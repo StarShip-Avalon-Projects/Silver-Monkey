@@ -493,7 +493,7 @@
     <Content Include="Wizard\help.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Furcadia Framework\FurcadiaLib\FurcadiaLib.csproj">
+    <ProjectReference Include="..\..\..\Furcadia Framework\FurcadiaLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>

@@ -44,14 +44,19 @@ AddressOf getReply, "(5:1501) send text {...} to chat engine and put the respons
 AddressOf getReplyName, "(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable.")	
 
 '(5:1503) Set Chat Engine State Vairable {...} to {...}.
+    Add(Monkeyspeak.TriggerCategory.Effect, 1503,
+AddressOf setStateVariable, "(5:1503) Set Chat Engine State Vairable {...} to {...}.")	
+
 '(5:1504) Get chat engine state variable {...} and put it into variable %Variable.
+    Add(Monkeyspeak.TriggerCategory.Effect, 1504,
+AddressOf getStateVariable, "(5:1504) Get chat engine state variable {...} and put it into variable %Variable.")	
     	
    	End sub
    	
    	#Region "Chat interface"
    	
    	'(5:1501) send text {...} to chat engine and put the response in variable %Variable
-   	Private Function getReply(reader As TriggerReader) As boolean
+   	Function getReply(reader As TriggerReader) As boolean
    		Dim SayText As String
    		Dim ResponceText As Monkeyspeak.Variable
    		Try
@@ -86,7 +91,7 @@ AddressOf getReplyName, "(5:1502) send text {...} and Name {...} to chat engine 
     End Function
     
     '(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable
-   	Private Function getReplyName(reader As TriggerReader) As boolean
+   	Function getReplyName(reader As TriggerReader) As boolean
    		Dim SayText As String
    		Dim SayName As String 
    		Dim ResponceText As Monkeyspeak.Variable
@@ -229,5 +234,50 @@ AddressOf getReplyName, "(5:1502) send text {...} and Name {...} to chat engine 
             Return False
         End Try
    	End Function
+   	
+   	
+   	'(5:1503) Set Chat Engine State Vairable {...} to {...}.
+   	Function setStateVariable(reader As TriggerReader) As Boolean
+   		
+   		Try
+   			
+   			Dim EngineVar As String = reader.ReadString()
+   			Dim EngineValue As String = reader.ReadString()
+   			If callbk.state.Vars.ContainsKey(EngineVar) Then
+            	callbk.state.Vars.Item(EngineVar) = EngineValue
+        	Else
+            	callbk.state.Vars.Add(EngineVar, EngineValue)
+        	End If
+        	Return True
+   		Catch ex As Exception
+            Dim tID As String = reader.TriggerId.ToString
+            Dim tCat As String = reader.TriggerCategory.ToString
+            Console.WriteLine(MS_ErrWarning)
+            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
+            writer.WriteLine(ErrorString)
+            Debug.Print(ErrorString)
+            Return False
+        End Try
+   	End Function
+   	
+'(5:1504) Get chat engine state variable {...} and put it into variable %Variable.
+	Function getStateVariable(reader As TriggerReader)As Boolean
+		Try
+			Dim EngineVar As String = reader.readstring()
+			Dim MS_Var As Variable = reader.ReadVariable(True)
+			
+			MS_Var.Value = callbk.state.Vars.Item(EngineVar)
+			Return true
+		
 
+   		Catch ex As Exception
+            Dim tID As String = reader.TriggerId.ToString
+            Dim tCat As String = reader.TriggerCategory.ToString
+            Console.WriteLine(MS_ErrWarning)
+            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
+            writer.WriteLine(ErrorString)
+            Debug.Print(ErrorString)
+            Return False
+        End Try
+	End Function   		
 End Class

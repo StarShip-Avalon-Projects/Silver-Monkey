@@ -3034,7 +3034,7 @@ Public Class Main
     End Sub
 
     Public Sub OnConnected() Handles smProxy.Connected
-
+If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
 
     End Sub
 
@@ -3521,7 +3521,13 @@ Public Class Main
             End If
         End If
     End Sub
-
+    
+    
+    Private Sub FurcSettingsRestored() Handles smProxy.FurcSettingsRestored
+    	 		FurcMutex.Close()
+                FurcMutex.Dispose()
+    End Sub
+    
     Private Sub ReconnectTick(ByVal state As Object)
 
 #If DEBUG Then

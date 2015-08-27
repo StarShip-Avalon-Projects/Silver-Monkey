@@ -400,9 +400,6 @@
     <None Include="resources\DocumentHS.png" />
     <None Include="resources\cwnz38d8.bmp" />
     <None Include="resources\1240733289676066064.png" />
-    <Content Include="msvcr100.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
     <None Include="resources\metal.ico" />
     <None Include="resources\metal.png" />
     <Content Include="SM Lisence.txt">
@@ -437,10 +434,7 @@
     <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Furcadia Framework\FurcadiaLib\FurcadiaLib.csproj">
+    <ProjectReference Include="..\..\..\Furcadia Framework\FurcadiaLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
