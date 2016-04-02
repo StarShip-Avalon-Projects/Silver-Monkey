@@ -76,9 +76,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SQLitex64.1.0.66\lib\System.Data.SQLite.DLL</HintPath>
+    <Reference Include="System.Data.SQLite">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -767,6 +767,18 @@ cd $(SolutionDir)
 
 "c:/program files/winrar/rar.exe" a -r -x*\.svn\* -x*\build\*  -x*\bin\*  -x*\src\ -x*\obj\* -n*.*proj -n*.sln -n*.nsi -n*.vb  -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll -n*.config "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" *.*
 move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Wix|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\build\Release\</OutputPath>
+    <DocumentationFile>Verbot Knowledgebase Editor.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

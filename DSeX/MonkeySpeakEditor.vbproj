@@ -40,6 +40,12 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <NoWin32Manifest>False</NoWin32Manifest>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <OptionCompare>Binary</OptionCompare>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>Full</DebugType>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -48,19 +54,14 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\build\Debug\</OutputPath>
     <DocumentationFile>MonkeySpeakEditor.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <AdditionalParameters />
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <Optimize>true</Optimize>
     <OutputPath>..\build\Release\</OutputPath>
     <DocumentationFile>MonkeySpeakEditor.xml</DocumentationFile>
     <NoWarn>
@@ -252,18 +253,18 @@
     <None Include="Scripts-MS\DreamCheck.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\4 point Chair Face.ini">
+    <Content Include="Scripts\4 point Chair Face.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Scripts\antispam.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\automaticdoor.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\BaH-Item Dispenser.ini">
+    <Content Include="Scripts\BaH-Item Dispenser.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Scripts\BaH-ItemClear.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -430,12 +431,12 @@
     <Content Include="MapSearch_Readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\128x128.ico" />
+    <DesignData Include="Resources\128x128.ico" />
     <None Include="Resources\64x64.ico" />
     <None Include="Resources\32x32 %282%29.ico" />
     <None Include="Resources\16x16.ico" />
     <None Include="Resources\32x32.ico" />
-    <None Include="Resources\128x128.png" />
+    <DesignData Include="Resources\128x128.png" />
     <None Include="Resources\64x64.png" />
     <None Include="Resources\32x32.png" />
     <None Include="Resources\16x16.png" />
@@ -472,9 +473,9 @@
     <None Include="Resources\cwnz38d8.bmp" />
     <None Include="Resources\CutHS.png" />
     <None Include="Resources\CopyHS.png" />
-    <None Include="Resources\1240733289676066064.png" />
+    <DesignData Include="Resources\1240733289676066064.png" />
     <None Include="Resources\1549_Paper_clip_gray.png" />
-    <None Include="Resources\1549_Paper_clip_blue.png" />
+    <DesignData Include="Resources\1549_Paper_clip_blue.png" />
     <None Include="Resources\dm16x16.png" />
     <None Include="Resources\dm32x32.png" />
     <None Include="Resources\dm64x64.png" />
@@ -559,6 +560,33 @@ cd $(SolutionDir)
 
 "c:/program files/winrar/rar.exe" a -r -x*\.svn\* -x*\build\*  -x*\bin\*  -x*\src\ -x*\obj\* -n*.*proj -n*.sln -n*.nsi -n*.vb  -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll -n*.config "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" *.*
 move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Wix|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\build\Release\</OutputPath>
+    <DocumentationFile>MonkeySpeakEditor.xml</DocumentationFile>
+    <NoWarn />
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <AdditionalParameters />
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Wix' ">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>False</Optimize>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

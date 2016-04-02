@@ -160,6 +160,25 @@ move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Wix|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile />
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>True</Optimize>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>None</DebugType>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Wix' ">
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties BuildVersion_BuildAction="ReBuild" BuildVersion_BuildVersioningStyle="None.None.Increment.MonthAndDayStamp" />

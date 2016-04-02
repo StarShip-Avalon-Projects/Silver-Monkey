@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="E8803C96-7C07-460B-8D9C-5EEC242D7DFE" Name="Silver Monkey" Language="1033" Version="1.0.0.0" Manufacturer="Me" UpgradeCode="9279b740-8419-45c4-9538-6a45f8e949c7">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Media Id="1" Cabinet="SilverMonkey.cab" EmbedCab="yes" />
+ 	
+    <Feature Id="ProductFeature" Title="DemoWebsite.Setup" Level="1">
+      <ComponentGroupRef Id="MyWebWebComponents"/>
+    </Feature>
+  </Product>
+
+	
+  <Fragment>
+    <!-- Will default to C:\ if that is the main disk-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Will reference to C:\inetpub-->
+      <Directory Id="INETPUB" Name="Inetpub">
+        <!-- Will reference to c:\Inetpub\Demowebsite-->
+        <Directory Id="INSTALLFOLDER" Name="DemoWebsite">
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+
+	
+	
+	<Fragment >
+ <ComponentGroup Id="MyWebWebComponents" Directory="INSTALLFOLDER">
+
+<!-- TODO: Insert files, registry keys, and other resources here. -->
+
+  </ComponentGroup>
+  </Fragment>
+</Wix>

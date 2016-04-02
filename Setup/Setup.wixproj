@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{3103818D-E12C-4A81-8897-6D1DB61996F7}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Package</OutputType>
+    <RootNamespace>Setup</RootNamespace>
+    <OutputName>Setup</OutputName>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <SupressIces>ICE45</SupressIces>
+    <WixVariables>WixUILicenseRtf=license.rtf</WixVariables>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <DefineConstants>HarvestProjectsAutogenerateGuids=False;HarvestProjectsGenerateGuidsNow=False;HarvestProjectsSuppressFragments=True;HarvestProjectsVerboseOutput=True;publishDir=../Build/$(Configuration)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>../Build/Installer</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <StartAction>Project</StartAction>
+    <BaseOutputPath>obj/Debug</BaseOutputPath>
+    <IntermediateOutputPath>bin/Debug</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>../Build</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <BaseOutputPath>obj/Release</BaseOutputPath>
+    <IntermediateOutputPath>bin/Release</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Wix' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <BaseOutputPath>obj/Debug</BaseOutputPath>
+    <IntermediateOutputPath>bin/Debug</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <WixExtension Include="WixFileVersionExtension.dll" />
+    <WixExtension Include="WixFirewallExtension.dll" />
+    <WixExtension Include="WixNetFxExtension.dll" />
+    <WixExtension Include="WixUtilExtension.dll" />
+    <WixExtension Include="WixUIExtension.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Filter.xslt" />
+    <None Include="license.rtf" />
+    <None Include="Setup.build" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dialog1.wxs" />
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DSeX\MonkeySpeakEditor.vbproj">
+      <Project>{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}</Project>
+      <Name>MonkeySpeakEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SilverMonkey\SilverMonkey2.vbproj">
+      <Project>{A2C3323D-B8B3-437D-9D56-80CD8ED88281}</Project>
+      <Name>SilverMonkey2</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <ItemGroup>
+    <HeatProject Include="@(ProjectReference->’%(FullPath)’">
+      <ProjectOutputGroups>Binaries;Symbols;Documents;Satellites;Content</ProjectOutputGroups>
+    </HeatProject>
+  </ItemGroup>
+    <PropertyGroup>
+		<EnableProjectHarvesting>True</EnableProjectHarvesting>
+	</PropertyGroup>
+
+
+</Project>

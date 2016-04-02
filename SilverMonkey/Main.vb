@@ -3152,7 +3152,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             'e.Handled = True
             'e.SuppressKeyPress = True
         ElseIf (e.KeyCode = Keys.F1) Then
-            Process.Start(Application.StartupPath & "/Silver Monkey.chm")
+            frmHelp.Show()
         ElseIf (e.KeyCode = Keys.N AndAlso e.Modifiers = Keys.Control) Then
             With BotSetup
                 .bFile = New cBot
@@ -3927,5 +3927,9 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
     End Sub
 
 
+    
+    Sub ContentsToolStripMenuItemClick(sender As Object, e As EventArgs)
+    	
+    End Sub
 End Class
 

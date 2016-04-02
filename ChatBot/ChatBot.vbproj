@@ -148,6 +148,7 @@
     <ProjectReference Include="..\..\..\Furcadia Framework\FurcadiaLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
     <ProjectReference Include="..\Verbot5Library\Verbot5Library.csproj">
       <Project>{4D25B13B-4D67-433F-9181-BF5FDFA931B6}</Project>
@@ -188,6 +189,18 @@ cd $(SolutionDir)
 
 "c:/program files/winrar/rar.exe" a -r -x*\.svn\* -x*\build\*  -x*\bin\*  -x*\src\ -x*\obj\* -n*.*proj -n*.sln -n*.nsi -n*.vb  -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll -n*.config "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" *.*
 move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Wix|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>None</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\build\Release\</OutputPath>
+    <DocumentationFile />
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
