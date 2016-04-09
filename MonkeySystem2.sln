@@ -18,6 +18,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextTransform", "TextTempla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.TextTemplating", "TextTemplating\Mono.TextTemplating\Mono.TextTemplating.csproj", "{A2364D6A-00EF-417C-80A6-815726C70032}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{8CBAA2DD-903F-4AF8-819B-0503A83F9BB2}"
+	ProjectSection(SolutionItems) = postProject
+		Externals\System.Data.SQLite.xml = Externals\System.Data.SQLite.xml
+		Externals\System.Data.SQLite.EF6.xml = Externals\System.Data.SQLite.EF6.xml
+		Externals\System.Data.SQLite.Linq.dll = Externals\System.Data.SQLite.Linq.dll
+		Externals\System.Data.SQLite.Linq.pdb = Externals\System.Data.SQLite.Linq.pdb
+		Externals\System.Data.SQLite.Linq.xml = Externals\System.Data.SQLite.Linq.xml
+		Externals\System.Data.SQLite.pdb = Externals\System.Data.SQLite.pdb
+		Externals\System.Data.SQLite.EF6.dll = Externals\System.Data.SQLite.EF6.dll
+		Externals\System.Data.SQLite.EF6.pdb = Externals\System.Data.SQLite.EF6.pdb
+		Externals\System.Data.SQLite.dll = Externals\System.Data.SQLite.dll
+		Externals\System.Data.SQLite.dll.config = Externals\System.Data.SQLite.dll.config
+		Externals\SQLite.Interop.pdb = Externals\SQLite.Interop.pdb
+		Externals\SQLite.Designer.xml = Externals\SQLite.Designer.xml
+		Externals\SQLite.Interop.dll = Externals\SQLite.Interop.dll
+		Externals\SQLite.Designer.dll = Externals\SQLite.Designer.dll
+		Externals\SQLite.Designer.pdb = Externals\SQLite.Designer.pdb
+	EndProjectSection
+EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SilverMonkey2", "SilverMonkey\SilverMonkey2.vbproj", "{A2C3323D-B8B3-437D-9D56-80CD8ED88281}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C9ACA223-FEB6-46B8-B34B-6B72C3E20643} = {C9ACA223-FEB6-46B8-B34B-6B72C3E20643}
@@ -331,9 +350,9 @@ Global
 		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Release|x86.Build.0 = Release|Any CPU
-		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Release|x86.ActiveCfg = Release|Any CPU
+		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Release|x86.ActiveCfg = Release|x86
 		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Special|Any CPU.Build.0 = Special|Any CPU
 		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Special|Any CPU.ActiveCfg = Special|Any CPU
 		{156C2AF0-3DA8-4D8C-A525-5400185579B3}.Special|Mixed Platforms.Build.0 = Special|Any CPU
