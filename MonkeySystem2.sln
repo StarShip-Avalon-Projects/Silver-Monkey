@@ -81,6 +81,25 @@ Project("{CFEE4113-1246-4D54-95CB-156813CB8593}") = "Setup", "Setup\Setup.wixpro
 EndProject
 Project("{CFEE4113-1246-4D54-95CB-156813CB8593}") = "SetupBootstrap", "SetupBootstrap\SetupBootstrap.wixproj", "{EB30D347-9A09-4DC4-B827-66167D961352}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{2863C16F-B5A3-4331-A0EB-92A7FE2F1D0B}"
+	ProjectSection(SolutionItems) = postProject
+		bin\vbVer.bat = bin\vbVer.bat
+		bin\TextTransform.exe = bin\TextTransform.exe
+		bin\Mono.TextTemplating.dll = bin\Mono.TextTemplating.dll
+		bin\TextTransform.pdb = bin\TextTransform.pdb
+		bin\Mono.TextTemplating.pdb = bin\Mono.TextTemplating.pdb
+		bin\TextTransform.exe.config = bin\TextTransform.exe.config
+		bin\Interfaces.dll = bin\Interfaces.dll
+		bin\Interfaces.pdb = bin\Interfaces.pdb
+		bin\Monkeyspeak.dll = bin\Monkeyspeak.dll
+		bin\Monkeyspeak.pdb = bin\Monkeyspeak.pdb
+		bin\license.txt = bin\license.txt
+		bin\FurcadiaLib.dll = bin\FurcadiaLib.dll
+		bin\FurcadiaLib.pdb = bin\FurcadiaLib.pdb
+		bin\FurcadiaLib.xml = bin\FurcadiaLib.xml
+		bin\sed.exe = bin\sed.exe
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
