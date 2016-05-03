@@ -14,7 +14,7 @@
 
 !define APP_NAME "Silver Monkey"
 !define COMP_NAME "TS-Projects"
-;!define WEB_SITE "http://www.ts-projects.org/smIdx.html"
+;!define WEB_SITE "http://www.tsprojects.org/smIdx.html"
 !ifndef VERSION
 !define VERSION "2.20.0.0"
 !endif

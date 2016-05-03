@@ -124,10 +124,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Furcadia Framework\FurcadiaLib\FurcadiaLib.csproj">
+    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
       <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
