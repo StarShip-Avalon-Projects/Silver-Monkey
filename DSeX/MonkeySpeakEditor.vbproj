@@ -494,13 +494,13 @@
     <Content Include="Wizard\help.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Furcadia Framework\FurcadiaLib\FurcadiaLib.csproj">
-      <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
-      <Name>FurcadiaLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FastColoredTextBox\FastColoredTextBox.csproj">
       <Project>{6DD14A85-CCFC-4774-BD26-0F5772512319}</Project>
       <Name>FastColoredTextBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
+      <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
+      <Name>FurcadiaLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyspeakR6\MonkeyspeakR6.csproj">
       <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>

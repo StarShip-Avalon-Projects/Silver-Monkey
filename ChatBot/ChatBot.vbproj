@@ -145,10 +145,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Furcadia Framework\FurcadiaLib\FurcadiaLib.csproj">
+    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
     <ProjectReference Include="..\Verbot5Library\Verbot5Library.csproj">
       <Project>{4D25B13B-4D67-433F-9181-BF5FDFA931B6}</Project>
