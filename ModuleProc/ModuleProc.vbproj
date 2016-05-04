@@ -31,6 +31,9 @@
     <DefineConstants>TRACE=1</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>Dlls\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -65,6 +68,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dlls" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
+      <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
+      <Name>FurcadiaLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
+      <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
