@@ -98,6 +98,12 @@ Project("{CFEE4113-1246-4D54-95CB-156813CB8593}") = "SetupBootstrap", "SetupBoot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurcadiaLib", "FurcLib\FurcadiaLib.csproj", "{156C2AF0-3DA8-4D8C-A525-5400185579B3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Change Logs", "Change Logs", "{67D96052-1E27-417D-94FB-3F47FAEE63C2}"
+	ProjectSection(SolutionItems) = postProject
+		FurcLib\Changes.txt = FurcLib\Changes.txt
+		MonkeySpeakR6\MonkeySpeak ChangeLog.txt = MonkeySpeakR6\MonkeySpeak ChangeLog.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
