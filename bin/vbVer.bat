@@ -24,3 +24,7 @@ CALL SetCurrVer.bat
 echo CURRENT_VERSION %CURRENT_VERSION%
 del SetCurrVer.bat
 makensis.exe -dVERSION=%CURRENT_VERSION% %1
+IF %ERRORLEVEL% NEQ 0 (
+ECHO MakeNSIS.exe hard an error Could not make setup file
+exit /b 0
+)

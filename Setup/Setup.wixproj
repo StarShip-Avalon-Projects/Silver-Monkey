@@ -19,7 +19,7 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>../Build/Installer</OutputPath>
+    <OutputPath>../Build/Installer/</OutputPath>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
@@ -48,7 +48,6 @@
   </PropertyGroup>
   <Import Project="$(WixTargetsPath)" />
   <ItemGroup>
-    <WixExtension Include="WixFileVersionExtension.dll" />
     <WixExtension Include="WixFirewallExtension.dll" />
     <WixExtension Include="WixNetFxExtension.dll" />
     <WixExtension Include="WixUtilExtension.dll" />

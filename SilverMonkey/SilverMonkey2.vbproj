@@ -487,8 +487,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
-    <PostBuildEvent>call "$(SolutionDir)bin\vbver.bat" SilverMonkey.nsi "$(ProjectDir)"</PostBuildEvent>
+    <PostBuildEvent>cd "$(TargetDir)"
+"..\..\bin\vbver.bat" SilverMonkey.nsi "$(ProjectDir)"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
@@ -500,10 +500,12 @@
     <Optimize>True</Optimize>
     <OutputPath>..\Build\Release</OutputPath>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Special' ">
     <Optimize>true</Optimize>
     <OutputPath>../Build</OutputPath>
+    <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <BaseAddress>4194304</BaseAddress>
@@ -523,6 +525,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'WIX' ">
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <OutputPath>../Build</OutputPath>
+    <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Wix|AnyCPU' ">
     <DefineDebug>false</DefineDebug>
@@ -547,6 +550,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Wix' ">
     <Optimize>False</Optimize>
     <OutputPath>../Build</OutputPath>
+    <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

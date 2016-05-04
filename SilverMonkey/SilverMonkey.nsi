@@ -175,8 +175,8 @@ SectionEnd
 
 Section -plugins
 SetOutPath "$INSTDIR\Plugins"
-File "${Bin_Directory}\Plugins\TheClaaaw.ini"
-File "${Bin_Directory}\Plugins\TheClaaaw.dll"
+File /nonfatal "${Bin_Directory}\Plugins\TheClaaaw.ini"
+File /nonfatal "${Bin_Directory}\Plugins\TheClaaaw.dll"
 SectionEnd
 
 ######################################################################

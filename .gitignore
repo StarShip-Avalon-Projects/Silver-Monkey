@@ -23,3 +23,5 @@ bin/
 obj/
 build/
 /SRC
+/Plugins/AngelCat
+/Plugins/SoundWave
