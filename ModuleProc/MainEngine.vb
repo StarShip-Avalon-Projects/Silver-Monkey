@@ -66,7 +66,7 @@ Public Class MainEngine
             For intIndex As Integer = 0 To Plugins.Length - 1
                 MSpage = engine.LoadFromString("")
                 objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
-                objPlugin.Initialize(Main.objHost)
+                objPlugin.Initialize(Program.objHost)
                 objPlugin.Page = MSpage
                 objPlugin.Start()
             Next

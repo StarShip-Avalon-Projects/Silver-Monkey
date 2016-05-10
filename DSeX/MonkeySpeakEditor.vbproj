@@ -113,6 +113,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="AssemblyFileVersion.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Config.designer.vb">
       <DependentUpon>Config.vb</DependentUpon>
     </Compile>
@@ -229,6 +234,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="AssemblyFileVersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
+    </None>
     <None Include="keys-ms.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -413,6 +422,9 @@
     <None Include="Templates\Verbal Warp.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="DESUrls.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="16x16.ico">
@@ -546,21 +558,6 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <PropertyGroup>
-    <PostBuildEvent>del "Silver Monkey.chm"
-copy "..\Help\Silver Monkey.chm" ".\"
-
-REM DEL old files
-del "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar"
-del "*setup*.*"
-
-REM Create the SRC rar
-cd $(SolutionDir)
-
-
-"c:/program files/winrar/rar.exe" a -r -x*\.svn\* -x*\build\*  -x*\bin\*  -x*\src\ -x*\obj\* -n*.*proj -n*.sln -n*.nsi -n*.vb  -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll -n*.config "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" *.*
-move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</PostBuildEvent>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Wix|x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <DefineDebug>false</DefineDebug>
@@ -575,13 +572,43 @@ move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <Optimize>true</Optimize>
+    <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
+    <PostBuildEvent>del "Silver Monkey.chm"
+copy "..\Help\Silver Monkey.chm" ".\"
+
+REM DEL old files
+del "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar"
+del "*setup*.*"
+
+REM Create the SRC rar
+cd $(SolutionDir)
+
+
+"c:/program files/winrar/rar.exe" a -r -x*\.svn\* -x*\build\*  -x*\bin\*  -x*\src\ -x*\obj\* -n*.*proj -n*.sln -n*.nsi -n*.vb  -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll -n*.config "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" *.*
+move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Wix' ">
     <Optimize>true</Optimize>
+    <PostBuildEvent>del "Silver Monkey.chm"
+copy "..\Help\Silver Monkey.chm" ".\"
+
+REM DEL old files
+del "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar"
+del "*setup*.*"
+
+REM Create the SRC rar
+cd $(SolutionDir)
+
+
+"c:/program files/winrar/rar.exe" a -r -x*\.svn\* -x*\build\*  -x*\bin\*  -x*\src\ -x*\obj\* -n*.*proj -n*.sln -n*.nsi -n*.vb  -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll -n*.config "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" *.*
+move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <PostBuildEvent>
+
+</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <BaseAddress>4194304</BaseAddress>

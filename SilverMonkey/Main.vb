@@ -3370,14 +3370,25 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             My.Settings.Save()
             ReLogCounter = 0
             ClientClose = False
-            Dim Ts As TimeSpan = TimeSpan.FromSeconds(cMain.ConnectTimeOut+10)
+            Dim Ts As TimeSpan = TimeSpan.FromSeconds(cMain.ConnectTimeOut)
             Me.ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick, _
              Nothing, Ts, Ts)
             Dim Tss As TimeSpan = TimeSpan.FromSeconds(cMain.Ping)
             If cMain.Ping > 0 Then Me.PingTimer = New Threading.Timer(AddressOf PingTimerTick, _
              Nothing, Tss, Tss)
             If Not IsNothing(MS_Export) Then MS_Export.Dispose()
-            ConnectBot()
+            Try
+            	ConnectBot()
+            Catch Ex As NetProxyException
+            	Me.ReconnectTimeOutTimer.Dispose()
+            	If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+               	If Not IsNothing(FurcMutex) Then '
+                	FurcMutex.Close()
+                	FurcMutex.Dispose()
+               	End If
+               	DisconnectBot()
+               	sndDisplay("Connection Aborting: " + eX.Message)
+            End Try
 
         Else
             ProcExit = False
@@ -3438,7 +3449,8 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
                         NewLogFile = True
                     End With
                 Catch ex As Exception
-                    Debug.WriteLine(ex.Message)
+                	'Debug.WriteLine(ex.Message)
+                	Throw ex
                 End Try
                 loggingIn = 1
                 TS_Status_Server.Image = My.Resources.images5
@@ -3543,8 +3555,21 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             smProxy.Kill()
             ClearQues()
         End If
-        ConnectBot()
-        Me.ReconnectTimer.Dispose()
+            Try
+            	ConnectBot()
+            Catch Ex As NetProxyException
+            	Me.ReconnectTimeOutTimer.Dispose()
+            	If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+               	If Not IsNothing(FurcMutex) Then '
+                	FurcMutex.Close()
+                	FurcMutex.Dispose()
+               	End If
+               	DisconnectBot()
+               	sndDisplay("Connection Aborting: " + eX.Message)
+            Finally
+            	Me.ReconnectTimer.Dispose()
+            End Try
+        
     End Sub
     Private Sub ReconnectTimeOutTick(ByVal Obj As Object)
 
@@ -3568,7 +3593,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
                 ClearQues()
             End If
 
-
+		try
             ConnectBot()
             sndDisplay("Reconnect attempt: " + ReLogCounter.ToString)
             If ReLogCounter = cMain.ReconnectMax Then
@@ -3586,6 +3611,17 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
 
             End If
             ReLogCounter += 1
+		Catch Ex As NetProxyException
+            	Me.ReconnectTimeOutTimer.Dispose()
+            	If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+               	If Not IsNothing(FurcMutex) Then '
+                	FurcMutex.Close()
+                	FurcMutex.Dispose()
+               	End If
+               	DisconnectBot()
+               	sndDisplay("Connection Aborting: " + eX.Message)
+
+			End try
         End If
     End Sub
 

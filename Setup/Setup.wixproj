@@ -9,12 +9,13 @@
     <OutputName>Setup</OutputName>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">C:\Program Files\MSBuild\Microsoft\WiX\v3.x\wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
-    <WixTasksPath Condition=" '$(WixTasksPath)' == '' ">$(WixInstallPath)\WixTasks.dll</WixTasksPath>
+    <WixTasksPath Condition=" '$(WixTasksPath)' == '' ">$(WixToolPath)\WixTasks.dll</WixTasksPath>
     <SupressIces>ICE45</SupressIces>
     <WixVariables>WixUILicenseRtf=license.rtf</WixVariables>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <DefineConstants>publishDir=../Build/$(Configuration)</DefineConstants>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
@@ -46,7 +47,7 @@
     <BaseOutputPath>obj/Debug</BaseOutputPath>
     <IntermediateOutputPath>bin/Debug</IntermediateOutputPath>
   </PropertyGroup>
-  <Import Project="$(WixTargetsPath)" />
+		  <Import Project="$(WixTargetsPath)" />
   <ItemGroup>
     <WixExtension Include="WixFirewallExtension.dll" />
     <WixExtension Include="WixNetFxExtension.dll" />

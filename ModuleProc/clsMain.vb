@@ -2,7 +2,7 @@ Imports System.IO
 
 Public Module clsMain
     Public MainMSEngine As MainEngine
-    Public callbk As Main
+    Public callbk As Program
     Public Plugins() As PluginServices.AvailablePlugin
 
 

@@ -56,20 +56,10 @@ Module Program
 
     End Sub
 
-    Private Sub frmMain_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Plugins = PluginServices.FindPlugins(Path.GetDirectoryName(Application.ExecutablePath) + "\Plugins\", "SilverMonkey.Interfaces.msPlugin")
-        PopulatePluginList()
-        MainMSEngine = New MainEngine
-        MainMSEngine.ScriptStart()
-    End Sub
 
     'place holder
     Public Sub TextToServer(ByRef arg As String)
 
-    End Sub
-
-    Private Sub ExportToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ExportToolStripMenuItem.Click
-        LoadPlugins()
     End Sub
 
     Private EffectList As List(Of String) = New List(Of String)
@@ -82,6 +72,11 @@ Module Program
     End Enum
 	
 	Sub Main()
+		Plugins = PluginServices.FindPlugins(Path.GetDirectoryName(Application.ExecutablePath) + "\Plugins\", "SilverMonkey.Interfaces.msPlugin")
+        'PopulatePluginList()
+        MainMSEngine = New MainEngine
+        MainMSEngine.ScriptStart()
+        
 		Console.WriteLine("Hello World!")
 		
 		' TODO: Implement Functionality Here
