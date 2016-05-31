@@ -199,9 +199,19 @@ Public Class Config
 
     Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
         With FindFurc
-
-            .FileName = "Furcadia.exe"
-            .InitialDirectory = FurcPath.GetInstallPath
+			Dim ExePath As String
+			.FileName = "Furcadia.exe"
+			If Directory.Exists(FurcPath.GetInstallPath) Then
+				ExePath = FurcPath.GetInstallPath
+			Else
+				
+				If Environment.Is64BitOperatingSystem Then
+					ExePath = Environment.GetEnvironmentVariable("ProgramFiles(x86)")
+				Else
+					ExePath = Environment.GetEnvironmentVariable("ProgramFiles")
+				End If
+			End If
+			.InitialDirectory = ExePath
             If .ShowDialog = DialogResult.OK Then
                 TxtBxFurPath.Text = Path.GetDirectoryName(.FileName)
             End If

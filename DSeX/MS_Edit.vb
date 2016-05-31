@@ -138,7 +138,7 @@ Public Class MS_Edit
 
     Private Const RES_Def_section As String = "Default Section"
     Private Const RES_DSS_All As String = "Entire Document"
-    Private Const My_Docs As String = "/Furcadia"
+    Private Const My_Docs As String = "/Silver Monkey"
     Dim FullFile As List(Of List(Of String)) = New List(Of List(Of String))
     Dim SectionIdx As List(Of Integer) = New List(Of Integer)
     Private Const New_File_Tag As String = "(New File)"
@@ -303,38 +303,43 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             TemplatePathsMS.Add(p)
         Next
         p = FurcPath.GetFurcadiaDocPath + "/Templates"
-        Directory.CreateDirectory(p)
-        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-            s = Path.GetFileNameWithoutExtension(s)
-            ListBox2.Items.Add(s)
-            TemplatePathsMS.Add(p)
-        Next
+        If Directory.Exists(p) then
+        	For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
+            	s = Path.GetFileNameWithoutExtension(s)
+            	ListBox2.Items.Add(s)
+            	TemplatePathsMS.Add(p)
+        	Next
+        End If
         p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Templates-DS"
-        Directory.CreateDirectory(p)
-        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-            s = Path.GetFileNameWithoutExtension(s)
-            ListBox2.Items.Add(s)
-            TemplatePathsMS.Add(p)
-        Next
+        If Directory.Exists(p) then
+        	For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
+            	s = Path.GetFileNameWithoutExtension(s)
+            	ListBox2.Items.Add(s)
+            	TemplatePathsMS.Add(p)
+        	Next
+        End If
         ListBox2.EndUpdate()
-
-        p = Application.StartupPath + "/Templates-MS"
-        Directory.CreateDirectory(p)
+        
         TemplatePathsMS.Clear()
-        ListBox3.Items.Clear()
+       	ListBox3.Items.Clear()
         ListBox3.BeginUpdate()
-        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
-            s = Path.GetFileNameWithoutExtension(s)
-            ListBox3.Items.Add(s)
-            TemplatePathsMS.Add(p)
-        Next
+        
+        p = Application.StartupPath + "/Templates-MS"
+        If Directory.Exists(p) then
+        	For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
+            	s = Path.GetFileNameWithoutExtension(s)
+            	ListBox3.Items.Add(s)
+            	TemplatePathsMS.Add(p)
+        	Next
+        End If
         p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Templates-MS"
-        Directory.CreateDirectory(p)
-        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
-            s = Path.GetFileNameWithoutExtension(s)
-            ListBox3.Items.Add(s)
-            TemplatePathsMS.Add(p)
-        Next
+        If Directory.Exists(p) then
+        	For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
+            	s = Path.GetFileNameWithoutExtension(s)
+            	ListBox3.Items.Add(s)
+            	TemplatePathsMS.Add(p)
+        	Next
+        End If
         ListBox3.EndUpdate()
     End Sub
 
@@ -682,8 +687,15 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         MS_KeysIni.Load(My.Application.Info.DirectoryPath + "\Keys-MS.ini")
         KeysHelpMSIni.Load(My.Application.Info.DirectoryPath + "\KeysHelp-MS.ini")
         KeysHelpIni.Load(My.Application.Info.DirectoryPath + "\KeysHelp.ini")
-
-        FurcPath = New Furcadia.IO.Paths(EditSettings.FurcPath)
+        
+        
+        ' Actual Path Doesn't matter here... 
+        ' All we need is FurcadiaDoc's path
+        If Directory.Exists(EditSettings.FurcPath) then
+        	FurcPath = New Furcadia.IO.Paths(EditSettings.FurcPath)
+        Else
+        	FurcPath = New Furcadia.IO.Paths()
+        End if
 
         Dim PluginFound As Boolean = False
         For Each s As String In FileIO.FileSystem.GetFiles(Application.StartupPath + "\plugins\", FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
@@ -1818,7 +1830,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
     End Sub
 
     Private Sub BtnTemplateAdd_Click(sender As System.Object, e As System.EventArgs) Handles AddToolStripMenuItem.Click, BtnTemplateAdd.Click
-        Dim path As String = FurcPath.GetFurcadiaDocPath + "/Templates/"
+        Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Templates/"
         Dim message, title As String
         Dim myValue As String
         message = "Name of file?"
