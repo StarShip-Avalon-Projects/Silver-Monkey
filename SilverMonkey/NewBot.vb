@@ -2,6 +2,8 @@
 Imports SilverMonkey.ConfigStructs
 Imports Furcadia.IO
 Imports System.IO
+Imports System.Drawing
+
 
 Public Class NewBott
     Dim pPath As String = ConfigStructs.pPath()

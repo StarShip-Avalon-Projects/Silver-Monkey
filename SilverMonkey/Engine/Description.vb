@@ -6,6 +6,10 @@ Imports Furcadia.IO
 Imports Furcadia.Net
 Imports Furcadia.Base220
 
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+
 Public Class Description
 
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary

@@ -5,6 +5,8 @@ Imports System.ComponentModel
 Imports System.IO
 Imports SilverMonkey.Controls
 Imports SilverMonkey.ConfigStructs
+Imports System
+Imports Miscrosoft.VisualBasic
 
 Public Class TextBoxWriter
     Inherits System.IO.TextWriter

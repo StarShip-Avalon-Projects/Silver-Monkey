@@ -5,6 +5,10 @@ Imports SilverMonkey.TextBoxWriter
 Imports Furcadia.Net
 Imports System.IO
 Imports System.Text.RegularExpressions
+Imports System.Runtime.InteropServices
+Imports System
+Imports System.Collections.Generic
+Imports System.Diagnostics
 
 'StringLibrary
 '(1:108) - (1:111)
@@ -145,7 +149,7 @@ Module MS_Engine
             End Try
         End Function
 
-        Public Function MatchWildcardString(pattern As [String], input As [String]) As [Boolean]
+        Public Function MatchWildcardString(pattern As String, input As String) As [Boolean]
             If [String].Compare(pattern, input) = 0 Then
                 Return True
             ElseIf [String].IsNullOrEmpty(input) Then

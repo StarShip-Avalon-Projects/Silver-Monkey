@@ -1,5 +1,9 @@
 ﻿Imports System.Text.RegularExpressions
 
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+
 Public Class LogStream
 
     Private Const Iconfilter As String = "<img src='fsh://system.fsh:([^']*)'(.*?)/>"

@@ -1,4 +1,10 @@
 ﻿Imports System.Runtime.InteropServices
+
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+
+
 Public Class Logger
     Dim strErrorFilePath As String
     Dim Stack As New ArrayList

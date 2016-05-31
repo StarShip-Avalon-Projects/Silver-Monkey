@@ -2,6 +2,11 @@
 Imports System.Text
 Imports SilverMonkey.ConfigStructs
 Imports Monkeyspeak
+
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+
 Public Class MainEngine
 
 

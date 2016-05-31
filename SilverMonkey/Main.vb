@@ -5,10 +5,13 @@ Imports Furcadia.IO
 Imports Furcadia.Net
 Imports Furcadia.Base220
 Imports SilverMonkey.ConfigStructs
+Imports System
 Imports System.Net
 Imports System.Web.HttpUtility
 Imports System.Text.RegularExpressions
 Imports System.IO
+Imports System.Collections
+Imports System.Collections.Generic
 Imports Furcadia.Drawing.Graphics
 Imports Furcadia.Drawing
 Imports System.Drawing
@@ -16,8 +19,11 @@ Imports System.Net.NetworkInformation
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
+Imports System.Diagnostics
 Imports SilverMonkey.MSPK_MDB
 Imports Conversive.Verbot5
+Imports System.Windows.Forms
+Imports Microsoft.VisualBasic
 
 Public Class Main
     Inherits System.Windows.Forms.Form
@@ -1795,6 +1801,7 @@ Public Class Main
         'Strip the trigger Character
         ' page = engine.LoadFromString(cBot.MS_Script)
         data = data.Remove(0, 1)
+        Dim psCheck As Boolean = false
         Dim SpecTag As String = ""
         Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
         Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
@@ -3446,7 +3453,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
                         .Connect()
                         ProcID = .ProcID
                         loggingIn = 1
-                        NewLogFile = True
+                        'NewLogFile = True
                     End With
                 Catch ex As Exception
                 	'Debug.WriteLine(ex.Message)

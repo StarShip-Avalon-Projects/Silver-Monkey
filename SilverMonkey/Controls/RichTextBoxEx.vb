@@ -9,6 +9,10 @@ Imports System.IO
 Imports System.Drawing.Imaging
 Imports System.Windows.Forms.VisualStyles
 
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+
 Namespace Controls
     Public Class RichTextBoxEx
         Inherits System.Windows.Forms.RichTextBox

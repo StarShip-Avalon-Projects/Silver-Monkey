@@ -1,7 +1,12 @@
-﻿Imports System.IO
+﻿Imports System
+Imports System.IO
+Imports System.Drawing
+Imports System.Windows.Forms
+Imports System.Collections.Generic
 Imports SilverMonkey.ConfigStructs
 Imports Furcadia.IO
 Imports SilverMonkey.IniFile
+Imports Microsoft.VisualBasic
 
 Public Class ConfigStructs
 #Region "Properties"
@@ -328,7 +333,7 @@ Public Class ConfigStructs
             If Not String.IsNullOrEmpty(s) Then _Host = s.Trim
 
             s = SettingsIni.GetKeyValue("Main", "TT Interval")
-            If Not String.IsNullOrEmpty(s) Then _TT_TimeInterval = s.ToInteger
+           ' If Not String.IsNullOrEmpty(s) Then _TT_TimeInterval = s.ToInteger
 
             s = SettingsIni.GetKeyValue("Main", "TT TimeOut")
             If Not String.IsNullOrEmpty(s) Then _TT_TimeOut = s.ToInteger

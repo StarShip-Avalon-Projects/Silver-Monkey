@@ -1,5 +1,9 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports System
+Imports System.Text.RegularExpressions
 Imports System.IO
+Imports System.Collections.Generic
+Imports  System.Windows.Forms
+
 Public Class MS_Export
 
     Class CatSorter
@@ -45,7 +49,7 @@ Public Class MS_Export
     End Enum
 
     Private Sub MS_Export_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        MS_Stared = 0
+        MainMSEngine.MS_Stared = 0
         MainMSEngine.EngineStart(False)
         Dim Test As New List(Of String)
         For Each item As String In MainEngine.MSpage.GetTriggerDescriptions()

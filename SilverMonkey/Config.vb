@@ -1,4 +1,7 @@
-﻿Imports System.IO
+﻿Imports System
+Imports System.IO
+Imports System.Collections.Generic
+Imports System.Windows.Forms
 Imports SilverMonkey.ConfigStructs
 Imports System.Drawing.Text
 Imports System.Drawing
