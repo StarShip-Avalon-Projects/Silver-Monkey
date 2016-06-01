@@ -34,7 +34,7 @@ Public Class cbMain
         With Me.openFileDialog1
             If .ShowDialog() = DialogResult.OK Then
                 Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
-                kb = xToolbox.LoadXML(.FileName)
+                kb =CType( xToolbox.LoadXML(.FileName), KnowledgeBase)
                 kbi.Filename = Path.GetFileName(.FileName)
                 kbi.Fullpath = Path.GetDirectoryName(.FileName) + "\"
                 verbot.AddKnowledgeBase(kb, kbi)

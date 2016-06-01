@@ -23,6 +23,7 @@
     <NoWin32Manifest>False</NoWin32Manifest>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <OptionExplicit>On</OptionExplicit>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,7 +60,8 @@
     <Reference Include="System.Collections" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>DLLx86\System.Data.SQLite.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
@@ -244,6 +246,12 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
+    <Content Include="DLLx64\System.Data.SQLite.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLLx86\System.Data.SQLite.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="DotNetChecker.nsh">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
@@ -271,9 +279,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dll\RTFLib.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dll\System.Data.SQLite.dll">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Include="Format Notes.txt" />
@@ -341,6 +346,10 @@
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
     <Import Include="System.IO" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DLLx86" />
+    <Folder Include="DLLx64" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

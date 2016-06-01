@@ -1299,6 +1299,7 @@ Module MS_Engine
                 Debug.Print(ErrorString)
                 Return False
             End Try
+            Return True
         End Function
         '(5:41) Disconnect the bot from the Furcadia game server.
         Public Function FurcadiaDisconnect(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -1313,10 +1314,12 @@ Module MS_Engine
                 Debug.Print(ErrorString)
                 Return False
             End Try
+            Return True
         End Function
         '(5:42) start a new instance to Silver Monkey with botfile {...}.
         Public Function StartNewBot(reader As Monkeyspeak.TriggerReader) As Boolean
-            Try
+        	Try
+        		 'Dim ps As Process = New Process()
                 Dim File As String = reader.ReadString
                 Dim p As New ProcessStartInfo
                 p.Arguments = File
@@ -1331,6 +1334,8 @@ Module MS_Engine
                 Debug.Print(ErrorString)
                 Return False
             End Try
+  
+            Return True
         End Function
     End Class
 
