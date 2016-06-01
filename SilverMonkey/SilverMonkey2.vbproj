@@ -60,8 +60,7 @@
     <Reference Include="System.Collections" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
-      <HintPath>DLLx86\System.Data.SQLite.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.101.0\lib\net45\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
@@ -246,12 +245,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
-    <Content Include="DLLx64\System.Data.SQLite.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLLx86\System.Data.SQLite.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="DotNetChecker.nsh">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
@@ -261,9 +254,9 @@
     <None Include="metal.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="My Project\app.manifest">
+    <EmbeddedResource Include="My Project\app.manifest">
       <SubType>Designer</SubType>
-    </None>
+    </EmbeddedResource>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -273,6 +266,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
     <None Include="SilverMonkey.nsi">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -325,6 +319,10 @@
     <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
+      <Project>{9072CD13-8B7E-4A22-BC28-6087785A5D9A}</Project>
+      <Name>Data Monkey</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
@@ -347,14 +345,11 @@
     <Import Include="System" />
     <Import Include="System.IO" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DLLx86" />
-    <Folder Include="DLLx64" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
     <PostBuildEvent>cd "$(TargetDir)"
 "..\..\bin\vbver.bat" SilverMonkey.nsi "$(ProjectDir)"</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.101.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.101.0\build\net45\System.Data.SQLite.Core.targets')" />
 </Project>

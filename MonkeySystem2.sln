@@ -18,25 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextTransform", "TextTempla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.TextTemplating", "TextTemplating\Mono.TextTemplating\Mono.TextTemplating.csproj", "{A2364D6A-00EF-417C-80A6-815726C70032}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{8CBAA2DD-903F-4AF8-819B-0503A83F9BB2}"
-	ProjectSection(SolutionItems) = postProject
-		Externals\System.Data.SQLite.xml = Externals\System.Data.SQLite.xml
-		Externals\System.Data.SQLite.EF6.xml = Externals\System.Data.SQLite.EF6.xml
-		Externals\System.Data.SQLite.Linq.dll = Externals\System.Data.SQLite.Linq.dll
-		Externals\System.Data.SQLite.Linq.pdb = Externals\System.Data.SQLite.Linq.pdb
-		Externals\System.Data.SQLite.Linq.xml = Externals\System.Data.SQLite.Linq.xml
-		Externals\System.Data.SQLite.pdb = Externals\System.Data.SQLite.pdb
-		Externals\System.Data.SQLite.EF6.dll = Externals\System.Data.SQLite.EF6.dll
-		Externals\System.Data.SQLite.EF6.pdb = Externals\System.Data.SQLite.EF6.pdb
-		Externals\System.Data.SQLite.dll = Externals\System.Data.SQLite.dll
-		Externals\System.Data.SQLite.dll.config = Externals\System.Data.SQLite.dll.config
-		Externals\SQLite.Interop.pdb = Externals\SQLite.Interop.pdb
-		Externals\SQLite.Designer.xml = Externals\SQLite.Designer.xml
-		Externals\SQLite.Interop.dll = Externals\SQLite.Interop.dll
-		Externals\SQLite.Designer.dll = Externals\SQLite.Designer.dll
-		Externals\SQLite.Designer.pdb = Externals\SQLite.Designer.pdb
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{2863C16F-B5A3-4331-A0EB-92A7FE2F1D0B}"
 	ProjectSection(SolutionItems) = postProject
 		bin\vbVer.bat = bin\vbVer.bat
@@ -45,14 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{2863C16F-B5A
 		bin\TextTransform.pdb = bin\TextTransform.pdb
 		bin\Mono.TextTemplating.pdb = bin\Mono.TextTemplating.pdb
 		bin\TextTransform.exe.config = bin\TextTransform.exe.config
-		bin\Interfaces.dll = bin\Interfaces.dll
-		bin\Interfaces.pdb = bin\Interfaces.pdb
-		bin\Monkeyspeak.dll = bin\Monkeyspeak.dll
-		bin\Monkeyspeak.pdb = bin\Monkeyspeak.pdb
-		bin\license.txt = bin\license.txt
-		bin\FurcadiaLib.dll = bin\FurcadiaLib.dll
-		bin\FurcadiaLib.pdb = bin\FurcadiaLib.pdb
-		bin\FurcadiaLib.xml = bin\FurcadiaLib.xml
 		bin\sed.exe = bin\sed.exe
 	EndProjectSection
 EndProject
@@ -82,8 +55,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SilverMonkey2", "SilverMonk
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MonkeySpeakEditor", "DSeX\MonkeySpeakEditor.vbproj", "{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastColoredTextBox", "FastColoredTextBox\FastColoredTextBox.csproj", "{6DD14A85-CCFC-4774-BD26-0F5772512319}"
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ModuleExplorer", "Host\ModuleExplorer.vbproj", "{DDB48421-ADD5-499B-AE19-62184A2F2051}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F7221C50-ED60-4CFF-8374-47CC9E53429B} = {F7221C50-ED60-4CFF-8374-47CC9E53429B}
@@ -107,6 +78,8 @@ EndProject
 Project("") = "smHelp", "Silver Monkey Help\smHelp.shfbproj", "E89784CC-8F62-497E-9593-385440AF26B3"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurcadiaLib", "FurcLib\FurcadiaLib.csproj", "{156C2AF0-3DA8-4D8C-A525-5400185579B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Monkey", "Data Monkey\Data Monkey.csproj", "{9072CD13-8B7E-4A22-BC28-6087785A5D9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -157,22 +130,6 @@ Global
 		{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}.Special|Mixed Platforms.Build.0 = Release|x86
 		{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}.Special|x86.ActiveCfg = Release|x86
 		{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}.Special|x86.Build.0 = Release|x86
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Debug|x86.Build.0 = Debug|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Release|x86.ActiveCfg = Release|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Special|Any CPU.ActiveCfg = Release|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Special|Any CPU.Build.0 = Release|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Special|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Special|Mixed Platforms.Build.0 = Release|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Special|x86.ActiveCfg = Release|Any CPU
 		{DDB48421-ADD5-499B-AE19-62184A2F2051}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DDB48421-ADD5-499B-AE19-62184A2F2051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDB48421-ADD5-499B-AE19-62184A2F2051}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -368,8 +325,6 @@ Global
 		{F7221C50-ED60-4CFF-8374-47CC9E53429B}.Wix|Any CPU.ActiveCfg = Wix|Any CPU
 		{DDB48421-ADD5-499B-AE19-62184A2F2051}.Wix|Any CPU.Build.0 = Wix|Any CPU
 		{DDB48421-ADD5-499B-AE19-62184A2F2051}.Wix|Any CPU.ActiveCfg = Wix|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Wix|Any CPU.Build.0 = Wix|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Wix|Any CPU.ActiveCfg = Wix|Any CPU
 		{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}.Wix|Any CPU.Build.0 = Wix|x86
 		{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}.Wix|Any CPU.ActiveCfg = Wix|x86
 		{A2C3323D-B8B3-437D-9D56-80CD8ED88281}.Wix|Any CPU.Build.0 = Wix|Any CPU
@@ -396,8 +351,6 @@ Global
 		{F7221C50-ED60-4CFF-8374-47CC9E53429B}.Wix|Mixed Platforms.ActiveCfg = Wix|Any CPU
 		{DDB48421-ADD5-499B-AE19-62184A2F2051}.Wix|Mixed Platforms.Build.0 = Wix|Any CPU
 		{DDB48421-ADD5-499B-AE19-62184A2F2051}.Wix|Mixed Platforms.ActiveCfg = Wix|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Wix|Mixed Platforms.Build.0 = Wix|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Wix|Mixed Platforms.ActiveCfg = Wix|Any CPU
 		{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}.Wix|Mixed Platforms.Build.0 = Wix|x86
 		{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}.Wix|Mixed Platforms.ActiveCfg = Wix|x86
 		{A2C3323D-B8B3-437D-9D56-80CD8ED88281}.Wix|Mixed Platforms.Build.0 = Wix|x86
@@ -424,8 +377,6 @@ Global
 		{F7221C50-ED60-4CFF-8374-47CC9E53429B}.Wix|x86.ActiveCfg = Wix|Any CPU
 		{DDB48421-ADD5-499B-AE19-62184A2F2051}.Wix|x86.Build.0 = Wix|Any CPU
 		{DDB48421-ADD5-499B-AE19-62184A2F2051}.Wix|x86.ActiveCfg = Wix|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Wix|x86.Build.0 = Wix|Any CPU
-		{6DD14A85-CCFC-4774-BD26-0F5772512319}.Wix|x86.ActiveCfg = Wix|Any CPU
 		{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}.Wix|x86.Build.0 = Wix|x86
 		{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}.Wix|x86.ActiveCfg = Wix|x86
 		{A2C3323D-B8B3-437D-9D56-80CD8ED88281}.Wix|x86.Build.0 = Wix|x86
@@ -506,6 +457,30 @@ Global
 		BDD805A4-D8D1-430E-8EA9-1B6661A4140D.Wix|Mixed Platforms.ActiveCfg = Wix|Any CPU
 		BDD805A4-D8D1-430E-8EA9-1B6661A4140D.Wix|x86.Build.0 = Wix|Any CPU
 		BDD805A4-D8D1-430E-8EA9-1B6661A4140D.Wix|x86.ActiveCfg = Wix|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Debug|x86.Build.0 = Debug|x86
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Debug|x86.ActiveCfg = Debug|x86
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Release|x86.Build.0 = Release|x86
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Release|x86.ActiveCfg = Release|x86
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Special|Any CPU.Build.0 = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Special|Any CPU.ActiveCfg = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Special|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Special|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Special|x86.Build.0 = Debug|x86
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Special|x86.ActiveCfg = Debug|x86
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Wix|Any CPU.Build.0 = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Wix|Any CPU.ActiveCfg = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Wix|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Wix|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Wix|x86.Build.0 = Debug|x86
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A}.Wix|x86.ActiveCfg = Debug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

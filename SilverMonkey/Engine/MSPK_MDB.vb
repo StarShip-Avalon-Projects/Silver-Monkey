@@ -25,16 +25,7 @@ Public Class MSPK_MDB
     Dim lock As New Object
     Dim cache As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
     
-    Public Shared Sub LoadSQLLiteAssembly()
-  		Dim appropriateFile As String = Path.Combine(My.Application.Info.DirectoryPath,"DLLx64" + Path.DirectorySeparatorChar + "System.Data.SQLite.dll")
-   		If Not Environment.Is64BitOperatingSystem Then
-   			appropriateFile = Path.Combine(My.Application.Info.DirectoryPath,"DLLx86" + Path.DirectorySeparatorChar + "System.Data.SQLite.dll")
-   		End If
-        Assembly.LoadFrom(appropriateFile)
-    End sub
     Public Sub New()
-    	
-    	LoadSQLLiteAssembly()
     	
         Try
             writer = New TextBoxWriter(Variables.TextBox1)
