@@ -13,7 +13,18 @@ Public Class cbMain
     Private state As State
     Private stCKBFileFilter As String = "Verbot Knowledge Bases (*.vkb)|*.vkb"
     Private stFormName As String = "Verbot SDK Windows App Sample"
-    Public kb As KnowledgeBase = New KnowledgeBase()
+    
+    Private _kb As KnowledgeBase = New KnowledgeBase()
+    Public Property kb As KnowledgeBase
+    	Get
+    		Return _kb
+    	End Get
+    	Set(value As KnowledgeBase)
+    		
+    		_kb = value
+    	End Set
+    End Property
+    
     Dim kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
     Public Player As FURRE
     Public Sub New()

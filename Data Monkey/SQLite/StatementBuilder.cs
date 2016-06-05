@@ -10,9 +10,6 @@ namespace SQLiteEditor
 	{
 		public StatementBuilder()
 		{
-			//
-			// TODO: Add constructor logic here
-			//
 		}
 
 		#region BuildTableOpenSql
