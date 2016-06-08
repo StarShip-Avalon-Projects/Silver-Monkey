@@ -1,4 +1,4 @@
-!include "DotNetChecker.nsh"
+;!include "DotNetChecker.nsh"
 !include "FileAssociation.nsh"
 ##{{NSIS_PLUS_BEGIN_PROJECT_SETTINGS}}##
 #NAME "Release"
@@ -117,7 +117,7 @@ Section -MainProgram
 ${INSTALL_TYPE}
 SetOverwrite ifnewer
 SetOutPath "$INSTDIR"
-!insertmacro CheckNetFramework "40Full"
+;!insertmacro CheckNetFramework "40Full"
 
 ExecWait '"$INSTDIR\uninstall.exe" /S _?=$INSTDIR'
 

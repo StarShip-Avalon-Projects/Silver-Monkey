@@ -8,7 +8,7 @@
     <MyType>WindowsForms</MyType>
     <RootNamespace>Verbot_Knowledgebase_Editor</RootNamespace>
     <AssemblyName>Verbot Knowledgebase Editor</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OptionInfer>On</OptionInfer>
     <OptionStrict>Off</OptionStrict>
@@ -19,6 +19,7 @@
     <StartupObject>Verbot_Knowledgebase_Editor.My.MyApplication</StartupObject>
     <ApplicationIcon>Resources\Bookmark.ico</ApplicationIcon>
     <NoWin32Manifest>False</NoWin32Manifest>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,6 +44,9 @@
     <Optimize>True</Optimize>
     <DefineConstants>TRACE=1</DefineConstants>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil">
@@ -196,6 +200,9 @@
       <Project>{4D25B13B-4D67-433F-9181-BF5FDFA931B6}</Project>
       <Name>Verbot5Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

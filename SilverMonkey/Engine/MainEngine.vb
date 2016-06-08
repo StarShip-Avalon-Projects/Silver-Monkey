@@ -39,7 +39,10 @@ Public Class MainEngine
     Public Function ScriptStart() As Boolean
         Try
 
-            If Not cBot.MS_Engine_Enable Then Exit Function
+            If Not cBot.MS_Engine_Enable Then
+                Return False
+            End If
+
             Console.WriteLine("Loading:" & cBot.MS_File)
             Dim start As DateTime = DateTime.Now
             cBot.MS_Script = msReader(CheckMyDocFile(cBot.MS_File))

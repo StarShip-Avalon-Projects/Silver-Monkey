@@ -14,19 +14,21 @@ Public Class LogStream
     Dim strErrorFilePath As String
     Dim Stack As New ArrayList
     Public Sub New(FileName As String, FilePath As String)
-
         strErrorFilePath = FilePath & "\" & FileName & ".log"
-        System.IO.Directory.CreateDirectory(FilePath)
-
+        Try
+            If Not Directory.Exists(FilePath) Then
+                System.IO.Directory.CreateDirectory(FilePath)
+            End If
+        Catch
+        End Try
     End Sub
+
     Public Function IsFileInUse(ByVal filePath As String) As Boolean
         Try
             Dim contents() As String = IO.File.ReadAllLines(filePath)
         Catch ex As IO.IOException
             Return (ex.Message.StartsWith("The process cannot access the file") AndAlso _
                     ex.Message.EndsWith("because it is being used by another process."))
-        Catch ex As Exception
-            Return False
         End Try
         Return False
     End Function
@@ -79,8 +81,8 @@ Public Class LogStream
                 Stack.Add(Message)
             End If
 
-        Catch exLog As Exception
-            If Not IsNothing(ioFile) Then
+        Finally
+            If Not ioFile.Equals(Nothing) Then
                 ioFile.Close()
             End If
         End Try

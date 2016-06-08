@@ -12,7 +12,7 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <NoConfig>false</NoConfig>
     <TargetFrameworkProfile />
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
@@ -26,6 +26,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>TRACE</DefineConstants>
@@ -105,7 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="frmExplorer.cs" />
+    <Compile Include="frmExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="SQLite\SQLiteDatabase.cs" />
     <Compile Include="SQLite\StatementBuilder.cs" />
@@ -113,19 +116,27 @@
     <EmbeddedResource Include="frmExplorer.resx">
       <DependentUpon>frmExplorer.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\AddColumn.cs" />
+    <Compile Include="Controls\AddColumn.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Controls\AddColumn.resx">
       <DependentUpon>AddColumn.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\AddTable.cs" />
+    <Compile Include="Controls\AddTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Controls\AddTable.resx">
       <DependentUpon>AddTable.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\BasePopup.cs" />
+    <Compile Include="Controls\BasePopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Controls\BasePopup.resx">
       <DependentUpon>BasePopup.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\RenameTable.cs" />
+    <Compile Include="Controls\RenameTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Controls\RenameTable.resx">
       <DependentUpon>RenameTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -136,9 +147,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SQLite" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.101.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.101.0\build\net45\System.Data.SQLite.Core.targets')" />
 </Project>

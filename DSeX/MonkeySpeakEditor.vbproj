@@ -9,7 +9,7 @@
     <AssemblyName>MonkeySpeakEditor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <OptionInfer>On</OptionInfer>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <StartupObject>MonkeySpeakEditor.My.MyApplication</StartupObject>
@@ -21,6 +21,22 @@
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,6 +60,10 @@
     <Optimize>True</Optimize>
     <DefineConstants>TRACE=1</DefineConstants>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DefineConstants />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FastColoredTextBox">
@@ -204,18 +224,18 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
-    <None Include="keys-ms.ini">
+    <Content Include="keys-ms.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="keys.ini">
+    </Content>
+    <Content Include="keys.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="keyshelp-ms.ini">
+    </Content>
+    <Content Include="keyshelp-ms.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="keyshelp.ini">
+    </Content>
+    <Content Include="keyshelp.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -226,15 +246,15 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="Scripts-MS\DreamCheck.ini">
+    <Content Include="Scripts-MS\DreamCheck.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="Scripts\4 point Chair Face.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\antispam.ini">
+    <Content Include="Scripts\antispam.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Scripts\automaticdoor.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -326,77 +346,77 @@
     <None Include="Scripts\touchfloor.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates-MS\Banish Control with Database.ms">
+    <Content Include="Templates-MS\Banish Control with Database.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\Banishment control with memberlist.ms">
+    </Content>
+    <Content Include="Templates-MS\Banishment control with memberlist.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\Demo MemberList.ms">
+    </Content>
+    <Content Include="Templates-MS\Demo MemberList.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\DreamCheck.ms">
+    </Content>
+    <Content Include="Templates-MS\DreamCheck.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\Enhanced PS Backup.ms">
+    </Content>
+    <Content Include="Templates-MS\Enhanced PS Backup.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\FloodProtect.ms">
+    </Content>
+    <Content Include="Templates-MS\FloodProtect.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\HelpChanDemo.ms">
+    </Content>
+    <Content Include="Templates-MS\HelpChanDemo.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\Navigate Oldetown.ms">
+    </Content>
+    <Content Include="Templates-MS\Navigate Oldetown.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\PS Backup %27n%27 Restore.ms">
+    </Content>
+    <Content Include="Templates-MS\PS Backup %27n%27 Restore.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\TradeDemo.ms">
+    </Content>
+    <Content Include="Templates-MS\TradeDemo.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\Variable.ms">
+    </Content>
+    <Content Include="Templates-MS\Variable.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Basic Ban.ds">
+    </Content>
+    <Content Include="Templates\Basic Ban.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Basic Share.ds">
+    </Content>
+    <Content Include="Templates\Basic Share.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Give furres ability to Emit.ds">
+    </Content>
+    <Content Include="Templates\Give furres ability to Emit.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Give furres ability to Emitloud.ds">
+    </Content>
+    <Content Include="Templates\Give furres ability to Emitloud.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Give furres ability to Share.ds">
+    </Content>
+    <Content Include="Templates\Give furres ability to Share.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Pickup Ungettables.ds">
+    </Content>
+    <Content Include="Templates\Pickup Ungettables.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\PS Auto Share.ds">
+    </Content>
+    <Content Include="Templates\PS Auto Share.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\PS Ban.ds">
+    </Content>
+    <Content Include="Templates\PS Ban.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Switch Flipping.ds">
+    </Content>
+    <Content Include="Templates\Switch Flipping.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Verbal Warp.ds">
+    </Content>
+    <Content Include="Templates\Verbal Warp.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="DESUrls.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="16x16.ico">
+    <Content Include="16x16.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="32x32 %282%29.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -470,13 +490,28 @@
     <Content Include="Scripts\readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Wizard\help.txt" />
+    <Resource Include="Wizard\help.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

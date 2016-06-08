@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("MonkeySpeak Editor")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("T-S Projects")> 
+<Assembly: AssemblyCompany("TSProjects")> 
 <Assembly: AssemblyProduct("Monkey Speak Editor")> 
 <Assembly: AssemblyCopyright("Copyright ©  2014-2017")> 
 <Assembly: AssemblyTrademark("")> 

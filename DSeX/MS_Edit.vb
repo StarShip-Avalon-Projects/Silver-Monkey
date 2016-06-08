@@ -292,53 +292,54 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 #End Region
 
     Private Sub GetTemplates()
-        Dim p As String = Application.StartupPath + "/Templates"
-        Directory.CreateDirectory(p)
+        Dim p As String = Path.Combine(Application.StartupPath, "/Templates")
         TemplatePaths.Clear()
         ListBox2.Items.Clear()
         ListBox2.BeginUpdate()
-        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-            s = Path.GetFileNameWithoutExtension(s)
-            ListBox2.Items.Add(s)
-            TemplatePathsMS.Add(p)
-        Next
+        If Directory.Exists(p) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
+                s = Path.GetFileNameWithoutExtension(s)
+                ListBox2.Items.Add(s)
+                TemplatePathsMS.Add(p)
+            Next
+        End If
         p = FurcPath.GetFurcadiaDocPath + "/Templates"
-        If Directory.Exists(p) then
-        	For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-            	s = Path.GetFileNameWithoutExtension(s)
-            	ListBox2.Items.Add(s)
-            	TemplatePathsMS.Add(p)
-        	Next
+        If Directory.Exists(p) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
+                s = Path.GetFileNameWithoutExtension(s)
+                ListBox2.Items.Add(s)
+                TemplatePathsMS.Add(p)
+            Next
         End If
         p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Templates-DS"
-        If Directory.Exists(p) then
-        	For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-            	s = Path.GetFileNameWithoutExtension(s)
-            	ListBox2.Items.Add(s)
-            	TemplatePathsMS.Add(p)
-        	Next
+        If Directory.Exists(p) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
+                s = Path.GetFileNameWithoutExtension(s)
+                ListBox2.Items.Add(s)
+                TemplatePathsMS.Add(p)
+            Next
         End If
         ListBox2.EndUpdate()
-        
+
         TemplatePathsMS.Clear()
-       	ListBox3.Items.Clear()
+        ListBox3.Items.Clear()
         ListBox3.BeginUpdate()
-        
+
         p = Application.StartupPath + "/Templates-MS"
-        If Directory.Exists(p) then
-        	For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
-            	s = Path.GetFileNameWithoutExtension(s)
-            	ListBox3.Items.Add(s)
-            	TemplatePathsMS.Add(p)
-        	Next
+        If Directory.Exists(p) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
+                s = Path.GetFileNameWithoutExtension(s)
+                ListBox3.Items.Add(s)
+                TemplatePathsMS.Add(p)
+            Next
         End If
         p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Templates-MS"
-        If Directory.Exists(p) then
-        	For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
-            	s = Path.GetFileNameWithoutExtension(s)
-            	ListBox3.Items.Add(s)
-            	TemplatePathsMS.Add(p)
-        	Next
+        If Directory.Exists(p) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
+                s = Path.GetFileNameWithoutExtension(s)
+                ListBox3.Items.Add(s)
+                TemplatePathsMS.Add(p)
+            Next
         End If
         ListBox3.EndUpdate()
     End Sub

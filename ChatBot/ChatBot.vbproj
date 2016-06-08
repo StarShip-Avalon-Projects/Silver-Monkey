@@ -8,7 +8,7 @@
     <MyType>WindowsForms</MyType>
     <RootNamespace>ChatBot</RootNamespace>
     <AssemblyName>ChatBot</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OptionInfer>On</OptionInfer>
     <OptionStrict>Off</OptionStrict>
@@ -17,6 +17,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <NoWin32Manifest>False</NoWin32Manifest>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,6 +50,9 @@
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil">
@@ -106,7 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cbMain.Designer.vb" />
-    <Compile Include="cbMain.vb" />
+    <Compile Include="cbMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="HelperClasses\Logger.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="My Project\Application.Designer.vb" />
@@ -119,7 +125,7 @@
     <EmbeddedResource Include="My Project\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="My Project" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
