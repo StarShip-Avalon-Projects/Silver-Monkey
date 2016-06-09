@@ -1,8 +1,11 @@
 ﻿
-Imports System.Collections.Generic
+
 Imports System.Linq
 Imports System.Text
 Imports System.IO
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
 
 Imports Monkeyspeak
 Imports Monkeyspeak.Libraries

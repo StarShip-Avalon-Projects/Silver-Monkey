@@ -1,4 +1,6 @@
-﻿Public Class TextBox_NoFlicker
+﻿Imports System.Windows.Forms
+
+Public Class TextBox_NoFlicker
     Inherits TextBox
 
     Public Sub New()

@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
+Imports System
+Imports Microsoft.VisualBasic
 Public Class ErrorLogging
 
     'Error Logging Class

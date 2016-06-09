@@ -1,4 +1,6 @@
-﻿Public Class ListBox_NoFlicker
+﻿Imports System.Windows.Forms
+
+Public Class ListBox_NoFlicker
 
     Inherits ListBox
 

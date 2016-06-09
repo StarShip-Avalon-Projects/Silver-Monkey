@@ -5,6 +5,11 @@ Imports Furcadia.Net.Movement
 Imports Furcadia.Net
 Imports System.Text.RegularExpressions
 
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+
+
 Public Class Movement
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing

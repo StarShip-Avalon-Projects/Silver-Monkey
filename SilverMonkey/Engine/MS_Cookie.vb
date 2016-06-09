@@ -3,6 +3,9 @@ Imports SilverMonkey.ErrorLogging
 Imports SilverMonkey.TextBoxWriter
 Imports Furcadia.Net
 
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
 
 'http://www.furcadia.com/cookies/
 'http://furcadia.com/cookies/Cookie%20Economy.html

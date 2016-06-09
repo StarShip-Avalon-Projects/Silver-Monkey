@@ -1,4 +1,6 @@
-﻿Public Class ListView_NoFlicker
+﻿Imports System.Windows.Forms
+
+Public Class ListView_NoFlicker
     Inherits ListView
 
     Public Sub New()

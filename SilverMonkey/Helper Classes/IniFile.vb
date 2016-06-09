@@ -2,10 +2,11 @@
 '        Date: 08\23\2010
 '     Purpose: Allow INI manipulation in .NET
 
-Imports System.IO
-Imports System.Text.RegularExpressions
+Imports System
 Imports System.Collections
 Imports System.Diagnostics
+Imports System.IO
+Imports System.Text.RegularExpressions
 
 ' IniFile class used to read and write ini files by loading the file into memory
 Public Class IniFile

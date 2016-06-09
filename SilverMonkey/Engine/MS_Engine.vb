@@ -5,6 +5,10 @@ Imports SilverMonkey.TextBoxWriter
 Imports Furcadia.Net
 Imports System.IO
 Imports System.Text.RegularExpressions
+Imports System.Runtime.InteropServices
+Imports System
+Imports System.Collections.Generic
+Imports System.Diagnostics
 
 'StringLibrary
 '(1:108) - (1:111)
@@ -145,7 +149,7 @@ Module MS_Engine
             End Try
         End Function
 
-        Public Function MatchWildcardString(pattern As [String], input As [String]) As [Boolean]
+        Public Function MatchWildcardString(pattern As String, input As String) As [Boolean]
             If [String].Compare(pattern, input) = 0 Then
                 Return True
             ElseIf [String].IsNullOrEmpty(input) Then
@@ -1295,6 +1299,7 @@ Module MS_Engine
                 Debug.Print(ErrorString)
                 Return False
             End Try
+            Return True
         End Function
         '(5:41) Disconnect the bot from the Furcadia game server.
         Public Function FurcadiaDisconnect(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -1309,10 +1314,12 @@ Module MS_Engine
                 Debug.Print(ErrorString)
                 Return False
             End Try
+            Return True
         End Function
         '(5:42) start a new instance to Silver Monkey with botfile {...}.
         Public Function StartNewBot(reader As Monkeyspeak.TriggerReader) As Boolean
-            Try
+        	Try
+        		 'Dim ps As Process = New Process()
                 Dim File As String = reader.ReadString
                 Dim p As New ProcessStartInfo
                 p.Arguments = File
@@ -1327,6 +1334,8 @@ Module MS_Engine
                 Debug.Print(ErrorString)
                 Return False
             End Try
+  
+            Return True
         End Function
     End Class
 

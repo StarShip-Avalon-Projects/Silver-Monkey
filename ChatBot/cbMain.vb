@@ -13,7 +13,18 @@ Public Class cbMain
     Private state As State
     Private stCKBFileFilter As String = "Verbot Knowledge Bases (*.vkb)|*.vkb"
     Private stFormName As String = "Verbot SDK Windows App Sample"
-    Public kb As KnowledgeBase = New KnowledgeBase()
+    
+    Private _kb As KnowledgeBase = New KnowledgeBase()
+    Public Property kb As KnowledgeBase
+    	Get
+    		Return _kb
+    	End Get
+    	Set(value As KnowledgeBase)
+    		
+    		_kb = value
+    	End Set
+    End Property
+    
     Dim kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
     Public Player As FURRE
     Public Sub New()
@@ -34,7 +45,7 @@ Public Class cbMain
         With Me.openFileDialog1
             If .ShowDialog() = DialogResult.OK Then
                 Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
-                kb = xToolbox.LoadXML(.FileName)
+                kb =CType( xToolbox.LoadXML(.FileName), KnowledgeBase)
                 kbi.Filename = Path.GetFileName(.FileName)
                 kbi.Fullpath = Path.GetDirectoryName(.FileName) + "\"
                 verbot.AddKnowledgeBase(kb, kbi)

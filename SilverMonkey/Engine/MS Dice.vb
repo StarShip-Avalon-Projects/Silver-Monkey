@@ -1,4 +1,9 @@
 ﻿Imports Monkeyspeak
+
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+
 Public Class MS_Dice
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing

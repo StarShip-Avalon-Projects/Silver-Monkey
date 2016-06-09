@@ -4,6 +4,10 @@ Imports SilverMonkey.TextBoxWriter
 Imports System.IO
 Imports System.Text.RegularExpressions
 
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+
 Public Class MS_Pounce
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing
