@@ -26,3 +26,5 @@ build/
 /Plugins/AngelCat
 /Plugins/SoundWave
 /FastColoredTextBox
+*.xml
+*.gif
