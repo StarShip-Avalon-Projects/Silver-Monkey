@@ -1,4 +1,7 @@
-﻿Imports System.Threading
+﻿Imports System
+Imports Microsoft.VisualBasic
+Imports System.Windows.Forms
+
 
 Public Class Variables
 

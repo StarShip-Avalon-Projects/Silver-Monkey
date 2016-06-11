@@ -5,6 +5,8 @@ Imports System.ComponentModel
 Imports System.IO
 Imports SilverMonkey.Controls
 Imports SilverMonkey.ConfigStructs
+Imports System
+
 
 Public Class TextBoxWriter
     Inherits System.IO.TextWriter
@@ -47,7 +49,10 @@ Public Class TextBoxWriter
     Public Overrides Sub WriteLine(ByVal s As String)
         If Not IsNothing(cBot) Then
             If cBot.log And Not IsNothing(callbk.LogStream) Then
-                callbk.LogStream.Writeline(s)
+                Try
+                    callbk.LogStream.Writeline(s)
+                Catch
+                End Try
             End If
         End If
         Write(s + Environment.NewLine)

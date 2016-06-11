@@ -1,4 +1,7 @@
 ﻿Imports Monkeyspeak
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
 Imports SilverMonkey.ErrorLogging
 Imports SilverMonkey.TextBoxWriter
 Imports Furcadia.Net.Movement

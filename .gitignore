@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 06ead4be35b89125a577eb8e9df5606cde17006b
 *.chw
 *.suo
 *.user
@@ -24,4 +27,12 @@ bin/
 obj/
 build/
 /SRC
+<<<<<<< HEAD
 .vs/
+=======
+/Plugins/AngelCat
+/Plugins/SoundWave
+/FastColoredTextBox
+*.xml
+*.gif
+>>>>>>> 06ead4be35b89125a577eb8e9df5606cde17006b

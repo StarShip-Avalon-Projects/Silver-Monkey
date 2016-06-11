@@ -2,6 +2,10 @@
 Imports SilverMonkey.ErrorLogging
 Imports SilverMonkey.TextBoxWriter
 
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+
 Public Class Warning
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing

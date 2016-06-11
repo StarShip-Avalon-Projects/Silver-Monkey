@@ -1,7 +1,7 @@
 @echo off
 rem call "C:\Program Files\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86
 set WORKING_DIRECTORY=%cd%
-set PATH=C:\Program Files\NSIS;%PATH%;..\..\bin
+set PATH="C:\Program Files(x86)\NSIS\";%PATH%;..\..\bin
 set mpath=%~2
 IF "%mpath%" == "" (
 set mpath=..\..\
@@ -23,4 +23,9 @@ if exist {%mpath%AssemblyFileVersion.vb} (
 CALL SetCurrVer.bat
 echo CURRENT_VERSION %CURRENT_VERSION%
 del SetCurrVer.bat
-makensis.exe -dVERSION=%CURRENT_VERSION% %1
+makensis.exe -dVERSION=%CURRENT_VERSION% "%1"
+IF %ERRORLEVEL% NEQ 0 (
+ECHO MakeNSIS.exe hard an error Could not make setup file
+echo PATH %PATH%
+exit /b 0
+)

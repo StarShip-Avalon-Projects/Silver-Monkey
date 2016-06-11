@@ -5,6 +5,10 @@ Imports System.Reflection
 Imports System.IO
 Imports Conversive.Verbot5
 
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+
 Public Class MS_Verbot
 	Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing

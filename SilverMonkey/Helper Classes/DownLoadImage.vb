@@ -2,6 +2,8 @@
 Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Net
+Imports System
+Imports System.Windows.Forms
 
 Public Class DownloadImage
     Private imageUrl As String

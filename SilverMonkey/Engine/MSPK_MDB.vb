@@ -7,6 +7,11 @@ Imports System.Data.SQLite
 Imports System.Collections.Specialized
 Imports System.Text.RegularExpressions
 Imports System.IO
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
+Imports System.Windows.Forms
+Imports System.Reflection
 
 
 Public Class MSPK_MDB
@@ -19,7 +24,9 @@ Public Class MSPK_MDB
 
     Dim lock As New Object
     Dim cache As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
+    
     Public Sub New()
+    	
         Try
             writer = New TextBoxWriter(Variables.TextBox1)
         Catch eX As Exception
@@ -1583,14 +1590,14 @@ Public Class MSPK_MDB
         ''' <param name="where">The where clause for the delete.</param>
         ''' <returns>A boolean true or false to signify success or failure.</returns>
         Public Function Delete(tableName As [String], where As [String]) As Boolean
-            Dim returnCode As [Boolean] = True
+
             Try
-                SQLiteDatabase.ExecuteNonQuery([String].Format("delete from {0} where {1};", tableName, where))
+                Return 0 < SQLiteDatabase.ExecuteNonQuery([String].Format("delete from {0} where {1};", tableName, where))
             Catch fail As Exception
                 MessageBox.Show(fail.Message)
-                returnCode = False
+
             End Try
-            Return returnCode
+            Return false
         End Function
 
         ''' <summary>

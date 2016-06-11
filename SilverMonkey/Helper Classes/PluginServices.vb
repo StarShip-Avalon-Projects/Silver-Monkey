@@ -1,5 +1,10 @@
 Imports System.IO
 Imports System.Reflection
+Imports System
+
+Imports System.Diagnostics
+Imports System.Collections
+Imports System.Collections.Generic
 
 Public Class PluginServices
 

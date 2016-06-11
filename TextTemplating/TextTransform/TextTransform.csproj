@@ -9,7 +9,7 @@
     <OutputType>Exe</OutputType>
     <AssemblyName>TextTransform</AssemblyName>
     <RootNamespace>Mono.TextTemplating</RootNamespace>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <NoWin32Manifest>False</NoWin32Manifest>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>

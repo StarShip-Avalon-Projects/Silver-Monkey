@@ -12,9 +12,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("MonkeySpeak Editor")> 
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("T-S Projects")> 
+<Assembly: AssemblyCompany("TSProjects")> 
 <Assembly: AssemblyProduct("Monkey Speak Editor")> 
-<Assembly: AssemblyCopyright("Copyright ©  2014")> 
+<Assembly: AssemblyCopyright("Copyright ©  2014-2017")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)> 
@@ -32,7 +32,6 @@ Imports System.Runtime.InteropServices
 ' You can specify all the values or you can default the Build and Revision Numbers 
 ' by using the '*' as shown below:
 
-<Assembly: AssemblyVersion("1.4.96.0824")> 
-<Assembly: AssemblyFileVersion("1.4.96.0824")> 
+
 
 <Assembly: NeutralResourcesLanguageAttribute("en")> 
