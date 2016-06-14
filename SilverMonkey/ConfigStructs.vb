@@ -694,7 +694,7 @@ Public Class ConfigStructs
             BotIni.SetKeyValue("Bot", "BotIni", _IniFile)
             BotIni.SetKeyValue("Bot", "MS_File", _MS_File)
             BotIni.SetKeyValue("Bot", "LPort", _lPort.ToString)
-            BotIni.SetKeyValue("Bot", "MSEngineEnable", _MS_Engine_Enable.ToString)
+            BotIni.SetKeyValue("Bot", "MSEngineEnable", _MS_Engine_Enable.ToString)`1
             BotIni.SetKeyValue("Bot", "BotController", _BotController)
             BotIni.SetKeyValue("Bot", "StandAlone", _StandAlone.ToString)
             BotIni.SetKeyValue("Bot", "AutoConnect", _AutoConnect.ToString)
