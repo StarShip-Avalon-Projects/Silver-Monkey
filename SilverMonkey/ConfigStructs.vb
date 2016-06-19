@@ -432,6 +432,9 @@ Public Class ConfigStructs
             End If
         End Sub
         Public Sub SaveMainSettings()
+            'settings may have changed by another app Reload to keep them
+            If File.Exists(SetFile) Then SettingsIni.Load(SetFile)
+
             SettingsIni.SetKeyValue("Main", "Host", _Host)
             '_reconnectMax
             SettingsIni.SetKeyValue("Main", "Time Out", _reconnectMax.ToString)
@@ -687,6 +690,9 @@ Public Class ConfigStructs
 
         End Sub
         Public Sub SaveBotSettings()
+
+            If File.Exists(CheckMyDocFile(BotFile)) Then BotIni.Load(CheckMyDocFile(BotFile))
+
             BotIni.SetKeyValue("Main", "Log", _log.ToString)
             BotIni.SetKeyValue("Main", "LogNameBase", _logNamebase)
             BotIni.SetKeyValue("Main", "LogOption", _logOption.ToString)
@@ -694,7 +700,7 @@ Public Class ConfigStructs
             BotIni.SetKeyValue("Bot", "BotIni", _IniFile)
             BotIni.SetKeyValue("Bot", "MS_File", _MS_File)
             BotIni.SetKeyValue("Bot", "LPort", _lPort.ToString)
-            BotIni.SetKeyValue("Bot", "MSEngineEnable", _MS_Engine_Enable.ToString)`1
+            BotIni.SetKeyValue("Bot", "MSEngineEnable", _MS_Engine_Enable.ToString)
             BotIni.SetKeyValue("Bot", "BotController", _BotController)
             BotIni.SetKeyValue("Bot", "StandAlone", _StandAlone.ToString)
             BotIni.SetKeyValue("Bot", "AutoConnect", _AutoConnect.ToString)

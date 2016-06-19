@@ -4,3 +4,6 @@
 [submodule "FurcLib"]
 	path = FurcLib
 	url = https://github.com/Gerolkae/FurcLib.git
+[submodule "SilverMonkeyMods"]
+	path = Plugins
+	url = http://proteus:8080/SilverMonkeyMods.git

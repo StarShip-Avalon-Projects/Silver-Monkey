@@ -1,3 +1,6 @@
+Add Phoenix Speak Level of Bot/Dream Settings
+Rework Furre Table to be like PhoenixSpeak Bakup?
+
 Cookie tracking keeping track of how many cookies you have
 
 replace SM RTF Output Buffer with HTML Browser Control

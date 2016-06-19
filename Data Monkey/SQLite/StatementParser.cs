@@ -27,10 +27,13 @@ namespace SQLiteEditor
 
 			SQLiteDatabase db = new SQLiteDatabase(DatabaseLocation);
 
-			if (SQLStatement.ToLower().StartsWith("select") || SQLStatement.ToLower().StartsWith("pragma"))
-				ds = db.ExecuteQuery(SQLStatement);
-			else
-				db.ExecuteNonQuery(SQLStatement);			
+            if (SQLStatement.ToLower().StartsWith("select") || SQLStatement.ToLower().StartsWith("pragma"))
+                ds = db.ExecuteQuery(SQLStatement);
+            else
+            {
+                db.ExecuteNonQuery(SQLStatement);
+                ds = null;
+            }
 			
 
 		}

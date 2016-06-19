@@ -22,6 +22,8 @@
     <LeaveTemporaryFiles>True</LeaveTemporaryFiles>
     <WixVariables>
     </WixVariables>
+    <LinkerAdditionalOptions>
+    </LinkerAdditionalOptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>..\Build\Installer\$(Configuration)\</OutputPath>
@@ -34,6 +36,8 @@
     <None Include="Setup.build" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyWixUI_InstallDi.wxs" />
+    <Compile Include="MyInstallDirDlg.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
@@ -169,10 +173,17 @@
   </Target>
   <!-- rename the output msi with Version number -->
   <Target Name="AfterBuild">
-    <Copy SourceFiles=".\bin\$(Configuration)\$(OutputName).msi" DestinationFiles=".\bin\$(Configuration)\SilverMonkey_$(OutputName)_(AnyCPU)-%(AssemblyVersion.Version).msi" />
-    <Delete Files=".\bin\$(Configuration)\$(OutputName).msi" />
+    <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\$(Configuration)\SilverMonkey_$(OutputName)_(AnyCPU)-%(AssemblyVersion.Version).msi" />
+    <Delete Files="..\Build\Installer\$(Configuration)\$(OutputName).msi" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent />
+    <PostBuildEvent>REM DEL old files
+del "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar"
+
+REM Create the SRC rar
+cd $(SolutionDir)
+
+"c:/program files/winrar/rar.exe" a -r -x%2a\.svn\%2a -x%2a\build\%2a  -x%2a\bin\%2a  -x%2a\src\ -x%2a\obj\%2a -n%2a.%2aproj -n%2a.sln -n%2a.nsi -n%2a.wxs  -n%2a.xslt -n%2a.rtf -n%2a.vb -n%2a.wix -n%2a.cs -n%2a.ds -n%2a.ms -n%2a.ini -nlicense%2a.%2a-n%2a.sln -n%2a.resx -n%2a.txt -n%2a.dll -n%2a.config "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" %2a.%2a
+move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)SRC\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

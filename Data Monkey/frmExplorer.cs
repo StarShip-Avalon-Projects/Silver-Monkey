@@ -24,7 +24,7 @@ namespace SQLiteEditor
 		private System.Windows.Forms.MenuItem AddAreaMenu;
 
 		//Database String
-		string ActiveDatabaseLocation = "";		
+		static string ActiveDatabaseLocation;		
 
 		//Menu Members
 		ContextMenu TreeViewContextMenu;
@@ -445,7 +445,7 @@ namespace SQLiteEditor
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Menu = this.mainMenu1;
 			this.Name = "frmExplorer";
-			this.Text = " Arke Systems - SQLite Explorer";
+			this.Text = "Starship Avalon Projects: Data Monkey";
 			this.SQLAreaTabControl.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -473,7 +473,7 @@ namespace SQLiteEditor
 			tablesNode.Tag = "Tables";
 
 			DataSet ds = null;
-			StatementParser.ReturnResults(StatementBuilder.BuildMasterQuery(), this.ActiveDatabaseLocation, ref ds);
+			StatementParser.ReturnResults(StatementBuilder.BuildMasterQuery(), ActiveDatabaseLocation, ref ds);
 
 			if (ds != null && ds.Tables.Count > 0)
 			{
@@ -579,7 +579,7 @@ namespace SQLiteEditor
 			((TextBox) SQLAreaTabControl.SelectedTab.Controls[0]).Text = sqlStatement;
 
 			//Parse Results
-			StatementParser.ReturnResults(sqlStatement, this.ActiveDatabaseLocation, ref ds);
+			StatementParser.ReturnResults(sqlStatement, ActiveDatabaseLocation, ref ds);
 
 			//Build ListView
 			BuildSqlResultsListView(ds, (DatabaseTreeView.SelectedNode == null ? "" : DatabaseTreeView.SelectedNode.Text));
@@ -595,7 +595,7 @@ namespace SQLiteEditor
 			string sqlStatement = ((TextBox) SQLAreaTabControl.SelectedTab.Controls[0]).Text;
 
 			//Parse Results
-			StatementParser.ReturnResults(sqlStatement, this.ActiveDatabaseLocation, ref ds);
+			StatementParser.ReturnResults(sqlStatement, ActiveDatabaseLocation, ref ds);
 
 			//Get the tablename out of the txtbox Sqlstatement
 			string TableName = ParseTableName(sqlStatement);
@@ -611,12 +611,12 @@ namespace SQLiteEditor
 		{
 			using (OpenFileDialog oFile = new OpenFileDialog()) 
 			{
-				oFile.Title = "Explorer Database Locator" ; 
+				oFile.Title = "Data Monkey Database Locator" ; 
 				oFile.InitialDirectory = @"c:\" ; 
 				oFile.Filter = "All files (*.*)|*.*|DB Files (*.db)|*.db" ; 
 				oFile.FilterIndex = 2 ; 
-				oFile.RestoreDirectory = true ; 
-				if(oFile.ShowDialog() == DialogResult.OK) 
+				oFile.RestoreDirectory = true ;
+                if (oFile.ShowDialog() == DialogResult.OK | oFile.ShowDialog() == DialogResult.Yes) 
 				{ 
 					ActiveDatabaseLocation = oFile.FileName ;
 					SQLiteDatabase db = new SQLiteDatabase(ActiveDatabaseLocation);
@@ -630,23 +630,23 @@ namespace SQLiteEditor
 
 		private void CreateDBFile()
 		{
-			using (SaveFileDialog oFile = new SaveFileDialog())
-			{
-				oFile.Title = "Explorer Database Locator" ; 
-				oFile.InitialDirectory = @"c:\" ; 
-				oFile.Filter = "All files (*.*)|*.*|DB Files (*.db)|*.db" ; 
-				oFile.FilterIndex = 2 ; 
-				oFile.RestoreDirectory = true ; 
-				if(oFile.ShowDialog() == DialogResult.OK) 
-				{ 
-					SQLiteDatabase db = new SQLiteDatabase(ActiveDatabaseLocation);
-					PopulateDatabaseTreeView();
-				} 
-			}
+            using (SaveFileDialog oFile = new SaveFileDialog())
+            {
+                oFile.Title = "Data Monkey Database Locator";
+                oFile.InitialDirectory = @"c:\";
+                oFile.Filter = "All files (*.*)|*.*|DB Files (*.db)|*.db";
+                oFile.FilterIndex = 2;
+                oFile.RestoreDirectory = true;
+                if (oFile.ShowDialog() == DialogResult.OK | oFile.ShowDialog() == DialogResult.Yes)
+                {
+                    ActiveDatabaseLocation = oFile.FileName;
+                    SQLiteDatabase db = new SQLiteDatabase(ActiveDatabaseLocation);
+                    PopulateDatabaseTreeView();
+                }
+            }
 		}
 
 		#endregion
-
 
 
 		#endregion
@@ -724,7 +724,7 @@ namespace SQLiteEditor
 				//GetTable Names
 				DataSet ds = null;
 
-				StatementParser.ReturnResults(SQLStatement, this.ActiveDatabaseLocation, ref ds);
+				StatementParser.ReturnResults(SQLStatement, ActiveDatabaseLocation, ref ds);
 
 				TreeNode columnsNode = e.Node.Nodes[0];
 				columnsNode.Tag = "Columns";
@@ -755,7 +755,7 @@ namespace SQLiteEditor
 				pAddTable.ShowInTaskbar = false;
 				if (DialogResult.OK == pAddTable.ShowDialog())
 				{					
-					StatementParser.ReturnResults(StatementBuilder.BuildAddTableSQL(pAddTable.TableName), this.ActiveDatabaseLocation);
+					StatementParser.ReturnResults(StatementBuilder.BuildAddTableSQL(pAddTable.TableName), ActiveDatabaseLocation);
 
 					//Build TreeView
 					PopulateDatabaseTreeView();
@@ -773,7 +773,7 @@ namespace SQLiteEditor
 			((TextBox) SQLAreaTabControl.SelectedTab.Controls[0]).Text = sqlStatement;
 
 			//Parse Results
-			StatementParser.ReturnResults(sqlStatement, this.ActiveDatabaseLocation, ref ds);
+			StatementParser.ReturnResults(sqlStatement, ActiveDatabaseLocation, ref ds);
 
 			//Build ListView
 			BuildSqlResultsListView(ds, DatabaseTreeView.SelectedNode.Text);
@@ -786,7 +786,7 @@ namespace SQLiteEditor
 				pAddColumn.ShowInTaskbar = false;
 				if (DialogResult.OK == pAddColumn.ShowDialog())
 				{
-					StatementParser.ReturnResults(StatementBuilder.BuildAddColumnSQL(DatabaseTreeView.SelectedNode.Text, pAddColumn.ColumnName, pAddColumn.ColumnType), this.ActiveDatabaseLocation);
+					StatementParser.ReturnResults(StatementBuilder.BuildAddColumnSQL(DatabaseTreeView.SelectedNode.Text, pAddColumn.ColumnName, pAddColumn.ColumnType), ActiveDatabaseLocation);
 
 					//Add new column to the tree if it is expanded
 					if (DatabaseTreeView.SelectedNode.IsExpanded)
@@ -808,7 +808,7 @@ namespace SQLiteEditor
 				pRenameTable.ShowInTaskbar = false;
 				if (DialogResult.OK == pRenameTable.ShowDialog())
 				{					
-					StatementParser.ReturnResults(StatementBuilder.BuildRenameTableSQL(DatabaseTreeView.SelectedNode.Text, pRenameTable.NewTableName), this.ActiveDatabaseLocation);
+					StatementParser.ReturnResults(StatementBuilder.BuildRenameTableSQL(DatabaseTreeView.SelectedNode.Text, pRenameTable.NewTableName),ActiveDatabaseLocation);
 
 					DatabaseTreeView.SelectedNode.Text = pRenameTable.NewTableName;
 				}
@@ -819,7 +819,7 @@ namespace SQLiteEditor
 		private void objDeleteTableSQL_Click(object sender, EventArgs e)
 		{
 			string TableName = DatabaseTreeView.SelectedNode.Text;
-			StatementParser.ReturnResults(StatementBuilder.BuildTableDeleteSQL(TableName), this.ActiveDatabaseLocation);
+			StatementParser.ReturnResults(StatementBuilder.BuildTableDeleteSQL(TableName),ActiveDatabaseLocation);
 			DatabaseTreeView.SelectedNode.Remove();
 		}
 		#endregion
@@ -887,7 +887,7 @@ namespace SQLiteEditor
 			string ColumnName = SqlResultsListView.Columns[0].Text;
 			foreach(ListViewItem lvi in SqlResultsListView.SelectedItems)
 			{
-				StatementParser.ReturnResults(StatementBuilder.BuildRowDeleteSQL(this.TableName, ColumnName, lvi.Text), this.ActiveDatabaseLocation);
+				StatementParser.ReturnResults(StatementBuilder.BuildRowDeleteSQL(this.TableName, ColumnName, lvi.Text), ActiveDatabaseLocation);
 				lvi.Remove();
 			}
 		}

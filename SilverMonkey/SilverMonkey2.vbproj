@@ -19,8 +19,7 @@
     <WarningLevel>4</WarningLevel>
     <StartupObject>SilverMonkey.My.MyApplication</StartupObject>
     <ApplicationIcon>resources\metal.ico</ApplicationIcon>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-    <NoWin32Manifest>False</NoWin32Manifest>
+    <NoWin32Manifest>True</NoWin32Manifest>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <OptionExplicit>On</OptionExplicit>
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
@@ -51,8 +50,14 @@
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <DefineConstants />
+    <DefineConstants>NoWin32Manifest=TRUE</DefineConstants>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="RTFLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -245,6 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="app.manifest" />
     <None Include="AssemblyFileVersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
@@ -361,7 +367,8 @@
     <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\MT.exe"   -manifest "$(ProjectDir)app.manifest"   -outputresource:"$(TargetDir)$(TargetFileName)";#1
+
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

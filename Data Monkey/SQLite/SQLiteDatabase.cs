@@ -23,6 +23,8 @@ namespace SQLiteEditor
 	/// </summary>
 public class SQLiteDatabase
 	{
+    String FurreTable = @"[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [Access Level] INTEGER, [date added] TEXT DEFAULT current_timestamp, [date modified] TEXT, [PSBackup] DOUBLE";
+        //const String FurreTable = @"[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Setting] TEXT Unique, [Value] TEXT";
 		object @lock = new object();
 		private static String dbConnection;
 		//private static TextBoxWriter writer = null;
@@ -42,9 +44,11 @@ public class SQLiteDatabase
 		{
 			//writer = new TextBoxWriter(Variables.TextBox1);
 			dbConnection = String.Format("Data Source={0};", inputFile);
-			//if (!File.Exists(inputFile)) {
-			//	CreateTbl("FURRE", ref MSPK_MDB.FurreTable);
-			//}
+			if (!File.Exists(inputFile)) {
+				CreateTbl("FURRE", FurreTable);
+                CreateTbl("SETTINGSMASTER", "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [date modified] TEXT");
+                CreateTbl("SETTINGS", "[NameID] INTEGER, [Key] TEXT, [Value] TEXT");
+			}
 		}
 
 
@@ -73,7 +77,7 @@ public class SQLiteDatabase
 		///    Create a Table with Titles
 		/// </Summary>
 		/// <param name="Table"></param><param name="Titles"></param>
-		public void CreateTbl(string Table, ref string Titles)
+		public void CreateTbl(string Table, string Titles)
 		{
 			using (SQLiteConnection SQLconnect = new SQLiteConnection(dbConnection)) {
 				using (SQLiteCommand SQLcommand = SQLconnect.CreateCommand()) {

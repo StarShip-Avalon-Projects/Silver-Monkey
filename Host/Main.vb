@@ -103,7 +103,8 @@ Public Class Main
         Dim Engine As New Monkeyspeak.MonkeyspeakEngine
         Dim page As Monkeyspeak.Page
         page = Engine.LoadFromString("")
-        objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), SilverMonkey.Interfaces.msPlugin)
+        objPlugin = PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index))
+        If objPlugin Is Nothing Then Exit Sub
         objPlugin.Initialize(objHost)
         objPlugin.Page = page
         objPlugin.Start()
@@ -232,7 +233,8 @@ Public Class Main
         Next
         For intIndex = 0 To Plugins.Length - 1
             page = Engine.LoadFromString("")
-            objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
+            objPlugin = PluginServices.CreateInstance(Plugins(intIndex))
+
             objPlugin.Initialize(objHost)
             objPlugin.Page = page
             objPlugin.Start()
@@ -247,6 +249,7 @@ Public Class Main
 #End If
 
             End Using
+
         Next
     End Sub
 

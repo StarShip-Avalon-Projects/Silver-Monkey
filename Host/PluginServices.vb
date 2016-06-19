@@ -1,15 +1,29 @@
 Imports System.IO
 Imports System.Reflection
+Imports System.Collections.Generic
 
 Public Class PluginServices
 
     Public Structure AvailablePlugin
         Public AssemblyPath As String
         Public ClassName As String
+
+        Public Overrides Function Equals(obj As Object) As Boolean
+            If obj Is Nothing OrElse Not Me.GetType() Is obj.GetType() Then
+                Return False
+            End If
+            Dim o As AvailablePlugin = CType(obj, AvailablePlugin)
+            Return Me.ClassName.Equals(o.ClassName)
+
+        End Function
+        Public Overrides Function GetHashCode() As Integer
+            Return Me.AssemblyPath.GetHashCode() Xor Me.ClassName.GetHashCode()
+        End Function
+
     End Structure
 
     Public Shared Function FindPlugins(ByVal strPath As String, ByVal strInterface As String) As AvailablePlugin()
-        Dim Plugins As ArrayList = New ArrayList()
+        Dim Plugins As List(Of AvailablePlugin) = New List(Of AvailablePlugin)
         Dim strDLLs() As String, intIndex As Integer
         Dim objDLL As [Assembly]
 
@@ -35,7 +49,7 @@ Public Class PluginServices
         End If
     End Function
 
-    Private Shared Sub ExamineAssembly(ByVal objDLL As [Assembly], ByVal strInterface As String, ByVal Plugins As ArrayList)
+    Private Shared Sub ExamineAssembly(ByVal objDLL As [Assembly], ByVal strInterface As String, ByVal Plugins As List(Of AvailablePlugin))
         Dim objType As Type
         Dim objInterface As Type
         Dim Plugin As AvailablePlugin
@@ -63,19 +77,17 @@ Public Class PluginServices
         Next
     End Sub
 
-    Public Shared Function CreateInstance(ByVal Plugin As AvailablePlugin) As Object
+    Public Shared Function CreateInstance(ByVal Plugin As AvailablePlugin) As SilverMonkey.Interfaces.msPlugin
         Dim objDLL As [Assembly]
-        Dim objPlugin As Object
+        Dim objPlugin As SilverMonkey.Interfaces.msPlugin
 
-        Try
-            'Load dll
-            objDLL = [Assembly].LoadFrom(Plugin.AssemblyPath)
+        'Load dll
+        objDLL = [Assembly].LoadFrom(Plugin.AssemblyPath)
+        If objDLL Is Nothing Then Throw New NullReferenceException("""objDLL"" failed to load assembly")
 
-            'Create and return class instance
-            objPlugin = objDLL.CreateInstance(Plugin.ClassName)
-        Catch e As Exception
-            Return Nothing
-        End Try
+        'Create and return class instance
+        objPlugin = DirectCast(objDLL.CreateInstance(Plugin.ClassName), SilverMonkey.Interfaces.msPlugin)
+
 
         Return objPlugin
     End Function

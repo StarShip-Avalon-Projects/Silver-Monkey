@@ -89,7 +89,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetDrop.vb" />
+    <Compile Include="TheClaaaw.vb" />
     <Compile Include="Mod.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -133,7 +133,7 @@
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
-      <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
+      <Project>{b0882700-5eaf-4712-ade5-69dafe473a01}</Project>
       <Name>Interfaces</Name>
       <Private>False</Private>
     </ProjectReference>
@@ -172,16 +172,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>REM DEL old files
-del "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar"
-del "*setup*.*"
-
-REM Create the SRC rar
-cd $(SolutionDir)
-
-
-"c:/program files/winrar/rar.exe" a -r -x*\.svn\* -x*\build\*  -x*\bin\*  -x*\src\ -x*\obj\* -n*.*proj -n*.sln -n*.nsi -n*.vb  -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll -n*.config "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" *.*
-move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Wix|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

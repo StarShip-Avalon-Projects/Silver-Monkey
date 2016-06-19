@@ -20,6 +20,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurcadiaLib", "FurcLib\FurcadiaLib.csproj", "{156C2AF0-3DA8-4D8C-A525-5400185579B3}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ModuleExplorer", "Host\ModuleExplorer.vbproj", "{DDB48421-ADD5-499B-AE19-62184A2F2051}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7221C50-ED60-4CFF-8374-47CC9E53429B} = {F7221C50-ED60-4CFF-8374-47CC9E53429B}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Interfaces", "Interfaces\Interfaces.vbproj", "{B0882700-5EAF-4712-ADE5-69DAFE473A01}"
 EndProject
@@ -42,9 +45,6 @@ EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup.wixproj", "{C47E57DC-6454-4798-A802-8D0BAC07E580}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{29F013AD-E80C-4055-9486-067C1C82308A}"
-	ProjectSection(SolutionItems) = preProject
-		ParseServer.cs = ParseServer.cs
-	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WpfBrowserApplication1", "WpfBrowserApplication1\WpfBrowserApplication1.vbproj", "{05ED9F43-F724-4AA7-B6ED-E874773B8956}"
 EndProject
@@ -239,15 +239,15 @@ Global
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|x64.ActiveCfg = Debug|x64
-		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|x64.Build.0 = Debug|x64
+		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|x64.ActiveCfg = Debug|x86
+		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|x64.Build.0 = Debug|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|x86.ActiveCfg = Debug|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|x86.Build.0 = Debug|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Release|Any CPU.ActiveCfg = Release|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Release|Mixed Platforms.Build.0 = Release|x86
-		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Release|x64.ActiveCfg = Debug|x86
-		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Release|x64.Build.0 = Debug|x86
+		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Release|x64.ActiveCfg = Release|x86
+		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Release|x64.Build.0 = Release|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Release|x86.ActiveCfg = Release|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Release|x86.Build.0 = Release|x86
 		{05ED9F43-F724-4AA7-B6ED-E874773B8956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
