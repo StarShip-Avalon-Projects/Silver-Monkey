@@ -17,6 +17,8 @@ Public Class Config
     Private Sub BTN_Ok_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTN_Ok.Click
         'Editor settings
 
+        EditSettings.FurcPath = TxtBxFurPath.Text
+
         EditSettings.AutoCompleteEnable = ChkBxAutoComplete.Checked
         ' MS_Edit.AutocompleteMenu1.Enabled = ChkBxAutoComplete.Checked
 
@@ -29,8 +31,8 @@ Public Class Config
         EditSettings.StringVariableColor = StringVariableClrBx.BackColor
 
         For i As Integer = 0 To ListBox1.Items.Count - 1
-            Dim item as string = ListBox1.Items(i).toString
-            Dim KV() As String = item.split("="c)
+            Dim item As String = ListBox1.Items(i).ToString
+            Dim KV() As String = item.Split("="c)
             ini.SetKeyValue("C-Indents", KV(0), KV(1))
         Next
 
@@ -40,8 +42,8 @@ Public Class Config
         EditSettings.MS_VariableColor = MS_VariablePictureBox.BackColor
         EditSettings.MS_IDColor = MS_IDPictureBox.BackColor
         For i As Integer = 0 To ListBox2.Items.Count - 1
-            Dim item as string = ListBox1.Items(i).toString
-            Dim KV() As String = item.split("="c)
+            Dim item As String = ListBox1.Items(i).ToString
+            Dim KV() As String = item.Split("="c)
             ini.SetKeyValue("MS-C-Indents", KV(0), KV(1))
         Next
         Dim Plugins As Dictionary(Of String, Boolean) = New Dictionary(Of String, Boolean)
@@ -96,7 +98,7 @@ Public Class Config
         EditSettings = New EditSettings
         'Editor
 
-        ChkBxAutoComplete.Checked = Ctype(EditSettings.AutoCompleteEnable, Boolean)
+        ChkBxAutoComplete.Checked = CType(EditSettings.AutoCompleteEnable, Boolean)
 
         CommentPictureBox.BackColor = EditSettings.CommentColor
         StringPictureBox.BackColor = EditSettings.StringColor
@@ -111,6 +113,7 @@ Public Class Config
         MS_VariablePictureBox.BackColor = EditSettings.MS_VariableColor
         MS_IDPictureBox.BackColor = EditSettings.MS_IDColor
 
+        TxtBxFurPath.Text = EditSettings.FurcPath
 
         Dim count As Integer = ini.GetKeyValue("Init-Types", "Count").ToInteger
         For i = 1 To count
@@ -130,7 +133,7 @@ Public Class Config
     End Sub
 
     Private Sub ConfigTabs_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ConfigTabs.SelectedIndexChanged
-        dim t as tabcontrol = ctype(sender,tabcontrol)
+        Dim t As TabControl = CType(sender, TabControl)
         My.Settings.ConfigSelectedTab = t.SelectedIndex
     End Sub
 
@@ -145,7 +148,7 @@ Public Class Config
 
     Private Sub CommentPictureBox_Click(sender As System.Object, e As System.EventArgs) Handles CommentPictureBox.Click, StringPictureBox.Click, NumberPictureBox.Click, VariablePictureBox.Click, IDPictureBox.Click, StringVariableClrBx.Click, _
                                                                                         MS_CommentPictureBox.Click, MS_StringPictureBox.Click, MS_NumberPictureBox.Click, MS_VariablePictureBox.Click, MS_IDPictureBox.Click
-        GetColor(ctype(sender,picturebox))
+        GetColor(CType(sender, PictureBox))
     End Sub
 
     Private Sub ChkBxAutoComplete_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkBxAutoComplete.CheckedChanged
@@ -170,7 +173,7 @@ Public Class Config
     End Sub
 
     Private Sub ListBox1_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles ListBox2.MouseUp, ListBox1.MouseUp
-        dim l as listbox = ctype(sender,listbox)
+        Dim l As ListBox = CType(sender, ListBox)
         Dim str As String = l.SelectedItem.ToString
         Dim Val As Integer = str.Split("="c)(1).ToInteger
         NumericUpDown1.Value = Val
@@ -194,11 +197,30 @@ Public Class Config
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ListBox2.SelectedIndexChanged, ListBox1.SelectedIndexChanged
-        CurrentListBox = ctype(sender, listbox)
+        CurrentListBox = CType(sender, ListBox)
     End Sub
 
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        With FindFurc
+            Dim ExePath As String
+            .FileName = "Furcadia.exe"
+
+            If Environment.Is64BitOperatingSystem Then
+                ExePath = Environment.GetEnvironmentVariable("ProgramFiles(x86)")
+            Else
+                ExePath = Environment.GetEnvironmentVariable("ProgramFiles")
+            End If
+
+            .InitialDirectory = ExePath
+            If .ShowDialog = DialogResult.OK Then
+                TxtBxFurPath.Text = Path.GetDirectoryName(.FileName)
+            End If
+
+        End With
     End Sub
 End Class

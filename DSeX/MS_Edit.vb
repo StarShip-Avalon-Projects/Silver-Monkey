@@ -692,11 +692,11 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         
         ' Actual Path Doesn't matter here... 
         ' All we need is FurcadiaDoc's path
-        If Directory.Exists(EditSettings.FurcPath) then
-        	FurcPath = New Furcadia.IO.Paths(EditSettings.FurcPath)
-        Else
-        	FurcPath = New Furcadia.IO.Paths()
-        End if
+        Try
+            FurcPath = New Furcadia.IO.Paths(EditSettings.FurcPath)
+        Catch ex As FurcadiaNotFoundException
+            Config.ShowDialog()
+        End Try
 
         Dim PluginFound As Boolean = False
         For Each s As String In FileIO.FileSystem.GetFiles(Application.StartupPath + "\plugins\", FileIO.SearchOption.SearchTopLevelOnly, "*.ini")

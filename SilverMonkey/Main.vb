@@ -3184,7 +3184,13 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         If Not NotifyIcon1.Visible Then NotifyIcon1.Visible = True
         'catch the Console messages
         _FormClose = False
-        FurcPath = New Paths(cMain.FurcPath)
+
+        cMain = New cMain
+        Try
+            FurcPath = New Furcadia.IO.Paths(cMain.FurcPath)
+        Catch ex As FurcadiaNotFoundException
+            Config.ShowDialog()
+        End Try
         writer = New TextBoxWriter(log_)
         Console.SetOut(writer)
         MainMSEngine = New MainEngine
@@ -3193,7 +3199,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         Plugins = PluginServices.FindPlugins(Path.GetDirectoryName(Application.ExecutablePath) + "\Plugins\", "SilverMonkey.Interfaces.msPlugin")
 
         ' Try to get Furcadia's path from the registry
-        cMain = New cMain
+
         MS_KeysIni.Load(Path.GetDirectoryName(Application.ExecutablePath) + "\Keys-MS.ini")
         InitializeTextControls()
 

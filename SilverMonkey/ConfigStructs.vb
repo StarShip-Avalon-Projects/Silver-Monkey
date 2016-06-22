@@ -434,7 +434,7 @@ Public Class ConfigStructs
         Public Sub SaveMainSettings()
             'settings may have changed by another app Reload to keep them
             If File.Exists(SetFile) Then SettingsIni.Load(SetFile)
-
+            SettingsIni.SetKeyValue("Main", "Host", _FurcPath)
             SettingsIni.SetKeyValue("Main", "Host", _Host)
             '_reconnectMax
             SettingsIni.SetKeyValue("Main", "Time Out", _reconnectMax.ToString)

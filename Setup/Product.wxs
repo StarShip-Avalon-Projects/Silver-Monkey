@@ -12,8 +12,8 @@
     UpgradeCode="A709F3A0-BEE3-403E-AC47-1FE1AD189C77">
     <Package InstallerVersion="500" InstallPrivileges="elevated"  Compressed="yes"  />
     
-    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER"/>
-    <UIRef Id="MyWixUI_InstallDir" />
+    <Property Id="WixUI_FeatureTree" Value="INSTALLFOLDER" />
+		<UIRef Id="WixUI_FeatureTree" />
     <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="license.Rtf"/>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is alreaady installed." />
