@@ -3,6 +3,7 @@ Imports System.Text
 Imports SilverMonkey.ConfigStructs
 Imports Monkeyspeak
 
+Imports MonkeyCore
 Imports System.Diagnostics
 Imports System.Collections
 Imports System.Collections.Generic
@@ -38,6 +39,7 @@ Public Class MainEngine
     'Bot Starts
     Public Function ScriptStart() As Boolean
         Try
+            Dim VariableList As New Dictionary(Of String, Object)
 
             If Not cBot.MS_Engine_Enable Then
                 Return False
@@ -46,11 +48,13 @@ Public Class MainEngine
             Console.WriteLine("Loading:" & cBot.MS_File)
             Dim start As DateTime = DateTime.Now
             cBot.MS_Script = msReader(CheckMyDocFile(cBot.MS_File))
-            Dim p As String = mPath()
             If String.IsNullOrEmpty(cBot.MS_Script) Then
-                Console.WriteLine("ERROR: No script loaded! Aborting")
+                Console.WriteLine("ERROR: No script loaded! Loading Default MonkeySpeak.")
                 MS_Engine_Running = False
-                Return False
+                msReader(IO.NewMSFile)
+                VariableList.Add("MSPATH", "!!! Not Specified !!!")
+            Else
+                VariableList.Add("MSPATH", Paths.SilverMonkeyBotPath)
             End If
             Try
                 MSpage = engine.LoadFromString(cBot.MS_Script)
@@ -64,8 +68,8 @@ Public Class MainEngine
             ' Console.WriteLine("Execute (0:0)")
             MS_Stared = 1
             LoadLibrary(True)
-            Dim VariableList As New Dictionary(Of String, Object)
-            VariableList.Add("MSPATH", mPath())
+
+
             VariableList.Add("DREAMOWNER", "")
             VariableList.Add("DREAMNAME", "")
             VariableList.Add("BOTNAME", "")
@@ -232,12 +236,12 @@ Public Class MainEngine
             For intIndex As Integer = 0 To Plugins.Length - 1
                 Try
                     objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
-                    If Not cMain.PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
-                        cMain.PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
+                    If Not Main.cMain.PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
+                        Main.cMain.PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
                         newPlugin = True
                     End If
 
-                    If cMain.PluginList.Item(objPlugin.Name.Replace(" ", "")) = True Then
+                    If Main.cMain.PluginList.Item(objPlugin.Name.Replace(" ", "")) = True Then
                         Console.WriteLine("Loading Plugin: " + objPlugin.Name)
                         objPlugin.Initialize(Main.objHost)
                         objPlugin.Page = MSpage
@@ -247,7 +251,7 @@ Public Class MainEngine
                     Dim e As New ErrorLogging(ex, Me)
                 End Try
             Next
-            If newPlugin Then cMain.SaveMainSettings()
+            If newPlugin Then Main.cMain.SaveMainSettings()
 
 
         End If

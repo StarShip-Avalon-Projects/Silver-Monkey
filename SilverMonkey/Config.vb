@@ -6,6 +6,7 @@ Imports SilverMonkey.ConfigStructs
 Imports System.Drawing.Text
 Imports System.Drawing
 Imports Furcadia.IO
+Imports MonkeyCore.Settings
 
 
 Public Class Config
@@ -19,45 +20,45 @@ Public Class Config
 
     Private Sub BTN_Ok_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTN_Ok.Click
         'apply the Settings
-        cMain.Host = TxtBx_Server.Text
-        cMain.sPort = Convert.ToInt32(TxtSPort.Text)
+        Main.cMain.Host = TxtBx_Server.Text
+        Main.cMain.sPort = Convert.ToInt32(TxtSPort.Text)
 
-        cMain.ReconnectMax = CInt(ReconnectUpDown.Value)
-        cMain.TT_TimeOut = CInt(NumericUpDown4.Value)
-        cMain.TimeStamp = CUShort(ChkTimeStamp.CheckState)
+        Main.cMain.ReconnectMax = CInt(ReconnectUpDown.Value)
+        Main.cMain.TT_TimeOut = CInt(NumericUpDown4.Value)
+        Main.cMain.TimeStamp = CUShort(ChkTimeStamp.CheckState)
         Dim face As String = ComboFontFace.SelectedItem.ToString
         Dim size As Integer = Convert.ToInt32(ComboFontSize.SelectedItem)
-        cMain.CloseProc = ChkBxAutoCloseProc.Checked
-        cMain.ApFont = New Font(face, size)
-        cMain.EmitColor = EmitColorBox.BackColor
-        cMain.SayColor = SayColorBox.BackColor
-        cMain.ShoutColor = ShoutColorBox.BackColor
-        cMain.WhColor = WhisperColorBox.BackColor
-        cMain.DefaultColor = DefaultColorBox.BackColor
+        Main.cMain.CloseProc = ChkBxAutoCloseProc.Checked
+        Main.cMain.ApFont = New Font(face, size)
+        Main.cMain.EmitColor = EmitColorBox.BackColor
+        Main.cMain.SayColor = SayColorBox.BackColor
+        Main.cMain.ShoutColor = ShoutColorBox.BackColor
+        Main.cMain.WhColor = WhisperColorBox.BackColor
+        Main.cMain.DefaultColor = DefaultColorBox.BackColor
 
-        cMain.AutoReconnect = ChkBxAutoReconnect.Checked
-        cMain.SysTray = ChkBxSysTray.CheckState
-        cMain.ReconnectMax = CInt(ReconnectUpDown.Value)
-        cMain.ConnectTimeOut = CInt(NumSonnectTimeOut.Value)
-        cMain.FurcPath = TxtBxFurPath.Text
-        cMain.Ping = CInt(NumPing.Value)
+        Main.cMain.AutoReconnect = ChkBxAutoReconnect.Checked
+        Main.cMain.SysTray = ChkBxSysTray.CheckState
+        Main.cMain.ReconnectMax = CInt(ReconnectUpDown.Value)
+        Main.cMain.ConnectTimeOut = CInt(NumSonnectTimeOut.Value)
+        Main.cMain.FurcPath = TxtBxFurPath.Text
+        Main.cMain.Ping = CInt(NumPing.Value)
 
-        cMain.Advertisment = chkBxAdvertisment.Checked
-        cMain.Announcement = chkBxAnnouncement.Checked
-        cMain.Broadcast = chkBxBroadcast.Checked
-        cMain.LoadLastBotFile = chkBxAutoLoadLastBotFile.Checked
-        cMain.DisconnectPopupToggle = chkBxClientDisconnectToggle.Checked
+        Main.cMain.Advertisment = chkBxAdvertisment.Checked
+        Main.cMain.Announcement = chkBxAnnouncement.Checked
+        Main.cMain.Broadcast = chkBxBroadcast.Checked
+        Main.cMain.LoadLastBotFile = chkBxAutoLoadLastBotFile.Checked
+        Main.cMain.DisconnectPopupToggle = chkBxClientDisconnectToggle.Checked
         'Save the settings to the ini file
 
-        cMain.PSShowClient = CheckBox1.Checked
-        cMain.PSShowMainWindow = CheckBox2.Checked
+        Main.cMain.PSShowClient = CheckBox1.Checked
+        Main.cMain.PSShowMainWindow = CheckBox2.Checked
         Dim Plugins As Dictionary(Of String, Boolean) = New Dictionary(Of String, Boolean)
         For Each lvItem As ListViewItem In LstVwPlugin.Items
             Plugins.Add(lvItem.SubItems.Item(1).Text.Replace(" ", ""), lvItem.Checked)
         Next
-        FurcPath = New Paths(cMain.FurcPath)
-        cMain.PluginList = Plugins
-        cMain.SaveMainSettings()
+        FurcPath = New Paths(Main.cMain.FurcPath)
+        Main.cMain.PluginList = Plugins
+        Main.cMain.SaveMainSettings()
 
         Main.InitializeTextControls()
         Me.Dispose()
@@ -78,15 +79,15 @@ Public Class Config
     Public Sub Loadconfig()
 
 
-        cMain = New cMain
+        Main.cMain = New cMain
 
-        TxtBx_Server.Text = cMain.Host
-        TxtSPort.Text = cMain.sPort.ToString
-        ChkBxAutoReconnect.Checked = cMain.AutoReconnect
+        TxtBx_Server.Text = Main.cMain.Host
+        TxtSPort.Text = Main.cMain.sPort.ToString
+        ChkBxAutoReconnect.Checked = Main.cMain.AutoReconnect
 
-        ChkBxAutoCloseProc.Checked = cMain.CloseProc
-        ReconnectUpDown.Value = cMain.ReconnectMax
-        ChkTimeStamp.Checked = CBool(cMain.TimeStamp)
+        ChkBxAutoCloseProc.Checked = Main.cMain.CloseProc
+        ReconnectUpDown.Value = Main.cMain.ReconnectMax
+        ChkTimeStamp.Checked = CBool(Main.cMain.TimeStamp)
         ' Get the installed fonts collection.
         Dim installed_fonts As New InstalledFontCollection
         ' Get an array of the system's font familiies.
@@ -95,36 +96,36 @@ Public Class Config
         For Each font_family As FontFamily In font_families
             ComboFontFace.Items.Add(font_family.Name)
         Next (font_family)
-        ComboFontFace.SelectedItem = cMain.ApFont.Name
+        ComboFontFace.SelectedItem = Main.cMain.ApFont.Name
         For i As Integer = 3 To 50
             ComboFontSize.Items.Add(i.ToString)
         Next
-        ComboFontSize.SelectedItem = cMain.ApFont.Size.ToString
-        NumericUpDown4.Value = cMain.TT_TimeOut
-        ReconnectUpDown.Value = cMain.ReconnectMax
-        EmitColorBox.BackColor = cMain.EmitColor
-        SayColorBox.BackColor = cMain.SayColor
-        ShoutColorBox.BackColor = cMain.ShoutColor
-        WhisperColorBox.BackColor = cMain.WhColor
-        DefaultColorBox.BackColor = cMain.DefaultColor
-        EmoteColorBox.BackColor = cMain.EmoteColor
+        ComboFontSize.SelectedItem = Main.cMain.ApFont.Size.ToString
+        NumericUpDown4.Value = Main.cMain.TT_TimeOut
+        ReconnectUpDown.Value = Main.cMain.ReconnectMax
+        EmitColorBox.BackColor = Main.cMain.EmitColor
+        SayColorBox.BackColor = Main.cMain.SayColor
+        ShoutColorBox.BackColor = Main.cMain.ShoutColor
+        WhisperColorBox.BackColor = Main.cMain.WhColor
+        DefaultColorBox.BackColor = Main.cMain.DefaultColor
+        EmoteColorBox.BackColor = Main.cMain.EmoteColor
 
-        TxtBxFurPath.Text = cMain.FurcPath
+        TxtBxFurPath.Text = Main.cMain.FurcPath
         'SysTray
-        ChkBxSysTray.CheckState = cMain.SysTray
-        NumSonnectTimeOut.Value = cMain.ConnectTimeOut
-        NumPing.Value = cMain.Ping
+        ChkBxSysTray.CheckState = Main.cMain.SysTray
+        NumSonnectTimeOut.Value = Main.cMain.ConnectTimeOut
+        NumPing.Value = Main.cMain.Ping
 
-        chkBxAdvertisment.Checked = cMain.Advertisment
-        chkBxAnnouncement.Checked = cMain.Announcement
-        chkBxBroadcast.Checked = cMain.Broadcast
-        chkBxAutoLoadLastBotFile.Checked = cMain.LoadLastBotFile
-        chkBxClientDisconnectToggle.Checked = cMain.DisconnectPopupToggle
+        chkBxAdvertisment.Checked = Main.cMain.Advertisment
+        chkBxAnnouncement.Checked = Main.cMain.Announcement
+        chkBxBroadcast.Checked = Main.cMain.Broadcast
+        chkBxAutoLoadLastBotFile.Checked = Main.cMain.LoadLastBotFile
+        chkBxClientDisconnectToggle.Checked = Main.cMain.DisconnectPopupToggle
         Me.Location = My.Settings.ConfigFormLocation
 
 
-        CheckBox1.Checked = cMain.PSShowClient
-        CheckBox2.Checked = cMain.PSShowMainWindow
+        CheckBox1.Checked = Main.cMain.PSShowClient
+        CheckBox2.Checked = Main.cMain.PSShowMainWindow
     End Sub
 
     Private Sub PopulatePluginList()
@@ -139,10 +140,10 @@ Public Class Config
                 item.SubItems.Add(objPlugin.Name)
                 item.SubItems.Add(objPlugin.Description)
                 item.SubItems.Add(objPlugin.Version)
-                If Not cMain.PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
-                    cMain.PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
+                If Not Main.cMain.PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
+                    Main.cMain.PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
                 End If
-                item.Checked = cMain.PluginList.Item(objPlugin.Name.Replace(" ", ""))
+                item.Checked = Main.cMain.PluginList.Item(objPlugin.Name.Replace(" ", ""))
             Next
         End If
 
@@ -184,7 +185,7 @@ Public Class Config
     End Sub
 
     Private Sub ChkTimeStamp_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkTimeStamp.CheckedChanged
-        cMain.TimeStamp = CUShort(ChkTimeStamp.CheckState)
+        Main.cMain.TimeStamp = CUShort(ChkTimeStamp.CheckState)
     End Sub
 
 
@@ -219,6 +220,6 @@ Public Class Config
 
     Private Sub Button3_Click(sender As System.Object, e As System.EventArgs) Handles Button3.Click
         callbk.RecentToolStripMenuItem.DropDownItems.Clear()
-        File.Delete(pPath() & "/Recent.txt")
+        File.Delete(Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt"))
     End Sub
 End Class

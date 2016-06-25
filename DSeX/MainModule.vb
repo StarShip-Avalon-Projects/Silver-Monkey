@@ -1,18 +1,14 @@
-﻿Imports MonkeySpeakEditor.IniFile
+﻿Imports MonkeyCore
 Imports FastColoredTextBoxNS
 Imports System.Runtime.InteropServices
 
 Public Module MainModule
 
-    Public Const My_Docs As String = "/Silver Monkey"
 
-    Public KeysIni As IniFile = New IniFile
-    Public MS_KeysIni As IniFile = New IniFile
-    Public ini As IniFile = New IniFile
+
     Public KeysHelpMSIni As IniFile = New IniFile
     Public KeysHelpIni As IniFile = New IniFile
-    Public EditSettings As ConfigStructs.EditSettings
-    Public FurcPath As New Furcadia.IO.Paths()
+
 
     Public DS_String_Style As TextStyle = New TextStyle(Brushes.Brown, Nothing, FontStyle.Italic)
     Public DS_Str_Var_Style As TextStyle = New TextStyle(New SolidBrush(Color.Green), Nothing, FontStyle.Regular)

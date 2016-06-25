@@ -119,7 +119,6 @@
     <Compile Include="Config.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigStructs.vb" />
     <Compile Include="Controls\InputBoxFrm.Designer.vb">
       <DependentUpon>InputBoxFrm.vb</DependentUpon>
     </Compile>
@@ -507,6 +506,10 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib Net4.0</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore Net40.vbproj">
+      <Project>{9cac7e97-de68-46d1-8155-0afde045e34a}</Project>
+      <Name>MonkeyCore Net40</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeySpeakR6\MonkeyspeakR6  Net4.0.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Name>MonkeyspeakR6  Net4.0</Name>
@@ -552,8 +555,8 @@ move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\MT.exe"   -manifest "$(ProjectDir)app.manifest"   -outputresource:"$(TargetDir)$(TargetFileName)";#1
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

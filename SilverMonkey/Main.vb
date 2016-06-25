@@ -24,6 +24,8 @@ Imports SilverMonkey.MSPK_MDB
 Imports Conversive.Verbot5
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic
+Imports MonkeyCore
+Imports MonkeyCore.Settings
 
 Public Class Main
     Inherits System.Windows.Forms.Form
@@ -313,6 +315,17 @@ Public Class Main
 
 
 
+#End Region
+    Private Shared _cMain As MonkeyCore.Settings.cMain
+#Region "Properties"
+    Public Shared Property cMain As MonkeyCore.Settings.cMain
+        Get
+            Return _cMain
+        End Get
+        Set(value As MonkeyCore.Settings.cMain)
+            _cMain = value
+        End Set
+    End Property
 #End Region
 
 #Region "Events"
@@ -690,7 +703,7 @@ Public Class Main
     Private Sub OpenToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles OpenToolStripMenuItem.Click
         With BotIniOpen
             ' Select Bot ini file
-            .InitialDirectory = mPath()
+            .InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
             If .ShowDialog = DialogResult.OK Then
                 cBot = New cBot(.FileName)
                 SaveRecentFile(.FileName)
@@ -726,7 +739,7 @@ Public Class Main
             RecentToolStripMenuItem.DropDownItems.Add(fileRecent)
         Next
         'writing menu list to file
-        Dim stringToWrite As New StreamWriter(pPath() & "/Recent.txt")
+        Dim stringToWrite As New StreamWriter(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt"))
         'create file called "Recent.txt" located on app folder
         For Each item As String In MRUlist
             'write list to stream
@@ -744,7 +757,10 @@ Public Class Main
         'try to load file. If file isn't found, do nothing
         MRUlist.Clear()
         Try
-            Dim listToRead As New StreamReader(pPath() & "/Recent.txt")
+            If Not File.Exists(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt")) Then
+                File.Create(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt"))
+            End If
+            Dim listToRead As New StreamReader(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt"), True)
             'read file stream
             Dim line As String = ""
             While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
@@ -1333,7 +1349,7 @@ Public Class Main
                 MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
             ElseIf data = "banish-list" Then
                 BanishName = ""
-                MainMSEngine.PageSetVariable("BANISHNAME", "")
+                MainMSEngine.PageSetVariable("BANISHNAME", Nothing)
             End If
 
             TextToServer(data)
@@ -1365,7 +1381,7 @@ Public Class Main
             SndToServer(result)
 
         Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me, arg)
+            Dim logError As New ErrorLogging(eX, Me, arg.ToString)
         End Try
     End Sub
 
@@ -1382,7 +1398,7 @@ Public Class Main
 
 
         Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me, data)
+            Dim logError As New ErrorLogging(eX, Me, data.ToString)
             Debug.Print("SndToServer: " & data)
             Debug.Print(eX.Message)
         End Try
@@ -1801,7 +1817,7 @@ Public Class Main
         'Strip the trigger Character
         ' page = engine.LoadFromString(cBot.MS_Script)
         data = data.Remove(0, 1)
-        Dim psCheck As Boolean = false
+        Dim psCheck As Boolean = False
         Dim SpecTag As String = ""
         Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
         Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
@@ -1864,8 +1880,8 @@ Public Class Main
 
                     '(0:60) When the bot successfully clears the banish list
                     BanishString.Clear()
-                    MainMSEngine.PageSetVariable("BANISHLIST", "")
-                    MainMSEngine.PageSetVariable("BANISHNAME", "")
+                    MainMSEngine.PageSetVariable("BANISHLIST", Nothing)
+                    MainMSEngine.PageSetVariable("BANISHNAME", Nothing)
                     MainMSEngine.PageExecute(60)
 
                 ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
@@ -1898,12 +1914,12 @@ Public Class Main
                         NoEndurance = True
                     End If
 
-                ElseIf Channel = "@cookie"
-                	'(0:96) When the Bot sees "Your cookies are ready."
-					Dim CookiesReady As Regex = New Regex(String.Format( "{0}", "Your cookies are ready.  http://furcadia.com/cookies/ for more info!"))
-					If CookiesReady.Match(data).Success Then
-                		MainMSEngine.PageExecute(96)
-            		End If
+                ElseIf Channel = "@cookie" Then
+                    '(0:96) When the Bot sees "Your cookies are ready."
+                    Dim CookiesReady As Regex = New Regex(String.Format("{0}", "Your cookies are ready.  http://furcadia.com/cookies/ for more info!"))
+                    If CookiesReady.Match(data).Success Then
+                        MainMSEngine.PageExecute(96)
+                    End If
                 End If
                 sndDisplay(Text)
                 If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
@@ -2368,8 +2384,8 @@ Public Class Main
                 '(0:59) When the bot fails to see the banish list,
                 BanishString.Clear()
                 MainMSEngine.PageExecute(59)
-                MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", "")
-            ElseIf Text = "You do not have any cookies to give away right now!"
+                MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", Nothing)
+            ElseIf Text = "You do not have any cookies to give away right now!" Then
                 MainMSEngine.PageExecute(95)
             End If
 
@@ -2388,7 +2404,7 @@ Public Class Main
             ' <font color='success'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Your cookies are ready.  http://furcadia.com/cookies/ for more info!</font>
             '<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.
 
-			Dim CookieToMe As Regex = New Regex(String.Format("{0}", CookieToMeREGEX))
+            Dim CookieToMe As Regex = New Regex(String.Format("{0}", CookieToMeREGEX))
             If CookieToMe.Match(data).Success Then
                 MainMSEngine.PageSetVariable(MS_Name, CookieToMe.Match(data).Groups(2).Value)
                 MainMSEngine.PageExecute(42, 43)
@@ -3041,7 +3057,7 @@ Public Class Main
     End Sub
 
     Public Sub OnConnected() Handles smProxy.Connected
-If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
+        If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
 
     End Sub
 
@@ -3073,7 +3089,8 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         'Timers.DestroyTimers()
         'Save the user settings so next time the
         'window will be the same size and location
-        SettingsIni.Save(SetFile)
+
+        _cMain.SaveMainSettings()
         My.Settings.Save()
         NotifyIcon1.Visible = False
         If Not IsNothing(Me.TroatTiredDelay) Then Me.TroatTiredDelay.Dispose()
@@ -3391,16 +3408,16 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
              Nothing, Tss, Tss)
             If Not IsNothing(MS_Export) Then MS_Export.Dispose()
             Try
-            	ConnectBot()
+                ConnectBot()
             Catch Ex As NetProxyException
-            	Me.ReconnectTimeOutTimer.Dispose()
-            	If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
-               	If Not IsNothing(FurcMutex) Then '
-                	FurcMutex.Close()
-                	FurcMutex.Dispose()
-               	End If
-               	DisconnectBot()
-               	sndDisplay("Connection Aborting: " + eX.Message)
+                Me.ReconnectTimeOutTimer.Dispose()
+                If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+                If Not IsNothing(FurcMutex) Then '
+                    FurcMutex.Close()
+                    FurcMutex.Dispose()
+                End If
+                DisconnectBot()
+                sndDisplay("Connection Aborting: " + Ex.Message)
             End Try
 
         Else
@@ -3462,8 +3479,8 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
                         'NewLogFile = True
                     End With
                 Catch ex As Exception
-                	'Debug.WriteLine(ex.Message)
-                	Throw ex
+                    'Debug.WriteLine(ex.Message)
+                    Throw ex
                 End Try
                 loggingIn = 1
                 TS_Status_Server.Image = My.Resources.images5
@@ -3546,13 +3563,13 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             End If
         End If
     End Sub
-    
-    
+
+
     Private Sub FurcSettingsRestored() Handles smProxy.FurcSettingsRestored
-    	 		FurcMutex.Close()
-                FurcMutex.Dispose()
+        FurcMutex.Close()
+        FurcMutex.Dispose()
     End Sub
-    
+
     Private Sub ReconnectTick(ByVal state As Object)
 
 #If DEBUG Then
@@ -3568,21 +3585,21 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             smProxy.Kill()
             ClearQues()
         End If
-            Try
-            	ConnectBot()
-            Catch Ex As NetProxyException
-            	Me.ReconnectTimeOutTimer.Dispose()
-            	If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
-               	If Not IsNothing(FurcMutex) Then '
-                	FurcMutex.Close()
-                	FurcMutex.Dispose()
-               	End If
-               	DisconnectBot()
-               	sndDisplay("Connection Aborting: " + eX.Message)
-            Finally
-            	Me.ReconnectTimer.Dispose()
-            End Try
-        
+        Try
+            ConnectBot()
+        Catch Ex As NetProxyException
+            Me.ReconnectTimeOutTimer.Dispose()
+            If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+            If Not IsNothing(FurcMutex) Then '
+                FurcMutex.Close()
+                FurcMutex.Dispose()
+            End If
+            DisconnectBot()
+            sndDisplay("Connection Aborting: " + Ex.Message)
+        Finally
+            Me.ReconnectTimer.Dispose()
+        End Try
+
     End Sub
     Private Sub ReconnectTimeOutTick(ByVal Obj As Object)
 
@@ -3606,35 +3623,35 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
                 ClearQues()
             End If
 
-		try
-            ConnectBot()
-            sndDisplay("Reconnect attempt: " + ReLogCounter.ToString)
-            If ReLogCounter = cMain.ReconnectMax Then
+            Try
+                ConnectBot()
+                sndDisplay("Reconnect attempt: " + ReLogCounter.ToString)
+                If ReLogCounter = cMain.ReconnectMax Then
+                    Me.ReconnectTimeOutTimer.Dispose()
+                    sndDisplay("Reconnect attempts exceeded.")
+                    BTN_Go.Text = "Go!"
+                    TS_Status_Server.Image = My.Resources.images2
+                    TS_Status_Client.Image = My.Resources.images2
+                    ConnectTrayIconMenuItem.Enabled = False
+                    DisconnectTrayIconMenuItem.Enabled = True
+                    If Not IsNothing(FurcMutex) Then
+                        FurcMutex.Close()
+                        FurcMutex.Dispose()
+                    End If
+
+                End If
+                ReLogCounter += 1
+            Catch Ex As NetProxyException
                 Me.ReconnectTimeOutTimer.Dispose()
-                sndDisplay("Reconnect attempts exceeded.")
-                BTN_Go.Text = "Go!"
-                TS_Status_Server.Image = My.Resources.images2
-                TS_Status_Client.Image = My.Resources.images2
-                ConnectTrayIconMenuItem.Enabled = False
-                DisconnectTrayIconMenuItem.Enabled = True
-                If Not IsNothing(FurcMutex) Then
+                If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+                If Not IsNothing(FurcMutex) Then '
                     FurcMutex.Close()
                     FurcMutex.Dispose()
                 End If
+                DisconnectBot()
+                sndDisplay("Connection Aborting: " + Ex.Message)
 
-            End If
-            ReLogCounter += 1
-		Catch Ex As NetProxyException
-            	Me.ReconnectTimeOutTimer.Dispose()
-            	If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
-               	If Not IsNothing(FurcMutex) Then '
-                	FurcMutex.Close()
-                	FurcMutex.Dispose()
-               	End If
-               	DisconnectBot()
-               	sndDisplay("Connection Aborting: " + eX.Message)
-
-			End try
+            End Try
         End If
     End Sub
 
@@ -3817,7 +3834,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         If Not String.IsNullOrEmpty(f) Then
             Dim dir As String = Path.GetDirectoryName(cBot.MS_File)
             If String.IsNullOrEmpty(dir) Then
-                f = mPath() + Path.DirectorySeparatorChar + cBot.MS_File
+                f = System.IO.Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, cBot.MS_File)
             End If
         End If
 
@@ -3976,9 +3993,9 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
     End Sub
 
 
-    
+
     Sub ContentsToolStripMenuItemClick(sender As Object, e As EventArgs)
-    	
+
     End Sub
 End Class
 

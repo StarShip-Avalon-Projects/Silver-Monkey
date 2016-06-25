@@ -1,5 +1,6 @@
 Imports System.IO
-Imports MonkeySpeakEditor.IniFile
+Imports MonkeyCore.IniFile
+Imports MonkeyCore.Paths
 
 '######### Please Read ##############
 '
@@ -186,7 +187,7 @@ Public Class wMain
             ScriptPaths.Add(p)
         Next
 
-        p = FurcPath.GetFurcadiaDocPath + "\Scripts\"
+        p = Path.Combine(MonkeyCore.Paths.FurcadiaDocumentsFolder, "Scripts\")
         'path = Enviroment.GetFolderPath(Enviroment.SpecialFolderMyDocuments) + My_Docs + "/Scripts"
         Directory.CreateDirectory(p)
         For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
@@ -198,7 +199,7 @@ Public Class wMain
 
         selector2.Items.Clear()
         selector2.BeginUpdate()
-        p = Application.StartupPath + "/Scripts-MS"
+        p = MonKeySpeakEditorScriptsPath
         Directory.CreateDirectory(p)
         ScriptPaths_MS.Clear()
         For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
@@ -208,7 +209,7 @@ Public Class wMain
         Next
 
         'p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Scripts-MS/"
-        p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Scripts-MS"
+        p = MonKeySpeakEditorDocumentsScriptsPath
         Directory.CreateDirectory(p)
         For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
             Dim e As String = Path.GetExtension(s)

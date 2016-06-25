@@ -2,10 +2,9 @@
 Imports SilverMonkey.ConfigStructs
 Imports Furcadia.IO
 Imports System.IO
+Imports MonkeyCore.Paths
 
 Public Class BotSetup
-
-    Dim pPath As String = ConfigStructs.pPath()
 
     Public bFile As cBot
 
@@ -19,7 +18,12 @@ Public Class BotSetup
 
         bFile.BotFile = TxtBxBotIni.Text
         bFile.lPort = Convert.ToInt32(TxtHPort.Text)
-        bFile.IniFile = TxtBx_CharIni.Text
+        Try
+            bFile.IniFile = TxtBx_CharIni.Text
+        Catch ex As ArgumentException
+            MessageBox.Show(ex.Message, "+++ERROR+++", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
         bFile.MS_File = TxtBxMS_File.Text
         bFile.MS_Engine_Enable = CBool(MSEnableChkBx.CheckState)
         bFile.BotController = TxtBxBotConroller.Text
@@ -141,7 +145,7 @@ Public Class BotSetup
     Private Sub BtnMS_File_Click(sender As System.Object, e As System.EventArgs) Handles BtnMS_File.Click
         With MS_BrosweDialog
             ' Select Character ini file
-            .InitialDirectory = mPath()
+            .InitialDirectory = SilverMonkeyDocumentsPath
             If .ShowDialog = DialogResult.OK Then
                 TxtBxMS_File.Text = CheckMyDocFile(.FileName)
             End If

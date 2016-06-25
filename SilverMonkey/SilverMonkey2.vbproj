@@ -59,6 +59,9 @@
   <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="RTFLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -164,11 +167,9 @@
     <Compile Include="Helper Classes\LogStream.vb" />
     <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="Helper Classes\MiscUtils.vb" />
-    <Compile Include="Helper Classes\IniFile.vb" />
     <Compile Include="MainModule.vb" />
     <Compile Include="Engine\MS_Engine.vb" />
     <Compile Include="Helper Classes\DownLoadImage.vb" />
-    <Compile Include="Helper Classes\ErrorLogging.vb" />
     <Compile Include="Helper Classes\TextWriter.vb" />
     <Compile Include="Config.Designer.vb">
       <DependentUpon>Config.vb</DependentUpon>
@@ -276,7 +277,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="packages.config" />
     <None Include="SilverMonkey.nsi">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -338,6 +338,10 @@
     <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
       <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Name>MonkeyCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyspeakR6\MonkeyspeakR6.csproj">
       <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>

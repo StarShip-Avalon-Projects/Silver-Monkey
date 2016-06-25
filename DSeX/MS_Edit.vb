@@ -1,15 +1,44 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System
-Imports MonkeySpeakEditor.ConfigStructs
 Imports System.IO
 Imports Furcadia.IO
-Imports MonkeySpeakEditor.IniFile
 Imports System.Text
 Imports FastColoredTextBoxNS
 Imports System.Runtime.InteropServices
 Imports System.Diagnostics
+Imports MonkeyCore.IniFile
+Imports MonkeyCore.Paths
 
 Public Class MS_Edit
+    Public Shared EditSettings As New MonkeyCore.Settings.EditSettings
+
+    Public Shared Property ini As MonkeyCore.IniFile
+        Get
+            Return MonkeyCore.Settings.ini
+        End Get
+        Set(value As MonkeyCore.IniFile)
+            MonkeyCore.Settings.ini = value
+        End Set
+    End Property
+
+    Public Shared Property KeysIni As MonkeyCore.IniFile
+        Get
+            Return MonkeyCore.Settings.KeysIni
+        End Get
+        Set(value As MonkeyCore.IniFile)
+            MonkeyCore.Settings.KeysIni = value
+        End Set
+    End Property
+
+    Public Shared Property MS_KeysIni As MonkeyCore.IniFile
+        Get
+            Return MonkeyCore.Settings.MS_KeysIni
+        End Get
+        Set(value As MonkeyCore.IniFile)
+            MonkeyCore.Settings.MS_KeysIni = value
+        End Set
+    End Property
+
 #Region "Sorters"
     Class CatSorter
         Implements IComparer(Of String)
@@ -303,7 +332,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                 TemplatePathsMS.Add(p)
             Next
         End If
-        p = FurcPath.GetFurcadiaDocPath + "/Templates"
+        p = MonkeyCore.Paths.FurcadiaDocumentsFolder + "/Templates"
         If Directory.Exists(p) Then
             For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
                 s = Path.GetFileNameWithoutExtension(s)
@@ -595,9 +624,9 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         Catch ex As Exception
             Select Case ext.ToLower
                 Case ".ds"
-                    MS_Editor.Text = NewDSFile()
+                    MS_Editor.Text = MonkeyCore.IO.NewDSFile()
                 Case ".ms"
-                    MS_Editor.Text = NewMSFile()
+                    MS_Editor.Text = MonkeyCore.IO.NewMSFile()
                 Case Else
                     MS_Editor.Text = ""
             End Select
@@ -642,7 +671,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
 
     Private Sub MS_Edit_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        EditSettings = New EditSettings
         Dim splash As SplashScreen1 = CType(My.Application.SplashScreen, SplashScreen1)
         Dim filename As String = ""
         If My.Application.CommandLineArgs.Count > 0 Then
@@ -684,22 +712,19 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             Exit Sub
         End If
         Me.DoubleBuffered = True
-        KeysIni.Load(My.Application.Info.DirectoryPath + "\Keys.ini")
-        MS_KeysIni.Load(My.Application.Info.DirectoryPath + "\Keys-MS.ini")
-        KeysHelpMSIni.Load(My.Application.Info.DirectoryPath + "\KeysHelp-MS.ini")
-        KeysHelpIni.Load(My.Application.Info.DirectoryPath + "\KeysHelp.ini")
-        
-        
-        ' Actual Path Doesn't matter here... 
-        ' All we need is FurcadiaDoc's path
         Try
-            FurcPath = New Furcadia.IO.Paths(EditSettings.FurcPath)
-        Catch ex As FurcadiaNotFoundException
-            Config.ShowDialog()
+            KeysIni.Load(My.Application.Info.DirectoryPath + "\Keys.ini")
+            MS_KeysIni.Load(My.Application.Info.DirectoryPath + "\Keys-MS.ini")
+            KeysHelpMSIni.Load(My.Application.Info.DirectoryPath + "\KeysHelp-MS.ini")
+            KeysHelpIni.Load(My.Application.Info.DirectoryPath + "\KeysHelp.ini")
+        Catch ex As Exception
+            Dim d As New ErrorLogging(ex, Me)
         End Try
 
+
+
         Dim PluginFound As Boolean = False
-        For Each s As String In FileIO.FileSystem.GetFiles(Application.StartupPath + "\plugins\", FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
+        For Each s As String In FileIO.FileSystem.GetFiles(MonkeyCore.Paths.ApplicationPluginPath, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
             Dim FName As String = Path.GetFileNameWithoutExtension(s)
             If IsNothing(EditSettings.PluginList) Then EditSettings.PluginList = New Dictionary(Of String, Boolean)
             If Not EditSettings.PluginList.ContainsKey(FName) Then
@@ -726,7 +751,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                 Dim DSLines As New List(Of String)
                 Dim key As String = KeysIni.GetKeyValue("Init-Types", i.ToString)
                 splash.UpdateProgress("Loading DS " + key + "...", CInt(i / (KeyCount + MS_KeyCount + 2) * 100))
-                Dim DSSection As IniSection = KeysIni.GetSection(key)
+                Dim DSSection As MonkeyCore.IniFile.IniSection = KeysIni.GetSection(key)
 
                 For Each K As IniSection.IniKey In DSSection.Keys
                     Dim fields As String() = SplitCSV(K.Value)
@@ -789,7 +814,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             'AddNewEditorTab(filename, mPath, 0)
             OpenMS_File(filename)
         Else
-            AddNewEditorTab("", mPath, 0)
+            AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, 0)
             NewFile(EditStyles.ms)
         End If
 
@@ -916,55 +941,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
     End Sub
 
-    Private Function NewDSFile() As String
-        Dim str As New StringBuilder
-        str.AppendLine(KeysIni.GetKeyValue("MS-General", "Header"))
-        Dim t As String = " "
-        Dim n As Integer = 0
-        While t <> ""
-            t = KeysIni.GetKeyValue("MS-General", "H" + n.ToString)
-            If t <> "" Then str.AppendLine(t)
-            n += 1
-        End While
-        For i = 0 To CInt(KeysIni.GetKeyValue("MS-General", "InitLineSpaces"))
-            str.AppendLine("")
-        Next
-        str.Append(KeysIni.GetKeyValue("MS-General", "Footer"))
-        Return str.ToString
-    End Function
 
-    Private Function NewMSFile() As String
-        Dim str As New StringBuilder
-        str.AppendLine(MS_KeysIni.GetKeyValue("MS-General", "Header"))
-        Dim t As String = " "
-        Dim n As Integer = 0
-        While t <> ""
-            t = MS_KeysIni.GetKeyValue("MS-General", "H" + n.ToString)
-            If t <> "" Then str.AppendLine(t)
-            n += 1
-        End While
-        For i = 0 To CInt(MS_KeysIni.GetKeyValue("MS-General", "InitLineSpaces"))
-            str.AppendLine("")
-        Next
-        str.Append(MS_KeysIni.GetKeyValue("MS-General", "Footer"))
-        Return str.ToString
-    End Function
-    Private Function NewDMScript() As String
-        Dim str As New StringBuilder
-        str.AppendLine(KeysIni.GetKeyValue("DM-Script", "Header"))
-        Dim t As String = " "
-        Dim n As Integer = 0
-        While Not String.IsNullOrEmpty(t)
-            t = KeysIni.GetKeyValue("DM-Script", "H" + n.ToString)
-            If Not String.IsNullOrEmpty(t) Then str.AppendLine(t)
-            n += 1
-        End While
-        For i = 0 To CInt(KeysIni.GetKeyValue("DM-Script", "InitLineSpaces"))
-            str.AppendLine("")
-        Next
-        str.Append(KeysIni.GetKeyValue("DM-Script", "Footer"))
-        Return str.ToString
-    End Function
 
     Private Sub TextInsert(ByRef LB As ListView, Optional ByVal Spaces As Integer = 0)
 
@@ -1024,7 +1001,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
         With MSSaveDialog
             ' Select Character ini file
-            .InitialDirectory = mPath() + "\Silver Monkey\"
+            .InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
             If .ShowDialog = DialogResult.OK Then
                 WorkFileName(TabControl2.SelectedIndex) = Path.GetFileName(.FileName)
                 WorkPath(TabControl2.SelectedIndex) = Path.GetDirectoryName(.FileName)
@@ -1317,7 +1294,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
         TabEditStyles(TabControl2.SelectedIndex) = style
 
         If style = EditStyles.ms Then
-            MS_Editor.Text = NewMSFile()
+            MS_Editor.Text = MonkeyCore.IO.NewMSFile()
             lblStatus.Text = "Status: Opened New MonkeySpeak  File "
             popupMenu = New AutocompleteMenu(MS_Editor)
             popupMenu.Enabled = True
@@ -1327,7 +1304,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
             popupMenu.Items.Width = 600
             popupMenu.Items.SetAutocompleteItems(MS_autoCompleteList)
         ElseIf style = EditStyles.ds Then
-            MS_Editor.Text = NewDSFile()
+            MS_Editor.Text = MonkeyCore.IO.NewDSFile()
             lblStatus.Text = "Status: Opened New DragonSpeak  File "
             popupMenu = New AutocompleteMenu(MS_Editor)
             popupMenu.Enabled = True
@@ -1337,7 +1314,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
             popupMenu.Items.Width = 600
             popupMenu.Items.SetAutocompleteItems(DS_autoCompleteList)
         ElseIf style = EditStyles.ini Then
-            MS_Editor.Text = NewDMScript()
+            MS_Editor.Text = MonkeyCore.IO.NewDMScript()
             lblStatus.Text = "Status: Opened new Wizard Script"
         Else
             MS_Editor.Text = ""
@@ -1491,8 +1468,10 @@ InputBox("What line within the document do you want to send the cursor to?", _
         Dim Test2 As Boolean = False
 
         Dim tbc As TabControl = Causes
-        Dim iFile As IniFile = KeysIni
+        ' First check DS File
+        Dim iFile As MonkeyCore.IniFile = KeysIni
         If TabEditStyles(TabControl2.SelectedIndex) = EditStyles.ms Then
+            'Then we check MS File
             tbc = TabControl3
             iFile = MS_KeysIni
         End If
@@ -1784,7 +1763,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
 
     Private Sub FNewTab_Click(sender As System.Object, e As System.EventArgs)
         Dim c As Integer = TabControl2.TabCount
-        AddNewEditorTab("", mPath, c)
+        AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, c)
         NewFile(EditStyles.ms)
     End Sub
 
@@ -2216,12 +2195,12 @@ InputBox("What line within the document do you want to send the cursor to?", _
     End Sub
 
     Private Sub DragonSpeakFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DragonSpeakFileToolStripMenuItem.Click
-        AddNewEditorTab("", mPath, TabControl2.TabCount)
+        AddNewEditorTab("", MonkeyCore.Paths.FurcadiaDocumentsFolder, TabControl2.TabCount)
         NewFile(EditStyles.ds)
     End Sub
 
     Private Sub MonkeySpeakFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles MonkeySpeakFileToolStripMenuItem.Click, ToolBoxNew.Click
-        AddNewEditorTab("", mPath, TabControl2.TabCount)
+        AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, TabControl2.TabCount)
         NewFile(EditStyles.ms)
     End Sub
 
@@ -2277,16 +2256,16 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
 
     Private Sub BtnTemplateAddMS_Click(sender As System.Object, e As System.EventArgs) Handles BtnTemplateAddMS.Click, MSTemplateMenuAdd.Click
-        Dim _path As String = mPath() + Path.DirectorySeparatorChar + "Templates-MS" + Path.DirectorySeparatorChar
+
         Dim message, title As String
         Dim myValue As String
         message = "Name of file?"
         title = "Template Name"
         myValue = InputBox(message, title, "")
         If String.IsNullOrEmpty(myValue) Then Exit Sub
-        TemplatePathsMS.Add(_path)
+        TemplatePathsMS.Add(MonKeySpeakEditorDocumentsTemplatesPath)
         ListBox3.Items.Add(myValue)
-        File.WriteAllText(_path + myValue.ToString + ".ms", MS_Editor.Selection.Text)
+        File.WriteAllText(Path.Combine(MonKeySpeakEditorDocumentsTemplatesPath, myValue.ToString + ".ms"), MS_Editor.Selection.Text)
     End Sub
 
     Private Sub BtnTemplateDeleteMS_Click(sender As System.Object, e As System.EventArgs) Handles BtnTemplateDeleteMS.Click, MSTemplateDelete.Click
@@ -2328,5 +2307,14 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
     Private Sub ContentToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ContentToolStripMenuItem.Click
         Process.Start("Silver Monkey.chm")
+    End Sub
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
     End Sub
 End Class

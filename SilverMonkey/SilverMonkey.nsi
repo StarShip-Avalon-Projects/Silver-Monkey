@@ -14,20 +14,23 @@
 
 !define APP_NAME "Silver Monkey"
 !define COMP_NAME "TS-Projects"
-;!define WEB_SITE "http://silvermonkey.tsprojects.org/"
+!define WEB_SITE "http://silvermonkey.tsprojects.org/"
 !ifndef VERSION
 !define VERSION "2.20.0.0"
 !endif
 
+!ifndef CONFIGURATION
+!define CONFIGURATION "Debug"
+!endif
 
 !define COPYRIGHT "Author Gerolkae © 2014"
 !define DESCRIPTION "Application"
-!define INSTALLER_NAME "SM_Setup(AnyCPU)-${VERSION}.exe"
+!define INSTALLER_NAME "SilverMonkey_Setup_Net40_AnyCPU_${CONFIGURATION}_${VERSION}.exe"
 !define MAIN_APP_EXE "SilverMonkey.exe"
 !define INSTALL_TYPE "SetShellVarContext all"
 !define REG_ROOT "HKLM"
-!define REG_APP_PATH "Software\Microsoft\Windows\CurrentVersion\App Paths\${MAIN_APP_EXE}"
-!define UNINSTALL_PATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
+!define REG_APP_PATH "Software\TSProjects\${MAIN_APP_EXE}"
+!define UNINSTALL_PATH "Software\TSProjects\Uninstall\${APP_NAME}"
 !define Bin_Directory "."
 !define REG_START_MENU "Start Menu Folder"
 

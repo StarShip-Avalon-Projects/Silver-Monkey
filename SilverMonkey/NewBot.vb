@@ -6,7 +6,6 @@ Imports System.Drawing
 
 
 Public Class NewBott
-    Dim pPath As String = ConfigStructs.pPath()
     Public bFile As cBot
     Dim WizIndex As Integer = 1
     Dim OverWrite As Boolean = False

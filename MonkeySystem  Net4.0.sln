@@ -5,6 +5,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{6EFFEF54-7DB
 	ProjectSection(SolutionItems) = preProject
 		bin\Mono.TextTemplating.dll = bin\Mono.TextTemplating.dll
 		bin\sed.exe = bin\sed.exe
+		Solution.build = Solution.build
 		bin\TextTransform.exe.config = bin\TextTransform.exe.config
 		bin\vbVer.bat = bin\vbVer.bat
 	EndProjectSection
@@ -36,10 +37,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonkeyspeakR6  Net4.0", "MonkeySpeakR6\MonkeyspeakR6  Net4.0.csproj", "{925781E6-8B75-471B-887F-616495BBBFDD}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SilverMonkey2  Net4.0", "SilverMonkey\SilverMonkey2  Net4.0.vbproj", "{CD544712-0665-44DB-BB70-5B9D4395B050}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9072CD13-8B7E-4A22-BC28-6087785A5D9A} = {9072CD13-8B7E-4A22-BC28-6087785A5D9A}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Verbot Knowledgebase Editor  Net4.0", "Verbot Knowledgebase Editor\Verbot Knowledgebase Editor  Net4.0.vbproj", "{B008B931-21E4-40B6-92F0-DD1BEBC569F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Verbot5Library  Net4.0", "Verbot5Library\Verbot5Library  Net4.0.csproj", "{4D25B13B-4D67-433F-9181-BF5FDFA931B6}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MonkeyCore Net40", "MonkeyCore\MonkeyCore Net40.vbproj", "{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -413,6 +419,30 @@ Global
 		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|Mixed Platforms.Build.0 = Wix|Any CPU
 		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|x64.ActiveCfg = Wix|Any CPU
 		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|x86.ActiveCfg = Wix|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Release|x64.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Release|x86.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Special|Any CPU.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Special|Any CPU.Build.0 = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Special|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Special|Mixed Platforms.Build.0 = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Special|x64.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Special|x86.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Wix|Any CPU.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Wix|Any CPU.Build.0 = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Wix|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Wix|Mixed Platforms.Build.0 = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Wix|x64.ActiveCfg = Release|Any CPU
+		{9CAC7E97-DE68-46D1-8155-0AFDE045E34A}.Wix|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

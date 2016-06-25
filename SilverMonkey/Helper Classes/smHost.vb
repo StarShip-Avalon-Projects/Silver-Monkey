@@ -3,6 +3,7 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports Monkeyspeak
 Imports Furcadia.Net
+Imports MonkeyCore
 
 Public Class smHost
     Implements SilverMonkey.Interfaces.msHost

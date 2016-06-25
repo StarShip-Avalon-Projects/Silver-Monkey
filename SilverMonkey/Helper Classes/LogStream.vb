@@ -66,7 +66,12 @@ Public Class LogStream
         Message = Now & ": " & Message
         Dim ioFile As System.IO.StreamWriter = Nothing
         Try
-
+            If Not Directory.Exists(Path.GetDirectoryName(strErrorFilePath)) Then
+                Directory.CreateDirectory(Path.GetDirectoryName(strErrorFilePath))
+            End If
+            If Not File.Exists(strErrorFilePath) Then
+                File.Create(strErrorFilePath)
+            End If
             ioFile = New System.IO.StreamWriter(strErrorFilePath, True)
             For Each line In Stack.ToArray
                 ioFile.WriteLine(line)

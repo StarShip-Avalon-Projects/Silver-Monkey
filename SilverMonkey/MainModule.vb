@@ -1,15 +1,14 @@
-﻿Imports SilverMonkey.IniFile
+﻿Imports MonkeyCore
 Imports SilverMonkey.ConfigStructs
 Imports System.Runtime.InteropServices
 Imports System.IO
 Imports System.Text.RegularExpressions
+Imports MonkeyCore.Paths
 
 Module MainModule
     'Public EditIni As New IniFile
     Public MS_KeysIni As IniFile = New IniFile
-    Public SettingsIni As New IniFile
     Public BotIni As New IniFile
-    Public cMain As cMain = New cMain
     Public cBot As cBot
     Public FurcPath As Furcadia.IO.Paths = New Furcadia.IO.Paths()
     Public Plugins() As PluginServices.AvailablePlugin
@@ -29,10 +28,10 @@ Module MainModule
 
         Dim f As String = Path.GetDirectoryName(Filename)
         If String.IsNullOrEmpty(f) Then
-            Return mPath() + Path.DirectorySeparatorChar + Filename
+            Return SilverMonkeyBotPath
         End If
         If String.IsNullOrEmpty(Path.GetPathRoot(f)) Then
-            Return mPath() + Path.DirectorySeparatorChar + Filename
+            Return SilverMonkeyBotPath
         End If
         Return Filename
     End Function

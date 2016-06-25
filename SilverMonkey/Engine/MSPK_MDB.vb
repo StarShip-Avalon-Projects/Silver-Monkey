@@ -12,6 +12,7 @@ Imports System.Collections
 Imports System.Collections.Generic
 Imports System.Windows.Forms
 Imports System.Reflection
+Imports MonkeyCore
 
 
 Public Class MSPK_MDB
@@ -24,9 +25,9 @@ Public Class MSPK_MDB
 
     Dim lock As New Object
     Dim cache As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
-    
+
     Public Sub New()
-    	
+
         Try
             writer = New TextBoxWriter(Variables.TextBox1)
         Catch eX As Exception
@@ -1597,7 +1598,7 @@ Public Class MSPK_MDB
                 MessageBox.Show(fail.Message)
 
             End Try
-            Return false
+            Return False
         End Function
 
         ''' <summary>

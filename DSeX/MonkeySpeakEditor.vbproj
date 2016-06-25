@@ -111,7 +111,6 @@
     <Compile Include="Config.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigStructs.vb" />
     <Compile Include="Controls\InputBoxFrm.Designer.vb">
       <DependentUpon>InputBoxFrm.vb</DependentUpon>
     </Compile>
@@ -131,7 +130,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Helper Classes\ErrorLogging.vb" />
-    <Compile Include="Helper Classes\IniFile.vb" />
     <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="MainModule.vb" />
     <Compile Include="MS_Edit.Designer.vb">
@@ -498,6 +496,10 @@
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Name>MonkeyCore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
