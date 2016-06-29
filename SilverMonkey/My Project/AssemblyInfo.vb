@@ -1,6 +1,4 @@
 ﻿Imports System.Resources
-
-Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -10,21 +8,21 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Silver Monkey")> 
+<Assembly: AssemblyTitle("Silver Monkey")>
 <Assembly: AssemblyDescription("Credits:" & ControlChars.NewLine & _
 "Artex, Squizzle, Dream Dancer, Daiktana, Farrier" & ControlChars.NewLine & _
 "Dragons Eye Productions, Gerolkae" & ControlChars.NewLine & _
 "Special Helpers and Testers:" & ControlChars.NewLine & _
-"Drake, Shadling, Arden, Sidereal")> 
-<Assembly: AssemblyCompany("TS-Projects")> 
-<Assembly: AssemblyProduct("Silver Monkey")> 
-<Assembly: AssemblyCopyright("Copyright © 2012 - 20117")> 
-<Assembly: AssemblyTrademark("")> 
+"Drake, Shadling, Arden, Sidereal")>
+<Assembly: AssemblyCompany("TS-Projects")>
+<Assembly: AssemblyProduct("Silver Monkey")>
+<Assembly: AssemblyCopyright("Copyright © 2012 - 20117")>
+<Assembly: AssemblyTrademark("")>
 
-<Assembly: ComVisible(False)> 
+<Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("13477681-8d61-4358-a42e-f47275647cfc")> 
+<Assembly: Guid("13477681-8d61-4358-a42e-f47275647cfc")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -35,4 +33,4 @@ Imports System.Runtime.InteropServices
 '
 ' You can specify all the values or you can default the Build and Revision Numbers 
 ' by using the '*' as shown below:
-<Assembly: NeutralResourcesLanguageAttribute("en-US")> 
+<Assembly: NeutralResourcesLanguageAttribute("en-US")>

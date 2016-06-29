@@ -1,13 +1,8 @@
 ﻿Imports Monkeyspeak
-Imports SilverMonkey.ErrorLogging
-Imports SilverMonkey.TextBoxWriter
-
-Imports System.Diagnostics
-Imports System.Collections
-Imports System.Collections.Generic
+Imports MonkeyCore
 
 Public Class MS_Time
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing
     Dim lock As New Object
     Public Sub New()
@@ -15,7 +10,7 @@ Public Class MS_Time
 
 
         '(0:299) When the time is {...} hh:mm:ss am/pm FST,
-        Add(Monkeyspeak.TriggerCategory.Cause, 299,
+        Add(TriggerCategory.Cause, 299,
 Function(reader As TriggerReader)
     Dim Time As String = reader.ReadString
     Dim str As String = ""
@@ -27,23 +22,23 @@ End Function,
 "(0:299) When the time is {...} hh:mm:ss am/pm FST,")
 
         '(5:30) set variable %Variable to the current local time.
-        Add(Monkeyspeak.TriggerCategory.Effect, 30,
+        Add(TriggerCategory.Effect, 30,
 AddressOf CurrentTime, "(5:30) set variable %Variable to the current local time.")
 
         '(5:31) set variable %Variable to the current Furcadia Standard time
-        Add(Monkeyspeak.TriggerCategory.Effect, 31,
+        Add(TriggerCategory.Effect, 31,
 AddressOf FurcTime, "(5:31) set variable %Variable to the current Furcadia Standard time.")
         '(5:32) set variable %Variable to current DateTime
-        Add(Monkeyspeak.TriggerCategory.Effect, 32,
+        Add(TriggerCategory.Effect, 32,
 AddressOf LocalDateTimeVar, "(5:32) set variable %Variable to current local DateTime.")
         '(5:33) set variable %Variable to current Furcadia DateTime
-        Add(Monkeyspeak.TriggerCategory.Effect, 33,
+        Add(TriggerCategory.Effect, 33,
 AddressOf FurcDateTimeVar, "(5:33) set variable %Variable to current Furcadia DateTime.")
         '(5:34) use variable %Variable as a DateTime string and subtract Date Time string {...} and put it into variable %Variable
-        Add(Monkeyspeak.TriggerCategory.Effect, 34,
+        Add(TriggerCategory.Effect, 34,
 AddressOf SubsractDateTimeStr, "(5:34) use variable %Variable as a DateTime string and subtract Date Time string {...} and put it into variable %Variable.")
         '(5:35) use variable %Variable as a DateTime string and subtract Date Time variable %Variable and put it into variable %Variable
-        Add(Monkeyspeak.TriggerCategory.Effect, 35,
+        Add(TriggerCategory.Effect, 35,
 AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime string and subtract Date Time variable %Variable and put it into variable %Variable.")
         '(5:36) use variable %Variable as a DateTime string and add Date Time string {...} and put it into variable %Variable
         '        Add(Monkeyspeak.TriggerCategory.Effect, 36,
@@ -62,12 +57,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             Var.Value = Str
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -83,12 +73,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             Var.Value = Str
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -99,12 +84,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
             var.Value = Date.Now.ToString("yyyy-MM-dd HH:mm:ss tt")
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -117,12 +97,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             End SyncLock
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -140,12 +115,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             End If
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -162,12 +132,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             End If
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -188,13 +153,8 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
     '        End If
     '        Return False
     '    Catch ex As Exception
-    '        Dim tID As String = reader.TriggerId.ToString
-    '        Dim tCat As String = reader.TriggerCategory.ToString
-    '        Console.WriteLine(MS_ErrWarning)
-    '        Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-    '        writer.WriteLine(ErrorString)
-    '        Debug.Print(ErrorString)
-    '        Return False
+    '       MainEngine.LogError(reader, ex)
+    '       Return False
     '    End Try
     'End Function
 

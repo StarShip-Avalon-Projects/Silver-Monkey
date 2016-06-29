@@ -1,7 +1,13 @@
-﻿Imports System.Runtime.InteropServices
-Imports System.IO
+﻿Imports System.IO
 Imports MonkeyCore.Paths
 Public Class ErrorLogging
+
+    Dim strErrorFilePath As String
+    Public ReadOnly Property LogFile As String
+        Get
+            Return strErrorFilePath
+        End Get
+    End Property
 
     'Error Logging Class
     'Author: Tim Wilson
@@ -20,21 +26,17 @@ Public Class ErrorLogging
     '
     'To provide more details for individual object types create a new constructor by copying and pasting one below and then adjusting the argument.
 
-
-
-    Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError2 As System.Windows.Forms.Form)
-        'Call Log Error
-        LogError(Ex, ObjectThrowingError2.ToString)
-    End Sub
-    Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object)
+    Public Sub New(ByRef Ex As System.Exception, ByVal ObjectThrowingError As Object)
         'Call Log Error
         LogError(Ex, ObjectThrowingError.ToString())
     End Sub
 
 
+
+
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        Dim strErrorFilePath As String
+
         strErrorFilePath = Path.combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         Dim ioFile As System.IO.StreamWriter = Nothing
         Try
@@ -56,11 +58,22 @@ Public Class ErrorLogging
             ioFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
             'Determine if 64-bit
             ' If OSBitness.Is64BitOperatingSystem() Then
+#If Net40 = True Then
             If OSBitness.Is64BitOperatingSystem = True Then
-                ioFile.WriteLine("64-Bit")
+#Else
+            If Environment.Is64BitOperatingSystem Then
+#End If
+                ioFile.WriteLine("64-Bit OS")
             Else
-                ioFile.WriteLine("32-Bit")
+                ioFile.WriteLine("32-Bit OS")
             End If
+#If Net40 = False Then
+            If Environment.Is64BitProcess = True Then
+                ioFile.WriteLine("64-Bit Process")
+            Else
+                ioFile.WriteLine("32-Bit Process")
+            End If
+#End If
             ioFile.WriteLine("")
             ioFile.WriteLine("Program Location: " & My.Application.Info.DirectoryPath)
 
@@ -97,7 +110,6 @@ Public Class ErrorLogging
     End Sub
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        Dim strErrorFilePath As String
         strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         Dim ioFile As System.IO.StreamWriter = Nothing
         Try
@@ -118,12 +130,23 @@ Public Class ErrorLogging
             ioFile.WriteLine("Windows Version: " & My.Computer.Info.OSFullName)
             ioFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
             'Determine if 64-bit
-            'If OSBitness.Is64BitOperatingSystem() Then
+#If Net40 = True Then
             If OSBitness.Is64BitOperatingSystem = True Then
-                ioFile.WriteLine("64-Bit")
+#Else
+            If Environment.Is64BitOperatingSystem Then
+#End If
+                ioFile.WriteLine("64-Bit OS")
             Else
-                ioFile.WriteLine("32-Bit")
+                ioFile.WriteLine("32-Bit OS")
             End If
+#If Net40 = False Then
+            If Environment.Is64BitProcess = True Then
+                ioFile.WriteLine("64-Bit Process")
+            Else
+                ioFile.WriteLine("32-Bit Process")
+            End If
+#End If
+
             ioFile.WriteLine("")
             ioFile.WriteLine("Program Location: " & My.Application.Info.DirectoryPath)
 
@@ -168,7 +191,7 @@ Public Class ErrorLogging
     '        * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
     '        \**************************************************************************
 
-
+#If Net40 = True Then
     Public NotInheritable Class OSBitness
         Private Sub New()
         End Sub
@@ -231,7 +254,6 @@ Public Class ErrorLogging
 
 #End Region
     End Class
+#End If
 #End Region
-
-
 End Class

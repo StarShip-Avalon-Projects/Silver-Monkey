@@ -1,7 +1,6 @@
-﻿Imports Monkeyspeak
-Imports SilverMonkey.ErrorLogging
-Imports SilverMonkey.TextBoxWriter
-'(5:210) - (5:220)
+﻿'(5:210) - (5:220)
+
+Imports MonkeyCore
 
 Public Class MS_Quotes
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary

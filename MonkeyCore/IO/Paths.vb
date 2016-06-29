@@ -24,10 +24,7 @@
 ' we have multiple Furcadia installations like DevClient and Live Client. Perhaps we want the Bot to 
 ' Use its own Furcadia Stash due to mangling the Furcadia Settings  with a localdir.ini installation
 
-Imports Furcadia.IO
-Imports System
 Imports System.IO
-Imports System.Windows.Controls
 Imports Microsoft.Win32
 
 Public Class Paths
@@ -41,6 +38,8 @@ Public Class Paths
     Private Const DsTemplateDocsPath As String = "Templates"
     Private Const DxScriptseDocsPath As String = "Scripts"
 
+    Private Const PluginPath As String = "Plugins"
+
     Private Shared _SilverMonkeyDocumentsPath As String
 
     Private Const ErrorLogPath As String = "Error"
@@ -53,6 +52,7 @@ Public Class Paths
     Private Shared _SilverMonkeyBotPath As String
     Private Shared _ApplicationPath As String
     Private Shared _ApplicationSettingsPath As String
+    Private Shared _ApplicationPluginPath As String
 
     Private Shared _MonKeySpeakEditorTemplatesPath As String
     Private Shared _MonKeySpeakEditorDocumentsTemplatesPath As String
@@ -65,6 +65,7 @@ Public Class Paths
 
     Private Shared _FurcadiaDocumentsFolder As String
     Private Shared _FurcadiaProgramFolder As String
+    Private Shared _FurcadiaCharactersFolder As String
 
     Private Shared _SilverMonkeyErrorLogPath As String
 
@@ -108,6 +109,30 @@ Public Class Paths
     End Property
 
     ''' <summary>
+    ''' Gets or sets the furcadia characters folder.
+    ''' </summary>
+    ''' <value>
+    ''' The furcadia characters folder.
+    ''' </value>
+    ''' <exception cref="System.IO.DirectoryNotFoundException">This needs to be a valid folder</exception>
+    Public Shared Property FurcadiaCharactersFolder() As String
+        Get
+
+            '
+            If String.IsNullOrEmpty(_FurcadiaCharactersFolder) Then
+                _FurcadiaCharactersFolder = Path.Combine(FurcadiaDocumentsFolder, "Furcadia Characters")
+            End If
+            Return _FurcadiaCharactersFolder
+        End Get
+        Set(ByVal value As String)
+            If Not Directory.Exists(value) Then
+                Throw New DirectoryNotFoundException("This needs to be a valid folder")
+            End If
+            _FurcadiaDocumentsFolder = value
+        End Set
+    End Property
+
+    ''' <summary>
     ''' Gets or sets the furcadia program folder.
     ''' </summary>
     ''' <value>
@@ -124,16 +149,19 @@ Public Class Paths
             Catch eX As Furcadia.IO.FurcadiaNotFoundException
                 Dim Broswe As New OpenFileDialog
                 'Check for Furcadia Install location.
-                Broswe.InitialDirectory = Environment.GetFolderPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86))
-                Broswe.CheckFileExists = True
+                'TODO: Add OSBitness methd or .Net 4.0
+                If Environment.Is64BitOperatingSystem() Then
+                    Broswe.InitialDirectory = Environment.GetFolderPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles))
+                Else
+                    Broswe.InitialDirectory = Environment.GetFolderPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86))
+                End If
+
+                'Broswe.CheckFileExists = True
                 If Broswe.ShowDialog() = MsgBoxResult.Ok Then
                     Dim ThisPath As String = Path.GetDirectoryName(Broswe.FileName)
                     _FurcPath = New Furcadia.IO.Paths(ThisPath)
                 End If
-            Finally
-                If Not Directory.Exists(_FurcadiaDocumentsFolder) Then
-                    Directory.CreateDirectory(_FurcadiaDocumentsFolder)
-                End If
+
             End Try
             Return _FurcadiaProgramFolder
         End Get
@@ -170,9 +198,9 @@ Public Class Paths
     Public Shared ReadOnly Property ApplicationPluginPath() As String
         Get
             If String.IsNullOrEmpty(_ApplicationPath) Then
-                _ApplicationPath = Path.Combine(My.Application.Info.DirectoryPath, "Plugins")
+                _ApplicationPluginPath = Path.Combine(My.Application.Info.DirectoryPath, PluginPath)
             End If
-            Return _ApplicationPath
+            Return _ApplicationPluginPath
         End Get
     End Property
 
@@ -224,7 +252,7 @@ Public Class Paths
     Public Shared Property SilverMonkeyBotPath() As String
         Get
             If String.IsNullOrEmpty(_SilverMonkeyDocumentsPath) Then
-                _SilverMonkeyBotPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), MyDocumentsPath)
+                _SilverMonkeyBotPath = SilverMonkeyDocumentsPath
             End If
             Return _SilverMonkeyBotPath
         End Get
@@ -234,7 +262,7 @@ Public Class Paths
     End Property
 
     ''' <summary>
-    ''' Gets or sets the mon key speak editor templates path.
+    ''' Gets or sets the Monkey Speak templates path.
     ''' </summary>
     ''' <value>
     ''' The mon key speak editor templates path.
@@ -242,9 +270,9 @@ Public Class Paths
     Public Shared Property MonKeySpeakEditorTemplatesPath() As String
         Get
             If String.IsNullOrEmpty(_MonKeySpeakEditorTemplatesPath) Then
-                _MonKeySpeakEditorTemplatesPath = Path.Combine(_ApplicationPath, MsTemplateDocsPath)
+                _MonKeySpeakEditorTemplatesPath = Path.Combine(ApplicationPath, MsTemplateDocsPath)
             End If
-            Return _SilverMonkeyDocumentsPath
+            Return _MonKeySpeakEditorTemplatesPath
         End Get
         Set(ByVal value As String)
             _MonKeySpeakEditorTemplatesPath = value
@@ -252,7 +280,7 @@ Public Class Paths
     End Property
 
     ''' <summary>
-    ''' Gets or sets the mon key speak editor documents templates path.
+    ''' Gets or sets the mon key Monkey Speak documents templates path.
     ''' </summary>
     ''' <value>
     ''' The mon key speak editor documents templates path.
@@ -260,7 +288,7 @@ Public Class Paths
     Public Shared Property MonKeySpeakEditorDocumentsTemplatesPath() As String
         Get
             If String.IsNullOrEmpty(_MonKeySpeakEditorDocumentsTemplatesPath) Then
-                _MonKeySpeakEditorDocumentsTemplatesPath = Path.Combine(_SilverMonkeyDocumentsPath, MsTemplateDocsPath)
+                _MonKeySpeakEditorDocumentsTemplatesPath = Path.Combine(SilverMonkeyDocumentsPath, MsTemplateDocsPath)
             End If
             Return _MonKeySpeakEditorDocumentsTemplatesPath
         End Get
@@ -273,12 +301,12 @@ Public Class Paths
     ''' Gets or sets the mon key speak editor scripts path.
     ''' </summary>
     ''' <value>
-    ''' The mon key speak editor scripts path.
+    ''' The mon keyspeak editor scripts path.
     ''' </value>
     Public Shared Property MonKeySpeakEditorScriptsPath() As String
         Get
             If String.IsNullOrEmpty(_MonKeySpeakEditorScriptsPath) Then
-                _MonKeySpeakEditorScriptsPath = Path.Combine(_ApplicationPath, MsTemplateDocsPath)
+                _MonKeySpeakEditorScriptsPath = Path.Combine(ApplicationPath, MsTemplateDocsPath)
                 If Not Directory.Exists(_MonKeySpeakEditorScriptsPath) Then
                     Directory.CreateDirectory(_MonKeySpeakEditorScriptsPath)
                 End If
@@ -291,7 +319,7 @@ Public Class Paths
     End Property
 
     ''' <summary>
-    ''' Gets or sets the mon key speak editor documents scripts path.
+    ''' Gets or sets the monkey speak editor documents scripts path.
     ''' </summary>
     ''' <value>
     ''' The mon key speak editor documents scripts path.
@@ -299,7 +327,7 @@ Public Class Paths
     Public Shared Property MonKeySpeakEditorDocumentsScriptsPath() As String
         Get
             If String.IsNullOrEmpty(_MonKeySpeakEditorDocumentsScriptsPath) Then
-                _MonKeySpeakEditorDocumentsScriptsPath = Path.Combine(_SilverMonkeyDocumentsPath, MsTemplateDocsPath)
+                _MonKeySpeakEditorDocumentsScriptsPath = Path.Combine(SilverMonkeyDocumentsPath, MsTemplateDocsPath)
                 If Not Directory.Exists(_MonKeySpeakEditorDocumentsScriptsPath) Then
                     Directory.CreateDirectory(_MonKeySpeakEditorDocumentsScriptsPath)
                 End If

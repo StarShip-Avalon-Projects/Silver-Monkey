@@ -1,4 +1,5 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports MonkeyCore
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Variables
     Inherits System.Windows.Forms.Form
 
@@ -26,7 +27,7 @@ Partial Class Variables
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.ListView1 = New SilverMonkey.ListView_NoFlicker()
+        Me.ListView1 = New ListView_NoFlicker()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -189,7 +190,7 @@ Partial Class Variables
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents ChkBxRefresh As System.Windows.Forms.CheckBox
-    Friend WithEvents ListView1 As SilverMonkey.ListView_NoFlicker
+    Friend WithEvents ListView1 As ListView_NoFlicker
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader3 As System.Windows.Forms.ColumnHeader

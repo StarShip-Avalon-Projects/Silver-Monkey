@@ -1,14 +1,9 @@
-﻿Imports System.IO
-Imports System.Text
-Imports SilverMonkey.ConfigStructs
-Imports Monkeyspeak
+﻿Imports Monkeyspeak
 
 Imports MonkeyCore
-Imports System.Diagnostics
-Imports System.Collections
 Imports System.Collections.Generic
 
-Public Class MainEngine
+Public Class MainMSEngine
 
 
 #Region "Const"
@@ -31,8 +26,8 @@ Public Class MainEngine
     Public EngineRestart As Boolean = False
 
     Public MS_Engine_Running As Boolean = False
-    Public engine As Monkeyspeak.MonkeyspeakEngine = New Monkeyspeak.MonkeyspeakEngine()
-    Public Shared WithEvents MSpage As Monkeyspeak.Page = Nothing
+    Public engine As MonkeyspeakEngine = New MonkeyspeakEngine()
+    Public Shared WithEvents MSpage As Page = Nothing
     Public Sub New()
         EngineStart(True)
     End Sub
@@ -47,7 +42,11 @@ Public Class MainEngine
 
             Console.WriteLine("Loading:" & cBot.MS_File)
             Dim start As DateTime = DateTime.Now
-            cBot.MS_Script = msReader(CheckMyDocFile(cBot.MS_File))
+            If Not File.Exists(cBot.MS_File) Then
+                Directory.Exists(Path.GetDirectoryName(cBot.MS_File))
+                cBot.MS_File = Path.Combine(Paths.SilverMonkeyBotPath, cBot.MS_File)
+            End If
+            cBot.MS_Script = msReader(cBot.MS_File)
             If String.IsNullOrEmpty(cBot.MS_Script) Then
                 Console.WriteLine("ERROR: No script loaded! Loading Default MonkeySpeak.")
                 MS_Engine_Running = False
@@ -99,22 +98,24 @@ Public Class MainEngine
 
     End Sub
 
+
+
     Public Sub LoadLibrary(ByRef LoadPlugins As Boolean)
         'Library Loaded?.. Get the Hell out of here
         If MS_Started() Then Exit Sub
         MS_Stared += 1
-        MSpage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 0,
+        MSpage.SetTriggerHandler(TriggerCategory.Cause, 0,
              Function()
                  Return True
              End Function, "(0:0) When the bot starts,")
         Try
             MSpage.LoadSysLibrary()
-#If Config = "Release" Then
+#If CONFIG = "Release" Then
             '(5:105) raise an error.
             MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
             '(5:110) load library from file {...}.
             MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
-#ElseIf Config = "Debug" Then
+#ElseIf CONFIG = "Debug" Then
 
 #End If
         Catch ex As Exception
@@ -126,7 +127,7 @@ Public Class MainEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-        	MSpage.LoadTimerLibrary()
+            MSpage.LoadTimerLibrary()
             MSpage.LoadStringLibrary()
             MSpage.LoadMathLibrary()
         Catch ex As Exception
@@ -286,7 +287,7 @@ Public Class MainEngine
             End Using
             Return Data
         Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
+            Dim LogError As New ErrorLogging(eX, Me)
             Return ""
         End Try
     End Function
@@ -296,7 +297,7 @@ Public Class MainEngine
             Try
                 MSpage.SetVariable(Main.VarPrefix & varName.ToUpper, data, True) '
             Catch ex As Exception
-                Dim logError As New ErrorLogging(ex, Me)
+                Dim LogError As New ErrorLogging(ex, Me)
             End Try
         End If
     End Sub
@@ -308,7 +309,7 @@ Public Class MainEngine
                     MSpage.SetVariable(Main.VarPrefix & kv.Key.ToUpper, kv.Value, True)
                 Next '
             Catch ex As Exception
-                Dim logError As New ErrorLogging(ex, Me)
+                Dim LogError As New ErrorLogging(ex, Me)
             End Try
         End If
     End Sub
@@ -319,7 +320,7 @@ Public Class MainEngine
                 Try
                     MSpage.SetVariable(Main.VarPrefix & varName.ToUpper, data, Constant) '
                 Catch ex As Exception
-                    Dim logError As New ErrorLogging(ex, Me)
+                    Dim LogError As New ErrorLogging(ex, Me)
                 End Try
             End If
         End If
@@ -335,11 +336,30 @@ Public Class MainEngine
 
     End Sub
 
-    Public Shared Sub MS_Error(trigger As Monkeyspeak.Trigger, ex As Exception) Handles MSpage.Error
+    Public Shared Sub LogError(trigger As Monkeyspeak.Trigger, ex As Exception) Handles MSpage.Error
 
         Console.WriteLine(MS_ErrWarning)
         Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
-        writer.WriteLine(ErrorString)
+
+        If Not IsNothing(cBot) Then
+            If cBot.log Then
+                LogStream.Writeline(ErrorString)
+            End If
+        End If
+        Writer.WriteLine(ErrorString)
+    End Sub
+
+    Public Shared Sub LogError(reader As Monkeyspeak.TriggerReader, ex As Exception)
+
+        Console.WriteLine(MS_ErrWarning)
+        Dim ErrorString As String = "Error: (" & reader.TriggerCategory.ToString & ":" & reader.TriggerId.ToString & ") " & ex.Message
+
+        If Not IsNothing(cBot) Then
+            If cBot.log Then
+                LogStream.Writeline(ErrorString)
+            End If
+        End If
+        Writer.WriteLine(ErrorString)
     End Sub
 
 #End Region

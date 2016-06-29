@@ -117,21 +117,8 @@
     <Compile Include="Controls\InputBoxFrm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\ScrollingListBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.Designer.vb">
-      <DependentUpon>ListView_NoFlicker.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TabControlEx.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Helper Classes\ErrorLogging.vb" />
-    <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="MainModule.vb" />
+    <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="MS_Edit.Designer.vb">
       <DependentUpon>MS_Edit.vb</DependentUpon>
     </Compile>
@@ -517,6 +504,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>

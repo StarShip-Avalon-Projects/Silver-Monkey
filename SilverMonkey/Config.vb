@@ -1,17 +1,14 @@
-﻿Imports System
-Imports System.IO
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Windows.Forms
-Imports SilverMonkey.ConfigStructs
 Imports System.Drawing.Text
 Imports System.Drawing
-Imports Furcadia.IO
-Imports MonkeyCore.Settings
+
+Imports MonkeyCore
 
 
 Public Class Config
 
-    Dim MyConfig As New ConfigStructs
+    Dim MyConfig As New Settings
 
     Private Sub BTN_Cancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTN_Cancel.Click
         'Close with out Saving
@@ -56,7 +53,7 @@ Public Class Config
         For Each lvItem As ListViewItem In LstVwPlugin.Items
             Plugins.Add(lvItem.SubItems.Item(1).Text.Replace(" ", ""), lvItem.Checked)
         Next
-        FurcPath = New Paths(Main.cMain.FurcPath)
+        Paths.FurcadiaProgramFolder = Main.cMain.FurcPath
         Main.cMain.PluginList = Plugins
         Main.cMain.SaveMainSettings()
 
@@ -77,10 +74,6 @@ Public Class Config
     End Sub
 
     Public Sub Loadconfig()
-
-
-        Main.cMain = New cMain
-
         TxtBx_Server.Text = Main.cMain.Host
         TxtSPort.Text = Main.cMain.sPort.ToString
         ChkBxAutoReconnect.Checked = Main.cMain.AutoReconnect

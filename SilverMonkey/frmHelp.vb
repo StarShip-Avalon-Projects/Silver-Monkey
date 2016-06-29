@@ -1,6 +1,4 @@
-﻿Imports System
-Imports System.Drawing
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Windows.Forms
 
 Public Class frmHelp

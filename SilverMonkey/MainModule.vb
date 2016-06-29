@@ -1,16 +1,13 @@
-﻿Imports MonkeyCore
-Imports SilverMonkey.ConfigStructs
-Imports System.Runtime.InteropServices
-Imports System.IO
+﻿Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
+Imports MonkeyCore
 Imports MonkeyCore.Paths
 
 Module MainModule
     'Public EditIni As New IniFile
     Public MS_KeysIni As IniFile = New IniFile
     Public BotIni As New IniFile
-    Public cBot As cBot
-    Public FurcPath As Furcadia.IO.Paths = New Furcadia.IO.Paths()
+    Public cBot As Settings.cBot
     Public Plugins() As PluginServices.AvailablePlugin
     Public Const My_Docs As String = "\Silver Monkey"
     Public Const REGEX_NameFilter As String = "[^a-z0-9\0x0020_;&]+"
@@ -18,22 +15,12 @@ Module MainModule
 
     Public Const MS_ErrWarning As String = "Error, See Debug Window"
 
+
+
     <System.Runtime.CompilerServices.Extension()> _
     Public Function ToFurcShortName(ByVal value As String) As String
         If String.IsNullOrEmpty(value) Then Return Nothing
         Return Regex.Replace(value.ToLower, REGEX_NameFilter, "", RegexOptions.CultureInvariant)
-    End Function
-
-    Public Function CheckMyDocFile(ByVal Filename As String) As String
-
-        Dim f As String = Path.GetDirectoryName(Filename)
-        If String.IsNullOrEmpty(f) Then
-            Return SilverMonkeyBotPath
-        End If
-        If String.IsNullOrEmpty(Path.GetPathRoot(f)) Then
-            Return SilverMonkeyBotPath
-        End If
-        Return Filename
     End Function
 
     Public Function IsBotControler(ByRef Name As String) As Boolean
@@ -79,19 +66,19 @@ Module MainModule
     End Function
 End Module
 Public Module MyExtensions
-    <System.Runtime.CompilerServices.Extension()> _
-    Public Function IsInteger(ByVal value As String) As Boolean
-        If String.IsNullOrEmpty(value) Then
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function IsInteger(ByVal value As Type) As Boolean
+        If String.IsNullOrEmpty(value.ToString) Then
             Return False
         Else
-            Return Integer.TryParse(value, Nothing)
+            Return Integer.TryParse(value.ToString, Nothing)
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
-    Public Function ToInteger(ByVal value As String) As Integer
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function ToInteger(ByVal value As Type) As Integer
         If value.IsInteger() Then
-            Return Integer.Parse(value)
+            Return Integer.Parse(value.ToString)
         Else
             Return 0
         End If

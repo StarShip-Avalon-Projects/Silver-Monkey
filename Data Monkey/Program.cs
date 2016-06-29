@@ -1,11 +1,9 @@
-﻿using System.Reflection;
-using System;
-using System.IO;
+﻿using System;
 using System.Windows.Forms;
 
 namespace SQLiteEditor
 {
-	public class Program
+    public class Program
 	{
 		/// <summary>
         /// The main entry point for the application.

@@ -1,4 +1,5 @@
-﻿Imports  System.Windows.Forms
+﻿Imports System.Windows.Forms
+Imports MonkeyCore
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class MS_Export
@@ -35,7 +36,7 @@ Partial Class MS_Export
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SelectAllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TextBox1 = New SilverMonkey.TextBox_NoFlicker()
+        Me.TextBox1 = New TextBox_NoFlicker()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.MenuStrip1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -140,7 +141,7 @@ Partial Class MS_Export
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents TextBox1 As SilverMonkey.TextBox_NoFlicker
+    Friend WithEvents TextBox1 As TextBox_NoFlicker
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SaveAsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem

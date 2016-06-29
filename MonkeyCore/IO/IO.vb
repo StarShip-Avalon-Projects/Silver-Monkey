@@ -1,12 +1,10 @@
 ﻿Imports System.Text
-Imports MonkeyCore.IniFile
 
 
 Public Class IO
     Private _KeysIni As IniFile
     Private _MS_KeysIni As IniFile
-
-
+    Friend Shared ReadOnly File As Object
 
     Public Sub New()
 

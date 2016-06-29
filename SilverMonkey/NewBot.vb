@@ -1,9 +1,7 @@
 ﻿Imports System.Windows.Forms
-Imports SilverMonkey.ConfigStructs
-Imports Furcadia.IO
-Imports System.IO
 Imports System.Drawing
-
+Imports MonkeyCore.Settings
+Imports MonkeyCore
 
 Public Class NewBott
     Public bFile As cBot
@@ -39,7 +37,7 @@ Public Class NewBott
         If Not String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
             BotFile = TxtbxFilelocation.Text + Path.DirectorySeparatorChar + TxtbxBotName.Text
         Else
-            BotFile = CheckMyDocFile(TxtbxBotName.Text)
+            BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text + ".bini")
         End If
         If File.Exists(BotFile + ".bini") And Not OverWrite Then
             If MessageBox.Show(BotFile + ".bini Exists! Over write settings?", "File Exists Warning", _
@@ -56,7 +54,7 @@ Public Class NewBott
             End If
         End If
 
-        bFile.BotFile = BotFile + ".bini"
+        bFile.IniFile = BotFile
         bFile.IniFile = TxtbxCharacterINI.Text
         bFile.MS_File = BotFile + ".ms"
 
@@ -88,7 +86,7 @@ Public Class NewBott
             callbk.LogStream = New LogStream(callbk.setLogName(bFile), bFile.LogPath)
         End If
         bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.BotFile)
+        Main.SaveRecentFile(bFile.IniFile)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Dispose()
 
@@ -309,7 +307,7 @@ Public Class NewBott
         With OpenFileDialog1
             '.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/Silver Monkey"
 
-            .InitialDirectory = FurcPath.GetFurcadiaCharactersPath()
+            .InitialDirectory = Paths.FurcadiaCharactersFolder
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
 
                 TxtbxCharacterINI.Text = .FileName

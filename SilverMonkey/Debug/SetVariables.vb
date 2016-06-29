@@ -1,6 +1,4 @@
-﻿Imports System.Windows.Forms
-Imports Monkeyspeak
-Public Class SetVariables
+﻿Public Class SetVariables
 
     Public Var As Monkeyspeak.Variable
     Private _VarName As String
@@ -14,7 +12,7 @@ Public Class SetVariables
     End Property
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Var.Value = TxtBxValue.Text
-        MainEngine.MSpage.SetVariable(VarName, Var.Value, Var.IsConstant)
+        MainMSEngine.MSpage.SetVariable(VarName, Var.Value, Var.IsConstant)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
     End Sub
@@ -25,7 +23,7 @@ Public Class SetVariables
     End Sub
 
     Private Sub SetVariables_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Var = MainEngine.MSpage.GetVariable(VarName)
+        Var = MainMSEngine.MSpage.GetVariable(VarName)
         If Var.IsConstant Then
             Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
             Me.Close()

@@ -1,27 +1,22 @@
 using System;
 using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
-using System.Text;
-using System.Data.SQLite;
 using SilverMonkey.SQLiteEditor.Controls;
-using System.Reflection;
-using System.IO;
+using MonkeyCore;
 
 namespace SQLiteEditor
 {
 
-	public class frmExplorer : System.Windows.Forms.Form
+    public class frmExplorer : Form
 	{
-		#region Members
-		System.Windows.Forms.MainMenu mainMenu1;
-		System.Windows.Forms.MenuItem menuItem1;
-		System.Windows.Forms.MenuItem OpenDBmenu;
+        #region Members
+        MainMenu mainMenu1;
+		MenuItem menuItem1;
+		MenuItem OpenDBmenu;
 		private System.ComponentModel.IContainer components;
-		private System.Windows.Forms.MenuItem menuItem2;
-		private System.Windows.Forms.MenuItem AddAreaMenu;
+		private MenuItem menuItem2;
+		private MenuItem AddAreaMenu;
 
 		//Database String
 		static string ActiveDatabaseLocation;		
@@ -42,31 +37,31 @@ namespace SQLiteEditor
 
 		//Listview Menu
 		MenuItem objDeleteRowSQL;
-		private System.Windows.Forms.MenuItem ExitAppMenu;
-		private System.Windows.Forms.TextBox sqlStatementTextBox;
-		private System.Windows.Forms.ToolBar toolBar1;
-		private System.Windows.Forms.TreeView DatabaseTreeView;
-		private System.Windows.Forms.Splitter splitter1;
-		private System.Windows.Forms.TabControl SQLAreaTabControl;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.Splitter splitter2;
-		private System.Windows.Forms.ImageList ToolBarImages;
-		private System.Windows.Forms.ToolBarButton OpenDatabase;
-		private System.Windows.Forms.ToolBarButton ExecuteSQL;
-		private System.Windows.Forms.ToolBarButton StopSQL;
-		private System.Windows.Forms.ToolBarButton Separator;
-		private System.Windows.Forms.ToolBarButton toolBarButton1;
-		private System.Windows.Forms.ToolBarButton toolBarButton2;
-		private System.Windows.Forms.ToolBarButton toolBarButton3;
-		private System.Windows.Forms.ToolBarButton toolBarButton4;
-		private System.Windows.Forms.ToolBarButton toolBarButton5;
-		private System.Windows.Forms.ToolBarButton toolBarButton6;
-		private System.Windows.Forms.ToolBarButton toolBarButton7;
-		private System.Windows.Forms.ListView SqlResultsListView;
-		private System.Windows.Forms.ToolBarButton IntegrityCheck;
-		private System.Windows.Forms.MenuItem CheckIntegrity;
-		private System.Windows.Forms.MenuItem menuItem3;
-		private System.Windows.Forms.MenuItem CreateDBMenu;
+		private MenuItem ExitAppMenu;
+		private TextBox sqlStatementTextBox;
+		private ToolBar toolBar1;
+		private TreeView DatabaseTreeView;
+		private Splitter splitter1;
+		private TabControl SQLAreaTabControl;
+		private TabPage tabPage1;
+		private Splitter splitter2;
+		private ImageList ToolBarImages;
+		private ToolBarButton OpenDatabase;
+		private ToolBarButton ExecuteSQL;
+		private ToolBarButton StopSQL;
+		private ToolBarButton Separator;
+		private ToolBarButton toolBarButton1;
+		private ToolBarButton toolBarButton2;
+		private ToolBarButton toolBarButton3;
+		private ToolBarButton toolBarButton4;
+		private ToolBarButton toolBarButton5;
+		private ToolBarButton toolBarButton6;
+		private ToolBarButton toolBarButton7;
+		private ListView SqlResultsListView;
+		private ToolBarButton IntegrityCheck;
+		private MenuItem CheckIntegrity;
+		private MenuItem menuItem3;
+		private MenuItem CreateDBMenu;
 
 		//Only access from BuildSqlResultsListView
 		string TableName = "";
@@ -114,59 +109,59 @@ namespace SQLiteEditor
 		{
 			this.components = new System.ComponentModel.Container();
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(frmExplorer));
-			this.mainMenu1 = new System.Windows.Forms.MainMenu();
-			this.menuItem1 = new System.Windows.Forms.MenuItem();
-			this.OpenDBmenu = new System.Windows.Forms.MenuItem();
-			this.CreateDBMenu = new System.Windows.Forms.MenuItem();
-			this.CheckIntegrity = new System.Windows.Forms.MenuItem();
-			this.menuItem3 = new System.Windows.Forms.MenuItem();
-			this.ExitAppMenu = new System.Windows.Forms.MenuItem();
-			this.menuItem2 = new System.Windows.Forms.MenuItem();
-			this.AddAreaMenu = new System.Windows.Forms.MenuItem();
-			this.objExecuteSQL = new System.Windows.Forms.MenuItem();
-			this.objOpenTableSQL = new System.Windows.Forms.MenuItem();
-			this.objRenameTableSQL = new System.Windows.Forms.MenuItem();
-			this.objAddColumnSQL = new System.Windows.Forms.MenuItem();
-			this.objDeleteRowSQL = new System.Windows.Forms.MenuItem();
+			this.mainMenu1 = new MainMenu();
+			this.menuItem1 = new MenuItem();
+			this.OpenDBmenu = new MenuItem();
+			this.CreateDBMenu = new MenuItem();
+			this.CheckIntegrity = new MenuItem();
+			this.menuItem3 = new MenuItem();
+			this.ExitAppMenu = new MenuItem();
+			this.menuItem2 = new MenuItem();
+			this.AddAreaMenu = new MenuItem();
+			this.objExecuteSQL = new MenuItem();
+			this.objOpenTableSQL = new MenuItem();
+			this.objRenameTableSQL = new MenuItem();
+			this.objAddColumnSQL = new MenuItem();
+			this.objDeleteRowSQL = new MenuItem();
 			this.objCreateTableSQL = new MenuItem();
-			this.objDeleteTableSQL = new System.Windows.Forms.MenuItem();
-			this.TreeViewContextMenu = new System.Windows.Forms.ContextMenu();
+			this.objDeleteTableSQL = new MenuItem();
+			this.TreeViewContextMenu = new ContextMenu();
 			this.TreeViewTablesMenu = new ContextMenu();
-			this.sqlStatementTextBox = new System.Windows.Forms.TextBox();
-			this.toolBar1 = new System.Windows.Forms.ToolBar();
-			this.OpenDatabase = new System.Windows.Forms.ToolBarButton();
-			this.IntegrityCheck = new System.Windows.Forms.ToolBarButton();
-			this.Separator = new System.Windows.Forms.ToolBarButton();
-			this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
-			this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
-			this.toolBarButton3 = new System.Windows.Forms.ToolBarButton();
-			this.toolBarButton4 = new System.Windows.Forms.ToolBarButton();
-			this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
-			this.toolBarButton6 = new System.Windows.Forms.ToolBarButton();
-			this.toolBarButton7 = new System.Windows.Forms.ToolBarButton();
-			this.ExecuteSQL = new System.Windows.Forms.ToolBarButton();
-			this.StopSQL = new System.Windows.Forms.ToolBarButton();
-			this.ToolBarImages = new System.Windows.Forms.ImageList(this.components);
-			this.DatabaseTreeView = new System.Windows.Forms.TreeView();
-			this.splitter1 = new System.Windows.Forms.Splitter();
-			this.SQLAreaTabControl = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.splitter2 = new System.Windows.Forms.Splitter();
-			this.SqlResultsListView = new System.Windows.Forms.ListView();
+			this.sqlStatementTextBox = new TextBox();
+			this.toolBar1 = new ToolBar();
+			this.OpenDatabase = new ToolBarButton();
+			this.IntegrityCheck = new ToolBarButton();
+			this.Separator = new ToolBarButton();
+			this.toolBarButton1 = new ToolBarButton();
+			this.toolBarButton2 = new ToolBarButton();
+			this.toolBarButton3 = new ToolBarButton();
+			this.toolBarButton4 = new ToolBarButton();
+			this.toolBarButton5 = new ToolBarButton();
+			this.toolBarButton6 = new ToolBarButton();
+			this.toolBarButton7 = new ToolBarButton();
+			this.ExecuteSQL = new ToolBarButton();
+			this.StopSQL = new ToolBarButton();
+			this.ToolBarImages = new ImageList(this.components);
+			this.DatabaseTreeView = new TreeView();
+			this.splitter1 = new Splitter();
+			this.SQLAreaTabControl = new TabControl();
+			this.tabPage1 = new TabPage();
+			this.splitter2 = new Splitter();
+			this.SqlResultsListView = new ListView();
 			this.SQLAreaTabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mainMenu1
 			// 
-			this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.mainMenu1.MenuItems.AddRange(new MenuItem[] {
 																					  this.menuItem1,
 																					  this.menuItem2});
 			// 
 			// menuItem1
 			// 
 			this.menuItem1.Index = 0;
-			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.menuItem1.MenuItems.AddRange(new MenuItem[] {
 																					  this.OpenDBmenu,
 																					  this.CreateDBMenu,
 																					  this.CheckIntegrity,
@@ -206,7 +201,7 @@ namespace SQLiteEditor
 			// menuItem2
 			// 
 			this.menuItem2.Index = 1;
-			this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.menuItem2.MenuItems.AddRange(new MenuItem[] {
 																					  this.AddAreaMenu});
 			this.menuItem2.Text = "SQLArea";
 			// 
@@ -260,7 +255,7 @@ namespace SQLiteEditor
 			// 
 			// TreeViewContextMenu
 			// 
-			this.TreeViewContextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.TreeViewContextMenu.MenuItems.AddRange(new MenuItem[] {
 																								this.objOpenTableSQL,
 																								this.objRenameTableSQL,
 																								this.objAddColumnSQL,
@@ -268,11 +263,11 @@ namespace SQLiteEditor
 			// 
 			// TreeViewTablesMenu
 			// 
-			this.TreeViewTablesMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {this.objCreateTableSQL});
+			this.TreeViewTablesMenu.MenuItems.AddRange(new MenuItem[] {this.objCreateTableSQL});
 			// 
 			// sqlStatementTextBox
 			// 
-			this.sqlStatementTextBox.Dock = System.Windows.Forms.DockStyle.Top;
+			this.sqlStatementTextBox.Dock = DockStyle.Top;
 			this.sqlStatementTextBox.Location = new System.Drawing.Point(0, 0);
 			this.sqlStatementTextBox.Multiline = true;
 			this.sqlStatementTextBox.Name = "sqlStatementTextBox";
@@ -282,7 +277,7 @@ namespace SQLiteEditor
 			// 
 			// toolBar1
 			// 
-			this.toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+			this.toolBar1.Buttons.AddRange(new ToolBarButton[] {
 																						this.OpenDatabase,
 																						this.IntegrityCheck,
 																						this.Separator,
@@ -302,7 +297,7 @@ namespace SQLiteEditor
 			this.toolBar1.ShowToolTips = true;
 			this.toolBar1.Size = new System.Drawing.Size(840, 28);
 			this.toolBar1.TabIndex = 11;
-			this.toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
+			this.toolBar1.ButtonClick += new ToolBarButtonClickEventHandler(this.toolBar1_ButtonClick);
 			// 
 			// OpenDatabase
 			// 
@@ -318,35 +313,35 @@ namespace SQLiteEditor
 			// 
 			// Separator
 			// 
-			this.Separator.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			this.Separator.Style = ToolBarButtonStyle.Separator;
 			// 
 			// toolBarButton1
 			// 
-			this.toolBarButton1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			this.toolBarButton1.Style = ToolBarButtonStyle.Separator;
 			// 
 			// toolBarButton2
 			// 
-			this.toolBarButton2.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			this.toolBarButton2.Style = ToolBarButtonStyle.Separator;
 			// 
 			// toolBarButton3
 			// 
-			this.toolBarButton3.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			this.toolBarButton3.Style = ToolBarButtonStyle.Separator;
 			// 
 			// toolBarButton4
 			// 
-			this.toolBarButton4.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			this.toolBarButton4.Style = ToolBarButtonStyle.Separator;
 			// 
 			// toolBarButton5
 			// 
-			this.toolBarButton5.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			this.toolBarButton5.Style = ToolBarButtonStyle.Separator;
 			// 
 			// toolBarButton6
 			// 
-			this.toolBarButton6.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			this.toolBarButton6.Style = ToolBarButtonStyle.Separator;
 			// 
 			// toolBarButton7
 			// 
-			this.toolBarButton7.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+			this.toolBarButton7.Style = ToolBarButtonStyle.Separator;
 			// 
 			// ExecuteSQL
 			// 
@@ -363,22 +358,22 @@ namespace SQLiteEditor
 			// ToolBarImages
 			// 
 			this.ToolBarImages.ImageSize = new System.Drawing.Size(16, 16);
-			this.ToolBarImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ToolBarImages.ImageStream")));
+			this.ToolBarImages.ImageStream = ((ImageListStreamer)(resources.GetObject("ToolBarImages.ImageStream")));
 			this.ToolBarImages.TransparentColor = System.Drawing.Color.Transparent;
 			// 
 			// DatabaseTreeView
 			// 
-			this.DatabaseTreeView.Cursor = System.Windows.Forms.Cursors.Default;
-			this.DatabaseTreeView.Dock = System.Windows.Forms.DockStyle.Left;
+			this.DatabaseTreeView.Cursor = Cursors.Default;
+			this.DatabaseTreeView.Dock = DockStyle.Left;
 			this.DatabaseTreeView.ImageIndex = -1;
 			this.DatabaseTreeView.Location = new System.Drawing.Point(0, 28);
 			this.DatabaseTreeView.Name = "DatabaseTreeView";
 			this.DatabaseTreeView.SelectedImageIndex = -1;
 			this.DatabaseTreeView.Size = new System.Drawing.Size(216, 397);
 			this.DatabaseTreeView.TabIndex = 12;
-			this.DatabaseTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DatabaseTreeView_MouseDown);
-			this.DatabaseTreeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.DatabaseTreeView_AfterExpand);
-			this.DatabaseTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.DatabaseTreeView_BeforeSelect);
+			this.DatabaseTreeView.MouseDown += new MouseEventHandler(this.DatabaseTreeView_MouseDown);
+			this.DatabaseTreeView.AfterExpand += new TreeViewEventHandler(this.DatabaseTreeView_AfterExpand);
+			this.DatabaseTreeView.BeforeSelect += new TreeViewCancelEventHandler(this.DatabaseTreeView_BeforeSelect);
 			this.DatabaseTreeView.LostFocus += new System.EventHandler(this.DatabaseTreeView_LostFocus);
 			// 
 			// splitter1
@@ -392,7 +387,7 @@ namespace SQLiteEditor
 			// SQLAreaTabControl
 			// 
 			this.SQLAreaTabControl.Controls.Add(this.tabPage1);
-			this.SQLAreaTabControl.Dock = System.Windows.Forms.DockStyle.Top;
+			this.SQLAreaTabControl.Dock = DockStyle.Top;
 			this.SQLAreaTabControl.HotTrack = true;
 			this.SQLAreaTabControl.ItemSize = new System.Drawing.Size(42, 18);
 			this.SQLAreaTabControl.Location = new System.Drawing.Point(224, 28);
@@ -412,7 +407,7 @@ namespace SQLiteEditor
 			// 
 			// splitter2
 			// 
-			this.splitter2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.splitter2.Dock = DockStyle.Top;
 			this.splitter2.Location = new System.Drawing.Point(224, 200);
 			this.splitter2.Name = "splitter2";
 			this.splitter2.Size = new System.Drawing.Size(616, 8);
@@ -421,16 +416,16 @@ namespace SQLiteEditor
 			// 
 			// SqlResultsListView
 			// 
-			this.SqlResultsListView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.SqlResultsListView.Dock = DockStyle.Fill;
 			this.SqlResultsListView.FullRowSelect = true;
 			this.SqlResultsListView.GridLines = true;
-			this.SqlResultsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.SqlResultsListView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
 			this.SqlResultsListView.Location = new System.Drawing.Point(224, 208);
 			this.SqlResultsListView.Name = "SqlResultsListView";
 			this.SqlResultsListView.Size = new System.Drawing.Size(616, 217);
 			this.SqlResultsListView.TabIndex = 19;
-			this.SqlResultsListView.View = System.Windows.Forms.View.Details;
-			this.SqlResultsListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SqlResultsListView_MouseDown);
+			this.SqlResultsListView.View = View.Details;
+			this.SqlResultsListView.MouseDown += new MouseEventHandler(this.SqlResultsListView_MouseDown);
 			// 
 			// frmExplorer
 			// 
@@ -509,7 +504,7 @@ namespace SQLiteEditor
 			// 
 			// sqlStatementTextBox
 			// 
-			tempTextBox.Dock = System.Windows.Forms.DockStyle.Top;
+			tempTextBox.Dock = DockStyle.Top;
 			tempTextBox.Location = new System.Drawing.Point(0, 0);
 			tempTextBox.Multiline = true;
 			tempTextBox.Size = new System.Drawing.Size(608, 200);
@@ -612,11 +607,11 @@ namespace SQLiteEditor
 			using (OpenFileDialog oFile = new OpenFileDialog()) 
 			{
 				oFile.Title = "Data Monkey Database Locator" ; 
-				oFile.InitialDirectory = @"c:\" ; 
+				oFile.InitialDirectory = Paths.SilverMonkeyBotPath ; 
 				oFile.Filter = "All files (*.*)|*.*|DB Files (*.db)|*.db" ; 
 				oFile.FilterIndex = 2 ; 
 				oFile.RestoreDirectory = true ;
-                if (oFile.ShowDialog() == DialogResult.OK | oFile.ShowDialog() == DialogResult.Yes) 
+                if (oFile.ShowDialog() == DialogResult.OK ) 
 				{ 
 					ActiveDatabaseLocation = oFile.FileName ;
 					SQLiteDatabase db = new SQLiteDatabase(ActiveDatabaseLocation);
@@ -633,11 +628,11 @@ namespace SQLiteEditor
             using (SaveFileDialog oFile = new SaveFileDialog())
             {
                 oFile.Title = "Data Monkey Database Locator";
-                oFile.InitialDirectory = @"c:\";
+                oFile.InitialDirectory = Paths.SilverMonkeyBotPath;
                 oFile.Filter = "All files (*.*)|*.*|DB Files (*.db)|*.db";
                 oFile.FilterIndex = 2;
                 oFile.RestoreDirectory = true;
-                if (oFile.ShowDialog() == DialogResult.OK | oFile.ShowDialog() == DialogResult.Yes)
+                if (oFile.ShowDialog() == DialogResult.OK )
                 {
                     ActiveDatabaseLocation = oFile.FileName;
                     SQLiteDatabase db = new SQLiteDatabase(ActiveDatabaseLocation);
@@ -867,7 +862,7 @@ namespace SQLiteEditor
 		#region ListView Events
 		private void SqlResultsListView_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (e.Button == System.Windows.Forms.MouseButtons.Right)
+			if (e.Button == MouseButtons.Right)
 			{
 				ListViewItem lvi = SqlResultsListView.GetItemAt(e.X, e.Y);
 				if (lvi != null)
@@ -894,7 +889,7 @@ namespace SQLiteEditor
 
 		#endregion
 
-		private void toolBar1_ButtonClick(object sender, System.Windows.Forms.ToolBarButtonClickEventArgs e)
+		private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
 		{
 			if(e.Button.Tag != null)
 			{

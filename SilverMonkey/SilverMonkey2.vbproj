@@ -98,21 +98,6 @@
     <Compile Include="BotSetup.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\ListBox_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.Designer.vb">
-      <DependentUpon>ListView_NoFlicker.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\RichTextBoxEx.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TextBox_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Debug\SetVariables.Designer.vb">
       <DependentUpon>SetVariables.vb</DependentUpon>
     </Compile>
@@ -133,6 +118,7 @@
     <Compile Include="frmHelp.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Helper Classes\DeBugWriter.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -144,7 +130,6 @@
     <Compile Include="NewBot.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Engine\Misc.vb" />
     <Compile Include="Engine\Banish.vb" />
     <Compile Include="Engine\Description.vb" />
     <Compile Include="Engine\HelperModule.vb" />
@@ -164,20 +149,17 @@
     <Compile Include="Engine\Warning.vb" />
     <Compile Include="Engine\WmCpyDta.vb" />
     <Compile Include="Helper Classes\Logger.vb" />
-    <Compile Include="Helper Classes\LogStream.vb" />
     <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="Helper Classes\MiscUtils.vb" />
     <Compile Include="MainModule.vb" />
     <Compile Include="Engine\MS_Engine.vb" />
     <Compile Include="Helper Classes\DownLoadImage.vb" />
-    <Compile Include="Helper Classes\TextWriter.vb" />
     <Compile Include="Config.Designer.vb">
       <DependentUpon>Config.vb</DependentUpon>
     </Compile>
     <Compile Include="Config.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigStructs.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -335,6 +317,10 @@
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Host\ModuleExplorer.vbproj">
+      <Project>{DDB48421-ADD5-499B-AE19-62184A2F2051}</Project>
+      <Name>ModuleExplorer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
       <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
       <Name>Interfaces</Name>
@@ -359,6 +345,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

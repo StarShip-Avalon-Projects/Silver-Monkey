@@ -1,15 +1,9 @@
-using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
-
 namespace SilverMonkey.SQLiteEditor.Controls
 {
-	/// <summary>
-	/// Summary description for Base.
-	/// </summary>
-	public class BasePopup : System.Windows.Forms.Form
+    /// <summary>
+    /// Summary description for Base.
+    /// </summary>
+    public class BasePopup : System.Windows.Forms.Form
 	{
 		protected System.Windows.Forms.Button CanButton;
 		protected System.Windows.Forms.Button OkButton;

@@ -130,6 +130,7 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -193,6 +194,10 @@
     <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
       <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Project>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</Project>
+      <Name>MonkeyCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyspeakR6\MonkeyspeakR6.csproj">
       <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>

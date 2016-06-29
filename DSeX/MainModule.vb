@@ -4,8 +4,7 @@ Imports System.Runtime.InteropServices
 
 Public Module MainModule
 
-
-
+    Public CallBk As MS_Edit
     Public KeysHelpMSIni As IniFile = New IniFile
     Public KeysHelpIni As IniFile = New IniFile
 

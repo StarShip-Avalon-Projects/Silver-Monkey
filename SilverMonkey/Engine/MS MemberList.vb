@@ -1,17 +1,12 @@
 ﻿Imports Monkeyspeak
-Imports SilverMonkey.ErrorLogging
-Imports SilverMonkey.TextBoxWriter
-Imports System.IO
+Imports MonkeyCore
 Imports System.Text.RegularExpressions
-
-Imports System.Diagnostics
-Imports System.Collections
 Imports System.Collections.Generic
 
 Public Class MS_MemberList
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing
-    Private MemberList As String = ""
+    Private Shared MemberList As String
     Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
         MemberList = "MemberList.txt"
@@ -44,13 +39,14 @@ Public Class MS_MemberList
 
     End Sub
 
+
     '(1:900) and the triggering furre is on my dream Member List,
-    Private Function TrigFurreIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
+    Private Function TrigFurreIsMember(reader As TriggerReader) As Boolean
         CheckMemberList()
         Dim Furre As String = Nothing
         Dim f() As String
         Try
-            Furre = MainEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             f = File.ReadAllLines(MemberList)
             For Each l As String In f
                 If l.ToFurcShortName = Furre.ToFurcShortName Then
@@ -60,16 +56,10 @@ Public Class MS_MemberList
             Dim test As Boolean = IsBotControler(Furre)
             Return IsBotControler(Furre)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
-
-            Return IsBotControler(Furre)
+            MainMSEngine.LogError(reader, ex)
+            Return False
         End Try
-
+        Return IsBotControler(Furre)
     End Function
     '(1:901) and the furre named {...} is on my Dream Member list.
     Private Function FurreNamedIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -84,12 +74,7 @@ Public Class MS_MemberList
             Next
             Return IsBotControler(Furre)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -107,7 +92,7 @@ Public Class MS_MemberList
         Dim Furre As String = Nothing
 
         Try
-            Furre = MainEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
                 Dim sw As StreamWriter = New StreamWriter(MemberList, True)
                 sw.WriteLine(Furre)
@@ -116,12 +101,7 @@ Public Class MS_MemberList
             Return True
 
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -142,12 +122,7 @@ Public Class MS_MemberList
             Return True
 
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -157,7 +132,7 @@ Public Class MS_MemberList
         Dim Furre As String = Nothing
         CheckMemberList()
         Try
-            Furre = MainEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
             Dim line As String = Nothing
             Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
@@ -174,12 +149,7 @@ Public Class MS_MemberList
                 line = SR.ReadLine()
             Next i
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -206,12 +176,7 @@ Public Class MS_MemberList
                 line = SR.ReadLine()
             Next i
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -224,12 +189,7 @@ Public Class MS_MemberList
             MemberList = reader.ReadString
             CheckMemberList()
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -244,18 +204,13 @@ Public Class MS_MemberList
             f = File.ReadAllLines(MemberList)
             Furre.Value = String.Join(" ", f)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     Private Sub CheckMemberList()
-        MemberList = CheckMyDocFile(MemberList)
+        MemberList = Path.Combine(Paths.SilverMonkeyBotPath, MemberList)
         If File.Exists(MemberList) = False Then
             Dim sw As StreamWriter = New StreamWriter(MemberList, False)
             sw.Close()

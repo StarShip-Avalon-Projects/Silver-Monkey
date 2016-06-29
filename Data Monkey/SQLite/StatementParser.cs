@@ -1,12 +1,11 @@
-using System;
+using MonkeyCore;
 using System.Data;
-
 namespace SQLiteEditor
 {
-	/// <summary>
-	/// Summary description for StatementParser.
-	/// </summary>
-	public class StatementParser
+    /// <summary>
+    /// Summary description for StatementParser.
+    /// </summary>
+    public class StatementParser
 	{
 		public StatementParser()
 		{
@@ -20,22 +19,23 @@ namespace SQLiteEditor
 			ReturnResults(SQLStatement, DatabaseLocation, ref ds);
 		}
 
-		public static void ReturnResults(string SQLStatement, string DatabaseLocation, ref DataSet ds)
-		{
-			//Add a call here to a parser that will 
-			//ensure the SQLStatement is properly formed
-
-			SQLiteDatabase db = new SQLiteDatabase(DatabaseLocation);
+        public static void ReturnResults(string SQLStatement, string DatabaseLocation, ref DataSet ds)
+        {
+            //Add a call here to a parser that will 
+            //ensure the SQLStatement is properly formed
 
             if (SQLStatement.ToLower().StartsWith("select") || SQLStatement.ToLower().StartsWith("pragma"))
+            {
+                SQLiteDatabase db = new SQLiteDatabase(DatabaseLocation);
                 ds = db.ExecuteQuery(SQLStatement);
+            }
             else
             {
-                db.ExecuteNonQuery(SQLStatement);
+                SQLiteDatabase.ExecuteNonQuery(SQLStatement);
                 ds = null;
             }
-			
 
+        
 		}
 
 
