@@ -1,5 +1,4 @@
 ﻿
-Imports Monkeyspeak
 Imports System.Data
 Imports System.Data.SQLite
 Imports System.Text.RegularExpressions
@@ -7,7 +6,7 @@ Imports System.Diagnostics
 Imports System.Collections.Generic
 Imports System.Windows.Forms
 Imports MonkeyCore
-
+Imports Monkeyspeak
 
 Public Class MSPK_MDB
     Inherits Libraries.AbstractBaseLibrary
@@ -27,6 +26,7 @@ Public Class MSPK_MDB
             Dim logError As New ErrorLogging(eX, Me)
         End Try
         Try
+            'Set the default file the first time this MonkeySpeak Library is run
             Main.SQLitefile = Path.Combine(Paths.SilverMonkeyBotPath, "SilverMonkey.db")
         Catch eX As Exception
             Dim logError As New ErrorLogging(eX, Me)
@@ -66,145 +66,145 @@ Public Class MSPK_MDB
                 AddressOf BackUpCharacterNamed, "(0:507) When the bot restores the  Phoenix Speak for the furre named {...}.")
 
             '(1:500) and the Database info {...} about the triggering furre is equal to #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 500),
+            Add(New Trigger(TriggerCategory.Condition, 500),
                 AddressOf TriggeringFurreinfoEqualToNumber, "(1:500) and the Database info {...} about the triggering furre is equal to #,")
             '(1:501) and the Database info {...} about the triggering furre is not equal to #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 501),
+            Add(New Trigger(TriggerCategory.Condition, 501),
                 AddressOf TriggeringFurreinfoNotEqualToNumber, "(1:501) and the Database info {...} about the triggering furre is not equal to #,")
             '(1:502) and the Database info {...} about the triggering furre is greater than #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 502),
+            Add(New Trigger(TriggerCategory.Condition, 502),
                 AddressOf TriggeringFurreinfoGreaterThanNumber, "(1:502) and the Database info {...} about the triggering furre is greater than #,")
             '(1:503) and the Database info {...} about the triggering furre is less than #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 503),
+            Add(New Trigger(TriggerCategory.Condition, 503),
                 AddressOf TriggeringFurreinfoLessThanNumber, "(1:503) and the Database info {...} about the triggering furre is less than #,")
 
             '(1:504) and the Database info {...} about the triggering furre is greater than or equal to #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 504),
+            Add(New Trigger(TriggerCategory.Condition, 504),
                 AddressOf TriggeringFurreinfoGreaterThanOrEqualToNumber, "(1:504) and the Database info {...} about the triggering furre is greater than or equal to #,")
             '(1:505) and the Database info {...} about the triggering furre is less than or equal to#,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 505),
+            Add(New Trigger(TriggerCategory.Condition, 505),
                 AddressOf TriggeringFurreinfoLessThanOrEqualToNumber, "(1:505) and the Database info {...} about the triggering furre is less than or equal to #,")
 
 
             '(1:508) and the Database info {...} about the furre named {...} is equal to #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 508),
+            Add(New Trigger(TriggerCategory.Condition, 508),
                 AddressOf FurreNamedinfoEqualToNumber, "(1:508) and the Database info {...} about the furre named {...} is equal to #,")
             '(1:509) and the Database info {...} about the furre named {...} is not equal to #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 509),
+            Add(New Trigger(TriggerCategory.Condition, 509),
                 AddressOf FurreNamedinfoNotEqualToNumber, "(1:509) and the Database info {...} about the furre named {...} is not equal to #,")
             '(1:510) and the Database info {...} about the furre named {...} is greater than #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 510),
+            Add(New Trigger(TriggerCategory.Condition, 510),
                 AddressOf FurreNamedinfoGreaterThanNumber, "(1:510) and the Database info {...} about the furre named {...} is greater than #,")
             '(1:511) and the Database info {...} about the furre named {...} is less than #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 511),
+            Add(New Trigger(TriggerCategory.Condition, 511),
                 AddressOf FurreNamedinfoLessThanNumber, "(1:511) and the Database info {...} about the furre named {...} is less than #,")
 
             '(1:510) and the Database info {...} about the furre named {...} is greater than or equal to #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 512),
+            Add(New Trigger(TriggerCategory.Condition, 512),
             AddressOf FurreNamedinfoGreaterThanOrEqualToNumber, "(1:512) and the Database info {...} about the furre named {...} is greater than or equal to #,")
             '(1:511) and the Database info {...} about the furre named {...} is less than or equal to #,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 513),
+            Add(New Trigger(TriggerCategory.Condition, 513),
             AddressOf FurreNamedinfoLessThanOrEqualToNumber, "(1:513) and the Database info {...} about the furre named {...} is less than or equal to #,")
 
 
             '(1:516) and the Database info {...} about the furre named {...} is equal to {...},
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 516),
+            Add(New Trigger(TriggerCategory.Condition, 516),
            AddressOf FurreNamedinfoEqualToSTR, "(1:516) and the Database info {...} about the furre named {...} is equal to string {...},")
             '(1:517) and the Database info {...} about the furre named {...} is not equal to {...},
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 517),
+            Add(New Trigger(TriggerCategory.Condition, 517),
             AddressOf FurreNamedinfoNotEqualToSTR, "(1:517) and the Database info {...} about the furre named {...} is not equal to string {...},")
             '(1:518) and the Database info {...} about the triggering furre is equal to {...},
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 518),
+            Add(New Trigger(TriggerCategory.Condition, 518),
                 AddressOf TriggeringFurreinfoEqualToSTR, "(1:518) and the Database info {...} about the triggering furre is equal to string {...},")
             '(1:519) and the Database info {...} about the triggering furre is not equal to {...},
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 519),
+            Add(New Trigger(TriggerCategory.Condition, 519),
                 AddressOf TriggeringFurreinfoNotEqualToSTR, "(1:519) and the Database info {...} about the triggering furre is not equal to string {...},")
 
             '(1:520) and the bot is not in the middle of a PS Backup Process
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 520),
+            Add(New Trigger(TriggerCategory.Condition, 520),
                   AddressOf BotBackup, "(1:520) and the bot is not in the middle of a PS Backup Process,")
 
             '(1:521) and the bot is in the middle of a PS Backup Process.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 521),
+            Add(New Trigger(TriggerCategory.Condition, 521),
                      AddressOf NotBotBackup, "(1:521) and the bot is in the middle of a PS Backup Process,")
 
             '(1:522) and the bot is not in the middle of a PS Restore Process,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 522),
+            Add(New Trigger(TriggerCategory.Condition, 522),
                  AddressOf BotRestore, "(1:522) and the bot is not in the middle of a PS Restore Process,")
             '(1:523) and the bot is in the middle of a PS Restore Process,
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 523),
+            Add(New Trigger(TriggerCategory.Condition, 523),
                  AddressOf NotBotRestore, "(1:523) and the bot is in the middle of a PS Restore Process,")
 
 
             '(5:500) use SQLite database file {...} or create file if it does not exist.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 500), AddressOf createMDB, "(5:500) use SQLite database file {...} or create file if it does not exist.")
+            Add(New Trigger(TriggerCategory.Effect, 500), AddressOf createMDB, "(5:500) use SQLite database file {...} or create file if it does not exist.")
 
             '(5:505 ) Add the triggering furre with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 505), AddressOf insertTriggeringFurreRecord, "(5:505) add the triggering furre with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
+            Add(New Trigger(TriggerCategory.Effect, 505), AddressOf insertTriggeringFurreRecord, "(5:505) add the triggering furre with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
             '(5:506) Add furre named {...} with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 506), AddressOf InsertFurreNamed, "(5:506) add furre named {...} with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
+            Add(New Trigger(TriggerCategory.Effect, 506), AddressOf InsertFurreNamed, "(5:506) add furre named {...} with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
 
             '(5:507) update Database info {...} about the triggering furre will now be #.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 507), AddressOf UpdateTriggeringFurreField, "(5:507) update Database info {...} about the triggering furre will now be #.")
+            Add(New Trigger(TriggerCategory.Effect, 507), AddressOf UpdateTriggeringFurreField, "(5:507) update Database info {...} about the triggering furre will now be #.")
             '(5:508) update Database info {...} about the furre named {...} will now be #.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 508), AddressOf UpdateFurreNamed_Field, "(5:508) update Database info {...} about the furre named {...} will now be #.")
+            Add(New Trigger(TriggerCategory.Effect, 508), AddressOf UpdateFurreNamed_Field, "(5:508) update Database info {...} about the furre named {...} will now be #.")
             '(5:509) update Database info {...} about the triggering furre will now be {...}.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 509), AddressOf UpdateTriggeringFurreFieldSTR, "(5:509) update Database info {...} about the triggering furre will now be {...}.")
+            Add(New Trigger(TriggerCategory.Effect, 509), AddressOf UpdateTriggeringFurreFieldSTR, "(5:509) update Database info {...} about the triggering furre will now be {...}.")
             '(5:510) update Database info {...} about the furre named {...} will now be {...}.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 510), AddressOf UpdateFurreNamed_FieldSTR, "(5:510) update Database info {...} about the furre named {...} will now be {...}.")
+            Add(New Trigger(TriggerCategory.Effect, 510), AddressOf UpdateFurreNamed_FieldSTR, "(5:510) update Database info {...} about the furre named {...} will now be {...}.")
 
             '(5:511) select Database info {...} about the triggering furre, and put it in variable %.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 511), AddressOf ReadDatabaseInfo, "(5:511) select Database info {...} about the triggering furre, and put it in variable %.")
+            Add(New Trigger(TriggerCategory.Effect, 511), AddressOf ReadDatabaseInfo, "(5:511) select Database info {...} about the triggering furre, and put it in variable %.")
             '(5:512) select Database info {...} about the furre named {...}, and put it in variable %.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 512), AddressOf ReadDatabaseInfoName, "(5:512) select Database info {...} about the furre named {...}, and put it in variable %.")
+            Add(New Trigger(TriggerCategory.Effect, 512), AddressOf ReadDatabaseInfoName, "(5:512) select Database info {...} about the furre named {...}, and put it in variable %.")
 
             '(5:513) add column {...} with type {...} to the Furre table.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 513), AddressOf AddColumn, "(5:513) add column {...} with type {...} to the Furre table.")
+            Add(New Trigger(TriggerCategory.Effect, 513), AddressOf AddColumn, "(5:513) add column {...} with type {...} to the Furre table.")
 
 
             '(5:518) delete all Database info about the triggering furre.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 518), AddressOf DeleteTriggeringFurre, "(5:518) delete all Database info about the triggering furre.")
+            Add(New Trigger(TriggerCategory.Effect, 518), AddressOf DeleteTriggeringFurre, "(5:518) delete all Database info about the triggering furre.")
             '(5:519) delete all Database info about the furre named {...}.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 519), AddressOf DeleteFurreNamed, "(5:519) delete all Database info about the furre named {...}.")
+            Add(New Trigger(TriggerCategory.Effect, 519), AddressOf DeleteFurreNamed, "(5:519) delete all Database info about the furre named {...}.")
 
             '(5:522) get the total of records from table {...} and put it into variable %.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 522), AddressOf GetTotalRecords, "(5:522) get the total number of records from table {...} and put it into variable %Variable.")
+            Add(New Trigger(TriggerCategory.Effect, 522), AddressOf GetTotalRecords, "(5:522) get the total number of records from table {...} and put it into variable %Variable.")
 
             '(5:523) take the sum of column{...} in table {...} and put it into variable %
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 523), AddressOf ColumnSum, "(5:523) take the sum of column{...} in table {...} and put it into variable %Variable.")
+            Add(New Trigger(TriggerCategory.Effect, 523), AddressOf ColumnSum, "(5:523) take the sum of column{...} in table {...} and put it into variable %Variable.")
 
             '(5:550) take variable %Variable , prepare it for a query, and put it in variable %Variable .   (this is your escaping call, which would depend on however you have to do it internally)
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 550), AddressOf PrepQuery,
+            Add(New Trigger(TriggerCategory.Effect, 550), AddressOf PrepQuery,
                 "(5:550) take variable %Variable , prepare it for a SQLite Database query, and put it in variable %Variable.")
 
             '(5:551) execute SQLite Database query {...} Select * from table where name=%2
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 551), AddressOf ExecuteQuery,
+            Add(New Trigger(TriggerCategory.Effect, 551), AddressOf ExecuteQuery,
                  "(5:551) execute SQLite Database query {...}.")
 
             '(5:552) retrieve field {...} from SQLite Database query and put it into variable %Variable .
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 552), AddressOf RetrieveQuery,
+            Add(New Trigger(TriggerCategory.Effect, 552), AddressOf RetrieveQuery,
                 "(5:552) retrieve field {...} from SQLite Database query and put it into variable %Variable.")
             '(5:553) Backup All Character phoenixspeak for the dream
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 553), AddressOf BackupAllPS,
+            Add(New Trigger(TriggerCategory.Effect, 553), AddressOf BackupAllPS,
                "(5:553) backup All Phoenix Speak for the dream")
             '(5:554) backup Character named {...} phoenix speak 
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 554), AddressOf BackupSingleCharacterPS,
+            Add(New Trigger(TriggerCategory.Effect, 554), AddressOf BackupSingleCharacterPS,
                    "(5:554) backup character named {...} Phoenix Speak. (use ""[DREAM]"" to restore information specific to the dream)")
             '(5:555) restore phoenix speak for character {...}
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 555), AddressOf RestoreCharacterPS,
+            Add(New Trigger(TriggerCategory.Effect, 555), AddressOf RestoreCharacterPS,
                    "(5:555) restore Phoenix Speak for character {...}. (use ""[DREAM]"" to restore information specific to the dream)")
             '(5:556) restore all phoenxi speak characters for this dream.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 556), AddressOf restoreAllPSData,
+            Add(New Trigger(TriggerCategory.Effect, 556), AddressOf restoreAllPSData,
                  "(5:556) restore all Phoenix Speak records for this dream.")
             '(5:557) remove Entries older then # days from Phoenix Speak Character backup.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 557), AddressOf PruneCharacterBackup,
+            Add(New Trigger(TriggerCategory.Effect, 557), AddressOf PruneCharacterBackup,
                 "(5:557) remove Entries older than # days from Phoenix Speak backup.")
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 558), AddressOf restorePS_DataOldrThanDays,
+            Add(New Trigger(TriggerCategory.Effect, 558), AddressOf restorePS_DataOldrThanDays,
                 "(5:558) restore Phoenix Speak records newer then # days.")
             '(5:559) execute VACUUM on the database to rebuild and reclaim wasted space.
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 559), AddressOf VACUUM,
+            Add(New Trigger(TriggerCategory.Effect, 559), AddressOf VACUUM,
                 "(5:559) execute ""VACUUM"" to rebuild the database and reclaim wasted space.")
-            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 560), AddressOf AbortPS,
+            Add(New Trigger(TriggerCategory.Effect, 560), AddressOf AbortPS,
                 "(5:560) abort Phoenix Speak backup or restore process")
         Catch eX As Exception
             Dim logError As New ErrorLogging(eX, Me)
@@ -221,7 +221,7 @@ Public Class MSPK_MDB
     End Function
 
     '(1: ) and the Database info {...} about the triggering furre is equal to #,
-    Public Function TriggeringFurreinfoEqualToNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function TriggeringFurreinfoEqualToNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim number As Double = 0
         Dim Furre As String = Nothing
@@ -246,7 +246,7 @@ Public Class MSPK_MDB
     End Function
 
     '(1: ) and the Database info {...} about the triggering furre is not equal to #,
-    Public Function TriggeringFurreinfoNotEqualToNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function TriggeringFurreinfoNotEqualToNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim number As Double = 0
         Dim Furre As String = Nothing
@@ -267,7 +267,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1: ) and the Database info {...} about the triggering furre is greater than #,
-    Public Function TriggeringFurreinfoGreaterThanNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function TriggeringFurreinfoGreaterThanNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim number As Double = 0
         Dim Furre As String = Nothing
@@ -289,7 +289,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1: ) and the Database info {...} about the triggering furre is less than #,
-    Public Function TriggeringFurreinfoLessThanNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function TriggeringFurreinfoLessThanNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim number As Double = 0
         Dim Furre As String = Nothing
@@ -312,7 +312,7 @@ Public Class MSPK_MDB
     End Function
 
     '(1: ) and the Database info {...} about the triggering furre is greater than or equal to #,
-    Public Function TriggeringFurreinfoGreaterThanOrEqualToNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function TriggeringFurreinfoGreaterThanOrEqualToNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim number As Double = 0
         Dim Furre As String = Nothing
@@ -334,7 +334,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1: ) and the Database info {...} about the triggering furre is less than #,
-    Public Function TriggeringFurreinfoLessThanOrEqualToNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function TriggeringFurreinfoLessThanOrEqualToNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim number As Double = 0
         Dim Furre As String = Nothing
@@ -356,7 +356,7 @@ Public Class MSPK_MDB
     End Function
 
     '(1: ) and the Database info {...} about the furre named {...} is equal to #,
-    Public Function FurreNamedinfoEqualToNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function FurreNamedinfoEqualToNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim Variable As Double = 0
         Dim Furre As String = Nothing
@@ -377,7 +377,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1: ) and the Database info {...} about the furre named {...} is not equal to #,
-    Public Function FurreNamedinfoNotEqualToNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function FurreNamedinfoNotEqualToNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim Variable As Double = 0
         Dim Furre As String = Nothing
@@ -398,7 +398,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1: ) and the Database info {...} about the furre named {...} is greater than #,
-    Public Function FurreNamedinfoGreaterThanNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function FurreNamedinfoGreaterThanNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim Variable As Double = 0
         Dim Furre As String = Nothing
@@ -419,7 +419,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1: ) and the Database info {...} about the furre named {...} is less than #,
-    Public Function FurreNamedinfoLessThanNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function FurreNamedinfoLessThanNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim Variable As Double = 0
         Dim Furre As String = Nothing
@@ -440,7 +440,7 @@ Public Class MSPK_MDB
     End Function
 
     '(1: ) and the Database info {...} about the furre named {...} is greater than #,
-    Public Function FurreNamedinfoGreaterThanOrEqualToNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function FurreNamedinfoGreaterThanOrEqualToNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim Variable As Double = 0
         Dim Furre As String = Nothing
@@ -460,7 +460,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1: ) and the Database info {...} about the furre named {...} is less than #,
-    Public Function FurreNamedinfoLessThanOrEqualToNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function FurreNamedinfoLessThanOrEqualToNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
         Dim Variable As Double = 0
         Dim Furre As String = Nothing
@@ -482,7 +482,7 @@ Public Class MSPK_MDB
     End Function
 
     '(1: ) and the Database info {...} about the furre named {...} is equal to {...},
-    Public Function FurreNamedinfoEqualToSTR(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function FurreNamedinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
         Dim Furre As String = reader.ReadString()
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
@@ -496,7 +496,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1: ) and the Database info {...} about the furre named {...} is not equal to {...},
-    Public Function FurreNamedinfoNotEqualToSTR(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function FurreNamedinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
         Dim Furre As String = reader.ReadString
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
@@ -511,7 +511,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1: ) and the Database info {...} about the triggering furre is equal to {...},
-    Public Function TriggeringFurreinfoEqualToSTR(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
         Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
@@ -525,7 +525,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1: ) and the Database info {...} about the triggering furre is not equal to {...},
-    Public Function TriggeringFurreinfoNotEqualToSTR(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
         Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
@@ -540,7 +540,7 @@ Public Class MSPK_MDB
     End Function
 
     '(1:520) and the bot is not in the middle of a PS Backup Process
-    Public Function BotBackup(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function BotBackup(reader As TriggerReader) As Boolean
 
         Try
             Return Not callbk.PSBackupRunning
@@ -551,7 +551,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1:521) and the bot is in the middle of a PS Backup Process
-    Public Function NotBotBackup(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function NotBotBackup(reader As TriggerReader) As Boolean
         Try
             Return callbk.PSBackupRunning
         Catch ex As Exception
@@ -561,7 +561,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1:522) and the bot is not in the middle of a PS Restore Process
-    Public Function BotRestore(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function BotRestore(reader As TriggerReader) As Boolean
 
         Try
             Return Not callbk.PSRestoreRunning
@@ -572,7 +572,7 @@ Public Class MSPK_MDB
         Return False
     End Function
     '(1:523) and the bot is in the middle of a PS Restore Process
-    Public Function NotBotRestore(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function NotBotRestore(reader As TriggerReader) As Boolean
 
         Try
             Return callbk.PSRestoreRunning
@@ -609,7 +609,7 @@ Public Class MSPK_MDB
 #Region "Effect Functions"
 
 
-    Public Function createMDB(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function createMDB(reader As TriggerReader) As Boolean
         Main.SQLitefile = Path.Combine(Paths.SilverMonkeyBotPath, reader.ReadString())
         Dim db As New SQLiteDatabase(Main.SQLitefile)
         'db.CreateTbl("FURRE", FurreTable)
@@ -618,7 +618,7 @@ Public Class MSPK_MDB
 
 
     '(5:405) Add the triggering furre with default access level to the Furre Table in the database if he, she or it don't exist.
-    Public Function insertTriggeringFurreRecord(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
         Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
         Dim info As String = reader.ReadString
         'Dim value As String = reader.ReadVariable.Value.ToString
@@ -631,16 +631,16 @@ Public Class MSPK_MDB
         data.Add("[date modified]", Date.Now.ToString)
         data.Add("[Access Level]", "0")
         Try
-            db.Insert("FURRE", data)
-            Return True
-        Catch crap As Exception
-            MessageBox.Show(crap.Message)
+            Return db.Insert("FURRE", data)
+
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
     '(5:506) add furre named {%NewMember} with the default access level "1" to the Furre Table in the database if he, she, or it doesn't exist.
-    Public Function InsertFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function InsertFurreNamed(reader As TriggerReader) As Boolean
         Dim Furre As String = reader.ReadString
         Dim info As String
         If reader.PeekString Then
@@ -657,15 +657,14 @@ Public Class MSPK_MDB
         data.Add("[date modified]", Date.Now.ToString)
         data.Add("[Access Level]", info)
         Try
-            db.Insert("FURRE", data)
-            Return True
-        Catch crap As Exception
-            MessageBox.Show(crap.Message)
+            Return db.Insert("FURRE", data)
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
     '(5407) update Database info {...} about the triggering furre will now be #.
-    Public Function UpdateTriggeringFurreField(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function UpdateTriggeringFurreField(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
         Dim Furre As String = ""
@@ -680,16 +679,15 @@ Public Class MSPK_MDB
         data.Add("[" & info & "]", value.ToString)
         data.Add("[date modified]", Date.Now.ToString)
         Try
-            db.Update("FURRE", data, "Name='" & Furre & "'")
-            Return True
-        Catch crap As Exception
-            MessageBox.Show(crap.Message)
+            Return db.Update("FURRE", data, "Name='" & Furre & "'")
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
     '(5:408) update Database info {...} about the furre named {...} will now be #.
-    Public Function UpdateFurreNamed_Field(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function UpdateFurreNamed_Field(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
         Dim Furre As String = reader.ReadString
         'Dim Furre As String = MainEngine.MSpage.GetVariable("~Name").Value.ToString
@@ -701,8 +699,7 @@ Public Class MSPK_MDB
         data.Add("[" & info & "]", value)
         data.Add("[date modified]", Date.Now.ToString)
         Try
-            db.Update("FURRE", data, "Name='" & Furre & "'")
-            Return True
+            Return db.Update("FURRE", data, "Name='" & Furre & "'")
         Catch crap As Exception
             Dim e As New ErrorLogging(crap, Me)
             Return False
@@ -710,7 +707,7 @@ Public Class MSPK_MDB
     End Function
 
     '(5:409) update Database info {...} about the triggering furre will now be {...}.
-    Public Function UpdateTriggeringFurreFieldSTR(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
         Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
@@ -730,7 +727,7 @@ Public Class MSPK_MDB
         End Try
     End Function
     '(5:410) update Database info {...} about the furre named {...} will now be {...}.
-    Public Function UpdateFurreNamed_FieldSTR(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
         Dim Furre As String = reader.ReadString
         'Dim Furre As String = MainEngine.MSpage.GetVariable("~Name").Value.ToString
@@ -751,10 +748,10 @@ Public Class MSPK_MDB
     End Function
 
     '(5:411) select Database info {...} about the triggering furre, and put it in variable %Variable.
-    Public Function ReadDatabaseInfo(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function ReadDatabaseInfo(reader As TriggerReader) As Boolean
         Try
             Dim Info As String = reader.ReadString
-            Dim Variable As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim Variable As Variable = reader.ReadVariable(True)
             Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
             Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
             'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
@@ -762,40 +759,30 @@ Public Class MSPK_MDB
             Variable.Value = SQLiteDatabase.ExecuteScalar1(cmd)
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
     '(5:412) select Database info {...} about the furre named {...}, and put it in variable %Variable.
-    Public Function ReadDatabaseInfoName(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
         Try
             Dim Info As String = reader.ReadString
             Dim Furre As String = reader.ReadString
             Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
-            Dim Variable As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim Variable As Variable = reader.ReadVariable(True)
             ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where Name ='" & Furre & "'"
             Variable.Value = SQLiteDatabase.ExecuteScalar1(cmd)
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
     '(5:513) add column {...} with type {...} to the Furre table.
-    Public Function AddColumn(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function AddColumn(reader As TriggerReader) As Boolean
         Dim Column As String = reader.ReadString
         Dim Type As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
@@ -803,7 +790,7 @@ Public Class MSPK_MDB
         Return True
     End Function
     '(5:418) delete all Database info about the triggering furre.
-    Public Function DeleteTriggeringFurre(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
         Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
         Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
@@ -811,7 +798,7 @@ Public Class MSPK_MDB
 
     End Function
     '(5:419) delete all Database info about the furre named {...}.
-    Public Function DeleteFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
         Dim Furre As String = reader.ReadString
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
         Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
@@ -832,35 +819,25 @@ Public Class MSPK_MDB
             Total.Value = count
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
 
     End Function
     '(5:423) take the sum of column{...} in table {...} and put it into variable %
-    Public Function ColumnSum(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function ColumnSum(reader As TriggerReader) As Boolean
         Dim Table As String = ""
         Dim Column As String = ""
         Dim Total As Variable
-        Dim TotalSum As Integer = 0
+        Dim TotalSum As Double = 0
 
         Try
             Column = reader.ReadString
             Table = reader.ReadString
             Total = reader.ReadVariable(True)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Dim sql As String = "SELECT " & Column & " FROM " & Table & " ;"
@@ -869,7 +846,9 @@ Public Class MSPK_MDB
         Column = Column.Replace("]", "")
         For Each row As DataRow In dt.Rows
             Try
-                TotalSum += Convert.ToInt32(row(Column))
+                Dim num As Double = 0
+                Double.TryParse(row(Column).ToString, num)
+                TotalSum += num
                 'Console.WriteLine("Calculating TotalSum {0}", TotalSum.ToString)
             Catch
             End Try
@@ -879,7 +858,7 @@ Public Class MSPK_MDB
     End Function
 
     '(5:424) in table {...} take info {...} from record index % and and put it into variable %
-    Public Function RecordIndex(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function RecordIndex(reader As TriggerReader) As Boolean
         Dim info As String = ""
         Dim Idx As Variable
         Dim OutVar As Variable
@@ -890,12 +869,7 @@ Public Class MSPK_MDB
             OutVar = reader.ReadVariable(True)
 
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Dim sql As String = "SELECT " & info & " FROM " & Table & " ;"
@@ -917,9 +891,9 @@ Public Class MSPK_MDB
     End Function
 
     '(5:550) take variable %Variable , prepare it for a query, and put it in variable %Variable   (this is your escaping call, which would depend on however you have to do it internally)
-    Public Function PrepQuery(reader As Monkeyspeak.TriggerReader) As Boolean
-        Dim var1 As Monkeyspeak.Variable
-        Dim var2 As Monkeyspeak.Variable
+    Public Function PrepQuery(reader As TriggerReader) As Boolean
+        Dim var1 As Variable
+        Dim var2 As Variable
         Try
             var1 = reader.ReadVariable
             var2 = reader.ReadVariable(True)
@@ -928,18 +902,13 @@ Public Class MSPK_MDB
             var2.Value = str
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
     '(5:551) execute query {...}. Select * from table where name=%2
     ' "Has a query been run since the last time someone asked for a result? If so, if read() then export one row.
-    Public Function ExecuteQuery(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function ExecuteQuery(reader As TriggerReader) As Boolean
         Dim str As String = ""
 
         Try
@@ -960,27 +929,20 @@ Public Class MSPK_MDB
                     Return SQLiteDatabase.ExecuteNonQuery(str) > 0
                 End If
 
-                SQLiteDatabase.ExecuteNonQuery(str)
-                Return True
+                Return SQLiteDatabase.ExecuteNonQuery(str) > 0
+
             End SyncLock
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message & " SQL: " & str
-            writer.WriteLine(ErrorString)
-
-            Debug.Print(ErrorString)
-            Debug.Print(str)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
     End Function
 
     '(5:552) retrieve field {...} from query and put it into variable %Variable
-    Public Function RetrieveQuery(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function RetrieveQuery(reader As TriggerReader) As Boolean
         Dim Field As String
-        Dim Var As Monkeyspeak.Variable
+        Dim Var As Variable
 
         Try
             Field = reader.ReadString
@@ -1002,12 +964,7 @@ Public Class MSPK_MDB
             End If
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -1020,12 +977,7 @@ Public Class MSPK_MDB
                 sendServer("ps get character.*")
             End If
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -1060,29 +1012,19 @@ Public Class MSPK_MDB
                 End If
             End If
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:555) restore phoenix speak for character {...}
-    Public Function RestoreCharacterPS(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function RestoreCharacterPS(reader As TriggerReader) As Boolean
 
         Try
             Dim furre As String = reader.ReadString()
             callbk.Build_PS_CMD(furre, True)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -1098,12 +1040,7 @@ Public Class MSPK_MDB
             End If
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -1119,12 +1056,7 @@ Public Class MSPK_MDB
             End If
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -1133,8 +1065,6 @@ Public Class MSPK_MDB
     '(5:558) restore phoenix speak characters newer then # days.
     Public Function restorePS_DataOldrThanDays(reader As TriggerReader) As Boolean
 
-
-
         Try
             Dim days As Double = ReadVariableOrNumber(reader)
             If Not callbk.PSBackupRunning And Not callbk.PSRestoreRunning Then
@@ -1142,21 +1072,16 @@ Public Class MSPK_MDB
             End If
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
     End Function
 
-    Public Function VACUUM(reader As Monkeyspeak.TriggerReader) As Boolean
-        Dim start As DateTime = DateTime.Now
+    Public Function VACUUM(reader As TriggerReader) As Boolean
+        Dim start As Date = Date.Now
         SQLiteDatabase.ExecuteNonQuery("VACUUM")
-        Dim ts As TimeSpan = DateTime.Now.Subtract(start)
+        Dim ts As TimeSpan = Date.Now.Subtract(start)
         callbk.SendClientMessage("SYSTEM:", "Executed Vacum in " + ts.Seconds.ToString + " seconds")
         Return True
     End Function

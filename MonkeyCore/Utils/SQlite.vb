@@ -5,22 +5,35 @@ Imports System.Windows.Forms
 Public Class SQLiteDatabase
 
     Private Const FurreTable As String = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT, [PSBackup] DOUBLE"
-
+    Private Const DefaultFile As String = "SilverMonkey.db"
     Dim lock As New Object
     Private Shared dbConnection As [String]
     Private Shared writer As TextBoxWriter = Nothing
-    ' ''' <summary>
-    ' '''     Default Constructor for SQLiteDatabase Class.
-    ' ''' </summary>
-    'Public Sub New()
-    '    dbConnection = "Data Source=" & mPath() & "SilverMonkey.s3db"
-    'End Sub
+
+    ''' <summary>
+    '''     Default Constructor for SQLiteDatabase Class.
+    ''' </summary>
+    Public Sub New()
+        Dim inputFile As String = Path.Combine(Paths.SilverMonkeyBotPath, DefaultFile)
+        dbConnection = "Data Source=" & inputFile
+        If Not File.Exists(inputFile) Then
+            CreateTbl("FURRE", FurreTable)
+        End If
+    End Sub
 
     ''' <summary>
     '''     Single Param Constructor for specifying the DB file.
     ''' </summary>
     ''' <param name="inputFile">The File containing the DB</param>
     Public Sub New(inputFile As [String])
+
+        If String.IsNullOrEmpty(inputFile) Then
+            inputFile = Path.Combine(Paths.SilverMonkeyBotPath, DefaultFile)
+        End If
+        Dim dir As String = Path.GetDirectoryName(inputFile)
+        If String.IsNullOrEmpty(dir) Then
+            inputFile = Path.Combine(Paths.SilverMonkeyBotPath, inputFile)
+        End If
         dbConnection = [String].Format("Data Source={0};", inputFile)
         If Not File.Exists(inputFile) Then
             CreateTbl("FURRE", FurreTable)
@@ -261,13 +274,9 @@ Public Class SQLiteDatabase
         Dim Value As Object = Nothing
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()
-            Using cmd As SQLiteCommand = cnn.CreateCommand()
-                cmd.CommandText = "PRAGMA synchronous=0;"
-                cmd.ExecuteNonQuery()
-            End Using
 
             Using mycommand As New SQLiteCommand(cnn)
-                mycommand.CommandText = sql
+                mycommand.CommandText = "PRAGMA synchronous=0;" + sql
 
                 Try
                     Value = mycommand.ExecuteScalar()
@@ -308,10 +317,11 @@ Public Class SQLiteDatabase
         End If
         Try
             Dim cmd As String = [String].Format("update {0} set {1} where {2};", tableName, vals, where)
-            SQLiteDatabase.ExecuteNonQuery(cmd)
+            Return SQLiteDatabase.ExecuteNonQuery(cmd) > 0
 
-        Catch
-            returnCode = False
+        Catch ex As Exception
+            Dim err As New ErrorLogging(ex, Me)
+            Return False
         End Try
         Return returnCode
     End Function

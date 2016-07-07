@@ -3,7 +3,6 @@ Imports System.IO
 Imports FastColoredTextBoxNS
 Imports System.Runtime.InteropServices
 Imports MonkeyCore.IniFile
-Imports MonkeyCore.Paths
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 
@@ -465,7 +464,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
     Private Sub OpenMS_File()
         With MS_BrosweDialog
             ' Select Character ini file
-            .InitialDirectory = Environment.SpecialFolder.MyDocuments & "\Silver Monkey\"
+            .InitialDirectory = Paths.SilverMonkeyBotPath
 
             If .ShowDialog = DialogResult.OK Then
                 Dim f As String = Path.GetFileName(.FileName)
@@ -670,10 +669,10 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
     Private Sub MS_Edit_Load(sender As Object, e As EventArgs) Handles Me.Load
         CallBk = Me
-        KeysIni.Load(My.Application.Info.DirectoryPath + "\Keys.ini")
-        MS_KeysIni.Load(My.Application.Info.DirectoryPath + "\Keys-MS.ini")
-        KeysHelpMSIni.Load(My.Application.Info.DirectoryPath + "\KeysHelp-MS.ini")
-        KeysHelpIni.Load(My.Application.Info.DirectoryPath + "\KeysHelp.ini")
+        KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys.ini"))
+        MS_KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys-MS.ini"))
+        KeysHelpMSIni.Load(Path.Combine(Paths.ApplicationPath, "KeysHelp-MS.ini"))
+        KeysHelpIni.Load(Path.Combine(Paths.ApplicationPath, "KeysHelp.ini"))
         Dim splash As SplashScreen1 = CType(My.Application.SplashScreen, SplashScreen1)
         Dim filename As String = ""
 
@@ -770,7 +769,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             'AddNewEditorTab(filename, mPath, 0)
             OpenMS_File(filename)
         Else
-            AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, 0)
+            AddNewEditorTab("", Paths.SilverMonkeyBotPath, 0)
             NewFile(EditStyles.ms)
         End If
 
@@ -2217,9 +2216,9 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         title = "Template Name"
         myValue = InputBox(message, title, "")
         If String.IsNullOrEmpty(myValue) Then Exit Sub
-        TemplatePathsMS.Add(MonKeySpeakEditorDocumentsTemplatesPath)
+        TemplatePathsMS.Add(Paths.MonKeySpeakEditorDocumentsTemplatesPath)
         ListBox3.Items.Add(myValue)
-        File.WriteAllText(Path.Combine(MonKeySpeakEditorDocumentsTemplatesPath, myValue.ToString + ".ms"), MS_Editor.Selection.Text)
+        File.WriteAllText(Path.Combine(Paths.MonKeySpeakEditorDocumentsTemplatesPath, myValue.ToString + ".ms"), MS_Editor.Selection.Text)
     End Sub
 
     Private Sub BtnTemplateDeleteMS_Click(sender As Object, e As EventArgs) Handles BtnTemplateDeleteMS.Click, MSTemplateDelete.Click

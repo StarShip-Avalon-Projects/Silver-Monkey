@@ -2,7 +2,7 @@ Imports FastColoredTextBoxNS
 Imports System.Text
 Imports System.Text.RegularExpressions
 Public Class frmSearch
-    Inherits System.Windows.Forms.Form
+    Inherits Form
 
 #Region " Windows Form Designer generated code "
 

@@ -63,7 +63,7 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
-            Dim logError As New MonkeyCore.ErrorLogging(e.Exception, Me)
+            Dim logError As New MonkeyCore.ErrorLogging(e.Exception, sender)
             MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Sub
     End Class

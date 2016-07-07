@@ -96,12 +96,12 @@
     <None Include="My Project\Settings.settings" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="cbMain.Designer.vb" />
     <Compile Include="cbMain.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HelperClasses\Logger.vb" />
-    <Compile Include="Module1.vb" />
     <Compile Include="My Project\Application.Designer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb" />
@@ -118,6 +118,10 @@
     <ProjectReference Include="..\FurcLib\FurcadiaLib Net4.0.csproj">
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib Net4.0</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore Net40.vbproj">
+      <Project>{9cac7e97-de68-46d1-8155-0afde045e34a}</Project>
+      <Name>MonkeyCore Net40</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeySpeakR6\MonkeyspeakR6  Net4.0.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>

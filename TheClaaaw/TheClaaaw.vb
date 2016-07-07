@@ -1,14 +1,14 @@
 ﻿Imports Monkeyspeak
 Imports Furcadia.Net
-Imports System.Text.RegularExpressions
+
 Imports Furcadia.Base95
 
 Public Class TheClaaaw
     Implements Interfaces.msPlugin
 
-    Private msHost As SilverMonkey.Interfaces.msHost
+    Private msHost As Interfaces.msHost
 
-    Public Sub Initialize(ByVal Host As SilverMonkey.Interfaces.msHost) Implements Interfaces.msPlugin.Initialize
+    Public Sub Initialize(ByVal Host As Interfaces.msHost) Implements Interfaces.msPlugin.Initialize
         msHost = Host
     End Sub
 
@@ -17,7 +17,7 @@ Public Class TheClaaaw
             Return "The Claaaw"
         End Get
     End Property
-    Public ReadOnly Property Description() As String Implements SilverMonkey.Interfaces.msPlugin.Description
+    Public ReadOnly Property Description() As String Implements Interfaces.msPlugin.Description
         Get
             Return "Allows the bot to work with own paw and feet objects."
         End Get

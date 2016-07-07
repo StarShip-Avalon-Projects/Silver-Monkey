@@ -1,4 +1,4 @@
-﻿
+﻿Imports MonkeyCore.Controls
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class wUI
     Inherits System.Windows.Forms.Form
@@ -46,8 +46,8 @@ Partial Class wUI
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Solution = New FastColoredTextBoxNS.FastColoredTextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.selecter2 = New MonkeySpeakEditor.ScrollingListBox()
-        Me.ListBox1 = New MonkeySpeakEditor.ScrollingListBox()
+        Me.selecter2 = New ScrollingListBox()
+        Me.ListBox1 = New ScrollingListBox()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Solution, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -349,8 +349,8 @@ Partial Class wUI
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents Solution As FastColoredTextBoxNS.FastColoredTextBox
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents selecter2 As MonkeySpeakEditor.ScrollingListBox
-    Friend WithEvents ListBox1 As MonkeySpeakEditor.ScrollingListBox
+    Friend WithEvents selecter2 As ScrollingListBox
+    Friend WithEvents ListBox1 As ScrollingListBox
 
 
 End Class

@@ -125,20 +125,6 @@
     <Compile Include="Controls\InputBoxFrm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\ScrollingListBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.Designer.vb">
-      <DependentUpon>ListView_NoFlicker.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TabControlEx.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Helper Classes\ErrorLogging.vb" />
-    <Compile Include="Helper Classes\IniFile.vb" />
     <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="MainModule.vb" />
     <Compile Include="MS_Edit.Designer.vb">

@@ -1,13 +1,10 @@
-Imports RTF
 Imports Furcadia.Net.Movement
 Imports Furcadia.IO
 Imports Furcadia.Net
 Imports Furcadia.Base220
-Imports System.Net
 Imports System.Text.RegularExpressions
 Imports System.Collections
 Imports System.Collections.Generic
-Imports Furcadia.Drawing.Graphics
 Imports Furcadia.Drawing
 Imports System.Drawing
 Imports System.Net.NetworkInformation
@@ -22,7 +19,9 @@ Imports MonkeyCore.Settings
 Imports MonkeyCore.Controls
 
 Public Class Main
-    Inherits System.Windows.Forms.Form
+    Inherits Form
+
+
 
 #Region "Constants"
 
@@ -3028,9 +3027,9 @@ Public Class Main
         Dim intIndex As Integer
         Dim Handled As Boolean = False
         If Not Plugins Is Nothing Then
-            For intIndex = 0 To Plugins.Length - 1
-                objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
-                If cMain.PluginList.Item(objPlugin.Name.Replace(" ", "")) Then
+            For intIndex = 0 To Plugins.Count - 1
+                objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.msPlugin)
+                If PluginList.Item(objPlugin.Name.Replace(" ", "")) Then
                     objPlugin.Initialize(objHost)
                     objPlugin.Page = MainMSEngine.MSpage
                     If objPlugin.MessagePump(Server_Instruction) Then Handled = True
@@ -3199,11 +3198,8 @@ Public Class Main
         _FormClose = False
 
         cMain = New cMain
-        Try
-            MonkeyCore.Paths.FurcadiaProgramFolder = cMain.FurcPath
-        Catch ex As FurcadiaNotFoundException
-            Config.ShowDialog()
-        End Try
+        MonkeyCore.Paths.FurcadiaProgramFolder = cMain.FurcPath
+
         writer = New TextBoxWriter(log_)
         Console.SetOut(writer)
         MS_Engine.MainMSEngine = New MainMSEngine
@@ -3366,8 +3362,9 @@ Public Class Main
 #End Region
 
     Private Sub ConfigToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ConfigToolStripMenuItem.Click
-        Config.Show()
-        Config.Activate()
+        Dim test As New Config
+        test.Show()
+        test.Activate()
     End Sub
 
     Private Sub DebugToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles DebugToolStripMenuItem.Click

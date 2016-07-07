@@ -36,8 +36,7 @@ Public Class ErrorLogging
 
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-
-        strErrorFilePath = Path.combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
+        strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         Dim ioFile As System.IO.StreamWriter = Nothing
         Try
             ioFile = New System.IO.StreamWriter(strErrorFilePath, False)
@@ -111,10 +110,10 @@ Public Class ErrorLogging
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
         strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
-        Dim ioFile As System.IO.StreamWriter = Nothing
+        Dim ioFile As StreamWriter = Nothing
         Try
 
-            ioFile = New System.IO.StreamWriter(strErrorFilePath, False)
+            ioFile = New StreamWriter(strErrorFilePath, False)
 
             '***********************************************************
             '* Error Log Formatting

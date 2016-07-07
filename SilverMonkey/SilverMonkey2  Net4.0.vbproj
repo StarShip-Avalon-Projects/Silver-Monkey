@@ -101,21 +101,6 @@
     <Compile Include="BotSetup.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\ListBox_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.Designer.vb">
-      <DependentUpon>ListView_NoFlicker.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\RichTextBoxEx.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TextBox_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Debug\SetVariables.Designer.vb">
       <DependentUpon>SetVariables.vb</DependentUpon>
     </Compile>
@@ -147,7 +132,6 @@
     <Compile Include="NewBot.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Engine\Misc.vb" />
     <Compile Include="Engine\Banish.vb" />
     <Compile Include="Engine\Description.vb" />
     <Compile Include="Engine\HelperModule.vb" />
@@ -167,22 +151,17 @@
     <Compile Include="Engine\Warning.vb" />
     <Compile Include="Engine\WmCpyDta.vb" />
     <Compile Include="Helper Classes\Logger.vb" />
-    <Compile Include="Helper Classes\LogStream.vb" />
     <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="Helper Classes\MiscUtils.vb" />
-    <Compile Include="Helper Classes\IniFile.vb" />
     <Compile Include="MainModule.vb" />
     <Compile Include="Engine\MS_Engine.vb" />
     <Compile Include="Helper Classes\DownLoadImage.vb" />
-    <Compile Include="Helper Classes\ErrorLogging.vb" />
-    <Compile Include="Helper Classes\TextWriter.vb" />
     <Compile Include="Config.Designer.vb">
       <DependentUpon>Config.vb</DependentUpon>
     </Compile>
     <Compile Include="Config.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigStructs.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -261,9 +240,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
-    <None Include="DotNetChecker.nsh">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="DotNetChecker.nsh" />
     <None Include="FileAssociation.nsh">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -348,6 +325,10 @@
       <Project>{b0882700-5eaf-4712-ade5-69dafe473a01}</Project>
       <Name>Interfaces  Net4.0</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore Net40.vbproj">
+      <Project>{9cac7e97-de68-46d1-8155-0afde045e34a}</Project>
+      <Name>MonkeyCore Net40</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeySpeakR6\MonkeyspeakR6  Net4.0.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Name>MonkeyspeakR6  Net4.0</Name>
@@ -368,8 +349,8 @@
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
-    <PropertyGroup>
+  <PropertyGroup>
     <PostBuildEvent>
-</PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

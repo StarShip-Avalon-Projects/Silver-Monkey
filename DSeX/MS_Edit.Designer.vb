@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports MonkeyCore.Controls
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class MS_Edit
@@ -165,7 +166,7 @@ Partial Class MS_Edit
         Me.panelTotalCharacters = New StatusBarPanel()
         Me.ColumnHeader3 = CType(New ColumnHeader(), ColumnHeader)
         Me.ToolTip1 = New ToolTip(Me.components)
-        Me.TabControl2 = New MonkeySpeakEditor.TabControlEx()
+        Me.TabControl2 = New TabControlEx()
         Me.ContentToolStripMenuItem = New ToolStripMenuItem()
         Me.EditMenu.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
@@ -1450,7 +1451,7 @@ Partial Class MS_Edit
     Friend WithEvents ConfigToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DSWizardToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TabCauses As TabPage
-    Friend WithEvents ListCauses As MonkeyCore.ListView_NoFlicker
+    Friend WithEvents ListCauses As ListView_NoFlicker
     Friend WithEvents ColumnHeader3 As ColumnHeader
     Friend WithEvents SplitContainer2 As SplitContainer
     Friend WithEvents TabControl1 As TabControl
@@ -1525,7 +1526,7 @@ Partial Class MS_Edit
     Friend WithEvents ToolStripSeparator18 As ToolStripSeparator
     Friend WithEvents MSTemplateRename As ToolStripMenuItem
     Friend WithEvents MSTemplateEdit As ToolStripMenuItem
-    Friend WithEvents TabControl2 As MonkeyCore.TabControlEx
+    Friend WithEvents TabControl2 As TabControlEx
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents TextBox2 As TextBox
     Friend WithEvents TextBox1 As TextBox

@@ -1,6 +1,8 @@
 ﻿Imports System.IO
-Imports System.Text
+Imports MonkeyCore
 Imports Monkeyspeak
+
+
 Public Class MainEngine
 
 
@@ -23,8 +25,8 @@ Public Class MainEngine
     Public EngineRestart As Boolean = False
 
     Public MS_Engine_Running As Boolean = False
-    Public engine As Monkeyspeak.MonkeyspeakEngine = New Monkeyspeak.MonkeyspeakEngine()
-    Public Shared WithEvents MSpage As Monkeyspeak.Page = Nothing
+    Public engine As MonkeyspeakEngine = New MonkeyspeakEngine()
+    Public Shared WithEvents MSpage As Page = Nothing
     Public Sub New()
         EngineStart()
     End Sub
@@ -65,7 +67,7 @@ Public Class MainEngine
         If Not Plugins Is Nothing Then
             For intIndex As Integer = 0 To Plugins.Length - 1
                 MSpage = engine.LoadFromString("")
-                objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
+                objPlugin = PluginServices.CreateInstance(Plugins(intIndex))
                 objPlugin.Initialize(Main.objHost)
                 objPlugin.Page = MSpage
                 objPlugin.Start()
@@ -135,7 +137,7 @@ Public Class MainEngine
 
     End Sub
 
-    Public Shared Sub MS_Error(trigger As Monkeyspeak.Trigger, ex As Exception) Handles MSpage.Error
+    Public Shared Sub MS_Error(trigger As Trigger, ex As Exception) Handles MSpage.Error
 
         Console.WriteLine("Error, See Debug Window")
         Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message

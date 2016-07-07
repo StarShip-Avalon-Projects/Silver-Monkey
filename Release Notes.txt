@@ -1,0 +1,49 @@
+Release Notes:
+Furcadia Framework for 3rd Party Programs
+
+
+MonkeyCore 
+(Core library of shared components)
+Moved Applcation and Furcadia Paths
+Unified Application Settings.ini
+Moved SQLite Database Core to here
+Unified Error  Loging procedures
+
+Data Monkey
+(Database Manager)
+Added TabControlEx (Close Buttons)
+Switched TextBox Control to Fast Colored Text Box with Irony parser
+Fixed several reading Blank Database tables and auto tabs if not existd
+Added a Unhandled Exception Handler with Error logging
+
+Monkey Speak Editor
+(Script Editor)
+Switched to Single Instance App
+Added a Unhandled Exception Handler with Error logging
+Fixed Several Paths issues
+
+Silver Monkey
+(Main Bot Application)
+Moved Database Core to Monkey Core
+Combined all MSException blocks to use a single ErrorLogging Handler
+MS Exception Errorlogger prints exception data (Exception message Inner Exception Message Stack Trace)
+Fixd Several File path  issues through Monkey Core
+Added a Unhandled Exception Handler with Error logging
+SQLite Database:
+m Updated all lines to  use improved Error Handling function
++ added Help tab comment for Execute Database Query
++ Adjusted Execute Query to properly return > 0 results IE Rows modified and Data Selected
+
+MonkeySpeak
+(Script Engine)
+
+Interfaces
+(Plugin System)
+
+Chat Bot
+(Knowedgebase Tester)
+
+
+Verbot Knowedgebase Editor
+(Chatterbot Catch phrasses and responces)
+Added a Unhandled Exception Handler with Error logging

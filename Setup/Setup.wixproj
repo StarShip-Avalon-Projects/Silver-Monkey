@@ -109,6 +109,15 @@
       <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Name>MonkeyCore</Name>
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeySpeakR6\MonkeyspeakR6.csproj">
       <Name>MonkeyspeakR6</Name>
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
@@ -166,15 +175,15 @@
   </PropertyGroup>
   <Target Name="BeforeBuild">
     <GetAssemblyIdentity AssemblyFiles="..\Build\$(Configuration)\SilverMonkey.exe">
-      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+      <Output TaskParameter="Assemblies" ItemName="FileVersion" />
     </GetAssemblyIdentity>
     <PropertyGroup>
-      <DefineConstants>BuildVersion=%(AssemblyVersion.Version)</DefineConstants>
+      <DefineConstants>BuildVersion=%(FileVersion.Version)</DefineConstants>
     </PropertyGroup>
   </Target>
   <!-- rename the output msi with Version number -->
   <Target Name="AfterBuild">
-    <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-%(AssemblyVersion.Version).msi" />
+    <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-%(FileVersion.Version).msi" />
   </Target>
   <PropertyGroup>
     <PostBuildEvent />

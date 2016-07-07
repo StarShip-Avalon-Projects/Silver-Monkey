@@ -1,4 +1,4 @@
-;!include "DotNetChecker.nsh"
+!include "DotNetChecker.nsh"
 !include "FileAssociation.nsh"
 ##{{NSIS_PLUS_BEGIN_PROJECT_SETTINGS}}##
 #NAME "Release"
@@ -25,7 +25,7 @@
 
 !define COPYRIGHT "Author Gerolkae © 2014"
 !define DESCRIPTION "Application"
-!define INSTALLER_NAME "SilverMonkey_Setup_Net40_AnyCPU_${CONFIGURATION}_${VERSION}.exe"
+!define INSTALLER_NAME "SilverMonkey_Setup_WinXp_AnyCPU_${CONFIGURATION}_${VERSION}.exe"
 !define MAIN_APP_EXE "SilverMonkey.exe"
 !define INSTALL_TYPE "SetShellVarContext all"
 !define REG_ROOT "HKLM"
@@ -120,10 +120,13 @@ Section -MainProgram
 ${INSTALL_TYPE}
 SetOverwrite ifnewer
 SetOutPath "$INSTDIR"
-;!insertmacro CheckNetFramework "40Full"
+!insertmacro CheckNetFramework 40Full
 
 ExecWait '"$INSTDIR\uninstall.exe" /S _?=$INSTDIR'
 
+
+File "${Bin_Directory}\Irony.dll"
+File "${Bin_Directory}\MonkeyCore.dll"
 File "${Bin_Directory}\FastColoredTextBox.dll"
 File "${Bin_Directory}\Furcadialib.dll"
 File "${Bin_Directory}\Interfaces.dll"
@@ -239,6 +242,8 @@ Section Uninstall
 ${INSTALL_TYPE}
 
 Delete "$INSTDIR\FastColoredTextBox.dll"
+Delete "$INSTDIR\Irony.dll"
+Delete "$INSTDIR\MonkeyCore.dll"
 Delete "$INSTDIR\Furcadialib.dll"
 Delete "$INSTDIR\Interfaces.dll"
 Delete "$INSTDIR\MonkeySpeak.dll"
@@ -251,7 +256,6 @@ Delete "$INSTDIR\x64\SQLite.Interop.dll"
 RmDir "$INSTDIR\x86"
 RmDir "$INSTDIR\x64"
 
-Delete "$INSTDIR\MSVCR100.dll"
 Delete "$INSTDIR\Keys-ms.ini"
 Delete "$INSTDIR\keys.ini"
 Delete "$INSTDIR\MonkeySpeakEditor.exe"

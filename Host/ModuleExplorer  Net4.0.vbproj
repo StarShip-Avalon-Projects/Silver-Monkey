@@ -130,18 +130,13 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="clsMain.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\TextBox_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Helper Classes\ErrorLogging.vb" />
-    <Compile Include="Helper Classes\TextWriter.vb" />
-    <Compile Include="IniFile.vb" />
     <Compile Include="Main.Designer.vb">
       <DependentUpon>Main.vb</DependentUpon>
     </Compile>
@@ -197,6 +192,10 @@
     <ProjectReference Include="..\Interfaces\Interfaces  Net4.0.vbproj">
       <Project>{b0882700-5eaf-4712-ade5-69dafe473a01}</Project>
       <Name>Interfaces  Net4.0</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore Net40.vbproj">
+      <Project>{9cac7e97-de68-46d1-8155-0afde045e34a}</Project>
+      <Name>MonkeyCore Net40</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeySpeakR6\MonkeyspeakR6  Net4.0.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>

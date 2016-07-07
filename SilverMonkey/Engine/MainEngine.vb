@@ -2,6 +2,7 @@
 
 Imports MonkeyCore
 Imports System.Collections.Generic
+Imports MonkeyCore.Settings
 
 Public Class MainMSEngine
 
@@ -229,20 +230,21 @@ Public Class MainMSEngine
         End Try
 
         'Define our Triggers before we use them
-
+        'TODO Check for Duplicate and use that one instead
+        'we don't want this to cause a memory leak.. its prefered to run this one time and thats  it except for checking for new plugins
         'Loop through available plugins, creating instances and adding them to listbox
         If Not Plugins Is Nothing And LoadPlugins Then
-            Dim objPlugin As SilverMonkey.Interfaces.msPlugin
+            Dim objPlugin As Interfaces.msPlugin
             Dim newPlugin As Boolean = False
-            For intIndex As Integer = 0 To Plugins.Length - 1
+            For intIndex As Integer = 0 To Plugins.Count - 1
                 Try
-                    objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
-                    If Not Main.cMain.PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
-                        Main.cMain.PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
+                    objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.msPlugin)
+                    If Not PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
+                        PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
                         newPlugin = True
                     End If
 
-                    If Main.cMain.PluginList.Item(objPlugin.Name.Replace(" ", "")) = True Then
+                    If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True Then
                         Console.WriteLine("Loading Plugin: " + objPlugin.Name)
                         objPlugin.Initialize(Main.objHost)
                         objPlugin.Page = MSpage
@@ -252,7 +254,7 @@ Public Class MainMSEngine
                     Dim e As New ErrorLogging(ex, Me)
                 End Try
             Next
-            If newPlugin Then Main.cMain.SaveMainSettings()
+            If newPlugin Then cMain.SaveMainSettings()
 
 
         End If
@@ -336,27 +338,27 @@ Public Class MainMSEngine
 
     End Sub
 
-    Public Shared Sub LogError(trigger As Monkeyspeak.Trigger, ex As Exception) Handles MSpage.Error
+    Public Shared Sub LogError(trigger As Trigger, ex As Exception) Handles MSpage.Error
 
         Console.WriteLine(MS_ErrWarning)
         Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
 
         If Not IsNothing(cBot) Then
             If cBot.log Then
-                LogStream.Writeline(ErrorString)
+                LogStream.Writeline(ErrorString, ex)
             End If
         End If
         Writer.WriteLine(ErrorString)
     End Sub
 
-    Public Shared Sub LogError(reader As Monkeyspeak.TriggerReader, ex As Exception)
+    Public Shared Sub LogError(reader As TriggerReader, ex As Exception)
 
         Console.WriteLine(MS_ErrWarning)
         Dim ErrorString As String = "Error: (" & reader.TriggerCategory.ToString & ":" & reader.TriggerId.ToString & ") " & ex.Message
 
         If Not IsNothing(cBot) Then
             If cBot.log Then
-                LogStream.Writeline(ErrorString)
+                LogStream.Writeline(ErrorString, ex)
             End If
         End If
         Writer.WriteLine(ErrorString)

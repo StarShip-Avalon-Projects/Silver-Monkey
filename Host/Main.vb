@@ -40,7 +40,7 @@ Public Class Main
 
 
 
-    Public objHost As New smHost
+    Public Shared objHost As New smHost
     Public Player As FURRE = New FURRE
     Public DREAM As New DREAM
 

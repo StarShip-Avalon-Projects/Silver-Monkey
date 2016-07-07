@@ -48,9 +48,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <OutputPath>..\Net40\Release\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <OutputPath>..\Net40\Debug\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -77,6 +79,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="Rule Activation.Designer.vb">
       <DependentUpon>Rule Activation.vb</DependentUpon>
@@ -190,6 +193,10 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore Net40.vbproj">
+      <Project>{9cac7e97-de68-46d1-8155-0afde045e34a}</Project>
+      <Name>MonkeyCore Net40</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Verbot5Library\Verbot5Library  Net4.0.csproj">
       <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>
       <Name>Verbot5Library  Net4.0</Name>

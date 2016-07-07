@@ -137,12 +137,6 @@
     <Compile Include="clsMain.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\TextBox_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Helper Classes\ErrorLogging.vb" />
-    <Compile Include="Helper Classes\TextWriter.vb" />
-    <Compile Include="IniFile.vb" />
     <Compile Include="Main.Designer.vb">
       <DependentUpon>Main.vb</DependentUpon>
     </Compile>

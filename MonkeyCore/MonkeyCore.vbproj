@@ -50,6 +50,14 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FastColoredTextBox, Version=2.16.11.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCTB.2.16.11.0\lib\FastColoredTextBox.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Irony.0.9.1\lib\net40\Irony.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -101,6 +109,21 @@
     <Compile Include="Controls\ScrollingListBox.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\Settings Editor\Config.Designer.vb">
+      <DependentUpon>Config.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Settings Editor\Config.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\SilverMonkeyFCTB.Designer.vb">
+      <DependentUpon>SilverMonkeyFCTB.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SilverMonkeyFCTB.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TabControleExTabs.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\TabControlEx.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -108,6 +131,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utils\LogStream.vb" />
+    <Compile Include="Utils\PluginServices.vb" />
     <Compile Include="Utils\SQlite.vb" />
     <Compile Include="Utils\TextWriter.vb" />
     <Compile Include="Utils\ErrorLogging.vb" />
@@ -133,6 +157,9 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\Settings Editor\Config.resx">
+      <DependentUpon>Config.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -158,6 +185,13 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
+      <Project>{b0882700-5eaf-4712-ade5-69dafe473a01}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net46\System.Data.SQLite.Core.targets')" />

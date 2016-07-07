@@ -1,5 +1,4 @@
 ﻿Imports MonkeyCore.IniFile
-Imports MonkeyCore.IO
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports System.IO
@@ -34,6 +33,19 @@ Public Class Settings
     Private Shared _ini As New IniFile
     Private Shared _KeysIni As New IniFile
     Private Shared _MS_KeysIni As New IniFile
+
+    Private Shared _PluginList As New Dictionary(Of String, Boolean)
+
+    Public Shared Plugins As New List(Of PluginServices.AvailablePlugin)
+
+    Public Shared Property PluginList As Dictionary(Of String, Boolean)
+        Get
+            Return _PluginList
+        End Get
+        Set(value As Dictionary(Of String, Boolean))
+            _PluginList = value
+        End Set
+    End Property
 
     Public Shared Property ini As IniFile
         Get
@@ -258,7 +270,7 @@ Public Class Settings
 
             ' Defaults are now loaded
             ' Lets Read local appData Settings.ini for  last used Settings and Override existing settings
-            If System.IO.File.Exists(SettingsFile) Then
+            If File.Exists(SettingsFile) Then
                 ini.Load(SettingsFile, True)
             End If
 
@@ -332,44 +344,46 @@ Public Class Settings
 
     End Class
 
+
+
     Public Class cMain
-        Private SettingsFile As String = Path.Combine(Paths.ApplicationSettingsPath, SettingFile)
-        Private _sPort As Integer = 6500
-        Private _FurcPath As String = ""
-        Private _Host As String = Main_Host
+        Private Shared SettingsFile As String = Path.Combine(Paths.ApplicationSettingsPath, SettingFile)
+        Private Shared _sPort As Integer = 6500
+        Private Shared _FurcPath As String = ""
+        Private Shared _Host As String = Main_Host
 
-        Private _CloseProc As Boolean = False
-        Private _reconnectMax As Integer = 10
+        Private Shared _CloseProc As Boolean = False
+        Private Shared _reconnectMax As Integer = 10
 
 
-        Private _debug As Boolean = False
-        Private _TimeStamp As UShort = 0
-        Private _AutoReconnect As Boolean = False
-        Private _ConnectTimeOut As Integer = 45
+        Private Shared _debug As Boolean = False
+        Private Shared _TimeStamp As UShort = 0
+        Private Shared _AutoReconnect As Boolean = False
+        Private Shared _ConnectTimeOut As Integer = 45
         'Display Settings
-        Private _FontSize As Integer = 10
-        Private _FontFace As String = "Microsoft Sans Serif"
-        Private _AppFont As New Font(_FontFace, _FontSize, FontStyle.Regular)
+        Private Shared _FontSize As Integer = 10
+        Private Shared _FontFace As String = "Microsoft Sans Serif"
+        Private Shared _AppFont As New Font(_FontFace, _FontSize, FontStyle.Regular)
 
-        Private _emitColor As Color = Color.Blue
-        Private _sayColor As Color = Color.DarkGoldenrod
-        Private _shoutColor As Color = Color.DarkRed
-        Private _whColor As Color = Color.Purple
-        Private _defaultColor As Color = Color.Black
-        Private _emoteColor As Color = Color.DarkCyan
+        Private Shared _emitColor As Color = Color.Blue
+        Private Shared _sayColor As Color = Color.DarkGoldenrod
+        Private Shared _shoutColor As Color = Color.DarkRed
+        Private Shared _whColor As Color = Color.Purple
+        Private Shared _defaultColor As Color = Color.Black
+        Private Shared _emoteColor As Color = Color.DarkCyan
 
         'Throat Tired
-        Private _TT_TimeOut As Integer = 90
+        Private Shared _TT_TimeOut As Integer = 90
 
-        Private _ping As Integer = 300
+        Private Shared _ping As Integer = 300
         'systray Status
-        Private _TrayIcon As CheckState = CheckState.Indeterminate
+        Private Shared _TrayIcon As CheckState = CheckState.Indeterminate
 
-        Private _Broadcast As Boolean = False
-        Private _Advertisment As Boolean = False
-        Private _Announcement As Boolean = False
+        Private Shared _Broadcast As Boolean = False
+        Private Shared _Advertisment As Boolean = False
+        Private Shared _Announcement As Boolean = False
 
-        Public Property AutoReconnect As Boolean
+        Public Shared Property AutoReconnect As Boolean
             Get
                 Return _AutoReconnect
             End Get
@@ -379,7 +393,7 @@ Public Class Settings
         End Property
 
 
-        Public Property CloseProc As Boolean
+        Public Shared Property CloseProc As Boolean
             Get
                 Return _CloseProc
             End Get
@@ -387,7 +401,7 @@ Public Class Settings
                 _CloseProc = value
             End Set
         End Property
-        Public Property ApFont As Font
+        Public Shared Property ApFont As Font
             Get
                 Return _AppFont
             End Get
@@ -397,7 +411,7 @@ Public Class Settings
         End Property
 
 
-        Public Property EmitColor() As Color
+        Public Shared Property EmitColor() As Color
             Get
                 Return _emitColor
             End Get
@@ -405,7 +419,7 @@ Public Class Settings
                 _emitColor = value
             End Set
         End Property
-        Public Property SayColor() As Color
+        Public Shared Property SayColor() As Color
             Get
                 Return _sayColor
             End Get
@@ -413,7 +427,7 @@ Public Class Settings
                 _sayColor = value
             End Set
         End Property
-        Public Property ShoutColor() As Color
+        Public Shared Property ShoutColor() As Color
             Get
                 Return _shoutColor
             End Get
@@ -421,7 +435,7 @@ Public Class Settings
                 _shoutColor = value
             End Set
         End Property
-        Public Property WhColor() As Color
+        Public Shared Property WhColor() As Color
             Get
                 Return _whColor
             End Get
@@ -429,7 +443,7 @@ Public Class Settings
                 _whColor = value
             End Set
         End Property
-        Public Property DefaultColor() As Color
+        Public Shared Property DefaultColor() As Color
             Get
                 Return _defaultColor
             End Get
@@ -437,7 +451,7 @@ Public Class Settings
                 _defaultColor = value
             End Set
         End Property
-        Public Property EmoteColor() As Color
+        Public Shared Property EmoteColor() As Color
             Get
                 Return _emoteColor
             End Get
@@ -447,7 +461,7 @@ Public Class Settings
         End Property
 
 
-        Public Property ReconnectMax() As Integer
+        Public Shared Property ReconnectMax() As Integer
             Get
                 Return _reconnectMax
             End Get
@@ -456,7 +470,7 @@ Public Class Settings
             End Set
         End Property
 
-        Public Property sPort() As Integer
+        Public Shared Property sPort() As Integer
             Get
                 Return _sPort
             End Get
@@ -466,7 +480,7 @@ Public Class Settings
         End Property
 
 
-        Public Property Host() As String
+        Public Shared Property Host() As String
             Get
                 Return _Host
             End Get
@@ -475,7 +489,7 @@ Public Class Settings
             End Set
         End Property
 
-        Public Property Ping As Integer
+        Public Shared Property Ping As Integer
             Get
                 Return _ping
             End Get
@@ -485,7 +499,7 @@ Public Class Settings
         End Property
 
         'Throat Tired
-        Public Property TT_TimeOut As Integer
+        Public Shared Property TT_TimeOut As Integer
             Get
                 Return _TT_TimeOut
             End Get
@@ -495,7 +509,7 @@ Public Class Settings
         End Property
 
 
-        Public Property debug() As Boolean
+        Public Shared Property debug() As Boolean
             Get
                 Return _debug
             End Get
@@ -508,7 +522,7 @@ Public Class Settings
         ' 0 = off
         ' 1 = time
         ' 2 = Date Time
-        Public Property TimeStamp() As UShort
+        Public Shared Property TimeStamp() As UShort
             Get
                 Return _TimeStamp
             End Get
@@ -518,7 +532,7 @@ Public Class Settings
         End Property
 
         'systray Status
-        Public Property SysTray As CheckState
+        Public Shared Property SysTray As CheckState
             Get
                 Return _TrayIcon
             End Get
@@ -527,7 +541,7 @@ Public Class Settings
             End Set
         End Property
 
-        Public Property FurcPath As String
+        Public Shared Property FurcPath As String
             Get
                 If String.IsNullOrEmpty(_FurcPath) Then
                     _FurcPath = Paths.FurcadiaProgramFolder
@@ -539,7 +553,7 @@ Public Class Settings
             End Set
         End Property
 
-        Public Property ConnectTimeOut As Integer
+        Public Shared Property ConnectTimeOut As Integer
             Get
                 Return _ConnectTimeOut
             End Get
@@ -548,12 +562,12 @@ Public Class Settings
             End Set
         End Property
 
-        Public Sub SetDefault()
+        Public Shared Sub SetDefault()
             _debug = False
             _TimeStamp = 0
         End Sub
 
-        Public Property Announcement As Boolean
+        Public Shared Property Announcement As Boolean
             Get
                 Return _Announcement
             End Get
@@ -561,7 +575,7 @@ Public Class Settings
                 _Announcement = value
             End Set
         End Property
-        Public Property Broadcast As Boolean
+        Public Shared Property Broadcast As Boolean
             Get
                 Return _Broadcast
             End Get
@@ -569,7 +583,7 @@ Public Class Settings
                 _Broadcast = value
             End Set
         End Property
-        Public Property Advertisment As Boolean
+        Public Shared Property Advertisment As Boolean
             Get
                 Return _Advertisment
             End Get
@@ -577,8 +591,8 @@ Public Class Settings
                 _Advertisment = value
             End Set
         End Property
-        Private _LoadLastBotFile As Boolean = False
-        Public Property LoadLastBotFile As Boolean
+        Private Shared _LoadLastBotFile As Boolean = False
+        Public Shared Property LoadLastBotFile As Boolean
             Get
                 Return _LoadLastBotFile
             End Get
@@ -587,8 +601,8 @@ Public Class Settings
             End Set
         End Property
 
-        Private _DisconnectPopupToggle As Boolean = True
-        Public Property DisconnectPopupToggle As Boolean
+        Private Shared _DisconnectPopupToggle As Boolean = True
+        Public Shared Property DisconnectPopupToggle As Boolean
             Get
                 Return _DisconnectPopupToggle
             End Get
@@ -599,8 +613,8 @@ Public Class Settings
 
 
         End Property
-        Private _PSShowMainWindow As Boolean = True
-        Public Property PSShowMainWindow As Boolean
+        Private Shared _PSShowMainWindow As Boolean = True
+        Public Shared Property PSShowMainWindow As Boolean
             Get
                 Return _PSShowMainWindow
             End Get
@@ -608,8 +622,8 @@ Public Class Settings
                 _PSShowMainWindow = value
             End Set
         End Property
-        Private _PSShowClient As Boolean = True
-        Public Property PSShowClient As Boolean
+        Private Shared _PSShowClient As Boolean = True
+        Public Shared Property PSShowClient As Boolean
             Get
                 Return _PSShowClient
             End Get
@@ -617,17 +631,11 @@ Public Class Settings
                 _PSShowClient = value
             End Set
         End Property
-        Dim _PluginList As New Dictionary(Of String, Boolean)
-        Public Property PluginList As Dictionary(Of String, Boolean)
-            Get
-                Return _PluginList
-            End Get
-            Set(value As Dictionary(Of String, Boolean))
-                _PluginList = value
-            End Set
-        End Property
+
         Public Sub New()
-            If System.IO.File.Exists(SettingsFile) Then ini.Load(SettingsFile)
+            If System.IO.File.Exists(SettingsFile) Then
+                ini.Load(SettingsFile)
+            End If
 
             Dim s As String = ""
             s = ini.GetKeyValue("Main", "Host")
@@ -747,7 +755,7 @@ Public Class Settings
                 Next
             End If
         End Sub
-        Public Sub SaveMainSettings()
+        Public Shared Sub SaveMainSettings()
             ' Lets Read local appData Settings.ini for  last used Settings as other programs use the file too
             If System.IO.File.Exists(SettingsFile) Then
                 ini.Load(SettingsFile, True)
@@ -785,9 +793,9 @@ Public Class Settings
             ini.SetKeyValue("PhoenixSpeak", "ShowInClient", _PSShowClient.ToString)
             ini.SetKeyValue("PhoenixSpeak", "ShowInMainWindow", _PSShowMainWindow.ToString)
             ini.RemoveSection("Plugins")
-            'ini.AddSection("Plugins")
+            ini.AddSection("Plugins")
             For Each kv As KeyValuePair(Of String, Boolean) In PluginList
-                ini.SetKeyValue("Plugins", kv.Key, kv.Value.ToString)
+                ini.SetKeyValue("Plugins", kv.Key, kv.Value)
             Next
 
             ini.Save(SettingsFile)
@@ -797,9 +805,9 @@ Public Class Settings
 
     Public Class cBot
 
-        Private _IniFile As String = ""
+        Private Shared _IniFile As String = ""
 
-        Private _MS_Engine_Enable As Boolean = False
+        Private Shared _MS_Engine_Enable As Boolean = False
         Private _MsFileName As String = ""
         Private _MS_Script As String = ""
         Private _BotController As String = ""
