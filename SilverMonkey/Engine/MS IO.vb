@@ -1,12 +1,12 @@
 ﻿
-Imports System.Collections.Generic
+
 Imports System.Linq
 Imports System.Text
-Imports System.IO
-
+Imports MonkeyCore.IO
 Imports Monkeyspeak
 Imports Monkeyspeak.Libraries
-
+Imports MonkeyCore
+Imports System.Collections.Generic
 
 Friend Class MS_IO
     Inherits AbstractBaseLibrary
@@ -40,17 +40,17 @@ Friend Class MS_IO
         Add(New Trigger(TriggerCategory.Effect, 203), AddressOf CreateFile, "(5:203) create file {...}.")
 
         '(5:124) read line number # from text file {...} and put it into variable %Variable.
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 124), AddressOf ReadTextLine,
+        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 124), AddressOf ReadTextLine,
             "(5:124) read line number # from text file {...} and put it into variable %Variable.")
 
         '(5:125) count the number of lines in text file {...} and put it into variable %Variable .
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 125), AddressOf CountLines,
+        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 125), AddressOf CountLines,
             "(5:125) count the number of lines in text file {...} and put it into variable %Variable.")
 
     End Sub
 
     Private Function FileExists(reader As TriggerReader) As Boolean
-        Dim f As String = If((reader.PeekString()), CheckMyDocFile(reader.ReadString()), "")
+        Dim f As String = If((reader.PeekString()), CheckBotFolder(reader.ReadString()), "")
         Return File.Exists(f)
     End Function
 
@@ -59,73 +59,58 @@ Friend Class MS_IO
     End Function
 
     Private Function CanReadFile(reader As TriggerReader) As Boolean
-        Dim f As String = CheckMyDocFile(reader.ReadString())
+        Dim f As String = CheckBotFolder(reader.ReadString())
         Try
             Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
-                Return True
+                Return stream.CanRead
             End Using
-        Catch
-            ' (UnauthorizedAccessException ex)
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
     Private Function CanWriteFile(reader As TriggerReader) As Boolean
-        Dim f As String = CheckMyDocFile(reader.ReadString())
+        Dim f As String = CheckBotFolder(reader.ReadString())
         Try
             Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Write)
-                Return True
+                Return stream.CanWrite
             End Using
-        Catch
-            ' (UnauthorizedAccessException ex)
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
     Private Function AppendToFile(reader As TriggerReader) As Boolean
         Dim data As String = reader.ReadString()
-        Dim f As String = CheckMyDocFile(reader.ReadString())
+        Dim f As String = CheckBotFolder(reader.ReadString())
 
         Try
             Using SW As StreamWriter = New StreamWriter(f, True)
                 SW.WriteLine(data)
-                SW.Close()
             End Using
-
-            Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
+        Return True
     End Function
 
     Private Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
         Try
-            Dim f As String = CheckMyDocFile(reader.ReadString())
+            Dim f As String = CheckBotFolder(reader.ReadString(True))
             Dim var As Variable = reader.ReadVariable(True)
             Dim sb As New StringBuilder()
             Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
-                Using SR As StreamReader = New System.IO.StreamReader(stream)
-                    Dim line As String = ""
-                    While (InlineAssignHelper(line, SR.ReadLine())) IsNot Nothing
-                        sb.AppendLine(line)
-                    End While
+                Using SR As StreamReader = New StreamReader(stream)
+                    sb.AppendLine(SR.ReadToEnd)
                 End Using
             End Using
             var.Value = sb.ToString()
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -135,16 +120,11 @@ Friend Class MS_IO
             If reader.PeekString() = False Then
                 Return False
             End If
-            Dim f As String = CheckMyDocFile(reader.ReadString())
+            Dim f As String = CheckBotFolder(reader.ReadString())
             File.Delete(f)
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -153,71 +133,62 @@ Friend Class MS_IO
         If reader.PeekString() = False Then
             Return False
         End If
-        Dim f As String = CheckMyDocFile(reader.ReadString())
-        File.CreateText(f).Close()
+        Dim f As String = CheckBotFolder(reader.ReadString())
+        File.Create(f).Close()
         Return True
-    End Function
-    Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-        target = value
-        Return value
     End Function
 
     '(5:124) read line number # from text file {...} and put it into variable %Variable.
     Function ReadTextLine(reader As TriggerReader) As Boolean
         Try
             Dim num As Double = ReadVariableOrNumber(reader, False)
-            Dim F As String = CheckMyDocFile(reader.ReadString)
-            Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim F As String = CheckBotFolder(reader.ReadString)
+            Dim var As Variable = reader.ReadVariable(True)
             If File.Exists(F) Then
                 Dim lines() As String = File.ReadAllLines(F)
-                If lines.Count = 0 Then
-                    var.Value = Nothing
-                ElseIf num < lines.Length Then
+                If lines.Count < 0 Then
+                    var = Variable.NoValue
+                    Throw New IndexOutOfRangeException(var.Name + " Is less then the number of lines in file " + F)
+                ElseIf num < lines.Count - 1 Then
                     var.Value = lines(CInt(num))
+                    Return True
                 Else
-                    Throw New Exception(var.Name + " Is larger then the number of lines in file " + F)
+                    var = Variable.NoValue
+                    Throw New IndexOutOfRangeException(var.Name + " Is larger then the number of lines in file " + F)
                 End If
             Else
                 Throw New Exception("File """ + F + """ Does not exist.")
             End If
-            Return True
 
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
     '(5:125) count the number of lines in text file {...} and put it into variable %Variable .
-    Public Function CountLines(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function CountLines(reader As TriggerReader) As Boolean
         Dim F As String = ""
-        Dim Var As Monkeyspeak.Variable
+        Dim Var As Variable
         Dim count As Double = 0
         Try
-            F = CheckMyDocFile(reader.ReadString)
+            F = CheckBotFolder(reader.ReadString)
             Var = reader.ReadVariable(True)
+            Var.Value = 0.0R
             If File.Exists(F) Then
-                Dim test() As String = File.ReadAllLines(F)
-                Var.Value = CDbl(test.Length)
-            Else
-                Var.Value = 0.0R
+                Dim test As New List(Of String)
+                test.AddRange(File.ReadAllLines(F))
+                Var.Value = test.Count.ToString()
+
             End If
-            Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
+        Return True
     End Function
+
+
 End Class
 
 

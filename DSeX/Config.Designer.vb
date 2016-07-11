@@ -66,6 +66,10 @@
         Me.ListView1 = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.TxtBxFurPath = New System.Windows.Forms.TextBox()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.FindFurc = New System.Windows.Forms.OpenFileDialog()
         Me.TabPage5.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.MS_IDPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -465,6 +469,9 @@
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Label26)
+        Me.TabPage2.Controls.Add(Me.TxtBxFurPath)
+        Me.TabPage2.Controls.Add(Me.Button2)
         Me.TabPage2.Controls.Add(Me.ChkBxAutoComplete)
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
@@ -519,6 +526,37 @@
         '
         Me.ColumnHeader2.Text = "Name"
         Me.ColumnHeader2.Width = 300
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(46, 65)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(93, 13)
+        Me.Label26.TabIndex = 24
+        Me.Label26.Text = "Furcadia Directory"
+        '
+        'TxtBxFurPath
+        '
+        Me.TxtBxFurPath.Location = New System.Drawing.Point(49, 81)
+        Me.TxtBxFurPath.Name = "TxtBxFurPath"
+        Me.TxtBxFurPath.Size = New System.Drawing.Size(202, 20)
+        Me.TxtBxFurPath.TabIndex = 23
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(257, 79)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(51, 23)
+        Me.Button2.TabIndex = 22
+        Me.Button2.Text = "Open"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'FindFurc
+        '
+        Me.FindFurc.DefaultExt = "exe"
+        Me.FindFurc.FileName = "OpenFileDialog1"
+        Me.FindFurc.Filter = "Executable Files | *.exe"
         '
         'Config
         '
@@ -604,5 +642,9 @@
     Friend WithEvents ListView1 As System.Windows.Forms.ListView
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents Label26 As System.Windows.Forms.Label
+    Friend WithEvents TxtBxFurPath As System.Windows.Forms.TextBox
+    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents FindFurc As System.Windows.Forms.OpenFileDialog
 End Class
 

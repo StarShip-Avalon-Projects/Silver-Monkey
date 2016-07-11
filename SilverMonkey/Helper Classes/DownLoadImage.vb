@@ -1,6 +1,5 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Imaging
-Imports System.IO
 Imports System.Net
 
 Public Class DownloadImage

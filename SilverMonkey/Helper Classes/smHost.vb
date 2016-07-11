@@ -1,18 +1,15 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Text
-Imports Monkeyspeak
-Imports Furcadia.Net
+﻿Imports Furcadia.Net
+Imports MonkeyCore
 
 Public Class smHost
     Implements SilverMonkey.Interfaces.msHost
     Sub Start(ByRef page As Monkeyspeak.Page) Implements SilverMonkey.Interfaces.msHost.start
-        MainEngine.MSpage = page
+        MainMSEngine.MSpage = page
     End Sub
 
     Public WriteOnly Property Page() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.Page
         Set(value As Monkeyspeak.Page)
-            MainEngine.MSpage = value
+            MainMSEngine.MSpage = value
         End Set
     End Property
 

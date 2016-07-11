@@ -1,14 +1,10 @@
 ﻿Imports Monkeyspeak
-Imports SilverMonkey.ErrorLogging
-Imports SilverMonkey.TextBoxWriter
 Imports System.Runtime.InteropServices
-Imports System.Text
 Imports System.Diagnostics
-Imports System.Collections
-Imports System.ComponentModel
+Imports MonkeyCore
 
 Public Class WmCpyDta
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing
 
     <DllImport("user32.dll", EntryPoint:="FindWindow")> _
@@ -18,23 +14,23 @@ Public Class WmCpyDta
     Public Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
         '(0:75) When the bot receives a message from another bot on the same computer,
-        Add(Monkeyspeak.TriggerCategory.Cause, 75,
+        Add(TriggerCategory.Cause, 75,
 Function()
     Return True
 End Function, "(0:75) When the bot receives a message from another bot on the same computer,")
         '(0:76) When the bot receives message {...} from another bot on the same computer,
-        Add(Monkeyspeak.TriggerCategory.Cause, 76,
+        Add(TriggerCategory.Cause, 76,
 AddressOf ReceiveMessage, "(0:76) When the bot receives message {...} from another bot on the same computer,")
         '(0:77) When the bot receives a message containing {...} from another bot on the same computer,
-        Add(Monkeyspeak.TriggerCategory.Cause, 77,
+        Add(TriggerCategory.Cause, 77,
 AddressOf ReceiveMessageContaining, "(0:77) When the bot receives a message containing {...} from another bot on the same computer,")
 
         '(5:75) send message {...} to bot named {...}.
-        Add(Monkeyspeak.TriggerCategory.Effect, 75,
+        Add(TriggerCategory.Effect, 75,
 AddressOf SendMessage, "(5:75) send message {...} to bot named {...}.")
 
         '(5:76) set Variable %Variable to the Message the bot last received.
-        Add(Monkeyspeak.TriggerCategory.Effect, 76,
+        Add(TriggerCategory.Effect, 76,
 AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot last received.")
     End Sub
 
@@ -46,7 +42,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
             'Debug.Print("msgContains Begin Execution")
             msMsg = reader.ReadString()
             'Debug.Print("msMsg = " & msMsg)
-            msg = MainEngine.MSpage.GetVariable("MESSAGE").Value.ToString
+            msg = MainMSEngine.MSpage.GetVariable("MESSAGE").Value.ToString
             'Debug.Print("Msg = " & msg)
             Return msg.Equals(msMsg)
         Catch ex As Exception
@@ -67,7 +63,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
             'Debug.Print("msgContains Begin Execution")
             msMsg = reader.ReadString()
             'Debug.Print("msMsg = " & msMsg)
-            msg = MainEngine.MSpage.GetVariable("MESSAGE").Value.ToString
+            msg = MainMSEngine.MSpage.GetVariable("MESSAGE").Value.ToString
             'Debug.Print("Msg = " & msg)
             Return msg.Contains(msMsg)
         Catch ex As Exception

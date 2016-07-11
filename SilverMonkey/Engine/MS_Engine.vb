@@ -1,10 +1,9 @@
-﻿Imports SilverMonkey.MiscUtils
-Imports Monkeyspeak
-Imports SilverMonkey.ErrorLogging
-Imports SilverMonkey.TextBoxWriter
+﻿Imports Monkeyspeak
 Imports Furcadia.Net
-Imports System.IO
 Imports System.Text.RegularExpressions
+Imports System.Collections.Generic
+Imports System.Diagnostics
+Imports MonkeyCore
 
 'StringLibrary
 '(1:108) - (1:111)
@@ -21,7 +20,7 @@ Imports System.Text.RegularExpressions
 ''' </summary>
 Module MS_Engine
     Public callbk As Main
-    Public MainMSEngine As MainEngine
+    Public MainMSEngine As MainMSEngine
 
     Public Structure ViewArea
         Public X As Integer
@@ -77,36 +76,36 @@ Module MS_Engine
 
 
     Class StringLibrary
-        Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+        Inherits Libraries.AbstractBaseLibrary
         Private writer As TextBoxWriter = Nothing
         Dim FurreList As Dictionary(Of UInteger, FURRE) = DREAM.List
         Public Sub New()
             writer = New TextBoxWriter(Variables.TextBox1)
             '(1:60) and variable %Variable matches wildcard expression {...} ( ""*"" or ""?""),
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 60), AddressOf WildCard,
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 60), AddressOf WildCard,
  "(1:60) and variable %Variable matches wildcard expression {...} ( ""*"" or ""?""),")
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 61), AddressOf NotWildCard,
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 61), AddressOf NotWildCard,
  "(1:61) and variable %Variable doesn't match wildcard expression {...} ( ""*"" or ""?""),")
 
             '(5:110) use variable % and take word # and put it into variable %
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 120), AddressOf StringSplit,
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 120), AddressOf StringSplit,
              "(5:120) use variable %Variable and take word position # and put it into variable %Variable.")
             '(5:111) use variable % then remove character {...} and put it into variable %.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 121), AddressOf StripCharacters,
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 121), AddressOf StripCharacters,
  "(5:121) use variable %Variable then remove all occurrences of character {...} and put it into variable %Variable.")
             '(5:122) chop off the beginning of variable %variable, removing the first # characters of it.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 122), AddressOf ChopStartString,
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 122), AddressOf ChopStartString,
 "(5:122) chop off the beginning of variable %variable, removing the first # characters of it.")
             '(5:123) chop off the end of variable %Variable, removing the last # characters of it.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 123), AddressOf ChopEndString,
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 123), AddressOf ChopEndString,
            "(5:123) chop off the end of variable %Variable, removing the last # characters of it.")
 
             '(5:126) count the number of characters in string variable %variable and put them into variable %Variable .
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 126), AddressOf CountChars,
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 126), AddressOf CountChars,
   "(5:126) count the number of characters in string variable %variable and put them into variable %Variable.")
 
             '(5:127) take variable %Variable and Convert it to Furcadia short name. (with out special Characters or spaces)
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 127), AddressOf ToShortName,
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 127), AddressOf ToShortName,
 "(5:127) take variable %Variable and convert it to Furcadia short name. (without special characters or spaces or pipe ""|"").")
 
 
@@ -145,7 +144,7 @@ Module MS_Engine
             End Try
         End Function
 
-        Public Function MatchWildcardString(pattern As [String], input As [String]) As [Boolean]
+        Public Function MatchWildcardString(pattern As String, input As String) As [Boolean]
             If [String].Compare(pattern, input) = 0 Then
                 Return True
             ElseIf [String].IsNullOrEmpty(input) Then
@@ -326,181 +325,181 @@ Module MS_Engine
 
 
     Class SayLibrary
-        Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+        Inherits Libraries.AbstractBaseLibrary
         Private writer As TextBoxWriter = Nothing
 
         Public Sub New()
             writer = New TextBoxWriter(Variables.TextBox1)
-            Add(Monkeyspeak.TriggerCategory.Cause, 1,
+            Add(TriggerCategory.Cause, 1,
                 Function()
                     Return True
                 End Function, "(0:1) When the bot logs into furcadia,")
-            Add(Monkeyspeak.TriggerCategory.Cause, 2,
+            Add(TriggerCategory.Cause, 2,
                 Function()
                     Return True
                 End Function, "(0:2) When the bot logs out of furcadia,")
-            Add(Monkeyspeak.TriggerCategory.Cause, 3,
+            Add(TriggerCategory.Cause, 3,
                 Function()
                     Return True
                 End Function, "(0:3) When the Furcadia client disconnects or closes,")
 
             'says
-            Add(Monkeyspeak.TriggerCategory.Cause, 5,
+            Add(TriggerCategory.Cause, 5,
                       Function()
                           '       Console.WriteLine("Cause (0:5):")
                           Return Not callbk.IsBot(callbk.Player)
                       End Function,
                    "(0:5) When someone says something,")
-            Add(Monkeyspeak.TriggerCategory.Cause, 6,
+            Add(TriggerCategory.Cause, 6,
                  AddressOf msgIs, "(0:6) When someone says {...},")
 
             '(0:7) When some one says something with {...} in it
-            Add(Monkeyspeak.TriggerCategory.Cause, 7,
+            Add(TriggerCategory.Cause, 7,
                  AddressOf msgContains, "(0:7) When someone says something with {...} in it,")
 
             'Shouts
-            Add(Monkeyspeak.TriggerCategory.Cause, 8,
+            Add(TriggerCategory.Cause, 8,
            Function()
                Return Not callbk.IsBot(callbk.Player)
            End Function,
         "(0:8) When someone shouts something,")
-            Add(Monkeyspeak.TriggerCategory.Cause, 9,
+            Add(TriggerCategory.Cause, 9,
                  AddressOf msgIs, "(0:9) When someone shouts {...},")
 
             '(0:10) When some one shouts something with {...} in it
-            Add(Monkeyspeak.TriggerCategory.Cause, 10,
+            Add(TriggerCategory.Cause, 10,
                  AddressOf msgContains, "(0:10) When someone shouts something with {...} in it,")
 
             'emotes
-            Add(Monkeyspeak.TriggerCategory.Cause, 11,
+            Add(TriggerCategory.Cause, 11,
            Function()
                Return Not callbk.IsBot(callbk.Player)
            End Function,
         "(0:11) When someone emotes something,")
-            Add(Monkeyspeak.TriggerCategory.Cause, 12,
+            Add(TriggerCategory.Cause, 12,
                  AddressOf msgIs, "(0:12) When someone emotes {...},")
 
             '(0:13) When some one emotes something with {...} in it
-            Add(Monkeyspeak.TriggerCategory.Cause, 13,
+            Add(TriggerCategory.Cause, 13,
                  AddressOf msgContains, "(0:13) When someone emotes something with {...} in it,")
 
             'Whispers
-            Add(Monkeyspeak.TriggerCategory.Cause, 15,
+            Add(TriggerCategory.Cause, 15,
            Function()
                Return Not callbk.IsBot(callbk.Player)
            End Function,
         "(0:15) When someone whispers something,")
-            Add(Monkeyspeak.TriggerCategory.Cause, 16,
+            Add(TriggerCategory.Cause, 16,
                  AddressOf msgIs, "(0:16) When someone whispers {...},")
 
             '(0:13) When some one emotes something with {...} in it
-            Add(Monkeyspeak.TriggerCategory.Cause, 17,
+            Add(TriggerCategory.Cause, 17,
                  AddressOf msgContains, "(0:17) When someone whispers something with {...} in it,")
 
             'Says or Emotes
-            Add(Monkeyspeak.TriggerCategory.Cause, 18,
+            Add(TriggerCategory.Cause, 18,
                 Function()
                     Return Not callbk.IsBot(callbk.Player)
                 End Function, "(0:18) When someone says or emotes something,")
-            Add(Monkeyspeak.TriggerCategory.Cause, 19,
+            Add(TriggerCategory.Cause, 19,
                  AddressOf msgIs, "(0:19) When someone says or emotes {...},")
 
             '(0:13) When some one emotes something with {...} in it
-            Add(Monkeyspeak.TriggerCategory.Cause, 20,
+            Add(TriggerCategory.Cause, 20,
                  AddressOf msgContains, "(0:20) When someone says or emotes something with {...} in it,")
 
             'Emits
-            Add(Monkeyspeak.TriggerCategory.Cause, 21,
+            Add(TriggerCategory.Cause, 21,
                 Function()
                     Return Not callbk.IsBot(callbk.Player)
                 End Function, "(0:21) When someone emits something,")
-            Add(Monkeyspeak.TriggerCategory.Cause, 22,
+            Add(TriggerCategory.Cause, 22,
                  AddressOf msgIs, "(0:22) When someone emits {...},")
 
             '(0:13) When some one emotes something with {...} in it
-            Add(Monkeyspeak.TriggerCategory.Cause, 23,
+            Add(TriggerCategory.Cause, 23,
                  AddressOf msgContains, "(0:23) When someone emits something with {...} in it,")
 
             'Furre Enters
             '(0:4) When someone is added to the dream manifest,   
-            Add(Monkeyspeak.TriggerCategory.Cause, 24,
+            Add(TriggerCategory.Cause, 24,
                 Function()
 
                     Return True
                 End Function, "(0:24) When someone enters the dream,")
             '(0:25) When a furre Named {...} enters the dream,
-            Add(Monkeyspeak.TriggerCategory.Cause, 25,
+            Add(TriggerCategory.Cause, 25,
                 AddressOf NameIs, "(0:25) When a furre Named {...} enters the dream,")
             'Furre Leaves
             '(0:25) When someone leaves the dream,
-            Add(Monkeyspeak.TriggerCategory.Cause, 26,
+            Add(TriggerCategory.Cause, 26,
                 Function()
                     Return True
                 End Function, "(0:26) When someone leaves the dream, ")
             '(0:27) When a furre named {...} leaves the dream,
-            Add(Monkeyspeak.TriggerCategory.Cause, 27,
+            Add(TriggerCategory.Cause, 27,
                 AddressOf NameIs, "(0:27) When a furre named {...} leaves the dream")
 
             'Furre In View
             '(0:28) When someone enters the bots view,
-            Add(Monkeyspeak.TriggerCategory.Cause, 28,
+            Add(TriggerCategory.Cause, 28,
                 AddressOf EnterView, "(0:28) When someone enters the bots view, ")
             '(0:28) When a furre named {...} enters the bots view
-            Add(Monkeyspeak.TriggerCategory.Cause, 29,
+            Add(TriggerCategory.Cause, 29,
                 AddressOf FurreNamedEnterView, "(0:29) When a furre named {...} enters the bots view")
             'Furre Leave View
             '(0:30) When someone leaves the bots view,
-            Add(Monkeyspeak.TriggerCategory.Cause, 30,
+            Add(TriggerCategory.Cause, 30,
                 AddressOf LeaveView, "(0:30) When someone leaves the bots view, ")
             '(0:31) When a furre named {...} leaves the bots view
-            Add(Monkeyspeak.TriggerCategory.Cause, 31,
+            Add(TriggerCategory.Cause, 31,
                 AddressOf FurreNamedLeaveView, "(0:31) When a furre named {...} leaves the bots view")
 
             'Summon
             '(0:32) When someone requests to summon the bot,
-            Add(Monkeyspeak.TriggerCategory.Cause, 32,
+            Add(TriggerCategory.Cause, 32,
                 Function()
                     Return Not callbk.IsBot(callbk.Player)
                 End Function, "(0:32) When someone requests to summon the bot,")
 
             '(0:33) When a furre named {...} requests to summon the bot,
-            Add(Monkeyspeak.TriggerCategory.Cause, 33,
+            Add(TriggerCategory.Cause, 33,
                 AddressOf NameIs, "(0:33) When a furre named {...} requests to summon the bot,")
             'Join
             '(0:34) When someone requests to join the bot,
-            Add(Monkeyspeak.TriggerCategory.Cause, 34,
+            Add(TriggerCategory.Cause, 34,
                 Function()
                     Return Not callbk.IsBot(callbk.Player)
                 End Function, "(0:34) When someone requests to join the bot,")
             '(0:35) When a furre named {...} requests to join the bot,
-            Add(Monkeyspeak.TriggerCategory.Cause, 35,
+            Add(TriggerCategory.Cause, 35,
                 AddressOf NameIs, "(0:35) When a furre named {...} requests to join the bot,")
             'Follow
             '(0:36) When someone requests to follow the bot,
-            Add(Monkeyspeak.TriggerCategory.Cause, 36,
+            Add(TriggerCategory.Cause, 36,
                 Function()
                     Return Not callbk.IsBot(callbk.Player)
                 End Function, "(0:36) When someone requests to follow the bot,")
             '(0:37) When a furre named {...} requests to follow the bot,
-            Add(Monkeyspeak.TriggerCategory.Cause, 37,
+            Add(TriggerCategory.Cause, 37,
                 AddressOf NameIs, "(0:37) When a furre named {...} requests to follow the bot,")
             'Lead
             '(0:38) When someone requests to lead the bot,
-            Add(Monkeyspeak.TriggerCategory.Cause, 38,
+            Add(TriggerCategory.Cause, 38,
                 Function()
                     Return Not callbk.IsBot(callbk.Player)
                 End Function, "(0:38) When someone requests to lead the bot,")
             '(0:39) When a furre named {...} requests to lead the bot,
-            Add(Monkeyspeak.TriggerCategory.Cause, 39,
+            Add(TriggerCategory.Cause, 39,
                 AddressOf NameIs, "(0:39) When a furre named {...} requests to lead the bot,")
             'Cuddle
             '(0:40) When someone requests to cuddle with the bot. 
-            Add(Monkeyspeak.TriggerCategory.Cause, 40,
+            Add(TriggerCategory.Cause, 40,
                 Function()
                     Return Not callbk.IsBot(callbk.Player)
                 End Function, "(0:40) When someone requests to cuddle with the bot,")
             '(0:41) When a furre named {...} requests to cuddle with the bot,
-            Add(Monkeyspeak.TriggerCategory.Cause, 41,
+            Add(TriggerCategory.Cause, 41,
                 AddressOf NameIs, "(0:41) When a furre named {...} requests to cuddle with the bot,")
 
             'Trade rewuests
@@ -508,106 +507,106 @@ Module MS_Engine
 
 
             '(0:46) When the bot sees a trade request,
-            Add(Monkeyspeak.TriggerCategory.Cause, 46,
+            Add(TriggerCategory.Cause, 46,
             Function()
                 Return Not callbk.IsBot(callbk.Player)
             End Function, "(0:46) When the bot sees a trade request,")
             '(0:47) When the bot sees the trade request {...},
-            Add(Monkeyspeak.TriggerCategory.Cause, 47,
+            Add(TriggerCategory.Cause, 47,
                  AddressOf msgIs, "(0:47) When the bot sees the trade request {...}")
 
             '(0:48) When the bot sees a trade request with {...} in it,
-            Add(Monkeyspeak.TriggerCategory.Cause, 48,
+            Add(TriggerCategory.Cause, 48,
                  AddressOf msgContains, "(0:48) When the bot sees a trade request with {...} in it,")
 
 
             'Dream
             '(0:90) When the bot enters a dream,
-            Add(Monkeyspeak.TriggerCategory.Cause, 90,
+            Add(TriggerCategory.Cause, 90,
                 Function()
                     Return True
                 End Function, "(0:90) When the bot enters a dream,")
             '(0:91) When the bot enters a dream named {...},
-            Add(Monkeyspeak.TriggerCategory.Cause, 91,
+            Add(TriggerCategory.Cause, 91,
                 AddressOf EnterDreamNamed, "(0:91) When the bot enters a dream named {...},")
 
             '(0:92) When the bot detects the "Your throat is tired. Please wait a few seconds" message,
-            Add(Monkeyspeak.TriggerCategory.Cause, 92,
+            Add(TriggerCategory.Cause, 92,
                 Function()
                     Return True
                 End Function, "(0:92) When the bot detects the ""Your throat is tired. Please wait a few seconds"" message,")
 
             '(0:93) When the bot resumes processing after seeing "Your throat is tired" message,
-            Add(Monkeyspeak.TriggerCategory.Cause, 93,
+            Add(TriggerCategory.Cause, 93,
                 Function()
                     Return True
                 End Function, "(0:93) When the bot resumes processing after seeing ""Your throat is tired"" message,")
 
 
             ' (1:3) and the triggering furre's name is {...},
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 5), AddressOf NameIs, "(1:5) and the triggering furre's name is {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 5), AddressOf NameIs, "(1:5) and the triggering furre's name is {...},")
             ' (1:4) and the triggering furre's name is not {...},
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 6), AddressOf NameIsNot, "(1:6) and the triggering furre's name is not {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 6), AddressOf NameIsNot, "(1:6) and the triggering furre's name is not {...},")
 
             ' (1:5) and the Triggering Furre's message is {...}, (say, emote, shot, whisper, or emit Channels)
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 7), AddressOf msgIs, "(1:7) and the triggering furre's message is {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 7), AddressOf msgIs, "(1:7) and the triggering furre's message is {...},")
             ' (1:8) and the triggering furre's message contains {...} in it, (say, emote, shot, whisper, or emit Channels)
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 8), AddressOf msgContains, "(1:8) and the triggering furre's message contains {...} in it,")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 8), AddressOf msgContains, "(1:8) and the triggering furre's message contains {...} in it,")
             '(1:9) and the triggering furre's message does not contain {...} in it, (say, emote, shot, whisper, or emit Channels)
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 9), AddressOf msgNotContain, "(1:9) and the triggering furre's message does not contain {...} in it,")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 9), AddressOf msgNotContain, "(1:9) and the triggering furre's message does not contain {...} in it,")
             '(1:10) and the triggering furre's message is not {...}, (say, emote, shot, whisper, or emit Channels)
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 10), AddressOf msgIsNot, "(1:10) and the triggering furre's message is not {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 10), AddressOf msgIsNot, "(1:10) and the triggering furre's message is not {...},")
 
             '(1:11) and triggering furre's message starts with {...},
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 11), AddressOf msgStartsWith, "(1:11) and triggering furre's message starts with {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 11), AddressOf msgStartsWith, "(1:11) and triggering furre's message starts with {...},")
             '(1:12) and triggering furre's message doesn't start with {...},
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 12), AddressOf msgNotStartsWith, "(1:12) and triggering furre's message doesn't start with {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 12), AddressOf msgNotStartsWith, "(1:12) and triggering furre's message doesn't start with {...},")
             '(1:13) and triggering furre's message  ends with {...},
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 13), AddressOf msgEndsWith, "(1:13) and triggering furre's message  ends with {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 13), AddressOf msgEndsWith, "(1:13) and triggering furre's message  ends with {...},")
             '(1:14) and triggering furre's message doesn't end with {...},
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 14), AddressOf msgNotEndsWith, "(1:14) and triggering furre's message doesn't end with {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 14), AddressOf msgNotEndsWith, "(1:14) and triggering furre's message doesn't end with {...},")
 
             '(1:904) and the triggering furre is the Bot Controller,
             Add(New Trigger(TriggerCategory.Condition, 15), _
                 Function()
-                    Return IsBotControler(MainEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+                    Return IsBotControler(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
                 End Function, "(1:15) and the triggering furre is the Bot Controller,")
 
             '(1:905) and the triggering furre is not the Bot Controller,
             Add(New Trigger(TriggerCategory.Condition, 16), _
                 Function()
-                    Return Not IsBotControler(MainEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+                    Return Not IsBotControler(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
                 End Function, "(1:16) and the triggering furre is not the Bot Controller,")
 
 
             '(1:17) and the triggering furre's name is {...}.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 17), AddressOf TrigFurreNameIs, "(1:17) and the triggering furre's name is {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 17), AddressOf TrigFurreNameIs, "(1:17) and the triggering furre's name is {...},")
 
             '(1:18) and the triggering furre's name is not {...}.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 18), AddressOf TrigFurreNameIsNot, "(1:18) and the triggering furre's name is not {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 18), AddressOf TrigFurreNameIsNot, "(1:18) and the triggering furre's name is not {...},")
 
 
             '(1:19) and the bot is the dream owner,
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 19), AddressOf BotIsDreamOwner, "(1:19) and the bot is the dream owner,")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 19), AddressOf BotIsDreamOwner, "(1:19) and the bot is the dream owner,")
             '(1:20) and the bot is not the dream owner,
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 20), AddressOf BotIsNotDreamOwner, "(1:20) and the bot is not the dream owner,")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 20), AddressOf BotIsNotDreamOwner, "(1:20) and the bot is not the dream owner,")
             '(1:21) and the furre named {...} is the dream owner,
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 21), AddressOf FurreNamedIsDreamOwner, "(1:21) and the furre named {...} is the dream owner,")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 21), AddressOf FurreNamedIsDreamOwner, "(1:21) and the furre named {...} is the dream owner,")
             '(1:22) and the furre named {...} is not the dream owner,
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 22), AddressOf FurreNamedIsNotDreamOwner, "(1:22) and the furre named {...} is not the dream owner,")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 22), AddressOf FurreNamedIsNotDreamOwner, "(1:22) and the furre named {...} is not the dream owner,")
             '(1:23) and the Dream Name is {...},
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 23), AddressOf DreamNameIs, "(1:23) and the Dream Name is {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 23), AddressOf DreamNameIs, "(1:23) and the Dream Name is {...},")
             '(1:24) and the Dream Name is not {...},
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 24), AddressOf DreamNameIsNot, "(1:24) and the Dream Name is not {...},")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 24), AddressOf DreamNameIsNot, "(1:24) and the Dream Name is not {...},")
             '(1:25) and the triggering furre is the dream owner
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 25), AddressOf TriggeringFurreIsDreamOwner, "(1:25) and the triggering furre is the dream owner,")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 25), AddressOf TriggeringFurreIsDreamOwner, "(1:25) and the triggering furre is the dream owner,")
             '(1:26) and the triggering furre is not the dream owner
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 26), AddressOf TriggeringFurreIsNotDreamOwner, "(1:26) and the triggering furre is not the dream owner,")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 26), AddressOf TriggeringFurreIsNotDreamOwner, "(1:26) and the triggering furre is not the dream owner,")
 
             '(1:27) and the bot has share control of the dream or is the dream owner,
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 27),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 27),
                 Function(reader As TriggerReader)
-                    Dim tname As Variable = MainEngine.MSpage.GetVariable("DREAMOWNER")
+                    Dim tname As Variable = MainMSEngine.MSpage.GetVariable("DREAMOWNER")
                     If callbk.HasShare Or callbk.BotName.ToFurcShortName = tname.Value.ToString.ToFurcShortName Then
                         Return True
                     End If
@@ -615,19 +614,19 @@ Module MS_Engine
                 End Function, "(1:27) and the bot has share control of the dream or is the dream owner,")
 
             '(1:28) and the bot has share control of the dream,
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 28),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 28),
                 Function()
                     Return callbk.HasShare
                 End Function, "(1:28) and the bot has share control of the dream,")
 
             '(1:29) and the bot doesn't have share control in the dream,
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 29),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 29),
                 Function()
                     Return Not callbk.HasShare
                 End Function, "(1:29) and the bot doesn't have share control in the dream,")
             'Says
             ' (5:0) say {...}. 
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 0),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 0),
              Function(reader As Monkeyspeak.TriggerReader)
                  Try
                      Dim msg As String = reader.ReadString(True)
@@ -646,7 +645,7 @@ Module MS_Engine
              "(5:0) say {...}.")
             'emotes
             ' (5:1) emote {...}. 
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 1),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 1),
              Function(reader As Monkeyspeak.TriggerReader)
                  Try
                      Dim msg As String = reader.ReadString
@@ -666,7 +665,7 @@ Module MS_Engine
 
             'Shouts
             ' (5:2) shout {...}.         
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 2),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 2),
              Function(reader As Monkeyspeak.TriggerReader)
                  Try
                      Dim msg As String = reader.ReadString
@@ -686,7 +685,7 @@ Module MS_Engine
 
             'Emits
             ' (5:3) emit {...}. 
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 3),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 3),
            Function(reader As Monkeyspeak.TriggerReader)
                Try
                    Dim msg As String = reader.ReadString
@@ -704,7 +703,7 @@ Module MS_Engine
            End Function,
           "(5:3) Emit {...}.")
             ' (5:4) emitloud {...}. 
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 4),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 4),
            Function(reader As Monkeyspeak.TriggerReader)
                Try
                    Dim msg As String = reader.ReadString
@@ -724,11 +723,11 @@ Module MS_Engine
 
             'Whispers
             ' (5:5) whisper {...} to the triggering furre.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 5),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 5),
            Function(reader As Monkeyspeak.TriggerReader)
                Try
                    Dim msg As String = reader.ReadString
-                   Dim tname As Variable = MainEngine.MSpage.GetVariable(MS_Name)
+                   Dim tname As Variable = MainMSEngine.MSpage.GetVariable(MS_Name)
                    sndWhisper(tname.Value.ToString, msg)
                    Return True
                Catch ex As Exception
@@ -744,7 +743,7 @@ Module MS_Engine
          "(5:5) whisper {...} to the triggering furre.")
 
             ' (5:6) whisper {...} to {...}.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 6),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 6),
             Function(reader As Monkeyspeak.TriggerReader)
                 Try
                     Dim msg As String = reader.ReadString(True)
@@ -764,7 +763,7 @@ Module MS_Engine
          "(5:6) whisper {...} to {...}.")
 
             ' (5:7) whisper {...} to {...} even if they're offline.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 7),
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 7),
           Function(reader As Monkeyspeak.TriggerReader)
               Try
                   Dim msg As String = reader.ReadString
@@ -785,22 +784,22 @@ Module MS_Engine
             "(5:7) whisper {...} to {...} even if they're offline.")
 
             '(5:20) give share control to the triggering furre.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 20), AddressOf ShareTrigFurre, "(5:20) give share control to the triggering furre.")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 20), AddressOf ShareTrigFurre, "(5:20) give share control to the triggering furre.")
             '(5:21) remove shae control from the triggering furre.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 21), AddressOf UnshareTrigFurre, "(5:21) remove share control from the triggering furre.")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 21), AddressOf UnshareTrigFurre, "(5:21) remove share control from the triggering furre.")
             '(5:22) remove share from the furre named {...} if they're in the dream right now.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 22), AddressOf ShareFurreNamed, "(5:22) remove share from the furre named {...} if they're in the dream right now.")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 22), AddressOf ShareFurreNamed, "(5:22) remove share from the furre named {...} if they're in the dream right now.")
             '(5:23) give share to the furre named {...} if they're in the dream right now.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 23), AddressOf UnshareFurreNamed, "(5:23) give share to the furre named {...} if they're in the dream right now.")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 23), AddressOf UnshareFurreNamed, "(5:23) give share to the furre named {...} if they're in the dream right now.")
 
             '(5:40) Switch the bot to stand alone mode and close the Furcadia client.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 40), AddressOf StandAloneMode, "(5:40) Switch the bot to stand alone mode and close the Furcadia client.")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 40), AddressOf StandAloneMode, "(5:40) Switch the bot to stand alone mode and close the Furcadia client.")
 
             '(5:41) Disconnect the bot from the Furcadia game server.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 41), AddressOf FurcadiaDisconnect, "(5:41) Disconnect the bot from the Furcadia game server.")
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 41), AddressOf FurcadiaDisconnect, "(5:41) Disconnect the bot from the Furcadia game server.")
 
             '(5:42) start a new instance to Silver Monkey with botfile {...}.
-            Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 42), AddressOf StartNewBot,
+            Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 42), AddressOf StartNewBot,
                 "(5:42) start a new instance to Silver Monkey with botfile {...}.")
 
         End Sub
@@ -808,7 +807,7 @@ Module MS_Engine
         Function NameIs(reader As TriggerReader) As Boolean
             Try
                 Dim TmpName As String = reader.ReadString()
-                Dim tname As Variable = MainEngine.MSpage.GetVariable(MS_Name)
+                Dim tname As Variable = MainMSEngine.MSpage.GetVariable(MS_Name)
                 'add Machine Name parser
                 Return TmpName.ToFurcShortName = tname.Value.ToString.ToFurcShortName
             Catch ex As Exception
@@ -846,7 +845,7 @@ Module MS_Engine
         '(1:19) and the bot is the dream owner,
         Function BotIsDreamOwner(reader As TriggerReader) As Boolean
             Try
-                Dim tname As Variable = MainEngine.MSpage.GetVariable("DREAMOWNER")
+                Dim tname As Variable = MainMSEngine.MSpage.GetVariable("DREAMOWNER")
                 Dim TrigFurreName As String = callbk.BotName
                 'add Machine Name parser
                 Return tname.Value.ToString().ToFurcShortName = TrigFurreName.ToFurcShortName
@@ -866,7 +865,7 @@ Module MS_Engine
         '(1:20) and the furre named {...} is the dream owner,
         Function FurreNamedIsDreamOwner(reader As TriggerReader) As Boolean
             Try
-                Dim tname As Variable = MainEngine.MSpage.GetVariable("DREAMOWNER")
+                Dim tname As Variable = MainMSEngine.MSpage.GetVariable("DREAMOWNER")
                 Dim TrigFurreName As String = reader.ReadString
                 'add Machine Name parser
                 Return tname.Value.ToString().ToFurcShortName = TrigFurreName.ToFurcShortName
@@ -886,7 +885,7 @@ Module MS_Engine
         '(1:21) and the Dream Name is {...},
         Function DreamNameIs(reader As TriggerReader) As Boolean
             Try
-                Dim tname As Variable = MainEngine.MSpage.GetVariable("DREAMNAME")
+                Dim tname As Variable = MainMSEngine.MSpage.GetVariable("DREAMNAME")
                 Dim TrigFurreName As String = reader.ReadString
                 TrigFurreName = TrigFurreName.ToLower.Replace("furc://", "")
                 'add Machine Name parser
@@ -908,7 +907,7 @@ Module MS_Engine
         Function TriggeringFurreIsDreamOwner(reader As TriggerReader) As Boolean
             Try
                 Dim tname As String = callbk.Player.ShortName
-                Dim TrigFurreName As String = MainEngine.MSpage.GetVariable("DREAMOWNER").Value.ToString
+                Dim TrigFurreName As String = MainMSEngine.MSpage.GetVariable("DREAMOWNER").Value.ToString
                 'add Machine Name parser
                 Return tname = TrigFurreName.ToFurcShortName
             Catch ex As Exception
@@ -926,7 +925,7 @@ Module MS_Engine
         End Function
         Function NameIsNot(reader As TriggerReader) As Boolean
             Try
-                Dim tname As String = MainEngine.MSpage.GetVariable(MS_Name).Value.ToString
+                Dim tname As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
                 Dim TmpName As String = reader.ReadString()
                 'add Machine Name parser
                 If TmpName.ToFurcShortName <> tname.ToFurcShortName Then Return True
@@ -947,7 +946,7 @@ Module MS_Engine
 
             Try
                 Dim msMsg As String = StripHTML(reader.ReadString())
-                Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
 
                 Dim test As String = StripHTML(msg.Value.ToString)
                 Return test.Contains(msMsg)
@@ -965,7 +964,7 @@ Module MS_Engine
         Function msgNotContain(reader As TriggerReader) As Boolean
             Try
                 Dim msMsg As String = StripHTML(reader.ReadString())
-                Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
 
                 Dim test As String = StripHTML(msg.Value.ToString)
                 Return test.Contains(msMsg)
@@ -991,7 +990,7 @@ Module MS_Engine
             Try
                 Dim safety As Boolean = Not callbk.IsBot(callbk.Player)
                 Dim msMsg As String = StripHTML(reader.ReadString())
-                Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
 
                 Dim test As String = StripHTML(msg.Value.ToString)
                 Dim test2 As Boolean = msMsg.Equals(test) And safety
@@ -1011,7 +1010,7 @@ Module MS_Engine
             Try
                 Dim safety As Boolean = Not callbk.IsBot(callbk.Player)
                 Dim msMsg As String = StripHTML(reader.ReadString())
-                Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
 
                 Dim test As String = StripHTML(msg.Value.ToString)
                 Return Not msMsg.Equals(test) And safety
@@ -1030,7 +1029,7 @@ Module MS_Engine
         Function msgStartsWith(reader As TriggerReader) As Boolean
             Try
                 Dim msMsg As String = StripHTML(reader.ReadString())
-                Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
 
                 Dim test As String = StripHTML(msg.Value.ToString)
                 Return test.StartsWith(msMsg)
@@ -1048,7 +1047,7 @@ Module MS_Engine
         Function msgNotStartsWith(reader As TriggerReader) As Boolean
             Try
                 Dim msMsg As String = StripHTML(reader.ReadString())
-                Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
 
                 Dim test As String = StripHTML(msg.Value.ToString)
                 Return Not test.StartsWith(msMsg)
@@ -1066,7 +1065,7 @@ Module MS_Engine
         Function msgEndsWith(reader As TriggerReader) As Boolean
             Try
                 Dim msMsg As String = StripHTML(reader.ReadString())
-                Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
 
                 Dim test As String = StripHTML(msg.Value.ToString)
                 'Debug.Print("Msg = " & msg)
@@ -1086,7 +1085,7 @@ Module MS_Engine
 
             Try
                 Dim msMsg As String = StripHTML(reader.ReadString())
-                Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
 
                 Dim test As String = StripHTML(msg.Value.ToString)
                 'Debug.Print("Msg = " & msg)
@@ -1178,7 +1177,7 @@ Module MS_Engine
         Public Function EnterDreamNamed(reader As Monkeyspeak.TriggerReader) As Boolean
             Try
                 Dim msMsg As String = reader.ReadString()
-                Dim msg As Variable = MainEngine.MSpage.GetVariable("DREAMNAME")
+                Dim msg As Variable = MainMSEngine.MSpage.GetVariable("DREAMNAME")
                 Dim str As String = msMsg.ToLower.Replace("furc://", "").ToLower
                 If str.EndsWith("/") Then str = str.TrimEnd("/"c)
 
@@ -1295,6 +1294,7 @@ Module MS_Engine
                 Debug.Print(ErrorString)
                 Return False
             End Try
+            Return True
         End Function
         '(5:41) Disconnect the bot from the Furcadia game server.
         Public Function FurcadiaDisconnect(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -1309,10 +1309,12 @@ Module MS_Engine
                 Debug.Print(ErrorString)
                 Return False
             End Try
+            Return True
         End Function
         '(5:42) start a new instance to Silver Monkey with botfile {...}.
         Public Function StartNewBot(reader As Monkeyspeak.TriggerReader) As Boolean
             Try
+                'Dim ps As Process = New Process()
                 Dim File As String = reader.ReadString
                 Dim p As New ProcessStartInfo
                 p.Arguments = File
@@ -1327,11 +1329,13 @@ Module MS_Engine
                 Debug.Print(ErrorString)
                 Return False
             End Try
+
+            Return True
         End Function
     End Class
 
     Class MathLibrary
-        Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+        Inherits Libraries.AbstractBaseLibrary
         Sub New()
 
         End Sub

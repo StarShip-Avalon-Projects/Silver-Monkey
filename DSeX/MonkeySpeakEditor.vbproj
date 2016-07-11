@@ -1,30 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <ProjectGuid>{65E4CC10-B91D-4645-B20C-D3A381C9A36A}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>
-    </ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C9ACA223-FEB6-46B8-B34B-6B72C3E20643}</ProjectGuid>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
-    <StartupObject>MonkeySpeakEditor.My.MyApplication</StartupObject>
     <RootNamespace>MonkeySpeakEditor</RootNamespace>
     <AssemblyName>MonkeySpeakEditor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <OptionInfer>On</OptionInfer>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>MonkeySpeakEditor.My.MyApplication</StartupObject>
+    <ApplicationIcon>32x32 %282%29.ico</ApplicationIcon>
+    <NoWin32Manifest>True</NoWin32Manifest>
+    <OptionStrict>Off</OptionStrict>
+    <OptionCompare>Binary</OptionCompare>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -37,53 +33,44 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NoWin32Manifest>False</NoWin32Manifest>
-    <RemoveIntegerChecks>True</RemoveIntegerChecks>
-    <OptionCompare>Binary</OptionCompare>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>False</Prefer32Bit>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>..\Build\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>Full</DebugType>
-    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <WarningLevel>4</WarningLevel>
+    <Optimize>False</Optimize>
+    <DefineConstants>DEBUG=1,TRACE=1</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>..\build\Debug\</OutputPath>
-    <DocumentationFile>MonkeySpeakEditor.xml</DocumentationFile>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>..\Build\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <DefineConstants>TRACE=1</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <AdditionalParameters />
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <DefineConstants />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>..\build\Release\</OutputPath>
-    <DocumentationFile>MonkeySpeakEditor.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <AdditionalParameters />
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Resources\MonkeySpeak.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionStrict>On</OptionStrict>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FastColoredTextBox">
+      <HintPath>..\packages\FCTB.2.16.11.0\lib\FastColoredTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -113,35 +100,25 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="AssemblyFileVersion.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Config.designer.vb">
       <DependentUpon>Config.vb</DependentUpon>
     </Compile>
     <Compile Include="Config.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigStructs.vb" />
     <Compile Include="Controls\InputBoxFrm.Designer.vb">
       <DependentUpon>InputBoxFrm.vb</DependentUpon>
     </Compile>
     <Compile Include="Controls\InputBoxFrm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\ScrollingListBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.Designer.vb">
-      <DependentUpon>ListView_NoFlicker.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TabControlEx.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Helper Classes\ErrorLogging.vb" />
-    <Compile Include="Helper Classes\IniFile.vb" />
-    <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="MainModule.vb" />
+    <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="MS_Edit.Designer.vb">
       <DependentUpon>MS_Edit.vb</DependentUpon>
     </Compile>
@@ -229,18 +206,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="keys-ms.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <EmbeddedResource Include="app.manifest" />
+    <None Include="AssemblyFileVersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
-    <None Include="keys.ini">
+    <Content Include="keys-ms.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="keyshelp-ms.ini">
+    </Content>
+    <Content Include="keys.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="keyshelp.ini">
+    </Content>
+    <Content Include="keyshelp-ms.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="keyshelp.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -250,15 +232,16 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="Scripts-MS\DreamCheck.ini">
+    <None Include="packages.config" />
+    <Content Include="Scripts-MS\DreamCheck.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="Scripts\4 point Chair Face.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\antispam.ini">
+    <Content Include="Scripts\antispam.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Scripts\automaticdoor.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -350,74 +333,80 @@
     <None Include="Scripts\touchfloor.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Templates-MS\Banish Control with Database.ms">
+    <Content Include="Templates-MS\Banish Control with Database.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\Banishment control with memberlist.ms">
+    </Content>
+    <Content Include="Templates-MS\Banishment control with memberlist.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\Demo MemberList.ms">
+    </Content>
+    <Content Include="Templates-MS\Demo MemberList.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\DreamCheck.ms">
+    </Content>
+    <Content Include="Templates-MS\DreamCheck.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\Enhanced PS Backup.ms">
+    </Content>
+    <Content Include="Templates-MS\Enhanced PS Backup.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\FloodProtect.ms">
+    </Content>
+    <Content Include="Templates-MS\FloodProtect.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\HelpChanDemo.ms">
+    </Content>
+    <Content Include="Templates-MS\HelpChanDemo.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\Navigate Oldetown.ms">
+    </Content>
+    <Content Include="Templates-MS\Navigate Oldetown.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\PS Backup %27n%27 Restore.ms">
+    </Content>
+    <Content Include="Templates-MS\PS Backup %27n%27 Restore.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\TradeDemo.ms">
+    </Content>
+    <Content Include="Templates-MS\TradeDemo.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates-MS\Variable.ms">
+    </Content>
+    <Content Include="Templates-MS\Variable.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Basic Ban.ds">
+    </Content>
+    <Content Include="Templates\Basic Ban.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Basic Share.ds">
+    </Content>
+    <Content Include="Templates\Basic Share.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Give furres ability to Emit.ds">
+    </Content>
+    <Content Include="Templates\Give furres ability to Emit.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Give furres ability to Emitloud.ds">
+    </Content>
+    <Content Include="Templates\Give furres ability to Emitloud.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Give furres ability to Share.ds">
+    </Content>
+    <Content Include="Templates\Give furres ability to Share.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Pickup Ungettables.ds">
+    </Content>
+    <Content Include="Templates\Pickup Ungettables.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\PS Auto Share.ds">
+    </Content>
+    <Content Include="Templates\PS Auto Share.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\PS Ban.ds">
+    </Content>
+    <Content Include="Templates\PS Ban.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Switch Flipping.ds">
+    </Content>
+    <Content Include="Templates\Switch Flipping.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\Verbal Warp.ds">
+    </Content>
+    <Content Include="Templates\Verbal Warp.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="DESUrls.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates-MS\Angel Cat Staff Group.ms">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="16x16.ico">
+    <Content Include="16x16.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="32x32 %282%29.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -491,28 +480,22 @@
     <Content Include="Scripts\readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Wizard\help.txt" />
+    <Resource Include="Wizard\help.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FastColoredTextBox\FastColoredTextBox.csproj">
-      <Project>{6DD14A85-CCFC-4774-BD26-0F5772512319}</Project>
-      <Name>FastColoredTextBox</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyspeakR6\MonkeyspeakR6.csproj">
-      <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
-      <Name>MonkeyspeakR6</Name>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Name>MonkeyCore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -523,30 +506,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties BuildVersion_UpdateFileVersion="True" BuildVersion_ConfigurationName="Any" BuildVersion_BuildVersioningStyle="None.None.Increment.MonthAndDayStamp" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_StartDate="2014/2/21" />
-    </VisualStudio>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="MSBuild" />
-          <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-vb" />
-          <TextStylePolicy inheritsSet="null" scope="application/config+xml" />
-          <XmlFormattingPolicy inheritsSet="null" scope="application/config+xml" />
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
-  <PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
     <PostBuildEvent>del "Silver Monkey.chm"
 copy "..\Help\Silver Monkey.chm" ".\"
 
@@ -561,38 +525,20 @@ cd $(SolutionDir)
 "c:/program files/winrar/rar.exe" a -r -x*\.svn\* -x*\build\*  -x*\bin\*  -x*\src\ -x*\obj\* -n*.*proj -n*.sln -n*.nsi -n*.vb  -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll -n*.config "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" *.*
 move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</PostBuildEvent>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Wix|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>..\build\Release\</OutputPath>
-    <DocumentationFile>MonkeySpeakEditor.xml</DocumentationFile>
-    <NoWarn />
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <AdditionalParameters />
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <Optimize>true</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Wix' ">
-    <Optimize>true</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <Optimize>False</Optimize>
-    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>False</Prefer32Bit>
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <PropertyGroup>
+    <PostBuildEvent>"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\MT.exe"   -manifest "$(ProjectDir)app.manifest"   -outputresource:"$(TargetDir)$(TargetFileName)";#1
+</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>if $(ConfigurationName) == Release (
+"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"
+)</PreBuildEvent>
+  </PropertyGroup>
 </Project>

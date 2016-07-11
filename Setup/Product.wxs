@@ -1,52 +1,196 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension" 
+       xmlns:ui="http://schemas.microsoft.com/wix/UIExtension">
 
-	<Product Id="E8803C96-7C07-460B-8D9C-5EEC242D7DFE" Name="Silver Monkey" Language="1033" Version="1.0.0.0" Manufacturer="Me" UpgradeCode="A709F3A0-BEE3-403E-AC47-1FE1AD189C77">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
-
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is alreaady installed." />
-    <Media Id="1" Cabinet="SilverMonkey.cab" EmbedCab="yes" CompressionLevel="High"/>
+  <Product 
+    Id="E8803C96-7C07-460B-8D9C-5EEC242D7DFE" 
+    Name="Silver Monkey" 
+    Version="$(var.BuildVersion)" 
+    Manufacturer="TSProjects" 
+    Language="1033" 
+    UpgradeCode="A709F3A0-BEE3-403E-AC47-1FE1AD189C77">
+    <Package InstallerVersion="500" InstallPrivileges="elevated"  Compressed="yes"  />
+    
+    <Property Id="WixUI_FeatureTree" Value="INSTALLFOLDER" />
+		<UIRef Id="WixUI_FeatureTree" />
+    <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="license.Rtf"/>
+    <WixVariable Id="WixUIBannerBmp" Value="metal.png" />
+    <MajorUpgrade
+   Schedule="afterInstallInitialize"
+   DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
+    <Media Id="1" Cabinet="SilverMonkey.cab" EmbedCab="yes" CompressionLevel="high"/>
  	
-       <Directory Id="TARGETDIR" Name="SourceDir">
-            <Directory Id="ProgramFilesFolder">
-                <Directory Id="INTALLFOLDER" Name="Silver Monkey"/>
-            </Directory>
-            <!-- Step 1: Define the directory structure -->
-            <Directory Id="ProgramMenuFolder">
-                <Directory Id="ApplicationProgramsFolder" Name="My Application Name"/>
-            </Directory>
+
+         <Directory Id="TARGETDIR"
+         Name="SourceDir">
+           <Directory Id="ProgramFilesFolder">
+             <Directory Id="INSTALLFOLDER"
+                Name="Silver Monkey" >
+                  <Directory Id="PLUGINS" Name="Plugins" />
+                  <Directory Id="X86" Name="x86" />
+                  <Directory Id="X64" Name="x64" />
+              </Directory>
+           </Directory>
+            
+             <!-- Step 1: Define the directory structure -->
+<Directory Id="ProgramMenuFolder">
+    <Directory Id="TSProjects" Name="Silver Monkey">
+
+    </Directory>
+  </Directory>
         </Directory>
 
-        <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="SilverMonkey.exe" Guid="*">
-                <File Id="myapplication.exe" Source="$(var.SilverMonkey2.TargetName)" KeyPath="yes" Checksum="yes"/>
-            </Component>
-        </DirectoryRef>
 
-        <!-- Step 2: Add the shortcut to your installer package -->
-        <DirectoryRef Id="ApplicationProgramsFolder">
-            <Component Id="SilverMonkey2Shortcut" Guid="*">
-                <Shortcut Id="ApplicationStartMenuShortcut" 
-                     Name="Silver Monkey" 
-                   Description="My Application Description"
-                    Target="$(var.SilverMonkey2.TargetFileName)"
-                          WorkingDirectory="INSTALLFOLDER"/>
-                <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-                <RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
-           </Component>
-        </DirectoryRef>
-</Product>
-        <Feature Id="MainApplication" Title="Main Application" Level="1">
-            <ComponentRef Id="SilverMonkey2.exe" />
-        	<ComponentRef Id="SilverMonkey2.Binaries" />
-        	<ComponentRef Id="SilverMonkey2.Content" />
+      <!-- Step 2: Add the shortcut to your installer package -->
+
+          <Component Id="SilverMonkey2Shortcut" Guid="069F47AB-1B04-4783-BAFB-E7788BDE48DA" Directory='TSProjects'>
+
+              <Shortcut Id="$(var.SilverMonkey2.TargetName)Shortcut"
+                        Name="$(var.SilverMonkey2.TargetName)"
+                        Advertise="no"
+                        Target="[INSTALLFOLDER]$(var.SilverMonkey2.TargetName)"
+                        WorkingDirectory='INSTALLFOLDER'
+                        Description="Starts $(var.SilverMonkey2.TargetName)"
+                        Directory="TSProjects" />
+
+           
+          <RemoveFolder Id="RemoveTSProjects" Directory="TSProjects" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\TSProjects\Silver Monkey" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
+          </Component>
+          <Component Id="MonkeySpeakEditorShortcut" Guid="{4135A160-96A5-4C86-A402-AB2F1AEFA966}" Directory='TSProjects'>
+            
+              <Shortcut Id="$(var.MonkeySpeakEditor.TargetName)Shortcut"
+                        Name="$(var.MonkeySpeakEditor.TargetName)"
+                        Advertise="no"
+                        WorkingDirectory='INSTALLFOLDER'
+                        Target="[INSTALLFOLDER]$(var.MonkeySpeakEditor.TargetName)"
+                        Description="Starts $(var.MonkeySpeakEditor.TargetName)"
+                        Directory="TSProjects" />
+
+            <RemoveFolder Id="RemoveMonkeySpeakEditor" Directory="TSProjects" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\TSProjects\Monkey Speak Editory" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
+          </Component>
+    
+              <Component Id="DataMonkeyShortcut" Guid="{9B9BA57E-16C0-4E6C-A343-2E372C65000C}" Directory='TSProjects'>
+            
+              <Shortcut Id="$(var.DataMonkey.TargetName)Shortcut"
+                        Name="$(var.DataMonkey.TargetName)"
+                        Advertise="no"
+                        WorkingDirectory='INSTALLFOLDER'
+                        Target="[INSTALLFOLDER]$(var.DataMonkey.TargetName)"
+                        Description="Starts $(var.DataMonkey.TargetName)"
+                        Directory="TSProjects" />
+
+            <RemoveFolder Id="RemoveDataMonkey" Directory="TSProjects" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\TSProjects\Data Monkey" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
+          </Component>
+    
+              <Component Id="VerbotKnowledgebaseEditorShortcut" Guid="{9FB44C2E-575A-44B4-B85F-AB1AFC1572B4}" Directory='TSProjects'>
+            
+              <Shortcut Id="$(var.VerbotKnowledgebaseEditor.TargetName)Shortcut"
+                        Name="$(var.VerbotKnowledgebaseEditor.TargetName)"
+                        Advertise="no"
+                        WorkingDirectory='INSTALLFOLDER'
+                        Target="[INSTALLFOLDER]$(var.VerbotKnowledgebaseEditor.TargetName)"
+                        Description="Starts $(var.VerbotKnowledgebaseEditor.TargetName)"
+                        Directory="TSProjects" />
+
+            <RemoveFolder Id="RemoveVerbotKnowledgebaseEditor" Directory="TSProjects" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\TSProjects\Verbot Knowledgebase Editor" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
+          </Component>
+    
+              <Component Id="ChatBotShortcut" Guid="{F9E10352-4CD5-4000-B334-0000FAEF4FCD}" Directory='TSProjects'>
+            
+              <Shortcut Id="$(var.ChatBot.TargetName)Shortcut"
+                        Name="$(var.ChatBot.TargetName)"
+                        Advertise="no"
+                        WorkingDirectory='INSTALLFOLDER'
+                        Target="[INSTALLFOLDER]$(var.ChatBot.TargetName)"
+                        Description="Starts $(var.ChatBot.TargetName)"
+                        Directory="TSProjects" />
+
+            <RemoveFolder Id="RemoveChatBot" Directory="TSProjects" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\TSProjects\Chat Bot" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
+          </Component>
+      
+
+        <Feature Id="SilverMonkey2" Title="Main Application" Level="1" >
             <!-- Step 3: Tell WiX to install the shortcut -->
-            <ComponentRef Id="SilverMonkey2Shortcut" />   
+          <ComponentGroupRef Id="SilverMonkey2.Binaries" />
+          <ComponentGroupRef Id="MonkeyCore.Binaries" />
+            <ComponentRef Id="SilverMonkey2Shortcut" />
+          <ComponentRef Id="MonkeySpeakEditorShortcut" />
+          <ComponentGroupRef Id="TheClaaaw.Binaries" />
+          <ComponentRef Id="TheClaaawIni" />
+          <ComponentGroupRef Id="MonkeySpeakEditor.Binaries" />
+          <ComponentGroupRef Id="MonkeySpeakEditor.Content" />
+          <ComponentGroupRef Id="MonkeyspeakR6.Binaries" />
+          <ComponentGroupRef Id="FurcadiaLib.Binaries" />
+          <ComponentGroupRef Id="Interfaces.Binaries"  />         
+          <ComponentGroupRef Id="Verbot5Library.Binaries" />
+          <ComponentRef Id="FCTB" />
+          <ComponentRef Id="Irony" />
+          <ComponentRef Id="RTFLib.dll" />
+          <ComponentRef Id="SQLite" />
+          <ComponentRef Id="X86" />
+          <ComponentRef Id="X64" />
+          <Feature Id="DataMonkey" Title="Database Application" Level="2" >
+            <ComponentGroupRef Id="DataMonkey.Binaries"  />
+            <ComponentRef Id="DataMonkeyShortcut"  />
+          </Feature>
+          <Feature Id="ChatBot" Title="Chatbot Application" Level="2" >
+            <ComponentGroupRef Id="ChatBot.Binaries"  />
+            <ComponentRef Id="ChatBotShortcut"  />
+          </Feature>
+          <Feature Id="VerbotKnowledgebaseEditor" Title="Chatbot Knowedgebase Application" Level="2" >
+            <ComponentGroupRef Id="VerbotKnowledgebaseEditor.Binaries"  />
+            <ComponentRef Id="VerbotKnowledgebaseEditorShortcut"  />
+          </Feature>
         </Feature>
 
-	
-	
-	<Fragment >
 
-  </Fragment>
+    <!-- Misc DLLS-->
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="FCTB" Guid="{CAA87BC5-9387-47D4-B1BB-A0022C1A71B8}">
+        <File Id="FCTB" Source="$(var.SilverMonkey2.TargetDir)FastColoredTextBox.dll" KeyPath="no" Checksum="yes"/>
+      </Component>
+        <Component Id="Irony" Guid="{B078886D-97DD-491F-BFBB-5080A889CB12}">
+          <File Id="Irony" Source="$(var.SilverMonkey2.TargetDir)Irony.dll" KeyPath="no" Checksum="yes"/>
+        </Component>
+      <Component Id="RTFLib.dll" Guid="{274422CD-E56A-4157-BD0C-99B19DC07E09}">
+        <File Id="RTFLib.dll" Source="$(var.SilverMonkey2.TargetDir)RTFLib.dll" KeyPath="no" Checksum="yes"/>
+      </Component>
+    </DirectoryRef>
+    
+    <!-- SQLite Components -->
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="SQLite" Guid="{CADE1E29-CD6A-4301-8315-C611156C6462}">
+        <File Id="System.Data.SQLite" Source="$(var.SilverMonkey2.TargetDir)System.Data.SQLite.dll" KeyPath="no" Checksum="yes"/>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="X86">
+      <Component Id="X86" Guid="{E8C8E211-70E7-4B7E-B6B2-2058E91E7C13}">
+        <File Id="SQLite.Interop.X86" Source="$(var.SilverMonkey2.TargetDir)x86\SQLite.Interop.dll" KeyPath="no"/>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="X64">
+      <Component Id="X64" Guid="{7336B0B3-C8D0-4390-A714-837192E31007}">
+        <File Id="SQLite.Interop.X64" Source="$(var.SilverMonkey2.TargetDir)x64\SQLite.Interop.dll" KeyPath="no"/>
+      </Component>
+    </DirectoryRef>
+
+    <!-- Plugin FilesS-->
+    <DirectoryRef Id="PLUGINS">
+      <Component Id="TheClaaawIni" Guid="{0865D700-279F-4369-A1D5-AD4E89CAB1CA}">
+        <File Id="TheClaaawIni" Source="$(var.TheClaaaw.TargetDir)TheClaaaw.ini" KeyPath="no" Checksum="yes"/>
+      </Component>
+    </DirectoryRef>
+
+
+    
+    
+  </Product>
+
+
 </Wix>

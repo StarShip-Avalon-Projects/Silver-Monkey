@@ -14,20 +14,23 @@
 
 !define APP_NAME "Silver Monkey"
 !define COMP_NAME "TS-Projects"
-;!define WEB_SITE "http://www.tsprojects.org/smIdx.html"
+!define WEB_SITE "http://silvermonkey.tsprojects.org/"
 !ifndef VERSION
 !define VERSION "2.20.0.0"
 !endif
 
+!ifndef CONFIGURATION
+!define CONFIGURATION "Debug"
+!endif
 
 !define COPYRIGHT "Author Gerolkae © 2014"
 !define DESCRIPTION "Application"
-!define INSTALLER_NAME "SM_Setup(x86)-${VERSION}.exe"
+!define INSTALLER_NAME "SilverMonkey_Setup_WinXp_AnyCPU_${CONFIGURATION}_${VERSION}.exe"
 !define MAIN_APP_EXE "SilverMonkey.exe"
 !define INSTALL_TYPE "SetShellVarContext all"
 !define REG_ROOT "HKLM"
-!define REG_APP_PATH "Software\Microsoft\Windows\CurrentVersion\App Paths\${MAIN_APP_EXE}"
-!define UNINSTALL_PATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
+!define REG_APP_PATH "Software\TSProjects\${MAIN_APP_EXE}"
+!define UNINSTALL_PATH "Software\TSProjects\Uninstall\${APP_NAME}"
 !define Bin_Directory "."
 !define REG_START_MENU "Start Menu Folder"
 
@@ -117,22 +120,30 @@ Section -MainProgram
 ${INSTALL_TYPE}
 SetOverwrite ifnewer
 SetOutPath "$INSTDIR"
-!insertmacro CheckNetFramework "40Full"
+!insertmacro CheckNetFramework 40Full
 
 ExecWait '"$INSTDIR\uninstall.exe" /S _?=$INSTDIR'
 
+
+File "${Bin_Directory}\Irony.dll"
+File "${Bin_Directory}\MonkeyCore.dll"
 File "${Bin_Directory}\FastColoredTextBox.dll"
 File "${Bin_Directory}\Furcadialib.dll"
 File "${Bin_Directory}\Interfaces.dll"
 File "${Bin_Directory}\MonkeySpeak.dll"
 File "${Bin_Directory}\Verbot5Library.dll"
 File "${Bin_Directory}\RTFLib.dll"
+
 File "${Bin_Directory}\System.Data.SQLite.dll"
+File "${Bin_Directory}\x86\SQLite.Interop.dll"
+File "${Bin_Directory}\x64\SQLite.Interop.dll"
+
 File "${Bin_Directory}\Keys-ms.ini"
 File "${Bin_Directory}\keys.ini"
 File "${Bin_Directory}\keyshelp.ini"
 File "${Bin_Directory}\keyshelp-ms.ini"
 File "${Bin_Directory}\MonkeySpeakEditor.exe"
+File "${Bin_Directory}\Data Monkey.exe"
 File "${Bin_Directory}\Silver Monkey.chm"
 File "${Bin_Directory}\SilverMonkey.exe"
 File "${Bin_Directory}\Verbot Knowledgebase Editor.exe"
@@ -175,8 +186,8 @@ SectionEnd
 
 Section -plugins
 SetOutPath "$INSTDIR\Plugins"
-File "${Bin_Directory}\Plugins\TheClaaaw.ini"
-File "${Bin_Directory}\Plugins\TheClaaaw.dll"
+File /nonfatal "${Bin_Directory}\Plugins\TheClaaaw.ini"
+File /nonfatal "${Bin_Directory}\Plugins\TheClaaaw.dll"
 SectionEnd
 
 ######################################################################
@@ -190,6 +201,7 @@ WriteUninstaller "$INSTDIR\uninstall.exe"
 CreateDirectory "$SMPROGRAMS\$SM_Folder"
 CreateShortCut "$SMPROGRAMS\$SM_Folder\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"
 CreateShortCut "$SMPROGRAMS\$SM_Folder\Monkey Speak Editor.lnk" "$INSTDIR\MonkeySpeakEditor.exe"
+CreateShortCut "$SMPROGRAMS\$SM_Folder\Data Monkey.lnk" "$INSTDIR\Data Monkey.exe"
 CreateShortCut "$SMPROGRAMS\$SM_Folder\Verbot Knowledgebase Editor.lnk" "$INSTDIR\Verbot Knowledgebase Editor.exe"
 CreateShortCut "$SMPROGRAMS\$SM_Folder\Scripts.lnk" "$INSTDIR\Scripts"
 CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"
@@ -230,16 +242,24 @@ Section Uninstall
 ${INSTALL_TYPE}
 
 Delete "$INSTDIR\FastColoredTextBox.dll"
+Delete "$INSTDIR\Irony.dll"
+Delete "$INSTDIR\MonkeyCore.dll"
 Delete "$INSTDIR\Furcadialib.dll"
 Delete "$INSTDIR\Interfaces.dll"
 Delete "$INSTDIR\MonkeySpeak.dll"
 Delete "$INSTDIR\Verbot5Library.dll"
 Delete "$INSTDIR\RTFLib.dll"
 Delete "$INSTDIR\System.Data.SQLite.dll"
-Delete "$INSTDIR\MSVCR100.dll"
+
+Delete "$INSTDIR\x86\SQLite.Interop.dll"
+Delete "$INSTDIR\x64\SQLite.Interop.dll"
+RmDir "$INSTDIR\x86"
+RmDir "$INSTDIR\x64"
+
 Delete "$INSTDIR\Keys-ms.ini"
 Delete "$INSTDIR\keys.ini"
 Delete "$INSTDIR\MonkeySpeakEditor.exe"
+Delete "$INSTDIR\Data Monkey.exe"
 Delete "$INSTDIR\*.chm"
 Delete "$INSTDIR\SilverMonkey.exe"
 Delete "$INSTDIR\Verbot Knowledgebase Editor.exe"
@@ -272,6 +292,8 @@ RmDir "$DOCUMENTS\$SM_Folder"
 !insertmacro MUI_STARTMENU_GETFOLDER "Application" $SM_Folder
 Delete "$SMPROGRAMS\$SM_Folder\${APP_NAME}.lnk"
 Delete "$SMPROGRAMS\$SM_Folder\Monkey Speak Editor.lnk"
+Delete "$SMPROGRAMS\$SM_Folder\Data Monkey.lnk"
+Delete "$SMPROGRAMS\$SM_Folder\Verbot Knowledgebase Editor.lnk"
 
 !ifdef WEB_SITE
 Delete "$SMPROGRAMS\$SM_Folder\${APP_NAME} Website.lnk"

@@ -1,88 +1,89 @@
 ﻿Imports Monkeyspeak
-Imports SilverMonkey.ErrorLogging
-Imports SilverMonkey.TextBoxWriter
+
+Imports System.Diagnostics
+Imports MonkeyCore
 
 Public Class phoenixspeak
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing
     Public Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
-        Add(Monkeyspeak.TriggerCategory.Cause, 80,
+        Add(TriggerCategory.Cause, 80,
         Function()
             Return True
         End Function,
      "(0:80) When the bot sees a Phoenix Speak response")
-        Add(Monkeyspeak.TriggerCategory.Cause, 81,
+        Add(TriggerCategory.Cause, 81,
              AddressOf msgIs, "(0:81) When the bot sees the Phoenix Speak response {...},")
 
-        Add(Monkeyspeak.TriggerCategory.Cause, 82,
+        Add(TriggerCategory.Cause, 82,
              AddressOf msgContains, "(0:82) When the bot sees a Phoenix Speak response with {...} in it,")
 
         '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
-        Add(Monkeyspeak.TriggerCategory.Effect, 60, AddressOf RemberPSInforTrigFurre, "(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.")
+        Add(TriggerCategory.Effect, 60, AddressOf RemberPSInforTrigFurre, "(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.")
 
         '(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.
-        Add(Monkeyspeak.TriggerCategory.Effect, 61, AddressOf RemberPSInforFurreNamed, "(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.")
+        Add(TriggerCategory.Effect, 61, AddressOf RemberPSInforFurreNamed, "(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.")
 
         '(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.
-        Add(Monkeyspeak.TriggerCategory.Effect, 62, AddressOf RemberPSInfoAllDream, "(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.")
+        Add(TriggerCategory.Effect, 62, AddressOf RemberPSInfoAllDream, "(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.")
 
         '(5:63) get all Phoenix Speak info for all characters and put it into the PSInfo cache.
-        Add(Monkeyspeak.TriggerCategory.Effect, 63, AddressOf RemberPSInfoAllCharacters, "(5:63) get all Phoenix Speak info for all characters and put it into the PSInfo cache.")
+        Add(TriggerCategory.Effect, 63, AddressOf RemberPSInfoAllCharacters, "(5:63) get all Phoenix Speak info for all characters and put it into the PSInfo cache.")
 
         '(5:64) get All Phoenix Speak info with ID # for the triggering furre and put it into the PSInfo Cache.
-        Add(Monkeyspeak.TriggerCategory.Effect, 64, AddressOf RemberPSInforTrigFurre_ID, "(5:64) get All Phoenix Speak info with ID # for the triggering furre and put it into the PSInfo Cache.")
+        Add(TriggerCategory.Effect, 64, AddressOf RemberPSInforTrigFurre_ID, "(5:64) get All Phoenix Speak info with ID # for the triggering furre and put it into the PSInfo Cache.")
 
         '(5:65) get All Phoenix Speak info with ID # for the Furre Named {...} and put it into the PSInfo Cache.
-        Add(Monkeyspeak.TriggerCategory.Effect, 65, AddressOf RemberPSInfoFurreNamed_ID, "(5:65) get All Phoenix Speak info with ID # for the Furre Named {...} and put it into the PSInfo Cache.")
+        Add(TriggerCategory.Effect, 65, AddressOf RemberPSInfoFurreNamed_ID, "(5:65) get All Phoenix Speak info with ID # for the Furre Named {...} and put it into the PSInfo Cache.")
 
         '(5:66) get All Phoenix Speak info with ID # for the dream and put it into the PSInfo Cache.
-        Add(Monkeyspeak.TriggerCategory.Effect, 66, AddressOf RemberPSInfoAllDream_ID, "(5:66) get All Phoenix Speak info with ID # for the dream and put it into the PSInfo Cache.")
+        Add(TriggerCategory.Effect, 66, AddressOf RemberPSInfoAllDream_ID, "(5:66) get All Phoenix Speak info with ID # for the dream and put it into the PSInfo Cache.")
 
         '(5:68) get all Phoenix Speak info with ID # for all characters and put it into the PSInfo cache.
-        Add(Monkeyspeak.TriggerCategory.Effect, 68, AddressOf RemberPSInfoAllCharacters_ID, "(5:68) get all Phoenix Speak info with ID # for all characters and put it into the PSInfo cache.")
+        Add(TriggerCategory.Effect, 68, AddressOf RemberPSInfoAllCharacters_ID, "(5:68) get all Phoenix Speak info with ID # for all characters and put it into the PSInfo cache.")
 
         '(5:80) retrieve  Phoenix Speak info {...} and place the value into variable %Variable.
-        Add(Monkeyspeak.TriggerCategory.Effect, 80, AddressOf getPSinfo, "(5:80) retrieve  Phoenix Speak info {...} and place the value into variable %Variable.")
+        Add(TriggerCategory.Effect, 80, AddressOf getPSinfo, "(5:80) retrieve  Phoenix Speak info {...} and place the value into variable %Variable.")
 
         '(5:81) Store PSInfo Key Names to Variable %Variable.
-        Add(Monkeyspeak.TriggerCategory.Effect, 81, AddressOf PSInfoKeyToVariable, "(5:81) Store PSInfo Key Names to Variable %Variable.")
+        Add(TriggerCategory.Effect, 81, AddressOf PSInfoKeyToVariable, "(5:81) Store PSInfo Key Names to Variable %Variable.")
 
         '(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.
-        Add(Monkeyspeak.TriggerCategory.Effect, 82, AddressOf MemorizeFurreNamedPS, "(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.")
+        Add(TriggerCategory.Effect, 82, AddressOf MemorizeFurreNamedPS, "(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.")
 
         '(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.
-        Add(Monkeyspeak.TriggerCategory.Effect, 83, AddressOf ForgetFurreNamedPS, "(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.")
+        Add(TriggerCategory.Effect, 83, AddressOf ForgetFurreNamedPS, "(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.")
 
         '(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.
-        Add(Monkeyspeak.TriggerCategory.Effect, 84, AddressOf MemorizeTrigFurrePS, "(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.")
+        Add(TriggerCategory.Effect, 84, AddressOf MemorizeTrigFurrePS, "(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.")
 
         '(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.
-        Add(Monkeyspeak.TriggerCategory.Effect, 85, AddressOf ForgetTrigFurrePS, "(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.")
+        Add(TriggerCategory.Effect, 85, AddressOf ForgetTrigFurrePS, "(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.")
 
         '(5:86) Memorize Phoenix Speak info {...} with ID # for the Furre Named {...}.
-        Add(Monkeyspeak.TriggerCategory.Effect, 86, AddressOf MemorizeFurreNamedPS_ID, "(5:86) Memorize Phoenix Speak info {...} with ID # for the Furre Named {...}.")
+        Add(TriggerCategory.Effect, 86, AddressOf MemorizeFurreNamedPS_ID, "(5:86) Memorize Phoenix Speak info {...} with ID # for the Furre Named {...}.")
 
         '(5:87) Forget Phoenix Speak info {...} with ID # for the Furre Named {...}.
-        Add(Monkeyspeak.TriggerCategory.Effect, 87, AddressOf ForgetFurreNamedPS_ID, "(5:87) Forget Phoenix Speak info {...} with ID # for the Furre Named {...}.")
+        Add(TriggerCategory.Effect, 87, AddressOf ForgetFurreNamedPS_ID, "(5:87) Forget Phoenix Speak info {...} with ID # for the Furre Named {...}.")
 
         '(5:88) Memorize Phoenix Speak info {...} with ID # for the Triggering Furre.
-        Add(Monkeyspeak.TriggerCategory.Effect, 88, AddressOf MemorizeTrigFurrePS_ID, "(5:88) Memorize Phoenix Speak info {...} with ID # for the Triggering Furre.")
+        Add(TriggerCategory.Effect, 88, AddressOf MemorizeTrigFurrePS_ID, "(5:88) Memorize Phoenix Speak info {...} with ID # for the Triggering Furre.")
         '(5:89) Forget Phoenix Speak info {...} with ID # for the Triggering Furre.
-        Add(Monkeyspeak.TriggerCategory.Effect, 89, AddressOf ForgetTrigFurrePS_ID, "(5:89) Forget Phoenix Speak info {...} with ID # for the Triggering Furre.")
+        Add(TriggerCategory.Effect, 89, AddressOf ForgetTrigFurrePS_ID, "(5:89) Forget Phoenix Speak info {...} with ID # for the Triggering Furre.")
 
         '(5:90) Memorize Phoenix Speak info {...} for this dream.
-        Add(Monkeyspeak.TriggerCategory.Effect, 90, AddressOf MemorizeDreamPS, "(5:90) Memorize Phoenix Speak info {...} for this dream.")
+        Add(TriggerCategory.Effect, 90, AddressOf MemorizeDreamPS, "(5:90) Memorize Phoenix Speak info {...} for this dream.")
         '(5:91) Forget Phoenix Speak info {...} for this dream.
-        Add(Monkeyspeak.TriggerCategory.Effect, 91, AddressOf ForgetDreamPS, "(5:91) Forget Phoenix Speak info {...} for this dream.")
+        Add(TriggerCategory.Effect, 91, AddressOf ForgetDreamPS, "(5:91) Forget Phoenix Speak info {...} for this dream.")
 
         '(5:92) Memorize Phoenix Speak info {...} with ID # for this dream.
-        Add(Monkeyspeak.TriggerCategory.Effect, 92, AddressOf MemorizeDreamPS_ID, "(5:92) Memorize Phoenix Speak info {...} with ID # for this dream.")
+        Add(TriggerCategory.Effect, 92, AddressOf MemorizeDreamPS_ID, "(5:92) Memorize Phoenix Speak info {...} with ID # for this dream.")
         '(5:93) Forget Phoenix Speak info {...} with ID # for this dream.
-        Add(Monkeyspeak.TriggerCategory.Effect, 93, AddressOf ForgetDreamPS_ID, "(5:93) Forget Phoenix Speak info {...} with ID # for this dream.")
+        Add(TriggerCategory.Effect, 93, AddressOf ForgetDreamPS_ID, "(5:93) Forget Phoenix Speak info {...} with ID # for this dream.")
 
         '(5:94) execute Phoenix Speak command {...}.
-        Add(Monkeyspeak.TriggerCategory.Effect, 94, AddressOf PSCommand, "(5:94) execute Phoenix Speak command {...}.")
+        Add(TriggerCategory.Effect, 94, AddressOf PSCommand, "(5:94) execute Phoenix Speak command {...}.")
 
     End Sub
 
@@ -95,7 +96,7 @@ Public Class phoenixspeak
             'Debug.Print("msgContains Begin Execution")
             msMsg = reader.ReadString()
             'Debug.Print("msMsg = " & msMsg)
-            msg = MainEngine.MSpage.GetVariable("MESSAGE").Value.ToString
+            msg = MainMSEngine.MSpage.GetVariable("MESSAGE").Value.ToString
             'Debug.Print("Msg = " & msg)
             Return msg.Contains(msMsg)
         Catch ex As Exception
@@ -113,7 +114,7 @@ Public Class phoenixspeak
         Try
             Dim msMsg As String = reader.ReadString()
             'Debug.Print("msMsg = " & msMsg)
-            Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+            Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
             'Debug.Print("Msg = " & msg.Value.ToString)
             If msg.Value.ToString.Contains(msMsg) Then Return False
             Return True
@@ -131,7 +132,7 @@ Public Class phoenixspeak
     Public Function msgIs(reader As TriggerReader) As Boolean
         Try
             Dim msMsg As String = reader.ReadString()
-            Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+            Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
             If msMsg = msg.Value.ToString Then Return True
             Return False
         Catch ex As Exception
@@ -148,7 +149,7 @@ Public Class phoenixspeak
     Function msgIsNot(reader As TriggerReader) As Boolean
         Try
             Dim msMsg As String = reader.ReadString()
-            Dim msg As Variable = MainEngine.MSpage.GetVariable("MESSAGE")
+            Dim msg As Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
             If msMsg <> msg.Value.ToString Then Return True
             Return False
         Catch ex As Exception

@@ -1,4 +1,4 @@
-﻿
+﻿Imports MonkeyCore.Controls
 Imports System.Text.RegularExpressions
 Imports MonkeySpeakEditor.ConfigStructs
 Imports MonkeySpeakEditor.IniFile

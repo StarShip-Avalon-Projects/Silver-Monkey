@@ -1,15 +1,41 @@
 ﻿Imports System.Text.RegularExpressions
-Imports System
-Imports MonkeySpeakEditor.ConfigStructs
 Imports System.IO
-Imports Furcadia.IO
-Imports MonkeySpeakEditor.IniFile
-Imports System.Text
 Imports FastColoredTextBoxNS
 Imports System.Runtime.InteropServices
-Imports System.Diagnostics
+Imports MonkeyCore.IniFile
+Imports MonkeyCore
+Imports MonkeyCore.Controls
 
 Public Class MS_Edit
+    Public Shared EditSettings As New MonkeyCore.Settings.EditSettings
+
+    Public Shared Property ini As IniFile
+        Get
+            Return Settings.ini
+        End Get
+        Set(value As IniFile)
+            Settings.ini = value
+        End Set
+    End Property
+
+    Public Shared Property KeysIni As IniFile
+        Get
+            Return Settings.KeysIni
+        End Get
+        Set(value As IniFile)
+            Settings.KeysIni = value
+        End Set
+    End Property
+
+    Public Shared Property MS_KeysIni As IniFile
+        Get
+            Return Settings.MS_KeysIni
+        End Get
+        Set(value As IniFile)
+            Settings.MS_KeysIni = value
+        End Set
+    End Property
+
 #Region "Sorters"
     Class CatSorter
         Implements IComparer(Of String)
@@ -138,7 +164,7 @@ Public Class MS_Edit
 
     Private Const RES_Def_section As String = "Default Section"
     Private Const RES_DSS_All As String = "Entire Document"
-    Private Const My_Docs As String = "/Furcadia"
+    Private Const My_Docs As String = "/Silver Monkey"
     Dim FullFile As List(Of List(Of String)) = New List(Of List(Of String))
     Dim SectionIdx As List(Of Integer) = New List(Of Integer)
     Private Const New_File_Tag As String = "(New File)"
@@ -199,7 +225,7 @@ Public Class MS_Edit
 #Region "WmCpyDta"
 
 
-    <DllImport("user32.dll", EntryPoint:="FindWindow")> _
+    <DllImport("user32.dll", EntryPoint:="FindWindow")>
     Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
     End Function
     Public Declare Function SetFocusAPI Lib "user32.dll" Alias "SetFocus" (ByVal hWnd As Long) As Long
@@ -207,9 +233,9 @@ Public Class MS_Edit
 
 
     Private Declare Auto Function SendMessage Lib "user32" _
-(ByVal hWnd As IntPtr, _
-ByVal Msg As Integer, _
-ByVal wParam As IntPtr, _
+(ByVal hWnd As IntPtr,
+ByVal Msg As Integer,
+ByVal wParam As IntPtr,
 ByRef lParam As COPYDATASTRUCT) As Boolean
 
     Public Function FindProcessByName(strProcessName As String) As IntPtr
@@ -292,57 +318,63 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 #End Region
 
     Private Sub GetTemplates()
-        Dim p As String = Application.StartupPath + "/Templates"
-        Directory.CreateDirectory(p)
+        Dim p As String = Path.Combine(MonkeyCore.Paths.ApplicationPath, "Templates")
         TemplatePaths.Clear()
         ListBox2.Items.Clear()
         ListBox2.BeginUpdate()
-        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-            s = Path.GetFileNameWithoutExtension(s)
-            ListBox2.Items.Add(s)
-            TemplatePathsMS.Add(p)
-        Next
-        p = FurcPath.GetFurcadiaDocPath + "/Templates"
-        Directory.CreateDirectory(p)
-        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-            s = Path.GetFileNameWithoutExtension(s)
-            ListBox2.Items.Add(s)
-            TemplatePathsMS.Add(p)
-        Next
-        p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Templates-DS"
-        Directory.CreateDirectory(p)
-        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-            s = Path.GetFileNameWithoutExtension(s)
-            ListBox2.Items.Add(s)
-            TemplatePathsMS.Add(p)
-        Next
+        If Directory.Exists(p) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
+                s = Path.GetFileNameWithoutExtension(s)
+                ListBox2.Items.Add(s)
+                TemplatePaths.Add(p)
+            Next
+        End If
+        p = Path.Combine(MonkeyCore.Paths.FurcadiaDocumentsFolder, "Templates")
+        If Directory.Exists(p) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
+                s = Path.GetFileNameWithoutExtension(s)
+                ListBox2.Items.Add(s)
+                TemplatePaths.Add(p)
+            Next
+        End If
+        p = Path.Combine(MonkeyCore.Paths.SilverMonkeyDocumentsPath, "Templates")
+        If Directory.Exists(p) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
+                s = Path.GetFileNameWithoutExtension(s)
+                ListBox2.Items.Add(s)
+                TemplatePaths.Add(p)
+            Next
+        End If
         ListBox2.EndUpdate()
 
-        p = Application.StartupPath + "/Templates-MS"
-        Directory.CreateDirectory(p)
         TemplatePathsMS.Clear()
         ListBox3.Items.Clear()
         ListBox3.BeginUpdate()
-        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
-            s = Path.GetFileNameWithoutExtension(s)
-            ListBox3.Items.Add(s)
-            TemplatePathsMS.Add(p)
-        Next
-        p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Templates-MS"
-        Directory.CreateDirectory(p)
-        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
-            s = Path.GetFileNameWithoutExtension(s)
-            ListBox3.Items.Add(s)
-            TemplatePathsMS.Add(p)
-        Next
+
+        p = MonkeyCore.Paths.MonKeySpeakEditorDocumentsTemplatesPath
+        If Directory.Exists(p) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
+                s = Path.GetFileNameWithoutExtension(s)
+                ListBox3.Items.Add(s)
+                TemplatePathsMS.Add(p)
+            Next
+        End If
+        p = MonkeyCore.Paths.MonKeySpeakEditorTemplatesPath
+        If Directory.Exists(p) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
+                s = Path.GetFileNameWithoutExtension(s)
+                ListBox3.Items.Add(s)
+                TemplatePathsMS.Add(p)
+            Next
+        End If
         ListBox3.EndUpdate()
     End Sub
 
-    Private Sub ExitToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ExitToolStripMenuItem.Click
-        Me.Close()
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Close()
     End Sub
 
-    Private Sub MS_Edit_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+    Private Sub MS_Edit_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         For i = TabControl2.TabPages.Count - 1 To 0 Step -1
             If Not CanOpen(i) Then
                 Dim fname As String = WorkFileName(i)
@@ -402,16 +434,16 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         'Set my user setting MainFormLocation to
         'the current form's location
         If Not IsNothing(EditSettings) Then EditSettings.SaveEditorSettings()
-        My.Settings.EditFormLocation = Me.Location
+        My.Settings.EditFormLocation = Location
         My.Settings.Save()
-        Me.Dispose()
+        Dispose()
     End Sub
 
-    Private Sub MS_Edit_ImeModeChanged(sender As Object, e As System.EventArgs) Handles Me.ImeModeChanged
+    Private Sub MS_Edit_ImeModeChanged(sender As Object, e As EventArgs) Handles Me.ImeModeChanged
 
     End Sub
 
-    Private Sub MS_Edit_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+    Private Sub MS_Edit_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If (e.KeyCode = Keys.O AndAlso e.Modifiers = Keys.Control) Then
             OpenMS_File()
         ElseIf (e.KeyCode = Keys.W AndAlso e.Modifiers = Keys.Control) Then
@@ -432,7 +464,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
     Private Sub OpenMS_File()
         With MS_BrosweDialog
             ' Select Character ini file
-            .InitialDirectory = Environment.SpecialFolder.MyDocuments & "\Silver Monkey\"
+            .InitialDirectory = Paths.SilverMonkeyBotPath
 
             If .ShowDialog = DialogResult.OK Then
                 Dim f As String = Path.GetFileName(.FileName)
@@ -445,7 +477,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                 WorkPath(TabControl2.SelectedIndex) = .FileName.Replace(WorkFileName(TabControl2.SelectedIndex), "")
 
                 frmTitle(TabControl2.SelectedIndex) = AppName + " - " & WorkFileName(TabControl2.SelectedIndex)
-                Me.Text = frmTitle(TabControl2.SelectedIndex)
+                Text = frmTitle(TabControl2.SelectedIndex)
                 lblStatus.Text = "Status: opened " & WorkFileName(TabControl2.SelectedIndex)
 
                 Dim reader As New StreamReader(WorkPath(TabControl2.SelectedIndex) + "/" + WorkFileName(TabControl2.SelectedIndex))
@@ -544,7 +576,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             If Not CanOpen(TabControl2.SelectedIndex) Then
                 Dim msg = "File Contents have changed. Reload the file discarding changes?"
                 Dim title = "Refresh Page"
-                Dim style = MsgBoxStyle.OkCancel Or MsgBoxStyle.DefaultButton2 Or _
+                Dim style = MsgBoxStyle.OkCancel Or MsgBoxStyle.DefaultButton2 Or
                             MsgBoxStyle.Information
                 Dim response = MsgBox(msg, style, title)
                 If response = MsgBoxResult.Cancel Then
@@ -571,7 +603,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         Dim ext As String = Path.GetExtension(filename)
 
         frmTitle(TabControl2.SelectedIndex) = AppName + " - " & WorkFileName(TabControl2.SelectedIndex)
-        Me.Text = frmTitle(TabControl2.SelectedIndex)
+        Text = frmTitle(TabControl2.SelectedIndex)
 
         Try
             Dim reader As New StreamReader(WorkPath(TabControl2.SelectedIndex) + "/" + WorkFileName(TabControl2.SelectedIndex))
@@ -589,9 +621,9 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         Catch ex As Exception
             Select Case ext.ToLower
                 Case ".ds"
-                    MS_Editor.Text = NewDSFile()
+                    MS_Editor.Text = MonkeyCore.IO.NewDSFile()
                 Case ".ms"
-                    MS_Editor.Text = NewMSFile()
+                    MS_Editor.Text = MonkeyCore.IO.NewMSFile()
                 Case Else
                     MS_Editor.Text = ""
             End Select
@@ -635,10 +667,15 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
 
 
-    Private Sub MS_Edit_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        EditSettings = New EditSettings
+    Private Sub MS_Edit_Load(sender As Object, e As EventArgs) Handles Me.Load
+        CallBk = Me
+        KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys.ini"))
+        MS_KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys-MS.ini"))
+        KeysHelpMSIni.Load(Path.Combine(Paths.ApplicationPath, "KeysHelp-MS.ini"))
+        KeysHelpIni.Load(Path.Combine(Paths.ApplicationPath, "KeysHelp.ini"))
         Dim splash As SplashScreen1 = CType(My.Application.SplashScreen, SplashScreen1)
         Dim filename As String = ""
+
         If My.Application.CommandLineArgs.Count > 0 Then
             filename = My.Application.CommandLineArgs.Last()
         End If
@@ -648,45 +685,13 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             BotName = My.Application.CommandLineArgs(0)
         End If
 
-        objMutex = New System.Threading.Mutex(False, MyProcessName)
-        If objMutex.WaitOne(0, False) = False Then
-            objMutex.Close()
-            objMutex.Dispose()
-            If Not IsNothing(splash) Then splash.Close()
-            'Step 1.
-            'The second way is to iter through all processes 
-            'Since a windows title can change, I perfer the second method
-            Dim ProcessHandle As IntPtr = FindProcessByName(MyProcessName)
-            Dim msg As MessageHelper = New MessageHelper()
-            'Step 2.
-            Dim iResult As IntPtr = IntPtr.Zero
-            If ProcessHandle <> IntPtr.Zero Then
-                '#If DEBUG Then
 
-                '                If Debugger.IsAttached() <> True Then
-                '                    Debugger.Launch()
+        DoubleBuffered = True
 
-                '                Else
 
-                '                    Debugger.Break()
-                '                End If
-                '#End If
-                iResult = msg.sendWindowsStringMessage(ProcessHandle, Me.Handle, "~DSEX~", 0, BotName, filename)
-
-            End If
-            Me.Close()
-            Exit Sub
-        End If
-        Me.DoubleBuffered = True
-        KeysIni.Load(My.Application.Info.DirectoryPath + "\Keys.ini")
-        MS_KeysIni.Load(My.Application.Info.DirectoryPath + "\Keys-MS.ini")
-        KeysHelpMSIni.Load(My.Application.Info.DirectoryPath + "\KeysHelp-MS.ini")
-        KeysHelpIni.Load(My.Application.Info.DirectoryPath + "\KeysHelp.ini")
-
-        FurcPath = New Furcadia.IO.Paths(EditSettings.FurcPath)
 
         Dim PluginFound As Boolean = False
-        For Each s As String In FileIO.FileSystem.GetFiles(Application.StartupPath + "\plugins\", FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
+        For Each s As String In FileIO.FileSystem.GetFiles(Paths.ApplicationPluginPath, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
             Dim FName As String = Path.GetFileNameWithoutExtension(s)
             If IsNothing(EditSettings.PluginList) Then EditSettings.PluginList = New Dictionary(Of String, Boolean)
             If Not EditSettings.PluginList.ContainsKey(FName) Then
@@ -699,72 +704,60 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         Next
         If PluginFound Then EditSettings.SaveEditorSettings()
 
-        Me.Location = My.Settings.EditFormLocation
-        Me.Visible = True
+        Location = My.Settings.EditFormLocation
+        Visible = True
 
-        Try
+        Dim items As List(Of AutocompleteItem) = New List(Of AutocompleteItem)()
+        Dim KeyCount As Integer = CInt(KeysIni.GetKeyValue("Init-Types", "Count"))
+        Dim MS_KeyCount As Integer = CInt(MS_KeysIni.GetKeyValue("Init-Types", "Count"))
+        For i As Integer = 1 To KeyCount
+            items.Clear()
+            Dim DSLines As New List(Of String)
+            Dim key As String = KeysIni.GetKeyValue("Init-Types", i.ToString)
+            splash.UpdateProgress("Loading DS " + key + "...", CInt(i / (KeyCount + MS_KeyCount + 2) * 100))
+            Dim DSSection As MonkeyCore.IniFile.IniSection = KeysIni.GetSection(key)
 
+            For Each K As IniSection.IniKey In DSSection.Keys
+                Dim fields As String() = SplitCSV(K.Value)
+                If Not IsNothing(fields) Then
+                    DSLines.Add(fields(2))
+                    items.Add(New DA_AUtoCompleteMenu(fields(2)))
+                End If
 
-            Dim items As List(Of AutocompleteItem) = New List(Of AutocompleteItem)()
-            Dim KeyCount As Integer = CInt(KeysIni.GetKeyValue("Init-Types", "Count"))
-            Dim MS_KeyCount As Integer = CInt(MS_KeysIni.GetKeyValue("Init-Types", "Count"))
-            For i As Integer = 1 To KeyCount
-                items.Clear()
-                Dim DSLines As New List(Of String)
-                Dim key As String = KeysIni.GetKeyValue("Init-Types", i.ToString)
-                splash.UpdateProgress("Loading DS " + key + "...", CInt(i / (KeyCount + MS_KeyCount + 2) * 100))
-                Dim DSSection As IniSection = KeysIni.GetSection(key)
-
-                For Each K As IniSection.IniKey In DSSection.Keys
-                    Dim fields As String() = SplitCSV(K.Value)
-                    If Not IsNothing(fields) Then
-                        DSLines.Add(fields(2))
-                        items.Add(New DA_AUtoCompleteMenu(fields(2)))
-                    End If
-
-
-                Next
-
-                AddNewTab(key, i.ToString, DSLines, Causes)
-                DS_autoCompleteList.AddRange(items)
 
             Next
 
+            AddNewTab(key, i.ToString, DSLines, Causes)
+            DS_autoCompleteList.AddRange(items)
 
-            For i As Integer = 1 To MS_KeyCount
-                items.Clear()
-                Dim MSLines As New List(Of String)
-                Dim key As String = MS_KeysIni.GetKeyValue("Init-Types", i.ToString)
-                splash.UpdateProgress("Loading MS " + key + "...", CInt((i + KeyCount) / (KeyCount + MS_KeyCount + 2) * 100))
-                Dim DSSection As IniSection = MS_KeysIni.GetSection(key)
-
-                For Each K As IniSection.IniKey In DSSection.Keys
-
-                    Dim fields As String() = SplitCSV(K.Value)
-
-                    If Not IsNothing(fields) Then
-                        MSLines.Add(fields(2))
-                        items.Add(New DA_AUtoCompleteMenu(fields(2)))
-                    End If
+        Next
 
 
-                Next
+        For i As Integer = 1 To MS_KeyCount
+            items.Clear()
+            Dim MSLines As New List(Of String)
+            Dim key As String = MS_KeysIni.GetKeyValue("Init-Types", i.ToString)
+            splash.UpdateProgress("Loading MS " + key + "...", CInt((i + KeyCount) / (KeyCount + MS_KeyCount + 2) * 100))
+            Dim DSSection As IniSection = MS_KeysIni.GetSection(key)
 
-                AddNewTab(key, i.ToString, MSLines, TabControl3)
-                MS_autoCompleteList.AddRange(items)
+            For Each K As IniSection.IniKey In DSSection.Keys
+
+                Dim fields As String() = SplitCSV(K.Value)
+
+                If Not IsNothing(fields) Then
+                    MSLines.Add(fields(2))
+                    items.Add(New DA_AUtoCompleteMenu(fields(2)))
+                End If
+
 
             Next
 
-            splash.UpdateProgress("Finishing up...", CInt((KeyCount + MS_KeyCount + 1) / (KeyCount + MS_KeyCount + 2) * 100))
+            AddNewTab(key, i.ToString, MSLines, TabControl3)
+            MS_autoCompleteList.AddRange(items)
 
+        Next
 
-
-
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
-
-
+        splash.UpdateProgress("Finishing up...", CInt((KeyCount + MS_KeyCount + 1) / (KeyCount + MS_KeyCount + 2) * 100))
 
         SetDSHilighter()
         SetMSHilighter()
@@ -776,7 +769,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             'AddNewEditorTab(filename, mPath, 0)
             OpenMS_File(filename)
         Else
-            AddNewEditorTab("", mPath, 0)
+            AddNewEditorTab("", Paths.SilverMonkeyBotPath, 0)
             NewFile(EditStyles.ms)
         End If
 
@@ -790,7 +783,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         splash.UpdateProgress("Complete!", 100)
     End Sub
 
-    Private Sub RefreshTemplatesToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles RefreshTemplatesToolStripMenuItem.Click, MSTemplateRefresh.Click
+    Private Sub RefreshTemplatesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RefreshTemplatesToolStripMenuItem.Click, MSTemplateRefresh.Click
         GetTemplates()
     End Sub
 
@@ -903,55 +896,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
     End Sub
 
-    Private Function NewDSFile() As String
-        Dim str As New StringBuilder
-        str.AppendLine(KeysIni.GetKeyValue("MS-General", "Header"))
-        Dim t As String = " "
-        Dim n As Integer = 0
-        While t <> ""
-            t = KeysIni.GetKeyValue("MS-General", "H" + n.ToString)
-            If t <> "" Then str.AppendLine(t)
-            n += 1
-        End While
-        For i = 0 To CInt(KeysIni.GetKeyValue("MS-General", "InitLineSpaces"))
-            str.AppendLine("")
-        Next
-        str.Append(KeysIni.GetKeyValue("MS-General", "Footer"))
-        Return str.ToString
-    End Function
 
-    Private Function NewMSFile() As String
-        Dim str As New StringBuilder
-        str.AppendLine(MS_KeysIni.GetKeyValue("MS-General", "Header"))
-        Dim t As String = " "
-        Dim n As Integer = 0
-        While t <> ""
-            t = MS_KeysIni.GetKeyValue("MS-General", "H" + n.ToString)
-            If t <> "" Then str.AppendLine(t)
-            n += 1
-        End While
-        For i = 0 To CInt(MS_KeysIni.GetKeyValue("MS-General", "InitLineSpaces"))
-            str.AppendLine("")
-        Next
-        str.Append(MS_KeysIni.GetKeyValue("MS-General", "Footer"))
-        Return str.ToString
-    End Function
-    Private Function NewDMScript() As String
-        Dim str As New StringBuilder
-        str.AppendLine(KeysIni.GetKeyValue("DM-Script", "Header"))
-        Dim t As String = " "
-        Dim n As Integer = 0
-        While Not String.IsNullOrEmpty(t)
-            t = KeysIni.GetKeyValue("DM-Script", "H" + n.ToString)
-            If Not String.IsNullOrEmpty(t) Then str.AppendLine(t)
-            n += 1
-        End While
-        For i = 0 To CInt(KeysIni.GetKeyValue("DM-Script", "InitLineSpaces"))
-            str.AppendLine("")
-        Next
-        str.Append(KeysIni.GetKeyValue("DM-Script", "Footer"))
-        Return str.ToString
-    End Function
 
     Private Sub TextInsert(ByRef LB As ListView, Optional ByVal Spaces As Integer = 0)
 
@@ -964,7 +909,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
     End Sub
 
 
-    Private Sub ListCauses_DoubleClick(sender As Object, e As System.EventArgs)
+    Private Sub ListCauses_DoubleClick(sender As Object, e As EventArgs)
         Dim lv As ListView = CType(sender, ListView)
         Dim p As TabPage = CType(lv.Parent, TabPage)
         Dim r As TabControl = CType(p.Parent, TabControl)
@@ -982,7 +927,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
     End Sub
 
 
-    Private Sub ListCauses_MouseClick(sender As Object, e As System.EventArgs)
+    Private Sub ListCauses_MouseClick(sender As Object, e As EventArgs)
         Dim lv As ListView = CType(sender, ListView)
         If lv.FocusedItem Is Nothing Then Exit Sub
         Dim p As TabPage = CType(lv.Parent, TabPage)
@@ -1011,7 +956,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
         With MSSaveDialog
             ' Select Character ini file
-            .InitialDirectory = mPath() + "\Silver Monkey\"
+            .InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
             If .ShowDialog = DialogResult.OK Then
                 WorkFileName(TabControl2.SelectedIndex) = Path.GetFileName(.FileName)
                 WorkPath(TabControl2.SelectedIndex) = Path.GetDirectoryName(.FileName)
@@ -1019,7 +964,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                 SaveMS_File(TabControl2.SelectedIndex)
                 lblStatus.Text = "Status: Saved " & WorkFileName(TabControl2.SelectedIndex)
                 frmTitle(TabControl2.SelectedIndex) = AppName + " - " & WorkFileName(TabControl2.SelectedIndex)
-                Me.Text = frmTitle(TabControl2.SelectedIndex)
+                Text = frmTitle(TabControl2.SelectedIndex)
                 CanOpen(TabControl2.SelectedIndex) = True
             End If
         End With
@@ -1028,7 +973,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
     Private Sub SaveMS_File(ByRef TabIdx As Integer)
         If MS_Editor.InvokeRequired Then
             Dim d As New FileSave(AddressOf SaveMS_File)
-            Me.Invoke(d, TabIdx)
+            Invoke(d, TabIdx)
         Else
 
             If Not CanOpen(TabIdx) Then
@@ -1050,7 +995,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
                     CanOpen(TabIdx) = True
                     If TabIdx = TabControl2.SelectedIndex Then
-                        Me.Text = frmTitle(TabIdx)
+                        Text = frmTitle(TabIdx)
                         TabControl2.SelectedTab.Text = WorkFileName(TabIdx)
                         TabControl2.RePositionCloseButtons()
                     End If
@@ -1064,23 +1009,23 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
     End Sub
 
-    Private Sub SaveToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles SaveToolStripMenuItem.Click
+    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
         SaveMS_File(TabControl2.SelectedIndex)
     End Sub
 
-    Private Sub MenuCopy_Click(sender As System.Object, e As System.EventArgs) Handles MenuCopy.Click, EditDropCopy.Click
+    Private Sub MenuCopy_Click(sender As Object, e As EventArgs) Handles MenuCopy.Click, EditDropCopy.Click
         MS_Editor.Copy()
     End Sub
 
-    Private Sub MenuCut_Click(sender As System.Object, e As System.EventArgs) Handles MenuCut.Click, EditDropCut.Click
+    Private Sub MenuCut_Click(sender As Object, e As EventArgs) Handles MenuCut.Click, EditDropCut.Click
         MS_Editor.Cut()
     End Sub
 
-    Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click, EditDropPaste.Click
+    Private Sub PasteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PasteToolStripMenuItem.Click, EditDropPaste.Click
         MS_Editor.Paste()
     End Sub
 
-    Private Sub MS_Editor_CursorChanged(sender As Object, e As System.EventArgs)
+    Private Sub MS_Editor_CursorChanged(sender As Object, e As EventArgs)
         UpdateStatusBar()
     End Sub
 
@@ -1105,7 +1050,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             'string highlighting
             e.ChangedRange.SetStyle(DS_String_Style, "\{.*?\}")
             'number highlighting
-            e.ChangedRange.SetStyle(DS_Num_Style, "([0-9#]+)")
+            e.ChangedRange.SetStyle(DS_Num_Style, "([\-\+0-9#]+)")
             'clear folding markers
             ' sender.Range.ClearFoldingMarkers()
 
@@ -1142,12 +1087,12 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         End If
     End Sub
 
-    Private Sub MS_Editor_TextChanged(sender As Object, e As System.EventArgs)
+    Private Sub MS_Editor_TextChanged(sender As Object, e As EventArgs)
 
         If SectionChange = False Then CanOpen(TabControl2.SelectedIndex) = False
 
         UpdateStatusBar()
-        If CanOpen(TabControl2.SelectedIndex) = False Then Me.Text = frmTitle(TabControl2.SelectedIndex) & "*"
+        If CanOpen(TabControl2.SelectedIndex) = False Then Text = frmTitle(TabControl2.SelectedIndex) & "*"
         If WorkFileName(TabControl2.SelectedIndex) = "" And CanOpen(TabControl2.SelectedIndex) = False Then
             TabControl2.SelectedTab.Text = New_File_Tag + "*"
             TabControl2.RePositionCloseButtons()
@@ -1166,12 +1111,12 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         sb.Panels.Item(3).Text = "Total Characters: " & MS_Editor.Text.Length.ToString
     End Sub
 
-    Private Sub OpenToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles OpenToolStripMenuItem.Click
+    Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
 
         OpenMS_File()
     End Sub
 
-    Private Sub RestartBotEngineToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles RestartBotEngineToolStripMenuItem.Click, ToolStripButton2.Click
+    Private Sub RestartBotEngineToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RestartBotEngineToolStripMenuItem.Click, ToolStripButton2.Click
         Dim msg As MessageHelper = New MessageHelper
         'save if modified
         SaveMS_File(TabControl2.SelectedIndex)
@@ -1189,20 +1134,20 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
         Dim iResult As IntPtr = IntPtr.Zero
         If WindowHandle.ToInt32() <> 0 Then
-            iResult = msg.sendWindowsStringMessage(WindowHandle, Me.Handle, "~DSEX~", 0, strTag, msMsg)
+            iResult = msg.sendWindowsStringMessage(WindowHandle, Handle, "~DSEX~", 0, strTag, msMsg)
             lblStatus.Text = "Status: Engine restart command sent to " + BotName(TabControl2.SelectedIndex)
         End If
     End Sub
 
-    Private Sub ToolBoxSave_Click(sender As System.Object, e As System.EventArgs) Handles ToolBoxSave.Click
+    Private Sub ToolBoxSave_Click(sender As Object, e As EventArgs) Handles ToolBoxSave.Click
         SaveMS_File(TabControl2.SelectedIndex)
     End Sub
 
-    Private Sub ToolBoxOpen_Click(sender As System.Object, e As System.EventArgs) Handles ToolBoxOpen.Click
+    Private Sub ToolBoxOpen_Click(sender As Object, e As EventArgs) Handles ToolBoxOpen.Click
         OpenMS_File()
     End Sub
 
-    Private Sub ToolBoxFindReplace_Click(sender As System.Object, e As System.EventArgs) Handles ToolBoxFindReplace.Click
+    Private Sub ToolBoxFindReplace_Click(sender As Object, e As EventArgs) Handles ToolBoxFindReplace.Click
 
         If IsNothing(MS_Editor) Then Exit Sub
         Try
@@ -1220,7 +1165,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         End Try
     End Sub
 
-    Private Sub FindReplaceToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles FindReplaceToolStripMenuItem.Click
+    Private Sub FindReplaceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FindReplaceToolStripMenuItem.Click
         FindReplace()
     End Sub
     Private frm As frmSearch = New frmSearch
@@ -1241,35 +1186,35 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         End Try
     End Sub
 
-    Private Sub ToolBoxCut_Click(sender As System.Object, e As System.EventArgs) Handles ToolBoxCut.Click
+    Private Sub ToolBoxCut_Click(sender As Object, e As EventArgs) Handles ToolBoxCut.Click
         If IsNothing(MS_Editor) Then Exit Sub
         MS_Editor.Cut()
     End Sub
 
-    Private Sub ToolBoxyCopy_Click(sender As System.Object, e As System.EventArgs) Handles ToolBoxyCopy.Click
+    Private Sub ToolBoxyCopy_Click(sender As Object, e As EventArgs) Handles ToolBoxyCopy.Click
         If IsNothing(MS_Editor) Then Exit Sub
         MS_Editor.Copy()
     End Sub
 
-    Private Sub ToolBoxPaste_Click(sender As System.Object, e As System.EventArgs) Handles ToolBoxPaste.Click
+    Private Sub ToolBoxPaste_Click(sender As Object, e As EventArgs) Handles ToolBoxPaste.Click
         If IsNothing(MS_Editor) Then Exit Sub
         MS_Editor.Paste()
     End Sub
 
-    Private Sub ToolBoxUndo_Click(sender As System.Object, e As System.EventArgs) Handles ToolBoxUndo.Click
+    Private Sub ToolBoxUndo_Click(sender As Object, e As EventArgs) Handles ToolBoxUndo.Click
         If IsNothing(MS_Editor) Then Exit Sub
         MS_Editor.Undo()
     End Sub
 
-    Private Sub ToolBoxRedo_Click(sender As System.Object, e As System.EventArgs) Handles ToolBoxRedo.Click
+    Private Sub ToolBoxRedo_Click(sender As Object, e As EventArgs) Handles ToolBoxRedo.Click
         If IsNothing(MS_Editor) Then Exit Sub
         MS_Editor.Redo()
     End Sub
 
-    Private Sub GotoToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles GotoToolStripMenuItem.Click, ToolStripButton1.Click
+    Private Sub GotoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GotoToolStripMenuItem.Click, ToolStripButton1.Click
         If IsNothing(MS_Editor) Then Exit Sub
-        Dim i As String = _
-InputBox("What line within the document do you want to send the cursor to?", _
+        Dim i As String =
+InputBox("What line within the document do you want to send the cursor to?",
 " Location to send the Cursor?", "0")
         If String.IsNullOrEmpty(i) Then Exit Sub
         If IsInteger(i) And i.ToInteger > 0 Then
@@ -1283,17 +1228,17 @@ InputBox("What line within the document do you want to send the cursor to?", _
         End If
     End Sub
 
-    Private Sub UndoToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles UndoToolStripMenuItem.Click
+    Private Sub UndoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UndoToolStripMenuItem.Click
         If IsNothing(MS_Editor) Then Exit Sub
         MS_Editor.Undo()
     End Sub
 
-    Private Sub RedoToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles RedoToolStripMenuItem.Click
+    Private Sub RedoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RedoToolStripMenuItem.Click
         If IsNothing(MS_Editor) Then Exit Sub
         MS_Editor.Redo()
     End Sub
 
-    Private Sub SaveAsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles SaveAsToolStripMenuItem.Click, ToolBoxSaveAs.Click
+    Private Sub SaveAsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsToolStripMenuItem.Click, ToolBoxSaveAs.Click
         If IsNothing(MS_Editor) Then Exit Sub
         SaveAs()
     End Sub
@@ -1304,7 +1249,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
         TabEditStyles(TabControl2.SelectedIndex) = style
 
         If style = EditStyles.ms Then
-            MS_Editor.Text = NewMSFile()
+            MS_Editor.Text = MonkeyCore.IO.NewMSFile()
             lblStatus.Text = "Status: Opened New MonkeySpeak  File "
             popupMenu = New AutocompleteMenu(MS_Editor)
             popupMenu.Enabled = True
@@ -1314,7 +1259,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
             popupMenu.Items.Width = 600
             popupMenu.Items.SetAutocompleteItems(MS_autoCompleteList)
         ElseIf style = EditStyles.ds Then
-            MS_Editor.Text = NewDSFile()
+            MS_Editor.Text = MonkeyCore.IO.NewDSFile()
             lblStatus.Text = "Status: Opened New DragonSpeak  File "
             popupMenu = New AutocompleteMenu(MS_Editor)
             popupMenu.Enabled = True
@@ -1324,7 +1269,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
             popupMenu.Items.Width = 600
             popupMenu.Items.SetAutocompleteItems(DS_autoCompleteList)
         ElseIf style = EditStyles.ini Then
-            MS_Editor.Text = NewDMScript()
+            MS_Editor.Text = MonkeyCore.IO.NewDMScript()
             lblStatus.Text = "Status: Opened new Wizard Script"
         Else
             MS_Editor.Text = ""
@@ -1333,7 +1278,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
 
         frmTitle(TabControl2.SelectedIndex) = AppName + " - " + New_File_Tag
         FullFile(TabControl2.SelectedIndex).Clear()
-        Me.Text = frmTitle(TabControl2.SelectedIndex)
+        Text = frmTitle(TabControl2.SelectedIndex)
         For i = 0 To MS_Editor.Lines.Count - 1
             FullFile(TabControl2.SelectedIndex).Add(MS_Editor.Lines.Item(i).Trim(charsToTrim))
         Next
@@ -1347,7 +1292,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
 
     End Sub
 
-    Private Sub FixIndentsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles FixIndentsToolStripMenuItem.Click
+    Private Sub FixIndentsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FixIndentsToolStripMenuItem.Click
         If IsNothing(MS_Editor) Then Exit Sub
         Dim StrArray() As String = MS_Editor.Lines.ToArray
         Dim str As String
@@ -1399,11 +1344,11 @@ InputBox("What line within the document do you want to send the cursor to?", _
         MS_Editor.SelectionStart = insertPos
     End Sub
 
-    Private Sub BtnComment_Click(sender As System.Object, e As System.EventArgs) Handles BtnComment.Click, ApplyCommentToolStripMenuItem.Click, AutocommentOnToolStripMenuItem.Click
+    Private Sub BtnComment_Click(sender As Object, e As EventArgs) Handles BtnComment.Click, ApplyCommentToolStripMenuItem.Click, AutocommentOnToolStripMenuItem.Click
         ApplyComment()
     End Sub
 
-    Private Sub ApplyCommentToolStripMenuItem1_Click(sender As System.Object, e As System.EventArgs) Handles ApplyCommentToolStripMenuItem1.Click
+    Private Sub ApplyCommentToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ApplyCommentToolStripMenuItem1.Click
         If IsNothing(MS_Editor) Then Exit Sub
 
         Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(CChar(vbLf))
@@ -1416,7 +1361,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
         End If
     End Sub
 
-    Private Sub AutoCommentOffToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles AutoCommentOffToolStripMenuItem.Click, AutocommentOffToolStripMenuItem1.Click
+    Private Sub AutoCommentOffToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoCommentOffToolStripMenuItem.Click, AutocommentOffToolStripMenuItem1.Click
         If IsNothing(MS_Editor) Then Exit Sub
 
         Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(CChar(vbLf))
@@ -1459,11 +1404,11 @@ InputBox("What line within the document do you want to send the cursor to?", _
     End Sub
 
 
-    Private Sub RemoveCommentToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles RemoveCommentToolStripMenuItem.Click, BtnUncomment.Click
+    Private Sub RemoveCommentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveCommentToolStripMenuItem.Click, BtnUncomment.Click
         RemoveComment()
     End Sub
 
-    Private Sub ConfigToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ConfigToolStripMenuItem.Click
+    Private Sub ConfigToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConfigToolStripMenuItem.Click
         Config.Show()
         Config.Activate()
     End Sub
@@ -1472,14 +1417,16 @@ InputBox("What line within the document do you want to send the cursor to?", _
     Dim LastFoundIndex As Integer = 0
     Dim lisView As Integer = 1
 
-    Private Sub BtnFind_Click(sender As System.Object, e As System.EventArgs) Handles BtnFind.Click
+    Private Sub BtnFind_Click(sender As Object, e As EventArgs) Handles BtnFind.Click
         'Reset the starting index to Zero as the Search has changed   
 
         Dim Test2 As Boolean = False
 
         Dim tbc As TabControl = Causes
+        ' First check DS File
         Dim iFile As IniFile = KeysIni
         If TabEditStyles(TabControl2.SelectedIndex) = EditStyles.ms Then
+            'Then we check MS File
             tbc = TabControl3
             iFile = MS_KeysIni
         End If
@@ -1539,19 +1486,19 @@ InputBox("What line within the document do you want to send the cursor to?", _
         End If
     End Sub
 
-    Private Sub TxtBxFind_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtBxFind.KeyDown
+    Private Sub TxtBxFind_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtBxFind.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             BtnFind.PerformClick()
         End If
     End Sub
 
-    Private Sub DSWizardToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DSWizardToolStripMenuItem.Click
+    Private Sub DSWizardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DSWizardToolStripMenuItem.Click
         wMain.Show()
         wMain.Activate()
     End Sub
 
-    Private Sub AbutToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles AbutToolStripMenuItem.Click
+    Private Sub AbutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AbutToolStripMenuItem.Click
         AboutBox1.Show()
         AboutBox1.Activate()
     End Sub
@@ -1574,15 +1521,13 @@ InputBox("What line within the document do you want to send the cursor to?", _
         frmTitle.Add(AppName + " - New DragonSpeak File")
         SectionIdx.Add(0)
         TabEditStyles.Add(EditStyles.ds)
-        Dim sec As List(Of String) = New List(Of String)
-        sec.Clear()
-        FullFile.Add(sec)
+        FullFile.Add(New List(Of String))
         'Gets the index number of the last tab
         TabSections.Add(New List(Of TDSSegment))
 
         'Creates the listview and displays it in the new tab
         Dim lstView As FastColoredTextBox = New FastColoredTextBox()
-        lstView.ContextMenuStrip = Me.EditMenu
+        lstView.ContextMenuStrip = EditMenu
         lstView.AcceptsTab = True
         lstView.Parent = tp
         lstView.Anchor = CType(AnchorStyles.Left + AnchorStyles.Top + AnchorStyles.Bottom + AnchorStyles.Right, AnchorStyles)
@@ -1606,20 +1551,20 @@ InputBox("What line within the document do you want to send the cursor to?", _
     End Sub
 
 
-    Private Sub MS_EditRightClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+    Private Sub MS_EditRightClick(sender As Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
-            Me.EditMenu.Show(MS_Editor, New Point(e.X, e.Y))
+            EditMenu.Show(MS_Editor, New Point(e.X, e.Y))
         End If
     End Sub
 
-    Private Sub TabControl2_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles TabControl2.SelectedIndexChanged
+    Private Sub TabControl2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl2.SelectedIndexChanged
 
         If TabControl2.SelectedIndex = -1 Or TabControl2.SelectedIndex > TabControl2.TabPages.Count Then Exit Sub
         ListBox1.Items.Clear()
         If CanOpen(TabControl2.SelectedIndex) = False Then
-            Me.Text = frmTitle(TabControl2.SelectedIndex) + "*"
+            Text = frmTitle(TabControl2.SelectedIndex) + "*"
         Else
-            Me.Text = frmTitle(TabControl2.SelectedIndex)
+            Text = frmTitle(TabControl2.SelectedIndex)
         End If
         UpdateSegmentList()
         If SectionIdx(TabControl2.SelectedIndex) <> ListBox1.SelectedIndex Then ListBox1.SelectedIndex = SectionIdx(TabControl2.SelectedIndex)
@@ -1627,7 +1572,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
 
     End Sub
 
-    Private Sub ListBox3_Resize(sender As Object, e As System.EventArgs) Handles ListBox3.Resize, ListBox2.Resize
+    Private Sub ListBox3_Resize(sender As Object, e As EventArgs) Handles ListBox3.Resize, ListBox2.Resize
 
         If IsNothing(TabControl2) Then Exit Sub
         If TabControl2.TabPages.Count = 0 Then Exit Sub
@@ -1716,13 +1661,13 @@ InputBox("What line within the document do you want to send the cursor to?", _
         Next
     End Sub
 
-    Private Sub FCloseAllTab_Click(sender As System.Object, e As System.EventArgs)
+    Private Sub FCloseAllTab_Click(sender As Object, e As EventArgs)
         Dim t As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
         Dim i As Integer = CInt(t.Tag)
         CloseAllButThis(i)
     End Sub
 
-    Private Sub FCloseTab_Click(sender As System.Object, e As System.EventArgs)
+    Private Sub FCloseTab_Click(sender As Object, e As EventArgs)
         Dim t As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
         Dim i As Integer = CInt(t.Tag)
         CloseTab(i)
@@ -1743,7 +1688,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
         End If
 
         If Not CanOpen(i) Then
-            Dim reply As DialogResult = MessageBox.Show(fname + " has been modified." + Environment.NewLine + "Save the changes?", "Warning", _
+            Dim reply As DialogResult = MessageBox.Show(fname + " has been modified." + Environment.NewLine + "Save the changes?", "Warning",
       MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
 
             If reply = DialogResult.Yes Then
@@ -1762,20 +1707,20 @@ InputBox("What line within the document do you want to send the cursor to?", _
         FullFile.RemoveAt(i)
         TabSections.RemoveAt(i)
         TabEditStyles.RemoveAt(i)
-        If TabControl2.TabPages.Count = 0 And Me.Disposing = False Then
+        If TabControl2.TabPages.Count = 0 And Disposing = False Then
             AddNewEditorTab("", "", 0)
             NewFile(EditStyles.ms)
         End If
 
     End Sub
 
-    Private Sub FNewTab_Click(sender As System.Object, e As System.EventArgs)
+    Private Sub FNewTab_Click(sender As Object, e As EventArgs)
         Dim c As Integer = TabControl2.TabCount
-        AddNewEditorTab("", mPath, c)
+        AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, c)
         NewFile(EditStyles.ms)
     End Sub
 
-    Private Sub ListBox2_DoubleClick(sender As Object, e As System.EventArgs) Handles InsertToDSFileToolStripMenuItem.Click, ListBox2.DoubleClick
+    Private Sub ListBox2_DoubleClick(sender As Object, e As EventArgs) Handles InsertToDSFileToolStripMenuItem.Click, ListBox2.DoubleClick
         If IsNothing(MS_Editor) Then Exit Sub
         Dim p As String = TemplatePaths.Item(ListBox2.SelectedIndex) + "\" + ListBox2.SelectedItem.ToString + ".ds"
         Dim reader As New StreamReader(p)
@@ -1790,23 +1735,23 @@ InputBox("What line within the document do you want to send the cursor to?", _
 
     End Sub
 
-    Private Sub FSave_Click(sender As System.Object, e As System.EventArgs)
+    Private Sub FSave_Click(sender As Object, e As EventArgs)
         SaveMS_File(TabControl2.SelectedIndex)
     End Sub
 
-    Private Sub RenameToolStripMenuItem1_Click(sender As System.Object, e As System.EventArgs) Handles RenameToolStripMenuItem1.Click
+    Private Sub RenameToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles RenameToolStripMenuItem1.Click
         Dim s As String = Microsoft.VisualBasic.InputBox("New Name?")
         If String.IsNullOrEmpty(s) Then Exit Sub
         My.Computer.FileSystem.RenameFile(TemplatePaths.Item(ListBox2.SelectedIndex) + ListBox2.SelectedItem.ToString + ".ds", TemplatePaths(ListBox2.SelectedIndex) + s + ".ds")
         GetTemplates()
     End Sub
 
-    Private Sub EditToolStripMenuItem1_Click(sender As System.Object, e As System.EventArgs) Handles EditToolStripMenuItem1.Click
+    Private Sub EditToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles EditToolStripMenuItem1.Click
         OpenMS_File(TemplatePaths.Item(ListBox2.SelectedIndex) + "/" + ListBox2.SelectedItem.ToString + ".ds")
     End Sub
 
-    Private Sub BtnTemplateDelete_Click(sender As System.Object, e As System.EventArgs) Handles DeleteToolStripMenuItem.Click
-        Dim reply As DialogResult = MessageBox.Show("Really delete this template?", "Caption", _
+    Private Sub BtnTemplateDelete_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
+        Dim reply As DialogResult = MessageBox.Show("Really delete this template?", "Caption",
      MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
 
         If reply = DialogResult.OK Then
@@ -1817,8 +1762,8 @@ InputBox("What line within the document do you want to send the cursor to?", _
 
     End Sub
 
-    Private Sub BtnTemplateAdd_Click(sender As System.Object, e As System.EventArgs) Handles AddToolStripMenuItem.Click, BtnTemplateAdd.Click
-        Dim path As String = FurcPath.GetFurcadiaDocPath + "/Templates/"
+    Private Sub BtnTemplateAdd_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click, BtnTemplateAdd.Click
+        Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Templates/"
         Dim message, title As String
         Dim myValue As String
         message = "Name of file?"
@@ -2013,10 +1958,10 @@ InputBox("What line within the document do you want to send the cursor to?", _
         FullFile(Tab).Clear()
         For i = 0 To TabSections(Tab).Count - 1
             'RES_SEC_Marker
-            If TabSections(Tab)(i).Title <> RES_DSS_begin And _
-                TabSections(Tab)(i).Title <> RES_DSS_End And _
-                TabSections(Tab)(i).Title <> RES_MSS_begin And _
-                TabSections(Tab)(i).Title <> RES_MSS_End And _
+            If TabSections(Tab)(i).Title <> RES_DSS_begin And
+                TabSections(Tab)(i).Title <> RES_DSS_End And
+                TabSections(Tab)(i).Title <> RES_MSS_begin And
+                TabSections(Tab)(i).Title <> RES_MSS_End And
                 (TabSections(Tab)(i).Title <> RES_Def_section Or TabSections(Tab)(i).Title = RES_Def_section And i > 1) Then
                 FullFile(Tab).Add(RES_SEC_Marker + TabSections(Tab)(i).Title)
             End If
@@ -2024,11 +1969,11 @@ InputBox("What line within the document do you want to send the cursor to?", _
         Next
     End Sub
 
-    Private Sub NewSection_Click(sender As System.Object, e As System.EventArgs) Handles NewSection.Click, BtnSectionAdd.Click
+    Private Sub NewSection_Click(sender As Object, e As EventArgs) Handles NewSection.Click, BtnSectionAdd.Click
         If TabControl2.TabCount > 0 Then NewSec((TabSections(TabControl2.SelectedIndex).Count))
     End Sub
 
-    Private Sub InsertSectionToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles InsertSectionToolStripMenuItem.Click
+    Private Sub InsertSectionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InsertSectionToolStripMenuItem.Click
         If ListBox1.SelectedIndex > 1 Then NewSec(ListBox1.SelectedIndex)
     End Sub
 
@@ -2065,7 +2010,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
 
     End Sub
 
-    Private Sub BtnSectionUp_Click(sender As System.Object, e As System.EventArgs) Handles BtnSectionUp.Click
+    Private Sub BtnSectionUp_Click(sender As Object, e As EventArgs) Handles BtnSectionUp.Click
         If ListBox1.Items.Count = 0 Then Exit Sub
         If ListBox1.SelectedIndex <= 1 Then Exit Sub
         Dim idx As Integer = ListBox1.SelectedIndex - 1
@@ -2089,7 +2034,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
 
     End Sub
 
-    Private Sub BtnSectionDown_Click(sender As System.Object, e As System.EventArgs) Handles BtnSectionDown.Click
+    Private Sub BtnSectionDown_Click(sender As Object, e As EventArgs) Handles BtnSectionDown.Click
         If ListBox1.Items.Count = 0 Then Exit Sub
         If ListBox1.SelectedIndex <= 1 Then Exit Sub
         If ListBox1.SelectedIndex = ListBox1.Items.Count - 1 Then Exit Sub
@@ -2119,13 +2064,13 @@ InputBox("What line within the document do you want to send the cursor to?", _
         End If
     End Sub
 
-    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ListBox1.SelectedIndexChanged
+    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
         Dim l As ListBox = CType(sender, ListBox)
         If IsNothing(l.SelectedItem) Then Exit Sub
         ToolTip1.SetToolTip(l, l.SelectedItem.ToString)
     End Sub
 
-    Private Sub GotoNextToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles GotoNextToolStripMenuItem.Click
+    Private Sub GotoNextToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GotoNextToolStripMenuItem.Click
         GotoBookMark()
     End Sub
     Private Sub GotoBookMark()
@@ -2134,7 +2079,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
         MS_Editor.GotoNextBookmark(l)
     End Sub
 
-    Private Sub GotoPreviousToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles GotoPreviousToolStripMenuItem.Click
+    Private Sub GotoPreviousToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GotoPreviousToolStripMenuItem.Click
         GotoBookPrevMark()
     End Sub
 
@@ -2145,7 +2090,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
 
     End Sub
 
-    Private Sub RemoveAllToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles RemoveAllToolStripMenuItem.Click
+    Private Sub RemoveAllToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveAllToolStripMenuItem.Click
         If IsNothing(MS_Editor) Then Exit Sub
         MS_Editor.Bookmarks.Clear()
     End Sub
@@ -2162,15 +2107,15 @@ InputBox("What line within the document do you want to send the cursor to?", _
     End Sub
 
 
-    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         SplitContainer3.Panel1Collapsed = True
     End Sub
 
-    Private Sub ShowLineFinderToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ShowLineFinderToolStripMenuItem.Click
+    Private Sub ShowLineFinderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowLineFinderToolStripMenuItem.Click
         SplitContainer3.Panel1Collapsed = Not SplitContainer3.Panel1Collapsed
     End Sub
 
-    Private Sub DragonSpeakToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DragonSpeakToolStripMenuItem.Click
+    Private Sub DragonSpeakToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DragonSpeakToolStripMenuItem.Click
         TabEditStyles(TabControl2.SelectedIndex) = EditStyles.ds
 
         SetLineTabs(TabControl2.SelectedIndex)
@@ -2186,7 +2131,7 @@ InputBox("What line within the document do you want to send the cursor to?", _
         SetLineTabs(TabControl2.SelectedIndex)
     End Sub
 
-    Private Sub MonkeySpeakToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles MonkeySpeakToolStripMenuItem.Click
+    Private Sub MonkeySpeakToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MonkeySpeakToolStripMenuItem.Click
         TabEditStyles(TabControl2.SelectedIndex) = EditStyles.ms
 
         SetLineTabs(TabControl2.SelectedIndex)
@@ -2202,17 +2147,17 @@ InputBox("What line within the document do you want to send the cursor to?", _
         SetLineTabs(TabControl2.SelectedIndex)
     End Sub
 
-    Private Sub DragonSpeakFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DragonSpeakFileToolStripMenuItem.Click
-        AddNewEditorTab("", mPath, TabControl2.TabCount)
+    Private Sub DragonSpeakFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DragonSpeakFileToolStripMenuItem.Click
+        AddNewEditorTab("", MonkeyCore.Paths.FurcadiaDocumentsFolder, TabControl2.TabCount)
         NewFile(EditStyles.ds)
     End Sub
 
-    Private Sub MonkeySpeakFileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles MonkeySpeakFileToolStripMenuItem.Click, ToolBoxNew.Click
-        AddNewEditorTab("", mPath, TabControl2.TabCount)
+    Private Sub MonkeySpeakFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MonkeySpeakFileToolStripMenuItem.Click, ToolBoxNew.Click
+        AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, TabControl2.TabCount)
         NewFile(EditStyles.ms)
     End Sub
 
-    Private Sub ListBox3_DoubleClick(sender As Object, e As System.EventArgs) Handles ListBox3.DoubleClick
+    Private Sub ListBox3_DoubleClick(sender As Object, e As EventArgs) Handles ListBox3.DoubleClick
         If IsNothing(MS_Editor) Then Exit Sub
         Dim p As String = TemplatePathsMS.Item(ListBox3.SelectedIndex) + "\" + ListBox3.SelectedItem.ToString + ".ms"
         Dim reader As New StreamReader(p)
@@ -2226,17 +2171,17 @@ InputBox("What line within the document do you want to send the cursor to?", _
         MS_Editor.SelectionStart = pos + str.Length
     End Sub
 
-    Private Sub SelectAllToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles SelectAllToolStripMenuItem.Click
+    Private Sub SelectAllToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectAllToolStripMenuItem.Click
         MS_Editor.SelectAll()
     End Sub
 
-    Private Sub BtnSectionDelete_Click(sender As System.Object, e As System.EventArgs) Handles BtnSectionDelete.Click, DeleteSection.Click
+    Private Sub BtnSectionDelete_Click(sender As Object, e As EventArgs) Handles BtnSectionDelete.Click, DeleteSection.Click
         RemoveSection(ListBox1.SelectedIndex - 1)
     End Sub
     Private Sub RemoveSection(ByRef i As Integer)
         If ListBox1.SelectedIndex < 2 Then Exit Sub
         If ListBox1.Items.Count = 0 Then Exit Sub
-        Dim reply As DialogResult = MessageBox.Show("Really delete this section?", "Caption", _
+        Dim reply As DialogResult = MessageBox.Show("Really delete this section?", "Caption",
 MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
 
         If reply = DialogResult.Cancel Then Exit Sub
@@ -2251,7 +2196,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
     End Sub
 
 
-    Private Sub RenameToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles RenameToolStripMenuItem.Click
+    Private Sub RenameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RenameToolStripMenuItem.Click
         If ListBox1.Items.Count = 0 Then Exit Sub
         Dim idx As Integer = ListBox1.SelectedIndex
         Dim section As TDSSegment = TabSections(TabControl2.SelectedIndex)(idx - 1)
@@ -2263,21 +2208,21 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
     End Sub
 
 
-    Private Sub BtnTemplateAddMS_Click(sender As System.Object, e As System.EventArgs) Handles BtnTemplateAddMS.Click, MSTemplateMenuAdd.Click
-        Dim _path As String = mPath() + Path.DirectorySeparatorChar + "Templates-MS" + Path.DirectorySeparatorChar
+    Private Sub BtnTemplateAddMS_Click(sender As Object, e As EventArgs) Handles BtnTemplateAddMS.Click, MSTemplateMenuAdd.Click
+
         Dim message, title As String
         Dim myValue As String
         message = "Name of file?"
         title = "Template Name"
         myValue = InputBox(message, title, "")
         If String.IsNullOrEmpty(myValue) Then Exit Sub
-        TemplatePathsMS.Add(_path)
+        TemplatePathsMS.Add(Paths.MonKeySpeakEditorDocumentsTemplatesPath)
         ListBox3.Items.Add(myValue)
-        File.WriteAllText(_path + myValue.ToString + ".ms", MS_Editor.Selection.Text)
+        File.WriteAllText(Path.Combine(Paths.MonKeySpeakEditorDocumentsTemplatesPath, myValue.ToString + ".ms"), MS_Editor.Selection.Text)
     End Sub
 
-    Private Sub BtnTemplateDeleteMS_Click(sender As System.Object, e As System.EventArgs) Handles BtnTemplateDeleteMS.Click, MSTemplateDelete.Click
-        Dim reply As DialogResult = MessageBox.Show("Really delete this template?", "Caption", _
+    Private Sub BtnTemplateDeleteMS_Click(sender As Object, e As EventArgs) Handles BtnTemplateDeleteMS.Click, MSTemplateDelete.Click
+        Dim reply As DialogResult = MessageBox.Show("Really delete this template?", "Caption",
             MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
 
         If reply = DialogResult.OK Then
@@ -2288,18 +2233,18 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
     End Sub
 
 
-    Private Sub ToolStripMenuItem5_Click(sender As System.Object, e As System.EventArgs) Handles MSTemplateRename.Click
+    Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs) Handles MSTemplateRename.Click
         Dim s As String = Microsoft.VisualBasic.InputBox("New Name?")
         If String.IsNullOrEmpty(s) Then Exit Sub
         My.Computer.FileSystem.RenameFile(TemplatePathsMS.Item(ListBox3.SelectedIndex) + ListBox3.SelectedItem.ToString + ".ms", TemplatePathsMS(ListBox3.SelectedIndex) + s + ".ms")
         GetTemplates()
     End Sub
 
-    Private Sub ToolStripMenuItem6_Click(sender As System.Object, e As System.EventArgs) Handles MSTemplateEdit.Click
+    Private Sub ToolStripMenuItem6_Click(sender As Object, e As EventArgs) Handles MSTemplateEdit.Click
         OpenMS_File(TemplatePathsMS.Item(ListBox3.SelectedIndex) + Path.DirectorySeparatorChar + ListBox3.SelectedItem.ToString + ".ms")
     End Sub
 
-    Private Sub ToolStripMenuItem2_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem2.Click
+    Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
         If IsNothing(MS_Editor) Then Exit Sub
         Dim p As String = TemplatePathsMS.Item(ListBox3.SelectedIndex) + Path.DirectorySeparatorChar + ListBox3.SelectedItem.ToString + ".ms"
         Dim reader As New StreamReader(p)
@@ -2313,7 +2258,16 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         MS_Editor.SelectionStart = pos + str.Length
     End Sub
 
-    Private Sub ContentToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ContentToolStripMenuItem.Click
+    Private Sub ContentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ContentToolStripMenuItem.Click
         Process.Start("Silver Monkey.chm")
+    End Sub
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
     End Sub
 End Class

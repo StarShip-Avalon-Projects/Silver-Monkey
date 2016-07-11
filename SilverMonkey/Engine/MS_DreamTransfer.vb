@@ -1,4 +1,5 @@
-﻿Imports Monkeyspeak
+﻿Imports MonkeyCore
+
 Public Class MS_DreamTransfer
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
     ' Ctrl+T and Editor.ini Dream Name+location 

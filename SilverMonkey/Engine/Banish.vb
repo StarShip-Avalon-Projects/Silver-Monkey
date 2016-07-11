@@ -1,6 +1,7 @@
-﻿Imports Monkeyspeak
-Imports SilverMonkey.ErrorLogging
-Imports SilverMonkey.TextBoxWriter
+﻿
+Imports System.Diagnostics
+Imports System.Collections
+Imports MonkeyCore
 
 Public Class Banish
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
@@ -66,14 +67,14 @@ Public Class Banish
         Add(Monkeyspeak.TriggerCategory.Cause, 62, AddressOf AndBanishFurreNamed, "(0:62) When the bot successfully temp banishes the furre named {...},")
 
         '(1:50) and the triggering furre is not on the banish list,
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 50), AddressOf TrigFurreIsNotBanished,"(1:50) and the triggering furre is not on the banish list,")
+        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 50), AddressOf TrigFurreIsNotBanished, "(1:50) and the triggering furre is not on the banish list,")
 
         '(1:51) and the triggering furre is on the banish list,
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 51), AddressOf TrigFurreIsBanished,"(1:51) and the triggering furre is on the banish list,")
+        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 51), AddressOf TrigFurreIsBanished, "(1:51) and the triggering furre is on the banish list,")
         '(1:52) and the furre named {...} is not on the banish list,
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 52), AddressOf FurreNamedIsNotBanished,"(1:52) and the furre named {...} is not on the banish list,")
+        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 52), AddressOf FurreNamedIsNotBanished, "(1:52) and the furre named {...} is not on the banish list,")
         '(1:53) and the furre named {...} is on the banish list,
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 53), AddressOf FurreNamedIsBanished,"(1:53) and the furre named {...} is on the banish list,")
+        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 53), AddressOf FurreNamedIsBanished, "(1:53) and the furre named {...} is on the banish list,")
 
         ' (5: ) save the banish list to the variable % . 
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 49), AddressOf BanishSave,
@@ -89,7 +90,7 @@ Public Class Banish
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 52), AddressOf BanishFurreNamed,
             "(5:52) banish the furre named {...}.")
         '(5:x) temporarily  banish the triggering furre for three days.
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 53), AddressOf TempBanishTrigFurre,"(5:53) temporarily  banish the triggering furre for three days.")
+        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 53), AddressOf TempBanishTrigFurre, "(5:53) temporarily  banish the triggering furre for three days.")
 
         '(5:x) temporarily banish the furre named {...} for three days.
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 54), AddressOf TempBanishFurreNamed,
@@ -102,8 +103,10 @@ Public Class Banish
 "(5:56) unbanish the furre named {...}.")
     End Sub
 
+
+
     '(1:50) and the triggering furre is not on the banish list,
-    Function TrigFurreIsNotBanished(reader As TriggerReader) As Boolean
+    Function TrigFurreIsNotBanished(reader As Monkeyspeak.TriggerReader) As Boolean
         Dim banishlist As ArrayList = callbk.BanishString
         Try
             For Each Furre As String In banishlist
@@ -111,22 +114,17 @@ Public Class Banish
             Next
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(1:51) and the triggering furre is on the banish list,
-    Function TrigFurreIsBanished(reader As TriggerReader) As Boolean
+    Function TrigFurreIsBanished(reader As Monkeyspeak.TriggerReader) As Boolean
         Return Not TrigFurreIsNotBanished(reader)
     End Function
     '(1:52) and the furre named {...} is not on the banish list,
-    Function FurreNamedIsNotBanished(reader As TriggerReader) As Boolean
+    Function FurreNamedIsNotBanished(reader As Monkeyspeak.TriggerReader) As Boolean
         Dim banishlist As ArrayList = callbk.BanishString
         Try
             Dim f As String = reader.ReadString
@@ -135,18 +133,13 @@ Public Class Banish
             Next
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(1:53) and the furre named {...} is on the banish list,
-    Function FurreNamedIsBanished(reader As TriggerReader) As Boolean
+    Function FurreNamedIsBanished(reader As Monkeyspeak.TriggerReader) As Boolean
         Return Not FurreNamedIsNotBanished(reader)
     End Function
 
@@ -157,12 +150,7 @@ Public Class Banish
 
             NewVar = reader.ReadVariable(True)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -171,16 +159,11 @@ Public Class Banish
     End Function
 
     '(5:x) as the server for the banish-list.
-    Function BanishList(reader As TriggerReader) As Boolean
+    Function BanishList(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             sendServer("banish-list")
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -188,111 +171,76 @@ Public Class Banish
 
 
     '(5:x) banish the triggering furre.
-    Function BanishTrigFurre(reader As TriggerReader) As Boolean
+    Function BanishTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             sendServer("banish " + callbk.Player.Name)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(0:53) When the bot sucessfilly banishes the furre named {...},
     '(0: ) When the bot successfully temp banishes the furre named {...},
-    Function AndBanishFurreNamed(reader As TriggerReader) As Boolean
+    Function AndBanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim Furre As String = reader.ReadString
             Return Furre.ToFurcShortName = callbk.BanishName.ToFurcShortName
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:x) banish the furre named {...}.
-    Function BanishFurreNamed(reader As TriggerReader) As Boolean
+    Function BanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim Furre As String = reader.ReadString
             sendServer("banish " + Furre)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:x) temperary  banish the triggering furre for three days.
-    Function TempBanishFurreNamed(reader As TriggerReader) As Boolean
+    Function TempBanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             sendServer("tempbanish " + callbk.Player.Name)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:x) temperoily banish the furre named {...} for three days.
-    Function TempBanishTrigFurre(reader As TriggerReader) As Boolean
+    Function TempBanishTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim Furre As String = reader.ReadString
             sendServer("tempbanish " + Furre)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:x) unbanish the triggering furre.
-    Function UnBanishTrigFurre(reader As TriggerReader) As Boolean
+    Function UnBanishTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             sendServer("banish-off " + callbk.Player.Name)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:x) unbanish the furre named {...}.
-    Function UnBanishFurreNamed(reader As TriggerReader) As Boolean
+    Function UnBanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim Furre As String = reader.ReadString
             sendServer("banish-off " + Furre)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True

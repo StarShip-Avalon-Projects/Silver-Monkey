@@ -1,0 +1,34 @@
+Release Notes:
+Furcadia Framework for 3rd Party Programs
+
+
+MonkeyCore 
+(Core library of shared components)
+New BotCheckFolder function
+
+Data Monkey
+(Database Manager)
+
+
+Monkey Speak Editor
+(Script Editor)
+Added Angelcat Staff Group Template
+
+Silver Monkey
+(Main Bot Application)
+
+SQLite Database:
+Tied BotCheckFolder function with MS_Pounce MS IO and MemberList classes  in the Main Engine
+
+MonkeySpeak
+(Script Engine)
+
+Interfaces
+(Plugin System)
+
+Chat Bot
+(Knowedgebase Tester)
+
+
+Verbot Knowedgebase Editor
+(Chatterbot Catch phrasses and responces)

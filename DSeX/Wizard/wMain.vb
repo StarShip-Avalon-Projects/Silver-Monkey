@@ -1,5 +1,7 @@
 Imports System.IO
-Imports MonkeySpeakEditor.IniFile
+Imports MonkeyCore.IniFile
+Imports MonkeyCore.Paths
+Imports MonkeyCore
 
 '######### Please Read ##############
 '
@@ -70,7 +72,7 @@ Public Class wMain
         If wUI.IsDisposed = False Then
             wUI.Dispose()
         End If
-        If IO.File.Exists(My.Application.Info.DirectoryPath() & "\help.txt") Then
+        If System.IO.File.Exists(My.Application.Info.DirectoryPath() & "\help.txt") Then
             wUI.dsdesc2.Text = FileIO.FileSystem.ReadAllText(My.Application.Info.DirectoryPath() & "\help.txt")
         Else
             wUI.dsdesc2.Text = "Error: " & My.Application.Info.DirectoryPath() & "\help.txt" & " doesn't exist.  Help contents cannot be displayed."
@@ -98,7 +100,7 @@ Public Class wMain
         Else
             lst = ScriptPaths_MS
         End If
-        If IO.File.Exists(lst(lb.SelectedIndex) & lb.GetItemText(lb.SelectedItem) & ".ini") Then
+        If System.IO.File.Exists(lst(lb.SelectedIndex) & lb.GetItemText(lb.SelectedItem) & ".ini") Then
             Dim sIni = selecter.GetItemText(lb.SelectedItem)
             GetInfo(lst(lb.SelectedIndex) & sIni & ".ini")
         End If
@@ -166,7 +168,7 @@ Public Class wMain
                 wUI.NumericUpDown1.Value = s.ToInteger
             Else
                 wUI.NumericUpDown1.Value = 0
-                end if
+            End If
 
         Catch ex As Exception
             Dim x As New ErrorLogging(ex, Me)
@@ -186,7 +188,7 @@ Public Class wMain
             ScriptPaths.Add(p)
         Next
 
-        p = FurcPath.GetFurcadiaDocPath + "\Scripts\"
+        p = Path.Combine(MonkeyCore.Paths.FurcadiaDocumentsFolder, "Scripts\")
         'path = Enviroment.GetFolderPath(Enviroment.SpecialFolderMyDocuments) + My_Docs + "/Scripts"
         Directory.CreateDirectory(p)
         For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
@@ -198,7 +200,7 @@ Public Class wMain
 
         selector2.Items.Clear()
         selector2.BeginUpdate()
-        p = Application.StartupPath + "/Scripts-MS"
+        p = MonKeySpeakEditorScriptsPath
         Directory.CreateDirectory(p)
         ScriptPaths_MS.Clear()
         For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
@@ -208,7 +210,7 @@ Public Class wMain
         Next
 
         'p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Scripts-MS/"
-        p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Scripts-MS"
+        p = MonKeySpeakEditorDocumentsScriptsPath
         Directory.CreateDirectory(p)
         For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
             Dim e As String = Path.GetExtension(s)

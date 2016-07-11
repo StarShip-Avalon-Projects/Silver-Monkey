@@ -1,4 +1,4 @@
-﻿Imports MonkeySpeakEditor.IniFile
+﻿Imports MonkeyCore
 
 Module wMainMod
     Public ScriptIni As IniFile = New IniFile

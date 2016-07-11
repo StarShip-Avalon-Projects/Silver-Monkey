@@ -1,7 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 
 Module Modunle1
-    Public Const VarPrefix = "%"
+    Public Const VarPrefix As String = "%"
     Private Const REGEX_NameFilter As String = "[^a-zA-Z0-9\0x0020_.]+"
     <System.Runtime.CompilerServices.Extension()> _
     Public Function ToFurcShortName(ByVal value As String) As String

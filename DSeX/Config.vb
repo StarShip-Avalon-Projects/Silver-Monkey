@@ -1,13 +1,13 @@
 ﻿Imports System.IO
-Imports MonkeySpeakEditor.ConfigStructs
 Imports System.Drawing.Text
 Imports System.Drawing
 Imports Furcadia.IO
+Imports MonkeyCore.Settings
+
 
 
 Public Class Config
 
-    Dim MyConfig As New ConfigStructs
     Dim CurrentListBox As ListBox
     Private Sub BTN_Cancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTN_Cancel.Click
         'Close with out Saving
@@ -17,40 +17,42 @@ Public Class Config
     Private Sub BTN_Ok_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTN_Ok.Click
         'Editor settings
 
-        EditSettings.AutoCompleteEnable = ChkBxAutoComplete.Checked
+        MS_Edit.EditSettings.FurcPath = TxtBxFurPath.Text
+
+        MS_Edit.EditSettings.AutoCompleteEnable = ChkBxAutoComplete.Checked
         ' MS_Edit.AutocompleteMenu1.Enabled = ChkBxAutoComplete.Checked
 
 
-        EditSettings.CommentColor = CommentPictureBox.BackColor
-        EditSettings.StringColor = StringPictureBox.BackColor
-        EditSettings.NumberColor = NumberPictureBox.BackColor
-        EditSettings.VariableColor = VariablePictureBox.BackColor
-        EditSettings.IDColor = IDPictureBox.BackColor
-        EditSettings.StringVariableColor = StringVariableClrBx.BackColor
+        MS_Edit.EditSettings.CommentColor = CommentPictureBox.BackColor
+        MS_Edit.EditSettings.StringColor = StringPictureBox.BackColor
+        MS_Edit.EditSettings.NumberColor = NumberPictureBox.BackColor
+        MS_Edit.EditSettings.VariableColor = VariablePictureBox.BackColor
+        MS_Edit.EditSettings.IDColor = IDPictureBox.BackColor
+        MS_Edit.EditSettings.StringVariableColor = StringVariableClrBx.BackColor
 
         For i As Integer = 0 To ListBox1.Items.Count - 1
-            Dim item as string = ListBox1.Items(i).toString
-            Dim KV() As String = item.split("="c)
+            Dim item As String = ListBox1.Items(i).ToString
+            Dim KV() As String = item.Split("="c)
             ini.SetKeyValue("C-Indents", KV(0), KV(1))
         Next
 
-        EditSettings.MS_CommentColor = MS_CommentPictureBox.BackColor
-        EditSettings.MS_StringColor = MS_StringPictureBox.BackColor
-        EditSettings.MS_NumberColor = MS_NumberPictureBox.BackColor
-        EditSettings.MS_VariableColor = MS_VariablePictureBox.BackColor
-        EditSettings.MS_IDColor = MS_IDPictureBox.BackColor
+        MS_Edit.EditSettings.MS_CommentColor = MS_CommentPictureBox.BackColor
+        MS_Edit.EditSettings.MS_StringColor = MS_StringPictureBox.BackColor
+        MS_Edit.EditSettings.MS_NumberColor = MS_NumberPictureBox.BackColor
+        MS_Edit.EditSettings.MS_VariableColor = MS_VariablePictureBox.BackColor
+        MS_Edit.EditSettings.MS_IDColor = MS_IDPictureBox.BackColor
         For i As Integer = 0 To ListBox2.Items.Count - 1
-            Dim item as string = ListBox1.Items(i).toString
-            Dim KV() As String = item.split("="c)
+            Dim item As String = ListBox1.Items(i).ToString
+            Dim KV() As String = item.Split("="c)
             ini.SetKeyValue("MS-C-Indents", KV(0), KV(1))
         Next
         Dim Plugins As Dictionary(Of String, Boolean) = New Dictionary(Of String, Boolean)
         For Each lvItem As ListViewItem In ListView1.Items
             Plugins.Add(lvItem.SubItems.Item(1).Text.Replace(" ", ""), lvItem.Checked)
         Next
-        EditSettings.PluginList = Plugins
+        MS_Edit.EditSettings.PluginList = Plugins
         'Save the settings to the ini file
-        EditSettings.SaveEditorSettings()
+        MS_Edit.EditSettings.SaveEditorSettings()
 
         If MS_Edit.Visible Then
             MS_Edit.Reset()
@@ -72,7 +74,7 @@ Public Class Config
             Dim fname As String = Path.GetFileNameWithoutExtension(F)
             Dim item As ListViewItem = ListView1.Items.Add(intIndex.ToString)
             item.SubItems.Add(fname)
-            item.Checked = EditSettings.PluginList.Item(fname.Replace(" ", ""))
+            item.Checked = MS_Edit.EditSettings.PluginList.Item(fname.Replace(" ", ""))
         Next
 
 
@@ -93,24 +95,25 @@ Public Class Config
 
     Public Sub Loadconfig()
 
-        EditSettings = New EditSettings
+
         'Editor
 
-        ChkBxAutoComplete.Checked = Ctype(EditSettings.AutoCompleteEnable, Boolean)
+        ChkBxAutoComplete.Checked = CType(MS_Edit.EditSettings.AutoCompleteEnable, Boolean)
 
-        CommentPictureBox.BackColor = EditSettings.CommentColor
-        StringPictureBox.BackColor = EditSettings.StringColor
-        NumberPictureBox.BackColor = EditSettings.NumberColor
-        VariablePictureBox.BackColor = EditSettings.VariableColor
-        IDPictureBox.BackColor = EditSettings.IDColor
-        StringVariableClrBx.BackColor = EditSettings.StringVariableColor
+        CommentPictureBox.BackColor = MS_Edit.EditSettings.CommentColor
+        StringPictureBox.BackColor = MS_Edit.EditSettings.StringColor
+        NumberPictureBox.BackColor = MS_Edit.EditSettings.NumberColor
+        VariablePictureBox.BackColor = MS_Edit.EditSettings.VariableColor
+        IDPictureBox.BackColor = MS_Edit.EditSettings.IDColor
+        StringVariableClrBx.BackColor = MS_Edit.EditSettings.StringVariableColor
 
-        MS_CommentPictureBox.BackColor = EditSettings.MS_CommentColor
-        MS_StringPictureBox.BackColor = EditSettings.MS_StringColor
-        MS_NumberPictureBox.BackColor = EditSettings.MS_NumberColor
-        MS_VariablePictureBox.BackColor = EditSettings.MS_VariableColor
-        MS_IDPictureBox.BackColor = EditSettings.MS_IDColor
+        MS_CommentPictureBox.BackColor = MS_Edit.EditSettings.MS_CommentColor
+        MS_StringPictureBox.BackColor = MS_Edit.EditSettings.MS_StringColor
+        MS_NumberPictureBox.BackColor = MS_Edit.EditSettings.MS_NumberColor
+        MS_VariablePictureBox.BackColor = MS_Edit.EditSettings.MS_VariableColor
+        MS_IDPictureBox.BackColor = MS_Edit.EditSettings.MS_IDColor
 
+        TxtBxFurPath.Text = MS_Edit.EditSettings.FurcPath
 
         Dim count As Integer = ini.GetKeyValue("Init-Types", "Count").ToInteger
         For i = 1 To count
@@ -130,7 +133,7 @@ Public Class Config
     End Sub
 
     Private Sub ConfigTabs_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ConfigTabs.SelectedIndexChanged
-        dim t as tabcontrol = ctype(sender,tabcontrol)
+        Dim t As TabControl = CType(sender, TabControl)
         My.Settings.ConfigSelectedTab = t.SelectedIndex
     End Sub
 
@@ -145,11 +148,11 @@ Public Class Config
 
     Private Sub CommentPictureBox_Click(sender As System.Object, e As System.EventArgs) Handles CommentPictureBox.Click, StringPictureBox.Click, NumberPictureBox.Click, VariablePictureBox.Click, IDPictureBox.Click, StringVariableClrBx.Click, _
                                                                                         MS_CommentPictureBox.Click, MS_StringPictureBox.Click, MS_NumberPictureBox.Click, MS_VariablePictureBox.Click, MS_IDPictureBox.Click
-        GetColor(ctype(sender,picturebox))
+        GetColor(CType(sender, PictureBox))
     End Sub
 
     Private Sub ChkBxAutoComplete_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkBxAutoComplete.CheckedChanged
-        EditSettings.AutoCompleteEnable = ChkBxAutoComplete.Checked
+        MS_Edit.EditSettings.AutoCompleteEnable = ChkBxAutoComplete.Checked
     End Sub
 
     Private Sub NumericUpDown1_KeyUp(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles NumericUpDown1.KeyUp
@@ -170,7 +173,7 @@ Public Class Config
     End Sub
 
     Private Sub ListBox1_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles ListBox2.MouseUp, ListBox1.MouseUp
-        dim l as listbox = ctype(sender,listbox)
+        Dim l As ListBox = CType(sender, ListBox)
         Dim str As String = l.SelectedItem.ToString
         Dim Val As Integer = str.Split("="c)(1).ToInteger
         NumericUpDown1.Value = Val
@@ -194,11 +197,30 @@ Public Class Config
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ListBox2.SelectedIndexChanged, ListBox1.SelectedIndexChanged
-        CurrentListBox = ctype(sender, listbox)
+        CurrentListBox = CType(sender, ListBox)
     End Sub
 
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        With FindFurc
+            Dim ExePath As String
+            .FileName = "Furcadia.exe"
+
+            If Environment.Is64BitOperatingSystem Then
+                ExePath = Environment.GetEnvironmentVariable("ProgramFiles(x86)")
+            Else
+                ExePath = Environment.GetEnvironmentVariable("ProgramFiles")
+            End If
+
+            .InitialDirectory = ExePath
+            If .ShowDialog = DialogResult.OK Then
+                TxtBxFurPath.Text = Path.GetDirectoryName(.FileName)
+            End If
+
+        End With
     End Sub
 End Class
