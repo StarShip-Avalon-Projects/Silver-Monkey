@@ -18,7 +18,7 @@ Module MainModule
     <Runtime.CompilerServices.Extension()>
     Public Function ToFurcShortName(ByVal value As String) As String
         If String.IsNullOrEmpty(value) Then Return Nothing
-        Return Regex.Replace(value.ToLower, REGEX_NameFilter, "", RegexOptions.CultureInvariant)
+        Return Regex.Replace(value.ToLower, REGEX_NameFilter, "")
     End Function
 
     Public Function IsBotControler(ByRef Name As String) As Boolean
