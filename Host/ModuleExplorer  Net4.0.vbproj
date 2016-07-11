@@ -148,9 +148,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
-    <Compile Include="PluginServices.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="smHost.vb" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.vb</DependentUpon>

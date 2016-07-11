@@ -2,11 +2,10 @@
 Imports System.Data
 Imports System.Data.SQLite
 Imports System.Text.RegularExpressions
-Imports System.Diagnostics
 Imports System.Collections.Generic
-Imports System.Windows.Forms
 Imports MonkeyCore
 Imports Monkeyspeak
+Imports MonkeyCore.IO
 
 Public Class MSPK_MDB
     Inherits Libraries.AbstractBaseLibrary
@@ -14,6 +13,18 @@ Public Class MSPK_MDB
     Private writer As TextBoxWriter = Nothing
     Public Shared SQLreader As SQLiteDataReader = Nothing
     Private QueryRun As Boolean = False
+    Private Shared _SQLitefile As String
+    Public Shared Property SQLitefile As String
+        Get
+            If String.IsNullOrEmpty(_SQLitefile) Then
+                _SQLitefile = Path.Combine(Paths.SilverMonkeyBotPath, "SilverMonkey.db")
+            End If
+            Return _SQLitefile
+        End Get
+        Set(value As String)
+            _SQLitefile = value
+        End Set
+    End Property
 
     Dim lock As New Object
     Dim cache As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
@@ -27,7 +38,8 @@ Public Class MSPK_MDB
         End Try
         Try
             'Set the default file the first time this MonkeySpeak Library is run
-            Main.SQLitefile = Path.Combine(Paths.SilverMonkeyBotPath, "SilverMonkey.db")
+
+
         Catch eX As Exception
             Dim logError As New ErrorLogging(eX, Me)
         End Try
@@ -231,12 +243,10 @@ Public Class MSPK_MDB
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
             Dim Value As Double = 0
-            Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
+            Double.TryParse(GetValueFromTable(info, Furre.ToFurcShortName).ToString, Value)
 
-
-            If number = Value Then Return True
+            Return number = Value
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -610,8 +620,9 @@ Public Class MSPK_MDB
 
 
     Public Function createMDB(reader As TriggerReader) As Boolean
-        Main.SQLitefile = Path.Combine(Paths.SilverMonkeyBotPath, reader.ReadString())
-        Dim db As New SQLiteDatabase(Main.SQLitefile)
+        SQLitefile = CheckBotFolder(reader.ReadString())
+        Console.WriteLine("NOTICE: SQLite Database file has changed to" + SQLitefile)
+        Dim db As New SQLiteDatabase(SQLitefile)
         'db.CreateTbl("FURRE", FurreTable)
         Return True
     End Function
@@ -632,7 +643,6 @@ Public Class MSPK_MDB
         data.Add("[Access Level]", "0")
         Try
             Return db.Insert("FURRE", data)
-
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -649,7 +659,7 @@ Public Class MSPK_MDB
             info = reader.ReadVariableOrNumber.ToString
         End If
         'Dim value As String = reader.ReadVariable.Value.ToString
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of [String], [String])()
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
         data.Add(MS_Name, Furre)
@@ -668,12 +678,9 @@ Public Class MSPK_MDB
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
         Dim Furre As String = ""
-        SyncLock lock
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-        End SyncLock
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
         Dim value As Double = ReadVariableOrNumber(reader)
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of [String], [String])()
         data.Add(MS_Name, Furre)
         data.Add("[" & info & "]", value.ToString)
@@ -692,10 +699,9 @@ Public Class MSPK_MDB
         Dim Furre As String = reader.ReadString
         'Dim Furre As String = MainEngine.MSpage.GetVariable("~Name").Value.ToString
         Dim value As String = ReadVariableOrNumber(reader, False).ToString
-        Dim db As New SQLiteDatabase(Main.SQLitefile)
+        Dim db As New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of [String], [String])()
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
-        data.Add(MS_Name, Furre)
+        data.Add(MS_Name, Furre.ToFurcShortName)
         data.Add("[" & info & "]", value)
         data.Add("[date modified]", Date.Now.ToString)
         Try
@@ -712,7 +718,7 @@ Public Class MSPK_MDB
         'Dim Furre As String = reader.ReadString
         Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
         Dim value As String = reader.ReadString
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of [String], [String])()
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
         data.Add(MS_Name, Furre)
@@ -732,7 +738,7 @@ Public Class MSPK_MDB
         Dim Furre As String = reader.ReadString
         'Dim Furre As String = MainEngine.MSpage.GetVariable("~Name").Value.ToString
         Dim value As String = reader.ReadString
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of [String], [String])()
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
         data.Add(MS_Name, Furre)
@@ -785,7 +791,7 @@ Public Class MSPK_MDB
     Public Function AddColumn(reader As TriggerReader) As Boolean
         Dim Column As String = reader.ReadString
         Dim Type As String = reader.ReadString
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         db.addColumn("FURRE", "[" & Column & "]", Type)
         Return True
     End Function
@@ -793,7 +799,7 @@ Public Class MSPK_MDB
     Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
         Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
     End Function
@@ -801,7 +807,7 @@ Public Class MSPK_MDB
     Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
         Dim Furre As String = reader.ReadString
         Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
     End Function
@@ -813,9 +819,9 @@ Public Class MSPK_MDB
         Dim num As Double = 0
 
         Try
-            Table = reader.ReadString
+            Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
             Total = reader.ReadVariable(True)
-            Dim count As String = SQLiteDatabase.ExecuteScalar1("select count(1) from [" & Table & "]")
+            Dim count As String = SQLiteDatabase.ExecuteScalar1("select count(*) from [" & Table & "]")
             Total.Value = count
             Return True
         Catch ex As Exception
@@ -864,6 +870,7 @@ Public Class MSPK_MDB
         Dim OutVar As Variable
         Dim Table As String = ""
         Try
+            Table = reader.ReadString(True).Replace("[", "").Replace("]", "").Replace("'", "''")
             info = reader.ReadString(True)
             Idx = reader.ReadVariable(True)
             OutVar = reader.ReadVariable(True)
@@ -872,10 +879,9 @@ Public Class MSPK_MDB
             MainMSEngine.LogError(reader, ex)
             Return False
         End Try
-        Dim sql As String = "SELECT " & info & " FROM " & Table & " ;"
+        Dim sql As String = "SELECT " & info & " FROM [" & Table & "] ;"
         Dim dt As DataTable = SQLiteDatabase.GetDataTable(sql)
-        info = info.Replace("[", "")
-        info = info.Replace("]", "")
+        info = info.Replace("[", "").Replace("]", "")
         Dim i As Double = 0
         For Each row As DataRow In dt.Rows
             Try
@@ -895,7 +901,7 @@ Public Class MSPK_MDB
         Dim var1 As Variable
         Dim var2 As Variable
         Try
-            var1 = reader.ReadVariable
+            var1 = reader.ReadVariable(True)
             var2 = reader.ReadVariable(True)
             Dim str As String = var1.Value.ToString
             str = str.Replace("'", "''")
@@ -924,13 +930,9 @@ Public Class MSPK_MDB
                     QueryRun = True
 
                     Return cache.Count > 0
-                ElseIf str.ToUpper.StartsWith("UPDATE") Then
-
-                    Return SQLiteDatabase.ExecuteNonQuery(str) > 0
                 End If
-
-                Return SQLiteDatabase.ExecuteNonQuery(str) > 0
-
+                SQLiteDatabase.ExecuteNonQuery(str)
+                Return True
             End SyncLock
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
@@ -1007,7 +1009,7 @@ Public Class MSPK_MDB
                     If str <> "[DREAM]" Then
                         callbk.ServerStack.Enqueue("ps " + callbk.CharacterList.Count.ToString + " get character." + str + ".*")
                     Else
-                        callbk.ServerStack.Enqueue("ps " + callbk.CharacterList.Count.ToString + " get character.dream.*")
+                        callbk.ServerStack.Enqueue("ps " + callbk.CharacterList.Count.ToString + " get dream.*")
                     End If
                 End If
             End If

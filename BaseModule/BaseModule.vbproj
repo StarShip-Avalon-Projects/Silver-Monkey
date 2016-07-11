@@ -10,7 +10,7 @@
     <ProjectGuid>{BF18C360-B7C6-4E49-AC49-06AEC6A07410}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SilverMonkey.BaseModule</RootNamespace>
-    <AssemblyName>BaseModule</AssemblyName>
+    <AssemblyName>BaseModule.Plugin</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>

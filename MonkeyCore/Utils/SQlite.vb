@@ -4,6 +4,7 @@ Imports System.Windows.Forms
 
 Public Class SQLiteDatabase
 
+    Private Const SyncPragma As String = "PRAGMA synchronous=0;"
     Private Const FurreTable As String = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT, [PSBackup] DOUBLE"
     Private Const DefaultFile As String = "SilverMonkey.db"
     Dim lock As New Object
@@ -43,25 +44,6 @@ Public Class SQLiteDatabase
 
 
     '''<Summary>
-    '''    Create a Table
-    ''' </Summary>
-    ''' <param name="Table"></param>
-    Public Sub CreateTbl(Table As String)
-        Using SQLconnect As New SQLiteConnection(dbConnection)
-            Using SQLcommand As SQLiteCommand = SQLconnect.CreateCommand
-
-                SQLconnect.Open()
-                'SQL query to Create Table
-
-                SQLcommand.CommandText = "CREATE TABLE IF NOT EXISTS " & Table & "(id INTEGER PRIMARY KEY AUTOINCREMENT );"
-                SQLcommand.ExecuteNonQuery()
-                SQLcommand.Dispose()
-            End Using
-            SQLconnect.Close()
-            SQLconnect.Dispose()
-        End Using
-    End Sub
-    '''<Summary>
     '''    Create a Table with Titles
     ''' </Summary>
     ''' <param name="Table"></param><param name="Titles"></param>
@@ -73,7 +55,7 @@ Public Class SQLiteDatabase
                 'SQL query to Create Table
 
                 ' [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT, 
-                SQLcommand.CommandText = "CREATE TABLE IF NOT EXISTS " & Table & "( " & Titles & " );"
+                SQLcommand.CommandText = SyncPragma + "CREATE TABLE IF NOT EXISTS " & Table & "( " & Titles & " );"
                 SQLcommand.ExecuteNonQuery()
                 SQLcommand.Dispose()
             End Using
@@ -96,7 +78,7 @@ Public Class SQLiteDatabase
     End Sub
 
     Private Function getAllColumnName(ByVal tableName As String) As String
-        Dim sql As String = "SELECT * FROM " & tableName
+        Dim sql As String = SyncPragma + "SELECT * FROM " & tableName
         Dim columnNames As New ArrayList
         Using SQLconnect As New SQLiteConnection(dbConnection)
             SQLconnect.Open()
@@ -221,13 +203,8 @@ Public Class SQLiteDatabase
         Dim rowsUpdated As Integer
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()
-            Using cmd As SQLiteCommand = cnn.CreateCommand()
-                cmd.CommandText = "PRAGMA synchronous=0;"
-                cmd.ExecuteNonQuery()
-            End Using
-
             Using mycommand As New SQLiteCommand(cnn)
-                mycommand.CommandText = sql
+                mycommand.CommandText = SyncPragma + sql
                 rowsUpdated = mycommand.ExecuteNonQuery()
             End Using
 
@@ -242,7 +219,7 @@ Public Class SQLiteDatabase
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()
             Using mycommand As New SQLiteCommand(cnn)
-                mycommand.CommandText = "PRAGMA synchronous=0;" + sql
+                mycommand.CommandText = SyncPragma + sql
                 Using a As SQLiteDataAdapter = New SQLiteDataAdapter(mycommand)
                     a.Fill(rowsUpdated)
                 End Using
@@ -263,7 +240,7 @@ Public Class SQLiteDatabase
     ''' 
     ''' </returns>
     Public Function isTableExists(tableName As [String]) As [Boolean]
-        Return ExecuteNonQuery("SELECT name FROM sqlite_master WHERE name='" & tableName & "'") > 0
+        Return ExecuteNonQuery(SyncPragma + "SELECT name FROM sqlite_master WHERE name='" & tableName & "'") > 0
     End Function
     ''' <summary>
     '''     Allows the programmer to retrieve single items from the DB.
@@ -276,7 +253,7 @@ Public Class SQLiteDatabase
             cnn.Open()
 
             Using mycommand As New SQLiteCommand(cnn)
-                mycommand.CommandText = "PRAGMA synchronous=0;" + sql
+                mycommand.CommandText = SyncPragma + sql
 
                 Try
                     Value = mycommand.ExecuteScalar()
@@ -317,7 +294,7 @@ Public Class SQLiteDatabase
         End If
         Try
             Dim cmd As String = [String].Format("update {0} set {1} where {2};", tableName, vals, where)
-            Return SQLiteDatabase.ExecuteNonQuery(cmd) > 0
+            Return SQLiteDatabase.ExecuteNonQuery(SyncPragma + cmd) > 0
 
         Catch ex As Exception
             Dim err As New ErrorLogging(ex, Me)
@@ -336,8 +313,8 @@ Public Class SQLiteDatabase
 
         Try
             Return 0 < SQLiteDatabase.ExecuteNonQuery([String].Format("delete from {0} where {1};", tableName, where))
-        Catch fail As Exception
-            MessageBox.Show(fail.Message)
+        Catch ex As exception
+            Dim err As New ErrorLogging(ex, Me)
 
         End Try
         Return False
@@ -360,8 +337,8 @@ Public Class SQLiteDatabase
             Dim cmd As String = [String].Format("INSERT OR IGNORE into {0}({1}) values({2});", tableName, String.Join(", ", columns.ToArray), String.Join(", ", values.ToArray))
             SQLiteDatabase.ExecuteNonQuery(cmd)
             Return True
-        Catch fail As Exception
-            MessageBox.Show(fail.Message)
+        Catch ex As exception
+            Dim err As New ErrorLogging(ex, Me)
             Return False
         End Try
         Return True

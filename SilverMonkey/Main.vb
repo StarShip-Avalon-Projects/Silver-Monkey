@@ -38,8 +38,14 @@ Public Class Main
         Public Online As Boolean
     End Structure
 
-    Public OnlineList As String = Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, "OnlineList.txt")
-
+    Public Shared Property OnlineList As String
+        Get
+            Return MS_Pounce.OnlineList
+        End Get
+        Set(value As String)
+            MS_Pounce.OnlineList = value
+        End Set
+    End Property
     Public FurreList As New Dictionary(Of String, pFurre)
 
     Public HasShare As Boolean = False
@@ -48,12 +54,12 @@ Public Class Main
 
     Private Function ReadOnlineList() As Boolean
         Dim result As Boolean = False
-        If File.Exists(Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, OnlineList)) Then
-            If File.GetLastWriteTime(Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, OnlineList)) <> lastaccess Then
-                lastaccess = File.GetLastWriteTime(Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, OnlineList))
+        If File.Exists(OnlineList) Then
+            If File.GetLastWriteTime(OnlineList) <> lastaccess Then
+                lastaccess = File.GetLastWriteTime(OnlineList)
 
 
-                Dim NameList() As String = File.ReadAllLines(Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, OnlineList))
+                Dim NameList() As String = File.ReadAllLines(OnlineList)
                 For i As Integer = 0 To NameList.Length - 1
                     If Not FurreList.ContainsKey(NameList(i)) Then FurreList.Add(NameList(i), New pFurre)
                 Next
@@ -2829,7 +2835,7 @@ Public Class Main
     ''' <param name="data">A dictionary containing the column names and data for the insert.</param>
     ''' <returns>A boolean true or false to signify success or failure.</returns>
     Public Function InsertMultiRow(tableName As [String], ID As Integer, data As Dictionary(Of [String], [String])) As Boolean
-        Dim values As New ArrayList
+        Dim values As New List(Of String)
         For Each val As KeyValuePair(Of [String], [String]) In data
             values.Add([String].Format(" ( {0}, '{1}', '{2}' )", ID, val.Key, val.Value))
         Next
@@ -3085,7 +3091,6 @@ Public Class Main
         'Save the user settings so next time the
         'window will be the same size and location
 
-        _cMain.SaveMainSettings()
         My.Settings.Save()
         NotifyIcon1.Visible = False
         If Not IsNothing(Me.TroatTiredDelay) Then Me.TroatTiredDelay.Dispose()

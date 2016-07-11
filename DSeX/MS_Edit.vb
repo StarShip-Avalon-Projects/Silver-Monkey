@@ -371,7 +371,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
     End Sub
 
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub MS_Edit_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -434,9 +434,9 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         'Set my user setting MainFormLocation to
         'the current form's location
         If Not IsNothing(EditSettings) Then EditSettings.SaveEditorSettings()
-        My.Settings.EditFormLocation = Me.Location
+        My.Settings.EditFormLocation = Location
         My.Settings.Save()
-        Me.Dispose()
+        Dispose()
     End Sub
 
     Private Sub MS_Edit_ImeModeChanged(sender As Object, e As EventArgs) Handles Me.ImeModeChanged
@@ -477,7 +477,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                 WorkPath(TabControl2.SelectedIndex) = .FileName.Replace(WorkFileName(TabControl2.SelectedIndex), "")
 
                 frmTitle(TabControl2.SelectedIndex) = AppName + " - " & WorkFileName(TabControl2.SelectedIndex)
-                Me.Text = frmTitle(TabControl2.SelectedIndex)
+                Text = frmTitle(TabControl2.SelectedIndex)
                 lblStatus.Text = "Status: opened " & WorkFileName(TabControl2.SelectedIndex)
 
                 Dim reader As New StreamReader(WorkPath(TabControl2.SelectedIndex) + "/" + WorkFileName(TabControl2.SelectedIndex))
@@ -603,7 +603,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         Dim ext As String = Path.GetExtension(filename)
 
         frmTitle(TabControl2.SelectedIndex) = AppName + " - " & WorkFileName(TabControl2.SelectedIndex)
-        Me.Text = frmTitle(TabControl2.SelectedIndex)
+        Text = frmTitle(TabControl2.SelectedIndex)
 
         Try
             Dim reader As New StreamReader(WorkPath(TabControl2.SelectedIndex) + "/" + WorkFileName(TabControl2.SelectedIndex))
@@ -686,12 +686,12 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         End If
 
 
-        Me.DoubleBuffered = True
+        DoubleBuffered = True
 
 
 
         Dim PluginFound As Boolean = False
-        For Each s As String In FileIO.FileSystem.GetFiles(MonkeyCore.Paths.ApplicationPluginPath, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
+        For Each s As String In FileIO.FileSystem.GetFiles(Paths.ApplicationPluginPath, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
             Dim FName As String = Path.GetFileNameWithoutExtension(s)
             If IsNothing(EditSettings.PluginList) Then EditSettings.PluginList = New Dictionary(Of String, Boolean)
             If Not EditSettings.PluginList.ContainsKey(FName) Then
@@ -704,8 +704,8 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         Next
         If PluginFound Then EditSettings.SaveEditorSettings()
 
-        Me.Location = My.Settings.EditFormLocation
-        Me.Visible = True
+        Location = My.Settings.EditFormLocation
+        Visible = True
 
         Dim items As List(Of AutocompleteItem) = New List(Of AutocompleteItem)()
         Dim KeyCount As Integer = CInt(KeysIni.GetKeyValue("Init-Types", "Count"))
@@ -964,7 +964,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                 SaveMS_File(TabControl2.SelectedIndex)
                 lblStatus.Text = "Status: Saved " & WorkFileName(TabControl2.SelectedIndex)
                 frmTitle(TabControl2.SelectedIndex) = AppName + " - " & WorkFileName(TabControl2.SelectedIndex)
-                Me.Text = frmTitle(TabControl2.SelectedIndex)
+                Text = frmTitle(TabControl2.SelectedIndex)
                 CanOpen(TabControl2.SelectedIndex) = True
             End If
         End With
@@ -973,7 +973,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
     Private Sub SaveMS_File(ByRef TabIdx As Integer)
         If MS_Editor.InvokeRequired Then
             Dim d As New FileSave(AddressOf SaveMS_File)
-            Me.Invoke(d, TabIdx)
+            Invoke(d, TabIdx)
         Else
 
             If Not CanOpen(TabIdx) Then
@@ -995,7 +995,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
                     CanOpen(TabIdx) = True
                     If TabIdx = TabControl2.SelectedIndex Then
-                        Me.Text = frmTitle(TabIdx)
+                        Text = frmTitle(TabIdx)
                         TabControl2.SelectedTab.Text = WorkFileName(TabIdx)
                         TabControl2.RePositionCloseButtons()
                     End If
@@ -1092,7 +1092,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         If SectionChange = False Then CanOpen(TabControl2.SelectedIndex) = False
 
         UpdateStatusBar()
-        If CanOpen(TabControl2.SelectedIndex) = False Then Me.Text = frmTitle(TabControl2.SelectedIndex) & "*"
+        If CanOpen(TabControl2.SelectedIndex) = False Then Text = frmTitle(TabControl2.SelectedIndex) & "*"
         If WorkFileName(TabControl2.SelectedIndex) = "" And CanOpen(TabControl2.SelectedIndex) = False Then
             TabControl2.SelectedTab.Text = New_File_Tag + "*"
             TabControl2.RePositionCloseButtons()
@@ -1134,7 +1134,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
         Dim iResult As IntPtr = IntPtr.Zero
         If WindowHandle.ToInt32() <> 0 Then
-            iResult = msg.sendWindowsStringMessage(WindowHandle, Me.Handle, "~DSEX~", 0, strTag, msMsg)
+            iResult = msg.sendWindowsStringMessage(WindowHandle, Handle, "~DSEX~", 0, strTag, msMsg)
             lblStatus.Text = "Status: Engine restart command sent to " + BotName(TabControl2.SelectedIndex)
         End If
     End Sub
@@ -1278,7 +1278,7 @@ InputBox("What line within the document do you want to send the cursor to?",
 
         frmTitle(TabControl2.SelectedIndex) = AppName + " - " + New_File_Tag
         FullFile(TabControl2.SelectedIndex).Clear()
-        Me.Text = frmTitle(TabControl2.SelectedIndex)
+        Text = frmTitle(TabControl2.SelectedIndex)
         For i = 0 To MS_Editor.Lines.Count - 1
             FullFile(TabControl2.SelectedIndex).Add(MS_Editor.Lines.Item(i).Trim(charsToTrim))
         Next
@@ -1527,7 +1527,7 @@ InputBox("What line within the document do you want to send the cursor to?",
 
         'Creates the listview and displays it in the new tab
         Dim lstView As FastColoredTextBox = New FastColoredTextBox()
-        lstView.ContextMenuStrip = Me.EditMenu
+        lstView.ContextMenuStrip = EditMenu
         lstView.AcceptsTab = True
         lstView.Parent = tp
         lstView.Anchor = CType(AnchorStyles.Left + AnchorStyles.Top + AnchorStyles.Bottom + AnchorStyles.Right, AnchorStyles)
@@ -1553,7 +1553,7 @@ InputBox("What line within the document do you want to send the cursor to?",
 
     Private Sub MS_EditRightClick(sender As Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
-            Me.EditMenu.Show(MS_Editor, New Point(e.X, e.Y))
+            EditMenu.Show(MS_Editor, New Point(e.X, e.Y))
         End If
     End Sub
 
@@ -1562,9 +1562,9 @@ InputBox("What line within the document do you want to send the cursor to?",
         If TabControl2.SelectedIndex = -1 Or TabControl2.SelectedIndex > TabControl2.TabPages.Count Then Exit Sub
         ListBox1.Items.Clear()
         If CanOpen(TabControl2.SelectedIndex) = False Then
-            Me.Text = frmTitle(TabControl2.SelectedIndex) + "*"
+            Text = frmTitle(TabControl2.SelectedIndex) + "*"
         Else
-            Me.Text = frmTitle(TabControl2.SelectedIndex)
+            Text = frmTitle(TabControl2.SelectedIndex)
         End If
         UpdateSegmentList()
         If SectionIdx(TabControl2.SelectedIndex) <> ListBox1.SelectedIndex Then ListBox1.SelectedIndex = SectionIdx(TabControl2.SelectedIndex)
@@ -1707,7 +1707,7 @@ InputBox("What line within the document do you want to send the cursor to?",
         FullFile.RemoveAt(i)
         TabSections.RemoveAt(i)
         TabEditStyles.RemoveAt(i)
-        If TabControl2.TabPages.Count = 0 And Me.Disposing = False Then
+        If TabControl2.TabPages.Count = 0 And Disposing = False Then
             AddNewEditorTab("", "", 0)
             NewFile(EditStyles.ms)
         End If

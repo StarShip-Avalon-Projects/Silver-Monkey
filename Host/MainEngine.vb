@@ -64,15 +64,15 @@ Public Class MainEngine
         Dim objPlugin As SilverMonkey.Interfaces.msPlugin
 
         'Loop through available plugins, creating instances and adding them to listbox
-        If Not Plugins Is Nothing Then
-            For intIndex As Integer = 0 To Plugins.Length - 1
-                MSpage = engine.LoadFromString("")
-                objPlugin = PluginServices.CreateInstance(Plugins(intIndex))
-                objPlugin.Initialize(Main.objHost)
-                objPlugin.Page = MSpage
-                objPlugin.Start()
-            Next
-        End If
+
+        For intIndex As Integer = 0 To Main.Plugins.Count - 1
+            MSpage = engine.LoadFromString("")
+            objPlugin = CType(PluginServices.CreateInstance(Main.Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
+            objPlugin.Initialize(Main.objHost)
+            objPlugin.Page = MSpage
+            objPlugin.Start()
+        Next
+
 
     End Sub
 

@@ -30,7 +30,7 @@ Public Class PluginServices
         Dim objDLL As [Assembly]
 
         'Go through all DLLs in the directory, attempting to load them
-        strDLLs = Directory.GetFileSystemEntries(strPath, "*.dll")
+        strDLLs = Directory.GetFileSystemEntries(strPath, "*.Plugin.dll")
         For intIndex = 0 To strDLLs.Length - 1
             Try
                 objDLL = [Assembly].LoadFrom(strDLLs(intIndex))

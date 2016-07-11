@@ -2,14 +2,27 @@
 Imports System.Text.RegularExpressions
 Imports System.Collections.Generic
 Imports MonkeyCore
+Imports MonkeyCore.IO
 
 Public Class MS_Pounce
     Inherits Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing
 
+    Private Shared _OnlineList As String
+    Public Shared Property OnlineList As String
+        Get
+            If String.IsNullOrEmpty(_OnlineList) Then
+                _OnlineList = CheckBotFolder("OnlineList.txt")
+            End If
+            Return _OnlineList
+        End Get
+        Set(value As String)
+
+        End Set
+    End Property
+
     Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
-        Main.OnlineList = "OnlineList.txt"
 
         ' (0:950) When a furre logs on,
         Add(TriggerCategory.Cause, 950,
@@ -257,7 +270,7 @@ Public Class MS_Pounce
         Return True
     End Function
     Private Sub CheckCemberList()
-        callbk.OnlineList = Path.Combine(Paths.SilverMonkeyBotPath, callbk.OnlineList)
+        callbk.OnlineList = CheckBotFolder(callbk.OnlineList)
         If File.Exists(callbk.OnlineList) = False Then
             Dim sw As StreamWriter = New StreamWriter(callbk.OnlineList, False)
             sw.Close()

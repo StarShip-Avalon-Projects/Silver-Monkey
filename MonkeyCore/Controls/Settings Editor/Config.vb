@@ -2,6 +2,7 @@
 Imports System.Drawing.Text
 Imports System.Drawing
 Imports MonkeyCore.Settings
+Imports MonkeyCore
 Imports System.IO
 
 Public Class Config

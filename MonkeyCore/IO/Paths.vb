@@ -197,8 +197,8 @@ Public Class Paths
     ''' </value>
     Public Shared ReadOnly Property ApplicationPluginPath() As String
         Get
-            If String.IsNullOrEmpty(_ApplicationPath) Then
-                _ApplicationPluginPath = Path.Combine(My.Application.Info.DirectoryPath, PluginPath)
+            If String.IsNullOrEmpty(_ApplicationPluginPath) Then
+                _ApplicationPluginPath = Path.Combine(ApplicationPath, PluginPath)
             End If
             Return _ApplicationPluginPath
         End Get

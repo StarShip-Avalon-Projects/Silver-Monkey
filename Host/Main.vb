@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Collections.Generic
 Imports Ionic.Zip
 Imports System.Text.RegularExpressions
+Imports MonkeyCore
 
 Public Class Main
     Class CatSorter
@@ -43,6 +44,7 @@ Public Class Main
     Public Shared objHost As New smHost
     Public Player As FURRE = New FURRE
     Public DREAM As New DREAM
+    Public Shared Plugins As List(Of PluginServices.AvailablePlugin)
 
     Private Sub PopulatePluginList()
         Dim objPlugin As SilverMonkey.Interfaces.msPlugin
@@ -50,7 +52,7 @@ Public Class Main
 
         'Loop through available plugins, creating instances and adding them to listbox
         If Not Plugins Is Nothing Then
-            For intIndex = 0 To Plugins.Length - 1
+            For intIndex = 0 To Plugins.Count - 1
                 Try
                     objPlugin = TryCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
                     Dim item As ListViewItem = ListView1.Items.Add(intIndex.ToString)
@@ -72,7 +74,7 @@ Public Class Main
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Plugins = PluginServices.FindPlugins(Path.GetDirectoryName(Application.ExecutablePath) + "\Plugins\", "SilverMonkey.Interfaces.msPlugin")
+        Plugins = PluginServices.FindPlugins(Paths.ApplicationPluginPath, "SilverMonkey.Interfaces.msPlugin")
         PopulatePluginList()
         MainMSEngine = New MainEngine
         MainMSEngine.ScriptStart()
@@ -103,7 +105,7 @@ Public Class Main
         Dim Engine As New Monkeyspeak.MonkeyspeakEngine
         Dim page As Monkeyspeak.Page
         page = Engine.LoadFromString("")
-        objPlugin = PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index))
+        objPlugin = CType(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), SilverMonkey.Interfaces.msPlugin)
         If objPlugin Is Nothing Then Exit Sub
         objPlugin.Initialize(objHost)
         objPlugin.Page = page
@@ -231,9 +233,9 @@ Public Class Main
         For Each f As String In Directory.GetFiles(path, "*.zip")
             File.Delete(f)
         Next
-        For intIndex = 0 To Plugins.Length - 1
+        For intIndex = 0 To Plugins.Count - 1
             page = Engine.LoadFromString("")
-            objPlugin = PluginServices.CreateInstance(Plugins(intIndex))
+            objPlugin = CType(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
 
             objPlugin.Initialize(objHost)
             objPlugin.Page = page
@@ -241,7 +243,7 @@ Public Class Main
             ExportKeysIni(objPlugin.Name.Replace(" ", "") + ".ini", page)
             Using zip As ZipFile = New ZipFile
                 zip.AddFile(path + objPlugin.Name.Replace(" ", "") + ".ini")
-                zip.AddFile(path + objPlugin.Name.Replace(" ", "") + ".dll")
+                zip.AddFile(path + objPlugin.Name.Replace(" ", "") + ".Plugin.dll")
 #If DEBUG Then
                 zip.Save(path + objPlugin.Name.Replace(" ", "") + "_Debug" + objPlugin.Version + ".zip")
 #Else
