@@ -16,12 +16,14 @@
     <WixToolPath>C:\Program Files (x86)\WiX Toolset v4.0\bin\</WixToolPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>.\bin\$(Configuration)\</OutputPath>
+    <OutputPath>..\Build\Installer\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug;</DefineConstants>
     <LeaveTemporaryFiles>True</LeaveTemporaryFiles>
     <WixVariables>
     </WixVariables>
+    <LinkerAdditionalOptions>
+    </LinkerAdditionalOptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>..\Build\Installer\$(Configuration)\</OutputPath>
@@ -34,6 +36,8 @@
     <None Include="Setup.build" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyWixUI_InstallDi.wxs" />
+    <Compile Include="MyInstallDirDlg.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
@@ -42,13 +46,31 @@
     </HeatProject>
   </ItemGroup>
   <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixFirewallExtension">
+      <HintPath>$(WixExtDir)\WixFirewallExtension.dll</HintPath>
+      <Name>WixFirewallExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ChatBot\ChatBot.vbproj">
       <Name>ChatBot</Name>
       <Project>{97caa3b6-e99a-41ab-88df-71cbf8339b89}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
@@ -87,6 +109,15 @@
       <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Name>MonkeyCore</Name>
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeySpeakR6\MonkeyspeakR6.csproj">
       <Name>MonkeyspeakR6</Name>
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
@@ -99,6 +130,7 @@
     <ProjectReference Include="..\SilverMonkey\SilverMonkey2.vbproj">
       <Name>SilverMonkey2</Name>
       <Project>{cd544712-0665-44db-bb70-5b9d4395b050}</Project>
+      <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
       <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
@@ -111,7 +143,7 @@
       <DoNotHarvest>
       </DoNotHarvest>
       <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>PLUGINS</RefTargetDir>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Verbot Knowledgebase Editor\Verbot Knowledgebase Editor.vbproj">
       <Name>VerbotKnowledgebaseEditor</Name>
@@ -133,22 +165,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WixExtension Include="WixUtilExtension">
-      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
-      <Name>WixUtilExtension</Name>
-    </WixExtension>
-    <WixExtension Include="WixUIExtension">
-      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
-      <Name>WixUIExtension</Name>
-    </WixExtension>
-    <WixExtension Include="WixNetFxExtension">
-      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
-      <Name>WixNetFxExtension</Name>
-    </WixExtension>
-    <WixExtension Include="WixFirewallExtension">
-      <HintPath>$(WixExtDir)\WixFirewallExtension.dll</HintPath>
-      <Name>WixFirewallExtension</Name>
-    </WixExtension>
+    <Content Include="metal.png" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DefineConstants>Debug</DefineConstants>
@@ -161,18 +178,17 @@
   </PropertyGroup>
   <Target Name="BeforeBuild">
     <GetAssemblyIdentity AssemblyFiles="..\Build\$(Configuration)\SilverMonkey.exe">
-      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+      <Output TaskParameter="Assemblies" ItemName="FileVersion" />
     </GetAssemblyIdentity>
     <PropertyGroup>
-      <DefineConstants>BuildVersion=%(AssemblyVersion.Version)</DefineConstants>
+      <DefineConstants>BuildVersion=%(FileVersion.Version)</DefineConstants>
     </PropertyGroup>
   </Target>
   <!-- rename the output msi with Version number -->
   <Target Name="AfterBuild">
-    <Copy SourceFiles=".\bin\$(Configuration)\$(OutputName).msi" DestinationFiles=".\bin\$(Configuration)\SilverMonkey_$(OutputName)_(AnyCPU)-%(AssemblyVersion.Version).msi" />
-    <Delete Files=".\bin\$(Configuration)\$(OutputName).msi" />
+    <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-%(FileVersion.Version).msi" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent />
+    <PostBuildEvent />
   </PropertyGroup>
 </Project>

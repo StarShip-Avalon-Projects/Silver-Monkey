@@ -46,7 +46,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <NoWin32Manifest>False</NoWin32Manifest>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <OptionInfer>Off</OptionInfer>
+    <OptionInfer>On</OptionInfer>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -64,7 +64,7 @@
     <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
     <DebugType>Full</DebugType>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -130,18 +130,13 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="clsMain.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\TextBox_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Helper Classes\ErrorLogging.vb" />
-    <Compile Include="Helper Classes\TextWriter.vb" />
-    <Compile Include="IniFile.vb" />
     <Compile Include="Main.Designer.vb">
       <DependentUpon>Main.vb</DependentUpon>
     </Compile>
@@ -152,9 +147,6 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
-    <Compile Include="PluginServices.vb">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="smHost.vb" />
     <EmbeddedResource Include="Main.resx">
@@ -194,6 +186,10 @@
       <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Project>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</Project>
+      <Name>MonkeyCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeyspeakR6\MonkeyspeakR6.csproj">
       <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
       <Name>MonkeyspeakR6</Name>
@@ -206,16 +202,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>REM DEL old files
-del "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar"
-del "*setup*.*"
-
-REM Create the SRC rar
-cd $(SolutionDir)
-
-
-"c:/program files/winrar/rar.exe" a -r -x*\.svn\* -x*\build\*  -x*\bin\*  -x*\src\ -x*\obj\* -n*.*proj -n*.sln -n*.nsi -n*.vb  -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll -n*.config "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" *.*
-move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Wix|AnyCPU' ">
     <OutputPath>..\build\release\</OutputPath>

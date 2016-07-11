@@ -1,9 +1,4 @@
-﻿Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Runtime.Serialization.Formatters.Binary
-Imports System.Runtime.InteropServices
-Imports System.Diagnostics
+﻿Imports System.Runtime.InteropServices
 
 Public Class MessageHelper
     <DllImport("User32.dll")> _

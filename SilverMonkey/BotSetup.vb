@@ -1,11 +1,8 @@
 ﻿Imports System.Windows.Forms
-Imports SilverMonkey.ConfigStructs
-Imports Furcadia.IO
-Imports System.IO
-
+Imports MonkeyCore
+Imports MonkeyCore.Paths
+Imports MonkeyCore.Settings
 Public Class BotSetup
-
-    Dim pPath As String = ConfigStructs.pPath()
 
     Public bFile As cBot
 
@@ -17,9 +14,14 @@ Public Class BotSetup
         End If
 
 
-        bFile.BotFile = TxtBxBotIni.Text
+        bFile.IniFile = TxtBxBotIni.Text
         bFile.lPort = Convert.ToInt32(TxtHPort.Text)
-        bFile.IniFile = TxtBx_CharIni.Text
+        Try
+            bFile.IniFile = TxtBx_CharIni.Text
+        Catch ex As ArgumentException
+            MessageBox.Show(ex.Message, "+++ERROR+++", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
         bFile.MS_File = TxtBxMS_File.Text
         bFile.MS_Engine_Enable = CBool(MSEnableChkBx.CheckState)
         bFile.BotController = TxtBxBotConroller.Text
@@ -45,14 +47,14 @@ Public Class BotSetup
             callbk.LogStream = New LogStream(callbk.setLogName(bFile), bFile.LogPath)
         End If
         bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.BotFile)
-        Me.DialogResult = System.Windows.Forms.DialogResult.OK
+        Main.SaveRecentFile(bFile.IniFile)
+        Me.DialogResult = DialogResult.OK
         Me.Close()
 
     End Sub
 
     Private Sub Cancel_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel_Button.Click
-        Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.DialogResult = DialogResult.Cancel
         Me.Close()
     End Sub
 
@@ -92,7 +94,7 @@ Public Class BotSetup
 
     Private Sub BotSetup_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-        If String.IsNullOrEmpty(bFile.BotFile) Then
+        If String.IsNullOrEmpty(bFile.IniFile) Then
             Main.NewBot = True
             bFile = New cBot
         End If
@@ -100,7 +102,7 @@ Public Class BotSetup
         TxtHPort.Text = bFile.lPort.ToString
         TxtBx_CharIni.Text = bFile.IniFile
         TxtBxMS_File.Text = bFile.MS_File
-        TxtBxBotIni.Text = bFile.BotFile
+        TxtBxBotIni.Text = bFile.IniFile
         MSEnableChkBx.Checked = bFile.MS_Engine_Enable
         TxtBxBotConroller.Text = bFile.BotController
         StandAloneChkBx.Checked = bFile.StandAlone
@@ -127,7 +129,7 @@ Public Class BotSetup
         With IniBrowseDialog
             ' Select Character ini file
 
-            .InitialDirectory = FurcPath.GetFurcadiaCharactersPath()
+            .InitialDirectory = FurcadiaProgramFolder
 
             If .ShowDialog = DialogResult.OK Then
                 TxtBx_CharIni.Text = .FileName
@@ -141,9 +143,9 @@ Public Class BotSetup
     Private Sub BtnMS_File_Click(sender As System.Object, e As System.EventArgs) Handles BtnMS_File.Click
         With MS_BrosweDialog
             ' Select Character ini file
-            .InitialDirectory = mPath()
+            .InitialDirectory = SilverMonkeyDocumentsPath
             If .ShowDialog = DialogResult.OK Then
-                TxtBxMS_File.Text = CheckMyDocFile(.FileName)
+                TxtBxMS_File.Text = .FileName
             End If
         End With
     End Sub

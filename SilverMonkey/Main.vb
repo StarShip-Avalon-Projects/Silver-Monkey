@@ -1,18 +1,10 @@
-Imports RTF
-Imports SilverMonkey.Controls
 Imports Furcadia.Net.Movement
 Imports Furcadia.IO
 Imports Furcadia.Net
 Imports Furcadia.Base220
-Imports SilverMonkey.ConfigStructs
-Imports System
-Imports System.Net
-Imports System.Web.HttpUtility
 Imports System.Text.RegularExpressions
-Imports System.IO
 Imports System.Collections
 Imports System.Collections.Generic
-Imports Furcadia.Drawing.Graphics
 Imports Furcadia.Drawing
 Imports System.Drawing
 Imports System.Net.NetworkInformation
@@ -20,13 +12,16 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
 Imports System.Diagnostics
-Imports SilverMonkey.MSPK_MDB
 Imports Conversive.Verbot5
 Imports System.Windows.Forms
-Imports Microsoft.VisualBasic
+Imports MonkeyCore
+Imports MonkeyCore.Settings
+Imports MonkeyCore.Controls
 
 Public Class Main
-    Inherits System.Windows.Forms.Form
+    Inherits Form
+
+
 
 #Region "Constants"
 
@@ -43,8 +38,14 @@ Public Class Main
         Public Online As Boolean
     End Structure
 
-    Public OnlineList As String = CheckMyDocFile("OnlineList.txt")
-
+    Public Shared Property OnlineList As String
+        Get
+            Return MS_Pounce.OnlineList
+        End Get
+        Set(value As String)
+            MS_Pounce.OnlineList = value
+        End Set
+    End Property
     Public FurreList As New Dictionary(Of String, pFurre)
 
     Public HasShare As Boolean = False
@@ -53,12 +54,12 @@ Public Class Main
 
     Private Function ReadOnlineList() As Boolean
         Dim result As Boolean = False
-        If File.Exists(CheckMyDocFile(OnlineList)) Then
-            If File.GetLastWriteTime(CheckMyDocFile(OnlineList)) <> lastaccess Then
-                lastaccess = File.GetLastWriteTime(CheckMyDocFile(OnlineList))
+        If File.Exists(OnlineList) Then
+            If File.GetLastWriteTime(OnlineList) <> lastaccess Then
+                lastaccess = File.GetLastWriteTime(OnlineList)
 
 
-                Dim NameList() As String = File.ReadAllLines(CheckMyDocFile(OnlineList))
+                Dim NameList() As String = File.ReadAllLines(OnlineList)
                 For i As Integer = 0 To NameList.Length - 1
                     If Not FurreList.ContainsKey(NameList(i)) Then FurreList.Add(NameList(i), New pFurre)
                 Next
@@ -118,12 +119,12 @@ Public Class Main
                 'Furre Logged off
                 SendClientMessage("smPounce", _furre + " has logged out.")
                 Player = NametoFurre(_furre, True)
-                MainMSEngine.PageExecute(951, 953)
+                MS_Engine.MainMSEngine.PageExecute(951, 953)
             ElseIf test.WasOnline = False And test.Online = True Then
                 'Furre logged on
                 SendClientMessage("smPounce", _furre + " has logged on.")
                 Player = NametoFurre(_furre, True)
-                MainMSEngine.PageExecute(950, 952)
+                MS_Engine.MainMSEngine.PageExecute(950, 952)
             End If
 
         Next
@@ -181,16 +182,16 @@ Public Class Main
 
                 If sName = "~DSEX~" Then
                     If sTag = "Restart" Then
-                        MainMSEngine.EngineRestart = True
-                        cBot.MS_Script = MainMSEngine.msReader(CheckMyDocFile(cBot.MS_File))
-                        MainEngine.MSpage = MainMSEngine.engine.LoadFromString(cBot.MS_Script)
-                        MainMSEngine.MS_Stared = 2
+                        MS_Engine.MainMSEngine.EngineRestart = True
+                        cBot.MS_Script = MS_Engine.MainMSEngine.msReader(Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, cBot.MS_File))
+                        MainMSEngine.MSpage = MS_Engine.MainMSEngine.engine.LoadFromString(cBot.MS_Script)
+                        MS_Engine.MainMSEngine.MS_Stared = 2
                         ' MainMSEngine.LoadLibrary()
-                        MainMSEngine.EngineRestart = False
+                        MS_Engine.MainMSEngine.EngineRestart = False
                         ' Main.ResetPrimaryVariables()
                         sndDisplay("<b><i>[SM]</i></b> Status: File Saved. Engine Restarted")
                         If smProxy.IsClientConnected Then smProxy.SendClient(")<b><i>[SM]</i></b> Status: File Saved. Engine Restarted" + vbLf)
-                        MainMSEngine.PageExecute(0)
+                        MS_Engine.MainMSEngine.PageExecute(0)
                     End If
                 Else
                     If DREAM.List.ContainsKey(sFID) Then
@@ -201,10 +202,10 @@ Public Class Main
                     End If
 
                     Player.Message = sData.ToString
-                    MainMSEngine.PageSetVariable(MS_Name, sName)
-                    MainMSEngine.PageSetVariable("MESSAGE", sData)
+                    MS_Engine.MainMSEngine.PageSetVariable(MS_Name, sName)
+                    MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", sData)
                     ' Execute (0:15) When some one whispers something
-                    MainMSEngine.PageExecute(75, 76, 77)
+                    MS_Engine.MainMSEngine.PageExecute(75, 76, 77)
                     SendClientMessage("Message from: " + sName, sData)
                 End If
             End If
@@ -313,6 +314,17 @@ Public Class Main
 
 
 
+#End Region
+    Private Shared _cMain As cMain
+#Region "Properties"
+    Public Shared Property cMain As cMain
+        Get
+            Return _cMain
+        End Get
+        Set(value As cMain)
+            _cMain = value
+        End Set
+    End Property
 #End Region
 
 #Region "Events"
@@ -510,8 +522,8 @@ Public Class Main
 
         Player = NametoFurre(s.name, True)
         Player.Message = ""
-        MainMSEngine.PageSetVariable("MESSAGE", "")
-        MainMSEngine.PageExecute(504, 505)
+        MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", "")
+        MS_Engine.MainMSEngine.PageExecute(504, 505)
 
         Return InsertMultiRow("BACKUP", idx, Value)
     End Function
@@ -553,7 +565,7 @@ Public Class Main
         PSRestoreRunning = True
         SendClientMessage("SYSTEM:", "Restoreing all Character Phoenix Speak to the dream.")
         '(0:500) When the bot starts backing up the character Phoenix Speak,
-        MainEngine.MSpage.Execute(502)
+        MainMSEngine.MSpage.Execute(502)
         Dim cmd As String = "select * FROM BACKUPMASTER"
         PSS_Stack.Clear()
         CurrentPS_Stage = PS_BackupStage.RestoreAllCharacterPS
@@ -577,7 +589,7 @@ Public Class Main
         If PSRestoreRunning Or PSBackupRunning Or PSPruneRunning Then Exit Sub
         PSRestoreRunning = True
         '(0:500) When the bot starts backing up the character Phoenix Speak,
-        MainEngine.MSpage.Execute(502)
+        MainMSEngine.MSpage.Execute(502)
         psReceiveCounter = 0
         psSendCounter = 1
         PSS_Stack.Clear()
@@ -687,10 +699,10 @@ Public Class Main
     Const MRUnumber As Integer = 15
     Private MRUlist As System.Collections.Generic.Queue(Of String) = New Queue(Of String)(MRUnumber)
 
-    Private Sub OpenToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles OpenToolStripMenuItem.Click
+    Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
         With BotIniOpen
             ' Select Bot ini file
-            .InitialDirectory = mPath()
+            .InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
             If .ShowDialog = DialogResult.OK Then
                 cBot = New cBot(.FileName)
                 SaveRecentFile(.FileName)
@@ -726,7 +738,7 @@ Public Class Main
             RecentToolStripMenuItem.DropDownItems.Add(fileRecent)
         Next
         'writing menu list to file
-        Dim stringToWrite As New StreamWriter(pPath() & "/Recent.txt")
+        Dim stringToWrite As New StreamWriter(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt"))
         'create file called "Recent.txt" located on app folder
         For Each item As String In MRUlist
             'write list to stream
@@ -744,7 +756,10 @@ Public Class Main
         'try to load file. If file isn't found, do nothing
         MRUlist.Clear()
         Try
-            Dim listToRead As New StreamReader(pPath() & "/Recent.txt")
+            If Not File.Exists(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt")) Then
+                File.Create(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt"))
+            End If
+            Dim listToRead As New StreamReader(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt"), True)
             'read file stream
             Dim line As String = ""
             While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
@@ -769,14 +784,14 @@ Public Class Main
         'BotSetup.BotFile =
         'BotSetup.ShowDialog()
         cBot = New cBot(sender.ToString())
-        My.Settings.LastBotFile = cBot.BotFile
+        My.Settings.LastBotFile = cBot.IniFile
         EditBotToolStripMenuItem.Enabled = True
         My.Settings.Save()
 
         'same as open menu
     End Sub
 
-    Private Sub NewBotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles NewBotToolStripMenuItem.Click
+    Private Sub NewBotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewBotToolStripMenuItem.Click
 
         With NewBott
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
@@ -786,7 +801,7 @@ Public Class Main
         End With
     End Sub
 
-    Private Sub EditBotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EditBotToolStripMenuItem.Click
+    Private Sub EditBotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditBotToolStripMenuItem.Click
         With BotSetup
             .bFile = cBot
             If .ShowDialog() = Windows.Forms.DialogResult.OK Then
@@ -808,14 +823,14 @@ Public Class Main
     Private Const SBS_HORZ As Integer = 0
     Private Const SBS_VERT As Integer = 1
 
-    <DllImport("user32.dll")> _
-    Public Shared Function GetScrollRange(ByVal hWnd As IntPtr, ByVal nBar As Integer, _
- ByRef lpMinPos As Integer, _
+    <DllImport("user32.dll")>
+    Public Shared Function GetScrollRange(ByVal hWnd As IntPtr, ByVal nBar As Integer,
+ ByRef lpMinPos As Integer,
     ByRef lpMaxPos As Integer) As Boolean
     End Function
 
-    <DllImport("user32.dll")> _
-    Public Shared Function GetScrollPos(ByVal hWnd As IntPtr, _
+    <DllImport("user32.dll")>
+    Public Shared Function GetScrollPos(ByVal hWnd As IntPtr,
     ByVal nBar As Integer) As Integer
     End Function
     Public Enum ScrollInfoMask As UInteger
@@ -832,7 +847,7 @@ Public Class Main
         SB_CTL = &H2
         SB_BOTH = &H3
     End Enum
-    <Serializable(), StructLayout(LayoutKind.Sequential)> _
+    <Serializable(), StructLayout(LayoutKind.Sequential)>
     Structure SCROLLINFO
         Public cbSize As Integer
         <MarshalAs(UnmanagedType.U4)> Public fMask As ScrollInfoMask
@@ -842,9 +857,9 @@ Public Class Main
         Public nPos As Integer
         Public nTrackPos As Integer
     End Structure
-    <DllImport("user32.dll", SetLastError:=True)> _
-    Public Shared Function GetScrollInfo(hWnd As IntPtr, _
-  <MarshalAs(UnmanagedType.I4)> fnBar As SBOrientation, _
+    <DllImport("user32.dll", SetLastError:=True)>
+    Public Shared Function GetScrollInfo(hWnd As IntPtr,
+  <MarshalAs(UnmanagedType.I4)> fnBar As SBOrientation,
     <MarshalAs(UnmanagedType.Struct)> ByRef lpsi As SCROLLINFO) As Integer
     End Function
     Private Sub ScrollToEnd(ByRef rtb As RichTextBoxEx)
@@ -1083,17 +1098,17 @@ Public Class Main
         End If
     End Sub
 
-    Private Function GetFrame(ByRef Img As Integer, Optional ByRef FSH As String = "system.fsh") As Bitmap
-        If Not File.Exists(FurcPath.GetDefaultPatchPath() & FSH) Then
-            Dim pos As Integer = FSH.LastIndexOf(".")
-            FSH = FSH.Substring(0, pos) & ".fox"
-        End If
-        Dim shape As New FurcadiaShapes(FurcPath.GetDefaultPatchPath() & FSH)
-        Dim anims As Bitmap() = Helper.ToBitmapArray(shape)
-        ' pic.Image = anims(Img)
+    'Private Function GetFrame(ByRef Img As Integer, Optional ByRef FSH As String = "system.fsh") As Bitmap
+    '    If Not File.Exists(FurcPath.GetDefaultPatchPath() & FSH) Then
+    '        Dim pos As Integer = FSH.LastIndexOf(".")
+    '        FSH = FSH.Substring(0, pos) & ".fox"
+    '    End If
+    '    Dim shape As New FurcadiaShapes(FurcPath.GetDefaultPatchPath() & FSH)
+    '    Dim anims As Bitmap() = Helper.ToBitmapArray(shape)
+    '    ' pic.Image = anims(Img)
 
-        Return anims(Img)
-    End Function
+    '    Return anims(Img)
+    'End Function
 
     Private Function IMGresize(ByRef bm_source As Bitmap, ByRef RTF As RichTextBoxEx) As Bitmap
         'Dim g As Graphics = Me.CreateGraphic
@@ -1119,28 +1134,28 @@ Public Class Main
 
 
     End Function
-    Public Function GetSmily(ByRef ch As Char) As String
+    'Public Function GetSmily(ByRef ch As Char) As String
 
-        Dim RTFimg As New RTFBuilder
-        Dim file As String = ""
-        Dim shape As Integer = 0
-        If (ch >= "A") And (ch <= "P") Then
-            file = "smileys.fsh"
-            shape = Asc(ch) - Asc("A")
-        ElseIf (ch >= "Q" And ch <= "Z") Then
-            file = "smileys2.fsh"
-            shape = Asc(ch) - Asc("Q")
-        ElseIf (ch >= "a" And ch <= "z") Then
-            file = "smileys2.fsh"
-            shape = Asc(ch) - Asc("a") + 10
-        ElseIf (ch >= "1" And ch <= "3") Then
-            file = "smileys2.fsh"
-            shape = Asc(ch) - Asc("1") + 35
-        End If
-        RTFimg.InsertImage(IMGresize(GetFrame(shape, file), log_))
-        Return RTFimg.ToString
+    '    Dim RTFimg As New RTFBuilder
+    '    Dim file As String = ""
+    '    Dim shape As Integer = 0
+    '    If (ch >= "A") And (ch <= "P") Then
+    '        file = "smileys.fsh"
+    '        shape = Asc(ch) - Asc("A")
+    '    ElseIf (ch >= "Q" And ch <= "Z") Then
+    '        file = "smileys2.fsh"
+    '        shape = Asc(ch) - Asc("Q")
+    '    ElseIf (ch >= "a" And ch <= "z") Then
+    '        file = "smileys2.fsh"
+    '        shape = Asc(ch) - Asc("a") + 10
+    '    ElseIf (ch >= "1" And ch <= "3") Then
+    '        file = "smileys2.fsh"
+    '        shape = Asc(ch) - Asc("1") + 35
+    '    End If
+    '    RTFimg.InsertImage(IMGresize(GetFrame(shape, file), log_))
+    '    Return RTFimg.ToString
 
-    End Function
+    'End Function
 
     Private ImageList As New Dictionary(Of String, Image)
     ''' <summary>
@@ -1150,37 +1165,37 @@ Public Class Main
     ''' <param name="url"></param>
     ''' <returns>image</returns>
     ''' <remarks></remarks>
-    Public Function LoadImageFromUrl(ByRef url As String) As Image
-        Dim img As Image = Nothing
-        Dim ImageFile As String = System.IO.Path.GetFileName(url)
-        Dim TempPath As String = Path.GetTempPath()
-        Dim Filename As String = ""
-        If url.StartsWith("fsh://") = False Then Filename = ImageFile.Substring(0, ImageFile.Length - 4)
-        If url.StartsWith("fsh://") Then
-            Dim start As Integer = url.LastIndexOf("/") + 1
-            Dim last As Integer = url.LastIndexOf(":") - start
-            Dim FSH As String = url.Substring(start, last)
+    'Public Function LoadImageFromUrl(ByRef url As String) As Image
+    '    Dim img As Image = Nothing
+    '    Dim ImageFile As String = System.IO.Path.GetFileName(url)
+    '    Dim TempPath As String = Path.GetTempPath()
+    '    Dim Filename As String = ""
+    '    If url.StartsWith("fsh://") = False Then Filename = ImageFile.Substring(0, ImageFile.Length - 4)
+    '    If url.StartsWith("fsh://") Then
+    '        Dim start As Integer = url.LastIndexOf("/") + 1
+    '        Dim last As Integer = url.LastIndexOf(":") - start
+    '        Dim FSH As String = url.Substring(start, last)
 
-            img = GetFrame(CInt(ImageFile), FSH)
-        ElseIf ImageList.ContainsKey(Filename) Then
-            img = ImageList.Item(Filename)
-        ElseIf Not File.Exists(TempPath & "/" & ImageFile) Then
-            Try
-                Dim request As HttpWebRequest = DirectCast(HttpWebRequest.Create(url), HttpWebRequest)
-                Dim response As HttpWebResponse = DirectCast(request.GetResponse, HttpWebResponse)
-                img = Image.FromStream(response.GetResponseStream())
-                response.Close()
-                img.Save(TempPath & "/" & ImageFile)
-            Catch
-                Console.WriteLine("Error 404: Could not read " & ImageFile & " from Apollo.furcadia.com")
-            End Try
-            If ImageList.ContainsKey(Filename) = False Then ImageList.Add(Filename, img)
-        Else
-            img = Image.FromFile(TempPath & "/" & ImageFile)
-            If ImageList.ContainsKey(Filename) = False Then ImageList.Add(Filename, img)
-        End If
-        Return IMGresize(CType(img, Bitmap), log_)
-    End Function
+    '        img = GetFrame(CInt(ImageFile), FSH)
+    '    ElseIf ImageList.ContainsKey(Filename) Then
+    '        img = ImageList.Item(Filename)
+    '    ElseIf Not File.Exists(TempPath & "/" & ImageFile) Then
+    '        Try
+    '            Dim request As HttpWebRequest = DirectCast(HttpWebRequest.Create(url), HttpWebRequest)
+    '            Dim response As HttpWebResponse = DirectCast(request.GetResponse, HttpWebResponse)
+    '            img = Image.FromStream(response.GetResponseStream())
+    '            response.Close()
+    '            img.Save(TempPath & "/" & ImageFile)
+    '        Catch
+    '            Console.WriteLine("Error 404: Could not read " & ImageFile & " from Apollo.furcadia.com")
+    '        End Try
+    '        If ImageList.ContainsKey(Filename) = False Then ImageList.Add(Filename, img)
+    '    Else
+    '        img = Image.FromFile(TempPath & "/" & ImageFile)
+    '        If ImageList.ContainsKey(Filename) = False Then ImageList.Add(Filename, img)
+    '    End If
+    '    Return IMGresize(CType(img, Bitmap), log_)
+    'End Function
 
     Private Sub log__KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles log_.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -1290,7 +1305,7 @@ Public Class Main
 
 
 
-    Private Sub DreamList_DoubleClick(sender As Object, e As System.EventArgs) Handles DreamList.DoubleClick
+    Private Sub DreamList_DoubleClick(sender As Object, e As EventArgs) Handles DreamList.DoubleClick
         If Not bConnected() Then Exit Sub
         sndServer("l " + Web.HttpUtility.HtmlEncode(DreamList.SelectedItem.ToString))
     End Sub
@@ -1327,13 +1342,13 @@ Public Class Main
 
             ElseIf data.StartsWith("banish ") Then
                 BanishName = data.Substring(7)
-                MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
+                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
             ElseIf data.StartsWith("banish-off ") Or data.StartsWith("tempbanish ") Then
                 BanishName = data.Substring(11)
-                MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
+                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
             ElseIf data = "banish-list" Then
                 BanishName = ""
-                MainMSEngine.PageSetVariable("BANISHNAME", "")
+                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", Nothing)
             End If
 
             TextToServer(data)
@@ -1365,7 +1380,7 @@ Public Class Main
             SndToServer(result)
 
         Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me, arg)
+            Dim logError As New ErrorLogging(eX, Me, arg.ToString)
         End Try
     End Sub
 
@@ -1382,7 +1397,7 @@ Public Class Main
 
 
         Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me, data)
+            Dim logError As New ErrorLogging(eX, Me, data.ToString)
             Debug.Print("SndToServer: " & data)
             Debug.Print(eX.Message)
         End Try
@@ -1411,7 +1426,7 @@ Public Class Main
             TS_Status_Client.Image = My.Resources.images3
             ReLogCounter = 0
             '(0:1) When the bot logs into furcadia,
-            MainMSEngine.PageExecute(1)
+            MS_Engine.MainMSEngine.PageExecute(1)
             If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             If smProxy.IsClientConnected Then smProxy.SendClient(data + vbLf)
             Exit Sub
@@ -1434,11 +1449,12 @@ Public Class Main
             Dim m As System.Text.RegularExpressions.Match = repqq.Match(data)
             Dim r As Rep
             r.ID = m.Groups(1).Value
-            r.type = m.Groups(2).Value.ToInteger
+            Dim num As Integer = 0
+            Integer.TryParse(m.Groups(2).Value, r.type)
             Repq.Enqueue(r)
-            MainMSEngine.PageSetVariable("MESSAGE", m.Groups(3).Value, True)
+            MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", m.Groups(3).Value, True)
             Player.Message = m.Groups(3).Value
-            MainMSEngine.PageExecute(95, 96)
+            MS_Engine.MainMSEngine.PageExecute(95, 96)
             If smProxy.IsClientConnected Then smProxy.SendClient(data + vbLf)
             Exit Sub
         ElseIf data.StartsWith("0") Then
@@ -1467,7 +1483,7 @@ Public Class Main
             Dim m As System.Text.RegularExpressions.Match = t.Match(data)
             If BotName.ToFurcShortName = m.Groups(2).Value.ToFurcShortName Then
 
-                MainMSEngine.PageExecute()
+                MS_Engine.MainMSEngine.PageExecute()
             End If
             If smProxy.IsClientConnected Then smProxy.SendClient(data + vbLf)
             Exit Sub
@@ -1536,7 +1552,7 @@ Public Class Main
                 ' Add New Arrivals to Dream List
                 ' One or the other will trigger it
                 IsBot(Player)
-                MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
+                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
 
                 If Player.Flag = 4 Or Not DREAM.List.ContainsKey(Player.ID) Then
                     DREAM.List.Add(Player.ID, Player)
@@ -1549,9 +1565,9 @@ Public Class Main
                         Else
                             Player.Visible = False
                         End If
-                        MainMSEngine.PageExecute(28, 29, 24, 25)
+                        MS_Engine.MainMSEngine.PageExecute(28, 29, 24, 25)
                     Else
-                        MainMSEngine.PageExecute(24, 25)
+                        MS_Engine.MainMSEngine.PageExecute(24, 25)
                     End If
                 ElseIf Player.Flag = 2 Then
                     Dim Bot As FURRE = fIDtoFurre(CUInt(BotUID))
@@ -1561,7 +1577,7 @@ Public Class Main
                     Else
                         Player.Visible = False
                     End If
-                    MainMSEngine.PageExecute(28, 29)
+                    MS_Engine.MainMSEngine.PageExecute(28, 29)
 
                 ElseIf Player.Flag = 1 Then
 
@@ -1585,8 +1601,8 @@ Public Class Main
                 ' remove departure from List
                 If DREAM.List.ContainsKey(remID) = True Then
                     Player = DREAM.List.Item(remID)
-                    MainMSEngine.PageSetVariable(MS_Name, Player.Name)
-                    MainMSEngine.PageExecute(26, 27, 30, 31)
+                    MS_Engine.MainMSEngine.PageSetVariable(MS_Name, Player.Name)
+                    MS_Engine.MainMSEngine.PageExecute(26, 27, 30, 31)
                     DREAM.List.Remove(remID)
                     UpDateDreamList("")
                 End If
@@ -1611,8 +1627,8 @@ Public Class Main
                 End If
                 If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
                 IsBot(Player)
-                MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
-                MainMSEngine.PageExecute(28, 29, 30, 31, 601, 602)
+                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
+                MS_Engine.MainMSEngine.PageExecute(28, 29, 30, 31, 601, 602)
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
@@ -1637,8 +1653,8 @@ Public Class Main
                 If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
 
                 IsBot(Player)
-                MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
-                MainMSEngine.PageExecute(28, 29, 30, 31, 601, 602)
+                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
+                MS_Engine.MainMSEngine.PageExecute(28, 29, 30, 31, 601, 602)
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
@@ -1673,8 +1689,8 @@ Public Class Main
                 Player.Visible = False
                 If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
                 IsBot(Player)
-                MainMSEngine.PageSetVariable(MS_Name, Player.Name)
-                MainMSEngine.PageExecute(30, 31)
+                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, Player.Name)
+                MS_Engine.MainMSEngine.PageExecute(30, 31)
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
@@ -1702,8 +1718,8 @@ Public Class Main
 #If DEBUG Then
                 Debug.Print("Entering new Dream" & data)
 #End If
-                MainMSEngine.PageSetVariable("DREAMOWNER", "")
-                MainMSEngine.PageSetVariable("DREAMNAME", "")
+                MS_Engine.MainMSEngine.PageSetVariable("DREAMOWNER", "")
+                MS_Engine.MainMSEngine.PageSetVariable("DREAMNAME", "")
                 HasShare = False
                 NoEndurance = False
 
@@ -1746,17 +1762,17 @@ Public Class Main
                     If NameStr.ToFurcShortName = BotName.ToFurcShortName Then
                         HasShare = True
                     End If
-                    MainMSEngine.PageSetVariable(Main.VarPrefix & "DREAMOWNER", NameStr)
+                    MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "DREAMOWNER", NameStr)
                 ElseIf dname.EndsWith("/") AndAlso Not dname.Contains(":") Then
                     Dim NameStr As String = dname.Substring(0, dname.IndexOf("/"))
                     If NameStr.ToFurcShortName = BotName.ToFurcShortName Then
                         HasShare = True
                     End If
-                    MainMSEngine.PageSetVariable("DREAMOWNER", NameStr)
+                    MS_Engine.MainMSEngine.PageSetVariable("DREAMOWNER", NameStr)
                 End If
 
-                MainMSEngine.PageSetVariable("DREAMNAME", dname)
-                MainMSEngine.PageExecute(90, 91)
+                MS_Engine.MainMSEngine.PageSetVariable("DREAMNAME", dname)
+                MS_Engine.MainMSEngine.PageExecute(90, 91)
             End If
 #If DEBUG Then
             Console.WriteLine(data)
@@ -1770,10 +1786,10 @@ Public Class Main
 
                 'Throat Tired Syndrome, Halt all out going data for a few seconds
                 Dim Ts As TimeSpan = TimeSpan.FromSeconds(cMain.TT_TimeOut)
-                TroatTiredDelay = New Threading.Timer(AddressOf TroatTiredDelayTick, _
+                TroatTiredDelay = New Threading.Timer(AddressOf TroatTiredDelayTick,
                    Nothing, Ts, Ts)
                 '(0:92) When the bot detects the "Your throat is tired. Please wait a few seconds" message,
-                MainMSEngine.PageExecute(92)
+                MS_Engine.MainMSEngine.PageExecute(92)
                 'Exit Sub
                 If smProxy.IsClientConnected Then smProxy.SendClient(data + vbLf)
                 Exit Sub
@@ -1801,7 +1817,7 @@ Public Class Main
         'Strip the trigger Character
         ' page = engine.LoadFromString(cBot.MS_Script)
         data = data.Remove(0, 1)
-        Dim psCheck As Boolean = false
+        Dim psCheck As Boolean = False
         Dim SpecTag As String = ""
         Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
         Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
@@ -1851,11 +1867,11 @@ Public Class Main
                     '(0:53) When the bot sucessfilly banishes the furre named {...},
                     Dim t As New Regex("(.*?) has been banished from your dreams.")
                     BanishName = t.Match(Text).Groups(1).ToString
-                    MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
+                    MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
 
                     BanishString.Add(BanishName)
-                    MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
-                    MainMSEngine.PageExecute(52, 53)
+                    MS_Engine.MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
+                    MS_Engine.MainMSEngine.PageExecute(52, 53)
 
                     ' MainMSEngine.PageExecute(53)
                 ElseIf Text = "You have canceled all banishments from your dreams." Then
@@ -1864,9 +1880,9 @@ Public Class Main
 
                     '(0:60) When the bot successfully clears the banish list
                     BanishString.Clear()
-                    MainMSEngine.PageSetVariable("BANISHLIST", "")
-                    MainMSEngine.PageSetVariable("BANISHNAME", "")
-                    MainMSEngine.PageExecute(60)
+                    MS_Engine.MainMSEngine.PageSetVariable("BANISHLIST", Nothing)
+                    MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", Nothing)
+                    MS_Engine.MainMSEngine.PageExecute(60)
 
                 ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
                     'tempbanish <name> (online)
@@ -1876,11 +1892,11 @@ Public Class Main
                     '(0:62) When the bot sucessfully temp banishes the furre named {...}
                     Dim t As New Regex("(.*?) has been temporarily banished from your dreams.")
                     BanishName = t.Match(Text).Groups(1).Value
-                    MainMSEngine.PageSetVariable(Main.VarPrefix & "BANISHNAME", BanishName)
+                    MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "BANISHNAME", BanishName)
                     '  MainMSEngine.PageExecute(61)
                     BanishString.Add(BanishName)
-                    MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", String.Join(" ", BanishString.ToArray))
-                    MainMSEngine.PageExecute(61, 62)
+                    MS_Engine.MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", String.Join(" ", BanishString.ToArray))
+                    MS_Engine.MainMSEngine.PageExecute(61, 62)
 
                 ElseIf Text = "Control of this dream is now being shared with you." Then
                     HasShare = True
@@ -1898,12 +1914,12 @@ Public Class Main
                         NoEndurance = True
                     End If
 
-                ElseIf Channel = "@cookie"
-                	'(0:96) When the Bot sees "Your cookies are ready."
-					Dim CookiesReady As Regex = New Regex(String.Format( "{0}", "Your cookies are ready.  http://furcadia.com/cookies/ for more info!"))
-					If CookiesReady.Match(data).Success Then
-                		MainMSEngine.PageExecute(96)
-            		End If
+                ElseIf Channel = "@cookie" Then
+                    '(0:96) When the Bot sees "Your cookies are ready."
+                    Dim CookiesReady As Regex = New Regex(String.Format("{0}", "Your cookies are ready.  http://furcadia.com/cookies/ for more info!"))
+                    If CookiesReady.Match(data).Success Then
+                        MS_Engine.MainMSEngine.PageExecute(96)
+                    End If
                 End If
                 sndDisplay(Text)
                 If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
@@ -1928,7 +1944,7 @@ Public Class Main
 
             Player = NametoFurre(DiceMatch.Groups(3).Value, True)
             Player.Message = DiceMatch.Groups(7).Value
-            MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", DiceMatch.Groups(7).Value)
+            MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", DiceMatch.Groups(7).Value)
             Double.TryParse(DiceMatch.Groups(4).Value, DiceSides)
             Double.TryParse(DiceMatch.Groups(3).Value, DiceCount)
             DiceCompnentMatch = DiceMatch.Groups(6).Value
@@ -1937,9 +1953,9 @@ Public Class Main
             Double.TryParse(DiceMatch.Groups(8).Value, DiceResult)
 
             If IsBot(Player) Then
-                MainMSEngine.PageExecute(130, 131, 132, 136)
+                MS_Engine.MainMSEngine.PageExecute(130, 131, 132, 136)
             Else
-                MainMSEngine.PageExecute(133, 134, 135, 136)
+                MS_Engine.MainMSEngine.PageExecute(133, 134, 135, 136)
             End If
 
             If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
@@ -1949,9 +1965,9 @@ Public Class Main
                 '(<font color='dragonspeak'><img src='fsh://system.fsh:91' alt='@emit' /><channel name='@emit' /> Furcadian Academy</font>
                 sndDisplay(Text, fColorEnum.Emit)
 
-                MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text.Substring(5))
+                MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text.Substring(5))
                 ' Execute (0:21) When someone emits something
-                MainMSEngine.PageExecute(21, 22, 23)
+                MS_Engine.MainMSEngine.PageExecute(21, 22, 23)
                 ' Execute (0:22) When someone emits {...}
                 '' Execute (0:23) When someone emits something with {...} in it
 
@@ -2009,7 +2025,7 @@ Public Class Main
 
                 sndDisplay("You " & u & ", """ & Text & """", fColorEnum.Say)
                 Player.Message = Text
-                MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
+                MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
                 ' Execute (0:5) When some one says something
                 'MainMSEngine.PageExecute(5, 6, 7, 18, 19, 20)
                 '' Execute (0:6) When some one says {...}
@@ -2039,11 +2055,11 @@ Public Class Main
                     End If
                     Channel = "say"
                     sndDisplay(User & " says, """ & Text & """", fColorEnum.Say)
-                    MainMSEngine.PageSetVariable(MS_Name, User)
-                    MainMSEngine.PageSetVariable("MESSAGE", Text)
+                    MS_Engine.MainMSEngine.PageSetVariable(MS_Name, User)
+                    MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", Text)
                     Player.Message = Text
                     ' Execute (0:5) When some one says something
-                    MainMSEngine.PageExecute(5, 6, 7, 18, 19, 20)
+                    MS_Engine.MainMSEngine.PageExecute(5, 6, 7, 18, 19, 20)
                     ' Execute (0:6) When some one says {...}
                     ' Execute (0:7) When some one says something with {...} in it
                     ' Execute (0:18) When someone says or emotes something
@@ -2092,8 +2108,8 @@ Public Class Main
                 End If
                 Player.Desc = Desc.Substring(6)
                 If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
-                MainMSEngine.PageSetVariable(MS_Name, DescName)
-                MainMSEngine.PageExecute(600)
+                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, DescName)
+                MS_Engine.MainMSEngine.PageExecute(600)
                 'sndDisplay)
                 If Player.Tag = "" Then
                     sndDisplay("You See '" & Player.Name & "'\par" & Desc)
@@ -2119,10 +2135,10 @@ Public Class Main
                     sndDisplay(User & " shouts, """ & Text & """", fColorEnum.Shout)
                 End If
                 If Not IsBot(Player) Then
-                    MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
+                    MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
                     Player.Message = Text
                     ' Execute (0:8) When some one shouts something
-                    MainMSEngine.PageExecute(8, 9, 10)
+                    MS_Engine.MainMSEngine.PageExecute(8, 9, 10)
                     ' Execute (0:9) When some one shouts {...}
                     ' Execute (0:10) When some one shouts something with {...} in it
 
@@ -2142,7 +2158,7 @@ Public Class Main
                     Try
                         sndDisplay(User & " requests to join you.")
                         'If Not IsBot(Player) Then
-                        MainMSEngine.PageExecute(34, 35)
+                        MS_Engine.MainMSEngine.PageExecute(34, 35)
                         'End If
                     Catch eX As Exception
                         Dim logError As New ErrorLogging(eX, Me)
@@ -2152,7 +2168,7 @@ Public Class Main
                     Try
                         sndDisplay(User & " requests to summon you.")
                         'If Not IsBot(Player) Then
-                        MainMSEngine.PageExecute(32, 33)
+                        MS_Engine.MainMSEngine.PageExecute(32, 33)
                         'End If
                     Catch eX As Exception
                         Dim logError As New ErrorLogging(eX, Me)
@@ -2162,7 +2178,7 @@ Public Class Main
                     Try
                         sndDisplay(User & " requests to lead.")
                         'If Not IsBot(Player) Then
-                        MainMSEngine.PageExecute(36, 37)
+                        MS_Engine.MainMSEngine.PageExecute(36, 37)
                         'End If
                     Catch eX As Exception
                         Dim logError As New ErrorLogging(eX, Me)
@@ -2172,7 +2188,7 @@ Public Class Main
                     Try
                         sndDisplay(User & " requests the bot to follow.")
                         'If Not IsBot(Player) Then
-                        MainMSEngine.PageExecute(38, 39)
+                        MS_Engine.MainMSEngine.PageExecute(38, 39)
                         'End If
                     Catch eX As Exception
                         Dim logError As New ErrorLogging(eX, Me)
@@ -2181,7 +2197,7 @@ Public Class Main
                     Try
                         sndDisplay(User & " requests the bot to cuddle.")
                         'If Not IsBot(Player) Then
-                        MainMSEngine.PageExecute(40, 41)
+                        MS_Engine.MainMSEngine.PageExecute(40, 41)
                         'End If
                     Catch eX As Exception
                         Dim logError As New ErrorLogging(eX, Me)
@@ -2216,9 +2232,9 @@ Public Class Main
 
                     sndDisplay(User & " whispers""" & WhisperFrom & """ to you.", fColorEnum.Whisper)
                     If Not IsBot(Player) Then
-                        MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Player.Message)
+                        MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Player.Message)
                         ' Execute (0:15) When some one whispers something
-                        MainMSEngine.PageExecute(15, 16, 17)
+                        MS_Engine.MainMSEngine.PageExecute(15, 16, 17)
                         ' Execute (0:16) When some one whispers {...}
                         ' Execute (0:17) When some one whispers something with {...} in it
                     End If
@@ -2238,7 +2254,7 @@ Public Class Main
                 ErrorMsg = Text
                 ErrorNum = 1
             End SyncLock
-            MainMSEngine.PageExecute(801)
+            MS_Engine.MainMSEngine.PageExecute(801)
             sndDisplay("::WARNING:: " & Text, fColorEnum.DefaultColor)
             If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
             Exit Sub
@@ -2247,9 +2263,9 @@ Public Class Main
             Text = Text.Substring(6)
             If User <> "" Then Text = " " & User & Text.Replace(TextStr, "")
             sndDisplay(Text, fColorEnum.DefaultColor)
-            MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
+            MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
             Player.Message = Text
-            MainMSEngine.PageExecute(46, 47, 48)
+            MS_Engine.MainMSEngine.PageExecute(46, 47, 48)
             If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
             Exit Sub
         ElseIf Color = "emote" Then
@@ -2265,7 +2281,7 @@ Public Class Main
                 Text = usr.Replace(Text, "")
 
                 Player = NametoFurre(n.Groups(3).Value, True)
-                MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
+                MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
                 Player.Message = Text
                 If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
                 sndDisplay(User & " " & Text, fColorEnum.Emote)
@@ -2273,7 +2289,7 @@ Public Class Main
                 If IsBot(Player) = False Then
 
                     ' Execute (0:11) When someone emotes something
-                    MainMSEngine.PageExecute(11, 12, 13, 18, 19, 20)
+                    MS_Engine.MainMSEngine.PageExecute(11, 12, 13, 18, 19, 20)
                     ' Execute (0:12) When someone emotes {...}
                     ' Execute (0:13) When someone emotes something with {...} in it
                     ' Execute (0:18) When someone says or emotes something
@@ -2308,8 +2324,8 @@ Public Class Main
                 For Each t As String In tmp
                     BanishString.Add(t)
                 Next
-                MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", String.Join(" ", BanishString.ToArray))
-                MainMSEngine.PageExecute(54)
+                MS_Engine.MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", String.Join(" ", BanishString.ToArray))
+                MS_Engine.MainMSEngine.PageExecute(54)
 
             ElseIf Text.StartsWith("The banishment of player ") Then
                 'banish-off <name> (on list)
@@ -2319,15 +2335,15 @@ Public Class Main
                 '(0:58) When the bot successfully removes the furre named {...} from the banish list,
                 Dim t As New Regex("The banishment of player (.*?) has ended.")
                 NameStr = t.Match(data).Groups(1).Value
-                MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
-                MainMSEngine.PageExecute(56, 56)
+                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
+                MS_Engine.MainMSEngine.PageExecute(56, 56)
                 For I As Integer = 0 To BanishString.Count - 1
                     If BanishString.Item(I).ToString.ToFurcShortName = NameStr.ToFurcShortName Then
                         BanishString.RemoveAt(I)
                         Exit For
                     End If
                 Next
-                MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
+                MS_Engine.MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
             End If
 
             sndDisplay("[notify> " & Text, fColorEnum.DefaultColor)
@@ -2338,7 +2354,7 @@ Public Class Main
                 ErrorMsg = Text
                 ErrorNum = 2
             End SyncLock
-            MainMSEngine.PageExecute(800)
+            MS_Engine.MainMSEngine.PageExecute(800)
             Dim NameStr As String = ""
             If Text.Contains("There are no furres around right now with a name starting with ") Then
                 'Banish <name> (Not online)
@@ -2348,9 +2364,9 @@ Public Class Main
                 '(0:51) When the bot fails to banish the furre named {...},
                 Dim t As New Regex("There are no furres around right now with a name starting with (.*?) .")
                 NameStr = t.Match(data).Groups(1).Value
-                MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
-                MainMSEngine.PageExecute(50, 51)
-                MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
+                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
+                MS_Engine.MainMSEngine.PageExecute(50, 51)
+                MS_Engine.MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
             ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
                 'banish-off <name> (not on list)
                 'Error:>> Sorry, this player has not been banished from your dreams.
@@ -2358,19 +2374,19 @@ Public Class Main
                 '(0:55) When the Bot fails to remove a furre from the banish list,
                 '(0:56) When the bot fails to remove the furre named {...} from the banish list,
                 NameStr = BanishName
-                MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
-                MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
-                MainMSEngine.PageExecute(50, 51)
+                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
+                MS_Engine.MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
+                MS_Engine.MainMSEngine.PageExecute(50, 51)
             ElseIf Text = "You have not banished anyone." Then
                 'banish-off-all (empty List)
                 'Error:>> You have not banished anyone. 
 
                 '(0:59) When the bot fails to see the banish list,
                 BanishString.Clear()
-                MainMSEngine.PageExecute(59)
-                MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", "")
-            ElseIf Text = "You do not have any cookies to give away right now!"
-                MainMSEngine.PageExecute(95)
+                MS_Engine.MainMSEngine.PageExecute(59)
+                MS_Engine.MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", Nothing)
+            ElseIf Text = "You do not have any cookies to give away right now!" Then
+                MS_Engine.MainMSEngine.PageExecute(95)
             End If
 
             sndDisplay("Error:>> " & Text)
@@ -2388,31 +2404,31 @@ Public Class Main
             ' <font color='success'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Your cookies are ready.  http://furcadia.com/cookies/ for more info!</font>
             '<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.
 
-			Dim CookieToMe As Regex = New Regex(String.Format("{0}", CookieToMeREGEX))
+            Dim CookieToMe As Regex = New Regex(String.Format("{0}", CookieToMeREGEX))
             If CookieToMe.Match(data).Success Then
-                MainMSEngine.PageSetVariable(MS_Name, CookieToMe.Match(data).Groups(2).Value)
-                MainMSEngine.PageExecute(42, 43)
+                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, CookieToMe.Match(data).Groups(2).Value)
+                MS_Engine.MainMSEngine.PageExecute(42, 43)
             End If
             Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
             If CookieToAnyone.Match(data).Success Then
                 'MainMSEngine.PageSetVariable(VarPrefix & MS_Name, CookieToAnyone.Match(data).Groups(3).Value)
                 If callbk.IsBot(NametoFurre(CookieToAnyone.Match(data).Groups(3).Value, True)) Then
-                    MainMSEngine.PageExecute(42, 43)
+                    MS_Engine.MainMSEngine.PageExecute(42, 43)
                 Else
-                    MainMSEngine.PageExecute(44)
+                    MS_Engine.MainMSEngine.PageExecute(44)
                 End If
 
 
             End If
             Dim CookieFail As Regex = New Regex(String.Format("You do not have any (.*?) left!"))
             If CookieFail.Match(data).Success Then
-                MainMSEngine.PageExecute(45)
+                MS_Engine.MainMSEngine.PageExecute(45)
             End If
             Dim EatCookie As Regex = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
             If EatCookie.Match(data).Success Then
-                MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", "You eat a cookie." + EatCookie.Replace(data, ""))
+                MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", "You eat a cookie." + EatCookie.Replace(data, ""))
                 Player.Message = "You eat a cookie." + EatCookie.Replace(data, "")
-                MainMSEngine.PageExecute(49)
+                MS_Engine.MainMSEngine.PageExecute(49)
 
             End If
             sndDisplay(Text, fColorEnum.DefaultColor)
@@ -2421,7 +2437,7 @@ Public Class Main
         ElseIf data.StartsWith("PS") Then
             Dim PS_Stat As Int16 = 0
             '(PS Ok: get: result: bank=200, clearance=10, member=1, message='test', stafflv=2, sys_lastused_date=1340046340
-            MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", data)
+            MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", data)
             Player.Message = data
             Dim psResult As Regex = New Regex(String.Format("^PS (\d+)? ?Ok: get: result: (.*)$"))          'Regex: ^\(PS Ok: get: result: (.*)$
             Dim psMatch As System.Text.RegularExpressions.Match = psResult.Match(String.Format("{0}", data))
@@ -2515,8 +2531,9 @@ Public Class Main
                             'Match 2: Empty if number, ' if string
                             'Match(3) : Value()
                         Next
-                        Dim test As Integer = 1000 * psMatch.Groups(3).Value.ToInteger
-                        If pslen > 1000 * psMatch.Groups(3).Value.ToInteger And CurrentPS_Stage = PS_BackupStage.GetList Then
+                        Dim num As Integer = 0
+                        Integer.TryParse(psMatch.Groups(3).Value, num)
+                        If pslen > 1000 * num And CurrentPS_Stage = PS_BackupStage.GetList Then
                             CurrentPS_Stage = PS_BackupStage.GetAlphaNumericList
                             Dim m As System.Text.RegularExpressions.Match = mc.Item(mc.Count - 1)
                             ServerStack.Enqueue("ps get character." + m.Groups(1).Value.Substring(0, 1) + "*")
@@ -2576,13 +2593,13 @@ Public Class Main
                 If psMatch2.Success Or psmatch3.Success Or psmatch4.Success Then
                     PS_Abort()
                     If psmatch4.Success Then
-                        MainEngine.MSpage.Execute(503)
+                        MainMSEngine.MSpage.Execute(503)
                     End If
                 Else
                     Int16.TryParse(psMatch.Groups(1).Value.ToString, PS_Stat)
 
                     If CurrentPS_Stage = PS_BackupStage.off Then
-                        MainMSEngine.PageExecute(80, 81, 82)
+                        MS_Engine.MainMSEngine.PageExecute(80, 81, 82)
 
                     ElseIf CurrentPS_Stage = PS_BackupStage.GetList Then
                         If PS_Stat <> CharacterList.Count Then
@@ -2611,7 +2628,7 @@ Public Class Main
                             psSendCounter = 1
                             '(0:501) When the bot completes backing up the characters Phoenix Speak,
                             SendClientMessage("SYSTEM:", "Completed Backing up Dream Characters set.")
-                            MainEngine.MSpage.Execute(501)
+                            MainMSEngine.MSpage.Execute(501)
                         End If
 
                     ElseIf CurrentPS_Stage = PS_BackupStage.RestoreAllCharacterPS And PS_Stat <= PSS_Stack.Count - 1 And psSendCounter = psReceiveCounter + 1 Then
@@ -2627,7 +2644,7 @@ Public Class Main
                             PSRestoreRunning = False
                             SendClientMessage("SYSTEM:", "Completed Character restoration to the dream")
                             '(0:501) When the bot completes backing up the characters Phoenix Speak,
-                            MainEngine.MSpage.Execute(503)
+                            MainMSEngine.MSpage.Execute(503)
                             CurrentPS_Stage = PS_BackupStage.off
                         End If
                     ElseIf CurrentPS_Stage = PS_BackupStage.GetSingle And PS_Stat <= CharacterList.Count And psSendCounter = psReceiveCounter + 1 Then
@@ -2655,9 +2672,9 @@ Public Class Main
             Exit Sub
 
         ElseIf data.StartsWith("(You enter the dream of") Then
-            MainMSEngine.PageSetVariable("DREAMNAME", "")
-            MainMSEngine.PageSetVariable("DREAMOWNER", data.Substring(24, data.Length - 2 - 24))
-            MainMSEngine.PageExecute(90, 91)
+            MS_Engine.MainMSEngine.PageSetVariable("DREAMNAME", "")
+            MS_Engine.MainMSEngine.PageSetVariable("DREAMOWNER", data.Substring(24, data.Length - 2 - 24))
+            MS_Engine.MainMSEngine.PageExecute(90, 91)
             sndDisplay(data)
             If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
             Exit Sub
@@ -2702,13 +2719,13 @@ Public Class Main
     End Function
     Private Function ProcessPSData(ByVal PS_Stat As Int16, ByVal ps_KV As Dictionary(Of String, String), data As String) As Boolean
         If CurrentPS_Stage = PS_BackupStage.off Then
-            MainMSEngine.PageExecute(80, 81, 82)
+            MS_Engine.MainMSEngine.PageExecute(80, 81, 82)
             Return False
         ElseIf CurrentPS_Stage = PS_BackupStage.GetList Or CurrentPS_Stage = PS_BackupStage.GetAlphaNumericList Then
             CharacterList.Clear()
 
             '(0:500) When the bot starts backing up the character Phoenix Speak,
-            MainEngine.MSpage.Execute(500)
+            MainMSEngine.MSpage.Execute(500)
             PSBackupRunning = True
             SendClientMessage("SYSTEM:", "Backing up Dream Characters Set.")
 
@@ -2754,7 +2771,7 @@ Public Class Main
                 psSendCounter = 1
                 '(0:501) When the bot completes backing up the characters Phoenix Speak,
                 SendClientMessage("SYSTEM:", "Completed Backing up Dream Characters set.")
-                MainEngine.MSpage.Execute(501)
+                MainMSEngine.MSpage.Execute(501)
             End If
             ' End If
         ElseIf CurrentPS_Stage = PS_BackupStage.GetSingle And PS_Stat <= CharacterList.Count And psSendCounter = psReceiveCounter + 1 Then
@@ -2790,8 +2807,8 @@ Public Class Main
                 ServerStack.Enqueue(s.Cmd)
                 Player = NametoFurre(s.Name, True)
                 Player.Message = ""
-                MainMSEngine.PageSetVariable("MESSAGE", "")
-                MainMSEngine.PageExecute(506, 507)
+                MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", "")
+                MS_Engine.MainMSEngine.PageExecute(506, 507)
 
                 psSendCounter = CShort(PS_Stat + 1)
                 psReceiveCounter = PS_Stat
@@ -2800,7 +2817,7 @@ Public Class Main
                 PSRestoreRunning = False
                 SendClientMessage("SYSTEM:", "Completed Character restoration to the dream")
                 '(0:501) When the bot completes backing up the characters Phoenix Speak,
-                MainEngine.MSpage.Execute(503)
+                MainMSEngine.MSpage.Execute(503)
                 CurrentPS_Stage = PS_BackupStage.off
             End If
 
@@ -2818,7 +2835,7 @@ Public Class Main
     ''' <param name="data">A dictionary containing the column names and data for the insert.</param>
     ''' <returns>A boolean true or false to signify success or failure.</returns>
     Public Function InsertMultiRow(tableName As [String], ID As Integer, data As Dictionary(Of [String], [String])) As Boolean
-        Dim values As New ArrayList
+        Dim values As New List(Of String)
         For Each val As KeyValuePair(Of [String], [String]) In data
             values.Add([String].Format(" ( {0}, '{1}', '{2}' )", ID, val.Key, val.Value))
         Next
@@ -2857,7 +2874,7 @@ Public Class Main
                 Exit For
             End If
         Next
-        If UbdateMSVariableName Then MainMSEngine.PageSetVariable(MS_Name, sname)
+        If UbdateMSVariableName Then MS_Engine.MainMSEngine.PageSetVariable(MS_Name, sname)
 
         Return p
     End Function
@@ -2918,7 +2935,7 @@ Public Class Main
                     BotName = BotName.Replace("|", " ")
                     MainText(BotName)
                     BotName = BotName.Replace("[^a-zA-Z0-9\0x0020_.| ]+", "").ToLower()
-                    MainMSEngine.PageSetVariable("BOTNAME", BotName)
+                    MS_Engine.MainMSEngine.PageSetVariable("BOTNAME", BotName)
                 ElseIf data = "vascodagama" And loggingIn = 2 Then
                     sndServer("`uid")
                     Select Case cBot.GoMapIDX
@@ -2966,7 +2983,7 @@ Public Class Main
         ' If loggingIn = 0 Then Exit Sub
 
         'TS_Status_Client.Image = My.Resources.images2
-        MainMSEngine.PageExecute(3)
+        MS_Engine.MainMSEngine.PageExecute(3)
 
         'loggingIn = 0
         If cBot.StandAlone = False Then
@@ -3000,8 +3017,8 @@ Public Class Main
             If (Monitor.TryEnter(temp)) Then
                 Player.Clear()
                 Channel = ""
-                MainMSEngine.PageSetVariable(MS_Name, "")
-                MainMSEngine.PageSetVariable("MESSAGE", "")
+                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, "")
+                MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", "")
                 serverData = data
                 Dim test As Boolean = MessagePump(serverData)
                 ParseServerData(serverData, test)
@@ -3016,11 +3033,11 @@ Public Class Main
         Dim intIndex As Integer
         Dim Handled As Boolean = False
         If Not Plugins Is Nothing Then
-            For intIndex = 0 To Plugins.Length - 1
-                objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
-                If cMain.PluginList.Item(objPlugin.Name.Replace(" ", "")) Then
+            For intIndex = 0 To Plugins.Count - 1
+                objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.msPlugin)
+                If PluginList.Item(objPlugin.Name.Replace(" ", "")) Then
                     objPlugin.Initialize(objHost)
-                    objPlugin.Page = MainEngine.MSpage
+                    objPlugin.Page = MainMSEngine.MSpage
                     If objPlugin.MessagePump(Server_Instruction) Then Handled = True
                 End If
             Next
@@ -3041,7 +3058,7 @@ Public Class Main
     End Sub
 
     Public Sub OnConnected() Handles smProxy.Connected
-If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
+        If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
 
     End Sub
 
@@ -3069,11 +3086,11 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
     Private Sub FormClose()
         _FormClose = True
         My.Settings.MainFormLocation = Me.Location
-        If Not IsNothing(cBot) Then My.Settings.LastBotFile = cBot.BotFile
+        If Not IsNothing(cBot) Then My.Settings.LastBotFile = cBot.IniFile
         'Timers.DestroyTimers()
         'Save the user settings so next time the
         'window will be the same size and location
-        SettingsIni.Save(SetFile)
+
         My.Settings.Save()
         NotifyIcon1.Visible = False
         If Not IsNothing(Me.TroatTiredDelay) Then Me.TroatTiredDelay.Dispose()
@@ -3097,7 +3114,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
                     Me.Visible = False
                     e.Cancel = True
                 Case CheckState.Indeterminate
-                    If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing, _
+                    If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing,
                      MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
                         cMain.SysTray = CheckState.Checked
                         cMain.SaveMainSettings()
@@ -3139,7 +3156,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
                 Try
 
                     FurcTimeLbl.Text = "Furcadia Standard Time: " & FTime.ToLongTimeString
-                    MainMSEngine.PageExecute(299)
+                    MS_Engine.MainMSEngine.PageExecute(299)
                 Catch ex As Exception
                     Debug.Print(ex.Message)
                 End Try
@@ -3172,7 +3189,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
 
     End Sub
 
-    Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Main_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         If IsNothing(NotifyIcon1) Then
             NotifyIcon1 = New NotifyIcon
             NotifyIcon1.ContextMenuStrip = ContextTryIcon
@@ -3184,16 +3201,19 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         If Not NotifyIcon1.Visible Then NotifyIcon1.Visible = True
         'catch the Console messages
         _FormClose = False
-        FurcPath = New Paths(cMain.FurcPath)
+
+        cMain = New cMain
+        MonkeyCore.Paths.FurcadiaProgramFolder = cMain.FurcPath
+
         writer = New TextBoxWriter(log_)
         Console.SetOut(writer)
-        MainMSEngine = New MainEngine
+        MS_Engine.MainMSEngine = New MainMSEngine
         Me.MSalarm = New Threading.Timer(AddressOf Tick, True, 1000, 1000)
         FurreList.Clear()
         Plugins = PluginServices.FindPlugins(Path.GetDirectoryName(Application.ExecutablePath) + "\Plugins\", "SilverMonkey.Interfaces.msPlugin")
 
         ' Try to get Furcadia's path from the registry
-        cMain = New cMain
+
         MS_KeysIni.Load(Path.GetDirectoryName(Application.ExecutablePath) + "\Keys-MS.ini")
         InitializeTextControls()
 
@@ -3257,19 +3277,19 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
 
 #Region "Action Controls"
 
-    Private Sub ActionTmr_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ActionTmr.Tick
+    Private Sub ActionTmr_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles ActionTmr.Tick
         If Not bConnected() Then Exit Sub
         sndServer(ActionCMD)
     End Sub
-    Private Sub _ne_Click(sender As System.Object, e As System.EventArgs) Handles _ne.Click
+    Private Sub _ne_Click(sender As Object, e As EventArgs) Handles _ne.Click
         sndServer("`m 9")
     End Sub
 
-    Private Sub _nw_Click(sender As System.Object, e As System.EventArgs) Handles _nw.Click
+    Private Sub _nw_Click(sender As Object, e As EventArgs) Handles _nw.Click
         sndServer("`m 7")
     End Sub
 
-    Private Sub BtnSit_stand_Lie_Click(sender As System.Object, e As System.EventArgs) Handles BtnSit_stand_Lie.Click
+    Private Sub BtnSit_stand_Lie_Click(sender As Object, e As EventArgs) Handles BtnSit_stand_Lie.Click
         If Not bConnected() Then Exit Sub
         If BtnSit_stand_Lie.Text = "Stand" Then
             BtnSit_stand_Lie.Text = "Lay"
@@ -3281,23 +3301,23 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         sndServer("`lie")
     End Sub
 
-    Private Sub BTN_TurnR_Click(sender As System.Object, e As System.EventArgs) Handles BTN_TurnR.Click
+    Private Sub BTN_TurnR_Click(sender As Object, e As EventArgs) Handles BTN_TurnR.Click
         sndServer("`>")
     End Sub
 
-    Private Sub BTN_TurnL_Click(sender As System.Object, e As System.EventArgs) Handles BTN_TurnL.Click
+    Private Sub BTN_TurnL_Click(sender As Object, e As EventArgs) Handles BTN_TurnL.Click
         sndServer("`<")
     End Sub
 
-    Private Sub use__Click(sender As Object, e As System.EventArgs) Handles use_.Click
+    Private Sub use__Click(sender As Object, e As EventArgs) Handles use_.Click
         sndServer("`use")
     End Sub
 
-    Private Sub get__Click(sender As Object, e As System.EventArgs) Handles get_.Click
+    Private Sub get__Click(sender As Object, e As EventArgs) Handles get_.Click
         sndServer("`get")
     End Sub
 
-    Private Sub sw__Click(sender As Object, e As System.EventArgs) Handles sw_.Click
+    Private Sub sw__Click(sender As Object, e As EventArgs) Handles sw_.Click
         sndServer("`m 1")
     End Sub
 
@@ -3331,7 +3351,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         ActionCMD = ""
     End Sub
 
-    Private Sub se__Click(sender As Object, e As System.EventArgs) Handles se_.Click
+    Private Sub se__Click(sender As Object, e As EventArgs) Handles se_.Click
         sndServer("`m 3")
     End Sub
 
@@ -3346,23 +3366,24 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
     End Sub
 #End Region
 
-    Private Sub ConfigToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConfigToolStripMenuItem.Click
-        Config.Show()
-        Config.Activate()
+    Private Sub ConfigToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ConfigToolStripMenuItem.Click
+        Dim test As New Config
+        test.Show()
+        test.Activate()
     End Sub
 
-    Private Sub DebugToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DebugToolStripMenuItem.Click
+    Private Sub DebugToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles DebugToolStripMenuItem.Click
         Variables.Show()
         Variables.Activate()
     End Sub
 
-    Private Sub BTN_Go_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTN_Go.Click, ConnectTrayIconMenuItem.Click, DisconnectTrayIconMenuItem.Click
+    Private Sub BTN_Go_Click(ByVal sender As Object, ByVal e As EventArgs) Handles BTN_Go.Click, ConnectTrayIconMenuItem.Click, DisconnectTrayIconMenuItem.Click
         If IsNothing(cBot) Then Exit Sub
         If String.IsNullOrEmpty(cBot.IniFile) Then Exit Sub
         If cBot.IniFile = "-pick" Then Exit Sub
 
         Dim p As String = Path.GetDirectoryName(cBot.IniFile)
-        If String.IsNullOrEmpty(p) And Not File.Exists(FurcPath.GetFurcadiaCharactersPath() + Path.DirectorySeparatorChar + Path.GetFileName(cBot.IniFile)) Then
+        If String.IsNullOrEmpty(p) And Not File.Exists(cBot.IniFile) Then
             MessageBox.Show(cBot.IniFile + " Not found, Aborting connection!", "Important Message")
             Exit Sub
         End If
@@ -3372,29 +3393,29 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             If cBot.log Then
                 LogStream = New LogStream(setLogName(cBot), cBot.LogPath)
             End If
-            If Not MainMSEngine.ScriptStart() Then Exit Sub
-            My.Settings.LastBotFile = CheckMyDocFile(cBot.BotFile)
+            If Not MS_Engine.MainMSEngine.ScriptStart() Then Exit Sub
+            My.Settings.LastBotFile = Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, cBot.IniFile)
             My.Settings.Save()
             ReLogCounter = 0
             ClientClose = False
             Dim Ts As TimeSpan = TimeSpan.FromSeconds(cMain.ConnectTimeOut)
-            Me.ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick, _
+            Me.ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
              Nothing, Ts, Ts)
             Dim Tss As TimeSpan = TimeSpan.FromSeconds(cMain.Ping)
-            If cMain.Ping > 0 Then Me.PingTimer = New Threading.Timer(AddressOf PingTimerTick, _
+            If cMain.Ping > 0 Then Me.PingTimer = New Threading.Timer(AddressOf PingTimerTick,
              Nothing, Tss, Tss)
             If Not IsNothing(MS_Export) Then MS_Export.Dispose()
             Try
-            	ConnectBot()
+                ConnectBot()
             Catch Ex As NetProxyException
-            	Me.ReconnectTimeOutTimer.Dispose()
-            	If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
-               	If Not IsNothing(FurcMutex) Then '
-                	FurcMutex.Close()
-                	FurcMutex.Dispose()
-               	End If
-               	DisconnectBot()
-               	sndDisplay("Connection Aborting: " + eX.Message)
+                Me.ReconnectTimeOutTimer.Dispose()
+                If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+                If Not IsNothing(FurcMutex) Then '
+                    FurcMutex.Close()
+                    FurcMutex.Dispose()
+                End If
+                DisconnectBot()
+                sndDisplay("Connection Aborting: " + Ex.Message)
             End Try
 
         Else
@@ -3456,8 +3477,8 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
                         'NewLogFile = True
                     End With
                 Catch ex As Exception
-                	'Debug.WriteLine(ex.Message)
-                	Throw ex
+                    'Debug.WriteLine(ex.Message)
+                    Throw ex
                 End Try
                 loggingIn = 1
                 TS_Status_Server.Image = My.Resources.images5
@@ -3477,7 +3498,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             Me.Invoke(d)
         Else
             If cMain.AutoReconnect And Not ClientClose Then
-                Me.ReconnectTimer = New Threading.Timer(AddressOf ReconnectTick, _
+                Me.ReconnectTimer = New Threading.Timer(AddressOf ReconnectTick,
                   Nothing, 45000, 45000)
                 SetBalloonText("Connection Lost. Reconnecting in 45 Seconds.")
                 Console.WriteLine("Connection Lost. Reconnecting in 45 Seconds.")
@@ -3514,10 +3535,10 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             DreamCountTxtBx.Text = ""
 
             ' (0:2) When the bot logs off
-            MainMSEngine.PageExecute(2)
+            MS_Engine.MainMSEngine.PageExecute(2)
             loggingIn = 0
             Monkeyspeak.Libraries.Timers.DestroyTimers()
-            MainMSEngine.MS_Engine_Running = False
+            MS_Engine.MainMSEngine.MS_Engine_Running = False
         End If
     End Sub
     Public Sub BotConnecting()
@@ -3540,20 +3561,20 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             End If
         End If
     End Sub
-    
-    
+
+
     Private Sub FurcSettingsRestored() Handles smProxy.FurcSettingsRestored
-    	 		FurcMutex.Close()
-                FurcMutex.Dispose()
+        FurcMutex.Close()
+        FurcMutex.Dispose()
     End Sub
-    
+
     Private Sub ReconnectTick(ByVal state As Object)
 
 #If DEBUG Then
         Console.WriteLine("ReconnectTick()")
 #End If
         Dim Ts As TimeSpan = TimeSpan.FromSeconds(45)
-        Me.ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick, _
+        Me.ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
          Nothing, Ts, Ts)
         If cMain.CloseProc And ProcExit = False Then
             KillProc(ProcID)
@@ -3562,21 +3583,21 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
             smProxy.Kill()
             ClearQues()
         End If
-            Try
-            	ConnectBot()
-            Catch Ex As NetProxyException
-            	Me.ReconnectTimeOutTimer.Dispose()
-            	If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
-               	If Not IsNothing(FurcMutex) Then '
-                	FurcMutex.Close()
-                	FurcMutex.Dispose()
-               	End If
-               	DisconnectBot()
-               	sndDisplay("Connection Aborting: " + eX.Message)
-            Finally
-            	Me.ReconnectTimer.Dispose()
-            End Try
-        
+        Try
+            ConnectBot()
+        Catch Ex As NetProxyException
+            Me.ReconnectTimeOutTimer.Dispose()
+            If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+            If Not IsNothing(FurcMutex) Then '
+                FurcMutex.Close()
+                FurcMutex.Dispose()
+            End If
+            DisconnectBot()
+            sndDisplay("Connection Aborting: " + Ex.Message)
+        Finally
+            Me.ReconnectTimer.Dispose()
+        End Try
+
     End Sub
     Private Sub ReconnectTimeOutTick(ByVal Obj As Object)
 
@@ -3600,35 +3621,35 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
                 ClearQues()
             End If
 
-		try
-            ConnectBot()
-            sndDisplay("Reconnect attempt: " + ReLogCounter.ToString)
-            If ReLogCounter = cMain.ReconnectMax Then
+            Try
+                ConnectBot()
+                sndDisplay("Reconnect attempt: " + ReLogCounter.ToString)
+                If ReLogCounter = cMain.ReconnectMax Then
+                    Me.ReconnectTimeOutTimer.Dispose()
+                    sndDisplay("Reconnect attempts exceeded.")
+                    BTN_Go.Text = "Go!"
+                    TS_Status_Server.Image = My.Resources.images2
+                    TS_Status_Client.Image = My.Resources.images2
+                    ConnectTrayIconMenuItem.Enabled = False
+                    DisconnectTrayIconMenuItem.Enabled = True
+                    If Not IsNothing(FurcMutex) Then
+                        FurcMutex.Close()
+                        FurcMutex.Dispose()
+                    End If
+
+                End If
+                ReLogCounter += 1
+            Catch Ex As NetProxyException
                 Me.ReconnectTimeOutTimer.Dispose()
-                sndDisplay("Reconnect attempts exceeded.")
-                BTN_Go.Text = "Go!"
-                TS_Status_Server.Image = My.Resources.images2
-                TS_Status_Client.Image = My.Resources.images2
-                ConnectTrayIconMenuItem.Enabled = False
-                DisconnectTrayIconMenuItem.Enabled = True
-                If Not IsNothing(FurcMutex) Then
+                If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+                If Not IsNothing(FurcMutex) Then '
                     FurcMutex.Close()
                     FurcMutex.Dispose()
                 End If
+                DisconnectBot()
+                sndDisplay("Connection Aborting: " + Ex.Message)
 
-            End If
-            ReLogCounter += 1
-		Catch Ex As NetProxyException
-            	Me.ReconnectTimeOutTimer.Dispose()
-            	If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
-               	If Not IsNothing(FurcMutex) Then '
-                	FurcMutex.Close()
-                	FurcMutex.Dispose()
-               	End If
-               	DisconnectBot()
-               	sndDisplay("Connection Aborting: " + eX.Message)
-
-			End try
+            End Try
         End If
     End Sub
 
@@ -3691,7 +3712,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
 
     End Sub
 
-    Private Sub sendToServer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles sendToServer.Click
+    Private Sub sendToServer_Click(ByVal sender As Object, ByVal e As EventArgs) Handles sendToServer.Click
         If Not bConnected() Then Exit Sub
         SendTxtToServer()
     End Sub
@@ -3760,19 +3781,19 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         Return iFound
     End Function
 
-    Private Sub BTN_Underline_Click(sender As System.Object, e As System.EventArgs) Handles BTN_Underline.Click
+    Private Sub BTN_Underline_Click(sender As Object, e As EventArgs) Handles BTN_Underline.Click
         FormatRichTectBox(Me.toServer, System.Drawing.FontStyle.Underline)
     End Sub
 
-    Private Sub Btn_Bold_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Bold.Click
+    Private Sub Btn_Bold_Click(sender As Object, e As EventArgs) Handles Btn_Bold.Click
         FormatRichTectBox(Me.toServer, System.Drawing.FontStyle.Bold)
     End Sub
 
-    Private Sub BTN_Italic_Click(sender As System.Object, e As System.EventArgs) Handles BTN_Italic.Click
+    Private Sub BTN_Italic_Click(sender As Object, e As EventArgs) Handles BTN_Italic.Click
         FormatRichTectBox(Me.toServer, System.Drawing.FontStyle.Italic)
     End Sub
 
-    Public Sub FormatRichTectBox(ByRef TB As SilverMonkey.Controls.RichTextBoxEx, _
+    Public Sub FormatRichTectBox(ByRef TB As RichTextBoxEx,
      ByRef style As System.Drawing.FontStyle)
         With TB
             If .SelectionFont IsNot Nothing Then
@@ -3793,7 +3814,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         End With
     End Sub
 
-    Private Sub MSEditorToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles MSEditorToolStripMenuItem.Click, EditorTrayIconMenuItem.Click
+    Private Sub MSEditorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MSEditorToolStripMenuItem.Click, EditorTrayIconMenuItem.Click
         LaunchEditor()
     End Sub
 
@@ -3811,7 +3832,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         If Not String.IsNullOrEmpty(f) Then
             Dim dir As String = Path.GetDirectoryName(cBot.MS_File)
             If String.IsNullOrEmpty(dir) Then
-                f = mPath() + Path.DirectorySeparatorChar + cBot.MS_File
+                f = System.IO.Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, cBot.MS_File)
             End If
         End If
 
@@ -3824,11 +3845,11 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         Process.Start(processStrt)
     End Sub
 
-    Private Sub NotifyIcon1_Disposed(sender As Object, e As System.EventArgs)
+    Private Sub NotifyIcon1_Disposed(sender As Object, e As EventArgs)
         Me.Visible = False
     End Sub
 
-    Private Sub NotifyIcon1_DoubleClick(sender As Object, e As System.EventArgs)
+    Private Sub NotifyIcon1_DoubleClick(sender As Object, e As EventArgs)
         If Not IsNothing(NotifyIcon1) Then
 
         End If
@@ -3837,12 +3858,12 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
     End Sub
 
 
-    Private Sub CloseToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CloseToolStripMenuItem.Click, ExitTrayIconMenuItem.Click
+    Private Sub CloseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseToolStripMenuItem.Click, ExitTrayIconMenuItem.Click
         FormClose()
     End Sub
 
 
-    Private Sub ContextTryIcon_Opened(sender As Object, e As System.EventArgs) Handles ContextTryIcon.Opened
+    Private Sub ContextTryIcon_Opened(sender As Object, e As EventArgs) Handles ContextTryIcon.Opened
         Select Case loggingIn
             Case 0
                 DisconnectTrayIconMenuItem.Enabled = False
@@ -3857,27 +3878,27 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         End Select
     End Sub
 
-    Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click
+    Private Sub PasteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PasteToolStripMenuItem.Click
         toServer.Paste()
     End Sub
 
-    Private Sub MenuCut_Click(sender As System.Object, e As System.EventArgs) Handles MenuCut.Click
+    Private Sub MenuCut_Click(sender As Object, e As EventArgs) Handles MenuCut.Click
         toServer.Cut()
     End Sub
 
-    Private Sub MenuCopy_Click(sender As System.Object, e As System.EventArgs) Handles MenuCopy.Click
+    Private Sub MenuCopy_Click(sender As Object, e As EventArgs) Handles MenuCopy.Click
         toServer.Copy()
     End Sub
 
-    Private Sub MenuCopy2_Click(sender As System.Object, e As System.EventArgs) Handles MenuCopy2.Click
+    Private Sub MenuCopy2_Click(sender As Object, e As EventArgs) Handles MenuCopy2.Click
         log_.Copy()
     End Sub
 
-    Private Sub AboutToolStripMenuItem1_Click(sender As System.Object, e As System.EventArgs) Handles AboutToolStripMenuItem1.Click
+    Private Sub AboutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem1.Click
         AboutBox1.ShowDialog()
     End Sub
 
-    Private Sub ContentsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ContentsToolStripMenuItem.Click
+    Private Sub ContentsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ContentsToolStripMenuItem.Click
         If File.Exists(Application.StartupPath & "/Silver Monkey.chm") Then
             Process.Start(Application.StartupPath & "/Silver Monkey.chm")
         Else
@@ -3936,7 +3957,7 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         Return ""
     End Function
 
-    Private Sub log__MouseHover(sender As Object, e As System.EventArgs) Handles log_.MouseHover, log_.MouseLeave, log_.MouseEnter, log_.CursorChanged
+    Private Sub log__MouseHover(sender As Object, e As EventArgs) Handles log_.MouseHover, log_.MouseLeave, log_.MouseEnter, log_.CursorChanged
         If Cursor.Current = Cursors.Hand Then
             SyncLock Lock
                 ToolTip1.Show(curWord, Me.log_)
@@ -3955,24 +3976,24 @@ If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         End If
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBox1.CheckedChanged
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
         log_.HideSelection = Not CheckBox1.Checked
     End Sub
 
-    Private Sub TSTutorialsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles TSTutorialsToolStripMenuItem.Click
+    Private Sub TSTutorialsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TSTutorialsToolStripMenuItem.Click
         'Process.Start("http://www.ts-projects.org/tutorials/")
     End Sub
 
-    Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
+    Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
         If loggingIn > 0 Then Exit Sub
         MS_Export.Show()
         MS_Export.Activate()
     End Sub
 
 
-    
+
     Sub ContentsToolStripMenuItemClick(sender As Object, e As EventArgs)
-    	
+
     End Sub
 End Class
 

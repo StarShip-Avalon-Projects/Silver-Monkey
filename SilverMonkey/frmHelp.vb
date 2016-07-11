@@ -1,10 +1,8 @@
-﻿Imports System
-Imports System.Drawing
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Windows.Forms
 
 Public Class frmHelp
-    Inherits System.Windows.Forms.Form
+    Inherits Form
     Private helpfile As String = "Silver Monkey.chm"
     Private WithEvents showIndex As System.Windows.Forms.Button
     Private WithEvents showHelp As System.Windows.Forms.Button

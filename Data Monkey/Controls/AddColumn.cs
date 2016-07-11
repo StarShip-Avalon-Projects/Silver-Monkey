@@ -1,15 +1,9 @@
-using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
-
 namespace SilverMonkey.SQLiteEditor.Controls
 {
-	/// <summary>
-	/// Summary description for AddColumn.
-	/// </summary>
-	public class AddColumn : BasePopup
+    /// <summary>
+    /// Summary description for AddColumn.
+    /// </summary>
+    public class AddColumn : BasePopup
 	{
 		private System.Windows.Forms.TextBox NameTextBox;
 		private System.Windows.Forms.Label NameLabel;

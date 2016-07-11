@@ -1,8 +1,9 @@
-﻿Imports  System.Windows.Forms
+﻿
+Imports MonkeyCore.Controls
 
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<CompilerServices.DesignerGenerated()>
 Partial Class MS_Export
-    Inherits System.Windows.Forms.Form
+    Inherits Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -17,15 +18,15 @@ Partial Class MS_Export
     End Sub
 
     'Required by the Windows Form Designer
-    Private components As System.ComponentModel.IContainer
+    Private components As ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.components = New ComponentModel.Container()
+        Me.MenuStrip1 = New Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveAsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TexttxtToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -35,7 +36,7 @@ Partial Class MS_Export
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SelectAllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TextBox1 = New SilverMonkey.TextBox_NoFlicker()
+        Me.TextBox1 = New TextBox_NoFlicker()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.MenuStrip1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -140,7 +141,7 @@ Partial Class MS_Export
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents TextBox1 As SilverMonkey.TextBox_NoFlicker
+    Friend WithEvents TextBox1 As TextBox_NoFlicker
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SaveAsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem

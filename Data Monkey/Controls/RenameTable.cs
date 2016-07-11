@@ -1,15 +1,9 @@
-using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
-
 namespace SilverMonkey.SQLiteEditor.Controls
 {
-	/// <summary>
-	/// Summary description for RenameTable.
-	/// </summary>
-	public class RenameTable : BasePopup
+    /// <summary>
+    /// Summary description for RenameTable.
+    /// </summary>
+    public class RenameTable : BasePopup
 	{
 		private System.Windows.Forms.TextBox RenameTableTextBox;
 		private System.Windows.Forms.Label RenameTableLabel;

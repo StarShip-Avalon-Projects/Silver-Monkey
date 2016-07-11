@@ -1,12 +1,11 @@
-using System;
 using System.Text;
 
 namespace SQLiteEditor
 {
-	/// <summary>
-	/// Summary description for StatementBuilder.
-	/// </summary>
-	public class StatementBuilder
+    /// <summary>
+    /// Summary description for StatementBuilder.
+    /// </summary>
+    public class StatementBuilder
 	{
 		public StatementBuilder()
 		{

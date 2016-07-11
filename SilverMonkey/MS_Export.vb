@@ -1,8 +1,5 @@
-﻿Imports System
-Imports System.Text.RegularExpressions
-Imports System.IO
+﻿Imports System.Text.RegularExpressions
 Imports System.Collections.Generic
-Imports  System.Windows.Forms
 
 Public Class MS_Export
 
@@ -49,10 +46,10 @@ Public Class MS_Export
     End Enum
 
     Private Sub MS_Export_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        MainMSEngine.MS_Stared = 0
-        MainMSEngine.EngineStart(False)
+        MS_Engine.MainMSEngine.MS_Stared = 0
+        MS_Engine.MainMSEngine.EngineStart(False)
         Dim Test As New List(Of String)
-        For Each item As String In MainEngine.MSpage.GetTriggerDescriptions()
+        For Each item As String In MainMSEngine.MSpage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         Dim cat As New Regex("\((.[0-9]*)\:(.[0-9]*)\)")
@@ -61,8 +58,9 @@ Public Class MS_Export
         ConditionList.Clear()
         For Each desc As String In Test
             ' print it or write it to file
-
-            Dim Catagory As TriggerTypes = CType(cat.Match(desc).Groups(1).Value.ToString.ToInteger, TriggerTypes)
+            Dim num As Integer = 0
+            Integer.TryParse(cat.Match(desc).Groups(1).Value, num)
+            Dim Catagory As TriggerTypes = CType(num, TriggerTypes)
             Select Case Catagory
                 Case TriggerTypes.Cause
                     CauseList.Add(desc)
@@ -109,7 +107,7 @@ Public Class MS_Export
         'MS_Stared = 0
         'MainMSEngine.EngineStart(False)
         Dim Test As New List(Of String)
-        For Each item As String In MainEngine.MSpage.GetTriggerDescriptions()
+        For Each item As String In MainMSEngine.MSpage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         EffectList.Clear()

@@ -1,14 +1,8 @@
-﻿Imports Monkeyspeak
-Imports SilverMonkey.ErrorLogging
-Imports SilverMonkey.TextBoxWriter
-Imports Furcadia.Net.Movement
-Imports Furcadia.IO
+﻿
 Imports Furcadia.Net
 Imports Furcadia.Base220
-
 Imports System.Diagnostics
-Imports System.Collections
-Imports System.Collections.Generic
+Imports MonkeyCore
 
 Public Class Description
 
@@ -185,6 +179,7 @@ Public Class Description
 
     End Sub
 
+
     '(1:600) and triggering furre's description contains {...}
     Function DescContains(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
@@ -193,12 +188,7 @@ Public Class Description
             If tPlayer.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
             Return tPlayer.Desc.Contains(Pattern)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -211,12 +201,7 @@ Public Class Description
             If tPlayer.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
             Return Not tPlayer.Desc.Contains(Pattern)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -230,12 +215,7 @@ Public Class Description
             If Target.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
             Return Target.Desc.Contains(Pattern)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -251,12 +231,7 @@ Public Class Description
             If Target.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
             Return Not tPlayer.Desc.Contains(Pattern)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -277,16 +252,12 @@ Public Class Description
                         Return tPlayer.FrameInfo.gender = 1
                     End If
             End Select
-            Return False
+
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
+        Return False
     End Function
     '(1:605) and the triggering furre is female,
     Function TriggeringFurreFemale(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -305,16 +276,12 @@ Public Class Description
                         Return tPlayer.FrameInfo.gender = 0
                     End If
             End Select
-            Return False
+
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
+        Return False
     End Function
     '(1:606) and the triggering furre is unspecified,
     Function TriggeringFurreUnspecified(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -335,12 +302,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -365,12 +327,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -395,12 +352,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -424,12 +376,8 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
+            Return False
             Return False
         End Try
     End Function
@@ -453,12 +401,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -484,12 +427,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -514,12 +452,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -543,12 +476,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -574,12 +502,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -605,12 +528,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -625,12 +543,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -644,12 +557,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -663,12 +571,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -682,12 +585,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -701,12 +599,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -720,12 +613,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -739,12 +627,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -760,12 +643,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -781,12 +659,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -802,12 +675,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -823,12 +691,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -844,12 +707,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -865,12 +723,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -886,12 +739,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -906,12 +754,7 @@ Public Class Description
             Var.Value = tPlayer.Desc
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -936,12 +779,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -965,12 +803,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -991,12 +824,7 @@ Public Class Description
             Var.Value = ColorString
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -1021,12 +849,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -1051,12 +874,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -1070,12 +888,7 @@ Public Class Description
             Var.Value = Target.Desc
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -1098,12 +911,7 @@ Public Class Description
             Var.Value = ColorString
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -1128,12 +936,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -1158,12 +961,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function

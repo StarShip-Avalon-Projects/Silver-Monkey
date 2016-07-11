@@ -19,7 +19,11 @@
             'This is not elegant, but it's simple enough and quite effective.
             dim s as string  = f.ReadLine().Replace("'","")
            integer.tryParse(s, revisionNumber) 
+#IF DEBUG THEN
+
+#ELSE
 			revisionNumber += 1
+#END IF
         end using
     catch e as exception
          
@@ -33,5 +37,5 @@
 '' 
 Imports System.Reflection
 
-<Assembly: AssemblyVersion("2.17.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
-<Assembly: AssemblyFileVersion("2.17.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
+<Assembly: AssemblyVersion("2.18.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
+<Assembly: AssemblyFileVersion("2.18.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 

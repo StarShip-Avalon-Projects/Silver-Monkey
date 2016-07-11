@@ -1,4 +1,4 @@
-;!include "DotNetChecker.nsh"
+!include "DotNetChecker.nsh"
 !include "FileAssociation.nsh"
 ##{{NSIS_PLUS_BEGIN_PROJECT_SETTINGS}}##
 #NAME "Release"
@@ -14,20 +14,23 @@
 
 !define APP_NAME "Silver Monkey"
 !define COMP_NAME "TS-Projects"
-;!define WEB_SITE "http://silvermonkey.tsprojects.org/"
+!define WEB_SITE "http://silvermonkey.tsprojects.org/"
 !ifndef VERSION
 !define VERSION "2.20.0.0"
 !endif
 
+!ifndef CONFIGURATION
+!define CONFIGURATION "Debug"
+!endif
 
 !define COPYRIGHT "Author Gerolkae © 2014"
 !define DESCRIPTION "Application"
-!define INSTALLER_NAME "SM_Setup(AnyCPU)-${VERSION}.exe"
+!define INSTALLER_NAME "SilverMonkey_Setup_WinXp_AnyCPU_${CONFIGURATION}_${VERSION}.exe"
 !define MAIN_APP_EXE "SilverMonkey.exe"
 !define INSTALL_TYPE "SetShellVarContext all"
 !define REG_ROOT "HKLM"
-!define REG_APP_PATH "Software\Microsoft\Windows\CurrentVersion\App Paths\${MAIN_APP_EXE}"
-!define UNINSTALL_PATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
+!define REG_APP_PATH "Software\TSProjects\${MAIN_APP_EXE}"
+!define UNINSTALL_PATH "Software\TSProjects\Uninstall\${APP_NAME}"
 !define Bin_Directory "."
 !define REG_START_MENU "Start Menu Folder"
 
@@ -117,10 +120,13 @@ Section -MainProgram
 ${INSTALL_TYPE}
 SetOverwrite ifnewer
 SetOutPath "$INSTDIR"
-;!insertmacro CheckNetFramework "40Full"
+!insertmacro CheckNetFramework 40Full
 
 ExecWait '"$INSTDIR\uninstall.exe" /S _?=$INSTDIR'
 
+
+File "${Bin_Directory}\Irony.dll"
+File "${Bin_Directory}\MonkeyCore.dll"
 File "${Bin_Directory}\FastColoredTextBox.dll"
 File "${Bin_Directory}\Furcadialib.dll"
 File "${Bin_Directory}\Interfaces.dll"
@@ -236,6 +242,8 @@ Section Uninstall
 ${INSTALL_TYPE}
 
 Delete "$INSTDIR\FastColoredTextBox.dll"
+Delete "$INSTDIR\Irony.dll"
+Delete "$INSTDIR\MonkeyCore.dll"
 Delete "$INSTDIR\Furcadialib.dll"
 Delete "$INSTDIR\Interfaces.dll"
 Delete "$INSTDIR\MonkeySpeak.dll"
@@ -248,7 +256,6 @@ Delete "$INSTDIR\x64\SQLite.Interop.dll"
 RmDir "$INSTDIR\x86"
 RmDir "$INSTDIR\x64"
 
-Delete "$INSTDIR\MSVCR100.dll"
 Delete "$INSTDIR\Keys-ms.ini"
 Delete "$INSTDIR\keys.ini"
 Delete "$INSTDIR\MonkeySpeakEditor.exe"

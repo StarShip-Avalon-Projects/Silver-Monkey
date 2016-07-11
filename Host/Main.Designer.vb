@@ -1,9 +1,11 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports MonkeyCore.Controls
+
+<CompilerServices.DesignerGenerated()>
 Partial Class Main
-    Inherits System.Windows.Forms.Form
+    Inherits Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,17 +22,17 @@ Partial Class Main
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.ListView1 = New System.Windows.Forms.ListView()
-        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.ExportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExportCurrentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TextBox1 = New ModuleExplorer.TextBox_NoFlicker()
+        Me.Label1 = New Label()
+        Me.ListView1 = New ListView()
+        Me.ColumnHeader1 = New ColumnHeader()
+        Me.ColumnHeader2 = New ColumnHeader()
+        Me.ColumnHeader3 = New ColumnHeader()
+        Me.MenuStrip1 = New MenuStrip()
+        Me.ExportToolStripMenuItem = New ToolStripMenuItem()
+        Me.ExportCurrentToolStripMenuItem = New ToolStripMenuItem()
+        Me.TextBox1 = New TextBox_NoFlicker()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -44,9 +46,9 @@ Partial Class Main
         '
         'ListView1
         '
-        Me.ListView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ListView1.BorderStyle = BorderStyle.FixedSingle
         Me.ListView1.CheckBoxes = True
-        Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
+        Me.ListView1.Columns.AddRange(New ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
         Me.ListView1.FullRowSelect = True
         Me.ListView1.GridLines = True
         Me.ListView1.HideSelection = False
@@ -56,7 +58,7 @@ Partial Class Main
         Me.ListView1.Size = New System.Drawing.Size(473, 106)
         Me.ListView1.TabIndex = 6
         Me.ListView1.UseCompatibleStateImageBehavior = False
-        Me.ListView1.View = System.Windows.Forms.View.Details
+        Me.ListView1.View = View.Details
         '
         'ColumnHeader1
         '
@@ -74,7 +76,7 @@ Partial Class Main
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExportToolStripMenuItem, Me.ExportCurrentToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New ToolStripItem() {Me.ExportToolStripMenuItem, Me.ExportCurrentToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(514, 24)
@@ -95,13 +97,13 @@ Partial Class Main
         '
         'TextBox1
         '
-        Me.TextBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox1.Anchor = CType((((AnchorStyles.Top Or AnchorStyles.Bottom) _
+            Or AnchorStyles.Left) _
+            Or AnchorStyles.Right), AnchorStyles)
         Me.TextBox1.Location = New System.Drawing.Point(15, 155)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.TextBox1.ScrollBars = ScrollBars.Both
         Me.TextBox1.Size = New System.Drawing.Size(473, 155)
         Me.TextBox1.TabIndex = 8
         Me.TextBox1.WordWrap = False
@@ -109,7 +111,7 @@ Partial Class Main
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleMode = AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(514, 316)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.ListView1)
@@ -124,13 +126,13 @@ Partial Class Main
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents ListView1 As System.Windows.Forms.ListView
-    Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader3 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
-    Friend WithEvents ExportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents TextBox1 As ModuleExplorer.TextBox_NoFlicker
-    Friend WithEvents ExportCurrentToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Label1 As Label
+    Friend WithEvents ListView1 As ListView
+    Friend WithEvents ColumnHeader1 As ColumnHeader
+    Friend WithEvents ColumnHeader2 As ColumnHeader
+    Friend WithEvents ColumnHeader3 As ColumnHeader
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents ExportToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TextBox1 As TextBox_NoFlicker
+    Friend WithEvents ExportCurrentToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -1,17 +1,12 @@
 ﻿Imports Monkeyspeak
-Imports SilverMonkey.ErrorLogging
-Imports SilverMonkey.TextBoxWriter
-Imports System.IO
-Imports System.Text.RegularExpressions
-
-Imports System.Diagnostics
-Imports System.Collections
+Imports MonkeyCore
+Imports MonkeyCore.IO
 Imports System.Collections.Generic
 
 Public Class MS_MemberList
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing
-    Private MemberList As String = ""
+    Private Shared MemberList As String
     Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
         MemberList = "MemberList.txt"
@@ -44,32 +39,23 @@ Public Class MS_MemberList
 
     End Sub
 
+
     '(1:900) and the triggering furre is on my dream Member List,
-    Private Function TrigFurreIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
+    Private Function TrigFurreIsMember(reader As TriggerReader) As Boolean
         CheckMemberList()
         Dim Furre As String = Nothing
-        Dim f() As String
+        Dim f As New List(Of String)
         Try
-            Furre = MainEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            f = File.ReadAllLines(MemberList)
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            f.AddRange(File.ReadAllLines(MemberList))
             For Each l As String In f
-                If l.ToFurcShortName = Furre.ToFurcShortName Then
-                    Return True
-                End If
+                If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
             Next
-            Dim test As Boolean = IsBotControler(Furre)
-            Return IsBotControler(Furre)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
-
-            Return IsBotControler(Furre)
+            MainMSEngine.LogError(reader, ex)
+            Return False
         End Try
-
+        Return IsBotControler(Furre)
     End Function
     '(1:901) and the furre named {...} is on my Dream Member list.
     Private Function FurreNamedIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -82,17 +68,12 @@ Public Class MS_MemberList
             For Each l As String In f
                 If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
             Next
-            Return IsBotControler(Furre)
+
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
-
+        Return IsBotControler(Furre)
     End Function
     '(1:902) and the triggering furre is not on my Dream Member list.
     Private Function TrigFurreIsNotMember(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -107,7 +88,7 @@ Public Class MS_MemberList
         Dim Furre As String = Nothing
 
         Try
-            Furre = MainEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
                 Dim sw As StreamWriter = New StreamWriter(MemberList, True)
                 sw.WriteLine(Furre)
@@ -116,12 +97,7 @@ Public Class MS_MemberList
             Return True
 
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -130,24 +106,19 @@ Public Class MS_MemberList
 
     '(5:901) add the furre named {...} to my Dream Member list if they aren't already on it.
     Private Function AddFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = Nothing
+        Dim Furre As String
 
         Try
             Furre = reader.ReadString
-            If FurreNamedIsMember(reader) = False And FurreNamedIsNotMember(reader) Then
-                Dim sw As StreamWriter = New StreamWriter(MemberList, True)
-                sw.WriteLine(Furre)
-                sw.Close()
+            If FurreNamedIsNotMember(reader) Then
+                Using sw As StreamWriter = New StreamWriter(MemberList, True)
+                    sw.WriteLine(Furre)
+                End Using
             End If
             Return True
 
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -157,29 +128,23 @@ Public Class MS_MemberList
         Dim Furre As String = Nothing
         CheckMemberList()
         Try
-            Furre = MainEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
-            Dim line As String = Nothing
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Dim line As String
             Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
-            Dim SR As New StreamReader(MemberList)
-            line = SR.ReadLine()
-            For i As Integer = 0 To linesList.Count - 1
-                If Regex.Replace(line.ToLower(), REGEX_NameFilter, "") = Furre Then
-                    SR.Dispose()
-                    SR.Close()
-                    linesList.RemoveAt(i)
-                    File.WriteAllLines(MemberList, linesList.ToArray())
-                    Exit For
-                End If
-                line = SR.ReadLine()
-            Next i
+            Using SR As New StreamReader(MemberList)
+                While SR.Peek() <> -1
+                    line = SR.ReadLine()
+                    For i As Integer = 0 To linesList.Count - 1
+                        If line.ToFurcShortName = Furre.ToFurcShortName Then
+                            linesList.RemoveAt(i)
+                            File.WriteAllLines(MemberList, linesList.ToArray())
+                            Exit For
+                        End If
+                    Next i
+                End While
+            End Using
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -190,28 +155,22 @@ Public Class MS_MemberList
         CheckMemberList()
         Try
             Furre = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
-            Dim line As String = Nothing
+            Dim line As String
             Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
-            Dim SR As New StreamReader(MemberList)
-            line = SR.ReadLine()
-            For i As Integer = 0 To linesList.Count - 1
-                If Regex.Replace(line.ToLower(), REGEX_NameFilter, "") = Furre Then
-                    SR.Dispose()
-                    SR.Close()
-                    linesList.RemoveAt(i)
-                    File.WriteAllLines(MemberList, linesList.ToArray())
-                    Exit For
-                End If
-                line = SR.ReadLine()
-            Next i
+            Using SR As New StreamReader(MemberList)
+                While SR.Peek() <> -1
+                    line = SR.ReadLine()
+                    For i As Integer = 0 To linesList.Count - 1
+                        If line.ToFurcShortName = Furre.ToFurcShortName Then
+                            linesList.RemoveAt(i)
+                            File.WriteAllLines(MemberList, linesList.ToArray())
+                            Exit For
+                        End If
+                    Next i
+                End While
+            End Using
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -224,12 +183,7 @@ Public Class MS_MemberList
             MemberList = reader.ReadString
             CheckMemberList()
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -244,21 +198,17 @@ Public Class MS_MemberList
             f = File.ReadAllLines(MemberList)
             Furre.Value = String.Join(" ", f)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     Private Sub CheckMemberList()
-        MemberList = CheckMyDocFile(MemberList)
-        If File.Exists(MemberList) = False Then
-            Dim sw As StreamWriter = New StreamWriter(MemberList, False)
-            sw.Close()
+        MemberList = CheckBotFolder(MemberList)
+        If Not File.Exists(MemberList) Then
+            Using f As New StreamWriter(MemberList)
+                f.WriteLine("")
+            End Using
         End If
     End Sub
 End Class

@@ -1,9 +1,10 @@
-Imports System.IO
+Imports System.Collections.Generic
+Imports MonkeyCore
 
 Public Module clsMain
     Public MainMSEngine As MainEngine
     Public callbk As Main
-    Public Plugins() As PluginServices.AvailablePlugin
+
 
 
     <System.Runtime.CompilerServices.Extension()> _

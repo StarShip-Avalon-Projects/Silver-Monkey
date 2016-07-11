@@ -19,8 +19,7 @@
     <WarningLevel>4</WarningLevel>
     <StartupObject>SilverMonkey.My.MyApplication</StartupObject>
     <ApplicationIcon>resources\metal.ico</ApplicationIcon>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-    <NoWin32Manifest>False</NoWin32Manifest>
+    <NoWin32Manifest>True</NoWin32Manifest>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <OptionExplicit>On</OptionExplicit>
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
@@ -51,7 +50,16 @@
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <DefineConstants />
+    <DefineConstants>NoWin32Manifest=TRUE</DefineConstants>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
@@ -90,21 +98,6 @@
     <Compile Include="BotSetup.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\ListBox_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.Designer.vb">
-      <DependentUpon>ListView_NoFlicker.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\RichTextBoxEx.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TextBox_NoFlicker.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Debug\SetVariables.Designer.vb">
       <DependentUpon>SetVariables.vb</DependentUpon>
     </Compile>
@@ -125,6 +118,7 @@
     <Compile Include="frmHelp.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Helper Classes\DeBugWriter.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -136,7 +130,6 @@
     <Compile Include="NewBot.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Engine\Misc.vb" />
     <Compile Include="Engine\Banish.vb" />
     <Compile Include="Engine\Description.vb" />
     <Compile Include="Engine\HelperModule.vb" />
@@ -156,22 +149,11 @@
     <Compile Include="Engine\Warning.vb" />
     <Compile Include="Engine\WmCpyDta.vb" />
     <Compile Include="Helper Classes\Logger.vb" />
-    <Compile Include="Helper Classes\LogStream.vb" />
     <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="Helper Classes\MiscUtils.vb" />
-    <Compile Include="Helper Classes\IniFile.vb" />
     <Compile Include="MainModule.vb" />
     <Compile Include="Engine\MS_Engine.vb" />
     <Compile Include="Helper Classes\DownLoadImage.vb" />
-    <Compile Include="Helper Classes\ErrorLogging.vb" />
-    <Compile Include="Helper Classes\TextWriter.vb" />
-    <Compile Include="Config.Designer.vb">
-      <DependentUpon>Config.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Config.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConfigStructs.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -195,7 +177,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Helper Classes\PluginServices.vb" />
     <Compile Include="Settings.vb" />
     <Compile Include="Debug\Variables.Designer.vb">
       <DependentUpon>Variables.vb</DependentUpon>
@@ -214,9 +195,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BotSetup.resx">
       <DependentUpon>BotSetup.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Config.resx">
-      <DependentUpon>Config.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Debug\SetVariables.resx">
       <DependentUpon>SetVariables.vb</DependentUpon>
@@ -245,6 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="app.manifest" />
     <None Include="AssemblyFileVersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
@@ -270,7 +249,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="packages.config" />
     <None Include="SilverMonkey.nsi">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -321,10 +299,6 @@
     <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
-      <Project>{9072CD13-8B7E-4A22-BC28-6087785A5D9A}</Project>
-      <Name>Data Monkey</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
@@ -332,6 +306,10 @@
     <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
       <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Name>MonkeyCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyspeakR6\MonkeyspeakR6.csproj">
       <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
@@ -350,6 +328,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
@@ -358,10 +339,14 @@
   </PropertyGroup>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.101.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.101.0\build\net46\System.Data.SQLite.Core.targets')" />
   <PropertyGroup>
-    <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
+    <PreBuildEvent>if $(ConfigurationName) == Release (
+"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"
+)</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
-    </PostBuildEvent>
+"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\MT.exe"   -manifest "$(ProjectDir)app.manifest"   -outputresource:"$(TargetDir)$(TargetFileName)";#1
+
+)</PostBuildEvent>
   </PropertyGroup>
 </Project>

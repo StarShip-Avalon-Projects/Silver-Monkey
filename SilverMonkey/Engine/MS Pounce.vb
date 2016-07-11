@@ -1,37 +1,45 @@
 ﻿Imports Monkeyspeak
-Imports SilverMonkey.ErrorLogging
-Imports SilverMonkey.TextBoxWriter
-Imports System.IO
 Imports System.Text.RegularExpressions
-
-Imports System.Diagnostics
-Imports System.Collections
 Imports System.Collections.Generic
+Imports MonkeyCore
+Imports MonkeyCore.IO
 
 Public Class MS_Pounce
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits Libraries.AbstractBaseLibrary
     Private writer As TextBoxWriter = Nothing
+
+    Private Shared _OnlineList As String
+    Public Shared Property OnlineList As String
+        Get
+            If String.IsNullOrEmpty(_OnlineList) Then
+                _OnlineList = CheckBotFolder("OnlineList.txt")
+            End If
+            Return _OnlineList
+        End Get
+        Set(value As String)
+
+        End Set
+    End Property
 
     Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
-        Main.OnlineList = "OnlineList.txt"
 
         ' (0:950) When a furre logs on,
-        Add(Monkeyspeak.TriggerCategory.Cause, 950,
+        Add(TriggerCategory.Cause, 950,
             Function()
                 Return True
             End Function, "(0:950) When a furre logs on,")
 
 
         '(0:951) When a furre logs off,
-        Add(Monkeyspeak.TriggerCategory.Cause, 951,
+        Add(TriggerCategory.Cause, 951,
             Function()
                 Return True
             End Function, "(0:951) When a furre logs off,")
         '(0:952) When the furre named {...} logs on,
-        Add(Monkeyspeak.TriggerCategory.Cause, 952, AddressOf NameIs, "(0:952) When the furre named {...} logs on,")
+        Add(TriggerCategory.Cause, 952, AddressOf NameIs, "(0:952) When the furre named {...} logs on,")
         '(0:953) When the furre named {...} logs off,
-        Add(Monkeyspeak.TriggerCategory.Cause, 953, AddressOf NameIs, "(0:953) When the furre named {...} logs off,")
+        Add(TriggerCategory.Cause, 953, AddressOf NameIs, "(0:953) When the furre named {...} logs off,")
 
 
 
@@ -67,16 +75,11 @@ Public Class MS_Pounce
     Function NameIs(reader As TriggerReader) As Boolean
         Try
             Dim TmpName As String = reader.ReadString()
-            Dim tname As Variable = MainEngine.MSpage.GetVariable(MS_Name)
+            Dim tname As Variable = MainMSEngine.MSpage.GetVariable(MS_Name)
             'add Machine Name parser
             Return TmpName.ToFurcShortName = tname.Value.ToString.ToFurcShortName
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            'Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            'Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -94,12 +97,7 @@ Public Class MS_Pounce
             'add Machine Name parser
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            'Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            'Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -116,12 +114,7 @@ Public Class MS_Pounce
             'add Machine Name parser
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            'Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            'Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -131,20 +124,14 @@ Public Class MS_Pounce
         Dim Furre As String = Nothing
         Dim f() As String
         Try
-            Furre = MainEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             f = File.ReadAllLines(callbk.OnlineList)
             For Each l As String In f
                 If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
             Next
             Return False
-        Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
-
+        Catch ex As exception
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -162,12 +149,7 @@ Public Class MS_Pounce
             Next
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -185,7 +167,7 @@ Public Class MS_Pounce
         Dim Furre As String = Nothing
 
         Try
-            Furre = MainEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
                 Dim sw As StreamWriter = New StreamWriter(callbk.OnlineList, True)
                 sw.WriteLine(Furre)
@@ -194,12 +176,7 @@ Public Class MS_Pounce
             Return True
 
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -220,12 +197,7 @@ Public Class MS_Pounce
             Return True
 
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -235,7 +207,7 @@ Public Class MS_Pounce
         Dim Furre As String = Nothing
         CheckCemberList()
         Try
-            Furre = MainEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
             Dim line As String = Nothing
             Dim linesList As New List(Of String)(File.ReadAllLines(callbk.OnlineList))
@@ -252,12 +224,7 @@ Public Class MS_Pounce
                 line = SR.ReadLine()
             Next i
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -284,12 +251,7 @@ Public Class MS_Pounce
                 line = SR.ReadLine()
             Next i
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -302,18 +264,13 @@ Public Class MS_Pounce
             callbk.OnlineList = reader.ReadString
             CheckCemberList()
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     Private Sub CheckCemberList()
-        callbk.OnlineList = CheckMyDocFile(callbk.OnlineList)
+        callbk.OnlineList = CheckBotFolder(callbk.OnlineList)
         If File.Exists(callbk.OnlineList) = False Then
             Dim sw As StreamWriter = New StreamWriter(callbk.OnlineList, False)
             sw.Close()

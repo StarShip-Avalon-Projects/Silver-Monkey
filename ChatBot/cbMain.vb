@@ -1,30 +1,25 @@
-﻿Imports System.Drawing
-Imports System.Collections
-Imports System.ComponentModel
-Imports System.Windows.Forms
-Imports System.Data
-Imports Conversive.Verbot5
+﻿Imports Conversive.Verbot5
 Imports System.IO
 Imports Furcadia.Net
 
 Public Class cbMain
-    Inherits System.Windows.Forms.Form
+    Inherits Form
     Private verbot As Verbot5Engine
     Private state As State
     Private stCKBFileFilter As String = "Verbot Knowledge Bases (*.vkb)|*.vkb"
     Private stFormName As String = "Verbot SDK Windows App Sample"
-    
+
     Private _kb As KnowledgeBase = New KnowledgeBase()
     Public Property kb As KnowledgeBase
-    	Get
-    		Return _kb
-    	End Get
-    	Set(value As KnowledgeBase)
-    		
-    		_kb = value
-    	End Set
+        Get
+            Return _kb
+        End Get
+        Set(value As KnowledgeBase)
+
+            _kb = value
+        End Set
     End Property
-    
+
     Dim kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
     Public Player As FURRE
     Public Sub New()
@@ -33,19 +28,19 @@ Public Class cbMain
         '
         InitializeComponent()
 
-        Me.verbot = New Verbot5Engine()
-        Me.state = New State()
+        verbot = New Verbot5Engine()
+        state = New State()
 
-        Me.openFileDialog1.Filter = Me.stCKBFileFilter
-        Me.openFileDialog1.InitialDirectory = myDocs
-        Me.Text = Me.stFormName
+        openFileDialog1.Filter = stCKBFileFilter
+        openFileDialog1.InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
+        Text = stFormName
     End Sub
 
-    Private Sub loadMenuItem_Click(sender As Object, e As System.EventArgs) Handles loadMenuItem.Click
-        With Me.openFileDialog1
+    Private Sub loadMenuItem_Click(sender As Object, e As EventArgs) Handles loadMenuItem.Click
+        With openFileDialog1
             If .ShowDialog() = DialogResult.OK Then
                 Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
-                kb =CType( xToolbox.LoadXML(.FileName), KnowledgeBase)
+                kb = CType(xToolbox.LoadXML(.FileName), KnowledgeBase)
                 kbi.Filename = Path.GetFileName(.FileName)
                 kbi.Fullpath = Path.GetDirectoryName(.FileName) + "\"
                 verbot.AddKnowledgeBase(kb, kbi)
@@ -56,36 +51,36 @@ Public Class cbMain
     End Sub
 
     Private Sub exitMenuItem_Click(sender As Object, e As System.EventArgs) Handles exitMenuItem.Click
-        Me.Close()
+        Close()
     End Sub
 
 
     Private Sub inputTextBox_KeyPress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs) Handles inputTextBox.KeyPress
         If e.KeyChar = ControlChars.Cr Then
             e.Handled = True
-            Me.getReply()
+            getReply()
         End If
     End Sub
 
     Private Sub getReplyButton_Click(sender As Object, e As System.EventArgs) Handles getReplyButton.Click
-        Me.getReply()
+        getReply()
     End Sub
 
     Private Sub getReply()
-        Dim stInput As String = Me.inputTextBox.Text.Trim()
-        Me.inputTextBox.Text = ""
+        Dim stInput As String = inputTextBox.Text.Trim()
+        inputTextBox.Text = ""
         If state.Vars.ContainsKey("botname") Then
             state.Vars.Item("botname") = TxtBxBotName.Text
         Else
             state.Vars.Add("botname", TxtBxBotName.Text)
         End If
-        Dim reply As Reply = Me.verbot.GetReply(Player, stInput, Me.state)
+        Dim reply As Reply = verbot.GetReply(Player, stInput, state)
         If reply IsNot Nothing Then
-            Me.outputTextBox.Text = reply.Text
-            Me.parseEmbeddedOutputCommands(reply.AgentText)
-            Me.runProgram(reply.Cmd)
+            outputTextBox.Text = reply.Text
+            parseEmbeddedOutputCommands(reply.AgentText)
+            runProgram(reply.Cmd)
         Else
-            Me.outputTextBox.Text = "No reply found."
+            outputTextBox.Text = "No reply found."
         End If
     End Sub
 
@@ -101,7 +96,7 @@ Public Class cbMain
             If [end] <> -1 Then
                 Dim command As String = text.Substring(start + 1, [end] - start - 1).Trim()
                 If command <> "" Then
-                    Me.runEmbeddedOutputCommand(command)
+                    runEmbeddedOutputCommand(command)
                 End If
             End If
             start = text.IndexOf(startCommand, start + 1)
@@ -125,10 +120,10 @@ Public Class cbMain
             Select Case [function]
                 Case "quit", "exit"
 
-                    Me.Close()
+                    Close()
                     Exit Select
                 Case "run"
-                    Me.runProgram(args)
+                    runProgram(args)
                     Exit Select
                 Case Else
                     Exit Select
@@ -140,7 +135,7 @@ Public Class cbMain
     'runOutputEmbeddedCommand(string command)
     Private Sub runProgram(command As String)
         Try
-            Dim pieces As String() = Me.splitOnFirstUnquotedSpace(command)
+            Dim pieces As String() = splitOnFirstUnquotedSpace(command)
 
             Dim proc As New System.Diagnostics.Process()
             proc.StartInfo.FileName = pieces(0).Trim()

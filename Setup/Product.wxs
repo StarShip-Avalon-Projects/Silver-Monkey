@@ -15,8 +15,10 @@
     <Property Id="WixUI_FeatureTree" Value="INSTALLFOLDER" />
 		<UIRef Id="WixUI_FeatureTree" />
     <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="license.Rtf"/>
-
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is alreaady installed." />
+    <WixVariable Id="WixUIBannerBmp" Value="metal.png" />
+    <MajorUpgrade
+   Schedule="afterInstallInitialize"
+   DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
     <Media Id="1" Cabinet="SilverMonkey.cab" EmbedCab="yes" CompressionLevel="high"/>
  	
 
@@ -116,7 +118,7 @@
         <Feature Id="SilverMonkey2" Title="Main Application" Level="1" >
             <!-- Step 3: Tell WiX to install the shortcut -->
           <ComponentGroupRef Id="SilverMonkey2.Binaries" />
-          <ComponentGroupRef Id="SilverMonkey2.Satellites" />
+          <ComponentGroupRef Id="MonkeyCore.Binaries" />
             <ComponentRef Id="SilverMonkey2Shortcut" />
           <ComponentRef Id="MonkeySpeakEditorShortcut" />
           <ComponentGroupRef Id="TheClaaaw.Binaries" />
@@ -128,6 +130,7 @@
           <ComponentGroupRef Id="Interfaces.Binaries"  />         
           <ComponentGroupRef Id="Verbot5Library.Binaries" />
           <ComponentRef Id="FCTB" />
+          <ComponentRef Id="Irony" />
           <ComponentRef Id="RTFLib.dll" />
           <ComponentRef Id="SQLite" />
           <ComponentRef Id="X86" />
@@ -152,6 +155,9 @@
       <Component Id="FCTB" Guid="{CAA87BC5-9387-47D4-B1BB-A0022C1A71B8}">
         <File Id="FCTB" Source="$(var.SilverMonkey2.TargetDir)FastColoredTextBox.dll" KeyPath="no" Checksum="yes"/>
       </Component>
+        <Component Id="Irony" Guid="{B078886D-97DD-491F-BFBB-5080A889CB12}">
+          <File Id="Irony" Source="$(var.SilverMonkey2.TargetDir)Irony.dll" KeyPath="no" Checksum="yes"/>
+        </Component>
       <Component Id="RTFLib.dll" Guid="{274422CD-E56A-4157-BD0C-99B19DC07E09}">
         <File Id="RTFLib.dll" Source="$(var.SilverMonkey2.TargetDir)RTFLib.dll" KeyPath="no" Checksum="yes"/>
       </Component>
@@ -180,6 +186,8 @@
         <File Id="TheClaaawIni" Source="$(var.TheClaaaw.TargetDir)TheClaaaw.ini" KeyPath="no" Checksum="yes"/>
       </Component>
     </DirectoryRef>
+
+
     
     
   </Product>

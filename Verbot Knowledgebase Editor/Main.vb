@@ -18,7 +18,7 @@ Public Class Main
             ' Select Character ini file
             If .ShowDialog = DialogResult.OK Then
                 Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
-                kb = xToolbox.LoadXML(.FileName)
+                kb = CType(xToolbox.LoadXML(.FileName), KnowledgeBase)
                 FileName = .FileName
                 LstBxInput.Items.Clear()
                 LstBxOutput.Items.Clear()

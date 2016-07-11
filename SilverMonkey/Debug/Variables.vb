@@ -1,6 +1,4 @@
-﻿Imports System
-Imports Microsoft.VisualBasic
-Imports System.Windows.Forms
+﻿Imports System.Windows.Forms
 
 
 Public Class Variables
@@ -27,8 +25,8 @@ Public Class Variables
 
             SyncLock Lock
 
-                For i As Integer = 0 To MainEngine.MSpage.Scope.Count - 1
-                    Dim Var As Monkeyspeak.Variable = MainEngine.MSpage.Scope.Item(i)
+                For i As Integer = 0 To MainMSEngine.MSpage.Scope.Count - 1
+                    Dim Var As Monkeyspeak.Variable = MainMSEngine.MSpage.Scope.Item(i)
 
                     Dim Variable() As String = {"", "", ""}
                     Variable(0) = Var.Name.ToString

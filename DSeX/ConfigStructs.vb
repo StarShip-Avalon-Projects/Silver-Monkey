@@ -24,6 +24,7 @@ Public Class ConfigStructs
     End Function
     Public Class EditSettings
 
+        Private _FurcPath As String
         'Dragon Speak
         Private _IDcolor As Color
         Private _CommentColor As Color
@@ -40,6 +41,16 @@ Public Class ConfigStructs
         Private _MS_VariableColor As Color
 
         Private _AutoCompleteEnable As Boolean
+
+        Public Property FurcPath As String
+            Get
+                Return _FurcPath
+            End Get
+            Set(value As String)
+                _FurcPath = value
+            End Set
+        End Property
+
         Public Property AutoCompleteEnable As Boolean
             Get
                 Return _AutoCompleteEnable
@@ -140,16 +151,12 @@ Public Class ConfigStructs
                 _MS_CommentColor = value
             End Set
         End Property
-        Dim _FurcPath As String
-        Public ReadOnly Property FurcPath As String
-            Get
-                Return _FurcPath
-            End Get
-        End Property
 
         Public Property PluginList As Dictionary(Of String, Boolean)
 
         Public Sub New()
+
+            Dim s As String = ""
             ini.AddSection("Editor").AddKey("IDColor").Value = Color.Blue.ToArgb.ToString
             ini.AddSection("Editor").AddKey("CommentColor").Value = Color.Green.ToArgb.ToString
             ini.AddSection("Editor").AddKey("StringColor").Value = Color.Red.ToArgb.ToString
@@ -200,6 +207,8 @@ Public Class ConfigStructs
                 ini.Load(SetFile, True)
             End If
 
+
+
             'Dragon Speak
             _IDcolor = ColorTranslator.FromHtml(ini.GetKeyValue("Editor", "IDColor"))
             _CommentColor = ColorTranslator.FromHtml(ini.GetKeyValue("Editor", "CommentColor"))
@@ -217,7 +226,6 @@ Public Class ConfigStructs
 
             _AutoCompleteEnable = Convert.ToBoolean(ini.GetKeyValue("Editor", "AutoComplete"))
 
-            Dim s As String = ""
             Dim DSSection As IniSection = ini.GetSection("plugins")
             If Not IsNothing(DSSection) Then
                 PluginList = New Dictionary(Of String, Boolean)
@@ -231,11 +239,13 @@ Public Class ConfigStructs
                 Next
             End If
 
-            _FurcPath = ini.GetKeyValue("Main", "FurcPath")
+            s = ini.GetKeyValue("Main", "FurcPath")
+            If Not String.IsNullOrEmpty(s) Then _FurcPath = s
         End Sub
 
         Public Sub SaveEditorSettings()
-
+            'Main Settings
+            ini.SetKeyValue("Main", "FurcPath", _FurcPath)
 
             ini.SetKeyValue("Editor", "IDColor", ColorTranslator.ToHtml(_IDcolor).ToString)
             ini.SetKeyValue("Editor", "NumberColor", ColorTranslator.ToHtml(_NumberColor).ToString)
