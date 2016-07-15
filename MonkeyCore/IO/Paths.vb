@@ -78,26 +78,10 @@ Public Class Paths
     ''' <exception cref="System.IO.DirectoryNotFoundException">This needs to be a valid folder</exception>
     Public Shared Property FurcadiaDocumentsFolder() As String
         Get
-            Try
-                '
-                If String.IsNullOrEmpty(_FurcadiaDocumentsFolder) Then
-                    _FurcadiaDocumentsFolder = _FurcPath.GetFurcadiaDocPath()
-                End If
-
-            Catch eX As Furcadia.IO.FurcadiaNotFoundException
-                Dim Broswe As New OpenFileDialog
-                Broswe.InitialDirectory = Environment.GetFolderPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86))
-                Broswe.CheckFileExists = True
-                If Broswe.ShowDialog() = MsgBoxResult.Ok Then
-                    Dim ThisPath As String = Path.GetDirectoryName(Broswe.FileName)
-                    _FurcPath = New Furcadia.IO.Paths(ThisPath)
-                    _FurcadiaDocumentsFolder = _FurcPath.GetFurcadiaDocPath()
-                End If
-            Finally
-                If Not Directory.Exists(_FurcadiaDocumentsFolder) Then
-                    Directory.CreateDirectory(_FurcadiaDocumentsFolder)
-                End If
-            End Try
+            If Not String.IsNullOrEmpty(_FurcadiaDocumentsFolder) Then
+                Return _FurcadiaDocumentsFolder
+            End If
+            _FurcadiaDocumentsFolder = _FurcPath.GetFurcadiaDocPath()
             Return _FurcadiaDocumentsFolder
         End Get
         Set(ByVal value As String)
@@ -117,10 +101,8 @@ Public Class Paths
     ''' <exception cref="System.IO.DirectoryNotFoundException">This needs to be a valid folder</exception>
     Public Shared Property FurcadiaCharactersFolder() As String
         Get
-
-            '
             If String.IsNullOrEmpty(_FurcadiaCharactersFolder) Then
-                _FurcadiaCharactersFolder = Path.Combine(FurcadiaDocumentsFolder, "Furcadia Characters")
+                _FurcadiaCharactersFolder = _FurcPath.GetFurcadiaCharactersPath
             End If
             Return _FurcadiaCharactersFolder
         End Get
@@ -142,8 +124,8 @@ Public Class Paths
     Public Shared Property FurcadiaProgramFolder() As String
         Get
             Try
-                If String.IsNullOrEmpty(_FurcadiaDocumentsFolder) Then
-                    _FurcadiaProgramFolder = _FurcPath.GetInstallPath
+                If String.IsNullOrEmpty(_FurcadiaProgramFolder) Then
+                    _FurcadiaProgramFolder = Furcadia.IO.Paths.GetInstallPath
                 End If
 
             Catch eX As Furcadia.IO.FurcadiaNotFoundException
@@ -151,9 +133,9 @@ Public Class Paths
                 'Check for Furcadia Install location.
                 'TODO: Add OSBitness methd or .Net 4.0
                 If Environment.Is64BitOperatingSystem() Then
-                    Broswe.InitialDirectory = Environment.GetFolderPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles))
-                Else
                     Broswe.InitialDirectory = Environment.GetFolderPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86))
+                Else
+                    Broswe.InitialDirectory = Environment.GetFolderPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles))
                 End If
 
                 'Broswe.CheckFileExists = True

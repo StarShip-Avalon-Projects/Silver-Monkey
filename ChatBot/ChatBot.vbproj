@@ -116,7 +116,6 @@
     <None Include="app.manifest" />
     <None Include="My Project\Application.myapp" />
     <None Include="My Project\Settings.settings" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />

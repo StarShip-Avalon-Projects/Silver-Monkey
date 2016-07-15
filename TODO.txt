@@ -5,12 +5,13 @@ create/Delete Table
 Convert Table Row to MonkeySpeak Variables
 -SQL Import Function
 -Help Menu with Helpfule links
+Hot Keys https://msdn.microsoft.com/en-us/library/ms174205.aspx
 
 Tutorials:
 Complete DS Game Intergration
 
 Module Explorer
-Fix Memory leak with Plugins
+Fix Memory leak with Plugins 
 
 MonkeySpeak Editor
 -Help Menu with Helpfule links
@@ -23,12 +24,21 @@ Add SyntaxHighlighter for MonkeySpeak/Dragon Speak
 Silver Monkey
 Fix Memory Leak with Plugins
 Add Missing Database MonkeySpeak
--and Bot Setting is
--and Dream Setting is
--make setting table
--and setting in table is
--delete table name
--delete setting in table name
+
+(1:x) and the Database info  {...} in Settings Table {...} exists,
+(1:x) and the Database info  {...} in Settings Table {...} doesn't exist,
+(1:x)and the Database info {..} in Settings Table  {...} is equal to {...},
+(1:x)and the Database info {..} in Settings Table  {...} is not equal to {...},
+(1:x)and the Database info {..} in Settings Table  {...} is greater than #,
+(1:x)and the Database info {..} in Settings Table  {...} is greater than or equl to #,
+(1:x)and the Database info {..} in Settings Table  {...} is less than #,
+(1:x)and the Database info {..} in Settings Table  {...} is less than or equl to #,
+
+(5:x) Add Settings Info {...} to Database Settings Table {...}.
+(5:x) update Database Info {...} for Settings Table {...} to {...}.
+(5:x) remove Database info {...} from Settings Table{...}.
+(5:x) clear all Settings Table Database info.
+
 Help Menu with Helpfule links
 Silent Prefix (Client and UI Says/Emotes) Bot client side only... Doesn't send to server [IE: Pillow Cannon]
 

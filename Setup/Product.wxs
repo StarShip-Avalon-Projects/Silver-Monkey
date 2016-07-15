@@ -12,16 +12,19 @@
     UpgradeCode="A709F3A0-BEE3-403E-AC47-1FE1AD189C77">
     <Package InstallerVersion="500" InstallPrivileges="elevated"  Compressed="yes"  />
     
-    <Property Id="WixUI_FeatureTree" Value="INSTALLFOLDER" />
-		<UIRef Id="WixUI_FeatureTree" />
+
+		<UIRef Id="WixUI_Advanced" />
+    <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
     <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="license.Rtf"/>
-    <WixVariable Id="WixUIBannerBmp" Value="metal.png" />
+ <!--   <WixVariable Id="WixUIBannerBmp" Value="metal.png" /> -->
+    <WixVariable Id="WixUIDialogBmp" Value="metal.png" />
     <MajorUpgrade
-   Schedule="afterInstallInitialize"
+   Schedule="afterInstallInitialize" AllowSameVersionUpgrades="yes" Disallow="no"
    DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
     <Media Id="1" Cabinet="SilverMonkey.cab" EmbedCab="yes" CompressionLevel="high"/>
  	
-
+  <Property Id="ApplicationFolderName" Value="Silver Monkey" />
+    
          <Directory Id="TARGETDIR"
          Name="SourceDir">
            <Directory Id="ProgramFilesFolder">
@@ -35,7 +38,7 @@
             
              <!-- Step 1: Define the directory structure -->
 <Directory Id="ProgramMenuFolder">
-    <Directory Id="TSProjects" Name="Silver Monkey">
+    <Directory Id="APPLICATIONFOLDER" Name="Silver Monkey">
 
     </Directory>
   </Directory>
@@ -44,7 +47,7 @@
 
       <!-- Step 2: Add the shortcut to your installer package -->
 
-          <Component Id="SilverMonkey2Shortcut" Guid="069F47AB-1B04-4783-BAFB-E7788BDE48DA" Directory='TSProjects'>
+          <Component Id="SilverMonkey2Shortcut" Guid="069F47AB-1B04-4783-BAFB-E7788BDE48DA" Directory='APPLICATIONFOLDER'>
 
               <Shortcut Id="$(var.SilverMonkey2.TargetName)Shortcut"
                         Name="$(var.SilverMonkey2.TargetName)"
@@ -52,13 +55,13 @@
                         Target="[INSTALLFOLDER]$(var.SilverMonkey2.TargetName)"
                         WorkingDirectory='INSTALLFOLDER'
                         Description="Starts $(var.SilverMonkey2.TargetName)"
-                        Directory="TSProjects" />
+                        Directory="APPLICATIONFOLDER" />
 
            
-          <RemoveFolder Id="RemoveTSProjects" Directory="TSProjects" On="uninstall" />
-            <RegistryValue Root="HKCU" Key="Software\TSProjects\Silver Monkey" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
+          <RemoveFolder Id="RemoveAPPLICATIONFOLDER" Directory="APPLICATIONFOLDER" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\APPLICATIONFOLDER\Silver Monkey" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
           </Component>
-          <Component Id="MonkeySpeakEditorShortcut" Guid="{4135A160-96A5-4C86-A402-AB2F1AEFA966}" Directory='TSProjects'>
+          <Component Id="MonkeySpeakEditorShortcut" Guid="{4135A160-96A5-4C86-A402-AB2F1AEFA966}" Directory='APPLICATIONFOLDER'>
             
               <Shortcut Id="$(var.MonkeySpeakEditor.TargetName)Shortcut"
                         Name="$(var.MonkeySpeakEditor.TargetName)"
@@ -66,13 +69,13 @@
                         WorkingDirectory='INSTALLFOLDER'
                         Target="[INSTALLFOLDER]$(var.MonkeySpeakEditor.TargetName)"
                         Description="Starts $(var.MonkeySpeakEditor.TargetName)"
-                        Directory="TSProjects" />
+                        Directory="APPLICATIONFOLDER" />
 
-            <RemoveFolder Id="RemoveMonkeySpeakEditor" Directory="TSProjects" On="uninstall" />
-            <RegistryValue Root="HKCU" Key="Software\TSProjects\Monkey Speak Editory" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
+            <RemoveFolder Id="RemoveMonkeySpeakEditor" Directory="APPLICATIONFOLDER" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\APPLICATIONFOLDER\Monkey Speak Editory" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
           </Component>
     
-              <Component Id="DataMonkeyShortcut" Guid="{9B9BA57E-16C0-4E6C-A343-2E372C65000C}" Directory='TSProjects'>
+              <Component Id="DataMonkeyShortcut" Guid="{9B9BA57E-16C0-4E6C-A343-2E372C65000C}" Directory='APPLICATIONFOLDER'>
             
               <Shortcut Id="$(var.DataMonkey.TargetName)Shortcut"
                         Name="$(var.DataMonkey.TargetName)"
@@ -80,13 +83,13 @@
                         WorkingDirectory='INSTALLFOLDER'
                         Target="[INSTALLFOLDER]$(var.DataMonkey.TargetName)"
                         Description="Starts $(var.DataMonkey.TargetName)"
-                        Directory="TSProjects" />
+                        Directory="APPLICATIONFOLDER" />
 
-            <RemoveFolder Id="RemoveDataMonkey" Directory="TSProjects" On="uninstall" />
-            <RegistryValue Root="HKCU" Key="Software\TSProjects\Data Monkey" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
+            <RemoveFolder Id="RemoveDataMonkey" Directory="APPLICATIONFOLDER" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\APPLICATIONFOLDER\Data Monkey" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
           </Component>
     
-              <Component Id="VerbotKnowledgebaseEditorShortcut" Guid="{9FB44C2E-575A-44B4-B85F-AB1AFC1572B4}" Directory='TSProjects'>
+              <Component Id="VerbotKnowledgebaseEditorShortcut" Guid="{9FB44C2E-575A-44B4-B85F-AB1AFC1572B4}" Directory='APPLICATIONFOLDER'>
             
               <Shortcut Id="$(var.VerbotKnowledgebaseEditor.TargetName)Shortcut"
                         Name="$(var.VerbotKnowledgebaseEditor.TargetName)"
@@ -94,13 +97,13 @@
                         WorkingDirectory='INSTALLFOLDER'
                         Target="[INSTALLFOLDER]$(var.VerbotKnowledgebaseEditor.TargetName)"
                         Description="Starts $(var.VerbotKnowledgebaseEditor.TargetName)"
-                        Directory="TSProjects" />
+                        Directory="APPLICATIONFOLDER" />
 
-            <RemoveFolder Id="RemoveVerbotKnowledgebaseEditor" Directory="TSProjects" On="uninstall" />
-            <RegistryValue Root="HKCU" Key="Software\TSProjects\Verbot Knowledgebase Editor" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
+            <RemoveFolder Id="RemoveVerbotKnowledgebaseEditor" Directory="APPLICATIONFOLDER" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\APPLICATIONFOLDER\Verbot Knowledgebase Editor" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
           </Component>
     
-              <Component Id="ChatBotShortcut" Guid="{F9E10352-4CD5-4000-B334-0000FAEF4FCD}" Directory='TSProjects'>
+              <Component Id="ChatBotShortcut" Guid="{F9E10352-4CD5-4000-B334-0000FAEF4FCD}" Directory='APPLICATIONFOLDER'>
             
               <Shortcut Id="$(var.ChatBot.TargetName)Shortcut"
                         Name="$(var.ChatBot.TargetName)"
@@ -108,10 +111,10 @@
                         WorkingDirectory='INSTALLFOLDER'
                         Target="[INSTALLFOLDER]$(var.ChatBot.TargetName)"
                         Description="Starts $(var.ChatBot.TargetName)"
-                        Directory="TSProjects" />
+                        Directory="APPLICATIONFOLDER" />
 
-            <RemoveFolder Id="RemoveChatBot" Directory="TSProjects" On="uninstall" />
-            <RegistryValue Root="HKCU" Key="Software\TSProjects\Chat Bot" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
+            <RemoveFolder Id="RemoveChatBot" Directory="APPLICATIONFOLDER" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\APPLICATIONFOLDER\Chat Bot" Name="InstalledStartMenuShortcuts" Type="integer" Value="1" />
           </Component>
       
 

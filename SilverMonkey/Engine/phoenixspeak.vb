@@ -100,12 +100,7 @@ Public Class phoenixspeak
             'Debug.Print("Msg = " & msg)
             Return msg.Contains(msMsg)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -119,12 +114,7 @@ Public Class phoenixspeak
             If msg.Value.ToString.Contains(msMsg) Then Return False
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -136,12 +126,7 @@ Public Class phoenixspeak
             If msMsg = msg.Value.ToString Then Return True
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -153,149 +138,104 @@ Public Class phoenixspeak
             If msMsg <> msg.Value.ToString Then Return True
             Return False
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
     '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
-    Function RemberPSInforTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function RemberPSInforTrigFurre(reader As TriggerReader) As Boolean
         Try
             Dim furre As String = callbk.Player.ShortName
             sendServer("ps get characer." + furre + ".*")
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.
-    Function RemberPSInforFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function RemberPSInforFurreNamed(reader As TriggerReader) As Boolean
         Try
             Dim furre As String = reader.ReadString
             sendServer("ps get characer." + furre + ".*")
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.
-    Function RemberPSInfoAllDream(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function RemberPSInfoAllDream(reader As TriggerReader) As Boolean
         Try
             sendServer("ps get dream.*")
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:63) get all Phoenix Speak info for all characters and put it into the PSInfo cache.
-    Function RemberPSInfoAllCharacters(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function RemberPSInfoAllCharacters(reader As TriggerReader) As Boolean
         Try
             sendServer("ps get character.*")
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:64) get All Phoenix Speak info with ID # for the triggering furre and put it into the PSInfo Cache.
-    Function RemberPSInforTrigFurre_ID(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function RemberPSInforTrigFurre_ID(reader As TriggerReader) As Boolean
         Try
             Dim ID As String = ReadVariableOrNumber(reader).ToString
             Dim furre As String = callbk.Player.ShortName
             sendServer("ps " + ID + " get characer." + furre + ".*")
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:65) get All Phoenix Speak info with ID # for the Furre Named {...} and put it into the PSInfo Cache.
-    Function RemberPSInfoFurreNamed_ID(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function RemberPSInfoFurreNamed_ID(reader As TriggerReader) As Boolean
         Try
             Dim ID As String = ReadVariableOrNumber(reader).ToString
             Dim furre As String = reader.ReadString
             sendServer("ps " + ID + " get character." + furre + ".*")
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:66) get All Phoenix Speak info with ID # for the dream and put it into the PSInfo Cache.
-    Function RemberPSInfoAllDream_ID(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function RemberPSInfoAllDream_ID(reader As TriggerReader) As Boolean
         Try
             Dim ID As String = ReadVariableOrNumber(reader).ToString
             sendServer("ps " + ID + " get dream.*")
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:68) get all Phoenix Speak info with ID # for all characters and put it into the PSInfo cache.
-    Function RemberPSInfoAllCharacters_ID(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function RemberPSInfoAllCharacters_ID(reader As TriggerReader) As Boolean
         Try
             Dim ID As String = ReadVariableOrNumber(reader).ToString
             sendServer("ps " + ID + " get character.*")
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
 
-    Public Function getPSinfo(reader As Monkeyspeak.TriggerReader) As Boolean
+    Public Function getPSinfo(reader As TriggerReader) As Boolean
         Try
             Dim Info As String = reader.ReadString()
-            Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim var As Variable = reader.ReadVariable(True)
             If Main.PSinfo.ContainsKey(Info) Then
                 var.Value = Main.PSinfo.Item(Info)
             Else
@@ -303,253 +243,178 @@ Public Class phoenixspeak
             End If
             Return True
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
     '(5:81) Store PSInfo Key Names to Variable %Variable.
-    Function PSInfoKeyToVariable(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function PSInfoKeyToVariable(reader As TriggerReader) As Boolean
         Try
-            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim Var As Variable = reader.ReadVariable(True)
             Var.Value = String.Join(" ", Main.PSinfo.Keys)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.
-    Function MemorizeFurreNamedPS(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function MemorizeFurreNamedPS(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             Dim furre As String = reader.ReadString
             sendServer("ps set characer." + furre + "." + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.
-    Function ForgetFurreNamedPS(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function ForgetFurreNamedPS(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             Dim furre As String = reader.ReadString
             sendServer("ps clear characer." + furre + "." + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.
-    Function MemorizeTrigFurrePS(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function MemorizeTrigFurrePS(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             Dim furre As String = callbk.Player.ShortName
             sendServer("ps set characer." + furre + "." + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.
-    Function ForgetTrigFurrePS(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function ForgetTrigFurrePS(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             Dim furre As String = callbk.Player.ShortName
             sendServer("ps clear characer." + furre + "." + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
 
     '(5:86) Memorize Phoenix Speak info {...} with ID # for the Furre Named {...}.
-    Function MemorizeFurreNamedPS_ID(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function MemorizeFurreNamedPS_ID(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             Dim ID As String = ReadVariableOrNumber(reader).ToString
             Dim furre As String = reader.ReadString
             sendServer("ps " + ID + " set characer." + furre + " " + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:87) Forget Phoenix Speak info {...} with ID # for the Furre Named {...}.
-    Function ForgetFurreNamedPS_ID(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function ForgetFurreNamedPS_ID(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             Dim ID As String = ReadVariableOrNumber(reader).ToString
             Dim furre As String = reader.ReadString
             sendServer("ps " + ID + " clear characer." + furre + " " + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:88) Memorize Phoenix Speak info {...} with ID # for the Triggering Furre.
-    Function MemorizeTrigFurrePS_ID(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function MemorizeTrigFurrePS_ID(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             Dim ID As String = ReadVariableOrNumber(reader).ToString
             Dim furre As String = callbk.Player.ShortName
             sendServer("ps " + ID + " set characer." + furre + "." + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:89) Forget Phoenix Speak info {...} with ID # for the Triggering Furre.
-    Function ForgetTrigFurrePS_ID(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function ForgetTrigFurrePS_ID(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             Dim ID As String = ReadVariableOrNumber(reader).ToString
             Dim furre As String = callbk.Player.ShortName
             sendServer("ps " + ID + " clear characer." + furre + "." + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
 
     '(5:90) Memorize Phoenix Speak info {...} for this dream.
-    Function MemorizeDreamPS(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function MemorizeDreamPS(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             sendServer("ps  set dream." + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:91) Forget Phoenix Speak info {...} for this dream.
-    Function ForgetDreamPS(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function ForgetDreamPS(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             sendServer("ps  clear dream." + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
 
     '(5:92) Memorize Phoenix Speak info {...} with ID # for this dream.
-    Function MemorizeDreamPS_ID(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function MemorizeDreamPS_ID(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             Dim ID As String = ReadVariableOrNumber(reader).ToString
             sendServer("ps " + ID + " set dream." + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:93) Forget Phoenix Speak info {...} with ID # for this dream.
-    Function ForgetDreamPS_ID(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function ForgetDreamPS_ID(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             Dim ID As String = ReadVariableOrNumber(reader).ToString
             sendServer("ps " + ID + " clear dream." + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
     '(5:94) execute Phoenix Speak command {...}.
-    Function PSCommand(reader As Monkeyspeak.TriggerReader) As Boolean
+    Function PSCommand(reader As TriggerReader) As Boolean
         Try
             Dim info As String = reader.ReadString
             sendServer("ps  " + info)
         Catch ex As Exception
-            Dim tID As String = reader.TriggerId.ToString
-            Dim tCat As String = reader.TriggerCategory.ToString
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            writer.WriteLine(ErrorString)
-            Debug.Print(ErrorString)
+            MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return True

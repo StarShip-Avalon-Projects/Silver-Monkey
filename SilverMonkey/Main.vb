@@ -1,5 +1,4 @@
 Imports Furcadia.Net.Movement
-Imports Furcadia.IO
 Imports Furcadia.Net
 Imports Furcadia.Base220
 Imports System.Text.RegularExpressions
@@ -90,7 +89,7 @@ Public Class Main
 
             smPounce.RemoveFriends()
             For Each kv As KeyValuePair(Of String, pFurre) In FurreList
-                If Not [String].IsNullOrEmpty(kv.Key) Then
+                If Not String.IsNullOrEmpty(kv.Key) Then
                     smPounce.AddFriend(kv.Key.ToFurcShortName())
                 End If
             Next
@@ -141,7 +140,7 @@ Public Class Main
 
 #Region "WmCpyDta"
 
-    <DllImport("user32.dll", EntryPoint:="FindWindow")> _
+    <DllImport("user32.dll", EntryPoint:="FindWindow")>
     Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
     End Function
     Public Declare Function SetFocusAPI Lib "user32.dll" Alias "SetFocus" (ByVal hWnd As Long) As Long
@@ -238,7 +237,6 @@ Public Class Main
     Dim InDream As Boolean = False
     Dim curWord As String
 
-    Public Shared [SQLitefile] As [String]
     'Public PS_Que As New Queue(Of String)(100)
     '0 = no error
     '1 = warning
@@ -358,7 +356,7 @@ Public Class Main
         End If
     End Sub
 
-    Public CharacterList As List(Of PSInfo_Struct) = New List(Of PSInfo_Struct)
+    Public Shared CharacterList As List(Of PSInfo_Struct) = New List(Of PSInfo_Struct)
     Public Enum PS_BackupStage
         off = 0
         GetList = 1
@@ -367,7 +365,7 @@ Public Class Main
         GetSingle
         RestoreAllCharacterPS
     End Enum
-    Public CurrentPS_Stage As PS_BackupStage = PS_BackupStage.off
+    Public Shared CurrentPS_Stage As PS_BackupStage = PS_BackupStage.off
 
     Public TroatTiredProc As Threading.Timer
     Private TickTime As DateTime = DateTime.Now
@@ -386,7 +384,7 @@ Public Class Main
     Private ps_mass As Double = 0
     Private pss_mass As Double = 0
 
-    Public PSS_Stack As New List(Of PSS_Struct)
+    Public Shared PSS_Stack As New List(Of PSS_Struct)
     Public LastPS_ID As Integer = 0
 
     Public Class PSS_Struct
@@ -448,8 +446,8 @@ Public Class Main
 
     'resend PS Command if we don't get a response from the server
     'Or skip insruction after failing 4 times
-    Dim PSLock2 As New Object
-    Dim LastSentPS As Integer
+    Private Shared PSLock2 As New Object
+    Private Shared LastSentPS As Integer
     Private Sub CheckPS_Send()
         If CurrentPS_Stage <> PS_BackupStage.RestoreAllCharacterPS Then Exit Sub
         If ThroatTired Then Exit Sub
@@ -474,21 +472,19 @@ Public Class Main
 
 
     Dim backupLock As New Object
-    Public PSBackupRunning As Boolean = False
+    Public Shared PSBackupRunning As Boolean = False
     Private Function SendPStoDatabase(s As PSInfo_Struct) As Boolean
 
         If PSRestoreRunning Then Return False
 
-        Dim db As New SQLiteDatabase(Main.SQLitefile)
-        db.CreateTbl("BACKUPMASTER", "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [date modified] TEXT")
-        db.CreateTbl("BACKUP", "[NameID] INTEGER, [Key] TEXT, [Value] TEXT")
+        Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
         Dim Value As Dictionary(Of String, String) = s.Values
         Dim cmd As String = "SELECT [ID] FROM BACKUPMASTER Where Name ='" & s.name & "'"
 
         Dim idx As Integer = 0
         Dim RecordExist As Boolean = Integer.TryParse(SQLiteDatabase.ExecuteScalar1(cmd).ToString, idx)
 
-        Dim dta As New Dictionary(Of [String], [String])()
+        Dim dta As New Dictionary(Of String, String)()
         If s.name.ToUpper = "[DREAM]" Then
             s.name = "[DREAM]"
         End If
@@ -522,13 +518,13 @@ Public Class Main
 
         Player = NametoFurre(s.name, True)
         Player.Message = ""
-        MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", "")
+        MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", Nothing)
         MS_Engine.MainMSEngine.PageExecute(504, 505)
 
         Return InsertMultiRow("BACKUP", idx, Value)
     End Function
 
-    Public PSPruneRunning As Boolean = False
+    Public Shared PSPruneRunning As Boolean = False
     Public Sub PrunePS(NumDays As Double)
         If PSBackupRunning Or PSRestoreRunning Or PSPruneRunning Then Exit Sub
         PSPruneRunning = True
@@ -536,7 +532,7 @@ Public Class Main
         'MainEngine.MSpage.Execute(500)
         SendClientMessage("SYSTEM:", "Pruning records older than " + NumDays.ToString + " days")
         Dim cmd2 As String = "SELECT * FROM BACKUPMASTER"
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(MSPK_MDB.SQLitefile)
         Dim dt As System.Data.DataTable = SQLiteDatabase.GetDataTable(cmd2)
         Dim result As String = ""
         Dim Counter As Integer = 0
@@ -558,7 +554,7 @@ Public Class Main
     End Sub
 
 
-    Public PSRestoreRunning As Boolean = False
+    Public Shared PSRestoreRunning As Boolean = False
 
     Public Sub RestorePS()
         If PSRestoreRunning Or PSBackupRunning Or PSPruneRunning Then Exit Sub
@@ -571,7 +567,7 @@ Public Class Main
         CurrentPS_Stage = PS_BackupStage.RestoreAllCharacterPS
         psReceiveCounter = 0
         psSendCounter = 1
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(MSPK_MDB.SQLitefile)
         Dim dt As System.Data.DataTable = SQLiteDatabase.GetDataTable(cmd)
         Dim result As String = ""
         For Each row As System.Data.DataRow In dt.Rows
@@ -583,8 +579,8 @@ Public Class Main
         ServerStack.Enqueue(s.Cmd)
 
     End Sub
-    Public psSendCounter As Int16 = 0
-    Public psReceiveCounter As Int16 = 0
+    Public Shared psSendCounter As Int16 = 0
+    Public Shared psReceiveCounter As Int16 = 0
     Public Sub RestorePS(days As Double)
         If PSRestoreRunning Or PSBackupRunning Or PSPruneRunning Then Exit Sub
         PSRestoreRunning = True
@@ -597,7 +593,7 @@ Public Class Main
         SendClientMessage("SYSTEM:", "Restoring characters newer than " + days.ToString + " days to the dream.")
         Dim cmd As String = "select * FROM BACKUPMASTER"
         CurrentPS_Stage = Main.PS_BackupStage.RestoreAllCharacterPS
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(MSPK_MDB.SQLitefile)
         Dim dt As System.Data.DataTable = SQLiteDatabase.GetDataTable(cmd)
         Dim result As String = ""
         For Each row As System.Data.DataRow In dt.Rows
@@ -621,14 +617,14 @@ Public Class Main
             str = str.ToFurcShortName
         End If
 
-        Dim cmd As String = _
-            "select BACKUP.*, BACKUPMASTER.ID from BACKUP " + _
-            "inner join BACKUPMASTER on " + _
-            "BACKUPMASTER.ID = BACKUP.NameID " + _
+        Dim cmd As String =
+            "select BACKUP.*, BACKUPMASTER.ID from BACKUP " +
+            "inner join BACKUPMASTER on " +
+            "BACKUPMASTER.ID = BACKUP.NameID " +
             "where BACKUPMASTER.Name = '" + str + "' "
         If msg Then SendClientMessage("SYSTEM:", "Restoring Phoenix Speak for " + str)
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
-        Dim dt As System.Data.DataTable = SQLiteDatabase.GetDataTable(cmd)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(MSPK_MDB.SQLitefile)
+        Dim dt As Data.DataTable = SQLiteDatabase.GetDataTable(cmd)
         Dim result As New ArrayList
         Dim ID As Integer = 0
         SyncLock (Me)
@@ -954,13 +950,11 @@ Public Class Main
 
     Private Sub ProxyError(eX As Exception, o As Object, n As String) Handles smProxy.Error
         sndDisplay(o.ToString + "- " + n + ": " + eX.Message)
-        'sndDisplay(eX.Message)
-        'Dim logError As New ErrorLogging(eX, Me)
-
+        LogStream.Writeline(n, eX)
     End Sub
 
 
-    Public Sub AddDataToList(ByRef lb As Controls.RichTextBoxEx, ByRef obj As String, ByRef newColor As fColorEnum)
+    Public Sub AddDataToList(ByRef lb As RichTextBoxEx, ByRef obj As String, ByRef newColor As fColorEnum)
         If InvokeRequired Then
             Dim dataArray() As Object = {lb, obj, newColor}
             Me.Invoke(New AddDataToListCaller(AddressOf AddDataToList), dataArray)
@@ -1014,64 +1008,14 @@ Public Class Main
                             With lb
                                 .Find(mmatch.ToString)
                                 'WAIT Snag Image Links first!
-                                'Dim snag As Match = Regex.Match(matchText, "IMG:(.*?)::")
-                                'If snag.Success Then
-                                '    Dim RTFimg As New RTFBuilder
-                                '    RTFimg.InsertImage(LoadImageFromUrl(snag.Groups(1).ToString))
-                                '    .SelectedRtf = RTFimg.ToString
-                                'Else
                                 .SelectedRtf = FormatURL(matchText & "\v #" & matchUrl & "\v0 ")
                                 .Find(matchText & "#" & matchUrl, RichTextBoxFinds.WholeWord)
                                 .SetSelectionLink(True)
-                                'End If
-                                'Put the Link in
-
                             End With
                         End If
                     Next
                 Next
-                'Dim Images As MatchCollection = Regex.Matches(lb.Text, "<img .*?src=[""']?([^'"">]+)[""']?.*?>", RegexOptions.IgnoreCase)
-                'For Each Image As Match In Images
-                '    Dim img As String = Image.Groups(1).Value
-                '    Dim alt As String = Image.Groups(2).Value
-                '    With lb
-                '        .SelectionStart = lb.Text.IndexOf(Image.ToString)
-                '        .SelectionLength = Image.ToString.Length
-                '        Dim RTFimg As New RTFBuilder
-                '        'RTFimg.Append("IMG:" & img & "::")
-                '        RTFimg.InsertImage(LoadImageFromUrl(img))
-                '        .SelectedRtf = RTFimg.ToString
-                '    End With
-                'Next
 
-                'Dim SysImages As MatchCollection = Regex.Matches(lb.Text, "\$(.[0-9]+)\$")
-                'For Each SysMatch As Match In SysImages
-                '    Dim idx As Integer = Convert.ToInt32(SysMatch.Groups(1).ToString)
-                '    With lb
-                '        .Find(SysMatch.ToString)
-                '        Dim RTFimg As New RTFBuilder
-                '        RTFimg.InsertImage(IMGresize(GetFrame(idx), log_))
-                '        .SelectedRtf = RTFimg.ToString
-                '    End With
-                'Next
-                '' 
-                'SysImages = Regex.Matches(lb.Text, "#C(.?)?")
-                'For Each SysMatch As Match In SysImages
-                '    Dim idx As Integer = Helper.CharToDescTag(SysMatch.Groups(1).ToString)
-                '    With lb
-                '        .Find(SysMatch.ToString)
-                '        Dim RTFimg As New RTFBuilder
-                '        RTFimg.InsertImage(IMGresize(GetFrame(idx, "desctags.fox"), log_))
-                '        .SelectedRtf = RTFimg.ToString
-                '    End With
-                'Next
-                'SysImages = Regex.Matches(lb.Text, "#S(.?)?")
-                'For Each SysMatch As Match In SysImages
-                '    With lb
-                '        .Find(SysMatch.ToString)
-                '        .SelectedRtf = GetSmily(SysMatch.Groups(1).Value)
-                '    End With
-                'Next
 
 
                 Try
@@ -1098,17 +1042,7 @@ Public Class Main
         End If
     End Sub
 
-    'Private Function GetFrame(ByRef Img As Integer, Optional ByRef FSH As String = "system.fsh") As Bitmap
-    '    If Not File.Exists(FurcPath.GetDefaultPatchPath() & FSH) Then
-    '        Dim pos As Integer = FSH.LastIndexOf(".")
-    '        FSH = FSH.Substring(0, pos) & ".fox"
-    '    End If
-    '    Dim shape As New FurcadiaShapes(FurcPath.GetDefaultPatchPath() & FSH)
-    '    Dim anims As Bitmap() = Helper.ToBitmapArray(shape)
-    '    ' pic.Image = anims(Img)
 
-    '    Return anims(Img)
-    'End Function
 
     Private Function IMGresize(ByRef bm_source As Bitmap, ByRef RTF As RichTextBoxEx) As Bitmap
         'Dim g As Graphics = Me.CreateGraphic
@@ -1134,70 +1068,12 @@ Public Class Main
 
 
     End Function
-    'Public Function GetSmily(ByRef ch As Char) As String
 
-    '    Dim RTFimg As New RTFBuilder
-    '    Dim file As String = ""
-    '    Dim shape As Integer = 0
-    '    If (ch >= "A") And (ch <= "P") Then
-    '        file = "smileys.fsh"
-    '        shape = Asc(ch) - Asc("A")
-    '    ElseIf (ch >= "Q" And ch <= "Z") Then
-    '        file = "smileys2.fsh"
-    '        shape = Asc(ch) - Asc("Q")
-    '    ElseIf (ch >= "a" And ch <= "z") Then
-    '        file = "smileys2.fsh"
-    '        shape = Asc(ch) - Asc("a") + 10
-    '    ElseIf (ch >= "1" And ch <= "3") Then
-    '        file = "smileys2.fsh"
-    '        shape = Asc(ch) - Asc("1") + 35
-    '    End If
-    '    RTFimg.InsertImage(IMGresize(GetFrame(shape, file), log_))
-    '    Return RTFimg.ToString
-
-    'End Function
 
     Private ImageList As New Dictionary(Of String, Image)
-    ''' <summary>
-    ''' Downloads an image file from a web server and Stores it in a temp file location
-    ''' if it doesn't already exist at that location
-    ''' </summary>
-    ''' <param name="url"></param>
-    ''' <returns>image</returns>
-    ''' <remarks></remarks>
-    'Public Function LoadImageFromUrl(ByRef url As String) As Image
-    '    Dim img As Image = Nothing
-    '    Dim ImageFile As String = System.IO.Path.GetFileName(url)
-    '    Dim TempPath As String = Path.GetTempPath()
-    '    Dim Filename As String = ""
-    '    If url.StartsWith("fsh://") = False Then Filename = ImageFile.Substring(0, ImageFile.Length - 4)
-    '    If url.StartsWith("fsh://") Then
-    '        Dim start As Integer = url.LastIndexOf("/") + 1
-    '        Dim last As Integer = url.LastIndexOf(":") - start
-    '        Dim FSH As String = url.Substring(start, last)
 
-    '        img = GetFrame(CInt(ImageFile), FSH)
-    '    ElseIf ImageList.ContainsKey(Filename) Then
-    '        img = ImageList.Item(Filename)
-    '    ElseIf Not File.Exists(TempPath & "/" & ImageFile) Then
-    '        Try
-    '            Dim request As HttpWebRequest = DirectCast(HttpWebRequest.Create(url), HttpWebRequest)
-    '            Dim response As HttpWebResponse = DirectCast(request.GetResponse, HttpWebResponse)
-    '            img = Image.FromStream(response.GetResponseStream())
-    '            response.Close()
-    '            img.Save(TempPath & "/" & ImageFile)
-    '        Catch
-    '            Console.WriteLine("Error 404: Could not read " & ImageFile & " from Apollo.furcadia.com")
-    '        End Try
-    '        If ImageList.ContainsKey(Filename) = False Then ImageList.Add(Filename, img)
-    '    Else
-    '        img = Image.FromFile(TempPath & "/" & ImageFile)
-    '        If ImageList.ContainsKey(Filename) = False Then ImageList.Add(Filename, img)
-    '    End If
-    '    Return IMGresize(CType(img, Bitmap), log_)
-    'End Function
 
-    Private Sub log__KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles log_.KeyDown
+    Private Sub log__KeyDown(sender As Object, e As KeyEventArgs) Handles log_.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
         ElseIf (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
@@ -1206,7 +1082,7 @@ Public Class Main
     End Sub
 
 
-    Private Sub log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles log_.LinkClicked
+    Private Sub log__LinkClicked(ByVal sender As Object, ByVal e As LinkClickedEventArgs) Handles log_.LinkClicked
         Dim Proto As String = ""
         Dim Str As String = e.LinkText
         Try
@@ -1219,21 +1095,21 @@ Public Class Main
         Select Case Proto.ToLower
             Case "http"
                 Try
-                    Me.Cursor = System.Windows.Forms.Cursors.AppStarting
+                    Me.Cursor = Cursors.AppStarting
                     Dim url As String = Str.Substring(InStr(Str, "#"))
                     Process.Start(url)
                 Catch ex As Exception
                 Finally
-                    Me.Cursor = System.Windows.Forms.Cursors.Default
+                    Me.Cursor = Cursors.Default
                 End Try
             Case "https"
                 Try
-                    Me.Cursor = System.Windows.Forms.Cursors.AppStarting
+                    Me.Cursor = Cursors.AppStarting
                     Dim url As String = Str.Substring(InStr(Str, "#"))
                     Process.Start(url)
                 Catch ex As Exception
                 Finally
-                    Me.Cursor = System.Windows.Forms.Cursors.Default
+                    Me.Cursor = Cursors.Default
                 End Try
             Case Else
                 MsgBox("Protocol: """ & Proto & """ Not yet implemented")
@@ -1547,7 +1423,7 @@ Public Class Main
                 Dim AFK_Pos As Integer = data.Length - 5
                 Dim AFKStr As String = data.Substring(AFK_Pos, 4)
                 Player.AFK = ConvertFromBase220(data.Substring(AFK_Pos, 4))
-                Dim FlagCheck As Integer = CType(Flags.CHAR_FLAG_NEW_AVATAR, Integer) - Player.Flag
+                Dim FlagCheck As Integer = Flags.CHAR_FLAG_NEW_AVATAR - Player.Flag
 
                 ' Add New Arrivals to Dream List
                 ' One or the other will trigger it
@@ -1558,7 +1434,7 @@ Public Class Main
                     DREAM.List.Add(Player.ID, Player)
                     If InDream Then UpDateDreamList(Player.Name)
                     If Player.Flag = 2 Then
-                        Dim Bot As FURRE = fIDtoFurre(CUInt(BotUID))
+                        Dim Bot As FURRE = fIDtoFurre((BotUID))
                         Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
                         If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
                             Player.Visible = True
@@ -1570,7 +1446,7 @@ Public Class Main
                         MS_Engine.MainMSEngine.PageExecute(24, 25)
                     End If
                 ElseIf Player.Flag = 2 Then
-                    Dim Bot As FURRE = fIDtoFurre(CUInt(BotUID))
+                    Dim Bot As FURRE = fIDtoFurre((BotUID))
                     Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
                     If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
                         Player.Visible = True
@@ -1618,7 +1494,7 @@ Public Class Main
                 Player.X = CUInt(ConvertFromBase220(data.Substring(5, 2)) * 2)
                 Player.Y = ConvertFromBase220(data.Substring(7, 2))
                 Player.Shape = ConvertFromBase220(data.Substring(9, 2))
-                Dim Bot As FURRE = fIDtoFurre(CUInt(BotUID))
+                Dim Bot As FURRE = fIDtoFurre((BotUID))
                 Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
                 If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
                     Player.Visible = True
@@ -1642,7 +1518,7 @@ Public Class Main
                 Player.Y = ConvertFromBase220(data.Substring(7, 2))
                 Player.Shape = ConvertFromBase220(data.Substring(9, 2))
 
-                Dim Bot As FURRE = fIDtoFurre(CUInt(BotUID))
+                Dim Bot As FURRE = fIDtoFurre((BotUID))
                 Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
                 If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
 
@@ -1735,11 +1611,7 @@ Public Class Main
             BotUID = UInteger.Parse(data.Remove(0, 2))
             'Snag out UID
         ElseIf data.StartsWith("]B") Then
-            Try
-                BotUID = UInteger.Parse(data.Remove(0, 2))
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
+            BotUID = UInteger.Parse(data.Substring(2, data.Length - BotName.Length - 3))
             If smProxy.IsClientConnected Then smProxy.SendClient(data + vbLf)
             Exit Sub
         ElseIf data.StartsWith("~") Then
@@ -2672,7 +2544,7 @@ Public Class Main
             Exit Sub
 
         ElseIf data.StartsWith("(You enter the dream of") Then
-            MS_Engine.MainMSEngine.PageSetVariable("DREAMNAME", "")
+            MS_Engine.MainMSEngine.PageSetVariable("DREAMNAME", Nothing)
             MS_Engine.MainMSEngine.PageSetVariable("DREAMOWNER", data.Substring(24, data.Length - 2 - 24))
             MS_Engine.MainMSEngine.PageExecute(90, 91)
             sndDisplay(data)
@@ -2689,7 +2561,7 @@ Public Class Main
         ' If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
         ' Exit Sub
     End Sub
-    Public Sub PS_Abort()
+    Public Shared Sub PS_Abort()
         CurrentPS_Stage = PS_BackupStage.off
         PSS_Stack.Clear()
         CharacterList.Clear()
@@ -2834,10 +2706,10 @@ Public Class Main
     ''' <param name="tableName">The table into which we insert the data.</param>
     ''' <param name="data">A dictionary containing the column names and data for the insert.</param>
     ''' <returns>A boolean true or false to signify success or failure.</returns>
-    Public Function InsertMultiRow(tableName As [String], ID As Integer, data As Dictionary(Of [String], [String])) As Boolean
+    Public Function InsertMultiRow(tableName As String, ID As Integer, data As Dictionary(Of String, String)) As Boolean
         Dim values As New List(Of String)
-        For Each val As KeyValuePair(Of [String], [String]) In data
-            values.Add([String].Format(" ( {0}, '{1}', '{2}' )", ID, val.Key, val.Value))
+        For Each val As KeyValuePair(Of String, String) In data
+            values.Add(String.Format(" ( {0}, '{1}', '{2}' )", ID, val.Key, val.Value))
         Next
 
         Try
@@ -2845,7 +2717,7 @@ Public Class Main
             If values.Count > 0 Then
                 Dim str As String = String.Join(", ", values.ToArray)
                 'INSERT INTO 'table' ('column1', 'col2', 'col3') VALUES (1,2,3),  (1, 2, 3), (etc);
-                Dim cmd As String = [String].Format("INSERT into '{0}' (NameID, 'Key', 'Value') Values {1};", tableName, str)
+                Dim cmd As String = String.Format("INSERT into '{0}' (NameID, 'Key', 'Value') Values {1};", tableName, str)
                 i = SQLiteDatabase.ExecuteNonQuery(cmd)
             End If
             Return values.Count <> 0 AndAlso i <> 0
@@ -3167,7 +3039,7 @@ Public Class Main
 
     End Sub
 
-    Private Sub Main_KeyUp(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyUp
+    Private Sub Main_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
         If (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
 
             LaunchEditor()
@@ -3666,7 +3538,7 @@ Public Class Main
         'End If
     End Sub
 
-    Private Sub toServer_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles toServer.KeyDown
+    Private Sub toServer_KeyDown(sender As Object, e As KeyEventArgs) Handles toServer.KeyDown
         'Command History
         If (e.KeyCode = Keys.I AndAlso e.Modifiers = Keys.Control) Then
 

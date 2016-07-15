@@ -11,7 +11,7 @@ Public Class LogStream
     Private Shared strErrorFilePath As String
     Private Shared Stack As New List(Of String)
     Public Sub New(FileName As String, FilePath As String)
-        strErrorFilePath = FilePath & "\" & FileName & ".log"
+        strErrorFilePath = Path.Combine(FilePath, FileName & ".log")
         Try
             If Not Directory.Exists(FilePath) Then
                 Directory.CreateDirectory(FilePath)
@@ -31,7 +31,7 @@ Public Class LogStream
     End Function
 
     Public Shared Sub Writeline(Message As String, ByRef ObjectException As Exception)
-        Dim build As New System.Text.StringBuilder(Message)
+        Dim build As New Text.StringBuilder(Message)
         Dim Names As MatchCollection = Regex.Matches(Message, NameFilter)
         For Each Name As Match In Names
             build = build.Replace(Name.ToString, Name.Groups(3).Value)
@@ -109,7 +109,7 @@ Public Class LogStream
     End Sub
 
     Public Shared Sub Writeline(Message As String)
-        Dim build As New System.Text.StringBuilder(Message)
+        Dim build As New Text.StringBuilder(Message)
         Dim Names As MatchCollection = Regex.Matches(Message, NameFilter)
         For Each Name As Match In Names
             build = build.Replace(Name.ToString, Name.Groups(3).Value)

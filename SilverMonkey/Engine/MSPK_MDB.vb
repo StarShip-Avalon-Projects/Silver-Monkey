@@ -22,7 +22,7 @@ Public Class MSPK_MDB
             Return _SQLitefile
         End Get
         Set(value As String)
-            _SQLitefile = value
+            _SQLitefile = CheckBotFolder(value)
         End Set
     End Property
 
@@ -31,21 +31,10 @@ Public Class MSPK_MDB
 
     Public Sub New()
 
-        Try
-            writer = New TextBoxWriter(Variables.TextBox1)
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
-        Try
-            'Set the default file the first time this MonkeySpeak Library is run
+        writer = New TextBoxWriter(Variables.TextBox1)
 
-
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
-        Try
-            '(0:500) When the bot starts backing up the character Phoenix Speak,
-            Add(TriggerCategory.Cause, 500,
+        '(0:500) When the bot starts backing up the character Phoenix Speak,
+        Add(TriggerCategory.Cause, 500,
                 Function()
                     Return True
                 End Function, "(0:500) When the bot starts backing up the character Phoenix Speak,")
@@ -143,13 +132,38 @@ Public Class MSPK_MDB
             '(1:522) and the bot is not in the middle of a PS Restore Process,
             Add(New Trigger(TriggerCategory.Condition, 522),
                  AddressOf BotRestore, "(1:522) and the bot is not in the middle of a PS Restore Process,")
-            '(1:523) and the bot is in the middle of a PS Restore Process,
-            Add(New Trigger(TriggerCategory.Condition, 523),
+        '(1:523) and the bot is in the middle of a PS Restore Process,
+        Add(New Trigger(TriggerCategory.Condition, 523),
                  AddressOf NotBotRestore, "(1:523) and the bot is in the middle of a PS Restore Process,")
 
+        'Installed 7/13/120`16
+        '(1:524) and the Database info  {...} in Settings Table {...} exists,
+        Add(New Trigger(TriggerCategory.Condition, 524),
+                 AddressOf SettingExist, "(1:524) and the Database info  {...} in Settings Table {...} exists,")
+        '(1:525) and the Database info  {...} in Settings Table {...} doesn't exist,
+        Add(New Trigger(TriggerCategory.Condition, 525),
+                 AddressOf SettingNotExist, "(1:525) and the Database info  {...} in Settings Table {...} doesn't exist,")
+        '(1:526) and the Database info {..} in Settings Table  {...} Is equal to {...},
+        Add(New Trigger(TriggerCategory.Condition, 526),
+                 AddressOf SettingEqualTo, "(1:526) and the Database info {..} in Settings Table  {...} Is equal to {...},")
+        '(1:527) and the Database info {..} in Settings Table  {...} Is Not equal to {...},
+        Add(New Trigger(TriggerCategory.Condition, 527),
+                 AddressOf SettingNotEqualTo, "(1:527) and the Database info {..} in Settings Table  {...} Is not equal to {...},")
+        '(1:528) and the Database info {..} in Settings Table  {...} Is greater than #,
+        Add(New Trigger(TriggerCategory.Condition, 528),
+                 AddressOf SettingGreaterThan, "(1:528) and the Database info {..} in Settings Table  {...} Is greater than #,")
+        '(1:529) and the Database info {..} in Settings Table  {...} Is greater than or equal to #,
+        Add(New Trigger(TriggerCategory.Condition, 529),
+                 AddressOf SettingGreaterThanOrEqualTo, "(1:529) and the Database info {..} in Settings Table  {...} Is greater than or equal to #,")
+        '(1:530) and the Database info {..} in Settings Table  {...} Is less than #,
+        Add(New Trigger(TriggerCategory.Condition, 530),
+                 AddressOf SettingLessThan, "(1:530) and the Database info {..} in Settings Table  {...} Is less than #,")
+        '(1:530) and the Database info {..} in Settings Table  {...} Is less than #,
+        Add(New Trigger(TriggerCategory.Condition, 531),
+                 AddressOf SettingLessThanOrEqualTo, "(1:531) and the Database info {..} in Settings Table  {...} Is less than or equal to #,")
 
-            '(5:500) use SQLite database file {...} or create file if it does not exist.
-            Add(New Trigger(TriggerCategory.Effect, 500), AddressOf createMDB, "(5:500) use SQLite database file {...} or create file if it does not exist.")
+        '(5:500) use SQLite database file {...} or create file if it does not exist.
+        Add(New Trigger(TriggerCategory.Effect, 500), AddressOf createMDB, "(5:500) use SQLite database file {...} or create file if it does not exist.")
 
             '(5:505 ) Add the triggering furre with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
             Add(New Trigger(TriggerCategory.Effect, 505), AddressOf insertTriggeringFurreRecord, "(5:505) add the triggering furre with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
@@ -218,9 +232,10 @@ Public Class MSPK_MDB
                 "(5:559) execute ""VACUUM"" to rebuild the database and reclaim wasted space.")
             Add(New Trigger(TriggerCategory.Effect, 560), AddressOf AbortPS,
                 "(5:560) abort Phoenix Speak backup or restore process")
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
+        '(5:561) remember Database Info {...} for Settings Table {...} to {...}.
+        '(5:562) forget Database info {...} from Settings Table{...}.
+        '(5:563) forget all Settings Table Database info.
+
 
     End Sub
 
@@ -306,8 +321,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -329,8 +343,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -351,8 +364,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -373,8 +385,7 @@ Public Class MSPK_MDB
 
         Try
             info = reader.ReadString
-            Furre = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = reader.ReadString.ToFurcShortName
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
@@ -393,8 +404,8 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = reader.ReadString.ToFurcShortName
+
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -414,8 +425,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = reader.ReadString.ToFurcShortName
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -435,8 +445,8 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = reader.ReadString.ToFurcShortName
+
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
@@ -456,8 +466,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = reader.ReadString.ToFurcShortName
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
@@ -476,8 +485,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = reader.ReadString.ToFurcShortName
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -494,8 +502,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the furre named {...} is equal to {...},
     Public Function FurreNamedinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = reader.ReadString()
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Dim Furre As String = reader.ReadString().ToFurcShortName
         Dim str As String = reader.ReadString
         Try
             Return str = GetValueFromTable(Info, Furre).ToString
@@ -508,8 +515,8 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the furre named {...} is not equal to {...},
     Public Function FurreNamedinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = reader.ReadString
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Dim Furre As String = reader.ReadString.ToFurcShortName
+
         Dim str As String = reader.ReadString
 
         Try
@@ -523,8 +530,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the triggering furre is equal to {...},
     Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
         Dim str As String = reader.ReadString
         Try
             If str = GetValueFromTable(Info, Furre).ToString Then Return True
@@ -537,8 +543,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the triggering furre is not equal to {...},
     Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
         Dim str As String = reader.ReadString
         Try
             If str <> GetValueFromTable(Info, Furre).ToString Then Return True
@@ -553,7 +558,7 @@ Public Class MSPK_MDB
     Public Function BotBackup(reader As TriggerReader) As Boolean
 
         Try
-            Return Not callbk.PSBackupRunning
+            Return Not Main.PSBackupRunning
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -563,7 +568,7 @@ Public Class MSPK_MDB
     '(1:521) and the bot is in the middle of a PS Backup Process
     Public Function NotBotBackup(reader As TriggerReader) As Boolean
         Try
-            Return callbk.PSBackupRunning
+            Return Main.PSBackupRunning
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -574,7 +579,7 @@ Public Class MSPK_MDB
     Public Function BotRestore(reader As TriggerReader) As Boolean
 
         Try
-            Return Not callbk.PSRestoreRunning
+            Return Not Main.PSRestoreRunning
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -585,18 +590,189 @@ Public Class MSPK_MDB
     Public Function NotBotRestore(reader As TriggerReader) As Boolean
 
         Try
-            Return callbk.PSRestoreRunning
+            Return Main.PSRestoreRunning
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
         End Try
         Return False
     End Function
+    '(1:x) And the Database info  {...} in Settings Table {...} exists,
+    Public Function SettingExist(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString(True)
+        Dim setting As String = reader.ReadString(True)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.ID from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + setting + "' "
+        Try
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Return cache.Count > 0
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:x) And the Database info  {...} in Settings Table {...} doesn't exist,
+    Public Function SettingNotExist(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString(True)
+        Dim setting As String = reader.ReadString(True)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.ID from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + setting + "' "
+        Try
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Return cache.Count = 0
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:x) And the Database info {..} in Settings Table  {...} Is equal to {...},
+    Public Function SettingEqualTo(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Value As String = reader.ReadString(True)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Info + "' "
+        Try
+
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+
+            Return cache.Item(Info).ToString = Value
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:x) And the Database info {..} in Settings Table  {...} Is Not equal to {...},
+    Public Function SettingNotEqualTo(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Value As String = reader.ReadString(True)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Info + "' "
+        Try
+
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Return cache.Item(Info).ToString <> Value
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:x) And the Database info {..} in Settings Table  {...} Is greater than #,
+    Public Function SettingGreaterThan(reader As TriggerReader) As Boolean
+        Dim Setting As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Number As Double = reader.ReadVariableOrNumber()
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Setting + "' "
+        Try
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num > Number
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+    End Function
+    '(1:x )And the Database info {..} in Settings Table  {...} Is greater than Or equl to #,
+    Public Function SettingGreaterThanOrEqualTo(reader As TriggerReader) As Boolean
+        Dim Setting As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Number As Double = reader.ReadVariableOrNumber()
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Setting + "' "
+        Try
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num >= Number
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:x )And the Database info {..} in Settings Table  {...} Is less than #,
+    Public Function SettingLessThan(reader As TriggerReader) As Boolean
+        Dim Setting As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Number As Double = reader.ReadVariableOrNumber()
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Setting + "' "
+        Try
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num < Number
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+    End Function
+    '(1:x )And the Database info {..} in Settings Table  {...} Is less than Or equl to #,
+    Public Function SettingLessThanOrEqualTo(reader As TriggerReader) As Boolean
+        Dim Setting As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Number As Double = reader.ReadVariableOrNumber()
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Setting + "' "
+        Try
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num <= Number
+        Catch ex As Exception
+            MainMSEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
 #End Region
 
 #Region "Condition Helper Functions"
-    Private Function GetValueFromTable(ByRef Column As String, ByRef Name As String) As Object
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+    Private Function GetValueFromTable(Column As String, ByRef Name As String) As Object
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim str As String = "SELECT * FROM FURRE WHERE Name='" & Name & "';"
         SyncLock lock
             cache = db.GetValueFromTable(str)
@@ -630,13 +806,12 @@ Public Class MSPK_MDB
 
     '(5:405) Add the triggering furre with default access level to the Furre Table in the database if he, she or it don't exist.
     Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
+        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
         Dim info As String = reader.ReadString
         'Dim value As String = reader.ReadVariable.Value.ToString
 
-        Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
-        Dim data As New Dictionary(Of [String], [String])()
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim data As New Dictionary(Of String, String)()
         data.Add("[Name]", Furre)
         data.Add("[date added]", Date.Now.ToString)
         data.Add("[date modified]", Date.Now.ToString)
@@ -651,7 +826,7 @@ Public Class MSPK_MDB
 
     '(5:506) add furre named {%NewMember} with the default access level "1" to the Furre Table in the database if he, she, or it doesn't exist.
     Public Function InsertFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = reader.ReadString
+        Dim Furre As String = reader.ReadString.ToFurcShortName
         Dim info As String
         If reader.PeekString Then
             info = reader.ReadString
@@ -660,8 +835,7 @@ Public Class MSPK_MDB
         End If
         'Dim value As String = reader.ReadVariable.Value.ToString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of [String], [String])()
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Dim data As New Dictionary(Of String, String)()
         data.Add(MS_Name, Furre)
         data.Add("[date added]", Date.Now.ToString)
         data.Add("[date modified]", Date.Now.ToString)
@@ -681,7 +855,7 @@ Public Class MSPK_MDB
         Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
         Dim value As Double = ReadVariableOrNumber(reader)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of [String], [String])()
+        Dim data As New Dictionary(Of String, String)()
         data.Add(MS_Name, Furre)
         data.Add("[" & info & "]", value.ToString)
         data.Add("[date modified]", Date.Now.ToString)
@@ -700,7 +874,7 @@ Public Class MSPK_MDB
         'Dim Furre As String = MainEngine.MSpage.GetVariable("~Name").Value.ToString
         Dim value As String = ReadVariableOrNumber(reader, False).ToString
         Dim db As New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of [String], [String])()
+        Dim data As New Dictionary(Of String, String)()
         data.Add(MS_Name, Furre.ToFurcShortName)
         data.Add("[" & info & "]", value)
         data.Add("[date modified]", Date.Now.ToString)
@@ -716,11 +890,10 @@ Public Class MSPK_MDB
     Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
+        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
         Dim value As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of [String], [String])()
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Dim data As New Dictionary(Of String, String)()
         data.Add(MS_Name, Furre)
         data.Add("[" & info & "]", value)
         data.Add("[date modified]", Date.Now.ToString)
@@ -735,12 +908,11 @@ Public Class MSPK_MDB
     '(5:410) update Database info {...} about the furre named {...} will now be {...}.
     Public Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
-        Dim Furre As String = reader.ReadString
+        Dim Furre As String = reader.ReadString.ToFurcShortName
         'Dim Furre As String = MainEngine.MSpage.GetVariable("~Name").Value.ToString
         Dim value As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of [String], [String])()
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Dim data As New Dictionary(Of String, String)()
         data.Add(MS_Name, Furre)
         data.Add("[" & info & "]", value)
         data.Add("[date modified]", Date.Now.ToString)
@@ -758,8 +930,7 @@ Public Class MSPK_MDB
         Try
             Dim Info As String = reader.ReadString
             Dim Variable As Variable = reader.ReadVariable(True)
-            Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
             'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where Name ='" & Furre & "'"
             Variable.Value = SQLiteDatabase.ExecuteScalar1(cmd)
@@ -774,8 +945,7 @@ Public Class MSPK_MDB
     Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
         Try
             Dim Info As String = reader.ReadString
-            Dim Furre As String = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Dim Furre As String = reader.ReadString.ToFurcShortName
             Dim Variable As Variable = reader.ReadVariable(True)
             ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where Name ='" & Furre & "'"
@@ -797,16 +967,14 @@ Public Class MSPK_MDB
     End Function
     '(5:418) delete all Database info about the triggering furre.
     Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString()
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
     End Function
     '(5:419) delete all Database info about the furre named {...}.
     Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = reader.ReadString
-        Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+        Dim Furre As String = reader.ReadString.ToFurcShortName
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
@@ -850,16 +1018,14 @@ Public Class MSPK_MDB
         Dim dt As DataTable = SQLiteDatabase.GetDataTable(sql)
         Column = Column.Replace("[", "")
         Column = Column.Replace("]", "")
+        Dim suma As Double = 0.0R
         For Each row As DataRow In dt.Rows
-            Try
-                Dim num As Double = 0
-                Double.TryParse(row(Column).ToString, num)
-                TotalSum += num
-                'Console.WriteLine("Calculating TotalSum {0}", TotalSum.ToString)
-            Catch
-            End Try
+            Dim num As Double = 0R
+            Double.TryParse(row(Column).ToString, num)
+            suma += num
         Next row
-        Total.Value = TotalSum.ToString
+        'Console.WriteLine("Calculating TotalSum {0}", TotalSum.ToString)
+        Total.Value = suma
         Return True
     End Function
 
@@ -924,7 +1090,7 @@ Public Class MSPK_MDB
                 cache.Clear()
                 QueryRun = False
                 If str.ToUpper.StartsWith("SELECT") Then
-                    Dim db As SQLiteDatabase = New SQLiteDatabase(Main.SQLitefile)
+                    Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
 
                     cache = db.GetValueFromTable(str)
                     QueryRun = True
@@ -974,8 +1140,8 @@ Public Class MSPK_MDB
     '(5:553) Backup All Character phoenixspeak for the dream
     Function BackupAllPS(reader As TriggerReader) As Boolean
         Try
-            If Not callbk.PSBackupRunning And Not callbk.PSRestoreRunning Then
-                callbk.CurrentPS_Stage = Main.PS_BackupStage.GetList
+            If Not Main.PSBackupRunning And Not Main.PSRestoreRunning Then
+                Main.CurrentPS_Stage = Main.PS_BackupStage.GetList
                 sendServer("ps get character.*")
             End If
         Catch ex As Exception
@@ -988,7 +1154,7 @@ Public Class MSPK_MDB
     '(5:554) backup Character named {...} phoenix speak 
     Function BackupSingleCharacterPS(reader As TriggerReader) As Boolean
         Try
-            If Not callbk.PSBackupRunning And Not callbk.PSRestoreRunning And Not callbk.PSPruneRunning Then
+            If Not Main.PSBackupRunning And Not Main.PSRestoreRunning And Not Main.PSPruneRunning Then
 
                 Dim str As String = reader.ReadString
                 If str.ToUpper <> "[DREAM]" Then
@@ -999,17 +1165,17 @@ Public Class MSPK_MDB
 
                 Dim f As New Main.PSInfo_Struct
                 f.name = str
-                f.PS_ID = callbk.CharacterList.Count + 1
-                callbk.CharacterList.Add(f)
-                If callbk.CurrentPS_Stage <> Main.PS_BackupStage.GetSingle Then
-                    callbk.CurrentPS_Stage = Main.PS_BackupStage.GetSingle
-                    callbk.psReceiveCounter = 0
-                    callbk.psSendCounter = 1
-                    callbk.PSBackupRunning = True
+                f.PS_ID = Main.CharacterList.Count + 1
+                Main.CharacterList.Add(f)
+                If Main.CurrentPS_Stage <> Main.PS_BackupStage.GetSingle Then
+                    Main.CurrentPS_Stage = Main.PS_BackupStage.GetSingle
+                    Main.psReceiveCounter = 0
+                    Main.psSendCounter = 1
+                    Main.PSBackupRunning = True
                     If str <> "[DREAM]" Then
-                        callbk.ServerStack.Enqueue("ps " + callbk.CharacterList.Count.ToString + " get character." + str + ".*")
+                        callbk.ServerStack.Enqueue("ps " + Main.CharacterList.Count.ToString + " get character." + str + ".*")
                     Else
-                        callbk.ServerStack.Enqueue("ps " + callbk.CharacterList.Count.ToString + " get dream.*")
+                        callbk.ServerStack.Enqueue("ps " + Main.CharacterList.Count.ToString + " get dream.*")
                     End If
                 End If
             End If
@@ -1037,7 +1203,7 @@ Public Class MSPK_MDB
         Dim str As String = ""
 
         Try
-            If Not callbk.PSBackupRunning And Not callbk.PSRestoreRunning Then
+            If Not Main.PSBackupRunning And Not Main.PSRestoreRunning Then
                 callbk.RestorePS()
             End If
             Return True
@@ -1053,7 +1219,7 @@ Public Class MSPK_MDB
 
         Try
             Dim age As Double = ReadVariableOrNumber(reader)
-            If Not callbk.PSBackupRunning And Not callbk.PSRestoreRunning Then
+            If Not Main.PSBackupRunning And Not Main.PSRestoreRunning Then
                 callbk.PrunePS(age)
             End If
             Return True
@@ -1069,7 +1235,7 @@ Public Class MSPK_MDB
 
         Try
             Dim days As Double = ReadVariableOrNumber(reader)
-            If Not callbk.PSBackupRunning And Not callbk.PSRestoreRunning Then
+            If Not Main.PSBackupRunning And Not Main.PSRestoreRunning Then
                 callbk.RestorePS(days)
             End If
             Return True
@@ -1089,12 +1255,16 @@ Public Class MSPK_MDB
     End Function
 
     Public Function AbortPS(reader As TriggerReader) As Boolean
-        If callbk.PSBackupRunning Or callbk.PSRestoreRunning Then
-            callbk.PS_Abort()
+        If Main.PSBackupRunning Or Main.PSRestoreRunning Then
+            Main.PS_Abort()
             callbk.SendClientMessage("SYSTEM:", "Aborted PS Backup/Restore process")
         End If
         Return True
     End Function
+
+    '(5:561) remember Database Info {...} for Settings Table {...} to {...}.
+    '(5:562) forget Database info {...} from Settings Table{...}.
+    '(5:563) forget all Settings Table Database info.
 #End Region
 #Region "Effects Helper Functions"
 

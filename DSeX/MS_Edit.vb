@@ -318,7 +318,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 #End Region
 
     Private Sub GetTemplates()
-        Dim p As String = Path.Combine(MonkeyCore.Paths.ApplicationPath, "Templates")
+        Dim p As String = Path.Combine(Paths.ApplicationPath, "Templates")
         TemplatePaths.Clear()
         ListBox2.Items.Clear()
         ListBox2.BeginUpdate()
@@ -329,12 +329,16 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                 TemplatePaths.Add(p)
             Next
         End If
-        p = Path.Combine(MonkeyCore.Paths.FurcadiaDocumentsFolder, "Templates")
+        p = Path.Combine(Paths.FurcadiaDocumentsFolder, "Templates")
         If Directory.Exists(p) Then
             For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-                s = Path.GetFileNameWithoutExtension(s)
-                ListBox2.Items.Add(s)
-                TemplatePaths.Add(p)
+                Try
+                    s = Path.GetFileNameWithoutExtension(s)
+                    ListBox2.Items.Add(s)
+                    TemplatePaths.Add(p)
+                Catch ex As Exception
+                    Dim err As New ErrorLogging(ex, Me)
+                End Try
             Next
         End If
         p = Path.Combine(MonkeyCore.Paths.SilverMonkeyDocumentsPath, "Templates")
