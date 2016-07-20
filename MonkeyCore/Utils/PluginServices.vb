@@ -23,7 +23,7 @@ Public Class PluginServices
             Return ClassName.GetHashCode()
         End Function
     End Structure
-    Public Shared Plugins As New List(Of PluginServices.AvailablePlugin)
+    Public Shared Plugins As New List(Of AvailablePlugin)
 
     Public Shared Function FindPlugins(ByVal strPath As String, ByVal strInterface As String) As List(Of AvailablePlugin)
         Dim strDLLs() As String, intIndex As Integer

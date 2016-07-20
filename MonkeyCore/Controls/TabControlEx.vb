@@ -1,4 +1,5 @@
 ﻿
+Option Strict On
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms

@@ -13,8 +13,7 @@ Data Monkey
 
 Monkey Speak Editor
 (Script Editor)
-Added Angelcat Staff Group Template
-BugTraq 	0000007: MS Editor: Crashes on startup.
+
 
 Silver Monkey
 (Main Bot Application)
@@ -22,9 +21,10 @@ Silver Monkey
 SQLite Database:
 
 [Effects]
-(5:561) remember Database Info {...} for Settings Table {...} to {...}.
-(5:562) forget Database info {...} from Settings Table{...}.
-(5:563) forget all Settings Table Database info.
+(5:562) insert or ignore Database Setting {...} for Table {...} to {...}.
+(5:563) Sselect Database setting {...} for Table {...} to {...}.
+(5:564) delete Database setting {...} from Table{...}.
+(5:565) delet all Settings Table Database info.
 
 MonkeySpeak
 (Script Engine)

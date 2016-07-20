@@ -8,7 +8,7 @@
     <MyType>WindowsForms</MyType>
     <RootNamespace>ChatBot</RootNamespace>
     <AssemblyName>ChatBot</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OptionInfer>On</OptionInfer>
     <OptionStrict>Off</OptionStrict>

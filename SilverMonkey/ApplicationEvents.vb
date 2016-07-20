@@ -27,7 +27,7 @@ Namespace My
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             Dim logError As New MonkeyCore.ErrorLogging(e.Exception, sender)
             MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Process.Start(MonkeyCore.Paths.SilverMonkeyErrorLogPath)
+            'Process.Start(MonkeyCore.Paths.SilverMonkeyErrorLogPath)
         End Sub
     End Class
 

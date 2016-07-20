@@ -139,15 +139,16 @@ Public Class LogStream
 
         Dim Now As String = Date.Now().ToString("MM/dd/yyyy H:mm:ss")
         Message = Now & ": " & Message
-        Dim ioFile As StreamWriter = Nothing
+
+        If Not Directory.Exists(Path.GetDirectoryName(strErrorFilePath)) Then
+            Directory.CreateDirectory(Path.GetDirectoryName(strErrorFilePath))
+        End If
+        If Not File.Exists(strErrorFilePath) Then
+            File.Create(strErrorFilePath)
+        End If
+
         Try
-            If Not Directory.Exists(Path.GetDirectoryName(strErrorFilePath)) Then
-                Directory.CreateDirectory(Path.GetDirectoryName(strErrorFilePath))
-            End If
-            If Not File.Exists(strErrorFilePath) Then
-                File.Create(strErrorFilePath)
-            End If
-            ioFile = New StreamWriter(strErrorFilePath, True)
+            Dim ioFile As New StreamWriter(strErrorFilePath, True)
             For Each line In Stack.ToArray
                 ioFile.WriteLine(line)
             Next
@@ -162,12 +163,8 @@ Public Class LogStream
             End If
         Catch ex As Exception
             Throw New Exception("there was an error with" + strErrorFilePath, ex)
-        Finally
-            If Not ioFile.Equals(Nothing) Then
-                ioFile.Close()
-            End If
         End Try
-    End Sub
 
+    End Sub
 #End Region
 End Class

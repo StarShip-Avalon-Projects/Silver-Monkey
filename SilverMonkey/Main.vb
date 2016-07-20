@@ -27,7 +27,7 @@ Public Class Main
     Private Const CookieToMeREGEX As String = "<name shortname='(.*?)'>(.*?)</name> just gave you"
 #End Region
 #Region "SysTray"
-    Public WithEvents NotifyIcon1 As NotifyIcon
+    Public Shared WithEvents NotifyIcon1 As NotifyIcon
 #End Region
 #Region "smPounce"
     Private WithEvents smPounce As PounceConnection
@@ -182,7 +182,7 @@ Public Class Main
                 If sName = "~DSEX~" Then
                     If sTag = "Restart" Then
                         MS_Engine.MainMSEngine.EngineRestart = True
-                        cBot.MS_Script = MS_Engine.MainMSEngine.msReader(Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, cBot.MS_File))
+                        cBot.MS_Script = MS_Engine.MainMSEngine.msReader(Path.Combine(Paths.SilverMonkeyBotPath, cBot.MS_File))
                         MainMSEngine.MSpage = MS_Engine.MainMSEngine.engine.LoadFromString(cBot.MS_Script)
                         MS_Engine.MainMSEngine.MS_Stared = 2
                         ' MainMSEngine.LoadLibrary()
@@ -220,8 +220,8 @@ Public Class Main
         sndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
     End Sub
 
-    Dim _FormClose As Boolean = False
-    Private FurcMutex As System.Threading.Mutex
+    Private Shared _FormClose As Boolean = False
+    Private FurcMutex As Mutex
     Private Const FurcProcess As String = "Furcadia"
     Private ReconnectTimer, ReconnectTimeOutTimer As Threading.Timer
     Public Shared NewBot As Boolean = False
@@ -252,7 +252,7 @@ Public Class Main
     Private LookQue As Queue(Of String) = New Queue(Of String)()
 
     Private Sub ClearQues()
-        If Not IsNothing(Me.TroatTiredDelay) Then Me.TroatTiredDelay.Dispose()
+        If Not IsNothing(TroatTiredDelay) Then TroatTiredDelay.Dispose()
         SyncLock Lock
             ThroatTired = False
         End SyncLock
@@ -315,14 +315,7 @@ Public Class Main
 #End Region
     Private Shared _cMain As cMain
 #Region "Properties"
-    Public Shared Property cMain As cMain
-        Get
-            Return _cMain
-        End Get
-        Set(value As cMain)
-            _cMain = value
-        End Set
-    End Property
+
 #End Region
 
 #Region "Events"
@@ -683,7 +676,7 @@ Public Class Main
     Public TroatTiredDelay As Threading.Timer
     Private Sub TroatTiredDelayTick(ByVal state As Object)
         ThroatTired = False
-        Me.TroatTiredDelay.Dispose()
+        TroatTiredDelay.Dispose()
     End Sub
 
 #End Region
@@ -693,18 +686,18 @@ Public Class Main
     ''' how many list will save
     ''' </summary>
     Const MRUnumber As Integer = 15
-    Private MRUlist As System.Collections.Generic.Queue(Of String) = New Queue(Of String)(MRUnumber)
+    Private Shared MRUlist As Queue(Of String) = New Queue(Of String)(MRUnumber)
 
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
         With BotIniOpen
             ' Select Bot ini file
-            .InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
+            .InitialDirectory = Paths.SilverMonkeyBotPath
             If .ShowDialog = DialogResult.OK Then
                 cBot = New cBot(.FileName)
                 SaveRecentFile(.FileName)
                 ' BotSetup.BotFile = .FileName
                 ' BotSetup.ShowDialog()
-                Me.EditBotToolStripMenuItem.Enabled = True
+                EditBotToolStripMenuItem.Enabled = True
             End If
 
         End With
@@ -734,15 +727,16 @@ Public Class Main
             RecentToolStripMenuItem.DropDownItems.Add(fileRecent)
         Next
         'writing menu list to file
-        Dim stringToWrite As New StreamWriter(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt"))
-        'create file called "Recent.txt" located on app folder
-        For Each item As String In MRUlist
-            'write list to stream
-            stringToWrite.WriteLine(item)
-        Next
-        stringToWrite.Flush()
-        'write stream to file
-        stringToWrite.Close()
+        Using stringToWrite As New StreamWriter(System.IO.Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"))
+            'create file called "Recent.txt" located on app folder
+            For Each item As String In MRUlist
+                'write list to stream
+                stringToWrite.WriteLine(item)
+            Next
+            stringToWrite.Flush()
+            'write stream to file
+            stringToWrite.Close()
+        End Using
         'close the stream and reclaim memory
     End Sub
     ''' <summary>
@@ -751,24 +745,22 @@ Public Class Main
     Private Sub LoadRecentList()
         'try to load file. If file isn't found, do nothing
         MRUlist.Clear()
-        Try
-            If Not File.Exists(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt")) Then
-                File.Create(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt"))
-            End If
-            Dim listToRead As New StreamReader(System.IO.Path.Combine(MonkeyCore.Paths.ApplicationSettingsPath, "Recent.txt"), True)
-            'read file stream
-            Dim line As String = ""
-            While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
-                'read each line until end of file
-                MRUlist.Enqueue(line)
-            End While
-            'insert to list
-            'close the stream
-            listToRead.Close()
-
-            'throw;
-        Catch generatedExceptionName As Exception
-        End Try
+        'If Not File.Exists(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt")) Then
+        '    File.Create(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"))
+        'End If
+        If File.Exists(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt")) Then
+            Using listToRead As New StreamReader(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"), True)
+                'read file stream
+                Dim line As String = ""
+                While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
+                    'read each line until end of file
+                    MRUlist.Enqueue(line)
+                End While
+                'insert to list
+                'close the stream
+                listToRead.Close()
+            End Using
+        End If
 
     End Sub
     ''' <summary>
@@ -957,7 +949,7 @@ Public Class Main
     Public Sub AddDataToList(ByRef lb As RichTextBoxEx, ByRef obj As String, ByRef newColor As fColorEnum)
         If InvokeRequired Then
             Dim dataArray() As Object = {lb, obj, newColor}
-            Me.Invoke(New AddDataToListCaller(AddressOf AddDataToList), dataArray)
+            Invoke(New AddDataToListCaller(AddressOf AddDataToList), dataArray)
         Else
             If lb.GetType().ToString.Contains("Controls.RichTextBoxEx") Then
                 'Pos_Old = GetScrollPos(lb.Handle, SBS_VERT)
@@ -1046,7 +1038,7 @@ Public Class Main
 
     Private Function IMGresize(ByRef bm_source As Bitmap, ByRef RTF As RichTextBoxEx) As Bitmap
         'Dim g As Graphics = Me.CreateGraphic
-        Dim g As Drawing.Graphics = Me.CreateGraphics()
+        Dim g As Drawing.Graphics = CreateGraphics()
         Dim x, y As Integer
 
         y = CInt(RTF.SelectionFont.Height * 72 / g.DpiX)
@@ -1095,21 +1087,21 @@ Public Class Main
         Select Case Proto.ToLower
             Case "http"
                 Try
-                    Me.Cursor = Cursors.AppStarting
+                    Cursor = Cursors.AppStarting
                     Dim url As String = Str.Substring(InStr(Str, "#"))
                     Process.Start(url)
                 Catch ex As Exception
                 Finally
-                    Me.Cursor = Cursors.Default
+                    Cursor = Cursors.Default
                 End Try
             Case "https"
                 Try
-                    Me.Cursor = Cursors.AppStarting
+                    Cursor = Cursors.AppStarting
                     Dim url As String = Str.Substring(InStr(Str, "#"))
                     Process.Start(url)
                 Catch ex As Exception
                 Finally
-                    Me.Cursor = Cursors.Default
+                    Cursor = Cursors.Default
                 End Try
             Case Else
                 MsgBox("Protocol: """ & Proto & """ Not yet implemented")
@@ -1121,8 +1113,8 @@ Public Class Main
 
     Public Sub UpDateDreamList(ByRef name As String) '
         Try
-            If Me.DreamList.InvokeRequired OrElse DreamCountTxtBx.InvokeRequired Then
-                Me.Invoke(New UpDateDreamListCaller(AddressOf UpDateDreamList), name)
+            If DreamList.InvokeRequired OrElse DreamCountTxtBx.InvokeRequired Then
+                Invoke(New UpDateDreamListCaller(AddressOf UpDateDreamList), name)
             Else
                 Dim fList As New Dictionary(Of UInteger, FURRE)
                 fList = DREAM.List
@@ -2762,7 +2754,7 @@ Public Class Main
         End Try
         If BtnSit_stand_Lie.InvokeRequired Then
             Dim d As New UpDateBtn_StandCallback(AddressOf IsBot)
-            Me.Invoke(d, [player])
+            Invoke(d, [player])
             Return True
         Else
             'Update inteface
@@ -2839,13 +2831,13 @@ Public Class Main
     End Sub
 
     Public Sub MainText(ByRef str As String)
-        If Me.InvokeRequired Then
+        If InvokeRequired Then
 
             Dim d As New UpDateBtn_GoCallback(AddressOf MainText)
-            Me.Invoke(d, str)
+            Invoke(d, str)
         Else
-            Me.Text = "Silver Monkey: " & str.ToString '& " " & Application.ProductVersion
-            Me.NotifyIcon1.Text = "Silver Monkey: " & str.ToString
+            Text = "Silver Monkey: " & str.ToString '& " " & Application.ProductVersion
+            NotifyIcon1.Text = "Silver Monkey: " & str.ToString
         End If
 
 
@@ -2957,7 +2949,7 @@ Public Class Main
 
     Private Sub FormClose()
         _FormClose = True
-        My.Settings.MainFormLocation = Me.Location
+        My.Settings.MainFormLocation = Location
         If Not IsNothing(cBot) Then My.Settings.LastBotFile = cBot.IniFile
         'Timers.DestroyTimers()
         'Save the user settings so next time the
@@ -2965,15 +2957,15 @@ Public Class Main
 
         My.Settings.Save()
         NotifyIcon1.Visible = False
-        If Not IsNothing(Me.TroatTiredDelay) Then Me.TroatTiredDelay.Dispose()
-        If Not IsNothing(Me.TroatTiredProc) Then Me.TroatTiredProc.Dispose()
-        If Not IsNothing(Me.LogTimer) Then Me.LogTimer.Dispose()
-        If Not IsNothing(Me.MSalarm) Then Me.MSalarm.Dispose()
-        If Not IsNothing(Me.DreamUpdateTimer) Then Me.DreamUpdateTimer.Dispose()
-        If Not IsNothing(Me.ReconnectTimeOutTimer) Then Me.ReconnectTimeOutTimer.Dispose()
-        If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
-        If Not IsNothing(Me.PounceTimer) Then Me.PounceTimer.Dispose()
-        Me.Dispose()
+        If Not IsNothing(TroatTiredDelay) Then TroatTiredDelay.Dispose()
+        If Not IsNothing(TroatTiredProc) Then TroatTiredProc.Dispose()
+        If Not IsNothing(LogTimer) Then LogTimer.Dispose()
+        If Not IsNothing(MSalarm) Then MSalarm.Dispose()
+        If Not IsNothing(DreamUpdateTimer) Then DreamUpdateTimer.Dispose()
+        If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
+        If Not IsNothing(PingTimer) Then PingTimer.Dispose()
+        If Not IsNothing(PounceTimer) Then PounceTimer.Dispose()
+        Dispose()
     End Sub
 
 
@@ -2983,14 +2975,14 @@ Public Class Main
 
             Select Case cMain.SysTray
                 Case CheckState.Checked
-                    Me.Visible = False
+                    Visible = False
                     e.Cancel = True
                 Case CheckState.Indeterminate
                     If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing,
-                     MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
+                         MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
                         cMain.SysTray = CheckState.Checked
                         cMain.SaveMainSettings()
-                        Me.Visible = False
+                        Visible = False
                         e.Cancel = True
                     Else
                         e.Cancel = False
@@ -3008,7 +3000,7 @@ Public Class Main
     End Sub
 
     Private Sub Tick(ByVal state As Object)
-        If Me.IsDisposed Then Exit Sub
+        If IsDisposed Then Exit Sub
         Timeupdate()
     End Sub
     Private Sub Timeupdate()
@@ -3017,7 +3009,7 @@ Public Class Main
             If MenuStrip1.InvokeRequired Then
 
                 Dim d As New DelTimeupdate(AddressOf Timeupdate)
-                If Me.IsDisposed = False Then Me.Invoke(d)
+                If IsDisposed = False Then Invoke(d)
 
             Else
                 Dim FTime As Date = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(Date.Now, TimeZoneInfo.Local.Id, "Central Standard Time")
@@ -3060,7 +3052,7 @@ Public Class Main
         End If
 
     End Sub
-
+    Dim listlock As New Object
     Private Sub Main_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         If IsNothing(NotifyIcon1) Then
             NotifyIcon1 = New NotifyIcon
@@ -3074,26 +3066,24 @@ Public Class Main
         'catch the Console messages
         _FormClose = False
 
-        cMain = New cMain
-        MonkeyCore.Paths.FurcadiaProgramFolder = cMain.FurcPath
+        Paths.FurcadiaProgramFolder = cMain.FurcPath
 
         writer = New TextBoxWriter(log_)
         Console.SetOut(writer)
         MS_Engine.MainMSEngine = New MainMSEngine
-        Me.MSalarm = New Threading.Timer(AddressOf Tick, True, 1000, 1000)
+        ' MSalarm = New Threading.Timer(AddressOf Tick, True, 1000, 1000)
         FurreList.Clear()
-        Plugins = PluginServices.FindPlugins(Path.GetDirectoryName(Application.ExecutablePath) + "\Plugins\", "SilverMonkey.Interfaces.msPlugin")
+        Plugins = PluginServices.FindPlugins(Paths.ApplicationPluginPath, "SilverMonkey.Interfaces.msPlugin")
 
         ' Try to get Furcadia's path from the registry
 
-        MS_KeysIni.Load(Path.GetDirectoryName(Application.ExecutablePath) + "\Keys-MS.ini")
+        MS_KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys-MS.ini"))
         InitializeTextControls()
 
-        'Me.Size = My.Settings.MainFormSize
-        Me.Location = My.Settings.MainFormLocation
-        Me.Text = "Silver Monkey: " & Application.ProductVersion
-        Me.Visible = True
-
+        Size = My.Settings.MainFormSize
+        Location = My.Settings.MainFormLocation
+        Text = "Silver Monkey: " & Application.ProductVersion
+        Visible = True
 
         LoadRecentList()
         For Each item As String In MRUlist
@@ -3108,19 +3098,23 @@ Public Class Main
             Dim File As String = My.Application.CommandLineArgs(0)
             Dim directoryName As String
             directoryName = Path.GetDirectoryName(File)
-            If String.IsNullOrEmpty(directoryName) Then File = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Silver Monkey/" + File
+            If String.IsNullOrEmpty(directoryName) Then
+                File = Path.Combine(Paths.SilverMonkeyBotPath, File)
+            Else
+                Paths.SilverMonkeyBotPath = directoryName
+            End If
             cBot = New cBot(File)
             EditBotToolStripMenuItem.Enabled = True
             Console.WriteLine("Loaded: """ + File + """")
-        ElseIf cMain.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) And My.Application.CommandLineArgs.Count = 0 Then
-            cBot = New cBot(My.Settings.LastBotFile)
-            EditBotToolStripMenuItem.Enabled = True
-            Console.WriteLine("Loaded: """ + My.Settings.LastBotFile + """")
+            'ElseIf cMain.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) Then
+            '    cBot = New cBot(My.Settings.LastBotFile)
+            '    'EditBotToolStripMenuItem.Enabled = True
+            '    Console.WriteLine("Loaded: """ + My.Settings.LastBotFile + """")
         End If
-        Dim ts As TimeSpan = TimeSpan.FromSeconds(30)
-        Me.PounceTimer = New Threading.Timer(AddressOf smPounceSend, Nothing, TimeSpan.Zero, ts)
-        Me.PounceTimer.InitializeLifetimeService()
-        Me.TroatTiredProc = New Threading.Timer(AddressOf TroatTiredProcTick, Nothing, 3000, 100)
+        'Dim ts As TimeSpan = TimeSpan.FromSeconds(30)
+        ' PounceTimer = New Threading.Timer(AddressOf smPounceSend, Nothing, TimeSpan.Zero, ts)
+        'PounceTimer.InitializeLifetimeService()
+        ' TroatTiredProc = New Threading.Timer(AddressOf TroatTiredProcTick, Nothing, 3000, 100)
 
         If Not IsNothing(cBot) Then
             If cBot.AutoConnect Then
@@ -3128,7 +3122,6 @@ Public Class Main
             End If
         End If
 
-        'Paths.InstallPath = SettingsIni.GetKeyValue("Main", "FurcPath")
     End Sub
 
 
@@ -3137,7 +3130,7 @@ Public Class Main
 
     End Sub
     Public Sub ConnectionControlDisEnable()
-        Me.EditBotToolStripMenuItem.Enabled = False
+        EditBotToolStripMenuItem.Enabled = False
     End Sub
 
     Public Sub InitializeTextControls()
@@ -3194,32 +3187,32 @@ Public Class Main
     End Sub
 
     Private Sub sw__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseDown
-        Me.ActionTmr.Enabled = bConnected()
+        ActionTmr.Enabled = bConnected()
         ActionCMD = "`m 1"
     End Sub
 
     Private Sub sw__MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseUp
-        Me.ActionTmr.Enabled = False
+        ActionTmr.Enabled = False
         ActionCMD = ""
     End Sub
 
     Private Sub _ne_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _ne.MouseDown
-        Me.ActionTmr.Enabled = bConnected()
+        ActionTmr.Enabled = bConnected()
         ActionCMD = "`m 9"
     End Sub
 
     Private Sub _ne_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _ne.MouseUp
-        Me.ActionTmr.Enabled = False
+        ActionTmr.Enabled = False
         ActionCMD = ""
     End Sub
 
     Private Sub _nw_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _nw.MouseDown
-        Me.ActionTmr.Enabled = bConnected()
+        ActionTmr.Enabled = bConnected()
         ActionCMD = "`m 7"
     End Sub
 
     Private Sub _nw_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _nw.MouseUp
-        Me.ActionTmr.Enabled = False
+        ActionTmr.Enabled = False
         ActionCMD = ""
     End Sub
 
@@ -3228,12 +3221,12 @@ Public Class Main
     End Sub
 
     Private Sub se__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseDown
-        Me.ActionTmr.Enabled = bConnected()
+        ActionTmr.Enabled = bConnected()
         ActionCMD = "`m 3"
     End Sub
 
     Private Sub se__MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseUp
-        Me.ActionTmr.Enabled = False
+        ActionTmr.Enabled = False
         ActionCMD = ""
     End Sub
 #End Region
@@ -3266,22 +3259,22 @@ Public Class Main
                 LogStream = New LogStream(setLogName(cBot), cBot.LogPath)
             End If
             If Not MS_Engine.MainMSEngine.ScriptStart() Then Exit Sub
-            My.Settings.LastBotFile = Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, cBot.IniFile)
+            My.Settings.LastBotFile = Path.Combine(Paths.SilverMonkeyBotPath, cBot.IniFile)
             My.Settings.Save()
             ReLogCounter = 0
             ClientClose = False
             Dim Ts As TimeSpan = TimeSpan.FromSeconds(cMain.ConnectTimeOut)
-            Me.ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
+            ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
              Nothing, Ts, Ts)
             Dim Tss As TimeSpan = TimeSpan.FromSeconds(cMain.Ping)
-            If cMain.Ping > 0 Then Me.PingTimer = New Threading.Timer(AddressOf PingTimerTick,
+            If cMain.Ping > 0 Then PingTimer = New Threading.Timer(AddressOf PingTimerTick,
              Nothing, Tss, Tss)
             If Not IsNothing(MS_Export) Then MS_Export.Dispose()
             Try
                 ConnectBot()
             Catch Ex As NetProxyException
-                Me.ReconnectTimeOutTimer.Dispose()
-                If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+                ReconnectTimeOutTimer.Dispose()
+                If Not IsNothing(PingTimer) Then PingTimer.Dispose()
                 If Not IsNothing(FurcMutex) Then '
                     FurcMutex.Close()
                     FurcMutex.Dispose()
@@ -3298,7 +3291,7 @@ Public Class Main
                 FurcMutex.Dispose()
             End If
             DisconnectBot()
-            If Not IsNothing(ReconnectTimer) Then Me.ReconnectTimer.Dispose()
+            If Not IsNothing(ReconnectTimer) Then ReconnectTimer.Dispose()
             If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
         End If
     End Sub
@@ -3313,11 +3306,11 @@ Public Class Main
     End Sub
 
     Public Sub ConnectBot()
-        If Me.BTN_Go.InvokeRequired Then
+        If BTN_Go.InvokeRequired Then
             Dim d As New UpDateBtn_GoCallback2(AddressOf ConnectBot)
-            Me.Invoke(d)
+            Invoke(d)
         Else
-            FurcMutex = New System.Threading.Mutex(False, FurcProcess)
+            FurcMutex = New Mutex(False, FurcProcess)
             If FurcMutex.WaitOne(0, False) = False Then
                 FurcMutex.Close()
                 FurcMutex.Dispose()
@@ -3365,12 +3358,12 @@ Public Class Main
         End If
     End Sub
     Public Sub DisconnectBot()
-        If Me.BTN_Go.InvokeRequired Then
+        If BTN_Go.InvokeRequired Then
             Dim d As New UpDateBtn_GoCallback2(AddressOf DisconnectBot)
-            Me.Invoke(d)
+            Invoke(d)
         Else
             If cMain.AutoReconnect And Not ClientClose Then
-                Me.ReconnectTimer = New Threading.Timer(AddressOf ReconnectTick,
+                ReconnectTimer = New Threading.Timer(AddressOf ReconnectTick,
                   Nothing, 45000, 45000)
                 SetBalloonText("Connection Lost. Reconnecting in 45 Seconds.")
                 Console.WriteLine("Connection Lost. Reconnecting in 45 Seconds.")
@@ -3414,9 +3407,9 @@ Public Class Main
         End If
     End Sub
     Public Sub BotConnecting()
-        If Me.BTN_Go.InvokeRequired Then
+        If BTN_Go.InvokeRequired Then
             Dim d As New UpDateBtn_GoCallback2(AddressOf BotConnecting)
-            Me.Invoke(d)
+            Invoke(d)
         Else
             BTN_Go.Text = "Connected."
             ClientClose = False
@@ -3446,7 +3439,7 @@ Public Class Main
         Console.WriteLine("ReconnectTick()")
 #End If
         Dim Ts As TimeSpan = TimeSpan.FromSeconds(45)
-        Me.ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
+        ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
          Nothing, Ts, Ts)
         If cMain.CloseProc And ProcExit = False Then
             KillProc(ProcID)
@@ -3458,8 +3451,8 @@ Public Class Main
         Try
             ConnectBot()
         Catch Ex As NetProxyException
-            Me.ReconnectTimeOutTimer.Dispose()
-            If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+            ReconnectTimeOutTimer.Dispose()
+            If Not IsNothing(PingTimer) Then PingTimer.Dispose()
             If Not IsNothing(FurcMutex) Then '
                 FurcMutex.Close()
                 FurcMutex.Dispose()
@@ -3467,7 +3460,7 @@ Public Class Main
             DisconnectBot()
             sndDisplay("Connection Aborting: " + Ex.Message)
         Finally
-            Me.ReconnectTimer.Dispose()
+            ReconnectTimer.Dispose()
         End Try
 
     End Sub
@@ -3475,7 +3468,7 @@ Public Class Main
 
         If InvokeRequired Then
             Dim dataArray() As Object = {Obj}
-            Me.Invoke(New UpDateBtn_GoCallback3(AddressOf ReconnectTimeOutTick), dataArray)
+            Invoke(New UpDateBtn_GoCallback3(AddressOf ReconnectTimeOutTick), dataArray)
 
 #If DEBUG Then
             Console.WriteLine("ReconnectTimeOutTick()")
@@ -3497,7 +3490,7 @@ Public Class Main
                 ConnectBot()
                 sndDisplay("Reconnect attempt: " + ReLogCounter.ToString)
                 If ReLogCounter = cMain.ReconnectMax Then
-                    Me.ReconnectTimeOutTimer.Dispose()
+                    ReconnectTimeOutTimer.Dispose()
                     sndDisplay("Reconnect attempts exceeded.")
                     BTN_Go.Text = "Go!"
                     TS_Status_Server.Image = My.Resources.images2
@@ -3512,8 +3505,8 @@ Public Class Main
                 End If
                 ReLogCounter += 1
             Catch Ex As NetProxyException
-                Me.ReconnectTimeOutTimer.Dispose()
-                If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
+                ReconnectTimeOutTimer.Dispose()
+                If Not IsNothing(PingTimer) Then PingTimer.Dispose()
                 If Not IsNothing(FurcMutex) Then '
                     FurcMutex.Close()
                     FurcMutex.Dispose()
@@ -3654,15 +3647,15 @@ Public Class Main
     End Function
 
     Private Sub BTN_Underline_Click(sender As Object, e As EventArgs) Handles BTN_Underline.Click
-        FormatRichTectBox(Me.toServer, System.Drawing.FontStyle.Underline)
+        FormatRichTectBox(toServer, System.Drawing.FontStyle.Underline)
     End Sub
 
     Private Sub Btn_Bold_Click(sender As Object, e As EventArgs) Handles Btn_Bold.Click
-        FormatRichTectBox(Me.toServer, System.Drawing.FontStyle.Bold)
+        FormatRichTectBox(toServer, System.Drawing.FontStyle.Bold)
     End Sub
 
     Private Sub BTN_Italic_Click(sender As Object, e As EventArgs) Handles BTN_Italic.Click
-        FormatRichTectBox(Me.toServer, System.Drawing.FontStyle.Italic)
+        FormatRichTectBox(toServer, System.Drawing.FontStyle.Italic)
     End Sub
 
     Public Sub FormatRichTectBox(ByRef TB As RichTextBoxEx,
@@ -3704,7 +3697,7 @@ Public Class Main
         If Not String.IsNullOrEmpty(f) Then
             Dim dir As String = Path.GetDirectoryName(cBot.MS_File)
             If String.IsNullOrEmpty(dir) Then
-                f = System.IO.Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, cBot.MS_File)
+                f = Path.Combine(Paths.SilverMonkeyBotPath, cBot.MS_File)
             End If
         End If
 
@@ -3718,15 +3711,15 @@ Public Class Main
     End Sub
 
     Private Sub NotifyIcon1_Disposed(sender As Object, e As EventArgs)
-        Me.Visible = False
+        Visible = False
     End Sub
 
     Private Sub NotifyIcon1_DoubleClick(sender As Object, e As EventArgs)
         If Not IsNothing(NotifyIcon1) Then
 
         End If
-        Me.Show()
-        Me.Activate()
+        Show()
+        Activate()
     End Sub
 
 
@@ -3832,10 +3825,10 @@ Public Class Main
     Private Sub log__MouseHover(sender As Object, e As EventArgs) Handles log_.MouseHover, log_.MouseLeave, log_.MouseEnter, log_.CursorChanged
         If Cursor.Current = Cursors.Hand Then
             SyncLock Lock
-                ToolTip1.Show(curWord, Me.log_)
+                ToolTip1.Show(curWord, log_)
             End SyncLock
         Else
-            ToolTip1.Hide(Me.log_)
+            ToolTip1.Hide(log_)
         End If
     End Sub
 
@@ -3843,7 +3836,7 @@ Public Class Main
         If Cursor.Current = Cursors.Hand Or Cursor.Current = Cursors.Default Then
             SyncLock Lock
 
-                curWord = GetWordUnderMouse(Me.log_, e.X, e.Y)
+                curWord = GetWordUnderMouse(log_, e.X, e.Y)
             End SyncLock
         End If
     End Sub

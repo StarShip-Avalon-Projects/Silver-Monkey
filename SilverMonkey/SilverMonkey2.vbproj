@@ -8,12 +8,12 @@
     <MyType>WindowsForms</MyType>
     <RootNamespace>SilverMonkey</RootNamespace>
     <AssemblyName>SilverMonkey</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <OptionInfer>On</OptionInfer>
     <OptionStrict>On</OptionStrict>
-    <OptionCompare>Binary</OptionCompare>
+    <OptionCompare>Text</OptionCompare>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>

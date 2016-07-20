@@ -43,10 +43,10 @@ Public Class MS_Edit
         Public Function Compare(ByVal item1 As String, ByVal item2 As String) As Integer Implements IComparer(Of String).Compare
 
             Dim cat As New Regex("\((.[0-9]*?)\:(.[0-9]*?)\)")
-            Dim num1 As Integer = CInt(cat.Match(item1).Groups(1).ToString)
-            Dim num2 As Integer = CInt(cat.Match(item2).Groups(1).ToString)
-            Dim num3 As Integer = CInt(cat.Match(item1).Groups(2).ToString)
-            Dim num4 As Integer = CInt(cat.Match(item2).Groups(2).ToString)
+            Dim num1 As Integer = cat.Match(item1).Groups(1).ToString
+            Dim num2 As Integer = cat.Match(item2).Groups(1).ToString
+            Dim num3 As Integer = cat.Match(item1).Groups(2).ToString
+            Dim num4 As Integer = cat.Match(item2).Groups(2).ToString
 
 
             If num3 > num4 Then
@@ -172,7 +172,7 @@ Public Class MS_Edit
     Private Const BotProcessName As String = "Silver Monkey: "
     Private Const AppName As String = "Monkey Speak Editor"
     Private charsToTrim() As Char = {CChar(vbCr), CChar(vbLf)}
-    Private Templatelist As ListBox = New ListBox
+    'Private Templatelist As ListBox = New ListBox
     Enum TSecType
         SecNormal
         SecEnd
@@ -193,8 +193,8 @@ Public Class MS_Edit
     Dim SectionChange As Boolean = False
     Dim TabSections As List(Of List(Of TDSSegment)) = New List(Of List(Of TDSSegment))
 
-    Public TemplatePaths As List(Of String) = New List(Of String)
-    Public TemplatePathsMS As List(Of String) = New List(Of String)
+    Public Shared TemplatePaths As List(Of String) = New List(Of String)
+    Public Shared TemplatePathsMS As List(Of String) = New List(Of String)
 
     Private AutoCompleteMenu1 As AutocompleteMenu
 
@@ -254,13 +254,13 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
     Protected Overrides Sub WndProc(ByRef m As Message)
         If m.Msg = WM_COPYDATA Then
-            Dim mystr2 As COPYDATASTRUCT = CType(Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT)), COPYDATASTRUCT)
+            Dim mystr2 As COPYDATASTRUCT = Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT))
 
             ' If the size matches
             If mystr2.cdData = Marshal.SizeOf(GetType(MyData)) Then
                 ' Marshal the data from the unmanaged memory block to a 
                 ' MyStruct managed struct.
-                Dim myStr As MyData = DirectCast(Marshal.PtrToStructure(mystr2.lpData, GetType(MyData)), MyData)
+                Dim myStr As MyData = Marshal.PtrToStructure(mystr2.lpData, GetType(MyData))
 
 
 
@@ -318,60 +318,78 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 #End Region
 
     Private Sub GetTemplates()
-        Dim p As String = Path.Combine(Paths.ApplicationPath, "Templates")
-        TemplatePaths.Clear()
-        ListBox2.Items.Clear()
-        ListBox2.BeginUpdate()
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-                s = Path.GetFileNameWithoutExtension(s)
-                ListBox2.Items.Add(s)
-                TemplatePaths.Add(p)
-            Next
-        End If
-        p = Path.Combine(Paths.FurcadiaDocumentsFolder, "Templates")
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-                Try
+        Try
+            Dim p As String = Path.Combine(Paths.ApplicationPath, "Templates")
+
+
+            ListBox3.BeginUpdate()
+            TemplatePaths.Clear()
+            ListBox2.Items.Clear()
+
+            Dim fileEntries As String()
+            If Directory.Exists(p) Then
+                fileEntries = Directory.GetFiles(p, "*.ds", SearchOption.TopDirectoryOnly)
+                For Each s As String In fileEntries
+                    s = Path.GetFileNameWithoutExtension(s)
+                    ListBox2.BeginUpdate()
+                    ListBox2.Items.Add(s)
+                    TemplatePaths.Add(p)
+                    ListBox2.EndUpdate()
+                Next
+            End If
+            p = Path.Combine(Paths.FurcadiaDocumentsFolder, "Templates")
+            If Directory.Exists(p) Then
+                fileEntries = Directory.GetFiles(p, "*.ds", SearchOption.TopDirectoryOnly)
+                For Each s As String In fileEntries
                     s = Path.GetFileNameWithoutExtension(s)
                     ListBox2.Items.Add(s)
                     TemplatePaths.Add(p)
-                Catch ex As Exception
-                    Dim err As New ErrorLogging(ex, Me)
-                End Try
-            Next
-        End If
-        p = Path.Combine(MonkeyCore.Paths.SilverMonkeyDocumentsPath, "Templates")
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ds")
-                s = Path.GetFileNameWithoutExtension(s)
-                ListBox2.Items.Add(s)
-                TemplatePaths.Add(p)
-            Next
-        End If
-        ListBox2.EndUpdate()
 
-        TemplatePathsMS.Clear()
-        ListBox3.Items.Clear()
-        ListBox3.BeginUpdate()
+                Next
+            End If
+            p = Path.Combine(Paths.SilverMonkeyDocumentsPath, "Templates")
+            If Directory.Exists(p) Then
+                fileEntries = Directory.GetFiles(p, "*.ds", SearchOption.TopDirectoryOnly)
+                For Each s As String In fileEntries
+                    s = Path.GetFileNameWithoutExtension(s)
+                    ListBox2.BeginUpdate()
+                    ListBox2.Items.Add(s)
+                    TemplatePaths.Add(p)
+                    ListBox2.EndUpdate()
+                Next
+            End If
+            ListBox2.EndUpdate()
 
-        p = MonkeyCore.Paths.MonKeySpeakEditorDocumentsTemplatesPath
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
-                s = Path.GetFileNameWithoutExtension(s)
-                ListBox3.Items.Add(s)
-                TemplatePathsMS.Add(p)
-            Next
-        End If
-        p = MonkeyCore.Paths.MonKeySpeakEditorTemplatesPath
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ms")
-                s = Path.GetFileNameWithoutExtension(s)
-                ListBox3.Items.Add(s)
-                TemplatePathsMS.Add(p)
-            Next
-        End If
-        ListBox3.EndUpdate()
+            TemplatePathsMS.Clear()
+            ListBox3.Items.Clear()
+
+
+            p = Paths.MonKeySpeakEditorDocumentsTemplatesPath
+            If Directory.Exists(p) Then
+                fileEntries = Directory.GetFiles(p, "*.ms", SearchOption.TopDirectoryOnly)
+                For Each s As String In fileEntries
+                    s = Path.GetFileNameWithoutExtension(s)
+                    ListBox3.BeginUpdate()
+                    ListBox3.Items.Add(s)
+                    TemplatePaths.Add(p)
+                    ListBox3.EndUpdate()
+                Next
+            End If
+            p = Paths.MonKeySpeakEditorTemplatesPath
+            If Directory.Exists(p) Then
+
+                fileEntries = Directory.GetFiles(p, "*.ms", SearchOption.TopDirectoryOnly)
+                For Each s As String In fileEntries
+                    s = Path.GetFileNameWithoutExtension(s)
+                    ListBox3.BeginUpdate()
+                    ListBox3.Items.Add(s)
+                    TemplatePaths.Add(p)
+                    ListBox3.EndUpdate()
+                Next
+            End If
+            ListBox3.EndUpdate()
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
@@ -712,14 +730,14 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         Visible = True
 
         Dim items As List(Of AutocompleteItem) = New List(Of AutocompleteItem)()
-        Dim KeyCount As Integer = CInt(KeysIni.GetKeyValue("Init-Types", "Count"))
-        Dim MS_KeyCount As Integer = CInt(MS_KeysIni.GetKeyValue("Init-Types", "Count"))
+        Dim KeyCount As Integer = Integer.Parse(KeysIni.GetKeyValue("Init-Types", "Count"))
+        Dim MS_KeyCount As Integer = Integer.Parse(MS_KeysIni.GetKeyValue("Init-Types", "Count"))
         For i As Integer = 1 To KeyCount
             items.Clear()
             Dim DSLines As New List(Of String)
             Dim key As String = KeysIni.GetKeyValue("Init-Types", i.ToString)
             splash.UpdateProgress("Loading DS " + key + "...", CInt(i / (KeyCount + MS_KeyCount + 2) * 100))
-            Dim DSSection As MonkeyCore.IniFile.IniSection = KeysIni.GetSection(key)
+            Dim DSSection As IniSection = KeysIni.GetSection(key)
 
             For Each K As IniSection.IniKey In DSSection.Keys
                 Dim fields As String() = SplitCSV(K.Value)
@@ -777,9 +795,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             NewFile(EditStyles.ms)
         End If
 
-        Templatelist.Size = New Size(99, 147)
-        Templatelist.Location = New Point(5, 3)
-        Debug.Print("TemplateList.Size: " + Templatelist.Size.ToString)
         SetLineTabs(0)
 
         GetTemplates()
@@ -817,6 +832,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
     End Sub
 
     Private Sub SetDSHilighter()
+
         DS_String_Style.ForeBrush = New SolidBrush(EditSettings.StringVariableColor)
         DS_Str_Var_Style.ForeBrush = New SolidBrush(EditSettings.StringVariableColor)
         DS_Num_Var_Style.ForeBrush = New SolidBrush(EditSettings.VariableColor)
@@ -1355,7 +1371,7 @@ InputBox("What line within the document do you want to send the cursor to?",
     Private Sub ApplyCommentToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ApplyCommentToolStripMenuItem1.Click
         If IsNothing(MS_Editor) Then Exit Sub
 
-        Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(CChar(vbLf))
+        Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(vbLf)
         If str.Length > 1 Then
             For i As Integer = 0 To str.Length - 1
                 str(i) = "*" + str(i)
@@ -1368,7 +1384,7 @@ InputBox("What line within the document do you want to send the cursor to?",
     Private Sub AutoCommentOffToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoCommentOffToolStripMenuItem.Click, AutocommentOffToolStripMenuItem1.Click
         If IsNothing(MS_Editor) Then Exit Sub
 
-        Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(CChar(vbLf))
+        Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(vbLf)
         If str.Length > 1 Then
             For i As Integer = 0 To str.Length - 1
                 If str(i).StartsWith("*") Then str(i) = str(i).Remove(0, 1)
@@ -1448,7 +1464,7 @@ InputBox("What line within the document do you want to send the cursor to?",
         Else
             LastFoundIndex += 1
         End If
-        For lis As Integer = lisView To CInt(iFile.GetKeyValue("Init-Types", "Count"))
+        For lis As Integer = lisView To iFile.GetKeyValue("Init-Types", "Count")
             LV1 = CType(tbc.TabPages.Item(lis - 1).Controls.Find(lis.ToString, True)(0), ListView_NoFlicker)
 
             With LV1
@@ -1508,50 +1524,51 @@ InputBox("What line within the document do you want to send the cursor to?",
     End Sub
 
     Private popupMenu As AutocompleteMenu
+    Dim tablock As New Object
     Public Sub AddNewEditorTab(ByRef FileName As String, FilePath As String, ByRef n As Integer)
+        SyncLock tablock
+            Dim tp As New TabPage
 
-        Dim tp As New TabPage
+            tp.Text = New_File_Tag + "     "
+            TabControl2.TabPages.Add(tp)
+            Dim intLastTabIndex As Integer = TabControl2.TabPages.Count - 1
+            tp.Name = "tbpageBrowser" & intLastTabIndex.ToString
+            'Adds a new tab to your tab control
+            CanOpen.Add(True)
+            WorkFileName.Add(FileName)
+            WorkPath.Add(FilePath)
+            BotName.Add("none")
 
-        tp.Text = New_File_Tag + "     "
-        TabControl2.TabPages.Add(tp)
-        Dim intLastTabIndex As Integer = TabControl2.TabPages.Count - 1
-        tp.Name = "tbpageBrowser" & intLastTabIndex.ToString
-        'Adds a new tab to your tab control
-        CanOpen.Add(True)
-        WorkFileName.Add(FileName)
-        WorkPath.Add(FilePath)
-        BotName.Add("none")
+            frmTitle.Add(AppName + " - New DragonSpeak File")
+            SectionIdx.Add(0)
+            TabEditStyles.Add(EditStyles.ds)
+            FullFile.Add(New List(Of String))
+            'Gets the index number of the last tab
+            TabSections.Add(New List(Of TDSSegment))
 
-        frmTitle.Add(AppName + " - New DragonSpeak File")
-        SectionIdx.Add(0)
-        TabEditStyles.Add(EditStyles.ds)
-        FullFile.Add(New List(Of String))
-        'Gets the index number of the last tab
-        TabSections.Add(New List(Of TDSSegment))
+            'Creates the listview and displays it in the new tab
+            Dim lstView As FastColoredTextBox = New FastColoredTextBox()
+            lstView.ContextMenuStrip = EditMenu
+            lstView.AcceptsTab = True
+            lstView.Parent = tp
+            lstView.Anchor = CType(AnchorStyles.Left & AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Right, AnchorStyles)
+            lstView.Name = "edit" + n.ToString
+            lstView.AutoIndent = False
+            lstView.Dock = DockStyle.Fill
+            lstView.CommentPrefix = "*"
+            lstView.Language = Language.Custom
+            lstView.Show()
+            lstView.ContextMenuStrip = SectionMenu
+            TabControl2.SelectedTab = TabControl2.TabPages(intLastTabIndex)
 
-        'Creates the listview and displays it in the new tab
-        Dim lstView As FastColoredTextBox = New FastColoredTextBox()
-        lstView.ContextMenuStrip = EditMenu
-        lstView.AcceptsTab = True
-        lstView.Parent = tp
-        lstView.Anchor = CType(AnchorStyles.Left + AnchorStyles.Top + AnchorStyles.Bottom + AnchorStyles.Right, AnchorStyles)
-        lstView.Name = "edit" + n.ToString
-        lstView.AutoIndent = False
-        lstView.Dock = DockStyle.Fill
-        lstView.CommentPrefix = "*"
-        lstView.Language = Language.Custom
-        lstView.Show()
-        lstView.ContextMenuStrip = SectionMenu
-        TabControl2.SelectedTab = TabControl2.TabPages(intLastTabIndex)
-
-        AddHandler lstView.TextChangedDelayed, AddressOf MS_Editor_TextChangedDelayed
-        AddHandler lstView.TextChanged, AddressOf MS_Editor_TextChanged
-        AddHandler lstView.MouseUp, AddressOf MS_EditRightClick
-        AddHandler lstView.CursorChanged, AddressOf MS_Editor_CursorChanged
-        AddHandler lstView.MouseClick, AddressOf MS_Editor_CursorChanged
-        AddHandler lstView.KeyUp, AddressOf MS_Editor_CursorChanged
-        AddHandler lstView.MouseDoubleClick, AddressOf MS_Editor_MouseDoubleClick
-
+            AddHandler lstView.TextChangedDelayed, AddressOf MS_Editor_TextChangedDelayed
+            AddHandler lstView.TextChanged, AddressOf MS_Editor_TextChanged
+            AddHandler lstView.MouseUp, AddressOf MS_EditRightClick
+            AddHandler lstView.CursorChanged, AddressOf MS_Editor_CursorChanged
+            AddHandler lstView.MouseClick, AddressOf MS_Editor_CursorChanged
+            AddHandler lstView.KeyUp, AddressOf MS_Editor_CursorChanged
+            AddHandler lstView.MouseDoubleClick, AddressOf MS_Editor_MouseDoubleClick
+        End SyncLock
     End Sub
 
 
@@ -1601,8 +1618,8 @@ InputBox("What line within the document do you want to send the cursor to?",
             SplitContainer5.Panel2Collapsed = False
 
 
-            ListBox2.Location = Templatelist.Location
-            ListBox2.Size = Templatelist.Size
+            ListBox2.Location = New Point(5, 3)
+            ListBox2.Size = New Size(99, 147)
             TabControl1.TabPages.Item(2).Text = "DragonSpeak Help"
             Label1.Text = "DragonSpeak Line Help"
 
@@ -1615,8 +1632,8 @@ InputBox("What line within the document do you want to send the cursor to?",
             SplitContainer5.Panel1Collapsed = False
             SplitContainer5.Panel2Collapsed = True
 
-            ListBox3.Location = Templatelist.Location
-            ListBox3.Size = Templatelist.Size
+            ListBox3.Location = New Point(5, 3)
+            ListBox3.Size = New Size(99, 147)
 
             TabControl1.TabPages.Item(2).Text = "MonkeySpeak Help"
             Label1.Text = "MonkeySpeak Line Help"
@@ -1667,13 +1684,13 @@ InputBox("What line within the document do you want to send the cursor to?",
 
     Private Sub FCloseAllTab_Click(sender As Object, e As EventArgs)
         Dim t As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
-        Dim i As Integer = CInt(t.Tag)
+        Dim i As Integer = t.Tag
         CloseAllButThis(i)
     End Sub
 
     Private Sub FCloseTab_Click(sender As Object, e As EventArgs)
         Dim t As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
-        Dim i As Integer = CInt(t.Tag)
+        Dim i As Integer = t.Tag
         CloseTab(i)
     End Sub
 
