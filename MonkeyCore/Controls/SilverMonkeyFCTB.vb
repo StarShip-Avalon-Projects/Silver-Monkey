@@ -3,6 +3,7 @@
 Imports System.ComponentModel
 Imports System.Drawing
 Imports FastColoredTextBoxNS
+Imports Irony
 Imports Irony.Parsing
 
 Namespace Controls
@@ -100,8 +101,8 @@ Namespace Controls
             'highlight errors
             If tree.Status = ParseTreeStatus.[Error] Then
                 ClearStyle(GetStyleIndexMask(New Style() {WavyStyle}))
-                For Each msg As Object In tree.ParserMessages
-                    Dim loc = msg.Location
+                For Each msg As LogMessage In tree.ParserMessages
+                    Dim loc As SourceLocation = msg.Location
                     Dim place = New Place(loc.Column, loc.Line)
                     Dim r = New Range(Me, place, place)
                     Dim f = r.GetFragment("[\S]")

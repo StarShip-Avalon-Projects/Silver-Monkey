@@ -27,7 +27,9 @@ Public Class Main
     Private Const CookieToMeREGEX As String = "<name shortname='(.*?)'>(.*?)</name> just gave you"
 #End Region
 #Region "SysTray"
-    Public Shared WithEvents NotifyIcon1 As NotifyIcon
+    Public Shared WithEvents NotifyIcon1 As NotifyIcon = Nothing
+
+    Public Shared Property MainSettings As cMain
 #End Region
 #Region "smPounce"
     Private WithEvents smPounce As PounceConnection
@@ -888,19 +890,19 @@ Public Class Main
         Try
             Select Case MyColor
                 Case fColorEnum.DefaultColor
-                    Return cMain.DefaultColor
+                    Return MainSettings.DefaultColor
                 Case fColorEnum.Emit
-                    Return cMain.EmitColor
+                    Return MainSettings.EmitColor
                 Case fColorEnum.Say
-                    Return cMain.SayColor
+                    Return MainSettings.SayColor
                 Case fColorEnum.Shout
-                    Return cMain.ShoutColor
+                    Return MainSettings.ShoutColor
                 Case fColorEnum.Whisper
-                    Return cMain.WhColor
+                    Return MainSettings.WhColor
                 Case fColorEnum.Emote
-                    Return cMain.EmoteColor
+                    Return MainSettings.EmoteColor
                 Case Else
-                    Return cMain.DefaultColor
+                    Return MainSettings.DefaultColor
             End Select
         Catch Ex As Exception
             Dim logError As New ErrorLogging(Ex, Me)
@@ -1161,7 +1163,7 @@ Public Class Main
         Try
             'data = data.Replace(vbLf, vbCrLf)
             If cBot.log Then LogStream.Writeline(data)
-            If CBool(cMain.TimeStamp) Then
+            If CBool(MainSettings.TimeStamp) Then
                 Dim Now As String = DateTime.Now.ToLongTimeString
                 data = Now.ToString & ": " & data
             End If
@@ -1649,7 +1651,7 @@ Public Class Main
                 ThroatTired = True
 
                 'Throat Tired Syndrome, Halt all out going data for a few seconds
-                Dim Ts As TimeSpan = TimeSpan.FromSeconds(cMain.TT_TimeOut)
+                Dim Ts As TimeSpan = TimeSpan.FromSeconds(MainSettings.TT_TimeOut)
                 TroatTiredDelay = New Threading.Timer(AddressOf TroatTiredDelayTick,
                    Nothing, Ts, Ts)
                 '(0:92) When the bot detects the "Your throat is tired. Please wait a few seconds" message,
@@ -1849,16 +1851,16 @@ Public Class Main
 
                 Select Case chan
                     Case "@advertisements"
-                        If cMain.Advertisment Then Exit Sub
+                        If MainSettings.Advertisment Then Exit Sub
                         AdRegEx = "\[(.*?)\] (.*?)</font>"
                         Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
                         sndDisplay(Text)
                     Case "@bcast"
-                        If cMain.Broadcast Then Exit Sub
+                        If MainSettings.Broadcast Then Exit Sub
                         Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
                         sndDisplay(Text)
                     Case "@announcements"
-                        If cMain.Announcement Then Exit Sub
+                        If MainSettings.Announcement Then Exit Sub
                         Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
                         sndDisplay(Text)
                     Case Else
@@ -2527,10 +2529,10 @@ Public Class Main
                     End If
                 End If
             End If
-            If cMain.PSShowMainWindow Then
+            If MainSettings.PSShowMainWindow Then
                 sndDisplay(data)
             End If
-            If cMain.PSShowClient Then
+            If MainSettings.PSShowClient Then
                 If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
             End If
             Exit Sub
@@ -2853,7 +2855,7 @@ Public Class Main
         If cBot.StandAlone = False Then
 
             ClientClose = True
-            If cMain.CloseProc Then
+            If MainSettings.CloseProc Then
                 ProcExit = False
             Else
                 ProcExit = True
@@ -2863,7 +2865,7 @@ Public Class Main
             smProxy.CloseClient()
             TS_Status_Client.Image = My.Resources.images2
         End If
-        If cMain.DisconnectPopupToggle Then SetBalloonText("Furcadia Closed or disconnected")
+        If MainSettings.DisconnectPopupToggle Then SetBalloonText("Furcadia Closed or disconnected")
     End Sub
     Private Sub ServerClose() Handles smProxy.ServerDisConnected
         If smProxy.IsClientConnected Then
@@ -2935,14 +2937,14 @@ Public Class Main
         Dim myColor As System.Drawing.Color = fColor(newColor)
         Dim ColorString As String = "{\colortbl ;"
         ColorString += "\red" & myColor.R & "\green" & myColor.G & "\blue" & myColor.B & ";}"
-        Dim FontSize As Single = cMain.ApFont.Size
-        Dim FontFace As String = cMain.ApFont.Name
+        Dim FontSize As Single = MainSettings.ApFont.Size
+        Dim FontFace As String = MainSettings.ApFont.Name
         FontSize *= 2
         Return "{\rtf1\ansi\ansicpg1252\deff0\deflang1033" & ColorString & "{\fonttbl{\f0\fcharset0 " & FontFace & ";}}\viewkind4\uc1\fs" & FontSize.ToString & "\cf1 " & data & " \par}"
     End Function
     Public Function FormatURL(ByVal data As String) As String
-        Dim FontSize As Single = cMain.ApFont.Size
-        Dim FontFace As String = cMain.ApFont.Name
+        Dim FontSize As Single = MainSettings.ApFont.Size
+        Dim FontFace As String = MainSettings.ApFont.Name
         FontSize *= 2
         Return "{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fcharset0 " & FontFace & ";}}\viewkind4\uc1\fs" & FontSize.ToString & " " & data & "}"
     End Function
@@ -2973,15 +2975,15 @@ Public Class Main
     Private Sub Main_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         Try
 
-            Select Case cMain.SysTray
+            Select Case MainSettings.SysTray
                 Case CheckState.Checked
                     Visible = False
                     e.Cancel = True
                 Case CheckState.Indeterminate
                     If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing,
                          MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
-                        cMain.SysTray = CheckState.Checked
-                        cMain.SaveMainSettings()
+                        MainSettings.SysTray = CheckState.Checked
+                        MainSettings.SaveMainSettings()
                         Visible = False
                         e.Cancel = True
                     Else
@@ -3054,7 +3056,7 @@ Public Class Main
     End Sub
     Dim listlock As New Object
     Private Sub Main_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
-        If IsNothing(NotifyIcon1) Then
+        If NotifyIcon1 Is Nothing Then
             NotifyIcon1 = New NotifyIcon
             NotifyIcon1.ContextMenuStrip = ContextTryIcon
             NotifyIcon1.Icon = My.Resources.metal
@@ -3062,11 +3064,16 @@ Public Class Main
             NotifyIcon1.Text = My.Application.Info.ProductName + ": " + My.Application.Info.Version.ToString
             AddHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
         End If
+        MainSettings = New cMain
+        If Not String.IsNullOrEmpty(MainSettings.FurcPath) Then
+            Paths.FurcadiaProgramFolder = MainSettings.FurcPath
+        End If
+
         If Not NotifyIcon1.Visible Then NotifyIcon1.Visible = True
         'catch the Console messages
         _FormClose = False
 
-        Paths.FurcadiaProgramFolder = cMain.FurcPath
+        Paths.FurcadiaProgramFolder = MainSettings.FurcPath
 
         writer = New TextBoxWriter(log_)
         Console.SetOut(writer)
@@ -3096,8 +3103,7 @@ Public Class Main
         callbk = Me
         If (My.Application.CommandLineArgs.Count > 0) Then
             Dim File As String = My.Application.CommandLineArgs(0)
-            Dim directoryName As String
-            directoryName = Path.GetDirectoryName(File)
+            Dim directoryName As String = Path.GetDirectoryName(File)
             If String.IsNullOrEmpty(directoryName) Then
                 File = Path.Combine(Paths.SilverMonkeyBotPath, File)
             Else
@@ -3106,17 +3112,17 @@ Public Class Main
             cBot = New cBot(File)
             EditBotToolStripMenuItem.Enabled = True
             Console.WriteLine("Loaded: """ + File + """")
-            'ElseIf cMain.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) Then
-            '    cBot = New cBot(My.Settings.LastBotFile)
-            '    'EditBotToolStripMenuItem.Enabled = True
-            '    Console.WriteLine("Loaded: """ + My.Settings.LastBotFile + """")
+        ElseIf MainSettings.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) Then
+            cBot = New cBot(My.Settings.LastBotFile)
+            'EditBotToolStripMenuItem.Enabled = True
+            Console.WriteLine("Loaded: """ + My.Settings.LastBotFile + """")
         End If
-        'Dim ts As TimeSpan = TimeSpan.FromSeconds(30)
-        ' PounceTimer = New Threading.Timer(AddressOf smPounceSend, Nothing, TimeSpan.Zero, ts)
-        'PounceTimer.InitializeLifetimeService()
-        ' TroatTiredProc = New Threading.Timer(AddressOf TroatTiredProcTick, Nothing, 3000, 100)
+        Dim ts As TimeSpan = TimeSpan.FromSeconds(30)
+        PounceTimer = New Threading.Timer(AddressOf smPounceSend, Nothing, TimeSpan.Zero, ts)
+        PounceTimer.InitializeLifetimeService()
+        TroatTiredProc = New Threading.Timer(AddressOf TroatTiredProcTick, Nothing, 3000, 100)
 
-        If Not IsNothing(cBot) Then
+        If Not cBot Is Nothing Then
             If cBot.AutoConnect Then
                 ConnectBot()
             End If
@@ -3134,10 +3140,10 @@ Public Class Main
     End Sub
 
     Public Sub InitializeTextControls()
-        log_.Font = cMain.ApFont
-        toServer.Font = cMain.ApFont
-        DreamList.Font = cMain.ApFont
-        DreamCountTxtBx.Font = cMain.ApFont
+        log_.Font = MainSettings.ApFont
+        toServer.Font = MainSettings.ApFont
+        DreamList.Font = MainSettings.ApFont
+        DreamCountTxtBx.Font = MainSettings.ApFont
     End Sub
 
 #Region "Action Controls"
@@ -3263,11 +3269,11 @@ Public Class Main
             My.Settings.Save()
             ReLogCounter = 0
             ClientClose = False
-            Dim Ts As TimeSpan = TimeSpan.FromSeconds(cMain.ConnectTimeOut)
+            Dim Ts As TimeSpan = TimeSpan.FromSeconds(MainSettings.ConnectTimeOut)
             ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
              Nothing, Ts, Ts)
-            Dim Tss As TimeSpan = TimeSpan.FromSeconds(cMain.Ping)
-            If cMain.Ping > 0 Then PingTimer = New Threading.Timer(AddressOf PingTimerTick,
+            Dim Tss As TimeSpan = TimeSpan.FromSeconds(MainSettings.Ping)
+            If MainSettings.Ping > 0 Then PingTimer = New Threading.Timer(AddressOf PingTimerTick,
              Nothing, Tss, Tss)
             If Not IsNothing(MS_Export) Then MS_Export.Dispose()
             Try
@@ -3331,10 +3337,10 @@ Public Class Main
                 Try
                     g_mass = 0
                     If Not IsNothing(smProxy) Then smProxy.Dispose()
-                    smProxy = New NetProxy(cMain.Host, cMain.sPort, port)
+                    smProxy = New NetProxy(MainSettings.Host, MainSettings.sPort, port)
                     With smProxy
                         .ProcessCMD = cBot.IniFile
-                        .ProcessPath = cMain.FurcPath
+                        .ProcessPath = MainSettings.FurcPath
                         .StandAloneMode = cBot.StandAlone
                         .Connect()
                         ProcID = .ProcID
@@ -3362,7 +3368,7 @@ Public Class Main
             Dim d As New UpDateBtn_GoCallback2(AddressOf DisconnectBot)
             Invoke(d)
         Else
-            If cMain.AutoReconnect And Not ClientClose Then
+            If MainSettings.AutoReconnect And Not ClientClose Then
                 ReconnectTimer = New Threading.Timer(AddressOf ReconnectTick,
                   Nothing, 45000, 45000)
                 SetBalloonText("Connection Lost. Reconnecting in 45 Seconds.")
@@ -3376,7 +3382,7 @@ Public Class Main
             DisconnectTrayIconMenuItem.Enabled = True
             NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Now disconnected from Furcadia.", ToolTipIcon.Info)
             Try
-                If cMain.CloseProc And ProcExit = False Then
+                If MainSettings.CloseProc And ProcExit = False Then
 
                     KillProc(ProcID)
                     SndToServer("quit")
@@ -3441,7 +3447,7 @@ Public Class Main
         Dim Ts As TimeSpan = TimeSpan.FromSeconds(45)
         ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
          Nothing, Ts, Ts)
-        If cMain.CloseProc And ProcExit = False Then
+        If MainSettings.CloseProc And ProcExit = False Then
             KillProc(ProcID)
         End If
         If Not IsNothing(smProxy) Then
@@ -3477,7 +3483,7 @@ Public Class Main
 
 
             'DisconnectBot()
-            If cMain.CloseProc And ProcExit = False Then
+            If MainSettings.CloseProc And ProcExit = False Then
                 KillProc(ProcID)
 
             End If
@@ -3489,7 +3495,7 @@ Public Class Main
             Try
                 ConnectBot()
                 sndDisplay("Reconnect attempt: " + ReLogCounter.ToString)
-                If ReLogCounter = cMain.ReconnectMax Then
+                If ReLogCounter = MainSettings.ReconnectMax Then
                     ReconnectTimeOutTimer.Dispose()
                     sndDisplay("Reconnect attempts exceeded.")
                     BTN_Go.Text = "Go!"

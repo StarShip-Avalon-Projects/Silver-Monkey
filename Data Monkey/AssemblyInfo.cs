@@ -1,3 +1,5 @@
+using System.Resources;
+using System.Runtime.InteropServices;
 using System.Reflection;
 
 //
@@ -5,12 +7,12 @@ using System.Reflection;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Data Monkey")]
+[assembly: AssemblyDescription("Silver Monkey Database Manager")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCompany("TSProjects")]
+[assembly: AssemblyProduct("Data Monkey")]
+[assembly: AssemblyCopyright("TSProjects ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -24,8 +26,6 @@ using System.Reflection;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-
-[assembly: AssemblyVersion("1.0.*")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
@@ -55,3 +55,7 @@ using System.Reflection;
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
+[assembly: Guid("9D25AE8A-82D4-4AD0-9D56-714EC6D75912")]
+[assembly: NeutralResourcesLanguage("en-US")]
+[assembly: ComVisible(false)]
+

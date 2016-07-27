@@ -3,13 +3,18 @@ Furcadia Framework for 3rd Party Programs
 
 MonkeyCore 
 (Core library of shared components)
+Tweaked Close Button to appear more as an X
 
 SqliteDatabase:
-
+Tweaked SQLTIEDatabase.AddCollumn (Condenced ExecuteNonQuery()s into one to work around iDispose of Using Statment)
 
 Data Monkey
 (Database Manager)
-
+Added Menu Item Remove Column
+Added Status Box with SQLite Execution messages
+Added TabControlEx Menu with close options
+SQLTabControl now opens a new tab when closing last tab
+Added Middle mouse button Close to tabs
 
 Monkey Speak Editor
 (Script Editor)
@@ -17,6 +22,7 @@ Monkey Speak Editor
 
 Silver Monkey
 (Main Bot Application)
+Fixed Settings Loading Causing NullReferenceException
 
 SQLite Database:
 

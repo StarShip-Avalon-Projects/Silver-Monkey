@@ -38,6 +38,34 @@ namespace SQLiteEditor
         
 		}
 
+        public static void ReturnResults(string SQLStatement, string DatabaseLocation, out string message)
+        {
+            DataSet ds = null;
+            
+            ReturnResults(SQLStatement, DatabaseLocation, ref ds, out message);
+        }
 
-	}
+        public static void ReturnResults(string SQLStatement, string DatabaseLocation, ref DataSet ds, out string message)
+        {
+            //Add a call here to a parser that will 
+            //ensure the SQLStatement is properly formed
+
+            if (SQLStatement.ToLower().StartsWith("select") || SQLStatement.ToLower().StartsWith("pragma"))
+            {
+                SQLiteDatabase db = new SQLiteDatabase(DatabaseLocation);
+                ds = db.ExecuteQuery(SQLStatement);
+                message = "ExecuteQuery: ok";
+            }
+            else
+            {
+                bool result = SQLiteDatabase.ExecuteNonQuery(SQLStatement) > 0;
+                ds = null;
+                message = string.Format("ExecuteNonQuery: {0}", result == true ? "Sucess" : "Failed");
+            }
+
+
+        }
+
+
+    }
 }

@@ -25,15 +25,6 @@ Silver Monkey
 Fix Memory Leak with Plugins
 Add Missing Database MonkeySpeak
 
-(1:x) and the Database info  {...} in Settings Table {...} exists,
-(1:x) and the Database info  {...} in Settings Table {...} doesn't exist,
-(1:x)and the Database info {..} in Settings Table  {...} is equal to {...},
-(1:x)and the Database info {..} in Settings Table  {...} is not equal to {...},
-(1:x)and the Database info {..} in Settings Table  {...} is greater than #,
-(1:x)and the Database info {..} in Settings Table  {...} is greater than or equl to #,
-(1:x)and the Database info {..} in Settings Table  {...} is less than #,
-(1:x)and the Database info {..} in Settings Table  {...} is less than or equl to #,
-
 (5:x) Add Settings Info {...} to Database Settings Table {...}.
 (5:x) update Database Info {...} for Settings Table {...} to {...}.
 (5:x) remove Database info {...} from Settings Table{...}.
@@ -42,10 +33,5 @@ Add Missing Database MonkeySpeak
 Help Menu with Helpfule links
 Silent Prefix (Client and UI Says/Emotes) Bot client side only... Doesn't send to server [IE: Pillow Cannon]
 
-Setup (MSI)
-rebuild the script to allow Custom Directory path
-
 Plugins
-rebuild SoundWave
 Rebuild AngelCat
-Switch Loading to <name>.Plugin.dll to cut back on unessary loading of dlls that cause nullreference exceptions

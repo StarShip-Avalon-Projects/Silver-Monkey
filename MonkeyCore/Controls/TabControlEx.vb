@@ -85,7 +85,7 @@ Namespace Controls
                 .FlatStyle = FlatStyle.Flat
                 .BackColor = Color.FromKnownColor(KnownColor.ButtonFace)
                 .ForeColor = Color.White
-                .Font = New Font("Microsoft Sans Serif", 4, FontStyle.Bold)
+                .Font = New Font("Microsoft Sans Serif", 5, FontStyle.Bold)
             End With
             Return closeButton
         End Function
@@ -107,12 +107,12 @@ Namespace Controls
                     Dim rect As Rectangle = Me.GetTabRect(tpIndex)
                     If Me.SelectedTab Is tp Then
                         btn.BackColor = Color.Red
-                        btn.Size = New Size(rect.Height - 3, rect.Height - 3)
-                        btn.Location = New Point(rect.X + rect.Width - rect.Height - 1, rect.Y + 1)
+                        btn.Size = New Size(rect.Height - 2, rect.Height - 2)
+                        btn.Location = New Point(rect.X + rect.Width - rect.Height - 2, rect.Y + 2)
                     Else
                         btn.BackColor = Color.FromKnownColor(KnownColor.ButtonFace)
-                        btn.Size = New Size(rect.Height - 3, rect.Height - 3)
-                        btn.Location = New Point(rect.X + rect.Width - rect.Height - 1, rect.Y + 1)
+                        btn.Size = New Size(rect.Height - 2, rect.Height - 2)
+                        btn.Location = New Point(rect.X + rect.Width - rect.Height - 2, rect.Y + 2)
                     End If
                     btn.Visible = ShowCloseButtonOnTabs
                     btn.BringToFront()

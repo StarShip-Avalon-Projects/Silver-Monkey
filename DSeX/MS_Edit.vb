@@ -254,13 +254,15 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
     Protected Overrides Sub WndProc(ByRef m As Message)
         If m.Msg = WM_COPYDATA Then
-            Dim mystr2 As COPYDATASTRUCT = Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT))
 
+            Dim mystr2 As COPYDATASTRUCT = Nothing
+            Marshal.PtrToStructure(m.LParam(), [mystr2])
             ' If the size matches
             If mystr2.cdData = Marshal.SizeOf(GetType(MyData)) Then
                 ' Marshal the data from the unmanaged memory block to a 
                 ' MyStruct managed struct.
-                Dim myStr As MyData = Marshal.PtrToStructure(mystr2.lpData, GetType(MyData))
+                Dim myStr As MyData = Nothing
+                Marshal.PtrToStructure(mystr2.lpData, [myStr])
 
 
 
@@ -809,7 +811,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
     Public Function SplitCSV(ByRef input As String) As String()
 
         Try
-            Dim afile As New FileIO.TextFieldParser(New System.IO.StringReader(input))
+            Dim afile As New FileIO.TextFieldParser(New StringReader(input))
             afile.TextFieldType = FileIO.FieldType.Delimited
             afile.Delimiters = New String() {","}
             afile.HasFieldsEnclosedInQuotes = True
@@ -1275,7 +1277,7 @@ InputBox("What line within the document do you want to send the cursor to?",
             popupMenu.Enabled = True
 
             popupMenu.SearchPattern = AutoCompleteSearchPattern
-            popupMenu.Items.MaximumSize = New System.Drawing.Size(600, 300)
+            popupMenu.Items.MaximumSize = New Size(600, 300)
             popupMenu.Items.Width = 600
             popupMenu.Items.SetAutocompleteItems(MS_autoCompleteList)
         ElseIf style = EditStyles.ds Then
@@ -1285,11 +1287,11 @@ InputBox("What line within the document do you want to send the cursor to?",
             popupMenu.Enabled = True
 
             popupMenu.SearchPattern = AutoCompleteSearchPattern
-            popupMenu.Items.MaximumSize = New System.Drawing.Size(600, 300)
+            popupMenu.Items.MaximumSize = New Size(600, 300)
             popupMenu.Items.Width = 600
             popupMenu.Items.SetAutocompleteItems(DS_autoCompleteList)
         ElseIf style = EditStyles.ini Then
-            MS_Editor.Text = MonkeyCore.IO.NewDMScript()
+            MS_Editor.Text = IO.NewDMScript()
             lblStatus.Text = "Status: Opened new Wizard Script"
         Else
             MS_Editor.Text = ""
@@ -1371,7 +1373,7 @@ InputBox("What line within the document do you want to send the cursor to?",
     Private Sub ApplyCommentToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ApplyCommentToolStripMenuItem1.Click
         If IsNothing(MS_Editor) Then Exit Sub
 
-        Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(vbLf)
+        Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(Convert.ToChar(vbLf))
         If str.Length > 1 Then
             For i As Integer = 0 To str.Length - 1
                 str(i) = "*" + str(i)
@@ -1384,7 +1386,7 @@ InputBox("What line within the document do you want to send the cursor to?",
     Private Sub AutoCommentOffToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoCommentOffToolStripMenuItem.Click, AutocommentOffToolStripMenuItem1.Click
         If IsNothing(MS_Editor) Then Exit Sub
 
-        Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(vbLf)
+        Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(Convert.ToChar(vbLf))
         If str.Length > 1 Then
             For i As Integer = 0 To str.Length - 1
                 If str(i).StartsWith("*") Then str(i) = str(i).Remove(0, 1)
@@ -1464,7 +1466,7 @@ InputBox("What line within the document do you want to send the cursor to?",
         Else
             LastFoundIndex += 1
         End If
-        For lis As Integer = lisView To iFile.GetKeyValue("Init-Types", "Count")
+        For lis As Integer = lisView To Integer.Parse(iFile.GetKeyValue("Init-Types", "Count"))
             LV1 = CType(tbc.TabPages.Item(lis - 1).Controls.Find(lis.ToString, True)(0), ListView_NoFlicker)
 
             With LV1
@@ -1572,7 +1574,7 @@ InputBox("What line within the document do you want to send the cursor to?",
     End Sub
 
 
-    Private Sub MS_EditRightClick(sender As Object, e As System.Windows.Forms.MouseEventArgs)
+    Private Sub MS_EditRightClick(sender As Object, e As MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             EditMenu.Show(MS_Editor, New Point(e.X, e.Y))
         End If
@@ -1644,7 +1646,7 @@ InputBox("What line within the document do you want to send the cursor to?",
 
     End Sub
 
-    Private Sub TabControl2_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles TabControl2.MouseDown
+    Private Sub TabControl2_MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TabControl2.MouseDown
         Dim z As Control = CType(sender, Control)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             Dim x As New ContextMenuStrip
@@ -1684,13 +1686,13 @@ InputBox("What line within the document do you want to send the cursor to?",
 
     Private Sub FCloseAllTab_Click(sender As Object, e As EventArgs)
         Dim t As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
-        Dim i As Integer = t.Tag
+        Dim i As Integer = Integer.Parse(t.Tag.ToString)
         CloseAllButThis(i)
     End Sub
 
     Private Sub FCloseTab_Click(sender As Object, e As EventArgs)
         Dim t As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
-        Dim i As Integer = t.Tag
+        Dim i As Integer = Integer.Parse(t.Tag.ToString)
         CloseTab(i)
     End Sub
 
@@ -1737,7 +1739,7 @@ InputBox("What line within the document do you want to send the cursor to?",
 
     Private Sub FNewTab_Click(sender As Object, e As EventArgs)
         Dim c As Integer = TabControl2.TabCount
-        AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, c)
+        AddNewEditorTab("", Paths.SilverMonkeyBotPath, c)
         NewFile(EditStyles.ms)
     End Sub
 
@@ -1903,7 +1905,7 @@ InputBox("What line within the document do you want to send the cursor to?",
     End Sub
     Dim SectionLstIdx As Integer = 0
     Dim SectionLstIdxOld As Integer = 0
-    Private Sub ListBox1_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles ListBox1.MouseDown
+    Private Sub ListBox1_MouseDown(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseDown
         Dim l As ListBox = CType(sender, ListBox)
         If l.Items.Count = 0 Then Exit Sub
         SectionLstIdx = l.IndexFromPoint(New Point(e.X, e.Y))
@@ -1915,7 +1917,7 @@ InputBox("What line within the document do you want to send the cursor to?",
         If SectionLstIdx <> SectionLstIdxOld Then SaveSections(TabControl2.SelectedIndex)
 
     End Sub
-    Private Sub ListBox1_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles ListBox1.MouseUp
+    Private Sub ListBox1_MouseUp(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseUp
         Dim l As ListBox = CType(sender, ListBox)
         If ListBox1.Items.Count = 0 Or l.SelectedIndex = -1 Then Exit Sub
         Debug.Print("ListBox1_MouseUp()")
@@ -2004,7 +2006,7 @@ InputBox("What line within the document do you want to send the cursor to?",
         'If i >= 1 Then i = 2
         i -= 1
         Debug.Print("NewSection_Click()")
-        Dim s As String = Microsoft.VisualBasic.InputBox("Add Section")
+        Dim s As String = InputBox("Add Section")
         If String.IsNullOrEmpty(s) Then Exit Sub
 
         SaveSections(TabControl2.SelectedIndex)
@@ -2079,7 +2081,7 @@ InputBox("What line within the document do you want to send the cursor to?",
     End Sub
 
 
-    Private Sub ListBox2_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles ListBox2.MouseDown
+    Private Sub ListBox2_MouseDown(sender As Object, e As MouseEventArgs) Handles ListBox2.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Right Then
             ListBox2.SelectedIndex = ListBox2.IndexFromPoint(New Point(e.X, e.Y))
         End If
@@ -2161,7 +2163,7 @@ InputBox("What line within the document do you want to send the cursor to?",
         popupMenu.Enabled = True
 
         popupMenu.SearchPattern = AutoCompleteSearchPattern
-        popupMenu.Items.MaximumSize = New System.Drawing.Size(600, 300)
+        popupMenu.Items.MaximumSize = New Size(600, 300)
         popupMenu.Items.Width = 600
         popupMenu.Items.SetAutocompleteItems(MS_autoCompleteList)
         MS_Editor.OnTextChanged()
@@ -2169,12 +2171,12 @@ InputBox("What line within the document do you want to send the cursor to?",
     End Sub
 
     Private Sub DragonSpeakFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DragonSpeakFileToolStripMenuItem.Click
-        AddNewEditorTab("", MonkeyCore.Paths.FurcadiaDocumentsFolder, TabControl2.TabCount)
+        AddNewEditorTab("", Paths.FurcadiaDocumentsFolder, TabControl2.TabCount)
         NewFile(EditStyles.ds)
     End Sub
 
     Private Sub MonkeySpeakFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MonkeySpeakFileToolStripMenuItem.Click, ToolBoxNew.Click
-        AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, TabControl2.TabCount)
+        AddNewEditorTab("", Paths.SilverMonkeyBotPath, TabControl2.TabCount)
         NewFile(EditStyles.ms)
     End Sub
 
@@ -2221,7 +2223,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         If ListBox1.Items.Count = 0 Then Exit Sub
         Dim idx As Integer = ListBox1.SelectedIndex
         Dim section As TDSSegment = TabSections(TabControl2.SelectedIndex)(idx - 1)
-        Dim s As String = Microsoft.VisualBasic.InputBox("New Name?")
+        Dim s As String = InputBox("New Name?")
         If String.IsNullOrEmpty(s) Then Exit Sub
         section.Title = s
         UpdateSegmentList()
@@ -2255,7 +2257,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
 
     Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs) Handles MSTemplateRename.Click
-        Dim s As String = Microsoft.VisualBasic.InputBox("New Name?")
+        Dim s As String = InputBox("New Name?")
         If String.IsNullOrEmpty(s) Then Exit Sub
         My.Computer.FileSystem.RenameFile(TemplatePathsMS.Item(ListBox3.SelectedIndex) + ListBox3.SelectedItem.ToString + ".ms", TemplatePathsMS(ListBox3.SelectedIndex) + s + ".ms")
         GetTemplates()

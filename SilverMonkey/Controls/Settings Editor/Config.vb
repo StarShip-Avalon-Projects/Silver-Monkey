@@ -3,7 +3,6 @@ Imports System.Drawing.Text
 Imports System.Drawing
 Imports MonkeyCore.Settings
 Imports MonkeyCore
-Imports System.IO
 
 Public Class Config
 
@@ -14,40 +13,40 @@ Public Class Config
 
     Private Sub BTN_Ok_Click(ByVal sender As Object, ByVal e As EventArgs) Handles BTN_Ok.Click
         'apply the Settings
-        cMain.Host = TxtBx_Server.Text
-        cMain.sPort = Convert.ToInt32(TxtSPort.Text)
+        Main.MainSettings.Host = TxtBx_Server.Text
+        Main.MainSettings.sPort = Convert.ToInt32(TxtSPort.Text)
 
-        cMain.ReconnectMax = CInt(ReconnectUpDown.Value)
-        cMain.TT_TimeOut = CInt(NumericUpDown4.Value)
-        cMain.TimeStamp = CUShort(ChkTimeStamp.CheckState)
+        Main.MainSettings.ReconnectMax = CInt(ReconnectUpDown.Value)
+        Main.MainSettings.TT_TimeOut = CInt(NumericUpDown4.Value)
+        Main.MainSettings.TimeStamp = CUShort(ChkTimeStamp.CheckState)
 
         Dim face As String = ComboFontFace.SelectedItem.ToString
         Dim size As Integer = Convert.ToInt32(ComboFontSize.SelectedItem)
-        cMain.ApFont = New Font(face, size)
+        Main.MainSettings.ApFont = New Font(face, size)
 
-        cMain.CloseProc = ChkBxAutoCloseProc.Checked
-        cMain.EmitColor = EmitColorBox.BackColor
-        cMain.SayColor = SayColorBox.BackColor
-        cMain.ShoutColor = ShoutColorBox.BackColor
-        cMain.WhColor = WhisperColorBox.BackColor
-        cMain.DefaultColor = DefaultColorBox.BackColor
+        Main.MainSettings.CloseProc = ChkBxAutoCloseProc.Checked
+        Main.MainSettings.EmitColor = EmitColorBox.BackColor
+        Main.MainSettings.SayColor = SayColorBox.BackColor
+        Main.MainSettings.ShoutColor = ShoutColorBox.BackColor
+        Main.MainSettings.WhColor = WhisperColorBox.BackColor
+        Main.MainSettings.DefaultColor = DefaultColorBox.BackColor
 
-        cMain.AutoReconnect = ChkBxAutoReconnect.Checked
-        cMain.SysTray = ChkBxSysTray.CheckState
-        cMain.ReconnectMax = CInt(ReconnectUpDown.Value)
-        cMain.ConnectTimeOut = CInt(NumSonnectTimeOut.Value)
-        cMain.FurcPath = TxtBxFurPath.Text
-        cMain.Ping = CInt(NumPing.Value)
+        Main.MainSettings.AutoReconnect = ChkBxAutoReconnect.Checked
+        Main.MainSettings.SysTray = ChkBxSysTray.CheckState
+        Main.MainSettings.ReconnectMax = CInt(ReconnectUpDown.Value)
+        Main.MainSettings.ConnectTimeOut = CInt(NumSonnectTimeOut.Value)
+        Main.MainSettings.FurcPath = TxtBxFurPath.Text
+        Main.MainSettings.Ping = CInt(NumPing.Value)
 
-        cMain.Advertisment = chkBxAdvertisment.Checked
-        cMain.Announcement = chkBxAnnouncement.Checked
-        cMain.Broadcast = chkBxBroadcast.Checked
-        cMain.LoadLastBotFile = chkBxAutoLoadLastBotFile.Checked
-        cMain.DisconnectPopupToggle = chkBxClientDisconnectToggle.Checked
+        Main.MainSettings.Advertisment = chkBxAdvertisment.Checked
+        Main.MainSettings.Announcement = chkBxAnnouncement.Checked
+        Main.MainSettings.Broadcast = chkBxBroadcast.Checked
+        Main.MainSettings.LoadLastBotFile = chkBxAutoLoadLastBotFile.Checked
+        Main.MainSettings.DisconnectPopupToggle = chkBxClientDisconnectToggle.Checked
         'Save the settings to the ini file
 
-        cMain.PSShowClient = CheckBox1.Checked
-        'cMain.PSShowSettingsWindow = CheckBox2.Checked
+        Main.MainSettings.PSShowClient = CheckBox1.Checked
+        'Main.MainSettings.PSShowSettingsWindow = CheckBox2.Checked
 
         For Each lvItem As ListViewItem In LstVwPlugin.Items
             If PluginList.ContainsKey(lvItem.SubItems.Item(1).Text.Replace(" ", "")) Then
@@ -56,8 +55,8 @@ Public Class Config
                 PluginList.Add(lvItem.SubItems.Item(1).Text.Replace(" ", ""), lvItem.Checked)
             End If
         Next
-        Paths.FurcadiaProgramFolder = cMain.FurcPath
-        cMain.SaveMainSettings()
+        Paths.FurcadiaProgramFolder = Main.MainSettings.FurcPath
+        Main.MainSettings.SaveMainSettings()
 
         'Settings.InitializeTextControls()
         Me.Dispose()
@@ -76,13 +75,13 @@ Public Class Config
     End Sub
 
     Public Sub Loadconfig()
-        TxtBx_Server.Text = cMain.Host
-        TxtSPort.Text = cMain.sPort.ToString
-        ChkBxAutoReconnect.Checked = cMain.AutoReconnect
+        TxtBx_Server.Text = Main.MainSettings.Host
+        TxtSPort.Text = Main.MainSettings.sPort.ToString
+        ChkBxAutoReconnect.Checked = Main.MainSettings.AutoReconnect
 
-        ChkBxAutoCloseProc.Checked = cMain.CloseProc
-        ReconnectUpDown.Value = cMain.ReconnectMax
-        ChkTimeStamp.Checked = CBool(cMain.TimeStamp)
+        ChkBxAutoCloseProc.Checked = Main.MainSettings.CloseProc
+        ReconnectUpDown.Value = Main.MainSettings.ReconnectMax
+        ChkTimeStamp.Checked = CBool(Main.MainSettings.TimeStamp)
         ' Get the installed fonts collection.
         Dim installed_fonts As New InstalledFontCollection
         ' Get an array of the system's font familiies.
@@ -91,36 +90,36 @@ Public Class Config
         For Each font_family As FontFamily In font_families
             ComboFontFace.Items.Add(font_family.Name)
         Next (font_family)
-        ComboFontFace.SelectedItem = cMain.ApFont.Name
+        ComboFontFace.SelectedItem = Main.MainSettings.ApFont.Name
         For i As Integer = 3 To 50
             ComboFontSize.Items.Add(i.ToString)
         Next
-        ComboFontSize.SelectedItem = cMain.ApFont.Size.ToString
-        NumericUpDown4.Value = cMain.TT_TimeOut
-        ReconnectUpDown.Value = cMain.ReconnectMax
-        EmitColorBox.BackColor = cMain.EmitColor
-        SayColorBox.BackColor = cMain.SayColor
-        ShoutColorBox.BackColor = cMain.ShoutColor
-        WhisperColorBox.BackColor = cMain.WhColor
-        DefaultColorBox.BackColor = cMain.DefaultColor
-        EmoteColorBox.BackColor = cMain.EmoteColor
+        ComboFontSize.SelectedItem = Main.MainSettings.ApFont.Size.ToString
+        NumericUpDown4.Value = Main.MainSettings.TT_TimeOut
+        ReconnectUpDown.Value = Main.MainSettings.ReconnectMax
+        EmitColorBox.BackColor = Main.MainSettings.EmitColor
+        SayColorBox.BackColor = Main.MainSettings.SayColor
+        ShoutColorBox.BackColor = Main.MainSettings.ShoutColor
+        WhisperColorBox.BackColor = Main.MainSettings.WhColor
+        DefaultColorBox.BackColor = Main.MainSettings.DefaultColor
+        EmoteColorBox.BackColor = Main.MainSettings.EmoteColor
 
-        TxtBxFurPath.Text = cMain.FurcPath
+        TxtBxFurPath.Text = Main.MainSettings.FurcPath
         'SysTray
-        ChkBxSysTray.CheckState = cMain.SysTray
-        NumSonnectTimeOut.Value = cMain.ConnectTimeOut
-        NumPing.Value = cMain.Ping
+        ChkBxSysTray.CheckState = Main.MainSettings.SysTray
+        NumSonnectTimeOut.Value = Main.MainSettings.ConnectTimeOut
+        NumPing.Value = Main.MainSettings.Ping
 
-        chkBxAdvertisment.Checked = cMain.Advertisment
-        chkBxAnnouncement.Checked = cMain.Announcement
-        chkBxBroadcast.Checked = cMain.Broadcast
-        chkBxAutoLoadLastBotFile.Checked = cMain.LoadLastBotFile
-        chkBxClientDisconnectToggle.Checked = cMain.DisconnectPopupToggle
+        chkBxAdvertisment.Checked = Main.MainSettings.Advertisment
+        chkBxAnnouncement.Checked = Main.MainSettings.Announcement
+        chkBxBroadcast.Checked = Main.MainSettings.Broadcast
+        chkBxAutoLoadLastBotFile.Checked = Main.MainSettings.LoadLastBotFile
+        chkBxClientDisconnectToggle.Checked = Main.MainSettings.DisconnectPopupToggle
         Me.Location = My.Settings.ConfigFormLocation
 
 
-        CheckBox1.Checked = cMain.PSShowClient
-        'CheckBox2.Checked = cMain.PSShowSettingsWindow
+        CheckBox1.Checked = Main.MainSettings.PSShowClient
+        'CheckBox2.Checked = Main.MainSettings.PSShowSettingsWindow
     End Sub
 
     Private Sub PopulatePluginList()
@@ -179,7 +178,7 @@ Public Class Config
     End Sub
 
     Private Sub ChkTimeStamp_CheckedChanged(sender As Object, e As EventArgs) Handles ChkTimeStamp.CheckedChanged
-        cMain.TimeStamp = CUShort(ChkTimeStamp.CheckState)
+        Main.MainSettings.TimeStamp = CUShort(ChkTimeStamp.CheckState)
     End Sub
 
 

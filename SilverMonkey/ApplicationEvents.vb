@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Devices
 Imports System.Windows.Forms
-Imports System.Diagnostics
 
 Namespace My
     ' The following events are available for MyApplication:
@@ -25,9 +24,10 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
-            Dim logError As New MonkeyCore.ErrorLogging(e.Exception, sender)
-            MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            'Process.Start(MonkeyCore.Paths.SilverMonkeyErrorLogPath)
+            Dim ex As Exception = e.Exception
+            Dim logError As New MonkeyCore.ErrorLogging(ex, sender)
+            Dim dialog As DialogResult = MessageBox.Show("An error log has been saved to" + logError.LogFile + " Press Ok To continue ", "Unhandled Exception", MessageBoxButtons.OKCancel, MessageBoxIcon.Error)
+            e.ExitApplication = dialog = DialogResult.Cancel
         End Sub
     End Class
 

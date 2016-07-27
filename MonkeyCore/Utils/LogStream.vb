@@ -22,7 +22,7 @@ Public Class LogStream
 
     Public Shared Function IsFileInUse(ByVal filePath As String) As Boolean
         Try
-            Dim contents() As String = IO.File.ReadAllLines(filePath)
+            Dim contents() As String = System.IO.File.ReadAllLines(filePath)
         Catch ex As IOException
             Return (ex.Message.StartsWith("The process cannot access the file") AndAlso
                     ex.Message.EndsWith("because it is being used by another process."))

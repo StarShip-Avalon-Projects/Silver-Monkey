@@ -8,7 +8,7 @@ Public Class TabControleExTabs
     Private TabControl2 As TabControlEx
     Private popupMenu As AutocompleteMenu
 
-    Public Sub New(ByRef TabControlObject As TabControl, name As String)
+    Public Sub New(ByRef TabControlObject As TabControlEx, name As String)
         TabControl2 = TabControlObject
         Dim tp As New TabPage
 

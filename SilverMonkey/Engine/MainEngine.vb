@@ -254,7 +254,7 @@ Public Class MainMSEngine
                     Dim e As New ErrorLogging(ex, Me)
                 End Try
             Next
-            If newPlugin Then cMain.SaveMainSettings()
+            If newPlugin Then Main.MainSettings.SaveMainSettings()
 
 
         End If

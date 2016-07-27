@@ -101,13 +101,13 @@ Public Class SQLiteDatabase
         Dim columnNames As String = getAllColumnName(tableName)
         columnNames = columnNames.Replace(columnName + ", ", "")
         columnNames = columnNames.Replace(", " + columnName, "")
-        columnNames = columnNames.Replace(columnName, "")
-        ExecuteNonQuery("CREATE TEMPORARY TABLE " + tableName + "backup(" + columnNames + ");")
-        ExecuteNonQuery("INSERT INTO " + tableName + "backup SELECT " + columnNames + " FROM " + tableName + ";")
-        ExecuteNonQuery("DROP TABLE " + tableName + ";")
-        ExecuteNonQuery("CREATE TABLE " + tableName + "(" + columnNames + ");")
-        ExecuteNonQuery("INSERT INTO " + tableName + " SELECT " + columnNames + " FROM " + tableName + "backup;")
-        ExecuteNonQuery("DROP TABLE " + tableName + "backup;")
+        columnNames = columnNames.Replace(columnName, "").Replace("[],", "").Replace(",[]", "")
+        ExecuteNonQuery("CREATE TEMPORARY TABLE " + tableName + "backup(" + columnNames + ");" +
+       "INSERT INTO " + tableName + "backup SELECT " + columnNames + " FROM " + tableName + ";" +
+        "DROP TABLE " + tableName + ";" +
+        "CREATE TABLE " + tableName + "(" + columnNames + ");" +
+       "INSERT INTO " + tableName + " SELECT " + columnNames + " FROM " + tableName + "backup;" +
+        "DROP TABLE " + tableName + "backup;")
     End Sub
 
     'Add a column is much more easy

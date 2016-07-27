@@ -61,13 +61,17 @@ Public Class Paths
     Private Shared _MonKeySpeakEditorDocumentsScriptsPath As String
 
 
-    Private Shared _FurcPath As New Furcadia.IO.Paths()
+    Private Shared _Paths As New Furcadia.IO.Paths()
 
     Private Shared _FurcadiaDocumentsFolder As String
     Private Shared _FurcadiaProgramFolder As String
     Private Shared _FurcadiaCharactersFolder As String
 
     Private Shared _SilverMonkeyErrorLogPath As String
+
+    Public Sub New()
+        _Paths = New Furcadia.IO.Paths(_FurcadiaProgramFolder)
+    End Sub
 
     ''' <summary>
     ''' Gets or sets the furcadia documents folder.
@@ -81,7 +85,10 @@ Public Class Paths
             If Not String.IsNullOrEmpty(_FurcadiaDocumentsFolder) Then
                 Return _FurcadiaDocumentsFolder
             End If
-            _FurcadiaDocumentsFolder = _FurcPath.GetFurcadiaDocPath()
+            If _Paths Is Nothing Then
+                _Paths = New Furcadia.IO.Paths(_FurcadiaProgramFolder)
+            End If
+            _FurcadiaDocumentsFolder = _Paths.GetFurcadiaDocPath()
             Return _FurcadiaDocumentsFolder
         End Get
         Set(ByVal value As String)
@@ -102,7 +109,10 @@ Public Class Paths
     Public Shared Property FurcadiaCharactersFolder() As String
         Get
             If String.IsNullOrEmpty(_FurcadiaCharactersFolder) Then
-                _FurcadiaCharactersFolder = _FurcPath.GetFurcadiaCharactersPath
+                If _Paths Is Nothing Then
+                    _Paths = New Furcadia.IO.Paths(_FurcadiaProgramFolder)
+                End If
+                _FurcadiaCharactersFolder = _Paths.GetFurcadiaCharactersPath
             End If
             Return _FurcadiaCharactersFolder
         End Get
@@ -125,23 +135,26 @@ Public Class Paths
         Get
             Try
                 If String.IsNullOrEmpty(_FurcadiaProgramFolder) Then
-                    _FurcadiaProgramFolder = Furcadia.IO.Paths.GetInstallPath
+                    If _Paths Is Nothing Then
+                        _Paths = New Furcadia.IO.Paths(_FurcadiaProgramFolder)
+                    End If
+                    _FurcadiaProgramFolder = _Paths.GetInstallPath
                 End If
 
             Catch eX As Furcadia.IO.FurcadiaNotFoundException
                 Dim Broswe As New OpenFileDialog
                 'Check for Furcadia Install location.
-                'TODO: Add OSBitness methd or .Net 4.0
                 If Environment.Is64BitOperatingSystem() Then
-                    Broswe.InitialDirectory = Environment.GetFolderPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86))
+                    Broswe.InitialDirectory = Environment.GetFolderPath(CType(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), Environment.SpecialFolder))
                 Else
-                    Broswe.InitialDirectory = Environment.GetFolderPath(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles))
+                    Broswe.InitialDirectory = Environment.GetFolderPath(CType(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), Environment.SpecialFolder))
                 End If
 
                 'Broswe.CheckFileExists = True
-                If Broswe.ShowDialog() = MsgBoxResult.Ok Then
+                If CType(Broswe.ShowDialog(), Global.Microsoft.VisualBasic.MsgBoxResult) = MsgBoxResult.Ok Then
                     Dim ThisPath As String = Path.GetDirectoryName(Broswe.FileName)
-                    _FurcPath = New Furcadia.IO.Paths(ThisPath)
+                    _Paths = New Furcadia.IO.Paths(ThisPath)
+                    _FurcadiaProgramFolder = _Paths.GetInstallPath
                 End If
 
             End Try

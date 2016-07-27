@@ -100,10 +100,13 @@ Public Class Settings
         Private MS_KeysIni As IniFile = Settings.MS_KeysIni
         Public Property FurcPath As String
             Get
-                Return Paths.FurcadiaProgramFolder
+                If String.IsNullOrEmpty(_FurcPath) Then
+                    Return Paths.FurcadiaProgramFolder
+                End If
+                Return _FurcPath
             End Get
             Set(value As String)
-                Paths.FurcadiaProgramFolder = value
+                _FurcPath = value
             End Set
         End Property
 
@@ -347,43 +350,43 @@ Public Class Settings
 
 
     Public Class cMain
-        Private Shared SettingsFile As String = Path.Combine(Paths.ApplicationSettingsPath, SettingFile)
-        Private Shared _sPort As Integer = 6500
-        Private Shared _FurcPath As String = ""
-        Private Shared _Host As String = Main_Host
+        Private SettingsFile As String = Path.Combine(Paths.ApplicationSettingsPath, SettingFile)
+        Private _sPort As Integer = 6500
+        Private _FurcPath As String = ""
+        Private _Host As String = Main_Host
 
-        Private Shared _CloseProc As Boolean = False
-        Private Shared _reconnectMax As Integer = 10
+        Private _CloseProc As Boolean = False
+        Private _reconnectMax As Integer = 10
 
 
-        Private Shared _debug As Boolean = False
-        Private Shared _TimeStamp As UShort = 0
-        Private Shared _AutoReconnect As Boolean = False
-        Private Shared _ConnectTimeOut As Integer = 45
+        Private _debug As Boolean = False
+        Private _TimeStamp As UShort = 0
+        Private _AutoReconnect As Boolean = False
+        Private _ConnectTimeOut As Integer = 45
         'Display Settings
-        Private Shared _FontSize As Integer = 10
-        Private Shared _FontFace As String = "Microsoft Sans Serif"
-        Private Shared _AppFont As New Font(_FontFace, _FontSize, FontStyle.Regular)
+        Private _FontSize As Integer = 10
+        Private _FontFace As String = "Microsoft Sans Serif"
+        Private _AppFont As New Font(_FontFace, _FontSize, FontStyle.Regular)
 
-        Private Shared _emitColor As Color = Color.Blue
-        Private Shared _sayColor As Color = Color.DarkGoldenrod
-        Private Shared _shoutColor As Color = Color.DarkRed
-        Private Shared _whColor As Color = Color.Purple
-        Private Shared _defaultColor As Color = Color.Black
-        Private Shared _emoteColor As Color = Color.DarkCyan
+        Private _emitColor As Color = Color.Blue
+        Private _sayColor As Color = Color.DarkGoldenrod
+        Private _shoutColor As Color = Color.DarkRed
+        Private _whColor As Color = Color.Purple
+        Private _defaultColor As Color = Color.Black
+        Private _emoteColor As Color = Color.DarkCyan
 
         'Throat Tired
-        Private Shared _TT_TimeOut As Integer = 90
+        Private _TT_TimeOut As Integer = 90
 
-        Private Shared _ping As Integer = 300
+        Private _ping As Integer = 300
         'systray Status
-        Private Shared _TrayIcon As CheckState = CheckState.Indeterminate
+        Private _TrayIcon As CheckState = CheckState.Indeterminate
 
-        Private Shared _Broadcast As Boolean = False
-        Private Shared _Advertisment As Boolean = False
-        Private Shared _Announcement As Boolean = False
+        Private _Broadcast As Boolean = False
+        Private _Advertisment As Boolean = False
+        Private _Announcement As Boolean = False
 
-        Public Shared Property AutoReconnect As Boolean
+        Public Property AutoReconnect As Boolean
             Get
                 Return _AutoReconnect
             End Get
@@ -393,7 +396,7 @@ Public Class Settings
         End Property
 
 
-        Public Shared Property CloseProc As Boolean
+        Public Property CloseProc As Boolean
             Get
                 Return _CloseProc
             End Get
@@ -401,7 +404,7 @@ Public Class Settings
                 _CloseProc = value
             End Set
         End Property
-        Public Shared Property ApFont As Font
+        Public Property ApFont As Font
             Get
                 Return _AppFont
             End Get
@@ -411,7 +414,7 @@ Public Class Settings
         End Property
 
 
-        Public Shared Property EmitColor() As Color
+        Public Property EmitColor() As Color
             Get
                 Return _emitColor
             End Get
@@ -419,7 +422,7 @@ Public Class Settings
                 _emitColor = value
             End Set
         End Property
-        Public Shared Property SayColor() As Color
+        Public Property SayColor() As Color
             Get
                 Return _sayColor
             End Get
@@ -427,7 +430,7 @@ Public Class Settings
                 _sayColor = value
             End Set
         End Property
-        Public Shared Property ShoutColor() As Color
+        Public Property ShoutColor() As Color
             Get
                 Return _shoutColor
             End Get
@@ -435,7 +438,7 @@ Public Class Settings
                 _shoutColor = value
             End Set
         End Property
-        Public Shared Property WhColor() As Color
+        Public Property WhColor() As Color
             Get
                 Return _whColor
             End Get
@@ -443,7 +446,7 @@ Public Class Settings
                 _whColor = value
             End Set
         End Property
-        Public Shared Property DefaultColor() As Color
+        Public Property DefaultColor() As Color
             Get
                 Return _defaultColor
             End Get
@@ -451,7 +454,7 @@ Public Class Settings
                 _defaultColor = value
             End Set
         End Property
-        Public Shared Property EmoteColor() As Color
+        Public Property EmoteColor() As Color
             Get
                 Return _emoteColor
             End Get
@@ -461,7 +464,7 @@ Public Class Settings
         End Property
 
 
-        Public Shared Property ReconnectMax() As Integer
+        Public Property ReconnectMax() As Integer
             Get
                 Return _reconnectMax
             End Get
@@ -470,7 +473,7 @@ Public Class Settings
             End Set
         End Property
 
-        Public Shared Property sPort() As Integer
+        Public Property sPort() As Integer
             Get
                 Return _sPort
             End Get
@@ -480,7 +483,7 @@ Public Class Settings
         End Property
 
 
-        Public Shared Property Host() As String
+        Public Property Host() As String
             Get
                 Return _Host
             End Get
@@ -489,7 +492,7 @@ Public Class Settings
             End Set
         End Property
 
-        Public Shared Property Ping As Integer
+        Public Property Ping As Integer
             Get
                 Return _ping
             End Get
@@ -499,7 +502,7 @@ Public Class Settings
         End Property
 
         'Throat Tired
-        Public Shared Property TT_TimeOut As Integer
+        Public Property TT_TimeOut As Integer
             Get
                 Return _TT_TimeOut
             End Get
@@ -509,7 +512,7 @@ Public Class Settings
         End Property
 
 
-        Public Shared Property debug() As Boolean
+        Public Property debug() As Boolean
             Get
                 Return _debug
             End Get
@@ -522,7 +525,7 @@ Public Class Settings
         ' 0 = off
         ' 1 = time
         ' 2 = Date Time
-        Public Shared Property TimeStamp() As UShort
+        Public Property TimeStamp() As UShort
             Get
                 Return _TimeStamp
             End Get
@@ -532,7 +535,7 @@ Public Class Settings
         End Property
 
         'systray Status
-        Public Shared Property SysTray As CheckState
+        Public Property SysTray As CheckState
             Get
                 Return _TrayIcon
             End Get
@@ -541,10 +544,10 @@ Public Class Settings
             End Set
         End Property
 
-        Public Shared Property FurcPath As String
+        Public Property FurcPath As String
             Get
                 If String.IsNullOrEmpty(_FurcPath) Then
-                    _FurcPath = Paths.FurcadiaProgramFolder
+                    Return Paths.FurcadiaProgramFolder
                 End If
                 Return _FurcPath
             End Get
@@ -553,7 +556,7 @@ Public Class Settings
             End Set
         End Property
 
-        Public Shared Property ConnectTimeOut As Integer
+        Public Property ConnectTimeOut As Integer
             Get
                 Return _ConnectTimeOut
             End Get
@@ -562,12 +565,12 @@ Public Class Settings
             End Set
         End Property
 
-        Public Shared Sub SetDefault()
+        Public Sub SetDefault()
             _debug = False
             _TimeStamp = 0
         End Sub
 
-        Public Shared Property Announcement As Boolean
+        Public Property Announcement As Boolean
             Get
                 Return _Announcement
             End Get
@@ -575,7 +578,7 @@ Public Class Settings
                 _Announcement = value
             End Set
         End Property
-        Public Shared Property Broadcast As Boolean
+        Public Property Broadcast As Boolean
             Get
                 Return _Broadcast
             End Get
@@ -583,7 +586,7 @@ Public Class Settings
                 _Broadcast = value
             End Set
         End Property
-        Public Shared Property Advertisment As Boolean
+        Public Property Advertisment As Boolean
             Get
                 Return _Advertisment
             End Get
@@ -591,8 +594,8 @@ Public Class Settings
                 _Advertisment = value
             End Set
         End Property
-        Private Shared _LoadLastBotFile As Boolean = False
-        Public Shared Property LoadLastBotFile As Boolean
+        Private _LoadLastBotFile As Boolean = False
+        Public Property LoadLastBotFile As Boolean
             Get
                 Return _LoadLastBotFile
             End Get
@@ -601,8 +604,8 @@ Public Class Settings
             End Set
         End Property
 
-        Private Shared _DisconnectPopupToggle As Boolean = True
-        Public Shared Property DisconnectPopupToggle As Boolean
+        Private _DisconnectPopupToggle As Boolean = True
+        Public Property DisconnectPopupToggle As Boolean
             Get
                 Return _DisconnectPopupToggle
             End Get
@@ -613,8 +616,8 @@ Public Class Settings
 
 
         End Property
-        Private Shared _PSShowMainWindow As Boolean = True
-        Public Shared Property PSShowMainWindow As Boolean
+        Private _PSShowMainWindow As Boolean = True
+        Public Property PSShowMainWindow As Boolean
             Get
                 Return _PSShowMainWindow
             End Get
@@ -622,8 +625,8 @@ Public Class Settings
                 _PSShowMainWindow = value
             End Set
         End Property
-        Private Shared _PSShowClient As Boolean = True
-        Public Shared Property PSShowClient As Boolean
+        Private _PSShowClient As Boolean = True
+        Public Property PSShowClient As Boolean
             Get
                 Return _PSShowClient
             End Get
@@ -633,7 +636,7 @@ Public Class Settings
         End Property
 
         Public Sub New()
-            If System.IO.File.Exists(SettingsFile) Then
+            If File.Exists(SettingsFile) Then
                 ini.Load(SettingsFile)
             End If
 
@@ -651,7 +654,7 @@ Public Class Settings
 
             s = ini.GetKeyValue("Main", "SPort")
             If Not String.IsNullOrEmpty(s) Then
-                Integer.TryParse(_sPort, s)
+                Integer.TryParse(s, _sPort)
             End If
 
             s = ini.GetKeyValue("Main", "Time Out")
@@ -755,12 +758,12 @@ Public Class Settings
                 Next
             End If
         End Sub
-        Public Shared Sub SaveMainSettings()
+        Public Sub SaveMainSettings()
             ' Lets Read local appData Settings.ini for  last used Settings as other programs use the file too
-            If System.IO.File.Exists(SettingsFile) Then
+            If File.Exists(SettingsFile) Then
                 ini.Load(SettingsFile, True)
             End If
-            ini.SetKeyValue("Main", "Host", _FurcPath)
+            ini.SetKeyValue("Main", "FurcPath", _FurcPath)
             ini.SetKeyValue("Main", "Host", _Host)
             '_reconnectMax
             ini.SetKeyValue("Main", "Time Out", _reconnectMax.ToString)
@@ -795,7 +798,7 @@ Public Class Settings
             ini.RemoveSection("Plugins")
             ini.AddSection("Plugins")
             For Each kv As KeyValuePair(Of String, Boolean) In PluginList
-                ini.SetKeyValue("Plugins", kv.Key, kv.Value)
+                ini.SetKeyValue("Plugins", kv.Key, kv.Value.ToString)
             Next
 
             ini.Save(SettingsFile)

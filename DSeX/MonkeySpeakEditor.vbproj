@@ -211,7 +211,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
-    <Content Include="keys-ms.ini">
+    <Content Include="Keys-MS.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="keys.ini">
