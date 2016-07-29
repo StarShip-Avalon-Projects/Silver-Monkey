@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace SilverMonkey.SQLiteEditor.Controls
 {
     /// <summary>
@@ -32,50 +34,50 @@ namespace SilverMonkey.SQLiteEditor.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.AddTableTextBox = new System.Windows.Forms.TextBox();
-			this.AddTableLabel = new System.Windows.Forms.Label();
-			this.SuspendLayout();
-			// 
-			// CanButton
-			// 
-			this.CanButton.Location = new System.Drawing.Point(136, 64);
-			this.CanButton.Name = "CanButton";
-			// 
-			// OkButton
-			// 
-			this.OkButton.Location = new System.Drawing.Point(32, 64);
-			this.OkButton.Name = "OkButton";
-			// 
-			// RenameTableTextBox
-			// 
-			this.AddTableTextBox.Location = new System.Drawing.Point(8, 32);
-			this.AddTableTextBox.Name = "AddTableTextBox";
-			this.AddTableTextBox.Size = new System.Drawing.Size(232, 20);
-			this.AddTableTextBox.TabIndex = 5;
-			this.AddTableTextBox.Text = "";
-			// 
-			// RenameTableLabel
-			// 
-			this.AddTableLabel.Location = new System.Drawing.Point(8, 8);
-			this.AddTableLabel.Name = "AddTableLabel";
-			this.AddTableLabel.Size = new System.Drawing.Size(232, 24);
-			this.AddTableLabel.TabIndex = 4;
-			this.AddTableLabel.Text = "Create table named:";
-			this.AddTableLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// RenameTable
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(248, 101);
-			this.Controls.Add(this.AddTableTextBox);
-			this.Controls.Add(this.AddTableLabel);
-			this.Name = "AddTable";
-			this.Text = "Add Table";
-			this.Controls.SetChildIndex(this.OkButton, 0);
-			this.Controls.SetChildIndex(this.CanButton, 0);
-			this.Controls.SetChildIndex(this.AddTableLabel, 0);
-			this.Controls.SetChildIndex(this.AddTableTextBox, 0);
-			this.ResumeLayout(false);
+            AddTableTextBox = new System.Windows.Forms.TextBox();
+            AddTableLabel = new System.Windows.Forms.Label();
+            SuspendLayout();
+            // 
+            // CanButton
+            // 
+            CanButton.Location = new System.Drawing.Point(136, 64);
+            // 
+            // OkButton
+            // 
+            OkButton.Location = new System.Drawing.Point(32, 64);
+            // 
+            // AddTableTextBox
+            // 
+            AddTableTextBox.AcceptsReturn = true;
+            AddTableTextBox.Location = new System.Drawing.Point(8, 32);
+            AddTableTextBox.Name = "AddTableTextBox";
+            AddTableTextBox.Size = new System.Drawing.Size(232, 20);
+            AddTableTextBox.TabIndex = 5;
+            AddTableTextBox.KeyDown += new KeyEventHandler(tb_KeyDown);
+            // 
+            // AddTableLabel
+            // 
+            AddTableLabel.Location = new System.Drawing.Point(8, 8);
+            AddTableLabel.Name = "AddTableLabel";
+            AddTableLabel.Size = new System.Drawing.Size(232, 24);
+            AddTableLabel.TabIndex = 4;
+            AddTableLabel.Text = "Create table named:";
+            AddTableLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // AddTable
+            // 
+            AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            ClientSize = new System.Drawing.Size(248, 101);
+            Controls.Add(AddTableTextBox);
+            Controls.Add(AddTableLabel);
+            Name = "AddTable";
+            Text = "Add Table";
+            Controls.SetChildIndex(OkButton, 0);
+            Controls.SetChildIndex(CanButton, 0);
+            Controls.SetChildIndex(AddTableLabel, 0);
+            Controls.SetChildIndex(AddTableTextBox, 0);
+            ResumeLayout(false);
+            PerformLayout();
 
 		}
 		#endregion

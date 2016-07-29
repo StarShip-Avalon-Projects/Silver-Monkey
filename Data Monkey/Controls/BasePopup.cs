@@ -1,12 +1,14 @@
+using System.Windows.Forms;
+
 namespace SilverMonkey.SQLiteEditor.Controls
 {
     /// <summary>
     /// Summary description for Base.
     /// </summary>
-    public class BasePopup : System.Windows.Forms.Form
-	{
-		protected System.Windows.Forms.Button CanButton;
-		protected System.Windows.Forms.Button OkButton;
+    public class BasePopup : Form
+    {
+		protected static Button CanButton;
+		public static Button OkButton;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -46,8 +48,8 @@ namespace SilverMonkey.SQLiteEditor.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-            CanButton = new System.Windows.Forms.Button();
-            OkButton = new System.Windows.Forms.Button();
+            CanButton = new Button();
+            OkButton = new Button();
             SuspendLayout();
             // 
             // CanButton
@@ -82,7 +84,18 @@ namespace SilverMonkey.SQLiteEditor.Controls
         #endregion
 
         #region Button Events
-        private void OkButton_Click(object sender, System.EventArgs e)
+
+        public static void tb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+
+                //enter key is down
+                OkButton.PerformClick();
+            }
+        }
+
+        public void OkButton_Click(object sender, System.EventArgs e)
 		{
             Close();
 		}

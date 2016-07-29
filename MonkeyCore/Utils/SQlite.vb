@@ -77,7 +77,7 @@ Public Class SQLiteDatabase
 
     Private Function getAllColumnName(ByVal tableName As String) As String
         Dim sql As String = SyncPragma + "SELECT * FROM " & tableName
-        Dim columnNames As New ArrayList
+        Dim columnNames As New List(Of String)
         Using SQLconnect As New SQLiteConnection(dbConnection)
             SQLconnect.Open()
             Using SQLcommand As SQLiteCommand = SQLconnect.CreateCommand
@@ -97,18 +97,21 @@ Public Class SQLiteDatabase
         Dim columnNames As String = getAllColumnName(tableName)
         Return columnNames.Contains(columnName)
     End Function
-    Public Sub removeColumn(ByVal tableName As String, ByVal columnName As String)
+    Public Function removeColumn(ByVal tableName As String, ByVal columnName As String) As Integer
         Dim columnNames As String = getAllColumnName(tableName)
+        If Not columnNames.Contains(columnName) Then
+            Return -1
+        End If
         columnNames = columnNames.Replace(columnName + ", ", "")
         columnNames = columnNames.Replace(", " + columnName, "")
         columnNames = columnNames.Replace(columnName, "").Replace("[],", "").Replace(",[]", "")
-        ExecuteNonQuery("CREATE TEMPORARY TABLE " + tableName + "backup(" + columnNames + ");" +
-       "INSERT INTO " + tableName + "backup SELECT " + columnNames + " FROM " + tableName + ";" +
-        "DROP TABLE " + tableName + ";" +
-        "CREATE TABLE " + tableName + "(" + columnNames + ");" +
-       "INSERT INTO " + tableName + " SELECT " + columnNames + " FROM " + tableName + "backup;" +
-        "DROP TABLE " + tableName + "backup;")
-    End Sub
+        Return ExecuteNonQuery("CREATE TEMPORARY TABLE " + tableName + "backup(" + columnNames + ");" +
+            "INSERT INTO " + tableName + "backup SELECT " + columnNames + " FROM " + tableName + ";" +
+            "DROP TABLE " + tableName + ";" +
+            "CREATE TABLE " + tableName + "(" + columnNames + ");" +
+            "INSERT INTO " + tableName + " SELECT " + columnNames + " FROM " + tableName + "backup;" +
+            "DROP TABLE " + tableName + "backup;")
+    End Function
 
     'Add a column is much more easy
     Public Sub addColumn(ByVal tableName As String, ByVal columnName As String)
@@ -134,10 +137,14 @@ Public Class SQLiteDatabase
             cnn.Open()
             Dim mycommand As New SQLiteCommand(cnn)
             mycommand.CommandText = sql
-            Using reader As SQLiteDataReader = mycommand.ExecuteReader()
+            Dim reader As SQLiteDataReader
+            Try
+                reader = mycommand.ExecuteReader()
                 dt.Load(reader)
                 reader.Close()
-            End Using
+            Catch ex As exception
+                dt.Dispose()
+            End Try
             cnn.Close()
         End Using
         Return dt
@@ -175,10 +182,16 @@ Public Class SQLiteDatabase
         Dim rowsUpdated As Integer
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()
-            Using mycommand As New SQLiteCommand(cnn)
+            Dim mycommand As New SQLiteCommand(cnn)
+            Try
+
                 mycommand.CommandText = SyncPragma + sql
                 rowsUpdated = mycommand.ExecuteNonQuery()
-            End Using
+            Catch
+                Return -1
+            Finally
+                mycommand.Dispose()
+            End Try
             cnn.Close()
         End Using
         Return rowsUpdated
@@ -190,30 +203,33 @@ Public Class SQLiteDatabase
     ''' <param name="sql">The SQL.</param>
     ''' <returns></returns>
     Public Function ExecuteQuery(sql As String) As DataSet
-        Dim rowsUpdated As New DataSet
+        Dim rowsUpdated = New DataSet
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()
             Using mycommand As New SQLiteCommand(cnn)
                 mycommand.CommandText = SyncPragma + sql
-                Using a As SQLiteDataAdapter = New SQLiteDataAdapter(mycommand)
+                Dim a As SQLiteDataAdapter = New SQLiteDataAdapter(mycommand)
+                Try
                     a.Fill(rowsUpdated)
-                End Using
+                Catch ex As exception
+                    rowsUpdated = Nothing
+
+                    ' Finally
+                    ' a.Dispose()
+                End Try
             End Using
             cnn.Close()
         End Using
         Return rowsUpdated
     End Function
 
-    '''<summary>
-    ''' 
+
+    ''' <summary>
+    ''' Determines whether [is table exists] [the specified table name].
     ''' </summary>
-    ''' <param name="tableName">
-    ''' 
-    ''' </param>
-    ''' <returns>
-    ''' 
-    ''' </returns>
-    Public Function isTableExists(tableName As String) As [Boolean]
+    ''' <param name="tableName">Name of the table.</param>
+    ''' <returns>True if ExecuteNonQurey returns one or more tables</returns>
+    Public Function isTableExists(tableName As String) As Boolean
         Return ExecuteNonQuery(SyncPragma + "SELECT name FROM sqlite_master WHERE name='" & tableName & "'") > 0
     End Function
     ''' <summary>

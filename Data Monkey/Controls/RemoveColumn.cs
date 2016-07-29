@@ -1,3 +1,6 @@
+using System;
+using System.Windows.Forms;
+
 namespace SilverMonkey.SQLiteEditor.Controls
 {
     /// <summary>
@@ -24,56 +27,66 @@ namespace SilverMonkey.SQLiteEditor.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.NameTextBox = new System.Windows.Forms.TextBox();
-            this.NameLabel = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            NameTextBox = new System.Windows.Forms.TextBox();
+            NameLabel = new System.Windows.Forms.Label();
+            SuspendLayout();
             // 
             // CanButton
             // 
-            this.CanButton.Location = new System.Drawing.Point(144, 80);
+            CanButton.Location = new System.Drawing.Point(144, 80);
             // 
             // OkButton
             // 
-            this.OkButton.Location = new System.Drawing.Point(32, 80);
+            OkButton.Location = new System.Drawing.Point(32, 80);
+            OkButton.Click -= OkButton_Click;
+            OkButton.Click += OkButton_Click2;
             // 
             // NameTextBox
             // 
-            this.NameTextBox.Location = new System.Drawing.Point(96, 8);
-            this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(144, 20);
-            this.NameTextBox.TabIndex = 0;
+            NameTextBox.AcceptsReturn = true;
+            NameTextBox.Location = new System.Drawing.Point(96, 8);
+            NameTextBox.Name = "NameTextBox";
+            NameTextBox.Size = new System.Drawing.Size(144, 20);
+            NameTextBox.TabIndex = 0;
+            NameTextBox.KeyDown += new KeyEventHandler(tb_KeyDown);
             // 
             // NameLabel
             // 
-            this.NameLabel.Location = new System.Drawing.Point(8, 8);
-            this.NameLabel.Name = "NameLabel";
-            this.NameLabel.Size = new System.Drawing.Size(80, 23);
-            this.NameLabel.TabIndex = 1;
-            this.NameLabel.Text = "Name:";
-            this.NameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            NameLabel.Location = new System.Drawing.Point(8, 8);
+            NameLabel.Name = "NameLabel";
+            NameLabel.Size = new System.Drawing.Size(80, 23);
+            NameLabel.TabIndex = 1;
+            NameLabel.Text = "Name:";
+            NameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // RemoveColumn
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(248, 117);
-            this.Controls.Add(this.NameTextBox);
-            this.Controls.Add(this.NameLabel);
-            this.Name = "RemoveColumn";
-            this.Text = "     Remove Column";
-            this.Controls.SetChildIndex(this.NameLabel, 0);
-            this.Controls.SetChildIndex(this.NameTextBox, 0);
-            this.Controls.SetChildIndex(this.OkButton, 0);
-            this.Controls.SetChildIndex(this.CanButton, 0);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            ClientSize = new System.Drawing.Size(248, 117);
+            Controls.Add(NameTextBox);
+            Controls.Add(NameLabel);
+            Name = "RemoveColumn";
+            Text = "     Remove Column";
+            Controls.SetChildIndex(NameLabel, 0);
+            Controls.SetChildIndex(NameTextBox, 0);
+            Controls.SetChildIndex(OkButton, 0);
+            Controls.SetChildIndex(CanButton, 0);
+            ResumeLayout(false);
+            PerformLayout();
 
 		}
-		#endregion
+        private void OkButton_Click2(object sender, EventArgs e)
+        {
 
-		#region Properties
-		public string ColumnName 
+            OkButton.DialogResult = MessageBox.Show("Do you want to delete this column?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            Close();
+        }
+        #endregion
+
+        #region Properties
+        public string ColumnName 
 		{
-			get { return this.NameTextBox.Text; }
+			get { return NameTextBox.Text; }
 		}
 
 		#endregion

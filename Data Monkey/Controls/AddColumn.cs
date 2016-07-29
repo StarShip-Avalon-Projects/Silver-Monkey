@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace SilverMonkey.SQLiteEditor.Controls
 {
     /// <summary>
@@ -5,7 +7,7 @@ namespace SilverMonkey.SQLiteEditor.Controls
     /// </summary>
     public class AddColumn : BasePopup
 	{
-		private System.Windows.Forms.TextBox NameTextBox;
+		private TextBox NameTextBox;
 		private System.Windows.Forms.Label NameLabel;
 		private System.Windows.Forms.Label TypeLabel;
 		private System.Windows.Forms.ComboBox TypeComboBox;
@@ -26,7 +28,7 @@ namespace SilverMonkey.SQLiteEditor.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-            NameTextBox = new System.Windows.Forms.TextBox();
+            NameTextBox = new TextBox();
             NameLabel = new System.Windows.Forms.Label();
             TypeLabel = new System.Windows.Forms.Label();
             TypeComboBox = new System.Windows.Forms.ComboBox();
@@ -49,6 +51,7 @@ namespace SilverMonkey.SQLiteEditor.Controls
             NameTextBox.Size = new System.Drawing.Size(144, 20);
             NameTextBox.TabIndex = 0;
             NameTextBox.Text = "";
+            NameTextBox.KeyDown += new KeyEventHandler(tb_KeyDown);
             // 
             // NameLabel
             // 
@@ -112,6 +115,7 @@ namespace SilverMonkey.SQLiteEditor.Controls
             //x != 0.0 ? Math.Sin(x) / x : 1.0;
             get { return TypeComboBox.SelectedItem != null ? TypeComboBox.SelectedItem.ToString() : "TEXT"; }
 		}
-		#endregion
-	}
+        #endregion
+
+    }
 }

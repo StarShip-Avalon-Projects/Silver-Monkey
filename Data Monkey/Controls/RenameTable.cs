@@ -1,3 +1,7 @@
+using SilverMonkey.SQLiteEditor.Controls;
+using System.Windows.Forms;
+using System;
+
 namespace SilverMonkey.SQLiteEditor.Controls
 {
     /// <summary>
@@ -14,7 +18,8 @@ namespace SilverMonkey.SQLiteEditor.Controls
 			// Required for Windows Form Designer support
 			//
 			InitializeComponent();
-		}
+            
+        }
 
 		#region Properties
 
@@ -32,52 +37,62 @@ namespace SilverMonkey.SQLiteEditor.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.RenameTableTextBox = new System.Windows.Forms.TextBox();
-			this.RenameTableLabel = new System.Windows.Forms.Label();
-			this.SuspendLayout();
+            RenameTableTextBox = new System.Windows.Forms.TextBox();
+            RenameTableLabel = new System.Windows.Forms.Label();
+            SuspendLayout();
 			// 
 			// CanButton
 			// 
-			this.CanButton.Location = new System.Drawing.Point(136, 64);
-			this.CanButton.Name = "CanButton";
+			CanButton.Location = new System.Drawing.Point(136, 64);
+			CanButton.Name = "CanButton";
 			// 
 			// OkButton
 			// 
-			this.OkButton.Location = new System.Drawing.Point(32, 64);
-			this.OkButton.Name = "OkButton";
-			// 
-			// RenameTableTextBox
-			// 
-			this.RenameTableTextBox.Location = new System.Drawing.Point(8, 32);
-			this.RenameTableTextBox.Name = "RenameTableTextBox";
-			this.RenameTableTextBox.Size = new System.Drawing.Size(232, 20);
-			this.RenameTableTextBox.TabIndex = 5;
-			this.RenameTableTextBox.Text = "";
-			// 
-			// RenameTableLabel
-			// 
-			this.RenameTableLabel.Location = new System.Drawing.Point(8, 8);
-			this.RenameTableLabel.Name = "RenameTableLabel";
-			this.RenameTableLabel.Size = new System.Drawing.Size(232, 24);
-			this.RenameTableLabel.TabIndex = 4;
-			this.RenameTableLabel.Text = "Change table name to:";
-			this.RenameTableLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// RenameTable
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(248, 101);
-			this.Controls.Add(this.RenameTableTextBox);
-			this.Controls.Add(this.RenameTableLabel);
-			this.Name = "RenameTable";
-			this.Text = "Rename Table";
-			this.Controls.SetChildIndex(this.OkButton, 0);
-			this.Controls.SetChildIndex(this.CanButton, 0);
-			this.Controls.SetChildIndex(this.RenameTableLabel, 0);
-			this.Controls.SetChildIndex(this.RenameTableTextBox, 0);
-			this.ResumeLayout(false);
+			OkButton.Location = new System.Drawing.Point(32, 64);
+			OkButton.Name = "OkButton";
+            OkButton.Click -= new System.EventHandler(OkButton_Click);
+            OkButton.Click += new System.EventHandler(OkButton_Click2);
+            // 
+            // RenameTableTextBox
+            // 
+            RenameTableTextBox.Location = new System.Drawing.Point(8, 32);
+            RenameTableTextBox.Name = "RenameTableTextBox";
+            RenameTableTextBox.Size = new System.Drawing.Size(232, 20);
+            RenameTableTextBox.TabIndex = 5;
+            RenameTableTextBox.Text = "";
+            RenameTableTextBox.KeyDown += new KeyEventHandler(tb_KeyDown);
+            // 
+            // RenameTableLabel
+            // 
+            RenameTableLabel.Location = new System.Drawing.Point(8, 8);
+            RenameTableLabel.Name = "RenameTableLabel";
+            RenameTableLabel.Size = new System.Drawing.Size(232, 24);
+            RenameTableLabel.TabIndex = 4;
+            RenameTableLabel.Text = "Change table name to:";
+            RenameTableLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // RenameTable
+            // 
+            AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            ClientSize = new System.Drawing.Size(248, 101);
+            Controls.Add(RenameTableTextBox);
+            Controls.Add(RenameTableLabel);
+            Name = "RenameTable";
+            Text = "Rename Table";
+            Controls.SetChildIndex(OkButton, 0);
+            Controls.SetChildIndex(CanButton, 0);
+            Controls.SetChildIndex(RenameTableLabel, 0);
+            Controls.SetChildIndex(RenameTableTextBox, 0);
+            ResumeLayout(false);
 
 		}
-		#endregion
-	}
+
+        private void OkButton_Click2(object sender, EventArgs e)
+        {
+
+            OkButton.DialogResult = MessageBox.Show("Do you want to rename this table?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            Close();
+        }
+        #endregion
+    }
 }

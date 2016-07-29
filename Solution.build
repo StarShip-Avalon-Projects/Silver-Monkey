@@ -32,10 +32,8 @@
       Projects="MonkeySystem VS2015.sln"
       Targets="Clean;Build"
       Properties="Configuration=Debug;Platform=Any CPU" />
-    <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x\.svn\* -x*\Net40\* -x*\Build\* -x*\.vs\* -x*\.git\* -x*\.svn\* -x*Plugins\*  -x*bin\*  -x*\src\ -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config MonkeySystem2_Src.rar *.*" />
+    <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x\.svn\* -x*\Net40\* -x*\Build\* -x*\.vs\* -x*\.git\* -x*\.svn\* -x*Plugins\*  -x*bin\*  -x*\src\ -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config Build/Installer/MonkeySystem2_Src.rar *.*" />
     <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.pdb ..\Installer\MonkeySystem2_Debug_Symbols.rar *.*" WorkingDirectory="Build/Debug" />
-    <Move
-      SourceFiles="MonkeySystem2_Src.rar"
-      DestinationFolder="Build/Installer/"/>
+    <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.bat ..\Build\Installer\MonkeySystem2_Support_Files.rar *.*" WorkingDirectory="Bin" />
   </Target>
 </Project>

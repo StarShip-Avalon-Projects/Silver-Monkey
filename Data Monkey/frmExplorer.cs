@@ -6,6 +6,7 @@ using SilverMonkey.SQLiteEditor.Controls;
 using MonkeyCore;
 using FastColoredTextBoxNS;
 using MonkeyCore.Controls;
+using System.ComponentModel;
 
 namespace SQLiteEditor
 {
@@ -42,27 +43,29 @@ namespace SQLiteEditor
         MenuItem objDeleteRowSQL;
         private MenuItem ExitAppMenu;
         private ToolBar toolBar1;
-        private TreeView DatabaseTreeView;
-        private Splitter splitter1;
         private ImageList ToolBarImages;
         private ToolBarButton OpenDatabase;
         private ToolBarButton ExecuteSQL;
-        private ToolBarButton StopSQL;
         private ToolBarButton Separator;
         private ToolBarButton IntegrityCheck;
         private MenuItem CheckIntegrity;
         private MenuItem menuItem3;
         private MenuItem CreateDBMenu;
-        private SplitContainer splitContainer1;
-        public ListView_NoFlicker SqlResultsListView;
 
         //Only access from BuildSqlResultsListView
         string TableName = "";
-        private MonkeyCore.Controls.TabControlEx SQLAreaTabControl;
-        private TabPage tabPage1;
-        private SilverMonkeyFCTB silverMonkeyFCTB1;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel StatusStripLog;
+        private SplitContainer splitContainer1;
+        private TabControl tabControl1;
+        private TabPage tabPage2;
+        private TreeView DatabaseTreeView;
+        private TabPage tabPage3;
+        private SplitContainer splitContainer2;
+        private TabControlEx SQLAreaTabControl;
+        private TabPage tabPage1;
+        private SilverMonkeyFCTB silverMonkeyFCTB1;
+        public ListView_NoFlicker SqlResultsListView;
         private FastColoredTextBox sqlStatementTextBox;
         #endregion
 
@@ -80,8 +83,8 @@ namespace SQLiteEditor
             //
             GenerateTabPage();
 
-            //  this.sqlStatementTextBox.ContextMenu = new ContextMenu();
-            //this.sqlStatementTextBox.ContextMenu.MenuItems.Add(objExecuteSQL);
+            sqlStatementTextBox.ContextMenu = new ContextMenu();
+            sqlStatementTextBox.ContextMenu.MenuItems.Add(objExecuteSQL);
         }
 
         /// <summary>
@@ -108,65 +111,73 @@ namespace SQLiteEditor
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmExplorer));
-            mainMenu1 = new System.Windows.Forms.MainMenu(components);
-            menuItem1 = new System.Windows.Forms.MenuItem();
-            OpenDBmenu = new System.Windows.Forms.MenuItem();
-            CreateDBMenu = new System.Windows.Forms.MenuItem();
-            CheckIntegrity = new System.Windows.Forms.MenuItem();
-            menuItem3 = new System.Windows.Forms.MenuItem();
-            ExitAppMenu = new System.Windows.Forms.MenuItem();
-            menuItem2 = new System.Windows.Forms.MenuItem();
-            AddAreaMenu = new System.Windows.Forms.MenuItem();
-            objExecuteSQL = new System.Windows.Forms.MenuItem();
-            objOpenTableSQL = new System.Windows.Forms.MenuItem();
-            objRenameTableSQL = new System.Windows.Forms.MenuItem();
-            objAddColumnSQL = new System.Windows.Forms.MenuItem();
-            objRemoveColumnSQL = new System.Windows.Forms.MenuItem();
-            objDeleteRowSQL = new System.Windows.Forms.MenuItem();
-            objCreateTableSQL = new System.Windows.Forms.MenuItem();
-            objDeleteTableSQL = new System.Windows.Forms.MenuItem();
-            TreeViewContextMenu = new System.Windows.Forms.ContextMenu();
-            TreeViewTablesMenu = new System.Windows.Forms.ContextMenu();
-            toolBar1 = new System.Windows.Forms.ToolBar();
-            OpenDatabase = new System.Windows.Forms.ToolBarButton();
-            IntegrityCheck = new System.Windows.Forms.ToolBarButton();
-            Separator = new System.Windows.Forms.ToolBarButton();
-            ExecuteSQL = new System.Windows.Forms.ToolBarButton();
-            StopSQL = new System.Windows.Forms.ToolBarButton();
-            ToolBarImages = new System.Windows.Forms.ImageList(components);
-            sqlStatementTextBox = new FastColoredTextBoxNS.FastColoredTextBox();
-            DatabaseTreeView = new System.Windows.Forms.TreeView();
-            splitter1 = new System.Windows.Forms.Splitter();
-            splitContainer1 = new System.Windows.Forms.SplitContainer();
-            SQLAreaTabControl = new MonkeyCore.Controls.TabControlEx();
-            tabPage1 = new System.Windows.Forms.TabPage();
-            silverMonkeyFCTB1 = new MonkeyCore.Controls.SilverMonkeyFCTB();
-            SqlResultsListView = new MonkeyCore.Controls.ListView_NoFlicker();
-            statusStrip1 = new System.Windows.Forms.StatusStrip();
-            StatusStripLog = new System.Windows.Forms.ToolStripStatusLabel();
-            ((System.ComponentModel.ISupportInitialize)(sqlStatementTextBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(splitContainer1)).BeginInit();
+            components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(frmExplorer));
+            mainMenu1 = new MainMenu(components);
+            menuItem1 = new MenuItem();
+            OpenDBmenu = new MenuItem();
+            CreateDBMenu = new MenuItem();
+            CheckIntegrity = new MenuItem();
+            menuItem3 = new MenuItem();
+            ExitAppMenu = new MenuItem();
+            menuItem2 = new MenuItem();
+            AddAreaMenu = new MenuItem();
+            objExecuteSQL = new MenuItem();
+            objOpenTableSQL = new MenuItem();
+            objRenameTableSQL = new MenuItem();
+            objAddColumnSQL = new MenuItem();
+            objRemoveColumnSQL = new MenuItem();
+            objDeleteRowSQL = new MenuItem();
+            objCreateTableSQL = new MenuItem();
+            objDeleteTableSQL = new MenuItem();
+            TreeViewContextMenu = new ContextMenu();
+            TreeViewTablesMenu = new ContextMenu();
+            toolBar1 = new ToolBar();
+            OpenDatabase = new ToolBarButton();
+            IntegrityCheck = new ToolBarButton();
+            Separator = new ToolBarButton();
+            ExecuteSQL = new ToolBarButton();
+            ToolBarImages = new ImageList(components);
+            sqlStatementTextBox = new FastColoredTextBox();
+            statusStrip1 = new StatusStrip();
+            StatusStripLog = new ToolStripStatusLabel();
+            splitContainer1 = new SplitContainer();
+            splitContainer2 = new SplitContainer();
+            SQLAreaTabControl = new TabControlEx();
+            tabPage1 = new TabPage();
+            silverMonkeyFCTB1 = new SilverMonkeyFCTB();
+            SqlResultsListView = new ListView_NoFlicker();
+            tabControl1 = new TabControl();
+            tabPage2 = new TabPage();
+            tabPage3 = new TabPage();
+            DatabaseTreeView = new TreeView();
+            ((ISupportInitialize)(sqlStatementTextBox)).BeginInit();
+            statusStrip1.SuspendLayout();
+            ((ISupportInitialize)(splitContainer1)).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
+            ((ISupportInitialize)(splitContainer2)).BeginInit();
+            splitContainer2.Panel1.SuspendLayout();
+            splitContainer2.Panel2.SuspendLayout();
+            splitContainer2.SuspendLayout();
             SQLAreaTabControl.SuspendLayout();
             tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(silverMonkeyFCTB1)).BeginInit();
-            statusStrip1.SuspendLayout();
+            ((ISupportInitialize)(silverMonkeyFCTB1)).BeginInit();
+            tabControl1.SuspendLayout();
+            tabPage2.SuspendLayout();
             SuspendLayout();
             // 
             // mainMenu1
             // 
-            mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            mainMenu1.MenuItems.AddRange(new MenuItem[] {
             menuItem1,
             menuItem2});
             // 
             // menuItem1
             // 
             menuItem1.Index = 0;
-            menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            menuItem1.MenuItems.AddRange(new MenuItem[] {
             OpenDBmenu,
             CreateDBMenu,
             CheckIntegrity,
@@ -178,19 +189,19 @@ namespace SQLiteEditor
             // 
             OpenDBmenu.Index = 0;
             OpenDBmenu.Text = "Open Database";
-            OpenDBmenu.Click += new System.EventHandler(OpenDBmenu_Click);
+            OpenDBmenu.Click += new EventHandler(OpenDBmenu_Click);
             // 
             // CreateDBMenu
             // 
             CreateDBMenu.Index = 1;
             CreateDBMenu.Text = "Create Database";
-            CreateDBMenu.Click += new System.EventHandler(CreateDBMenu_Click);
+            CreateDBMenu.Click += new EventHandler(CreateDBMenu_Click);
             // 
             // CheckIntegrity
             // 
             CheckIntegrity.Index = 2;
             CheckIntegrity.Text = "Check DB Integrity";
-            CheckIntegrity.Click += new System.EventHandler(CheckIntegrity_Click);
+            CheckIntegrity.Click += new EventHandler(CheckIntegrity_Click);
             // 
             // menuItem3
             // 
@@ -201,12 +212,12 @@ namespace SQLiteEditor
             // 
             ExitAppMenu.Index = 4;
             ExitAppMenu.Text = "Exit";
-            ExitAppMenu.Click += new System.EventHandler(ExitAppMenu_Click);
+            ExitAppMenu.Click += new EventHandler(ExitAppMenu_Click);
             // 
             // menuItem2
             // 
             menuItem2.Index = 1;
-            menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            menuItem2.MenuItems.AddRange(new MenuItem[] {
             AddAreaMenu});
             menuItem2.Text = "SQLArea";
             // 
@@ -214,59 +225,59 @@ namespace SQLiteEditor
             // 
             AddAreaMenu.Index = 0;
             AddAreaMenu.Text = "Add Area";
-            AddAreaMenu.Click += new System.EventHandler(AddAreaMenu_Click);
+            AddAreaMenu.Click += new EventHandler(AddAreaMenu_Click);
             // 
             // objExecuteSQL
             // 
             objExecuteSQL.Index = -1;
             objExecuteSQL.Text = "Execute";
-            objExecuteSQL.Click += new System.EventHandler(objExecuteSQL_Click);
+            objExecuteSQL.Click += new EventHandler(objExecuteSQL_Click);
             // 
             // objOpenTableSQL
             // 
             objOpenTableSQL.Index = 0;
             objOpenTableSQL.Text = "Open Table";
-            objOpenTableSQL.Click += new System.EventHandler(objOpenTableSQL_Click);
+            objOpenTableSQL.Click += new EventHandler(objOpenTableSQL_Click);
             // 
             // objRenameTableSQL
             // 
             objRenameTableSQL.Index = 1;
             objRenameTableSQL.Text = "Rename";
-            objRenameTableSQL.Click += new System.EventHandler(objRenameTableSQL_Click);
+            objRenameTableSQL.Click += new EventHandler(objRenameTableSQL_Click);
             // 
             // objAddColumnSQL
             // 
             objAddColumnSQL.Index = 2;
             objAddColumnSQL.Text = "Add Column";
-            objAddColumnSQL.Click += new System.EventHandler(objAddColumnSQL_Click);
+            objAddColumnSQL.Click += new EventHandler(objAddColumnSQL_Click);
             // 
             // objRemoveColumnSQL
             // 
             objRemoveColumnSQL.Index = 3;
             objRemoveColumnSQL.Text = "Remove Column";
-            objRemoveColumnSQL.Click += new System.EventHandler(objRemoveColumnSQL_Click);
+            objRemoveColumnSQL.Click += new EventHandler(objRemoveColumnSQL_Click);
             // 
             // objDeleteRowSQL
             // 
             objDeleteRowSQL.Index = -1;
             objDeleteRowSQL.Text = "Delete Row";
-            objDeleteRowSQL.Click += new System.EventHandler(objDeleteRowSQL_Click);
+            objDeleteRowSQL.Click += new EventHandler(objDeleteRowSQL_Click);
             // 
             // objCreateTableSQL
             // 
             objCreateTableSQL.Index = 0;
             objCreateTableSQL.Text = "Create Table";
-            objCreateTableSQL.Click += new System.EventHandler(objCreateTableSQL_Click);
+            objCreateTableSQL.Click += new EventHandler(objCreateTableSQL_Click);
             // 
             // objDeleteTableSQL
             // 
             objDeleteTableSQL.Index = 4;
             objDeleteTableSQL.Text = "Delete Table";
-            objDeleteTableSQL.Click += new System.EventHandler(objDeleteTableSQL_Click);
+            objDeleteTableSQL.Click += new EventHandler(objDeleteTableSQL_Click);
             // 
             // TreeViewContextMenu
             // 
-            TreeViewContextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            TreeViewContextMenu.MenuItems.AddRange(new MenuItem[] {
             objOpenTableSQL,
             objRenameTableSQL,
             objAddColumnSQL,
@@ -275,25 +286,24 @@ namespace SQLiteEditor
             // 
             // TreeViewTablesMenu
             // 
-            TreeViewTablesMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            TreeViewTablesMenu.MenuItems.AddRange(new MenuItem[] {
             objCreateTableSQL});
             // 
             // toolBar1
             // 
-            toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+            toolBar1.Buttons.AddRange(new ToolBarButton[] {
             OpenDatabase,
             IntegrityCheck,
             Separator,
-            ExecuteSQL,
-            StopSQL});
+            ExecuteSQL});
             toolBar1.DropDownArrows = true;
             toolBar1.ImageList = ToolBarImages;
-            toolBar1.Location = new System.Drawing.Point(0, 0);
+            toolBar1.Location = new Point(0, 0);
             toolBar1.Name = "toolBar1";
             toolBar1.ShowToolTips = true;
-            toolBar1.Size = new System.Drawing.Size(840, 28);
+            toolBar1.Size = new Size(840, 28);
             toolBar1.TabIndex = 11;
-            toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(toolBar1_ButtonClick);
+            toolBar1.ButtonClick += new ToolBarButtonClickEventHandler(toolBar1_ButtonClick);
             // 
             // OpenDatabase
             // 
@@ -312,7 +322,7 @@ namespace SQLiteEditor
             // Separator
             // 
             Separator.Name = "Separator";
-            Separator.Style = System.Windows.Forms.ToolBarButtonStyle.Separator;
+            Separator.Style = ToolBarButtonStyle.Separator;
             // 
             // ExecuteSQL
             // 
@@ -321,16 +331,9 @@ namespace SQLiteEditor
             ExecuteSQL.Tag = "ExecuteSQL";
             ExecuteSQL.ToolTipText = "Execute SQL";
             // 
-            // StopSQL
-            // 
-            StopSQL.ImageIndex = 2;
-            StopSQL.Name = "StopSQL";
-            StopSQL.Tag = "StopSQL";
-            StopSQL.ToolTipText = "Stop SQL";
-            // 
             // ToolBarImages
             // 
-            ToolBarImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ToolBarImages.ImageStream")));
+            ToolBarImages.ImageStream = ((ImageListStreamer)(resources.GetObject("ToolBarImages.ImageStream")));
             ToolBarImages.TransparentColor = System.Drawing.Color.Transparent;
             ToolBarImages.Images.SetKeyName(0, "");
             ToolBarImages.Images.SetKeyName(1, "");
@@ -350,81 +353,94 @@ namespace SQLiteEditor
         '\"',
         '\'',
         '\''};
-            sqlStatementTextBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
+            sqlStatementTextBox.AutoScrollMinSize = new Size(2, 14);
             sqlStatementTextBox.BackBrush = null;
             sqlStatementTextBox.CharHeight = 14;
             sqlStatementTextBox.CharWidth = 8;
-            sqlStatementTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            sqlStatementTextBox.Cursor = Cursors.IBeam;
             sqlStatementTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             sqlStatementTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             sqlStatementTextBox.IsReplaceMode = false;
-            sqlStatementTextBox.Location = new System.Drawing.Point(0, 0);
+            sqlStatementTextBox.Location = new Point(0, 0);
             sqlStatementTextBox.Name = "sqlStatementTextBox";
-            sqlStatementTextBox.Paddings = new System.Windows.Forms.Padding(0);
+            sqlStatementTextBox.Paddings = new Padding(0);
             sqlStatementTextBox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            sqlStatementTextBox.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("sqlStatementTextBox.ServiceColors")));
-            sqlStatementTextBox.Size = new System.Drawing.Size(150, 150);
+            sqlStatementTextBox.ServiceColors = ((ServiceColors)(resources.GetObject("sqlStatementTextBox.ServiceColors")));
+            sqlStatementTextBox.Size = new Size(150, 150);
             sqlStatementTextBox.TabIndex = 0;
             sqlStatementTextBox.Zoom = 100;
             // 
-            // DatabaseTreeView
+            // statusStrip1
             // 
-            DatabaseTreeView.Cursor = System.Windows.Forms.Cursors.Default;
-            DatabaseTreeView.Dock = System.Windows.Forms.DockStyle.Left;
-            DatabaseTreeView.Location = new System.Drawing.Point(0, 28);
-            DatabaseTreeView.Name = "DatabaseTreeView";
-            DatabaseTreeView.Size = new System.Drawing.Size(216, 355);
-            DatabaseTreeView.TabIndex = 12;
-            DatabaseTreeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(DatabaseTreeView_AfterExpand);
-            DatabaseTreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(DatabaseTreeView_BeforeSelect);
-            DatabaseTreeView.LostFocus += new System.EventHandler(DatabaseTreeView_LostFocus);
-            DatabaseTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(DatabaseTreeView_MouseDown);
+            statusStrip1.Items.AddRange(new ToolStripItem[] {
+            StatusStripLog});
+            statusStrip1.Location = new Point(0, 361);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(840, 22);
+            statusStrip1.TabIndex = 18;
+            statusStrip1.Text = "statusStrip1";
             // 
-            // splitter1
+            // StatusStripLog
             // 
-            splitter1.Location = new System.Drawing.Point(216, 28);
-            splitter1.Name = "splitter1";
-            splitter1.Size = new System.Drawing.Size(8, 355);
-            splitter1.TabIndex = 16;
-            splitter1.TabStop = false;
+            StatusStripLog.Name = "StatusStripLog";
+            StatusStripLog.Size = new Size(50, 17);
+            StatusStripLog.Text = "Execute: Ready";
             // 
             // splitContainer1
             // 
-            splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            splitContainer1.Location = new System.Drawing.Point(224, 28);
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(0, 28);
             splitContainer1.Name = "splitContainer1";
-            splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(SQLAreaTabControl);
+            splitContainer1.Panel1.Controls.Add(tabControl1);
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(SqlResultsListView);
-            splitContainer1.Size = new System.Drawing.Size(616, 355);
-            splitContainer1.SplitterDistance = 170;
-            splitContainer1.TabIndex = 17;
+            splitContainer1.Panel2.Controls.Add(splitContainer2);
+            splitContainer1.Size = new Size(840, 333);
+            splitContainer1.SplitterDistance = 280;
+            splitContainer1.TabIndex = 19;
+            // 
+            // splitContainer2
+            // 
+            splitContainer2.Dock = DockStyle.Fill;
+            splitContainer2.Location = new Point(0, 0);
+            splitContainer2.Name = "splitContainer2";
+            splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            splitContainer2.Panel1.Controls.Add(SQLAreaTabControl);
+            splitContainer2.Panel1.Padding = new Padding(5);
+            // 
+            // splitContainer2.Panel2
+            // 
+            splitContainer2.Panel2.Controls.Add(SqlResultsListView);
+            splitContainer2.Size = new Size(556, 333);
+            splitContainer2.SplitterDistance = 158;
+            splitContainer2.TabIndex = 21;
             // 
             // SQLAreaTabControl
             // 
             SQLAreaTabControl.Controls.Add(tabPage1);
-            SQLAreaTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            SQLAreaTabControl.Location = new System.Drawing.Point(0, 0);
+            SQLAreaTabControl.Dock = DockStyle.Fill;
+            SQLAreaTabControl.Location = new Point(5, 5);
             SQLAreaTabControl.Name = "SQLAreaTabControl";
             SQLAreaTabControl.SelectedIndex = 0;
-            SQLAreaTabControl.Size = new System.Drawing.Size(616, 170);
+            SQLAreaTabControl.Size = new Size(546, 148);
             SQLAreaTabControl.TabIndex = 0;
             SQLAreaTabControl.CloseButtonClick += SQLAreaTabControl_CloseButtonClick;
-            SQLAreaTabControl.MouseDown += SQLAreaTabControl_MouseDown;
+            SQLAreaTabControl.MouseDown += new MouseEventHandler(SQLAreaTabControl_MouseDown);
             // 
             // tabPage1
             // 
             tabPage1.Controls.Add(silverMonkeyFCTB1);
-            tabPage1.Location = new System.Drawing.Point(4, 22);
+            tabPage1.Location = new Point(4, 22);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            tabPage1.Size = new System.Drawing.Size(608, 144);
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(538, 122);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "SQL     ";
             tabPage1.UseVisualStyleBackColor = true;
@@ -443,83 +459,213 @@ namespace SQLiteEditor
         '\'',
         '\''};
             silverMonkeyFCTB1.AutoIndentCharsPatterns = "";
-            silverMonkeyFCTB1.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            silverMonkeyFCTB1.AutoScrollMinSize = new Size(27, 14);
             silverMonkeyFCTB1.BackBrush = null;
             silverMonkeyFCTB1.CharHeight = 14;
             silverMonkeyFCTB1.CharWidth = 8;
             silverMonkeyFCTB1.CommentPrefix = "--";
-            silverMonkeyFCTB1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            silverMonkeyFCTB1.Cursor = Cursors.IBeam;
             silverMonkeyFCTB1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            silverMonkeyFCTB1.Dock = System.Windows.Forms.DockStyle.Fill;
-            silverMonkeyFCTB1.Font = new System.Drawing.Font("Courier New", 9.75F);
+            silverMonkeyFCTB1.Dock = DockStyle.Fill;
             silverMonkeyFCTB1.IsReplaceMode = false;
             silverMonkeyFCTB1.Language = FastColoredTextBoxNS.Language.SQL;
             silverMonkeyFCTB1.LeftBracket = '(';
-            silverMonkeyFCTB1.Location = new System.Drawing.Point(3, 3);
+            silverMonkeyFCTB1.Location = new Point(3, 3);
             silverMonkeyFCTB1.Name = "silverMonkeyFCTB1";
-            silverMonkeyFCTB1.Paddings = new System.Windows.Forms.Padding(0);
+            silverMonkeyFCTB1.Paddings = new Padding(0);
             silverMonkeyFCTB1.RightBracket = ')';
             silverMonkeyFCTB1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            silverMonkeyFCTB1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("silverMonkeyFCTB1.ServiceColors")));
-            silverMonkeyFCTB1.Size = new System.Drawing.Size(602, 138);
+            silverMonkeyFCTB1.ServiceColors = ((ServiceColors)(resources.GetObject("silverMonkeyFCTB1.ServiceColors")));
+            silverMonkeyFCTB1.Size = new Size(532, 116);
             silverMonkeyFCTB1.TabIndex = 0;
             silverMonkeyFCTB1.Zoom = 100;
             // 
             // SqlResultsListView
             // 
-            SqlResultsListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            SqlResultsListView.Dock = DockStyle.Fill;
             SqlResultsListView.FullRowSelect = true;
             SqlResultsListView.GridLines = true;
             SqlResultsListView.LabelEdit = true;
             SqlResultsListView.LargeImageList = ToolBarImages;
-            SqlResultsListView.Location = new System.Drawing.Point(0, 0);
+            SqlResultsListView.Location = new Point(0, 0);
             SqlResultsListView.Name = "SqlResultsListView";
-            SqlResultsListView.Size = new System.Drawing.Size(616, 181);
+            SqlResultsListView.Size = new Size(556, 171);
             SqlResultsListView.TabIndex = 0;
             SqlResultsListView.UseCompatibleStateImageBehavior = false;
-            SqlResultsListView.View = System.Windows.Forms.View.Details;
+            SqlResultsListView.View = View.Details;
             // 
-            // statusStrip1
+            // tabControl1
             // 
-            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            StatusStripLog});
-            statusStrip1.Location = new System.Drawing.Point(224, 361);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(616, 22);
-            statusStrip1.TabIndex = 18;
-            statusStrip1.Text = "statusStrip1";
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabPage3);
+            tabControl1.Dock = DockStyle.Fill;
+            tabControl1.Location = new Point(0, 0);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(280, 333);
+            tabControl1.TabIndex = 1;
             // 
-            // StatusStripLog
+            // tabPage2
             // 
-            StatusStripLog.Name = "StatusStripLog";
-            StatusStripLog.Size = new System.Drawing.Size(50, 17);
-            StatusStripLog.Text = "Execute:";
+            tabPage2.Controls.Add(DatabaseTreeView);
+            tabPage2.Location = new Point(4, 22);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(272, 307);
+            tabPage2.TabIndex = 0;
+            tabPage2.Text = "Database";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            tabPage3.Location = new Point(4, 22);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Padding = new Padding(3);
+            tabPage3.Size = new Size(272, 307);
+            tabPage3.TabIndex = 1;
+            tabPage3.Text = "Templates";
+            tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // DatabaseTreeView
+            // 
+            DatabaseTreeView.Dock = DockStyle.Fill;
+            DatabaseTreeView.Location = new Point(3, 3);
+            DatabaseTreeView.Name = "DatabaseTreeView";
+            DatabaseTreeView.Size = new Size(266, 301);
+            DatabaseTreeView.TabIndex = 1;
+            DatabaseTreeView.MouseDown += new MouseEventHandler(DatabaseTreeView_MouseDown);
+            DatabaseTreeView.MouseDoubleClick += DatabaseTreeView_MouseDoubleClick;
+            DatabaseTreeView.AfterExpand += DatabaseTreeView_AfterExpand;
             // 
             // frmExplorer
             // 
-            AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            ClientSize = new System.Drawing.Size(840, 383);
-            Controls.Add(statusStrip1);
+            AutoScaleBaseSize = new Size(5, 13);
+            ClientSize = new Size(840, 383);
             Controls.Add(splitContainer1);
-            Controls.Add(splitter1);
-            Controls.Add(DatabaseTreeView);
+            Controls.Add(statusStrip1);
             Controls.Add(toolBar1);
-            Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            Icon = ((Icon)(resources.GetObject("$this.Icon")));
             Menu = mainMenu1;
             Name = "frmExplorer";
-            Text = "Starship Avalon Projects: Data Monkey";
-            ((System.ComponentModel.ISupportInitialize)(sqlStatementTextBox)).EndInit();
-            splitContainer1.Panel1.ResumeLayout(false);
-            splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(splitContainer1)).EndInit();
-            splitContainer1.ResumeLayout(false);
-            SQLAreaTabControl.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(silverMonkeyFCTB1)).EndInit();
+            Text = "TSProjects: Data Monkey";
+            ((ISupportInitialize)(sqlStatementTextBox)).EndInit();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            ((ISupportInitialize)(splitContainer1)).EndInit();
+            splitContainer1.ResumeLayout(false);
+            splitContainer2.Panel1.ResumeLayout(false);
+            splitContainer2.Panel2.ResumeLayout(false);
+            ((ISupportInitialize)(splitContainer2)).EndInit();
+            splitContainer2.ResumeLayout(false);
+            SQLAreaTabControl.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            ((ISupportInitialize)(silverMonkeyFCTB1)).EndInit();
+            tabControl1.ResumeLayout(false);
+            tabPage2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
+
+        }
+
+
+        private void DatabaseTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (DatabaseTreeView.SelectedNode != null &&
+                DatabaseTreeView.SelectedNode.Parent != null &&
+                DatabaseTreeView.SelectedNode.Parent.Text.ToLower().Equals("tables"))
+            {
+                objOpenTableSQL.PerformClick();
+            }
+        }
+
+        private void SQLAreaTabControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            Control z = (Control)sender;
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip x = new ContextMenuStrip();
+                ToolStripItem s = x.Items.Add("New Tab", null, FNewTab_Click);
+                s.Tag = sender;
+                ToolStripItem t = x.Items.Add("Close All Other Tabs", null, FCloseAllTab_Click);
+                ToolStripItem v = x.Items.Add("Close Tab", null, FCloseTab_Click);
+
+
+                x.Show(z, e.Location);
+                int tabPageIndex = 0;
+                for (int i = 0; i <= SQLAreaTabControl.TabPages.Count - 1; i++)
+                {
+                    if (SQLAreaTabControl.GetTabRect(i).Contains(e.X, e.Y))
+                    {
+                        tabPageIndex = i;
+                        break; 
+                    }
+
+                }
+                t.Tag = tabPageIndex;
+                v.Tag = tabPageIndex;
+            }
+            else if (e.Button == MouseButtons.Middle)
+            {
+                for (int i = 0; i <= SQLAreaTabControl.TabPages.Count - 1; i++)
+                {
+                    if (SQLAreaTabControl.GetTabRect(i).Contains(e.X, e.Y))
+                    {
+                        CloseTab(i);
+                        break; 
+                    }
+                }
+            }
+        }
+
+        private void FNewTab_Click(object sender, EventArgs e)
+        {
+            SQLAreaTabControl.TabPages.Add(GenerateTabPage());
+        }
+
+        private void CloseAllButThis(ref int i)
+        {
+            int j = 0;
+            for (j = SQLAreaTabControl.TabPages.Count - 1; j >= 0; j += -1)
+            {
+                if (i != j)
+                    CloseTab(j);
+            }
+        }
+
+        private void FCloseAllTab_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem t = (ToolStripMenuItem)sender;
+            int i = (int)t.Tag;
+            CloseAllButThis(ref i);
+        }
+
+        private void FCloseTab_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem t = (ToolStripMenuItem)sender;
+            int i = (int)t.Tag;
+            CloseTab(i);
+        }
+
+        private void SQLAreaTabControl_CloseButtonClick(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Button t = (Button)sender;
+            CloseTab(t.TabIndex);
+            SQLAreaTabControl.RePositionCloseButtons();
+        }
+
+        private void CloseTab(int i)
+        {
+            if (i > SQLAreaTabControl.TabCount - 1)
+                return;
+            SQLAreaTabControl.TabPages.RemoveAt(i);
+            SQLAreaTabControl.RePositionCloseButtons();
+            if (SQLAreaTabControl.TabPages.Count == 0 & Disposing == false)
+            {
+                SQLAreaTabControl.TabPages.Add(GenerateTabPage());
+            }
 
         }
 
@@ -546,8 +692,9 @@ namespace SQLiteEditor
             tablesNode.Tag = "Tables";
 
             DataSet ds = null;
-            StatementParser.ReturnResults(StatementBuilder.BuildMasterQuery(), ActiveDatabaseLocation, ref ds);
-
+            string message;
+            StatementParser.ReturnResults(StatementBuilder.BuildMasterQuery(), ActiveDatabaseLocation, ref ds, out message);
+            StatusStripLog.Text = message;
             if (ds != null && ds.Tables.Count > 0)
             {
                 foreach (DataRow dr in ds.Tables[0].Rows)
@@ -594,7 +741,7 @@ namespace SQLiteEditor
             tempTabPage.Location = new Point(4, 22);
             tempTabPage.Size = new Size(608, 158);
             tempTabPage.Text = (SQLAreaTabControl.TabCount + 1).ToString();
-            tempTabPage.Tag = SQLAreaTabControl.TabCount;
+
             return tempTabPage;
         }
         #endregion
@@ -654,7 +801,9 @@ namespace SQLiteEditor
             ((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text = sqlStatement;
 
             //Parse Results
-            StatementParser.ReturnResults(sqlStatement, ActiveDatabaseLocation, ref ds);
+            string message;
+            StatementParser.ReturnResults(sqlStatement, ActiveDatabaseLocation, ref ds, out message);
+            StatusStripLog.Text = message;
 
             //Build ListView
             BuildSqlResultsListView(ds, (DatabaseTreeView.SelectedNode == null ? "" : DatabaseTreeView.SelectedNode.Text));
@@ -667,10 +816,9 @@ namespace SQLiteEditor
         {
             //GetTable Names
             DataSet ds = null;
-            if (SQLAreaTabControl.SelectedTab == null)
-                SQLAreaTabControl.TabPages.Add(GenerateTabPage());
             string sqlStatement = ((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text;
-
+            if (string.IsNullOrEmpty(sqlStatement))
+                return;
             //Parse Results
             string message = null;
             StatementParser.ReturnResults(sqlStatement, ActiveDatabaseLocation, ref ds, out message);
@@ -731,26 +879,26 @@ namespace SQLiteEditor
         #endregion
 
         #region Menu Event
-        private void OpenDBmenu_Click(object sender, System.EventArgs e)
+        private void OpenDBmenu_Click(object sender, EventArgs e)
         {
             OpenDBFileLocator();
         }
 
-        private void CreateDBMenu_Click(object sender, System.EventArgs e)
+        private void CreateDBMenu_Click(object sender, EventArgs e)
         {
             CreateDBFile();
         }
-        private void AddAreaMenu_Click(object sender, System.EventArgs e)
+        private void AddAreaMenu_Click(object sender, EventArgs e)
         {
             SQLAreaTabControl.Controls.Add(GenerateTabPage());
         }
 
-        private void ExitAppMenu_Click(object sender, System.EventArgs e)
+        private void ExitAppMenu_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void CheckIntegrity_Click(object sender, System.EventArgs e)
+        private void CheckIntegrity_Click(object sender, EventArgs e)
         {
             IntegrityCheckSQL();
         }
@@ -803,7 +951,9 @@ namespace SQLiteEditor
                 //GetTable Names
                 DataSet ds = null;
 
-                StatementParser.ReturnResults(SQLStatement, ActiveDatabaseLocation, ref ds);
+                string message;
+                StatementParser.ReturnResults(SQLStatement, ActiveDatabaseLocation, ref ds, out message);
+                StatusStripLog.Text = message;
 
                 TreeNode columnsNode = e.Node.Nodes[0];
                 columnsNode.Tag = "Columns";
@@ -817,7 +967,7 @@ namespace SQLiteEditor
                         string ColumnName = dr[1].ToString();
                         string ColumnType = dr[2].ToString();
                         TreeNode columnNode = new TreeNode();
-                        columnNode.Text = ColumnName != null ? ColumnName + ", " + ColumnType : ColumnName  ;
+                        columnNode.Text = ColumnName != null ? ColumnName + ", " + ColumnType : ColumnName;
                         columnNode.Tag = ColumnName;
 
                         columnsNode.Nodes.Add(columnNode);
@@ -831,17 +981,21 @@ namespace SQLiteEditor
         {
             using (AddTable pAddTable = new AddTable())
             {
+                string message;
                 pAddTable.ShowInTaskbar = false;
                 if (DialogResult.OK == pAddTable.ShowDialog())
                 {
                     DataSet ds = null;
-                    string message;
+
                     StatementParser.ReturnResults(StatementBuilder.BuildAddTableSQL(pAddTable.TableName), ActiveDatabaseLocation, ref ds, out message);
 
                     //Build TreeView
                     PopulateDatabaseTreeView();
-                    StatusStripLog.Text = message;
+
                 }
+                else
+                    message = "Create Table Aborted";
+                StatusStripLog.Text = message;
             }
         }
 
@@ -852,10 +1006,12 @@ namespace SQLiteEditor
             string sqlStatement = StatementBuilder.BuildTableOpenSql(DatabaseTreeView.SelectedNode.Text);
 
             //Place sqlstatement into the text box
-
-            if (SQLAreaTabControl.SelectedTab == null)
+            if (!string.IsNullOrEmpty(((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text))
+            {
                 SQLAreaTabControl.TabPages.Add(GenerateTabPage());
-            ((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text = sqlStatement;
+                SQLAreaTabControl.SelectTab(SQLAreaTabControl.TabCount - 1);
+            }
+                ((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text = sqlStatement;
 
             //Parse Results
             string LogMessage;
@@ -895,28 +1051,30 @@ namespace SQLiteEditor
             using (RemoveColumn pRemoveColumn = new RemoveColumn())
             {
                 pRemoveColumn.ShowInTaskbar = false;
+                string message = null;
                 if (DialogResult.OK == pRemoveColumn.ShowDialog() & !string.IsNullOrEmpty(pRemoveColumn.ColumnName))
                 {
                     // StatementParser.ReturnResults(StatementBuilder.BuildAddColumnSQL(DatabaseTreeView.SelectedNode.Text, pRemoveColumn.ColumnName, pRemoveColumn.ColumnType), ActiveDatabaseLocation);
                     SQLiteDatabase db = new SQLiteDatabase(ActiveDatabaseLocation);
-                    if (db.isColumnExist(pRemoveColumn.ColumnName, DatabaseTreeView.SelectedNode.Text ))
-                    {
-                        db.removeColumn(DatabaseTreeView.SelectedNode.Text, pRemoveColumn.ColumnName);
-                        //Add new column to the tree if it is expanded
-                        if (DatabaseTreeView.SelectedNode.IsExpanded)
-                        {
-                            TreeNode columnNode = new TreeNode();
-                            columnNode.Text = pRemoveColumn.ColumnName ;
-                            columnNode.Tag = pRemoveColumn.ColumnName;
+                    int Records = db.removeColumn(DatabaseTreeView.SelectedNode.Text, pRemoveColumn.ColumnName);
 
-                            DatabaseTreeView.SelectedNode.Nodes[0].Nodes.Remove(columnNode);
-                          
-                            DatabaseTreeView.SelectedNode.Collapse();
-                           DatabaseTreeView.SelectedNode.Expand();
-                           
-                        }
+                    //Add new column to the tree if it is expanded
+                    if (DatabaseTreeView.SelectedNode.IsExpanded & Records > -1)
+                    {
+                        TreeNode columnNode = new TreeNode();
+                        columnNode.Text = pRemoveColumn.ColumnName;
+                        columnNode.Tag = pRemoveColumn.ColumnName;
+                        DatabaseTreeView.SelectedNode.Nodes[0].Nodes.Remove(columnNode);
+
+                        DatabaseTreeView.SelectedNode.Collapse();
+                        DatabaseTreeView.SelectedNode.Expand();
+
                     }
+                    message = String.Format("ExecuteNonQurey: Records updated {0}", Records);
                 }
+                else
+                    message = "Remove Column Aborted";
+                StatusStripLog.Text = message;
             }
         }
 
@@ -925,12 +1083,16 @@ namespace SQLiteEditor
             using (RenameTable pRenameTable = new RenameTable())
             {
                 pRenameTable.ShowInTaskbar = false;
+                string message;
                 if (DialogResult.OK == pRenameTable.ShowDialog())
                 {
-                    StatementParser.ReturnResults(StatementBuilder.BuildRenameTableSQL(DatabaseTreeView.SelectedNode.Text, pRenameTable.NewTableName), ActiveDatabaseLocation);
 
-                    DatabaseTreeView.SelectedNode.Text = pRenameTable.NewTableName;
+                    if (StatementParser.ReturnResults(StatementBuilder.BuildRenameTableSQL(DatabaseTreeView.SelectedNode.Text, pRenameTable.NewTableName), ActiveDatabaseLocation, out message))
+                        DatabaseTreeView.SelectedNode.Text = pRenameTable.NewTableName;
                 }
+                else
+                    message = "Rename Table aborted";
+                StatusStripLog.Text = message;
             }
         }
 
@@ -938,8 +1100,15 @@ namespace SQLiteEditor
         private void objDeleteTableSQL_Click(object sender, EventArgs e)
         {
             string TableName = DatabaseTreeView.SelectedNode.Text;
-            StatementParser.ReturnResults(StatementBuilder.BuildTableDeleteSQL(TableName), ActiveDatabaseLocation);
-            DatabaseTreeView.SelectedNode.Remove();
+            string message;
+            if (MessageBox.Show("Do you want to delete this table?", "Waring", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                StatementParser.ReturnResults(StatementBuilder.BuildTableDeleteSQL(TableName), ActiveDatabaseLocation, out message);
+                DatabaseTreeView.SelectedNode.Remove();
+            }
+            else
+                message = "Delete Table Aborted";
+            StatusStripLog.Text = message;
         }
         #endregion
 
@@ -1006,7 +1175,9 @@ namespace SQLiteEditor
             string ColumnName = SqlResultsListView.Columns[0].Text;
             foreach (ListViewItem lvi in SqlResultsListView.SelectedItems)
             {
-                StatementParser.ReturnResults(StatementBuilder.BuildRowDeleteSQL(TableName, ColumnName, lvi.Text), ActiveDatabaseLocation);
+                string message;
+                StatementParser.ReturnResults(StatementBuilder.BuildRowDeleteSQL(TableName, ColumnName, lvi.Text), ActiveDatabaseLocation, out message);
+                StatusStripLog.Text = message;
                 lvi.Remove();
             }
         }
@@ -1028,9 +1199,6 @@ namespace SQLiteEditor
                     case "ExecuteSQL":
                         ExecuteTextBoxSQL();
                         break;
-                    //case "StopSQL":
-                    //StatementParser.InterruptQuery();
-                    //break;
                     default:
                         break;
                 }
@@ -1039,93 +1207,7 @@ namespace SQLiteEditor
         }
 
 
-        private void SQLAreaTabControl_MouseDown(object sender, MouseEventArgs e)
-        {
-            Control z = (Control)sender;
-            if (e.Button == MouseButtons.Right)
-            {
-                ContextMenuStrip x = new ContextMenuStrip();
-                ToolStripItem s = x.Items.Add("New Tab", null, FNewTab_Click);
-                s.Tag = sender;
-                ToolStripItem t = x.Items.Add("Close All Other Tabs", null, FCloseAllTab_Click);
-                ToolStripItem v = x.Items.Add("Close Tab", null, FCloseTab_Click);
 
-
-                x.Show(z, e.Location);
-                int tabPageIndex = 0;
-                for (int i = 0; i <= SQLAreaTabControl.TabPages.Count - 1; i++)
-                {
-                    if (SQLAreaTabControl.GetTabRect(i).Contains(e.X, e.Y))
-                    {
-                        tabPageIndex = i;
-                        break; // TODO: might not be correct. Was : Exit For
-                    }
-
-                }
-                t.Tag = tabPageIndex;
-                v.Tag = tabPageIndex;
-            }
-            else if (e.Button == MouseButtons.Middle)
-            {
-                for (int i = 0; i <= SQLAreaTabControl.TabPages.Count - 1; i++)
-                {
-                    if (SQLAreaTabControl.GetTabRect(i).Contains(e.X, e.Y))
-                    {
-                        CloseTab(i);
-                        break; // TODO: might not be correct. Was : Exit For
-                    }
-                }
-            }
-        }
-
-        private void FNewTab_Click(object sender, EventArgs e)
-        {
-            SQLAreaTabControl.TabPages.Add(GenerateTabPage());
-        }
-
-        private void CloseAllButThis(ref int i)
-        {
-            int j = 0;
-            for (j = SQLAreaTabControl.TabPages.Count - 1; j >= 0; j += -1)
-            {
-                if (i != j)
-                    CloseTab(j);
-            }
-        }
-
-        private void FCloseAllTab_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem t = (ToolStripMenuItem)sender;
-            int i = int.Parse((string)t.Tag);
-            CloseAllButThis(ref i);
-        }
-
-        private void FCloseTab_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem t = (ToolStripMenuItem)sender;
-            int i = (int)t.Tag;
-            CloseTab(i);
-        }
-
-        private void SQLAreaTabControl_CloseButtonClick(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = true;
-            Button t = (Button)sender;
-            CloseTab(t.TabIndex);
-            SQLAreaTabControl.RePositionCloseButtons();
-        }
-
-        private void CloseTab(int i)
-        {
-            if (i > SQLAreaTabControl.TabCount - 1)
-                return;
-            SQLAreaTabControl.TabPages.RemoveAt(i);
-            if (SQLAreaTabControl.TabPages.Count == 0 & Disposing == false)
-            {
-                SQLAreaTabControl.TabPages.Add(GenerateTabPage());
-            }
-
-        }
 
     }
 }
