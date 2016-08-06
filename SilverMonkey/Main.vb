@@ -39,14 +39,6 @@ Public Class Main
         Public Online As Boolean
     End Structure
 
-    Public Shared Property OnlineList As String
-        Get
-            Return MS_Pounce.OnlineList
-        End Get
-        Set(value As String)
-            MS_Pounce.OnlineList = value
-        End Set
-    End Property
     Public FurreList As New Dictionary(Of String, pFurre)
 
     Public HasShare As Boolean = False
@@ -55,12 +47,12 @@ Public Class Main
 
     Private Function ReadOnlineList() As Boolean
         Dim result As Boolean = False
-        If File.Exists(OnlineList) Then
-            If File.GetLastWriteTime(OnlineList) <> lastaccess Then
-                lastaccess = File.GetLastWriteTime(OnlineList)
+        If File.Exists(MS_Pounce.OnlineList) Then
+            If File.GetLastWriteTime(MS_Pounce.OnlineList) <> lastaccess Then
+                lastaccess = File.GetLastWriteTime(MS_Pounce.OnlineList)
 
 
-                Dim NameList() As String = File.ReadAllLines(OnlineList)
+                Dim NameList() As String = File.ReadAllLines(MS_Pounce.OnlineList)
                 For i As Integer = 0 To NameList.Length - 1
                     If Not FurreList.ContainsKey(NameList(i)) Then FurreList.Add(NameList(i), New pFurre)
                 Next
@@ -3073,18 +3065,16 @@ Public Class Main
         'catch the Console messages
         _FormClose = False
 
-        Paths.FurcadiaProgramFolder = MainSettings.FurcPath
-
         writer = New TextBoxWriter(log_)
         Console.SetOut(writer)
         MS_Engine.MainMSEngine = New MainMSEngine
-        ' MSalarm = New Threading.Timer(AddressOf Tick, True, 1000, 1000)
-        FurreList.Clear()
-        Plugins = PluginServices.FindPlugins(Paths.ApplicationPluginPath, "SilverMonkey.Interfaces.msPlugin")
+        MSalarm = New Threading.Timer(AddressOf Tick, True, 1000, 1000)
+        'FurreList.Clear()
+        'Plugins = PluginServices.FindPlugins(Paths.ApplicationPluginPath, "SilverMonkey.Interfaces.msPlugin")
 
         ' Try to get Furcadia's path from the registry
 
-        MS_KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys-MS.ini"))
+        'MS_KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys-MS.ini"))
         InitializeTextControls()
 
         Size = My.Settings.MainFormSize
@@ -3127,7 +3117,6 @@ Public Class Main
                 ConnectBot()
             End If
         End If
-
     End Sub
 
 

@@ -3,35 +3,14 @@ Furcadia Framework for 3rd Party Programs
 
 MonkeyCore 
 (Core library of shared components)
-Tweaked Close Button to appear more as an X
+
 
 SqliteDatabase:
-Tweaked SQLTIEDatabase.AddCollumn (Condenced ExecuteNonQuery()s into one to work around iDispose of Using Statment)
-Tweaked  SQLiteDatabase.ExecuteNonQuery to return -1 for SQL Errors to prevent Application crash
-tweaked SQLiteDatabase.ExecuteQuery to truturn Null for SQL Errors to prevent Application crash
+
 
 Data Monkey
 (Database Manager)
-Bug Report #8 Implimented Suggestions
-1.] Change the down arrow on each area to an x. The x would be more comprehensive.
-2.] When a user closes the last open area, create a new area so that there is always an area on screen.
-6.] Add ability to delete columns. You already make it easy to add columns, why not delete too?
-7.] Add a prompt to ask the user if they're sure they want to delete a table or column.
-8.] When adding a table, if the user presses ENTER or RETURN, press the OK button for them.
-**12.] Add a way to auto-update the database. When I added a column using an ALTER TABLE SQL statement, I did not see my new column until I reopened the database.
-*14.] Instead of throwing an error that allows the user to close out the entire program just because of a small typo or something in their query, have the error report return back to the program instead unless its a program-crashing bug.
-15.] When an SQL statement, that isn't a SELECT statement executes correctly, display a message of some sort to notify the user of this.
-16.] When opening a table, do NOT overwrite the area that they currently have open. Instead, open a new area so the individual doesn't lose their queries.
 
-*Started Implimentation, Need more insight to whaat to do as the Application has been crashing for legit reasons related to this.
-** Do you mean auto execute SELECT * FROM [table] when executing SQLTextBox or when the AddColumn popup is used?
-
-Added Menu Item Remove Column
-Added Status Box with SQLite Execution messages
-Added SQLTabControl Menu with close options
-SQLTabControl now opens a new tab when closing last tab
-Added Middle mouse button Close to tabs
-Tweaked StatementParser for Status Messages
 
 
 Monkey Speak Editor
@@ -40,7 +19,7 @@ Monkey Speak Editor
 
 Silver Monkey
 (Main Bot Application)
-Fixed Settings Loading Causing NullReferenceException
+
 
 SQLite Database:
 

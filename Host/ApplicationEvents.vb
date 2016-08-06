@@ -1,6 +1,10 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Devices
 Imports System.Windows.Forms
+Imports MonkeyCore
+Imports SilverMonkey.BugTraqConnect
+Imports System.IO
+
 Namespace My
     ' The following events are available for MyApplication:
     ' 
@@ -23,10 +27,13 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
-            Dim ex As Exception = e.Exception
-            Dim logError As New MonkeyCore.ErrorLogging(ex, sender)
-            MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Process.Start(MonkeyCore.Paths.SilverMonkeyErrorLogPath)
+            Dim logError As New ErrorLogging(e.Exception, sender)
+            Dim SubmitError As New SubmitIssueForm(logError.LogFile)
+            'MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            'Process.Start(MonkeyCore.Paths.SilverMonkeyErrorLogPath)
+            If SubmitError.ShowDialog = DialogResult.OK Then
+                File.Delete(logError.LogFile)
+            End If
         End Sub
     End Class
 

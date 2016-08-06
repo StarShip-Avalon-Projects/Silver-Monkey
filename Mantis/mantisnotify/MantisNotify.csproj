@@ -113,11 +113,6 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
-    <ProjectReference Include="..\mantisconnect\MantisConnect.csproj">
-      <Name>MantisConnect</Name>
-      <Project>{F4391F6F-0239-48E2-B415-C39A6D920303}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
@@ -172,6 +167,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\mantisconnect\BugTraqConnect.csproj">
+      <Project>{F4391F6F-0239-48E2-B415-C39A6D920303}</Project>
+      <Name>BugTraqConnect</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

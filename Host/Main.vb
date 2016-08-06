@@ -51,18 +51,16 @@ Public Class Main
         Dim intIndex As Integer
 
         'Loop through available plugins, creating instances and adding them to listbox
-        If Not Plugins Is Nothing Then
-            For intIndex = 0 To Plugins.Count - 1
-                Try
-                    objPlugin = TryCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
-                    Dim item As ListViewItem = ListView1.Items.Add(intIndex.ToString)
-                    item.SubItems.Add(objPlugin.Name)
-                    item.SubItems.Add(objPlugin.Description)
-                    item.Checked = objPlugin.enabled
-                Catch
-                End Try
-            Next
-        End If
+        For intIndex = 0 To Plugins.Count - 1
+            Try
+                objPlugin = TryCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
+                Dim item As ListViewItem = ListView1.Items.Add(intIndex.ToString)
+                item.SubItems.Add(objPlugin.Name)
+                item.SubItems.Add(objPlugin.Description)
+                item.Checked = objPlugin.enabled
+            Catch
+            End Try
+        Next
 
     End Sub
 

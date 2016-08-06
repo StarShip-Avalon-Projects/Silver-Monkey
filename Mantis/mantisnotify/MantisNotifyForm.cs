@@ -25,36 +25,36 @@ using System.Windows.Forms;
 
 using CustomUIControls;
 
-using Futureware.MantisConnect;
+using SilverMonkey.BugTraqConnect;
 
 namespace Futureware.MantisNotify
 {
 	/// <summary>
 	/// Main form for Mantis Notify sample application.
 	/// </summary>
-	public class MantisNotifyForm : System.Windows.Forms.Form
-	{
-        private System.Windows.Forms.Timer checkMantisTimer;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox urlTextBox;
-        private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.ContextMenu contextMenu;
-        private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox mantisUsernameTextBox;
-        private System.Windows.Forms.TextBox mantisPasswordTextBox;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox basicPasswordTextBox;
-        private System.Windows.Forms.TextBox basicUsernameTextBox;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.MenuItem exitMenuItem;
-        private System.Windows.Forms.MenuItem checkNowMenuItem;
-        private System.Windows.Forms.MenuItem ShowLastIssueMenuItem;
-        private System.ComponentModel.IContainer components;
+	public class MantisNotifyForm : Form
+    {
+        private Timer checkMantisTimer;
+        private Label label1;
+        private TextBox urlTextBox;
+        private NotifyIcon notifyIcon;
+        private ContextMenu contextMenu;
+        private Button okButton;
+        private Button cancelButton;
+        private GroupBox groupBox1;
+        private Label label2;
+        private Label label3;
+        private TextBox mantisUsernameTextBox;
+        private TextBox mantisPasswordTextBox;
+        private GroupBox groupBox2;
+        private Label label4;
+        private TextBox basicPasswordTextBox;
+        private TextBox basicUsernameTextBox;
+        private Label label5;
+        private MenuItem exitMenuItem;
+        private MenuItem checkNowMenuItem;
+        private MenuItem ShowLastIssueMenuItem;
+        private IContainer components;
 
 		public MantisNotifyForm()
 		{
@@ -86,214 +86,214 @@ namespace Futureware.MantisNotify
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MantisNotifyForm));
-            this.checkMantisTimer = new System.Windows.Forms.Timer(this.components);
-            this.urlTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenu = new System.Windows.Forms.ContextMenu();
-            this.ShowLastIssueMenuItem = new System.Windows.Forms.MenuItem();
-            this.checkNowMenuItem = new System.Windows.Forms.MenuItem();
-            this.exitMenuItem = new System.Windows.Forms.MenuItem();
-            this.okButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.mantisPasswordTextBox = new System.Windows.Forms.TextBox();
-            this.mantisUsernameTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.basicPasswordTextBox = new System.Windows.Forms.TextBox();
-            this.basicUsernameTextBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.SuspendLayout();
+            checkMantisTimer = new Timer(components);
+            urlTextBox = new TextBox();
+            label1 = new Label();
+            notifyIcon = new NotifyIcon(components);
+            contextMenu = new ContextMenu();
+            ShowLastIssueMenuItem = new MenuItem();
+            checkNowMenuItem = new MenuItem();
+            exitMenuItem = new MenuItem();
+            okButton = new Button();
+            cancelButton = new Button();
+            groupBox1 = new GroupBox();
+            label3 = new Label();
+            mantisPasswordTextBox = new TextBox();
+            mantisUsernameTextBox = new TextBox();
+            label2 = new Label();
+            groupBox2 = new GroupBox();
+            label4 = new Label();
+            basicPasswordTextBox = new TextBox();
+            basicUsernameTextBox = new TextBox();
+            label5 = new Label();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            SuspendLayout();
             // 
             // checkMantisTimer
             // 
-            this.checkMantisTimer.Interval = 10000;
-            this.checkMantisTimer.Tick += new System.EventHandler(this.checkMantisTimer_Tick);
+            checkMantisTimer.Interval = 10000;
+            checkMantisTimer.Tick += new System.EventHandler(checkMantisTimer_Tick);
             // 
             // urlTextBox
             // 
-            this.urlTextBox.Location = new System.Drawing.Point(128, 16);
-            this.urlTextBox.Name = "urlTextBox";
-            this.urlTextBox.Size = new System.Drawing.Size(376, 20);
-            this.urlTextBox.TabIndex = 0;
-            this.urlTextBox.Text = "";
+            urlTextBox.Location = new System.Drawing.Point(128, 16);
+            urlTextBox.Name = "urlTextBox";
+            urlTextBox.Size = new System.Drawing.Size(376, 20);
+            urlTextBox.TabIndex = 0;
+            urlTextBox.Text = "";
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(16, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Mantis Connect Url";
+            label1.Location = new System.Drawing.Point(16, 16);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(100, 16);
+            label1.TabIndex = 1;
+            label1.Text = "Mantis Connect Url";
             // 
             // notifyIcon
             // 
-            this.notifyIcon.ContextMenu = this.contextMenu;
-            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "Mantis Notifier";
-            this.notifyIcon.Visible = true;
+            notifyIcon.ContextMenu = contextMenu;
+            notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            notifyIcon.Text = "Mantis Notifier";
+            notifyIcon.Visible = true;
             // 
             // contextMenu
             // 
-            this.contextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-                                                                                        this.ShowLastIssueMenuItem,
-                                                                                        this.checkNowMenuItem,
-                                                                                        this.exitMenuItem});
+            contextMenu.MenuItems.AddRange(new MenuItem[] {
+                                                                                        ShowLastIssueMenuItem,
+                                                                                        checkNowMenuItem,
+                                                                                        exitMenuItem});
             // 
             // ShowLastIssueMenuItem
             // 
-            this.ShowLastIssueMenuItem.Index = 0;
-            this.ShowLastIssueMenuItem.Text = "Show Last Issue";
-            this.ShowLastIssueMenuItem.Click += new System.EventHandler(this.menuItem1_Click);
+            ShowLastIssueMenuItem.Index = 0;
+            ShowLastIssueMenuItem.Text = "Show Last Issue";
+            ShowLastIssueMenuItem.Click += new System.EventHandler(menuItem1_Click);
             // 
             // checkNowMenuItem
             // 
-            this.checkNowMenuItem.Index = 1;
-            this.checkNowMenuItem.Text = "Check Now";
-            this.checkNowMenuItem.Click += new System.EventHandler(this.checkNowMenuItem_Click);
+            checkNowMenuItem.Index = 1;
+            checkNowMenuItem.Text = "Check Now";
+            checkNowMenuItem.Click += new System.EventHandler(checkNowMenuItem_Click);
             // 
             // exitMenuItem
             // 
-            this.exitMenuItem.Index = 2;
-            this.exitMenuItem.Text = "Exit";
-            this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
+            exitMenuItem.Index = 2;
+            exitMenuItem.Text = "Exit";
+            exitMenuItem.Click += new System.EventHandler(exitMenuItem_Click);
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(176, 216);
-            this.okButton.Name = "okButton";
-            this.okButton.TabIndex = 1;
-            this.okButton.Text = "OK";
+            okButton.Location = new System.Drawing.Point(176, 216);
+            okButton.Name = "okButton";
+            okButton.TabIndex = 1;
+            okButton.Text = "OK";
             // 
             // cancelButton
             // 
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(264, 216);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.TabIndex = 0;
-            this.cancelButton.Text = "Cancel";
+            cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            cancelButton.Location = new System.Drawing.Point(264, 216);
+            cancelButton.Name = "cancelButton";
+            cancelButton.TabIndex = 0;
+            cancelButton.Text = "Cancel";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.mantisPasswordTextBox);
-            this.groupBox1.Controls.Add(this.mantisUsernameTextBox);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(16, 48);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(488, 72);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Mantis Authentication";
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(mantisPasswordTextBox);
+            groupBox1.Controls.Add(mantisUsernameTextBox);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Location = new System.Drawing.Point(16, 48);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(488, 72);
+            groupBox1.TabIndex = 2;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Mantis Authentication";
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(264, 32);
-            this.label3.Name = "label3";
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Password";
+            label3.Location = new System.Drawing.Point(264, 32);
+            label3.Name = "label3";
+            label3.TabIndex = 3;
+            label3.Text = "Password";
             // 
             // mantisPasswordTextBox
             // 
-            this.mantisPasswordTextBox.Location = new System.Drawing.Point(376, 32);
-            this.mantisPasswordTextBox.Name = "mantisPasswordTextBox";
-            this.mantisPasswordTextBox.TabIndex = 2;
-            this.mantisPasswordTextBox.Text = "";
+            mantisPasswordTextBox.Location = new System.Drawing.Point(376, 32);
+            mantisPasswordTextBox.Name = "mantisPasswordTextBox";
+            mantisPasswordTextBox.TabIndex = 2;
+            mantisPasswordTextBox.Text = "";
             // 
             // mantisUsernameTextBox
             // 
-            this.mantisUsernameTextBox.Location = new System.Drawing.Point(96, 32);
-            this.mantisUsernameTextBox.Name = "mantisUsernameTextBox";
-            this.mantisUsernameTextBox.TabIndex = 1;
-            this.mantisUsernameTextBox.Text = "";
+            mantisUsernameTextBox.Location = new System.Drawing.Point(96, 32);
+            mantisUsernameTextBox.Name = "mantisUsernameTextBox";
+            mantisUsernameTextBox.TabIndex = 1;
+            mantisUsernameTextBox.Text = "";
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(16, 32);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 23);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Username";
+            label2.Location = new System.Drawing.Point(16, 32);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(64, 23);
+            label2.TabIndex = 0;
+            label2.Text = "Username";
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.basicPasswordTextBox);
-            this.groupBox2.Controls.Add(this.basicUsernameTextBox);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Location = new System.Drawing.Point(16, 136);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(488, 72);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Basic Authentication";
+            groupBox2.Controls.Add(label4);
+            groupBox2.Controls.Add(basicPasswordTextBox);
+            groupBox2.Controls.Add(basicUsernameTextBox);
+            groupBox2.Controls.Add(label5);
+            groupBox2.Location = new System.Drawing.Point(16, 136);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new System.Drawing.Size(488, 72);
+            groupBox2.TabIndex = 4;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Basic Authentication";
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(264, 32);
-            this.label4.Name = "label4";
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Password";
+            label4.Location = new System.Drawing.Point(264, 32);
+            label4.Name = "label4";
+            label4.TabIndex = 3;
+            label4.Text = "Password";
             // 
             // basicPasswordTextBox
             // 
-            this.basicPasswordTextBox.Location = new System.Drawing.Point(376, 32);
-            this.basicPasswordTextBox.Name = "basicPasswordTextBox";
-            this.basicPasswordTextBox.TabIndex = 2;
-            this.basicPasswordTextBox.Text = "";
+            basicPasswordTextBox.Location = new System.Drawing.Point(376, 32);
+            basicPasswordTextBox.Name = "basicPasswordTextBox";
+            basicPasswordTextBox.TabIndex = 2;
+            basicPasswordTextBox.Text = "";
             // 
             // basicUsernameTextBox
             // 
-            this.basicUsernameTextBox.Location = new System.Drawing.Point(96, 32);
-            this.basicUsernameTextBox.Name = "basicUsernameTextBox";
-            this.basicUsernameTextBox.TabIndex = 1;
-            this.basicUsernameTextBox.Text = "";
+            basicUsernameTextBox.Location = new System.Drawing.Point(96, 32);
+            basicUsernameTextBox.Name = "basicUsernameTextBox";
+            basicUsernameTextBox.TabIndex = 1;
+            basicUsernameTextBox.Text = "";
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(16, 32);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 23);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Username";
+            label5.Location = new System.Drawing.Point(16, 32);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(64, 23);
+            label5.TabIndex = 0;
+            label5.Text = "Username";
             // 
             // MantisNotifyForm
             // 
-            this.AcceptButton = this.okButton;
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(520, 256);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.okButton);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.urlTextBox);
-            this.Controls.Add(this.groupBox2);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.Name = "MantisNotifyForm";
-            this.ShowInTaskbar = false;
-            this.Text = "Mantis Notify Configuration";
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.Load += new System.EventHandler(this.MantisNotifyForm_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AcceptButton = okButton;
+            AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            CancelButton = cancelButton;
+            ClientSize = new System.Drawing.Size(520, 256);
+            Controls.Add(groupBox1);
+            Controls.Add(cancelButton);
+            Controls.Add(okButton);
+            Controls.Add(label1);
+            Controls.Add(urlTextBox);
+            Controls.Add(groupBox2);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            MaximizeBox = false;
+            Name = "MantisNotifyForm";
+            ShowInTaskbar = false;
+            Text = "Mantis Notify Configuration";
+            WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            Load += new System.EventHandler(MantisNotifyForm_Load);
+            groupBox1.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            ResumeLayout(false);
 
         }
 		#endregion
 
         protected override void OnResize(EventArgs e)
         {
-            if ( this.WindowState == FormWindowState.Minimized )
+            if (WindowState == FormWindowState.Minimized )
                 Hide();
 
             base.OnResize(e);
@@ -302,6 +302,8 @@ namespace Futureware.MantisNotify
         private void MantisNotifyForm_Load(object sender, System.EventArgs e)
         {
             Hide();
+
+            
 
             NameValueCollection appSettings = ConfigurationManager.AppSettings;
             checkMantisTimer.Interval = Convert.ToInt32(appSettings["CheckForNewIssuesEverySecs"]) * 1000;
@@ -443,7 +445,7 @@ namespace Futureware.MantisNotify
         {
             try
             {
-                this.checkMantisTimer.Enabled = false;
+                checkMantisTimer.Enabled = false;
 
                 if ( !Connect() )
                     return;
@@ -476,7 +478,7 @@ namespace Futureware.MantisNotify
         {
             try
             {
-                this.checkMantisTimer.Enabled = false;
+                checkMantisTimer.Enabled = false;
 
                 if ( !Connect() )
                     return;

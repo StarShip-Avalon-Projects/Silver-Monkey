@@ -101,6 +101,9 @@ Public Class MS_Edit
 
     End Class
 #End Region
+
+    Private Delegate Sub ListBoxInvoker(ByVal Sender As Object, e As EventArgs)
+
     Public DS_autoCompleteList As New List(Of AutocompleteItem)
     Public MS_autoCompleteList As New List(Of AutocompleteItem)
     Private Class DA_AUtoCompleteMenu
@@ -373,7 +376,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                     s = Path.GetFileNameWithoutExtension(s)
                     ListBox3.BeginUpdate()
                     ListBox3.Items.Add(s)
-                    TemplatePaths.Add(p)
+                    TemplatePathsMS.Add(p)
                     ListBox3.EndUpdate()
                 Next
             End If
@@ -385,7 +388,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                     s = Path.GetFileNameWithoutExtension(s)
                     ListBox3.BeginUpdate()
                     ListBox3.Items.Add(s)
-                    TemplatePaths.Add(p)
+                    TemplatePathsMS.Add(p)
                     ListBox3.EndUpdate()
                 Next
             End If
@@ -1599,13 +1602,16 @@ InputBox("What line within the document do you want to send the cursor to?",
 
         If IsNothing(TabControl2) Then Exit Sub
         If TabControl2.TabPages.Count = 0 Then Exit Sub
-        Dim lb As ListBox = CType(sender, ListBox)
-        Dim p As SplitterPanel = CType(lb.Parent, SplitterPanel)
 
-        lb.Size = New Size(p.Width - 5, p.Height - 30)
+        Dim lb As ListBox = DirectCast(sender, ListBox)
+        Dim p As SplitterPanel = DirectCast(lb.Parent, SplitterPanel)
 
-        'Debug.Print(lb.Name + " Resize()")
-        'Debug.Print("Size: " + lb.Size.ToString)
+        If lb.Width <> p.Width - 5 AndAlso p.Height <> p.Height - 30 Then
+            lb.BeginUpdate()
+            lb.Size = New Size(p.Width - 5, p.Height - 30)
+            lb.EndUpdate()
+        End If
+
     End Sub
 
     Public Sub SetLineTabs(ByRef Idx As Integer)

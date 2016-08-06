@@ -13,7 +13,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace Futureware.MantisConnect
+namespace SilverMonkey.BugTraqConnect
 {
     using System;
     using System.Net;

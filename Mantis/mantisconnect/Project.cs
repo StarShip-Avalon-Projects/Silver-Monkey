@@ -13,7 +13,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 using System.Collections.Generic;
-namespace Futureware.MantisConnect
+namespace SilverMonkey.BugTraqConnect
 {
     using System;
 

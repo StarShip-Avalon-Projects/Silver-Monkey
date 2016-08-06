@@ -50,7 +50,7 @@ Friend Class MS_IO
     End Sub
 
     Private Function FileExists(reader As TriggerReader) As Boolean
-        Dim f As String = If((reader.PeekString()), CheckBotFolder(reader.ReadString()), "")
+        Dim f As String = If((reader.PeekString()), Paths.CheckBotFolder(reader.ReadString()), "")
         Return File.Exists(f)
     End Function
 
@@ -59,7 +59,7 @@ Friend Class MS_IO
     End Function
 
     Private Function CanReadFile(reader As TriggerReader) As Boolean
-        Dim f As String = CheckBotFolder(reader.ReadString())
+        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
         Try
             Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
                 Return stream.CanRead
@@ -71,7 +71,7 @@ Friend Class MS_IO
     End Function
 
     Private Function CanWriteFile(reader As TriggerReader) As Boolean
-        Dim f As String = CheckBotFolder(reader.ReadString())
+        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
         Try
             Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Write)
                 Return stream.CanWrite
@@ -84,7 +84,7 @@ Friend Class MS_IO
 
     Private Function AppendToFile(reader As TriggerReader) As Boolean
         Dim data As String = reader.ReadString()
-        Dim f As String = CheckBotFolder(reader.ReadString())
+        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
 
         Try
             Using SW As StreamWriter = New StreamWriter(f, True)
@@ -99,7 +99,7 @@ Friend Class MS_IO
 
     Private Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
         Try
-            Dim f As String = CheckBotFolder(reader.ReadString(True))
+            Dim f As String = Paths.CheckBotFolder(reader.ReadString(True))
             Dim var As Variable = reader.ReadVariable(True)
             Dim sb As New StringBuilder()
             Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
@@ -120,7 +120,7 @@ Friend Class MS_IO
             If reader.PeekString() = False Then
                 Return False
             End If
-            Dim f As String = CheckBotFolder(reader.ReadString())
+            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
             File.Delete(f)
             Return True
         Catch ex As Exception
@@ -133,7 +133,7 @@ Friend Class MS_IO
         If reader.PeekString() = False Then
             Return False
         End If
-        Dim f As String = CheckBotFolder(reader.ReadString())
+        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
         File.Create(f).Close()
         Return True
     End Function
@@ -142,7 +142,7 @@ Friend Class MS_IO
     Function ReadTextLine(reader As TriggerReader) As Boolean
         Try
             Dim num As Double = ReadVariableOrNumber(reader, False)
-            Dim F As String = CheckBotFolder(reader.ReadString)
+            Dim F As String = Paths.CheckBotFolder(reader.ReadString)
             Dim var As Variable = reader.ReadVariable(True)
             If File.Exists(F) Then
                 Dim lines() As String = File.ReadAllLines(F)
@@ -172,7 +172,7 @@ Friend Class MS_IO
         Dim Var As Variable
         Dim count As Double = 0
         Try
-            F = CheckBotFolder(reader.ReadString)
+            F = Paths.CheckBotFolder(reader.ReadString)
             Var = reader.ReadVariable(True)
             Var.Value = 0.0R
             If File.Exists(F) Then

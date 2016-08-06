@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 //-----------------------------------------------------------------------
 // <copyright file="AssemblyInfo.cs" company="Victor Boctor">
 //     Copyright (C) All Rights Reserved
@@ -22,12 +23,12 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("MantisConnect")]
+[assembly: AssemblyTitle("BugTraqConnect")]
 [assembly: AssemblyDescription("C# Library to connect to Mantis Bug Tracker (PHP)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Futureware.Biz")]
-[assembly: AssemblyProduct("MantisConnect")]
-[assembly: AssemblyCopyright("Copyright 2004-2013 Victor Boctor - Futureware")]
+[assembly: AssemblyCompany("StarshipAvalonProjects")]
+[assembly: AssemblyProduct("BugTraqConnect")]
+[assembly: AssemblyCopyright("Copyright 2016 StarshipAvalonProjects")]
 [assembly: AssemblyTrademark("MantisConnect")]
 [assembly: AssemblyCulture("")]
 
@@ -42,8 +43,8 @@ using System.Runtime.CompilerServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("1.0.0.6")]
-[assembly: AssemblyFileVersion("1.0.0.6")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
@@ -75,3 +76,5 @@ using System.Runtime.CompilerServices;
 
 [assembly: CLSCompliant(true)]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
+[assembly: Guid("3A6C3DF8-1269-477B-A291-3E404BDF46CF")]
+

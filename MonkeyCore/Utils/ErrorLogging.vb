@@ -28,6 +28,7 @@ Public Class ErrorLogging
 
     Public Sub New(ByRef Ex As System.Exception, ByVal ObjectThrowingError As Object)
         'Call Log Error
+        strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         LogError(Ex, ObjectThrowingError.ToString())
     End Sub
 
@@ -36,7 +37,8 @@ Public Class ErrorLogging
 
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
+
+        File.Create(strErrorFilePath)
         Dim ioFile As System.IO.StreamWriter = Nothing
         Try
             ioFile = New System.IO.StreamWriter(strErrorFilePath, False)
@@ -85,16 +87,21 @@ Public Class ErrorLogging
             ioFile.WriteLine("Source: " & ObjectThrowingError.ToString)
             ioFile.WriteLine("")
             Dim st As New StackTrace(ex, True)
-            ioFile.WriteLine("Stack Frames: " & st.ToString())
-            ioFile.WriteLine("")
+            ioFile.WriteLine("Stack Frames: ")
+            For Each Frame As StackFrame In st.GetFrames()
+                ioFile.WriteLine("Line:" + Frame.GetFileLineNumber().ToString + Frame.GetFileName().ToString, Frame.GetMethod().ToString)
+            Next
             ioFile.WriteLine("-------------------------------------------------------")
-            'For Each Frame As StackFrame In st.GetFrames()
-            '    ioFile.WriteLine("Line:" + Frame.GetFileLineNumber().ToString + Frame.GetFileName().ToString, Frame.GetMethod().ToString)
-            'Next
+
             ioFile.WriteLine("Stack Trace: " & st.ToString())
             ioFile.WriteLine("")
             ioFile.WriteLine("-------------------------------------------------------")
-
+            If Not ex.InnerException Is Nothing Then
+                Dim stInner As New StackTrace(ex.InnerException, True)
+                ioFile.WriteLine("Inner Stack Trace: " & stInner.ToString())
+                ioFile.WriteLine("")
+                ioFile.WriteLine("-------------------------------------------------------")
+            End If
 
             '***********************************************************
 
@@ -108,11 +115,12 @@ Public Class ErrorLogging
     End Sub
     Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'Call Log Error
+        strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck.ToString)
     End Sub
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
+        File.Create(strErrorFilePath)
         Dim ioFile As StreamWriter = Nothing
         Try
 
@@ -161,15 +169,21 @@ Public Class ErrorLogging
             ioFile.WriteLine("Object Check: " & ObJectCheck.ToString)
             ioFile.WriteLine("")
             Dim st As New StackTrace(ex, True)
-            ioFile.WriteLine("Stack Frames: " & st.ToString())
-            ioFile.WriteLine("")
-            ioFile.WriteLine("-------------------------------------------------------")
+            ioFile.WriteLine("Stack Frames: ")
             For Each Frame As StackFrame In st.GetFrames()
                 ioFile.WriteLine("Line:" + Frame.GetFileLineNumber().ToString + Frame.GetFileName().ToString, Frame.GetMethod().ToString)
             Next
+            ioFile.WriteLine("-------------------------------------------------------")
+
             ioFile.WriteLine("Stack Trace: " & st.ToString())
             ioFile.WriteLine("")
             ioFile.WriteLine("-------------------------------------------------------")
+            If Not ex.InnerException Is Nothing Then
+                Dim stInner As New StackTrace(ex.InnerException, True)
+                ioFile.WriteLine("Inner Stack Trace: " & stInner.ToString())
+                ioFile.WriteLine("")
+                ioFile.WriteLine("-------------------------------------------------------")
+            End If
 
 
             '***********************************************************

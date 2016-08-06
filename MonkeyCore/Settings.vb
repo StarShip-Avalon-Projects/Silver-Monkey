@@ -34,6 +34,9 @@ Public Class Settings
     Private Shared _KeysIni As New IniFile
     Private Shared _MS_KeysIni As New IniFile
 
+    Private Shared SettingsFile As String = Path.Combine(Paths.ApplicationSettingsPath, SettingFile)
+
+
     Private Shared _PluginList As New Dictionary(Of String, Boolean)
 
     Public Shared Plugins As New List(Of PluginServices.AvailablePlugin)
@@ -77,7 +80,7 @@ Public Class Settings
     End Property
 
     Public Class EditSettings
-        Private SettingsFile As String = Path.Combine(Paths.ApplicationSettingsPath, SettingFile)
+
         Private _FurcPath As String
         'Dragon Speak
         Private _IDcolor As Color
@@ -316,7 +319,7 @@ Public Class Settings
         Public Sub SaveEditorSettings()
 
             ' Lets Read local appData Settings.ini for  last used Settings as other programs use the file too
-            If System.IO.File.Exists(SettingsFile) Then
+            If File.Exists(SettingsFile) Then
                 ini.Load(SettingsFile, True)
             End If
             'Main Settings
@@ -841,7 +844,7 @@ Public Class Settings
             End Set
         End Property
 
-        Private _logPath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\Silver Monkey\Logs"
+        Private _logPath As String = Path.Combine(Paths.SilverMonkeyDocumentsPath, "Logs")
         Public Property LogPath As String
             Get
                 Return _logPath
@@ -982,8 +985,11 @@ Public Class Settings
 
         Public Sub New(ByRef BFile As String)
             If BotIni Is Nothing Then BotIni = New IniFile
-            If System.IO.File.Exists(Path.Combine(Paths.SilverMonkeyBotPath, BFile)) Then
-                Paths.SilverMonkeyBotPath = Path.GetDirectoryName(BFile)
+            If File.Exists(Paths.CheckBotFolder(BFile)) Then
+                Dim p As String = Path.GetDirectoryName(BFile)
+                If Not String.IsNullOrEmpty(p) Then
+                    Paths.SilverMonkeyBotPath = p
+                End If
                 BotIni.Load(BFile)
             End If
             IniFile = BFile
@@ -1039,7 +1045,7 @@ Public Class Settings
 
         End Sub
         Public Sub SaveBotSettings()
-            If System.IO.File.Exists(Path.Combine(Paths.SilverMonkeyBotPath, IniFile)) Then
+            If File.Exists(Path.Combine(Paths.SilverMonkeyBotPath, IniFile)) Then
                 BotIni.Load(Path.Combine(Paths.SilverMonkeyBotPath, IniFile))
             End If
 
@@ -1062,4 +1068,105 @@ Public Class Settings
         End Sub
     End Class
 
+    Public Class MantisConnectSettings
+
+        Private _StoreSettings As Boolean
+        Private _HttpPassword As String
+        Private _HttpUserName As String
+        Private _MantisUserName As String
+        Private _MantisPassword As String
+
+        Public Property StoreSettings As Boolean
+            Get
+                Return _StoreSettings
+            End Get
+            Set(value As Boolean)
+                _StoreSettings = value
+            End Set
+        End Property
+
+
+        Public Property HttpPassword As String
+            Get
+                Return _HttpPassword
+            End Get
+            Set(value As String)
+                _HttpPassword = value
+            End Set
+        End Property
+
+        Public Property HttpUserName As String
+            Get
+                Return _HttpUserName
+            End Get
+            Set(value As String)
+                _HttpUserName = value
+            End Set
+        End Property
+
+        Public Property MantisUserName As String
+            Get
+                Return _MantisUserName
+            End Get
+            Set(value As String)
+                _MantisUserName = value
+            End Set
+        End Property
+
+        Public Property MantisPassword As String
+            Get
+                Return _MantisPassword
+            End Get
+            Set(value As String)
+                _MantisPassword = value
+            End Set
+        End Property
+
+        Public Sub New()
+            If File.Exists(SettingsFile) Then
+                ini.Load(SettingsFile, True)
+            End If
+            Dim s As String
+            Dim MantisSection As IniSection = ini.GetSection("MantisConnect")
+
+            Dim MantisKey As IniSection.IniKey = MantisSection.GetKey("HttpPassword")
+            If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
+                _HttpPassword = MantisKey.GetValue
+            End If
+            MantisKey = MantisSection.GetKey("StoreSettings")
+            If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
+                _StoreSettings = Boolean.Parse(MantisKey.GetValue)
+            End If
+
+            MantisKey = MantisSection.GetKey("HttpUserName")
+            If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
+                _HttpUserName = MantisKey.GetValue
+            End If
+            MantisKey = MantisSection.GetKey("MantisUserName")
+            If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
+                _MantisUserName = MantisKey.GetValue
+            End If
+            MantisKey = MantisSection.GetKey("MantisPassword")
+            If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
+                _MantisPassword = MantisKey.GetValue
+            End If
+
+        End Sub
+
+
+        Public Sub SaveSettings()
+            ' Lets Read local appData Settings.ini for  last used Settings as other programs use the file too
+            If File.Exists(SettingsFile) Then
+                ini.Load(SettingsFile, True)
+            End If
+            ini.SetKeyValue("Mantis", "StoreSettings", _StoreSettings.ToString)
+            ini.SetKeyValue("Mantis", "HttpPassword", _HttpPassword)
+            ini.SetKeyValue("Mantis", "HttpUserName", _HttpUserName)
+            ini.SetKeyValue("Mantis", "MantisPassword", _MantisPassword)
+            ini.SetKeyValue("Mantis", "MantisUserName", _MantisUserName)
+
+            ini.Save(SettingsFile)
+        End Sub
+
+    End Class
 End Class

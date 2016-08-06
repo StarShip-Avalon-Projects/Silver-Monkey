@@ -22,7 +22,7 @@ Public Class MSPK_MDB
             Return _SQLitefile
         End Get
         Set(value As String)
-            _SQLitefile = CheckBotFolder(value)
+            _SQLitefile = Paths.CheckBotFolder(value)
         End Set
     End Property
 
@@ -796,7 +796,7 @@ Public Class MSPK_MDB
 
 
     Public Function createMDB(reader As TriggerReader) As Boolean
-        SQLitefile = CheckBotFolder(reader.ReadString())
+        SQLitefile = Paths.CheckBotFolder(reader.ReadString())
         Console.WriteLine("NOTICE: SQLite Database file has changed to" + SQLitefile)
         Dim db As New SQLiteDatabase(SQLitefile)
         'db.CreateTbl("FURRE", FurreTable)

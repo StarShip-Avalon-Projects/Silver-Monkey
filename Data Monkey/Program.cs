@@ -2,12 +2,14 @@
 using System.Windows.Forms;
 using MonkeyCore;
 using System.Diagnostics;
+using SilverMonkey.BugTraqConnect;
+using System.IO;
 
 namespace SQLiteEditor
 {
     public class Program
-	{
-		/// <summary>
+    {
+        /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
@@ -15,7 +17,7 @@ namespace SQLiteEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            AppDomain.CurrentDomain.UnhandledException +=  new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Application.Run(new frmExplorer());
         }
 
@@ -26,11 +28,17 @@ namespace SQLiteEditor
         /// <param name="e">The <see cref="UnhandledExceptionEventArgs"/> instance containing the event data.</param>
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Exception ex = (Exception)e.ExceptionObject;
-            ErrorLogging logError = new ErrorLogging(ref ex, sender);
-            MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Process.Start(Paths.SilverMonkeyErrorLogPath);
-            Application.Exit();
+            Exception Ex = (Exception)e.ExceptionObject;
+            ErrorLogging logError = new ErrorLogging(ref Ex, sender);
+            SubmitIssueForm SubmitError = new SubmitIssueForm(logError.LogFile);
+            //Exception ex = (Exception)e.ExceptionObject;
+            //ErrorLogging logError = new ErrorLogging(ref ex, sender);
+            // MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //Process.Start(Paths.SilverMonkeyErrorLogPath);
+            // Application.Exit();
+            if (SubmitError.ShowDialog() == DialogResult.OK)
+                File.Delete(logError.LogFile);
+
         }
     }
 

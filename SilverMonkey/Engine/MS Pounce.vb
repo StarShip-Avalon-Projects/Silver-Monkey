@@ -12,7 +12,7 @@ Public Class MS_Pounce
     Public Shared Property OnlineList As String
         Get
             If String.IsNullOrEmpty(_OnlineList) Then
-                _OnlineList = CheckBotFolder("OnlineList.txt")
+                _OnlineList = Paths.CheckBotFolder("OnlineList.txt")
             End If
             Return _OnlineList
         End Get
@@ -125,7 +125,7 @@ Public Class MS_Pounce
         Dim f() As String
         Try
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            f = File.ReadAllLines(callbk.OnlineList)
+            f = File.ReadAllLines(OnlineList)
             For Each l As String In f
                 If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
             Next
@@ -143,7 +143,7 @@ Public Class MS_Pounce
         Dim f() As String
         Try
             Furre = reader.ReadString
-            f = File.ReadAllLines(callbk.OnlineList)
+            f = File.ReadAllLines(OnlineList)
             For Each l As String In f
                 If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
             Next
@@ -169,7 +169,7 @@ Public Class MS_Pounce
         Try
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
-                Dim sw As StreamWriter = New StreamWriter(callbk.OnlineList, True)
+                Dim sw As StreamWriter = New StreamWriter(OnlineList, True)
                 sw.WriteLine(Furre)
                 sw.Close()
             End If
@@ -190,7 +190,7 @@ Public Class MS_Pounce
         Try
             Furre = reader.ReadString
             If FurreNamedIsMember(reader) = False And FurreNamedIsNotMember(reader) Then
-                Dim sw As StreamWriter = New StreamWriter(callbk.OnlineList, True)
+                Dim sw As StreamWriter = New StreamWriter(OnlineList, True)
                 sw.WriteLine(Furre)
                 sw.Close()
             End If
@@ -210,15 +210,15 @@ Public Class MS_Pounce
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
             Dim line As String = Nothing
-            Dim linesList As New List(Of String)(File.ReadAllLines(callbk.OnlineList))
-            Dim SR As New StreamReader(callbk.OnlineList)
+            Dim linesList As New List(Of String)(File.ReadAllLines(OnlineList))
+            Dim SR As New StreamReader(OnlineList)
             line = SR.ReadLine()
             For i As Integer = 0 To linesList.Count - 1
                 If Regex.Replace(line.ToLower(), REGEX_NameFilter, "") = Furre Then
                     SR.Dispose()
                     SR.Close()
                     linesList.RemoveAt(i)
-                    File.WriteAllLines(callbk.OnlineList, linesList.ToArray())
+                    File.WriteAllLines(OnlineList, linesList.ToArray())
                     Return True
                 End If
                 line = SR.ReadLine()
@@ -237,15 +237,15 @@ Public Class MS_Pounce
             Furre = reader.ReadString
             Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
             Dim line As String = Nothing
-            Dim linesList As New List(Of String)(File.ReadAllLines(callbk.OnlineList))
-            Dim SR As New StreamReader(callbk.OnlineList)
+            Dim linesList As New List(Of String)(File.ReadAllLines(OnlineList))
+            Dim SR As New StreamReader(OnlineList)
             line = SR.ReadLine()
             For i As Integer = 0 To linesList.Count - 1
                 If Regex.Replace(line.ToLower(), REGEX_NameFilter, "") = Furre Then
                     SR.Dispose()
                     SR.Close()
                     linesList.RemoveAt(i)
-                    File.WriteAllLines(callbk.OnlineList, linesList.ToArray())
+                    File.WriteAllLines(OnlineList, linesList.ToArray())
                     Return True
                 End If
                 line = SR.ReadLine()
@@ -261,7 +261,7 @@ Public Class MS_Pounce
     Private Function UseMemberFile(reader As TriggerReader) As Boolean
 
         Try
-            callbk.OnlineList = reader.ReadString
+            OnlineList = reader.ReadString
             CheckCemberList()
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
@@ -270,9 +270,9 @@ Public Class MS_Pounce
         Return True
     End Function
     Private Sub CheckCemberList()
-        callbk.OnlineList = CheckBotFolder(callbk.OnlineList)
-        If File.Exists(callbk.OnlineList) = False Then
-            Dim sw As StreamWriter = New StreamWriter(callbk.OnlineList, False)
+        OnlineList = Paths.CheckBotFolder(OnlineList)
+        If File.Exists(OnlineList) = False Then
+            Dim sw As StreamWriter = New StreamWriter(OnlineList, False)
             sw.Close()
         End If
     End Sub

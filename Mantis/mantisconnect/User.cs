@@ -13,13 +13,14 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace Futureware.MantisConnect
+namespace SilverMonkey.BugTraqConnect
 {
     using System;
+    using MantisConnectWebservice;
 
     /// <summary>
-	/// A class that includes information relating to a Mantis user account.
-	/// </summary>
+    /// A class that includes information relating to a Mantis user account.
+    /// </summary>
     [Serializable]
     public sealed class User
 	{
@@ -42,11 +43,12 @@ namespace Futureware.MantisConnect
         /// The user email address.
         /// </summary>
         private string email;
- 
+        //private AccountData reporter;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
-		public User()
+        public User()
 		{
 		}
 
@@ -54,13 +56,15 @@ namespace Futureware.MantisConnect
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
         /// <param name="accountData">Account data.</param>
-		internal User(MantisConnectWebservice.AccountData accountData)
+		internal User(AccountData accountData)
 		{
-			this.Id = Convert.ToInt32(accountData.id);
-			this.Name = accountData.name;
-			this.RealName = accountData.real_name;
-			this.Email = accountData.email;
+			Id = Convert.ToInt32(accountData.id);
+			Name = accountData.name;
+			RealName = accountData.real_name;
+			Email = accountData.email;
 		}
+
+
 
         /// <summary>
         /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
@@ -68,7 +72,7 @@ namespace Futureware.MantisConnect
         /// <returns>
         /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
         /// </returns>
-		public override string ToString()
+        public override string ToString()
 		{
 			return this.Name;
 		}

@@ -192,7 +192,7 @@ Public Class Main
 
     Private Sub Button11_Click(sender As System.Object, e As System.EventArgs) Handles Button11.Click
         With OpenFileDialog2
-            .InitialDirectory = myDocs
+            .InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
                 Dim I As ResourceFile = New ResourceFile
                 I.Filename = Path.GetFileName(.FileName)
@@ -392,8 +392,8 @@ Public Class Main
     End Sub
 
     Private Sub Main_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        OpenFileDialog1.InitialDirectory = myDocs
-        OpenFileDialog2.InitialDirectory = myDocs
-        SaveFileDialog1.InitialDirectory = myDocs
+        OpenFileDialog1.InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
+        OpenFileDialog2.InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
+        SaveFileDialog1.InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
     End Sub
 End Class

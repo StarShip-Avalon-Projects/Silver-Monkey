@@ -204,7 +204,7 @@ Public Class MS_MemberList
         Return True
     End Function
     Private Sub CheckMemberList()
-        MemberList = CheckBotFolder(MemberList)
+        MemberList = Paths.CheckBotFolder(MemberList)
         If Not File.Exists(MemberList) Then
             Using f As New StreamWriter(MemberList)
                 f.WriteLine("")

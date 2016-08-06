@@ -13,10 +13,11 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace Futureware.MantisConnect
+namespace SilverMonkey.BugTraqConnect
 {
     using System;
     using System.Collections;
+
 
     /// <summary>
 	/// A class that manages information relating to an issue note.
@@ -82,7 +83,7 @@ namespace Futureware.MantisConnect
 		/// <returns>An instance of webservice issue note.</returns>
 		internal MantisConnectWebservice.IssueNoteData ToWebservice()
 		{
-			MantisConnectWebservice.IssueNoteData note = new Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData();
+			MantisConnectWebservice.IssueNoteData note = new SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData();
 
 			note.id = Id.ToString();
 			note.reporter = Author != null ? Author.ToWebservice() : null;

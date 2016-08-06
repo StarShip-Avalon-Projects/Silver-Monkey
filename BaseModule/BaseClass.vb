@@ -3,7 +3,7 @@ Imports Furcadia.Net
 Imports System.Text.RegularExpressions
 Imports Furcadia.Base95
 
-Public Class BaseClass2
+Public Class BaseClass
     Implements SilverMonkey.Interfaces.msPlugin
 
     Private msHost As SilverMonkey.Interfaces.msHost
@@ -113,7 +113,7 @@ Public Class BaseClass2
 
     Private Function fIDtoFurre(ByRef ID As UInteger) As FURRE
         Dim Character As KeyValuePair(Of UInteger, FURRE)
-        For Each Character In Dream.List
+        For Each Character In DREAM.List
             If Character.Value.ID = ID Then
                 Return Character.Value
             End If
@@ -123,7 +123,7 @@ Public Class BaseClass2
     Public Function NametoFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
         Dim p As New FURRE
         p.Name = sname
-        For Each Character As KeyValuePair(Of UInteger, FURRE) In Dream.List
+        For Each Character As KeyValuePair(Of UInteger, FURRE) In DREAM.List
             If Character.Value.ShortName = sname.ToFurcShortName Then
                 p = Character.Value
                 Exit For

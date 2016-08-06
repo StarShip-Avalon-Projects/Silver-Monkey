@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <PropertyGroup>
     <EnableProjectHarvesting>True</EnableProjectHarvesting>
   </PropertyGroup>
@@ -76,7 +76,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
@@ -85,7 +85,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\DSeX\MonkeySpeakEditor.vbproj">
@@ -94,7 +94,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
@@ -103,7 +103,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
@@ -112,7 +112,25 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
+      <Name>BugTraqConnect</Name>
+      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Mantis\mantisnotify\MantisNotify.csproj">
+      <Name>MantisNotify</Name>
+      <Project>{2a8447ac-e15c-4a8f-bded-8e4373d574d4}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
@@ -121,7 +139,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\MonkeySpeakR6\MonkeyspeakR6.csproj">
@@ -130,7 +148,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\SilverMonkey\SilverMonkey2.vbproj">
@@ -139,7 +157,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\TheClaaaw\TheClaaaw.vbproj">
@@ -148,7 +166,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>PLUGINS</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Verbot Knowledgebase Editor\Verbot Knowledgebase Editor.vbproj">
@@ -157,7 +175,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Verbot5Library\Verbot5Library.csproj">
@@ -166,7 +184,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
   </ItemGroup>

@@ -1,9 +1,10 @@
 Imports System.Reflection
 Imports System.IO
+Imports System.Windows.Forms
 
 Public Class PluginServices
 
-    Public Structure AvailablePlugin
+    Public Class AvailablePlugin
         Public ReadOnly Property AssemblyPath As String
             Get
                 Return Library.Location
@@ -15,27 +16,28 @@ Public Class PluginServices
             If obj Is Nothing OrElse Not obj.GetType().Equals(GetType(AvailablePlugin)) Then
                 Return False
             End If
-            Dim var As AvailablePlugin = CType(obj, AvailablePlugin)
+            Dim var As AvailablePlugin = DirectCast(obj, AvailablePlugin)
             Return ClassName = var.ClassName
             Return False
         End Function
         Public Overrides Function GetHashCode() As Integer
             Return ClassName.GetHashCode()
         End Function
-    End Structure
+    End Class
     Public Shared Plugins As New List(Of AvailablePlugin)
 
     Public Shared Function FindPlugins(ByVal strPath As String, ByVal strInterface As String) As List(Of AvailablePlugin)
         Dim strDLLs() As String, intIndex As Integer
-        Dim objDLL As [Assembly]
+        Dim objDLL As [Assembly] = Nothing
 
         'Go through all DLLs in the directory, attempting to load them
-        strDLLs = Directory.GetFileSystemEntries(strPath, "*.Plugin.dll")
+        strDLLs = Directory.GetFileSystemEntries(strPath, "*.Plugin.dll", SearchOption.TopDirectoryOnly)
         For intIndex = 0 To strDLLs.Length - 1
             Try
                 objDLL = [Assembly].LoadFrom(strDLLs(intIndex))
                 ExamineAssembly(objDLL, strInterface, Plugins)
             Catch e As Exception
+                MessageBox.Show("there was a problem" + objDLL.ToString + e.Message)
                 'Error loading DLL, we don't need to do anything special
             End Try
         Next
@@ -67,10 +69,15 @@ Public Class PluginServices
 
                     If Not (objInterface Is Nothing) Then
                         'It does
-                        Plugin = New AvailablePlugin()
-                        Plugin.ClassName = objType.FullName
-                        Plugin.Library = objDLL
-                        Plugins.Add(Plugin)
+                        Try
+                            Plugin = New AvailablePlugin()
+                            Plugin.ClassName = objType.FullName
+                            Plugin.Library = objDLL
+                            Debug.Print("Loading: " + Plugin.ClassName)
+                            Plugins.Add(Plugin)
+                        Catch e As Exception
+
+                        End Try
                     End If
 
                 End If

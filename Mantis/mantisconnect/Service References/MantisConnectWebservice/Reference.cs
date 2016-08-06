@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Futureware.MantisConnect.MantisConnectWebservice {
+namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -37,13 +37,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.UserData mc_login(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData mc_login(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_login", ReplyAction="*")]
         System.IAsyncResult Beginmc_login(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.UserData Endmc_login(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData Endmc_login(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_status", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -56,13 +56,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_status(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_status(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_status", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_status(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_status(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_status(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_priorities", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -75,13 +75,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_priorities(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_priorities(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_priorities", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_priorities(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_priorities(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_priorities(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_severities", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -94,13 +94,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_severities(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_severities(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_severities", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_severities(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_severities(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_severities(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_reproducibilitie" +
             "s", ReplyAction="*")]
@@ -114,14 +114,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_reproducibilities(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_reproducibilities(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_reproducibilitie" +
             "s", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_reproducibilities(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_reproducibilities(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_reproducibilities(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_projections", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -134,13 +134,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_projections(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_projections(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_projections", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_projections(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_projections(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_projections(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_etas", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -153,13 +153,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_etas(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_etas(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_etas", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_etas(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_etas(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_etas(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_resolutions", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -172,13 +172,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_resolutions(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_resolutions(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_resolutions", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_resolutions(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_resolutions(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_resolutions(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_access_levels", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -191,13 +191,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_access_levels(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_access_levels(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_access_levels", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_access_levels(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_access_levels(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_access_levels(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_status", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -210,13 +210,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_status(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_status(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_status", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_project_status(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_project_status(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_project_status(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_view_sta" +
             "tes", ReplyAction="*")]
@@ -230,14 +230,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_view_states(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_view_states(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_view_sta" +
             "tes", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_project_view_states(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_project_view_states(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_project_view_states(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_view_states", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -250,13 +250,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_view_states(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_view_states(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_view_states", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_view_states(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_view_states(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_view_states(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_custom_field_typ" +
             "es", ReplyAction="*")]
@@ -270,14 +270,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_custom_field_types(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_custom_field_types(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_custom_field_typ" +
             "es", ReplyAction="*")]
         System.IAsyncResult Beginmc_enum_custom_field_types(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_custom_field_types(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_custom_field_types(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_get", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -328,13 +328,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueData mc_issue_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData mc_issue_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get", ReplyAction="*")]
         System.IAsyncResult Beginmc_issue_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueData Endmc_issue_get(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData Endmc_issue_get(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_history", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -347,13 +347,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.HistoryData[] mc_issue_get_history(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] mc_issue_get_history(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_history", ReplyAction="*")]
         System.IAsyncResult Beginmc_issue_get_history(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.HistoryData[] Endmc_issue_get_history(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] Endmc_issue_get_history(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_biggest_id", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -411,10 +411,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-        string mc_issue_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue);
+        string mc_issue_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_add", ReplyAction="*")]
-        System.IAsyncResult Beginmc_issue_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_issue_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
@@ -431,10 +431,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        bool mc_issue_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issueId, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue);
+        bool mc_issue_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_update", ReplyAction="*")]
-        System.IAsyncResult Beginmc_issue_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issueId, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_issue_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         bool Endmc_issue_update(System.IAsyncResult result);
@@ -450,10 +450,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        bool mc_issue_set_tags(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, Futureware.MantisConnect.MantisConnectWebservice.TagData[] tags);
+        bool mc_issue_set_tags(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_set_tags", ReplyAction="*")]
-        System.IAsyncResult Beginmc_issue_set_tags(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, Futureware.MantisConnect.MantisConnectWebservice.TagData[] tags, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_issue_set_tags(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         bool Endmc_issue_set_tags(System.IAsyncResult result);
@@ -489,10 +489,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-        string mc_issue_note_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note);
+        string mc_issue_note_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_add", ReplyAction="*")]
-        System.IAsyncResult Beginmc_issue_note_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_issue_note_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
@@ -528,10 +528,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        bool mc_issue_note_update(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note);
+        bool mc_issue_note_update(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_update", ReplyAction="*")]
-        System.IAsyncResult Beginmc_issue_note_update(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_issue_note_update(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         bool Endmc_issue_note_update(System.IAsyncResult result);
@@ -549,11 +549,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-        string mc_issue_relationship_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, Futureware.MantisConnect.MantisConnectWebservice.RelationshipData relationship);
+        string mc_issue_relationship_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_ad" +
             "d", ReplyAction="*")]
-        System.IAsyncResult Beginmc_issue_relationship_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, Futureware.MantisConnect.MantisConnectWebservice.RelationshipData relationship, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_issue_relationship_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
@@ -655,10 +655,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-        string mc_project_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project);
+        string mc_project_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add", ReplyAction="*")]
-        System.IAsyncResult Beginmc_project_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_project_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
@@ -694,10 +694,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        bool mc_project_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project);
+        bool mc_project_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_update", ReplyAction="*")]
-        System.IAsyncResult Beginmc_project_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_project_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         bool Endmc_project_update(System.IAsyncResult result);
@@ -737,14 +737,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues_for_user(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string filter_type, Futureware.MantisConnect.MantisConnectWebservice.AccountData target_user, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues_for_user(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues_fo" +
             "r_user", ReplyAction="*")]
-        System.IAsyncResult Beginmc_project_get_issues_for_user(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string filter_type, Futureware.MantisConnect.MantisConnectWebservice.AccountData target_user, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_project_get_issues_for_user(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueData[] Endmc_project_get_issues_for_user(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] Endmc_project_get_issues_for_user(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -757,13 +757,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues", ReplyAction="*")]
         System.IAsyncResult Beginmc_project_get_issues(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueData[] Endmc_project_get_issues(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] Endmc_project_get_issues(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issue_hea" +
             "ders", ReplyAction="*")]
@@ -777,14 +777,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] mc_project_get_issue_headers(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_project_get_issue_headers(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issue_hea" +
             "ders", ReplyAction="*")]
         System.IAsyncResult Beginmc_project_get_issue_headers(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] Endmc_project_get_issue_headers(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] Endmc_project_get_issue_headers(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_users", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -797,13 +797,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.AccountData[] mc_project_get_users(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string access);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] mc_project_get_users(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string access);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_users", ReplyAction="*")]
         System.IAsyncResult Beginmc_project_get_users(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string access, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.AccountData[] Endmc_project_get_users(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] Endmc_project_get_users(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_projects_get_user_acc" +
             "essible", ReplyAction="*")]
@@ -817,14 +817,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProjectData[] mc_projects_get_user_accessible(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] mc_projects_get_user_accessible(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_projects_get_user_acc" +
             "essible", ReplyAction="*")]
         System.IAsyncResult Beginmc_projects_get_user_accessible(string username, string password, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProjectData[] Endmc_projects_get_user_accessible(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] Endmc_projects_get_user_accessible(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_categorie" +
             "s", ReplyAction="*")]
@@ -925,13 +925,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_versions", ReplyAction="*")]
         System.IAsyncResult Beginmc_project_get_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_versions(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_versions(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_add", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -945,10 +945,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-        string mc_project_version_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version);
+        string mc_project_version_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_add", ReplyAction="*")]
-        System.IAsyncResult Beginmc_project_version_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_project_version_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
@@ -966,11 +966,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        bool mc_project_version_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version);
+        bool mc_project_version_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_updat" +
             "e", ReplyAction="*")]
-        System.IAsyncResult Beginmc_project_version_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_project_version_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         bool Endmc_project_version_update(System.IAsyncResult result);
@@ -1008,14 +1008,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_released_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_released_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_released_" +
             "versions", ReplyAction="*")]
         System.IAsyncResult Beginmc_project_get_released_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_released_versions(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_released_versions(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_unrelease" +
             "d_versions", ReplyAction="*")]
@@ -1029,14 +1029,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_unreleased_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_unreleased_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_unrelease" +
             "d_versions", ReplyAction="*")]
         System.IAsyncResult Beginmc_project_get_unreleased_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_unreleased_versions(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_unreleased_versions(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_attachmen" +
             "ts", ReplyAction="*")]
@@ -1050,14 +1050,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProjectAttachmentData[] mc_project_get_attachments(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] mc_project_get_attachments(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_attachmen" +
             "ts", ReplyAction="*")]
         System.IAsyncResult Beginmc_project_get_attachments(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProjectAttachmentData[] Endmc_project_get_attachments(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] Endmc_project_get_attachments(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_custom_fi" +
             "elds", ReplyAction="*")]
@@ -1071,14 +1071,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.CustomFieldDefinitionData[] mc_project_get_custom_fields(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] mc_project_get_custom_fields(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_custom_fi" +
             "elds", ReplyAction="*")]
         System.IAsyncResult Beginmc_project_get_custom_fields(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.CustomFieldDefinitionData[] Endmc_project_get_custom_fields(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] Endmc_project_get_custom_fields(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_ge" +
             "t", ReplyAction="*")]
@@ -1179,13 +1179,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.FilterData[] mc_filter_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] mc_filter_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get", ReplyAction="*")]
         System.IAsyncResult Beginmc_filter_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.FilterData[] Endmc_filter_get(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] Endmc_filter_get(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issues", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1198,13 +1198,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueData[] mc_filter_get_issues(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_filter_get_issues(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issues", ReplyAction="*")]
         System.IAsyncResult Beginmc_filter_get_issues(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueData[] Endmc_filter_get_issues(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] Endmc_filter_get_issues(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issue_head" +
             "ers", ReplyAction="*")]
@@ -1218,14 +1218,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_get_issue_headers(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_get_issue_headers(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issue_head" +
             "ers", ReplyAction="*")]
         System.IAsyncResult Beginmc_filter_get_issue_headers(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] Endmc_filter_get_issue_headers(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] Endmc_filter_get_issue_headers(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_config_get_string", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1296,14 +1296,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProfileDataSearchResult mc_user_profiles_get_all(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult mc_user_profiles_get_all(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_profiles_get_all" +
             "", ReplyAction="*")]
         System.IAsyncResult Beginmc_user_profiles_get_all(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.ProfileDataSearchResult Endmc_user_profiles_get_all(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult Endmc_user_profiles_get_all(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_get_all", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1316,13 +1316,13 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.TagDataSearchResult mc_tag_get_all(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult mc_tag_get_all(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_get_all", ReplyAction="*")]
         System.IAsyncResult Beginmc_tag_get_all(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        Futureware.MantisConnect.MantisConnectWebservice.TagDataSearchResult Endmc_tag_get_all(System.IAsyncResult result);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult Endmc_tag_get_all(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_add", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1336,10 +1336,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-        string mc_tag_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.TagData tag);
+        string mc_tag_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_add", ReplyAction="*")]
-        System.IAsyncResult Beginmc_tag_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.TagData tag, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Beginmc_tag_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag, System.AsyncCallback callback, object asyncState);
         
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
@@ -4093,7 +4093,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface MantisConnectPortTypeChannel : Futureware.MantisConnect.MantisConnectWebservice.MantisConnectPortType, System.ServiceModel.IClientChannel {
+    public interface MantisConnectPortTypeChannel : SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -4126,10 +4126,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.UserData Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.UserData)(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData)(this.results[0]));
             }
         }
     }
@@ -4145,10 +4145,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4164,10 +4164,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4183,10 +4183,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4202,10 +4202,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4221,10 +4221,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4240,10 +4240,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4259,10 +4259,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4278,10 +4278,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4297,10 +4297,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4316,10 +4316,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4335,10 +4335,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4354,10 +4354,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[])(this.results[0]));
             }
         }
     }
@@ -4411,10 +4411,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.IssueData)(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData)(this.results[0]));
             }
         }
     }
@@ -4430,10 +4430,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.HistoryData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.HistoryData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[])(this.results[0]));
             }
         }
     }
@@ -4791,10 +4791,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.IssueData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[])(this.results[0]));
             }
         }
     }
@@ -4810,10 +4810,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.IssueData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[])(this.results[0]));
             }
         }
     }
@@ -4829,10 +4829,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[])(this.results[0]));
             }
         }
     }
@@ -4848,10 +4848,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.AccountData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.AccountData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[])(this.results[0]));
             }
         }
     }
@@ -4867,10 +4867,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ProjectData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[])(this.results[0]));
             }
         }
     }
@@ -4962,10 +4962,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[])(this.results[0]));
             }
         }
     }
@@ -5038,10 +5038,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[])(this.results[0]));
             }
         }
     }
@@ -5057,10 +5057,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[])(this.results[0]));
             }
         }
     }
@@ -5076,10 +5076,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectAttachmentData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ProjectAttachmentData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[])(this.results[0]));
             }
         }
     }
@@ -5095,10 +5095,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.CustomFieldDefinitionData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.CustomFieldDefinitionData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[])(this.results[0]));
             }
         }
     }
@@ -5190,10 +5190,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.FilterData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.FilterData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[])(this.results[0]));
             }
         }
     }
@@ -5209,10 +5209,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.IssueData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[])(this.results[0]));
             }
         }
     }
@@ -5228,10 +5228,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[])(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[])(this.results[0]));
             }
         }
     }
@@ -5304,10 +5304,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProfileDataSearchResult Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.ProfileDataSearchResult)(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult)(this.results[0]));
             }
         }
     }
@@ -5323,10 +5323,10 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             this.results = results;
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.TagDataSearchResult Result {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((Futureware.MantisConnect.MantisConnectWebservice.TagDataSearchResult)(this.results[0]));
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult)(this.results[0]));
             }
         }
     }
@@ -5371,7 +5371,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MantisConnectPortTypeClient : System.ServiceModel.ClientBase<Futureware.MantisConnect.MantisConnectWebservice.MantisConnectPortType>, Futureware.MantisConnect.MantisConnectWebservice.MantisConnectPortType {
+    public partial class MantisConnectPortTypeClient : System.ServiceModel.ClientBase<SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType>, SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType {
         
         private BeginOperationDelegate onBeginmc_versionDelegate;
         
@@ -5976,7 +5976,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             base.InvokeAsync(this.onBeginmc_versionDelegate, null, this.onEndmc_versionDelegate, this.onmc_versionCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.UserData mc_login(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData mc_login(string username, string password) {
             return base.Channel.mc_login(username, password);
         }
         
@@ -5986,7 +5986,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.UserData Endmc_login(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData Endmc_login(System.IAsyncResult result) {
             return base.Channel.Endmc_login(result);
         }
         
@@ -5997,7 +5997,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_login(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.UserData retVal = this.Endmc_login(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData retVal = this.Endmc_login(result);
             return new object[] {
                     retVal};
         }
@@ -6028,7 +6028,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_loginDelegate, this.onmc_loginCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_status(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_status(string username, string password) {
             return base.Channel.mc_enum_status(username, password);
         }
         
@@ -6038,7 +6038,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_status(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_status(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_status(result);
         }
         
@@ -6049,7 +6049,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_status(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_status(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_status(result);
             return new object[] {
                     retVal};
         }
@@ -6080,7 +6080,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_statusDelegate, this.onmc_enum_statusCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_priorities(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_priorities(string username, string password) {
             return base.Channel.mc_enum_priorities(username, password);
         }
         
@@ -6090,7 +6090,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_priorities(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_priorities(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_priorities(result);
         }
         
@@ -6101,7 +6101,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_priorities(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_priorities(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_priorities(result);
             return new object[] {
                     retVal};
         }
@@ -6132,7 +6132,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_prioritiesDelegate, this.onmc_enum_prioritiesCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_severities(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_severities(string username, string password) {
             return base.Channel.mc_enum_severities(username, password);
         }
         
@@ -6142,7 +6142,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_severities(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_severities(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_severities(result);
         }
         
@@ -6153,7 +6153,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_severities(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_severities(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_severities(result);
             return new object[] {
                     retVal};
         }
@@ -6184,7 +6184,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_severitiesDelegate, this.onmc_enum_severitiesCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_reproducibilities(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_reproducibilities(string username, string password) {
             return base.Channel.mc_enum_reproducibilities(username, password);
         }
         
@@ -6194,7 +6194,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_reproducibilities(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_reproducibilities(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_reproducibilities(result);
         }
         
@@ -6205,7 +6205,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_reproducibilities(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_reproducibilities(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_reproducibilities(result);
             return new object[] {
                     retVal};
         }
@@ -6236,7 +6236,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_reproducibilitiesDelegate, this.onmc_enum_reproducibilitiesCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_projections(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_projections(string username, string password) {
             return base.Channel.mc_enum_projections(username, password);
         }
         
@@ -6246,7 +6246,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_projections(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_projections(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_projections(result);
         }
         
@@ -6257,7 +6257,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_projections(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_projections(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_projections(result);
             return new object[] {
                     retVal};
         }
@@ -6288,7 +6288,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_projectionsDelegate, this.onmc_enum_projectionsCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_etas(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_etas(string username, string password) {
             return base.Channel.mc_enum_etas(username, password);
         }
         
@@ -6298,7 +6298,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_etas(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_etas(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_etas(result);
         }
         
@@ -6309,7 +6309,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_etas(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_etas(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_etas(result);
             return new object[] {
                     retVal};
         }
@@ -6340,7 +6340,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_etasDelegate, this.onmc_enum_etasCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_resolutions(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_resolutions(string username, string password) {
             return base.Channel.mc_enum_resolutions(username, password);
         }
         
@@ -6350,7 +6350,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_resolutions(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_resolutions(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_resolutions(result);
         }
         
@@ -6361,7 +6361,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_resolutions(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_resolutions(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_resolutions(result);
             return new object[] {
                     retVal};
         }
@@ -6392,7 +6392,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_resolutionsDelegate, this.onmc_enum_resolutionsCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_access_levels(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_access_levels(string username, string password) {
             return base.Channel.mc_enum_access_levels(username, password);
         }
         
@@ -6402,7 +6402,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_access_levels(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_access_levels(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_access_levels(result);
         }
         
@@ -6413,7 +6413,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_access_levels(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_access_levels(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_access_levels(result);
             return new object[] {
                     retVal};
         }
@@ -6444,7 +6444,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_access_levelsDelegate, this.onmc_enum_access_levelsCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_status(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_status(string username, string password) {
             return base.Channel.mc_enum_project_status(username, password);
         }
         
@@ -6454,7 +6454,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_project_status(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_project_status(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_project_status(result);
         }
         
@@ -6465,7 +6465,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_project_status(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_project_status(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_project_status(result);
             return new object[] {
                     retVal};
         }
@@ -6496,7 +6496,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_project_statusDelegate, this.onmc_enum_project_statusCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_view_states(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_view_states(string username, string password) {
             return base.Channel.mc_enum_project_view_states(username, password);
         }
         
@@ -6506,7 +6506,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_project_view_states(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_project_view_states(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_project_view_states(result);
         }
         
@@ -6517,7 +6517,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_project_view_states(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_project_view_states(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_project_view_states(result);
             return new object[] {
                     retVal};
         }
@@ -6548,7 +6548,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_project_view_statesDelegate, this.onmc_enum_project_view_statesCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_view_states(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_view_states(string username, string password) {
             return base.Channel.mc_enum_view_states(username, password);
         }
         
@@ -6558,7 +6558,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_view_states(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_view_states(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_view_states(result);
         }
         
@@ -6569,7 +6569,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_view_states(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_view_states(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_view_states(result);
             return new object[] {
                     retVal};
         }
@@ -6600,7 +6600,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         password}, this.onEndmc_enum_view_statesDelegate, this.onmc_enum_view_statesCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] mc_enum_custom_field_types(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_custom_field_types(string username, string password) {
             return base.Channel.mc_enum_custom_field_types(username, password);
         }
         
@@ -6610,7 +6610,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_custom_field_types(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] Endmc_enum_custom_field_types(System.IAsyncResult result) {
             return base.Channel.Endmc_enum_custom_field_types(result);
         }
         
@@ -6621,7 +6621,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_enum_custom_field_types(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_custom_field_types(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] retVal = this.Endmc_enum_custom_field_types(result);
             return new object[] {
                     retVal};
         }
@@ -6760,7 +6760,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         issue_id}, this.onEndmc_issue_existsDelegate, this.onmc_issue_existsCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData mc_issue_get(string username, string password, string issue_id) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData mc_issue_get(string username, string password, string issue_id) {
             return base.Channel.mc_issue_get(username, password, issue_id);
         }
         
@@ -6770,7 +6770,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData Endmc_issue_get(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData Endmc_issue_get(System.IAsyncResult result) {
             return base.Channel.Endmc_issue_get(result);
         }
         
@@ -6782,7 +6782,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_issue_get(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.IssueData retVal = this.Endmc_issue_get(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData retVal = this.Endmc_issue_get(result);
             return new object[] {
                     retVal};
         }
@@ -6814,7 +6814,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         issue_id}, this.onEndmc_issue_getDelegate, this.onmc_issue_getCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.HistoryData[] mc_issue_get_history(string username, string password, string issue_id) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] mc_issue_get_history(string username, string password, string issue_id) {
             return base.Channel.mc_issue_get_history(username, password, issue_id);
         }
         
@@ -6824,7 +6824,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.HistoryData[] Endmc_issue_get_history(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] Endmc_issue_get_history(System.IAsyncResult result) {
             return base.Channel.Endmc_issue_get_history(result);
         }
         
@@ -6836,7 +6836,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_issue_get_history(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.HistoryData[] retVal = this.Endmc_issue_get_history(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] retVal = this.Endmc_issue_get_history(result);
             return new object[] {
                     retVal};
         }
@@ -6976,12 +6976,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         summary}, this.onEndmc_issue_get_id_from_summaryDelegate, this.onmc_issue_get_id_from_summaryCompletedDelegate, userState);
         }
         
-        public string mc_issue_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue) {
+        public string mc_issue_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
             return base.Channel.mc_issue_add(username, password, issue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_issue_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_issue_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_issue_add(username, password, issue, callback, asyncState);
         }
         
@@ -6993,7 +6993,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         private System.IAsyncResult OnBeginmc_issue_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
-            Futureware.MantisConnect.MantisConnectWebservice.IssueData issue = ((Futureware.MantisConnect.MantisConnectWebservice.IssueData)(inValues[2]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData)(inValues[2]));
             return this.Beginmc_issue_add(username, password, issue, callback, asyncState);
         }
         
@@ -7010,11 +7010,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_issue_addAsync(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue) {
+        public void mc_issue_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
             this.mc_issue_addAsync(username, password, issue, null);
         }
         
-        public void mc_issue_addAsync(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue, object userState) {
+        public void mc_issue_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue, object userState) {
             if ((this.onBeginmc_issue_addDelegate == null)) {
                 this.onBeginmc_issue_addDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_add);
             }
@@ -7030,12 +7030,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         issue}, this.onEndmc_issue_addDelegate, this.onmc_issue_addCompletedDelegate, userState);
         }
         
-        public bool mc_issue_update(string username, string password, string issueId, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue) {
+        public bool mc_issue_update(string username, string password, string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
             return base.Channel.mc_issue_update(username, password, issueId, issue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_issue_update(string username, string password, string issueId, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_issue_update(string username, string password, string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_issue_update(username, password, issueId, issue, callback, asyncState);
         }
         
@@ -7048,7 +7048,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
             string issueId = ((string)(inValues[2]));
-            Futureware.MantisConnect.MantisConnectWebservice.IssueData issue = ((Futureware.MantisConnect.MantisConnectWebservice.IssueData)(inValues[3]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData)(inValues[3]));
             return this.Beginmc_issue_update(username, password, issueId, issue, callback, asyncState);
         }
         
@@ -7065,11 +7065,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_issue_updateAsync(string username, string password, string issueId, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue) {
+        public void mc_issue_updateAsync(string username, string password, string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
             this.mc_issue_updateAsync(username, password, issueId, issue, null);
         }
         
-        public void mc_issue_updateAsync(string username, string password, string issueId, Futureware.MantisConnect.MantisConnectWebservice.IssueData issue, object userState) {
+        public void mc_issue_updateAsync(string username, string password, string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue, object userState) {
             if ((this.onBeginmc_issue_updateDelegate == null)) {
                 this.onBeginmc_issue_updateDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_update);
             }
@@ -7086,12 +7086,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         issue}, this.onEndmc_issue_updateDelegate, this.onmc_issue_updateCompletedDelegate, userState);
         }
         
-        public bool mc_issue_set_tags(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.TagData[] tags) {
+        public bool mc_issue_set_tags(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags) {
             return base.Channel.mc_issue_set_tags(username, password, issue_id, tags);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_issue_set_tags(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.TagData[] tags, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_issue_set_tags(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_issue_set_tags(username, password, issue_id, tags, callback, asyncState);
         }
         
@@ -7104,7 +7104,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
             string issue_id = ((string)(inValues[2]));
-            Futureware.MantisConnect.MantisConnectWebservice.TagData[] tags = ((Futureware.MantisConnect.MantisConnectWebservice.TagData[])(inValues[3]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[])(inValues[3]));
             return this.Beginmc_issue_set_tags(username, password, issue_id, tags, callback, asyncState);
         }
         
@@ -7121,11 +7121,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_issue_set_tagsAsync(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.TagData[] tags) {
+        public void mc_issue_set_tagsAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags) {
             this.mc_issue_set_tagsAsync(username, password, issue_id, tags, null);
         }
         
-        public void mc_issue_set_tagsAsync(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.TagData[] tags, object userState) {
+        public void mc_issue_set_tagsAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags, object userState) {
             if ((this.onBeginmc_issue_set_tagsDelegate == null)) {
                 this.onBeginmc_issue_set_tagsDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_set_tags);
             }
@@ -7196,12 +7196,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         issue_id}, this.onEndmc_issue_deleteDelegate, this.onmc_issue_deleteCompletedDelegate, userState);
         }
         
-        public string mc_issue_note_add(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note) {
+        public string mc_issue_note_add(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
             return base.Channel.mc_issue_note_add(username, password, issue_id, note);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_issue_note_add(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_issue_note_add(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_issue_note_add(username, password, issue_id, note, callback, asyncState);
         }
         
@@ -7214,7 +7214,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
             string issue_id = ((string)(inValues[2]));
-            Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note = ((Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData)(inValues[3]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData)(inValues[3]));
             return this.Beginmc_issue_note_add(username, password, issue_id, note, callback, asyncState);
         }
         
@@ -7231,11 +7231,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_issue_note_addAsync(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note) {
+        public void mc_issue_note_addAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
             this.mc_issue_note_addAsync(username, password, issue_id, note, null);
         }
         
-        public void mc_issue_note_addAsync(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note, object userState) {
+        public void mc_issue_note_addAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note, object userState) {
             if ((this.onBeginmc_issue_note_addDelegate == null)) {
                 this.onBeginmc_issue_note_addDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_note_add);
             }
@@ -7306,12 +7306,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         issue_note_id}, this.onEndmc_issue_note_deleteDelegate, this.onmc_issue_note_deleteCompletedDelegate, userState);
         }
         
-        public bool mc_issue_note_update(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note) {
+        public bool mc_issue_note_update(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
             return base.Channel.mc_issue_note_update(username, password, note);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_issue_note_update(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_issue_note_update(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_issue_note_update(username, password, note, callback, asyncState);
         }
         
@@ -7323,7 +7323,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         private System.IAsyncResult OnBeginmc_issue_note_update(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
-            Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note = ((Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData)(inValues[2]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData)(inValues[2]));
             return this.Beginmc_issue_note_update(username, password, note, callback, asyncState);
         }
         
@@ -7340,11 +7340,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_issue_note_updateAsync(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note) {
+        public void mc_issue_note_updateAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
             this.mc_issue_note_updateAsync(username, password, note, null);
         }
         
-        public void mc_issue_note_updateAsync(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.IssueNoteData note, object userState) {
+        public void mc_issue_note_updateAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note, object userState) {
             if ((this.onBeginmc_issue_note_updateDelegate == null)) {
                 this.onBeginmc_issue_note_updateDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_note_update);
             }
@@ -7360,12 +7360,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         note}, this.onEndmc_issue_note_updateDelegate, this.onmc_issue_note_updateCompletedDelegate, userState);
         }
         
-        public string mc_issue_relationship_add(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.RelationshipData relationship) {
+        public string mc_issue_relationship_add(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship) {
             return base.Channel.mc_issue_relationship_add(username, password, issue_id, relationship);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_issue_relationship_add(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.RelationshipData relationship, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_issue_relationship_add(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_issue_relationship_add(username, password, issue_id, relationship, callback, asyncState);
         }
         
@@ -7378,7 +7378,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
             string issue_id = ((string)(inValues[2]));
-            Futureware.MantisConnect.MantisConnectWebservice.RelationshipData relationship = ((Futureware.MantisConnect.MantisConnectWebservice.RelationshipData)(inValues[3]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData)(inValues[3]));
             return this.Beginmc_issue_relationship_add(username, password, issue_id, relationship, callback, asyncState);
         }
         
@@ -7395,11 +7395,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_issue_relationship_addAsync(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.RelationshipData relationship) {
+        public void mc_issue_relationship_addAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship) {
             this.mc_issue_relationship_addAsync(username, password, issue_id, relationship, null);
         }
         
-        public void mc_issue_relationship_addAsync(string username, string password, string issue_id, Futureware.MantisConnect.MantisConnectWebservice.RelationshipData relationship, object userState) {
+        public void mc_issue_relationship_addAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship, object userState) {
             if ((this.onBeginmc_issue_relationship_addDelegate == null)) {
                 this.onBeginmc_issue_relationship_addDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_relationship_add);
             }
@@ -7640,12 +7640,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         issue_attachment_id}, this.onEndmc_issue_attachment_getDelegate, this.onmc_issue_attachment_getCompletedDelegate, userState);
         }
         
-        public string mc_project_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project) {
+        public string mc_project_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
             return base.Channel.mc_project_add(username, password, project);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_project_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_project_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_project_add(username, password, project, callback, asyncState);
         }
         
@@ -7657,7 +7657,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         private System.IAsyncResult OnBeginmc_project_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
-            Futureware.MantisConnect.MantisConnectWebservice.ProjectData project = ((Futureware.MantisConnect.MantisConnectWebservice.ProjectData)(inValues[2]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData)(inValues[2]));
             return this.Beginmc_project_add(username, password, project, callback, asyncState);
         }
         
@@ -7674,11 +7674,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_project_addAsync(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project) {
+        public void mc_project_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
             this.mc_project_addAsync(username, password, project, null);
         }
         
-        public void mc_project_addAsync(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project, object userState) {
+        public void mc_project_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project, object userState) {
             if ((this.onBeginmc_project_addDelegate == null)) {
                 this.onBeginmc_project_addDelegate = new BeginOperationDelegate(this.OnBeginmc_project_add);
             }
@@ -7748,12 +7748,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         project_id}, this.onEndmc_project_deleteDelegate, this.onmc_project_deleteCompletedDelegate, userState);
         }
         
-        public bool mc_project_update(string username, string password, string project_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project) {
+        public bool mc_project_update(string username, string password, string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
             return base.Channel.mc_project_update(username, password, project_id, project);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_project_update(string username, string password, string project_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_project_update(string username, string password, string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_project_update(username, password, project_id, project, callback, asyncState);
         }
         
@@ -7766,7 +7766,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
             string project_id = ((string)(inValues[2]));
-            Futureware.MantisConnect.MantisConnectWebservice.ProjectData project = ((Futureware.MantisConnect.MantisConnectWebservice.ProjectData)(inValues[3]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData)(inValues[3]));
             return this.Beginmc_project_update(username, password, project_id, project, callback, asyncState);
         }
         
@@ -7783,11 +7783,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_project_updateAsync(string username, string password, string project_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project) {
+        public void mc_project_updateAsync(string username, string password, string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
             this.mc_project_updateAsync(username, password, project_id, project, null);
         }
         
-        public void mc_project_updateAsync(string username, string password, string project_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectData project, object userState) {
+        public void mc_project_updateAsync(string username, string password, string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project, object userState) {
             if ((this.onBeginmc_project_updateDelegate == null)) {
                 this.onBeginmc_project_updateDelegate = new BeginOperationDelegate(this.OnBeginmc_project_update);
             }
@@ -7858,17 +7858,17 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         project_name}, this.onEndmc_project_get_id_from_nameDelegate, this.onmc_project_get_id_from_nameCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues_for_user(string username, string password, string project_id, string filter_type, Futureware.MantisConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues_for_user(string username, string password, string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page) {
             return base.Channel.mc_project_get_issues_for_user(username, password, project_id, filter_type, target_user, page_number, per_page);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_project_get_issues_for_user(string username, string password, string project_id, string filter_type, Futureware.MantisConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_project_get_issues_for_user(string username, string password, string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_project_get_issues_for_user(username, password, project_id, filter_type, target_user, page_number, per_page, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData[] Endmc_project_get_issues_for_user(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] Endmc_project_get_issues_for_user(System.IAsyncResult result) {
             return base.Channel.Endmc_project_get_issues_for_user(result);
         }
         
@@ -7877,14 +7877,14 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             string password = ((string)(inValues[1]));
             string project_id = ((string)(inValues[2]));
             string filter_type = ((string)(inValues[3]));
-            Futureware.MantisConnect.MantisConnectWebservice.AccountData target_user = ((Futureware.MantisConnect.MantisConnectWebservice.AccountData)(inValues[4]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData)(inValues[4]));
             string page_number = ((string)(inValues[5]));
             string per_page = ((string)(inValues[6]));
             return this.Beginmc_project_get_issues_for_user(username, password, project_id, filter_type, target_user, page_number, per_page, callback, asyncState);
         }
         
         private object[] OnEndmc_project_get_issues_for_user(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.IssueData[] retVal = this.Endmc_project_get_issues_for_user(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] retVal = this.Endmc_project_get_issues_for_user(result);
             return new object[] {
                     retVal};
         }
@@ -7896,11 +7896,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_project_get_issues_for_userAsync(string username, string password, string project_id, string filter_type, Futureware.MantisConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page) {
+        public void mc_project_get_issues_for_userAsync(string username, string password, string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page) {
             this.mc_project_get_issues_for_userAsync(username, password, project_id, filter_type, target_user, page_number, per_page, null);
         }
         
-        public void mc_project_get_issues_for_userAsync(string username, string password, string project_id, string filter_type, Futureware.MantisConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page, object userState) {
+        public void mc_project_get_issues_for_userAsync(string username, string password, string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page, object userState) {
             if ((this.onBeginmc_project_get_issues_for_userDelegate == null)) {
                 this.onBeginmc_project_get_issues_for_userDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_issues_for_user);
             }
@@ -7920,7 +7920,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         per_page}, this.onEndmc_project_get_issues_for_userDelegate, this.onmc_project_get_issues_for_userCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues(string username, string password, string project_id, string page_number, string per_page) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues(string username, string password, string project_id, string page_number, string per_page) {
             return base.Channel.mc_project_get_issues(username, password, project_id, page_number, per_page);
         }
         
@@ -7930,7 +7930,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData[] Endmc_project_get_issues(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] Endmc_project_get_issues(System.IAsyncResult result) {
             return base.Channel.Endmc_project_get_issues(result);
         }
         
@@ -7944,7 +7944,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_project_get_issues(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.IssueData[] retVal = this.Endmc_project_get_issues(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] retVal = this.Endmc_project_get_issues(result);
             return new object[] {
                     retVal};
         }
@@ -7978,7 +7978,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         per_page}, this.onEndmc_project_get_issuesDelegate, this.onmc_project_get_issuesCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] mc_project_get_issue_headers(string username, string password, string project_id, string page_number, string per_page) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_project_get_issue_headers(string username, string password, string project_id, string page_number, string per_page) {
             return base.Channel.mc_project_get_issue_headers(username, password, project_id, page_number, per_page);
         }
         
@@ -7988,7 +7988,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] Endmc_project_get_issue_headers(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] Endmc_project_get_issue_headers(System.IAsyncResult result) {
             return base.Channel.Endmc_project_get_issue_headers(result);
         }
         
@@ -8002,7 +8002,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_project_get_issue_headers(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] retVal = this.Endmc_project_get_issue_headers(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] retVal = this.Endmc_project_get_issue_headers(result);
             return new object[] {
                     retVal};
         }
@@ -8036,7 +8036,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         per_page}, this.onEndmc_project_get_issue_headersDelegate, this.onmc_project_get_issue_headersCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.AccountData[] mc_project_get_users(string username, string password, string project_id, string access) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] mc_project_get_users(string username, string password, string project_id, string access) {
             return base.Channel.mc_project_get_users(username, password, project_id, access);
         }
         
@@ -8046,7 +8046,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.AccountData[] Endmc_project_get_users(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] Endmc_project_get_users(System.IAsyncResult result) {
             return base.Channel.Endmc_project_get_users(result);
         }
         
@@ -8059,7 +8059,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_project_get_users(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.AccountData[] retVal = this.Endmc_project_get_users(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] retVal = this.Endmc_project_get_users(result);
             return new object[] {
                     retVal};
         }
@@ -8092,7 +8092,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         access}, this.onEndmc_project_get_usersDelegate, this.onmc_project_get_usersCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectData[] mc_projects_get_user_accessible(string username, string password) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] mc_projects_get_user_accessible(string username, string password) {
             return base.Channel.mc_projects_get_user_accessible(username, password);
         }
         
@@ -8102,7 +8102,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectData[] Endmc_projects_get_user_accessible(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] Endmc_projects_get_user_accessible(System.IAsyncResult result) {
             return base.Channel.Endmc_projects_get_user_accessible(result);
         }
         
@@ -8113,7 +8113,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_projects_get_user_accessible(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ProjectData[] retVal = this.Endmc_projects_get_user_accessible(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] retVal = this.Endmc_projects_get_user_accessible(result);
             return new object[] {
                     retVal};
         }
@@ -8370,7 +8370,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         p_assigned_to}, this.onEndmc_project_rename_category_by_nameDelegate, this.onmc_project_rename_category_by_nameCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_versions(string username, string password, string project_id) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_versions(string username, string password, string project_id) {
             return base.Channel.mc_project_get_versions(username, password, project_id);
         }
         
@@ -8380,7 +8380,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_versions(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_versions(System.IAsyncResult result) {
             return base.Channel.Endmc_project_get_versions(result);
         }
         
@@ -8392,7 +8392,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_project_get_versions(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] retVal = this.Endmc_project_get_versions(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] retVal = this.Endmc_project_get_versions(result);
             return new object[] {
                     retVal};
         }
@@ -8424,12 +8424,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         project_id}, this.onEndmc_project_get_versionsDelegate, this.onmc_project_get_versionsCompletedDelegate, userState);
         }
         
-        public string mc_project_version_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version) {
+        public string mc_project_version_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
             return base.Channel.mc_project_version_add(username, password, version);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_project_version_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_project_version_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_project_version_add(username, password, version, callback, asyncState);
         }
         
@@ -8441,7 +8441,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         private System.IAsyncResult OnBeginmc_project_version_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
-            Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version = ((Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData)(inValues[2]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData)(inValues[2]));
             return this.Beginmc_project_version_add(username, password, version, callback, asyncState);
         }
         
@@ -8458,11 +8458,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_project_version_addAsync(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version) {
+        public void mc_project_version_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
             this.mc_project_version_addAsync(username, password, version, null);
         }
         
-        public void mc_project_version_addAsync(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version, object userState) {
+        public void mc_project_version_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version, object userState) {
             if ((this.onBeginmc_project_version_addDelegate == null)) {
                 this.onBeginmc_project_version_addDelegate = new BeginOperationDelegate(this.OnBeginmc_project_version_add);
             }
@@ -8478,12 +8478,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         version}, this.onEndmc_project_version_addDelegate, this.onmc_project_version_addCompletedDelegate, userState);
         }
         
-        public bool mc_project_version_update(string username, string password, string version_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version) {
+        public bool mc_project_version_update(string username, string password, string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
             return base.Channel.mc_project_version_update(username, password, version_id, version);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_project_version_update(string username, string password, string version_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_project_version_update(string username, string password, string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_project_version_update(username, password, version_id, version, callback, asyncState);
         }
         
@@ -8496,7 +8496,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
             string version_id = ((string)(inValues[2]));
-            Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version = ((Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData)(inValues[3]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData)(inValues[3]));
             return this.Beginmc_project_version_update(username, password, version_id, version, callback, asyncState);
         }
         
@@ -8513,11 +8513,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_project_version_updateAsync(string username, string password, string version_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version) {
+        public void mc_project_version_updateAsync(string username, string password, string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
             this.mc_project_version_updateAsync(username, password, version_id, version, null);
         }
         
-        public void mc_project_version_updateAsync(string username, string password, string version_id, Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData version, object userState) {
+        public void mc_project_version_updateAsync(string username, string password, string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version, object userState) {
             if ((this.onBeginmc_project_version_updateDelegate == null)) {
                 this.onBeginmc_project_version_updateDelegate = new BeginOperationDelegate(this.OnBeginmc_project_version_update);
             }
@@ -8588,7 +8588,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         version_id}, this.onEndmc_project_version_deleteDelegate, this.onmc_project_version_deleteCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_released_versions(string username, string password, string project_id) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_released_versions(string username, string password, string project_id) {
             return base.Channel.mc_project_get_released_versions(username, password, project_id);
         }
         
@@ -8598,7 +8598,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_released_versions(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_released_versions(System.IAsyncResult result) {
             return base.Channel.Endmc_project_get_released_versions(result);
         }
         
@@ -8610,7 +8610,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_project_get_released_versions(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] retVal = this.Endmc_project_get_released_versions(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] retVal = this.Endmc_project_get_released_versions(result);
             return new object[] {
                     retVal};
         }
@@ -8642,7 +8642,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         project_id}, this.onEndmc_project_get_released_versionsDelegate, this.onmc_project_get_released_versionsCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_unreleased_versions(string username, string password, string project_id) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_unreleased_versions(string username, string password, string project_id) {
             return base.Channel.mc_project_get_unreleased_versions(username, password, project_id);
         }
         
@@ -8652,7 +8652,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_unreleased_versions(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] Endmc_project_get_unreleased_versions(System.IAsyncResult result) {
             return base.Channel.Endmc_project_get_unreleased_versions(result);
         }
         
@@ -8664,7 +8664,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_project_get_unreleased_versions(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ProjectVersionData[] retVal = this.Endmc_project_get_unreleased_versions(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] retVal = this.Endmc_project_get_unreleased_versions(result);
             return new object[] {
                     retVal};
         }
@@ -8696,7 +8696,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         project_id}, this.onEndmc_project_get_unreleased_versionsDelegate, this.onmc_project_get_unreleased_versionsCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectAttachmentData[] mc_project_get_attachments(string username, string password, string project_id) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] mc_project_get_attachments(string username, string password, string project_id) {
             return base.Channel.mc_project_get_attachments(username, password, project_id);
         }
         
@@ -8706,7 +8706,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ProjectAttachmentData[] Endmc_project_get_attachments(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] Endmc_project_get_attachments(System.IAsyncResult result) {
             return base.Channel.Endmc_project_get_attachments(result);
         }
         
@@ -8718,7 +8718,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_project_get_attachments(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ProjectAttachmentData[] retVal = this.Endmc_project_get_attachments(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] retVal = this.Endmc_project_get_attachments(result);
             return new object[] {
                     retVal};
         }
@@ -8750,7 +8750,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         project_id}, this.onEndmc_project_get_attachmentsDelegate, this.onmc_project_get_attachmentsCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.CustomFieldDefinitionData[] mc_project_get_custom_fields(string username, string password, string project_id) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] mc_project_get_custom_fields(string username, string password, string project_id) {
             return base.Channel.mc_project_get_custom_fields(username, password, project_id);
         }
         
@@ -8760,7 +8760,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.CustomFieldDefinitionData[] Endmc_project_get_custom_fields(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] Endmc_project_get_custom_fields(System.IAsyncResult result) {
             return base.Channel.Endmc_project_get_custom_fields(result);
         }
         
@@ -8772,7 +8772,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_project_get_custom_fields(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.CustomFieldDefinitionData[] retVal = this.Endmc_project_get_custom_fields(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] retVal = this.Endmc_project_get_custom_fields(result);
             return new object[] {
                     retVal};
         }
@@ -9030,7 +9030,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         project_id}, this.onEndmc_project_get_all_subprojectsDelegate, this.onmc_project_get_all_subprojectsCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.FilterData[] mc_filter_get(string username, string password, string project_id) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] mc_filter_get(string username, string password, string project_id) {
             return base.Channel.mc_filter_get(username, password, project_id);
         }
         
@@ -9040,7 +9040,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.FilterData[] Endmc_filter_get(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] Endmc_filter_get(System.IAsyncResult result) {
             return base.Channel.Endmc_filter_get(result);
         }
         
@@ -9052,7 +9052,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_filter_get(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.FilterData[] retVal = this.Endmc_filter_get(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] retVal = this.Endmc_filter_get(result);
             return new object[] {
                     retVal};
         }
@@ -9084,7 +9084,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         project_id}, this.onEndmc_filter_getDelegate, this.onmc_filter_getCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData[] mc_filter_get_issues(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_filter_get_issues(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
             return base.Channel.mc_filter_get_issues(username, password, project_id, filter_id, page_number, per_page);
         }
         
@@ -9094,7 +9094,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueData[] Endmc_filter_get_issues(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] Endmc_filter_get_issues(System.IAsyncResult result) {
             return base.Channel.Endmc_filter_get_issues(result);
         }
         
@@ -9109,7 +9109,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_filter_get_issues(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.IssueData[] retVal = this.Endmc_filter_get_issues(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] retVal = this.Endmc_filter_get_issues(result);
             return new object[] {
                     retVal};
         }
@@ -9144,7 +9144,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         per_page}, this.onEndmc_filter_get_issuesDelegate, this.onmc_filter_get_issuesCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_get_issue_headers(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_get_issue_headers(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
             return base.Channel.mc_filter_get_issue_headers(username, password, project_id, filter_id, page_number, per_page);
         }
         
@@ -9154,7 +9154,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] Endmc_filter_get_issue_headers(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] Endmc_filter_get_issue_headers(System.IAsyncResult result) {
             return base.Channel.Endmc_filter_get_issue_headers(result);
         }
         
@@ -9169,7 +9169,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_filter_get_issue_headers(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.IssueHeaderData[] retVal = this.Endmc_filter_get_issue_headers(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] retVal = this.Endmc_filter_get_issue_headers(result);
             return new object[] {
                     retVal};
         }
@@ -9372,7 +9372,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         pref_name}, this.onEndmc_user_pref_get_prefDelegate, this.onmc_user_pref_get_prefCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.ProfileDataSearchResult mc_user_profiles_get_all(string username, string password, string page_number, string per_page) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult mc_user_profiles_get_all(string username, string password, string page_number, string per_page) {
             return base.Channel.mc_user_profiles_get_all(username, password, page_number, per_page);
         }
         
@@ -9382,7 +9382,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.ProfileDataSearchResult Endmc_user_profiles_get_all(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult Endmc_user_profiles_get_all(System.IAsyncResult result) {
             return base.Channel.Endmc_user_profiles_get_all(result);
         }
         
@@ -9395,7 +9395,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_user_profiles_get_all(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.ProfileDataSearchResult retVal = this.Endmc_user_profiles_get_all(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult retVal = this.Endmc_user_profiles_get_all(result);
             return new object[] {
                     retVal};
         }
@@ -9428,7 +9428,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         per_page}, this.onEndmc_user_profiles_get_allDelegate, this.onmc_user_profiles_get_allCompletedDelegate, userState);
         }
         
-        public Futureware.MantisConnect.MantisConnectWebservice.TagDataSearchResult mc_tag_get_all(string username, string password, string page_number, string per_page) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult mc_tag_get_all(string username, string password, string page_number, string per_page) {
             return base.Channel.mc_tag_get_all(username, password, page_number, per_page);
         }
         
@@ -9438,7 +9438,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Futureware.MantisConnect.MantisConnectWebservice.TagDataSearchResult Endmc_tag_get_all(System.IAsyncResult result) {
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult Endmc_tag_get_all(System.IAsyncResult result) {
             return base.Channel.Endmc_tag_get_all(result);
         }
         
@@ -9451,7 +9451,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         }
         
         private object[] OnEndmc_tag_get_all(System.IAsyncResult result) {
-            Futureware.MantisConnect.MantisConnectWebservice.TagDataSearchResult retVal = this.Endmc_tag_get_all(result);
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult retVal = this.Endmc_tag_get_all(result);
             return new object[] {
                     retVal};
         }
@@ -9484,12 +9484,12 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
                         per_page}, this.onEndmc_tag_get_allDelegate, this.onmc_tag_get_allCompletedDelegate, userState);
         }
         
-        public string mc_tag_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.TagData tag) {
+        public string mc_tag_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag) {
             return base.Channel.mc_tag_add(username, password, tag);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult Beginmc_tag_add(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.TagData tag, System.AsyncCallback callback, object asyncState) {
+        public System.IAsyncResult Beginmc_tag_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag, System.AsyncCallback callback, object asyncState) {
             return base.Channel.Beginmc_tag_add(username, password, tag, callback, asyncState);
         }
         
@@ -9501,7 +9501,7 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
         private System.IAsyncResult OnBeginmc_tag_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string username = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
-            Futureware.MantisConnect.MantisConnectWebservice.TagData tag = ((Futureware.MantisConnect.MantisConnectWebservice.TagData)(inValues[2]));
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData)(inValues[2]));
             return this.Beginmc_tag_add(username, password, tag, callback, asyncState);
         }
         
@@ -9518,11 +9518,11 @@ namespace Futureware.MantisConnect.MantisConnectWebservice {
             }
         }
         
-        public void mc_tag_addAsync(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.TagData tag) {
+        public void mc_tag_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag) {
             this.mc_tag_addAsync(username, password, tag, null);
         }
         
-        public void mc_tag_addAsync(string username, string password, Futureware.MantisConnect.MantisConnectWebservice.TagData tag, object userState) {
+        public void mc_tag_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag, object userState) {
             if ((this.onBeginmc_tag_addDelegate == null)) {
                 this.onBeginmc_tag_addDelegate = new BeginOperationDelegate(this.OnBeginmc_tag_add);
             }
