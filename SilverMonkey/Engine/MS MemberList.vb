@@ -49,13 +49,13 @@ Public Class MS_MemberList
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             f.AddRange(File.ReadAllLines(MemberList))
             For Each l As String In f
-                If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
+                If MainMSEngine.ToFurcShortName(l) = MainMSEngine.ToFurcShortName(Furre) Then Return True
             Next
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
         End Try
-        Return IsBotControler(Furre)
+        Return MainMSEngine.IsBotControler(Furre)
     End Function
     '(1:901) and the furre named {...} is on my Dream Member list.
     Private Function FurreNamedIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -66,14 +66,16 @@ Public Class MS_MemberList
             Furre = reader.ReadString
             f = File.ReadAllLines(MemberList)
             For Each l As String In f
-                If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
+                If MainMSEngine.ToFurcShortName(l) = MainMSEngine.ToFurcShortName(Furre) Then
+                    Return True
+                End If
             Next
 
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
         End Try
-        Return IsBotControler(Furre)
+        Return MainMSEngine.IsBotControler(Furre)
     End Function
     '(1:902) and the triggering furre is not on my Dream Member list.
     Private Function TrigFurreIsNotMember(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -135,7 +137,7 @@ Public Class MS_MemberList
                 While SR.Peek() <> -1
                     line = SR.ReadLine()
                     For i As Integer = 0 To linesList.Count - 1
-                        If line.ToFurcShortName = Furre.ToFurcShortName Then
+                        If MainMSEngine.ToFurcShortName(line) = MainMSEngine.ToFurcShortName(Furre) Then
                             linesList.RemoveAt(i)
                             File.WriteAllLines(MemberList, linesList.ToArray())
                             Exit For
@@ -161,7 +163,7 @@ Public Class MS_MemberList
                 While SR.Peek() <> -1
                     line = SR.ReadLine()
                     For i As Integer = 0 To linesList.Count - 1
-                        If line.ToFurcShortName = Furre.ToFurcShortName Then
+                        If MainMSEngine.ToFurcShortName(line) = MainMSEngine.ToFurcShortName(Furre) Then
                             linesList.RemoveAt(i)
                             File.WriteAllLines(MemberList, linesList.ToArray())
                             Exit For

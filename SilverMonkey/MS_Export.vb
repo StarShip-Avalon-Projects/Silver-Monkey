@@ -46,7 +46,7 @@ Public Class MS_Export
     End Enum
 
     Private Sub MS_Export_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        MS_Engine.MainMSEngine.MS_Stared = 0
+        MainMSEngine.MS_Stared = 0
         MS_Engine.MainMSEngine.EngineStart(False)
         Dim Test As New List(Of String)
         For Each item As String In MainMSEngine.MSpage.GetTriggerDescriptions()

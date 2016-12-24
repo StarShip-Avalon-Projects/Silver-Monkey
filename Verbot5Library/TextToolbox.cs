@@ -874,8 +874,8 @@ namespace Conversive.Verbot5
 
 	public class SynonymNode : System.Windows.Forms.TreeNode, IComparable
 	{
-		public string Name;
-		public string Id;
+        public new string Name;
+        public string Id;
 
 		public List<string> MatchedPhrases;
 

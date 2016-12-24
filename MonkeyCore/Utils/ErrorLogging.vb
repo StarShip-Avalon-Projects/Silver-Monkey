@@ -2,7 +2,7 @@
 Imports MonkeyCore.Paths
 Public Class ErrorLogging
 
-    Dim strErrorFilePath As String
+    Private strErrorFilePath As String
     Public ReadOnly Property LogFile As String
         Get
             Return strErrorFilePath
@@ -38,7 +38,6 @@ Public Class ErrorLogging
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
 
-        File.Create(strErrorFilePath)
         Dim ioFile As System.IO.StreamWriter = Nothing
         Try
             ioFile = New System.IO.StreamWriter(strErrorFilePath, False)
@@ -87,10 +86,10 @@ Public Class ErrorLogging
             ioFile.WriteLine("Source: " & ObjectThrowingError.ToString)
             ioFile.WriteLine("")
             Dim st As New StackTrace(ex, True)
-            ioFile.WriteLine("Stack Frames: ")
-            For Each Frame As StackFrame In st.GetFrames()
-                ioFile.WriteLine("Line:" + Frame.GetFileLineNumber().ToString + Frame.GetFileName().ToString, Frame.GetMethod().ToString)
-            Next
+            'ioFile.WriteLine("Stack Frames: ")
+            'For Each Frame As StackFrame In st.GetFrames()
+            '    ioFile.WriteLine("Line:" + Frame.GetFileLineNumber().ToString + Frame.GetFileName().ToString, Frame.GetMethod().ToString)
+            'Next
             ioFile.WriteLine("-------------------------------------------------------")
 
             ioFile.WriteLine("Stack Trace: " & st.ToString())
@@ -120,7 +119,6 @@ Public Class ErrorLogging
     End Sub
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        File.Create(strErrorFilePath)
         Dim ioFile As StreamWriter = Nothing
         Try
 

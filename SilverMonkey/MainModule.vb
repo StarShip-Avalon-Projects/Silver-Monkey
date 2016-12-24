@@ -8,23 +8,13 @@ Module MainModule
     Public BotIni As New IniFile
     Public cBot As Settings.cBot
 
-    Public Const REGEX_NameFilter As String = "[^a-z0-9\0x0020_;&|]+"
+
     Public Const MS_Name As String = "NAME"
 
     Public Const MS_ErrWarning As String = "Error, See Debug Window"
 
 
 
-    <Runtime.CompilerServices.Extension()>
-    Public Function ToFurcShortName(ByVal value As String) As String
-        If String.IsNullOrEmpty(value) Then Return Nothing
-        Return Regex.Replace(value.ToLower, REGEX_NameFilter, "", RegexOptions.CultureInvariant)
-    End Function
-
-    Public Function IsBotControler(ByRef Name As String) As Boolean
-        If String.IsNullOrEmpty(cBot.BotController) Then Return False
-        Return cBot.BotController.ToFurcShortName = Name.ToFurcShortName
-    End Function
 
     Public Const WM_USER As Integer = &H400
     Public Const WM_COPYDATA As Integer = &H4A

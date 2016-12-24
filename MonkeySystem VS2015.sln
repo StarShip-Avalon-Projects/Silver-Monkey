@@ -16,6 +16,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Monkey", "Data Monkey\Data Monkey.csproj", "{9072CD13-8B7E-4A22-BC28-6087785A5D9A}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MonkeySpeakEditor", "DSeX\MonkeySpeakEditor.vbproj", "{65E4CC10-B91D-4645-B20C-D3A381C9A36A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00} = {C9EDB4B0-618F-497D-944F-AB0A72736B00}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurcadiaLib", "FurcLib\FurcadiaLib.csproj", "{156C2AF0-3DA8-4D8C-A525-5400185579B3}"
 EndProject
@@ -60,6 +63,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MantisNotify", "Mantis\mantisnotify\MantisNotify.csproj", "{2A8447AC-E15C-4A8F-BDED-8E4373D574D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTraqConnect", "Mantis\mantisconnect\BugTraqConnect.csproj", "{F4391F6F-0239-48E2-B415-C39A6D920303}"
+EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "smHelp", "Silver Monkey Help\smHelp.shfbproj", "{C9EDB4B0-618F-497D-944F-AB0A72736B00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -325,6 +330,20 @@ Global
 		{F4391F6F-0239-48E2-B415-C39A6D920303}.Release|x64.Build.0 = Release|Any CPU
 		{F4391F6F-0239-48E2-B415-C39A6D920303}.Release|x86.ActiveCfg = Release|Any CPU
 		{F4391F6F-0239-48E2-B415-C39A6D920303}.Release|x86.Build.0 = Release|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Debug|x64.Build.0 = Debug|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Debug|x86.Build.0 = Debug|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Release|x64.ActiveCfg = Release|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Release|x64.Build.0 = Release|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

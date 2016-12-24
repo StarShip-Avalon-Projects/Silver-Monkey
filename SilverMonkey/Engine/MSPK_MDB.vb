@@ -244,7 +244,7 @@ Public Class MSPK_MDB
 
     Public Function BackUpCharacterNamed(reader As TriggerReader) As Boolean
         Dim furre As String = reader.ReadString
-        Return callbk.Player.ShortName = furre.ToFurcShortName
+        Return callbk.Player.ShortName = MainMSEngine.ToFurcShortName(furre)
     End Function
 
     '(1: ) and the Database info {...} about the triggering furre is equal to #,
@@ -259,7 +259,7 @@ Public Class MSPK_MDB
             number = ReadVariableOrNumber(reader, False)
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             Dim Value As Double = 0
-            Double.TryParse(GetValueFromTable(info, Furre.ToFurcShortName).ToString, Value)
+            Double.TryParse(GetValueFromTable(info, MainMSEngine.ToFurcShortName(Furre)).ToString, Value)
 
             Return number = Value
         Catch ex As Exception
@@ -279,7 +279,7 @@ Public Class MSPK_MDB
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Furre.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(Furre)
             Dim val As String = GetValueFromTable(info, Furre).ToString
             Dim Value As Double = 0
             Double.TryParse(val, Value)
@@ -300,7 +300,7 @@ Public Class MSPK_MDB
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Furre.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(Furre)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
             Double.TryParse(check.ToString, Value)
@@ -321,7 +321,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -343,7 +343,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -364,7 +364,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -385,7 +385,7 @@ Public Class MSPK_MDB
 
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
@@ -404,7 +404,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
 
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
@@ -425,7 +425,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -445,7 +445,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
 
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
@@ -466,7 +466,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
@@ -485,7 +485,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -502,7 +502,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the furre named {...} is equal to {...},
     Public Function FurreNamedinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = reader.ReadString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString())
         Dim str As String = reader.ReadString
         Try
             Return str = GetValueFromTable(Info, Furre).ToString
@@ -515,7 +515,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the furre named {...} is not equal to {...},
     Public Function FurreNamedinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = reader.ReadString.ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
 
         Dim str As String = reader.ReadString
 
@@ -530,7 +530,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the triggering furre is equal to {...},
     Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim str As String = reader.ReadString
         Try
             If str = GetValueFromTable(Info, Furre).ToString Then Return True
@@ -543,7 +543,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the triggering furre is not equal to {...},
     Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim str As String = reader.ReadString
         Try
             If str <> GetValueFromTable(Info, Furre).ToString Then Return True
@@ -806,7 +806,7 @@ Public Class MSPK_MDB
 
     '(5:405) Add the triggering furre with default access level to the Furre Table in the database if he, she or it don't exist.
     Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim info As String = reader.ReadString
         'Dim value As String = reader.ReadVariable.Value.ToString
 
@@ -817,7 +817,8 @@ Public Class MSPK_MDB
         data.Add("[date modified]", Date.Now.ToString)
         data.Add("[Access Level]", "0")
         Try
-            Return db.Insert("FURRE", data)
+            db.Insert("FURRE", data)
+            Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -826,7 +827,7 @@ Public Class MSPK_MDB
 
     '(5:506) add furre named {%NewMember} with the default access level "1" to the Furre Table in the database if he, she, or it doesn't exist.
     Public Function InsertFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = reader.ReadString.ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
         Dim info As String
         If reader.PeekString Then
             info = reader.ReadString
@@ -841,7 +842,8 @@ Public Class MSPK_MDB
         data.Add("[date modified]", Date.Now.ToString)
         data.Add("[Access Level]", info)
         Try
-            Return db.Insert("FURRE", data)
+            db.Insert("FURRE", data)
+            Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -852,7 +854,7 @@ Public Class MSPK_MDB
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
         Dim Furre As String = ""
-        Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
+        Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim value As Double = ReadVariableOrNumber(reader)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
@@ -875,7 +877,7 @@ Public Class MSPK_MDB
         Dim value As String = ReadVariableOrNumber(reader, False).ToString
         Dim db As New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
-        data.Add(MS_Name, Furre.ToFurcShortName)
+        data.Add(MS_Name, MainMSEngine.ToFurcShortName(Furre))
         data.Add("[" & info & "]", value)
         data.Add("[date modified]", Date.Now.ToString)
         Try
@@ -890,7 +892,7 @@ Public Class MSPK_MDB
     Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim value As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
@@ -908,7 +910,7 @@ Public Class MSPK_MDB
     '(5:410) update Database info {...} about the furre named {...} will now be {...}.
     Public Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
-        Dim Furre As String = reader.ReadString.ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
         'Dim Furre As String = MainEngine.MSpage.GetVariable("~Name").Value.ToString
         Dim value As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
@@ -930,7 +932,7 @@ Public Class MSPK_MDB
         Try
             Dim Info As String = reader.ReadString
             Dim Variable As Variable = reader.ReadVariable(True)
-            Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+            Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
             'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where Name ='" & Furre & "'"
             Variable.Value = SQLiteDatabase.ExecuteScalar1(cmd)
@@ -945,7 +947,7 @@ Public Class MSPK_MDB
     Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
         Try
             Dim Info As String = reader.ReadString
-            Dim Furre As String = reader.ReadString.ToFurcShortName
+            Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
             Dim Variable As Variable = reader.ReadVariable(True)
             ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where Name ='" & Furre & "'"
@@ -967,14 +969,14 @@ Public Class MSPK_MDB
     End Function
     '(5:418) delete all Database info about the triggering furre.
     Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
     End Function
     '(5:419) delete all Database info about the furre named {...}.
     Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = reader.ReadString.ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
@@ -1158,7 +1160,7 @@ Public Class MSPK_MDB
 
                 Dim str As String = reader.ReadString
                 If str.ToUpper <> "[DREAM]" Then
-                    str = str.ToFurcShortName
+                    str = MainMSEngine.ToFurcShortName(str)
                 Else
                     str = str.ToUpper
                 End If

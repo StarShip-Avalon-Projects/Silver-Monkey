@@ -3,6 +3,8 @@
 Imports MonkeyCore
 Imports System.Collections.Generic
 Imports MonkeyCore.Settings
+Imports System.Text.RegularExpressions
+Imports System.Diagnostics
 
 Public Class MainMSEngine
 
@@ -11,15 +13,24 @@ Public Class MainMSEngine
     Private Const MS_Header As String = "*MSPK V04.00 Silver Monkey"
     Private Const MS_Footer As String = "*Endtriggers* 8888 *Endtriggers*"
 #End Region
+    Public Const REGEX_NameFilter As String = "[^a-z0-9\0x0020_;&|]+"
+    Public Shared Function ToFurcShortName(ByVal value As String) As String
+        If String.IsNullOrEmpty(value) Then Return Nothing
+        Return Regex.Replace(value.ToLower, REGEX_NameFilter, "", RegexOptions.CultureInvariant)
+    End Function
 
+    Public Shared Function IsBotControler(ByRef Name As String) As Boolean
+        If String.IsNullOrEmpty(cBot.BotController) Then Return False
+        Return ToFurcShortName(cBot.BotController) = ToFurcShortName(Name)
+    End Function
 #Region "MonkeySpeakEngine"
-    Public Function MS_Started() As Boolean
+    Public Shared Function MS_Started() As Boolean
         ' 0 = main load
         ' 1 = engine start
         ' 2 = engine running
         Return MS_Stared >= 2
     End Function
-    Public MS_Stared As Integer = 0
+    Public Shared MS_Stared As Integer = 0
     Private Shared Writer As TextBoxWriter = New TextBoxWriter(Variables.TextBox1)
     Private Const RES_MS_begin As String = "*MSPK V"
     Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
@@ -294,36 +305,29 @@ Public Class MainMSEngine
         End Try
     End Function
 
-    Public Sub PageSetVariable(ByVal varName As String, ByVal data As Object)
+    Public Shared Sub PageSetVariable(ByVal varName As String, ByVal data As Object)
         If cBot.MS_Engine_Enable AndAlso MS_Started() Then
-            Try
-                MSpage.SetVariable(Main.VarPrefix & varName.ToUpper, data, True) '
-            Catch ex As Exception
-                Dim LogError As New ErrorLogging(ex, Me)
-            End Try
+            Debug.Print("Settingg Variable: " + varName + ":" + data)
+            MSpage.SetVariable(Main.VarPrefix & varName.ToUpper, data, True) '
+
         End If
     End Sub
 
-    Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
+    Public Shared Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
         If cBot.MS_Engine_Enable Then
-            Try
-                For Each kv As KeyValuePair(Of String, Object) In VariableList
-                    MSpage.SetVariable(Main.VarPrefix & kv.Key.ToUpper, kv.Value, True)
-                Next '
-            Catch ex As Exception
-                Dim LogError As New ErrorLogging(ex, Me)
-            End Try
+
+            For Each kv As KeyValuePair(Of String, Object) In VariableList
+                MSpage.SetVariable(Main.VarPrefix & kv.Key.ToUpper, kv.Value, True)
+            Next '
+
         End If
     End Sub
 
-    Public Sub PageSetVariable(ByVal varName As String, ByVal data As Object, ByVal Constant As Boolean)
+    Public Shared Sub PageSetVariable(ByVal varName As String, ByVal data As Object, ByVal Constant As Boolean)
         If Not IsNothing(cBot) Then
             If cBot.MS_Engine_Enable AndAlso MS_Started() Then
-                Try
-                    MSpage.SetVariable(Main.VarPrefix & varName.ToUpper, data, Constant) '
-                Catch ex As Exception
-                    Dim LogError As New ErrorLogging(ex, Me)
-                End Try
+                Debug.Print("Settingg Variable: " + varName + ":" + data)
+                MSpage.SetVariable(Main.VarPrefix & varName.ToUpper, data, Constant) '
             End If
         End If
     End Sub

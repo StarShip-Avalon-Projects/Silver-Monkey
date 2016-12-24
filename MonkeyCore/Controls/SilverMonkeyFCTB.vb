@@ -2,6 +2,7 @@
 
 Imports System.ComponentModel
 Imports System.Drawing
+Imports System.Net.WebRequestMethods
 Imports FastColoredTextBoxNS
 Imports Irony
 Imports Irony.Parsing
@@ -11,7 +12,7 @@ Namespace Controls
     ''' FastColoredTextBox with Irony parser support
     ''' </summary>
     ''' <see cref="https://github.com/PavelTorgashov/FastColoredTextBox"/>
-    ''' <see cref="http://irony.codeplex.com/"/>
+    ''' <see cref="Http://irony.codeplex.com/"/>
     Public Class SilverMonkeyFCTB
         Inherits FastColoredTextBox
         Public Event StyleNeeded As EventHandler(Of StyleNeededEventArgs)

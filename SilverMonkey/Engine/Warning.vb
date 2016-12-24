@@ -20,15 +20,15 @@ AddressOf ErrorIs, "(0:800) When the bot sees error message {...},")
 AddressOf ErrorIs, "(0:801) when the bot sees warning message{...},")
 
         '(1:800) and the last command sent returned an error or warning # (zero = none, one = warning, two = error)
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 800), AddressOf CommandWariningOrError,
+        Add(New Trigger(TriggerCategory.Condition, 800), AddressOf CommandWariningOrError,
 "(1:800) and the last command sent returned an error or warning # (zero = none, one = warning, two = error)")
 
         '(1:801) and the last command sent didn't return an error or warning # (zero = none, one = warning, two = error)
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 801), AddressOf CommandNotWariningOrError,
+        Add(New Trigger(TriggerCategory.Condition, 801), AddressOf CommandNotWariningOrError,
 "(1:801) and the last command sent didn't return an error or warning # (zero = none, one = warning, two = error)")
 
         '(5:800) set %Variable to the value of the message returned by the last command line. (zero = none, one = warning, two = error)
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 800), AddressOf CommandNotWariningOrError,
+        Add(New Trigger(TriggerCategory.Effect, 800), AddressOf CommandNotWariningOrError,
 "(5:800) set %Variable to the value of the message returned by the last command line. (zero = none, one = warning, two = error)")
 
 

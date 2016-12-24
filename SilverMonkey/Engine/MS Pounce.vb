@@ -3,6 +3,7 @@ Imports System.Text.RegularExpressions
 Imports System.Collections.Generic
 Imports MonkeyCore
 Imports MonkeyCore.IO
+Imports SilverMonkey
 
 Public Class MS_Pounce
     Inherits Libraries.AbstractBaseLibrary
@@ -77,7 +78,8 @@ Public Class MS_Pounce
             Dim TmpName As String = reader.ReadString()
             Dim tname As Variable = MainMSEngine.MSpage.GetVariable(MS_Name)
             'add Machine Name parser
-            Return TmpName.ToFurcShortName = tname.Value.ToString.ToFurcShortName
+            Return MainMSEngine.ToFurcShortName(TmpName) = MainMSEngine.ToFurcShortName(tname.Value)
+
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -89,7 +91,7 @@ Public Class MS_Pounce
             Dim TmpName As String = reader.ReadString()
             Dim Furr As Main.pFurre
             For Each Fur As KeyValuePair(Of String, Main.pFurre) In callbk.FurreList
-                If Fur.Key.ToFurcShortName = TmpName.ToFurcShortName Then
+                If MainMSEngine.ToFurcShortName(Fur.Key) = MainMSEngine.ToFurcShortName(TmpName) Then
                     Furr = Fur.Value
                     Return Furr.Online
                 End If
@@ -106,7 +108,7 @@ Public Class MS_Pounce
             Dim TmpName As String = reader.ReadString()
             Dim Furr As Main.pFurre
             For Each Fur As KeyValuePair(Of String, Main.pFurre) In callbk.FurreList
-                If Fur.Key.ToFurcShortName = TmpName.ToFurcShortName Then
+                If MainMSEngine.ToFurcShortName(Fur.Key) = MainMSEngine.ToFurcShortName(TmpName) Then
                     Furr = Fur.Value
                     Return Not Furr.Online
                 End If
@@ -127,10 +129,10 @@ Public Class MS_Pounce
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             f = File.ReadAllLines(OnlineList)
             For Each l As String In f
-                If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
+                If MainMSEngine.ToFurcShortName(l) = MainMSEngine.ToFurcShortName(Furre) Then Return True
             Next
             Return False
-        Catch ex As exception
+        Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
         End Try
@@ -145,7 +147,7 @@ Public Class MS_Pounce
             Furre = reader.ReadString
             f = File.ReadAllLines(OnlineList)
             For Each l As String In f
-                If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
+                If MainMSEngine.ToFurcShortName(l) = MainMSEngine.ToFurcShortName(Furre) Then Return True
             Next
             Return False
         Catch ex As Exception
@@ -208,13 +210,13 @@ Public Class MS_Pounce
         CheckCemberList()
         Try
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = Regex.Replace(Furre.ToLower(), MainMSEngine.REGEX_NameFilter, "")
             Dim line As String = Nothing
             Dim linesList As New List(Of String)(File.ReadAllLines(OnlineList))
             Dim SR As New StreamReader(OnlineList)
             line = SR.ReadLine()
             For i As Integer = 0 To linesList.Count - 1
-                If Regex.Replace(line.ToLower(), REGEX_NameFilter, "") = Furre Then
+                If Regex.Replace(line.ToLower(), MainMSEngine.REGEX_NameFilter, "") = Furre Then
                     SR.Dispose()
                     SR.Close()
                     linesList.RemoveAt(i)
@@ -235,13 +237,13 @@ Public Class MS_Pounce
         CheckCemberList()
         Try
             Furre = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = Regex.Replace(Furre.ToLower(), MainMSEngine.REGEX_NameFilter, "")
             Dim line As String = Nothing
             Dim linesList As New List(Of String)(File.ReadAllLines(OnlineList))
             Dim SR As New StreamReader(OnlineList)
             line = SR.ReadLine()
             For i As Integer = 0 To linesList.Count - 1
-                If Regex.Replace(line.ToLower(), REGEX_NameFilter, "") = Furre Then
+                If Regex.Replace(line.ToLower(), MainMSEngine.REGEX_NameFilter, "") = Furre Then
                     SR.Dispose()
                     SR.Close()
                     linesList.RemoveAt(i)

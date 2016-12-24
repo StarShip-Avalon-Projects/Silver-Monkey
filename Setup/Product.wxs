@@ -123,7 +123,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
           Name="installed" Type="integer" Value="1"
           KeyPath="yes" />
       </Component>
-            <Component Id="MantisNotifyShortcut" Guid="{BA68555B-8B14-4890-A6CF-5CBB6CFB2529}" >
+      <Component Id="MantisNotifyShortcut" Guid="{BA68555B-8B14-4890-A6CF-5CBB6CFB2529}" >
 
         <Shortcut Id="$(var.MantisNotify.TargetName)Shortcut"
                   Name="$(var.MantisNotify.TargetName)"
@@ -137,7 +137,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
           Name="installed" Type="integer" Value="1"
           KeyPath="yes" />
       </Component>
-                  <Component Id="MantisNotifyShortcutStartup" Guid="{9C0C4CC8-09D1-4FE4-BC69-C1A237FB34B8}" >
+      <Component Id="MantisNotifyShortcutStartup" Guid="{9C0C4CC8-09D1-4FE4-BC69-C1A237FB34B8}" >
 
         <Shortcut Id="$(var.MantisNotify.TargetName)ShortcutStartup"
                   Directory="StartupFolder"
@@ -175,7 +175,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="SilverMonkey2.Symbols" />
       <ComponentGroupRef Id="MonkeyCore.Binaries" />
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
-            <ComponentGroupRef Id="BugTraqConnect.Binaries" />
+      <ComponentGroupRef Id="BugTraqConnect.Binaries" />
       <ComponentGroupRef Id="BugTraqConnect.Symbols" />
       <ComponentRef Id="SilverMonkeyShortcut" />
       <ComponentRef Id="MonkeySpeakEditorShortcut" />
@@ -187,6 +187,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="MonkeySpeakEditor.Symbols" />
       <ComponentGroupRef Id="MonkeyspeakR6.Binaries" />
       <ComponentGroupRef Id="MonkeyspeakR6.Symbols" />
+      <ComponentRef Id="smHelp" />
       <ComponentGroupRef Id="FurcadiaLib.Binaries" />
       <ComponentGroupRef Id="FurcadiaLib.Symbols" />
       <ComponentGroupRef Id="Interfaces.Binaries"  />
@@ -222,6 +223,12 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       </Feature>
     </Feature>
 
+  <!-- Help file-->
+    <DirectoryRef Id="APPLICATIONFOLDER">
+      <Component Id="smHelp" Guid="{7FEB427A-07AB-4083-8792-2005152C64F3}">
+        <File Id="smHelp" Source="$(var.MonkeySpeakEditor.TargetDir)Silver Monkey.chm" KeyPath="no" Checksum="yes"/>
+      </Component>
+    </DirectoryRef>
 
     <!-- Misc DLLS-->
     <DirectoryRef Id="APPLICATIONFOLDER">

@@ -61,7 +61,7 @@ Public Class Main
                 For i As Integer = 0 To Namelist2.Length - 1
                     Dim found As Boolean = False
                     For j As Integer = 0 To NameList.Length - 1
-                        If NameList(j).ToFurcShortName = Namelist2(i).ToFurcShortName Then
+                        If MainMSEngine.ToFurcShortName(NameList(j)) = MainMSEngine.ToFurcShortName(Namelist2(i)) Then
                             found = True
                             Exit For
                         End If
@@ -84,7 +84,7 @@ Public Class Main
             smPounce.RemoveFriends()
             For Each kv As KeyValuePair(Of String, pFurre) In FurreList
                 If Not String.IsNullOrEmpty(kv.Key) Then
-                    smPounce.AddFriend(kv.Key.ToFurcShortName())
+                    smPounce.AddFriend(MainMSEngine.ToFurcShortName(kv.Key))
                 End If
             Next
             smPounce.ConnectAsync()
@@ -102,7 +102,7 @@ Public Class Main
             test.WasOnline = test.Online
             test.Online = False
             For Each [friend] As String In friends
-                If _furre.ToFurcShortName = [friend].ToFurcShortName Then
+                If MainMSEngine.ToFurcShortName(_furre) = MainMSEngine.ToFurcShortName([friend]) Then
                     test.Online = True
                     Exit For
                 End If
@@ -157,13 +157,13 @@ Public Class Main
     Protected Overrides Sub WndProc(ByRef m As Message)
         If m.Msg = WM_COPYDATA Then
             'Dim mystr As COPYDATASTRUCT
-            Dim mystr2 As COPYDATASTRUCT = CType(Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT)), COPYDATASTRUCT)
+            Dim mystr2 As COPYDATASTRUCT = Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT))
 
             ' If the size matches
             If mystr2.cdData = Marshal.SizeOf(GetType(MyData)) Then
                 ' Marshal the data from the unmanaged memory block to a 
                 ' MyStruct managed struct.
-                Dim myStr As MyData = DirectCast(Marshal.PtrToStructure(mystr2.lpData, GetType(MyData)), MyData)
+                Dim myStr As MyData = Marshal.PtrToStructure(mystr2.lpData, GetType(MyData))
 
 
 
@@ -178,7 +178,7 @@ Public Class Main
                         MS_Engine.MainMSEngine.EngineRestart = True
                         cBot.MS_Script = MS_Engine.MainMSEngine.msReader(Path.Combine(Paths.SilverMonkeyBotPath, cBot.MS_File))
                         MainMSEngine.MSpage = MS_Engine.MainMSEngine.engine.LoadFromString(cBot.MS_Script)
-                        MS_Engine.MainMSEngine.MS_Stared = 2
+                        MainMSEngine.MS_Stared = 2
                         ' MainMSEngine.LoadLibrary()
                         MS_Engine.MainMSEngine.EngineRestart = False
                         ' Main.ResetPrimaryVariables()
@@ -195,8 +195,8 @@ Public Class Main
                     End If
 
                     Player.Message = sData.ToString
-                    MS_Engine.MainMSEngine.PageSetVariable(MS_Name, sName)
-                    MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", sData)
+                    MainMSEngine.PageSetVariable(MS_Name, sName)
+                    MainMSEngine.PageSetVariable("MESSAGE", sData)
                     ' Execute (0:15) When some one whispers something
                     MS_Engine.MainMSEngine.PageExecute(75, 76, 77)
                     SendClientMessage("Message from: " + sName, sData)
@@ -279,7 +279,7 @@ Public Class Main
     Public Look As Boolean = False
     Dim newData As Boolean = False
     Public BanishName As String = ""
-    Public BanishString As New ArrayList
+    Public BanishString As New List(Of String)
     'Input History
     Dim CMD_Max As Integer = 20
     Dim CMDList(CMD_Max) As String
@@ -505,7 +505,7 @@ Public Class Main
 
         Player = NametoFurre(s.name, True)
         Player.Message = ""
-        MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", Nothing)
+        MainMSEngine.PageSetVariable("MESSAGE", Nothing)
         MS_Engine.MainMSEngine.PageExecute(504, 505)
 
         Return InsertMultiRow("BACKUP", idx, Value)
@@ -601,7 +601,7 @@ Public Class Main
         If str.ToUpper = "[DREAM]" Then
             str = str.ToUpper
         Else
-            str = str.ToFurcShortName
+            str = MainMSEngine.ToFurcShortName(str)
         End If
 
         Dim cmd As String =
@@ -1155,8 +1155,8 @@ Public Class Main
         Try
             'data = data.Replace(vbLf, vbCrLf)
             If cBot.log Then LogStream.Writeline(data)
-            If CBool(MainSettings.TimeStamp) Then
-                Dim Now As String = DateTime.Now.ToLongTimeString
+            If MainSettings.TimeStamp Then
+                Dim Now As String = Date.Now.ToLongTimeString
                 data = Now.ToString & ": " & data
             End If
             AddDataToList(log_, data, newColor)
@@ -1204,13 +1204,13 @@ Public Class Main
 
             ElseIf data.StartsWith("banish ") Then
                 BanishName = data.Substring(7)
-                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
+                MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
             ElseIf data.StartsWith("banish-off ") Or data.StartsWith("tempbanish ") Then
                 BanishName = data.Substring(11)
-                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
+                MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
             ElseIf data = "banish-list" Then
                 BanishName = ""
-                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", Nothing)
+                MainMSEngine.PageSetVariable("BANISHNAME", Nothing)
             End If
 
             TextToServer(data)
@@ -1314,7 +1314,7 @@ Public Class Main
             Dim num As Integer = 0
             Integer.TryParse(m.Groups(2).Value, r.type)
             Repq.Enqueue(r)
-            MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", m.Groups(3).Value, True)
+            MainMSEngine.PageSetVariable("MESSAGE", m.Groups(3).Value, True)
             Player.Message = m.Groups(3).Value
             MS_Engine.MainMSEngine.PageExecute(95, 96)
             If smProxy.IsClientConnected Then smProxy.SendClient(data + vbLf)
@@ -1343,7 +1343,7 @@ Public Class Main
         ElseIf data.StartsWith("]s") Then
             Dim t As New Regex("\]s(.+)1 (.*?) (.*?) 0", RegexOptions.IgnoreCase)
             Dim m As System.Text.RegularExpressions.Match = t.Match(data)
-            If BotName.ToFurcShortName = m.Groups(2).Value.ToFurcShortName Then
+            If MainMSEngine.ToFurcShortName(BotName) = MainMSEngine.ToFurcShortName(m.Groups(2).Value) Then
 
                 MS_Engine.MainMSEngine.PageExecute()
             End If
@@ -1392,17 +1392,17 @@ Public Class Main
 
 
                 Dim NameLength As UInteger = ConvertFromBase220(data.Substring(11, 1))
-                Player.Name = data.Substring(12, CInt(NameLength)).Replace("|", " ")
+                Player.Name = data.Substring(12, NameLength).Replace("|", " ")
 
-                Dim ColTypePos As UInteger = CUInt(12 + NameLength)
-                Player.ColorType = CChar(data.Substring(CInt(ColTypePos), 1))
+                Dim ColTypePos As UInteger = 12 + NameLength
+                Player.ColorType = CChar(data.Substring(ColTypePos, 1))
                 Dim ColorSize As UInteger = 10
-                If Player.ColorType <> "t" Then
-                    ColorSize = 30
-                End If
-                Dim sColorPos As Integer = CInt(ColTypePos + 1)
+                'If Player.ColorType <> "t" Then
+                '    ColorSize = 30
+                'End If
+                Dim sColorPos As Integer = ColTypePos + 1
 
-                Player.Color = data.Substring(sColorPos, CInt(ColorSize))
+                Player.Color = data.Substring(sColorPos, ColorSize)
 
                 Dim FlagPos As Integer = data.Length - 6
                 Player.Flag = CInt(ConvertFromBase220(data.Substring(FlagPos, 1)))
@@ -1414,14 +1414,14 @@ Public Class Main
                 ' Add New Arrivals to Dream List
                 ' One or the other will trigger it
                 IsBot(Player)
-                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
+                MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
 
                 If Player.Flag = 4 Or Not DREAM.List.ContainsKey(Player.ID) Then
                     DREAM.List.Add(Player.ID, Player)
                     If InDream Then UpDateDreamList(Player.Name)
                     If Player.Flag = 2 Then
-                        Dim Bot As FURRE = fIDtoFurre((BotUID))
-                        Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
+                        Dim Bot As FURRE = NametoFurre(BotName, False)
+                        Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord((Bot.X), (Bot.Y))
                         If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
                             Player.Visible = True
                         Else
@@ -1432,8 +1432,8 @@ Public Class Main
                         MS_Engine.MainMSEngine.PageExecute(24, 25)
                     End If
                 ElseIf Player.Flag = 2 Then
-                    Dim Bot As FURRE = fIDtoFurre((BotUID))
-                    Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
+                    Dim Bot As FURRE = NametoFurre(BotName, False)
+                    Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord((Bot.X), (Bot.Y))
                     If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
                         Player.Visible = True
                     Else
@@ -1463,7 +1463,7 @@ Public Class Main
                 ' remove departure from List
                 If DREAM.List.ContainsKey(remID) = True Then
                     Player = DREAM.List.Item(remID)
-                    MS_Engine.MainMSEngine.PageSetVariable(MS_Name, Player.Name)
+                    MainMSEngine.PageSetVariable(MS_Name, Player.Name)
                     MS_Engine.MainMSEngine.PageExecute(26, 27, 30, 31)
                     DREAM.List.Remove(remID)
                     UpDateDreamList("")
@@ -1481,7 +1481,7 @@ Public Class Main
                 Player.Y = ConvertFromBase220(data.Substring(7, 2))
                 Player.Shape = ConvertFromBase220(data.Substring(9, 2))
                 Dim Bot As FURRE = fIDtoFurre((BotUID))
-                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
+                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord((Bot.X), (Bot.Y))
                 If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
                     Player.Visible = True
                 Else
@@ -1489,7 +1489,7 @@ Public Class Main
                 End If
                 If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
                 IsBot(Player)
-                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
+                MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
                 MS_Engine.MainMSEngine.PageExecute(28, 29, 30, 31, 601, 602)
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
@@ -1505,7 +1505,7 @@ Public Class Main
                 Player.Shape = ConvertFromBase220(data.Substring(9, 2))
 
                 Dim Bot As FURRE = fIDtoFurre((BotUID))
-                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
+                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord((Bot.X), (Bot.Y))
                 If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
 
                     Player.Visible = True
@@ -1515,7 +1515,7 @@ Public Class Main
                 If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
 
                 IsBot(Player)
-                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
+                MainMSEngine.PageSetVariable(MS_Name, Player.ShortName)
                 MS_Engine.MainMSEngine.PageExecute(28, 29, 30, 31, 601, 602)
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
@@ -1528,13 +1528,11 @@ Public Class Main
                 Player = fIDtoFurre(ConvertFromBase220(data.Substring(1, 4)))
                 Player.Shape = ConvertFromBase220(data.Substring(5, 2))
                 Dim ColTypePos As UInteger = 7
-                Player.ColorType = CChar(data.Substring(CInt(ColTypePos), 1))
+                Player.ColorType = CChar(data.Substring(ColTypePos, 1))
                 Dim ColorSize As UInteger = 10
-                If Player.ColorType <> "t" Then
-                    ColorSize = 30
-                End If
-                Dim sColorPos As UInteger = CUInt(ColTypePos + 1)
-                Player.Color = data.Substring(CInt(sColorPos), CInt(ColorSize))
+
+                Dim sColorPos As UInteger = ColTypePos + 1
+                Player.Color = data.Substring(sColorPos, ColorSize)
                 If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
                 IsBot(Player)
             Catch eX As Exception
@@ -1551,7 +1549,7 @@ Public Class Main
                 Player.Visible = False
                 If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
                 IsBot(Player)
-                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, Player.Name)
+                MainMSEngine.PageSetVariable(MS_Name, Player.Name)
                 MS_Engine.MainMSEngine.PageExecute(30, 31)
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
@@ -1580,8 +1578,8 @@ Public Class Main
 #If DEBUG Then
                 Debug.Print("Entering new Dream" & data)
 #End If
-                MS_Engine.MainMSEngine.PageSetVariable("DREAMOWNER", "")
-                MS_Engine.MainMSEngine.PageSetVariable("DREAMNAME", "")
+                MainMSEngine.PageSetVariable("DREAMOWNER", "")
+                MainMSEngine.PageSetVariable("DREAMNAME", "")
                 HasShare = False
                 NoEndurance = False
 
@@ -1617,19 +1615,19 @@ Public Class Main
                 Dim dname As String = data.Substring(10)
                 If dname.Contains(":") Then
                     Dim NameStr As String = dname.Substring(0, dname.IndexOf(":"))
-                    If NameStr.ToFurcShortName = BotName.ToFurcShortName Then
+                    If MainMSEngine.ToFurcShortName(NameStr) = MainMSEngine.ToFurcShortName(BotName) Then
                         HasShare = True
                     End If
-                    MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "DREAMOWNER", NameStr)
+                    MainMSEngine.PageSetVariable(Main.VarPrefix & "DREAMOWNER", NameStr)
                 ElseIf dname.EndsWith("/") AndAlso Not dname.Contains(":") Then
                     Dim NameStr As String = dname.Substring(0, dname.IndexOf("/"))
-                    If NameStr.ToFurcShortName = BotName.ToFurcShortName Then
+                    If MainMSEngine.ToFurcShortName(NameStr) = MainMSEngine.ToFurcShortName(BotName) Then
                         HasShare = True
                     End If
-                    MS_Engine.MainMSEngine.PageSetVariable("DREAMOWNER", NameStr)
+                    MainMSEngine.PageSetVariable("DREAMOWNER", NameStr)
                 End If
 
-                MS_Engine.MainMSEngine.PageSetVariable("DREAMNAME", dname)
+                MainMSEngine.PageSetVariable("DREAMNAME", dname)
                 MS_Engine.MainMSEngine.PageExecute(90, 91)
             End If
 #If DEBUG Then
@@ -1674,712 +1672,711 @@ Public Class Main
     Public Sub ChannelProcess(ByRef data As String, ByVal Handled As Boolean)
         'Strip the trigger Character
         ' page = engine.LoadFromString(cBot.MS_Script)
-        data = data.Remove(0, 1)
-        Dim psCheck As Boolean = False
-        Dim SpecTag As String = ""
-        Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
-        Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
-        Dim User As String = ""
-        Dim Desc As String = ""
-        Dim Text As String = ""
-        If Not Handled Then
-            Text = Regex.Match(data, EntryFilter).Groups(2).Value
-            User = Regex.Match(data, NameFilter).Groups(3).Value
-            If User <> "" Then Player = NametoFurre(User, True)
-            Player.Message = ""
-            Desc = Regex.Match(data, DescFilter).Groups(2).Value
-            Dim mm As New Regex(Iconfilter)
-            Dim ds As System.Text.RegularExpressions.Match = mm.Match(Text)
-            Text = mm.Replace(Text, "[" + ds.Groups(1).Value + "] ")
-            Dim s As New Regex(ChannelNameFilter)
-            Text = s.Replace(Text, "")
-        Else
-            User = Player.Name
-            Text = Player.Message
-        End If
-        DiceSides = 0
-        DiceCount = 0
-        DiceCompnentMatch = ""
-        DiceModifyer = 0
-        DiceResult = 0
+        SyncLock ChannelLock
+            data = data.Remove(0, 1)
+            Dim psCheck As Boolean = False
+            Dim SpecTag As String = ""
+            Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
+            Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
+            Dim User As String = ""
+            Dim Desc As String = ""
+            Dim Text As String = ""
+            If Not Handled Then
+                Text = Regex.Match(data, EntryFilter).Groups(2).Value
+                User = Regex.Match(data, NameFilter).Groups(3).Value
+                If User <> "" Then Player = NametoFurre(User, True)
+                Player.Message = ""
+                Desc = Regex.Match(data, DescFilter).Groups(2).Value
+                Dim mm As New Regex(Iconfilter)
+                Dim ds As System.Text.RegularExpressions.Match = mm.Match(Text)
+                Text = mm.Replace(Text, "[" + ds.Groups(1).Value + "] ")
+                Dim s As New Regex(ChannelNameFilter)
+                Text = s.Replace(Text, "")
+            Else
+                User = Player.Name
+                Text = Player.Message
+            End If
+            DiceSides = 0
+            DiceCount = 0
+            DiceCompnentMatch = ""
+            DiceModifyer = 0
+            DiceResult = 0
 
-        SyncLock Lock
             ErrorMsg = ""
             ErrorNum = 0
-        End SyncLock
-        If Channel = "@news" Or Channel = "@spice" Then
-            Try
-                sndDisplay(Text)
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf Color = "success" Then
-            Try
-                If Text.Contains(" has been banished from your dreams.") Then
-                    'banish <name> (online)
-                    'Success: (.*?) has been banished from your dreams. 
 
-                    '(0:52) When the bot sucessfilly banishes a furre,
-                    '(0:53) When the bot sucessfilly banishes the furre named {...},
-                    Dim t As New Regex("(.*?) has been banished from your dreams.")
-                    BanishName = t.Match(Text).Groups(1).ToString
-                    MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
-
-                    BanishString.Add(BanishName)
-                    MS_Engine.MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
-                    MS_Engine.MainMSEngine.PageExecute(52, 53)
-
-                    ' MainMSEngine.PageExecute(53)
-                ElseIf Text = "You have canceled all banishments from your dreams." Then
-                    'banish-off-all (active list)
-                    'Success: You have canceled all banishments from your dreams. 
-
-                    '(0:60) When the bot successfully clears the banish list
-                    BanishString.Clear()
-                    MS_Engine.MainMSEngine.PageSetVariable("BANISHLIST", Nothing)
-                    MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", Nothing)
-                    MS_Engine.MainMSEngine.PageExecute(60)
-
-                ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
-                    'tempbanish <name> (online)
-                    'Success: (.*?) has been temporarily banished from your dreams. 
-
-                    '(0:61) When the bot sucessfully temp banishes a Furre
-                    '(0:62) When the bot sucessfully temp banishes the furre named {...}
-                    Dim t As New Regex("(.*?) has been temporarily banished from your dreams.")
-                    BanishName = t.Match(Text).Groups(1).Value
-                    MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "BANISHNAME", BanishName)
-                    '  MainMSEngine.PageExecute(61)
-                    BanishString.Add(BanishName)
-                    MS_Engine.MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", String.Join(" ", BanishString.ToArray))
-                    MS_Engine.MainMSEngine.PageExecute(61, 62)
-
-                ElseIf Text = "Control of this dream is now being shared with you." Then
-                    HasShare = True
-
-                ElseIf Text.EndsWith("is now sharing control of this dream with you.") Then
-                    HasShare = True
-
-                ElseIf Text.EndsWith("has stopped sharing control of this dream with you.") Then
-                    HasShare = False
-
-                ElseIf Text.StartsWith("The endurance limits of player ") Then
-                    Dim t As New Regex("The endurance limits of player (.*?) are now toggled off.")
-                    Dim m As String = t.Match(Text).Groups(1).Value.ToString
-                    If m.ToFurcShortName = BotName.ToFurcShortName Then
-                        NoEndurance = True
-                    End If
-
-                ElseIf Channel = "@cookie" Then
-                    '(0:96) When the Bot sees "Your cookies are ready."
-                    Dim CookiesReady As Regex = New Regex(String.Format("{0}", "Your cookies are ready.  http://furcadia.com/cookies/ for more info!"))
-                    If CookiesReady.Match(data).Success Then
-                        MS_Engine.MainMSEngine.PageExecute(96)
-                    End If
-                End If
-                sndDisplay(Text)
+            If Channel = "@news" Or Channel = "@spice" Then
+                Try
+                    sndDisplay(Text)
+                Catch eX As Exception
+                    Dim logError As New ErrorLogging(eX, Me)
+                End Try
                 If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
                 Exit Sub
+            ElseIf Color = "success" Then
+                Try
+                    If Text.Contains(" has been banished from your dreams.") Then
+                        'banish <name> (online)
+                        'Success: (.*?) has been banished from your dreams. 
 
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-        ElseIf Channel = "@roll" Then
-            Dim DiceREGEX As New Regex(DiceFilter, RegexOptions.IgnoreCase)
-            Dim DiceMatch As System.Text.RegularExpressions.Match = DiceREGEX.Match(data)
+                        '(0:52) When the bot sucessfilly banishes a furre,
+                        '(0:53) When the bot sucessfilly banishes the furre named {...},
+                        Dim t As New Regex("(.*?) has been banished from your dreams.")
+                        BanishName = t.Match(Text).Groups(1).ToString
+                        MainMSEngine.PageSetVariable("BANISHNAME", BanishName)
 
-            'Matches, in order:
-            '1:      shortname()
-            '2:      full(name)
-            '3:      dice(count)
-            '4:      sides()
-            '5: +/-#
-            '6: +/-  (component match)
-            '7:      additional(Message)
-            '8:      Final(result)
+                        BanishString.Add(BanishName)
+                        MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
+                        MS_Engine.MainMSEngine.PageExecute(52, 53)
 
-            Player = NametoFurre(DiceMatch.Groups(3).Value, True)
-            Player.Message = DiceMatch.Groups(7).Value
-            MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", DiceMatch.Groups(7).Value)
-            Double.TryParse(DiceMatch.Groups(4).Value, DiceSides)
-            Double.TryParse(DiceMatch.Groups(3).Value, DiceCount)
-            DiceCompnentMatch = DiceMatch.Groups(6).Value
-            DiceModifyer = 0.0R
-            Double.TryParse(DiceMatch.Groups(5).Value, DiceModifyer)
-            Double.TryParse(DiceMatch.Groups(8).Value, DiceResult)
+                        ' MainMSEngine.PageExecute(53)
+                    ElseIf Text = "You have canceled all banishments from your dreams." Then
+                        'banish-off-all (active list)
+                        'Success: You have canceled all banishments from your dreams. 
 
-            If IsBot(Player) Then
-                MS_Engine.MainMSEngine.PageExecute(130, 131, 132, 136)
-            Else
-                MS_Engine.MainMSEngine.PageExecute(133, 134, 135, 136)
-            End If
+                        '(0:60) When the bot successfully clears the banish list
+                        BanishString.Clear()
+                        MainMSEngine.PageSetVariable("BANISHLIST", Nothing)
+                        MainMSEngine.PageSetVariable("BANISHNAME", Nothing)
+                        MS_Engine.MainMSEngine.PageExecute(60)
 
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf Channel = "@dragonspeak" OrElse Channel = "@emit" OrElse Color = "emit" Then
-            Try
-                '(<font color='dragonspeak'><img src='fsh://system.fsh:91' alt='@emit' /><channel name='@emit' /> Furcadian Academy</font>
-                sndDisplay(Text, fColorEnum.Emit)
+                    ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
+                        'tempbanish <name> (online)
+                        'Success: (.*?) has been temporarily banished from your dreams. 
 
-                MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text.Substring(5))
-                ' Execute (0:21) When someone emits something
-                MS_Engine.MainMSEngine.PageExecute(21, 22, 23)
-                ' Execute (0:22) When someone emits {...}
-                '' Execute (0:23) When someone emits something with {...} in it
+                        '(0:61) When the bot sucessfully temp banishes a Furre
+                        '(0:62) When the bot sucessfully temp banishes the furre named {...}
+                        Dim t As New Regex("(.*?) has been temporarily banished from your dreams.")
+                        BanishName = t.Match(Text).Groups(1).Value
+                        MainMSEngine.PageSetVariable(Main.VarPrefix & "BANISHNAME", BanishName)
+                        '  MainMSEngine.PageExecute(61)
+                        BanishString.Add(BanishName)
+                        MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", String.Join(" ", BanishString.ToArray))
+                        MS_Engine.MainMSEngine.PageExecute(61, 62)
 
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-            ''BCast (Advertisments, Announcments)
-        ElseIf Color = "bcast" Then
-            Dim AdRegEx As String = "<channel name='(.*)' />"
+                    ElseIf Text = "Control of this dream is now being shared with you." Then
+                        HasShare = True
 
-            Dim chan As String = Regex.Match(data, AdRegEx).Groups(1).Value
-            Try
+                    ElseIf Text.EndsWith("is now sharing control of this dream with you.") Then
+                        HasShare = True
 
-                Select Case chan
-                    Case "@advertisements"
-                        If MainSettings.Advertisment Then Exit Sub
-                        AdRegEx = "\[(.*?)\] (.*?)</font>"
-                        Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
-                        sndDisplay(Text)
-                    Case "@bcast"
-                        If MainSettings.Broadcast Then Exit Sub
-                        Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
-                        sndDisplay(Text)
-                    Case "@announcements"
-                        If MainSettings.Announcement Then Exit Sub
-                        Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
-                        sndDisplay(Text)
-                    Case Else
-#If DEBUG Then
-                        Console.WriteLine("Unknown ")
-                        Console.WriteLine("BCAST:" & data)
-#End If
-                End Select
+                    ElseIf Text.EndsWith("has stopped sharing control of this dream with you.") Then
+                        HasShare = False
 
+                    ElseIf Text.StartsWith("The endurance limits of player ") Then
+                        Dim t As New Regex("The endurance limits of player (.*?) are now toggled off.")
+                        Dim m As String = t.Match(Text).Groups(1).Value.ToString
+                        If MainMSEngine.ToFurcShortName(m) = MainMSEngine.ToFurcShortName(BotName) Then
+                            NoEndurance = True
+                        End If
 
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-            ''SAY
-        ElseIf Color = "myspeech" Then
-            Try
-                Dim t As New Regex(YouSayFilter)
-                Dim u As String = t.Match(data).Groups(1).ToString
-                Text = t.Match(data).Groups(2).ToString
-                If SpeciesTag.Count() > 0 Then
-                    SpecTag = SpeciesTag.Peek
-                    SpeciesTag.Dequeue()
-                    Player.Color = SpecTag
-                    If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
+                    ElseIf Channel = "@cookie" Then
+                        '(0:96) When the Bot sees "Your cookies are ready."
+                        Dim CookiesReady As Regex = New Regex(String.Format("{0}", "Your cookies are ready.  http://furcadia.com/cookies/ for more info!"))
+                        If CookiesReady.Match(data).Success Then
+                            MS_Engine.MainMSEngine.PageExecute(96)
+                        End If
+                    End If
+                    sndDisplay(Text)
+                    If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                    Exit Sub
+
+                Catch eX As Exception
+                    Dim logError As New ErrorLogging(eX, Me)
+                End Try
+            ElseIf Channel = "@roll" Then
+                Dim DiceREGEX As New Regex(DiceFilter, RegexOptions.IgnoreCase)
+                Dim DiceMatch As System.Text.RegularExpressions.Match = DiceREGEX.Match(data)
+
+                'Matches, in order:
+                '1:      shortname()
+                '2:      full(name)
+                '3:      dice(count)
+                '4:      sides()
+                '5: +/-#
+                '6: +/-  (component match)
+                '7:      additional(Message)
+                '8:      Final(result)
+
+                Player = NametoFurre(DiceMatch.Groups(3).Value, True)
+                Player.Message = DiceMatch.Groups(7).Value
+                MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", DiceMatch.Groups(7).Value)
+                Double.TryParse(DiceMatch.Groups(4).Value, DiceSides)
+                Double.TryParse(DiceMatch.Groups(3).Value, DiceCount)
+                DiceCompnentMatch = DiceMatch.Groups(6).Value
+                DiceModifyer = 0.0R
+                Double.TryParse(DiceMatch.Groups(5).Value, DiceModifyer)
+                Double.TryParse(DiceMatch.Groups(8).Value, DiceResult)
+
+                If IsBot(Player) Then
+                    MS_Engine.MainMSEngine.PageExecute(130, 131, 132, 136)
+                Else
+                    MS_Engine.MainMSEngine.PageExecute(133, 134, 135, 136)
                 End If
 
-                sndDisplay("You " & u & ", """ & Text & """", fColorEnum.Say)
-                Player.Message = Text
-                MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
-                ' Execute (0:5) When some one says something
-                'MainMSEngine.PageExecute(5, 6, 7, 18, 19, 20)
-                '' Execute (0:6) When some one says {...}
-                '' Execute (0:7) When some one says something with {...} in it
-                '' Execute (0:18) When someone says or emotes something
-                '' Execute (0:19) When someone says or emotes {...}
-                '' Execute (0:20) When someone says or emotes something with {...} in it
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf User <> "" And Channel = "" And Color = "" And Regex.Match(data, NameFilter).Groups(2).Value <> "forced" Then
-            Dim tt As System.Text.RegularExpressions.Match = Regex.Match(data, "\(you see(.*?)\)", RegexOptions.IgnoreCase)
-            Dim t As New Regex(NameFilter)
-            If Not tt.Success Then
-
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf Channel = "@dragonspeak" OrElse Channel = "@emit" OrElse Color = "emit" Then
                 Try
-                    Text = t.Replace(data, "")
-                    Text = Text.Remove(0, 2)
+                    '(<font color='dragonspeak'><img src='fsh://system.fsh:91' alt='@emit' /><channel name='@emit' /> Furcadian Academy</font>
+                    sndDisplay(Text, fColorEnum.Emit)
 
+                    MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text.Substring(5))
+                    ' Execute (0:21) When someone emits something
+                    MS_Engine.MainMSEngine.PageExecute(21, 22, 23)
+                    ' Execute (0:22) When someone emits {...}
+                    '' Execute (0:23) When someone emits something with {...} in it
+
+                Catch eX As Exception
+                    Dim logError As New ErrorLogging(eX, Me)
+                End Try
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+                ''BCast (Advertisments, Announcments)
+            ElseIf Color = "bcast" Then
+                Dim AdRegEx As String = "<channel name='(.*)' />"
+
+                Dim chan As String = Regex.Match(data, AdRegEx).Groups(1).Value
+                Try
+
+                    Select Case chan
+                        Case "@advertisements"
+                            If MainSettings.Advertisment Then Exit Sub
+                            AdRegEx = "\[(.*?)\] (.*?)</font>"
+                            Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
+                            sndDisplay(Text)
+                        Case "@bcast"
+                            If MainSettings.Broadcast Then Exit Sub
+                            Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
+                            sndDisplay(Text)
+                        Case "@announcements"
+                            If MainSettings.Announcement Then Exit Sub
+                            Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
+                            sndDisplay(Text)
+                        Case Else
+#If DEBUG Then
+                            Console.WriteLine("Unknown ")
+                            Console.WriteLine("BCAST:" & data)
+#End If
+                    End Select
+
+
+                Catch eX As Exception
+                    Dim logError As New ErrorLogging(eX, Me)
+                End Try
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+                ''SAY
+            ElseIf Color = "myspeech" Then
+                Try
+                    Dim t As New Regex(YouSayFilter)
+                    Dim u As String = t.Match(data).Groups(1).ToString
+                    Text = t.Match(data).Groups(2).ToString
                     If SpeciesTag.Count() > 0 Then
                         SpecTag = SpeciesTag.Peek
-                        SpeciesTag.Clear()
+                        SpeciesTag.Dequeue()
                         Player.Color = SpecTag
                         If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
                     End If
-                    Channel = "say"
-                    sndDisplay(User & " says, """ & Text & """", fColorEnum.Say)
-                    MS_Engine.MainMSEngine.PageSetVariable(MS_Name, User)
-                    MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", Text)
-                    Player.Message = Text
-                    ' Execute (0:5) When some one says something
-                    MS_Engine.MainMSEngine.PageExecute(5, 6, 7, 18, 19, 20)
-                    ' Execute (0:6) When some one says {...}
-                    ' Execute (0:7) When some one says something with {...} in it
-                    ' Execute (0:18) When someone says or emotes something
-                    ' Execute (0:19) When someone says or emotes {...}
-                    ' Execute (0:20) When someone says or emotes something with {...} in it
 
+                    sndDisplay("You " & u & ", """ & Text & """", fColorEnum.Say)
+                    Player.Message = Text
+                    MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
+                    ' Execute (0:5) When some one says something
+                    'MainMSEngine.PageExecute(5, 6, 7, 18, 19, 20)
+                    '' Execute (0:6) When some one says {...}
+                    '' Execute (0:7) When some one says something with {...} in it
+                    '' Execute (0:18) When someone says or emotes something
+                    '' Execute (0:19) When someone says or emotes {...}
+                    '' Execute (0:20) When someone says or emotes something with {...} in it
                 Catch eX As Exception
                     Dim logError As New ErrorLogging(eX, Me)
-
                 End Try
-
                 If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
                 Exit Sub
-            Else
+            ElseIf User <> "" And Channel = "" And Color = "" And Regex.Match(data, NameFilter).Groups(2).Value <> "forced" Then
+                Dim tt As System.Text.RegularExpressions.Match = Regex.Match(data, "\(you see(.*?)\)", RegexOptions.IgnoreCase)
+                Dim t As New Regex(NameFilter)
+                If Not tt.Success Then
+
+                    Try
+                        Text = t.Replace(data, "")
+                        Text = Text.Remove(0, 2)
+
+                        If SpeciesTag.Count() > 0 Then
+                            SpecTag = SpeciesTag.Peek
+                            SpeciesTag.Clear()
+                            Player.Color = SpecTag
+                            If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
+                        End If
+                        Channel = "say"
+                        sndDisplay(User & " says, """ & Text & """", fColorEnum.Say)
+                        MainMSEngine.PageSetVariable(MS_Name, User)
+                        MainMSEngine.PageSetVariable("MESSAGE", Text)
+                        Player.Message = Text
+                        ' Execute (0:5) When some one says something
+                        MS_Engine.MainMSEngine.PageExecute(5, 6, 7, 18, 19, 20)
+                        ' Execute (0:6) When some one says {...}
+                        ' Execute (0:7) When some one says something with {...} in it
+                        ' Execute (0:18) When someone says or emotes something
+                        ' Execute (0:19) When someone says or emotes {...}
+                        ' Execute (0:20) When someone says or emotes something with {...} in it
+
+                    Catch eX As Exception
+                        Dim logError As New ErrorLogging(eX, Me)
+
+                    End Try
+
+                    If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                    Exit Sub
+                Else
+                    Try
+                        'sndDisplay("You See '" & User & "'")
+                        Look = True
+                    Catch eX As Exception
+                        Dim logError As New ErrorLogging(eX, Me)
+                    End Try
+                End If
+
+            ElseIf Desc <> "" Then
                 Try
-                    'sndDisplay("You See '" & User & "'")
-                    Look = True
-                Catch eX As Exception
-                    Dim logError As New ErrorLogging(eX, Me)
-                End Try
-            End If
+                    Dim DescName As String = Regex.Match(data, DescFilter).Groups(1).ToString()
 
-        ElseIf Desc <> "" Then
-            Try
-                Dim DescName As String = Regex.Match(data, DescFilter).Groups(1).ToString()
+                    Player = NametoFurre(DescName, True)
+                    If LookQue.Count > 0 Then
+                        Dim colorcode As String = LookQue.Peek
+                        If colorcode.StartsWith("t") Then
+                            colorcode = colorcode.Substring(0, 14)
+                        ElseIf colorcode.StartsWith("u") Then
 
-                Player = NametoFurre(DescName, True)
-                If LookQue.Count > 0 Then
-                    Dim colorcode As String = LookQue.Peek
-                    If colorcode.StartsWith("t") Then
-                        colorcode = colorcode.Substring(0, 14)
-                    ElseIf colorcode.StartsWith("u") Then
-
-                    ElseIf colorcode.StartsWith("v") Then
-                        'RGB Values
+                        ElseIf colorcode.StartsWith("v") Then
+                            'RGB Values
+                        End If
+                        Player.Color = colorcode
+                        LookQue.Dequeue()
                     End If
-                    Player.Color = colorcode
-                    LookQue.Dequeue()
-                End If
-                If BadgeTag.Count() > 0 Then
-                    SpecTag = BadgeTag.Peek
-                    BadgeTag.Clear()
-                    Player.Badge = SpecTag
-                ElseIf Player.Badge <> "" Then
-                    Player.Badge = ""
-                End If
-                Player.Desc = Desc.Substring(6)
-                If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
-                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, DescName)
-                MS_Engine.MainMSEngine.PageExecute(600)
-                'sndDisplay)
-                If Player.Tag = "" Then
-                    sndDisplay("You See '" & Player.Name & "'\par" & Desc)
-                Else
-                    sndDisplay("You See '" & Player.Name & "'\par" & Player.Tag & " " & Desc)
-                End If
-                Look = False
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf Color = "shout" Then
-            ''SHOUT
-            Try
-                Dim t As New Regex(YouSayFilter)
-                Dim u As String = t.Match(data).Groups(1).ToString
-                Text = t.Match(data).Groups(2).ToString
-                If User = "" Then
-                    sndDisplay("You " & u & ", """ & Text & """", fColorEnum.Shout)
-                Else
-                    Text = Regex.Match(data, "shouts: (.*)</font>").Groups(1).ToString()
-                    sndDisplay(User & " shouts, """ & Text & """", fColorEnum.Shout)
-                End If
-                If Not IsBot(Player) Then
-                    MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
-                    Player.Message = Text
-                    ' Execute (0:8) When some one shouts something
-                    MS_Engine.MainMSEngine.PageExecute(8, 9, 10)
-                    ' Execute (0:9) When some one shouts {...}
-                    ' Execute (0:10) When some one shouts something with {...} in it
-
-
-                End If
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf Color = "query" Then
-            Dim QCMD As String = Regex.Match(data, "<a.*?href='command://(.*?)'>").Groups(1).ToString
-            'Player = NametoFurre(User, True)
-            Select Case QCMD
-                Case "summon"
-                    ''JOIN
-                    Try
-                        sndDisplay(User & " requests to join you.")
-                        'If Not IsBot(Player) Then
-                        MS_Engine.MainMSEngine.PageExecute(34, 35)
-                        'End If
-                    Catch eX As Exception
-                        Dim logError As New ErrorLogging(eX, Me)
-                    End Try
-                Case "join"
-                    ''SUMMON
-                    Try
-                        sndDisplay(User & " requests to summon you.")
-                        'If Not IsBot(Player) Then
-                        MS_Engine.MainMSEngine.PageExecute(32, 33)
-                        'End If
-                    Catch eX As Exception
-                        Dim logError As New ErrorLogging(eX, Me)
-                    End Try
-                Case "follow"
-                    ''LEAD
-                    Try
-                        sndDisplay(User & " requests to lead.")
-                        'If Not IsBot(Player) Then
-                        MS_Engine.MainMSEngine.PageExecute(36, 37)
-                        'End If
-                    Catch eX As Exception
-                        Dim logError As New ErrorLogging(eX, Me)
-                    End Try
-                Case "lead"
-                    ''FOLLOW
-                    Try
-                        sndDisplay(User & " requests the bot to follow.")
-                        'If Not IsBot(Player) Then
-                        MS_Engine.MainMSEngine.PageExecute(38, 39)
-                        'End If
-                    Catch eX As Exception
-                        Dim logError As New ErrorLogging(eX, Me)
-                    End Try
-                Case "cuddle"
-                    Try
-                        sndDisplay(User & " requests the bot to cuddle.")
-                        'If Not IsBot(Player) Then
-                        MS_Engine.MainMSEngine.PageExecute(40, 41)
-                        'End If
-                    Catch eX As Exception
-                        Dim logError As New ErrorLogging(eX, Me)
-                    End Try
-                Case Else
-                    sndDisplay("## Unknown " & Channel & "## " & data)
-            End Select
-
-            'NameFilter
-
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf Color = "whisper" Then
-            ''WHISPER
-            Try
-                Dim WhisperFrom As String = Regex.Match(data, "whispers, ""(.*?)"" to you").Groups(1).Value
-                Dim WhisperTo As String = Regex.Match(data, "You whisper ""(.*?)"" to").Groups(1).Value
-                Dim WhisperDir As String = Regex.Match(data, String.Format("<name shortname='(.*?)' src='whisper-(.*?)'>")).Groups(2).Value
-                If WhisperDir = "from" Then
-                    'Player = NametoFurre(User, True)
-                    Player.Message = WhisperFrom
                     If BadgeTag.Count() > 0 Then
                         SpecTag = BadgeTag.Peek
                         BadgeTag.Clear()
                         Player.Badge = SpecTag
-                    Else
+                    ElseIf Player.Badge <> "" Then
                         Player.Badge = ""
                     End If
-
+                    Player.Desc = Desc.Substring(6)
                     If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
-
-
-                    sndDisplay(User & " whispers""" & WhisperFrom & """ to you.", fColorEnum.Whisper)
-                    If Not IsBot(Player) Then
-                        MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Player.Message)
-                        ' Execute (0:15) When some one whispers something
-                        MS_Engine.MainMSEngine.PageExecute(15, 16, 17)
-                        ' Execute (0:16) When some one whispers {...}
-                        ' Execute (0:17) When some one whispers something with {...} in it
+                    MainMSEngine.PageSetVariable(MS_Name, DescName)
+                    MS_Engine.MainMSEngine.PageExecute(600)
+                    'sndDisplay)
+                    If Player.Tag = "" Then
+                        sndDisplay("You See '" & Player.Name & "'\par" & Desc)
+                    Else
+                        sndDisplay("You See '" & Player.Name & "'\par" & Player.Tag & " " & Desc)
                     End If
+                    Look = False
+                Catch eX As Exception
+                    Dim logError As New ErrorLogging(eX, Me)
+                End Try
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf Color = "shout" Then
+                ''SHOUT
+                Try
+                    Dim t As New Regex(YouSayFilter)
+                    Dim u As String = t.Match(data).Groups(1).ToString
+                    Text = t.Match(data).Groups(2).ToString
+                    If User = "" Then
+                        sndDisplay("You " & u & ", """ & Text & """", fColorEnum.Shout)
+                    Else
+                        Text = Regex.Match(data, "shouts: (.*)</font>").Groups(1).ToString()
+                        sndDisplay(User & " shouts, """ & Text & """", fColorEnum.Shout)
+                    End If
+                    If Not IsBot(Player) Then
+                        MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
+                        Player.Message = Text
+                        ' Execute (0:8) When some one shouts something
+                        MS_Engine.MainMSEngine.PageExecute(8, 9, 10)
+                        ' Execute (0:9) When some one shouts {...}
+                        ' Execute (0:10) When some one shouts something with {...} in it
 
 
-                Else
-                    WhisperTo = WhisperTo.Replace("<wnd>", "")
-                    sndDisplay("You whisper""" & WhisperTo & """ to " & User & ".", fColorEnum.Whisper)
-                End If
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf Color = "warning" Then
-            SyncLock ChannelLock
+                    End If
+                Catch eX As Exception
+                    Dim logError As New ErrorLogging(eX, Me)
+                End Try
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf Color = "query" Then
+                Dim QCMD As String = Regex.Match(data, "<a.*?href='command://(.*?)'>").Groups(1).ToString
+                'Player = NametoFurre(User, True)
+                Select Case QCMD
+                    Case "summon"
+                        ''JOIN
+                        Try
+                            sndDisplay(User & " requests to join you.")
+                            'If Not IsBot(Player) Then
+                            MS_Engine.MainMSEngine.PageExecute(34, 35)
+                            'End If
+                        Catch eX As Exception
+                            Dim logError As New ErrorLogging(eX, Me)
+                        End Try
+                    Case "join"
+                        ''SUMMON
+                        Try
+                            sndDisplay(User & " requests to summon you.")
+                            'If Not IsBot(Player) Then
+                            MS_Engine.MainMSEngine.PageExecute(32, 33)
+                            'End If
+                        Catch eX As Exception
+                            Dim logError As New ErrorLogging(eX, Me)
+                        End Try
+                    Case "follow"
+                        ''LEAD
+                        Try
+                            sndDisplay(User & " requests to lead.")
+                            'If Not IsBot(Player) Then
+                            MS_Engine.MainMSEngine.PageExecute(36, 37)
+                            'End If
+                        Catch eX As Exception
+                            Dim logError As New ErrorLogging(eX, Me)
+                        End Try
+                    Case "lead"
+                        ''FOLLOW
+                        Try
+                            sndDisplay(User & " requests the bot to follow.")
+                            'If Not IsBot(Player) Then
+                            MS_Engine.MainMSEngine.PageExecute(38, 39)
+                            'End If
+                        Catch eX As Exception
+                            Dim logError As New ErrorLogging(eX, Me)
+                        End Try
+                    Case "cuddle"
+                        Try
+                            sndDisplay(User & " requests the bot to cuddle.")
+                            'If Not IsBot(Player) Then
+                            MS_Engine.MainMSEngine.PageExecute(40, 41)
+                            'End If
+                        Catch eX As Exception
+                            Dim logError As New ErrorLogging(eX, Me)
+                        End Try
+                    Case Else
+                        sndDisplay("## Unknown " & Channel & "## " & data)
+                End Select
+
+                'NameFilter
+
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf Color = "whisper" Then
+                ''WHISPER
+                Try
+                    Dim WhisperFrom As String = Regex.Match(data, "whispers, ""(.*?)"" to you").Groups(1).Value
+                    Dim WhisperTo As String = Regex.Match(data, "You whisper ""(.*?)"" to").Groups(1).Value
+                    Dim WhisperDir As String = Regex.Match(data, String.Format("<name shortname='(.*?)' src='whisper-(.*?)'>")).Groups(2).Value
+                    If WhisperDir = "from" Then
+                        'Player = NametoFurre(User, True)
+                        Player.Message = WhisperFrom
+                        If BadgeTag.Count() > 0 Then
+                            SpecTag = BadgeTag.Peek
+                            BadgeTag.Clear()
+                            Player.Badge = SpecTag
+                        Else
+                            Player.Badge = ""
+                        End If
+
+                        If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
+
+
+                        sndDisplay(User & " whispers""" & WhisperFrom & """ to you.", fColorEnum.Whisper)
+                        If Not IsBot(Player) Then
+                            MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Player.Message)
+                            ' Execute (0:15) When some one whispers something
+                            MS_Engine.MainMSEngine.PageExecute(15, 16, 17)
+                            ' Execute (0:16) When some one whispers {...}
+                            ' Execute (0:17) When some one whispers something with {...} in it
+                        End If
+
+
+                    Else
+                        WhisperTo = WhisperTo.Replace("<wnd>", "")
+                        sndDisplay("You whisper""" & WhisperTo & """ to " & User & ".", fColorEnum.Whisper)
+                    End If
+                Catch eX As Exception
+                    Dim logError As New ErrorLogging(eX, Me)
+                End Try
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf Color = "warning" Then
+
                 ErrorMsg = Text
                 ErrorNum = 1
-            End SyncLock
-            MS_Engine.MainMSEngine.PageExecute(801)
-            sndDisplay("::WARNING:: " & Text, fColorEnum.DefaultColor)
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf Color = "trade" Then
-            Dim TextStr As String = Regex.Match(data, "\s<name (.*?)</name>").Groups(0).ToString()
-            Text = Text.Substring(6)
-            If User <> "" Then Text = " " & User & Text.Replace(TextStr, "")
-            sndDisplay(Text, fColorEnum.DefaultColor)
-            MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
-            Player.Message = Text
-            MS_Engine.MainMSEngine.PageExecute(46, 47, 48)
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf Color = "emote" Then
-            Try
-                ' ''EMOTE
-                If SpeciesTag.Count() > 0 Then
-                    SpecTag = SpeciesTag.Peek
-                    SpeciesTag.Dequeue()
-                    Player.Color = SpecTag
-                End If
-                Dim usr As Regex = New Regex(NameFilter)
-                Dim n As System.Text.RegularExpressions.Match = usr.Match(Text)
-                Text = usr.Replace(Text, "")
-
-                Player = NametoFurre(n.Groups(3).Value, True)
-                MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
+                MS_Engine.MainMSEngine.PageExecute(801)
+                sndDisplay("::WARNING:: " & Text, fColorEnum.DefaultColor)
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf Color = "trade" Then
+                Dim TextStr As String = Regex.Match(data, "\s<name (.*?)</name>").Groups(0).ToString()
+                Text = Text.Substring(6)
+                If User <> "" Then Text = " " & User & Text.Replace(TextStr, "")
+                sndDisplay(Text, fColorEnum.DefaultColor)
+                MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
                 Player.Message = Text
-                If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
-                sndDisplay(User & " " & Text, fColorEnum.Emote)
-                Dim test As Boolean = IsBot(Player)
-                If IsBot(Player) = False Then
-
-                    ' Execute (0:11) When someone emotes something
-                    MS_Engine.MainMSEngine.PageExecute(11, 12, 13, 18, 19, 20)
-                    ' Execute (0:12) When someone emotes {...}
-                    ' Execute (0:13) When someone emotes something with {...} in it
-                    ' Execute (0:18) When someone says or emotes something
-                    ' Execute (0:19) When someone says or emotes {...}
-                    ' Execute (0:20) When someone says or emotes something with {...} in it
-                End If
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf Color = "channel" Then
-            'ChannelNameFilter2
-            Dim chan As Regex = New Regex(ChannelNameFilter)
-            Dim ChanMatch As System.Text.RegularExpressions.Match = chan.Match(data)
-            Dim r As New Regex("<img src='(.*?)' alt='(.*?)' />")
-            Dim ss As RegularExpressions.Match = r.Match(Text)
-            If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
-            r = New Regex(NameFilter + ":")
-            ss = r.Match(Text)
-            If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
-            sndDisplay("[" + ChanMatch.Groups(1).Value + "] " + User & ": " & Text)
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-        ElseIf Color = "notify" Then
-            Dim NameStr As String = ""
-            If Text.StartsWith("Players banished from your dreams: ") Then
-                'Banish-List
-                '[notify> Players banished from your dreams:  
-                '`(0:54) When the bot sees the banish list
-                BanishString.Clear()
-                Dim tmp() As String = Text.Substring(35).Split(","c)
-                For Each t As String In tmp
-                    BanishString.Add(t)
-                Next
-                MS_Engine.MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", String.Join(" ", BanishString.ToArray))
-                MS_Engine.MainMSEngine.PageExecute(54)
-
-            ElseIf Text.StartsWith("The banishment of player ") Then
-                'banish-off <name> (on list)
-                '[notify> The banishment of player (.*?) has ended.  
-
-                '(0:56) When the bot successfully removes a furre from the banish list,
-                '(0:58) When the bot successfully removes the furre named {...} from the banish list,
-                Dim t As New Regex("The banishment of player (.*?) has ended.")
-                NameStr = t.Match(data).Groups(1).Value
-                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
-                MS_Engine.MainMSEngine.PageExecute(56, 56)
-                For I As Integer = 0 To BanishString.Count - 1
-                    If BanishString.Item(I).ToString.ToFurcShortName = NameStr.ToFurcShortName Then
-                        BanishString.RemoveAt(I)
-                        Exit For
+                MS_Engine.MainMSEngine.PageExecute(46, 47, 48)
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf Color = "emote" Then
+                Try
+                    ' ''EMOTE
+                    If SpeciesTag.Count() > 0 Then
+                        SpecTag = SpeciesTag.Peek
+                        SpeciesTag.Dequeue()
+                        Player.Color = SpecTag
                     End If
-                Next
-                MS_Engine.MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
-            End If
+                    Dim usr As Regex = New Regex(NameFilter)
+                    Dim n As System.Text.RegularExpressions.Match = usr.Match(Text)
+                    Text = usr.Replace(Text, "")
 
-            sndDisplay("[notify> " & Text, fColorEnum.DefaultColor)
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf Color = "error" Then
-            SyncLock Lock
-                ErrorMsg = Text
-                ErrorNum = 2
-            End SyncLock
-            MS_Engine.MainMSEngine.PageExecute(800)
-            Dim NameStr As String = ""
-            If Text.Contains("There are no furres around right now with a name starting with ") Then
-                'Banish <name> (Not online)
-                'Error:>>  There are no furres around right now with a name starting with (.*?) . 
+                    Player = NametoFurre(n.Groups(3).Value, True)
+                    MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", Text)
+                    Player.Message = Text
+                    If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
+                    sndDisplay(User & " " & Text, fColorEnum.Emote)
+                    Dim test As Boolean = IsBot(Player)
+                    If IsBot(Player) = False Then
 
-                '(0:50) When the Bot fails to banish a furre,
-                '(0:51) When the bot fails to banish the furre named {...},
-                Dim t As New Regex("There are no furres around right now with a name starting with (.*?) .")
-                NameStr = t.Match(data).Groups(1).Value
-                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
-                MS_Engine.MainMSEngine.PageExecute(50, 51)
-                MS_Engine.MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
-            ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
-                'banish-off <name> (not on list)
-                'Error:>> Sorry, this player has not been banished from your dreams.
+                        ' Execute (0:11) When someone emotes something
+                        MS_Engine.MainMSEngine.PageExecute(11, 12, 13, 18, 19, 20)
+                        ' Execute (0:12) When someone emotes {...}
+                        ' Execute (0:13) When someone emotes something with {...} in it
+                        ' Execute (0:18) When someone says or emotes something
+                        ' Execute (0:19) When someone says or emotes {...}
+                        ' Execute (0:20) When someone says or emotes something with {...} in it
+                    End If
+                Catch eX As Exception
+                    Dim logError As New ErrorLogging(eX, Me)
+                End Try
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf Color = "channel" Then
+                'ChannelNameFilter2
+                Dim chan As Regex = New Regex(ChannelNameFilter)
+                Dim ChanMatch As System.Text.RegularExpressions.Match = chan.Match(data)
+                Dim r As New Regex("<img src='(.*?)' alt='(.*?)' />")
+                Dim ss As RegularExpressions.Match = r.Match(Text)
+                If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
+                r = New Regex(NameFilter + ":")
+                ss = r.Match(Text)
+                If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
+                sndDisplay("[" + ChanMatch.Groups(1).Value + "] " + User & ": " & Text)
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+            ElseIf Color = "notify" Then
+                Dim NameStr As String = ""
+                If Text.StartsWith("Players banished from your dreams: ") Then
+                    'Banish-List
+                    '[notify> Players banished from your dreams:  
+                    '`(0:54) When the bot sees the banish list
+                    BanishString.Clear()
+                    Dim tmp() As String = Text.Substring(35).Split(","c)
+                    For Each t As String In tmp
+                        BanishString.Add(t)
+                    Next
+                    MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", String.Join(" ", BanishString.ToArray))
+                    MS_Engine.MainMSEngine.PageExecute(54)
 
-                '(0:55) When the Bot fails to remove a furre from the banish list,
-                '(0:56) When the bot fails to remove the furre named {...} from the banish list,
-                NameStr = BanishName
-                MS_Engine.MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
-                MS_Engine.MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
-                MS_Engine.MainMSEngine.PageExecute(50, 51)
-            ElseIf Text = "You have not banished anyone." Then
-                'banish-off-all (empty List)
-                'Error:>> You have not banished anyone. 
+                ElseIf Text.StartsWith("The banishment of player ") Then
+                    'banish-off <name> (on list)
+                    '[notify> The banishment of player (.*?) has ended.  
 
-                '(0:59) When the bot fails to see the banish list,
-                BanishString.Clear()
-                MS_Engine.MainMSEngine.PageExecute(59)
-                MS_Engine.MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", Nothing)
-            ElseIf Text = "You do not have any cookies to give away right now!" Then
-                MS_Engine.MainMSEngine.PageExecute(95)
-            End If
+                    '(0:56) When the bot successfully removes a furre from the banish list,
+                    '(0:58) When the bot successfully removes the furre named {...} from the banish list,
+                    Dim t As New Regex("The banishment of player (.*?) has ended.")
+                    NameStr = t.Match(data).Groups(1).Value
+                    MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
+                    MS_Engine.MainMSEngine.PageExecute(56, 56)
+                    For I As Integer = 0 To BanishString.Count - 1
+                        If MainMSEngine.ToFurcShortName(BanishString.Item(I).ToString) = MainMSEngine.ToFurcShortName(NameStr) Then
+                            BanishString.RemoveAt(I)
+                            Exit For
+                        End If
+                    Next
+                    MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
+                End If
 
-            sndDisplay("Error:>> " & Text)
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf data.StartsWith("Communication") Then
-            sndDisplay("Error: Communication Error.  Aborting connection.")
-            ProcExit = False
-            DisconnectBot()
-            'LogSaveTmr.Enabled = False
+                sndDisplay("[notify> " & Text, fColorEnum.DefaultColor)
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf Color = "error" Then
+                SyncLock Lock
+                    ErrorMsg = Text
+                    ErrorNum = 2
+                End SyncLock
+                MS_Engine.MainMSEngine.PageExecute(800)
+                Dim NameStr As String = ""
+                If Text.Contains("There are no furres around right now with a name starting with ") Then
+                    'Banish <name> (Not online)
+                    'Error:>>  There are no furres around right now with a name starting with (.*?) . 
 
-        ElseIf Channel = "@cookie" Then
-            ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Cookie <a href='http://www.furcadia.com/cookies/Cookie%20Economy.html'>bank</a> has currently collected: 0</font>
-            ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> All-time Cookie total: 0</font>
-            ' <font color='success'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Your cookies are ready.  http://furcadia.com/cookies/ for more info!</font>
-            '<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.
+                    '(0:50) When the Bot fails to banish a furre,
+                    '(0:51) When the bot fails to banish the furre named {...},
+                    Dim t As New Regex("There are no furres around right now with a name starting with (.*?) .")
+                    NameStr = t.Match(data).Groups(1).Value
+                    MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
+                    MS_Engine.MainMSEngine.PageExecute(50, 51)
+                    MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
+                ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
+                    'banish-off <name> (not on list)
+                    'Error:>> Sorry, this player has not been banished from your dreams.
 
-            Dim CookieToMe As Regex = New Regex(String.Format("{0}", CookieToMeREGEX))
-            If CookieToMe.Match(data).Success Then
-                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, CookieToMe.Match(data).Groups(2).Value)
-                MS_Engine.MainMSEngine.PageExecute(42, 43)
-            End If
-            Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
-            If CookieToAnyone.Match(data).Success Then
-                'MainMSEngine.PageSetVariable(VarPrefix & MS_Name, CookieToAnyone.Match(data).Groups(3).Value)
-                If callbk.IsBot(NametoFurre(CookieToAnyone.Match(data).Groups(3).Value, True)) Then
+                    '(0:55) When the Bot fails to remove a furre from the banish list,
+                    '(0:56) When the bot fails to remove the furre named {...} from the banish list,
+                    NameStr = BanishName
+                    MainMSEngine.PageSetVariable("BANISHNAME", NameStr)
+                    MainMSEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
+                    MS_Engine.MainMSEngine.PageExecute(50, 51)
+                ElseIf Text = "You have not banished anyone." Then
+                    'banish-off-all (empty List)
+                    'Error:>> You have not banished anyone. 
+
+                    '(0:59) When the bot fails to see the banish list,
+                    BanishString.Clear()
+                    MS_Engine.MainMSEngine.PageExecute(59)
+                    MainMSEngine.PageSetVariable(VarPrefix & "BANISHLIST", Nothing)
+                ElseIf Text = "You do not have any cookies to give away right now!" Then
+                    MS_Engine.MainMSEngine.PageExecute(95)
+                End If
+
+                sndDisplay("Error:>> " & Text)
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf data.StartsWith("Communication") Then
+                sndDisplay("Error: Communication Error.  Aborting connection.")
+                ProcExit = False
+                DisconnectBot()
+                'LogSaveTmr.Enabled = False
+
+            ElseIf Channel = "@cookie" Then
+                ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Cookie <a href='http://www.furcadia.com/cookies/Cookie%20Economy.html'>bank</a> has currently collected: 0</font>
+                ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> All-time Cookie total: 0</font>
+                ' <font color='success'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Your cookies are ready.  http://furcadia.com/cookies/ for more info!</font>
+                '<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.
+
+                Dim CookieToMe As Regex = New Regex(String.Format("{0}", CookieToMeREGEX))
+                If CookieToMe.Match(data).Success Then
+                    MainMSEngine.PageSetVariable(MS_Name, CookieToMe.Match(data).Groups(2).Value)
                     MS_Engine.MainMSEngine.PageExecute(42, 43)
-                Else
-                    MS_Engine.MainMSEngine.PageExecute(44)
+                End If
+                Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
+                If CookieToAnyone.Match(data).Success Then
+                    'MainMSEngine.PageSetVariable(VarPrefix & MS_Name, CookieToAnyone.Match(data).Groups(3).Value)
+                    If callbk.IsBot(NametoFurre(CookieToAnyone.Match(data).Groups(3).Value, True)) Then
+                        MS_Engine.MainMSEngine.PageExecute(42, 43)
+                    Else
+                        MS_Engine.MainMSEngine.PageExecute(44)
+                    End If
+
+
+                End If
+                Dim CookieFail As Regex = New Regex(String.Format("You do not have any (.*?) left!"))
+                If CookieFail.Match(data).Success Then
+                    MS_Engine.MainMSEngine.PageExecute(45)
+                End If
+                Dim EatCookie As Regex = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
+                If EatCookie.Match(data).Success Then
+                    MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", "You eat a cookie." + EatCookie.Replace(data, ""))
+                    Player.Message = "You eat a cookie." + EatCookie.Replace(data, "")
+                    MS_Engine.MainMSEngine.PageExecute(49)
+
+                End If
+                sndDisplay(Text, fColorEnum.DefaultColor)
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+            ElseIf data.StartsWith("PS") Then
+                Dim PS_Stat As Int16 = 0
+                '(PS Ok: get: result: bank=200, clearance=10, member=1, message='test', stafflv=2, sys_lastused_date=1340046340
+                MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", data)
+                Player.Message = data
+                Dim psResult As Regex = New Regex(String.Format("^PS (\d+)? ?Ok: get: result: (.*)$"))          'Regex: ^\(PS Ok: get: result: (.*)$
+                Dim psMatch As System.Text.RegularExpressions.Match = psResult.Match(String.Format("{0}", data))
+                If psMatch.Success Then
+                    Int16.TryParse(psMatch.Groups(1).Value.ToString, PS_Stat)
+                    Dim psResult1 As Regex = New Regex("^<empty>$")
+                    Dim psMatch2 As System.Text.RegularExpressions.Match = psResult1.Match(psMatch.Groups(2).Value)
+                    If psMatch2.Success And CurrentPS_Stage = PS_BackupStage.GetAlphaNumericList Then
+                        If NextLetter <> "{"c Then
+                            ServerStack.Enqueue("ps get character." + incrementLetter(NextLetter) + "*")
+                        Else
+                            psCheck = ProcessPSData(1, PSinfo, data)
+                        End If
+                    Else
+
+
+                        'Add "," to the end of match #1.
+                        'Input: "bank=200, clearance=10, member=1, message='test', stafflv=2, sys_lastused_date=1340046340,"
+                        Dim input As String = psMatch.Groups(2).Value.ToString & ","
+                        'Regex: ( ?([^=]+)=('?)(.+?)('?)),
+                        SyncLock ChannelLock
+                            If CurrentPS_Stage <> PS_BackupStage.GetAlphaNumericList Then PSinfo.Clear()
+                            Dim mc As MatchCollection = Regex.Matches(input, "\s?(.*?)=('?)(\d+|.*?)(\2),?")
+                            Dim i As Integer
+                            For i = 0 To mc.Count - 1
+                                Dim m As System.Text.RegularExpressions.Match = mc.Item(i)
+                                If Not PSinfo.ContainsKey(m.Groups(1).Value) Then PSinfo.Add(m.Groups(1).Value.ToString, m.Groups(3).Value)
+                                'Match(1) : Value(Name)
+                                'Match 2: Empty if number, ' if string
+                                'Match(3) : Value()
+                            Next
+                            'Int16.TryParse(psMatch.Groups(1).Value.ToString, PS_Stat)
+                            If CurrentPS_Stage <> PS_BackupStage.GetAlphaNumericList Then
+                                Try
+                                    psCheck = ProcessPSData(PS_Stat, PSinfo, data)
+                                Catch ex As Exception
+                                    Dim e As New ErrorLogging(ex, Me)
+                                End Try
+                            ElseIf CurrentPS_Stage = PS_BackupStage.GetAlphaNumericList And NextLetter <> "{"c Then
+                                Dim m As System.Text.RegularExpressions.Match = mc.Item(mc.Count - 1)
+                                NextLetter = incrementLetter(m.Groups(1).Value.ToString)
+                                If NextLetter <> "{"c Then
+                                    ServerStack.Enqueue("ps get character." + NextLetter + "*")
+                                Else
+                                    psCheck = ProcessPSData(1, PSinfo, data)
+                                End If
+                            ElseIf CurrentPS_Stage = PS_BackupStage.GetAlphaNumericList And NextLetter = "{"c Then
+                                'CurrentPS_Stage = PS_BackupStage.GetList
+                                Try
+                                    psCheck = ProcessPSData(PS_Stat, PSinfo, data)
+                                Catch ex As Exception
+                                    Dim e As New ErrorLogging(ex, Me)
+                                End Try
+                            End If
+                        End SyncLock
+                    End If
                 End If
 
 
-            End If
-            Dim CookieFail As Regex = New Regex(String.Format("You do not have any (.*?) left!"))
-            If CookieFail.Match(data).Success Then
-                MS_Engine.MainMSEngine.PageExecute(45)
-            End If
-            Dim EatCookie As Regex = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
-            If EatCookie.Match(data).Success Then
-                MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", "You eat a cookie." + EatCookie.Replace(data, ""))
-                Player.Message = "You eat a cookie." + EatCookie.Replace(data, "")
-                MS_Engine.MainMSEngine.PageExecute(49)
+                psResult = New Regex(String.Format("^PS (\d+)? ?Ok: get: multi_result (\d+)/(\d+): (.+)$"))
+                'Regex: ^\(PS Ok: get: result: (.*)$
+                psMatch = psResult.Match(String.Format("{0}", data))
+                If psMatch.Success Then
 
-            End If
-            sndDisplay(Text, fColorEnum.DefaultColor)
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        ElseIf data.StartsWith("PS") Then
-            Dim PS_Stat As Int16 = 0
-            '(PS Ok: get: result: bank=200, clearance=10, member=1, message='test', stafflv=2, sys_lastused_date=1340046340
-            MS_Engine.MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", data)
-            Player.Message = data
-            Dim psResult As Regex = New Regex(String.Format("^PS (\d+)? ?Ok: get: result: (.*)$"))          'Regex: ^\(PS Ok: get: result: (.*)$
-            Dim psMatch As System.Text.RegularExpressions.Match = psResult.Match(String.Format("{0}", data))
-            If psMatch.Success Then
-                Int16.TryParse(psMatch.Groups(1).Value.ToString, PS_Stat)
-                Dim psResult1 As Regex = New Regex("^<empty>$")
-                Dim psMatch2 As System.Text.RegularExpressions.Match = psResult1.Match(psMatch.Groups(2).Value)
-                If psMatch2.Success And CurrentPS_Stage = PS_BackupStage.GetAlphaNumericList Then
-                    If NextLetter <> "{"c Then
-                        ServerStack.Enqueue("ps get character." + incrementLetter(NextLetter) + "*")
-                    Else
-                        psCheck = ProcessPSData(1, PSinfo, data)
+                    Int16.TryParse(psMatch.Groups(1).Value.ToString, PS_Stat)
+                    If psMatch.Groups(2).Value.ToString = "1" And CurrentPS_Stage = PS_BackupStage.GetList Then
+                        pslen = 0
+                        PSinfo.Clear()
+                        PS_Page = ""
+                    ElseIf CurrentPS_Stage = PS_BackupStage.GetAlphaNumericList Then
+                        pslen = 0
                     End If
-                Else
-
 
                     'Add "," to the end of match #1.
                     'Input: "bank=200, clearance=10, member=1, message='test', stafflv=2, sys_lastused_date=1340046340,"
-                    Dim input As String = psMatch.Groups(2).Value.ToString & ","
+                    'Dim input As String = psMatch.Groups(4).Value.ToString
+                    PS_Page += psMatch.Groups(4).Value.ToString
+                    pslen += data.Length + 1
                     'Regex: ( ?([^=]+)=('?)(.+?)('?)),
-                    SyncLock ChannelLock
-                        If CurrentPS_Stage <> PS_BackupStage.GetAlphaNumericList Then PSinfo.Clear()
-                        Dim mc As MatchCollection = Regex.Matches(input, "\s?(.*?)=('?)(\d+|.*?)(\2),?")
-                        Dim i As Integer
-                        For i = 0 To mc.Count - 1
-                            Dim m As System.Text.RegularExpressions.Match = mc.Item(i)
-                            If Not PSinfo.ContainsKey(m.Groups(1).Value) Then PSinfo.Add(m.Groups(1).Value.ToString, m.Groups(3).Value)
-                            'Match(1) : Value(Name)
-                            'Match 2: Empty if number, ' if string
-                            'Match(3) : Value()
-                        Next
-                        'Int16.TryParse(psMatch.Groups(1).Value.ToString, PS_Stat)
-                        If CurrentPS_Stage <> PS_BackupStage.GetAlphaNumericList Then
-                            Try
-                                psCheck = ProcessPSData(PS_Stat, PSinfo, data)
-                            Catch ex As Exception
-                                Dim e As New ErrorLogging(ex, Me)
-                            End Try
-                        ElseIf CurrentPS_Stage = PS_BackupStage.GetAlphaNumericList And NextLetter <> "{"c Then
-                            Dim m As System.Text.RegularExpressions.Match = mc.Item(mc.Count - 1)
-                            NextLetter = incrementLetter(m.Groups(1).Value.ToString)
-                            If NextLetter <> "{"c Then
-                                ServerStack.Enqueue("ps get character." + NextLetter + "*")
-                            Else
-                                psCheck = ProcessPSData(1, PSinfo, data)
-                            End If
-                        ElseIf CurrentPS_Stage = PS_BackupStage.GetAlphaNumericList And NextLetter = "{"c Then
-                            'CurrentPS_Stage = PS_BackupStage.GetList
-                            Try
-                                psCheck = ProcessPSData(PS_Stat, PSinfo, data)
-                            Catch ex As Exception
-                                Dim e As New ErrorLogging(ex, Me)
-                            End Try
-                        End If
-                    End SyncLock
-                End If
-            End If
+
+                    If psMatch.Groups(2).Value = psMatch.Groups(3).Value Then
+                        'PS_Page += ","
 
 
-            psResult = New Regex(String.Format("^PS (\d+)? ?Ok: get: multi_result (\d+)/(\d+): (.+)$"))
-            'Regex: ^\(PS Ok: get: result: (.*)$
-            psMatch = psResult.Match(String.Format("{0}", data))
-            If psMatch.Success Then
-
-                Int16.TryParse(psMatch.Groups(1).Value.ToString, PS_Stat)
-                If psMatch.Groups(2).Value.ToString = "1" And CurrentPS_Stage = PS_BackupStage.GetList Then
-                    pslen = 0
-                    PSinfo.Clear()
-                    PS_Page = ""
-                ElseIf CurrentPS_Stage = PS_BackupStage.GetAlphaNumericList Then
-                    pslen = 0
-                End If
-
-                'Add "," to the end of match #1.
-                'Input: "bank=200, clearance=10, member=1, message='test', stafflv=2, sys_lastused_date=1340046340,"
-                'Dim input As String = psMatch.Groups(4).Value.ToString
-                PS_Page += psMatch.Groups(4).Value.ToString
-                pslen += data.Length + 1
-                'Regex: ( ?([^=]+)=('?)(.+?)('?)),
-
-                If psMatch.Groups(2).Value = psMatch.Groups(3).Value Then
-                    'PS_Page += ","
-
-                    SyncLock ChannelLock
                         Dim mc As MatchCollection = Regex.Matches(String.Format(PS_Page), String.Format("\s?(.*?)=('?)(\d+|.*?)(\2),?"), RegexOptions.IgnorePatternWhitespace)
                         If CurrentPS_Stage <> PS_BackupStage.GetAlphaNumericList Then PSinfo.Clear()
                         For i As Integer = 0 To mc.Count - 1
@@ -2418,134 +2415,135 @@ Public Class Main
                                 Dim e As New ErrorLogging(ex, Me)
                             End Try
                         End If
-                    End SyncLock
-                End If
-                '(PS 5 Error: get: Query error: Field 'Bob' does not exist
 
-            End If
-
-            psResult = New Regex("^PS (\d+)? ?Ok: set: Ok$")
-            '^PS (\d+)? ?Ok: set: Ok
-            psMatch = psResult.Match(data)
-            If psMatch.Success Then
-                PSinfo.Clear()
-                Int16.TryParse(psMatch.Groups(1).Value.ToString, PS_Stat)
-                Try
-                    ProcessPSData(PS_Stat, PSinfo, data)
-                Catch ex As Exception
-                    Dim e As New ErrorLogging(ex, Me)
-                End Try
-            End If
-            'PS (\d+) Error: Sorry, PhoenixSpeak commands are currently not available in this dream.
-            psResult = New Regex("^PS (\d+)? ?Error: (.*?)")
-            psMatch = psResult.Match(data)
-            If psMatch.Success Then
-                psResult = New Regex("^PS (\d+)? ?Error: Sorry, PhoenixSpeak commands are currently not available in this dream.$")
-                'Regex: ^\(PS Ok: get: result: (.*)$
-                'PS (\d+)? ?Error: get: Query error: (.+) Unexpected character '(.+)' at column (\d+)
-                Dim psMatch2 As System.Text.RegularExpressions.Match = psResult.Match(data)
-                Dim psResult2 As Regex = New Regex("^PS (\d+)? ?Error: set")
-                Dim psmatch3 As System.Text.RegularExpressions.Match = psResult2.Match(data)
-                Dim psResult3 As Regex = New Regex("PS (\d+)? ?Error: set: Query error: Only (\d+) rows allowed.")
-                Dim psmatch4 As System.Text.RegularExpressions.Match = psResult3.Match(data)
-                If psMatch2.Success Or psmatch3.Success Or psmatch4.Success Then
-                    PS_Abort()
-                    If psmatch4.Success Then
-                        MainMSEngine.MSpage.Execute(503)
                     End If
-                Else
+                    '(PS 5 Error: get: Query error: Field 'Bob' does not exist
+
+                End If
+
+                psResult = New Regex("^PS (\d+)? ?Ok: set: Ok$")
+                '^PS (\d+)? ?Ok: set: Ok
+                psMatch = psResult.Match(data)
+                If psMatch.Success Then
+                    PSinfo.Clear()
                     Int16.TryParse(psMatch.Groups(1).Value.ToString, PS_Stat)
-
-                    If CurrentPS_Stage = PS_BackupStage.off Then
-                        MS_Engine.MainMSEngine.PageExecute(80, 81, 82)
-
-                    ElseIf CurrentPS_Stage = PS_BackupStage.GetList Then
-                        If PS_Stat <> CharacterList.Count Then
-                            Dim str As String = "ps " + (PS_Stat + 1).ToString + " get character." + CharacterList(PS_Stat).name + ".*"
-                            ServerStack.Enqueue(str)
-                            psSendCounter = CShort(PS_Stat + 1)
-
-                            psReceiveCounter = PS_Stat
-
-                        ElseIf PS_Stat = CharacterList.Count Then
-                            CurrentPS_Stage = PS_BackupStage.off
-
-
-                        End If
-                    ElseIf CurrentPS_Stage = PS_BackupStage.GetTargets And psSendCounter = psReceiveCounter + 1 Then
-                        If PS_Stat <> CharacterList.Count Then
-                            Dim str As String = "ps " + (PS_Stat + 1).ToString + " get character." + CharacterList(PS_Stat).name + ".*"
-                            ServerStack.Enqueue(str)
-                            psSendCounter = CShort(PS_Stat + 1)
-                            psReceiveCounter = PS_Stat
-                        ElseIf PS_Stat = CharacterList.Count Then
-                            CurrentPS_Stage = PS_BackupStage.off
-                            PSBackupRunning = False
-                            CharacterList.Clear()
-                            psReceiveCounter = 0
-                            psSendCounter = 1
-                            '(0:501) When the bot completes backing up the characters Phoenix Speak,
-                            SendClientMessage("SYSTEM:", "Completed Backing up Dream Characters set.")
-                            MainMSEngine.MSpage.Execute(501)
-                        End If
-
-                    ElseIf CurrentPS_Stage = PS_BackupStage.RestoreAllCharacterPS And PS_Stat <= PSS_Stack.Count - 1 And psSendCounter = psReceiveCounter + 1 Then
-                        If PS_Stat <> PSS_Stack.Count - 1 Then
-                            LastSentPS = 0
-                            Dim ss As New PSS_Struct
-                            ss = PSS_Stack(PS_Stat)
-                            ServerStack.Enqueue(ss.Cmd)
-                            psSendCounter = CShort(PS_Stat + 1)
-                            psReceiveCounter = PS_Stat
-
-                        ElseIf PS_Stat = PSS_Stack.Count - 1 Then
-                            PSRestoreRunning = False
-                            SendClientMessage("SYSTEM:", "Completed Character restoration to the dream")
-                            '(0:501) When the bot completes backing up the characters Phoenix Speak,
+                    Try
+                        ProcessPSData(PS_Stat, PSinfo, data)
+                    Catch ex As Exception
+                        Dim e As New ErrorLogging(ex, Me)
+                    End Try
+                End If
+                'PS (\d+) Error: Sorry, PhoenixSpeak commands are currently not available in this dream.
+                psResult = New Regex("^PS (\d+)? ?Error: (.*?)")
+                psMatch = psResult.Match(data)
+                If psMatch.Success Then
+                    psResult = New Regex("^PS (\d+)? ?Error: Sorry, PhoenixSpeak commands are currently not available in this dream.$")
+                    'Regex: ^\(PS Ok: get: result: (.*)$
+                    'PS (\d+)? ?Error: get: Query error: (.+) Unexpected character '(.+)' at column (\d+)
+                    Dim psMatch2 As System.Text.RegularExpressions.Match = psResult.Match(data)
+                    Dim psResult2 As Regex = New Regex("^PS (\d+)? ?Error: set")
+                    Dim psmatch3 As System.Text.RegularExpressions.Match = psResult2.Match(data)
+                    Dim psResult3 As Regex = New Regex("PS (\d+)? ?Error: set: Query error: Only (\d+) rows allowed.")
+                    Dim psmatch4 As System.Text.RegularExpressions.Match = psResult3.Match(data)
+                    If psMatch2.Success Or psmatch3.Success Or psmatch4.Success Then
+                        PS_Abort()
+                        If psmatch4.Success Then
                             MainMSEngine.MSpage.Execute(503)
-                            CurrentPS_Stage = PS_BackupStage.off
                         End If
-                    ElseIf CurrentPS_Stage = PS_BackupStage.GetSingle And PS_Stat <= CharacterList.Count And psSendCounter = psReceiveCounter + 1 Then
-                        If PS_Stat <> CharacterList.Count Then
-                            Dim str As String = "ps " + (PS_Stat + 1).ToString + " get character." + CharacterList(PS_Stat).name + ".*"
-                            ServerStack.Enqueue(str)
-                            psSendCounter = CShort(PS_Stat + 1)
-                            psReceiveCounter = PS_Stat
-                        ElseIf PS_Stat = CharacterList.Count Then
-                            CurrentPS_Stage = PS_BackupStage.off
-                            CharacterList.Clear()
-                            psReceiveCounter = 0
-                            psSendCounter = 1
-                            PSBackupRunning = False
+                    Else
+                        Int16.TryParse(psMatch.Groups(1).Value.ToString, PS_Stat)
+
+                        If CurrentPS_Stage = PS_BackupStage.off Then
+                            MS_Engine.MainMSEngine.PageExecute(80, 81, 82)
+
+                        ElseIf CurrentPS_Stage = PS_BackupStage.GetList Then
+                            If PS_Stat <> CharacterList.Count Then
+                                Dim str As String = "ps " + (PS_Stat + 1).ToString + " get character." + CharacterList(PS_Stat).name + ".*"
+                                ServerStack.Enqueue(str)
+                                psSendCounter = CShort(PS_Stat + 1)
+
+                                psReceiveCounter = PS_Stat
+
+                            ElseIf PS_Stat = CharacterList.Count Then
+                                CurrentPS_Stage = PS_BackupStage.off
+
+
+                            End If
+                        ElseIf CurrentPS_Stage = PS_BackupStage.GetTargets And psSendCounter = psReceiveCounter + 1 Then
+                            If PS_Stat <> CharacterList.Count Then
+                                Dim str As String = "ps " + (PS_Stat + 1).ToString + " get character." + CharacterList(PS_Stat).name + ".*"
+                                ServerStack.Enqueue(str)
+                                psSendCounter = CShort(PS_Stat + 1)
+                                psReceiveCounter = PS_Stat
+                            ElseIf PS_Stat = CharacterList.Count Then
+                                CurrentPS_Stage = PS_BackupStage.off
+                                PSBackupRunning = False
+                                CharacterList.Clear()
+                                psReceiveCounter = 0
+                                psSendCounter = 1
+                                '(0:501) When the bot completes backing up the characters Phoenix Speak,
+                                SendClientMessage("SYSTEM:", "Completed Backing up Dream Characters set.")
+                                MainMSEngine.MSpage.Execute(501)
+                            End If
+
+                        ElseIf CurrentPS_Stage = PS_BackupStage.RestoreAllCharacterPS And PS_Stat <= PSS_Stack.Count - 1 And psSendCounter = psReceiveCounter + 1 Then
+                            If PS_Stat <> PSS_Stack.Count - 1 Then
+                                LastSentPS = 0
+                                Dim ss As New PSS_Struct
+                                ss = PSS_Stack(PS_Stat)
+                                ServerStack.Enqueue(ss.Cmd)
+                                psSendCounter = CShort(PS_Stat + 1)
+                                psReceiveCounter = PS_Stat
+
+                            ElseIf PS_Stat = PSS_Stack.Count - 1 Then
+                                PSRestoreRunning = False
+                                SendClientMessage("SYSTEM:", "Completed Character restoration to the dream")
+                                '(0:501) When the bot completes backing up the characters Phoenix Speak,
+                                MainMSEngine.MSpage.Execute(503)
+                                CurrentPS_Stage = PS_BackupStage.off
+                            End If
+                        ElseIf CurrentPS_Stage = PS_BackupStage.GetSingle And PS_Stat <= CharacterList.Count And psSendCounter = psReceiveCounter + 1 Then
+                            If PS_Stat <> CharacterList.Count Then
+                                Dim str As String = "ps " + (PS_Stat + 1).ToString + " get character." + CharacterList(PS_Stat).name + ".*"
+                                ServerStack.Enqueue(str)
+                                psSendCounter = CShort(PS_Stat + 1)
+                                psReceiveCounter = PS_Stat
+                            ElseIf PS_Stat = CharacterList.Count Then
+                                CurrentPS_Stage = PS_BackupStage.off
+                                CharacterList.Clear()
+                                psReceiveCounter = 0
+                                psSendCounter = 1
+                                PSBackupRunning = False
+                            End If
                         End If
                     End If
                 End If
-            End If
-            If MainSettings.PSShowMainWindow Then
+                If MainSettings.PSShowMainWindow Then
+                    sndDisplay(data)
+                End If
+                If MainSettings.PSShowClient Then
+                    If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                End If
+                Exit Sub
+
+            ElseIf data.StartsWith("(You enter the dream of") Then
+                MainMSEngine.PageSetVariable("DREAMNAME", Nothing)
+                MainMSEngine.PageSetVariable("DREAMOWNER", data.Substring(24, data.Length - 2 - 24))
+                MS_Engine.MainMSEngine.PageExecute(90, 91)
                 sndDisplay(data)
-            End If
-            If MainSettings.PSShowClient Then
                 If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
+
+
+            Else
+                sndDisplay(data)
+
+                If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+                Exit Sub
             End If
-            Exit Sub
-
-        ElseIf data.StartsWith("(You enter the dream of") Then
-            MS_Engine.MainMSEngine.PageSetVariable("DREAMNAME", Nothing)
-            MS_Engine.MainMSEngine.PageSetVariable("DREAMOWNER", data.Substring(24, data.Length - 2 - 24))
-            MS_Engine.MainMSEngine.PageExecute(90, 91)
-            sndDisplay(data)
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-
-
-        Else
-            sndDisplay(data)
-
-            If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-            Exit Sub
-        End If
-        ' If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
-        ' Exit Sub
+            ' If smProxy.IsClientConnected Then smProxy.SendClient("(" + data + vbLf)
+            ' Exit Sub
+        End SyncLock
     End Sub
     Public Shared Sub PS_Abort()
         CurrentPS_Stage = PS_BackupStage.off
@@ -2665,7 +2663,7 @@ Public Class Main
                 ServerStack.Enqueue(s.Cmd)
                 Player = NametoFurre(s.Name, True)
                 Player.Message = ""
-                MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", "")
+                MainMSEngine.PageSetVariable("MESSAGE", "")
                 MS_Engine.MainMSEngine.PageExecute(506, 507)
 
                 psSendCounter = CShort(PS_Stat + 1)
@@ -2721,18 +2719,19 @@ Public Class Main
                 Return Character.Value
             End If
         Next
+        Return Nothing
     End Function
 
     Public Function NametoFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
         Dim p As New FURRE
         p.Name = sname
         For Each Character As KeyValuePair(Of UInteger, FURRE) In DREAM.List
-            If Character.Value.ShortName = sname.ToFurcShortName Then
+            If Character.Value.ShortName = MainMSEngine.ToFurcShortName(sname) Then
                 p = Character.Value
                 Exit For
             End If
         Next
-        If UbdateMSVariableName Then MS_Engine.MainMSEngine.PageSetVariable(MS_Name, sname)
+        If UbdateMSVariableName Then MainMSEngine.PageSetVariable(MS_Name, sname)
 
         Return p
     End Function
@@ -2741,8 +2740,8 @@ Public Class Main
 
     Public Function IsBot(ByRef player As FURRE) As Boolean
         Try
-            Dim str As String = BotName.ToFurcShortName
-            If player.ShortName <> BotName.ToFurcShortName Then Return False
+            Dim str As String = MainMSEngine.ToFurcShortName(BotName)
+            If player.ShortName <> MainMSEngine.ToFurcShortName(BotName) Then Return False
         Catch eX As Exception
             Dim logError As New ErrorLogging(eX, Me)
         End Try
@@ -2793,7 +2792,7 @@ Public Class Main
                     BotName = BotName.Replace("|", " ")
                     MainText(BotName)
                     BotName = BotName.Replace("[^a-zA-Z0-9\0x0020_.| ]+", "").ToLower()
-                    MS_Engine.MainMSEngine.PageSetVariable("BOTNAME", BotName)
+                    MainMSEngine.PageSetVariable("BOTNAME", BotName)
                 ElseIf data = "vascodagama" And loggingIn = 2 Then
                     sndServer("`uid")
                     Select Case cBot.GoMapIDX
@@ -2875,8 +2874,8 @@ Public Class Main
             If (Monitor.TryEnter(temp)) Then
                 Player.Clear()
                 Channel = ""
-                MS_Engine.MainMSEngine.PageSetVariable(MS_Name, "")
-                MS_Engine.MainMSEngine.PageSetVariable("MESSAGE", "")
+                MainMSEngine.PageSetVariable(MS_Name, "")
+                MainMSEngine.PageSetVariable("MESSAGE", "")
                 serverData = data
                 Dim test As Boolean = MessagePump(serverData)
                 ParseServerData(serverData, test)

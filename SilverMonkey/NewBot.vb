@@ -37,11 +37,14 @@ Public Class NewBott
         If Not String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
             BotFile = TxtbxFilelocation.Text + Path.DirectorySeparatorChar + TxtbxBotName.Text
         Else
-            BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text + ".bini")
+            BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
         End If
-        If File.Exists(BotFile + ".bini") And Not OverWrite Then
-            If MessageBox.Show(BotFile + ".bini Exists! Over write settings?", "File Exists Warning", _
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning, _
+        Dim ext As String = Path.GetExtension(BotFile)
+        If String.IsNullOrEmpty(ext) Then BotFile = BotFile + ".bini"
+
+        If File.Exists(BotFile) And Not OverWrite Then
+            If MessageBox.Show(BotFile + " Exists! Over write settings?", "File Exists Warning",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
                 MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.No Then
 
                 ClearForm()
@@ -54,7 +57,7 @@ Public Class NewBott
             End If
         End If
 
-        bFile.IniFile = BotFile
+        bFile.BiniFile = BotFile
         bFile.IniFile = TxtbxCharacterINI.Text
         bFile.MS_File = BotFile + ".ms"
 
@@ -86,7 +89,7 @@ Public Class NewBott
             callbk.LogStream = New LogStream(callbk.setLogName(bFile), bFile.LogPath)
         End If
         bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.IniFile)
+        Main.SaveRecentFile(bFile.BiniFile)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Dispose()
 

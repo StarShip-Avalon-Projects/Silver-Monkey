@@ -812,7 +812,7 @@ Public Class Settings
     Public Class cBot
 
         Private Shared _IniFile As String = ""
-
+        Private Shared _BiniFile As String = ""
         Private Shared _MS_Engine_Enable As Boolean = False
         Private _MsFileName As String = ""
         Private _MS_Script As String = ""
@@ -904,12 +904,28 @@ Public Class Settings
             End Set
         End Property
 
+
+        ''' <summary>
+        ''' Gets or sets the Character ini file.
+        ''' </summary>
+        ''' <value>
+        ''' The ini file.
+        ''' </value>
         Public Property IniFile() As String
             Get
                 Return _IniFile
             End Get
             Set(ByVal value As String)
                 _IniFile = value
+            End Set
+        End Property
+
+        Public Property BiniFile() As String
+            Get
+                Return _BiniFile
+            End Get
+            Set(ByVal value As String)
+                _BiniFile = value
             End Set
         End Property
 
@@ -992,7 +1008,7 @@ Public Class Settings
                 End If
                 BotIni.Load(BFile)
             End If
-            IniFile = BFile
+            _BiniFile = BFile
             Dim s As String = ""
             s = BotIni.GetKeyValue("Main", "Log")
             If Not String.IsNullOrEmpty(s) Then _log = Convert.ToBoolean(s)
@@ -1045,8 +1061,9 @@ Public Class Settings
 
         End Sub
         Public Sub SaveBotSettings()
-            If File.Exists(Path.Combine(Paths.SilverMonkeyBotPath, IniFile)) Then
-                BotIni.Load(Path.Combine(Paths.SilverMonkeyBotPath, IniFile))
+            BotIni = New IniFile()
+            If File.Exists(Paths.CheckBotFolder(_BiniFile)) Then
+                BotIni.Load(Paths.CheckBotFolder(_BiniFile))
             End If
 
             BotIni.SetKeyValue("Main", "Log", _log.ToString)
@@ -1064,7 +1081,7 @@ Public Class Settings
             BotIni.SetKeyValue("GoMap", "IDX", _GoMap.ToString)
             BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL)
 
-            BotIni.Save(Path.Combine(Paths.SilverMonkeyBotPath, IniFile))
+            BotIni.Save(Paths.CheckBotFolder(_BiniFile))
         End Sub
     End Class
 
@@ -1126,7 +1143,6 @@ Public Class Settings
             If File.Exists(SettingsFile) Then
                 ini.Load(SettingsFile, True)
             End If
-            Dim s As String
             Dim MantisSection As IniSection = ini.GetSection("MantisConnect")
 
             Dim MantisKey As IniSection.IniKey = MantisSection.GetKey("HttpPassword")

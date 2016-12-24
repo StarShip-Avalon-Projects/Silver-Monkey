@@ -247,7 +247,7 @@ Public Class Paths
     ''' </value>
     Public Shared Property SilverMonkeyBotPath() As String
         Get
-            If String.IsNullOrEmpty(_SilverMonkeyDocumentsPath) Then
+            If String.IsNullOrEmpty(_SilverMonkeyBotPath) Then
                 _SilverMonkeyBotPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), MyDocumentsPath)
             End If
             Return _SilverMonkeyBotPath

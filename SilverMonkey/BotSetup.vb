@@ -1,10 +1,9 @@
 ﻿Imports System.Windows.Forms
 Imports MonkeyCore
-Imports MonkeyCore.Paths
 Imports MonkeyCore.Settings
 Public Class BotSetup
 
-    Public bFile As cBot
+    Public bFile As New cBot
 
 
 
@@ -14,7 +13,7 @@ Public Class BotSetup
         End If
 
 
-        bFile.IniFile = TxtBxBotIni.Text
+        bFile.BiniFile = (Path.Combine(Paths.SilverMonkeyBotPath, TxtBxBotIni.Text))
         bFile.lPort = Convert.ToInt32(TxtHPort.Text)
         Try
             bFile.IniFile = TxtBx_CharIni.Text
@@ -93,16 +92,15 @@ Public Class BotSetup
 
 
     Private Sub BotSetup_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-
-        If String.IsNullOrEmpty(bFile.IniFile) Then
+        If String.IsNullOrEmpty(bFile.BiniFile) Then
             Main.NewBot = True
-            bFile = New cBot
         End If
 
         TxtHPort.Text = bFile.lPort.ToString
         TxtBx_CharIni.Text = bFile.IniFile
         TxtBxMS_File.Text = bFile.MS_File
-        TxtBxBotIni.Text = bFile.IniFile
+
+        TxtBxBotIni.Text = Path.GetFileName(bFile.BiniFile)
         MSEnableChkBx.Checked = bFile.MS_Engine_Enable
         TxtBxBotConroller.Text = bFile.BotController
         StandAloneChkBx.Checked = bFile.StandAlone
@@ -129,7 +127,7 @@ Public Class BotSetup
         With IniBrowseDialog
             ' Select Character ini file
 
-            .InitialDirectory = FurcadiaProgramFolder
+            .InitialDirectory = Paths.FurcadiaCharactersFolder
 
             If .ShowDialog = DialogResult.OK Then
                 TxtBx_CharIni.Text = .FileName
@@ -143,7 +141,7 @@ Public Class BotSetup
     Private Sub BtnMS_File_Click(sender As System.Object, e As System.EventArgs) Handles BtnMS_File.Click
         With MS_BrosweDialog
             ' Select Character ini file
-            .InitialDirectory = SilverMonkeyDocumentsPath
+            .InitialDirectory = Paths.SilverMonkeyDocumentsPath
             If .ShowDialog = DialogResult.OK Then
                 TxtBxMS_File.Text = .FileName
             End If

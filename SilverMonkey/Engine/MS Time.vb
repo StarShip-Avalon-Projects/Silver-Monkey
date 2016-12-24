@@ -83,6 +83,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
         Try
             Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
             var.Value = Date.Now.ToString("yyyy-MM-dd HH:mm:ss tt")
+            Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
