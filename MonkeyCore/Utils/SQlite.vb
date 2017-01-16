@@ -237,7 +237,7 @@ Public Class SQLiteDatabase
     ''' </summary>
     ''' <param name="sql">The query to run.</param>
     ''' <returns>A string.</returns>
-    Public Shared Function ExecuteScalar1(ByVal sql As String) As String
+    Public Function ExecuteScalar1(ByVal sql As String) As String
         Dim Value As Object = Nothing
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()

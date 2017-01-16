@@ -16,7 +16,8 @@ Public Class LogStream
             If Not Directory.Exists(FilePath) Then
                 Directory.CreateDirectory(FilePath)
             End If
-        Catch
+        Catch ex As UnauthorizedAccessException
+            'TODO: Add Exception handler
         End Try
     End Sub
 
@@ -61,51 +62,53 @@ Public Class LogStream
 
         Dim Now As String = Date.Now().ToString("MM/dd/yyyy H:mm:ss")
         Message = Now & ": " & Message
-        Dim ioFile As StreamWriter = Nothing
-        Try
-            If Not Directory.Exists(Path.GetDirectoryName(strErrorFilePath)) Then
-                Directory.CreateDirectory(Path.GetDirectoryName(strErrorFilePath))
-            End If
-            If Not File.Exists(strErrorFilePath) Then
-                File.Create(strErrorFilePath)
-            End If
-            ioFile = New StreamWriter(strErrorFilePath, True)
-            For Each line In Stack.ToArray
-                ioFile.WriteLine(line)
-            Next
-            Stack.Clear()
-            ioFile.WriteLine(Message)
-            ioFile.WriteLine("Error: " & ObjectException.Message)
-            ioFile.WriteLine("")
-            If Not ObjectException.InnerException Is Nothing Then
-                ioFile.WriteLine("Inner Error: " & ObjectException.InnerException.Message)
-                ioFile.WriteLine("")
-            End If
-            ioFile.WriteLine(ObjectException.Source)
-            ioFile.WriteLine(ObjectException.StackTrace)
+        Using ioFile As StreamWriter = New StreamWriter(strErrorFilePath, True)
+            Try
 
-
-            ioFile.Close()
-        Catch ex As IOException
-            If (ex.Message.StartsWith("The process cannot access the file") AndAlso
-                    ex.Message.EndsWith("because it is being used by another process.")) Then
-                Stack.Add(Message)
-                Stack.Add("Error: " & ObjectException.Message)
-                Stack.Add("")
-                If Not ObjectException.InnerException Is Nothing Then
-                    Stack.Add("Inner Error: " & ObjectException.InnerException.Message)
-                    Stack.Add("")
+                If Not Directory.Exists(Path.GetDirectoryName(strErrorFilePath)) Then
+                    Directory.CreateDirectory(Path.GetDirectoryName(strErrorFilePath))
                 End If
-                Stack.Add(ObjectException.Source)
-                Stack.Add(ObjectException.StackTrace)
-            End If
-        Catch ex As Exception
-            Throw New Exception("there was an error with" + strErrorFilePath, ex)
-        Finally
-            If Not ioFile.Equals(Nothing) Then
+                If Not File.Exists(strErrorFilePath) Then
+                    File.Create(strErrorFilePath)
+                End If
+                For Each line In Stack.ToArray
+                    ioFile.WriteLine(line)
+                Next
+                Stack.Clear()
+                ioFile.WriteLine(Message)
+                ioFile.WriteLine("Error: " & ObjectException.Message)
+                ioFile.WriteLine("")
+                Dim st As New StackTrace(ObjectException, True)
+                If Not ObjectException.InnerException Is Nothing Then
+                    ioFile.WriteLine("Inner Error: " & ObjectException.InnerException.Message)
+                    ioFile.WriteLine("")
+                End If
+                ioFile.WriteLine(ObjectException.Source)
+                ioFile.WriteLine(ObjectException.StackTrace)
+
+
                 ioFile.Close()
-            End If
-        End Try
+            Catch ex As IOException
+                If (ex.Message.StartsWith("The process cannot access the file") AndAlso
+                        ex.Message.EndsWith("because it is being used by another process.")) Then
+                    Stack.Add(Message)
+                    Stack.Add("Error: " & ObjectException.Message)
+                    Stack.Add("")
+                    If Not ObjectException.InnerException Is Nothing Then
+                        Stack.Add("Inner Error: " & ObjectException.InnerException.Message)
+                        Stack.Add("")
+                    End If
+                    Stack.Add(ObjectException.Source)
+                    Stack.Add(ObjectException.StackTrace)
+                End If
+            Catch ex As Exception
+                Throw New Exception("there was an error with" + strErrorFilePath, ex)
+            Finally
+                If Not ioFile.Equals(Nothing) Then
+                    ioFile.Close()
+                End If
+            End Try
+        End Using
     End Sub
 
     Public Shared Sub Writeline(Message As String)
@@ -148,14 +151,15 @@ Public Class LogStream
         End If
 
         Try
-            Dim ioFile As New StreamWriter(strErrorFilePath, True)
-            For Each line In Stack.ToArray
-                ioFile.WriteLine(line)
-            Next
-            Stack.Clear()
-            ioFile.WriteLine(Message)
+            Using ioFile As New StreamWriter(strErrorFilePath, True)
+                For Each line In Stack.ToArray
+                    ioFile.WriteLine(line)
+                Next
+                Stack.Clear()
+                ioFile.WriteLine(Message)
 
-            ioFile.Close()
+                ioFile.Close()
+            End Using
         Catch ex As IOException
             If (ex.Message.StartsWith("The process cannot access the file") AndAlso
                     ex.Message.EndsWith("because it is being used by another process.")) Then

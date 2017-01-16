@@ -171,7 +171,7 @@ Public Class MS_Verbot
                         If VarDataIndex <> -1 Then
                             VarData = args.Substring(VarDataIndex + 1)
                         End If
-                        MS_Engine.MainMSEngine.PageSetVariable(VarName, VarData)
+                        MainMSEngine.PageSetVariable(VarName, VarData)
                     End If
 
                     'ChatExecute

@@ -253,7 +253,7 @@ Public Class FurreList
     Private Function InDream(ByRef Name As String) As Boolean
         Dim found As Boolean = False
         For Each kvp As KeyValuePair(Of UInteger, FURRE) In FurreList
-            If kvp.Value.Name.ToFurcShortName = Name.ToFurcShortName Then
+            If MainMSEngine.ToFurcShortName(kvp.Value.Name) = MainMSEngine.ToFurcShortName(Name) Then
                 Return True
             End If
         Next

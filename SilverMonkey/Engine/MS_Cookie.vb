@@ -26,7 +26,7 @@ End Function,
         "(0:42) When some one gives a cookie to the bot,")
 
         '(0:43) When a furre named {...} gives a cookie to the bot,
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Cause, 43),
+        Add(New Trigger(TriggerCategory.Cause, 43),
             AddressOf NameIs, "(0:43) When a furre named {...} gives a cookie to the bot,")
 
         '(0:44) When anyone gives a cookie to someone the bot can see,
@@ -85,7 +85,7 @@ AddressOf EatCookie,
             Dim TmpName As String = reader.ReadString()
             Dim tname As Variable = MainMSEngine.MSpage.GetVariable(MS_Name)
             'add Machine Name parser
-            Return TmpName.ToFurcShortName = tname.Value.ToString.ToFurcShortName
+            Return MainMSEngine.ToFurcShortName(TmpName) = MainMSEngine.ToFurcShortName(tname.Value)
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False

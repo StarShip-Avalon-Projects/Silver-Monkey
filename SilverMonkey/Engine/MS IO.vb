@@ -40,11 +40,11 @@ Friend Class MS_IO
         Add(New Trigger(TriggerCategory.Effect, 203), AddressOf CreateFile, "(5:203) create file {...}.")
 
         '(5:124) read line number # from text file {...} and put it into variable %Variable.
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 124), AddressOf ReadTextLine,
+        Add(New Trigger(TriggerCategory.Effect, 124), AddressOf ReadTextLine,
             "(5:124) read line number # from text file {...} and put it into variable %Variable.")
 
         '(5:125) count the number of lines in text file {...} and put it into variable %Variable .
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 125), AddressOf CountLines,
+        Add(New Trigger(TriggerCategory.Effect, 125), AddressOf CountLines,
             "(5:125) count the number of lines in text file {...} and put it into variable %Variable.")
 
     End Sub

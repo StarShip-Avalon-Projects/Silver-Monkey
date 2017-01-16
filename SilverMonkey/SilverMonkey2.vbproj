@@ -119,6 +119,8 @@
     </Compile>
     <Compile Include="Engine\MS Repq.vb" />
     <Compile Include="Engine\MS Verbot.vb" />
+    <Compile Include="Engine\PS Pre-Processor\PhoenixSpeakSubSystem.vb" />
+    <Compile Include="Engine\PS Pre-Processor\PhoenixSpeakDatabaseSystem.vb" />
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
@@ -157,7 +159,7 @@
     <Compile Include="Engine\MS_Cookie.vb" />
     <Compile Include="Engine\MS_DreamTransfer.vb" />
     <Compile Include="Engine\MS_Quotes.vb" />
-    <Compile Include="Engine\phoenixspeak.vb" />
+    <Compile Include="Engine\PS Pre-Processor\phoenixspeak.vb" />
     <Compile Include="Engine\FurreList.vb" />
     <Compile Include="Engine\Warning.vb" />
     <Compile Include="Engine\WmCpyDta.vb" />

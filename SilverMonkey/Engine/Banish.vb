@@ -2,6 +2,7 @@
 Imports System.Diagnostics
 Imports System.Collections
 Imports MonkeyCore
+Imports System.Collections.Generic
 
 Public Class Banish
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
@@ -107,10 +108,10 @@ Public Class Banish
 
     '(1:50) and the triggering furre is not on the banish list,
     Function TrigFurreIsNotBanished(reader As Monkeyspeak.TriggerReader) As Boolean
-        Dim banishlist As ArrayList = callbk.BanishString
+        Dim banishlist As List(Of String) = callbk.BanishString
         Try
             For Each Furre As String In banishlist
-                If Furre.ToFurcShortName = callbk.Player.Name.ToFurcShortName Then Return False
+                If MainMSEngine.ToFurcShortName(Furre) = MainMSEngine.ToFurcShortName(callbk.Player.Name) Then Return False
             Next
             Return True
         Catch ex As Exception
@@ -125,11 +126,11 @@ Public Class Banish
     End Function
     '(1:52) and the furre named {...} is not on the banish list,
     Function FurreNamedIsNotBanished(reader As Monkeyspeak.TriggerReader) As Boolean
-        Dim banishlist As ArrayList = callbk.BanishString
+        Dim banishlist As List(Of String) = callbk.BanishString
         Try
             Dim f As String = reader.ReadString
             For Each Furre As String In banishlist
-                If Furre.ToFurcShortName = f.ToFurcShortName Then Return False
+                If MainMSEngine.ToFurcShortName(Furre) = MainMSEngine.ToFurcShortName(f) Then Return False
             Next
             Return True
         Catch ex As Exception
@@ -185,7 +186,7 @@ Public Class Banish
     Function AndBanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim Furre As String = reader.ReadString
-            Return Furre.ToFurcShortName = callbk.BanishName.ToFurcShortName
+            Return MainMSEngine.ToFurcShortName(Furre) = MainMSEngine.ToFurcShortName(callbk.BanishName)
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False

@@ -940,9 +940,13 @@ namespace Conversive.Verbot5
 			}
 			return bRet;
 		}
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
 
 
-		public string ToRTF()
+        public string ToRTF()
 		{
 			string stCond = "";
 			if(this.Condition != null && this.Condition != "")
@@ -1083,7 +1087,11 @@ namespace Conversive.Verbot5
 				stCond = "\\cf1 |Cond: \\cf4 " + this.Condition + "\\par\r\n";
 			return "\\cf1 Output Text: " + @"\cf4 " + this.Text.Replace("\r\n", "\\par\r\n") + "\\par\r\n" + stCmd + stCond;
 		}
-	}//class Output
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }//class Output
 
 	public enum ResourceFileType
 	{

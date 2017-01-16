@@ -26,6 +26,7 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+            Exit Sub
             Dim logError As New ErrorLogging(e.Exception, sender)
             Dim SubmitError As New SubmitIssueForm(logError.LogFile)
             'Dim dialog As DialogResult = MessageBox.Show("An error log has been saved to" + logError.LogFile + " Press Ok To continue ", "Unhandled Exception", MessageBoxButtons.OKCancel, MessageBoxIcon.Error)

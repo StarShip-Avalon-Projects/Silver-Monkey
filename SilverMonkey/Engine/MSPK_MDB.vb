@@ -33,41 +33,9 @@ Public Class MSPK_MDB
 
         writer = New TextBoxWriter(Variables.TextBox1)
 
-        '(0:500) When the bot starts backing up the character Phoenix Speak,
-        Add(TriggerCategory.Cause, 500,
-                Function()
-                    Return True
-                End Function, "(0:500) When the bot starts backing up the character Phoenix Speak,")
-            '(0:501) When the bot completes backing up the characters Phoenix Speak,
-            Add(TriggerCategory.Cause, 501,
-                Function()
-                    Return True
-                End Function, "(0:501) When the bot completes backing up the characters Phoenix Speak,")
-            '(0:502) When the bot starts restoring the Dreams Character Phoenix Speak,
-            Add(TriggerCategory.Cause, 502,
-                Function()
-                    Return True
-                End Function, "(0:502) When the bot starts restoring the Dreams Character Phoenix Speak,")
-            '(0:503) When the bot finishes restoring the dreams character Phoenix Speak,
-            Add(TriggerCategory.Cause, 503,
-                Function()
-                    Return True
-                End Function, "(0:503) When the bot finishes restoring the dreams character Phoenix Speak,")
-            Add(TriggerCategory.Cause, 504,
-                Function()
-                    Return True
-                End Function, "(0:504) When the bot backsup Phoenix Speak for any Furre.")
-            Add(TriggerCategory.Cause, 505,
-                AddressOf BackUpCharacterNamed, "(0:505) When the bot backsup Phoenix Speak for the furre named {...}.")
-            Add(TriggerCategory.Cause, 506,
-                Function()
-                    Return True
-                End Function, "(0:506) When the bot restores any furre's Phoenix Speak.")
-            Add(TriggerCategory.Cause, 507,
-                AddressOf BackUpCharacterNamed, "(0:507) When the bot restores the  Phoenix Speak for the furre named {...}.")
 
-            '(1:500) and the Database info {...} about the triggering furre is equal to #,
-            Add(New Trigger(TriggerCategory.Condition, 500),
+        '(1:500) and the Database info {...} about the triggering furre is equal to #,
+        Add(New Trigger(TriggerCategory.Condition, 500),
                 AddressOf TriggeringFurreinfoEqualToNumber, "(1:500) and the Database info {...} about the triggering furre is equal to #,")
             '(1:501) and the Database info {...} about the triggering furre is not equal to #,
             Add(New Trigger(TriggerCategory.Condition, 501),
@@ -121,20 +89,6 @@ Public Class MSPK_MDB
             Add(New Trigger(TriggerCategory.Condition, 519),
                 AddressOf TriggeringFurreinfoNotEqualToSTR, "(1:519) and the Database info {...} about the triggering furre is not equal to string {...},")
 
-            '(1:520) and the bot is not in the middle of a PS Backup Process
-            Add(New Trigger(TriggerCategory.Condition, 520),
-                  AddressOf BotBackup, "(1:520) and the bot is not in the middle of a PS Backup Process,")
-
-            '(1:521) and the bot is in the middle of a PS Backup Process.
-            Add(New Trigger(TriggerCategory.Condition, 521),
-                     AddressOf NotBotBackup, "(1:521) and the bot is in the middle of a PS Backup Process,")
-
-            '(1:522) and the bot is not in the middle of a PS Restore Process,
-            Add(New Trigger(TriggerCategory.Condition, 522),
-                 AddressOf BotRestore, "(1:522) and the bot is not in the middle of a PS Restore Process,")
-        '(1:523) and the bot is in the middle of a PS Restore Process,
-        Add(New Trigger(TriggerCategory.Condition, 523),
-                 AddressOf NotBotRestore, "(1:523) and the bot is in the middle of a PS Restore Process,")
 
         'Installed 7/13/120`16
         '(1:524) and the Database info  {...} in Settings Table {...} exists,
@@ -210,28 +164,10 @@ Public Class MSPK_MDB
             '(5:552) retrieve field {...} from SQLite Database query and put it into variable %Variable .
             Add(New Trigger(TriggerCategory.Effect, 552), AddressOf RetrieveQuery,
                 "(5:552) retrieve field {...} from SQLite Database query and put it into variable %Variable.")
-            '(5:553) Backup All Character phoenixspeak for the dream
-            Add(New Trigger(TriggerCategory.Effect, 553), AddressOf BackupAllPS,
-               "(5:553) backup All Phoenix Speak for the dream")
-            '(5:554) backup Character named {...} phoenix speak 
-            Add(New Trigger(TriggerCategory.Effect, 554), AddressOf BackupSingleCharacterPS,
-                   "(5:554) backup character named {...} Phoenix Speak. (use ""[DREAM]"" to restore information specific to the dream)")
-            '(5:555) restore phoenix speak for character {...}
-            Add(New Trigger(TriggerCategory.Effect, 555), AddressOf RestoreCharacterPS,
-                   "(5:555) restore Phoenix Speak for character {...}. (use ""[DREAM]"" to restore information specific to the dream)")
-            '(5:556) restore all phoenxi speak characters for this dream.
-            Add(New Trigger(TriggerCategory.Effect, 556), AddressOf restoreAllPSData,
-                 "(5:556) restore all Phoenix Speak records for this dream.")
-            '(5:557) remove Entries older then # days from Phoenix Speak Character backup.
-            Add(New Trigger(TriggerCategory.Effect, 557), AddressOf PruneCharacterBackup,
-                "(5:557) remove Entries older than # days from Phoenix Speak backup.")
-            Add(New Trigger(TriggerCategory.Effect, 558), AddressOf restorePS_DataOldrThanDays,
-                "(5:558) restore Phoenix Speak records newer then # days.")
-            '(5:559) execute VACUUM on the database to rebuild and reclaim wasted space.
-            Add(New Trigger(TriggerCategory.Effect, 559), AddressOf VACUUM,
+
+        Add(New Trigger(TriggerCategory.Effect, 559), AddressOf VACUUM,
                 "(5:559) execute ""VACUUM"" to rebuild the database and reclaim wasted space.")
-            Add(New Trigger(TriggerCategory.Effect, 560), AddressOf AbortPS,
-                "(5:560) abort Phoenix Speak backup or restore process")
+
         '(5:561) remember Database Info {...} for Settings Table {...} to {...}.
         '(5:562) forget Database info {...} from Settings Table{...}.
         '(5:563) forget all Settings Table Database info.
@@ -242,10 +178,6 @@ Public Class MSPK_MDB
 
 #Region "Condition Functions"
 
-    Public Function BackUpCharacterNamed(reader As TriggerReader) As Boolean
-        Dim furre As String = reader.ReadString
-        Return callbk.Player.ShortName = furre.ToFurcShortName
-    End Function
 
     '(1: ) and the Database info {...} about the triggering furre is equal to #,
     Public Function TriggeringFurreinfoEqualToNumber(reader As TriggerReader) As Boolean
@@ -259,7 +191,7 @@ Public Class MSPK_MDB
             number = ReadVariableOrNumber(reader, False)
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
             Dim Value As Double = 0
-            Double.TryParse(GetValueFromTable(info, Furre.ToFurcShortName).ToString, Value)
+            Double.TryParse(GetValueFromTable(info, MainMSEngine.ToFurcShortName(Furre)).ToString, Value)
 
             Return number = Value
         Catch ex As Exception
@@ -279,7 +211,7 @@ Public Class MSPK_MDB
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Furre.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(Furre)
             Dim val As String = GetValueFromTable(info, Furre).ToString
             Dim Value As Double = 0
             Double.TryParse(val, Value)
@@ -300,7 +232,7 @@ Public Class MSPK_MDB
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
             Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Furre.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(Furre)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
             Double.TryParse(check.ToString, Value)
@@ -321,7 +253,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -343,7 +275,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -364,7 +296,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -385,7 +317,7 @@ Public Class MSPK_MDB
 
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
@@ -404,7 +336,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
 
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
@@ -425,7 +357,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -445,7 +377,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
 
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
@@ -466,7 +398,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
@@ -485,7 +417,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = reader.ReadString.ToFurcShortName
+            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -502,7 +434,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the furre named {...} is equal to {...},
     Public Function FurreNamedinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = reader.ReadString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString())
         Dim str As String = reader.ReadString
         Try
             Return str = GetValueFromTable(Info, Furre).ToString
@@ -515,7 +447,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the furre named {...} is not equal to {...},
     Public Function FurreNamedinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = reader.ReadString.ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
 
         Dim str As String = reader.ReadString
 
@@ -530,7 +462,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the triggering furre is equal to {...},
     Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim str As String = reader.ReadString
         Try
             If str = GetValueFromTable(Info, Furre).ToString Then Return True
@@ -543,7 +475,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the triggering furre is not equal to {...},
     Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim str As String = reader.ReadString
         Try
             If str <> GetValueFromTable(Info, Furre).ToString Then Return True
@@ -554,49 +486,7 @@ Public Class MSPK_MDB
         Return False
     End Function
 
-    '(1:520) and the bot is not in the middle of a PS Backup Process
-    Public Function BotBackup(reader As TriggerReader) As Boolean
 
-        Try
-            Return Not Main.PSBackupRunning
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return False
-    End Function
-    '(1:521) and the bot is in the middle of a PS Backup Process
-    Public Function NotBotBackup(reader As TriggerReader) As Boolean
-        Try
-            Return Main.PSBackupRunning
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return False
-    End Function
-    '(1:522) and the bot is not in the middle of a PS Restore Process
-    Public Function BotRestore(reader As TriggerReader) As Boolean
-
-        Try
-            Return Not Main.PSRestoreRunning
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return False
-    End Function
-    '(1:523) and the bot is in the middle of a PS Restore Process
-    Public Function NotBotRestore(reader As TriggerReader) As Boolean
-
-        Try
-            Return Main.PSRestoreRunning
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return False
-    End Function
     '(1:x) And the Database info  {...} in Settings Table {...} exists,
     Public Function SettingExist(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString(True)
@@ -806,7 +696,7 @@ Public Class MSPK_MDB
 
     '(5:405) Add the triggering furre with default access level to the Furre Table in the database if he, she or it don't exist.
     Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim info As String = reader.ReadString
         'Dim value As String = reader.ReadVariable.Value.ToString
 
@@ -817,7 +707,8 @@ Public Class MSPK_MDB
         data.Add("[date modified]", Date.Now.ToString)
         data.Add("[Access Level]", "0")
         Try
-            Return db.Insert("FURRE", data)
+            db.Insert("FURRE", data)
+            Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -826,7 +717,7 @@ Public Class MSPK_MDB
 
     '(5:506) add furre named {%NewMember} with the default access level "1" to the Furre Table in the database if he, she, or it doesn't exist.
     Public Function InsertFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = reader.ReadString.ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
         Dim info As String
         If reader.PeekString Then
             info = reader.ReadString
@@ -841,7 +732,8 @@ Public Class MSPK_MDB
         data.Add("[date modified]", Date.Now.ToString)
         data.Add("[Access Level]", info)
         Try
-            Return db.Insert("FURRE", data)
+            db.Insert("FURRE", data)
+            Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -852,7 +744,7 @@ Public Class MSPK_MDB
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
         Dim Furre As String = ""
-        Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString.ToFurcShortName
+        Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim value As Double = ReadVariableOrNumber(reader)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
@@ -875,7 +767,7 @@ Public Class MSPK_MDB
         Dim value As String = ReadVariableOrNumber(reader, False).ToString
         Dim db As New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
-        data.Add(MS_Name, Furre.ToFurcShortName)
+        data.Add(MS_Name, MainMSEngine.ToFurcShortName(Furre))
         data.Add("[" & info & "]", value)
         data.Add("[date modified]", Date.Now.ToString)
         Try
@@ -890,7 +782,7 @@ Public Class MSPK_MDB
     Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim value As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
@@ -908,7 +800,7 @@ Public Class MSPK_MDB
     '(5:410) update Database info {...} about the furre named {...} will now be {...}.
     Public Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
-        Dim Furre As String = reader.ReadString.ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
         'Dim Furre As String = MainEngine.MSpage.GetVariable("~Name").Value.ToString
         Dim value As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
@@ -928,12 +820,13 @@ Public Class MSPK_MDB
     '(5:411) select Database info {...} about the triggering furre, and put it in variable %Variable.
     Public Function ReadDatabaseInfo(reader As TriggerReader) As Boolean
         Try
+            Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
             Dim Info As String = reader.ReadString
             Dim Variable As Variable = reader.ReadVariable(True)
-            Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+            Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
             'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where Name ='" & Furre & "'"
-            Variable.Value = SQLiteDatabase.ExecuteScalar1(cmd)
+            Variable.Value = db.ExecuteScalar1(cmd)
             Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
@@ -944,12 +837,13 @@ Public Class MSPK_MDB
     '(5:412) select Database info {...} about the furre named {...}, and put it in variable %Variable.
     Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
         Try
+            Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
             Dim Info As String = reader.ReadString
-            Dim Furre As String = reader.ReadString.ToFurcShortName
+            Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
             Dim Variable As Variable = reader.ReadVariable(True)
             ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where Name ='" & Furre & "'"
-            Variable.Value = SQLiteDatabase.ExecuteScalar1(cmd)
+            Variable.Value = db.ExecuteScalar1(cmd)
             Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
@@ -967,14 +861,14 @@ Public Class MSPK_MDB
     End Function
     '(5:418) delete all Database info about the triggering furre.
     Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString().ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
     End Function
     '(5:419) delete all Database info about the furre named {...}.
     Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = reader.ReadString.ToFurcShortName
+        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
@@ -987,9 +881,10 @@ Public Class MSPK_MDB
         Dim num As Double = 0
 
         Try
+            Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
             Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
             Total = reader.ReadVariable(True)
-            Dim count As String = SQLiteDatabase.ExecuteScalar1("select count(*) from [" & Table & "]")
+            Dim count As String = db.ExecuteScalar1("select count(*) from [" & Table & "]")
             Total.Value = count
             Return True
         Catch ex As Exception
@@ -1137,114 +1032,7 @@ Public Class MSPK_MDB
         End Try
     End Function
 
-    '(5:553) Backup All Character phoenixspeak for the dream
-    Function BackupAllPS(reader As TriggerReader) As Boolean
-        Try
-            If Not Main.PSBackupRunning And Not Main.PSRestoreRunning Then
-                Main.CurrentPS_Stage = Main.PS_BackupStage.GetList
-                sendServer("ps get character.*")
-            End If
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return True
-    End Function
 
-    '(5:554) backup Character named {...} phoenix speak 
-    Function BackupSingleCharacterPS(reader As TriggerReader) As Boolean
-        Try
-            If Not Main.PSBackupRunning And Not Main.PSRestoreRunning And Not Main.PSPruneRunning Then
-
-                Dim str As String = reader.ReadString
-                If str.ToUpper <> "[DREAM]" Then
-                    str = str.ToFurcShortName
-                Else
-                    str = str.ToUpper
-                End If
-
-                Dim f As New Main.PSInfo_Struct
-                f.name = str
-                f.PS_ID = Main.CharacterList.Count + 1
-                Main.CharacterList.Add(f)
-                If Main.CurrentPS_Stage <> Main.PS_BackupStage.GetSingle Then
-                    Main.CurrentPS_Stage = Main.PS_BackupStage.GetSingle
-                    Main.psReceiveCounter = 0
-                    Main.psSendCounter = 1
-                    Main.PSBackupRunning = True
-                    If str <> "[DREAM]" Then
-                        callbk.ServerStack.Enqueue("ps " + Main.CharacterList.Count.ToString + " get character." + str + ".*")
-                    Else
-                        callbk.ServerStack.Enqueue("ps " + Main.CharacterList.Count.ToString + " get dream.*")
-                    End If
-                End If
-            End If
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return True
-    End Function
-    '(5:555) restore phoenix speak for character {...}
-    Public Function RestoreCharacterPS(reader As TriggerReader) As Boolean
-
-        Try
-            Dim furre As String = reader.ReadString()
-            callbk.Build_PS_CMD(furre, True)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return True
-    End Function
-    '(5:556) restore all phoenxi speak characters for this dream.
-    Public Function restoreAllPSData(reader As TriggerReader) As Boolean
-
-        Dim str As String = ""
-
-        Try
-            If Not Main.PSBackupRunning And Not Main.PSRestoreRunning Then
-                callbk.RestorePS()
-            End If
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-    End Function
-    '(5:557) remove Entries older then # days from Phoenix Speak Character backup.
-
-    Public Function PruneCharacterBackup(reader As TriggerReader) As Boolean
-
-        Try
-            Dim age As Double = ReadVariableOrNumber(reader)
-            If Not Main.PSBackupRunning And Not Main.PSRestoreRunning Then
-                callbk.PrunePS(age)
-            End If
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-    End Function
-
-    '(5:558) restore phoenix speak characters newer then # days.
-    Public Function restorePS_DataOldrThanDays(reader As TriggerReader) As Boolean
-
-        Try
-            Dim days As Double = ReadVariableOrNumber(reader)
-            If Not Main.PSBackupRunning And Not Main.PSRestoreRunning Then
-                callbk.RestorePS(days)
-            End If
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-    End Function
 
     Public Function VACUUM(reader As TriggerReader) As Boolean
         Dim start As Date = Date.Now
@@ -1254,13 +1042,7 @@ Public Class MSPK_MDB
         Return True
     End Function
 
-    Public Function AbortPS(reader As TriggerReader) As Boolean
-        If Main.PSBackupRunning Or Main.PSRestoreRunning Then
-            Main.PS_Abort()
-            callbk.SendClientMessage("SYSTEM:", "Aborted PS Backup/Restore process")
-        End If
-        Return True
-    End Function
+
 
     '(5:561) remember Database Info {...} for Settings Table {...} to {...}.
     '(5:562) forget Database info {...} from Settings Table{...}.

@@ -18,32 +18,32 @@ Public Class MSPK_Web
         writer = New TextBoxWriter(Variables.TextBox1)
         'WebStack.Clear()
         '(0:70) When the bot receives a variable list by sending the Web-Array.
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Cause, 70), _
+        Add(New Trigger(TriggerCategory.Cause, 70), _
         Function()
             Return True
         End Function, "(0:70) When the bot receives a variable list by sending the Web-Array.")
 
 
         '(1:30) and Web-Array setting {...} is equal to {...},
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 30), AddressOf WebArrayEqualTo, "(1:30) and Web-Array setting {...} is equal to {...},")
+        Add(New Trigger(TriggerCategory.Condition, 30), AddressOf WebArrayEqualTo, "(1:30) and Web-Array setting {...} is equal to {...},")
 
         '(1:31) and Web-Array setting {...} is not equal to {...},
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 31), AddressOf WebArrayNotEqualTo, "(1:31) and Web-Array setting {...} is not equal to {...},")
+        Add(New Trigger(TriggerCategory.Condition, 31), AddressOf WebArrayNotEqualTo, "(1:31) and Web-Array setting {...} is not equal to {...},")
 
         '(1:32) and the Web-Array contains field named {...},
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 32), AddressOf WebArrayContainArrayField, "(1:32) and the Web-Array contains field named {...},")
+        Add(New Trigger(TriggerCategory.Condition, 32), AddressOf WebArrayContainArrayField, "(1:32) and the Web-Array contains field named {...},")
 
         '(1:33) and the Web-Array doesn't contain field named {...},
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Condition, 33), AddressOf WebArrayNotContainArrayField, "(1:33) and the Web-Array doesn't contain field named {...},")
+        Add(New Trigger(TriggerCategory.Condition, 33), AddressOf WebArrayNotContainArrayField, "(1:33) and the Web-Array doesn't contain field named {...},")
 
         '(5:9) remove variable %Variable from the Web-Array
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 9), AddressOf RemoveWebStack, "(5:9) remove variable %Variable from the Web-Array.")
+        Add(New Trigger(TriggerCategory.Effect, 9), AddressOf RemoveWebStack, "(5:9) remove variable %Variable from the Web-Array.")
 
         '(5:10)  Set the web URL to {...}
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 10), AddressOf SetURL, "(5:10)  Set the web URL to {...},")
+        Add(New Trigger(TriggerCategory.Effect, 10), AddressOf SetURL, "(5:10)  Set the web URL to {...},")
 
         '(5:11)  remember setting {...} from Web-Array and store it into variable %Variable.
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 11), AddressOf RememberSetting, "(5:11)  remember setting {...} from Web-Array and store it into variable %Variable.")
+        Add(New Trigger(TriggerCategory.Effect, 11), AddressOf RememberSetting, "(5:11)  remember setting {...} from Web-Array and store it into variable %Variable.")
 
         '(5:12)
 
@@ -54,14 +54,14 @@ Public Class MSPK_Web
         '(5:15) 
 
         '(5:16) send GET request to send the Web-Array to URL.
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 16), AddressOf SendGetWebStack, "(5:16) send GET request to send the Web-Array to URL.")
+        Add(New Trigger(TriggerCategory.Effect, 16), AddressOf SendGetWebStack, "(5:16) send GET request to send the Web-Array to URL.")
 
         '(5:17) store variable %Variable to the Web-Array
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 17), AddressOf StoreWebStack, "(5:17) store variable %Variable to the Web-Array.")
+        Add(New Trigger(TriggerCategory.Effect, 17), AddressOf StoreWebStack, "(5:17) store variable %Variable to the Web-Array.")
         '(5:18) send post request to send the Web-Array to the web host.
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 18), AddressOf SendWebStack, "(5:18) send POST request to send the Web-Array to URL.")
+        Add(New Trigger(TriggerCategory.Effect, 18), AddressOf SendWebStack, "(5:18) send POST request to send the Web-Array to URL.")
         '(5:19) clear the Web-Array.
-        Add(New Monkeyspeak.Trigger(TriggerCategory.Effect, 19), AddressOf ClearWebStack, "(5:19) clear the Web-Array.")
+        Add(New Trigger(TriggerCategory.Effect, 19), AddressOf ClearWebStack, "(5:19) clear the Web-Array.")
 
 
     End Sub

@@ -44,6 +44,7 @@ Public Class Paths
     Private Shared _SilverMonkeyDocumentsPath As String
 
     Private Const ErrorLogPath As String = "Error"
+    Private Const LogPath As String = "Logs"
 
     'Bot folder
     'check current Folder Presumeably Current folder or settings last bot folder
@@ -69,6 +70,7 @@ Public Class Paths
     Private Shared _FurcadiaCharactersFolder As String = Nothing
 
     Private Shared _SilverMonkeyErrorLogPath As String = Nothing
+    Private Shared _SilverMonkeyLogPath As String = Nothing
 
 
     ''' <summary>
@@ -247,7 +249,7 @@ Public Class Paths
     ''' </value>
     Public Shared Property SilverMonkeyBotPath() As String
         Get
-            If String.IsNullOrEmpty(_SilverMonkeyDocumentsPath) Then
+            If String.IsNullOrEmpty(_SilverMonkeyBotPath) Then
                 _SilverMonkeyBotPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), MyDocumentsPath)
             End If
             Return _SilverMonkeyBotPath
@@ -353,6 +355,20 @@ Public Class Paths
             Return _SilverMonkeyErrorLogPath
         End Get
     End Property
+
+    Public Shared ReadOnly Property SilverMonkeyLogPath() As String
+        Get
+            If _SilverMonkeyLogPath Is Nothing Then
+                _SilverMonkeyDocumentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), MyDocumentsPath)
+                _SilverMonkeyLogPath = Path.Combine(_SilverMonkeyDocumentsPath, LogPath)
+                If Not Directory.Exists(_SilverMonkeyLogPath) Then
+                    Directory.CreateDirectory(_SilverMonkeyLogPath)
+                End If
+            End If
+            Return _SilverMonkeyLogPath
+        End Get
+    End Property
+
 
     Public Shared Function CheckBotFolder(ByVal file As String) As String
         Dim Check As String = Path.GetDirectoryName(file)
