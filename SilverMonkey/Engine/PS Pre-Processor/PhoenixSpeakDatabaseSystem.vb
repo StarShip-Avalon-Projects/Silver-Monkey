@@ -62,19 +62,18 @@ Public Class PhoenixSpeakDatabaseSystem
         Add(New Trigger(TriggerCategory.Condition, 523),
                  AddressOf NotBotRestore, "(1:523) and the bot is in the middle of a PS Restore Process,")
 
-        'TODO Add missing PS lines
-        'and the database info {...} for the triggering furre exists,
-        'and the database info {...} for the furre named {...} exists,  (use ""[DREAM]"" to check specific info for this dream.)
-        'and database info for the triggering furre exists,
-        'and database info for the furre named {...} exists,  (use ""[DREAM]"" to check specific info for this dream.)
+        'TODO: Add missing PS lines
+        'and the backed up phoenix speak database info {...} for the triggering furre exists,
+        'and the backed up phoenix speak database info {...} for the furre named {...} exists,  (use ""[DREAM]"" to check specific info for this dream.)
+        'and the backed up phoenix speak database info for the triggering furre exists,
+        'and the backed up phoenix speak database info for the furre named {...} exists,  (use ""[DREAM]"" to check specific info for this dream.)
 
-        'and the database info {...} for the triggering furre does not exist,
-        'and the database info {...} for the furre named {...} does not exist,  (use ""[DREAM]"" to check specific info for this dream.)
-        'and database info for the triggering furre does not exist,
-        'and database info for the furre named {...} does not eist,  (use ""[DREAM]"" to check specific info for this dream.)
+        'and the backed up phoenix speak database info {...} for the triggering furre does not exist,
+        'and the backed up phoenix speak database info {...} for the furre named {...} does not exist,  (use ""[DREAM]"" to check specific info for this dream.)
+        'and the backed up phoenix speak database info for the triggering furre does not exist,
+        'and the backed up phoenix speak database info for the furre named {...} does not eist,  (use ""[DREAM]"" to check specific info for this dream.)
 
-        'and setting {...} exists,
-        'and setting {...} does not exist,
+
 
 
         '(5:553) Backup All Character phoenixspeak for the dream
@@ -94,7 +93,7 @@ Public Class PhoenixSpeakDatabaseSystem
                 "(5:557) remove Entries older than # days from Phoenix Speak backup.")
         Add(New Trigger(TriggerCategory.Effect, 558), AddressOf restorePS_DataOldrThanDays,
                 "(5:558) restore Phoenix Speak records newer then # days.")
-        '(5:559) execute VACUUM on the database to rebuild and reclaim wasted space.
+
         Add(New Trigger(TriggerCategory.Effect, 560), AddressOf AbortPS,
         "(5:560) abort Phoenix Speak backup or restore process")
     End Sub

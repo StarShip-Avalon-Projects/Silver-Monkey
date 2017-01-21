@@ -37,5 +37,5 @@
 '' 
 Imports System.Reflection
 
-<Assembly: AssemblyVersion("2.18.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
-<Assembly: AssemblyFileVersion("2.18.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
+<Assembly: AssemblyVersion("2.19.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
+<Assembly: AssemblyFileVersion("2.19.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 

@@ -19,17 +19,15 @@
 *.opensdf
 *.sdf
 
-bin/
 obj/
 build/
 /SRC
 .vs/
-
+**/bin/*
 /Plugins/AngelCat
 /Plugins/SoundWave
 /FastColoredTextBox
-*.xml
-*.gif
+
 # Ignore NuGet Packages
 *.nupkg
 # Ignore the packages folder

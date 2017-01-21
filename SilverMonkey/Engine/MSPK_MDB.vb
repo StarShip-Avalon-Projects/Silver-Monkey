@@ -119,50 +119,50 @@ Public Class MSPK_MDB
         '(5:500) use SQLite database file {...} or create file if it does not exist.
         Add(New Trigger(TriggerCategory.Effect, 500), AddressOf createMDB, "(5:500) use SQLite database file {...} or create file if it does not exist.")
 
-            '(5:505 ) Add the triggering furre with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
-            Add(New Trigger(TriggerCategory.Effect, 505), AddressOf insertTriggeringFurreRecord, "(5:505) add the triggering furre with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
-            '(5:506) Add furre named {...} with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
-            Add(New Trigger(TriggerCategory.Effect, 506), AddressOf InsertFurreNamed, "(5:506) add furre named {...} with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
+        '(5:505 ) Add the triggering furre with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
+        Add(New Trigger(TriggerCategory.Effect, 505), AddressOf insertTriggeringFurreRecord, "(5:505) add the triggering furre with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
+        '(5:506) Add furre named {...} with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
+        Add(New Trigger(TriggerCategory.Effect, 506), AddressOf InsertFurreNamed, "(5:506) add furre named {...} with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
 
-            '(5:507) update Database info {...} about the triggering furre will now be #.
-            Add(New Trigger(TriggerCategory.Effect, 507), AddressOf UpdateTriggeringFurreField, "(5:507) update Database info {...} about the triggering furre will now be #.")
-            '(5:508) update Database info {...} about the furre named {...} will now be #.
-            Add(New Trigger(TriggerCategory.Effect, 508), AddressOf UpdateFurreNamed_Field, "(5:508) update Database info {...} about the furre named {...} will now be #.")
-            '(5:509) update Database info {...} about the triggering furre will now be {...}.
-            Add(New Trigger(TriggerCategory.Effect, 509), AddressOf UpdateTriggeringFurreFieldSTR, "(5:509) update Database info {...} about the triggering furre will now be {...}.")
-            '(5:510) update Database info {...} about the furre named {...} will now be {...}.
-            Add(New Trigger(TriggerCategory.Effect, 510), AddressOf UpdateFurreNamed_FieldSTR, "(5:510) update Database info {...} about the furre named {...} will now be {...}.")
+        '(5:507) update Database info {...} about the triggering furre will now be #.
+        Add(New Trigger(TriggerCategory.Effect, 507), AddressOf UpdateTriggeringFurreField, "(5:507) update Database info {...} about the triggering furre will now be #.")
+        '(5:508) update Database info {...} about the furre named {...} will now be #.
+        Add(New Trigger(TriggerCategory.Effect, 508), AddressOf UpdateFurreNamed_Field, "(5:508) update Database info {...} about the furre named {...} will now be #.")
+        '(5:509) update Database info {...} about the triggering furre will now be {...}.
+        Add(New Trigger(TriggerCategory.Effect, 509), AddressOf UpdateTriggeringFurreFieldSTR, "(5:509) update Database info {...} about the triggering furre will now be {...}.")
+        '(5:510) update Database info {...} about the furre named {...} will now be {...}.
+        Add(New Trigger(TriggerCategory.Effect, 510), AddressOf UpdateFurreNamed_FieldSTR, "(5:510) update Database info {...} about the furre named {...} will now be {...}.")
 
-            '(5:511) select Database info {...} about the triggering furre, and put it in variable %.
-            Add(New Trigger(TriggerCategory.Effect, 511), AddressOf ReadDatabaseInfo, "(5:511) select Database info {...} about the triggering furre, and put it in variable %.")
-            '(5:512) select Database info {...} about the furre named {...}, and put it in variable %.
-            Add(New Trigger(TriggerCategory.Effect, 512), AddressOf ReadDatabaseInfoName, "(5:512) select Database info {...} about the furre named {...}, and put it in variable %.")
+        '(5:511) select Database info {...} about the triggering furre, and put it in variable %.
+        Add(New Trigger(TriggerCategory.Effect, 511), AddressOf ReadDatabaseInfo, "(5:511) select Database info {...} about the triggering furre, and put it in variable %.")
+        '(5:512) select Database info {...} about the furre named {...}, and put it in variable %.
+        Add(New Trigger(TriggerCategory.Effect, 512), AddressOf ReadDatabaseInfoName, "(5:512) select Database info {...} about the furre named {...}, and put it in variable %.")
 
-            '(5:513) add column {...} with type {...} to the Furre table.
-            Add(New Trigger(TriggerCategory.Effect, 513), AddressOf AddColumn, "(5:513) add column {...} with type {...} to the Furre table.")
+        '(5:513) add column {...} with type {...} to the Furre table.
+        Add(New Trigger(TriggerCategory.Effect, 513), AddressOf AddColumn, "(5:513) add column {...} with type {...} to the Furre table.")
 
 
-            '(5:518) delete all Database info about the triggering furre.
-            Add(New Trigger(TriggerCategory.Effect, 518), AddressOf DeleteTriggeringFurre, "(5:518) delete all Database info about the triggering furre.")
-            '(5:519) delete all Database info about the furre named {...}.
-            Add(New Trigger(TriggerCategory.Effect, 519), AddressOf DeleteFurreNamed, "(5:519) delete all Database info about the furre named {...}.")
+        '(5:518) delete all Database info about the triggering furre.
+        Add(New Trigger(TriggerCategory.Effect, 518), AddressOf DeleteTriggeringFurre, "(5:518) delete all Database info about the triggering furre.")
+        '(5:519) delete all Database info about the furre named {...}.
+        Add(New Trigger(TriggerCategory.Effect, 519), AddressOf DeleteFurreNamed, "(5:519) delete all Database info about the furre named {...}.")
 
-            '(5:522) get the total of records from table {...} and put it into variable %.
-            Add(New Trigger(TriggerCategory.Effect, 522), AddressOf GetTotalRecords, "(5:522) get the total number of records from table {...} and put it into variable %Variable.")
+        '(5:522) get the total of records from table {...} and put it into variable %.
+        Add(New Trigger(TriggerCategory.Effect, 522), AddressOf GetTotalRecords, "(5:522) get the total number of records from table {...} and put it into variable %Variable.")
 
-            '(5:523) take the sum of column{...} in table {...} and put it into variable %
-            Add(New Trigger(TriggerCategory.Effect, 523), AddressOf ColumnSum, "(5:523) take the sum of column{...} in table {...} and put it into variable %Variable.")
+        '(5:523) take the sum of column{...} in table {...} and put it into variable %
+        Add(New Trigger(TriggerCategory.Effect, 523), AddressOf ColumnSum, "(5:523) take the sum of column{...} in table {...} and put it into variable %Variable.")
 
-            '(5:550) take variable %Variable , prepare it for a query, and put it in variable %Variable .   (this is your escaping call, which would depend on however you have to do it internally)
-            Add(New Trigger(TriggerCategory.Effect, 550), AddressOf PrepQuery,
+        '(5:550) take variable %Variable , prepare it for a query, and put it in variable %Variable .   (this is your escaping call, which would depend on however you have to do it internally)
+        Add(New Trigger(TriggerCategory.Effect, 550), AddressOf PrepQuery,
                 "(5:550) take variable %Variable , prepare it for a SQLite Database query, and put it in variable %Variable.")
 
-            '(5:551) execute SQLite Database query {...} Select * from table where name=%2
-            Add(New Trigger(TriggerCategory.Effect, 551), AddressOf ExecuteQuery,
+        '(5:551) execute SQLite Database query {...} Select * from table where name=%2
+        Add(New Trigger(TriggerCategory.Effect, 551), AddressOf ExecuteQuery,
                  "(5:551) execute SQLite Database query {...}.")
 
-            '(5:552) retrieve field {...} from SQLite Database query and put it into variable %Variable .
-            Add(New Trigger(TriggerCategory.Effect, 552), AddressOf RetrieveQuery,
+        '(5:552) retrieve field {...} from SQLite Database query and put it into variable %Variable .
+        Add(New Trigger(TriggerCategory.Effect, 552), AddressOf RetrieveQuery,
                 "(5:552) retrieve field {...} from SQLite Database query and put it into variable %Variable.")
 
         Add(New Trigger(TriggerCategory.Effect, 559), AddressOf VACUUM,
