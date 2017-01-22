@@ -19,9 +19,9 @@ Public Class PhoenixSpeakSubSystem
         Public Property Values As Dictionary(Of String, String)
         Public Property PS_ID As Integer
         Public Sub New()
-            name = ""
-            Values = New Dictionary(Of String, String)
-            PS_ID = 0
+            _name = ""
+            _Values = New Dictionary(Of String, String)
+            _PS_ID = 0
         End Sub
     End Class
 
