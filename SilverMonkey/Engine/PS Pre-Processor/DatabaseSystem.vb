@@ -6,6 +6,24 @@ Imports MonkeyCore.Utils
 
 Namespace PhoenixSpeak
 
+    'Class Notes
+
+    ' CharacterListLooping.
+    'first build the character list
+    'Send the First PhoenixSpeak Query-set to the server Enqueue
+    'PsReceived will read the incoming server responses and keep track which mode we're in
+    'Read CharacterList(0).name into a variable
+    'Remove character at CharacterList(0)
+    'Enqueue the Next Phoenix Speak Command
+    'Change mode as necessary IE CharacterList.Count = 0
+
+    'SubSystem.PSInfoCache is the List of PhoenixSpeak.Variables last transmitted by the server
+    'this list does take into account Multi-Page responses from the server and will flag an
+    'an overflow if page 6 is detected.
+
+
+
+
     ''' <summary>
     ''' Monkey Speak interface to the PS backup/restore system
     ''' </summary>
