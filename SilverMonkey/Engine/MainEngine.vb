@@ -5,6 +5,7 @@ Imports System.Collections.Generic
 Imports MonkeyCore.Settings
 Imports System.Text.RegularExpressions
 Imports System.Diagnostics
+Imports SilverMonkey.PhoenixSpeak
 
 Public Class MainMSEngine
 
@@ -189,12 +190,12 @@ Public Class MainMSEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New phoenixspeak())
+            MSpage.LoadLibrary(New MsPhoenixSpeak())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New PhoenixSpeakDatabaseSystem)
+            MSpage.LoadLibrary(New DatabaseSystem())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
@@ -312,7 +313,8 @@ Public Class MainMSEngine
 
     Public Shared Sub PageSetVariable(ByVal varName As String, ByVal data As Object)
         If cBot.MS_Engine_Enable AndAlso MS_Started() Then
-            Debug.Print("Settingg Variable: " + varName + ":" + data)
+            If data Is Nothing Then data = String.Empty
+            Debug.Print("Settingg Variable: " + varName + ":" + data.ToString)
             MSpage.SetVariable(Main.VarPrefix & varName.ToUpper, data, True) '
 
         End If
@@ -331,7 +333,7 @@ Public Class MainMSEngine
     Public Shared Sub PageSetVariable(ByVal varName As String, ByVal data As Object, ByVal Constant As Boolean)
         If Not IsNothing(cBot) Then
             If cBot.MS_Engine_Enable AndAlso MS_Started() Then
-                Debug.Print("Settingg Variable: " + varName + ":" + data)
+                Debug.Print("Settingg Variable: " + varName + ":" + data.ToString)
                 MSpage.SetVariable(Main.VarPrefix & varName.ToUpper, data, Constant) '
             End If
         End If
@@ -364,6 +366,7 @@ Public Class MainMSEngine
 
         Console.WriteLine(MS_ErrWarning)
         Dim ErrorString As String = "Error: (" & reader.TriggerCategory.ToString & ":" & reader.TriggerId.ToString & ") " & ex.Message
+        reader.ToString()
 
         If Not IsNothing(cBot) Then
             If cBot.log Then

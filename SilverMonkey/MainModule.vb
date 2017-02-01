@@ -43,15 +43,7 @@ Module MainModule
         Public lpMsg As String
     End Structure
 
-    Public Function UnixTimeStampToDateTime(ByRef unixTimeStamp As Double) As DateTime
-        ' Unix timestamp is seconds past epoch
-        Dim dtDateTime As System.DateTime = New DateTime(1970, 1, 1, 0, 0, 0, 0)
-        dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToUniversalTime
-        Return dtDateTime
-    End Function
-    Public Function DateTimeToUnixTimestamp(dTime As DateTime) As Double
-        Return (dTime - New DateTime(1970, 1, 1).ToLocalTime()).TotalSeconds
-    End Function
+
 End Module
 Public Module MyExtensions
     <Runtime.CompilerServices.Extension()>

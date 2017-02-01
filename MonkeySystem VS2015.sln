@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BaseModule", "BaseModule\BaseModule.vbproj", "{BF18C360-B7C6-4E49-AC49-06AEC6A07410}"
 EndProject
@@ -49,6 +49,7 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup.wixpro
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{29F013AD-E80C-4055-9486-067C1C82308A}"
 	ProjectSection(SolutionItems) = preProject
+		Backup SRC.cmd = Backup SRC.cmd
 		Release Notes.txt = Release Notes.txt
 		Solution.build = Solution.build
 		TODO.txt = TODO.txt

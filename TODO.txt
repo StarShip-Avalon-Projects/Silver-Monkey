@@ -2,6 +2,34 @@ TODO:
 
 GENERAL
 consolidate similar code into similar code blocks/class/folders
+Move win32 api to core controls.win32
+Develop a BotSession Class,
+-Server Parsing with delegates to Ms Engine SubSystems.
+-MS Engine Sub Systems,
+--SQLite MonkeySpeak 
+--Phoenix Speak
+--Banish MonkeySpeak
+--Verbot Chat API Engine
+--Cookie
+--SmPounce
+--Bot to Bot Messaging on Same Host
+BotCommand
+-Start Engine
+-Stop Engine
+-Restart Engine
+-MS Trigger
+-Debug <Verbosity Level> <SubSystem>
+--0 - off
+--1 = General notifications
+--2 = Warnings
+--3 = Errors
+Logging and Log Box
+-Errors
+--Monkey Speak
+--SQLite
+-Warnings
+--Monkey Speak
+--SQlite
 
 
 Data Monkey

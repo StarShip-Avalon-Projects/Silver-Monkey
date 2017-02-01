@@ -11,6 +11,7 @@ Namespace Controls
     ''' <summary>
     ''' FastColoredTextBox with Irony parser support
     ''' </summary>
+    ''' <see cref="https://www.codeproject.com/articles/161871/fast-colored-textbox-for-syntax-highlighting"/>
     ''' <see cref="https://github.com/PavelTorgashov/FastColoredTextBox"/>
     ''' <see cref="Http://irony.codeplex.com/"/>
     Public Class SilverMonkeyFCTB

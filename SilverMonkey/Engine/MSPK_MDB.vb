@@ -37,57 +37,57 @@ Public Class MSPK_MDB
         '(1:500) and the Database info {...} about the triggering furre is equal to #,
         Add(New Trigger(TriggerCategory.Condition, 500),
                 AddressOf TriggeringFurreinfoEqualToNumber, "(1:500) and the Database info {...} about the triggering furre is equal to #,")
-            '(1:501) and the Database info {...} about the triggering furre is not equal to #,
-            Add(New Trigger(TriggerCategory.Condition, 501),
-                AddressOf TriggeringFurreinfoNotEqualToNumber, "(1:501) and the Database info {...} about the triggering furre is not equal to #,")
-            '(1:502) and the Database info {...} about the triggering furre is greater than #,
-            Add(New Trigger(TriggerCategory.Condition, 502),
-                AddressOf TriggeringFurreinfoGreaterThanNumber, "(1:502) and the Database info {...} about the triggering furre is greater than #,")
-            '(1:503) and the Database info {...} about the triggering furre is less than #,
-            Add(New Trigger(TriggerCategory.Condition, 503),
-                AddressOf TriggeringFurreinfoLessThanNumber, "(1:503) and the Database info {...} about the triggering furre is less than #,")
+        '(1:501) and the Database info {...} about the triggering furre is not equal to #,
+        Add(New Trigger(TriggerCategory.Condition, 501),
+            AddressOf TriggeringFurreinfoNotEqualToNumber, "(1:501) and the Database info {...} about the triggering furre is not equal to #,")
+        '(1:502) and the Database info {...} about the triggering furre is greater than #,
+        Add(New Trigger(TriggerCategory.Condition, 502),
+            AddressOf TriggeringFurreinfoGreaterThanNumber, "(1:502) and the Database info {...} about the triggering furre is greater than #,")
+        '(1:503) and the Database info {...} about the triggering furre is less than #,
+        Add(New Trigger(TriggerCategory.Condition, 503),
+            AddressOf TriggeringFurreinfoLessThanNumber, "(1:503) and the Database info {...} about the triggering furre is less than #,")
 
-            '(1:504) and the Database info {...} about the triggering furre is greater than or equal to #,
-            Add(New Trigger(TriggerCategory.Condition, 504),
-                AddressOf TriggeringFurreinfoGreaterThanOrEqualToNumber, "(1:504) and the Database info {...} about the triggering furre is greater than or equal to #,")
-            '(1:505) and the Database info {...} about the triggering furre is less than or equal to#,
-            Add(New Trigger(TriggerCategory.Condition, 505),
-                AddressOf TriggeringFurreinfoLessThanOrEqualToNumber, "(1:505) and the Database info {...} about the triggering furre is less than or equal to #,")
-
-
-            '(1:508) and the Database info {...} about the furre named {...} is equal to #,
-            Add(New Trigger(TriggerCategory.Condition, 508),
-                AddressOf FurreNamedinfoEqualToNumber, "(1:508) and the Database info {...} about the furre named {...} is equal to #,")
-            '(1:509) and the Database info {...} about the furre named {...} is not equal to #,
-            Add(New Trigger(TriggerCategory.Condition, 509),
-                AddressOf FurreNamedinfoNotEqualToNumber, "(1:509) and the Database info {...} about the furre named {...} is not equal to #,")
-            '(1:510) and the Database info {...} about the furre named {...} is greater than #,
-            Add(New Trigger(TriggerCategory.Condition, 510),
-                AddressOf FurreNamedinfoGreaterThanNumber, "(1:510) and the Database info {...} about the furre named {...} is greater than #,")
-            '(1:511) and the Database info {...} about the furre named {...} is less than #,
-            Add(New Trigger(TriggerCategory.Condition, 511),
-                AddressOf FurreNamedinfoLessThanNumber, "(1:511) and the Database info {...} about the furre named {...} is less than #,")
-
-            '(1:510) and the Database info {...} about the furre named {...} is greater than or equal to #,
-            Add(New Trigger(TriggerCategory.Condition, 512),
-            AddressOf FurreNamedinfoGreaterThanOrEqualToNumber, "(1:512) and the Database info {...} about the furre named {...} is greater than or equal to #,")
-            '(1:511) and the Database info {...} about the furre named {...} is less than or equal to #,
-            Add(New Trigger(TriggerCategory.Condition, 513),
-            AddressOf FurreNamedinfoLessThanOrEqualToNumber, "(1:513) and the Database info {...} about the furre named {...} is less than or equal to #,")
+        '(1:504) and the Database info {...} about the triggering furre is greater than or equal to #,
+        Add(New Trigger(TriggerCategory.Condition, 504),
+            AddressOf TriggeringFurreinfoGreaterThanOrEqualToNumber, "(1:504) and the Database info {...} about the triggering furre is greater than or equal to #,")
+        '(1:505) and the Database info {...} about the triggering furre is less than or equal to#,
+        Add(New Trigger(TriggerCategory.Condition, 505),
+            AddressOf TriggeringFurreinfoLessThanOrEqualToNumber, "(1:505) and the Database info {...} about the triggering furre is less than or equal to #,")
 
 
-            '(1:516) and the Database info {...} about the furre named {...} is equal to {...},
-            Add(New Trigger(TriggerCategory.Condition, 516),
-           AddressOf FurreNamedinfoEqualToSTR, "(1:516) and the Database info {...} about the furre named {...} is equal to string {...},")
-            '(1:517) and the Database info {...} about the furre named {...} is not equal to {...},
-            Add(New Trigger(TriggerCategory.Condition, 517),
-            AddressOf FurreNamedinfoNotEqualToSTR, "(1:517) and the Database info {...} about the furre named {...} is not equal to string {...},")
-            '(1:518) and the Database info {...} about the triggering furre is equal to {...},
-            Add(New Trigger(TriggerCategory.Condition, 518),
-                AddressOf TriggeringFurreinfoEqualToSTR, "(1:518) and the Database info {...} about the triggering furre is equal to string {...},")
-            '(1:519) and the Database info {...} about the triggering furre is not equal to {...},
-            Add(New Trigger(TriggerCategory.Condition, 519),
-                AddressOf TriggeringFurreinfoNotEqualToSTR, "(1:519) and the Database info {...} about the triggering furre is not equal to string {...},")
+        '(1:508) and the Database info {...} about the furre named {...} is equal to #,
+        Add(New Trigger(TriggerCategory.Condition, 508),
+            AddressOf FurreNamedinfoEqualToNumber, "(1:508) and the Database info {...} about the furre named {...} is equal to #,")
+        '(1:509) and the Database info {...} about the furre named {...} is not equal to #,
+        Add(New Trigger(TriggerCategory.Condition, 509),
+            AddressOf FurreNamedinfoNotEqualToNumber, "(1:509) and the Database info {...} about the furre named {...} is not equal to #,")
+        '(1:510) and the Database info {...} about the furre named {...} is greater than #,
+        Add(New Trigger(TriggerCategory.Condition, 510),
+            AddressOf FurreNamedinfoGreaterThanNumber, "(1:510) and the Database info {...} about the furre named {...} is greater than #,")
+        '(1:511) and the Database info {...} about the furre named {...} is less than #,
+        Add(New Trigger(TriggerCategory.Condition, 511),
+            AddressOf FurreNamedinfoLessThanNumber, "(1:511) and the Database info {...} about the furre named {...} is less than #,")
+
+        '(1:510) and the Database info {...} about the furre named {...} is greater than or equal to #,
+        Add(New Trigger(TriggerCategory.Condition, 512),
+        AddressOf FurreNamedinfoGreaterThanOrEqualToNumber, "(1:512) and the Database info {...} about the furre named {...} is greater than or equal to #,")
+        '(1:511) and the Database info {...} about the furre named {...} is less than or equal to #,
+        Add(New Trigger(TriggerCategory.Condition, 513),
+        AddressOf FurreNamedinfoLessThanOrEqualToNumber, "(1:513) and the Database info {...} about the furre named {...} is less than or equal to #,")
+
+
+        '(1:516) and the Database info {...} about the furre named {...} is equal to {...},
+        Add(New Trigger(TriggerCategory.Condition, 516),
+       AddressOf FurreNamedinfoEqualToSTR, "(1:516) and the Database info {...} about the furre named {...} is equal to string {...},")
+        '(1:517) and the Database info {...} about the furre named {...} is not equal to {...},
+        Add(New Trigger(TriggerCategory.Condition, 517),
+        AddressOf FurreNamedinfoNotEqualToSTR, "(1:517) and the Database info {...} about the furre named {...} is not equal to string {...},")
+        '(1:518) and the Database info {...} about the triggering furre is equal to {...},
+        Add(New Trigger(TriggerCategory.Condition, 518),
+            AddressOf TriggeringFurreinfoEqualToSTR, "(1:518) and the Database info {...} about the triggering furre is equal to string {...},")
+        '(1:519) and the Database info {...} about the triggering furre is not equal to {...},
+        Add(New Trigger(TriggerCategory.Condition, 519),
+            AddressOf TriggeringFurreinfoNotEqualToSTR, "(1:519) and the Database info {...} about the triggering furre is not equal to string {...},")
 
 
         'Installed 7/13/120`16
@@ -253,7 +253,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
+            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -275,7 +275,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
+            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -296,7 +296,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
+            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -462,7 +462,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the triggering furre is equal to {...},
     Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
         Dim str As String = reader.ReadString
         Try
             If str = GetValueFromTable(Info, Furre).ToString Then Return True
@@ -475,7 +475,7 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the triggering furre is not equal to {...},
     Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString())
         Dim str As String = reader.ReadString
         Try
             If str <> GetValueFromTable(Info, Furre).ToString Then Return True
@@ -694,18 +694,23 @@ Public Class MSPK_MDB
     End Function
 
 
-    '(5:405) Add the triggering furre with default access level to the Furre Table in the database if he, she or it don't exist.
+    '(5:405) Add the triggering furre with default access level to the Furre Table in the database if he, she or it don't already exist.
     Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
         Dim info As String = reader.ReadString
-        'Dim value As String = reader.ReadVariable.Value.ToString
-
+        Dim value As String = "0"
+        If reader.PeekNumber Or reader.PeekVariable Then
+            value = reader.ReadVariableOrNumber.ToString
+        ElseIf reader.PeekString Then
+            value = reader.ReadString
+            Double.TryParse(value, 0)
+        End If
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
-        data.Add("[Name]", Furre)
-        data.Add("[date added]", Date.Now.ToString)
-        data.Add("[date modified]", Date.Now.ToString)
-        data.Add("[Access Level]", "0")
+        data.Add("Name", Furre)
+        data.Add("date added", Date.Now.ToString)
+        data.Add("date modified", Date.Now.ToString)
+        data.Add("Access Level", value)
         Try
             db.Insert("FURRE", data)
             Return True
@@ -727,10 +732,10 @@ Public Class MSPK_MDB
         'Dim value As String = reader.ReadVariable.Value.ToString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
-        data.Add(MS_Name, Furre)
-        data.Add("[date added]", Date.Now.ToString)
-        data.Add("[date modified]", Date.Now.ToString)
-        data.Add("[Access Level]", info)
+        data.Add("Name", Furre)
+        data.Add("date added", Date.Now.ToString)
+        data.Add("date modified", Date.Now.ToString)
+        data.Add("Access Level", info)
         Try
             db.Insert("FURRE", data)
             Return True
@@ -744,15 +749,15 @@ Public Class MSPK_MDB
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
         Dim Furre As String = ""
-        Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
+        Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
         Dim value As Double = ReadVariableOrNumber(reader)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
-        data.Add(MS_Name, Furre)
-        data.Add("[" & info & "]", value.ToString)
-        data.Add("[date modified]", Date.Now.ToString)
+        data.Add("Name", Furre)
+        data.Add(info, value.ToString)
+        data.Add("date modified", Date.Now.ToString)
         Try
-            Return db.Update("FURRE", data, "Name='" & Furre & "'")
+            Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
             Return False
@@ -767,11 +772,11 @@ Public Class MSPK_MDB
         Dim value As String = ReadVariableOrNumber(reader, False).ToString
         Dim db As New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
-        data.Add(MS_Name, MainMSEngine.ToFurcShortName(Furre))
-        data.Add("[" & info & "]", value)
-        data.Add("[date modified]", Date.Now.ToString)
+        data.Add("Name", MainMSEngine.ToFurcShortName(Furre))
+        data.Add(info, value)
+        data.Add("date modified", Date.Now.ToString)
         Try
-            Return db.Update("FURRE", data, "Name='" & Furre & "'")
+            Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
         Catch crap As Exception
             Dim e As New ErrorLogging(crap, Me)
             Return False
@@ -782,15 +787,15 @@ Public Class MSPK_MDB
     Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
         Dim value As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
-        data.Add(MS_Name, Furre)
-        data.Add("[" & info & "]", value)
-        data.Add("[date modified]", Date.Now.ToString)
+        data.Add("Name", Furre)
+        data.Add(info, value)
+        data.Add("date modified", Date.Now.ToString)
         Try
-            db.Update("FURRE", data, "Name='" & Furre & "'")
+            db.Update("FURRE", data, "[Name]='" & Furre & "'")
             Return True
         Catch crap As Exception
             Dim e As New ErrorLogging(crap, Me)
@@ -805,11 +810,11 @@ Public Class MSPK_MDB
         Dim value As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
-        data.Add(MS_Name, Furre)
-        data.Add("[" & info & "]", value)
-        data.Add("[date modified]", Date.Now.ToString)
+        data.Add("Name", Furre)
+        data.Add(info, value)
+        data.Add("date modified", Date.Now.ToString)
         Try
-            db.Update("FURRE", data, "Name='" & Furre & "'")
+            db.Update("FURRE", data, "[Name]='" & Furre & "'")
             Return True
         Catch crap As Exception
             Dim e As New ErrorLogging(crap, Me)
@@ -823,10 +828,10 @@ Public Class MSPK_MDB
             Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
             Dim Info As String = reader.ReadString
             Dim Variable As Variable = reader.ReadVariable(True)
-            Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
+            Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
             'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
-            Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where Name ='" & Furre & "'"
-            Variable.Value = db.ExecuteScalar1(cmd)
+            Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
+            Variable.Value = SQLiteDatabase.ExecuteScalar1(cmd)
             Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
@@ -842,8 +847,8 @@ Public Class MSPK_MDB
             Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
             Dim Variable As Variable = reader.ReadVariable(True)
             ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
-            Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where Name ='" & Furre & "'"
-            Variable.Value = db.ExecuteScalar1(cmd)
+            Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
+            Variable.Value = SQLiteDatabase.ExecuteScalar1(cmd)
             Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
@@ -861,7 +866,7 @@ Public Class MSPK_MDB
     End Function
     '(5:418) delete all Database info about the triggering furre.
     Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value)
+        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
@@ -884,7 +889,7 @@ Public Class MSPK_MDB
             Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
             Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
             Total = reader.ReadVariable(True)
-            Dim count As String = db.ExecuteScalar1("select count(*) from [" & Table & "]")
+            Dim count As String = SQLiteDatabase.ExecuteScalar1("select count(*) from [" & Table & "]")
             Total.Value = count
             Return True
         Catch ex As Exception
@@ -1038,7 +1043,7 @@ Public Class MSPK_MDB
         Dim start As Date = Date.Now
         SQLiteDatabase.ExecuteNonQuery("VACUUM")
         Dim ts As TimeSpan = Date.Now.Subtract(start)
-        callbk.SendClientMessage("SYSTEM:", "Executed Vacum in " + ts.Seconds.ToString + " seconds")
+        Main.SendClientMessage("SYSTEM:", "Executed Vacum in " + ts.Seconds.ToString + " seconds")
         Return True
     End Function
 

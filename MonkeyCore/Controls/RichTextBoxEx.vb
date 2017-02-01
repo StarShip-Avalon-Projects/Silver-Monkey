@@ -1,8 +1,10 @@
-﻿Imports System.ComponentModel
+﻿Imports System.Runtime.InteropServices
+Imports System.ComponentModel
 Imports System.Windows.Forms
-Imports System.Runtime.InteropServices
+
 Imports System.Text.RegularExpressions
 Imports System.Windows.Forms.VisualStyles
+Imports MonkeyCore.Controls.Win32
 
 Namespace Controls
     Public Class RichTextBoxEx
@@ -11,175 +13,23 @@ Namespace Controls
         'Declaration
         <BindableAttribute(True)>
         Public Property VerticalContentAlignment As VerticalAlignment
+        Private _protocols As List(Of String)
 
         Dim instance As Control
         Dim value As VerticalAlignment
 
 
-#Region "Interop-Defines"
-        <StructLayout(LayoutKind.Sequential)>
-        Private Structure CHARFORMAT2_STRUCT
-            Public cbSize As Integer
-            Public dwMask As Integer
-            Public dwEffects As Integer
-            Public yHeight As Integer
-            Public yOffset As Integer
-            Public crTextColor As Integer
-            Public bCharSet As Byte
-            Public bPitchAndFamily As Byte
-            <MarshalAs(UnmanagedType.ByValArray, SizeConst:=32)>
-            Public szFaceName As Char()
-            Public wWeight As Short
-            Public sSpacing As Short
-            Public crBackColor As Integer
-            ' Color.ToArgb() -> int
-            Public lcid As Integer
-            Public dwReserved As Integer
-            Public sStyle As Short
-            Public wKerning As Short
-            Public bUnderlineType As Byte
-            Public bAnimation As Byte
-            Public bRevAuthor As Byte
-            Public bReserved1 As Byte
-        End Structure
-
-        <DllImport("user32.dll", CharSet:=CharSet.Auto)>
-        Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
-        End Function
-
-        Private _protocols As List(Of String)
-        Private updating As Integer
-        Private oldEventMask As IntPtr
-        Private Const WM_USER As Integer = &H400
-        Private Const EM_GETCHARFORMAT As Integer = WM_USER + 58
-        Private Const EM_SETCHARFORMAT As Integer = WM_USER + 68
-
-        Private Const SCF_SELECTION As Integer = &H1
-        Private Const SCF_WORD As Integer = &H2
-        Private Const SCF_ALL As Integer = &H4
-
-        Private Const WM_SETREDRAW As Integer = &HB
-        Private Const EM_GETEVENTMASK As Integer = WM_USER + 59
-        Private Const EM_SETEVENTMASK As Integer = WM_USER + 69
-
-#Region "CHARFORMAT2 Flags"
-        Private Const CFE_BOLD As Integer = &H1
-        Private Const CFE_ITALIC As Integer = &H2
-        Private Const CFE_UNDERLINE As Integer = &H4
-        Private Const CFE_STRIKEOUT As Integer = &H8
-        Private Const CFE_PROTECTED As Integer = &H10
-        Private Const CFE_LINK As Integer = &H20
-        Private Const CFE_AUTOCOLOR As Integer = &H40000000
-        Private Const CFE_SUBSCRIPT As Integer = &H10000
-        ' Superscript and subscript are 
-        Private Const CFE_SUPERSCRIPT As Integer = &H20000
-        '  mutually exclusive			 
-
-        Private Const CFM_SMALLCAPS As Integer = &H40
-        ' (*)	
-        Private Const CFM_ALLCAPS As Integer = &H80
-        ' Displayed by 3.0	
-        Private Const CFM_HIDDEN As Integer = &H100
-        ' Hidden by 3.0 
-        Private Const CFM_OUTLINE As Integer = &H200
-        ' (*)	
-        Private Const CFM_SHADOW As Integer = &H400
-        ' (*)	
-        Private Const CFM_EMBOSS As Integer = &H800
-        ' (*)	
-        Private Const CFM_IMPRINT As Integer = &H1000
-        ' (*)	
-        Private Const CFM_DISABLED As Integer = &H2000
-        Private Const CFM_REVISED As Integer = &H4000
-
-        Private Const CFM_BACKCOLOR As Integer = &H4000000
-        Private Const CFM_LCID As Integer = &H2000000
-        Private Const CFM_UNDERLINETYPE As Integer = &H800000
-        ' Many displayed by 3.0 
-        Private Const CFM_WEIGHT As Integer = &H400000
-        Private Const CFM_SPACING As Integer = &H200000
-        ' Displayed by 3.0	
-        Private Const CFM_KERNING As Integer = &H100000
-        ' (*)	
-        Private Const CFM_STYLE As Integer = &H80000
-        ' (*)	
-        Private Const CFM_ANIMATION As Integer = &H40000
-        ' (*)	
-        Private Const CFM_REVAUTHOR As Integer = &H8000
+        Public Sub New()
+            MyBase.New()
+            Me.DoubleBuffered = True
+            ' Otherwise, non-standard links get lost When user starts typing
+            ' next to a non-standard link
+            Me.DetectUrls = True
+            Me._protocols = New List(Of String)
+            Me._protocols.AddRange(New String() {"http://", "furc://", "file://", "mailto://", "ftp://", "https://", "gopher://", "nntp://", "prospero://", "telnet://", "news://", "wais://", "outlook://", "\\"})
 
 
-        Private Const CFM_BOLD As Integer = &H1
-        Private Const CFM_ITALIC As Integer = &H2
-        Private Const CFM_UNDERLINE As Integer = &H4
-        Private Const CFM_STRIKEOUT As Integer = &H8
-        Private Const CFM_PROTECTED As Integer = &H10
-        Private Const CFM_LINK As Integer = &H20
-        Private Const CFM_SIZE As Integer = &H80000000
-        Private Const CFM_COLOR As Integer = &H40000000
-        Private Const CFM_FACE As Integer = &H20000000
-        Private Const CFM_OFFSET As Integer = &H10000000
-        Private Const CFM_CHARSET As Integer = &H8000000
-        Private Const CFM_SUBSCRIPT As Integer = CFE_SUBSCRIPT Or CFE_SUPERSCRIPT
-        Private Const CFM_SUPERSCRIPT As Integer = CFM_SUBSCRIPT
-
-        Private Const CFU_UNDERLINENONE As Byte = &H0
-        Private Const CFU_UNDERLINE As Byte = &H1
-        Private Const CFU_UNDERLINEWORD As Byte = &H2
-        ' (*) displayed as ordinary underline	
-        Private Const CFU_UNDERLINEDOUBLE As Byte = &H3
-        ' (*) displayed as ordinary underline	
-        Private Const CFU_UNDERLINEDOTTED As Byte = &H4
-        Private Const CFU_UNDERLINEDASH As Byte = &H5
-        Private Const CFU_UNDERLINEDASHDOT As Byte = &H6
-        Private Const CFU_UNDERLINEDASHDOTDOT As Byte = &H7
-        Private Const CFU_UNDERLINEWAVE As Byte = &H8
-        Private Const CFU_UNDERLINETHICK As Byte = &H9
-        Private Const CFU_UNDERLINEHAIRLINE As Byte = &HA
-        ' (*) displayed as ordinary underline	
-
-#End Region
-
-#Region "Scrollbar position"
-        <DllImport("user32.dll", CharSet:=CharSet.Auto)>
-        Public Shared Function GetScrollPos(ByVal hWnd As IntPtr, ByVal nBar As Integer) As Integer
-        End Function
-
-        <DllImport("user32.dll")>
-        Private Shared Function SetScrollPos(ByVal hWnd As IntPtr, ByVal nBar As Integer, ByVal nPos As Integer, ByVal bRedraw As Boolean) As Integer
-        End Function
-
-        Public Enum SBOrientation As Integer
-            SB_HORZ = &H0
-            SB_VERT = &H1
-            SB_CTL = &H2
-            SB_BOTH = &H3
-        End Enum
-        Public Enum ScrollInfoMask As UInteger
-            SIF_RANGE = &H1
-            SIF_PAGE = &H2
-            SIF_POS = &H4
-            SIF_DISABLENOSCROLL = &H8
-            SIF_TRACKPOS = &H10
-            SIF_ALL = (SIF_RANGE Or SIF_PAGE Or SIF_POS Or SIF_TRACKPOS)
-        End Enum
-        <Serializable(), StructLayout(LayoutKind.Sequential)> _
-        Structure SCROLLINFO
-            Public cbSize As UInteger
-            <MarshalAs(UnmanagedType.U4)> Public fMask As ScrollInfoMask
-            Public nMin As Integer
-            Public nMax As Integer
-            Public nPage As UInteger
-            Public nPos As Integer
-            Public nTrackPos As Integer
-        End Structure
-        Public Function GetScrollInfo(hWnd As IntPtr, _
-        <MarshalAs(UnmanagedType.I4)> fnBar As SBOrientation, _
-        <MarshalAs(UnmanagedType.Struct)> ByRef lpsi As SCROLLINFO) As Integer
-        End Function
-
-        Private Const SB_HORZ As Integer = &H0
-        Private Const SB_VERT As Integer = &H1
-
+        End Sub
 
         ''' <summary>
         ''' Gets and Sets the Horizontal Scroll position of the control.
@@ -204,27 +54,10 @@ Namespace Controls
                 SetScrollPos(Me.Handle, SB_VERT, value, True)
             End Set
         End Property
-#End Region
-
-
-
-#End Region
-
-        Public Sub New()
-            MyBase.New()
-            Me.DoubleBuffered = True
-            ' Otherwise, non-standard links get lost When user starts typing
-            ' next to a non-standard link
-            Me.DetectUrls = True
-            Me._protocols = New List(Of String)
-            Me._protocols.AddRange(New String() {"http://", "furc://", "file://", "mailto://", "ftp://", "https://", "gopher://", "nntp://", "prospero://", "telnet://", "news://", "wais://", "outlook://", "\\"})
-
-
-        End Sub
 
         <Editor(("System.Windows.Forms.Design.StringCollectionEditor," _
-           + "System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"), _
-           GetType(System.Drawing.Design.UITypeEditor))> _
+           + "System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),
+           GetType(System.Drawing.Design.UITypeEditor))>
         Public ReadOnly Property Protocols() As List(Of String)
             Get
 

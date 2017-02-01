@@ -305,7 +305,7 @@ Module MS_Engine
                     If String.IsNullOrEmpty(var.Value.ToString) Then
                         Return True
                     End If
-                    var.Value = MainMSEngine.ToFurcShortName(var.Value)
+                    var.Value = MainMSEngine.ToFurcShortName(var.Value.ToString)
                     Return True
                 Else
                     Return False
@@ -1180,10 +1180,11 @@ Module MS_Engine
                 Dim msg As Variable = MainMSEngine.MSpage.GetVariable("DREAMNAME")
                 Dim str As String = msMsg.ToLower.Replace("furc://", "").ToLower
                 If str.EndsWith("/") Then str = str.TrimEnd("/"c)
-
-                Dim str2 As String = msg.Value.ToString.ToLower.Replace("furc://", "")
-                If str2.EndsWith("/") Then str2 = str2.TrimEnd("/"c)
-
+                Dim str2 As String = Nothing
+                If Not String.IsNullOrEmpty(msg.Value.ToString) Then
+                    str2 = msg.Value.ToString.ToLower.Replace("furc://", "")
+                    If str2.EndsWith("/") Then str2 = str2.TrimEnd("/"c)
+                End If
                 Return str = str2
 
             Catch ex As Exception

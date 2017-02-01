@@ -78,7 +78,7 @@ Public Class MS_Pounce
             Dim TmpName As String = reader.ReadString()
             Dim tname As Variable = MainMSEngine.MSpage.GetVariable(MS_Name)
             'add Machine Name parser
-            Return MainMSEngine.ToFurcShortName(TmpName) = MainMSEngine.ToFurcShortName(tname.Value)
+            Return MainMSEngine.ToFurcShortName(TmpName) = MainMSEngine.ToFurcShortName(tname.Value.ToString)
 
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)

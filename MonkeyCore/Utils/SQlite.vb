@@ -1,11 +1,32 @@
 ﻿Imports System.Data.SQLite
 Imports System.IO
 
+<Serializable>
+Public Class SQLiteSyntaxException
+    Inherits Exception
+    Public Sub New()
+    End Sub
+
+    Public Sub New(message As String)
+        MyBase.New(message)
+    End Sub
+
+    Public Sub New(message As String, inner As Exception)
+        MyBase.New(message, inner)
+    End Sub
+
+    Protected Sub New(info As System.Runtime.Serialization.SerializationInfo, context As System.Runtime.Serialization.StreamingContext)
+        MyBase.New(info, context)
+    End Sub
+End Class
+
+
 Public Class SQLiteDatabase
 
     Private Const SyncPragma As String = "PRAGMA synchronous=0;"
     Private Const FurreTable As String = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT, [PSBackup] DOUBLE"
     Private Const DefaultFile As String = "SilverMonkey.db"
+    Public Const PlayerDbName As String = "Name"
     Dim lock As New Object
     Private Shared dbConnection As String
     Private Shared writer As TextBoxWriter = Nothing
@@ -17,7 +38,7 @@ Public Class SQLiteDatabase
         Dim inputFile As String = Path.Combine(Paths.SilverMonkeyBotPath, DefaultFile)
         dbConnection = "Data Source=" & inputFile
         CreateTbl("FURRE", FurreTable)
-        CreateTbl("BACKUPMASTER", "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [date modified] TEXT")
+        CreateTbl("BACKUPMASTER", "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [" + PlayerDbName + "] TEXT Unique, [date modified] TEXT")
         CreateTbl("BACKUP", "[NameID] INTEGER, [Key] TEXT, [Value] TEXT")
         CreateTbl("SettingsTableMaster", "[ID] INTEGER UNIQUE, [SettingsTable] TEXT Unique, [date modified] TEXT, PRIMARY KEY ([ID],[SettingsTable])")
         CreateTbl("SettingsTable", "[ID] INTEGER UNIQUE,[SettingsTableID] INTEGER, [Setting] TEXT, [Value] TEXT")
@@ -185,10 +206,10 @@ Public Class SQLiteDatabase
             Dim mycommand As New SQLiteCommand(cnn)
             Try
 
-                mycommand.CommandText = SyncPragma + sql
+                mycommand.CommandText = sql
                 rowsUpdated = mycommand.ExecuteNonQuery()
-            Catch
-                Return -1
+            Catch ex As SQLiteException
+                rowsUpdated = -1
             Finally
                 mycommand.Dispose()
             End Try
@@ -211,7 +232,8 @@ Public Class SQLiteDatabase
                 Dim a As SQLiteDataAdapter = New SQLiteDataAdapter(mycommand)
                 Try
                     a.Fill(rowsUpdated)
-                Catch ex As exception
+                Catch ex As SQLiteException
+
                     rowsUpdated = Nothing
 
                     ' Finally
@@ -230,19 +252,19 @@ Public Class SQLiteDatabase
     ''' <param name="tableName">Name of the table.</param>
     ''' <returns>True if ExecuteNonQurey returns one or more tables</returns>
     Public Function isTableExists(tableName As String) As Boolean
-        Return ExecuteNonQuery(SyncPragma + "SELECT name FROM sqlite_master WHERE name='" & tableName & "'") > 0
+        Return ExecuteNonQuery("SELECT name FROM sqlite_master WHERE name='" & tableName & "'") > 0
     End Function
     ''' <summary>
     '''     Allows the programmer to retrieve single items from the DB.
     ''' </summary>
     ''' <param name="sql">The query to run.</param>
     ''' <returns>A string.</returns>
-    Public Function ExecuteScalar1(ByVal sql As String) As String
+    Public Shared Function ExecuteScalar1(ByVal sql As String) As String
         Dim Value As Object = Nothing
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()
             Using mycommand As New SQLiteCommand(cnn)
-                mycommand.CommandText = SyncPragma + sql
+                mycommand.CommandText = sql
                 Value = mycommand.ExecuteScalar()
             End Using
             cnn.Close()
@@ -261,15 +283,14 @@ Public Class SQLiteDatabase
     ''' <param name="where">The where clause for the update statement.</param>
     ''' <returns>A boolean true or false to signify success or failure.</returns>
     Public Function Update(tableName As String, data As Dictionary(Of String, String), where As String) As Boolean
-        Dim vals As String = ""
-
-        If data.Count < 1 Then Return False
+        Dim vals As New List(Of String)
+        If data.Count = 0 Then Return False
         For Each val As KeyValuePair(Of String, String) In data
-            vals += String.Format(" {0} = '{1}',", val.Key.ToString(), val.Value.ToString())
+            vals.Add(String.Format("'{0}'='{1}'", val.Key, val.Value))
         Next
         Try
-            Dim cmd As String = String.Format("update {0} set {1} where {2};", tableName, vals, where)
-            Return ExecuteNonQuery(SyncPragma + cmd) > 0
+            Dim cmd As String = String.Format("update {0} set {1} where {2};", tableName, String.Join(", ", vals.ToArray), where)
+            Return ExecuteNonQuery(cmd) < -1
         Catch ex As Exception
             Dim err As New ErrorLogging(ex, Me)
             Return False
@@ -285,7 +306,7 @@ Public Class SQLiteDatabase
     Public Function Delete(tableName As String, where As String) As Boolean
 
         Try
-            Return 0 < ExecuteNonQuery(String.Format("delete from {0} where {1};", tableName, where))
+            Return ExecuteNonQuery(String.Format("delete from {0} where {1};", tableName, where)) > -1
         Catch ex As Exception
             Dim err As New ErrorLogging(ex, Me)
 
@@ -300,15 +321,15 @@ Public Class SQLiteDatabase
     ''' <param name="data">A dictionary containing the column names and data for the insert.</param>
     ''' <returns>A boolean true or false to signify success or failure.</returns>
     Public Function Insert(tableName As String, data As Dictionary(Of String, String)) As Boolean
-        Dim columns As New ArrayList
-        Dim values As New ArrayList
+        Dim columns As New List(Of String)
+        Dim values As New List(Of String)
         For Each val As KeyValuePair(Of String, String) In data
-            columns.Add(String.Format(" {0}", val.Key.ToString()))
-            values.Add(String.Format(" '{0}'", val.Value))
+            columns.Add(String.Format("[{0}]", val.Key))
+            values.Add(String.Format("'{0}'", val.Value))
         Next
         Try
             Dim cmd As String = String.Format("INSERT OR IGNORE into {0}({1}) values({2});", tableName, String.Join(", ", columns.ToArray), String.Join(", ", values.ToArray))
-            Return ExecuteNonQuery(cmd) > 0
+            Return ExecuteNonQuery(cmd) > -1
         Catch ex As Exception
             Dim err As New ErrorLogging(ex, Me)
             Return False
@@ -339,10 +360,32 @@ Public Class SQLiteDatabase
     ''' <returns>A boolean true or false to signify success or failure.</returns>
     Public Function ClearTable(table As String) As Boolean
         Try
-            Return ExecuteNonQuery(String.Format("delete from {0};", table)) > 0
+            Return ExecuteNonQuery(String.Format("delete from {0};", table)) > -1
         Catch
             Return False
         End Try
+    End Function
+
+    ''' <summary>
+    '''     Allows the programmer to easily insert into the DB
+    ''' </summary>
+    ''' <param name="tableName">The table into which we insert the data.</param>
+    ''' <param name="data">A dictionary containing the column names and data for the insert.</param>
+    ''' <returns>A boolean true or false to signify success or failure.</returns>
+    Public Shared Function InsertMultiRow(tableName As String, ID As Integer, data As Dictionary(Of String, String)) As Boolean
+        Dim values As New List(Of String)
+        For Each val As KeyValuePair(Of String, String) In data
+            values.Add(String.Format(" ( '{0}', '{1}', '{2}' )", ID, val.Key, val.Value))
+        Next
+        Dim i As Integer = 0
+        If values.Count > 0 Then
+            'INSERT INTO 'table' ('column1', 'col2', 'col3') VALUES (1,2,3),  (1, 2, 3), (etc);
+            Dim cmd As String = String.Format("INSERT into '{0}' ([NameID], [Key], [Value]) Values {1};", tableName, String.Join(", ", values.ToArray))
+            i = ExecuteNonQuery(cmd)
+        End If
+
+        ' i = -1 if there's an SQLte error 
+        Return values.Count <> 0 AndAlso i > -1
     End Function
 
 

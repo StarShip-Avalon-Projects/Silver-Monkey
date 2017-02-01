@@ -12,13 +12,14 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <OptionInfer>On</OptionInfer>
-    <OptionStrict>Off</OptionStrict>
+    <OptionStrict>On</OptionStrict>
     <OptionCompare>Binary</OptionCompare>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <StartupObject>SilverMonkey.My.MyApplication</StartupObject>
-    <ApplicationIcon>resources\metal.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <NoWin32Manifest>True</NoWin32Manifest>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <OptionExplicit>On</OptionExplicit>
@@ -54,7 +55,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <DefineConstants>NoWin32Manifest=TRUE</DefineConstants>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <NoWarn>
+    </NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -68,8 +71,12 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants />
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>SecurityRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="RTFLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -121,8 +128,10 @@
     </Compile>
     <Compile Include="Engine\MS Repq.vb" />
     <Compile Include="Engine\MS Verbot.vb" />
-    <Compile Include="Engine\PS Pre-Processor\PhoenixSpeakSubSystem.vb" />
-    <Compile Include="Engine\PS Pre-Processor\PhoenixSpeakDatabaseSystem.vb" />
+    <Compile Include="Engine\PS Pre-Processor\DataBaseTools.vb" />
+    <Compile Include="Engine\PS Pre-Processor\SubSystem.vb" />
+    <Compile Include="Engine\PS Pre-Processor\DatabaseSystem.vb" />
+    <Compile Include="Engine\PS Pre-Processor\PhoenixSpeakVariable.vb" />
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
@@ -161,7 +170,7 @@
     <Compile Include="Engine\MS_Cookie.vb" />
     <Compile Include="Engine\MS_DreamTransfer.vb" />
     <Compile Include="Engine\MS_Quotes.vb" />
-    <Compile Include="Engine\PS Pre-Processor\phoenixspeak.vb" />
+    <Compile Include="Engine\PS Pre-Processor\MSPhoenixSpeak.vb" />
     <Compile Include="Engine\FurreList.vb" />
     <Compile Include="Engine\Warning.vb" />
     <Compile Include="Engine\WmCpyDta.vb" />
@@ -193,6 +202,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SessionHandler\DreamSession.vb" />
+    <Compile Include="SessionHandler\FurcadiaSession.vb" />
     <Compile Include="Settings.vb" />
     <Compile Include="Debug\Variables.Designer.vb">
       <DependentUpon>Variables.vb</DependentUpon>
@@ -316,6 +327,7 @@
     <None Include="resources\PageNumber.png" />
     <Content Include="resources\SaveAsWebPageHS.png" />
     <None Include="resources\SaveAsWebPageHS1.png" />
+    <Content Include="TextFile1.txt" />
     <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>

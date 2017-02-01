@@ -16,7 +16,6 @@ Imports System.Runtime.InteropServices
 "Drake, Shadling, Arden, Sidereal")>
 <Assembly: AssemblyCompany("TS-Projects")>
 <Assembly: AssemblyProduct("Silver Monkey")>
-<Assembly: AssemblyCopyright("Copyright © 2012 - 20117")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

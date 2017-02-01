@@ -2,7 +2,6 @@ Imports Furcadia.Net.Movement
 Imports Furcadia.Net
 Imports Furcadia.Base220
 Imports System.Text.RegularExpressions
-Imports System.Collections
 Imports System.Collections.Generic
 Imports Furcadia.Drawing
 Imports System.Drawing
@@ -16,6 +15,7 @@ Imports System.Windows.Forms
 Imports MonkeyCore
 Imports MonkeyCore.Settings
 Imports MonkeyCore.Controls
+
 
 Public Class Main
     Inherits Form
@@ -157,13 +157,13 @@ Public Class Main
     Protected Overrides Sub WndProc(ByRef m As Message)
         If m.Msg = WM_COPYDATA Then
             'Dim mystr As COPYDATASTRUCT
-            Dim mystr2 As COPYDATASTRUCT = Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT))
+            Dim mystr2 As COPYDATASTRUCT = CType(Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT)), COPYDATASTRUCT)
 
             ' If the size matches
             If mystr2.cdData = Marshal.SizeOf(GetType(MyData)) Then
                 ' Marshal the data from the unmanaged memory block to a 
                 ' MyStruct managed struct.
-                Dim myStr As MyData = Marshal.PtrToStructure(mystr2.lpData, GetType(MyData))
+                Dim myStr As MyData = CType(Marshal.PtrToStructure(mystr2.lpData, GetType(MyData)), MyData)
 
 
 
@@ -209,9 +209,9 @@ Public Class Main
     End Sub
 
 #End Region
-    Public Sub SendClientMessage(msg As String, data As String)
-        If smProxy.IsClientConnected Then smProxy.SendClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """" + vbLf)
-        sndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
+    Public Shared Sub SendClientMessage(msg As String, data As String)
+        If callbk.smProxy.IsClientConnected Then callbk.smProxy.SendClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """" + vbLf)
+        callbk.sndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
     End Sub
 
     Private Shared _FormClose As Boolean = False
@@ -240,6 +240,8 @@ Public Class Main
 
     Public ThroatTired As Boolean = False
 
+
+    'TODO: Move these Setting to Proxy Class
     Public ServerStack As Queue(Of String) = New Queue(Of String)(500)
     Private SpeciesTag As Queue(Of String) = New Queue(Of String)()
     Private BadgeTag As Queue(Of String) = New Queue(Of String)()
@@ -255,7 +257,7 @@ Public Class Main
         LookQue.Clear()
         BadgeTag.Clear()
         g_mass = 0
-        PhoenixSpeakSubSystem.PS_Abort()
+        'PhoenixSpeak.SubSystem.Abort()
 
 
     End Sub
@@ -315,12 +317,12 @@ Public Class Main
     Private Delegate Sub DelTimeupdate()
     Private Delegate Function WordUnderMouse(ByRef Rtf As RichTextBoxEx, ByVal X As Integer, ByVal Y As Integer) As String
 
-    Dim LogTimer As New System.Timers.Timer()
-    Dim DreamUpdateTimer As New System.Timers.Timer()
+    Private LogTimer As New System.Timers.Timer()
+    Private DreamUpdateTimer As New System.Timers.Timer()
     Private MSalarm As Threading.Timer
 
-    Dim PingTimer As Threading.Timer
-    Dim usingPing As Integer = 0
+    Private PingTimer As Threading.Timer
+    Private usingPing As Integer = 0
     Private Sub PingTimerTick(ByVal state As Object)
         If (0 = Interlocked.Exchange(usingPing, 1)) Then
             If g_mass + MASS_SPEECH <= MASS_CRITICAL Then
@@ -338,17 +340,13 @@ Public Class Main
         If (0 = Interlocked.Exchange(usingResource, 1)) Then
             Dim seconds As Double = DateTime.Now.Subtract(TickTime).Milliseconds
             on_Tick(seconds)
-            PhoenixSpeakSubSystem.CheckPS_Send()
+            'PhoenixSpeak.CheckPS_Send()
             TickTime = DateTime.Now
             Interlocked.Exchange(usingResource, 0)
         End If
     End Sub
 
     Private g_mass As Double = 0
-    Private ps_mass As Double = 0
-    Private pss_mass As Double = 0
-
-
 
     Public Const MASS_DEFAULT As Integer = 80
     Public Const MASS_SPEECH As Integer = 1000
@@ -364,7 +362,6 @@ Public Class Main
             dt = Math.Round(dt, 0) + 1
         End If
 
-
         '/* Send buffered speech. */
         Dim decay As Double = Math.Round(dt * MASS_DECAYPS / 1000.0F, 0)
         If (decay > g_mass) Then
@@ -378,8 +375,7 @@ Public Class Main
                 '/* just send everything right away */
                 While ServerStack.Count > 0 And g_mass <= MASS_CRITICAL
                     g_mass += ServerStack.Peek.Length + MASS_DEFAULT
-                    smProxy.SendServer(ServerStack.Peek & vbLf)
-                    ServerStack.Dequeue()
+                    smProxy.SendServer(ServerStack.Dequeue() & vbLf)
                 End While
             End SyncLock
         ElseIf Not ThroatTired Then
@@ -387,9 +383,7 @@ Public Class Main
                 ' Only send a speech line if the mass will be under the limit. */
                 While ServerStack.Count > 0 And g_mass + MASS_SPEECH <= MASS_CRITICAL
                     g_mass += ServerStack.Peek.Length + MASS_DEFAULT
-                    smProxy.SendServer(ServerStack.Peek & vbLf)
-
-                    ServerStack.Dequeue()
+                    smProxy.SendServer(ServerStack.Dequeue() & vbLf)
                 End While
             End SyncLock
         End If
@@ -885,9 +879,11 @@ Public Class Main
         Try
             'data = data.Replace(vbLf, vbCrLf)
             If cBot.log Then LogStream.Writeline(data)
-            If MainSettings.TimeStamp Then
+            If MainSettings.TimeStamp = 1 Then
                 Dim Now As String = Date.Now.ToLongTimeString
                 data = Now.ToString & ": " & data
+            ElseIf MainSettings.TimeStamp = 2 Then
+
             End If
             AddDataToList(log_, data, newColor)
         Catch eX As Exception
@@ -1122,17 +1118,17 @@ Public Class Main
 
 
                 Dim NameLength As UInteger = ConvertFromBase220(data.Substring(11, 1))
-                Player.Name = data.Substring(12, NameLength).Replace("|", " ")
+                Player.Name = data.Substring(12, CInt(NameLength)).Replace("|", " ")
 
-                Dim ColTypePos As UInteger = 12 + NameLength
-                Player.ColorType = CChar(data.Substring(ColTypePos, 1))
+                Dim ColTypePos As UInteger = CUInt(12 + NameLength)
+                Player.ColorType = CChar(data.Substring(CInt(ColTypePos), 1))
                 Dim ColorSize As UInteger = 10
                 'If Player.ColorType <> "t" Then
                 '    ColorSize = 30
                 'End If
-                Dim sColorPos As Integer = ColTypePos + 1
+                Dim sColorPos As Integer = CInt(ColTypePos + 1)
 
-                Player.Color = data.Substring(sColorPos, ColorSize)
+                Player.Color = data.Substring(sColorPos, CInt(ColorSize))
 
                 Dim FlagPos As Integer = data.Length - 6
                 Player.Flag = CInt(ConvertFromBase220(data.Substring(FlagPos, 1)))
@@ -1151,7 +1147,7 @@ Public Class Main
                     If InDream Then UpDateDreamList(Player.Name)
                     If Player.Flag = 2 Then
                         Dim Bot As FURRE = NametoFurre(BotName, False)
-                        Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord((Bot.X), (Bot.Y))
+                        Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
                         If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
                             Player.Visible = True
                         Else
@@ -1163,7 +1159,7 @@ Public Class Main
                     End If
                 ElseIf Player.Flag = 2 Then
                     Dim Bot As FURRE = NametoFurre(BotName, False)
-                    Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord((Bot.X), (Bot.Y))
+                    Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
                     If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
                         Player.Visible = True
                     Else
@@ -1211,7 +1207,7 @@ Public Class Main
                 Player.Y = ConvertFromBase220(data.Substring(7, 2))
                 Player.Shape = ConvertFromBase220(data.Substring(9, 2))
                 Dim Bot As FURRE = fIDtoFurre((BotUID))
-                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord((Bot.X), (Bot.Y))
+                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
                 If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
                     Player.Visible = True
                 Else
@@ -1235,7 +1231,7 @@ Public Class Main
                 Player.Shape = ConvertFromBase220(data.Substring(9, 2))
 
                 Dim Bot As FURRE = fIDtoFurre((BotUID))
-                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord((Bot.X), (Bot.Y))
+                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(CInt(Bot.X), CInt(Bot.Y))
                 If VisableRectangle.X <= Player.X And VisableRectangle.Y <= Player.Y And VisableRectangle.height >= Player.Y And VisableRectangle.length >= Player.X Then
 
                     Player.Visible = True
@@ -1258,11 +1254,11 @@ Public Class Main
                 Player = fIDtoFurre(ConvertFromBase220(data.Substring(1, 4)))
                 Player.Shape = ConvertFromBase220(data.Substring(5, 2))
                 Dim ColTypePos As UInteger = 7
-                Player.ColorType = CChar(data.Substring(ColTypePos, 1))
+                Player.ColorType = CChar(data.Substring(CInt(ColTypePos), 1))
                 Dim ColorSize As UInteger = 10
 
-                Dim sColorPos As UInteger = ColTypePos + 1
-                Player.Color = data.Substring(sColorPos, ColorSize)
+                Dim sColorPos As UInteger = CUInt(ColTypePos + 1)
+                Player.Color = data.Substring(CInt(sColorPos), CInt(ColorSize))
                 If DREAM.List.ContainsKey(Player.ID) Then DREAM.List.Item(Player.ID) = Player
                 IsBot(Player)
             Catch eX As Exception
@@ -2020,7 +2016,7 @@ Public Class Main
                 Exit Sub
             ElseIf data.StartsWith("PS") Then
                 Color = "PhoenixSpeak"
-                PhoenixSpeakSubSystem.ProcessServerPS(data)
+                PhoenixSpeak.SubSystem.ProcessServerPS(data)
                 If MainSettings.PSShowMainWindow Then
                     sndDisplay(data)
                 End If
@@ -2114,11 +2110,13 @@ Public Class Main
 
 #End Region
     Private ClientReceived As Integer = 0
+
+    Dim clientlock As New Object
     Private Sub onClientDataReceived(ByVal data As String) Handles smProxy.ClientData2
-        Dim temp As Object = data
+
         Try
 
-            If (Monitor.TryEnter(temp)) Then
+            If (Monitor.TryEnter(clientlock)) Then
                 'If data.StartsWith("desc") = True Or data.StartsWith("chdesc") = True Then
                 '    data += " [<a href='http://www.ts-projects.org/smIdx.html'>SilverMonkey</a> with <a href='http://Furcadia.codeplex.com'>Furcadia Framework</a> for Third Party Programs]"
                 'End If
@@ -2157,7 +2155,7 @@ Public Class Main
             Dim logError As New ErrorLogging(eX, Me)
 
         Finally
-            Monitor.Exit(temp)
+            Monitor.Exit(clientlock)
         End Try
 
 
@@ -2212,10 +2210,9 @@ Public Class Main
 
     Public serverData As String
     Private Sub onServerDataReceived(ByVal data As String) Handles smProxy.ServerData2
-        Dim temp As Object = data
         Try
 
-            If (Monitor.TryEnter(temp)) Then
+            If (Monitor.TryEnter(Me)) Then
                 Player.Clear()
                 Channel = ""
                 MainMSEngine.PageSetVariable(MS_Name, "")
@@ -2225,7 +2222,7 @@ Public Class Main
                 ParseServerData(serverData, test)
             End If
         Finally
-            Monitor.Exit(temp)
+            Monitor.Exit(Me)
         End Try
     End Sub
 
@@ -2598,8 +2595,8 @@ Public Class Main
                     cBot.LogPath = Paths.SilverMonkeyLogPath
                 End If
                 LogStream = New LogStream(setLogName(cBot), cBot.LogPath)
-                End If
-                If Not MS_Engine.MainMSEngine.ScriptStart() Then Exit Sub
+            End If
+            If Not MS_Engine.MainMSEngine.ScriptStart() Then Exit Sub
             My.Settings.LastBotFile = Path.Combine(Paths.SilverMonkeyBotPath, cBot.IniFile)
             My.Settings.Save()
             ReLogCounter = 0
