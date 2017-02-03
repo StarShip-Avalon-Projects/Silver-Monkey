@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Data;
+using System.Data.SQLite;
 using SilverMonkey.SQLiteEditor.Controls;
 using MonkeyCore;
 using FastColoredTextBoxNS;

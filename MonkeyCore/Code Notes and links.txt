@@ -1,0 +1,3 @@
+﻿Fast colored text-box needs to be removed due to Win 32 dependency.
+http://blog.megahard.info/2010/09/syntax-highlighting-control.html
+here's one option

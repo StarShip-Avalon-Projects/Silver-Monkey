@@ -242,6 +242,7 @@ Public Class Main
 
 
     'TODO: Move these Setting to Proxy Class
+    Private WithEvents SubSys As New PhoenixSpeak.SubSystem
     Public ServerStack As Queue(Of String) = New Queue(Of String)(500)
     Private SpeciesTag As Queue(Of String) = New Queue(Of String)()
     Private BadgeTag As Queue(Of String) = New Queue(Of String)()
@@ -2016,7 +2017,7 @@ Public Class Main
                 Exit Sub
             ElseIf data.StartsWith("PS") Then
                 Color = "PhoenixSpeak"
-                PhoenixSpeak.SubSystem.ProcessServerPS(data)
+                SubSys.ProcessServerPS(data)
                 If MainSettings.PSShowMainWindow Then
                     sndDisplay(data)
                 End If

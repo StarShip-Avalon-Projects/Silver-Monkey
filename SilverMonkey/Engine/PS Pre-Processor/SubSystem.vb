@@ -51,7 +51,7 @@ Namespace PhoenixSpeak
                 End Get
                 Set(ByVal value As Short)
                     _id = value
-                    _Count += 1
+                    '_Count += 1
                 End Set
             End Property
             Public Property Count As Integer
@@ -77,18 +77,19 @@ Namespace PhoenixSpeak
             ''' </summary>
             ''' <param name="NewId"></param>
             Sub New(ByRef NewId As Short)
-                If NewId = 0 Then getID(NewId)
+
                 If List.ContainsKey(NewId) Then
-                    _id = List.Item(NewId).Id
-                    _Count += 1
+                    List.Item(NewId).Count += 1
                 Else
-                    _id = NewId
+
+                    _id = getID(NewId)
                     _Count = 1
                     List.Add(NewId, Me)
                 End If
+
             End Sub
 
-            Public Shared Function HasId(ByVal id As Short) As Boolean
+            Public Function HasId(ByVal id As Short) As Boolean
                 Return List.ContainsKey(id)
             End Function
 
@@ -96,7 +97,7 @@ Namespace PhoenixSpeak
             ''' Removes the specified Phoenix Speak ID
             ''' </summary>
             ''' <param name="id"></param>
-            Public Shared Sub remove(id As Short)
+            Public Sub remove(id As Short)
                 Dim PS As PsId
                 If List.ContainsKey(id) Then
                     PS = List.Item(id)
@@ -117,12 +118,19 @@ Namespace PhoenixSpeak
             Private Shared idLock As New Object
             Private Shared Function getID(ByRef v As Short) As Short
                 If v = 0 Then v = 1
-                While List.ContainsKey(v)
-                    v += CShort(1)
-                    If v = Short.MaxValue - 1 Then
-                        v = 1
-                    End If
-                End While
+                SyncLock idLock
+                    Try
+                        While List.ContainsKey(v)
+                            v += CShort(1)
+                            If v = Short.MaxValue - 1 Then
+                                v = 1
+                            End If
+                        End While
+                    Finally
+                        'Monitor.Exit(idLock)
+
+                    End Try
+                End SyncLock
                 Return v
             End Function
 
@@ -133,7 +141,7 @@ Namespace PhoenixSpeak
         ''' <summary>
         ''' PS server responses
         ''' </summary>
-        <CLSCompliant(True)>
+                       <CLSCompliant(True)>
         Public Enum PsResponseType As Short
             PsUnKnown = -1
             PsOk
@@ -153,6 +161,10 @@ Namespace PhoenixSpeak
         ''' </summary>
         Private Shared PS_Page As String
 
+        ''' <summary>
+        ''' Phoenix MultiPage limit is 6
+        ''' <para> If we hit this limit Inform the user there maybe more data unseen</para>
+        ''' </summary>
         Private Shared PageOverFlow As Boolean = False
 
         ''' <summary>
@@ -174,7 +186,9 @@ Namespace PhoenixSpeak
         Public Shared Event PsReveived(ByRef id As Short, ByVal PsType As PsResponseType, ByVal Flag As PsFlag, ByVal PageOverFlow As Boolean)
 #End Region
 
-        Private Shared PSProcessingResource As Integer = 0
+
+        Public Shared SubSystemPsID As PsId = New PsId
+        Private Shared PSProcessingResource As New Object
         '^PS (\d+)? ?Error:|Ok: (set:|get:)? multi_result? (\d+)?/?(\d+)?: Key/Value group
         ''' <summary>
         ''' process Phoenix Speak data coming from the game server
@@ -183,23 +197,25 @@ Namespace PhoenixSpeak
         ''' Always clear PSInfoCache unless its a Multi-Page response
         ''' </summary>
         ''' <param name="data">Server Data</param>
-        Public Shared Function ProcessServerPS(ByVal ServerData As String) As Boolean
-            Dim ReturnVal As Boolean = False
-            Debug.WriteLine(ServerData)
-
-            If (0 = Interlocked.Exchange(PSProcessingResource, 1)) Then
+        Public Sub ProcessServerPS(ByVal ServerData As String)
+            Try
+                Monitor.Enter(PSProcessingResource)
+                Dim ReturnVal As Boolean = False
+                Debug.WriteLine(ServerData)
                 Dim data As String = ServerData
                 Dim _PsId As Short = PsCaptureId(data)
 
+
+
+
                 'safety Check
-                If _PsId = 0 Or Not PsId.HasId(_PsId) Then
-                    Interlocked.Exchange(PSProcessingResource, 0)
-                    Return False
+                If _PsId = 0 Or Not SubSystemPsID.HasId(_PsId) Then
+                    ReceivedFromServer(_PsId)
+
+
                 End If
 
                 'Send to receive Buffer
-                Dim ServerItem As New KeyValuePair(Of String, Short)(ServerData, _PsId)
-                ReceivedFromServer(ServerItem)
 
                 Dim ResponceType As PsResponseType = PsCaptureMode(data)
                 Dim ResponceMode As PsFlag = PsResponceMode(data)
@@ -231,6 +247,7 @@ Namespace PhoenixSpeak
 
                         'Phoenix Speak Response set
                         MS_Engine.MainMSEngine.PageExecute(80, 81, 82)
+
                     Else 'Assume Single page responses
                         PSInfoCache = ProcessVariables(data)
                         'Phoenix Speak Response set
@@ -251,26 +268,26 @@ Namespace PhoenixSpeak
                     MainMSEngine.PageSetVariable(Main.VarPrefix & "MESSAGE", ServerData)
                     RaiseEvent PsReveived(_PsId, ResponceType, ResponceMode, PageOverFlow)
 
-                    Dim AbortError As New Regex("Sorry, PhoenixSpeak commands are currently not available in this dream.$")
+                    Dim AbortError As New Regex("Sorry, PhoenixSpeak commands are currently not available in this dream.$", SmRegExOptions)
                     If AbortError.Match(data).Success Then
                         Abort()
 
                         '(0:503) When the bot finishes restoring the dreams character Phoenix Speak,
                         MainMSEngine.MSpage.Execute(503)
                     End If
-                Else
 
                 End If
-                Dim serveItem As New KeyValuePair(Of String, Short)(ServerData, _PsId)
-                ReceivedFromServerIsProcessed(serveItem)
                 'remove Current PS Id from the list manager
                 'Remove Processed item from the enqueue
-                Interlocked.Exchange(PSProcessingResource, 0)
 
-            End If
 
-            Return True
-        End Function
+
+
+                If Not MultiPage Then ReceivedFromServer(_PsId)
+            Finally
+                Monitor.Exit(PSProcessingResource)
+            End Try
+        End Sub
 
         <CLSCompliant(False)>
         Private Shared Function PsResponceMode(ByRef data As String) As PsFlag
@@ -314,7 +331,7 @@ Namespace PhoenixSpeak
             Dim PsStat As Short = 0
             Dim IdCapture As New Regex("^PS (\d+)?", SmRegExOptions)
 
-            Short.TryParse(IdCapture.Match(Data, 0).Groups(1).ToString(), PsStat)
+            Short.TryParse(IdCapture.Match(Data, 0).Groups(1).Value, PsStat)
             Data = IdCapture.Replace(Data, "", 1)
 
             Return PsStat
@@ -329,12 +346,12 @@ Namespace PhoenixSpeak
         ''' <param name="VariableList"></param>
         ''' <returns></returns>
         Private Shared Function ProcessVariables(ByRef data As String) As List(Of PhoenixSpeak.Variable)
-            Dim mc As New Regex("(.*?)=('?)(\d+|.*?)(\2),?", SmRegExOptions)
+            Dim mc As New Regex(" (.*?)=('?)(\d+|.*?)(\2),?", SmRegExOptions)
 
             Dim PsVarList As New List(Of PhoenixSpeak.Variable)
             For Each M As Match In mc.Matches(data)
 
-                PsVarList.Add(New PhoenixSpeak.Variable(M.Groups(1).Value, M.Groups(3).Value))
+                PsVarList.Add(New PhoenixSpeak.Variable(M.Groups(1).Value.Trim, M.Groups(3).Value))
 
             Next
             Return PsVarList
@@ -363,58 +380,49 @@ Namespace PhoenixSpeak
         ' clear the last item sent when its received
         Private Shared psSendToServer As New Queue(Of KeyValuePair(Of String, Short))(20)
 
-        'clear the last item received when it's been processed
-        Private Shared psReveiveFromServer As New Queue(Of KeyValuePair(Of String, Short))(20)
-
-
+        Private SendLock As New Object
         ''' <summary>
         ''' Send the Phoenix Commands to the Server enqueue
         ''' </summary>
         ''' <param name="var"></param>
-        Public Shared Sub sendServer(ByRef var As String, Optional ByVal id As Short = 0)
-            Dim NewPsID As New PsId(id)
-            var = var.Replace("ps ", "ps " + NewPsID.Id.ToString() + " ")
-            Dim ServerQueueItem As New KeyValuePair(Of String, Short)(var, NewPsID.Id)
-            Dim CommandTrigger As Boolean = psSendToServer.Count = 0
-            ' there are possibilities that PS errors can come from the game server
-            psSendToServer.Enqueue(ServerQueueItem)
-            If CommandTrigger Then
+        Public Sub sendServer(ByRef var As String)
+            Try
+                Monitor.Enter(SendLock)
+                Dim Id As Short = PsCaptureId(var)
+                Dim NewPsID As New PsId(Id)
+                var = "ps " + Id.ToString + " " + var
+
+                Dim ServerQueueItem As New KeyValuePair(Of String, Short)(var, Id)
+                ' there are possibilities that PS errors can come from the game server
+                psSendToServer.Enqueue(ServerQueueItem)
                 callbk.ServerStack.Enqueue(var)
-                psSendToServer.Dequeue()
-            End If
+            Finally
+                Monitor.Exit(SendLock)
+            End Try
+            Debug.WriteLine("SendServer: " + var)
         End Sub
 
+
+        Private Shared bufferlock As New Object
         ''' <summary>
         ''' 'Fills the received PS Buffer
         ''' </summary>
         ''' <param name="item">CommandKey PsId</param>
-        Private Shared Sub ReceivedFromServer(ByVal item As KeyValuePair(Of String, Short))
-            psReveiveFromServer.Enqueue(item)
-
+        Private Shared Sub ReceivedFromServer(IsID As Short)
+            Try
+                Monitor.Enter(bufferlock)
+                If psSendToServer.Count = 0 Then Exit Sub
+                Dim id As Short = psSendToServer.Dequeue().Value
+                SubSystemPsID.remove(id)
+                If psSendToServer.Count = 0 Then Exit Sub
+                callbk.ServerStack.Enqueue(psSendToServer.Peek().Key)
+            Finally
+                Monitor.Exit(bufferlock)
+            End Try
         End Sub
 
 
-        Private Shared Function ReceivedFromServerIsProcessed(ByVal item As KeyValuePair(Of String, Short)) As Boolean
-            'psSendToServer.Dequeue()
-            Dim CommandTrigger As Boolean = psReveiveFromServer.Count > 0
-            If CommandTrigger Then
 
-
-                'If psSendToServer.Count > psReveiveFromServer.Count Then psSendToServer.Dequeue()
-                Dim id As Short = psReveiveFromServer.Peek().Value
-
-                If psSendToServer.Count > 0 Then
-                    Dim str As String = psSendToServer.Dequeue.Key
-                    callbk.ServerStack.Enqueue(str)
-                End If
-
-                psReveiveFromServer.Dequeue()
-
-                If PsId.HasId(id) Then PsId.remove(id)
-            End If
-
-            Return CommandTrigger
-        End Function
 
         Public Shared Sub ClientMessage(ByVal msg As String)
             Main.SendClientMessage("PhoenixSpeak:", msg)
@@ -427,11 +435,10 @@ Namespace PhoenixSpeak
         ''' 
         ''' </summary>
         Public Shared Sub Abort()
-            'Clear Enqueue's
-            psReveiveFromServer.Clear()
             psSendToServer.Clear()
             PSInfoCache.Clear()
         End Sub
 
     End Class
 End Namespace
+

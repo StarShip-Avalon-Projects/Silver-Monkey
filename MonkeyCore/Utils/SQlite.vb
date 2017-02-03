@@ -1,5 +1,7 @@
-﻿Imports System.Data.SQLite
+﻿Imports System.Data
+Imports System.Data.SQLite
 Imports System.IO
+Imports System.Threading
 
 <Serializable>
 Public Class SQLiteSyntaxException
@@ -23,7 +25,7 @@ End Class
 
 Public Class SQLiteDatabase
 
-    Private Const SyncPragma As String = "PRAGMA synchronous=0;"
+    Private Const SyncPragma As String = "PRAGMA encoding = ""UTF-16""; " 'PRAGMA synchronous=0;
     Private Const FurreTable As String = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT, [PSBackup] DOUBLE"
     Private Const DefaultFile As String = "SilverMonkey.db"
     Public Const PlayerDbName As String = "Name"
@@ -39,7 +41,7 @@ Public Class SQLiteDatabase
         dbConnection = "Data Source=" & inputFile
         CreateTbl("FURRE", FurreTable)
         CreateTbl("BACKUPMASTER", "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [" + PlayerDbName + "] TEXT Unique, [date modified] TEXT")
-        CreateTbl("BACKUP", "[NameID] INTEGER, [Key] TEXT, [Value] TEXT")
+        CreateTbl("BACKUP", "[NameID] INTEGER, [Key] TEXT, [Value] TEXT, PRIMARY KEY ([NameID],[Key])")
         CreateTbl("SettingsTableMaster", "[ID] INTEGER UNIQUE, [SettingsTable] TEXT Unique, [date modified] TEXT, PRIMARY KEY ([ID],[SettingsTable])")
         CreateTbl("SettingsTable", "[ID] INTEGER UNIQUE,[SettingsTableID] INTEGER, [Setting] TEXT, [Value] TEXT")
     End Sub
@@ -60,7 +62,7 @@ Public Class SQLiteDatabase
         dbConnection = String.Format("Data Source={0};", inputFile)
         CreateTbl("FURRE", FurreTable)
         CreateTbl("BACKUPMASTER", "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [date modified] TEXT")
-        CreateTbl("BACKUP", "[NameID] INTEGER, [Key] TEXT, [Value] TEXT")
+        CreateTbl("BACKUP", "[NameID] INTEGER, [Key] TEXT, [Value] TEXT, PRIMARY KEY ([NameID],[Key])")
         CreateTbl("SettingsTableMaster", "[ID] INTEGER UNIQUE, [SettingsTable] TEXT Unique, [date modified] TEXT, PRIMARY KEY ([ID],[SettingsTable])")
         CreateTbl("SettingsTable", "[ID] INTEGER UNIQUE,[SettingsID] INTEGER UNIQUE, [Setting] TEXT, [Value] TEXT")
     End Sub
@@ -81,6 +83,8 @@ Public Class SQLiteDatabase
             End Using
             SQLconnect.Close()
         End Using
+        GC.Collect()
+        GC.WaitForFullGCComplete()
     End Sub
 
     ''' <summary>
@@ -112,6 +116,8 @@ Public Class SQLiteDatabase
             End Using
             SQLconnect.Close()
         End Using
+        GC.Collect()
+        GC.WaitForFullGCComplete()
         Return String.Join(",", columnNames.ToArray)
     End Function
     Public Function isColumnExist(ByVal columnName As String, ByVal tableName As String) As Boolean
@@ -163,11 +169,13 @@ Public Class SQLiteDatabase
                 reader = mycommand.ExecuteReader()
                 dt.Load(reader)
                 reader.Close()
-            Catch ex As exception
+            Catch ex As Exception
                 dt.Dispose()
             End Try
             cnn.Close()
         End Using
+        GC.Collect()
+        GC.WaitForFullGCComplete()
         Return dt
     End Function
 
@@ -191,9 +199,12 @@ Public Class SQLiteDatabase
             End Using
             cnn.Close()
         End Using
+        GC.Collect()
+        GC.WaitForFullGCComplete()
         Return test3
     End Function
 
+    Private Shared nonQueryLock As New Object
     ''' <summary>
     '''     Allows the programmer to interact with the database for purposes other than a query.
     ''' </summary>
@@ -201,23 +212,25 @@ Public Class SQLiteDatabase
     ''' <returns>An Integer containing the number of rows updated.</returns>
     Public Shared Function ExecuteNonQuery(sql As String) As Integer
         Dim rowsUpdated As Integer
+        Monitor.Enter(nonQueryLock)
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()
             Dim mycommand As New SQLiteCommand(cnn)
             Try
-
                 mycommand.CommandText = sql
                 rowsUpdated = mycommand.ExecuteNonQuery()
             Catch ex As SQLiteException
                 rowsUpdated = -1
-            Finally
-                mycommand.Dispose()
             End Try
             cnn.Close()
         End Using
+        GC.Collect()
+        GC.WaitForFullGCComplete()
+        Monitor.Exit(nonQueryLock)
         Return rowsUpdated
     End Function
 
+    Private Shared QueryLock As New Object
     ''' <summary>
     ''' Executes the query.
     ''' </summary>
@@ -225,6 +238,7 @@ Public Class SQLiteDatabase
     ''' <returns></returns>
     Public Function ExecuteQuery(sql As String) As DataSet
         Dim rowsUpdated = New DataSet
+        Monitor.Enter(QueryLock)
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()
             Using mycommand As New SQLiteCommand(cnn)
@@ -242,6 +256,9 @@ Public Class SQLiteDatabase
             End Using
             cnn.Close()
         End Using
+        GC.Collect()
+        GC.WaitForFullGCComplete()
+        Monitor.Exit(QueryLock)
         Return rowsUpdated
     End Function
 
@@ -254,21 +271,28 @@ Public Class SQLiteDatabase
     Public Function isTableExists(tableName As String) As Boolean
         Return ExecuteNonQuery("SELECT name FROM sqlite_master WHERE name='" & tableName & "'") > 0
     End Function
+
+    Private Shared ExecuteScarlarLock As New Object
     ''' <summary>
     '''     Allows the programmer to retrieve single items from the DB.
     ''' </summary>
     ''' <param name="sql">The query to run.</param>
     ''' <returns>A string.</returns>
-    Public Shared Function ExecuteScalar1(ByVal sql As String) As String
+    Public Shared Function ExecuteScalar(ByVal sql As String) As String
         Dim Value As Object = Nothing
+        Monitor.Enter(ExecuteScarlarLock)
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()
             Using mycommand As New SQLiteCommand(cnn)
                 mycommand.CommandText = sql
                 Value = mycommand.ExecuteScalar()
+
             End Using
             cnn.Close()
         End Using
+        GC.Collect()
+        GC.WaitForFullGCComplete()
+        Monitor.Exit(ExecuteScarlarLock)
         If Value IsNot Nothing Then
             Return Value.ToString()
         End If
@@ -328,7 +352,7 @@ Public Class SQLiteDatabase
             values.Add(String.Format("'{0}'", val.Value))
         Next
         Try
-            Dim cmd As String = String.Format("INSERT OR IGNORE into {0}({1}) values({2});", tableName, String.Join(", ", columns.ToArray), String.Join(", ", values.ToArray))
+            Dim cmd As String = String.Format("INSERT OR IGNORE into {0}({1}) values({2});", tableName, String.Join(", ", columns.ToArray()), String.Join(", ", values.ToArray()))
             Return ExecuteNonQuery(cmd) > -1
         Catch ex As Exception
             Dim err As New ErrorLogging(ex, Me)
@@ -366,6 +390,8 @@ Public Class SQLiteDatabase
         End Try
     End Function
 
+
+    Private Shared insertLock As New Object
     ''' <summary>
     '''     Allows the programmer to easily insert into the DB
     ''' </summary>
@@ -374,16 +400,24 @@ Public Class SQLiteDatabase
     ''' <returns>A boolean true or false to signify success or failure.</returns>
     Public Shared Function InsertMultiRow(tableName As String, ID As Integer, data As Dictionary(Of String, String)) As Boolean
         Dim values As New List(Of String)
-        For Each val As KeyValuePair(Of String, String) In data
-            values.Add(String.Format(" ( '{0}', '{1}', '{2}' )", ID, val.Key, val.Value))
-        Next
         Dim i As Integer = 0
-        If values.Count > 0 Then
-            'INSERT INTO 'table' ('column1', 'col2', 'col3') VALUES (1,2,3),  (1, 2, 3), (etc);
-            Dim cmd As String = String.Format("INSERT into '{0}' ([NameID], [Key], [Value]) Values {1};", tableName, String.Join(", ", values.ToArray))
-            i = ExecuteNonQuery(cmd)
-        End If
+        Try
 
+            Monitor.Enter(insertLock)
+
+
+            For Each val As KeyValuePair(Of String, String) In data
+                values.Add(String.Format(" ( '{0}', '{1}', '{2}' )", ID, val.Key, val.Value))
+            Next
+
+            If values.Count > 0 Then
+                'INSERT INTO 'table' ('column1', 'col2', 'col3') VALUES (1,2,3),  (1, 2, 3), (etc);
+                Dim cmd As String = String.Format("INSERT into '{0}' ([NameID], [Key], [Value]) Values {1};", tableName, String.Join(", ", values.ToArray))
+                i = ExecuteNonQuery(cmd)
+            End If
+        Finally
+            Monitor.Exit(insertLock)
+        End Try
         ' i = -1 if there's an SQLte error 
         Return values.Count <> 0 AndAlso i > -1
     End Function

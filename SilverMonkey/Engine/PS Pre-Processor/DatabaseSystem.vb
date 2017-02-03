@@ -3,6 +3,7 @@ Imports System.Collections.Generic
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports MonkeyCore.Utils
+Imports System.Threading
 
 Namespace PhoenixSpeak
 
@@ -29,6 +30,8 @@ Namespace PhoenixSpeak
     ''' </summary>
     Public Class DatabaseSystem
         Inherits Libraries.AbstractBaseLibrary
+
+
         Private Shared WithEvents SubSys As New SubSystem
 
         Private writer As TextBoxWriter = Nothing
@@ -46,10 +49,12 @@ Namespace PhoenixSpeak
         Public Enum PsBackupStage As SByte
             [error] = -1
             off = 0
+
+            GetDream = 1
             ''' <summary>
             ''' Read Multi Page responses for character list
             ''' </summary>
-            GetList = 1
+            GetList
             ''' <summary>
             ''' Read Character list one letter at a time
             ''' <para> Picks up where Get List left Off</para>
@@ -245,8 +250,8 @@ Namespace PhoenixSpeak
         Function BackupAllPS(reader As TriggerReader) As Boolean
             Try
                 If CurrentPS_Stage = PsSystemRunning.PsNone Then
-                    CurrentPS_Stage = PsBackupStage.GetList
-                    SubSystem.sendServer("ps get character.*")
+                    CurrentPS_Stage = PsBackupStage.GetDream
+                    SubSys.sendServer("ps get dream.*")
                     Return True
                 End If
             Catch ex As Exception
@@ -275,7 +280,7 @@ Namespace PhoenixSpeak
 
             Try
                 Dim furre As String = reader.ReadString()
-                Build_PS_CMD(furre)
+                Return 0 < Build_PS_CMD(furre)
             Catch ex As Exception
                 MainMSEngine.LogError(reader, ex)
                 Return False
@@ -308,6 +313,7 @@ Namespace PhoenixSpeak
             Try
                 Dim days As Double = ReadVariableOrNumber(reader)
                 If CurrentPS_Stage = PsSystemRunning.PsNone Then
+                    CurrentPS_Stage = PsBackupStage.RestoreAllCharacterPS
                     RestorePS(days)
                 End If
                 Return True
@@ -336,7 +342,6 @@ Namespace PhoenixSpeak
         Public Shared Sub RestorePS(days As Double)
             If PsProcess <> PsSystemRunning.PsNone Then Exit Sub
             PsProcess = PsSystemRunning.PsRestore
-            CurrentPS_Stage = PsBackupStage.RestoreAllCharacterPS
             '(0:500) When the bot starts backing up the character Phoenix Speak,
             MainMSEngine.MSpage.Execute(502)
             If days > 0 Then
@@ -353,11 +358,18 @@ Namespace PhoenixSpeak
                 i += 1
                 Dim ft As String = row.Item("date modified").ToString
                 Dim Time As TimeSpan = Main.FurcTime.Subtract(DateTime.Parse(ft))
-                If Time.Days <= days OrElse days = 0 Then
-                    'Build PS Command sends the command set to the server Enqueue
-                    CharacterList.Add(New Variable(row.Item("Name").ToString(), i))
-                    Build_PS_CMD(row.Item("Name").ToString())
+
+                Dim CharacternName As String = row.Item("Name").ToString()
+                Dim CharId As Integer = 0
+                If Time.Days <= days Then
+                    CharId = Build_PS_CMD(CharacternName)
+                ElseIf days = 0 Then
+                    CharId = Build_PS_CMD(CharacternName)
                 End If
+                If CharId > 0 Then
+                    CharacterList.Add(New PhoenixSpeak.Variable(CharacternName))
+                End If
+
             Next
         End Sub
 
@@ -382,8 +394,7 @@ Namespace PhoenixSpeak
         ''' </summary>
         ''' <param name="str">Character Name</param>
         Public Shared Function Build_PS_CMD(ByRef str As String) As Short
-            Dim _id As Short = 0
-            Dim Ps_ID As New SubSystem.PsId(_id)
+
 
             'Is this a DataBase tool? 
             If String.IsNullOrEmpty(str) Then Return 0
@@ -405,23 +416,24 @@ Namespace PhoenixSpeak
                 PsVariableList.Add(String.Format("{0}=""{1}""", row.Item("Key").ToString, row.Item("Value").ToString))
                 Integer.TryParse(row.Item("NameID").ToString, NameID)
             Next
-
+            Dim _id As Short = 0
             If PsVariableList.Count > 0 Then
-                CharacterList.Clear()
+
+                Dim Ps_ID As New SubSystem.PsId(_id)
                 Dim PScmd As String = ""
                 Dim Var As New List(Of String)
                 Dim str2 As String = ""
 
                 'Loop the PS Variable List until the ps set command is full
                 For I As Integer = 0 To PsVariableList.Count - 1
-                    Ps_ID = New SubSystem.PsId(_id)
+
                     Var.Add(PsVariableList.Item(I).ToString)
 
                     Dim PsVars As String = String.Join(",", Var.ToArray)
                     If str.ToUpper = "[DREAM]" Then
-                        PScmd = "ps set dream." + PsVars
+                        PScmd = "ps " + Ps_ID.Id.ToString + "  set dream." + PsVars
                     Else
-                        PScmd = "ps set character." + str + "." + PsVars
+                        PScmd = "ps " + Ps_ID.Id.ToString + " set character." + str + "." + PsVars
                     End If
 
                     Dim CommandToSendOk As Boolean = False
@@ -432,7 +444,7 @@ Namespace PhoenixSpeak
                     End If
                     If CommandToSendOk Then
                         ' PS set command is full send to PS Out Enqueue
-                        SubSystem.sendServer(PScmd, Ps_ID.Id)
+                        SubSys.sendServer(PScmd)
                     End If
 
                 Next
@@ -447,43 +459,58 @@ Namespace PhoenixSpeak
         'Build Character List
         'read Multipages first (Seems to cap at 6 pages)
         'read *.<letter> till *.z these could be multi pages
-
+        Private Shared PSProcessingResource As Integer = 0
         Private Shared Sub PsReceived(ByRef id As Short, ByVal PsType As SubSystem.PsResponseType, ByVal Flag As SubSystem.PsFlag, PageOverFlow As Boolean) Handles SubSys.PsReveived
             'PsProcess = PsSystemRunning.PsBackup
+            Dim ServerCommand = String.Empty
             If PsType = SubSystem.PsResponseType.PsError Then
                 Abort()
                 Exit Sub
             End If
-            Dim ServerCommand = String.Empty
+
+
             Select Case CurrentPS_Stage
                 Case PsBackupStage.off
                     Exit Select
 
                 Case PsBackupStage.RestoreAllCharacterPS
+                    SubSystem.ClientMessage("Restoring Phoenix Speak for character '" + CharacterList(0).Name + "'")
+                    'SendPStoDatabase(SubSystem.PSInfoCache, "BACKUP", CharacterList(0).Name)
+                    CharacterList.RemoveAt(0)
+                    If CharacterList.Count > 0 Then
+                        CurrentPS_Stage = PsBackupStage.off
+                        lastItemName = String.Empty
+                    End If
+                Case PsBackupStage.GetDream
+                    If SubSystem.PSInfoCache.Count > 0 Then
+                        'Dream specific Information
+                        SubSystem.ClientMessage("Backing up Dream Characters Set.")
+                        '(0:500) When the bot starts backing up the character Phoenix Speak,
+                        MainMSEngine.MSpage.Execute(500)
+                        CharacterList.Clear()
+                        Dim f As New Variable("[DREAM]", "'<none>'")
+                        CharacterList.Add(f)
+                        SubSystem.ClientMessage("Backing Phoenix Speak for character '" + CharacterList(0).Name + "'")
+                        SendPStoDatabase(SubSystem.PSInfoCache, "BACKUP", CharacterList(0).Name)
+                        CharacterList.RemoveAt(0)
 
-
-
+                    End If
+                    ServerCommand = "ps get character.*"
+                    CurrentPS_Stage = PsBackupStage.GetList
+                    Exit Select
                 Case PsBackupStage.GetList
-
-                    SubSystem.ClientMessage("Backing up Dream Characters Set.")
-                    CharacterList.Clear()
-
-                    'Dream specific Information
-
-                    Dim f As New Variable("[DREAM]", "'<none>'")
-                    CharacterList.Add(f)
-                    '(0:500) When the bot starts backing up the character Phoenix Speak,
-                    MainMSEngine.MSpage.Execute(500)
                     If SubSystem.PSInfoCache.Count > 0 Then
                         CharacterList.AddRange(SubSystem.PSInfoCache)
                         lastItemName = CharacterList.Item(CharacterList.Count - 1).Name
+
+
                         If PageOverFlow Then
                             lastItemName = Utils.incrementLetter(lastItemName)
-                            ServerCommand = "ps get charatcer." + lastItemName + "*"
+                            ServerCommand = "ps get character." + lastItemName + "*"
                             CurrentPS_Stage = PsBackupStage.GetAlphaNumericList
                         Else
-                            ServerCommand = "ps get dream.*"
                             CurrentPS_Stage = PsBackupStage.GetTargets
+                            ServerCommand = "ps get character." + CharacterList(0).Name + ".*"
                         End If
 
                         Exit Select
@@ -531,9 +558,10 @@ Namespace PhoenixSpeak
 
             End Select
 
-            If Not String.IsNullOrEmpty(ServerCommand) Then SubSystem.sendServer(ServerCommand)
+            If Not String.IsNullOrEmpty(ServerCommand) Then SubSys.sendServer(ServerCommand)
             LastPSId = id
-            SubSystem.PsId.remove(id)
+
+            'SubSystem.PsId.remove(id)
         End Sub
 
         Private Shared Function NewPlayer(ByRef Player As String) As Dictionary(Of String, String)
@@ -546,47 +574,65 @@ Namespace PhoenixSpeak
             Return Dta
         End Function
 
+        Private Shared OjbLock As New Object
         ''' <summary>
         ''' Sends PS Info to SQLite Database
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns>True on success</returns>
         Private Shared Function SendPStoDatabase(PsInfo As List(Of PhoenixSpeak.Variable), TableSet As String, PlayerName As String) As Boolean
-            Dim dta As Dictionary(Of String, String) = NewPlayer(PlayerName)
-            If PlayerName.ToUpper = "[DREAM]" Then
-                PlayerName = "[DREAM]"
-            Else
-                PlayerName = MainMSEngine.ToFurcShortName(PlayerName)
-            End If
-
-            Dim Data As New Dictionary(Of String, String)
-
-            For Each var As PhoenixSpeak.Variable In PsInfo
-                Data.Add(var.Name, var.Value.ToString)
-            Next
-
-
-            Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
-
-            '''Check for special character to store Dream PS tree
-            Data = SystemDateFixer(TableSet, PlayerName, Data)
-
+            Dim Returnval As Boolean
             Dim idx As Integer = 0
-            Dim NameID As String = "SELECT [ID] FROM " + TableSet + "MASTER Where [Name]='" & PlayerName & "'"
-            Dim RecordExist As Boolean = Integer.TryParse(SQLiteDatabase.ExecuteScalar1(NameID), idx)
+            PlayerName = PlayerName.Trim
+            Dim Data As New Dictionary(Of String, String)
+            Try
+                Monitor.Enter(OjbLock)
 
-            'Lets check the Database for a record first.
-            ' If it exists we'll update the current record with new info
-            If RecordExist Then
-                db.Update("" + TableSet + "MASTER", dta, "[Name]='" + PlayerName + "'")
-                SQLiteDatabase.ExecuteNonQuery("DELETE FROM '" + TableSet + "' WHERE [NameID]=" + idx.ToString)
-            Else
-                'Inserting a new record? Lets make sure it has the right name for
-                ' for the MASTER Table
+                Dim dta As Dictionary(Of String, String) = NewPlayer(PlayerName)
+                If PlayerName.ToUpper = "[DREAM]" Then
+                    PlayerName = "[DREAM]"
+                Else
+                    PlayerName = MainMSEngine.ToFurcShortName(PlayerName)
+                End If
+
+
+
+                For Each var As PhoenixSpeak.Variable In PsInfo
+                    Data.Add(var.Name, var.Value.ToString)
+                Next
+
+
+                Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
+
+                '''Check for special character to store Dream PS tree
+                Data = SystemDateFixer(TableSet, PlayerName, Data)
+
+
+                Dim NameID As String = "SELECT [ID] FROM " + TableSet + "MASTER Where [Name]='" & PlayerName & "'"
+
                 db.Insert("" + TableSet + "MASTER", dta)
-                Integer.TryParse(SQLiteDatabase.ExecuteScalar1(NameID), idx)
-            End If
-            Return SQLiteDatabase.InsertMultiRow(TableSet, idx, Data)
+                Dim RecordExist As Boolean = Integer.TryParse(SQLiteDatabase.ExecuteScalar(NameID), idx)
+
+                'Lets check the Database for a record first.
+                ' If it exists we'll update the current record with new info
+                If RecordExist Then
+                    db.Update("" + TableSet + "MASTER", dta, "[Name]='" + PlayerName + "'")
+                    SQLiteDatabase.ExecuteNonQuery("DELETE FROM '" + TableSet + "' WHERE [NameID]=" + idx.ToString)
+                Else
+                    'Inserting a new record? Lets make sure it has the right name for
+                    ' for the MASTER Table
+
+
+                End If
+                Returnval = SQLiteDatabase.InsertMultiRow(TableSet, idx, Data)
+            Finally
+                Monitor.Exit(OjbLock)
+
+
+            End Try
+
+
+            Return Returnval
         End Function
 
 
@@ -594,11 +640,12 @@ Namespace PhoenixSpeak
 
         Private Shared Function TableJoinSet(ByVal TableSet As String, ByVal Name As String) As String
             'Retrieve Phoenix Speak Variables from the database
-            Return _
+            Dim str As String =
             "select " + TableSet + ".*, " + TableSet + "MASTER.ID from " + TableSet + " " +
             "inner join " + TableSet + "MASTER on " +
             "" + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
             "where " + TableSet + "MASTER.Name = '" + Name + "' "
+            Return str
         End Function
         '
         Private Shared Function SystemDateFixer(ByVal Table As String, ByVal PlayerName As String, ByRef dta As Dictionary(Of String, String)) As Dictionary(Of String, String)

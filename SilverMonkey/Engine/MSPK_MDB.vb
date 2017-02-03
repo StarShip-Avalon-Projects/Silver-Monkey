@@ -831,7 +831,7 @@ Public Class MSPK_MDB
             Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
             'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
-            Variable.Value = SQLiteDatabase.ExecuteScalar1(cmd)
+            Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
             Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
@@ -848,7 +848,7 @@ Public Class MSPK_MDB
             Dim Variable As Variable = reader.ReadVariable(True)
             ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
-            Variable.Value = SQLiteDatabase.ExecuteScalar1(cmd)
+            Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
             Return True
         Catch ex As Exception
             MainMSEngine.LogError(reader, ex)
@@ -889,7 +889,7 @@ Public Class MSPK_MDB
             Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
             Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
             Total = reader.ReadVariable(True)
-            Dim count As String = SQLiteDatabase.ExecuteScalar1("select count(*) from [" & Table & "]")
+            Dim count As String = SQLiteDatabase.ExecuteScalar("select count(*) from [" & Table & "]")
             Total.Value = count
             Return True
         Catch ex As Exception
