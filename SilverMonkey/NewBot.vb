@@ -34,10 +34,13 @@ Public Class NewBott
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Dim BotFile As String
+        Dim MsFile As String = String.Empty
         If Not String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
             BotFile = TxtbxFilelocation.Text + Path.DirectorySeparatorChar + TxtbxBotName.Text
+            MsFile = BotFile
         Else
             BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
+            MsFile = BotFile
         End If
         Dim ext As String = Path.GetExtension(BotFile)
         If String.IsNullOrEmpty(ext) Then BotFile = BotFile + ".bini"
@@ -59,7 +62,9 @@ Public Class NewBott
 
         bFile.BiniFile = BotFile
         bFile.IniFile = TxtbxCharacterINI.Text
-        bFile.MS_File = BotFile + ".ms"
+
+        'Bug 23
+        bFile.MS_File = MsFile + ".ms"
 
         bFile.LogNameBase = TxtbxBotName.Text
         bFile.log = True
@@ -117,9 +122,8 @@ Public Class NewBott
         LblBotName.Size = New Size(51, 13)
         LblBotName.Location = New Point(20, 39)
         LblBotName.Visible = True
-        LblBotName.Anchor = CType(System.Windows.Forms.AnchorStyles.Top _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        LblBotName.Anchor = System.Windows.Forms.AnchorStyles.Top _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'TxtbxBotName
         TxtbxBotName.Parent = GroupBox1
@@ -127,9 +131,8 @@ Public Class NewBott
         TxtbxBotName.Size = New Size(207, 20)
         TxtbxBotName.Location = New Point(20, 55)
         TxtbxBotName.Visible = True
-        TxtbxBotName.Anchor = CType(System.Windows.Forms.AnchorStyles.Right _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        TxtbxBotName.Anchor = System.Windows.Forms.AnchorStyles.Right _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'LblFileLocation
         LblFileLocation.Text = "File Location"
@@ -137,18 +140,16 @@ Public Class NewBott
         LblFileLocation.Size = New Size(70, 13)
         LblFileLocation.Location = New Point(20, 77)
         LblFileLocation.Visible = True
-        LblFileLocation.Anchor = CType(System.Windows.Forms.AnchorStyles.Top _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        LblFileLocation.Anchor = System.Windows.Forms.AnchorStyles.Top _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'TxtbxFilelocation
         TxtbxFilelocation.Parent = GroupBox1
         TxtbxFilelocation.Size = New Size(207, 20)
         TxtbxFilelocation.Location = New Point(20, 94)
         TxtbxFilelocation.Visible = True
-        TxtbxFilelocation.Anchor = CType(System.Windows.Forms.AnchorStyles.Right _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        TxtbxFilelocation.Anchor = System.Windows.Forms.AnchorStyles.Right _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'BtnFileLocation
         BtnFileLocation.Parent = GroupBox1
@@ -156,9 +157,8 @@ Public Class NewBott
         BtnFileLocation.Size = New Size(24, 19)
         BtnFileLocation.Location = New Point(245, 94)
         BtnFileLocation.Visible = True
-        BtnFileLocation.Anchor = CType(System.Windows.Forms.AnchorStyles.Right _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        BtnFileLocation.Anchor = System.Windows.Forms.AnchorStyles.Right _
+            Or System.Windows.Forms.AnchorStyles.Left
         AddHandler BtnFileLocation.Click, AddressOf BtnFileLocation_click
         'LblCharacterINI
         LblCharacterINI.Text = "Character Ini"
@@ -166,18 +166,16 @@ Public Class NewBott
         LblCharacterINI.Size = New Size(70, 13)
         LblCharacterINI.Location = New Point(20, 116)
         LblCharacterINI.Visible = True
-        LblCharacterINI.Anchor = CType(System.Windows.Forms.AnchorStyles.Top _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        LblCharacterINI.Anchor = System.Windows.Forms.AnchorStyles.Top _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'TxtbxCharacterINI
         TxtbxCharacterINI.Parent = GroupBox1
         TxtbxCharacterINI.Size = New Size(207, 20)
         TxtbxCharacterINI.Location = New Point(20, 132)
         TxtbxCharacterINI.Visible = True
-        TxtbxCharacterINI.Anchor = CType(System.Windows.Forms.AnchorStyles.Right _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        TxtbxCharacterINI.Anchor = System.Windows.Forms.AnchorStyles.Right _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'BtnCharacterINI
         BtnCharacterINI.Parent = GroupBox1
@@ -185,9 +183,8 @@ Public Class NewBott
         BtnCharacterINI.Size = New Size(24, 19)
         BtnCharacterINI.Location = New Point(245, 132)
         BtnCharacterINI.Visible = True
-        BtnCharacterINI.Anchor = CType(System.Windows.Forms.AnchorStyles.Right _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        BtnCharacterINI.Anchor = System.Windows.Forms.AnchorStyles.Right _
+            Or System.Windows.Forms.AnchorStyles.Left
         AddHandler BtnCharacterINI.Click, AddressOf BtnCharacterINI_click
         'LblBotController
         LblBotController.Text = "Bot Controller Name"
@@ -195,18 +192,16 @@ Public Class NewBott
         LblBotController.Size = New Size(101, 13)
         LblBotController.Location = New Point(17, 155)
         LblBotController.Visible = True
-        LblBotController.Anchor = CType(System.Windows.Forms.AnchorStyles.Top _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        LblBotController.Anchor = System.Windows.Forms.AnchorStyles.Top _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'TxtbxBotController
         TxtbxBotController.Parent = GroupBox1
         TxtbxBotController.Size = New Size(207, 20)
         TxtbxBotController.Location = New Point(20, 171)
         TxtbxBotController.Visible = True
-        TxtbxBotController.Anchor = CType(System.Windows.Forms.AnchorStyles.Right _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        TxtbxBotController.Anchor = System.Windows.Forms.AnchorStyles.Right _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'Value 2
         'RadioGoMapAcropolis
@@ -215,9 +210,8 @@ Public Class NewBott
         RadioGoMapAcropolis.Size = New Size(68, 17)
         RadioGoMapAcropolis.Location = New Point(6, 66)
         RadioGoMapAcropolis.Visible = False
-        RadioGoMapAcropolis.Anchor = CType(System.Windows.Forms.AnchorStyles.Top _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        RadioGoMapAcropolis.Anchor = System.Windows.Forms.AnchorStyles.Top _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'Value 1
         'RadioGoMapAllgeriaIsland
@@ -226,9 +220,8 @@ Public Class NewBott
         RadioGoMapAllgeriaIsland.Size = New Size(68, 17)
         RadioGoMapAllgeriaIsland.Location = New Point(6, 89)
         RadioGoMapAllgeriaIsland.Visible = False
-        RadioGoMapAllgeriaIsland.Anchor = CType(System.Windows.Forms.AnchorStyles.Top _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        RadioGoMapAllgeriaIsland.Anchor = System.Windows.Forms.AnchorStyles.Top _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'Value 4
         'RadioGoDreamURL
@@ -237,9 +230,8 @@ Public Class NewBott
         RadioGoDreamURL.Size = New Size(90, 17)
         RadioGoDreamURL.Location = New Point(6, 116)
         RadioGoDreamURL.Visible = False
-        RadioGoDreamURL.Anchor = CType(System.Windows.Forms.AnchorStyles.Top _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        RadioGoDreamURL.Anchor = System.Windows.Forms.AnchorStyles.Top _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'TxtbxCDreamURL
         TxtbxDreamURL.Parent = GroupBox1
@@ -247,9 +239,8 @@ Public Class NewBott
         TxtbxDreamURL.Size = New Size(174, 20)
         TxtbxDreamURL.Location = New Point(95, 115)
         TxtbxDreamURL.Visible = False
-        TxtbxDreamURL.Anchor = CType(System.Windows.Forms.AnchorStyles.Right _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        TxtbxDreamURL.Anchor = System.Windows.Forms.AnchorStyles.Right _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         'Value 3
         'RadioGoMapNone
@@ -258,9 +249,8 @@ Public Class NewBott
         RadioGoMapNone.Size = New Size(68, 17)
         RadioGoMapNone.Location = New Point(6, 139)
         RadioGoMapNone.Visible = False
-        RadioGoMapNone.Anchor = CType(System.Windows.Forms.AnchorStyles.Top _
-            Or System.Windows.Forms.AnchorStyles.Left _
-            , System.Windows.Forms.AnchorStyles)
+        RadioGoMapNone.Anchor = System.Windows.Forms.AnchorStyles.Top _
+            Or System.Windows.Forms.AnchorStyles.Left
 
         Button1.Enabled = False
         Button2.Enabled = True
