@@ -165,17 +165,15 @@ Namespace PhoenixSpeak
                  AddressOf NotBotRestore, "(1:523) and the bot is in the middle of a PS Restore Process,")
 
             'TODO: Add missing PS lines
-            'and the backed up phoenix speak database info {...} for the triggering furre exists,
-            'and the backed up phoenix speak database info {...} for the furre named {...} exists,  (use ""[DREAM]"" to check specific info for this dream.)
-            'and the backed up phoenix speak database info for the triggering furre exists,
-            'and the backed up phoenix speak database info for the furre named {...} exists,  (use ""[DREAM]"" to check specific info for this dream.)
+            '(1:) and the backed up phoenix speak database info {...} for the triggering furre exists,
+            '(1:) and the backed up phoenix speak database info {...} for the furre named {...} exists, (use ""[DREAM]"" to check specific info for this dream.)
+            '(1:) and the backed up phoenix speak database info for the triggering furre exists,
+            '(1:) and the backed up phoenix speak database info for the furre named {...} exists, (use ""[DREAM]"" to check specific info for this dream.)
 
-            'and the backed up phoenix speak database info {...} for the triggering furre does not exist,
-            'and the backed up phoenix speak database info {...} for the furre named {...} does not exist,  (use ""[DREAM]"" to check specific info for this dream.)
-            'and the backed up phoenix speak database info for the triggering furre does not exist,
-            'and the backed up phoenix speak database info for the furre named {...} does not eist,  (use ""[DREAM]"" to check specific info for this dream.)
-
-
+            '(1:) and the backed up phoenix speak database info {...} for the triggering furre does not exist,
+            '(1:) and the backed up phoenix speak database info {...} for the furre named {...} does not exist, (use ""[DREAM]"" to check specific info for this dream.)
+            '(1:) and the backed up phoenix speak database info for the triggering furre does not exist,
+            '(1:) and the backed up phoenix speak database info for the furre named {...} does not eist, (use ""[DREAM]"" to check specific info for this dream.)
 
 
             '(5:553) Backup All Character phoenixspeak for the dream
@@ -194,7 +192,13 @@ Namespace PhoenixSpeak
                 "(5:558) restore phoenix speak character records newer then # days. (zero equals all character records)")
 
             Add(New Trigger(TriggerCategory.Effect, 560), AddressOf AbortPS,
-        "(5:560) abort phoenix speak backup or restore process")
+                "(5:560) abort phoenix speak backup or restore process")
+
+            '(5:x) Add Settings Info {...} to Database Settings Table {...}.
+            '(5:x) update Database Info {...} for Settings Table {...} to {...}.
+            '(5:x) remove Database info {...} from Settings Table{...}.
+            '(5:x) clear all Settings Table Database info.
+            '(5:x) remove setting table {...}.
         End Sub
 
         Public Function BackUpCharacterNamed(reader As TriggerReader) As Boolean
@@ -246,7 +250,7 @@ Namespace PhoenixSpeak
             Return False
         End Function
 
-        '(5:553) Backup All Character phoenixspeak for the dream
+        '(5:553) Backup All Character phoenix speak for the dream
         Function BackupAllPS(reader As TriggerReader) As Boolean
             Try
                 If CurrentPS_Stage = PsSystemRunning.PsNone Then
@@ -266,8 +270,7 @@ Namespace PhoenixSpeak
             Try
                 If CurrentPS_Stage = PsSystemRunning.PsNone Then
                     CurrentPS_Stage = PsBackupStage.GetSingle
-                    Dim str As String = reader.ReadString
-                    lastItemName = str
+                    lastItemName = reader.ReadString
                 End If
             Catch ex As Exception
                 MainMSEngine.LogError(reader, ex)
@@ -367,7 +370,7 @@ Namespace PhoenixSpeak
                     CharId = Build_PS_CMD(CharacternName)
                 End If
                 If CharId > 0 Then
-                    CharacterList.Add(New PhoenixSpeak.Variable(CharacternName))
+                    CharacterList.Add(New PhoenixSpeak.Variable(CharacternName, CharId))
                 End If
 
             Next
@@ -595,12 +598,9 @@ Namespace PhoenixSpeak
                     PlayerName = MainMSEngine.ToFurcShortName(PlayerName)
                 End If
 
-
-
                 For Each var As PhoenixSpeak.Variable In PsInfo
                     Data.Add(var.Name, var.Value.ToString)
                 Next
-
 
                 Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
 
@@ -621,21 +621,15 @@ Namespace PhoenixSpeak
                 Else
                     'Inserting a new record? Lets make sure it has the right name for
                     ' for the MASTER Table
-
-
                 End If
                 Returnval = SQLiteDatabase.InsertMultiRow(TableSet, idx, Data)
             Finally
                 Monitor.Exit(OjbLock)
 
-
             End Try
-
 
             Return Returnval
         End Function
-
-
 
 
         Private Shared Function TableJoinSet(ByVal TableSet As String, ByVal Name As String) As String

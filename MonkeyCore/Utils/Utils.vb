@@ -1,6 +1,19 @@
 ﻿Public Class Utils
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    <Serializable>
+    Public Enum fColorEnum
+        DefaultColor = 0
+        Say
+        Shout
+        Whisper
+        Emote
+        Emit
+    End Enum
+
+    ''' <summary>
     ''' Gets the file version information.
     ''' </summary>
     ''' <param name="filename">The filename.</param>

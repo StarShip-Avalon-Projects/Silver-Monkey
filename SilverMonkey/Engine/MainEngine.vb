@@ -6,13 +6,30 @@ Imports MonkeyCore.Settings
 Imports System.Text.RegularExpressions
 Imports System.Diagnostics
 Imports SilverMonkey.PhoenixSpeak
+Imports Furcadia.Net
+Imports System.Threading
+Imports Microsoft.Win32.SafeHandles
+Imports System.Runtime.InteropServices
+Imports Conversive.Verbot5
 
 Public Class MainMSEngine
+    Implements IDisposable
 
 
 #Region "Const"
     Private Const MS_Header As String = "*MSPK V04.00 Silver Monkey"
     Private Const MS_Footer As String = "*Endtriggers* 8888 *Endtriggers*"
+#End Region
+
+#Region "Verbot"
+    <CLSCompliant(False)>
+    Public verbot As Verbot5Engine
+    <CLSCompliant(False)>
+    Public state As State
+    <CLSCompliant(False)>
+    Public kb As KnowledgeBase = New KnowledgeBase()
+    <CLSCompliant(False)>
+    Public kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
 #End Region
     Public Const REGEX_NameFilter As String = "[^a-z0-9\0x0020_;&|]+"
     Public Shared Function ToFurcShortName(ByVal value As String) As String
@@ -42,6 +59,7 @@ Public Class MainMSEngine
     Public engine As MonkeyspeakEngine = New MonkeyspeakEngine()
     Public Shared WithEvents MSpage As Page = Nothing
     Public Sub New()
+
         EngineStart(True)
     End Sub
     'Bot Starts
@@ -231,6 +249,8 @@ Public Class MainMSEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
+            PounceTimer = New Threading.Timer(AddressOf smPounceSend, Nothing, TimeSpan.Zero, TimeSpan.FromSeconds(30))
+            PounceTimer.InitializeLifetimeService()
             MSpage.LoadLibrary(New MS_Pounce())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
@@ -263,7 +283,7 @@ Public Class MainMSEngine
 
                     If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True Then
                         Console.WriteLine("Loading Plugin: " + objPlugin.Name)
-                        objPlugin.Initialize(Main.objHost)
+                        objPlugin.Initialize(Main.FurcSession.objHost)
                         objPlugin.Page = MSpage
                         objPlugin.Start()
                     End If
@@ -315,7 +335,7 @@ Public Class MainMSEngine
         If cBot.MS_Engine_Enable AndAlso MS_Started() Then
             If data Is Nothing Then data = String.Empty
             Debug.Print("Settingg Variable: " + varName + ":" + data.ToString)
-            MSpage.SetVariable(Main.VarPrefix & varName.ToUpper, data, True) '
+            MSpage.SetVariable(varName.ToUpper, data, True) '
 
         End If
     End Sub
@@ -324,7 +344,7 @@ Public Class MainMSEngine
         If cBot.MS_Engine_Enable Then
 
             For Each kv As KeyValuePair(Of String, Object) In VariableList
-                MSpage.SetVariable(Main.VarPrefix & kv.Key.ToUpper, kv.Value, True)
+                MSpage.SetVariable(kv.Key.ToUpper, kv.Value, True)
             Next '
 
         End If
@@ -334,7 +354,7 @@ Public Class MainMSEngine
         If Not IsNothing(cBot) Then
             If cBot.MS_Engine_Enable AndAlso MS_Started() Then
                 Debug.Print("Settingg Variable: " + varName + ":" + data.ToString)
-                MSpage.SetVariable(Main.VarPrefix & varName.ToUpper, data, Constant) '
+                MSpage.SetVariable(varName.ToUpper, data, Constant) '
             End If
         End If
     End Sub
@@ -366,7 +386,6 @@ Public Class MainMSEngine
 
         Console.WriteLine(MS_ErrWarning)
         Dim ErrorString As String = "Error: (" & reader.TriggerCategory.ToString & ":" & reader.TriggerId.ToString & ") " & ex.Message
-        reader.ToString()
 
         If Not IsNothing(cBot) Then
             If cBot.log Then
@@ -376,6 +395,128 @@ Public Class MainMSEngine
         Writer.WriteLine(ErrorString)
     End Sub
 
+#End Region
+
+#Region "smPounce"
+    Private WithEvents smPounce As PounceConnection
+    Private PounceTimer As Threading.Timer
+    Public Structure pFurre
+        Public WasOnline As Boolean
+        Public Online As Boolean
+    End Structure
+
+    Public FurreList As New Dictionary(Of String, pFurre)
+
+
+    Dim lastaccess As Date
+
+    Private Function ReadOnlineList() As Boolean
+        Dim result As Boolean = False
+        If File.Exists(MS_Pounce.OnlineList) Then
+            If File.GetLastWriteTime(MS_Pounce.OnlineList) <> lastaccess Then
+                lastaccess = File.GetLastWriteTime(MS_Pounce.OnlineList)
+
+
+                Dim NameList() As String = File.ReadAllLines(MS_Pounce.OnlineList)
+                For i As Integer = 0 To NameList.Length - 1
+                    If Not FurreList.ContainsKey(NameList(i)) Then FurreList.Add(NameList(i), New pFurre)
+                Next
+                Dim Namelist2(FurreList.Count - 1) As String
+                FurreList.Keys.CopyTo(Namelist2, 0)
+                For i As Integer = 0 To Namelist2.Length - 1
+                    Dim found As Boolean = False
+                    For j As Integer = 0 To NameList.Length - 1
+                        If MainMSEngine.ToFurcShortName(NameList(j)) = MainMSEngine.ToFurcShortName(Namelist2(i)) Then
+                            found = True
+                            Exit For
+                        End If
+                    Next
+                    If Not found Then FurreList.Remove(Namelist2(i))
+                Next
+                result = True
+            End If
+        End If
+        Return result
+    End Function
+    Dim usingPounce As Integer = 0
+    Private Sub smPounceSend(sender As Object)
+        If (0 = Interlocked.Exchange(usingPounce, 1)) Then
+            '   If _FormClose Then Exit Sub
+            '   If Not bConnected() Then Exit Sub
+            If Not ReadOnlineList() Then Exit Sub
+            smPounce = New PounceConnection("http://on.furcadia.com/q/", Nothing)
+
+            smPounce.RemoveFriends()
+            For Each kv As KeyValuePair(Of String, pFurre) In FurreList
+                If Not String.IsNullOrEmpty(kv.Key) Then
+                    smPounce.AddFriend(MainMSEngine.ToFurcShortName(kv.Key))
+                End If
+            Next
+            smPounce.ConnectAsync()
+            Interlocked.Exchange(usingPounce, 0)
+        End If
+    End Sub
+
+    Sub Response(friends As String(), dreams As String()) Handles smPounce.Response
+
+        Dim myKeysArray(FurreList.Keys.Count - 1) As String
+        FurreList.Keys.CopyTo(myKeysArray, 0)
+
+        For Each _furre As String In myKeysArray
+            Dim test As pFurre = FurreList.Item(_furre)
+            test.WasOnline = test.Online
+            test.Online = False
+            For Each [friend] As String In friends
+                If MainMSEngine.ToFurcShortName(_furre) = MainMSEngine.ToFurcShortName([friend]) Then
+                    test.Online = True
+                    Exit For
+                End If
+            Next
+            FurreList.Item(_furre) = test
+            If test.WasOnline = True And test.Online = False Then
+                'Furre Logged off
+                callbk.FurcSession.SendClientMessage("smPounce", _furre + " has logged out.")
+                FurcadiaSession.Player = FurcadiaSession.NametoFurre(_furre, True)
+                PageExecute(951, 953)
+            ElseIf test.WasOnline = False And test.Online = True Then
+                'Furre logged on
+                callbk.FurcSession.SendClientMessage("smPounce", _furre + " has logged on.")
+                FurcadiaSession.Player = FurcadiaSession.NametoFurre(_furre, True)
+                PageExecute(950, 952)
+            End If
+
+        Next
+    End Sub
+
+#End Region
+
+#Region "Dispose"
+
+    Dim disposed As Boolean = False
+    ' Instantiate a SafeHandle instance.
+    Dim handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
+
+    ' Public implementation of Dispose pattern callable by consumers.
+    Public Sub Dispose() _
+               Implements IDisposable.Dispose
+        Dispose(True)
+        GC.SuppressFinalize(Me)
+    End Sub
+
+    ' Protected implementation of Dispose pattern.
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If disposed Then Return
+
+        If disposing Then
+            handle.Dispose()
+            ' Free any other managed objects here.
+            If Not IsNothing(PounceTimer) Then PounceTimer.Dispose()
+        End If
+
+        ' Free any unmanaged objects here.
+        '
+        disposed = True
+    End Sub
 #End Region
 
 End Class

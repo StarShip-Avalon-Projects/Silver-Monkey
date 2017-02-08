@@ -1,10 +1,9 @@
 ﻿Imports System.Runtime.InteropServices
-Imports System.Text.RegularExpressions
 Imports MonkeyCore
 
 Module MainModule
     'Public EditIni As New IniFile
-    Public MS_KeysIni As IniFile = New IniFile
+    'Public MS_KeysIni As IniFile = New IniFile
     Public BotIni As New IniFile
     Public cBot As Settings.cBot
 
@@ -30,15 +29,10 @@ Module MainModule
     <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
     Public Structure MyData
         Public fID As UInteger
-
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=78)>
         Public lpName As String
-
-
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=78)>
         Public lpTag As String
-
-
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=2048)>
         Public lpMsg As String
     End Structure
