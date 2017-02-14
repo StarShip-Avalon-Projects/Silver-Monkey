@@ -7,13 +7,9 @@ Module MainModule
     Public BotIni As New IniFile
     Public cBot As Settings.cBot
 
-
     Public Const MS_Name As String = "NAME"
 
     Public Const MS_ErrWarning As String = "Error, See Debug Window"
-
-
-
 
     Public Const WM_USER As Integer = &H400
     Public Const WM_COPYDATA As Integer = &H4A
@@ -28,7 +24,7 @@ Module MainModule
 
     <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
     Public Structure MyData
-        Public fID As UInteger
+        Public fID As Integer
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=78)>
         Public lpName As String
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=78)>
@@ -36,7 +32,6 @@ Module MainModule
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=2048)>
         Public lpMsg As String
     End Structure
-
 
 End Module
 Public Module MyExtensions
@@ -57,6 +52,5 @@ Public Module MyExtensions
             Return 0
         End If
     End Function
-
 
 End Module

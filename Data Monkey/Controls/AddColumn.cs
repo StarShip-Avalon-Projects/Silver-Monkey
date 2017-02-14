@@ -1,90 +1,90 @@
 using System.Windows.Forms;
 
-namespace SilverMonkey.SQLiteEditor.Controls
+namespace SilverMonkey.DataMonkey.Controls
 {
     /// <summary>
     /// Summary description for AddColumn.
     /// </summary>
     public class AddColumn : BasePopup
-	{
-		private TextBox NameTextBox;
-		private System.Windows.Forms.Label NameLabel;
-		private System.Windows.Forms.Label TypeLabel;
-		private System.Windows.Forms.ComboBox TypeComboBox;
+    {
+        private TextBox NameTextBox;
+        private System.Windows.Forms.Label NameLabel;
+        private System.Windows.Forms.Label TypeLabel;
+        private System.Windows.Forms.ComboBox TypeComboBox;
 
-		public AddColumn()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
-		}
+        public AddColumn()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
+        }
 
+        #region Windows Form Designer generated code
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             NameTextBox = new TextBox();
             NameLabel = new System.Windows.Forms.Label();
             TypeLabel = new System.Windows.Forms.Label();
             TypeComboBox = new System.Windows.Forms.ComboBox();
             SuspendLayout();
-            // 
+            //
             // CanButton
-            // 
+            //
             CanButton.Location = new System.Drawing.Point(144, 80);
             CanButton.Name = "CanButton";
-            // 
+            //
             // OkButton
-            // 
+            //
             OkButton.Location = new System.Drawing.Point(32, 80);
             OkButton.Name = "OkButton";
-            // 
+            //
             // NameTextBox
-            // 
+            //
             NameTextBox.Location = new System.Drawing.Point(96, 8);
             NameTextBox.Name = "NameTextBox";
             NameTextBox.Size = new System.Drawing.Size(144, 20);
             NameTextBox.TabIndex = 0;
             NameTextBox.Text = "";
             NameTextBox.KeyDown += new KeyEventHandler(tb_KeyDown);
-            // 
+            //
             // NameLabel
-            // 
+            //
             NameLabel.Location = new System.Drawing.Point(8, 8);
             NameLabel.Name = "NameLabel";
             NameLabel.Size = new System.Drawing.Size(80, 23);
             NameLabel.TabIndex = 1;
             NameLabel.Text = "Name:";
             NameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // TypeLabel
-            // 
+            //
             TypeLabel.Location = new System.Drawing.Point(8, 40);
             TypeLabel.Name = "TypeLabel";
             TypeLabel.Size = new System.Drawing.Size(80, 23);
             TypeLabel.TabIndex = 2;
             TypeLabel.Text = "Type:";
             TypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // TypeComboBox
-            // 
+            //
             TypeComboBox.Items.AddRange(new object[] {
-															  "TEXT",
-															  "INTEGER",
+                                                              "TEXT",
+                                                              "INTEGER",
                                                               "DOUBLE",
                                                               "REAL"});
             TypeComboBox.Location = new System.Drawing.Point(96, 40);
             TypeComboBox.Name = "TypeComboBox";
             TypeComboBox.Size = new System.Drawing.Size(144, 21);
             TypeComboBox.TabIndex = 3;
-            // 
+            //
             // AddColumn
-            // 
+            //
             AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             ClientSize = new System.Drawing.Size(248, 117);
             Controls.Add(NameTextBox);
@@ -100,22 +100,23 @@ namespace SilverMonkey.SQLiteEditor.Controls
             Controls.SetChildIndex(OkButton, 0);
             Controls.SetChildIndex(CanButton, 0);
             ResumeLayout(false);
+        }
 
-		}
-		#endregion
+        #endregion Windows Form Designer generated code
 
-		#region Properties
-		public string ColumnName 
-		{
-			get { return NameTextBox.Text; }
-		}
+        #region Properties
 
-		public string ColumnType
-		{
+        public string ColumnName
+        {
+            get { return NameTextBox.Text; }
+        }
+
+        public string ColumnType
+        {
             //x != 0.0 ? Math.Sin(x) / x : 1.0;
             get { return TypeComboBox.SelectedItem != null ? TypeComboBox.SelectedItem.ToString() : "TEXT"; }
-		}
-        #endregion
+        }
 
+        #endregion Properties
     }
 }

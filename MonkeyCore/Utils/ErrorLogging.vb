@@ -1,42 +1,59 @@
 ﻿Imports System.IO
 Imports MonkeyCore.Paths
+
+''' <summary>
+'''Error Logging Class
+'''<para>Author: Tim Wilson</para>
+'''<para>Created: Sept 10, 2011</para>
+'''<para>Updated and maintained by Gerolkae</para>
+'''<para></para>
+'''<para>To Call Class </para>
+'''<para>Example of calling Custom Error Logging Code</para>
+'''<example>
+'''   Try
+'''        Throw New Exception("This is an example exception demonstrating the Error
+'''Logging Exception Routine") 'Don't require this... this is just manually throwing an error
+''' to demo the class, actual code you'd just have the try/catch
+'''    Catch ex As Exception
+'''        Dim logError As New ErrorLogging(ex, Me) 'Passes the new constructor in the Error Logging Class the exception and 'me' (the calling object)
+'''    End Try</example>
+'''<para></para>
+'''<para>To provide more details for individual object types create a new constructor by copying and pasting one below and then adjusting the argument. </para>
+''' </summary>
+'''
 Public Class ErrorLogging
 
-    Private strErrorFilePath As String
+    Private ReadOnly strErrorFilePath As String
+
+    ''' <summary>
+    ''' Fullpath the error document was written to.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property LogFile As String
         Get
             Return strErrorFilePath
         End Get
     End Property
 
-    'Error Logging Class
-    'Author: Tim Wilson
-    'Created: Sept 10, 2011
-    '
-    'To Call Class 
-    'Example of calling Custom Error Logging Code
-    '    Try
-    '        Throw New Exception("This is an example exception demonstrating the Error 
-    'Logging Exception Routine") 'Don't require this... this is just manually throwing an error
-    ' to demo the class, actual code you'd just have the try/catch
-    '    Catch ex As Exception
-    '        Dim logError As New ErrorLogging(ex, Me) 'Passes the new 
-    'constructor in the Error Logging Class the exception and 'me' (the calling object)
-    '    End Try
-    '
-    'To provide more details for individual object types create a new constructor by copying and pasting one below and then adjusting the argument.
-
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="Ex"></param>
+    ''' <param name="ObjectThrowingError"></param>
     Public Sub New(ByRef Ex As System.Exception, ByVal ObjectThrowingError As Object)
         'Call Log Error
+
+        'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
         strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         LogError(Ex, ObjectThrowingError.ToString())
     End Sub
 
-
-
-
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="ex"></param>
+    ''' <param name="ObjectThrowingError"></param>
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
-        'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
 
         Dim ioFile As System.IO.StreamWriter = Nothing
         Try
@@ -57,7 +74,6 @@ Public Class ErrorLogging
             ioFile.WriteLine("Windows Version: " & My.Computer.Info.OSFullName)
             ioFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
             'Determine if 64-bit
-            ' If OSBitness.Is64BitOperatingSystem() Then
             If Environment.Is64BitOperatingSystem Then
                 ioFile.WriteLine("64-Bit OS")
             Else
@@ -86,10 +102,6 @@ Public Class ErrorLogging
             ioFile.WriteLine("Source: " & ObjectThrowingError.ToString)
             ioFile.WriteLine("")
             Dim st As New StackTrace(ex, True)
-            'ioFile.WriteLine("Stack Frames: ")
-            'For Each Frame As StackFrame In st.GetFrames()
-            '    ioFile.WriteLine("Line:" + Frame.GetFileLineNumber().ToString + Frame.GetFileName().ToString, Frame.GetMethod().ToString)
-            'Next
             ioFile.WriteLine("-------------------------------------------------------")
 
             ioFile.WriteLine("Stack Trace: " & st.ToString())
@@ -104,19 +116,31 @@ Public Class ErrorLogging
 
             '***********************************************************
 
-            ioFile.Close()
-
-        Catch exLog As Exception
+        Finally
             If Not IsNothing(ioFile) Then
                 ioFile.Close()
             End If
         End Try
     End Sub
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="Ex"></param>
+    ''' <param name="ObjectThrowingError"></param>
+    ''' <param name="ObJectCheck"></param>
     Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'Call Log Error
+        'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
         strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck.ToString)
     End Sub
+
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="ex"></param>
+    ''' <param name="ObjectThrowingError"></param>
+    ''' <param name="ObJectCheck"></param>
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
         Dim ioFile As StreamWriter = Nothing
@@ -183,12 +207,8 @@ Public Class ErrorLogging
                 ioFile.WriteLine("-------------------------------------------------------")
             End If
 
-
             '***********************************************************
-
-            ioFile.Close()
-
-        Catch exLog As Exception
+        Finally
             If Not IsNothing(ioFile) Then
                 ioFile.Close()
             End If

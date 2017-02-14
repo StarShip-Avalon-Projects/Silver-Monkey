@@ -49,8 +49,8 @@
                     Dim s As New PSS_Struct
                     s = PSS_Stack(PS_Stat)
                     callbk.ServerStack.Enqueue(s.Cmd)
-                    callbk.Player = Main.NametoFurre(s.Name, True)
-                    callbk.Player.Message = ""
+                    callbk.FurcSession.Player = Main.NametoFurre(s.Name, True)
+                    callbk.FurcSession.Player.Message = ""
                     MainMSEngine.PageSetVariable("MESSAGE", "")
                     MS_Engine.MainMSEngine.PageExecute(506, 507)
 

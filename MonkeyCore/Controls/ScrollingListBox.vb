@@ -74,9 +74,9 @@ Namespace Controls
 
         Private Sub InitializeComponent()
             Me.SuspendLayout()
-            ' 
+            '
             ' scrolled
-            ' 
+            '
             Me.Size = New System.Drawing.Size(120, 95)
             Me.ResumeLayout(False)
         End Sub

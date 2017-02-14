@@ -1,5 +1,4 @@
-﻿
-Imports System.IO
+﻿Imports System.IO
 Imports System.Windows.Forms
 
 Namespace Controls
@@ -10,10 +9,9 @@ Namespace Controls
         ''' how many list will save
         ''' </summary>
         Const MRUnumber As Integer = 15
-        public MRUlist As Queue(Of String) = New Queue(Of String)(MRUnumber)
+        Public MRUlist As Queue(Of String) = New Queue(Of String)(MRUnumber)
 
         Public Property RecentFile As String
-
 
         Private Shared _Menu As ToolStripMenuItem
         Public Sub New()

@@ -4,10 +4,11 @@ Imports System.Collections.Generic
 Imports MonkeyCore
 Imports MonkeyCore.IO
 Imports SilverMonkey
+Imports Furcadia.Util
+Imports Furcadia.Net
 
 Public Class MS_Pounce
-    Inherits Libraries.AbstractBaseLibrary
-    Private writer As TextBoxWriter = Nothing
+    Inherits MonkeySpeakLibrary
 
     Private Shared _OnlineList As String
     Public Shared Property OnlineList As String
@@ -22,15 +23,14 @@ Public Class MS_Pounce
         End Set
     End Property
 
-    Sub New()
-        writer = New TextBoxWriter(Variables.TextBox1)
+    Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
+        MyBase.New(Dream, Player, MsEngine)
 
         ' (0:950) When a furre logs on,
         Add(TriggerCategory.Cause, 950,
             Function()
                 Return True
             End Function, "(0:950) When a furre logs on,")
-
 
         '(0:951) When a furre logs off,
         Add(TriggerCategory.Cause, 951,
@@ -42,9 +42,7 @@ Public Class MS_Pounce
         '(0:953) When the furre named {...} logs off,
         Add(TriggerCategory.Cause, 953, AddressOf NameIs, "(0:953) When the furre named {...} logs off,")
 
-
-
-        '(1;950) and the furre named {...} is online,  
+        '(1;950) and the furre named {...} is online,
         Add(New Trigger(TriggerCategory.Condition, 950), AddressOf FurreNamedOnline, "(1:950) and the furre named {...} is online,")
 
         '(1:951) and the furre named {...} is offline,
@@ -76,12 +74,12 @@ Public Class MS_Pounce
     Function NameIs(reader As TriggerReader) As Boolean
         Try
             Dim TmpName As String = reader.ReadString()
-            Dim tname As Variable = MainMSEngine.MSpage.GetVariable(MS_Name)
+            Dim tname As Variable = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name)
             'add Machine Name parser
-            Return MainMSEngine.ToFurcShortName(TmpName) = MainMSEngine.ToFurcShortName(tname.Value.ToString)
+            Return FurcadiaShortName(TmpName) = FurcadiaShortName(tname.Value.ToString)
 
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -89,34 +87,30 @@ Public Class MS_Pounce
     Function FurreNamedOnline(reader As TriggerReader) As Boolean
         Try
             Dim TmpName As String = reader.ReadString()
-            Dim Furr As Main.pFurre
-            For Each Fur As KeyValuePair(Of String, Main.pFurre) In callbk.FurreList
-                If MainMSEngine.ToFurcShortName(Fur.Key) = MainMSEngine.ToFurcShortName(TmpName) Then
-                    Furr = Fur.Value
-                    Return Furr.Online
+            For Each OnLineFurre As KeyValuePair(Of String, MainMsEngine.pFurre) In FurcSession.MainEngine.OnlineFurreList
+                If FurcadiaShortName(OnLineFurre.Key) = FurcadiaShortName(TmpName) Then
+                    Return OnLineFurre.Value.Online
                 End If
             Next
             'add Machine Name parser
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
     Function FurreNamedNotOnline(reader As TriggerReader) As Boolean
         Try
             Dim TmpName As String = reader.ReadString()
-            Dim Furr As Main.pFurre
-            For Each Fur As KeyValuePair(Of String, Main.pFurre) In callbk.FurreList
-                If MainMSEngine.ToFurcShortName(Fur.Key) = MainMSEngine.ToFurcShortName(TmpName) Then
-                    Furr = Fur.Value
-                    Return Not Furr.Online
+            For Each OnLineFurre As KeyValuePair(Of String, MainMsEngine.pFurre) In FurcSession.MainEngine.OnlineFurreList
+                If FurcadiaShortName(OnLineFurre.Key) = FurcadiaShortName(TmpName) Then
+                    Return Not OnLineFurre.Value.Online
                 End If
             Next
             'add Machine Name parser
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -126,14 +120,14 @@ Public Class MS_Pounce
         Dim Furre As String = Nothing
         Dim f() As String
         Try
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
             f = File.ReadAllLines(OnlineList)
             For Each l As String In f
-                If MainMSEngine.ToFurcShortName(l) = MainMSEngine.ToFurcShortName(Furre) Then Return True
+                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
             Next
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -147,11 +141,11 @@ Public Class MS_Pounce
             Furre = reader.ReadString
             f = File.ReadAllLines(OnlineList)
             For Each l As String In f
-                If MainMSEngine.ToFurcShortName(l) = MainMSEngine.ToFurcShortName(Furre) Then Return True
+                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
             Next
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -169,7 +163,7 @@ Public Class MS_Pounce
         Dim Furre As String = Nothing
 
         Try
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
             If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
                 Dim sw As StreamWriter = New StreamWriter(OnlineList, True)
                 sw.WriteLine(Furre)
@@ -178,12 +172,11 @@ Public Class MS_Pounce
             Return True
 
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
     End Function
-
 
     '(5:901) add the furre named {...} to my Dream Member list if they aren't already on it.
     Private Function AddFurreNamed(reader As TriggerReader) As Boolean
@@ -199,7 +192,7 @@ Public Class MS_Pounce
             Return True
 
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -209,14 +202,14 @@ Public Class MS_Pounce
         Dim Furre As String = Nothing
         CheckCemberList()
         Try
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Regex.Replace(Furre.ToLower(), MainMSEngine.REGEX_NameFilter, "")
+            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = Regex.Replace(Furre.ToLower(), MyMonkeySpeakEngine.REGEX_NameFilter, "")
             Dim line As String = Nothing
             Dim linesList As New List(Of String)(File.ReadAllLines(OnlineList))
             Dim SR As New StreamReader(OnlineList)
             line = SR.ReadLine()
             For i As Integer = 0 To linesList.Count - 1
-                If Regex.Replace(line.ToLower(), MainMSEngine.REGEX_NameFilter, "") = Furre Then
+                If Regex.Replace(line.ToLower(), MyMonkeySpeakEngine.REGEX_NameFilter, "") = Furre Then
                     SR.Dispose()
                     SR.Close()
                     linesList.RemoveAt(i)
@@ -226,7 +219,7 @@ Public Class MS_Pounce
                 line = SR.ReadLine()
             Next i
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -237,13 +230,13 @@ Public Class MS_Pounce
         CheckCemberList()
         Try
             Furre = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), MainMSEngine.REGEX_NameFilter, "")
+            Furre = Regex.Replace(Furre.ToLower(), MyMonkeySpeakEngine.REGEX_NameFilter, "")
             Dim line As String = Nothing
             Dim linesList As New List(Of String)(File.ReadAllLines(OnlineList))
             Dim SR As New StreamReader(OnlineList)
             line = SR.ReadLine()
             For i As Integer = 0 To linesList.Count - 1
-                If Regex.Replace(line.ToLower(), MainMSEngine.REGEX_NameFilter, "") = Furre Then
+                If Regex.Replace(line.ToLower(), MyMonkeySpeakEngine.REGEX_NameFilter, "") = Furre Then
                     SR.Dispose()
                     SR.Close()
                     linesList.RemoveAt(i)
@@ -253,20 +246,20 @@ Public Class MS_Pounce
                 line = SR.ReadLine()
             Next i
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return False
     End Function
 
-    '(5:904) Use file {...} as the dream member list.  
+    '(5:904) Use file {...} as the dream member list.
     Private Function UseMemberFile(reader As TriggerReader) As Boolean
 
         Try
             OnlineList = reader.ReadString
             CheckCemberList()
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True

@@ -5,9 +5,7 @@ Public Module clsMain
     Public MainMSEngine As MainEngine
     Public callbk As Main
 
-
-
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsInteger(ByVal value As String) As Boolean
         If String.IsNullOrEmpty(value) Then
             Return False
@@ -16,7 +14,7 @@ Public Module clsMain
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToInteger(ByVal value As String) As Integer
         If value.IsInteger() Then
             Return Integer.Parse(value)
@@ -24,6 +22,5 @@ Public Module clsMain
             Return 0
         End If
     End Function
-
 
 End Module

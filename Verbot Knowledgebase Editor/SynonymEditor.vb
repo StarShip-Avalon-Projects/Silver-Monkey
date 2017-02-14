@@ -1,5 +1,4 @@
-﻿
-Imports Conversive.Verbot5
+﻿Imports Conversive.Verbot5
 Imports System.IO
 Public Class SynonymEditor
     Public FilePath As String
@@ -23,8 +22,6 @@ Public Class SynonymEditor
         ' Add any initialization after the InitializeComponent() call.
         FilePath = FileName
     End Sub
-
-
 
     Private Sub Button8_Click(sender As System.Object, e As System.EventArgs) Handles Button8.Click
         If String.IsNullOrEmpty(TextBox3.Text) Then Exit Sub

@@ -30,7 +30,7 @@ Public Class frmSearch
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
+    'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     Friend WithEvents cmbSearch As System.Windows.Forms.ComboBox
     Friend WithEvents btnFind As System.Windows.Forms.Button
@@ -210,7 +210,6 @@ Public Class frmSearch
 
 #End Region
 
-
     Dim SearchItemIdx As Integer = 0
 
     Private Sub btnClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnClose.Click
@@ -246,14 +245,11 @@ Public Class frmSearch
                     Exit Sub '//find only first occurrence
                 Next
 
-                MessageBox.Show("Finished searching the document", " Finished Searching", _
+                MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
 
-
-
             Else
-
 
                 For Each r In MS_Edit.MS_Editor.Range.GetRanges("\b" + Regex.Escape(cmbSearch.Text) + "\b", RegexOptions.IgnoreCase)
 
@@ -263,13 +259,12 @@ Public Class frmSearch
                     Exit Sub '//find only first occurrence
                 Next
 
-                MessageBox.Show("Finished searching the document", " Finished Searching", _
+                MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
 
             End If
         ElseIf optNone.Checked Then
-
 
             If chkMatchCase.Checked Then
 
@@ -281,12 +276,11 @@ Public Class frmSearch
                     Exit Sub '//find only first occurrence
                 Next
 
-                MessageBox.Show("Finished searching the document", " Finished Searching", _
+                MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
 
             Else
-
 
                 For Each r In MS_Edit.MS_Editor.Range.GetRanges(Regex.Escape(cmbSearch.Text), RegexOptions.IgnoreCase)
 
@@ -296,7 +290,7 @@ Public Class frmSearch
                     Exit Sub '//find only first occurrence
                 Next
 
-                MessageBox.Show("Finished searching the document", " Finished Searching", _
+                MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
 
@@ -368,14 +362,11 @@ Public Class frmSearch
                     End If
                 Next
 
-                MessageBox.Show("Finished searching the document", " Finished Searching", _
+                MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
 
-
-
             Else
-
 
                 For i = 0 To MS_Edit.MS_Editor.Range.GetRanges("\b" + Regex.Escape(cmbSearch.Text) + "\b", RegexOptions.IgnoreCase).Count - 1
                     If i = SearchItemIdx + 1 Then
@@ -387,17 +378,12 @@ Public Class frmSearch
                     End If
                 Next
 
-                MessageBox.Show("Finished searching the document", " Finished Searching", _
+                MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
 
-
-
-
-
             End If
         ElseIf optNone.Checked Then
-
 
             If chkMatchCase.Checked Then
 
@@ -411,14 +397,11 @@ Public Class frmSearch
                     End If
                 Next
 
-                MessageBox.Show("Finished searching the document", " Finished Searching", _
+                MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
 
-
-
             Else
-
 
                 For i = 0 To MS_Edit.MS_Editor.Range.GetRanges(Regex.Escape(cmbSearch.Text), RegexOptions.IgnoreCase).Count - 1
                     If i = SearchItemIdx + 1 Then
@@ -431,18 +414,13 @@ Public Class frmSearch
                     End If
                 Next
 
-                MessageBox.Show("Finished searching the document", " Finished Searching", _
+                MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
-
-
-
-
 
             End If
 
         End If
-
 
     End Sub
 
@@ -464,8 +442,6 @@ Public Class frmSearch
         Do
 
             'Application.DoEvents()
-
-
 
             If (MS_Edit.MS_Editor.SelectedText.ToLower) = (cmbSearch.Text.ToLower) Then
 

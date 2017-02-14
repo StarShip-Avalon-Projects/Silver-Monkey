@@ -2,9 +2,7 @@
 Imports MonkeyCore
 Imports Monkeyspeak
 
-
 Public Class MainEngine
-
 
 #Region "Const"
     Private Const MS_Header As String = "*MSPK V04.00 Silver Monkey"
@@ -73,11 +71,7 @@ Public Class MainEngine
             objPlugin.Start()
         Next
 
-
     End Sub
-
-
-
 
     Private msVer As Double = 3.0
     Public Function msReader(ByVal file As String) As String
@@ -99,8 +93,6 @@ Public Class MainEngine
                     If line = RES_MS_end Then
                         Exit While
                     End If
-
-
 
                 End While
                 objReader.Close()
@@ -142,8 +134,6 @@ Public Class MainEngine
         Console.WriteLine("Error, See Debug Window")
         Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
     End Sub
-
-
 
 #End Region
 

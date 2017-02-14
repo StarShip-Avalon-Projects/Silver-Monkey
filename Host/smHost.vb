@@ -51,7 +51,6 @@ Public Class smHost
         End Set
     End Property
 
-
     Public Sub SendClientMessage(Tag As String, data As String) Implements SilverMonkey.Interfaces.msHost.SendClientMessage
         callbk.SendClientMessage(Tag, data)
     End Sub
@@ -63,6 +62,5 @@ Public Class smHost
     Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements SilverMonkey.Interfaces.msHost.logError
         Dim Err As New ErrorLogging(Ex, ObjectThrowingError)
     End Sub
-
 
 End Class

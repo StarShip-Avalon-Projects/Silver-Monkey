@@ -1,6 +1,4 @@
-﻿
-
-Imports System.Linq
+﻿Imports System.Linq
 Imports System.Text
 Imports MonkeyCore.IO
 Imports Monkeyspeak
@@ -65,7 +63,7 @@ Friend Class MS_IO
                 Return stream.CanRead
             End Using
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -77,7 +75,7 @@ Friend Class MS_IO
                 Return stream.CanWrite
             End Using
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -91,7 +89,7 @@ Friend Class MS_IO
                 SW.WriteLine(data)
             End Using
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -110,7 +108,7 @@ Friend Class MS_IO
             var.Value = sb.ToString()
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -124,7 +122,7 @@ Friend Class MS_IO
             File.Delete(f)
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -161,7 +159,7 @@ Friend Class MS_IO
             End If
 
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -182,13 +180,10 @@ Friend Class MS_IO
 
             End If
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
 
-
 End Class
-
-

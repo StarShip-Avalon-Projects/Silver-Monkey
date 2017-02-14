@@ -22,7 +22,7 @@ namespace SilverMonkey.BugTraqConnect
 	/// </summary>
     [Serializable]
     public sealed class Filter
-	{
+    {
         /// <summary>
         /// The filter id.
         /// </summary>
@@ -58,85 +58,85 @@ namespace SilverMonkey.BugTraqConnect
 		/// </summary>
 		/// <param name="filterData">The filter data stored in the webservice proxy data type.</param>
 		internal Filter(MantisConnectWebservice.FilterData filterData)
-		{
-			this.id = Convert.ToInt32(filterData.id);
-			this.owner = new User(filterData.owner);
-			this.projectId = Convert.ToInt32(filterData.project_id);
-			this.isPublic = filterData.is_public;
-			this.name = filterData.name;
-			this.filterString = filterData.filter_string;
-		}
+        {
+            this.id = Convert.ToInt32(filterData.id);
+            this.owner = new User(filterData.owner);
+            this.projectId = Convert.ToInt32(filterData.project_id);
+            this.isPublic = filterData.is_public;
+            this.name = filterData.name;
+            this.filterString = filterData.filter_string;
+        }
 
-		/// <summary>
-		/// Converts an array of filters from webservice data type to instances of <see cref="Filter"/> class.
-		/// </summary>
-		/// <param name="filtersData">An array of filters stored in webservice proxy data type.</param>
-		/// <returns>An array of <see cref="Filter"/> instances.</returns>
-		internal static Filter[] ConvertArray(MantisConnectWebservice.FilterData[] filtersData)
-		{
+        /// <summary>
+        /// Converts an array of filters from webservice data type to instances of <see cref="Filter"/> class.
+        /// </summary>
+        /// <param name="filtersData">An array of filters stored in webservice proxy data type.</param>
+        /// <returns>An array of <see cref="Filter"/> instances.</returns>
+        internal static Filter[] ConvertArray(MantisConnectWebservice.FilterData[] filtersData)
+        {
             if (filtersData == null)
             {
                 return null;
             }
 
-			Filter[] filters = new Filter[filtersData.Length];
+            Filter[] filters = new Filter[filtersData.Length];
 
             for (int i = 0; i < filtersData.Length; ++i)
             {
                 filters[i] = new Filter(filtersData[i]);
             }
 
-			return filters;
-		}
+            return filters;
+        }
 
-		/// <summary>
-		/// Gets the filter Id, must be greater than or equal to 1.
-		/// </summary>
-		public int Id
-		{
-			get { return this.id; }
-		}
+        /// <summary>
+        /// Gets the filter Id, must be greater than or equal to 1.
+        /// </summary>
+        public int Id
+        {
+            get { return this.id; }
+        }
 
-		/// <summary>
-		/// Gets the user who defined the filter.
-		/// </summary>
-		public User Owner
-		{
-			get { return this.owner; }
-		}
+        /// <summary>
+        /// Gets the user who defined the filter.
+        /// </summary>
+        public User Owner
+        {
+            get { return this.owner; }
+        }
 
-		/// <summary>
-		/// Gets the project to which the filter belongs, or 0 for All Projects.
-		/// </summary>
-		public int ProjectId
-		{
-			get { return this.projectId; }
-		}
+        /// <summary>
+        /// Gets the project to which the filter belongs, or 0 for All Projects.
+        /// </summary>
+        public int ProjectId
+        {
+            get { return this.projectId; }
+        }
 
-		/// <summary>
-		/// Gets a value indicating whether the filter is public (available to all users) or
-		/// private (available only to the user who created it).
-		/// </summary>
-		public bool IsPublic
-		{
-			get { return this.isPublic; }
-		}
+        /// <summary>
+        /// Gets a value indicating whether the filter is public (available to all users) or
+        /// private (available only to the user who created it).
+        /// </summary>
+        public bool IsPublic
+        {
+            get { return this.isPublic; }
+        }
 
-		/// <summary>
-		/// Gets the name of the filter
-		/// </summary>
-		public string Name
-		{
-			get { return this.name; }
-		}
+        /// <summary>
+        /// Gets the name of the filter
+        /// </summary>
+        public string Name
+        {
+            get { return this.name; }
+        }
 
-		/// <summary>
-		/// Gets the string that defines the filter.  At the moment this format is treated as 
-		/// a blackbox and is not interpretted by MantisConnect.
-		/// </summary>
-		public string FilterString
-		{
-			get { return this.filterString; }
-		}
-	}
+        /// <summary>
+        /// Gets the string that defines the filter.  At the moment this format is treated as
+        /// a blackbox and is not interpretted by MantisConnect.
+        /// </summary>
+        public string FilterString
+        {
+            get { return this.filterString; }
+        }
+    }
 }

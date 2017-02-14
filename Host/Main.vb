@@ -21,7 +21,6 @@ Public Class Main
             Dim num4 As Integer = 0
             Integer.TryParse(cat.Match(item2).Groups(2).ToString, num4)
 
-
             If num3 > num4 Then
                 If num1 > num2 Then Return 1
                 If num1 < num2 Then Return -1
@@ -38,8 +37,6 @@ Public Class Main
         End Function
 
     End Class
-
-
 
     Public Shared objHost As New smHost
     Public Player As FURRE = New FURRE
@@ -108,7 +105,6 @@ Public Class Main
         objPlugin.Initialize(objHost)
         objPlugin.Page = page
         objPlugin.Start()
-
 
         Dim Test As New List(Of String)
         For Each item As String In MainEngine.MSpage.GetTriggerDescriptions()

@@ -1,7 +1,9 @@
-﻿Imports System.IO
-Imports System.Text
+﻿Imports System.Text
 
-
+'TODO rename this to something meaningful
+''' <summary>
+'''
+''' </summary>
 Public Class IO
     Private _KeysIni As IniFile
     Private _MS_KeysIni As IniFile
@@ -11,6 +13,10 @@ Public Class IO
 
     End Sub
 
+    ''' <summary>
+    ''' Monkey Speak File containing MonkeySpeak Editors lines and settings
+    ''' </summary>
+    ''' <returns></returns>
     Public Property KeysIni As IniFile
         Get
             Return _KeysIni
@@ -20,6 +26,10 @@ Public Class IO
         End Set
     End Property
 
+    ''' <summary>
+    ''' Dragon Speak File containing MonkeySpeak Editors lines and settings
+    ''' </summary>
+    ''' <returns></returns>
     Public Property MS_KeysIni As IniFile
         Get
             Return _MS_KeysIni
@@ -29,11 +39,10 @@ Public Class IO
         End Set
     End Property
 
-
     ''' <summary>
-    ''' News the ds file.
+    ''' New Dragon Speak file default read from configuration *.ini
     ''' </summary>
-    ''' <returns>Generic Preformatted DragonSpeak file</returns>
+    ''' <returns>Generic preformated DragonSpeak file</returns>
     Public Shared Function NewDSFile() As String
         Dim str As New StringBuilder
         str.AppendLine(Settings.KeysIni.GetKeyValue("MS-General", "Header"))
@@ -52,9 +61,10 @@ Public Class IO
     End Function
 
     ''' <summary>
-    ''' News the ms file.
+    ''' New Monkey Speak fileDefaults
+    ''' <para>Actual format is set in a configuration *.ini file</para>
     ''' </summary>
-    ''' <returns>Generic Preformated MonkeySpeak file</returns>
+    ''' <returns>Generic preformated MonkeySpeak file</returns>
     Public Shared Function NewMSFile() As String
         Dim str As New StringBuilder
         str.AppendLine(Settings.MS_KeysIni.GetKeyValue("MS-General", "Header"))
@@ -71,7 +81,6 @@ Public Class IO
         str.Append(Settings.MS_KeysIni.GetKeyValue("MS-General", "Footer"))
         Return str.ToString
     End Function
-
 
     ''' <summary>
     ''' News the dm script.
@@ -95,4 +104,3 @@ Public Class IO
     End Function
 
 End Class
-

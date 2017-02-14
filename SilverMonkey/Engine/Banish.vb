@@ -1,13 +1,12 @@
-﻿
-Imports System.Diagnostics
+﻿Imports System.Diagnostics
 Imports System.Collections
 Imports MonkeyCore
 Imports System.Collections.Generic
+Imports Furcadia.Util
 
 Public Class Banish
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits MonkeySpeakLibrary
     Private writer As TextBoxWriter = Nothing
-
 
     Public Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
@@ -77,7 +76,7 @@ Public Class Banish
         '(1:53) and the furre named {...} is on the banish list,
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 53), AddressOf FurreNamedIsBanished, "(1:53) and the furre named {...} is on the banish list,")
 
-        ' (5: ) save the banish list to the variable % . 
+        ' (5: ) save the banish list to the variable % .
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 49), AddressOf BanishSave,
          "(5:49) save the banish list to the variable % .")
 
@@ -104,18 +103,16 @@ Public Class Banish
 "(5:56) unbanish the furre named {...}.")
     End Sub
 
-
-
     '(1:50) and the triggering furre is not on the banish list,
     Function TrigFurreIsNotBanished(reader As Monkeyspeak.TriggerReader) As Boolean
-        Dim banishlist As List(Of String) = callbk.BanishString
+        Dim banishlist As List(Of String) = FurcSession.BanishString
         Try
             For Each Furre As String In banishlist
-                If MainMSEngine.ToFurcShortName(Furre) = MainMSEngine.ToFurcShortName(callbk.Player.Name) Then Return False
+                If FurcadiaShortName(Furre) = FurcSession.Player.ShortName Then Return False
             Next
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -126,15 +123,15 @@ Public Class Banish
     End Function
     '(1:52) and the furre named {...} is not on the banish list,
     Function FurreNamedIsNotBanished(reader As Monkeyspeak.TriggerReader) As Boolean
-        Dim banishlist As List(Of String) = callbk.BanishString
+        Dim banishlist As List(Of String) = FurcSession.BanishString
         Try
             Dim f As String = reader.ReadString
             For Each Furre As String In banishlist
-                If MainMSEngine.ToFurcShortName(Furre) = MainMSEngine.ToFurcShortName(f) Then Return False
+                If FurcadiaShortName(Furre) = FurcadiaShortName(f) Then Return False
             Next
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -151,11 +148,11 @@ Public Class Banish
 
             NewVar = reader.ReadVariable(True)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
-        NewVar.Value = String.Join(" ", callbk.BanishString.ToArray)
+        NewVar.Value = String.Join(" ", FurcSession.BanishString.ToArray)
         Return True
     End Function
 
@@ -164,19 +161,18 @@ Public Class Banish
         Try
             sendServer("banish-list")
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
 
-
     '(5:x) banish the triggering furre.
     Function BanishTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            sendServer("banish " + callbk.Player.Name)
+            sendServer("banish " + FurcSession.Player.Name)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -186,9 +182,9 @@ Public Class Banish
     Function AndBanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim Furre As String = reader.ReadString
-            Return MainMSEngine.ToFurcShortName(Furre) = MainMSEngine.ToFurcShortName(callbk.BanishName)
+            Return FurcadiaShortName(Furre) = FurcadiaShortName(FurcSession.BanishName)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -199,7 +195,7 @@ Public Class Banish
             Dim Furre As String = reader.ReadString
             sendServer("banish " + Furre)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -207,9 +203,9 @@ Public Class Banish
     '(5:x) temperary  banish the triggering furre for three days.
     Function TempBanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            sendServer("tempbanish " + callbk.Player.Name)
+            sendServer("tempbanish " + FurcSession.Player.Name)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -220,7 +216,7 @@ Public Class Banish
             Dim Furre As String = reader.ReadString
             sendServer("tempbanish " + Furre)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -228,9 +224,9 @@ Public Class Banish
     '(5:x) unbanish the triggering furre.
     Function UnBanishTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            sendServer("banish-off " + callbk.Player.Name)
+            sendServer("banish-off " + FurcSession.Player.Name)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -241,13 +237,10 @@ Public Class Banish
             Dim Furre As String = reader.ReadString
             sendServer("banish-off " + Furre)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
-    Sub sendServer(ByRef var As String)
-        callbk.sndServer(var)
-    End Sub
 
 End Class

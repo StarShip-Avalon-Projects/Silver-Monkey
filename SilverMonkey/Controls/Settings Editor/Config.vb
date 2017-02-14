@@ -117,7 +117,6 @@ Public Class Config
         chkBxClientDisconnectToggle.Checked = Main.MainSettings.DisconnectPopupToggle
         Me.Location = My.Settings.ConfigFormLocation
 
-
         CheckBox1.Checked = Main.MainSettings.PSShowClient
         'CheckBox2.Checked = Main.MainSettings.PSShowSettingsWindow
     End Sub
@@ -139,11 +138,7 @@ Public Class Config
             item.Checked = PluginList.Item(objPlugin.Name.Replace(" ", ""))
         Next
 
-
     End Sub
-
-
-
 
     Private Sub WhisperColorBox_Click(sender As Object, e As EventArgs) Handles WhisperColorBox.Click
         GetColor(WhisperColorBox)
@@ -181,15 +176,10 @@ Public Class Config
         Main.MainSettings.TimeStamp = CUShort(ChkTimeStamp.CheckState)
     End Sub
 
-
-
-
     Private Sub ConfigTabs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ConfigTabs.SelectedIndexChanged
         Dim s As TabControl = CType(sender, TabControl)
         My.Settings.ConfigSelectedTab = s.SelectedIndex
     End Sub
-
-
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         With FindFurc

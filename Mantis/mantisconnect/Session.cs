@@ -136,7 +136,7 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Config object to be used to retrieve information about the configuration 
+        /// Config object to be used to retrieve information about the configuration
         /// of the Mantis installation.
         /// </summary>
         public Config Config

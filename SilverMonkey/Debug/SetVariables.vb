@@ -12,7 +12,7 @@
     End Property
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Var.Value = TxtBxValue.Text
-        MainMSEngine.MSpage.SetVariable(VarName, Var.Value, Var.IsConstant)
+        FurcSession.MainEngine.MSpage.SetVariable(VarName, Var.Value, Var.IsConstant)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
     End Sub
@@ -23,7 +23,7 @@
     End Sub
 
     Private Sub SetVariables_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Var = MainMSEngine.MSpage.GetVariable(VarName)
+        Var = FurcSession.MainEngine.MSpage.GetVariable(VarName)
         If Var.IsConstant Then
             Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
             Me.Close()

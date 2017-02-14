@@ -145,9 +145,9 @@
       <Name>Interfaces</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyspeakR6\MonkeyspeakR6.csproj">
+    <ProjectReference Include="..\MonkeySpeakR6\MonkeySpeakEx.csproj">
       <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
-      <Name>MonkeyspeakR6</Name>
+      <Name>MonkeySpeakEx</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

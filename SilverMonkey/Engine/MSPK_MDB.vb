@@ -1,16 +1,13 @@
-﻿
-Imports System.Data
+﻿Imports System.Data
 Imports System.Data.SQLite
-Imports System.Text.RegularExpressions
 Imports System.Collections.Generic
 Imports MonkeyCore
 Imports Monkeyspeak
-Imports MonkeyCore.IO
+Imports Furcadia.Util
 
 Public Class MSPK_MDB
-    Inherits Libraries.AbstractBaseLibrary
+    Inherits MonkeySpeakLibrary
 
-    Private writer As TextBoxWriter = Nothing
     Public Shared SQLreader As SQLiteDataReader = Nothing
     Private QueryRun As Boolean = False
     Private Shared _SQLitefile As String
@@ -29,10 +26,8 @@ Public Class MSPK_MDB
     Dim lock As New Object
     Dim cache As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
 
-    Public Sub New()
-
-        writer = New TextBoxWriter(Variables.TextBox1)
-
+    Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
+        MyBase.New(Dream, Player, MsEngine)
 
         '(1:500) and the Database info {...} about the triggering furre is equal to #,
         Add(New Trigger(TriggerCategory.Condition, 500),
@@ -54,7 +49,6 @@ Public Class MSPK_MDB
         Add(New Trigger(TriggerCategory.Condition, 505),
             AddressOf TriggeringFurreinfoLessThanOrEqualToNumber, "(1:505) and the Database info {...} about the triggering furre is less than or equal to #,")
 
-
         '(1:508) and the Database info {...} about the furre named {...} is equal to #,
         Add(New Trigger(TriggerCategory.Condition, 508),
             AddressOf FurreNamedinfoEqualToNumber, "(1:508) and the Database info {...} about the furre named {...} is equal to #,")
@@ -75,7 +69,6 @@ Public Class MSPK_MDB
         Add(New Trigger(TriggerCategory.Condition, 513),
         AddressOf FurreNamedinfoLessThanOrEqualToNumber, "(1:513) and the Database info {...} about the furre named {...} is less than or equal to #,")
 
-
         '(1:516) and the Database info {...} about the furre named {...} is equal to {...},
         Add(New Trigger(TriggerCategory.Condition, 516),
        AddressOf FurreNamedinfoEqualToSTR, "(1:516) and the Database info {...} about the furre named {...} is equal to string {...},")
@@ -88,7 +81,6 @@ Public Class MSPK_MDB
         '(1:519) and the Database info {...} about the triggering furre is not equal to {...},
         Add(New Trigger(TriggerCategory.Condition, 519),
             AddressOf TriggeringFurreinfoNotEqualToSTR, "(1:519) and the Database info {...} about the triggering furre is not equal to string {...},")
-
 
         'Installed 7/13/120`16
         '(1:524) and the Database info  {...} in Settings Table {...} exists,
@@ -141,7 +133,6 @@ Public Class MSPK_MDB
         '(5:513) add column {...} with type {...} to the Furre table.
         Add(New Trigger(TriggerCategory.Effect, 513), AddressOf AddColumn, "(5:513) add column {...} with type {...} to the Furre table.")
 
-
         '(5:518) delete all Database info about the triggering furre.
         Add(New Trigger(TriggerCategory.Effect, 518), AddressOf DeleteTriggeringFurre, "(5:518) delete all Database info about the triggering furre.")
         '(5:519) delete all Database info about the furre named {...}.
@@ -172,12 +163,9 @@ Public Class MSPK_MDB
         '(5:562) forget Database info {...} from Settings Table{...}.
         '(5:563) forget all Settings Table Database info.
 
-
     End Sub
 
-
 #Region "Condition Functions"
-
 
     '(1: ) and the Database info {...} about the triggering furre is equal to #,
     Public Function TriggeringFurreinfoEqualToNumber(reader As TriggerReader) As Boolean
@@ -189,13 +177,13 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
             Dim Value As Double = 0
-            Double.TryParse(GetValueFromTable(info, MainMSEngine.ToFurcShortName(Furre)).ToString, Value)
+            Double.TryParse(GetValueFromTable(info, FurcadiaShortName(Furre)).ToString, Value)
 
             Return number = Value
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -210,14 +198,14 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = MainMSEngine.ToFurcShortName(Furre)
+            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(Furre)
             Dim val As String = GetValueFromTable(info, Furre).ToString
             Dim Value As Double = 0
             Double.TryParse(val, Value)
             Return Value <> number
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -231,15 +219,15 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = MainMSEngine.ToFurcShortName(Furre)
+            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(Furre)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
             Double.TryParse(check.ToString, Value)
             Return Value > number
 
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -253,14 +241,14 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString())
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
 
             Return Num < number
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -275,14 +263,14 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString())
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
             Return Num >= number
 
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -296,13 +284,13 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString())
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
             Return Num <= number
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -317,13 +305,13 @@ Public Class MSPK_MDB
 
         Try
             info = reader.ReadString
-            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
             Return Variable = Value
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -336,7 +324,7 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
 
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
@@ -344,7 +332,7 @@ Public Class MSPK_MDB
             Double.TryParse(check.ToString, Value)
             Return Value <> Variable
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -357,14 +345,14 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
             Double.TryParse(check.ToString, Value)
             Return Value > Variable
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -377,14 +365,14 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
 
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
             Return Value < Variable
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -398,13 +386,13 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
             Return Value >= Variable
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -417,14 +405,14 @@ Public Class MSPK_MDB
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = MainMSEngine.ToFurcShortName(reader.ReadString)
+            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
             Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
             Double.TryParse(check.ToString, Value)
             Return Value <= Variable
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -434,12 +422,12 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the furre named {...} is equal to {...},
     Public Function FurreNamedinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString())
+        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString())
         Dim str As String = reader.ReadString
         Try
             Return str = GetValueFromTable(Info, Furre).ToString
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -447,14 +435,14 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the furre named {...} is not equal to {...},
     Public Function FurreNamedinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
+        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
 
         Dim str As String = reader.ReadString
 
         Try
             Return str <> GetValueFromTable(Info, Furre).ToString
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -462,12 +450,12 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the triggering furre is equal to {...},
     Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
         Dim str As String = reader.ReadString
         Try
             If str = GetValueFromTable(Info, Furre).ToString Then Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -475,17 +463,16 @@ Public Class MSPK_MDB
     '(1: ) and the Database info {...} about the triggering furre is not equal to {...},
     Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString())
+        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
         Dim str As String = reader.ReadString
         Try
             If str <> GetValueFromTable(Info, Furre).ToString Then Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return False
     End Function
-
 
     '(1:x) And the Database info  {...} in Settings Table {...} exists,
     Public Function SettingExist(reader As TriggerReader) As Boolean
@@ -502,7 +489,7 @@ Public Class MSPK_MDB
             QueryRun = True
             Return cache.Count > 0
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -521,7 +508,7 @@ Public Class MSPK_MDB
             QueryRun = True
             Return cache.Count = 0
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -543,7 +530,7 @@ Public Class MSPK_MDB
 
             Return cache.Item(Info).ToString = Value
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -564,7 +551,7 @@ Public Class MSPK_MDB
             QueryRun = True
             Return cache.Item(Info).ToString <> Value
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -586,7 +573,7 @@ Public Class MSPK_MDB
             Double.TryParse(cache.Item(Setting).ToString, num)
             Return num > Number
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -609,7 +596,7 @@ Public Class MSPK_MDB
             Double.TryParse(cache.Item(Setting).ToString, num)
             Return num >= Number
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -631,7 +618,7 @@ Public Class MSPK_MDB
             Double.TryParse(cache.Item(Setting).ToString, num)
             Return num < Number
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -654,7 +641,7 @@ Public Class MSPK_MDB
             Double.TryParse(cache.Item(Setting).ToString, num)
             Return num <= Number
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -681,9 +668,7 @@ Public Class MSPK_MDB
     End Function
 #End Region
 
-
 #Region "Effect Functions"
-
 
     Public Function createMDB(reader As TriggerReader) As Boolean
         SQLitefile = Paths.CheckBotFolder(reader.ReadString())
@@ -693,10 +678,9 @@ Public Class MSPK_MDB
         Return True
     End Function
 
-
     '(5:405) Add the triggering furre with default access level to the Furre Table in the database if he, she or it don't already exist.
     Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
         Dim info As String = reader.ReadString
         Dim value As String = "0"
         If reader.PeekNumber Or reader.PeekVariable Then
@@ -715,14 +699,14 @@ Public Class MSPK_MDB
             db.Insert("FURRE", data)
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
     '(5:506) add furre named {%NewMember} with the default access level "1" to the Furre Table in the database if he, she, or it doesn't exist.
     Public Function InsertFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
+        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
         Dim info As String
         If reader.PeekString Then
             info = reader.ReadString
@@ -740,7 +724,7 @@ Public Class MSPK_MDB
             db.Insert("FURRE", data)
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -749,7 +733,7 @@ Public Class MSPK_MDB
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
         Dim Furre As String = ""
-        Furre = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+        Furre = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
         Dim value As Double = ReadVariableOrNumber(reader)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
@@ -759,7 +743,7 @@ Public Class MSPK_MDB
         Try
             Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -768,11 +752,11 @@ Public Class MSPK_MDB
     Public Function UpdateFurreNamed_Field(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
         Dim Furre As String = reader.ReadString
-        'Dim Furre As String = MainEngine.MSpage.GetVariable("~Name").Value.ToString
+        'Dim Furre As String = MyMonkeySpeakEngine.MSpage.GetVariable("~Name").Value.ToString
         Dim value As String = ReadVariableOrNumber(reader, False).ToString
         Dim db As New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
-        data.Add("Name", MainMSEngine.ToFurcShortName(Furre))
+        data.Add("Name", MyMonkeySpeakEngine.ToFurcShortName(Furre))
         data.Add(info, value)
         data.Add("date modified", Date.Now.ToString)
         Try
@@ -787,7 +771,7 @@ Public Class MSPK_MDB
     Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
         'Dim Furre As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
         Dim value As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
@@ -805,8 +789,8 @@ Public Class MSPK_MDB
     '(5:410) update Database info {...} about the furre named {...} will now be {...}.
     Public Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
         Dim info As String = reader.ReadString
-        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
-        'Dim Furre As String = MainEngine.MSpage.GetVariable("~Name").Value.ToString
+        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
+        'Dim Furre As String = MyMonkeySpeakEngine.MSpage.GetVariable("~Name").Value.ToString
         Dim value As String = reader.ReadString
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Dim data As New Dictionary(Of String, String)()
@@ -828,13 +812,13 @@ Public Class MSPK_MDB
             Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
             Dim Info As String = reader.ReadString
             Dim Variable As Variable = reader.ReadVariable(True)
-            Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+            Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
             'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
             Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -844,14 +828,14 @@ Public Class MSPK_MDB
         Try
             Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
             Dim Info As String = reader.ReadString
-            Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
+            Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
             Dim Variable As Variable = reader.ReadVariable(True)
             ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
             Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -866,14 +850,14 @@ Public Class MSPK_MDB
     End Function
     '(5:418) delete all Database info about the triggering furre.
     Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.ToFurcShortName(MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
     End Function
     '(5:419) delete all Database info about the furre named {...}.
     Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = MainMSEngine.ToFurcShortName(reader.ReadString)
+        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
         Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
         Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
@@ -893,10 +877,9 @@ Public Class MSPK_MDB
             Total.Value = count
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
-
 
     End Function
     '(5:423) take the sum of column{...} in table {...} and put it into variable %
@@ -911,7 +894,7 @@ Public Class MSPK_MDB
             Table = reader.ReadString
             Total = reader.ReadVariable(True)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Dim sql As String = "SELECT " & Column & " FROM " & Table & " ;"
@@ -942,7 +925,7 @@ Public Class MSPK_MDB
             OutVar = reader.ReadVariable(True)
 
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Dim sql As String = "SELECT " & info & " FROM [" & Table & "] ;"
@@ -974,7 +957,7 @@ Public Class MSPK_MDB
             var2.Value = str
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -1001,7 +984,7 @@ Public Class MSPK_MDB
                 Return True
             End SyncLock
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
@@ -1032,38 +1015,24 @@ Public Class MSPK_MDB
             End If
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
-
-
 
     Public Function VACUUM(reader As TriggerReader) As Boolean
         Dim start As Date = Date.Now
         SQLiteDatabase.ExecuteNonQuery("VACUUM")
         Dim ts As TimeSpan = Date.Now.Subtract(start)
-        Main.SendClientMessage("SYSTEM:", "Executed Vacum in " + ts.Seconds.ToString + " seconds")
+        SendClientMessage("SYSTEM:", "Executed Vacum in " + ts.Seconds.ToString + " seconds")
         Return True
     End Function
-
-
 
     '(5:561) remember Database Info {...} for Settings Table {...} to {...}.
     '(5:562) forget Database info {...} from Settings Table{...}.
     '(5:563) forget all Settings Table Database info.
 #End Region
 #Region "Effects Helper Functions"
-
-
-
-    Sub sendServer(ByRef var As String)
-        Try
-            callbk.sndServer(var)
-        Catch ex As Exception
-            Dim log As New ErrorLogging(ex, Me)
-        End Try
-    End Sub
 
 #End Region
 

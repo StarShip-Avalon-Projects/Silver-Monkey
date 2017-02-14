@@ -31,6 +31,4 @@
         Return cnt
     End Function
 
-   
-
 End Class

@@ -54,7 +54,6 @@ Public Class cbMain
         Close()
     End Sub
 
-
     Private Sub inputTextBox_KeyPress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs) Handles inputTextBox.KeyPress
         If e.KeyChar = ControlChars.Cr Then
             e.Handled = True
@@ -173,7 +172,6 @@ Public Class cbMain
         Return pieces
     End Function
     'splitOnFirstUnquotedSpace(string text)
-
 
     Private Sub cbMain_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         Player = New FURRE

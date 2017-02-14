@@ -1,11 +1,10 @@
-﻿Imports Furcadia.Net
-Imports System.Text.RegularExpressions
+﻿Imports System.Text.RegularExpressions
+Imports Furcadia.Net
 
-Imports System.Diagnostics
 Imports MonkeyCore
 
 Public Class Movement
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits MonkeySpeakLibrary
     Private writer As TextBoxWriter = Nothing
     Private Const RGEX_Mov_Steps As String = "(nw|ne|sw|se|1|3|7|9)"
 
@@ -83,18 +82,16 @@ Public Class Movement
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 625), AddressOf BotMoveSequence, "(5:625) Move the bot  in this sequence {...} (one, sw, three, se, seven, nw, nine, or ne)")
     End Sub
 
-
-
     '(0:901) when a furre moves into (x,y),
     '(1:900) and the triggering furre moved into/is standing at (x,y),
     Function MoveInto(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Dim X As Double = ReadVariableOrNumber(reader, False)
             Dim Y As Double = ReadVariableOrNumber(reader, False)
             Return tPlayer.X = Convert.ToUInt32(X) AndAlso tPlayer.Y = Convert.ToUInt32(Y)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -103,24 +100,24 @@ Public Class Movement
     Function FurreNamedMoveInto(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
             Dim X As Double = ReadVariableOrNumber(reader, False)
             Dim Y As Double = ReadVariableOrNumber(reader, False)
             Return tPlayer.X = Convert.ToUInt32(X) AndAlso tPlayer.Y = Convert.ToUInt32(Y)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
     '(1:634) and the triggering furre moved from (x,y),
     Function MoveFrom(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Dim X As Double = ReadVariableOrNumber(reader, False)
             Dim Y As Double = ReadVariableOrNumber(reader, False)
             Return tPlayer.SourceX = Convert.ToUInt32(X) AndAlso tPlayer.SourceY = Convert.ToUInt32(Y)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -128,19 +125,19 @@ Public Class Movement
     Function FurreNamedMoveFrom(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
             Dim X As Double = ReadVariableOrNumber(reader, False)
             Dim Y As Double = ReadVariableOrNumber(reader, False)
             Return tPlayer.SourceX = Convert.ToUInt32(X) AndAlso tPlayer.SourceY = Convert.ToUInt32(Y)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
     '(1:636) and the triggering furre successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)
     Function MoveIntoDirection(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Dim Dir As Double = ReadVariableOrNumber(reader, False)
             Dim Direction As Double = 0
             If tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
@@ -157,7 +154,7 @@ Public Class Movement
             End If
             Return Direction = Dir
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -166,7 +163,7 @@ Public Class Movement
     Function FurreNamedMoveIntoDirection(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
             Dim Dir As Double = ReadVariableOrNumber(reader, False)
             Dim Direction As Double = 0
             If tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
@@ -183,7 +180,7 @@ Public Class Movement
             End If
             Return Direction = Dir
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -191,10 +188,10 @@ Public Class Movement
     '(1:638) and the triggering furre tried to move but stood still.
     Function StoodStill(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Return tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -203,10 +200,10 @@ Public Class Movement
     Function FurreNamedStoodStill(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
             Return tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -222,7 +219,7 @@ Public Class Movement
             End Select
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -232,7 +229,7 @@ Public Class Movement
             sendServer("`>")
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -242,7 +239,7 @@ Public Class Movement
             sendServer("`<")
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -250,11 +247,11 @@ Public Class Movement
     Function SetCordX(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Cord.Value = tPlayer.X
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -262,11 +259,11 @@ Public Class Movement
     Function SetCordY(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Cord.Value = tPlayer.Y
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -275,11 +272,11 @@ Public Class Movement
         Try
             Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
             Cord.Value = tPlayer.X
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -288,11 +285,11 @@ Public Class Movement
         Try
             Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
             Cord.Value = tPlayer.Y
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -301,7 +298,7 @@ Public Class Movement
     Function FaceDirectionNumber(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim Dir As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Dim direction As Double = 0
 
             If tPlayer.SourceX <> tPlayer.X Or tPlayer.SourceY <> tPlayer.Y Then
@@ -339,7 +336,7 @@ Public Class Movement
             Dir.Value = direction
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -348,7 +345,7 @@ Public Class Movement
         Try
             Dim Dir As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
             Dim direction As Double = 0
 
             If tPlayer.SourceX <> tPlayer.X Or tPlayer.SourceY <> tPlayer.Y Then
@@ -386,7 +383,7 @@ Public Class Movement
             Dir.Value = direction
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -397,7 +394,7 @@ Public Class Movement
             sendServer("`sit")
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -408,7 +405,7 @@ Public Class Movement
             sendServer("`lie")
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -419,7 +416,7 @@ Public Class Movement
             sendServer("`stand")
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -445,15 +442,12 @@ Public Class Movement
 
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 #Region "Helper Functions"
 
-    Sub sendServer(ByRef var As String)
-        callbk.sndServer(var)
-    End Sub
 #End Region
 
 End Class

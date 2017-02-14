@@ -18,11 +18,10 @@ Public Class MSPK_Web
         writer = New TextBoxWriter(Variables.TextBox1)
         'WebStack.Clear()
         '(0:70) When the bot receives a variable list by sending the Web-Array.
-        Add(New Trigger(TriggerCategory.Cause, 70), _
+        Add(New Trigger(TriggerCategory.Cause, 70),
         Function()
             Return True
         End Function, "(0:70) When the bot receives a variable list by sending the Web-Array.")
-
 
         '(1:30) and Web-Array setting {...} is equal to {...},
         Add(New Trigger(TriggerCategory.Condition, 30), AddressOf WebArrayEqualTo, "(1:30) and Web-Array setting {...} is equal to {...},")
@@ -47,11 +46,11 @@ Public Class MSPK_Web
 
         '(5:12)
 
-        '(5:13) 
+        '(5:13)
 
-        '(5:14) 
+        '(5:14)
 
-        '(5:15) 
+        '(5:15)
 
         '(5:16) send GET request to send the Web-Array to URL.
         Add(New Trigger(TriggerCategory.Effect, 16), AddressOf SendGetWebStack, "(5:16) send GET request to send the Web-Array to URL.")
@@ -62,7 +61,6 @@ Public Class MSPK_Web
         Add(New Trigger(TriggerCategory.Effect, 18), AddressOf SendWebStack, "(5:18) send POST request to send the Web-Array to URL.")
         '(5:19) clear the Web-Array.
         Add(New Trigger(TriggerCategory.Effect, 19), AddressOf ClearWebStack, "(5:19) clear the Web-Array.")
-
 
     End Sub
 
@@ -184,7 +182,7 @@ Public Class MSPK_Web
                 page = ws.WGet(WebStack)
                 WebStack = page.WebStack
                 If page.ReceivedPage Then
-                    MS_Engine.MainMSEngine.PageExecute(70)
+                    FurcSession.MainEngine.PageExecute(70)
                 End If
             End SyncLock
             If page.Status <> 0 Then Throw New WebException(page.ErrMsg)
@@ -199,7 +197,6 @@ Public Class MSPK_Web
         End Try
         Return page.Status = 0
     End Function
-
 
     '(5:17) store variable %Variable to the Web-Array
     Private Function StoreWebStack(reader As TriggerReader) As Boolean
@@ -232,7 +229,7 @@ Public Class MSPK_Web
                 page = ws.WPost(WebStack)
                 WebStack = page.WebStack
                 If page.ReceivedPage Then
-                    MS_Engine.MainMSEngine.PageExecute(70)
+                    FurcSession.MainEngine.PageExecute(70)
                 End If
             End SyncLock
             If page.Status <> 0 Then Throw New WebException(page.ErrMsg)
@@ -253,7 +250,6 @@ Public Class MSPK_Web
         If Not IsNothing(WebStack) Then WebStack.Clear()
         Return True
     End Function
-
 
     '(5:60) remove variable %Variable from the Web-Array
     Private Function RemoveWebStack(reader As TriggerReader) As Boolean
@@ -299,7 +295,6 @@ Public Class WebRequests
     Private UserAgent As String = "Silver Monkey a Furcadia Bot (gerolkae@hotmail.com)"
     Private WebReferer As String = "http://silvermonkey.codeplex.com"
 
-
     Dim data As New Dictionary(Of [String], [String])()
     ' Sample Data
 
@@ -335,8 +330,6 @@ Public Class WebRequests
         Next
         Return str.Substring(0, str.Length - 1)
     End Function
-
-
 
     Public Function WPost(ByRef array As Dictionary(Of String, String)) As WebData
         Dim Result As New WebData
@@ -376,7 +369,6 @@ Public Class WebRequests
             Result.Packet = ""
             Result.Status = 1
             Return Result
-
 
         End Try
 
@@ -444,7 +436,6 @@ Public Class WebRequests
         End Try
 
         Return Result
-
 
     End Function
 

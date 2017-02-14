@@ -51,8 +51,6 @@ Namespace PhoenixSpeak
             End Set
         End Property
 
-
-
         Friend Sub New(Name As String)
             _name = Name
             _value = Nothing
@@ -84,8 +82,6 @@ Namespace PhoenixSpeak
         Public Overrides Function ToString() As String
             Return (Convert.ToString(Name + " = " + (If((Value Is Nothing), Nothing.ToString(), Value.ToString()))))
         End Function
-
-
 
         Public Overloads Shared Operator =(varA As Variable, varB As Variable) As Boolean
             If varA Is Nothing OrElse varB Is Nothing Then
@@ -123,7 +119,6 @@ Namespace PhoenixSpeak
             End If
             Return _name.GetHashCode()
         End Function
-
 
     End Class
 End Namespace

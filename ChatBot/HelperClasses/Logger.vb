@@ -12,7 +12,7 @@ Public Class Logger
         Try
             Dim contents() As String = IO.File.ReadAllLines(filePath)
         Catch ex As IO.IOException
-            Return (ex.Message.StartsWith("The process cannot access the file") AndAlso _
+            Return (ex.Message.StartsWith("The process cannot access the file") AndAlso
                     ex.Message.EndsWith("because it is being used by another process."))
         Catch ex As Exception
             Return False
@@ -34,7 +34,7 @@ Public Class Logger
 
             ioFile.Close()
         Catch ex As IO.IOException
-            If (ex.Message.StartsWith("The process cannot access the file") AndAlso _
+            If (ex.Message.StartsWith("The process cannot access the file") AndAlso
                     ex.Message.EndsWith("because it is being used by another process.")) Then
                 Stack.Add(Message)
             End If
@@ -46,9 +46,4 @@ Public Class Logger
         End Try
     End Sub
 
-   
-
-
-
 End Class
-

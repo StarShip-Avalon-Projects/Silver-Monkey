@@ -6,6 +6,7 @@ Imports System.IO
 Imports System.Text.RegularExpressions
 
 ' IniFile class used to read and write ini files by loading the file into memory
+<CLSCompliant(True)>
 Public Class IniFile
     ' List of IniSection objects keeps track of all the sections in the INI file
     Private m_sections As New Hashtable
@@ -25,7 +26,7 @@ Public Class IniFile
         If Not bMerge Then
             RemoveAllSections()
         End If
-        '  Clear the object... 
+        '  Clear the object...
         Dim tempsection As IniSection = Nothing
         Dim oReader As New StreamReader(sFileName)
         Dim regexcomment As New Regex("^([\s]*#.*)", (RegexOptions.Singleline Or RegexOptions.IgnoreCase))
@@ -41,7 +42,6 @@ Public Class IniFile
                     m = regexcomment.Match(line)
 
                     Debug.WriteLine(String.Format("Skipping Comment: {0}", m.Groups(0).Value))
-
 
                 ElseIf regexsection.Match(line).Success Then
                     m = regexsection.Match(line)
@@ -218,7 +218,7 @@ Public Class IniFile
         Return False
     End Function
 
-    ' IniSection class 
+    ' IniSection class
     Public Class IniSection
         '  IniFile IniFile object instance
         Private m_pIniFile As IniFile

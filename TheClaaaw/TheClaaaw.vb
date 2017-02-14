@@ -3,11 +3,18 @@ Imports Furcadia.Net
 
 Imports Furcadia.Base95
 
+''' <summary>
+'''
+''' </summary>
 Public Class TheClaaaw
     Implements Interfaces.msPlugin
 
     Private msHost As Interfaces.msHost
 
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="Host"></param>
     Public Sub Initialize(ByVal Host As Interfaces.msHost) Implements Interfaces.msPlugin.Initialize
         msHost = Host
     End Sub
@@ -137,7 +144,6 @@ Public Class TheClaaaw
         Return Not ObjectAtFeet(reader)
     End Function
 
-
     '(5:2000) use the object in the bots paws.
     Function UseObject(reader As TriggerReader) As Boolean
         Try
@@ -185,20 +191,20 @@ Public Class TheClaaaw
     Function MessagePump(ByRef ServerInstruction As String) As Boolean Implements SilverMonkey.Interfaces.msPlugin.MessagePump
         'Set Object At Feet
         If ServerInstruction.StartsWith("%") Then
-            Player = NametoFurre(msHost.BotName, True)
+            Player = NameToFurre(msHost.BotName, True)
             Player.FloorObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
             Page.Execute(2000, 2001)
             msHost.Player = Player
-            Furcadia.Net.DREAM.List(Player.ID) = Player
+            Dream.FurreList(Player) = Player
             ServerInstruction = ServerInstruction
             Return True
             'Set Object In Paws
         ElseIf ServerInstruction.StartsWith("^") Then
-            Player = NametoFurre(msHost.BotName, True)
+            Player = NameToFurre(msHost.BotName, True)
             Player.PawObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
             Page.Execute(2000, 2001)
             msHost.Player = Player
-            Furcadia.Net.DREAM.List(Player.ID) = Player
+            Dream.FurreList(Player) = Player
             ServerInstruction = ServerInstruction
             Return True
         End If
@@ -222,21 +228,27 @@ Public Class TheClaaaw
         Return p.ShortName = msHost.BotName.ToFurcShortName
     End Function
 
-    Private Function fIDtoFurre(ByRef ID As String) As FURRE
-        Dim Character As KeyValuePair(Of UInteger, FURRE)
-        For Each Character In Dream.List
-            If Character.Value.ID = CDbl(ID) Then
-                Return Character.Value
+    Private Function fIDtoFurre(ByRef ID As Integer) As FURRE
+
+        For Each Character As FURRE In Dream.FurreList
+            If Character.ID = ID Then
+                Return Character
             End If
         Next
     End Function
 
-    Public Function NametoFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="sname"></param>
+    ''' <param name="UbdateMSVariableName"></param>
+    ''' <returns></returns>
+    Public Function NameToFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
         Dim p As New FURRE
         p.Name = sname
-        For Each Character As KeyValuePair(Of UInteger, FURRE) In Dream.List
-            If Character.Value.ShortName = sname.ToFurcShortName Then
-                p = Character.Value
+        For Each Character As FURRE In Dream.FurreList
+            If Character.ShortName = sname.ToFurcShortName Then
+                p = Character
                 Exit For
             End If
         Next

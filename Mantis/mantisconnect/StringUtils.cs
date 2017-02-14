@@ -30,7 +30,7 @@ namespace SilverMonkey.BugTraqConnect
         /// This is to be called on fields that support multiline string after
         /// reading them from the webservice and before setting them in controls
         /// like textboxes.
-        /// 
+        ///
         /// <seealso cref="NativeMultilineToWebservice"/>
         /// </remarks>
         /// <param name="webserviceMultiline">The string in webservice format.</param>
@@ -44,9 +44,9 @@ namespace SilverMonkey.BugTraqConnect
         /// Converts a multiline string from native format to webservice format.
         /// </summary>
         /// <remarks>
-        /// This is to be called on fields that support multiline strings before 
+        /// This is to be called on fields that support multiline strings before
         /// sending them to the webservice.
-        /// 
+        ///
         /// <seealso cref="WebserviceMultilineToNative"/>
         /// </remarks>
         /// <param name="nativeMultiline"></param>

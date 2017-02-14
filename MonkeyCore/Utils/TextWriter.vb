@@ -2,29 +2,29 @@
 Imports System.Text
 Imports MonkeyCore.Controls
 
+<CLSCompliant(True)>
 Public Class TextBoxWriter
     Inherits System.IO.TextWriter
 
     Private control As TextBoxBase
     Private Builder As StringBuilder
 
-
     Delegate Sub UpDateBtn_GoCallback(ByRef s As String)
 
     Public Sub New(ByVal control As TextBox)
         Me.control = control
-        AddHandler control.HandleCreated, _
+        AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
     Public Sub New(ByVal control As RichTextBoxEx)
         Me.control = control
-        AddHandler control.HandleCreated, _
+        AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
 
     Public Sub New(ByVal control As RichTextBox)
         Me.control = control
-        AddHandler control.HandleCreated, _
+        AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
 
@@ -43,7 +43,6 @@ Public Class TextBoxWriter
     Public Shadows Sub WriteLine(ByVal s As String)
         Write(s + Environment.NewLine)
     End Sub
-
 
     Private Sub BufferText(ByRef s As String)
 
@@ -68,7 +67,7 @@ Public Class TextBoxWriter
         End If
     End Sub
 
-    Private Sub OnHandleCreated(ByVal sender As Object, _
+    Private Sub OnHandleCreated(ByVal sender As Object,
        ByVal e As EventArgs)
         If (Builder Is Nothing = False) Then
             control.AppendText(Builder.ToString())

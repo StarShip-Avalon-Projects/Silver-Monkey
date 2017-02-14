@@ -1,11 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
-using MonkeyCore;
-using System.Diagnostics;
+﻿using MonkeyCore;
 using SilverMonkey.BugTraqConnect;
+using System;
 using System.IO;
+using System.Windows.Forms;
 
-namespace SQLiteEditor
+namespace DataMonkey
 {
     public class Program
     {
@@ -13,7 +12,7 @@ namespace SQLiteEditor
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -24,8 +23,12 @@ namespace SQLiteEditor
         /// <summary>
         /// Handles the UnhandledException event of the CurrentDomain control.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="UnhandledExceptionEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="UnhandledExceptionEventArgs"/> instance containing the event data.
+        /// </param>
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception Ex = (Exception)e.ExceptionObject;
@@ -38,9 +41,6 @@ namespace SQLiteEditor
             // Application.Exit();
             if (SubmitError.ShowDialog() == DialogResult.OK)
                 File.Delete(logError.LogFile);
-
         }
     }
-
 }
-

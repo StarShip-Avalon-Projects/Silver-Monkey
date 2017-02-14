@@ -43,11 +43,15 @@ Public Class MS_Edit
         Public Function Compare(ByVal item1 As String, ByVal item2 As String) As Integer Implements IComparer(Of String).Compare
 
             Dim cat As New Regex("\((.[0-9]*?)\:(.[0-9]*?)\)")
-            Dim num1 As Integer = cat.Match(item1).Groups(1).ToString
-            Dim num2 As Integer = cat.Match(item2).Groups(1).ToString
-            Dim num3 As Integer = cat.Match(item1).Groups(2).ToString
-            Dim num4 As Integer = cat.Match(item2).Groups(2).ToString
+            Dim num1 As Integer = 0
+            Dim num2 As Integer = 0
+            Dim num3 As Integer = 0
+            Dim num4 As Integer = 0
 
+            Integer.TryParse(cat.Match(item1).Groups(1).Value, num1)
+            Integer.TryParse(cat.Match(item2).Groups(1).Value, num2)
+            Integer.TryParse(cat.Match(item1).Groups(2).Value, num3)
+            Integer.TryParse(cat.Match(item2).Groups(2).Value, num4)
 
             If num3 > num4 Then
                 If num1 > num2 Then Return 1
@@ -76,10 +80,15 @@ Public Class MS_Edit
             Dim item2 As ListViewItem = CType(y, ListViewItem)
 
             Dim cat As New Regex("\((.[0-9]*?)\:(.[0-9]*?)\)")
-            Dim num1 As Integer = cat.Match(item1.SubItems(0).Text).Groups(1).ToString.ToInteger
-            Dim num2 As Integer = cat.Match(item2.SubItems(0).Text).Groups(1).ToString.ToInteger
-            Dim num3 As Integer = cat.Match(item1.SubItems(0).Text).Groups(2).ToString.ToInteger
-            Dim num4 As Integer = cat.Match(item2.SubItems(0).Text).Groups(2).ToString.ToInteger
+            Dim num1 As Integer = 0
+            Dim num2 As Integer = 0
+            Dim num3 As Integer = 0
+            Dim num4 As Integer = 0
+
+            Integer.TryParse(cat.Match(item1.Text).Groups(1).Value, num1)
+            Integer.TryParse(cat.Match(item2.Text).Groups(1).Value, num2)
+            Integer.TryParse(cat.Match(item1.Text).Groups(2).Value, num3)
+            Integer.TryParse(cat.Match(item2.Text).Groups(2).Value, num4)
 
             If num3 > num4 Then
                 If num1 > num2 Then Return 1
@@ -129,7 +138,6 @@ Public Class MS_Edit
             End If
             Return CompareResult.Hidden
         End Function
-
 
     End Class
 
@@ -222,18 +230,15 @@ Public Class MS_Edit
         Return CType(FindControl(TabControl2.TabPages.Item(i), "edit"), FastColoredTextBox)
     End Function '+ TabControl2.SelectedIndex.ToString
 
-
 #End Region
 
 #Region "WmCpyDta"
-
 
     <DllImport("user32.dll", EntryPoint:="FindWindow")>
     Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
     End Function
     Public Declare Function SetFocusAPI Lib "user32.dll" Alias "SetFocus" (ByVal hWnd As Long) As Long
     Private Declare Function SetForegroundWindow Lib "user32" (ByVal hWnd As Long) As Long
-
 
     Private Declare Auto Function SendMessage Lib "user32" _
 (ByVal hWnd As IntPtr,
@@ -262,13 +267,10 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             Marshal.PtrToStructure(m.LParam(), [mystr2])
             ' If the size matches
             If mystr2.cdData = Marshal.SizeOf(GetType(MyData)) Then
-                ' Marshal the data from the unmanaged memory block to a 
+                ' Marshal the data from the unmanaged memory block to a
                 ' MyStruct managed struct.
                 Dim myStr As MyData = Nothing
                 Marshal.PtrToStructure(mystr2.lpData, [myStr])
-
-
-
 
                 Dim sName As String = myStr.lpName
                 Dim sFID As UInteger = myStr.fID
@@ -282,10 +284,8 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
                 'sName = ~DSEX~
                 'sFID = 0 "n/a"
-                'sTag = 
+                'sTag =
                 'sData = "path/Filename.ms"
-
-
 
                 Dim bName As String = ""
                 If sTag.StartsWith("-B=") Then
@@ -308,13 +308,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             MyBase.WndProc(m)
         End If
 
-
-
-
-
     End Sub
-
-
 
 #End Region
 
@@ -325,7 +319,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
     Private Sub GetTemplates()
         Try
             Dim p As String = Path.Combine(Paths.ApplicationPath, "Templates")
-
 
             ListBox3.BeginUpdate()
             TemplatePaths.Clear()
@@ -367,7 +360,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
             TemplatePathsMS.Clear()
             ListBox3.Items.Clear()
-
 
             p = Paths.MonKeySpeakEditorDocumentsTemplatesPath
             If Directory.Exists(p) Then
@@ -566,7 +558,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
     Public Sub CloseFirstTab()
 
-
         If WorkFileName(0) = "" And CanOpen(0) Then
             CloseTab(0)
             TabControl2.RePositionCloseButtons()
@@ -612,7 +603,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
                 End If
 
-
             End If
         Else
             AddNewEditorTab(f, p, TabControl2.TabPages.Count)
@@ -622,7 +612,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         SectionIdx(TabControl2.SelectedIndex) = 0
         SectionLstIdxOld = 0
         SectionLstIdx = 0
-
 
         WorkFileName(TabControl2.SelectedIndex) = f
         WorkPath(TabControl2.SelectedIndex) = p
@@ -683,16 +672,12 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             TabEditStyles(TabControl2.SelectedIndex) = EditStyles.none
         End If
 
-
         SetLineTabs(TabControl2.SelectedIndex)
         TabControl2.RePositionCloseButtons(TabControl2.SelectedTab)
         UpdateSegments()
         UpdateSegmentList()
         CloseFirstTab()
     End Sub
-
-
-
 
     Private Sub MS_Edit_Load(sender As Object, e As EventArgs) Handles Me.Load
         CallBk = Me
@@ -712,10 +697,7 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             BotName = My.Application.CommandLineArgs(0)
         End If
 
-
         DoubleBuffered = True
-
-
 
         Dim PluginFound As Boolean = False
         For Each s As String In FileIO.FileSystem.GetFiles(Paths.ApplicationPluginPath, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
@@ -751,14 +733,12 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                     items.Add(New DA_AUtoCompleteMenu(fields(2)))
                 End If
 
-
             Next
 
             AddNewTab(key, i.ToString, DSLines, Causes)
             DS_autoCompleteList.AddRange(items)
 
         Next
-
 
         For i As Integer = 1 To MS_KeyCount
             items.Clear()
@@ -775,7 +755,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
                     MSLines.Add(fields(2))
                     items.Add(New DA_AUtoCompleteMenu(fields(2)))
                 End If
-
 
             Next
 
@@ -857,7 +836,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         MS_FOOTER = MS_KeysIni.GetKeyValue("MS-General", "Footer")
     End Sub
 
-
     Public Function RegExEscapedSring(ByVal text As String) As String
         text = text.Replace("\", "\\")
         text = text.Replace(".", "\.")
@@ -921,8 +899,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 
     End Sub
 
-
-
     Private Sub TextInsert(ByRef LB As ListView, Optional ByVal Spaces As Integer = 0)
 
         If IsNothing(MS_Editor) Then Exit Sub
@@ -932,7 +908,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         MS_Editor.InsertText(insertText + vbCrLf)
         UpdateStatusBar()
     End Sub
-
 
     Private Sub ListCauses_DoubleClick(sender As Object, e As EventArgs)
         Dim lv As ListView = CType(sender, ListView)
@@ -950,7 +925,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
         End If
         TextInsert(lv, test)
     End Sub
-
 
     Private Sub ListCauses_MouseClick(sender As Object, e As EventArgs)
         Dim lv As ListView = CType(sender, ListView)
@@ -1078,7 +1052,6 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
             e.ChangedRange.SetStyle(DS_Num_Style, "([\-\+0-9#]+)")
             'clear folding markers
             ' sender.Range.ClearFoldingMarkers()
-
 
         ElseIf TabEditStyles(TabControl2.SelectedIndex) = EditStyles.ms Then
             s.CommentPrefix = "*"
@@ -1428,7 +1401,6 @@ InputBox("What line within the document do you want to send the cursor to?",
         End If
     End Sub
 
-
     Private Sub RemoveCommentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveCommentToolStripMenuItem.Click, BtnUncomment.Click
         RemoveComment()
     End Sub
@@ -1443,7 +1415,7 @@ InputBox("What line within the document do you want to send the cursor to?",
     Dim lisView As Integer = 1
 
     Private Sub BtnFind_Click(sender As Object, e As EventArgs) Handles BtnFind.Click
-        'Reset the starting index to Zero as the Search has changed   
+        'Reset the starting index to Zero as the Search has changed
 
         Dim Test2 As Boolean = False
 
@@ -1478,13 +1450,11 @@ InputBox("What line within the document do you want to send the cursor to?",
                     Dim ItemStr As String = .Items(i).SubItems(0).Text
                     If ItemStr.Trim.ToLower.Contains(TxtBxFind.Text.Trim.ToLower) Then
 
-
                         Dim tmp As ListViewItem = .Items(i)
                         'Debug.Print(i.ToString() + ":" + TxtBxFind.Text.ToLower + ":" + .Items(i).SubItems(0).Text + ":" + .Items(i).Text)
                         'Debug.Print(tmp.Text)
 
                         tbc.SelectedTab = tbc.TabPages.Item(lis - 1)
-
 
                         .Items(i).EnsureVisible()
                         .Items(i).BackColor = Color.Blue
@@ -1576,7 +1546,6 @@ InputBox("What line within the document do you want to send the cursor to?",
         End SyncLock
     End Sub
 
-
     Private Sub MS_EditRightClick(sender As Object, e As MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             EditMenu.Show(MS_Editor, New Point(e.X, e.Y))
@@ -1624,7 +1593,6 @@ InputBox("What line within the document do you want to send the cursor to?",
             'Templates
             SplitContainer5.Panel1Collapsed = True
             SplitContainer5.Panel2Collapsed = False
-
 
             ListBox2.Location = New Point(5, 3)
             ListBox2.Size = New Size(99, 147)
@@ -1815,7 +1783,7 @@ InputBox("What line within the document do you want to send the cursor to?",
         Dim bypass As Boolean = False
         Dim t1 As String = ""
         Dim blank As Boolean = False
-        'Dim TabSections As List(Of Dictionary(Of String, TDSSegment)) 
+        'Dim TabSections As List(Of Dictionary(Of String, TDSSegment))
         If Not IsNothing(TabSections) Then TabSections(idx).Clear()
 
         'Build from the basics
@@ -1903,7 +1871,6 @@ InputBox("What line within the document do you want to send the cursor to?",
                 Else
                     .Items.Add(TabSections(idx)(i).Title)
                 End If
-
 
             Next
         End With
@@ -2036,7 +2003,6 @@ InputBox("What line within the document do you want to send the cursor to?",
         DisplaySection(i - 1)
         SectionChange = True
 
-
     End Sub
 
     Private Sub BtnSectionUp_Click(sender As Object, e As EventArgs) Handles BtnSectionUp.Click
@@ -2086,7 +2052,6 @@ InputBox("What line within the document do you want to send the cursor to?",
 
     End Sub
 
-
     Private Sub ListBox2_MouseDown(sender As Object, e As MouseEventArgs) Handles ListBox2.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Right Then
             ListBox2.SelectedIndex = ListBox2.IndexFromPoint(New Point(e.X, e.Y))
@@ -2134,7 +2099,6 @@ InputBox("What line within the document do you want to send the cursor to?",
             End If
         End If
     End Sub
-
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         SplitContainer3.Panel1Collapsed = True
@@ -2224,7 +2188,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
     End Sub
 
-
     Private Sub RenameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RenameToolStripMenuItem.Click
         If ListBox1.Items.Count = 0 Then Exit Sub
         Dim idx As Integer = ListBox1.SelectedIndex
@@ -2235,7 +2198,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         UpdateSegmentList()
         ListBox1.SelectedIndex = idx
     End Sub
-
 
     Private Sub BtnTemplateAddMS_Click(sender As Object, e As EventArgs) Handles BtnTemplateAddMS.Click, MSTemplateMenuAdd.Click
 
@@ -2260,7 +2222,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
             ListBox3.Items.RemoveAt(ListBox3.SelectedIndex)
         End If
     End Sub
-
 
     Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs) Handles MSTemplateRename.Click
         Dim s As String = InputBox("New Name?")

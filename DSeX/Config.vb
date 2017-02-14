@@ -4,8 +4,6 @@ Imports System.Drawing
 Imports Furcadia.IO
 Imports MonkeyCore.Settings
 
-
-
 Public Class Config
 
     Dim CurrentListBox As ListBox
@@ -21,7 +19,6 @@ Public Class Config
 
         MS_Edit.EditSettings.AutoCompleteEnable = ChkBxAutoComplete.Checked
         ' MS_Edit.AutocompleteMenu1.Enabled = ChkBxAutoComplete.Checked
-
 
         MS_Edit.EditSettings.CommentColor = CommentPictureBox.BackColor
         MS_Edit.EditSettings.StringColor = StringPictureBox.BackColor
@@ -58,8 +55,6 @@ Public Class Config
             MS_Edit.Reset()
         End If
 
-
-
         Me.Dispose()
 
     End Sub
@@ -77,7 +72,6 @@ Public Class Config
             item.Checked = MS_Edit.EditSettings.PluginList.Item(fname.Replace(" ", ""))
         Next
 
-
     End Sub
 
     Private Sub Config_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -94,7 +88,6 @@ Public Class Config
     End Sub
 
     Public Sub Loadconfig()
-
 
         'Editor
 
@@ -137,7 +130,6 @@ Public Class Config
         My.Settings.ConfigSelectedTab = t.SelectedIndex
     End Sub
 
-
     Public Sub GetColor(ByRef ColorBX As System.Windows.Forms.PictureBox)
         Dim dlg As New ColorDialog
         dlg.Color = ColorBX.BackColor
@@ -146,7 +138,7 @@ Public Class Config
         End If
     End Sub
 
-    Private Sub CommentPictureBox_Click(sender As System.Object, e As System.EventArgs) Handles CommentPictureBox.Click, StringPictureBox.Click, NumberPictureBox.Click, VariablePictureBox.Click, IDPictureBox.Click, StringVariableClrBx.Click, _
+    Private Sub CommentPictureBox_Click(sender As System.Object, e As System.EventArgs) Handles CommentPictureBox.Click, StringPictureBox.Click, NumberPictureBox.Click, VariablePictureBox.Click, IDPictureBox.Click, StringVariableClrBx.Click,
                                                                                         MS_CommentPictureBox.Click, MS_StringPictureBox.Click, MS_NumberPictureBox.Click, MS_VariablePictureBox.Click, MS_IDPictureBox.Click
         GetColor(CType(sender, PictureBox))
     End Sub
@@ -199,7 +191,6 @@ Public Class Config
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ListBox2.SelectedIndexChanged, ListBox1.SelectedIndexChanged
         CurrentListBox = CType(sender, ListBox)
     End Sub
-
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 

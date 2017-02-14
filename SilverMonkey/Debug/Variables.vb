@@ -1,6 +1,5 @@
 ﻿Imports System.Windows.Forms
 
-
 Public Class Variables
 
     Private alarm As Threading.Timer
@@ -13,7 +12,6 @@ Public Class Variables
 
     End Sub
 
-
     Public Sub updateVariables()
 
         If ListView1.InvokeRequired Then
@@ -21,12 +19,10 @@ Public Class Variables
             ListView1.Invoke(d)
         Else
 
-
-
             SyncLock Lock
 
-                For i As Integer = 0 To MainMSEngine.MSpage.Scope.Count - 1
-                    Dim Var As Monkeyspeak.Variable = MainMSEngine.MSpage.Scope.Item(i)
+                For i As Integer = 0 To FurcSession.MainEngine.MSpage.Scope.Count - 1
+                    Dim Var As Monkeyspeak.Variable = FurcSession.MainEngine.MSpage.Scope.Item(i)
 
                     Dim Variable() As String = {"", "", ""}
                     Variable(0) = Var.Name.ToString
@@ -37,7 +33,6 @@ Public Class Variables
                     Dim itm As ListViewItem = New ListViewItem(Variable)
                     If ListView1.Items.Count > i Then
 
-
                         If ListView1.Items.Item(i).SubItems(2).Text <> itm.SubItems.Item(2).Text Then
                             ListView1.Items.Item(i) = itm
                         End If
@@ -45,7 +40,6 @@ Public Class Variables
                     Else
                         ListView1.Items.Add(itm)
                     End If
-
 
                     '  ListView1.Groups.
 
@@ -73,7 +67,6 @@ Public Class Variables
         updateVariables()
     End Sub
 
-
     Private Sub ListView1_DoubleClick(sender As Object, e As System.EventArgs) Handles ListView1.DoubleClick
         With SetVariables
             Try
@@ -86,6 +79,5 @@ Public Class Variables
 
         End With
     End Sub
-
 
 End Class

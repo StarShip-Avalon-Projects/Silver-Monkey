@@ -10,13 +10,12 @@ Namespace PhoenixSpeak
     ''' <para>Checks and executes Basic PhoenixSpeak response triggers</para>
     ''' </summary>
     Public Class MsPhoenixSpeak
-        Inherits Libraries.AbstractBaseLibrary
-        Private writer As TextBoxWriter = Nothing
+        Inherits MonkeySpeakLibrary
 
-        Private WithEvents SubSys As New SubSystem
+        Private WithEvents SubSys As New SubSystem(MyDream, MyPlayer)
 
-        Public Sub New()
-            writer = New TextBoxWriter(Variables.TextBox1)
+        Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
+            MyBase.New(Dream, Player, MsEngine)
             Add(TriggerCategory.Cause, 80,
         Function()
             Return True
@@ -69,9 +68,7 @@ Namespace PhoenixSpeak
             Add(TriggerCategory.Effect, 96, AddressOf PSForgetFurreNamed, "(5:96) Forget ALL Phoenix Speak info for the furre named {...}.")
             Add(TriggerCategory.Effect, 97, AddressOf PSForgetDream, "(5:97) Forget ALL Phoenix Speak info for this dream.")
 
-
         End Sub
-
 
         '(0:17) When someone whispers something with {...} in it,
         Function msgContains(reader As TriggerReader) As Boolean
@@ -81,11 +78,11 @@ Namespace PhoenixSpeak
                 'Debug.Print("msgContains Begin Execution")
                 msMsg = reader.ReadString()
                 'Debug.Print("msMsg = " & msMsg)
-                msg = MainMSEngine.MSpage.GetVariable("MESSAGE").Value.ToString
+                msg = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE").Value.ToString
                 'Debug.Print("Msg = " & msg)
                 Return msg.Contains(msMsg)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
         End Function
@@ -94,12 +91,12 @@ Namespace PhoenixSpeak
             Try
                 Dim msMsg As String = reader.ReadString()
                 'Debug.Print("msMsg = " & msMsg)
-                Dim msg As Monkeyspeak.Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Monkeyspeak.Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE")
                 'Debug.Print("Msg = " & msg.Value.ToString)
                 If msg.Value.ToString.Contains(msMsg) Then Return False
                 Return True
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
         End Function
@@ -107,11 +104,11 @@ Namespace PhoenixSpeak
         Public Function msgIs(reader As TriggerReader) As Boolean
             Try
                 Dim msMsg As String = reader.ReadString()
-                Dim msg As Monkeyspeak.Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Monkeyspeak.Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE")
                 If msMsg = msg.Value.ToString Then Return True
                 Return False
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
         End Function
@@ -119,11 +116,11 @@ Namespace PhoenixSpeak
         Function msgIsNot(reader As TriggerReader) As Boolean
             Try
                 Dim msMsg As String = reader.ReadString()
-                Dim msg As Monkeyspeak.Variable = MainMSEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Monkeyspeak.Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE")
                 If msMsg <> msg.Value.ToString Then Return True
                 Return False
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
         End Function
@@ -131,10 +128,10 @@ Namespace PhoenixSpeak
         '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
         Function RemberPSInforTrigFurre(reader As TriggerReader) As Boolean
             Try
-                Dim furre As String = callbk.Player.ShortName
-                SubSys.sendServer("ps set characer." + furre + ".*")
+                Dim furre As String = MyPlayer.ShortName
+                sendServer("ps set characer." + furre + ".*")
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -143,9 +140,9 @@ Namespace PhoenixSpeak
         Function RemberPSInforFurreNamed(reader As TriggerReader) As Boolean
             Try
                 Dim furre As String = reader.ReadString
-                SubSys.sendServer("ps get characer." + furre + ".*")
+                sendServer("ps get characer." + furre + ".*")
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -153,9 +150,9 @@ Namespace PhoenixSpeak
         '(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.
         Function RemberPSInfoAllDream(reader As TriggerReader) As Boolean
             Try
-                SubSys.sendServer("ps get dream.*")
+                sendServer("ps get dream.*")
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -163,9 +160,9 @@ Namespace PhoenixSpeak
         '(5:63) get all Phoenix Speak info for all characters and put it into the PSInfo cache.
         Function RemberPSInfoAllCharacters(reader As TriggerReader) As Boolean
             Try
-                SubSys.sendServer("ps get character.*")
+                sendServer("ps get character.*")
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -175,14 +172,14 @@ Namespace PhoenixSpeak
             Try
                 Dim Info As New PhoenixSpeak.Variable(reader.ReadString())
                 Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
-                If SubSystem.PSInfoCache.Contains(Info) Then
+                If SubSys.PSInfoCache.Contains(Info) Then
                     var = Info
                 Else
                     var.Value = Nothing
                 End If
                 Return True
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
         End Function
@@ -192,12 +189,12 @@ Namespace PhoenixSpeak
             Try
                 Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
                 Dim L As New List(Of String)
-                For Each Name As PhoenixSpeak.Variable In SubSystem.PSInfoCache
+                For Each Name As PhoenixSpeak.Variable In SubSys.PSInfoCache
                     L.Add(Name.Name)
                 Next
                 Var.Value = String.Join(" ", L)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -207,9 +204,9 @@ Namespace PhoenixSpeak
             Try
                 Dim info As String = reader.ReadString
                 Dim furre As String = reader.ReadString
-                SubSys.sendServer("ps set characer." + furre + "." + info)
+                sendServer("ps set characer." + furre + "." + info)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -219,9 +216,9 @@ Namespace PhoenixSpeak
             Try
                 Dim info As String = reader.ReadString
                 Dim furre As String = reader.ReadString
-                SubSys.sendServer("ps clear characer." + furre + "." + info)
+                sendServer("ps clear characer." + furre + "." + info)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -230,10 +227,10 @@ Namespace PhoenixSpeak
         Function MemorizeTrigFurrePS(reader As TriggerReader) As Boolean
             Try
                 Dim info As String = reader.ReadString
-                Dim furre As String = callbk.Player.ShortName
-                SubSys.sendServer("ps set characer." + furre + "." + info)
+                Dim furre As String = MyPlayer.ShortName
+                sendServer("ps set characer." + furre + "." + info)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -242,10 +239,10 @@ Namespace PhoenixSpeak
         Function ForgetTrigFurrePS(reader As TriggerReader) As Boolean
             Try
                 Dim info As String = reader.ReadString
-                Dim furre As String = callbk.Player.ShortName
-                SubSys.sendServer("ps clear characer." + furre + "." + info)
+                Dim furre As String = MyPlayer.ShortName
+                sendServer("ps clear characer." + furre + "." + info)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -255,9 +252,9 @@ Namespace PhoenixSpeak
         Function MemorizeDreamPS(reader As TriggerReader) As Boolean
             Try
                 Dim info As String = reader.ReadString
-                SubSys.sendServer("ps set dream." + info)
+                sendServer("ps set dream." + info)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -266,22 +263,21 @@ Namespace PhoenixSpeak
         Function ForgetDreamPS(reader As TriggerReader) As Boolean
             Try
                 Dim info As String = reader.ReadString
-                SubSys.sendServer("ps clear dream." + info)
+                sendServer("ps clear dream." + info)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
         End Function
 
-
         '(5:94) execute Phoenix Speak command {...}.
         Function PSCommand(reader As TriggerReader) As Boolean
             Try
                 Dim info As String = reader.ReadString
-                SubSys.sendServer("ps " + info)
+                sendServer("ps " + info)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -289,9 +285,9 @@ Namespace PhoenixSpeak
 
         Function PSForgetTriggeringFurre(reader As TriggerReader) As Boolean
             Try
-                SubSys.sendServer("ps clear character." + callbk.Player.ShortName)
+                sendServer("ps clear character." + MyPlayer.ShortName)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -300,9 +296,9 @@ Namespace PhoenixSpeak
         Function PSForgetFurreNamed(reader As TriggerReader) As Boolean
             Try
                 Dim Furre As String = reader.ReadString
-                SubSys.sendServer("ps clear character. " + Furre)
+                sendServer("ps clear character. " + Furre)
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -310,15 +306,13 @@ Namespace PhoenixSpeak
 
         Function PSForgetDream(reader As TriggerReader) As Boolean
             Try
-                SubSys.sendServer("ps clear dream ")
+                sendServer("ps clear dream ")
             Catch ex As Exception
-                MainMSEngine.LogError(reader, ex)
+                MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
         End Function
-
-
 
     End Class
 End Namespace

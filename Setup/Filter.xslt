@@ -8,9 +8,7 @@
     <xsl:template match="wix:ComponentRef[key('exe-search', @Id)]" />
     <xsl:template match="wix:File[contains(@Source,'\SilverMonkey.exe')]">
       <xsl:copy>
-        <xsl:apply-templates select="@*|node()"/>
+        <xsl:apply-templates select="@*|node()" />
        </xsl:copy>
     </xsl:template>
-
 </xsl:stylesheet>
-

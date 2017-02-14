@@ -112,7 +112,7 @@ namespace SilverMonkey.BugTraqConnect
         /// <returns>The enumeration label.</returns>
         public string this[int id]
         {
-            get 
+            get
             {
                 string name;
 
@@ -130,9 +130,9 @@ namespace SilverMonkey.BugTraqConnect
         /// </summary>
         /// <param name="name">The enumeration value name.</param>
         /// <returns>The enumeration code.</returns>
-        public int this [string name]
+        public int this[string name]
         {
-            get 
+            get
             {
                 int id;
 
@@ -168,7 +168,7 @@ namespace SilverMonkey.BugTraqConnect
             {
                 labels[i++] = label;
             }
-            
+
             return labels;
         }
 

@@ -77,7 +77,7 @@
     <Prefer32Bit>False</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>SQLiteEditor.Program</StartupObject>
+    <StartupObject>DataMonkey.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

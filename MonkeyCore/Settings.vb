@@ -3,11 +3,10 @@ Imports System.Drawing
 Imports System.Windows.Forms
 Imports System.IO
 
-
 'Structure Data (Main Settings, Individual Program Groups)
 'Read Master settings.ini
 'read keys.ini/MS_keys.ini for MS Editor/Bot default settings ie Default MonkeySpeak file
-' Write default monkey Speak file for bot.
+' Write default Monkey Speak file for bot.
 'Read Bot MonkeySpeak File
 
 'Default Sqlite Database Tables SQL Syntax.
@@ -17,12 +16,11 @@ Imports System.IO
 ' User Specified Key/Value pairs
 ' Phoenix Speak Backup Tables
 
+<CLSCompliant(True)>
 Public Class Settings
 
     Private Const FurcadiaPath As String = "Furcadia"
     Private Const Main_Host As String = "lightbringer.Furcadia.com"
-
-
 
     Private Const SettingFile As String = "Settings.Ini"
     Private Const MainSection As String = "Main"
@@ -31,11 +29,13 @@ Public Class Settings
     Private Const DragonSpeak As String = "DragonSpeak"
 
     Private Shared _ini As New IniFile
+    ''' <summary>
+    '''
+    ''' </summary>
     Private Shared _KeysIni As New IniFile
     Private Shared _MS_KeysIni As New IniFile
 
     Private Shared SettingsFile As String = Path.Combine(Paths.ApplicationSettingsPath, SettingFile)
-
 
     Private Shared _PluginList As New Dictionary(Of String, Boolean)
 
@@ -60,6 +60,10 @@ Public Class Settings
         End Set
     End Property
 
+    ''' <summary>
+    ''' System to load Key.ini for Dragon Speak Settings
+    ''' </summary>
+    ''' <returns></returns>
     Public Shared Property KeysIni As IniFile
         Get
 
@@ -70,6 +74,10 @@ Public Class Settings
         End Set
     End Property
 
+    ''' <summary>
+    ''' Loads Key.ini file for Monkey Speak display
+    ''' </summary>
+    ''' <returns></returns>
     Public Shared Property MS_KeysIni As IniFile
         Get
             Return _MS_KeysIni
@@ -79,6 +87,7 @@ Public Class Settings
         End Set
     End Property
 
+    <CLSCompliant(True)>
     Public Class EditSettings
 
         Private _FurcPath As String
@@ -101,6 +110,11 @@ Public Class Settings
 
         Private KeysIni As IniFile = Settings.KeysIni
         Private MS_KeysIni As IniFile = Settings.MS_KeysIni
+
+        ''' <summary>
+        ''' Furcadia Application folder
+        ''' </summary>
+        ''' <returns></returns>
         Public Property FurcPath As String
             Get
                 If String.IsNullOrEmpty(_FurcPath) Then
@@ -280,8 +294,6 @@ Public Class Settings
                 ini.Load(SettingsFile, True)
             End If
 
-
-
             'Dragon Speak
             _IDcolor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "IDColor"))
             _CommentColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "CommentColor"))
@@ -350,8 +362,7 @@ Public Class Settings
 
     End Class
 
-
-
+    <CLSCompliant(True)>
     Public Class cMain
         Private SettingsFile As String = Path.Combine(Paths.ApplicationSettingsPath, SettingFile)
         Private _sPort As Integer = 6500
@@ -360,7 +371,6 @@ Public Class Settings
 
         Private _CloseProc As Boolean = False
         Private _reconnectMax As Integer = 10
-
 
         Private _debug As Boolean = False
         Private _TimeStamp As UShort = 0
@@ -398,7 +408,6 @@ Public Class Settings
             End Set
         End Property
 
-
         Public Property CloseProc As Boolean
             Get
                 Return _CloseProc
@@ -415,7 +424,6 @@ Public Class Settings
                 _AppFont = value
             End Set
         End Property
-
 
         Public Property EmitColor() As Color
             Get
@@ -466,7 +474,6 @@ Public Class Settings
             End Set
         End Property
 
-
         Public Property ReconnectMax() As Integer
             Get
                 Return _reconnectMax
@@ -484,7 +491,6 @@ Public Class Settings
                 _sPort = value
             End Set
         End Property
-
 
         Public Property Host() As String
             Get
@@ -513,7 +519,6 @@ Public Class Settings
                 _TT_TimeOut = value
             End Set
         End Property
-
 
         Public Property debug() As Boolean
             Get
@@ -616,8 +621,6 @@ Public Class Settings
                 _DisconnectPopupToggle = value
             End Set
 
-
-
         End Property
         Private _PSShowMainWindow As Boolean = True
         Public Property PSShowMainWindow As Boolean
@@ -671,8 +674,6 @@ Public Class Settings
             s = ini.GetKeyValue("Main", "AutoCloseProc")
             If Not String.IsNullOrEmpty(s) Then _CloseProc = Convert.ToBoolean(s)
 
-
-
             s = ini.GetKeyValue("Main", "Debug")
             If Not String.IsNullOrEmpty(s) Then _debug = Convert.ToBoolean(s)
 
@@ -719,7 +720,6 @@ Public Class Settings
             If Not String.IsNullOrEmpty(s) Then
                 Integer.TryParse(s, _ConnectTimeOut)
             End If
-
 
             s = ini.GetKeyValue("Main", "SysTray")
             If Not String.IsNullOrEmpty(s) Then
@@ -874,8 +874,6 @@ Public Class Settings
             End Set
         End Property
 
-
-
         Public Property AutoConnect As Boolean
             Get
                 Return _AutoConnect
@@ -903,7 +901,6 @@ Public Class Settings
                 _lPort = value
             End Set
         End Property
-
 
         ''' <summary>
         ''' Gets or sets the Character ini file.
@@ -937,7 +934,6 @@ Public Class Settings
                 _MS_Engine_Enable = value
             End Set
         End Property
-
 
         ''' <summary>
         ''' Gets or sets the m s_ file.
@@ -994,7 +990,6 @@ Public Class Settings
             End Set
         End Property
 
-
         Public Sub New()
 
         End Sub
@@ -1021,7 +1016,6 @@ Public Class Settings
 
             s = BotIni.GetKeyValue("Main", "LogNamePath")
             If Not String.IsNullOrEmpty(s) Then _logPath = s
-
 
             s = BotIni.GetKeyValue("Bot", "BotIni")
             If Not String.IsNullOrEmpty(s) Then _IniFile = s
@@ -1102,7 +1096,6 @@ Public Class Settings
             End Set
         End Property
 
-
         Public Property HttpPassword As String
             Get
                 Return _HttpPassword
@@ -1168,7 +1161,6 @@ Public Class Settings
             End If
 
         End Sub
-
 
         Public Sub SaveSettings()
             ' Lets Read local appData Settings.ini for  last used Settings as other programs use the file too

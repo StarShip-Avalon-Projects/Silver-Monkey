@@ -44,7 +44,6 @@ Public Class PluginServices
 
         'Return all plugins found
 
-
         If Plugins.Count > 0 Then
             Return Plugins
         Else

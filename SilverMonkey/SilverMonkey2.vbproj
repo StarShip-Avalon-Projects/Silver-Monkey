@@ -58,6 +58,7 @@
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <DocumentationFile>SilverMonkey.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -77,6 +78,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>SecurityRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <DocumentationFile>SilverMonkey.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -153,9 +155,10 @@
     <Compile Include="Debug\SetVariables.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Engine\BaseClasses\BaseSubSystem.vb" />
+    <Compile Include="Engine\MonkeySpeakLibrary.vb" />
     <Compile Include="Engine\MS Repq.vb" />
     <Compile Include="Engine\MS Verbot.vb" />
-    <Compile Include="Engine\PS Pre-Processor\DataBaseTools.vb" />
     <Compile Include="Engine\PS Pre-Processor\SubSystem.vb" />
     <Compile Include="Engine\PS Pre-Processor\DatabaseSystem.vb" />
     <Compile Include="Engine\PS Pre-Processor\PhoenixSpeakVariable.vb" />
@@ -229,7 +232,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SessionHandler\DreamSession.vb" />
     <Compile Include="SessionHandler\FurcadiaSession.vb" />
     <Compile Include="Settings.vb" />
     <Compile Include="Debug\Variables.Designer.vb">
@@ -376,9 +378,9 @@
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyspeakR6\MonkeyspeakR6.csproj">
+    <ProjectReference Include="..\MonkeySpeakR6\MonkeySpeakEx.csproj">
       <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
-      <Name>MonkeyspeakR6</Name>
+      <Name>MonkeySpeakEx</Name>
     </ProjectReference>
     <ProjectReference Include="..\Verbot5Library\Verbot5Library.csproj">
       <Project>{4D25B13B-4D67-433F-9181-BF5FDFA931B6}</Project>

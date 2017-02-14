@@ -26,7 +26,7 @@ namespace SilverMonkey.BugTraqConnect
 	/// any other configs that are not considered private.  Using this class the client
 	/// will not be able to retrieve sensitive information from the webservice, like
 	/// passwords, database names, host names, ...etc.
-	/// 
+	///
 	/// This class also provides the necessary caching to avoid unnecessary round trips
 	/// to the server.  Caching is feasible in this class due to the static nature of
 	/// these configs.

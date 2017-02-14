@@ -1,8 +1,13 @@
-﻿Public Class Utils
+﻿''' <summary>
+''' General Utility functions we haven't found a home for yet
+''' </summary>
+<CLSCompliant(True)>
+Public Class Utils
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
+    <CLSCompliant(True)>
     <Serializable>
     Public Enum fColorEnum
         DefaultColor = 0
@@ -47,8 +52,12 @@
         Return test
     End Function
 
-
     'DateTime functions
+    ''' <summary>
+    ''' Converts a number representing a Unix Time stamp and converts it to a usable DateTime format
+    ''' </summary>
+    ''' <param name="unixTimeStamp"></param>
+    ''' <returns>DataTime</returns>
     Public Shared Function UnixTimeStampToDateTime(ByRef unixTimeStamp As Double) As DateTime
         ' Unix timestamp is seconds past epoch
         Dim dtDateTime As System.DateTime = New DateTime(1970, 1, 1, 0, 0, 0, 0)

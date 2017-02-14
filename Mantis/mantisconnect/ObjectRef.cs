@@ -21,12 +21,12 @@ namespace SilverMonkey.BugTraqConnect
 	/// A class that is used on entites to reference other entities.
 	/// </summary>
 	/// <remarks>
-	/// An example is where an issue refers to the project is belongs to.  In some cases it can know 
+	/// An example is where an issue refers to the project is belongs to.  In some cases it can know
 	/// the id, in others, the name, or sometimes both.
 	/// </remarks>
     [Serializable]
     public sealed class ObjectRef
-	{
+    {
         /// <summary>
         /// The object ref id.
         /// </summary>
@@ -51,10 +51,10 @@ namespace SilverMonkey.BugTraqConnect
         /// <param name="id">Id of the entity referenced</param>
         /// <param name="name">Name of the entity referenced.</param>
 		public ObjectRef(int id, string name)
-		{
+        {
             this.Id = id;
             this.Name = name;
-		}
+        }
 
         /// <summary>
         /// Constructor from webservice object ref object.
@@ -140,5 +140,5 @@ namespace SilverMonkey.BugTraqConnect
         {
             return string.Format("{0}:{1}", this.Id, this.Name);
         }
-	}
+    }
 }

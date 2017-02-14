@@ -90,9 +90,6 @@ Public Class NewBott
             Exit Sub
         End If
 
-        If bFile.log Then
-            callbk.LogStream = New LogStream(callbk.setLogName(bFile), bFile.LogPath)
-        End If
         bFile.SaveBotSettings()
         Main.SaveRecentFile(bFile.BiniFile)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
@@ -309,7 +306,6 @@ Public Class NewBott
 
     End Sub
 
-
     Private Sub SetForm(Index As Integer)
 
         Select Case Index
@@ -345,7 +341,6 @@ Public Class NewBott
                 Throw New InvalidDataException("Invalid Wizard Form index")
         End Select
 
-
     End Sub
 
     'Button Previous
@@ -355,7 +350,6 @@ Public Class NewBott
         WizIndex -= 1
         SetForm(WizIndex)
     End Sub
-
 
     'Button Next
     Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click

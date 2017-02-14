@@ -22,7 +22,7 @@ namespace SilverMonkey.BugTraqConnect
 	/// </summary>
     [Serializable]
     public sealed class IssueRelationship
-	{
+    {
         /// <summary>
         /// The relationship type.
         /// </summary>
@@ -38,10 +38,10 @@ namespace SilverMonkey.BugTraqConnect
         /// </summary>
         /// <param name="relationshipData">Relationship data in webservice proxy type.</param>
 		internal IssueRelationship(MantisConnectWebservice.RelationshipData relationshipData)
-		{
-			this.Type = new ObjectRef(relationshipData.type);
-			this.IssueId = Convert.ToInt32(relationshipData.target_id);
-		}
+        {
+            this.Type = new ObjectRef(relationshipData.type);
+            this.IssueId = Convert.ToInt32(relationshipData.target_id);
+        }
 
         /// <summary>
         /// Converts an array of relationships from webservice proxy type to this type.
@@ -49,30 +49,30 @@ namespace SilverMonkey.BugTraqConnect
         /// <param name="relationshipsData">Relationships data.</param>
         /// <returns>An array of relationships in this type.</returns>
 		internal static IssueRelationship[] ConvertArray(MantisConnectWebservice.RelationshipData[] relationshipsData)
-		{
+        {
             if (relationshipsData == null)
             {
                 return null;
             }
 
-			IssueRelationship[] relationships = new IssueRelationship[relationshipsData.Length];
+            IssueRelationship[] relationships = new IssueRelationship[relationshipsData.Length];
 
             for (int i = 0; i < relationshipsData.Length; ++i)
             {
                 relationships[i] = new IssueRelationship(relationshipsData[i]);
             }
 
-			return relationships;
-		}
+            return relationships;
+        }
 
         /// <summary>
         /// Gets or sets the relationship type.
         /// </summary>
 		public ObjectRef Type
-		{
-			get { return this.type; }
-			set { this.type = value; }
-		}
+        {
+            get { return this.type; }
+            set { this.type = value; }
+        }
 
         /// <summary>
         /// Gets or sets the issue id of the other issues involved in the relationship.  Note
@@ -81,9 +81,9 @@ namespace SilverMonkey.BugTraqConnect
         /// </summary>
         /// <value>Greater than or equal to 1.</value>
 		public int IssueId
-		{
-			get { return this.issueId; }
-			set { this.issueId = value; }
-		}
-	}
+        {
+            get { return this.issueId; }
+            set { this.issueId = value; }
+        }
+    }
 }

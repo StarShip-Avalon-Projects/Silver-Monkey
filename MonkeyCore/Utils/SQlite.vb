@@ -22,7 +22,9 @@ Public Class SQLiteSyntaxException
     End Sub
 End Class
 
-
+''' <summary>
+''' Monkey Systems generic interface to System.Data.Sqlite
+''' </summary>
 Public Class SQLiteDatabase
 
     Private Const SyncPragma As String = "PRAGMA encoding = ""UTF-16""; " 'PRAGMA synchronous=0;
@@ -67,7 +69,6 @@ Public Class SQLiteDatabase
         CreateTbl("SettingsTable", "[ID] INTEGER UNIQUE,[SettingsID] INTEGER UNIQUE, [Setting] TEXT, [Value] TEXT")
     End Sub
 
-
     '''<Summary>
     '''    Create a Table with Titles
     ''' </Summary>
@@ -77,7 +78,7 @@ Public Class SQLiteDatabase
             Using SQLcommand As SQLiteCommand = SQLconnect.CreateCommand
                 SQLconnect.Open()
                 'SQL query to Create Table
-                ' [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT, 
+                ' [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT,
                 SQLcommand.CommandText = SyncPragma + "CREATE TABLE IF NOT EXISTS " & Table & "( " & Titles & " );"
                 SQLcommand.ExecuteNonQuery()
             End Using
@@ -100,6 +101,11 @@ Public Class SQLiteDatabase
         dbConnection = str
     End Sub
 
+    ''' <summary>
+    ''' gets all table column name in a string
+    ''' </summary>
+    ''' <param name="tableName"></param>
+    ''' <returns></returns>
     Private Function getAllColumnName(ByVal tableName As String) As String
         Dim sql As String = SyncPragma + "SELECT * FROM " & tableName
         Dim columnNames As New List(Of String)
@@ -120,10 +126,24 @@ Public Class SQLiteDatabase
         GC.WaitForFullGCComplete()
         Return String.Join(",", columnNames.ToArray)
     End Function
+
+    ''' <summary>
+    ''' Does the Column name exist in the specified table
+    ''' </summary>
+    ''' <param name="columnName"></param>
+    ''' <param name="tableName"></param>
+    ''' <returns></returns>
     Public Function isColumnExist(ByVal columnName As String, ByVal tableName As String) As Boolean
         Dim columnNames As String = getAllColumnName(tableName)
         Return columnNames.Contains(columnName)
     End Function
+
+    ''' <summary>
+    ''' removes a column of data from the specified table
+    ''' </summary>
+    ''' <param name="tableName"></param>
+    ''' <param name="columnName"></param>
+    ''' <returns></returns>
     Public Function removeColumn(ByVal tableName As String, ByVal columnName As String) As Integer
         Dim columnNames As String = getAllColumnName(tableName)
         If Not columnNames.Contains(columnName) Then
@@ -140,15 +160,34 @@ Public Class SQLiteDatabase
             "DROP TABLE " + tableName + "backup;")
     End Function
 
-    'Add a column is much more easy
+    ''' <summary>
+    ''' Adds a column to the specified table
+    ''' </summary>
+    ''' <param name="tableName"></param>
+    ''' <param name="columnName"></param>
     Public Sub addColumn(ByVal tableName As String, ByVal columnName As String)
         If isColumnExist(columnName, tableName) = True Then Exit Sub
         ExecuteNonQuery("ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " ;")
     End Sub
+
+    ''' <summary>
+    ''' Adds a column to the specified table
+    ''' </summary>
+    ''' <param name="tableName"></param>
+    ''' <param name="columnName"></param>
+    ''' <param name="columnType"></param>
     Public Sub addColumn(ByVal tableName As String, ByVal columnName As String, ByVal columnType As String)
         If isColumnExist(columnName, tableName) = True Then Exit Sub
         ExecuteNonQuery("ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + columnType + ";")
     End Sub
+
+    ''' <summary>
+    ''' Adds a column to the specified table
+    ''' </summary>
+    ''' <param name="tableName"></param>
+    ''' <param name="columnName"></param>
+    ''' <param name="columnType"></param>
+    ''' <param name="DefaultValue"></param>
     Public Sub addColumn(ByVal tableName As String, ByVal columnName As String, ByVal columnType As String, ByVal DefaultValue As String)
         If isColumnExist(columnName, tableName) = True Then Exit Sub
         ExecuteNonQuery("ALTER TABLE( " + tableName + " ADD COLUMN " + columnName + " " + columnType + " DEFAULT" + DefaultValue + ");")
@@ -179,6 +218,11 @@ Public Class SQLiteDatabase
         Return dt
     End Function
 
+    ''' <summary>
+    ''' Get a set of values from the specified table
+    ''' </summary>
+    ''' <param name="str"></param>
+    ''' <returns>a dictionary of values</returns>
     Public Function GetValueFromTable(str As String) As Dictionary(Of String, Object)
         'Dim str As String = "SELECT * FROM FURRE WHERE WHERE =" & Name & ";"
         Dim test3 As Dictionary(Of String, Object) = Nothing
@@ -261,7 +305,6 @@ Public Class SQLiteDatabase
         Monitor.Exit(QueryLock)
         Return rowsUpdated
     End Function
-
 
     ''' <summary>
     ''' Determines whether [is table exists] [the specified table name].
@@ -390,7 +433,6 @@ Public Class SQLiteDatabase
         End Try
     End Function
 
-
     Private Shared insertLock As New Object
     ''' <summary>
     '''     Allows the programmer to easily insert into the DB
@@ -405,7 +447,6 @@ Public Class SQLiteDatabase
 
             Monitor.Enter(insertLock)
 
-
             For Each val As KeyValuePair(Of String, String) In data
                 values.Add(String.Format(" ( '{0}', '{1}', '{2}' )", ID, val.Key, val.Value))
             Next
@@ -418,9 +459,8 @@ Public Class SQLiteDatabase
         Finally
             Monitor.Exit(insertLock)
         End Try
-        ' i = -1 if there's an SQLte error 
+        ' i = -1 if there's an SQLte error
         Return values.Count <> 0 AndAlso i > -1
     End Function
-
 
 End Class

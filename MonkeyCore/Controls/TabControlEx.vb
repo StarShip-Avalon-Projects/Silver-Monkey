@@ -1,5 +1,4 @@
-﻿
-Option Strict On
+﻿Option Strict On
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
@@ -26,8 +25,6 @@ Namespace Controls
                 RePositionCloseButtons()
             End Set
         End Property
-
-
 
         Protected Overrides Sub OnCreateControl()
             MyBase.OnCreateControl()
@@ -93,7 +90,6 @@ Namespace Controls
         Public Sub RePositionCloseButtons()
             For Each item In CloseButtonCollection
 
-
                 RePositionCloseButtons(item.Value)
             Next
         End Sub
@@ -125,4 +121,3 @@ Namespace Controls
         End Function
     End Class
 End Namespace
-

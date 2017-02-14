@@ -12,9 +12,8 @@ Imports Microsoft.Win32.SafeHandles
 Imports System.Runtime.InteropServices
 Imports Conversive.Verbot5
 
-Public Class MainMSEngine
+Public Class MainMsEngine
     Implements IDisposable
-
 
 #Region "Const"
     Private Const MS_Header As String = "*MSPK V04.00 Silver Monkey"
@@ -57,7 +56,7 @@ Public Class MainMSEngine
 
     Public MS_Engine_Running As Boolean = False
     Public engine As MonkeyspeakEngine = New MonkeyspeakEngine()
-    Public Shared WithEvents MSpage As Page = Nothing
+    Public WithEvents MSpage As Page = Nothing
     Public Sub New()
 
         EngineStart(True)
@@ -99,7 +98,6 @@ Public Class MainMSEngine
             MS_Stared = 1
             LoadLibrary(True)
 
-
             VariableList.Add("DREAMOWNER", "")
             VariableList.Add("DREAMNAME", "")
             VariableList.Add("BOTNAME", "")
@@ -128,8 +126,6 @@ Public Class MainMSEngine
         LoadLibrary(LoadPlugins)
 
     End Sub
-
-
 
     Public Sub LoadLibrary(ByRef LoadPlugins As Boolean)
         'Library Loaded?.. Get the Hell out of here
@@ -165,12 +161,12 @@ Public Class MainMSEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New StringLibrary()) ' Load our new TestLibrary
+            MSpage.LoadLibrary(New StringLibrary(FurcSession.Dream, FurcSession.Player, Me)) ' Load our new TestLibrary
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New SayLibrary())
+            MSpage.LoadLibrary(New SayLibrary(FurcSession.Dream, FurcSession.Player, Me))
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
@@ -190,7 +186,7 @@ Public Class MainMSEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New MSPK_MDB())
+            MSpage.LoadLibrary(New MSPK_MDB(FurcSession.Dream, FurcSession.Player, Me))
         Catch ex As FileNotFoundException
             Console.WriteLine(ex.Message)
         Catch ex As Exception
@@ -208,12 +204,12 @@ Public Class MainMSEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New MsPhoenixSpeak())
+            MSpage.LoadLibrary(New MsPhoenixSpeak(FurcSession.Dream, FurcSession.Player, Me))
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New DatabaseSystem())
+            MSpage.LoadLibrary(New DatabaseSystem(FurcSession.Dream, FurcSession.Player, Me))
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
@@ -229,7 +225,7 @@ Public Class MainMSEngine
         End Try
         Try
 
-            MSpage.LoadLibrary(New FurreList())
+            MSpage.LoadLibrary(New MonkeySpeakFurreList())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
@@ -244,24 +240,24 @@ Public Class MainMSEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New WmCpyDta())
+            MSpage.LoadLibrary(New WmCpyDta(FurcSession.Dream, FurcSession.Player, Me))
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
             PounceTimer = New Threading.Timer(AddressOf smPounceSend, Nothing, TimeSpan.Zero, TimeSpan.FromSeconds(30))
             PounceTimer.InitializeLifetimeService()
-            MSpage.LoadLibrary(New MS_Pounce())
+            MSpage.LoadLibrary(New MS_Pounce(FurcSession.Dream, FurcSession.Player, Me))
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New MS_MemberList())
+            MSpage.LoadLibrary(New MS_MemberList(FurcSession.Dream, FurcSession.Player, Me))
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New MS_Verbot())
+            MSpage.LoadLibrary(New MS_Verbot(FurcSession.Dream, FurcSession.Player, Me))
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
@@ -283,7 +279,7 @@ Public Class MainMSEngine
 
                     If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True Then
                         Console.WriteLine("Loading Plugin: " + objPlugin.Name)
-                        objPlugin.Initialize(Main.FurcSession.objHost)
+                        objPlugin.Initialize(FurcSession.objHost)
                         objPlugin.Page = MSpage
                         objPlugin.Start()
                     End If
@@ -292,7 +288,6 @@ Public Class MainMSEngine
                 End Try
             Next
             If newPlugin Then Main.MainSettings.SaveMainSettings()
-
 
         End If
     End Sub
@@ -318,8 +313,6 @@ Public Class MainMSEngine
                         Exit While
                     End If
 
-
-
                 End While
                 objReader.Close()
                 objReader.Dispose()
@@ -331,7 +324,7 @@ Public Class MainMSEngine
         End Try
     End Function
 
-    Public Shared Sub PageSetVariable(ByVal varName As String, ByVal data As Object)
+    Public Sub PageSetVariable(ByVal varName As String, ByVal data As Object)
         If cBot.MS_Engine_Enable AndAlso MS_Started() Then
             If data Is Nothing Then data = String.Empty
             Debug.Print("Settingg Variable: " + varName + ":" + data.ToString)
@@ -340,17 +333,17 @@ Public Class MainMSEngine
         End If
     End Sub
 
-    Public Shared Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
+    Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
         If cBot.MS_Engine_Enable Then
 
             For Each kv As KeyValuePair(Of String, Object) In VariableList
-                MSpage.SetVariable(kv.Key.ToUpper, kv.Value, True)
+                PageSetVariable(kv.Key.ToUpper, kv.Value, True)
             Next '
 
         End If
     End Sub
 
-    Public Shared Sub PageSetVariable(ByVal varName As String, ByVal data As Object, ByVal Constant As Boolean)
+    Public Sub PageSetVariable(ByVal varName As String, ByVal data As Object, ByVal Constant As Boolean)
         If Not IsNothing(cBot) Then
             If cBot.MS_Engine_Enable AndAlso MS_Started() Then
                 Debug.Print("Settingg Variable: " + varName + ":" + data.ToString)
@@ -369,14 +362,14 @@ Public Class MainMSEngine
 
     End Sub
 
-    Public Shared Sub LogError(trigger As Trigger, ex As Exception) Handles MSpage.Error
+    Public Sub LogError(trigger As Trigger, ex As Exception) Handles MSpage.Error
 
         Console.WriteLine(MS_ErrWarning)
         Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
 
         If Not IsNothing(cBot) Then
             If cBot.log Then
-                LogStream.Writeline(ErrorString, ex)
+                '  BotLogStream.WriteLine(ErrorString, ex)
             End If
         End If
         Writer.WriteLine(ErrorString)
@@ -389,7 +382,7 @@ Public Class MainMSEngine
 
         If Not IsNothing(cBot) Then
             If cBot.log Then
-                LogStream.Writeline(ErrorString, ex)
+                LogStream.WriteLine(ErrorString, ex)
             End If
         End If
         Writer.WriteLine(ErrorString)
@@ -405,8 +398,7 @@ Public Class MainMSEngine
         Public Online As Boolean
     End Structure
 
-    Public FurreList As New Dictionary(Of String, pFurre)
-
+    Public OnlineFurreList As New Dictionary(Of String, pFurre)
 
     Dim lastaccess As Date
 
@@ -416,22 +408,21 @@ Public Class MainMSEngine
             If File.GetLastWriteTime(MS_Pounce.OnlineList) <> lastaccess Then
                 lastaccess = File.GetLastWriteTime(MS_Pounce.OnlineList)
 
-
                 Dim NameList() As String = File.ReadAllLines(MS_Pounce.OnlineList)
                 For i As Integer = 0 To NameList.Length - 1
-                    If Not FurreList.ContainsKey(NameList(i)) Then FurreList.Add(NameList(i), New pFurre)
+                    If Not OnlineFurreList.ContainsKey(NameList(i)) Then OnlineFurreList.Add(NameList(i), New pFurre)
                 Next
-                Dim Namelist2(FurreList.Count - 1) As String
-                FurreList.Keys.CopyTo(Namelist2, 0)
+                Dim Namelist2(OnlineFurreList.Count - 1) As String
+                OnlineFurreList.Keys.CopyTo(Namelist2, 0)
                 For i As Integer = 0 To Namelist2.Length - 1
                     Dim found As Boolean = False
                     For j As Integer = 0 To NameList.Length - 1
-                        If MainMSEngine.ToFurcShortName(NameList(j)) = MainMSEngine.ToFurcShortName(Namelist2(i)) Then
+                        If ToFurcShortName(NameList(j)) = ToFurcShortName(Namelist2(i)) Then
                             found = True
                             Exit For
                         End If
                     Next
-                    If Not found Then FurreList.Remove(Namelist2(i))
+                    If Not found Then OnlineFurreList.Remove(Namelist2(i))
                 Next
                 result = True
             End If
@@ -447,9 +438,9 @@ Public Class MainMSEngine
             smPounce = New PounceConnection("http://on.furcadia.com/q/", Nothing)
 
             smPounce.RemoveFriends()
-            For Each kv As KeyValuePair(Of String, pFurre) In FurreList
+            For Each kv As KeyValuePair(Of String, pFurre) In OnlineFurreList
                 If Not String.IsNullOrEmpty(kv.Key) Then
-                    smPounce.AddFriend(MainMSEngine.ToFurcShortName(kv.Key))
+                    smPounce.AddFriend(ToFurcShortName(kv.Key))
                 End If
             Next
             smPounce.ConnectAsync()
@@ -459,29 +450,29 @@ Public Class MainMSEngine
 
     Sub Response(friends As String(), dreams As String()) Handles smPounce.Response
 
-        Dim myKeysArray(FurreList.Keys.Count - 1) As String
-        FurreList.Keys.CopyTo(myKeysArray, 0)
+        Dim myKeysArray(OnlineFurreList.Keys.Count - 1) As String
+        OnlineFurreList.Keys.CopyTo(myKeysArray, 0)
 
         For Each _furre As String In myKeysArray
-            Dim test As pFurre = FurreList.Item(_furre)
+            Dim test As pFurre = OnlineFurreList.Item(_furre)
             test.WasOnline = test.Online
             test.Online = False
             For Each [friend] As String In friends
-                If MainMSEngine.ToFurcShortName(_furre) = MainMSEngine.ToFurcShortName([friend]) Then
+                If ToFurcShortName(_furre) = ToFurcShortName([friend]) Then
                     test.Online = True
                     Exit For
                 End If
             Next
-            FurreList.Item(_furre) = test
+            OnlineFurreList.Item(_furre) = test
             If test.WasOnline = True And test.Online = False Then
                 'Furre Logged off
-                callbk.FurcSession.SendClientMessage("smPounce", _furre + " has logged out.")
-                FurcadiaSession.Player = FurcadiaSession.NametoFurre(_furre, True)
+                SendClientMessage("smPounce", _furre + " has logged out.")
+                FurcSession.Player = FurcSession.NameToFurre(_furre, True)
                 PageExecute(951, 953)
             ElseIf test.WasOnline = False And test.Online = True Then
                 'Furre logged on
-                callbk.FurcSession.SendClientMessage("smPounce", _furre + " has logged on.")
-                FurcadiaSession.Player = FurcadiaSession.NametoFurre(_furre, True)
+                SendClientMessage("smPounce", _furre + " has logged on.")
+                FurcSession.Player = FurcSession.NameToFurre(_furre, True)
                 PageExecute(950, 952)
             End If
 
@@ -490,7 +481,12 @@ Public Class MainMSEngine
 
 #End Region
 
+    'TODO Link to Furcadia Proxy Send Client
+    Protected Sub SendClientMessage(ByRef System As String, Message As String)
+
+    End Sub
 #Region "Dispose"
+    'need Timer Library disposal here and any other Libs that need to be disposed
 
     Dim disposed As Boolean = False
     ' Instantiate a SafeHandle instance.

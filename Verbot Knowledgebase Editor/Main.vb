@@ -74,7 +74,6 @@ Public Class Main
             CurrentRule = R
         End If
 
-
         For i As Integer = 0 To CurrentRule.Inputs.Count - 1
             LstBxInput.Items.Add(CurrentRule.Inputs.Item(i).Text)
         Next
@@ -94,7 +93,6 @@ Public Class Main
             End If
         End With
     End Sub
-
 
     Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click, LstBxInput.DoubleClick
         If IsNothing(CurrentRule) Or LstBxInput.SelectedIndex = -1 Then Exit Sub
@@ -146,7 +144,6 @@ Public Class Main
             End If
         End With
     End Sub
-
 
     Private Sub TextBox1_KeyPress(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles TextBox1.KeyDown
         Dim t As TextBox = CType(sender, TextBox)
@@ -216,8 +213,6 @@ Public Class Main
             End If
         End With
     End Sub
-
-
 
     Private Sub NewReplacementProfileToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles NewReplacementProfileToolStripMenuItem.Click
         With ReplacementEditor
@@ -370,7 +365,6 @@ Public Class Main
 
         LstBxInput.Items.Add(InputCopy.Text)
     End Sub
-
 
     Private Sub MenuCopyOutputItem_Click(sender As System.Object, e As System.EventArgs) Handles MenuCopyOutputItem.Click
         CopyOutput = New Output

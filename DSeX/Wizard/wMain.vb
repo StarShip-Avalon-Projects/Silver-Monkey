@@ -8,15 +8,13 @@ Imports MonkeyCore
 ' This Project was originally not intended to be "open-source".
 ' However the source is released and if you use a lot of the source
 ' provided please, in your project, give credit where credit is due.
-' 
+'
 ' Sincerely,
 ' Squizzle (in-game)
 '####################################
 
-
 'Begin the main Form!
 Public Class wMain
-
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -105,8 +103,6 @@ Public Class wMain
             GetInfo(lst(lb.SelectedIndex) & sIni & ".ini")
         End If
     End Sub
-
-
 
     Private Sub ToolStripMenuItem8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem8.Click
         'AboutToolStrip
@@ -235,8 +231,6 @@ Public Class wMain
         End If
     End Sub
 
-
-
     Private Sub OnToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OnToolStripMenuItem1.Click
         MsgBox(sender.ToString)
     End Sub
@@ -250,7 +244,6 @@ Public Class wMain
 
     End Sub
 
-
     Private Sub LoadOptions()
         Dim a As Integer = 0
         'Dim a = IniRead(AppPath & "\Settings", "Main", "Fade", 1)
@@ -263,7 +256,6 @@ Public Class wMain
         End If
 
     End Sub
-
 
     Private Sub WizardRefresh_Click(sender As System.Object, e As System.EventArgs) Handles WizardRefresh.Click, Refres_MS_ToolStripMenuItem3.Click
         GetScriptIni()
@@ -287,7 +279,7 @@ Public Class wMain
     End Sub
 
     Private Sub RemoveToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles RemoveToolStripMenuItem.Click
-        Dim reply As DialogResult = MessageBox.Show("Really delete this script?", "Caption", _
+        Dim reply As DialogResult = MessageBox.Show("Really delete this script?", "Caption",
 MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
 
         If reply = DialogResult.OK Then
@@ -301,9 +293,8 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         MS_Edit.OpenMS_File(ScriptPaths_MS.Item(selector2.SelectedIndex) + "/" + selector2.SelectedItem.ToString + ".ini")
     End Sub
 
-
     Private Sub Delete_MS_ToolStripMenuItem6_Click(sender As System.Object, e As System.EventArgs) Handles Delete_MS_ToolStripMenuItem6.Click
-        Dim reply As DialogResult = MessageBox.Show("Really delete this script?", "Caption", _
+        Dim reply As DialogResult = MessageBox.Show("Really delete this script?", "Caption",
 MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
 
         If reply = DialogResult.OK Then

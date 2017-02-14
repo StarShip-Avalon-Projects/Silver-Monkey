@@ -16,8 +16,6 @@
 namespace SilverMonkey.BugTraqConnect
 {
     using System;
-    using System.Data;
-    using System.Diagnostics;
     using System.Globalization;
     using System.IO;
     using System.ServiceModel;
@@ -51,7 +49,7 @@ namespace SilverMonkey.BugTraqConnect
         /// </summary>
         /// <param name="session">The session to use for all communication with the webservice.
         /// The user name and password are used from their to provide such details to the
-        /// webservice with each call without exposing such detail to the user of the 
+        /// webservice with each call without exposing such detail to the user of the
         /// library.</param>
         public Request(Session session)
         {
@@ -147,7 +145,7 @@ namespace SilverMonkey.BugTraqConnect
         /// <exception cref="ArgumentOutOfRangeException">The issue id is invalid.</exception>
         public void IssueDelete(int issueId)
         {
-			ValidateIssueId(issueId);
+            ValidateIssueId(issueId);
 
             this.mc.mc_issue_delete(
                 this.session.Username,
@@ -164,14 +162,14 @@ namespace SilverMonkey.BugTraqConnect
 		/// <exception cref="ArgumentOutOfRangeException">The issue id is 0 or negative.</exception>
 		public Issue IssueGet(int issueId)
         {
-			ValidateIssueId(issueId);
+            ValidateIssueId(issueId);
 
-			MantisConnectWebservice.IssueData issueData = this.mc.mc_issue_get(
+            MantisConnectWebservice.IssueData issueData = this.mc.mc_issue_get(
                 this.session.Username,
                 this.session.Password,
                 issueId.ToString());
 
-			return issueData == null ? null : new Issue(issueData);
+            return issueData == null ? null : new Issue(issueData);
         }
 
         /// <summary>
@@ -194,9 +192,9 @@ namespace SilverMonkey.BugTraqConnect
 		/// <exception cref="ArgumentOutOfRangeException">The issue id is 0 or negative.</exception>
 		public bool IssueExists(int issueId)
         {
-			ValidateIssueId(issueId);
-			
-			return Convert.ToBoolean(this.mc.mc_issue_exists(
+            ValidateIssueId(issueId);
+
+            return Convert.ToBoolean(this.mc.mc_issue_exists(
                 this.session.Username,
                 this.session.Password,
                 issueId.ToString()));
@@ -209,7 +207,7 @@ namespace SilverMonkey.BugTraqConnect
         /// This is useful to allow a software which is automatically reporting issues due
         /// to exceptions or whatever reason to check first that the issue was not reported
         /// before.  And if it was, then it knows the issue id and hence is able to add
-        /// a note or do whatever with this id.  Other applications may decide to delete 
+        /// a note or do whatever with this id.  Other applications may decide to delete
         /// the issue and create a new one, basically it is up to the client application
         /// to decide how to use the returned issue id.
         /// </remarks>
@@ -249,9 +247,9 @@ namespace SilverMonkey.BugTraqConnect
 		/// <exception cref="ArgumentOutOfRangeException">The project id is invalid.</exception>
 		public int IssueGetLastId(int projectId)
         {
-			ValidateProjectId(projectId);
+            ValidateProjectId(projectId);
 
-			return Convert.ToInt32(this.mc.mc_issue_get_biggest_id(
+            return Convert.ToInt32(this.mc.mc_issue_get_biggest_id(
                 this.session.Username,
                 this.session.Password,
                 projectId.ToString()));
@@ -279,9 +277,9 @@ namespace SilverMonkey.BugTraqConnect
 		/// <exception cref="ArgumentOutOfRangeException">The project id is invalid.</exception>
 		public Filter[] UserGetFilters(int projectId)
         {
-			ValidateProjectId(projectId);
+            ValidateProjectId(projectId);
 
-			return Filter.ConvertArray(this.mc.mc_filter_get(
+            return Filter.ConvertArray(this.mc.mc_filter_get(
                 this.session.Username,
                 this.session.Password,
                 projectId.ToString()));
@@ -418,9 +416,9 @@ namespace SilverMonkey.BugTraqConnect
 		/// <exception cref="ArgumentOutOfRangeException">The project id is invalid.</exception>
 		public string[] ProjectGetCategories(int projectId)
         {
-			ValidateProjectId(projectId);
+            ValidateProjectId(projectId);
 
-			return this.mc.mc_project_get_categories(
+            return this.mc.mc_project_get_categories(
                 this.session.Username,
                 this.session.Password,
                 projectId.ToString());
@@ -434,9 +432,9 @@ namespace SilverMonkey.BugTraqConnect
 		/// <exception cref="ArgumentOutOfRangeException">The project id is invalid.</exception>
 		public ProjectVersion[] ProjectGetVersions(int projectId)
         {
-			ValidateProjectId(projectId);
+            ValidateProjectId(projectId);
 
-			return ProjectVersion.ConvertArray(this.mc.mc_project_get_versions(
+            return ProjectVersion.ConvertArray(this.mc.mc_project_get_versions(
                 this.session.Username,
                 this.session.Password,
                 projectId.ToString()));
@@ -508,9 +506,9 @@ namespace SilverMonkey.BugTraqConnect
         /// Get string value of the specified configuration option.
         /// </summary>
         /// <remarks>
-        /// If the caller attempts to retrieve sensitive configuration options like 
+        /// If the caller attempts to retrieve sensitive configuration options like
         /// passwords, database name, ...etc, an exception will be raised.
-        /// 
+        ///
         /// TODO: Overload this method to get more types of configurations.
         /// </remarks>
         /// <param name="config">Name of configuration option (without the $g_ part)</param>
@@ -527,62 +525,62 @@ namespace SilverMonkey.BugTraqConnect
                 config);
         }
 
-		/// <summary>
-		/// Adds a note to the specified issue.
-		/// </summary>
-		/// <param name="issueId">Issue id to add note to.</param>
-		/// <param name="note">The note to add</param>
-		/// <remarks>
-		/// The user must have write access to the issue and the issue must not be readonly.
-		/// </remarks>
-		/// <returns></returns>
-		/// <exception cref="ArgumentNullException">Note is null</exception>
-		/// <exception cref="ArgumentOutOfRangeException">The issue id is 0 or negative.  Or note is empty or blank.</exception>
-		public int IssueNoteAdd(int issueId, IssueNote note)
-		{
-			ValidateIssueId(issueId);
+        /// <summary>
+        /// Adds a note to the specified issue.
+        /// </summary>
+        /// <param name="issueId">Issue id to add note to.</param>
+        /// <param name="note">The note to add</param>
+        /// <remarks>
+        /// The user must have write access to the issue and the issue must not be readonly.
+        /// </remarks>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Note is null</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The issue id is 0 or negative.  Or note is empty or blank.</exception>
+        public int IssueNoteAdd(int issueId, IssueNote note)
+        {
+            ValidateIssueId(issueId);
             ValidateIssueNote(note);
 
-			return Convert.ToInt32(this.mc.mc_issue_note_add(
+            return Convert.ToInt32(this.mc.mc_issue_note_add(
                 this.session.Username,
                 this.session.Password,
                 issueId.ToString(CultureInfo.InvariantCulture),
                 note.ToWebservice()));
-		}
+        }
 
-		/// <summary>
-		/// Delete the issue note with the specified id
-		/// </summary>
-		/// <param name="issueNoteId">Id of issue note to delete</param>
-		/// <exception cref="ArgumentOutOfRangeException">The issue note id is 0 or negative.</exception>
-		public void IssueNoteDelete(int issueNoteId)
-		{
-			ValidateIssueNoteId(issueNoteId);
+        /// <summary>
+        /// Delete the issue note with the specified id
+        /// </summary>
+        /// <param name="issueNoteId">Id of issue note to delete</param>
+        /// <exception cref="ArgumentOutOfRangeException">The issue note id is 0 or negative.</exception>
+        public void IssueNoteDelete(int issueNoteId)
+        {
+            ValidateIssueNoteId(issueNoteId);
 
-			mc.mc_issue_note_delete(
+            mc.mc_issue_note_delete(
                 this.session.Username,
                 this.session.Password,
                 issueNoteId.ToString());
-		}
+        }
 
-		/// <summary>
-		/// Adds an attachment to an issue.
-		/// </summary>
-		/// <param name="issueId">The id of the issue to associate the attachment with.</param>
-		/// <param name="fileName">The file name of the attachment.  Only the file name dot extension.</param>
-		/// <param name="fileType">The mime file type.</param>
-		/// <param name="base64Content">A byte array that contains a base 64 encoding of the attachment.</param>
-		/// <returns>The attachment id.</returns>
-		public int IssueAttachmentAdd(int issueId, string fileName, string fileType, System.Byte[] base64Content)
-		{
-			return Convert.ToInt32(this.mc.mc_issue_attachment_add(
+        /// <summary>
+        /// Adds an attachment to an issue.
+        /// </summary>
+        /// <param name="issueId">The id of the issue to associate the attachment with.</param>
+        /// <param name="fileName">The file name of the attachment.  Only the file name dot extension.</param>
+        /// <param name="fileType">The mime file type.</param>
+        /// <param name="base64Content">A byte array that contains a base 64 encoding of the attachment.</param>
+        /// <returns>The attachment id.</returns>
+        public int IssueAttachmentAdd(int issueId, string fileName, string fileType, System.Byte[] base64Content)
+        {
+            return Convert.ToInt32(this.mc.mc_issue_attachment_add(
                 this.session.Username,
                 this.session.Password,
                 issueId.ToString(),
                 fileName,
                 fileType,
                 base64Content));
-		}
+        }
 
         /// <summary>
         /// Uploads the specified file to the specified issue.
@@ -590,7 +588,7 @@ namespace SilverMonkey.BugTraqConnect
         /// <param name="issueId">The issue id</param>
         /// <param name="filePath">The file path of the file to attach.</param>
         /// <param name="fileName">
-        /// The name of the file (without any path) to be associated with the uploaded file 
+        /// The name of the file (without any path) to be associated with the uploaded file
         /// (if null, will extract name from full path).
         /// </param>
         /// <returns>The attachment id.</returns>
@@ -608,56 +606,56 @@ namespace SilverMonkey.BugTraqConnect
                 File.ReadAllBytes(filePath));
         }
 
-		/// <summary>
-		/// Deletes an attachment given it's id.
-		/// </summary>
-		/// <param name="issueAttachmentId">The attachment id.</param>
-		public void IssueAttachmentDelete(int issueAttachmentId)
-		{
-			this.mc.mc_issue_attachment_delete(
+        /// <summary>
+        /// Deletes an attachment given it's id.
+        /// </summary>
+        /// <param name="issueAttachmentId">The attachment id.</param>
+        public void IssueAttachmentDelete(int issueAttachmentId)
+        {
+            this.mc.mc_issue_attachment_delete(
                 this.session.Username,
                 this.session.Password,
                 issueAttachmentId.ToString());
-		}
+        }
 
-		/// <summary>
-		/// Gets an attachment given it's id.
-		/// </summary>
-		/// <param name="issueAttachmentId">The attachment id.  This is returned when attachment is added or when attachments list is returned with the issue details.</param>
-		/// <returns>The attachment contents base 64 encoded.</returns>
-		public System.Byte[] IssueAttachmentGet(int issueAttachmentId)
-		{
-			return this.mc.mc_issue_attachment_get(
+        /// <summary>
+        /// Gets an attachment given it's id.
+        /// </summary>
+        /// <param name="issueAttachmentId">The attachment id.  This is returned when attachment is added or when attachments list is returned with the issue details.</param>
+        /// <returns>The attachment contents base 64 encoded.</returns>
+        public System.Byte[] IssueAttachmentGet(int issueAttachmentId)
+        {
+            return this.mc.mc_issue_attachment_get(
                 this.session.Username,
                 this.session.Password,
                 issueAttachmentId.ToString());
-		}
+        }
 
-		/// <summary>
-		/// Validates a project id and raises an exception if it is not valid.
-		/// </summary>
-		/// <param name="projectId">Project Id</param>
-		/// <exception cref="ArgumentOutOfRangeException">The project id is smaller than -1.</exception>
-		private static void ValidateProjectId(int projectId)
-		{
+        /// <summary>
+        /// Validates a project id and raises an exception if it is not valid.
+        /// </summary>
+        /// <param name="projectId">Project Id</param>
+        /// <exception cref="ArgumentOutOfRangeException">The project id is smaller than -1.</exception>
+        private static void ValidateProjectId(int projectId)
+        {
             if (projectId < -1)
             {
                 throw new ArgumentOutOfRangeException("projectId");
             }
-		}
+        }
 
-		/// <summary>
-		/// Validates an issue id and raises an exception if it is not valid.
-		/// </summary>
-		/// <param name="issueId">Issue Id</param>
-		/// <exception cref="ArgumentOutOfRangeException">The issue id is 0 or negative.</exception>
-		private static void ValidateIssueId(int issueId)
-		{
+        /// <summary>
+        /// Validates an issue id and raises an exception if it is not valid.
+        /// </summary>
+        /// <param name="issueId">Issue Id</param>
+        /// <exception cref="ArgumentOutOfRangeException">The issue id is 0 or negative.</exception>
+        private static void ValidateIssueId(int issueId)
+        {
             if (issueId < 1)
             {
                 throw new ArgumentOutOfRangeException("issueId");
             }
-		}
+        }
 
         /// <summary>
         /// Validates a project version id and raises an exception if it is not valid.
@@ -714,18 +712,18 @@ namespace SilverMonkey.BugTraqConnect
             }
         }
 
-		/// <summary>
-		/// Validates an issue note id and raises an exception if it is not valid.
-		/// </summary>
-		/// <param name="issueNoteId">Issue Note Id</param>
-		/// <exception cref="ArgumentOutOfRangeException">The issue note id is 0 or negative.</exception>
-		private static void ValidateIssueNoteId(int issueNoteId)
-		{
+        /// <summary>
+        /// Validates an issue note id and raises an exception if it is not valid.
+        /// </summary>
+        /// <param name="issueNoteId">Issue Note Id</param>
+        /// <exception cref="ArgumentOutOfRangeException">The issue note id is 0 or negative.</exception>
+        private static void ValidateIssueNoteId(int issueNoteId)
+        {
             if (issueNoteId < 1)
             {
                 throw new ArgumentOutOfRangeException("issueNoteId");
             }
-		}
+        }
 
         /// <summary>
         /// Validates an issue note and raises an exception if it is not valid.

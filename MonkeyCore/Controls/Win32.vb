@@ -1,6 +1,5 @@
 ﻿'Move All DLL imports here
 
-
 'Author Gerolkae
 Imports System.Runtime.InteropServices
 
@@ -38,7 +37,6 @@ Namespace Controls
         Friend Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
         End Function
 
-
         Friend Shared updating As Integer
         Friend Shared oldEventMask As IntPtr
         Friend Const WM_USER As Integer = &H400
@@ -62,42 +60,41 @@ Namespace Controls
         Friend Const CFE_LINK As Integer = &H20
         Friend Const CFE_AUTOCOLOR As Integer = &H40000000
         Friend Const CFE_SUBSCRIPT As Integer = &H10000
-        ' Superscript and subscript are 
+        ' Superscript and subscript are
         Friend Const CFE_SUPERSCRIPT As Integer = &H20000
-        '  mutually exclusive			 
+        '  mutually exclusive
 
         Friend Const CFM_SMALLCAPS As Integer = &H40
-        ' (*)	
+        ' (*)
         Friend Const CFM_ALLCAPS As Integer = &H80
-        ' Displayed by 3.0	
+        ' Displayed by 3.0
         Friend Const CFM_HIDDEN As Integer = &H100
-        ' Hidden by 3.0 
+        ' Hidden by 3.0
         Friend Const CFM_OUTLINE As Integer = &H200
-        ' (*)	
+        ' (*)
         Friend Const CFM_SHADOW As Integer = &H400
-        ' (*)	
+        ' (*)
         Friend Const CFM_EMBOSS As Integer = &H800
-        ' (*)	
+        ' (*)
         Friend Const CFM_IMPRINT As Integer = &H1000
-        ' (*)	
+        ' (*)
         Friend Const CFM_DISABLED As Integer = &H2000
         Friend Const CFM_REVISED As Integer = &H4000
 
         Friend Const CFM_BACKCOLOR As Integer = &H4000000
         Friend Const CFM_LCID As Integer = &H2000000
         Friend Const CFM_UNDERLINETYPE As Integer = &H800000
-        ' Many displayed by 3.0 
+        ' Many displayed by 3.0
         Friend Const CFM_WEIGHT As Integer = &H400000
         Friend Const CFM_SPACING As Integer = &H200000
-        ' Displayed by 3.0	
+        ' Displayed by 3.0
         Friend Const CFM_KERNING As Integer = &H100000
-        ' (*)	
+        ' (*)
         Friend Const CFM_STYLE As Integer = &H80000
-        ' (*)	
+        ' (*)
         Friend Const CFM_ANIMATION As Integer = &H40000
-        ' (*)	
+        ' (*)
         Friend Const CFM_REVAUTHOR As Integer = &H8000
-
 
         Friend Const CFM_BOLD As Integer = &H1
         Friend Const CFM_ITALIC As Integer = &H2
@@ -116,9 +113,9 @@ Namespace Controls
         Friend Const CFU_UNDERLINENONE As Byte = &H0
         Friend Const CFU_UNDERLINE As Byte = &H1
         Friend Const CFU_UNDERLINEWORD As Byte = &H2
-        ' (*) displayed as ordinary underline	
+        ' (*) displayed as ordinary underline
         Friend Const CFU_UNDERLINEDOUBLE As Byte = &H3
-        ' (*) displayed as ordinary underline	
+        ' (*) displayed as ordinary underline
         Friend Const CFU_UNDERLINEDOTTED As Byte = &H4
         Friend Const CFU_UNDERLINEDASH As Byte = &H5
         Friend Const CFU_UNDERLINEDASHDOT As Byte = &H6
@@ -126,7 +123,7 @@ Namespace Controls
         Friend Const CFU_UNDERLINEWAVE As Byte = &H8
         Friend Const CFU_UNDERLINETHICK As Byte = &H9
         Friend Const CFU_UNDERLINEHAIRLINE As Byte = &HA
-        ' (*) displayed as ordinary underline	
+        ' (*) displayed as ordinary underline
 
 #End Region
 
@@ -171,10 +168,7 @@ Namespace Controls
         Friend Const SB_HORZ As Integer = &H0
         Friend Const SB_VERT As Integer = &H1
 
-
 #End Region
-
-
 
 #End Region
 

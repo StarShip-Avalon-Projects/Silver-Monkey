@@ -1,15 +1,24 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.IO
 
+''' <summary>
+''' Log stream for normal log messages
+''' </summary>
 Public Class LogStream
 
     Private Const Iconfilter As String = "<img src='fsh://system.fsh:([^']*)'(.*?)/>"
+    Private Const IMGFILTER As String = "<img src='?""?(.*?)'?""? ?/?>"
     Private Const NameFilter As String = "<name shortname='([^']*)' ?(.*?)?>([\x21-\x3B\=\x3F-\x7E]+)</name>"
     Private Const URLFILTER As String = "<a href='?""?(.*?)'?""?>(.*?)</a>"
-    Private Const IMGFILTER As String = "<img src='?""?(.*?)'?""? ?/?>"
 #Region "logging functions"
-    Private Shared strErrorFilePath As String
     Private Shared Stack As New List(Of String)
+    Private Shared strErrorFilePath As String
+
+    ''' <summary>
+    ''' Create a new instance of the log file
+    ''' </summary>
+    ''' <param name="FileName"></param>
+    ''' <param name="FilePath"></param>
     Public Sub New(FileName As String, FilePath As String)
         strErrorFilePath = Path.Combine(FilePath, FileName & ".log")
         Try
@@ -21,7 +30,12 @@ Public Class LogStream
         End Try
     End Sub
 
-    Public Shared Function IsFileInUse(ByVal filePath As String) As Boolean
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    ''' <returns></returns>
+    Private Shared Function IsFileInUse(ByVal filePath As String) As Boolean
         Try
             Dim contents() As String = System.IO.File.ReadAllLines(filePath)
         Catch ex As IOException
@@ -31,7 +45,12 @@ Public Class LogStream
         Return False
     End Function
 
-    Public Shared Sub Writeline(Message As String, ByRef ObjectException As Exception)
+    ''' <summary>
+    ''' Write a an exception line to the log file
+    ''' </summary>
+    ''' <param name="Message"></param>
+    ''' <param name="ObjectException"></param>
+    Public Shared Sub WriteLine(Message As String, ByRef ObjectException As Exception)
         Dim build As New Text.StringBuilder(Message)
         Dim Names As MatchCollection = Regex.Matches(Message, NameFilter)
         For Each Name As Match In Names
@@ -86,7 +105,6 @@ Public Class LogStream
                 ioFile.WriteLine(ObjectException.Source)
                 ioFile.WriteLine(ObjectException.StackTrace)
 
-
                 ioFile.Close()
             Catch ex As IOException
                 If (ex.Message.StartsWith("The process cannot access the file") AndAlso
@@ -111,7 +129,11 @@ Public Class LogStream
         End Using
     End Sub
 
-    Public Shared Sub Writeline(Message As String)
+    ''' <summary>
+    ''' Write a line to the log file
+    ''' </summary>
+    ''' <param name="Message"></param>
+    Public Shared Sub WriteLine(Message As String)
         Dim build As New Text.StringBuilder(Message)
         Dim Names As MatchCollection = Regex.Matches(Message, NameFilter)
         For Each Name As Match In Names

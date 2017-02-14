@@ -6,7 +6,7 @@ Imports System.IO
 Imports FastColoredTextBoxNS
 
 Public Module MyExtensions
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsInteger(ByVal value As String) As Boolean
         If String.IsNullOrEmpty(value) Then
             Return False
@@ -15,7 +15,7 @@ Public Module MyExtensions
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToInteger(ByVal value As String) As Integer
         If value.IsInteger() Then
             Return Integer.Parse(value)
@@ -24,7 +24,7 @@ Public Module MyExtensions
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsDouble(ByVal value As String) As Boolean
         If String.IsNullOrEmpty(value) Then
             Return False
@@ -33,7 +33,7 @@ Public Module MyExtensions
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToDouble(ByVal value As String) As Double
         If value.IsDouble() Then
             Return Double.Parse(value)
@@ -50,8 +50,6 @@ Public Class wUI
     Dim WorkFileName As String = ""
     Dim WorkPath As String = ""
     Public PathIndex As Integer = 0
-
-
 
     Public Structure StructMapSearch
         Public DreamPath As String
@@ -151,7 +149,6 @@ Public Class wUI
 
         Dim m As MatchCollection = Regex.Matches(directions, RGEX_Mov_Steps, RegexOptions.IgnoreCase)
 
-
         For Each s As Match In m
             Dim spaces As Integer = s.Groups(2).Value.ToInteger
 
@@ -208,7 +205,6 @@ Public Class wUI
 
         Dim m As MatchCollection = Regex.Matches(directions, RGEX_MathStep, RegexOptions.IgnoreCase)
 
-
         For Each s As Match In m
             Dim spaces As Integer = s.Groups(2).Value.ToInteger
 
@@ -247,7 +243,6 @@ Public Class wUI
 
     End Sub
 
-
     Private Sub Form2_OnExit(ByVal sender As System.Object, ByVal e As Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If wMain.OnToolStripMenuItem.Checked = True Then
             Timer1.Enabled = False
@@ -255,8 +250,6 @@ Public Class wUI
         End If
 
     End Sub
-
-
 
     Private Sub selecter2_SelectedIndexChanged_1(sender As System.Object, e As System.EventArgs) Handles selecter2.SelectedIndexChanged, ListBox1.SelectedIndexChanged
         Dim lb As ListBox = CType(sender, ListBox)
@@ -274,7 +267,7 @@ Public Class wUI
 
     'Fade effect Timer (fade-in)
     Private Sub Timer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer.Tick
-        'decreases opacity in turms of timer interval 
+        'decreases opacity in turms of timer interval
         Me.Opacity -= 0.01
         'when opacity is zero the form is invisible and we dispose it
         If Me.Opacity = 0 Then Me.Dispose()
@@ -282,7 +275,7 @@ Public Class wUI
 
     'Fade effect Timer1 (fade-out)
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        'decreases opacity in turms of timer interval 
+        'decreases opacity in turms of timer interval
         Me.Opacity += 0.01
         'when opacity is zero the form is invisible and we dispose it
         If Me.Opacity = 100 Then
@@ -406,7 +399,6 @@ Public Class wUI
                 Dim type = wVariables(t).GetType()
                 If type Is GetType(System.String) Then
 
-
                     Dim regex As Regex = New Regex(RGEX_Range)
                     Dim match As Match = regex.Match(wVariables.Item(t).ToString)
                     If match.Success Then
@@ -447,7 +439,7 @@ Public Class wUI
                 ElseIf type Is GetType(StructMapSearch) Then
                     Dim mlist As List(Of String) = New List(Of String)
                     Dim test As StructMapSearch = CType(wVariables.Item(t), StructMapSearch)
-                    Do While test.Getlist.count <= NumericUpDown1.Value - 1
+                    Do While test.Getlist.Count <= NumericUpDown1.Value - 1
                         Dim start_info As New ProcessStartInfo("mapsearch.exe")
                         start_info.UseShellExecute = False
                         start_info.CreateNoWindow = True
@@ -455,8 +447,8 @@ Public Class wUI
                         start_info.RedirectStandardError = True
                         start_info.WorkingDirectory = WorkPath
                         'Parameters: [/ns] [/n #] [/f,/o,/w,/r,/e ##] <filename>
-                        start_info.Arguments = "/ns /n " + NumericUpDown1.Value.ToString + " / " + _
-                            test.MSValue.ToString + " " + test.Item.ToString + " " + _
+                        start_info.Arguments = "/ns /n " + NumericUpDown1.Value.ToString + " / " +
+                            test.MSValue.ToString + " " + test.Item.ToString + " " +
                             test.DreamPath
                         ' Make the process and set its start information.
                         Dim proc As New Process()
@@ -483,7 +475,7 @@ Public Class wUI
                         If mlist.Count <= NumericUpDown1.Value Then
                             mlist.AddRange(te)
                         End If
-                        If test.Getlist.count >= NumericUpDown1.Value Then
+                        If test.Getlist.Count >= NumericUpDown1.Value Then
                             test.Setlist.AddRange(mlist)
                         End If
                     Loop
@@ -496,7 +488,6 @@ Public Class wUI
         Next
         ProcessIterations(VariableList)
     End Sub
-
 
     Private Sub ProcessIterations(ByRef Values As List(Of List(Of String)))
         Solution.Text = ""
@@ -580,11 +571,7 @@ Public Class wUI
         'clear folding markers
         ' sender.Range.ClearFoldingMarkers()
 
-
     End Sub
-
-
-
 
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
         ProcessVariableList()
@@ -594,7 +581,6 @@ Public Class wUI
         If IsNothing(MS_Edit.MS_Editor) Then Exit Sub
         MS_Edit.MS_Editor.InsertText(Solution.Text)
     End Sub
-
 
     Private Sub ListBox1_OnVerticalScroll(sender As Object, e As System.Windows.Forms.ScrollEventArgs) Handles ListBox1.OnVerticalScroll
         Dim lb As ScrollingListBox = CType(sender, ScrollingListBox)

@@ -1,17 +1,12 @@
-﻿Imports System.Diagnostics
-Imports System.Collections
+﻿Imports System.Collections
 Imports System.Collections.Generic
 Imports Furcadia.Net
-Imports MonkeyCore
 
-Public Class FurreList
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
-    Private writer As TextBoxWriter = Nothing
-
-    Dim FurreList As Dictionary(Of UInteger, FURRE) = DREAM.List
+Public Class MonkeySpeakFurreList
+    Inherits MonkeySpeakLibrary
+    Dim FurreList As FURREList = MyDream.FurreList
 
     Public Sub New()
-        writer = New TextBoxWriter(Variables.TextBox1)
 
         '(1:700) and the triggering furre in the dream.
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 700), AddressOf TriggeringInDream,
@@ -30,19 +25,19 @@ Public Class FurreList
             "(1:703) and the furre named {...} is not in the dream")
 
         '(1:704) and the triggering furre is visible.
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 704), AddressOf TriggeringCanSee,
+        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 704), AddressOf TriggeringCanSe,
             "(1:704) and the triggering furre is visible.")
 
         '(1:705) and the triggering furre is not visible
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 705), AddressOf TriggeringNotCanSee,
+        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 705), AddressOf TriggeringNotCanSe,
             "(1:705) and the triggering furre is not visible")
 
         '(1:706) and the furre named {...} is visible.
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 706), AddressOf FurreNamedCanSee,
+        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 706), AddressOf FurreNamedCanSe,
             "(1:706) and the furre named {...} is visible.")
 
         '(1:707) and the furre named {...} is not visible
-        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 707), AddressOf FurreNamedNotCanSee,
+        Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 707), AddressOf FurreNamedNotCanSe,
             "(1:707) and the furre named {...} is not visible")
 
         '(1:708) and the furre named {...} is a.f.k.,
@@ -69,151 +64,20 @@ Public Class FurreList
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 703), AddressOf FurreAFKListCount,
             "(5:703) count the number of A.F.K furres in the drean and put it in the variable %Variable.")
 
-
     End Sub
 
-
-    '(1:700) and the triggering furre in the dream.
-    Function TriggeringInDream(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Return InDream(tPlayer.Name)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
+#Region "Helper Functions"
+    Private Function InDream(ByRef Name As String) As Boolean
+        Dim found As Boolean = False
+        For Each kvp As KeyValuePair(Of UInteger, FURRE) In FurreList
+            If Furcadia.Util.FurcadiaShortName(kvp.Value.Name) = Furcadia.Util.FurcadiaShortName(Name) Then
+                Return True
+            End If
+        Next
+        Return False
     End Function
 
-    '(1:701) and the triggering furre is not in the dream.
-    Function TriggeringNotInDream(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Return Not InDream(tPlayer.Name)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:702) and the furre named {...} is in the dream.
-    Function FurreNamedInDream(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Return InDream(Target.Name)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(1:703) and the furre named {...} is not in the dream
-    Function FurreNamedNotInDream(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Return Not InDream(Target.Name)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(1:704) and the triggering furre is visible.
-    Function TriggeringCanSee(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Return tPlayer.Visible
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:705) and the triggering furre is not visible
-    Function TriggeringNotCanSee(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Return Not tPlayer.Visible
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:706) and the furre named {...} is visible.
-    Function FurreNamedCanSee(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Return Target.Visible
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:707) and the furre named {...} is not visible
-    Function FurreNamedNotCanSee(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Return Not Target.Visible
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(1:708) and the furre named {...} is a.f.k.,
-    Function FurreNamedAFK(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Return Target.AFK > 0
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(1:709) and the furre named {...} is active in the dream,
-    Function FurreNamedActive(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Return Target.AFK = 0
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(5:700) Copy the dreams's furre-list to array %Variable
-    Function FurreListVar(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim str As New ArrayList
-            For Each kvp As KeyValuePair(Of UInteger, FURRE) In FurreList
-                str.Add(kvp.Value.Name)
-            Next
-            var.Value = String.Join(", ", str.ToArray)
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(5:701) save the dream list count to variable %Variable.
-    Function FurreListCount(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim c As Double = 0
-            Double.TryParse(FurreList.Count.ToString, c)
-            var.Value = c
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
+#End Region
 
     '(5:702) count the number of active furres in the drean and put it in the variable %Variable.
     Function FurreActiveListCount(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -228,7 +92,7 @@ Public Class FurreList
             var.Value = c
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -245,21 +109,150 @@ Public Class FurreList
             var.Value = c
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
-#Region "Helper Functions"
-    Private Function InDream(ByRef Name As String) As Boolean
-        Dim found As Boolean = False
-        For Each kvp As KeyValuePair(Of UInteger, FURRE) In FurreList
-            If MainMSEngine.ToFurcShortName(kvp.Value.Name) = MainMSEngine.ToFurcShortName(Name) Then
-                Return True
-            End If
-        Next
-        Return False
+
+    '(5:701) save the dream list count to variable %Variable.
+    Function FurreListCount(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim c As Double = 0
+            Double.TryParse(FurreList.Count.ToString, c)
+            var.Value = c
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
     End Function
 
-#End Region
+    '(5:700) Copy the dreams's furre-list to array %Variable
+    Function FurreListVar(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim str As New ArrayList
+            For Each kvp As KeyValuePair(Of UInteger, FURRE) In FurreList
+                str.Add(kvp.Value.Name)
+            Next
+            var.Value = String.Join(", ", str.ToArray)
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
 
+    '(1:709) and the furre named {...} is active in the dream,
+    Function FurreNamedActive(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Return Target.AFK = 0
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:708) and the furre named {...} is a.f.k.,
+    Function FurreNamedAFK(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Return Target.AFK > 0
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:706) and the furre named {...} is visible.
+    Function FurreNamedCanSe(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Return Target.Visible
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:702) and the furre named {...} is in the dream.
+    Function FurreNamedInDream(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Return InDream(Target.Name)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:707) and the furre named {...} is not visible
+    Function FurreNamedNotCanSe(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Return Not Target.Visible
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:703) and the furre named {...} is not in the dream
+    Function FurreNamedNotInDream(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Return Not InDream(Target.Name)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:704) and the triggering furre is visible.
+    Function TriggeringCanSe(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = MyPlayer
+            Return tPlayer.Visible
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:700) and the triggering furre in the dream.
+    Function TriggeringInDream(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Return InDream(tPlayer.Name)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:705) and the triggering furre is not visible
+    Function TriggeringNotCanSe(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Return Not tPlayer.Visible
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:701) and the triggering furre is not in the dream.
+    Function TriggeringNotInDream(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Return Not InDream(tPlayer.Name)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
 End Class

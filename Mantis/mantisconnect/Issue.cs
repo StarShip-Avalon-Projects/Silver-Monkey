@@ -185,79 +185,79 @@ namespace SilverMonkey.BugTraqConnect
         /// </summary>
         /// <param name="issueData">Issue data from Webservice proxy.</param>
 		internal Issue(MantisConnectWebservice.IssueData issueData)
-		{
-			this.Id = Convert.ToInt32(issueData.id);
-			this.Project = new ObjectRef(issueData.project);
-			this.Category = new ObjectRef(issueData.category);
-			this.Summary = issueData.summary;
-			this.Description = StringUtils.WebserviceMultilineToNative(issueData.description);
-			this.StepsToReproduce = issueData.steps_to_reproduce == null ? String.Empty : StringUtils.WebserviceMultilineToNative(issueData.steps_to_reproduce);
-			this.AdditionalInformation = issueData.additional_information == null ? String.Empty : StringUtils.WebserviceMultilineToNative(issueData.additional_information);
-			this.AssignedTo = issueData.handler == null ? null : new User(issueData.handler);
-			this.ReportedBy = new User(issueData.reporter);
-			this.ProductVersion = issueData.version == null ? String.Empty : issueData.version;
-			this.ProductBuild = issueData.build == null ? String.Empty : issueData.build;
-			this.Os = issueData.os == null ? String.Empty : issueData.os;
-			this.OsBuild = issueData.os_build == null ? String.Empty : issueData.os_build;
-			this.Platform = issueData.platform == null ? String.Empty : issueData.platform;
-			this.FixedInVersion = issueData.fixed_in_version == null ? String.Empty : issueData.fixed_in_version;
-			this.SponsorshipTotal = Convert.ToInt32(issueData.sponsorship_total);
-			this.Reproducibility = new ObjectRef(issueData.reproducibility);
-			this.Resolution = new ObjectRef(issueData.resolution);
-			this.Eta = new ObjectRef(issueData.eta);
-			this.Status = new ObjectRef(issueData.status);
-			this.Priority = new ObjectRef(issueData.priority);
-			this.Severity = new ObjectRef(issueData.severity);
-			this.Projection = new ObjectRef(issueData.projection);
-			this.ViewState = new ObjectRef(issueData.view_state);
+        {
+            this.Id = Convert.ToInt32(issueData.id);
+            this.Project = new ObjectRef(issueData.project);
+            this.Category = new ObjectRef(issueData.category);
+            this.Summary = issueData.summary;
+            this.Description = StringUtils.WebserviceMultilineToNative(issueData.description);
+            this.StepsToReproduce = issueData.steps_to_reproduce == null ? String.Empty : StringUtils.WebserviceMultilineToNative(issueData.steps_to_reproduce);
+            this.AdditionalInformation = issueData.additional_information == null ? String.Empty : StringUtils.WebserviceMultilineToNative(issueData.additional_information);
+            this.AssignedTo = issueData.handler == null ? null : new User(issueData.handler);
+            this.ReportedBy = new User(issueData.reporter);
+            this.ProductVersion = issueData.version == null ? String.Empty : issueData.version;
+            this.ProductBuild = issueData.build == null ? String.Empty : issueData.build;
+            this.Os = issueData.os == null ? String.Empty : issueData.os;
+            this.OsBuild = issueData.os_build == null ? String.Empty : issueData.os_build;
+            this.Platform = issueData.platform == null ? String.Empty : issueData.platform;
+            this.FixedInVersion = issueData.fixed_in_version == null ? String.Empty : issueData.fixed_in_version;
+            this.SponsorshipTotal = Convert.ToInt32(issueData.sponsorship_total);
+            this.Reproducibility = new ObjectRef(issueData.reproducibility);
+            this.Resolution = new ObjectRef(issueData.resolution);
+            this.Eta = new ObjectRef(issueData.eta);
+            this.Status = new ObjectRef(issueData.status);
+            this.Priority = new ObjectRef(issueData.priority);
+            this.Severity = new ObjectRef(issueData.severity);
+            this.Projection = new ObjectRef(issueData.projection);
+            this.ViewState = new ObjectRef(issueData.view_state);
 
-			this.Notes = IssueNote.ConvertArray(issueData.notes);
-			this.Attachments = Attachment.ConvertArray(issueData.attachments);
-			this.Relationships = IssueRelationship.ConvertArray(issueData.relationships);
-		}
+            this.Notes = IssueNote.ConvertArray(issueData.notes);
+            this.Attachments = Attachment.ConvertArray(issueData.attachments);
+            this.Relationships = IssueRelationship.ConvertArray(issueData.relationships);
+        }
 
         /// <summary>
         /// Convert this instance to the type supported by the webservice proxy.
         /// </summary>
         /// <returns>A copy of this instance in the webservice proxy type.</returns>
 		internal MantisConnectWebservice.IssueData ToWebservice()
-		{
-			MantisConnectWebservice.IssueData issueData = new MantisConnectWebservice.IssueData();
+        {
+            MantisConnectWebservice.IssueData issueData = new MantisConnectWebservice.IssueData();
 
-			issueData.id = this.Id.ToString();
-			issueData.category = this.Category.Name;
-			issueData.summary = this.Summary;
-			issueData.description = StringUtils.NativeMultilineToWebservice(this.Description);
-			issueData.additional_information = StringUtils.NativeMultilineToWebservice(this.AdditionalInformation);
-			issueData.steps_to_reproduce = StringUtils.NativeMultilineToWebservice(this.StepsToReproduce);
-			issueData.build = this.ProductBuild;
-			issueData.version = this.ProductVersion;
-			issueData.os = this.Os;
-			issueData.os_build = this.OsBuild;
-			issueData.platform = this.Platform;
-			issueData.sponsorship_total = this.SponsorshipTotal.ToString();
-			issueData.fixed_in_version = this.FixedInVersion;
-			issueData.view_state = this.ViewState.ToWebservice();
-			issueData.projection = this.Projection.ToWebservice();
-			issueData.eta = this.Eta.ToWebservice();
-			issueData.priority = this.Priority.ToWebservice();
-			issueData.severity = this.Severity.ToWebservice();
-			issueData.project = this.Project.ToWebservice();
-			issueData.reproducibility = this.Reproducibility.ToWebservice();
-			issueData.resolution = this.Resolution.ToWebservice();
-			issueData.status = this.Status.ToWebservice();
-			issueData.reporter = this.ReportedBy.ToWebservice();
-			issueData.handler = this.AssignedTo == null ? null : this.AssignedTo.ToWebservice();
-			issueData.date_submitted = this.dateSubmitted;
-			issueData.last_updated = this.lastUpdated;
+            issueData.id = this.Id.ToString();
+            issueData.category = this.Category.Name;
+            issueData.summary = this.Summary;
+            issueData.description = StringUtils.NativeMultilineToWebservice(this.Description);
+            issueData.additional_information = StringUtils.NativeMultilineToWebservice(this.AdditionalInformation);
+            issueData.steps_to_reproduce = StringUtils.NativeMultilineToWebservice(this.StepsToReproduce);
+            issueData.build = this.ProductBuild;
+            issueData.version = this.ProductVersion;
+            issueData.os = this.Os;
+            issueData.os_build = this.OsBuild;
+            issueData.platform = this.Platform;
+            issueData.sponsorship_total = this.SponsorshipTotal.ToString();
+            issueData.fixed_in_version = this.FixedInVersion;
+            issueData.view_state = this.ViewState.ToWebservice();
+            issueData.projection = this.Projection.ToWebservice();
+            issueData.eta = this.Eta.ToWebservice();
+            issueData.priority = this.Priority.ToWebservice();
+            issueData.severity = this.Severity.ToWebservice();
+            issueData.project = this.Project.ToWebservice();
+            issueData.reproducibility = this.Reproducibility.ToWebservice();
+            issueData.resolution = this.Resolution.ToWebservice();
+            issueData.status = this.Status.ToWebservice();
+            issueData.reporter = this.ReportedBy.ToWebservice();
+            issueData.handler = this.AssignedTo == null ? null : this.AssignedTo.ToWebservice();
+            issueData.date_submitted = this.dateSubmitted;
+            issueData.last_updated = this.lastUpdated;
 
-			issueData.notes = IssueNote.ConvertArrayToWebservice(this.Notes);
+            issueData.notes = IssueNote.ConvertArrayToWebservice(this.Notes);
 
-			// TODO: Attachments
-			// TODO: Relationships
+            // TODO: Attachments
+            // TODO: Relationships
 
-			return issueData;
-		}
+            return issueData;
+        }
 
         /// <summary>
         /// Converts an array of instances from webservice proxy type to this type.
@@ -265,21 +265,21 @@ namespace SilverMonkey.BugTraqConnect
         /// <param name="issuesData">Issues data in webservice proxy type.</param>
         /// <returns>The array converted to this type.</returns>
 		internal static Issue[] ConvertArray(MantisConnectWebservice.IssueData[] issuesData)
-		{
+        {
             if (issuesData == null)
             {
                 return null;
             }
 
-			Issue[] issues = new Issue[issuesData.Length];
+            Issue[] issues = new Issue[issuesData.Length];
 
             for (int i = 0; i < issuesData.Length; ++i)
             {
                 issues[i] = new Issue(issuesData[i]);
             }
 
-			return issues;
-		}
+            return issues;
+        }
 
         /// <summary>
         /// Gets or sets the issue id.
@@ -532,52 +532,52 @@ namespace SilverMonkey.BugTraqConnect
             set { this.viewState = value; }
         }
 
-		/// <summary>
-		/// Gets or sets the timestamp when issue was submitted.
-		/// </summary>
-		public DateTime DateSubmitted
-		{
-			get { return this.dateSubmitted; }
-			set { this.dateSubmitted = value; }
-		}
+        /// <summary>
+        /// Gets or sets the timestamp when issue was submitted.
+        /// </summary>
+        public DateTime DateSubmitted
+        {
+            get { return this.dateSubmitted; }
+            set { this.dateSubmitted = value; }
+        }
 
-		/// <summary>
-		/// Gets or sets the timestamp when issue was last updated.
-		/// </summary>
-		public DateTime LastUpdated
-		{
-			get { return this.lastUpdated; }
-			set { this.lastUpdated = value; }
-		}
+        /// <summary>
+        /// Gets or sets the timestamp when issue was last updated.
+        /// </summary>
+        public DateTime LastUpdated
+        {
+            get { return this.lastUpdated; }
+            set { this.lastUpdated = value; }
+        }
 
         /// <summary>
         /// Gets or sets the notes.
         /// </summary>
 		public IssueNote[] Notes
-		{
-			get { return this.notes; }
-			set { this.notes = value; }
-		}
+        {
+            get { return this.notes; }
+            set { this.notes = value; }
+        }
 
         /// <summary>
         /// Gets or sets the relationships.
         /// </summary>
 		public IssueRelationship[] Relationships
-		{
-			get { return this.relationships; }
-			set { this.relationships = value; }
-		}
+        {
+            get { return this.relationships; }
+            set { this.relationships = value; }
+        }
 
         /// <summary>
         /// Gets or sets the attachments.
         /// </summary>
 		public Attachment[] Attachments
-		{
-			get { return this.attachments; }
-			set { this.attachments = value; }
-		}
-		
-		/// <summary>
+        {
+            get { return this.attachments; }
+            set { this.attachments = value; }
+        }
+
+        /// <summary>
         /// Dumps the issue information to a string.
         /// </summary>
         /// <returns>String include all issue information.</returns>
@@ -612,10 +612,10 @@ namespace SilverMonkey.BugTraqConnect
             sb.AppendFormat("OS Build = '{0}'\n", this.OsBuild);
             sb.AppendFormat("Platform = '{0}'\n", this.Platform);
 
-			sb.AppendFormat("Date Submitted = '{0}'\n", this.DateSubmitted);
-			sb.AppendFormat("Last Updated = '{0}'\n", this.LastUpdated);
+            sb.AppendFormat("Date Submitted = '{0}'\n", this.DateSubmitted);
+            sb.AppendFormat("Last Updated = '{0}'\n", this.LastUpdated);
 
-			return sb.ToString();
+            return sb.ToString();
         }
     }
 }

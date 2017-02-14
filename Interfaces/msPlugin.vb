@@ -17,5 +17,4 @@ Public Interface msPlugin
 
     Function MessagePump(ByRef ServerInstruction As String) As Boolean
 
-
 End Interface

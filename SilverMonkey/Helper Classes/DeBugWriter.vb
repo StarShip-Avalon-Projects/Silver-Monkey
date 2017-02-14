@@ -9,23 +9,22 @@ Public Class DeBugWriter
     Private control As TextBoxBase
     Private Builder As StringBuilder
 
-
     Delegate Sub UpDateBtn_GoCallback(ByRef s As String)
 
     Public Sub New(ByVal control As TextBox)
         Me.control = control
-        AddHandler control.HandleCreated, _
+        AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
     Public Sub New(ByVal control As RichTextBoxEx)
         Me.control = control
-        AddHandler control.HandleCreated, _
+        AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
 
     Public Sub New(ByVal control As RichTextBox)
         Me.control = control
-        AddHandler control.HandleCreated, _
+        AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
 
@@ -43,12 +42,13 @@ Public Class DeBugWriter
 
     Public Overrides Sub WriteLine(ByVal s As String)
         If Not IsNothing(cBot) Then
-            If cBot.log And Not IsNothing(callbk.LogStream) Then
-                Try
-                    LogStream.Writeline(s)
-                Catch
-                End Try
-            End If
+            'If cBot.log And Not IsNothing(FurcSession.BotLogStream) Then
+            '    Try
+
+            '        '  FurcSession.BotLogStream.WriteLine(s)
+            '    Catch
+            '    End Try
+            'End If
         End If
         Write(s + Environment.NewLine)
     End Sub
@@ -76,7 +76,7 @@ Public Class DeBugWriter
         End If
     End Sub
 
-    Private Sub OnHandleCreated(ByVal sender As Object, _
+    Private Sub OnHandleCreated(ByVal sender As Object,
        ByVal e As EventArgs)
         If (Builder Is Nothing = False) Then
             control.AppendText(Builder.ToString())

@@ -5,14 +5,13 @@ Imports System.Diagnostics
 Imports MonkeyCore
 
 Public Class MS_Verbot
-    Inherits Libraries.AbstractBaseLibrary
-    Private writer As TextBoxWriter = Nothing
-    Private ChatCMD As String
+    Inherits MonkeySpeakLibrary
 
-    Public Sub New()
-        writer = New TextBoxWriter(Variables.TextBox1)
-        Main.verbot = New Verbot5Engine()
-        Main.state = New State()
+    Private ChatCMD As String
+    Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
+        MyBase.New(Dream, Player, MsEngine)
+        MyMonkeySpeakEngine.verbot = New Verbot5Engine()
+        MyMonkeySpeakEngine.state = New State()
 
         '(0:1500) When the chat engine executes command {...},
         Add(TriggerCategory.Cause, 1500,
@@ -20,19 +19,16 @@ Public Class MS_Verbot
 
         '(1:1500) and the Chat Engine State variable {...} is equal to {..},
         '(1:1501) and the Chat Engine State variable {...} is not equal to {..},
-        '(1:1502) and the Chat Engine State variable {...} is equal to #, 
-        '(1:1503) and the Chat Engine State variable {...} is not equal to #, 
+        '(1:1502) and the Chat Engine State variable {...} is equal to #,
+        '(1:1503) and the Chat Engine State variable {...} is not equal to #,
         '(1:1504) and the Chat Engine State variable {...} is greater than #,
         '(1:1505) and the Chat Engine State variable {...} is greater than or equal to #,
         '(1:1506) and the Chat Engine State variable {...} is less than #,
         '(1:1507) And the Chat Engine State variable {...} Is less than Or equal To #,
 
-
         '(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.
         Add(TriggerCategory.Effect, 1500,
     AddressOf useKB_File, "(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.")
-
-
 
         '(5:1501) send text {...} to chat engine and put the response in variable %Variable.
         Add(TriggerCategory.Effect, 1501,
@@ -61,17 +57,17 @@ Public Class MS_Verbot
         Try
             SayText = reader.ReadString
             ResponceText = reader.ReadVariable(True)
-            If callbk.state.Vars.ContainsKey("botname") Then
-                callbk.state.Vars.Item("botname") = callbk.BotName
+            If MyMonkeySpeakEngine.state.Vars.ContainsKey("botname") Then
+                MyMonkeySpeakEngine.state.Vars.Item("botname") = FurcSession.BotName
             Else
-                callbk.state.Vars.Add("botname", callbk.BotName)
+                MyMonkeySpeakEngine.state.Vars.Add("botname", FurcSession.BotName)
             End If
-            If callbk.state.Vars.ContainsKey("channel") Then
-                callbk.state.Vars.Item("channel") = callbk.Channel
+            If MyMonkeySpeakEngine.state.Vars.ContainsKey("channel") Then
+                MyMonkeySpeakEngine.state.Vars.Item("channel") = FurcSession.Channel
             Else
-                callbk.state.Vars.Add("channel", callbk.Channel)
+                MyMonkeySpeakEngine.state.Vars.Add("channel", FurcSession.Channel)
             End If
-            Dim reply As Reply = callbk.verbot.GetReply(callbk.Player, SayText, callbk.state)
+            Dim reply As Reply = MyMonkeySpeakEngine.verbot.GetReply(MyPlayer, SayText, MyMonkeySpeakEngine.state)
 
             If reply Is Nothing Then Return False
 
@@ -98,17 +94,17 @@ Public Class MS_Verbot
             SayText = reader.ReadString
             SayName = reader.ReadString
             ResponceText = reader.ReadVariable(True)
-            If callbk.state.Vars.ContainsKey("botname") Then
-                callbk.state.Vars.Item("botname") = callbk.BotName
+            If MyMonkeySpeakEngine.state.Vars.ContainsKey("botname") Then
+                MyMonkeySpeakEngine.state.Vars.Item("botname") = FurcSession.BotName
             Else
-                callbk.state.Vars.Add("botname", callbk.BotName)
+                MyMonkeySpeakEngine.state.Vars.Add("botname", FurcSession.BotName)
             End If
-            If callbk.state.Vars.ContainsKey("channel") Then
-                callbk.state.Vars.Item("channel") = callbk.Channel
+            If MyMonkeySpeakEngine.state.Vars.ContainsKey("channel") Then
+                MyMonkeySpeakEngine.state.Vars.Item("channel") = FurcSession.Channel
             Else
-                callbk.state.Vars.Add("channel", callbk.Channel)
+                MyMonkeySpeakEngine.state.Vars.Add("channel", FurcSession.Channel)
             End If
-            Dim reply As Reply = callbk.verbot.GetReply(callbk.NametoFurre(SayName, False), SayText, callbk.state)
+            Dim reply As Reply = MyMonkeySpeakEngine.verbot.GetReply(FurcSession.NameToFurre(SayName, False), SayText, MyMonkeySpeakEngine.state)
 
             If reply Is Nothing Then Return False
 
@@ -171,13 +167,13 @@ Public Class MS_Verbot
                         If VarDataIndex <> -1 Then
                             VarData = args.Substring(VarDataIndex + 1)
                         End If
-                        MainMSEngine.PageSetVariable(VarName, VarData)
+                        MyMonkeySpeakEngine.PageSetVariable(VarName, VarData)
                     End If
 
                     'ChatExecute
                 Case "executechatcmd"
                     ChatCMD = args
-                    MS_Engine.MainMSEngine.PageExecute(1500)
+                    MyMonkeySpeakEngine.PageExecute(1500)
 
                 Case Else
                     Exit Select
@@ -196,7 +192,7 @@ Public Class MS_Verbot
             Dim cmd As String = reader.ReadString()
             Return ChatCMD.ToLower() = cmd.ToLower()
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -209,21 +205,20 @@ Public Class MS_Verbot
             FileName = Path.Combine(Paths.SilverMonkeyBotPath, FileName)
 
             Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
-            callbk.kb = CType(xToolbox.LoadXML(FileName), KnowledgeBase)
-            callbk.kbi.Filename = Path.GetFileName(FileName)
-            callbk.kbi.Fullpath = Path.GetDirectoryName(FileName) + "\"
-            callbk.verbot.AddKnowledgeBase(callbk.kb, callbk.kbi)
-            callbk.state.CurrentKBs.Clear()
-            callbk.state.CurrentKBs.Add(FileName)
+            MyMonkeySpeakEngine.kb = CType(xToolbox.LoadXML(FileName), KnowledgeBase)
+            MyMonkeySpeakEngine.kbi.Filename = Path.GetFileName(FileName)
+            MyMonkeySpeakEngine.kbi.Fullpath = Path.GetDirectoryName(FileName) + "\"
+            MyMonkeySpeakEngine.verbot.AddKnowledgeBase(MyMonkeySpeakEngine.kb, MyMonkeySpeakEngine.kbi)
+            MyMonkeySpeakEngine.state.CurrentKBs.Clear()
+            MyMonkeySpeakEngine.state.CurrentKBs.Add(FileName)
 
             Return True
 
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MyMonkeySpeakEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
-
 
     '(5:1503) Set Chat Engine State Vairable {...} to {...}.
     Function setStateVariable(reader As TriggerReader) As Boolean
@@ -232,14 +227,14 @@ Public Class MS_Verbot
 
             Dim EngineVar As String = reader.ReadString()
             Dim EngineValue As String = reader.ReadString()
-            If callbk.state.Vars.ContainsKey(EngineVar) Then
-                callbk.state.Vars.Item(EngineVar) = EngineValue
+            If MyMonkeySpeakEngine.state.Vars.ContainsKey(EngineVar) Then
+                MyMonkeySpeakEngine.state.Vars.Item(EngineVar) = EngineValue
             Else
-                callbk.state.Vars.Add(EngineVar, EngineValue)
+                MyMonkeySpeakEngine.state.Vars.Add(EngineVar, EngineValue)
             End If
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -250,12 +245,11 @@ Public Class MS_Verbot
             Dim EngineVar As String = reader.ReadString()
             Dim MS_Var As Variable = reader.ReadVariable(True)
 
-            MS_Var.Value = callbk.state.Vars.Item(EngineVar)
+            MS_Var.Value = MyMonkeySpeakEngine.state.Vars.Item(EngineVar)
             Return True
 
-
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MyMonkeySpeakEngine.LogError(reader, ex)
             Return False
         End Try
     End Function

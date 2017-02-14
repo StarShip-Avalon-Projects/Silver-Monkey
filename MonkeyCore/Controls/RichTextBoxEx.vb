@@ -18,7 +18,6 @@ Namespace Controls
         Dim instance As Control
         Dim value As VerticalAlignment
 
-
         Public Sub New()
             MyBase.New()
             Me.DoubleBuffered = True
@@ -27,7 +26,6 @@ Namespace Controls
             Me.DetectUrls = True
             Me._protocols = New List(Of String)
             Me._protocols.AddRange(New String() {"http://", "furc://", "file://", "mailto://", "ftp://", "https://", "gopher://", "nntp://", "prospero://", "telnet://", "news://", "wais://", "outlook://", "\\"})
-
 
         End Sub
 
@@ -79,7 +77,7 @@ Namespace Controls
             EndUpdate()
         End Sub
 
-        <DefaultValue(False)> _
+        <DefaultValue(False)>
         Public Shadows Property DetectUrls() As Boolean
             Get
                 Return MyBase.DetectUrls
@@ -98,7 +96,7 @@ Namespace Controls
         End Sub
 
         ''' <summary>
-        ''' Insert a given text at a given position as a link. 
+        ''' Insert a given text at a given position as a link.
         ''' </summary>
         ''' <param name="text">Text to be inserted</param>
         ''' <param name="position">Insert position</param>
@@ -265,13 +263,6 @@ Namespace Controls
             ' Allow the control to raise event messages.
             SendMessage(Me.Handle, EM_SETEVENTMASK, IntPtr.Zero, oldEventMask)
         End Sub
-
-
-
-
-
-
-
 
     End Class
 End Namespace

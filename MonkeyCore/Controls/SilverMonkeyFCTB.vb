@@ -1,6 +1,4 @@
-﻿
-
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Net.WebRequestMethods
 Imports FastColoredTextBoxNS
