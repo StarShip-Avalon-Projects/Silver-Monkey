@@ -118,6 +118,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Content\" />
+    <Folder Include="Content\Furcadia Specifications" />
     <Folder Include="Content\VersionHistory\" />
     <Folder Include="icons" />
     <Folder Include="media" />
@@ -127,6 +128,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Furcadia Specifications.aml" />
+    <None Include="Content\Furcadia Specifications\Pounce Speciifications.aml" />
+    <None Include="Content\Reference1.aml" />
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />

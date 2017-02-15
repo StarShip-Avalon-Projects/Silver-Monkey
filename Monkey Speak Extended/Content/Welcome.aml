@@ -1,55 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <topic id="8d0a663e-8095-408a-b860-f55d2fc3ccbe" revisionNumber="1">
-	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-		<introduction>
-			<para>This is a sample conceptual topic.  You can use this as a starting point for adding more conceptual
-content to your help project.</para>
-		</introduction>
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        MonkeySpeakEx is a Furcadia&#169; <!--&copy;-->Dragon Speak like interpreter written in C# .Net 4.6.
+      </para>
+      <para>
+        Ts Projects is in no way affiliated with Dragons Eye Productions or Catnip Studios, the creators of Furcadia. This library is forked from
+        <externalLink>
+          <linkText>MonkeySpeak R6</linkText>
+          <linkAlternateText>MonkeySpeak R6</linkAlternateText>
+          <linkUri>https://monkeyspeak.codeplex.com/</linkUri>
+        </externalLink>
+        created by Squizzle and maintained by Ts Projects. MonkeySpeakExnis free for life, Free as in FREE BEER!!!
+      </para>
+    </introduction>
 
-		<section>
-			<title>Getting Started</title>
-			<content>
-				<para>To get started, add a documentation source to the project (a Visual Studio solution, project, or
-assembly and XML comments file).  See the <legacyBold>Getting Started</legacyBold> topics in the Sandcastle Help
-File Builder's help file for more information.  The following default items are included in this project:</para>
+    <section>
+      <title>Basics</title>
+      <content>
+        <para>TMonkeyspeak is a functional language. The Engine loads the script into a new Page that contains the Triggers. Triggers can be compared to functions since they are used to perform a function in Monkeyspeak. Triggers are assigned specific TriggerHandlers (delegates) that are executed whenever the engine detects that trigger. Only one TriggerHandler delegate is assigned per Trigger.</para>
 
-				<list class="bullet">
-					<listItem>
-						<para><localUri>ContentLayout.content</localUri> - Use the content layout file to manage the
-conceptual content in the project and define its layout in the table of contents.</para>
-					</listItem>
+        <para>Features</para>
+        <list class="bullet">
 
-					<listItem>
-						<para>The <localUri>.\media</localUri> folder - Place images in this folder that you will reference
-from conceptual content using <codeInline>medialLink</codeInline> or <codeInline>mediaLinkInline</codeInline>
-elements.  If you will not have any images in the file, you may remove this folder.</para>
-					</listItem>
+          <listItem>
+            <para> supported data types (string, double)</para>
+          </listItem>
+          <listItem>
+            <para>Local variable scope per Page</para>
+          </listItem>
+          <listItem>
+            <para>Multiple conditional statements using (1:##) triggers</para>
+          </listItem>
+          <listItem>
+            <para>Default libraries Sys, IO, Math, Debug, Timers</para>
+          </listItem>
+          <listItem>
+            <para>Easy to extend by extending AbstractBaseLibrary or attaching TriggerHandlerAttribute to a method</para>
+          </listItem>
+          <listItem>
+            <para>Compilable scripts for faster loading or sending over the network</para>
+          </listItem>
+          <listItem>
+            <para>Thread safe, can execute multiple pages asynchronously. (beta)</para>
+          </listItem>
+          <listItem>
+            <para>EXE compiler (beta)</para>
+          </listItem>
+        </list>
 
-					<listItem>
-						<para>The <localUri>.\icons</localUri> folder - This contains a default logo for the help file.  You
-may replace it or remove it and the folder if not wanted.  If removed or if you change the file name, update
-the <ui>Transform Args</ui> project properties page by removing or changing the filename in the
-<codeInline>logoFile</codeInline> transform argument.  Note that unlike images referenced from conceptual topics,
-the logo file should have its <legacyBold>BuildAction</legacyBold> property set to <codeInline>Content</codeInline>.</para>
-					</listItem>
+        <para>
+          See the <legacyBold>Conceptual Content</legacyBold> topics in the Sandcastle Help File Builder's
+          help file for more information.  See the <legacyBold> Sandcastle MAML Guide</legacyBold> for details on Microsoft
+          Assistance Markup Language (MAML) which is used to create these topics.
+        </para>
+      </content>
+    </section>
 
-					<listItem>
-						<para>The <localUri>.\Content</localUri> folder - Use this to store your conceptual topics.  You may
-name the files and organize them however you like.  One suggestion is to lay the files out on disk as you have
-them in the content layout file as shown in this project but the choice is yours.  Files can be added via the
-Solution Explorer or from within the content layout file editor.  Files must appear in the content layout file
-in order to be compiled into the help file.</para>
-					</listItem>
-				</list>
-
-				<para>See the <legacyBold>Conceptual Content</legacyBold> topics in the Sandcastle Help File Builder's
-help file for more information.  See the <legacyBold> Sandcastle MAML Guide</legacyBold> for details on Microsoft
-Assistance Markup Language (MAML) which is used to create these topics.</para>
-			</content>
-		</section>
-
-		<relatedTopics>
-			<link xlink:href="4340cd61-7802-4111-a144-fc835a39faf6" />
-		</relatedTopics>
-	</developerConceptualDocument>
+    <relatedTopics>
+      <link xlink:href="4340cd61-7802-4111-a144-fc835a39faf6" />
+    </relatedTopics>
+  </developerConceptualDocument>
 </topic>
