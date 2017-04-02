@@ -378,10 +378,6 @@
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeySpeakR6\MonkeySpeakEx.csproj">
-      <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
-      <Name>MonkeySpeakEx</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Verbot5Library\Verbot5Library.csproj">
       <Project>{4D25B13B-4D67-433F-9181-BF5FDFA931B6}</Project>
       <Name>Verbot5Library</Name>

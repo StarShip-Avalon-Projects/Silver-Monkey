@@ -1,6 +1,6 @@
-[submodule "FurcLib"]
-	path = FurcLib
-	url = https://github.com/StarShip-Avalon-Projects/FurcLib.git
 [submodule "MonkeySpeakEx"]
 	path = MonkeySpeakEx
 	url = https://github.com/StarShip-Avalon-Projects/MonkeySpeakEx.git
+
+[submodule "furclib"]
+	path = FurcLib	url = https://github.com/StarShip-Avalon-Projects/FurcLib.git
