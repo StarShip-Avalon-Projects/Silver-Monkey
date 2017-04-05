@@ -3,15 +3,8 @@ Imports MonkeyCore
 
 Public Class smHost
     Implements Interfaces.msHost
-    Sub Start(ByRef page As Monkeyspeak.Page) Implements SilverMonkey.Interfaces.msHost.start
-        FurcSession.MainEngine.MSpage = page
-    End Sub
 
-    Public WriteOnly Property Page() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.Page
-        Set(value As Monkeyspeak.Page)
-            FurcSession.MainEngine.MSpage = value
-        End Set
-    End Property
+#Region "Public Properties"
 
     Public ReadOnly Property BotName As String Implements SilverMonkey.Interfaces.msHost.BotName
         Get
@@ -38,6 +31,12 @@ Public Class smHost
         End Set
     End Property
 
+    Public WriteOnly Property Page() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.Page
+        Set(value As Monkeyspeak.Page)
+            FurcSession.MainEngine.MSpage = value
+        End Set
+    End Property
+
     Public Property Player() As FURRE Implements SilverMonkey.Interfaces.msHost.Player
         Get
             Return FurcSession.Player
@@ -47,6 +46,14 @@ Public Class smHost
         End Set
     End Property
 
+#End Region
+
+#Region "Public Methods"
+
+    Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements SilverMonkey.Interfaces.msHost.logError
+        Dim Err As New ErrorLogging(Ex, ObjectThrowingError)
+    End Sub
+
     Public Sub SendClientMessage(Tag As String, data As String) Implements SilverMonkey.Interfaces.msHost.SendClientMessage
         SendClientMessage(Tag, data)
     End Sub
@@ -55,8 +62,10 @@ Public Class smHost
 
     End Sub
 
-    Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements SilverMonkey.Interfaces.msHost.logError
-        Dim Err As New ErrorLogging(Ex, ObjectThrowingError)
+    Sub Start(ByRef page As Monkeyspeak.Page) Implements SilverMonkey.Interfaces.msHost.start
+        FurcSession.MainEngine.MSpage = page
     End Sub
+
+#End Region
 
 End Class

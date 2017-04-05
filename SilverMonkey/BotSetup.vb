@@ -4,7 +4,49 @@ Imports MonkeyCore.Settings
 
 Public Class BotSetup
 
+#Region "Public Fields"
+
     Public bFile As New cBot
+
+#End Region
+
+#Region "Public Methods"
+
+    Public Function LogOption() As Short
+        Dim Opt As Short = 0
+        If RadioOverwriteLog.Checked Then
+            Return Opt
+        ElseIf RadioNewFile.Checked Then
+            Opt = 1
+            If ChkBxTimeStampLog.Checked Then
+                Opt = 2
+                Return Opt
+            End If
+            Return Opt
+        End If
+        Return Opt
+    End Function
+
+    Public Sub setLogOptions()
+        Select Case bFile.LogOption
+            Case 0
+                RadioOverwriteLog.Checked = True
+                ChkBxTimeStampLog.Checked = False
+                ChkBxTimeStampLog.Enabled = False
+            Case 1
+                RadioNewFile.Checked = True
+                ChkBxTimeStampLog.Checked = False
+                ChkBxTimeStampLog.Enabled = True
+            Case 2
+                RadioNewFile.Checked = True
+                ChkBxTimeStampLog.Checked = True
+                ChkBxTimeStampLog.Enabled = True
+        End Select
+    End Sub
+
+#End Region
+
+#Region "Private Methods"
 
     Private Sub BotSetup_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         If String.IsNullOrEmpty(bFile.BiniFile) Then
@@ -129,36 +171,6 @@ Public Class BotSetup
         ChkBxTimeStampLog.Enabled = RadioNewFile.Checked
     End Sub
 
-    Public Function LogOption() As Short
-        Dim Opt As Short = 0
-        If RadioOverwriteLog.Checked Then
-            Return Opt
-        ElseIf RadioNewFile.Checked Then
-            Opt = 1
-            If ChkBxTimeStampLog.Checked Then
-                Opt = 2
-                Return Opt
-            End If
-            Return Opt
-        End If
-        Return Opt
-    End Function
-
-    Public Sub setLogOptions()
-        Select Case bFile.LogOption
-            Case 0
-                RadioOverwriteLog.Checked = True
-                ChkBxTimeStampLog.Checked = False
-                ChkBxTimeStampLog.Enabled = False
-            Case 1
-                RadioNewFile.Checked = True
-                ChkBxTimeStampLog.Checked = False
-                ChkBxTimeStampLog.Enabled = True
-            Case 2
-                RadioNewFile.Checked = True
-                ChkBxTimeStampLog.Checked = True
-                ChkBxTimeStampLog.Enabled = True
-        End Select
-    End Sub
+#End Region
 
 End Class

@@ -7,9 +7,13 @@ namespace DataMonkey
     /// </summary>
     public class StatementBuilder
     {
+        #region Public Constructors
+
         public StatementBuilder()
         {
         }
+
+        #endregion Public Constructors
 
         #region BuildTableOpenSql
 

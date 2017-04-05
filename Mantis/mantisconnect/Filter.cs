@@ -18,20 +18,22 @@ namespace SilverMonkey.BugTraqConnect
     using System;
 
     /// <summary>
-	/// A class that manages information relating to a Mantis filter.
-	/// </summary>
+    /// A class that manages information relating to a Mantis filter.
+    /// </summary>
     [Serializable]
     public sealed class Filter
     {
+        #region Private Fields
+
+        /// <summary>
+        /// The filter string.
+        /// </summary>
+        private readonly string filterString;
+
         /// <summary>
         /// The filter id.
         /// </summary>
         private readonly int id;
-
-        /// <summary>
-        /// The project id the filter is associated with.
-        /// </summary>
-        private readonly int projectId;
 
         /// <summary>
         /// A flag indicating whether the filter is public or not.
@@ -44,20 +46,26 @@ namespace SilverMonkey.BugTraqConnect
         private readonly string name;
 
         /// <summary>
-        /// The filter string.
+        /// The project id the filter is associated with.
         /// </summary>
-        private readonly string filterString;
+        private readonly int projectId;
 
         /// <summary>
         /// The owner of the filter.
         /// </summary>
         private User owner;
 
+        #endregion Private Fields
+
+        #region Internal Constructors
+
         /// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="filterData">The filter data stored in the webservice proxy data type.</param>
-		internal Filter(MantisConnectWebservice.FilterData filterData)
+        /// Constructor
+        /// </summary>
+        /// <param name="filterData">
+        /// The filter data stored in the webservice proxy data type.
+        /// </param>
+        internal Filter(MantisConnectWebservice.FilterData filterData)
         {
             this.id = Convert.ToInt32(filterData.id);
             this.owner = new User(filterData.owner);
@@ -67,26 +75,17 @@ namespace SilverMonkey.BugTraqConnect
             this.filterString = filterData.filter_string;
         }
 
+        #endregion Internal Constructors
+
+        #region Public Properties
+
         /// <summary>
-        /// Converts an array of filters from webservice data type to instances of <see cref="Filter"/> class.
+        /// Gets the string that defines the filter. At the moment this format is treated as a
+        /// blackbox and is not interpretted by MantisConnect.
         /// </summary>
-        /// <param name="filtersData">An array of filters stored in webservice proxy data type.</param>
-        /// <returns>An array of <see cref="Filter"/> instances.</returns>
-        internal static Filter[] ConvertArray(MantisConnectWebservice.FilterData[] filtersData)
+        public string FilterString
         {
-            if (filtersData == null)
-            {
-                return null;
-            }
-
-            Filter[] filters = new Filter[filtersData.Length];
-
-            for (int i = 0; i < filtersData.Length; ++i)
-            {
-                filters[i] = new Filter(filtersData[i]);
-            }
-
-            return filters;
+            get { return this.filterString; }
         }
 
         /// <summary>
@@ -95,6 +94,23 @@ namespace SilverMonkey.BugTraqConnect
         public int Id
         {
             get { return this.id; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the filter is public (available to all users) or private
+        /// (available only to the user who created it).
+        /// </summary>
+        public bool IsPublic
+        {
+            get { return this.isPublic; }
+        }
+
+        /// <summary>
+        /// Gets the name of the filter
+        /// </summary>
+        public string Name
+        {
+            get { return this.name; }
         }
 
         /// <summary>
@@ -113,30 +129,37 @@ namespace SilverMonkey.BugTraqConnect
             get { return this.projectId; }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the filter is public (available to all users) or
-        /// private (available only to the user who created it).
-        /// </summary>
-        public bool IsPublic
-        {
-            get { return this.isPublic; }
-        }
+        #endregion Public Properties
+
+        #region Internal Methods
 
         /// <summary>
-        /// Gets the name of the filter
+        /// Converts an array of filters from webservice data type to instances of
+        /// <see cref="Filter"/> class.
         /// </summary>
-        public string Name
+        /// <param name="filtersData">
+        /// An array of filters stored in webservice proxy data type.
+        /// </param>
+        /// <returns>
+        /// An array of <see cref="Filter"/> instances.
+        /// </returns>
+        internal static Filter[] ConvertArray(MantisConnectWebservice.FilterData[] filtersData)
         {
-            get { return this.name; }
+            if (filtersData == null)
+            {
+                return null;
+            }
+
+            Filter[] filters = new Filter[filtersData.Length];
+
+            for (int i = 0; i < filtersData.Length; ++i)
+            {
+                filters[i] = new Filter(filtersData[i]);
+            }
+
+            return filters;
         }
 
-        /// <summary>
-        /// Gets the string that defines the filter.  At the moment this format is treated as
-        /// a blackbox and is not interpretted by MantisConnect.
-        /// </summary>
-        public string FilterString
-        {
-            get { return this.filterString; }
-        }
+        #endregion Internal Methods
     }
 }

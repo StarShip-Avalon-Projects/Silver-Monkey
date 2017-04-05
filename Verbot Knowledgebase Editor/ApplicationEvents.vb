@@ -10,6 +10,9 @@ Namespace My
     ' StartupNextInstance: Raised when launching a single-instance application and the application is already active.
     ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
+
+#Region "Private Methods"
+
         Private Sub MyApplication_UnhandledException(sender As Object, e As ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
             Dim logError As New ErrorLogging(e.Exception, sender)
             Dim SubmitError As New SubmitIssueForm(logError.LogFile)
@@ -18,5 +21,8 @@ Namespace My
                 File.Delete(logError.LogFile)
             End If
         End Sub
+
+#End Region
+
     End Class
 End Namespace

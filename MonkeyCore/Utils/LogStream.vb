@@ -4,12 +4,18 @@ Imports System.IO
 ''' <summary>
 ''' Log stream for normal log messages
 ''' </summary>
+<CLSCompliant(True)>
 Public Class LogStream
+
+#Region "Private Fields"
 
     Private Const Iconfilter As String = "<img src='fsh://system.fsh:([^']*)'(.*?)/>"
     Private Const IMGFILTER As String = "<img src='?""?(.*?)'?""? ?/?>"
     Private Const NameFilter As String = "<name shortname='([^']*)' ?(.*?)?>([\x21-\x3B\=\x3F-\x7E]+)</name>"
     Private Const URLFILTER As String = "<a href='?""?(.*?)'?""?>(.*?)</a>"
+
+#End Region
+
 #Region "logging functions"
     Private Shared Stack As New List(Of String)
     Private Shared strErrorFilePath As String
@@ -29,21 +35,6 @@ Public Class LogStream
             'TODO: Add Exception handler
         End Try
     End Sub
-
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <param name="filePath"></param>
-    ''' <returns></returns>
-    Private Shared Function IsFileInUse(ByVal filePath As String) As Boolean
-        Try
-            Dim contents() As String = System.IO.File.ReadAllLines(filePath)
-        Catch ex As IOException
-            Return (ex.Message.StartsWith("The process cannot access the file") AndAlso
-                    ex.Message.EndsWith("because it is being used by another process."))
-        End Try
-        Return False
-    End Function
 
     ''' <summary>
     ''' Write a an exception line to the log file
@@ -192,5 +183,20 @@ Public Class LogStream
         End Try
 
     End Sub
+
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    ''' <returns></returns>
+    Private Shared Function IsFileInUse(ByVal filePath As String) As Boolean
+        Try
+            Dim contents() As String = System.IO.File.ReadAllLines(filePath)
+        Catch ex As IOException
+            Return (ex.Message.StartsWith("The process cannot access the file") AndAlso
+                    ex.Message.EndsWith("because it is being used by another process."))
+        End Try
+        Return False
+    End Function
 #End Region
 End Class

@@ -40,14 +40,24 @@ Module MS_Engine
 
     Class MathLibrary
         Inherits Libraries.AbstractBaseLibrary
+
+#Region "Public Constructors"
+
         Sub New()
 
         End Sub
+
+#End Region
 
     End Class
 
     Class SayLibrary
         Inherits MonkeySpeakLibrary
+
+#Region "Public Constructors"
+        Public Sub New()
+            MyBase.New()
+        End Sub
         Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
             MyBase.New(Dream, Player, MsEngine)
 
@@ -518,6 +528,10 @@ Module MS_Engine
                 "(5:42) start a new instance to Silver Monkey with botfile {.}.")
 
         End Sub
+
+#End Region
+
+#Region "Public Methods"
 
         '(1:19) and the bot is the MyDream owner,
         Function BotIsDREAMOWNER(reader As TriggerReader) As Boolean
@@ -1057,6 +1071,10 @@ Module MS_Engine
             Return True
         End Function
 
+#End Region
+
+#Region "Private Methods"
+
         Private Function InDream(ByRef Name As String) As Boolean
             Dim found As Boolean = False
             For Each kvp As KeyValuePair(Of Integer, FURRE) In MyDream.FurreList
@@ -1073,10 +1091,19 @@ Module MS_Engine
             Text = r.Replace(Text, String.Empty)
             Return Text.Replace("|", " ").ToLower
         End Function
+
+#End Region
+
     End Class
 
     Class StringLibrary
-        Inherits MonkeySpeakLibrary
+        Inherits SilverMonkey.MonkeySpeakLibrary
+
+#Region "Public Constructors"
+
+        Public Sub New()
+            MyBase.New()
+        End Sub
 
         Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
             MyBase.New(Dream, Player, MsEngine)
@@ -1109,6 +1136,10 @@ Module MS_Engine
 "(5:127) take variable %Variable and convert it to Furcadia short name. (without special characters or spaces or pipe ""|"").")
 
         End Sub
+
+#End Region
+
+#Region "Public Methods"
 
         '(5:123) chop off the end of variable %Variable, removing the last # characters of it.
         Public Function ChopEndString(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -1297,6 +1328,10 @@ Module MS_Engine
             End Try
         End Function
 
+#End Region
+
+#Region "Private Methods"
+
         Private Function ToShortName(reader As TriggerReader) As Boolean
             Try
                 If reader.PeekVariable Then
@@ -1319,5 +1354,8 @@ Module MS_Engine
                 Return False
             End Try
         End Function
+
+#End Region
+
     End Class
 End Module

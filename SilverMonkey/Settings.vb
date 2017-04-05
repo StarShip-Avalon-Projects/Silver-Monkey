@@ -8,6 +8,12 @@ Namespace My
     ' The SettingsLoaded event is raised after the setting values are loaded.
     ' The SettingsSaving event is raised before the setting values are saved.
     Partial Friend NotInheritable Class MySettings
+
+#Region "Public Properties"
+
         Public Property MainFormSize As Size
+
+#End Region
+
     End Class
 End Namespace

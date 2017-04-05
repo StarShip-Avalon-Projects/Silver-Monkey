@@ -3,9 +3,15 @@
 Public Class BaseSubSystem
     Inherits Furcadia.IO.ParseServer
 
+#Region "Protected Fields"
+
     Protected MyDream As Furcadia.Net.DREAM
 
     Protected MyEngine As MainMsEngine
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New(ByRef Dream As DREAM, ByRef Player As FURRE, MsEngine As MainMsEngine)
         MyBase.New(Dream, Player)
@@ -18,6 +24,14 @@ Public Class BaseSubSystem
         MyEngine = New MainMsEngine()
     End Sub
 
+    Public Sub New()
+        MyBase.New()
+    End Sub
+
+#End Region
+
+#Region "Public Methods"
+
     Public Overrides Sub ParseServerChannel(ByVal data As String, ByRef handled As Boolean)
         MyBase.ParseServerChannel(data, handled)
     End Sub
@@ -25,5 +39,7 @@ Public Class BaseSubSystem
     Public Overrides Sub ParseServerData(data As String, ByRef handled As Boolean)
         MyBase.ParseServerData(data, handled)
     End Sub
+
+#End Region
 
 End Class

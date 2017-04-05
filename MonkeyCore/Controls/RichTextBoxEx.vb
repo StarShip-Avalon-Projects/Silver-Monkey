@@ -10,13 +10,15 @@ Namespace Controls
     Public Class RichTextBoxEx
         Inherits System.Windows.Forms.RichTextBox
 
-        'Declaration
-        <BindableAttribute(True)>
-        Public Property VerticalContentAlignment As VerticalAlignment
-        Private _protocols As List(Of String)
+#Region "Private Fields"
 
+        Private _protocols As List(Of String)
         Dim instance As Control
         Dim value As VerticalAlignment
+
+#End Region
+
+#Region "Public Constructors"
 
         Public Sub New()
             MyBase.New()
@@ -28,6 +30,10 @@ Namespace Controls
             Me._protocols.AddRange(New String() {"http://", "furc://", "file://", "mailto://", "ftp://", "https://", "gopher://", "nntp://", "prospero://", "telnet://", "news://", "wais://", "outlook://", "\\"})
 
         End Sub
+
+#End Region
+
+#Region "Public Properties"
 
         ''' <summary>
         ''' Gets and Sets the Horizontal Scroll position of the control.
@@ -41,6 +47,14 @@ Namespace Controls
             End Set
         End Property
 
+        Public ReadOnly Property Protocols() As List(Of String)
+            Get
+
+                Return Me._protocols
+            End Get
+        End Property
+
+        Public Property VerticalContentAlignment As VerticalAlignment
         ''' <summary>
         ''' Gets and Sets the Vertical Scroll position of the control.
         ''' </summary>
@@ -56,28 +70,6 @@ Namespace Controls
         <Editor(("System.Windows.Forms.Design.StringCollectionEditor," _
            + "System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),
            GetType(System.Drawing.Design.UITypeEditor))>
-        Public ReadOnly Property Protocols() As List(Of String)
-            Get
-
-                Return Me._protocols
-            End Get
-        End Property
-
-        Protected Overrides Sub OnTextChanged(ByVal e As EventArgs)
-            BeginUpdate()
-            For Each p As String In _protocols
-                Dim matches As MatchCollection = Regex.Matches(Me.Text, p & "(.*?)\s", RegexOptions.IgnoreCase)
-                For Each m As Match In matches
-                    If m.Success Then
-                        Me.Select(m.Index, m.Length - 1)
-                        Me.SetSelectionStyle(CFM_LINK, CFE_LINK)
-                    End If
-                Next
-            Next
-            EndUpdate()
-        End Sub
-
-        <DefaultValue(False)>
         Public Shadows Property DetectUrls() As Boolean
             Get
                 Return MyBase.DetectUrls
@@ -86,6 +78,75 @@ Namespace Controls
                 MyBase.DetectUrls = value
             End Set
         End Property
+
+#End Region
+
+#Region "Public Methods"
+
+        ''' <summary>
+        ''' Maintains performance while updating.
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>
+        ''' It is recommended to call this method before doing
+        ''' any major updates that you do not wish the user to
+        ''' see. Remember to call EndUpdate When you are finished
+        ''' with the update. Nested calls are supported.
+        ''' </para>
+        ''' <para>
+        ''' Calling this method will prevent redrawing. It will
+        ''' also setup the event mask of the underlying richedit
+        ''' control so that no events are sent.
+        ''' </para>
+        ''' </remarks>
+        Public Sub BeginUpdate()
+            ' Deal with nested calls.
+            updating += 1
+
+            If updating > 1 Then
+                Return
+            End If
+
+            ' Prevent the control from raising any events.
+            oldEventMask = SendMessage(Me.Handle, EM_SETEVENTMASK, IntPtr.Zero, IntPtr.Zero)
+
+            ' Prevent the control from redrawing itself.
+            SendMessage(Me.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero)
+        End Sub
+
+        'Public Sub urlClicked(ByVal sender As Object, ByVal e As LinkClickedEventArgs) Handles Me.LinkClicked
+        '    MessageBox.Show(e.LinkText)
+        'End Sub
+        ''' <summary>
+        ''' Resumes drawing and event handling.
+        ''' </summary>
+        ''' <remarks>
+        ''' This method should be called every time a call is made
+        ''' made to BeginUpdate. It resets the event mask to it's
+        ''' original value and enables redrawing of the control.
+        ''' </remarks>
+        Public Sub EndUpdate()
+            ' Deal with nested calls.
+            updating -= 1
+
+            If updating > 0 Then
+                Return
+            End If
+
+            ' Allow the control to redraw itself.
+            SendMessage(Me.Handle, WM_SETREDRAW, New IntPtr(1), IntPtr.Zero)
+
+            ' Allow the control to raise event messages.
+            SendMessage(Me.Handle, EM_SETEVENTMASK, IntPtr.Zero, oldEventMask)
+        End Sub
+
+        ''' <summary>
+        ''' Get the link style for the current selection
+        ''' </summary>
+        ''' <returns>0: link style not set, 1: link style set, -1: mixed</returns>
+        Public Function GetSelectionLink() As Integer
+            Return GetSelectionStyle(CFM_LINK, CFE_LINK)
+        End Function
 
         ''' <summary>
         ''' Insert a given text as a link into the RichTextBox at the current insert position.
@@ -154,28 +215,28 @@ Namespace Controls
         Public Sub SetSelectionLink(ByVal link As Boolean)
             SetSelectionStyle(CFM_LINK, If(link, CFE_LINK, 0))
         End Sub
-        ''' <summary>
-        ''' Get the link style for the current selection
-        ''' </summary>
-        ''' <returns>0: link style not set, 1: link style set, -1: mixed</returns>
-        Public Function GetSelectionLink() As Integer
-            Return GetSelectionStyle(CFM_LINK, CFE_LINK)
-        End Function
 
-        Private Sub SetSelectionStyle(ByVal mask As Integer, ByVal effect As Integer)
-            Dim cf As New CHARFORMAT2_STRUCT()
-            cf.cbSize = CType(Marshal.SizeOf(cf), Integer)
-            cf.dwMask = mask
-            cf.dwEffects = effect
+#End Region
 
-            Dim wpar As New IntPtr(SCF_SELECTION)
-            Dim lpar As IntPtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(cf))
-            Marshal.StructureToPtr(cf, lpar, False)
+#Region "Protected Methods"
 
-            Dim res As IntPtr = SendMessage(Handle, EM_SETCHARFORMAT, wpar, lpar)
-
-            Marshal.FreeCoTaskMem(lpar)
+        Protected Overrides Sub OnTextChanged(ByVal e As EventArgs)
+            BeginUpdate()
+            For Each p As String In _protocols
+                Dim matches As MatchCollection = Regex.Matches(Me.Text, p & "(.*?)\s", RegexOptions.IgnoreCase)
+                For Each m As Match In matches
+                    If m.Success Then
+                        Me.Select(m.Index, m.Length - 1)
+                        Me.SetSelectionStyle(CFM_LINK, CFE_LINK)
+                    End If
+                Next
+            Next
+            EndUpdate()
         End Sub
+
+#End Region
+
+#Region "Private Methods"
 
         Private Function GetSelectionStyle(ByVal mask As Integer, ByVal effect As Integer) As Integer
             Dim cf As New CHARFORMAT2_STRUCT()
@@ -206,63 +267,22 @@ Namespace Controls
             Return state
         End Function
 
-        'Public Sub urlClicked(ByVal sender As Object, ByVal e As LinkClickedEventArgs) Handles Me.LinkClicked
-        '    MessageBox.Show(e.LinkText)
-        'End Sub
+        Private Sub SetSelectionStyle(ByVal mask As Integer, ByVal effect As Integer)
+            Dim cf As New CHARFORMAT2_STRUCT()
+            cf.cbSize = CType(Marshal.SizeOf(cf), Integer)
+            cf.dwMask = mask
+            cf.dwEffects = effect
 
-        ''' <summary>
-        ''' Maintains performance while updating.
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>
-        ''' It is recommended to call this method before doing
-        ''' any major updates that you do not wish the user to
-        ''' see. Remember to call EndUpdate When you are finished
-        ''' with the update. Nested calls are supported.
-        ''' </para>
-        ''' <para>
-        ''' Calling this method will prevent redrawing. It will
-        ''' also setup the event mask of the underlying richedit
-        ''' control so that no events are sent.
-        ''' </para>
-        ''' </remarks>
-        Public Sub BeginUpdate()
-            ' Deal with nested calls.
-            updating += 1
+            Dim wpar As New IntPtr(SCF_SELECTION)
+            Dim lpar As IntPtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(cf))
+            Marshal.StructureToPtr(cf, lpar, False)
 
-            If updating > 1 Then
-                Return
-            End If
+            Dim res As IntPtr = SendMessage(Handle, EM_SETCHARFORMAT, wpar, lpar)
 
-            ' Prevent the control from raising any events.
-            oldEventMask = SendMessage(Me.Handle, EM_SETEVENTMASK, IntPtr.Zero, IntPtr.Zero)
-
-            ' Prevent the control from redrawing itself.
-            SendMessage(Me.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero)
+            Marshal.FreeCoTaskMem(lpar)
         End Sub
 
-        ''' <summary>
-        ''' Resumes drawing and event handling.
-        ''' </summary>
-        ''' <remarks>
-        ''' This method should be called every time a call is made
-        ''' made to BeginUpdate. It resets the event mask to it's
-        ''' original value and enables redrawing of the control.
-        ''' </remarks>
-        Public Sub EndUpdate()
-            ' Deal with nested calls.
-            updating -= 1
-
-            If updating > 0 Then
-                Return
-            End If
-
-            ' Allow the control to redraw itself.
-            SendMessage(Me.Handle, WM_SETREDRAW, New IntPtr(1), IntPtr.Zero)
-
-            ' Allow the control to raise event messages.
-            SendMessage(Me.Handle, EM_SETEVENTMASK, IntPtr.Zero, oldEventMask)
-        End Sub
+#End Region
 
     End Class
 End Namespace

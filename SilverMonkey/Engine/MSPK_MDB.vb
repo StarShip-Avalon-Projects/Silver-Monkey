@@ -6,26 +6,27 @@ Imports Monkeyspeak
 Imports Furcadia.Util
 
 Public Class MSPK_MDB
-    Inherits MonkeySpeakLibrary
+    Inherits SilverMonkey.MonkeySpeakLibrary
+
+#Region "Public Fields"
 
     Public Shared SQLreader As SQLiteDataReader = Nothing
-    Private QueryRun As Boolean = False
+
+#End Region
+
+#Region "Private Fields"
+
     Private Shared _SQLitefile As String
-    Public Shared Property SQLitefile As String
-        Get
-            If String.IsNullOrEmpty(_SQLitefile) Then
-                _SQLitefile = Path.Combine(Paths.SilverMonkeyBotPath, "SilverMonkey.db")
-            End If
-            Return _SQLitefile
-        End Get
-        Set(value As String)
-            _SQLitefile = Paths.CheckBotFolder(value)
-        End Set
-    End Property
-
-    Dim lock As New Object
     Dim cache As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
+    Dim lock As New Object
+    Private QueryRun As Boolean = False
 
+#End Region
+
+#Region "Public Constructors"
+    Public Sub New()
+        MyBase.New()
+    End Sub
     Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
         MyBase.New(Dream, Player, MsEngine)
 
@@ -165,7 +166,360 @@ Public Class MSPK_MDB
 
     End Sub
 
+#End Region
+
+#Region "Public Properties"
+
+    Public Shared Property SQLitefile As String
+        Get
+            If String.IsNullOrEmpty(_SQLitefile) Then
+                _SQLitefile = Path.Combine(Paths.SilverMonkeyBotPath, "SilverMonkey.db")
+            End If
+            Return _SQLitefile
+        End Get
+        Set(value As String)
+            _SQLitefile = Paths.CheckBotFolder(value)
+        End Set
+    End Property
+
+#End Region
+
 #Region "Condition Functions"
+
+    '(1: ) and the Database info {...} about the furre named {...} is equal to #,
+    Public Function FurreNamedinfoEqualToNumber(reader As TriggerReader) As Boolean
+        Dim info As String = Nothing
+        Dim Variable As Double = 0
+        Dim Furre As String = Nothing
+
+        Try
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim Value As Double = 0
+            Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
+            Return Variable = Value
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+        Return False
+    End Function
+
+    '(1: ) and the Database info {...} about the furre named {...} is equal to {...},
+    Public Function FurreNamedinfoEqualToSTR(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString
+        Dim Furre As String = FurcadiaShortName(reader.ReadString())
+        Dim str As String = reader.ReadString
+        Try
+            Return str = GetValueFromTable(Info, Furre).ToString
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+        Return False
+    End Function
+
+    '(1: ) and the Database info {...} about the furre named {...} is greater than #,
+    Public Function FurreNamedinfoGreaterThanNumber(reader As TriggerReader) As Boolean
+        Dim info As String = Nothing
+        Dim Variable As Double = 0
+        Dim Furre As String = Nothing
+        Try
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim Value As Double = 0
+            Double.TryParse(check.ToString, Value)
+            Return Value > Variable
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+        Return False
+    End Function
+
+    '(1: ) and the Database info {...} about the furre named {...} is greater than #,
+    Public Function FurreNamedinfoGreaterThanOrEqualToNumber(reader As TriggerReader) As Boolean
+        Dim info As String = Nothing
+        Dim Variable As Double = 0
+        Dim Furre As String = Nothing
+        Try
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim Value As Double = 0
+            Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
+            Return Value >= Variable
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+        Return False
+    End Function
+
+    '(1: ) and the Database info {...} about the furre named {...} is less than #,
+    Public Function FurreNamedinfoLessThanNumber(reader As TriggerReader) As Boolean
+        Dim info As String = Nothing
+        Dim Variable As Double = 0
+        Dim Furre As String = Nothing
+        Try
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
+
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim Value As Double = 0
+            Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
+            Return Value < Variable
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+        Return False
+    End Function
+
+    '(1: ) and the Database info {...} about the furre named {...} is less than #,
+    Public Function FurreNamedinfoLessThanOrEqualToNumber(reader As TriggerReader) As Boolean
+        Dim info As String = Nothing
+        Dim Variable As Double = 0
+        Dim Furre As String = Nothing
+        Try
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim Value As Double = 0
+            Double.TryParse(check.ToString, Value)
+            Return Value <= Variable
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+        Return False
+    End Function
+
+    '(1: ) and the Database info {...} about the furre named {...} is not equal to #,
+    Public Function FurreNamedinfoNotEqualToNumber(reader As TriggerReader) As Boolean
+        Dim info As String = Nothing
+        Dim Variable As Double = 0
+        Dim Furre As String = Nothing
+        Try
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
+
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim Value As Double = 0
+            Double.TryParse(check.ToString, Value)
+            Return Value <> Variable
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+        Return False
+    End Function
+
+    '(1: ) and the Database info {...} about the furre named {...} is not equal to {...},
+    Public Function FurreNamedinfoNotEqualToSTR(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString
+        Dim Furre As String = FurcadiaShortName(reader.ReadString)
+
+        Dim str As String = reader.ReadString
+
+        Try
+            Return str <> GetValueFromTable(Info, Furre).ToString
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+        Return False
+    End Function
+
+    '(1:x) And the Database info {..} in Settings Table  {...} Is equal to {...},
+    Public Function SettingEqualTo(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Value As String = reader.ReadString(True)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Info + "' "
+        Try
+
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+
+            Return cache.Item(Info).ToString = Value
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) And the Database info  {...} in Settings Table {...} exists,
+    Public Function SettingExist(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString(True)
+        Dim setting As String = reader.ReadString(True)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.ID from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + setting + "' "
+        Try
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Return cache.Count > 0
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) And the Database info {..} in Settings Table  {...} Is greater than #,
+    Public Function SettingGreaterThan(reader As TriggerReader) As Boolean
+        Dim Setting As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Number As Double = reader.ReadVariableOrNumber()
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Setting + "' "
+        Try
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num > Number
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+    End Function
+
+    '(1:x )And the Database info {..} in Settings Table  {...} Is greater than Or equl to #,
+    Public Function SettingGreaterThanOrEqualTo(reader As TriggerReader) As Boolean
+        Dim Setting As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Number As Double = reader.ReadVariableOrNumber()
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Setting + "' "
+        Try
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num >= Number
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x )And the Database info {..} in Settings Table  {...} Is less than #,
+    Public Function SettingLessThan(reader As TriggerReader) As Boolean
+        Dim Setting As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Number As Double = reader.ReadVariableOrNumber()
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Setting + "' "
+        Try
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num < Number
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+    End Function
+
+    '(1:x )And the Database info {..} in Settings Table  {...} Is less than Or equl to #,
+    Public Function SettingLessThanOrEqualTo(reader As TriggerReader) As Boolean
+        Dim Setting As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Number As Double = reader.ReadVariableOrNumber()
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Setting + "' "
+        Try
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num <= Number
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) And the Database info {..} in Settings Table  {...} Is Not equal to {...},
+    Public Function SettingNotEqualTo(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString(True)
+        Dim Table As String = reader.ReadString(True)
+        Dim Value As String = reader.ReadString(True)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + Info + "' "
+        Try
+
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Return cache.Item(Info).ToString <> Value
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) And the Database info  {...} in Settings Table {...} doesn't exist,
+    Public Function SettingNotExist(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString(True)
+        Dim setting As String = reader.ReadString(True)
+        Dim cmd As String =
+            "select SettingsTable.*, SettingsTableMaster.ID from SettingsTable " +
+            "inner join SettingsTableMaster on " +
+            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
+            "where SettingsTableMaster.Setting = '" + setting + "' "
+        Try
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Return cache.Count = 0
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
 
     '(1: ) and the Database info {...} about the triggering furre is equal to #,
     Public Function TriggeringFurreinfoEqualToNumber(reader As TriggerReader) As Boolean
@@ -190,27 +544,20 @@ Public Class MSPK_MDB
         Return False
     End Function
 
-    '(1: ) and the Database info {...} about the triggering furre is not equal to #,
-    Public Function TriggeringFurreinfoNotEqualToNumber(reader As TriggerReader) As Boolean
-        Dim info As String = Nothing
-        Dim number As Double = 0
-        Dim Furre As String = Nothing
+    '(1: ) and the Database info {...} about the triggering furre is equal to {...},
+    Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
+        Dim Info As String = reader.ReadString
+        Dim Furre As String = FurcadiaShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+        Dim str As String = reader.ReadString
         Try
-            info = reader.ReadString
-            number = ReadVariableOrNumber(reader, False)
-            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(Furre)
-            Dim val As String = GetValueFromTable(info, Furre).ToString
-            Dim Value As Double = 0
-            Double.TryParse(val, Value)
-            Return Value <> number
+            If str = GetValueFromTable(Info, Furre).ToString Then Return True
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False
         End Try
-
         Return False
     End Function
+
     '(1: ) and the Database info {...} about the triggering furre is greater than #,
     Public Function TriggeringFurreinfoGreaterThanNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
@@ -220,33 +567,12 @@ Public Class MSPK_MDB
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
             Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(Furre)
+            Furre = FurcadiaShortName(Furre)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
             Double.TryParse(check.ToString, Value)
             Return Value > number
 
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-        Return False
-    End Function
-    '(1: ) and the Database info {...} about the triggering furre is less than #,
-    Public Function TriggeringFurreinfoLessThanNumber(reader As TriggerReader) As Boolean
-        Dim info As String = Nothing
-        Dim number As Double = 0
-        Dim Furre As String = Nothing
-        Try
-            info = reader.ReadString
-            number = ReadVariableOrNumber(reader, False)
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
-            Dim Num As Double = 0
-            Dim check As Object = GetValueFromTable(info, Furre)
-            Double.TryParse(check.ToString, Num)
-
-            Return Num < number
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False
@@ -263,7 +589,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
+            Furre = FurcadiaShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -276,6 +602,29 @@ Public Class MSPK_MDB
 
         Return False
     End Function
+
+    '(1: ) and the Database info {...} about the triggering furre is less than #,
+    Public Function TriggeringFurreinfoLessThanNumber(reader As TriggerReader) As Boolean
+        Dim info As String = Nothing
+        Dim number As Double = 0
+        Dim Furre As String = Nothing
+        Try
+            info = reader.ReadString
+            number = ReadVariableOrNumber(reader, False)
+            Furre = FurcadiaShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
+            Dim Num As Double = 0
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Double.TryParse(check.ToString, Num)
+
+            Return Num < number
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+        Return False
+    End Function
+
     '(1: ) and the Database info {...} about the triggering furre is less than #,
     Public Function TriggeringFurreinfoLessThanOrEqualToNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
@@ -284,7 +633,7 @@ Public Class MSPK_MDB
         Try
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
+            Furre = FurcadiaShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -297,173 +646,31 @@ Public Class MSPK_MDB
         Return False
     End Function
 
-    '(1: ) and the Database info {...} about the furre named {...} is equal to #,
-    Public Function FurreNamedinfoEqualToNumber(reader As TriggerReader) As Boolean
+    '(1: ) and the Database info {...} about the triggering furre is not equal to #,
+    Public Function TriggeringFurreinfoNotEqualToNumber(reader As TriggerReader) As Boolean
         Dim info As String = Nothing
-        Dim Variable As Double = 0
-        Dim Furre As String = Nothing
-
-        Try
-            info = reader.ReadString
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-            Variable = ReadVariableOrNumber(reader, False)
-            Dim Value As Double = 0
-            Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
-            Return Variable = Value
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-        Return False
-    End Function
-    '(1: ) and the Database info {...} about the furre named {...} is not equal to #,
-    Public Function FurreNamedinfoNotEqualToNumber(reader As TriggerReader) As Boolean
-        Dim info As String = Nothing
-        Dim Variable As Double = 0
+        Dim number As Double = 0
         Dim Furre As String = Nothing
         Try
             info = reader.ReadString
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-
-            Variable = ReadVariableOrNumber(reader, False)
-            Dim check As Object = GetValueFromTable(info, Furre)
+            number = ReadVariableOrNumber(reader, False)
+            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = FurcadiaShortName(Furre)
+            Dim val As String = GetValueFromTable(info, Furre).ToString
             Dim Value As Double = 0
-            Double.TryParse(check.ToString, Value)
-            Return Value <> Variable
+            Double.TryParse(val, Value)
+            Return Value <> number
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
-        Return False
-    End Function
-    '(1: ) and the Database info {...} about the furre named {...} is greater than #,
-    Public Function FurreNamedinfoGreaterThanNumber(reader As TriggerReader) As Boolean
-        Dim info As String = Nothing
-        Dim Variable As Double = 0
-        Dim Furre As String = Nothing
-        Try
-            info = reader.ReadString
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-            Variable = ReadVariableOrNumber(reader, False)
-            Dim check As Object = GetValueFromTable(info, Furre)
-            Dim Value As Double = 0
-            Double.TryParse(check.ToString, Value)
-            Return Value > Variable
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-        Return False
-    End Function
-    '(1: ) and the Database info {...} about the furre named {...} is less than #,
-    Public Function FurreNamedinfoLessThanNumber(reader As TriggerReader) As Boolean
-        Dim info As String = Nothing
-        Dim Variable As Double = 0
-        Dim Furre As String = Nothing
-        Try
-            info = reader.ReadString
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-
-            Variable = ReadVariableOrNumber(reader, False)
-            Dim Value As Double = 0
-            Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
-            Return Value < Variable
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-        Return False
-    End Function
-
-    '(1: ) and the Database info {...} about the furre named {...} is greater than #,
-    Public Function FurreNamedinfoGreaterThanOrEqualToNumber(reader As TriggerReader) As Boolean
-        Dim info As String = Nothing
-        Dim Variable As Double = 0
-        Dim Furre As String = Nothing
-        Try
-            info = reader.ReadString
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-            Variable = ReadVariableOrNumber(reader, False)
-            Dim Value As Double = 0
-            Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
-            Return Value >= Variable
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-        Return False
-    End Function
-    '(1: ) and the Database info {...} about the furre named {...} is less than #,
-    Public Function FurreNamedinfoLessThanOrEqualToNumber(reader As TriggerReader) As Boolean
-        Dim info As String = Nothing
-        Dim Variable As Double = 0
-        Dim Furre As String = Nothing
-        Try
-            info = reader.ReadString
-            Furre = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-            Variable = ReadVariableOrNumber(reader, False)
-            Dim check As Object = GetValueFromTable(info, Furre)
-            Dim Value As Double = 0
-            Double.TryParse(check.ToString, Value)
-            Return Value <= Variable
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-        Return False
-    End Function
-
-    '(1: ) and the Database info {...} about the furre named {...} is equal to {...},
-    Public Function FurreNamedinfoEqualToSTR(reader As TriggerReader) As Boolean
-        Dim Info As String = reader.ReadString
-        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString())
-        Dim str As String = reader.ReadString
-        Try
-            Return str = GetValueFromTable(Info, Furre).ToString
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return False
-    End Function
-    '(1: ) and the Database info {...} about the furre named {...} is not equal to {...},
-    Public Function FurreNamedinfoNotEqualToSTR(reader As TriggerReader) As Boolean
-        Dim Info As String = reader.ReadString
-        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-
-        Dim str As String = reader.ReadString
-
-        Try
-            Return str <> GetValueFromTable(Info, Furre).ToString
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return False
-    End Function
-    '(1: ) and the Database info {...} about the triggering furre is equal to {...},
-    Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
-        Dim Info As String = reader.ReadString
-        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
-        Dim str As String = reader.ReadString
-        Try
-            If str = GetValueFromTable(Info, Furre).ToString Then Return True
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
         Return False
     End Function
     '(1: ) and the Database info {...} about the triggering furre is not equal to {...},
     Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
         Dim Info As String = reader.ReadString
-        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
+        Dim Furre As String = FurcadiaShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString())
         Dim str As String = reader.ReadString
         Try
             If str <> GetValueFromTable(Info, Furre).ToString Then Return True
@@ -472,178 +679,6 @@ Public Class MSPK_MDB
             Return False
         End Try
         Return False
-    End Function
-
-    '(1:x) And the Database info  {...} in Settings Table {...} exists,
-    Public Function SettingExist(reader As TriggerReader) As Boolean
-        Dim Info As String = reader.ReadString(True)
-        Dim setting As String = reader.ReadString(True)
-        Dim cmd As String =
-            "select SettingsTable.*, SettingsTableMaster.ID from SettingsTable " +
-            "inner join SettingsTableMaster on " +
-            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
-            "where SettingsTableMaster.Setting = '" + setting + "' "
-        Try
-            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-            cache = db.GetValueFromTable(cmd)
-            QueryRun = True
-            Return cache.Count > 0
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) And the Database info  {...} in Settings Table {...} doesn't exist,
-    Public Function SettingNotExist(reader As TriggerReader) As Boolean
-        Dim Info As String = reader.ReadString(True)
-        Dim setting As String = reader.ReadString(True)
-        Dim cmd As String =
-            "select SettingsTable.*, SettingsTableMaster.ID from SettingsTable " +
-            "inner join SettingsTableMaster on " +
-            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
-            "where SettingsTableMaster.Setting = '" + setting + "' "
-        Try
-            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-            cache = db.GetValueFromTable(cmd)
-            QueryRun = True
-            Return cache.Count = 0
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) And the Database info {..} in Settings Table  {...} Is equal to {...},
-    Public Function SettingEqualTo(reader As TriggerReader) As Boolean
-        Dim Info As String = reader.ReadString(True)
-        Dim Table As String = reader.ReadString(True)
-        Dim Value As String = reader.ReadString(True)
-        Dim cmd As String =
-            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
-            "inner join SettingsTableMaster on " +
-            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
-            "where SettingsTableMaster.Setting = '" + Info + "' "
-        Try
-
-            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-            cache = db.GetValueFromTable(cmd)
-            QueryRun = True
-
-            Return cache.Item(Info).ToString = Value
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) And the Database info {..} in Settings Table  {...} Is Not equal to {...},
-    Public Function SettingNotEqualTo(reader As TriggerReader) As Boolean
-        Dim Info As String = reader.ReadString(True)
-        Dim Table As String = reader.ReadString(True)
-        Dim Value As String = reader.ReadString(True)
-        Dim cmd As String =
-            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
-            "inner join SettingsTableMaster on " +
-            "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
-            "where SettingsTableMaster.Setting = '" + Info + "' "
-        Try
-
-            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-            cache = db.GetValueFromTable(cmd)
-            QueryRun = True
-            Return cache.Item(Info).ToString <> Value
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) And the Database info {..} in Settings Table  {...} Is greater than #,
-    Public Function SettingGreaterThan(reader As TriggerReader) As Boolean
-        Dim Setting As String = reader.ReadString(True)
-        Dim Table As String = reader.ReadString(True)
-        Dim Number As Double = reader.ReadVariableOrNumber()
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim cmd As String =
-            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
-            "inner join SettingsTableMaster on " +
-            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
-            "where SettingsTableMaster.Setting = '" + Setting + "' "
-        Try
-            cache = db.GetValueFromTable(cmd)
-            QueryRun = True
-            Dim num As Double = 0
-            Double.TryParse(cache.Item(Setting).ToString, num)
-            Return num > Number
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-    End Function
-    '(1:x )And the Database info {..} in Settings Table  {...} Is greater than Or equl to #,
-    Public Function SettingGreaterThanOrEqualTo(reader As TriggerReader) As Boolean
-        Dim Setting As String = reader.ReadString(True)
-        Dim Table As String = reader.ReadString(True)
-        Dim Number As Double = reader.ReadVariableOrNumber()
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim cmd As String =
-            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
-            "inner join SettingsTableMaster on " +
-            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
-            "where SettingsTableMaster.Setting = '" + Setting + "' "
-        Try
-            cache = db.GetValueFromTable(cmd)
-            QueryRun = True
-            Dim num As Double = 0
-            Double.TryParse(cache.Item(Setting).ToString, num)
-            Return num >= Number
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x )And the Database info {..} in Settings Table  {...} Is less than #,
-    Public Function SettingLessThan(reader As TriggerReader) As Boolean
-        Dim Setting As String = reader.ReadString(True)
-        Dim Table As String = reader.ReadString(True)
-        Dim Number As Double = reader.ReadVariableOrNumber()
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim cmd As String =
-            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
-            "inner join SettingsTableMaster on " +
-            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
-            "where SettingsTableMaster.Setting = '" + Setting + "' "
-        Try
-            cache = db.GetValueFromTable(cmd)
-            QueryRun = True
-            Dim num As Double = 0
-            Double.TryParse(cache.Item(Setting).ToString, num)
-            Return num < Number
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-    End Function
-    '(1:x )And the Database info {..} in Settings Table  {...} Is less than Or equl to #,
-    Public Function SettingLessThanOrEqualTo(reader As TriggerReader) As Boolean
-        Dim Setting As String = reader.ReadString(True)
-        Dim Table As String = reader.ReadString(True)
-        Dim Number As Double = reader.ReadVariableOrNumber()
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim cmd As String =
-            "select SettingsTable.*, SettingsTableMaster.[" + Table + "] from SettingsTable " +
-            "inner join SettingsTableMaster on " +
-            "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
-            "where SettingsTableMaster.Setting = '" + Setting + "' "
-        Try
-            cache = db.GetValueFromTable(cmd)
-            QueryRun = True
-            Dim num As Double = 0
-            Double.TryParse(cache.Item(Setting).ToString, num)
-            Return num <= Number
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
     End Function
 #End Region
 
@@ -670,176 +705,6 @@ Public Class MSPK_MDB
 
 #Region "Effect Functions"
 
-    Public Function createMDB(reader As TriggerReader) As Boolean
-        SQLitefile = Paths.CheckBotFolder(reader.ReadString())
-        Console.WriteLine("NOTICE: SQLite Database file has changed to" + SQLitefile)
-        Dim db As New SQLiteDatabase(SQLitefile)
-        'db.CreateTbl("FURRE", FurreTable)
-        Return True
-    End Function
-
-    '(5:405) Add the triggering furre with default access level to the Furre Table in the database if he, she or it don't already exist.
-    Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
-        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
-        Dim info As String = reader.ReadString
-        Dim value As String = "0"
-        If reader.PeekNumber Or reader.PeekVariable Then
-            value = reader.ReadVariableOrNumber.ToString
-        ElseIf reader.PeekString Then
-            value = reader.ReadString
-            Double.TryParse(value, 0)
-        End If
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of String, String)()
-        data.Add("Name", Furre)
-        data.Add("date added", Date.Now.ToString)
-        data.Add("date modified", Date.Now.ToString)
-        data.Add("Access Level", value)
-        Try
-            db.Insert("FURRE", data)
-            Return True
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(5:506) add furre named {%NewMember} with the default access level "1" to the Furre Table in the database if he, she, or it doesn't exist.
-    Public Function InsertFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-        Dim info As String
-        If reader.PeekString Then
-            info = reader.ReadString
-        Else
-            info = reader.ReadVariableOrNumber.ToString
-        End If
-        'Dim value As String = reader.ReadVariable.Value.ToString
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of String, String)()
-        data.Add("Name", Furre)
-        data.Add("date added", Date.Now.ToString)
-        data.Add("date modified", Date.Now.ToString)
-        data.Add("Access Level", info)
-        Try
-            db.Insert("FURRE", data)
-            Return True
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5407) update Database info {...} about the triggering furre will now be #.
-    Public Function UpdateTriggeringFurreField(reader As TriggerReader) As Boolean
-        Dim info As String = reader.ReadString
-        'Dim Furre As String = reader.ReadString
-        Dim Furre As String = ""
-        Furre = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
-        Dim value As Double = ReadVariableOrNumber(reader)
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of String, String)()
-        data.Add("Name", Furre)
-        data.Add(info, value.ToString)
-        data.Add("date modified", Date.Now.ToString)
-        Try
-            Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(5:408) update Database info {...} about the furre named {...} will now be #.
-    Public Function UpdateFurreNamed_Field(reader As TriggerReader) As Boolean
-        Dim info As String = reader.ReadString
-        Dim Furre As String = reader.ReadString
-        'Dim Furre As String = MyMonkeySpeakEngine.MSpage.GetVariable("~Name").Value.ToString
-        Dim value As String = ReadVariableOrNumber(reader, False).ToString
-        Dim db As New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of String, String)()
-        data.Add("Name", MyMonkeySpeakEngine.ToFurcShortName(Furre))
-        data.Add(info, value)
-        data.Add("date modified", Date.Now.ToString)
-        Try
-            Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
-        Catch crap As Exception
-            Dim e As New ErrorLogging(crap, Me)
-            Return False
-        End Try
-    End Function
-
-    '(5:409) update Database info {...} about the triggering furre will now be {...}.
-    Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
-        Dim info As String = reader.ReadString
-        'Dim Furre As String = reader.ReadString
-        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
-        Dim value As String = reader.ReadString
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of String, String)()
-        data.Add("Name", Furre)
-        data.Add(info, value)
-        data.Add("date modified", Date.Now.ToString)
-        Try
-            db.Update("FURRE", data, "[Name]='" & Furre & "'")
-            Return True
-        Catch crap As Exception
-            Dim e As New ErrorLogging(crap, Me)
-            Return False
-        End Try
-    End Function
-    '(5:410) update Database info {...} about the furre named {...} will now be {...}.
-    Public Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
-        Dim info As String = reader.ReadString
-        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-        'Dim Furre As String = MyMonkeySpeakEngine.MSpage.GetVariable("~Name").Value.ToString
-        Dim value As String = reader.ReadString
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Dim data As New Dictionary(Of String, String)()
-        data.Add("Name", Furre)
-        data.Add(info, value)
-        data.Add("date modified", Date.Now.ToString)
-        Try
-            db.Update("FURRE", data, "[Name]='" & Furre & "'")
-            Return True
-        Catch crap As Exception
-            Dim e As New ErrorLogging(crap, Me)
-            Return False
-        End Try
-    End Function
-
-    '(5:411) select Database info {...} about the triggering furre, and put it in variable %Variable.
-    Public Function ReadDatabaseInfo(reader As TriggerReader) As Boolean
-        Try
-            Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
-            Dim Info As String = reader.ReadString
-            Dim Variable As Variable = reader.ReadVariable(True)
-            Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
-            'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
-            Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
-            Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
-            Return True
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(5:412) select Database info {...} about the furre named {...}, and put it in variable %Variable.
-    Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
-        Try
-            Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
-            Dim Info As String = reader.ReadString
-            Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-            Dim Variable As Variable = reader.ReadVariable(True)
-            ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
-            Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
-            Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
-            Return True
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
     '(5:513) add column {...} with type {...} to the Furre table.
     Public Function AddColumn(reader As TriggerReader) As Boolean
         Dim Column As String = reader.ReadString
@@ -848,40 +713,7 @@ Public Class MSPK_MDB
         db.addColumn("FURRE", "[" & Column & "]", Type)
         Return True
     End Function
-    '(5:418) delete all Database info about the triggering furre.
-    Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
-        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
-    End Function
-    '(5:419) delete all Database info about the furre named {...}.
-    Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
-        Dim Furre As String = MyMonkeySpeakEngine.ToFurcShortName(reader.ReadString)
-        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-        Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
-
-    End Function
-
-    '(5:422) get the total number of records from table {...} and put it into variable %.
-    Public Function GetTotalRecords(reader As TriggerReader) As Boolean
-        Dim Table As String = ""
-        Dim Total As Variable
-        Dim num As Double = 0
-
-        Try
-            Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
-            Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
-            Total = reader.ReadVariable(True)
-            Dim count As String = SQLiteDatabase.ExecuteScalar("select count(*) from [" & Table & "]")
-            Total.Value = count
-            Return True
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-    End Function
     '(5:423) take the sum of column{...} in table {...} and put it into variable %
     Public Function ColumnSum(reader As TriggerReader) As Boolean
         Dim Table As String = ""
@@ -910,6 +742,180 @@ Public Class MSPK_MDB
         'Console.WriteLine("Calculating TotalSum {0}", TotalSum.ToString)
         Total.Value = suma
         Return True
+    End Function
+
+    Public Function createMDB(reader As TriggerReader) As Boolean
+        SQLitefile = Paths.CheckBotFolder(reader.ReadString())
+        Console.WriteLine("NOTICE: SQLite Database file has changed to" + SQLitefile)
+        Dim db As New SQLiteDatabase(SQLitefile)
+        'db.CreateTbl("FURRE", FurreTable)
+        Return True
+    End Function
+
+    '(5:419) delete all Database info about the furre named {...}.
+    Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
+        Dim Furre As String = FurcadiaShortName(reader.ReadString)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
+
+    End Function
+
+    '(5:418) delete all Database info about the triggering furre.
+    Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
+        Dim Furre As String = FurcadiaShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
+
+    End Function
+
+    '(5:551) execute query {...}. Select * from table where name=%2
+    ' "Has a query been run since the last time someone asked for a result? If so, if read() then export one row.
+    Public Function ExecuteQuery(reader As TriggerReader) As Boolean
+        Dim str As String = ""
+
+        Try
+            str = reader.ReadString
+            str = str.Trim
+            SyncLock (lock)
+                cache.Clear()
+                QueryRun = False
+                If str.ToUpper.StartsWith("SELECT") Then
+                    Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+
+                    cache = db.GetValueFromTable(str)
+                    QueryRun = True
+
+                    Return cache.Count > 0
+                End If
+                SQLiteDatabase.ExecuteNonQuery(str)
+                Return True
+            End SyncLock
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+    End Function
+
+    '(5:422) get the total number of records from table {...} and put it into variable %.
+    Public Function GetTotalRecords(reader As TriggerReader) As Boolean
+        Dim Table As String = ""
+        Dim Total As Variable
+        Dim num As Double = 0
+
+        Try
+            Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
+            Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
+            Total = reader.ReadVariable(True)
+            Dim count As String = SQLiteDatabase.ExecuteScalar("select count(*) from [" & Table & "]")
+            Total.Value = count
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+    End Function
+
+    '(5:506) add furre named {%NewMember} with the default access level "1" to the Furre Table in the database if he, she, or it doesn't exist.
+    Public Function InsertFurreNamed(reader As TriggerReader) As Boolean
+        Dim Furre As String = FurcadiaShortName(reader.ReadString)
+        Dim info As String
+        If reader.PeekString Then
+            info = reader.ReadString
+        Else
+            info = reader.ReadVariableOrNumber.ToString
+        End If
+        'Dim value As String = reader.ReadVariable.Value.ToString
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim data As New Dictionary(Of String, String)()
+        data.Add("Name", Furre)
+        data.Add("date added", Date.Now.ToString)
+        data.Add("date modified", Date.Now.ToString)
+        data.Add("Access Level", info)
+        Try
+            db.Insert("FURRE", data)
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:405) Add the triggering furre with default access level to the Furre Table in the database if he, she or it don't already exist.
+    Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
+        Dim Furre As String = FurcadiaShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+        Dim info As String = reader.ReadString
+        Dim value As String = "0"
+        If reader.PeekNumber Or reader.PeekVariable Then
+            value = reader.ReadVariableOrNumber.ToString
+        ElseIf reader.PeekString Then
+            value = reader.ReadString
+            Double.TryParse(value, 0)
+        End If
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim data As New Dictionary(Of String, String)()
+        data.Add("Name", Furre)
+        data.Add("date added", Date.Now.ToString)
+        data.Add("date modified", Date.Now.ToString)
+        data.Add("Access Level", value)
+        Try
+            db.Insert("FURRE", data)
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(5:550) take variable %Variable , prepare it for a query, and put it in variable %Variable   (this is your escaping call, which would depend on however you have to do it internally)
+    Public Function PrepQuery(reader As TriggerReader) As Boolean
+        Dim var1 As Variable
+        Dim var2 As Variable
+        Try
+            var1 = reader.ReadVariable(True)
+            var2 = reader.ReadVariable(True)
+            Dim str As String = var1.Value.ToString
+            str = str.Replace("'", "''")
+            var2.Value = str
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:411) select Database info {...} about the triggering furre, and put it in variable %Variable.
+    Public Function ReadDatabaseInfo(reader As TriggerReader) As Boolean
+        Try
+            Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
+            Dim Info As String = reader.ReadString
+            Dim Variable As Variable = reader.ReadVariable(True)
+            Dim Furre As String = FurcadiaShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+            'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
+            Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
+            Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:412) select Database info {...} about the furre named {...}, and put it in variable %Variable.
+    Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
+        Try
+            Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
+            Dim Info As String = reader.ReadString
+            Dim Furre As String = FurcadiaShortName(reader.ReadString)
+            Dim Variable As Variable = reader.ReadVariable(True)
+            ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
+            Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
+            Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
     End Function
 
     '(5:424) in table {...} take info {...} from record index % and and put it into variable %
@@ -945,51 +951,6 @@ Public Class MSPK_MDB
         Return True
     End Function
 
-    '(5:550) take variable %Variable , prepare it for a query, and put it in variable %Variable   (this is your escaping call, which would depend on however you have to do it internally)
-    Public Function PrepQuery(reader As TriggerReader) As Boolean
-        Dim var1 As Variable
-        Dim var2 As Variable
-        Try
-            var1 = reader.ReadVariable(True)
-            var2 = reader.ReadVariable(True)
-            Dim str As String = var1.Value.ToString
-            str = str.Replace("'", "''")
-            var2.Value = str
-            Return True
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5:551) execute query {...}. Select * from table where name=%2
-    ' "Has a query been run since the last time someone asked for a result? If so, if read() then export one row.
-    Public Function ExecuteQuery(reader As TriggerReader) As Boolean
-        Dim str As String = ""
-
-        Try
-            str = reader.ReadString
-            str = str.Trim
-            SyncLock (lock)
-                cache.Clear()
-                QueryRun = False
-                If str.ToUpper.StartsWith("SELECT") Then
-                    Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-
-                    cache = db.GetValueFromTable(str)
-                    QueryRun = True
-
-                    Return cache.Count > 0
-                End If
-                SQLiteDatabase.ExecuteNonQuery(str)
-                Return True
-            End SyncLock
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-    End Function
-
     '(5:552) retrieve field {...} from query and put it into variable %Variable
     Public Function RetrieveQuery(reader As TriggerReader) As Boolean
         Dim Field As String
@@ -1020,6 +981,83 @@ Public Class MSPK_MDB
         End Try
     End Function
 
+    '(5:408) update Database info {...} about the furre named {...} will now be #.
+    Public Function UpdateFurreNamed_Field(reader As TriggerReader) As Boolean
+        Dim info As String = reader.ReadString
+        Dim Furre As String = reader.ReadString
+        'Dim Furre As String = MyMonkeySpeakEngine.MSpage.GetVariable("~Name").Value.ToString
+        Dim value As String = ReadVariableOrNumber(reader, False).ToString
+        Dim db As New SQLiteDatabase(SQLitefile)
+        Dim data As New Dictionary(Of String, String)()
+        data.Add("Name", FurcadiaShortName(Furre))
+        data.Add(info, value)
+        data.Add("date modified", Date.Now.ToString)
+        Try
+            Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
+        Catch crap As Exception
+            Dim e As New ErrorLogging(crap, Me)
+            Return False
+        End Try
+    End Function
+
+    '(5:410) update Database info {...} about the furre named {...} will now be {...}.
+    Public Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
+        Dim info As String = reader.ReadString
+        Dim Furre As String = FurcadiaShortName(reader.ReadString)
+        'Dim Furre As String = MyMonkeySpeakEngine.MSpage.GetVariable("~Name").Value.ToString
+        Dim value As String = reader.ReadString
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim data As New Dictionary(Of String, String)()
+        data.Add("Name", Furre)
+        data.Add(info, value)
+        data.Add("date modified", Date.Now.ToString)
+        Try
+            db.Update("FURRE", data, "[Name]='" & Furre & "'")
+            Return True
+        Catch crap As Exception
+            Dim e As New ErrorLogging(crap, Me)
+            Return False
+        End Try
+    End Function
+
+    '(5407) update Database info {...} about the triggering furre will now be #.
+    Public Function UpdateTriggeringFurreField(reader As TriggerReader) As Boolean
+        Dim info As String = reader.ReadString
+        'Dim Furre As String = reader.ReadString
+        Dim Furre As String = ""
+        Furre = FurcadiaShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+        Dim value As Double = ReadVariableOrNumber(reader)
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim data As New Dictionary(Of String, String)()
+        data.Add("Name", Furre)
+        data.Add(info, value.ToString)
+        data.Add("date modified", Date.Now.ToString)
+        Try
+            Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(5:409) update Database info {...} about the triggering furre will now be {...}.
+    Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
+        Dim info As String = reader.ReadString
+        'Dim Furre As String = reader.ReadString
+        Dim Furre As String = FurcadiaShortName(MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+        Dim value As String = reader.ReadString
+        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+        Dim data As New Dictionary(Of String, String)()
+        data.Add("Name", Furre)
+        data.Add(info, value)
+        data.Add("date modified", Date.Now.ToString)
+        Try
+            db.Update("FURRE", data, "[Name]='" & Furre & "'")
+            Return True
+        Catch crap As Exception
+            Dim e As New ErrorLogging(crap, Me)
+            Return False
+        End Try
+    End Function
     Public Function VACUUM(reader As TriggerReader) As Boolean
         Dim start As Date = Date.Now
         SQLiteDatabase.ExecuteNonQuery("VACUUM")

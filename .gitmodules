@@ -4,3 +4,6 @@
 
 [submodule "furclib"]
 	path = FurcLib	url = https://github.com/StarShip-Avalon-Projects/FurcLib.git
+[submodule "VerbotSDK"]
+	path = VerbotSDK
+	url = https://github.com/StarShip-Avalon-Projects/Verbot-SDK.git

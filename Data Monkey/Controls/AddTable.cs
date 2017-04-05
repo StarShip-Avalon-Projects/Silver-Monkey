@@ -7,14 +7,22 @@ namespace DataMonkey.Controls
     /// </summary>
     public class AddTable : BasePopup
     {
+        #region Private Fields
+
         private Label AddTableLabel;
         private TextBox AddTableTextBox;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AddTable()
         {
             // Required for Windows Form Designer support
             InitializeComponent();
         }
+
+        #endregion Public Constructors
 
         #region Properties
 

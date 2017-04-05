@@ -6,16 +6,21 @@ Imports MonkeyCore.Controls
 Public Class TextBoxWriter
     Inherits System.IO.TextWriter
 
-    Private control As TextBoxBase
-    Private Builder As StringBuilder
+#Region "Private Fields"
 
-    Delegate Sub UpDateBtn_GoCallback(ByRef s As String)
+    Private Builder As StringBuilder
+    Private control As TextBoxBase
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New(ByVal control As TextBox)
         Me.control = control
         AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
+
     Public Sub New(ByVal control As RichTextBoxEx)
         Me.control = control
         AddHandler control.HandleCreated,
@@ -27,6 +32,26 @@ Public Class TextBoxWriter
         AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
+
+#End Region
+
+#Region "Public Delegates"
+
+    Delegate Sub UpDateBtn_GoCallback(ByRef s As String)
+
+#End Region
+
+#Region "Public Properties"
+
+    Public Overrides ReadOnly Property Encoding() As System.Text.Encoding
+        Get
+            Return Encoding.Default
+        End Get
+    End Property
+
+#End Region
+
+#Region "Public Methods"
 
     Public Overrides Sub Write(ByVal ch As Char)
         Write(ch.ToString())
@@ -44,14 +69,9 @@ Public Class TextBoxWriter
         Write(s + Environment.NewLine)
     End Sub
 
-    Private Sub BufferText(ByRef s As String)
+#End Region
 
-        If (Builder Is Nothing) Then
-            Builder = New StringBuilder()
-        End If
-        Builder.Append(s)
-
-    End Sub
+#Region "Private Methods"
 
     Private Sub AppendText(ByRef s As String)
         If control.InvokeRequired Then
@@ -67,6 +87,14 @@ Public Class TextBoxWriter
         End If
     End Sub
 
+    Private Sub BufferText(ByRef s As String)
+
+        If (Builder Is Nothing) Then
+            Builder = New StringBuilder()
+        End If
+        Builder.Append(s)
+
+    End Sub
     Private Sub OnHandleCreated(ByVal sender As Object,
        ByVal e As EventArgs)
         If (Builder Is Nothing = False) Then
@@ -75,9 +103,6 @@ Public Class TextBoxWriter
         End If
     End Sub
 
-    Public Overrides ReadOnly Property Encoding() As System.Text.Encoding
-        Get
-            Return Encoding.Default
-        End Get
-    End Property
+#End Region
+
 End Class

@@ -8,12 +8,16 @@ namespace DataMonkey
     /// </summary>
     public class StatementParser
     {
+        #region Public Constructors
+
         public StatementParser()
         {
-            //
             // TODO: Add constructor logic here
-            //
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public static bool ReturnResults(string SQLStatement, string DatabaseLocation, out string message)
         {
@@ -42,5 +46,7 @@ namespace DataMonkey
                 return result > -1;
             }
         }
+
+        #endregion Public Methods
     }
 }

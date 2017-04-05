@@ -1,5 +1,44 @@
 ﻿Public NotInheritable Class SplashScreen1
 
+#Region "Private Delegates"
+
+    Private Delegate Sub CloseDelegate()
+
+    Private Delegate Sub UpdateProgressDelegate(ByVal msg As String, ByVal percentage As Integer)
+
+#End Region
+
+#Region "Public Methods"
+
+    Public Overloads Sub Close()
+        If Me.InvokeRequired Then
+            Me.Invoke(New CloseDelegate(AddressOf Close))
+        Else
+            Me.Hide()
+        End If
+    End Sub
+
+    Public Sub UpdateProgress(ByVal msg As String, ByVal percentage As Integer)
+        If Me.InvokeRequired Then
+            Me.Invoke(New UpdateProgressDelegate(AddressOf UpdateProgress), New Object() {msg, percentage})
+        Else
+            Me.Label2.Text = msg
+            If percentage >= Me.Status.Minimum AndAlso percentage <= Me.Status.Maximum Then
+                Me.Status.Value = percentage
+            End If
+        End If
+    End Sub
+
+#End Region
+
+#Region "Private Methods"
+
+    Private Sub frmSplashScreen_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
+        ' Draw a Black Border around the Borderless Form:
+        Dim rc As New Rectangle(0, 0, Me.ClientRectangle.Width - 1, Me.ClientRectangle.Height - 1)
+        e.Graphics.DrawRectangle(Pens.Black, rc)
+    End Sub
+
     Private Sub SplashScreen1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         'Set up the dialog text at runtime according to the application's assembly information.
 
@@ -24,32 +63,7 @@
         'Copyright info
         Copyright.Text = My.Application.Info.Copyright
     End Sub
-    Private Delegate Sub UpdateProgressDelegate(ByVal msg As String, ByVal percentage As Integer)
 
-    Public Sub UpdateProgress(ByVal msg As String, ByVal percentage As Integer)
-        If Me.InvokeRequired Then
-            Me.Invoke(New UpdateProgressDelegate(AddressOf UpdateProgress), New Object() {msg, percentage})
-        Else
-            Me.Label2.Text = msg
-            If percentage >= Me.Status.Minimum AndAlso percentage <= Me.Status.Maximum Then
-                Me.Status.Value = percentage
-            End If
-        End If
-    End Sub
-
-    Private Sub frmSplashScreen_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
-        ' Draw a Black Border around the Borderless Form:
-        Dim rc As New Rectangle(0, 0, Me.ClientRectangle.Width - 1, Me.ClientRectangle.Height - 1)
-        e.Graphics.DrawRectangle(Pens.Black, rc)
-    End Sub
-
-    Private Delegate Sub CloseDelegate()
-    Public Overloads Sub Close()
-        If Me.InvokeRequired Then
-            Me.Invoke(New CloseDelegate(AddressOf Close))
-        Else
-            Me.Hide()
-        End If
-    End Sub
+#End Region
 
 End Class

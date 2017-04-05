@@ -8,6 +8,8 @@ Imports Furcadia.Util
 Public Class MS_Cookie
     Inherits MonkeySpeakLibrary
 
+#Region "Public Constructors"
+
     Public Sub New()
 
         '(0:42) When some one gives a cookie to the bot,
@@ -54,6 +56,10 @@ AddressOf EatCookie,
 "(5:45) set variable %Variable to the cookie message the bot received")
     End Sub
 
+#End Region
+
+#Region "Public Methods"
+
     Function EatCookie(reader As TriggerReader) As Boolean
         Try
             Dim tPlayer As FURRE = MyPlayer
@@ -78,5 +84,7 @@ AddressOf EatCookie,
             Return False
         End Try
     End Function
+
+#End Region
 
 End Class

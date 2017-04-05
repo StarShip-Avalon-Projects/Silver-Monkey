@@ -18,15 +18,17 @@ namespace SilverMonkey.BugTraqConnect
     using System;
 
     /// <summary>
-	/// A class that is used on entites to reference other entities.
-	/// </summary>
-	/// <remarks>
-	/// An example is where an issue refers to the project is belongs to.  In some cases it can know
-	/// the id, in others, the name, or sometimes both.
-	/// </remarks>
+    /// A class that is used on entites to reference other entities.
+    /// </summary>
+    /// <remarks>
+    /// An example is where an issue refers to the project is belongs to. In some cases it can know
+    /// the id, in others, the name, or sometimes both.
+    /// </remarks>
     [Serializable]
     public sealed class ObjectRef
     {
+        #region Private Fields
+
         /// <summary>
         /// The object ref id.
         /// </summary>
@@ -36,6 +38,10 @@ namespace SilverMonkey.BugTraqConnect
         /// The object ref name.
         /// </summary>
         private string name = string.Empty;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         /// <summary>
         /// Default Constructor
@@ -48,8 +54,12 @@ namespace SilverMonkey.BugTraqConnect
         /// <summary>
         /// Constructor specifying id and name
         /// </summary>
-        /// <param name="id">Id of the entity referenced</param>
-        /// <param name="name">Name of the entity referenced.</param>
+        /// <param name="id">
+        /// Id of the entity referenced
+        /// </param>
+        /// <param name="name">
+        /// Name of the entity referenced.
+        /// </param>
 		public ObjectRef(int id, string name)
         {
             this.Id = id;
@@ -59,7 +69,9 @@ namespace SilverMonkey.BugTraqConnect
         /// <summary>
         /// Constructor from webservice object ref object.
         /// </summary>
-        /// <param name="objRefFromWs">Object reference from webservice</param>
+        /// <param name="objRefFromWs">
+        /// Object reference from webservice
+        /// </param>
         public ObjectRef(MantisConnectWebservice.ObjectRef objRefFromWs)
         {
             if (objRefFromWs != null)
@@ -77,7 +89,9 @@ namespace SilverMonkey.BugTraqConnect
         /// <summary>
         /// Constructor specifying id.
         /// </summary>
-        /// <param name="id">Id of the entity referenced</param>
+        /// <param name="id">
+        /// Id of the entity referenced
+        /// </param>
         public ObjectRef(int id)
             : this(id, string.Empty)
         {
@@ -86,29 +100,24 @@ namespace SilverMonkey.BugTraqConnect
         /// <summary>
         /// Constructor specifying name.
         /// </summary>
-        /// <param name="name">Name of the entity referenced.</param>
+        /// <param name="name">
+        /// Name of the entity referenced.
+        /// </param>
         public ObjectRef(string name)
             : this(0, name)
         {
         }
 
-        /// <summary>
-        /// Converts the current object into the Webservice object.
-        /// </summary>
-        /// <returns>Webservice object reference</returns>
-        internal MantisConnectWebservice.ObjectRef ToWebservice()
-        {
-            MantisConnectWebservice.ObjectRef wsor = new MantisConnectWebservice.ObjectRef();
-            wsor.id = Id.ToString();
-            wsor.name = Name;
+        #endregion Public Constructors
 
-            return wsor;
-        }
+        #region Public Properties
 
         /// <summary>
         /// Checks if the current object reference instance doesn't reference anything.
         /// </summary>
-        /// <value>true: references something, false: doesn't reference anything.</value>
+        /// <value>
+        /// true: references something, false: doesn't reference anything.
+        /// </value>
         public bool Empty
         {
             get { return (this.id == 0) && string.IsNullOrEmpty(this.name); }
@@ -132,13 +141,40 @@ namespace SilverMonkey.BugTraqConnect
             set { this.name = value != null ? value.Trim() : string.Empty; }
         }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         /// <summary>
         /// String representation of ObjectRef object.
         /// </summary>
-        /// <returns>String displaying internal state.</returns>
+        /// <returns>
+        /// String displaying internal state.
+        /// </returns>
         public override string ToString()
         {
             return string.Format("{0}:{1}", this.Id, this.Name);
         }
+
+        #endregion Public Methods
+
+        #region Internal Methods
+
+        /// <summary>
+        /// Converts the current object into the Webservice object.
+        /// </summary>
+        /// <returns>
+        /// Webservice object reference
+        /// </returns>
+        internal MantisConnectWebservice.ObjectRef ToWebservice()
+        {
+            MantisConnectWebservice.ObjectRef wsor = new MantisConnectWebservice.ObjectRef();
+            wsor.id = Id.ToString();
+            wsor.name = Name;
+
+            return wsor;
+        }
+
+        #endregion Internal Methods
     }
 }

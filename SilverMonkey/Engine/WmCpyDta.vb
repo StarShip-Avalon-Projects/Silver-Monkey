@@ -1,16 +1,14 @@
 ﻿Imports Monkeyspeak
-Imports System.Runtime.InteropServices
+
 Imports System.Diagnostics
-Imports MonkeyCore
+Imports Furcadia.Net
 
 Public Class WmCpyDta
     Inherits MonkeySpeakLibrary
-    Private writer As TextBoxWriter = Nothing
 
-    <DllImport("user32.dll", EntryPoint:="FindWindow")>
-    Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
-    End Function
-    Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
+#Region "Public Constructors"
+
+    Public Sub New(ByRef Dream As DREAM, ByRef Player As FURRE, ByRef MsEngine As MainMsEngine)
         MyBase.New(Dream, Player, MsEngine)
 
         '(0:75) When the bot receives a message from another bot on the same computer,
@@ -34,6 +32,10 @@ AddressOf SendMessage, "(5:75) send message {...} to bot named {...}.")
 AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot last received.")
     End Sub
 
+#End Region
+
+#Region "Public Methods"
+
     '(0:76) When the bot receives message {...} from another bot on the same computer,
     Function ReceiveMessage(reader As TriggerReader) As Boolean
         Dim msMsg As String = ""
@@ -55,6 +57,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
             Return False
         End Try
     End Function
+
     '(0:77) When the bot receives a message containing {...} from another bot on the same computer,
     Function ReceiveMessageContaining(reader As TriggerReader) As Boolean
         Dim msMsg As String = ""
@@ -134,4 +137,14 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
             Return False
         End Try
     End Function
+
+#End Region
+
+#Region "Private Methods"
+
+    Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
+    End Function
+
+#End Region
+
 End Class

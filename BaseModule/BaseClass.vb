@@ -5,20 +5,25 @@ Imports Furcadia.Base95
 Public Class BaseClass
     Implements Interfaces.msPlugin
 
+#Region "Private Fields"
+
     Private msHost As Interfaces.msHost
 
-    Public Sub Initialize(ByVal Host As Interfaces.msHost) Implements Interfaces.msPlugin.Initialize
-        msHost = Host
-    End Sub
+#End Region
+
+#Region "Public Properties"
+
+    Public ReadOnly Property Description() As String Implements Interfaces.msPlugin.Description
+        Get
+            Return "Base Class for building Modules"
+        End Get
+    End Property
+
+    Public Property Enabled As Boolean Implements Interfaces.msPlugin.enabled
 
     Public ReadOnly Property Name() As String Implements Interfaces.msPlugin.Name
         Get
             Return "Base Module"
-        End Get
-    End Property
-    Public ReadOnly Property Description() As String Implements Interfaces.msPlugin.Description
-        Get
-            Return "Base Class for building Modules"
         End Get
     End Property
 
@@ -29,12 +34,31 @@ Public Class BaseClass
         End Get
     End Property
 
-    Public Property Enabled As Boolean Implements Interfaces.msPlugin.enabled
+#End Region
+
+#Region "Public Methods"
+
+    Public Sub Initialize(ByVal Host As Interfaces.msHost) Implements Interfaces.msPlugin.Initialize
+        msHost = Host
+    End Sub
+
+#End Region
+
 #Region "Global Properties"
 
     Public Player As FURRE
 
+    Private msDream As DREAM
     Private MSpage As Monkeyspeak.Page
+    Public Property Dream As DREAM
+        Get
+            Return msHost.Dream
+        End Get
+        Set(value As DREAM)
+            msHost.Dream = value
+        End Set
+    End Property
+
     Public Property Page As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msPlugin.Page
         Get
             Return MSpage
@@ -45,30 +69,7 @@ Public Class BaseClass
             msHost.Page = MSpage
         End Set
     End Property
-    Private msDream As DREAM
-    Public Property Dream As DREAM
-        Get
-            Return msHost.Dream
-        End Get
-        Set(value As DREAM)
-            msHost.Dream = value
-        End Set
-    End Property
-
 #End Region
-
-    Public Sub Start() Implements Interfaces.msPlugin.Start
-        '(0:x) When the bot picks up or drops an object
-        'Page.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 2000,
-        '    Function()
-        '        Return Player.FloorObjectOld = Player.PawObjectCurrent And Player.PawObjectOld = Player.FloorObjectCurrent
-        '    End Function, "(0:2000) When the bot picks up or drops an object")
-
-        ''(0:2001) When the bot picks up or drops the object #,
-        'Page.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 2001,
-        '    AddressOf PickUpObjectNumber, "(0:2001) When the bot picks up or drops the object #,")
-
-    End Sub
 
     Function MessagePump(ByRef ServerInstruction As String) As Boolean Implements Interfaces.msPlugin.MessagePump
         'Set Object At Feet
@@ -91,29 +92,21 @@ Public Class BaseClass
         Return False
     End Function
 
-#Region "Helper Functions"
-    Public Function ReadVariableOrNumber(ByVal reader As Monkeyspeak.TriggerReader, Optional addIfNotExist As Boolean = False) As Double
-        Dim result As Double = 0
-        If reader.PeekVariable Then
-            Dim value As String = reader.ReadVariable(addIfNotExist).Value.ToString
-            Double.TryParse(value, result)
-        ElseIf reader.PeekNumber Then
-            result = reader.ReadNumber
-        End If
-        Return result
-    End Function
+    Public Sub Start() Implements Interfaces.msPlugin.Start
+        '(0:x) When the bot picks up or drops an object
+        'Page.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 2000,
+        '    Function()
+        '        Return Player.FloorObjectOld = Player.PawObjectCurrent And Player.PawObjectOld = Player.FloorObjectCurrent
+        '    End Function, "(0:2000) When the bot picks up or drops an object")
 
+        ''(0:2001) When the bot picks up or drops the object #,
+        'Page.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 2001,
+        '    AddressOf PickUpObjectNumber, "(0:2001) When the bot picks up or drops the object #,")
+
+    End Sub
+#Region "Helper Functions"
     Public Function IsBot(ByRef p As FURRE) As Boolean
         Return p.ShortName = msHost.BotName.ToFurcShortName
-    End Function
-
-    Private Function fIDtoFurre(ByRef ID As UInteger) As FURRE
-
-        For Each Character As FURRE In Dream.FurreList
-            If Character.ID = ID Then
-                Return Character
-            End If
-        Next
     End Function
 
     Public Function NameToFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
@@ -129,5 +122,23 @@ Public Class BaseClass
         Return p
     End Function
 
+    Public Function ReadVariableOrNumber(ByVal reader As Monkeyspeak.TriggerReader, Optional addIfNotExist As Boolean = False) As Double
+        Dim result As Double = 0
+        If reader.PeekVariable Then
+            Dim value As String = reader.ReadVariable(addIfNotExist).Value.ToString
+            Double.TryParse(value, result)
+        ElseIf reader.PeekNumber Then
+            result = reader.ReadNumber
+        End If
+        Return result
+    End Function
+    Private Function fIDtoFurre(ByRef ID As UInteger) As FURRE
+
+        For Each Character As FURRE In Dream.FurreList
+            If Character.ID = ID Then
+                Return Character
+            End If
+        Next
+    End Function
 #End Region
 End Class

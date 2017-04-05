@@ -8,17 +8,7 @@ namespace DataMonkey
 {
     public class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        private static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-            Application.Run(new frmExplorer());
-        }
+        #region Private Methods
 
         /// <summary>
         /// Handles the UnhandledException event of the CurrentDomain control.
@@ -42,5 +32,19 @@ namespace DataMonkey
             if (SubmitError.ShowDialog() == DialogResult.OK)
                 File.Delete(logError.LogFile);
         }
+
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        private static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            Application.Run(new frmExplorer());
+        }
+
+        #endregion Private Methods
     }
 }

@@ -38,6 +38,8 @@ Imports System.Windows.Forms
 ''' </summary>
 Public Class Paths
 
+#Region "Private Fields"
+
     Private Const DsTemplateDocsPath As String = "Templates"
 
     Private Const DxScriptseDocsPath As String = "Scripts"
@@ -77,6 +79,10 @@ Public Class Paths
     Private Shared _SilverMonkeyDocumentsPath As String
     Private Shared _SilverMonkeyErrorLogPath As String = Nothing
     Private Shared _SilverMonkeyLogPath As String = Nothing
+
+#End Region
+
+#Region "Public Properties"
 
     ''' <summary>
     ''' Silver Monkey Program Files  Folder
@@ -374,6 +380,10 @@ Public Class Paths
         End Get
     End Property
 
+#End Region
+
+#Region "Public Methods"
+
     ''' <summary>
     ''' Special Functoin for getting the default paths
     ''' <para>Ideal logic is to check the location of the Bot.Bini file for the current path and then check the Silver Monkey folder in my documents</para>
@@ -388,5 +398,7 @@ Public Class Paths
         End If
         Return file
     End Function
+
+#End Region
 
 End Class

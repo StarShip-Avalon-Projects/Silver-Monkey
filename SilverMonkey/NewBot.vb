@@ -4,102 +4,125 @@ Imports MonkeyCore.Settings
 Imports MonkeyCore
 
 Public Class NewBott
-    Public bFile As cBot
-    Dim WizIndex As Integer = 1
-    Dim OverWrite As Boolean = False
-#Region "Controls"
-    Private Const PageCount As Integer = 2
 
-    Public LblBotName As New Label
-    Public TxtbxBotName As New TextBox
-    Public LblFileLocation As New Label
-    Public TxtbxFilelocation As New TextBox
-    Public BtnFileLocation As New Button
-    Public LblCharacterINI As New Label
-    Public TxtbxCharacterINI As New TextBox
+#Region "Public Fields"
+
+    Public bFile As cBot
+
+#End Region
+
+#Region "Private Fields"
+
+    Dim OverWrite As Boolean = False
+    Dim WizIndex As Integer = 1
+
+#End Region
+
+#Region "Controls"
     Public BtnCharacterINI As New Button
+    Public BtnFileLocation As New Button
     Public LblBotController As New Label
-    Public TxtbxBotController As New TextBox
+    Public LblBotName As New Label
+    Public LblCharacterINI As New Label
+    Public LblFileLocation As New Label
+    'Value 4
+    Public RadioGoDreamURL As New RadioButton
 
     'Value 2
     Public RadioGoMapAcropolis As New RadioButton
+
     'Value 1
     Public RadioGoMapAllgeriaIsland As New RadioButton
-    'Value 4
-    Public RadioGoDreamURL As New RadioButton
+
     'Value 3
     Public RadioGoMapNone As New RadioButton
+
+    Public TxtbxBotController As New TextBox
+    Public TxtbxBotName As New TextBox
+    Public TxtbxCharacterINI As New TextBox
     Public TxtbxDreamURL As New TextBox
+    Public TxtbxFilelocation As New TextBox
+    Private Const PageCount As Integer = 2
 #End Region
 
-    Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
-        Dim BotFile As String
-        Dim MsFile As String = String.Empty
-        If Not String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
-            BotFile = TxtbxFilelocation.Text + Path.DirectorySeparatorChar + TxtbxBotName.Text
-            MsFile = BotFile
-        Else
-            BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
-            MsFile = BotFile
-        End If
-        Dim ext As String = Path.GetExtension(BotFile)
-        If String.IsNullOrEmpty(ext) Then BotFile = BotFile + ".bini"
+#Region "Public Methods"
 
-        If File.Exists(BotFile) And Not OverWrite Then
-            If MessageBox.Show(BotFile + " Exists! Over write settings?", "File Exists Warning",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
-                MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.No Then
+    Public Sub BtnCharacterINI_click(sender As Object, e As EventArgs)
 
-                ClearForm()
-                WizIndex = 1
-                SetForm(WizIndex)
-                TxtbxBotName.Select()
-                Exit Sub
-            Else
-                OverWrite = True
+        With OpenFileDialog1
+            '.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/Silver Monkey"
+
+            .InitialDirectory = Paths.FurcadiaCharactersFolder
+            If .ShowDialog = Windows.Forms.DialogResult.OK Then
+
+                TxtbxCharacterINI.Text = .FileName
             End If
-        End If
+        End With
 
-        bFile.BiniFile = BotFile
-        bFile.IniFile = TxtbxCharacterINI.Text
+    End Sub
 
-        'Bug 23
-        bFile.MS_File = MsFile + ".ms"
+    Public Sub BtnFileLocation_click(sender As Object, e As EventArgs)
+        Dim btn As Button = CType(sender, Button)
 
-        bFile.LogNameBase = TxtbxBotName.Text
-        bFile.log = True
+        With FolderBrowserDialog1
+            '.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/Silver Monkey"
 
-        bFile.BotController = TxtbxBotController.Text
+            If .ShowDialog = Windows.Forms.DialogResult.OK Then
 
-        bFile.DreamURL = TxtbxDreamURL.Text
+                TxtbxFilelocation.Text = .SelectedPath
+            End If
+        End With
+    End Sub
 
-        If RadioGoMapAllgeriaIsland.Checked = True Then
-            bFile.GoMapIDX = 1
-        ElseIf RadioGoMapAcropolis.Checked = True Then
-            bFile.GoMapIDX = 2
-        ElseIf RadioGoMapNone.Checked = True Then
-            bFile.GoMapIDX = 3
-        ElseIf RadioGoDreamURL.Checked = True Then
-            bFile.GoMapIDX = 4
-        Else
-            'pop up error and load that pare of the form Page 2
-            MessageBox.Show("Please select which map you want the bot to go to when connected to Furcadia.")
-            ClearForm()
-            WizIndex = 2
-            SetForm(WizIndex)
-            Exit Sub
-        End If
+#End Region
 
-        bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.BiniFile)
-        Me.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.Dispose()
+#Region "Private Methods"
 
+    'Button Previous
+    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
+        If WizIndex <= 1 Then Exit Sub
+        ClearForm()
+        WizIndex -= 1
+        SetForm(WizIndex)
+    End Sub
+
+    'Button Next
+    Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
+        If WizIndex >= 2 Then Exit Sub
+        ClearForm()
+        WizIndex += 1
+        SetForm(WizIndex)
     End Sub
 
     Private Sub Cancel_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.Dispose()
+    End Sub
+
+    Private Sub ClearForm()
+        LblBotName.Visible = False
+        TxtbxBotName.Visible = False
+        LblFileLocation.Visible = False
+        TxtbxFilelocation.Visible = False
+        BtnFileLocation.Visible = False
+        LblCharacterINI.Visible = False
+        TxtbxCharacterINI.Visible = False
+        BtnCharacterINI.Visible = False
+        LblBotController.Visible = False
+        TxtbxBotController.Visible = False
+
+        'Value 2
+        RadioGoMapAcropolis.Visible = False
+        'Value 1
+        RadioGoMapAllgeriaIsland.Visible = False
+        'Value 4
+        RadioGoDreamURL.Visible = False
+        'Value 3
+        RadioGoMapNone.Visible = False
+        TxtbxDreamURL.Visible = False
+
+        Button1.Enabled = True
+        Button2.Enabled = True
     End Sub
 
     Private Sub Dialog1_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -254,58 +277,70 @@ Public Class NewBott
         WizIndex = 1
     End Sub
 
-    Private Sub ClearForm()
-        LblBotName.Visible = False
-        TxtbxBotName.Visible = False
-        LblFileLocation.Visible = False
-        TxtbxFilelocation.Visible = False
-        BtnFileLocation.Visible = False
-        LblCharacterINI.Visible = False
-        TxtbxCharacterINI.Visible = False
-        BtnCharacterINI.Visible = False
-        LblBotController.Visible = False
-        TxtbxBotController.Visible = False
+    Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
+        Dim BotFile As String
+        Dim MsFile As String = String.Empty
+        If Not String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
+            BotFile = TxtbxFilelocation.Text + Path.DirectorySeparatorChar + TxtbxBotName.Text
+            MsFile = BotFile
+        Else
+            BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
+            MsFile = BotFile
+        End If
+        Dim ext As String = Path.GetExtension(BotFile)
+        If String.IsNullOrEmpty(ext) Then BotFile = BotFile + ".bini"
 
-        'Value 2
-        RadioGoMapAcropolis.Visible = False
-        'Value 1
-        RadioGoMapAllgeriaIsland.Visible = False
-        'Value 4
-        RadioGoDreamURL.Visible = False
-        'Value 3
-        RadioGoMapNone.Visible = False
-        TxtbxDreamURL.Visible = False
+        If File.Exists(BotFile) And Not OverWrite Then
+            If MessageBox.Show(BotFile + " Exists! Over write settings?", "File Exists Warning",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.No Then
 
-        Button1.Enabled = True
-        Button2.Enabled = True
-    End Sub
-
-    Public Sub BtnFileLocation_click(sender As Object, e As EventArgs)
-        Dim btn As Button = CType(sender, Button)
-
-        With FolderBrowserDialog1
-            '.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/Silver Monkey"
-
-            If .ShowDialog = Windows.Forms.DialogResult.OK Then
-
-                TxtbxFilelocation.Text = .SelectedPath
+                ClearForm()
+                WizIndex = 1
+                SetForm(WizIndex)
+                TxtbxBotName.Select()
+                Exit Sub
+            Else
+                OverWrite = True
             End If
-        End With
+        End If
+
+        bFile.BiniFile = BotFile
+        bFile.IniFile = TxtbxCharacterINI.Text
+
+        'Bug 23
+        bFile.MS_File = MsFile + ".ms"
+
+        bFile.LogNameBase = TxtbxBotName.Text
+        bFile.log = True
+
+        bFile.BotController = TxtbxBotController.Text
+
+        bFile.DreamURL = TxtbxDreamURL.Text
+
+        If RadioGoMapAllgeriaIsland.Checked = True Then
+            bFile.GoMapIDX = 1
+        ElseIf RadioGoMapAcropolis.Checked = True Then
+            bFile.GoMapIDX = 2
+        ElseIf RadioGoMapNone.Checked = True Then
+            bFile.GoMapIDX = 3
+        ElseIf RadioGoDreamURL.Checked = True Then
+            bFile.GoMapIDX = 4
+        Else
+            'pop up error and load that pare of the form Page 2
+            MessageBox.Show("Please select which map you want the bot to go to when connected to Furcadia.")
+            ClearForm()
+            WizIndex = 2
+            SetForm(WizIndex)
+            Exit Sub
+        End If
+
+        bFile.SaveBotSettings()
+        Main.SaveRecentFile(bFile.BiniFile)
+        Me.DialogResult = System.Windows.Forms.DialogResult.OK
+        Me.Dispose()
+
     End Sub
-    Public Sub BtnCharacterINI_click(sender As Object, e As EventArgs)
-
-        With OpenFileDialog1
-            '.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/Silver Monkey"
-
-            .InitialDirectory = Paths.FurcadiaCharactersFolder
-            If .ShowDialog = Windows.Forms.DialogResult.OK Then
-
-                TxtbxCharacterINI.Text = .FileName
-            End If
-        End With
-
-    End Sub
-
     Private Sub SetForm(Index As Integer)
 
         Select Case Index
@@ -343,19 +378,6 @@ Public Class NewBott
 
     End Sub
 
-    'Button Previous
-    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-        If WizIndex <= 1 Then Exit Sub
-        ClearForm()
-        WizIndex -= 1
-        SetForm(WizIndex)
-    End Sub
+#End Region
 
-    'Button Next
-    Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
-        If WizIndex >= 2 Then Exit Sub
-        ClearForm()
-        WizIndex += 1
-        SetForm(WizIndex)
-    End Sub
 End Class

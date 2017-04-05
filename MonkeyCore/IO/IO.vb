@@ -5,13 +5,29 @@
 '''
 ''' </summary>
 Public Class IO
+
+#Region "Internal Fields"
+
+    Friend Shared ReadOnly File As Object
+
+#End Region
+
+#Region "Private Fields"
+
     Private _KeysIni As IniFile
     Private _MS_KeysIni As IniFile
-    Friend Shared ReadOnly File As Object
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
 
     End Sub
+
+#End Region
+
+#Region "Public Properties"
 
     ''' <summary>
     ''' Monkey Speak File containing MonkeySpeak Editors lines and settings
@@ -38,6 +54,31 @@ Public Class IO
             _MS_KeysIni = value
         End Set
     End Property
+
+#End Region
+
+#Region "Public Methods"
+
+    ''' <summary>
+    ''' News the dm script.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Shared Function NewDMScript() As String
+        Dim str As New StringBuilder
+        str.AppendLine(Settings.KeysIni.GetKeyValue("DM-Script", "Header"))
+        Dim t As String = " "
+        Dim n As Integer = 0
+        While Not String.IsNullOrEmpty(t)
+            t = Settings.KeysIni.GetKeyValue("DM-Script", "H" + n.ToString)
+            If Not String.IsNullOrEmpty(t) Then str.AppendLine(t)
+            n += 1
+        End While
+        For i = 0 To CInt(Settings.KeysIni.GetKeyValue("DM-Script", "InitLineSpaces"))
+            str.AppendLine("")
+        Next
+        str.Append(Settings.KeysIni.GetKeyValue("DM-Script", "Footer"))
+        Return str.ToString
+    End Function
 
     ''' <summary>
     ''' New Dragon Speak file default read from configuration *.ini
@@ -82,25 +123,6 @@ Public Class IO
         Return str.ToString
     End Function
 
-    ''' <summary>
-    ''' News the dm script.
-    ''' </summary>
-    ''' <returns></returns>
-    Public Shared Function NewDMScript() As String
-        Dim str As New StringBuilder
-        str.AppendLine(Settings.KeysIni.GetKeyValue("DM-Script", "Header"))
-        Dim t As String = " "
-        Dim n As Integer = 0
-        While Not String.IsNullOrEmpty(t)
-            t = Settings.KeysIni.GetKeyValue("DM-Script", "H" + n.ToString)
-            If Not String.IsNullOrEmpty(t) Then str.AppendLine(t)
-            n += 1
-        End While
-        For i = 0 To CInt(Settings.KeysIni.GetKeyValue("DM-Script", "InitLineSpaces"))
-            str.AppendLine("")
-        Next
-        str.Append(Settings.KeysIni.GetKeyValue("DM-Script", "Footer"))
-        Return str.ToString
-    End Function
+#End Region
 
 End Class

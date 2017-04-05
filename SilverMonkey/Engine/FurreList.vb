@@ -4,7 +4,14 @@ Imports Furcadia.Net
 
 Public Class MonkeySpeakFurreList
     Inherits MonkeySpeakLibrary
+
+#Region "Private Fields"
+
     Dim FurreList As FURREList = MyDream.FurreList
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
 
@@ -66,6 +73,8 @@ Public Class MonkeySpeakFurreList
 
     End Sub
 
+#End Region
+
 #Region "Helper Functions"
     Private Function InDream(ByRef Name As String) As Boolean
         Dim found As Boolean = False
@@ -78,6 +87,8 @@ Public Class MonkeySpeakFurreList
     End Function
 
 #End Region
+
+#Region "Public Methods"
 
     '(5:702) count the number of active furres in the drean and put it in the variable %Variable.
     Function FurreActiveListCount(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -255,4 +266,7 @@ Public Class MonkeySpeakFurreList
             Return False
         End Try
     End Function
+
+#End Region
+
 End Class

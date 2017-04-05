@@ -6,7 +6,13 @@ Imports MonkeyCore
 Public Class Warning
     Inherits MonkeySpeakLibrary
 
+#Region "Private Fields"
+
     Dim Lock As New Object()
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
 
@@ -31,6 +37,10 @@ AddressOf ErrorIs, "(0:801) when the bot sees warning message{...},")
 "(5:800) set %Variable to the value of the message returned by the last command line. (zero = none, one = warning, two = error)")
 
     End Sub
+
+#End Region
+
+#Region "Public Methods"
 
     '(1:801) and the last command sent didn't return an error or warning # (zero = none, one = warning, two = error)
     Function CommandNotWariningOrError(reader As TriggerReader) As Boolean
@@ -116,5 +126,7 @@ AddressOf ErrorIs, "(0:801) when the bot sees warning message{...},")
             Return False
         End Try
     End Function
+
+#End Region
 
 End Class

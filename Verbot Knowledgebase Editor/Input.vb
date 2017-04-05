@@ -2,7 +2,15 @@
 Imports Conversive.Verbot5
 
 Public Class InputWindow
+
+#Region "Public Fields"
+
     Public _CurrentInput As Input
+
+#End Region
+
+#Region "Public Constructors"
+
     'New Rule
     Sub New()
         InitializeComponent()
@@ -16,12 +24,9 @@ Public Class InputWindow
         _CurrentInput = CurrentInput
     End Sub
 
-    Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
-        _CurrentInput.Text = TextBox1.Text
-        _CurrentInput.Condition = TextBox2.Text
-        Me.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.Close()
-    End Sub
+#End Region
+
+#Region "Private Methods"
 
     Private Sub Cancel_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
@@ -32,4 +37,14 @@ Public Class InputWindow
         TextBox1.Text = _CurrentInput.Text
         TextBox2.Text = _CurrentInput.Condition
     End Sub
+
+    Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
+        _CurrentInput.Text = TextBox1.Text
+        _CurrentInput.Condition = TextBox2.Text
+        Me.DialogResult = System.Windows.Forms.DialogResult.OK
+        Me.Close()
+    End Sub
+
+#End Region
+
 End Class

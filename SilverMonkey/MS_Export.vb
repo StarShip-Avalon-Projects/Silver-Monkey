@@ -4,17 +4,27 @@ Imports Monkeyspeak
 
 Public Class MS_Export
 
+#Region "Private Fields"
+
     Private CauseList As List(Of String) = New List(Of String)
 
     Private ConditionList As List(Of String) = New List(Of String)
 
     Private EffectList As List(Of String) = New List(Of String)
 
+#End Region
+
+#Region "Public Enums"
+
     Enum TriggerTypes
         Cause = 0
         Condition = 1
         Effect = 5
     End Enum
+
+#End Region
+
+#Region "Private Methods"
 
     Private Sub ExitToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ExitToolStripMenuItem.Click
         Me.Close()
@@ -143,8 +153,14 @@ Public Class MS_Export
         End If
     End Sub
 
+#End Region
+
+#Region "Public Classes"
+
     Class CatSorter
         Implements IComparer(Of String)
+
+#Region "Public Methods"
 
         Public Function Compare(ByVal item1 As String, ByVal item2 As String) As Integer Implements IComparer(Of String).Compare
 
@@ -173,5 +189,10 @@ Public Class MS_Export
             End If
         End Function
 
+#End Region
+
     End Class
+
+#End Region
+
 End Class

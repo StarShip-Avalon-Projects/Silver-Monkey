@@ -7,16 +7,24 @@ namespace DataMonkey.Controls
     /// </summary>
     public class AddColumn : BasePopup
     {
+        #region Private Fields
+
         private Label NameLabel;
         private TextBox NameTextBox;
         private ComboBox TypeComboBox;
         private Label TypeLabel;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public AddColumn()
         {
             // Required for Windows Form Designer support
             InitializeComponent();
         }
+
+        #endregion Public Constructors
 
         #region Windows Form Designer generated code
 

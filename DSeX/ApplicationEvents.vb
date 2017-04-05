@@ -11,6 +11,9 @@ Namespace My
     ' StartupNextInstance: Raised when launching a single-instance application and the application is already active.
     ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
+
+#Region "Public Properties"
+
         Public Shared Property KeysIni As IniFile
             Get
                 Return MonkeyCore.Settings.KeysIni
@@ -28,6 +31,10 @@ Namespace My
                 MonkeyCore.Settings.MS_KeysIni = value
             End Set
         End Property
+
+#End Region
+
+#Region "Private Methods"
 
         Private Sub MyApplication_NetworkAvailabilityChanged(sender As Object, e As Devices.NetworkAvailableEventArgs) Handles Me.NetworkAvailabilityChanged
 
@@ -70,6 +77,9 @@ Namespace My
                 File.Delete(logError.LogFile)
             End If
         End Sub
+
+#End Region
+
     End Class
 
 End Namespace

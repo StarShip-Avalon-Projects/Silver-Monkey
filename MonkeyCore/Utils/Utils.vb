@@ -4,11 +4,8 @@
 <CLSCompliant(True)>
 Public Class Utils
 
-    ''' <summary>
-    '''
-    ''' </summary>
-    <CLSCompliant(True)>
-    <Serializable>
+#Region "Public Enums"
+
     Public Enum fColorEnum
         DefaultColor = 0
         Say
@@ -17,6 +14,14 @@ Public Class Utils
         Emote
         Emit
     End Enum
+
+#End Region
+
+#Region "Public Methods"
+
+    Public Shared Function DateTimeToUnixTimestamp(dTime As DateTime) As Double
+        Return (dTime - New DateTime(1970, 1, 1).ToLocalTime()).TotalSeconds
+    End Function
 
     ''' <summary>
     ''' Gets the file version information.
@@ -64,8 +69,7 @@ Public Class Utils
         dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToUniversalTime
         Return dtDateTime
     End Function
-    Public Shared Function DateTimeToUnixTimestamp(dTime As DateTime) As Double
-        Return (dTime - New DateTime(1970, 1, 1).ToLocalTime()).TotalSeconds
-    End Function
+
+#End Region
 
 End Class

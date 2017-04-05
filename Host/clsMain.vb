@@ -2,9 +2,8 @@ Imports System.Collections.Generic
 Imports MonkeyCore
 
 Public Module clsMain
-    Public MainMSEngine As MainEngine
     Public callbk As Main
-
+    Public MainMSEngine As MainEngine
     <System.Runtime.CompilerServices.Extension()>
     Public Function IsInteger(ByVal value As String) As Boolean
         If String.IsNullOrEmpty(value) Then

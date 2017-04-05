@@ -23,10 +23,22 @@ namespace SilverMonkey.BugTraqConnect
     /// </summary>
     public sealed class Session
     {
+        #region Private Fields
+
         /// <summary>
         /// The config instance.
         /// </summary>
         private readonly Config config;
+
+        /// <summary>
+        /// The network credential (e.g. basic http auth).
+        /// </summary>
+        private readonly NetworkCredential networkCredential;
+
+        /// <summary>
+        /// The password.
+        /// </summary>
+        private readonly string password;
 
         /// <summary>
         /// The request instance.
@@ -43,23 +55,25 @@ namespace SilverMonkey.BugTraqConnect
         /// </summary>
         private readonly string username;
 
-        /// <summary>
-        /// The password.
-        /// </summary>
-        private readonly string password;
+        #endregion Private Fields
 
-        /// <summary>
-        /// The network credential (e.g. basic http auth).
-        /// </summary>
-        private readonly NetworkCredential networkCredential;
+        #region Public Constructors
 
         /// <summary>
         /// Constructs a session given a url, username and password.
         /// </summary>
-        /// <param name="url">URL of MantisConnect webservice (eg: http://www.example.com/mantis/)</param>
-        /// <param name="username">User name to connect as.</param>
-        /// <param name="password">Password for the specified user.</param>
-        /// <param name="networkCredential">The network credentials to use (e.g. basic http password).</param>
+        /// <param name="url">
+        /// URL of MantisConnect webservice (eg: http://www.example.com/mantis/)
+        /// </param>
+        /// <param name="username">
+        /// User name to connect as.
+        /// </param>
+        /// <param name="password">
+        /// Password for the specified user.
+        /// </param>
+        /// <param name="networkCredential">
+        /// The network credentials to use (e.g. basic http password).
+        /// </param>
         public Session(string url, string username, string password, NetworkCredential networkCredential)
         {
             if (string.IsNullOrEmpty(url))
@@ -86,22 +100,28 @@ namespace SilverMonkey.BugTraqConnect
             this.request = new Request(this);
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         /// <summary>
-        /// Connects to the webservice.
+        /// Config object to be used to retrieve information about the configuration of the Mantis installation.
         /// </summary>
-        public void Connect()
+        public Config Config
         {
-            // call any method to trigger authentication, if url, username, password
-            // are valid, then nothing will happen, otherwise an exception will be raised.
-            MantisEnum temp = Config.StatusEnum;
+            get { return this.config; }
         }
 
         /// <summary>
-        /// Gets the user name specified on construction of the session.
+        /// Gets the network credential specified during construction time.
         /// </summary>
-        public string Username
+        /// <remarks>
+        /// This is use to support connecting to Mantis installation that are protected with basic
+        /// http authentication.
+        /// </remarks>
+        public NetworkCredential NetworkCredential
         {
-            get { return this.username; }
+            get { return this.networkCredential; }
         }
 
         /// <summary>
@@ -110,6 +130,15 @@ namespace SilverMonkey.BugTraqConnect
         public string Password
         {
             get { return this.password; }
+        }
+
+        /// <summary>
+        /// Request is a wrapper around the MantisConnect webservice which makes calling the methods
+        /// more natural for the rest of the C# code.
+        /// </summary>
+        public Request Request
+        {
+            get { return this.request; }
         }
 
         /// <summary>
@@ -124,33 +153,27 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Gets the network credential specified during construction time.
+        /// Gets the user name specified on construction of the session.
         /// </summary>
-        /// <remarks>
-        /// This is use to support connecting to Mantis installation that are
-        /// protected with basic http authentication.
-        /// </remarks>
-        public NetworkCredential NetworkCredential
+        public string Username
         {
-            get { return this.networkCredential; }
+            get { return this.username; }
         }
 
-        /// <summary>
-        /// Config object to be used to retrieve information about the configuration
-        /// of the Mantis installation.
-        /// </summary>
-        public Config Config
-        {
-            get { return this.config; }
-        }
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
-        /// Request is a wrapper around the MantisConnect webservice which makes calling
-        /// the methods more natural for the rest of the C# code.
+        /// Connects to the webservice.
         /// </summary>
-        public Request Request
+        public void Connect()
         {
-            get { return this.request; }
+            // call any method to trigger authentication, if url, username, password are valid, then
+            // nothing will happen, otherwise an exception will be raised.
+            MantisEnum temp = Config.StatusEnum;
         }
+
+        #endregion Public Methods
     }
 }

@@ -6,6 +6,40 @@ Public Class frmSearch
 
 #Region " Windows Form Designer generated code "
 
+    Friend WithEvents btnClose As System.Windows.Forms.Button
+
+    Friend WithEvents btnFind As System.Windows.Forms.Button
+
+    Friend WithEvents btnFindNext As System.Windows.Forms.Button
+
+    Friend WithEvents btnReplace As System.Windows.Forms.Button
+
+    Friend WithEvents btnReplaceAll As System.Windows.Forms.Button
+
+    Friend WithEvents chkMatchCase As System.Windows.Forms.CheckBox
+
+    Friend WithEvents chkOnTop As System.Windows.Forms.CheckBox
+
+    Friend WithEvents chkReverse As System.Windows.Forms.CheckBox
+
+    Friend WithEvents cmbReplace As System.Windows.Forms.ComboBox
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.
+    'Do not modify it using the code editor.
+    Friend WithEvents cmbSearch As System.Windows.Forms.ComboBox
+
+    Friend WithEvents lblReplace As System.Windows.Forms.Label
+
+    Friend WithEvents lblSearch As System.Windows.Forms.Label
+
+    Friend WithEvents optNone As System.Windows.Forms.RadioButton
+
+    Friend WithEvents optWhole As System.Windows.Forms.RadioButton
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
     Public Sub New()
         MyBase.New()
 
@@ -25,27 +59,6 @@ Public Class frmSearch
         End If
         MyBase.Dispose(disposing)
     End Sub
-
-    'Required by the Windows Form Designer
-    Private components As System.ComponentModel.IContainer
-
-    'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.
-    'Do not modify it using the code editor.
-    Friend WithEvents cmbSearch As System.Windows.Forms.ComboBox
-    Friend WithEvents btnFind As System.Windows.Forms.Button
-    Friend WithEvents btnReplace As System.Windows.Forms.Button
-    Friend WithEvents btnReplaceAll As System.Windows.Forms.Button
-    Friend WithEvents chkMatchCase As System.Windows.Forms.CheckBox
-    Friend WithEvents optWhole As System.Windows.Forms.RadioButton
-    Friend WithEvents cmbReplace As System.Windows.Forms.ComboBox
-    Friend WithEvents lblSearch As System.Windows.Forms.Label
-    Friend WithEvents lblReplace As System.Windows.Forms.Label
-    Friend WithEvents btnFindNext As System.Windows.Forms.Button
-    Friend WithEvents btnClose As System.Windows.Forms.Button
-    Friend WithEvents optNone As System.Windows.Forms.RadioButton
-    Friend WithEvents chkReverse As System.Windows.Forms.CheckBox
-    Friend WithEvents chkOnTop As System.Windows.Forms.CheckBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.cmbSearch = New System.Windows.Forms.ComboBox()
         Me.btnFind = New System.Windows.Forms.Button()
@@ -210,7 +223,13 @@ Public Class frmSearch
 
 #End Region
 
+#Region "Private Fields"
+
     Dim SearchItemIdx As Integer = 0
+
+#End Region
+
+#Region "Private Methods"
 
     Private Sub btnClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnClose.Click
 
@@ -295,49 +314,6 @@ Public Class frmSearch
                 Exit Sub
 
             End If
-
-        End If
-
-    End Sub
-
-    Private Sub cmbSearch_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles cmbSearch.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            e.SuppressKeyPress = True
-            If btnFindNext.Enabled = True Then
-                btnFindNext.PerformClick()
-            Else
-                btnFind.PerformClick()
-            End If
-
-        End If
-    End Sub
-
-    Private Sub cmbSearch_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbSearch.TextChanged
-
-        If cmbSearch.Text.Length > 0 Then
-
-            btnFind.Enabled = True
-
-        Else
-
-            btnFind.Enabled = False
-            btnFindNext.Enabled = False
-
-        End If
-
-    End Sub
-
-    Private Sub cmbReplace_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbReplace.TextChanged
-
-        If cmbReplace.Text.Length > 0 Then
-
-            btnReplace.Enabled = True
-            btnReplaceAll.Enabled = True
-
-        Else
-
-            btnReplace.Enabled = False
-            btnReplaceAll.Enabled = False
 
         End If
 
@@ -477,5 +453,50 @@ Public Class frmSearch
         End If
 
     End Sub
+
+    Private Sub cmbReplace_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbReplace.TextChanged
+
+        If cmbReplace.Text.Length > 0 Then
+
+            btnReplace.Enabled = True
+            btnReplaceAll.Enabled = True
+
+        Else
+
+            btnReplace.Enabled = False
+            btnReplaceAll.Enabled = False
+
+        End If
+
+    End Sub
+
+    Private Sub cmbSearch_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles cmbSearch.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            If btnFindNext.Enabled = True Then
+                btnFindNext.PerformClick()
+            Else
+                btnFind.PerformClick()
+            End If
+
+        End If
+    End Sub
+
+    Private Sub cmbSearch_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbSearch.TextChanged
+
+        If cmbSearch.Text.Length > 0 Then
+
+            btnFind.Enabled = True
+
+        Else
+
+            btnFind.Enabled = False
+            btnFindNext.Enabled = False
+
+        End If
+
+    End Sub
+
+#End Region
 
 End Class

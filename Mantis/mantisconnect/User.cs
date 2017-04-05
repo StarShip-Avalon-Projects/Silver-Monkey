@@ -24,6 +24,13 @@ namespace SilverMonkey.BugTraqConnect
     [Serializable]
     public sealed class User
     {
+        #region Private Fields
+
+        /// <summary>
+        /// The user email address.
+        /// </summary>
+        private string email;
+
         /// <summary>
         /// The user id.
         /// </summary>
@@ -39,12 +46,11 @@ namespace SilverMonkey.BugTraqConnect
         /// </summary>
         private string realName;
 
-        /// <summary>
-        /// The user email address.
-        /// </summary>
-        private string email;
+        #endregion Private Fields
 
         //private AccountData reporter;
+
+        #region Public Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
@@ -53,17 +59,79 @@ namespace SilverMonkey.BugTraqConnect
         {
         }
 
+        #endregion Public Constructors
+
+        #region Internal Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
-        /// <param name="accountData">Account data.</param>
-		internal User(AccountData accountData)
+        /// <param name="accountData">
+        /// Account data.
+        /// </param>
+        internal User(AccountData accountData)
         {
             Id = Convert.ToInt32(accountData.id);
             Name = accountData.name;
             RealName = accountData.real_name;
             Email = accountData.email;
         }
+
+        #endregion Internal Constructors
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        /// <value>
+        /// Can be empty or null.
+        /// </value>
+        public string Email
+        {
+            get { return this.email; }
+            set { this.email = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        /// <value>
+        /// Greater than or equal to 1.
+        /// </value>
+		public int Id
+        {
+            get { return this.id; }
+            set { this.id = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// Must not be empty or null.
+        /// </value>
+		public string Name
+        {
+            get { return this.name; }
+            set { this.name = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the real name of the user.
+        /// </summary>
+        /// <value>
+        /// Can be empty or null.
+        /// </value>
+		public string RealName
+        {
+            get { return this.realName; }
+            set { this.realName = value; }
+        }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
@@ -76,11 +144,17 @@ namespace SilverMonkey.BugTraqConnect
             return this.Name;
         }
 
+        #endregion Public Methods
+
+        #region Internal Methods
+
         /// <summary>
         /// Converts this instance to the webservice proxy type.
         /// </summary>
-        /// <returns>An equivalent object in the webservice proxy type.</returns>
-		internal MantisConnectWebservice.AccountData ToWebservice()
+        /// <returns>
+        /// An equivalent object in the webservice proxy type.
+        /// </returns>
+        internal MantisConnectWebservice.AccountData ToWebservice()
         {
             MantisConnectWebservice.AccountData accountData = new MantisConnectWebservice.AccountData();
             accountData.id = this.Id.ToString();
@@ -91,44 +165,6 @@ namespace SilverMonkey.BugTraqConnect
             return accountData;
         }
 
-        /// <summary>
-        /// Gets or sets the id.
-        /// </summary>
-        /// <value>Greater than or equal to 1.</value>
-		public int Id
-        {
-            get { return this.id; }
-            set { this.id = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        /// <value>Must not be empty or null.</value>
-		public string Name
-        {
-            get { return this.name; }
-            set { this.name = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the real name of the user.
-        /// </summary>
-        /// <value>Can be empty or null.</value>
-		public string RealName
-        {
-            get { return this.realName; }
-            set { this.realName = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the email.
-        /// </summary>
-        /// <value>Can be empty or null.</value>
-		public string Email
-        {
-            get { return this.email; }
-            set { this.email = value; }
-        }
+        #endregion Internal Methods
     }
 }

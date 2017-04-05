@@ -7,7 +7,14 @@ Imports MonkeyCore
 Public Class MS_Verbot
     Inherits MonkeySpeakLibrary
 
+#Region "Private Fields"
+
     Private ChatCMD As String
+
+#End Region
+
+#Region "Public Constructors"
+
     Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
         MyBase.New(Dream, Player, MsEngine)
         MyMonkeySpeakEngine.verbot = New Verbot5Engine()
@@ -47,6 +54,8 @@ Public Class MS_Verbot
     AddressOf getStateVariable, "(5:1504) Get chat engine state variable {...} and put it into variable %Variable.")
 
     End Sub
+
+#End Region
 
 #Region "Chat interface"
 
@@ -185,12 +194,48 @@ Public Class MS_Verbot
 
 #End Region
 
+#Region "Public Methods"
+
     '(0:1500) When the chat engine executes command {...},
     Function ChatExecute(reader As TriggerReader) As Boolean
 
         Try
             Dim cmd As String = reader.ReadString()
             Return ChatCMD.ToLower() = cmd.ToLower()
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:1504) Get chat engine state variable {...} and put it into variable %Variable.
+    Function getStateVariable(reader As TriggerReader) As Boolean
+        Try
+            Dim EngineVar As String = reader.ReadString()
+            Dim MS_Var As Variable = reader.ReadVariable(True)
+
+            MS_Var.Value = MyMonkeySpeakEngine.state.Vars.Item(EngineVar)
+            Return True
+
+        Catch ex As Exception
+            MyMonkeySpeakEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:1503) Set Chat Engine State Vairable {...} to {...}.
+    Function setStateVariable(reader As TriggerReader) As Boolean
+
+        Try
+
+            Dim EngineVar As String = reader.ReadString()
+            Dim EngineValue As String = reader.ReadString()
+            If MyMonkeySpeakEngine.state.Vars.ContainsKey(EngineVar) Then
+                MyMonkeySpeakEngine.state.Vars.Item(EngineVar) = EngineValue
+            Else
+                MyMonkeySpeakEngine.state.Vars.Add(EngineVar, EngineValue)
+            End If
+            Return True
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False
@@ -220,37 +265,6 @@ Public Class MS_Verbot
         End Try
     End Function
 
-    '(5:1503) Set Chat Engine State Vairable {...} to {...}.
-    Function setStateVariable(reader As TriggerReader) As Boolean
+#End Region
 
-        Try
-
-            Dim EngineVar As String = reader.ReadString()
-            Dim EngineValue As String = reader.ReadString()
-            If MyMonkeySpeakEngine.state.Vars.ContainsKey(EngineVar) Then
-                MyMonkeySpeakEngine.state.Vars.Item(EngineVar) = EngineValue
-            Else
-                MyMonkeySpeakEngine.state.Vars.Add(EngineVar, EngineValue)
-            End If
-            Return True
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(5:1504) Get chat engine state variable {...} and put it into variable %Variable.
-    Function getStateVariable(reader As TriggerReader) As Boolean
-        Try
-            Dim EngineVar As String = reader.ReadString()
-            Dim MS_Var As Variable = reader.ReadVariable(True)
-
-            MS_Var.Value = MyMonkeySpeakEngine.state.Vars.Item(EngineVar)
-            Return True
-
-        Catch ex As Exception
-            MyMonkeySpeakEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
 End Class

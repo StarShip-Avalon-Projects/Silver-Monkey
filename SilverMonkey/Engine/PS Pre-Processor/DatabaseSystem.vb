@@ -29,85 +29,47 @@ Namespace PhoenixSpeak
     Public Class DatabaseSystem
         Inherits MonkeySpeakLibrary
 
+#Region "Public Constructors"
+
+        Sub New()
+            MyBase.New()
+        End Sub
+
+#End Region
+
+#Region "Fields"
+
         Private WithEvents SubSys As New SubSystem(MyDream, MyPlayer)
 
-        Public Shared SQLreader As SQLiteDataReader = Nothing
-        Private QueryRun As Boolean = False
+#End Region
 
-        Private Shared lastItemName As String = String.Empty
+#Region "Public Fields"
+
+        Public Shared SQLreader As SQLiteDataReader = Nothing
+
+#End Region
+
+#Region "Private Fields"
 
         Private Shared _SQLitefile As String = MSPK_MDB.SQLitefile
+        Private Shared lastItemName As String = String.Empty
+        Private QueryRun As Boolean = False
 
-        ''' <summary>
-        ''' Backup/Restore/Prune modes
-        ''' </summary>
-        <CLSCompliant(False)>
-        Public Enum PsBackupStage As SByte
-            [error] = -1
-            off = 0
+#End Region
 
-            GetDream = 1
-            ''' <summary>
-            ''' Read Multi Page responses for character list
-            ''' </summary>
-            GetList
-            ''' <summary>
-            ''' Read Character list one letter at a time
-            ''' <para> Picks up where Get List left Off</para>
-            ''' </summary>
-            GetAlphaNumericList
-            ''' <summary>
-            '''
-            ''' </summary>
-            GetTargets
-            ''' <summary>
-            '''
-            ''' </summary>
-            GetSingle
-            ''' <summary>
-            '''
-            ''' </summary>
-            RestoreSibgleCharacterPs
-            ''' <summary>
-            '''
-            ''' </summary>
-            RestoreAllCharacterPS
+#Region "Public Enums"
 
-            ''' <summary>
-            ''' Pruning Database
-            ''' </summary>
-            PruneDatabase
+#End Region
 
-        End Enum
+#Region "Public Properties"
 
-        ''' <summary>
-        ''' PS systems running
-        ''' </summary>
-        <CLSCompliant(False)>
-        Public Enum PsSystemRunning As SByte
-            [Error] = -1
-            PsNone = 0
-            PsBackup = 1
-            PsRestore = 2
-            PsPrune = 3
-        End Enum
+#End Region
 
-        ''' <summary>
-        ''' Current Mode the Phoenix Speak Subsystem is in.
-        ''' </summary>
-        ''' <returns></returns>
-        <CLSCompliant(False)>
-        Public Property CurrentPS_Stage As PsBackupStage
+#Region "Public Methods"
 
-        <CLSCompliant(False)>
-        Public Property PsProcess As PsSystemRunning
+#End Region
 
-        ''' <summary>
-        ''' List of characters to back up
-        ''' <para>special character [DREAM] for information to host dream</para>
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property CharacterList As New List(Of Variable)(20)
+#Region "Public Constructors"
 
         Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
             MyBase.New(Dream, Player, MsEngine)
@@ -196,53 +158,86 @@ Namespace PhoenixSpeak
             '(5:x) remove setting table {...}.
         End Sub
 
-        Public Function BackUpCharacterNamed(reader As TriggerReader) As Boolean
-            Dim furre As String = reader.ReadString
-            Return MyPlayer.ShortName = FurcadiaShortName(furre)
-        End Function
+#End Region
 
-        '(1:520) and the bot is not in the middle of a PS Backup Process
-        Public Function BotBackup(reader As TriggerReader) As Boolean
+#Region "Public Enums"
 
-            Try
-                Return CurrentPS_Stage <> PsSystemRunning.PsBackup
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return False
-        End Function
-        '(1:521) and the bot is in the middle of a PS Backup Process
-        Public Function NotBotBackup(reader As TriggerReader) As Boolean
-            Try
-                Return CurrentPS_Stage = PsSystemRunning.PsBackup
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return False
-        End Function
-        '(1:522) and the bot is not in the middle of a PS Restore Process
-        Public Function BotRestore(reader As TriggerReader) As Boolean
+        Public Enum PsBackupStage As SByte
+            [error] = -1
+            off = 0
 
-            Try
-                Return CurrentPS_Stage <> PsSystemRunning.PsRestore
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return False
-        End Function
-        '(1:523) and the bot is in the middle of a PS Restore Process
-        Public Function NotBotRestore(reader As TriggerReader) As Boolean
+            GetDream = 1
+            ''' <summary>
+            ''' Read Multi Page responses for character list
+            ''' </summary>
+            GetList
+            ''' <summary>
+            ''' Read Character list one letter at a time
+            ''' <para> Picks up where Get List left Off</para>
+            ''' </summary>
+            GetAlphaNumericList
+            ''' <summary>
+            '''
+            ''' </summary>
+            GetTargets
+            ''' <summary>
+            '''
+            ''' </summary>
+            GetSingle
+            ''' <summary>
+            '''
+            ''' </summary>
+            RestoreSibgleCharacterPs
+            ''' <summary>
+            '''
+            ''' </summary>
+            RestoreAllCharacterPS
 
-            Try
-                Return CurrentPS_Stage = PsSystemRunning.PsRestore
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return False
+            ''' <summary>
+            ''' Pruning Database
+            ''' </summary>
+            PruneDatabase
+
+        End Enum
+
+        ''' <summary>
+        ''' PS systems running
+        ''' </summary>
+        <CLSCompliant(False)>
+        Public Enum PsSystemRunning As SByte
+            [Error] = -1
+            PsNone = 0
+            PsBackup = 1
+            PsRestore = 2
+            PsPrune = 3
+        End Enum
+
+#End Region
+
+#Region "Public Properties"
+
+        ''' <summary>
+        ''' List of characters to back up
+        ''' <para>special character [DREAM] for information to host dream</para>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property CharacterList As New List(Of Variable)(20)
+
+        Public Property CurrentPS_Stage As PsBackupStage
+
+        <CLSCompliant(False)>
+        Public Property PsProcess As PsSystemRunning
+
+#End Region
+
+#Region "Public Methods"
+
+        Public Function AbortPS(reader As TriggerReader) As Boolean
+            If CurrentPS_Stage <> PsSystemRunning.PsNone Then
+                Abort()
+                ClientMessage("Aborted PS Backup/Restore process")
+            End If
+            Return True
         End Function
 
         '(5:553) Backup All Character phoenix speak for the dream
@@ -260,6 +255,11 @@ Namespace PhoenixSpeak
             Return False
         End Function
 
+        Public Function BackUpCharacterNamed(reader As TriggerReader) As Boolean
+            Dim furre As String = reader.ReadString
+            Return MyPlayer.ShortName = FurcadiaShortName(furre)
+        End Function
+
         '(5:554) backup Character named {...} phoenix speak
         Function BackupSingleCharacterPS(reader As TriggerReader) As Boolean
             Try
@@ -273,21 +273,51 @@ Namespace PhoenixSpeak
             End Try
             Return True
         End Function
-        '(5:555) restore phoenix speak for character {...}
-        Public Function RestoreCharacterPS(reader As TriggerReader) As Boolean
+
+        '(1:520) and the bot is not in the middle of a PS Backup Process
+        Public Function BotBackup(reader As TriggerReader) As Boolean
 
             Try
-                Dim furre As String = reader.ReadString()
-                Return 0 < Build_PS_CMD(furre)
+                Return CurrentPS_Stage <> PsSystemRunning.PsBackup
             Catch ex As Exception
                 MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
-            Return True
+            Return False
+        End Function
+        '(1:522) and the bot is not in the middle of a PS Restore Process
+        Public Function BotRestore(reader As TriggerReader) As Boolean
+
+            Try
+                Return CurrentPS_Stage <> PsSystemRunning.PsRestore
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return False
         End Function
 
-        '(5:557) remove Entries older then # days from phoenix speak Character backup.
+        '(1:521) and the bot is in the middle of a PS Backup Process
+        Public Function NotBotBackup(reader As TriggerReader) As Boolean
+            Try
+                Return CurrentPS_Stage = PsSystemRunning.PsBackup
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return False
+        End Function
+        '(1:523) and the bot is in the middle of a PS Restore Process
+        Public Function NotBotRestore(reader As TriggerReader) As Boolean
 
+            Try
+                Return CurrentPS_Stage = PsSystemRunning.PsRestore
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return False
+        End Function
         Public Function PruneCharacterBackup(reader As TriggerReader) As Boolean
 
             Try
@@ -305,6 +335,20 @@ Namespace PhoenixSpeak
 
         End Function
 
+        '(5:555) restore phoenix speak for character {...}
+        Public Function RestoreCharacterPS(reader As TriggerReader) As Boolean
+
+            Try
+                Dim furre As String = reader.ReadString()
+                Return 0 < Build_PS_CMD(furre)
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+        '(5:557) remove Entries older then # days from phoenix speak Character backup.
         '(5:558) restore phoenix speak characters newer then # days.
         Public Function restorePS_DataOldrThanDays(reader As TriggerReader) As Boolean
 
@@ -322,63 +366,10 @@ Namespace PhoenixSpeak
 
         End Function
 
-        Public Function AbortPS(reader As TriggerReader) As Boolean
-            If CurrentPS_Stage <> PsSystemRunning.PsNone Then
-                Abort()
-                ClientMessage("Aborted PS Backup/Restore process")
-            End If
-            Return True
-        End Function
+#End Region
 
 #Region "Backup/Restore"
 
-        ''' <summary>
-        ''' Restores Phoenix Speak newer the specified amount a time
-        ''' <para>0 Days will restore all records</para>
-        ''' </summary>
-        ''' <param name="days">Number of Days for new records</param>
-        Public Sub RestorePS(ByVal days As Double)
-            If PsProcess <> PsSystemRunning.PsNone Then Exit Sub
-            PsProcess = PsSystemRunning.PsRestore
-            '(0:500) When the bot starts backing up the character Phoenix Speak,
-            MyMonkeySpeakEngine.MSpage.Execute(502)
-            If days > 0 Then
-                ClientMessage("Restoring characters newer than " + days.ToString + " days to the dream.")
-            Else
-                ClientMessage("Restoring all characters for the dream")
-            End If
-            Dim cmd As String = "select * FROM BACKUPMASTER"
-            Dim db As SQLiteDatabase = New SQLiteDatabase(MSPK_MDB.SQLitefile)
-            Dim dt As System.Data.DataTable = SQLiteDatabase.GetDataTable(cmd)
-            Dim i As Integer = 0
-            'Build Commands for each character
-            For Each row As System.Data.DataRow In dt.Rows
-                i += 1
-                Dim ft As String = row.Item("date modified").ToString
-                Dim Time As TimeSpan = Main.FurcTime.Subtract(DateTime.Parse(ft))
-
-                Dim CharacternName As String = row.Item("Name").ToString()
-                Dim CharId As Integer = 0
-                If Time.Days <= days Then
-                    CharId = Build_PS_CMD(CharacternName)
-                ElseIf days = 0 Then
-                    CharId = Build_PS_CMD(CharacternName)
-                End If
-                If CharId > 0 Then
-                    CharacterList.Add(New PhoenixSpeak.Variable(CharacternName, CharId))
-                End If
-
-            Next
-        End Sub
-
-        Private Sub Abort()
-            'Reset all PS System Controls
-            CurrentPS_Stage = PsBackupStage.off
-            PsProcess = PsSystemRunning.PsNone
-            CharacterList.Clear()
-            'Abort()
-            LastPSId = 0
-        End Sub
         ''' <summary>
         ''' resend PS Command if we don't get a response from the server
         ''' Or skip instruction after failing 4 times
@@ -397,7 +388,7 @@ Namespace PhoenixSpeak
             If str.ToUpper = "[DREAM]" Then
                 str = str.ToUpper
             Else
-                str = MainMsEngine.ToFurcShortName(str)
+                str = FurcadiaShortName(str)
             End If
 
             Dim db As SQLiteDatabase = New SQLiteDatabase(MSPK_MDB.SQLitefile)
@@ -447,14 +438,156 @@ Namespace PhoenixSpeak
             End If
             Return _id
         End Function
+
+        ''' <summary>
+        ''' Restores Phoenix Speak newer the specified amount a time
+        ''' <para>0 Days will restore all records</para>
+        ''' </summary>
+        ''' <param name="days">Number of Days for new records</param>
+        Public Sub RestorePS(ByVal days As Double)
+            If PsProcess <> PsSystemRunning.PsNone Then Exit Sub
+            PsProcess = PsSystemRunning.PsRestore
+            '(0:500) When the bot starts backing up the character Phoenix Speak,
+            MyMonkeySpeakEngine.MSpage.Execute(502)
+            If days > 0 Then
+                ClientMessage("Restoring characters newer than " + days.ToString + " days to the dream.")
+            Else
+                ClientMessage("Restoring all characters for the dream")
+            End If
+            Dim cmd As String = "select * FROM BACKUPMASTER"
+            Dim db As SQLiteDatabase = New SQLiteDatabase(MSPK_MDB.SQLitefile)
+            Dim dt As System.Data.DataTable = SQLiteDatabase.GetDataTable(cmd)
+            Dim i As Integer = 0
+            'Build Commands for each character
+            For Each row As System.Data.DataRow In dt.Rows
+                i += 1
+                Dim ft As String = row.Item("date modified").ToString
+                Dim Time As TimeSpan = Main.FurcTime.Subtract(DateTime.Parse(ft))
+
+                Dim CharacternName As String = row.Item("Name").ToString()
+                Dim CharId As Integer = 0
+                If Time.Days <= days Then
+                    CharId = Build_PS_CMD(CharacternName)
+                ElseIf days = 0 Then
+                    CharId = Build_PS_CMD(CharacternName)
+                End If
+                If CharId > 0 Then
+                    CharacterList.Add(New PhoenixSpeak.Variable(CharacternName, CharId))
+                End If
+
+            Next
+        End Sub
+
+        Private Sub Abort()
+            'Reset all PS System Controls
+            CurrentPS_Stage = PsBackupStage.off
+            PsProcess = PsSystemRunning.PsNone
+            CharacterList.Clear()
+            'Abort()
+            LastPSId = 0
+        End Sub
 #End Region
 
 #Region "Backup Functions"
+
+        Private Shared OjbLock As New Object
 
         'Build Character List
         'read Multipages first (Seems to cap at 6 pages)
         'read *.<letter> till *.z these could be multi pages
         Private PSProcessingResource As Integer = 0
+        Private Shared Function NewPlayer(ByRef Player As String) As Dictionary(Of String, String)
+            Dim Dta As New Dictionary(Of String, String)
+            If Player.ToUpper = "[DREAM]" Then
+                Player = "[DREAM]"
+            End If
+            Dta.Add("Name", Player)
+            Dta.Add("date modified", Main.FurcTime.ToString)
+            Return Dta
+        End Function
+
+        ''' <summary>
+        ''' Sends PS Info to SQLite Database
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns>True on success</returns>
+        Private Shared Function SendPStoDatabase(PsInfo As List(Of PhoenixSpeak.Variable), TableSet As String, PlayerName As String) As Boolean
+            Dim Returnval As Boolean
+            Dim idx As Integer = 0
+            PlayerName = PlayerName.Trim
+            Dim Data As New Dictionary(Of String, String)
+            Try
+                Monitor.Enter(OjbLock)
+
+                Dim dta As Dictionary(Of String, String) = NewPlayer(PlayerName)
+                If PlayerName.ToUpper = "[DREAM]" Then
+                    PlayerName = "[DREAM]"
+                Else
+                    PlayerName = FurcadiaShortName(PlayerName)
+                End If
+
+                For Each var As PhoenixSpeak.Variable In PsInfo
+                    Data.Add(var.Name, var.Value.ToString)
+                Next
+
+                Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
+
+                '''Check for special character to store Dream PS tree
+                Data = SystemDateFixer(TableSet, PlayerName, Data)
+
+                Dim NameID As String = "SELECT [ID] FROM " + TableSet + "MASTER Where [Name]='" & PlayerName & "'"
+
+                db.Insert(String.Empty + TableSet + "MASTER", dta)
+                Dim RecordExist As Boolean = Integer.TryParse(SQLiteDatabase.ExecuteScalar(NameID), idx)
+
+                'Lets check the Database for a record first.
+                ' If it exists we'll update the current record with new info
+                If RecordExist Then
+                    db.Update(String.Empty + TableSet + "MASTER", dta, "[Name]='" + PlayerName + "'")
+                    SQLiteDatabase.ExecuteNonQuery("DELETE FROM '" + TableSet + "' WHERE [NameID]=" + idx.ToString)
+                Else
+                    'Inserting a new record? Lets make sure it has the right name for
+                    ' for the MASTER Table
+                End If
+                Returnval = SQLiteDatabase.InsertMultiRow(TableSet, idx, Data)
+            Finally
+                Monitor.Exit(OjbLock)
+
+            End Try
+
+            Return Returnval
+        End Function
+
+        '
+        Private Shared Function SystemDateFixer(ByVal Table As String, ByVal PlayerName As String, ByRef dta As Dictionary(Of String, String)) As Dictionary(Of String, String)
+            If Table <> "BACKUP" Then Return dta
+            'retrieve characters Last Used date from PS for Use in our " + TableSet  + " tables
+            Dim TimeItem As String = "sys_lastused_date"
+            Dim fDate As Double = 0
+            If dta.ContainsKey(TimeItem) Then
+                Double.TryParse(dta.Item(TimeItem), fDate)
+                If fDate = 0 Then
+                    If PlayerName.ToUpper <> "[DREAM]" Then
+                        dta.Item(TimeItem) = DateTimeToUnixTimestamp(Main.FurcTime).ToString
+                    End If
+                Else
+                    'Add current Unix Time Stamp as default
+                    dta.Item(TimeItem) = UnixTimeStampToDateTime(fDate).ToString
+                End If
+            End If
+            Return dta
+        End Function
+
+        Private Shared Function TableJoinSet(ByVal TableSet As String, ByVal Name As String) As String
+            'Retrieve Phoenix Speak Variables from the database
+            Dim str As String =
+            "select " + TableSet + ".*, " + TableSet + "MASTER.ID from " + TableSet + " " +
+            "inner join " + TableSet + "MASTER on " +
+String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
+            "where " + TableSet + "MASTER.Name = '" + Name + "' "
+            Return str
+        End Function
+
         Private Sub PsReceived(o As Object, e As PhoenixSpeakEventArgs) Handles SubSys.PsReceived
             'PsProcess = PsSystemRunning.PsBackup
             Dim ServerCommand = String.Empty
@@ -557,99 +690,6 @@ Namespace PhoenixSpeak
 
             'SubSystem.PsId.remove(id)
         End Sub
-
-        Private Shared Function NewPlayer(ByRef Player As String) As Dictionary(Of String, String)
-            Dim Dta As New Dictionary(Of String, String)
-            If Player.ToUpper = "[DREAM]" Then
-                Player = "[DREAM]"
-            End If
-            Dta.Add("Name", Player)
-            Dta.Add("date modified", Main.FurcTime.ToString)
-            Return Dta
-        End Function
-
-        Private Shared OjbLock As New Object
-        ''' <summary>
-        ''' Sends PS Info to SQLite Database
-        ''' </summary>
-        ''' <param name="s"></param>
-        ''' <returns>True on success</returns>
-        Private Shared Function SendPStoDatabase(PsInfo As List(Of PhoenixSpeak.Variable), TableSet As String, PlayerName As String) As Boolean
-            Dim Returnval As Boolean
-            Dim idx As Integer = 0
-            PlayerName = PlayerName.Trim
-            Dim Data As New Dictionary(Of String, String)
-            Try
-                Monitor.Enter(OjbLock)
-
-                Dim dta As Dictionary(Of String, String) = NewPlayer(PlayerName)
-                If PlayerName.ToUpper = "[DREAM]" Then
-                    PlayerName = "[DREAM]"
-                Else
-                    PlayerName = MainMsEngine.ToFurcShortName(PlayerName)
-                End If
-
-                For Each var As PhoenixSpeak.Variable In PsInfo
-                    Data.Add(var.Name, var.Value.ToString)
-                Next
-
-                Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
-
-                '''Check for special character to store Dream PS tree
-                Data = SystemDateFixer(TableSet, PlayerName, Data)
-
-                Dim NameID As String = "SELECT [ID] FROM " + TableSet + "MASTER Where [Name]='" & PlayerName & "'"
-
-                db.Insert(String.Empty + TableSet + "MASTER", dta)
-                Dim RecordExist As Boolean = Integer.TryParse(SQLiteDatabase.ExecuteScalar(NameID), idx)
-
-                'Lets check the Database for a record first.
-                ' If it exists we'll update the current record with new info
-                If RecordExist Then
-                    db.Update(String.Empty + TableSet + "MASTER", dta, "[Name]='" + PlayerName + "'")
-                    SQLiteDatabase.ExecuteNonQuery("DELETE FROM '" + TableSet + "' WHERE [NameID]=" + idx.ToString)
-                Else
-                    'Inserting a new record? Lets make sure it has the right name for
-                    ' for the MASTER Table
-                End If
-                Returnval = SQLiteDatabase.InsertMultiRow(TableSet, idx, Data)
-            Finally
-                Monitor.Exit(OjbLock)
-
-            End Try
-
-            Return Returnval
-        End Function
-
-        Private Shared Function TableJoinSet(ByVal TableSet As String, ByVal Name As String) As String
-            'Retrieve Phoenix Speak Variables from the database
-            Dim str As String =
-            "select " + TableSet + ".*, " + TableSet + "MASTER.ID from " + TableSet + " " +
-            "inner join " + TableSet + "MASTER on " +
-String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
-            "where " + TableSet + "MASTER.Name = '" + Name + "' "
-            Return str
-        End Function
-        '
-        Private Shared Function SystemDateFixer(ByVal Table As String, ByVal PlayerName As String, ByRef dta As Dictionary(Of String, String)) As Dictionary(Of String, String)
-            If Table <> "BACKUP" Then Return dta
-            'retrieve characters Last Used date from PS for Use in our " + TableSet  + " tables
-            Dim TimeItem As String = "sys_lastused_date"
-            Dim fDate As Double = 0
-            If dta.ContainsKey(TimeItem) Then
-                Double.TryParse(dta.Item(TimeItem), fDate)
-                If fDate = 0 Then
-                    If PlayerName.ToUpper <> "[DREAM]" Then
-                        dta.Item(TimeItem) = DateTimeToUnixTimestamp(Main.FurcTime).ToString
-                    End If
-                Else
-                    'Add current Unix Time Stamp as default
-                    dta.Item(TimeItem) = UnixTimeStampToDateTime(fDate).ToString
-                End If
-            End If
-            Return dta
-        End Function
-
 #End Region
 
 #Region "Pruning"

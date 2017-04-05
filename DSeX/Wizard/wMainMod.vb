@@ -6,11 +6,11 @@ Module wMainMod
     Public ScriptPaths As List(Of String) = New List(Of String)
     Public ScriptPaths_MS As List(Of String) = New List(Of String)
 
-    Public Function IsOdd(ByRef num As Integer) As Boolean
-        Return num Mod 2 <> 0
-    End Function
-
     Public Function IsEven(ByRef num As Integer) As Boolean
         Return num Mod 2 = 0
+    End Function
+
+    Public Function IsOdd(ByRef num As Integer) As Boolean
+        Return num Mod 2 <> 0
     End Function
 End Module

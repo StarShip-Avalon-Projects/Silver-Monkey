@@ -4,7 +4,14 @@ Imports MonkeyCore
 
 Public Class MS_Quotes
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+
+#Region "Private Fields"
+
     Private writer As TextBoxWriter = Nothing
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
@@ -12,5 +19,7 @@ Public Class MS_Quotes
         '(5: ) Use file {...} as quote list and put line # into Variable %.
         '(5: ) Use File {...} as quote list and put the total of lines into variable %
     End Sub
+
+#End Region
 
 End Class

@@ -8,14 +8,22 @@ namespace DataMonkey.Controls
     /// </summary>
     public class RemoveColumn : BasePopup
     {
-        private System.Windows.Forms.TextBox NameTextBox;
+        #region Private Fields
+
         private System.Windows.Forms.Label NameLabel;
+        private System.Windows.Forms.TextBox NameTextBox;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public RemoveColumn()
         {
             // Required for Windows Form Designer support
             InitializeComponent();
         }
+
+        #endregion Public Constructors
 
         #region Windows Form Designer generated code
 

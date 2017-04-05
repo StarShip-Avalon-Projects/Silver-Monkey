@@ -2,15 +2,21 @@
 
 Public Class Variables
 
+#Region "Private Fields"
+
     Private alarm As Threading.Timer
     'Dim RefreshList As New Thread(AddressOf RefreshMe)
     Dim Lock As New Object
+
+#End Region
+
+#Region "Private Delegates"
+
     Private Delegate Sub dlgUpdateUI()
 
-    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-        updateVariables()
+#End Region
 
-    End Sub
+#Region "Public Methods"
 
     Public Sub updateVariables()
 
@@ -48,23 +54,20 @@ Public Class Variables
         End If
     End Sub
 
+#End Region
+
+#Region "Private Methods"
+
+    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
+        updateVariables()
+
+    End Sub
     Private Sub ChkBxRefresh_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkBxRefresh.CheckedChanged
         If ChkBxRefresh.Checked Then
             Me.alarm = New Threading.Timer(AddressOf Tick, Nothing, 1000, 1000)
         Else
             Me.alarm.Dispose()
         End If
-    End Sub
-
-    Private Sub Variables_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-        If Not IsNothing(Me.alarm) Then Me.alarm.Dispose()
-    End Sub
-
-    Private Sub Variables_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-
-    End Sub
-    Private Sub Tick(ByVal state As Object)
-        updateVariables()
     End Sub
 
     Private Sub ListView1_DoubleClick(sender As Object, e As System.EventArgs) Handles ListView1.DoubleClick
@@ -79,5 +82,19 @@ Public Class Variables
 
         End With
     End Sub
+
+    Private Sub Tick(ByVal state As Object)
+        updateVariables()
+    End Sub
+
+    Private Sub Variables_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        If Not IsNothing(Me.alarm) Then Me.alarm.Dispose()
+    End Sub
+
+    Private Sub Variables_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+
+    End Sub
+
+#End Region
 
 End Class

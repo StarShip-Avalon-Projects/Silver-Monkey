@@ -4,27 +4,30 @@ Imports System.Windows.Forms
 
 Public Class PluginServices
 
-    Public Class AvailablePlugin
-        Public ReadOnly Property AssemblyPath As String
-            Get
-                Return Library.Location
-            End Get
-        End Property
-        Public Property ClassName As String
-        Public Property Library As [Assembly]
-        Public Overrides Function Equals(obj As Object) As Boolean
-            If obj Is Nothing OrElse Not obj.GetType().Equals(GetType(AvailablePlugin)) Then
-                Return False
-            End If
-            Dim var As AvailablePlugin = DirectCast(obj, AvailablePlugin)
-            Return ClassName = var.ClassName
-            Return False
-        End Function
-        Public Overrides Function GetHashCode() As Integer
-            Return ClassName.GetHashCode()
-        End Function
-    End Class
+#Region "Public Fields"
+
     Public Shared Plugins As New List(Of AvailablePlugin)
+
+#End Region
+
+#Region "Public Methods"
+
+    Public Shared Function CreateInstance(ByVal Plugin As AvailablePlugin) As Object
+        Dim objDLL As [Assembly]
+        Dim objPlugin As Object
+
+        Try
+            'Load dll
+            objDLL = [Assembly].LoadFrom(Plugin.AssemblyPath)
+
+            'Create and return class instance
+            objPlugin = objDLL.CreateInstance(Plugin.ClassName)
+        Catch e As Exception
+            Return Nothing
+        End Try
+
+        Return objPlugin
+    End Function
 
     Public Shared Function FindPlugins(ByVal strPath As String, ByVal strInterface As String) As List(Of AvailablePlugin)
         Dim strDLLs() As String, intIndex As Integer
@@ -50,6 +53,10 @@ Public Class PluginServices
             Return Nothing
         End If
     End Function
+
+#End Region
+
+#Region "Private Methods"
 
     Private Shared Sub ExamineAssembly(ByVal objDLL As [Assembly], ByVal strInterface As String, ByRef Plugins As List(Of AvailablePlugin))
         Dim objType As Type
@@ -84,21 +91,42 @@ Public Class PluginServices
         Next
     End Sub
 
-    Public Shared Function CreateInstance(ByVal Plugin As AvailablePlugin) As Object
-        Dim objDLL As [Assembly]
-        Dim objPlugin As Object
+#End Region
 
-        Try
-            'Load dll
-            objDLL = [Assembly].LoadFrom(Plugin.AssemblyPath)
+#Region "Public Classes"
 
-            'Create and return class instance
-            objPlugin = objDLL.CreateInstance(Plugin.ClassName)
-        Catch e As Exception
-            Return Nothing
-        End Try
+    Public Class AvailablePlugin
 
-        Return objPlugin
-    End Function
+#Region "Public Properties"
+
+        Public ReadOnly Property AssemblyPath As String
+            Get
+                Return Library.Location
+            End Get
+        End Property
+        Public Property ClassName As String
+        Public Property Library As [Assembly]
+
+#End Region
+
+#Region "Public Methods"
+
+        Public Overrides Function Equals(obj As Object) As Boolean
+            If obj Is Nothing OrElse Not obj.GetType().Equals(GetType(AvailablePlugin)) Then
+                Return False
+            End If
+            Dim var As AvailablePlugin = DirectCast(obj, AvailablePlugin)
+            Return ClassName = var.ClassName
+            Return False
+        End Function
+        Public Overrides Function GetHashCode() As Integer
+            Return ClassName.GetHashCode()
+        End Function
+
+#End Region
+
+    End Class
+
+#End Region
 
 End Class

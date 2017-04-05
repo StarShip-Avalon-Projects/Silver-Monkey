@@ -8,14 +8,22 @@ namespace DataMonkey.Controls
     /// </summary>
     public class RenameTable : BasePopup
     {
-        private TextBox RenameTableTextBox;
+        #region Private Fields
+
         private Label RenameTableLabel;
+        private TextBox RenameTableTextBox;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public RenameTable()
         {
             // Required for Windows Form Designer support
             InitializeComponent();
         }
+
+        #endregion Public Constructors
 
         #region Properties
 

@@ -4,8 +4,15 @@
 ''' trouble shooting Class for tracing what functions do
 ''' </summary>
 Public Class Logger
-    Private strErrorFilePath As String
+
+#Region "Private Fields"
+
     Private Stack As New List(Of String)
+    Private strErrorFilePath As String
+
+#End Region
+
+#Region "Public Constructors"
 
     ''' <summary>
     ''' Constructor
@@ -20,22 +27,9 @@ Public Class Logger
         LogMessage(message)
     End Sub
 
-    ''' <summary>
-    ''' Checks to see if a file is in use
-    ''' </summary>
-    ''' <param name="filePath"></param>
-    ''' <returns></returns>
-    Private Function IsFileInUse(ByVal filePath As String) As Boolean
-        Try
-            Dim contents() As String = File.ReadAllLines(filePath)
-        Catch ex As IOException
-            Return (ex.Message.StartsWith("The process cannot access the file") AndAlso
-                    ex.Message.EndsWith("because it is being used by another process."))
-        Catch ex As Exception
-            Return False
-        End Try
-        Return False
-    End Function
+#End Region
+
+#Region "Public Methods"
 
     ''' <summary>
     ''' Sends a string to the log file
@@ -63,5 +57,28 @@ Public Class Logger
             End Try
         End Using
     End Sub
+
+#End Region
+
+#Region "Private Methods"
+
+    ''' <summary>
+    ''' Checks to see if a file is in use
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    ''' <returns></returns>
+    Private Function IsFileInUse(ByVal filePath As String) As Boolean
+        Try
+            Dim contents() As String = File.ReadAllLines(filePath)
+        Catch ex As IOException
+            Return (ex.Message.StartsWith("The process cannot access the file") AndAlso
+                    ex.Message.EndsWith("because it is being used by another process."))
+        Catch ex As Exception
+            Return False
+        End Try
+        Return False
+    End Function
+
+#End Region
 
 End Class

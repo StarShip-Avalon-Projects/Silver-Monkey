@@ -1,6 +1,5 @@
 ﻿Imports Monkeyspeak
 
-Imports MonkeyCore
 Imports System.Collections.Generic
 
 Namespace PhoenixSpeak
@@ -10,9 +9,19 @@ Namespace PhoenixSpeak
     ''' <para>Checks and executes Basic PhoenixSpeak response triggers</para>
     ''' </summary>
     Public Class MsPhoenixSpeak
-        Inherits MonkeySpeakLibrary
+        Inherits SilverMonkey.MonkeySpeakLibrary
+
+#Region "Fields"
 
         Private WithEvents SubSys As New SubSystem(MyDream, MyPlayer)
+
+#End Region
+
+#Region "Public Constructors"
+
+        Public Sub New()
+            MyBase.New()
+        End Sub
 
         Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
             MyBase.New(Dream, Player, MsEngine)
@@ -70,6 +79,102 @@ Namespace PhoenixSpeak
 
         End Sub
 
+#End Region
+
+#Region "Public Methods"
+
+        '(5:91) Forget Phoenix Speak info {...} for this dream.
+        Function ForgetDreamPS(reader As TriggerReader) As Boolean
+            Try
+                Dim info As String = reader.ReadString
+                sendServer("ps clear dream." + info)
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+        '(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.
+        Function ForgetFurreNamedPS(reader As TriggerReader) As Boolean
+            Try
+                Dim info As String = reader.ReadString
+                Dim furre As String = reader.ReadString
+                sendServer("ps clear characer." + furre + "." + info)
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+        '(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.
+        Function ForgetTrigFurrePS(reader As TriggerReader) As Boolean
+            Try
+                Dim info As String = reader.ReadString
+                Dim furre As String = MyPlayer.ShortName
+                sendServer("ps clear characer." + furre + "." + info)
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+        Public Function getPSinfo(reader As TriggerReader) As Boolean
+            Try
+                Dim Info As New PhoenixSpeak.Variable(reader.ReadString())
+                Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
+                If SubSys.PSInfoCache.Contains(Info) Then
+                    var = Info
+                Else
+                    var.Value = Nothing
+                End If
+                Return True
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+        End Function
+
+        '(5:90) Memorize Phoenix Speak info {...} for this dream.
+        Function MemorizeDreamPS(reader As TriggerReader) As Boolean
+            Try
+                Dim info As String = reader.ReadString
+                sendServer("ps set dream." + info)
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+        '(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.
+        Function MemorizeFurreNamedPS(reader As TriggerReader) As Boolean
+            Try
+                Dim info As String = reader.ReadString
+                Dim furre As String = reader.ReadString
+                sendServer("ps set characer." + furre + "." + info)
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+        '(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.
+        Function MemorizeTrigFurrePS(reader As TriggerReader) As Boolean
+            Try
+                Dim info As String = reader.ReadString
+                Dim furre As String = MyPlayer.ShortName
+                sendServer("ps set characer." + furre + "." + info)
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
         '(0:17) When someone whispers something with {...} in it,
         Function msgContains(reader As TriggerReader) As Boolean
             Dim msMsg As String = ""
@@ -81,20 +186,6 @@ Namespace PhoenixSpeak
                 msg = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE").Value.ToString
                 'Debug.Print("Msg = " & msg)
                 Return msg.Contains(msMsg)
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-        End Function
-
-        Function msgNotContain(reader As TriggerReader) As Boolean
-            Try
-                Dim msMsg As String = reader.ReadString()
-                'Debug.Print("msMsg = " & msMsg)
-                Dim msg As Monkeyspeak.Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE")
-                'Debug.Print("Msg = " & msg.Value.ToString)
-                If msg.Value.ToString.Contains(msMsg) Then Return False
-                Return True
             Catch ex As Exception
                 MainMsEngine.LogError(reader, ex)
                 Return False
@@ -125,152 +216,19 @@ Namespace PhoenixSpeak
             End Try
         End Function
 
-        '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
-        Function RemberPSInforTrigFurre(reader As TriggerReader) As Boolean
+        Function msgNotContain(reader As TriggerReader) As Boolean
             Try
-                Dim furre As String = MyPlayer.ShortName
-                sendServer("ps set characer." + furre + ".*")
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-        '(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.
-        Function RemberPSInforFurreNamed(reader As TriggerReader) As Boolean
-            Try
-                Dim furre As String = reader.ReadString
-                sendServer("ps get characer." + furre + ".*")
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-        '(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.
-        Function RemberPSInfoAllDream(reader As TriggerReader) As Boolean
-            Try
-                sendServer("ps get dream.*")
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-        '(5:63) get all Phoenix Speak info for all characters and put it into the PSInfo cache.
-        Function RemberPSInfoAllCharacters(reader As TriggerReader) As Boolean
-            Try
-                sendServer("ps get character.*")
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-
-        Public Function getPSinfo(reader As TriggerReader) As Boolean
-            Try
-                Dim Info As New PhoenixSpeak.Variable(reader.ReadString())
-                Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
-                If SubSys.PSInfoCache.Contains(Info) Then
-                    var = Info
-                Else
-                    var.Value = Nothing
-                End If
+                Dim msMsg As String = reader.ReadString()
+                'Debug.Print("msMsg = " & msMsg)
+                Dim msg As Monkeyspeak.Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE")
+                'Debug.Print("Msg = " & msg.Value.ToString)
+                If msg.Value.ToString.Contains(msMsg) Then Return False
                 Return True
             Catch ex As Exception
                 MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
         End Function
-
-        '(5:81) Store PSInfo Key Names to Variable %Variable.
-        Function PSInfoKeyToVariable(reader As TriggerReader) As Boolean
-            Try
-                Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
-                Dim L As New List(Of String)
-                For Each Name As PhoenixSpeak.Variable In SubSys.PSInfoCache
-                    L.Add(Name.Name)
-                Next
-                Var.Value = String.Join(" ", L)
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-        '(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.
-        Function MemorizeFurreNamedPS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                Dim furre As String = reader.ReadString
-                sendServer("ps set characer." + furre + "." + info)
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-        '(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.
-        Function ForgetFurreNamedPS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                Dim furre As String = reader.ReadString
-                sendServer("ps clear characer." + furre + "." + info)
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-        '(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.
-        Function MemorizeTrigFurrePS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                Dim furre As String = MyPlayer.ShortName
-                sendServer("ps set characer." + furre + "." + info)
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-        '(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.
-        Function ForgetTrigFurrePS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                Dim furre As String = MyPlayer.ShortName
-                sendServer("ps clear characer." + furre + "." + info)
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-
-        '(5:90) Memorize Phoenix Speak info {...} for this dream.
-        Function MemorizeDreamPS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                sendServer("ps set dream." + info)
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-        '(5:91) Forget Phoenix Speak info {...} for this dream.
-        Function ForgetDreamPS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                sendServer("ps clear dream." + info)
-            Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
-                Return False
-            End Try
-            Return True
-        End Function
-
         '(5:94) execute Phoenix Speak command {...}.
         Function PSCommand(reader As TriggerReader) As Boolean
             Try
@@ -283,9 +241,9 @@ Namespace PhoenixSpeak
             Return True
         End Function
 
-        Function PSForgetTriggeringFurre(reader As TriggerReader) As Boolean
+        Function PSForgetDream(reader As TriggerReader) As Boolean
             Try
-                sendServer("ps clear character." + MyPlayer.ShortName)
+                sendServer("ps clear dream ")
             Catch ex As Exception
                 MainMsEngine.LogError(reader, ex)
                 Return False
@@ -304,15 +262,79 @@ Namespace PhoenixSpeak
             Return True
         End Function
 
-        Function PSForgetDream(reader As TriggerReader) As Boolean
+        Function PSForgetTriggeringFurre(reader As TriggerReader) As Boolean
             Try
-                sendServer("ps clear dream ")
+                sendServer("ps clear character." + MyPlayer.ShortName)
             Catch ex As Exception
                 MainMsEngine.LogError(reader, ex)
                 Return False
             End Try
             Return True
         End Function
+
+        '(5:81) Store PSInfo Key Names to Variable %Variable.
+        Function PSInfoKeyToVariable(reader As TriggerReader) As Boolean
+            Try
+                Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
+                Dim L As New List(Of String)
+                For Each Name As PhoenixSpeak.Variable In SubSys.PSInfoCache
+                    L.Add(Name.Name)
+                Next
+                Var.Value = String.Join(" ", L)
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+        '(5:63) get all Phoenix Speak info for all characters and put it into the PSInfo cache.
+        Function RemberPSInfoAllCharacters(reader As TriggerReader) As Boolean
+            Try
+                sendServer("ps get character.*")
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+        '(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.
+        Function RemberPSInfoAllDream(reader As TriggerReader) As Boolean
+            Try
+                sendServer("ps get dream.*")
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+        '(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.
+        Function RemberPSInforFurreNamed(reader As TriggerReader) As Boolean
+            Try
+                Dim furre As String = reader.ReadString
+                sendServer("ps get characer." + furre + ".*")
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+        '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
+        Function RemberPSInforTrigFurre(reader As TriggerReader) As Boolean
+            Try
+                Dim furre As String = MyPlayer.ShortName
+                sendServer("ps set characer." + furre + ".*")
+            Catch ex As Exception
+                MainMsEngine.LogError(reader, ex)
+                Return False
+            End Try
+            Return True
+        End Function
+
+#End Region
 
     End Class
 End Namespace

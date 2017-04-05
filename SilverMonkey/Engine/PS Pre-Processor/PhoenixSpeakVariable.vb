@@ -6,6 +6,8 @@ Namespace PhoenixSpeak
     Public Class TypeNotSupportedException
         Inherits Exception
 
+#Region "Public Constructors"
+
         Public Sub New()
             MyBase.New()
         End Sub
@@ -18,9 +20,16 @@ Namespace PhoenixSpeak
             MyBase.New(message, innerException)
         End Sub
 
+#End Region
+
+#Region "Protected Constructors"
+
         Protected Sub New(info As SerializationInfo, context As StreamingContext)
             MyBase.New(info, context)
         End Sub
+
+#End Region
+
     End Class
 
     <Serializable>
@@ -28,8 +37,45 @@ Namespace PhoenixSpeak
     Public Class Variable
         Inherits Monkeyspeak.Variable
 
-        Private _value As Object
+#Region "Private Fields"
+
         Private _name As String
+        Private _value As Object
+
+#End Region
+
+#Region "Public Methods"
+
+#End Region
+
+#Region "Private Methods"
+
+#End Region
+
+#Region "Public Properties"
+
+#End Region
+
+#Region "Internal Constructors"
+
+        Public Sub New(Var As PhoenixSpeak.Variable)
+            _name = Var.Name
+            _value = Var.Value
+        End Sub
+
+#End Region
+
+#Region "Public Constructors"
+
+        Friend Sub New(Name As String, value As Object)
+            _name = Name
+            _value = value
+        End Sub
+
+#End Region
+
+#Region "Public Properties"
+
         Public Overloads Property Name As String
             Get
                 Return _name
@@ -51,37 +97,23 @@ Namespace PhoenixSpeak
             End Set
         End Property
 
+#End Region
+
+#Region "Public Methods"
+
+#End Region
+
+#Region "Private Methods"
+
+#End Region
+
         Friend Sub New(Name As String)
             _name = Name
             _value = Nothing
         End Sub
-
-        Public Sub New(Var As PhoenixSpeak.Variable)
-            _name = Var.Name
-            _value = Var.Value
-        End Sub
-
-        Friend Sub New(Name As String, value As Object)
-            _name = Name
-            _value = value
-        End Sub
-
-        Private Function CheckType(_value As Object) As Boolean
-            If _value Is Nothing Then
-                Return True
-            End If
-
-            Return TypeOf _value Is String OrElse TypeOf _value Is Short OrElse TypeOf _value Is Double
-        End Function
-
-        ''' <summary>
-        ''' Returns a const identifier if the variable is constant followed by name,
-        ''' <para>otherwise just the name is returned.</para>
-        ''' </summary>
-        ''' <returns></returns>))
-        Public Overrides Function ToString() As String
-            Return (Convert.ToString(Name + " = " + (If((Value Is Nothing), Nothing.ToString(), Value.ToString()))))
-        End Function
+        Public Overloads Shared Operator <>(varA As Variable, varB As Variable) As Boolean
+            Return varA.Value IsNot varB.Value
+        End Operator
 
         Public Overloads Shared Operator =(varA As Variable, varB As Variable) As Boolean
             If varA Is Nothing OrElse varB Is Nothing Then
@@ -93,10 +125,6 @@ Namespace PhoenixSpeak
                 End If
             End If
             Return varA.Value Is varB.Value
-        End Operator
-
-        Public Overloads Shared Operator <>(varA As Variable, varB As Variable) As Boolean
-            Return varA.Value IsNot varB.Value
         End Operator
 
         Public Overrides Function Equals(obj As Object) As Boolean
@@ -113,6 +141,7 @@ Namespace PhoenixSpeak
             End If
             Return False
         End Function
+
         Public Overrides Function GetHashCode() As Integer
             If TypeOf _value Is Integer Then
                 Return CInt(_value) Xor _name.GetHashCode()
@@ -120,5 +149,21 @@ Namespace PhoenixSpeak
             Return _name.GetHashCode()
         End Function
 
+        ''' <summary>
+        ''' Returns a const identifier if the variable is constant followed by name,
+        ''' <para>otherwise just the name is returned.</para>
+        ''' </summary>
+        ''' <returns></returns>))
+        Public Overrides Function ToString() As String
+            Return (Convert.ToString(Name + " = " + (If((Value Is Nothing), Nothing.ToString(), Value.ToString()))))
+        End Function
+
+        Private Function CheckType(_value As Object) As Boolean
+            If _value Is Nothing Then
+                Return True
+            End If
+
+            Return TypeOf _value Is String OrElse TypeOf _value Is Short OrElse TypeOf _value Is Double
+        End Function
     End Class
 End Namespace

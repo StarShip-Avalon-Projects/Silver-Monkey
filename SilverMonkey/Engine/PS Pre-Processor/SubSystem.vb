@@ -9,15 +9,30 @@ Imports SilverMonkey.PhoenixSpeak.SubSystem
 Namespace PhoenixSpeak
 
     ''' <summary>
-    ''' Phoenix mSpeak Even Args
+    ''' Phoenix mSpeak Even Arguments
     ''' </summary>
     Public Class PhoenixSpeakEventArgs
         Inherits EventArgs
+
+#Region "Public Fields"
+        ''' <summary>
+        ''' Phoenix Speak Flag
+        ''' </summary>
         Public Flag As PsFlag
+        ''' <summary>
+        ''' Do we have too much Phoienix-Speak Data then the Server can send to us?
+        ''' </summary>
         Public PageOverFlow As Boolean
+
+#End Region
+
+#Region "Public Properties"
 
         Public Property id As Short
         Public Property PsType As PsResponseType
+
+#End Region
+
     End Class
     ''' <summary>
     ''' Phoenix Speak processing system
@@ -28,9 +43,23 @@ Namespace PhoenixSpeak
     Public Class SubSystem
         Inherits BaseSubSystem
 
+#Region "Public Fields"
+
         Public Const SmRegExOptions As RegexOptions = RegexOptions.CultureInvariant _
             Or RegexOptions.IgnoreCase
 
+        ''' <summary>
+        ''' 16 bit integer Game server ID for the Current Executing Phoenix Speak Instruction set.
+        ''' </summary>
+        Public SubSystemPsID As PsId = New PsId
+
+#End Region
+
+#Region "Private Fields"
+
+        ''' <summary>
+        ''' Did we get a Multi-Page response from the game server?
+        ''' </summary>
         Private Shared MultiPage As Boolean = False
 
         ''' <summary>
@@ -44,91 +73,56 @@ Namespace PhoenixSpeak
         ''' <para>Furcadia has a parsing bug where the information is not split correctly</para>
         ''' </summary>
         Private PS_Page As String
+        ''' <summary>
+        '''
+        ''' </summary>
         Private PSProcessingResource As New Object
-        Public SubSystemPsID As PsId = New PsId
+
+#End Region
+
+#Region "Public Enums"
+
+        Public Enum PsFlag As Short
+            ''' <summary>
+            ''' Unknown Phoenix Speak response
+            ''' </summary>
+            PsUnknown = -1
+            ''' <summary>
+            ''' Phoenix Speak Error
+            ''' </summary>
+            PsError
+            ''' <summary>
+            ''' Get Phoenix Speak data from server
+            ''' </summary>
+            PsGet
+            ''' <summary>
+            ''' Send Phoenix Speak data to server.
+            ''' </summary>
+            PsSet
+        End Enum
+
+        Public Enum PsResponseType As Short
+            PsUnKnown = -1
+            PsOk
+            PSGet
+            PSSet
+            PsError
+        End Enum
+
+#End Region
+
+#Region "Public Properties"
 
         ''' <summary>
-        ''' returns number of Phoenix Speak pages remaining
+        ''' List of Phoenix Speak Variables last received from the Phoenix Speak Server Interface
+        ''' <para>This should take into account Multi-Page responses from the servers Command Line interface</para>
         ''' </summary>
-        ''' <param name="data"></param>
         ''' <returns></returns>
-        Private Function ProcessPage(ByRef data As String) As Short
-            Dim PsPage As New Regex(String.Format("{0}", "multi_result?(\ d +)?/(\d+)?"), SmRegExOptions)
-            Dim CurrentPage As Short = 0
-            Dim TotalPages As Short = 0
-            Short.TryParse(PsPage.Match(data, 0).Groups(1).Value(), CurrentPage)
-            Short.TryParse(PsPage.Match(data, 0).Groups(2).Value(), TotalPages)
-            data = PsPage.Replace(data, "", 1)
-            Return TotalPages - CurrentPage
-            'Add "," to the end of match #1.
-            'Input: "bank=200, clearance=10, member=1, message='test', stafflv=2, sys_lastused_date=1340046340,"
-        End Function
+        Public Property PSInfoCache As New List(Of Variable)
 
-        ''' <summary>
-        ''' Get a Ps Variable List  from a REGEX match collection
-        ''' <para>     Match(1) : Value(Name)</para>
-        ''' <para>     Match 2: Empty if number, ' if string</para>
-        ''' <para>     Match(3) : Value()</para>
-        ''' </summary>
-        ''' <param name="VariableList"></param>
-        ''' <returns></returns>
-        Private Function ProcessVariables(ByRef data As String) As List(Of PhoenixSpeak.Variable)
-            Dim mc As New Regex(" (.*?)=('?)(\d+|.*?)(\2),?", SmRegExOptions)
+#End Region
 
-            Dim PsVarList As New List(Of PhoenixSpeak.Variable)
-            For Each M As Match In mc.Matches(data)
-                PsVarList.Add(New PhoenixSpeak.Variable(M.Groups(1).Value.Trim, M.Groups(3).Value))
-            Next
-
-            Return PsVarList
-        End Function
-
-        ''' <summary>
-        ''' gets the PsId from the server
-        ''' Defaults to 0 if not found
-        ''' </summary>
-        ''' <param name="Data"></param>
-        ''' <returns></returns>
-        Private Function PsCaptureId(ByRef Data As String) As Short
-            Dim ThisPsId As Short = 0
-            Dim IdCapture As New Regex("^PS (\d+)? ?", SmRegExOptions)
-
-            Short.TryParse(IdCapture.Match(Data, 0).Groups(1).Value, ThisPsId)
-            Data = IdCapture.Replace(Data, "", 1)
-
-            Return ThisPsId
-        End Function
-
-        <CLSCompliant(False)>
-        Private Function PsCaptureMode(ByRef data As String) As PsResponseType
-            Dim ResponceType As PsResponseType = PsResponseType.PsUnKnown
-            Dim CaptureMode As New Regex(" (Error:|Ok:)?", SmRegExOptions)
-            Select Case CaptureMode.Match(data).Groups(1).Value
-                Case "Error:"
-                    ResponceType = PsResponseType.PsError
-                Case "Ok:"
-                    ResponceType = PsResponseType.PsOk
-            End Select
-            data = CaptureMode.Replace(data, "", 1)
-            Return ResponceType
-        End Function
-
-        <CLSCompliant(False)>
-        Private Function PsResponceMode(ByRef data As String) As PsFlag
-            Dim Responceflag As PsFlag = PsFlag.PsUnknown
-            Dim CaptureMode As New Regex("^ ?(get:|set:)? ?(result: )?", SmRegExOptions)
-            Select Case CaptureMode.Match(data).Groups(1).Value
-                Case "get:"
-                    Responceflag = PsFlag.PsGet
-                Case "set:"
-                    Responceflag = PsFlag.PsSet
-                Case Else
-                    Responceflag = PsFlag.PsUnknown
-
-            End Select
-            data = CaptureMode.Replace(data, "", 1)
-            Return Responceflag
-        End Function
+#Region "Public Methods"
 
         ''' <summary>
         '''
@@ -136,6 +130,7 @@ Namespace PhoenixSpeak
         Public Sub Abort()
             psSendToServer.Clear()
         End Sub
+
         '^PS (\d+)? ?Error:|Ok: (set:|get:)? multi_result? (\d+)?/?(\d+)?: Key/Value group
         ''' <summary>
         ''' process Phoenix Speak data coming from the game server
@@ -143,7 +138,7 @@ Namespace PhoenixSpeak
         ''' Execute Monkey Speak Engine processing (Triggers setting Monkey Speak Variables)
         ''' Always clear PSInfoCache unless its a Multi-Page response
         ''' </summary>
-        ''' <param name="data">Server Data</param>
+        ''' <param name="ServerData">Server Data as string</param>
         Public Overrides Sub ParseServerChannel(ServerData As String, ByRef Handled As Boolean)
             Try
                 Monitor.Enter(PSProcessingResource)
@@ -243,20 +238,106 @@ Namespace PhoenixSpeak
 
         End Sub
 
+#End Region
+
+#Region "Private Methods"
+
         ''' <summary>
-        ''' List of Phoenix Speak Variables last received from the Phoenix Speak Server Interface
-        ''' <para>This should take into account Multi-Page responses from the servers Command Line interface</para>
+        ''' returns number of Phoenix Speak pages remaining
         ''' </summary>
+        ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Property PSInfoCache As New List(Of Variable)
+        Private Function ProcessPage(ByRef data As String) As Short
+            Dim PsPage As New Regex(String.Format("{0}", "multi_result?(\ d +)?/(\d+)?"), SmRegExOptions)
+            Dim CurrentPage As Short = 0
+            Dim TotalPages As Short = 0
+            Short.TryParse(PsPage.Match(data, 0).Groups(1).Value(), CurrentPage)
+            Short.TryParse(PsPage.Match(data, 0).Groups(2).Value(), TotalPages)
+            data = PsPage.Replace(data, "", 1)
+            Return TotalPages - CurrentPage
+            'Add "," to the end of match #1.
+            'Input: "bank=200, clearance=10, member=1, message='test', stafflv=2, sys_lastused_date=1340046340,"
+        End Function
+
+        ''' <summary>
+        ''' Get a Phoenix-Speak Variable List  from a REGEX match collection
+        ''' <para>     Match(1) : Value(Name)</para>
+        ''' <para>     Match 2: Empty if number, ' if string</para>
+        ''' <para>     Match(3) : Value()</para>
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        Private Function ProcessVariables(ByRef data As String) As List(Of PhoenixSpeak.Variable)
+            Dim mc As New Regex(" (.*?)=('?)(\d+|.*?)(\2),?", SmRegExOptions)
+
+            Dim PsVarList As New List(Of PhoenixSpeak.Variable)
+            For Each M As Match In mc.Matches(data)
+                PsVarList.Add(New PhoenixSpeak.Variable(M.Groups(1).Value.Trim, M.Groups(3).Value))
+            Next
+
+            Return PsVarList
+        End Function
+
+        ''' <summary>
+        ''' gets the PsId from the server
+        ''' Defaults to 0 if not found
+        ''' </summary>
+        ''' <param name="Data"></param>
+        ''' <returns></returns>
+        Private Function PsCaptureId(ByRef Data As String) As Short
+            Dim ThisPsId As Short = 0
+            Dim IdCapture As New Regex("^PS (\d+)? ?", SmRegExOptions)
+
+            Short.TryParse(IdCapture.Match(Data, 0).Groups(1).Value, ThisPsId)
+            Data = IdCapture.Replace(Data, "", 1)
+
+            Return ThisPsId
+        End Function
+
+        <CLSCompliant(False)>
+        Private Function PsCaptureMode(ByRef data As String) As PsResponseType
+            Dim ResponceType As PsResponseType = PsResponseType.PsUnKnown
+            Dim CaptureMode As New Regex(" (Error:|Ok:)?", SmRegExOptions)
+            Select Case CaptureMode.Match(data).Groups(1).Value
+                Case "Error:"
+                    ResponceType = PsResponseType.PsError
+                Case "Ok:"
+                    ResponceType = PsResponseType.PsOk
+            End Select
+            data = CaptureMode.Replace(data, "", 1)
+            Return ResponceType
+        End Function
+
+        <CLSCompliant(False)>
+        Private Function PsResponceMode(ByRef data As String) As PsFlag
+            Dim Responceflag As PsFlag = PsFlag.PsUnknown
+            Dim CaptureMode As New Regex("^ ?(get:|set:)? ?(result: )?", SmRegExOptions)
+            Select Case CaptureMode.Match(data).Groups(1).Value
+                Case "get:"
+                    Responceflag = PsFlag.PsGet
+                Case "set:"
+                    Responceflag = PsFlag.PsSet
+                Case Else
+                    Responceflag = PsFlag.PsUnknown
+
+            End Select
+            data = CaptureMode.Replace(data, "", 1)
+            Return Responceflag
+        End Function
+
+#End Region
 
         'TODO: FreePSId as PsId
+
+#Region "Public Classes"
 
         ''' <summary>
         ''' Phoenix Speak ID manager
         '''
         ''' </summary>
         Public Class PsId
+
+#Region "Private Fields"
 
             ''' <summary>
             ''' Gets a free PS ID 16 bit integer
@@ -278,6 +359,10 @@ Namespace PhoenixSpeak
 
             Private _Count As Integer
             Private _id As Short
+
+#End Region
+
+#Region "Public Constructors"
 
             Sub New()
                 _id = getID(0)
@@ -305,18 +390,32 @@ Namespace PhoenixSpeak
 
             End Sub
 
-            Private Shared Function getID(ByRef v As Short) As Short
-                If v = 0 Then v = 1
-                SyncLock idLock
-                    While List.ContainsKey(v)
-                        v += CShort(1)
-                        If v = Short.MaxValue - 1 Then
-                            v = 1
-                        End If
-                    End While
-                End SyncLock
-                Return v
-            End Function
+#End Region
+
+#Region "Public Properties"
+
+            Public Property Count As Integer
+                Get
+                    Return _Count
+                End Get
+                Private Set(ByVal value As Integer)
+                    _Count = value
+                End Set
+            End Property
+
+            Public Property Id As Short
+                Get
+                    Return _id
+                End Get
+                Set(ByVal value As Short)
+                    _id = value
+                    '_Count += 1
+                End Set
+            End Property
+
+#End Region
+
+#Region "Public Methods"
 
             Public Function HasId(ByVal id As Short) As Boolean
                 Return List.ContainsKey(id)
@@ -337,42 +436,28 @@ Namespace PhoenixSpeak
                 End If
             End Sub
 
-            Public Property Count As Integer
-                Get
-                    Return _Count
-                End Get
-                Private Set(ByVal value As Integer)
-                    _Count = value
-                End Set
-            End Property
-            Public Property Id As Short
-                Get
-                    Return _id
-                End Get
-                Set(ByVal value As Short)
-                    _id = value
-                    '_Count += 1
-                End Set
-            End Property
+#End Region
+
+#Region "Private Methods"
+
+            Private Shared Function getID(ByRef v As Short) As Short
+                If v = 0 Then v = 1
+                SyncLock idLock
+                    While List.ContainsKey(v)
+                        v += CShort(1)
+                        If v = Short.MaxValue - 1 Then
+                            v = 1
+                        End If
+                    End While
+                End SyncLock
+                Return v
+            End Function
+
+#End Region
 
         End Class
 
-        ''' <summary>
-        ''' PS server responses
-        ''' </summary>
-        <CLSCompliant(True)>
-        Public Enum PsResponseType As Short
-            PsUnKnown = -1
-            PsOk
-            PsError
-        End Enum
-
-        <CLSCompliant(True)>
-        Public Enum PsFlag As Short
-            PsUnknown = -1
-            PsGet
-            PsSet
-        End Enum
+#End Region
 
 #Region "Events"
         Public Delegate Sub ParsePhoenixSpeak(o As Object, e As PhoenixSpeakEventArgs)
@@ -381,10 +466,28 @@ Namespace PhoenixSpeak
 
 #Region "Server Functions"
 
+        Private Shared bufferlock As New Object
+
         ' clear the last item sent when its received
         Private Shared psSendToServer As New Queue(Of KeyValuePair(Of String, Short))(20)
 
         Private SendLock As New Object
+        Public Sub New()
+            MyBase.New()
+        End Sub
+
+        Public Sub New(ByRef Dream As DREAM, ByRef Player As FURRE)
+            MyBase.New(Dream, Player)
+        End Sub
+
+        Public Shared Sub ProcessedFromeServer(o As Object, e As PhoenixSpeakEventArgs)
+
+        End Sub
+
+        Public Sub ClientMessage(ByVal msg As String)
+            'FurcSession.SendClientMessage("PhoenixSpeak:", msg)
+        End Sub
+
         ''' <summary>
         ''' Send the Phoenix Commands to the Server enqueue
         ''' </summary>
@@ -405,13 +508,6 @@ Namespace PhoenixSpeak
             End Try
             Debug.WriteLine("SendServer: " + var)
         End Sub
-
-        Private Shared bufferlock As New Object
-
-        Public Sub New(ByRef Dream As DREAM, ByRef Player As FURRE)
-            MyBase.New(Dream, Player)
-        End Sub
-
         ''' <summary>
         ''' 'Fills the received PS Buffer
         ''' </summary>
@@ -431,15 +527,6 @@ Namespace PhoenixSpeak
                 Monitor.Exit(bufferlock)
             End Try
         End Sub
-
-        Public Shared Sub ProcessedFromeServer(o As Object, e As PhoenixSpeakEventArgs)
-
-        End Sub
-
-        Public Sub ClientMessage(ByVal msg As String)
-            'FurcSession.SendClientMessage("PhoenixSpeak:", msg)
-        End Sub
-
 #End Region
 
     End Class

@@ -23,12 +23,18 @@ namespace Futureware.MantisNotify
     /// </summary>
     public sealed class MantisNotifyApp
     {
+        #region Private Constructors
+
         /// <summary>
         /// Private Constructor, no need to create instances of this class.
         /// </summary>
-		private MantisNotifyApp()
+        private MantisNotifyApp()
         {
         }
+
+        #endregion Private Constructors
+
+        #region Private Methods
 
         /// <summary>
         /// The main entry point for the application.
@@ -38,5 +44,7 @@ namespace Futureware.MantisNotify
         {
             Application.Run(new MantisNotifyForm());
         }
+
+        #endregion Private Methods
     }
 }

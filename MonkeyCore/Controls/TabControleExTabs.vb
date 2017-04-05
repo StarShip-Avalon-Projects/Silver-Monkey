@@ -5,8 +5,14 @@ Imports MonkeyCore.Controls
 Public Class TabControleExTabs
     Inherits TabPage
 
-    Private TabControl2 As TabControlEx
+#Region "Private Fields"
+
     Private popupMenu As AutocompleteMenu
+    Private TabControl2 As TabControlEx
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New(ByRef TabControlObject As TabControlEx, name As String)
         TabControl2 = TabControlObject
@@ -41,4 +47,7 @@ Public Class TabControleExTabs
         'AddHandler lstView.MouseDoubleClick, AddressOf MS_Editor_MouseDoubleClick
 
     End Sub
+
+#End Region
+
 End Class

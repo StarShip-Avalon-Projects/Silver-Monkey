@@ -23,17 +23,13 @@ Imports MonkeyCore.Paths
 '''
 Public Class ErrorLogging
 
+#Region "Private Fields"
+
     Private ReadOnly strErrorFilePath As String
 
-    ''' <summary>
-    ''' Fullpath the error document was written to.
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property LogFile As String
-        Get
-            Return strErrorFilePath
-        End Get
-    End Property
+#End Region
+
+#Region "Public Constructors"
 
     ''' <summary>
     '''
@@ -47,6 +43,37 @@ Public Class ErrorLogging
         strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         LogError(Ex, ObjectThrowingError.ToString())
     End Sub
+
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="Ex"></param>
+    ''' <param name="ObjectThrowingError"></param>
+    ''' <param name="ObJectCheck"></param>
+    Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
+        'Call Log Error
+        'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
+        strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
+        LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck.ToString)
+    End Sub
+
+#End Region
+
+#Region "Public Properties"
+
+    ''' <summary>
+    ''' Fullpath the error document was written to.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property LogFile As String
+        Get
+            Return strErrorFilePath
+        End Get
+    End Property
+
+#End Region
+
+#Region "Public Methods"
 
     ''' <summary>
     '''
@@ -122,19 +149,6 @@ Public Class ErrorLogging
             End If
         End Try
     End Sub
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <param name="Ex"></param>
-    ''' <param name="ObjectThrowingError"></param>
-    ''' <param name="ObJectCheck"></param>
-    Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
-        'Call Log Error
-        'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
-        LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck.ToString)
-    End Sub
-
     ''' <summary>
     '''
     ''' </summary>
@@ -214,4 +228,7 @@ Public Class ErrorLogging
             End If
         End Try
     End Sub
+
+#End Region
+
 End Class

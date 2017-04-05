@@ -23,15 +23,21 @@ namespace SilverMonkey.BugTraqConnect
     /// </summary>
     public static class MimeTypes
     {
-        /// <summary>
-        /// The dictionary for mime types.
-        /// </summary>
-        private static IDictionary<string, string> mimeTypes;
+        #region Private Fields
 
         /// <summary>
         /// The default mime type to use when the extension is not mapped.
         /// </summary>
         private const string DefaultMimeType = "application/octet-stream";
+
+        /// <summary>
+        /// The dictionary for mime types.
+        /// </summary>
+        private static IDictionary<string, string> mimeTypes;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         /// <summary>
         /// Static constructor for <see cref="MimeTypes"/>.
@@ -591,11 +597,19 @@ namespace SilverMonkey.BugTraqConnect
             mimeTypes[".zsh"] = "text/x-script.zsh";
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         /// <summary>
         /// Gets a file extension and returns the corresponding mime type.
         /// </summary>
-        /// <param name="fileExtension">File extension including the dot.</param>
-        /// <returns>The mime type, won't be null.</returns>
+        /// <param name="fileExtension">
+        /// File extension including the dot.
+        /// </param>
+        /// <returns>
+        /// The mime type, won't be null.
+        /// </returns>
         public static string GetMimeType(string fileExtension)
         {
             if (string.IsNullOrEmpty(fileExtension))
@@ -612,5 +626,7 @@ namespace SilverMonkey.BugTraqConnect
 
             return mimeType;
         }
+
+        #endregion Public Methods
     }
 }

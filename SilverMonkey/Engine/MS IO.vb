@@ -9,7 +9,13 @@ Imports System.Collections.Generic
 Friend Class MS_IO
     Inherits AbstractBaseLibrary
 
+#Region "Private Fields"
+
     Private writer As TextBoxWriter = Nothing
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
@@ -47,92 +53,29 @@ Friend Class MS_IO
 
     End Sub
 
-    Private Function FileExists(reader As TriggerReader) As Boolean
-        Dim f As String = If((reader.PeekString()), Paths.CheckBotFolder(reader.ReadString()), "")
-        Return File.Exists(f)
-    End Function
+#End Region
 
-    Private Function FileNotExists(reader As TriggerReader) As Boolean
-        Return FileExists(reader) = False
-    End Function
+#Region "Public Methods"
 
-    Private Function CanReadFile(reader As TriggerReader) As Boolean
-        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+    '(5:125) count the number of lines in text file {...} and put it into variable %Variable .
+    Public Function CountLines(reader As TriggerReader) As Boolean
+        Dim F As String = ""
+        Dim Var As Variable
+        Dim count As Double = 0
         Try
-            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
-                Return stream.CanRead
-            End Using
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
+            F = Paths.CheckBotFolder(reader.ReadString)
+            Var = reader.ReadVariable(True)
+            Var.Value = 0.0R
+            If File.Exists(F) Then
+                Dim test As New List(Of String)
+                test.AddRange(File.ReadAllLines(F))
+                Var.Value = test.Count.ToString()
 
-    Private Function CanWriteFile(reader As TriggerReader) As Boolean
-        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
-        Try
-            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Write)
-                Return stream.CanWrite
-            End Using
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    Private Function AppendToFile(reader As TriggerReader) As Boolean
-        Dim data As String = reader.ReadString()
-        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
-
-        Try
-            Using SW As StreamWriter = New StreamWriter(f, True)
-                SW.WriteLine(data)
-            End Using
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return True
-    End Function
-
-    Private Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
-        Try
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString(True))
-            Dim var As Variable = reader.ReadVariable(True)
-            Dim sb As New StringBuilder()
-            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
-                Using SR As StreamReader = New StreamReader(stream)
-                    sb.AppendLine(SR.ReadToEnd)
-                End Using
-            End Using
-            var.Value = sb.ToString()
-            Return True
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    Private Function DeleteFile(reader As TriggerReader) As Boolean
-        Try
-            If reader.PeekString() = False Then
-                Return False
             End If
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
-            File.Delete(f)
-            Return True
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False
         End Try
-    End Function
-
-    Private Function CreateFile(reader As TriggerReader) As Boolean
-        If reader.PeekString() = False Then
-            Return False
-        End If
-        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
-        File.Create(f).Close()
         Return True
     End Function
 
@@ -164,26 +107,98 @@ Friend Class MS_IO
         End Try
     End Function
 
-    '(5:125) count the number of lines in text file {...} and put it into variable %Variable .
-    Public Function CountLines(reader As TriggerReader) As Boolean
-        Dim F As String = ""
-        Dim Var As Variable
-        Dim count As Double = 0
-        Try
-            F = Paths.CheckBotFolder(reader.ReadString)
-            Var = reader.ReadVariable(True)
-            Var.Value = 0.0R
-            If File.Exists(F) Then
-                Dim test As New List(Of String)
-                test.AddRange(File.ReadAllLines(F))
-                Var.Value = test.Count.ToString()
+#End Region
 
-            End If
+#Region "Private Methods"
+
+    Private Function AppendToFile(reader As TriggerReader) As Boolean
+        Dim data As String = reader.ReadString()
+        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+
+        Try
+            Using SW As StreamWriter = New StreamWriter(f, True)
+                SW.WriteLine(data)
+            End Using
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
+
+    Private Function CanReadFile(reader As TriggerReader) As Boolean
+        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+        Try
+            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
+                Return stream.CanRead
+            End Using
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    Private Function CanWriteFile(reader As TriggerReader) As Boolean
+        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+        Try
+            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Write)
+                Return stream.CanWrite
+            End Using
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    Private Function CreateFile(reader As TriggerReader) As Boolean
+        If reader.PeekString() = False Then
+            Return False
+        End If
+        Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+        File.Create(f).Close()
+        Return True
+    End Function
+
+    Private Function DeleteFile(reader As TriggerReader) As Boolean
+        Try
+            If reader.PeekString() = False Then
+                Return False
+            End If
+            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+            File.Delete(f)
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    Private Function FileExists(reader As TriggerReader) As Boolean
+        Dim f As String = If((reader.PeekString()), Paths.CheckBotFolder(reader.ReadString()), "")
+        Return File.Exists(f)
+    End Function
+
+    Private Function FileNotExists(reader As TriggerReader) As Boolean
+        Return FileExists(reader) = False
+    End Function
+    Private Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
+        Try
+            Dim f As String = Paths.CheckBotFolder(reader.ReadString(True))
+            Dim var As Variable = reader.ReadVariable(True)
+            Dim sb As New StringBuilder()
+            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
+                Using SR As StreamReader = New StreamReader(stream)
+                    sb.AppendLine(SR.ReadToEnd)
+                End Using
+            End Using
+            var.Value = sb.ToString()
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+#End Region
 
 End Class

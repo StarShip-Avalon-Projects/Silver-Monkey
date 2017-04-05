@@ -28,49 +28,59 @@ namespace SilverMonkey.BugTraqConnect
     /// </summary>
     public class SubmitIssueForm : System.Windows.Forms.Form
     {
+        #region Private Fields
+
         private NameValueCollection appSettings = new NameValueCollection();
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button submitButton;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox priorityComboBox;
-        private System.Windows.Forms.ComboBox severityComboBox;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox reproducibilityComboBox;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private TextBox summaryTextBox;
-        private TextBox descriptionTextBox;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.StatusBar statusBar;
-        private System.Windows.Forms.ComboBox versionComboBox;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox categoryComboBox;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.StatusBarPanel statusBarPanel;
-        private Label lblCustomField1;
-        private TextBox firstCustomFieldTextBox;
-        private TextBox secondCustomFieldTextBox;
-        private Label lblCustomField2;
-        private OpenFileDialog openFileDialog1;
         private TextBox attachmentTextBox;
-        private Label label10;
         private Button browseButton;
-        private TreeView treeView1;
-        private string ErrorFileName;
+        private System.Windows.Forms.ComboBox categoryComboBox;
 
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.Container components = null;
 
+        private TextBox descriptionTextBox;
+        private string ErrorFileName;
+        private TextBox firstCustomFieldTextBox;
+        private System.Windows.Forms.Label label1;
+        private Label label10;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private Label lblCustomField1;
+        private Label lblCustomField2;
         private MantisConnectSettings MantisSettings;
+        private OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ComboBox priorityComboBox;
+        private System.Windows.Forms.ComboBox reproducibilityComboBox;
+        private TextBox secondCustomFieldTextBox;
+
+        /// <summary>
+        /// Session used to communicate with MantisConnect.
+        /// </summary>
+        private Session session;
+
+        private System.Windows.Forms.ComboBox severityComboBox;
+        private System.Windows.Forms.StatusBar statusBar;
+        private System.Windows.Forms.StatusBarPanel statusBarPanel;
+        private System.Windows.Forms.Button submitButton;
+        private TextBox summaryTextBox;
+        private TreeView treeView1;
+        private System.Windows.Forms.ComboBox versionComboBox;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public SubmitIssueForm()
         {
-            //
             // Required for Windows Form Designer support
-            //
             InitializeComponent();
             MantisSettings = new MantisConnectSettings();
             appSettings.Add("MantisConnectUrl", "http://bugtraq.tsprojects.org/api/soap/mantisconnect.php?wsdl");
@@ -82,15 +92,35 @@ namespace SilverMonkey.BugTraqConnect
 
         public SubmitIssueForm(string ErrorFile)
         {
-            //
             // Required for Windows Form Designer support
-            //
             InitializeComponent();
             MantisSettings = new MantisConnectSettings();
             appSettings.Add("MantisConnectUrl", "http://bugtraq.tsprojects.org/api/soap/mantisconnect.php?wsdl");
 
             ErrorFileName = ErrorFile;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public void walkNode(List<Project> projects, ref TreeNode Tn)
+        {
+            for (int i = 0; i < projects.Count; i++)
+            {
+                TreeNode Node = new TreeNode(projects[i].Name);
+                Node.Tag = projects[i].Id;
+                Tn.Nodes.Add(Node);
+                if (Node.Text == Application.ProductName)
+                    treeView1.SelectedNode = Node;
+                if (projects[i].Subprojects.Count > 0)
+                    walkNode(projects[i].Subprojects, ref Tn);
+            }
+        }
+
+        #endregion Public Methods
+
+        #region Protected Methods
 
         /// <summary>
         /// Clean up any resources being used.
@@ -107,11 +137,13 @@ namespace SilverMonkey.BugTraqConnect
             base.Dispose(disposing);
         }
 
+        #endregion Protected Methods
+
         #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify the contents of this method with the
+        /// code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -145,25 +177,19 @@ namespace SilverMonkey.BugTraqConnect
             this.treeView1 = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPanel)).BeginInit();
             this.SuspendLayout();
-            //
             // summaryTextBox
-            //
             this.summaryTextBox.Location = new System.Drawing.Point(160, 272);
             this.summaryTextBox.Name = "summaryTextBox";
             this.summaryTextBox.Size = new System.Drawing.Size(472, 20);
             this.summaryTextBox.TabIndex = 7;
-            //
             // label1
-            //
             this.label1.Location = new System.Drawing.Point(32, 272);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 23);
             this.label1.TabIndex = 1;
             this.label1.Text = "Summary";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // submitButton
-            //
             this.submitButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.submitButton.Location = new System.Drawing.Point(300, 614);
             this.submitButton.Name = "submitButton";
@@ -172,95 +198,73 @@ namespace SilverMonkey.BugTraqConnect
             this.submitButton.Text = "Submit";
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
             this.submitButton.DialogResult = DialogResult.OK;
-            //
             // label2
-            //
             this.label2.Location = new System.Drawing.Point(328, 163);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 21);
             this.label2.TabIndex = 3;
             this.label2.Text = "Priority";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // priorityComboBox
-            //
             this.priorityComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.priorityComboBox.Location = new System.Drawing.Point(456, 163);
             this.priorityComboBox.Name = "priorityComboBox";
             this.priorityComboBox.Size = new System.Drawing.Size(176, 21);
             this.priorityComboBox.TabIndex = 4;
-            //
             // severityComboBox
-            //
             this.severityComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.severityComboBox.Location = new System.Drawing.Point(456, 195);
             this.severityComboBox.Name = "severityComboBox";
             this.severityComboBox.Size = new System.Drawing.Size(176, 21);
             this.severityComboBox.TabIndex = 5;
-            //
             // label3
-            //
             this.label3.Location = new System.Drawing.Point(328, 195);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 21);
             this.label3.TabIndex = 5;
             this.label3.Text = "Severity";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // reproducibilityComboBox
-            //
             this.reproducibilityComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.reproducibilityComboBox.Location = new System.Drawing.Point(456, 227);
             this.reproducibilityComboBox.Name = "reproducibilityComboBox";
             this.reproducibilityComboBox.Size = new System.Drawing.Size(176, 21);
             this.reproducibilityComboBox.TabIndex = 6;
-            //
             // label4
-            //
             this.label4.Location = new System.Drawing.Point(328, 227);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 21);
             this.label4.TabIndex = 7;
             this.label4.Text = "Reproducibility";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // label5
-            //
             this.label5.Location = new System.Drawing.Point(32, 304);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(100, 23);
             this.label5.TabIndex = 10;
             this.label5.Text = "Description";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // descriptionTextBox
-            //
             this.descriptionTextBox.Location = new System.Drawing.Point(160, 304);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.Size = new System.Drawing.Size(472, 176);
             this.descriptionTextBox.TabIndex = 8;
-            //
             // label6
-            //
             this.label6.Location = new System.Drawing.Point(32, 80);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(100, 21);
             this.label6.TabIndex = 11;
             this.label6.Text = "Project";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // label7
-            //
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(32, 16);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(616, 48);
             this.label7.TabIndex = 13;
             this.label7.Text = "MantisConnect Submit";
-            //
             // statusBar
-            //
             this.statusBar.Location = new System.Drawing.Point(0, 654);
             this.statusBar.Name = "statusBar";
             this.statusBar.Panels.AddRange(new System.Windows.Forms.StatusBarPanel[] {
@@ -268,103 +272,77 @@ namespace SilverMonkey.BugTraqConnect
             this.statusBar.ShowPanels = true;
             this.statusBar.Size = new System.Drawing.Size(664, 22);
             this.statusBar.TabIndex = 14;
-            //
             // statusBarPanel
-            //
             this.statusBarPanel.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring;
             this.statusBarPanel.Name = "statusBarPanel";
             this.statusBarPanel.Width = 647;
-            //
             // versionComboBox
-            //
             this.versionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.versionComboBox.Location = new System.Drawing.Point(456, 99);
             this.versionComboBox.Name = "versionComboBox";
             this.versionComboBox.Size = new System.Drawing.Size(176, 21);
             this.versionComboBox.TabIndex = 2;
-            //
             // label8
-            //
             this.label8.Location = new System.Drawing.Point(328, 99);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(100, 21);
             this.label8.TabIndex = 16;
             this.label8.Text = "Version";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // categoryComboBox
-            //
             this.categoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryComboBox.Location = new System.Drawing.Point(456, 131);
             this.categoryComboBox.Name = "categoryComboBox";
             this.categoryComboBox.Size = new System.Drawing.Size(176, 21);
             this.categoryComboBox.TabIndex = 3;
-            //
             // label9
-            //
             this.label9.Location = new System.Drawing.Point(328, 131);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(100, 21);
             this.label9.TabIndex = 18;
             this.label9.Text = "Category";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // lblCustomField1
-            //
             this.lblCustomField1.Location = new System.Drawing.Point(35, 494);
             this.lblCustomField1.Name = "lblCustomField1";
             this.lblCustomField1.Size = new System.Drawing.Size(100, 23);
             this.lblCustomField1.TabIndex = 19;
             this.lblCustomField1.Text = "Custom Field 1";
             this.lblCustomField1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // firstCustomFieldTextBox
-            //
             this.firstCustomFieldTextBox.Enabled = false;
             this.firstCustomFieldTextBox.Location = new System.Drawing.Point(160, 494);
             this.firstCustomFieldTextBox.Name = "firstCustomFieldTextBox";
             this.firstCustomFieldTextBox.Size = new System.Drawing.Size(472, 20);
             this.firstCustomFieldTextBox.TabIndex = 20;
-            //
             // secondCustomFieldTextBox
-            //
             this.secondCustomFieldTextBox.Enabled = false;
             this.secondCustomFieldTextBox.Location = new System.Drawing.Point(160, 526);
             this.secondCustomFieldTextBox.Name = "secondCustomFieldTextBox";
             this.secondCustomFieldTextBox.Size = new System.Drawing.Size(472, 20);
             this.secondCustomFieldTextBox.TabIndex = 22;
-            //
             // lblCustomField2
-            //
             this.lblCustomField2.Location = new System.Drawing.Point(35, 526);
             this.lblCustomField2.Name = "lblCustomField2";
             this.lblCustomField2.Size = new System.Drawing.Size(100, 23);
             this.lblCustomField2.TabIndex = 21;
             this.lblCustomField2.Text = "Custom Field 2";
             this.lblCustomField2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // openFileDialog1
-            //
             this.openFileDialog1.FileName = "openFileDialog1";
-            //
             // attachmentTextBox
-            //
             this.attachmentTextBox.Location = new System.Drawing.Point(160, 558);
             this.attachmentTextBox.Name = "attachmentTextBox";
             this.attachmentTextBox.Size = new System.Drawing.Size(436, 20);
             this.attachmentTextBox.TabIndex = 24;
-            //
             // label10
-            //
             this.label10.Location = new System.Drawing.Point(32, 558);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(100, 23);
             this.label10.TabIndex = 23;
             this.label10.Text = "Attachment";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
             // browseButton
-            //
             this.browseButton.Location = new System.Drawing.Point(603, 554);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(29, 23);
@@ -372,16 +350,12 @@ namespace SilverMonkey.BugTraqConnect
             this.browseButton.Text = "...";
             this.browseButton.UseVisualStyleBackColor = true;
             this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
-            //
             // treeView1
-            //
             this.treeView1.Location = new System.Drawing.Point(35, 104);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(155, 144);
             this.treeView1.TabIndex = 26;
-            //
             // SubmitIssueForm
-            //
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(664, 676);
             this.Controls.Add(this.treeView1);
@@ -420,55 +394,50 @@ namespace SilverMonkey.BugTraqConnect
 
         #endregion Windows Form Designer generated code
 
-        private void SubmitIssue_Load(object sender, System.EventArgs e)
+        #region Private Methods
+
+        /// <summary>
+        /// Tracks whether the projects combobox is currently being populated or not.
+        /// </summary>
+        /// <remarks>
+        /// If being populated, then selection change event for the current project is ignored.
+        /// </remarks>
+        // private bool populating = false;
+        private void browseButton_Click(object sender, EventArgs e)
+        {
+            this.openFileDialog1.FileName = this.attachmentTextBox.Text;
+            this.openFileDialog1.CheckFileExists = true;
+
+            if (this.openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                this.attachmentTextBox.Text = this.openFileDialog1.FileName;
+            }
+        }
+
+        /// <summary>
+        /// Populates the list of categories and versions based on the currently selected projects.
+        /// </summary>
+        private void PopulateProjectDependentFields()
         {
             try
             {
-                NetworkCredential nc = null;
-                MantisSettings = new MantisConnectSettings();
+                int projectId = (int)treeView1.SelectedNode.Tag;
 
-                string basicHttpAuthUserName = appSettings["BasicHttpAuthUserName"];
-                string basicHttpAuthPassword = appSettings["BasicHttpAuthPassword"];
-                string mantisConnectUrl = appSettings["MantisConnectUrl"];
-                string mantisUserName = appSettings["MantisUserName"];
-                string mantisPassword = appSettings["MantisPassword"];
-
-                if (!string.IsNullOrEmpty(basicHttpAuthUserName) && basicHttpAuthPassword != null)
+                this.lblCustomField1.Text = "Custom Field 1";
+                this.lblCustomField2.Text = "Custom Field 2";
+                attachmentTextBox.Text = ErrorFileName;
+                if (projectId == 0)
                 {
-                    nc = new NetworkCredential(basicHttpAuthUserName, basicHttpAuthPassword);
+                    categoryComboBox.DataSource = null;
+                    versionComboBox.DataSource = null;
                 }
-                session = new Session(mantisConnectUrl, mantisUserName, mantisPassword, nc);
-                session.Connect();
-
-                //populating = true;
-                int i = 0;
-                foreach (Project project in session.Request.UserGetAccessibleProjects())
+                else
                 {
-                    TreeNode Node = new TreeNode(project.Name);
-                    Node.Tag = project.Id;
-                    treeView1.Nodes.Add(Node);
-                    if (project.Subprojects.Count > 0)
-                    {
-                        treeView1.BeginUpdate();
-                        TreeNode customerNode = new TreeNode(project.Name);
-                        customerNode.Tag = project.Id;
-                        walkNode(project.Subprojects, ref customerNode);
-                        treeView1.Nodes[i].Nodes.Add(customerNode);
-                        treeView1.EndUpdate();
-                    }
-                    //if (i == 1)
-                    //    treeView1.SelectedNode = Node;
-                    i++;
+                    categoryComboBox.DataSource = session.Request.ProjectGetCategories(projectId);
+                    categoryComboBox.DisplayMember = "Name";
+                    versionComboBox.DataSource = session.Request.ProjectGetVersions(projectId);
+                    versionComboBox.DisplayMember = "Name";
                 }
-
-                treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(TreeView1_AfterSelect);
-                //populating = false;
-
-                PopulateProjectDependentFields();
-
-                priorityComboBox.DataSource = session.Config.PriorityEnum.GetLabels();
-                severityComboBox.DataSource = session.Config.SeverityEnum.GetLabels();
-                reproducibilityComboBox.DataSource = session.Config.ReproducibilityEnum.GetLabels();
             }
             catch (Exception ex)
             {
@@ -476,25 +445,25 @@ namespace SilverMonkey.BugTraqConnect
             }
         }
 
-        public void walkNode(List<Project> projects, ref TreeNode Tn)
+        /// <summary>
+        /// Prepare the form for the next issue.
+        /// </summary>
+        private void ResetForm()
         {
-            for (int i = 0; i < projects.Count; i++)
-            {
-                TreeNode Node = new TreeNode(projects[i].Name);
-                Node.Tag = projects[i].Id;
-                Tn.Nodes.Add(Node);
-                if (Node.Text == Application.ProductName)
-                    treeView1.SelectedNode = Node;
-                if (projects[i].Subprojects.Count > 0)
-                    walkNode(projects[i].Subprojects, ref Tn);
-            }
+            summaryTextBox.Clear();
+            summaryTextBox.Focus();
+            descriptionTextBox.Clear();
         }
 
         /// <summary>
         /// Event handler for clicking the submit button.
         /// </summary>
-        /// <param name="sender">not used</param>
-        /// <param name="e">not used</param>
+        /// <param name="sender">
+        /// not used
+        /// </param>
+        /// <param name="e">
+        /// not used
+        /// </param>
         private void submitButton_Click(object sender, System.EventArgs e)
         {
             try
@@ -563,14 +532,60 @@ namespace SilverMonkey.BugTraqConnect
             }
         }
 
-        /// <summary>
-        /// Prepare the form for the next issue.
-        /// </summary>
-        private void ResetForm()
+        private void SubmitIssue_Load(object sender, System.EventArgs e)
         {
-            summaryTextBox.Clear();
-            summaryTextBox.Focus();
-            descriptionTextBox.Clear();
+            try
+            {
+                NetworkCredential nc = null;
+                MantisSettings = new MantisConnectSettings();
+
+                string basicHttpAuthUserName = appSettings["BasicHttpAuthUserName"];
+                string basicHttpAuthPassword = appSettings["BasicHttpAuthPassword"];
+                string mantisConnectUrl = appSettings["MantisConnectUrl"];
+                string mantisUserName = appSettings["MantisUserName"];
+                string mantisPassword = appSettings["MantisPassword"];
+
+                if (!string.IsNullOrEmpty(basicHttpAuthUserName) && basicHttpAuthPassword != null)
+                {
+                    nc = new NetworkCredential(basicHttpAuthUserName, basicHttpAuthPassword);
+                }
+                session = new Session(mantisConnectUrl, mantisUserName, mantisPassword, nc);
+                session.Connect();
+
+                //populating = true;
+                int i = 0;
+                foreach (Project project in session.Request.UserGetAccessibleProjects())
+                {
+                    TreeNode Node = new TreeNode(project.Name);
+                    Node.Tag = project.Id;
+                    treeView1.Nodes.Add(Node);
+                    if (project.Subprojects.Count > 0)
+                    {
+                        treeView1.BeginUpdate();
+                        TreeNode customerNode = new TreeNode(project.Name);
+                        customerNode.Tag = project.Id;
+                        walkNode(project.Subprojects, ref customerNode);
+                        treeView1.Nodes[i].Nodes.Add(customerNode);
+                        treeView1.EndUpdate();
+                    }
+                    //if (i == 1)
+                    //    treeView1.SelectedNode = Node;
+                    i++;
+                }
+
+                treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(TreeView1_AfterSelect);
+                //populating = false;
+
+                PopulateProjectDependentFields();
+
+                priorityComboBox.DataSource = session.Config.PriorityEnum.GetLabels();
+                severityComboBox.DataSource = session.Config.SeverityEnum.GetLabels();
+                reproducibilityComboBox.DataSource = session.Config.ReproducibilityEnum.GetLabels();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Webservice Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
         }
 
         // Handle the After_Select event.
@@ -581,61 +596,6 @@ namespace SilverMonkey.BugTraqConnect
             PopulateProjectDependentFields();
         }
 
-        /// <summary>
-        /// Populates the list of categories and versions based on the currently
-        /// selected projects.
-        /// </summary>
-        private void PopulateProjectDependentFields()
-        {
-            try
-            {
-                int projectId = (int)treeView1.SelectedNode.Tag;
-
-                this.lblCustomField1.Text = "Custom Field 1";
-                this.lblCustomField2.Text = "Custom Field 2";
-                attachmentTextBox.Text = ErrorFileName;
-                if (projectId == 0)
-                {
-                    categoryComboBox.DataSource = null;
-                    versionComboBox.DataSource = null;
-                }
-                else
-                {
-                    categoryComboBox.DataSource = session.Request.ProjectGetCategories(projectId);
-                    categoryComboBox.DisplayMember = "Name";
-                    versionComboBox.DataSource = session.Request.ProjectGetVersions(projectId);
-                    versionComboBox.DisplayMember = "Name";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Webservice Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-        }
-
-        /// <summary>
-        /// Tracks whether the projects combobox is currently being populated or not.
-        /// </summary>
-        /// <remarks>
-        /// If being populated, then selection change event for the current project is
-        /// ignored.
-        /// </remarks>
-      // private bool populating = false;
-
-        /// <summary>
-        /// Session used to communicate with MantisConnect.
-        /// </summary>
-        private Session session;
-
-        private void browseButton_Click(object sender, EventArgs e)
-        {
-            this.openFileDialog1.FileName = this.attachmentTextBox.Text;
-            this.openFileDialog1.CheckFileExists = true;
-
-            if (this.openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                this.attachmentTextBox.Text = this.openFileDialog1.FileName;
-            }
-        }
+        #endregion Private Methods
     }
 }

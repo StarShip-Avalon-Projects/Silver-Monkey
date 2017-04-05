@@ -87,14 +87,6 @@
     <AssemblyOriginatorKeyFile>SilverMonkey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="FastColoredTextBox, Version=2.16.21.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
       <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
       <Private>True</Private>
@@ -363,7 +355,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
-      <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
+      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
@@ -378,8 +370,12 @@
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MonkeySpeakEx\MonkeyspeakR6.csproj">
+      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
+      <Name>MonkeyspeakR6</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Verbot5Library\Verbot5Library.csproj">
-      <Project>{4D25B13B-4D67-433F-9181-BF5FDFA931B6}</Project>
+      <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>
       <Name>Verbot5Library</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,5 +1,5 @@
 ﻿Imports Monkeyspeak
-
+Imports Furcadia.Util
 Imports MonkeyCore
 Imports System.Collections.Generic
 Imports MonkeyCore.Settings
@@ -7,118 +7,81 @@ Imports System.Text.RegularExpressions
 Imports System.Diagnostics
 Imports SilverMonkey.PhoenixSpeak
 Imports Furcadia.Net
+Imports Furcadia.Text.Util
 Imports System.Threading
 Imports Microsoft.Win32.SafeHandles
 Imports System.Runtime.InteropServices
 Imports Conversive.Verbot5
 
 Public Class MainMsEngine
+    Inherits MonkeyspeakEngine
     Implements IDisposable
 
 #Region "Const"
-    Private Const MS_Header As String = "*MSPK V04.00 Silver Monkey"
     Private Const MS_Footer As String = "*Endtriggers* 8888 *Endtriggers*"
+    Private Const MS_Header As String = "*MSPK V04.00 Silver Monkey"
 #End Region
 
 #Region "Verbot"
     <CLSCompliant(False)>
-    Public verbot As Verbot5Engine
-    <CLSCompliant(False)>
-    Public state As State
-    <CLSCompliant(False)>
     Public kb As KnowledgeBase = New KnowledgeBase()
-    <CLSCompliant(False)>
     Public kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
+    Public state As State
+    Public verbot As Verbot5Engine
 #End Region
-    Public Const REGEX_NameFilter As String = "[^a-z0-9\0x0020_;&|]+"
-    Public Shared Function ToFurcShortName(ByVal value As String) As String
-        If String.IsNullOrEmpty(value) Then Return Nothing
-        Return Regex.Replace(value.ToLower, REGEX_NameFilter, "", RegexOptions.CultureInvariant)
-    End Function
+
+#Region "Public Methods"
 
     Public Shared Function IsBotControler(ByRef Name As String) As Boolean
         If String.IsNullOrEmpty(cBot.BotController) Then Return False
-        Return ToFurcShortName(cBot.BotController) = ToFurcShortName(Name)
+        Return FurcadiaShortName(cBot.BotController) = FurcadiaShortName(Name)
     End Function
+
+#End Region
+
 #Region "MonkeySpeakEngine"
+    Public WithEvents MSpage As Page = Nothing
+
+    Public Shared MS_Stared As Integer = 0
+
+    Public engine As MonkeyspeakEngine = New MonkeyspeakEngine()
+
+    Public EngineRestart As Boolean = False
+
+    Public MS_Engine_Running As Boolean = False
+
+    Private Const RES_MS_begin As String = "*MSPK V"
+
+    Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
+
+    Private Shared Writer As TextBoxWriter = New TextBoxWriter(Variables.TextBox1)
+
+    Private msVer As Double = 3.0
+
+    Public Sub New()
+
+        EngineStart(True)
+    End Sub
+
+    Public Shared Sub LogError(reader As TriggerReader, ex As Exception)
+
+        Console.WriteLine(MS_ErrWarning)
+        Dim ErrorString As String = "Error: (" & reader.TriggerCategory.ToString & ":" & reader.TriggerId.ToString & ") " & ex.Message
+
+        If Not IsNothing(cBot) Then
+            If cBot.log Then
+                LogStream.WriteLine(ErrorString, ex)
+            End If
+        End If
+        Writer.WriteLine(ErrorString)
+    End Sub
+
     Public Shared Function MS_Started() As Boolean
         ' 0 = main load
         ' 1 = engine start
         ' 2 = engine running
         Return MS_Stared >= 2
     End Function
-    Public Shared MS_Stared As Integer = 0
-    Private Shared Writer As TextBoxWriter = New TextBoxWriter(Variables.TextBox1)
-    Private Const RES_MS_begin As String = "*MSPK V"
-    Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
-
-    Public EngineRestart As Boolean = False
-
-    Public MS_Engine_Running As Boolean = False
-    Public engine As MonkeyspeakEngine = New MonkeyspeakEngine()
-    Public WithEvents MSpage As Page = Nothing
-    Public Sub New()
-
-        EngineStart(True)
-    End Sub
-    'Bot Starts
-    Public Function ScriptStart() As Boolean
-        Try
-            Dim VariableList As New Dictionary(Of String, Object)
-
-            If Not cBot.MS_Engine_Enable Then
-                Return False
-            End If
-
-            Console.WriteLine("Loading:" & cBot.MS_File)
-            Dim start As DateTime = DateTime.Now
-            If Not File.Exists(cBot.MS_File) Then
-                Directory.Exists(Path.GetDirectoryName(cBot.MS_File))
-                cBot.MS_File = Path.Combine(Paths.SilverMonkeyBotPath, cBot.MS_File)
-            End If
-            cBot.MS_Script = msReader(cBot.MS_File)
-            If String.IsNullOrEmpty(cBot.MS_Script) Then
-                Console.WriteLine("ERROR: No script loaded! Loading Default MonkeySpeak.")
-                MS_Engine_Running = False
-                msReader(IO.NewMSFile)
-                VariableList.Add("MSPATH", "!!! Not Specified !!!")
-            Else
-                VariableList.Add("MSPATH", Paths.SilverMonkeyBotPath)
-            End If
-            Try
-                MSpage = engine.LoadFromString(cBot.MS_Script)
-            Catch ex As MonkeyspeakException
-                Console.WriteLine(ex.Message)
-                Return False
-            Catch ex As Exception
-                Console.WriteLine("There's an error loading the bot script")
-                Return False
-            End Try
-            ' Console.WriteLine("Execute (0:0)")
-            MS_Stared = 1
-            LoadLibrary(True)
-
-            VariableList.Add("DREAMOWNER", "")
-            VariableList.Add("DREAMNAME", "")
-            VariableList.Add("BOTNAME", "")
-            VariableList.Add("BOTCONTROLLER", cBot.BotController)
-            VariableList.Add(MS_Name, "")
-            VariableList.Add("MESSAGE", "")
-            VariableList.Add("BANISHNAME", "")
-            VariableList.Add("BANISHLIST", "")
-            PageSetVariable(VariableList)
-            '(0:0) When the bot starts,
-            PageExecute(0)
-            Console.WriteLine("Done! Executed in " & DateTime.Now.Subtract(start).ToString())
-            'Console.ReadKey()
-            MS_Engine_Running = True
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-            Return False
-        End Try
-        Return True
-    End Function
-
     'loads at main load
     Public Sub EngineStart(ByRef LoadPlugins As Boolean)
 
@@ -161,12 +124,12 @@ Public Class MainMsEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New StringLibrary(FurcSession.Dream, FurcSession.Player, Me)) ' Load our new TestLibrary
+            MSpage.LoadLibrary(New StringLibrary()) ' Load our new TestLibrary
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New SayLibrary(FurcSession.Dream, FurcSession.Player, Me))
+            MSpage.LoadLibrary(New SayLibrary())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
@@ -186,7 +149,7 @@ Public Class MainMsEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New MSPK_MDB(FurcSession.Dream, FurcSession.Player, Me))
+            MSpage.LoadLibrary(New MSPK_MDB())
         Catch ex As FileNotFoundException
             Console.WriteLine(ex.Message)
         Catch ex As Exception
@@ -204,12 +167,12 @@ Public Class MainMsEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New MsPhoenixSpeak(FurcSession.Dream, FurcSession.Player, Me))
+            MSpage.LoadLibrary(New MsPhoenixSpeak())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New DatabaseSystem(FurcSession.Dream, FurcSession.Player, Me))
+            MSpage.LoadLibrary(New DatabaseSystem())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
@@ -292,7 +255,19 @@ Public Class MainMsEngine
         End If
     End Sub
 
-    Private msVer As Double = 3.0
+    Public Sub LogError(trigger As Trigger, ex As Exception) Handles MSpage.Error
+
+        Console.WriteLine(MS_ErrWarning)
+        Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
+
+        If Not IsNothing(cBot) Then
+            If cBot.log Then
+                '  BotLogStream.WriteLine(ErrorString, ex)
+            End If
+        End If
+        Writer.WriteLine(ErrorString)
+    End Sub
+
     Public Function msReader(ByVal file As String) As String
         file = file.Trim
         Dim Data As String = String.Empty
@@ -324,6 +299,16 @@ Public Class MainMsEngine
         End Try
     End Function
 
+    Public Sub PageExecute(ParamArray ID() As Integer)
+        If Not IsNothing(cBot) Then
+            If cBot.MS_Engine_Enable AndAlso MS_Started() Then
+                MSpage.Execute(ID)
+
+            End If
+        End If
+
+    End Sub
+
     Public Sub PageSetVariable(ByVal varName As String, ByVal data As Object)
         If cBot.MS_Engine_Enable AndAlso MS_Started() Then
             If data Is Nothing Then data = String.Empty
@@ -352,101 +337,71 @@ Public Class MainMsEngine
         End If
     End Sub
 
-    Public Sub PageExecute(ParamArray ID() As Integer)
-        If Not IsNothing(cBot) Then
-            If cBot.MS_Engine_Enable AndAlso MS_Started() Then
-                MSpage.Execute(ID)
+    'Bot Starts
+    Public Function ScriptStart() As Boolean
+        Try
+            Dim VariableList As New Dictionary(Of String, Object)
 
+            If Not cBot.MS_Engine_Enable Then
+                Return False
             End If
-        End If
 
-    End Sub
-
-    Public Sub LogError(trigger As Trigger, ex As Exception) Handles MSpage.Error
-
-        Console.WriteLine(MS_ErrWarning)
-        Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
-
-        If Not IsNothing(cBot) Then
-            If cBot.log Then
-                '  BotLogStream.WriteLine(ErrorString, ex)
+            Console.WriteLine("Loading:" & cBot.MS_File)
+            Dim start As DateTime = DateTime.Now
+            If Not File.Exists(cBot.MS_File) Then
+                Directory.Exists(Path.GetDirectoryName(cBot.MS_File))
+                cBot.MS_File = Path.Combine(Paths.SilverMonkeyBotPath, cBot.MS_File)
             End If
-        End If
-        Writer.WriteLine(ErrorString)
-    End Sub
-
-    Public Shared Sub LogError(reader As TriggerReader, ex As Exception)
-
-        Console.WriteLine(MS_ErrWarning)
-        Dim ErrorString As String = "Error: (" & reader.TriggerCategory.ToString & ":" & reader.TriggerId.ToString & ") " & ex.Message
-
-        If Not IsNothing(cBot) Then
-            If cBot.log Then
-                LogStream.WriteLine(ErrorString, ex)
+            cBot.MS_Script = msReader(cBot.MS_File)
+            If String.IsNullOrEmpty(cBot.MS_Script) Then
+                Console.WriteLine("ERROR: No script loaded! Loading Default MonkeySpeak.")
+                MS_Engine_Running = False
+                msReader(IO.NewMSFile)
+                VariableList.Add("MSPATH", "!!! Not Specified !!!")
+            Else
+                VariableList.Add("MSPATH", Paths.SilverMonkeyBotPath)
             End If
-        End If
-        Writer.WriteLine(ErrorString)
-    End Sub
+            Try
+                MSpage = engine.LoadFromString(cBot.MS_Script)
+            Catch ex As MonkeyspeakException
+                Console.WriteLine(ex.Message)
+                Return False
+            Catch ex As Exception
+                Console.WriteLine("There's an error loading the bot script")
+                Return False
+            End Try
+            ' Console.WriteLine("Execute (0:0)")
+            MS_Stared = 1
+            LoadLibrary(True)
 
+            VariableList.Add("DREAMOWNER", "")
+            VariableList.Add("DREAMNAME", "")
+            VariableList.Add("BOTNAME", "")
+            VariableList.Add("BOTCONTROLLER", cBot.BotController)
+            VariableList.Add(MS_Name, "")
+            VariableList.Add("MESSAGE", "")
+            VariableList.Add("BANISHNAME", "")
+            VariableList.Add("BANISHLIST", "")
+            PageSetVariable(VariableList)
+            '(0:0) When the bot starts,
+            PageExecute(0)
+            Console.WriteLine("Done! Executed in " & DateTime.Now.Subtract(start).ToString())
+            'Console.ReadKey()
+            MS_Engine_Running = True
+        Catch eX As Exception
+            Dim logError As New ErrorLogging(eX, Me)
+            Return False
+        End Try
+        Return True
+    End Function
 #End Region
 
 #Region "smPounce"
-    Private WithEvents smPounce As PounceConnection
-    Private PounceTimer As Threading.Timer
-    Public Structure pFurre
-        Public WasOnline As Boolean
-        Public Online As Boolean
-    End Structure
-
+    Private WithEvents smPounce As Furcadia.Net.PounceConnection
     Public OnlineFurreList As New Dictionary(Of String, pFurre)
-
     Dim lastaccess As Date
-
-    Private Function ReadOnlineList() As Boolean
-        Dim result As Boolean = False
-        If File.Exists(MS_Pounce.OnlineList) Then
-            If File.GetLastWriteTime(MS_Pounce.OnlineList) <> lastaccess Then
-                lastaccess = File.GetLastWriteTime(MS_Pounce.OnlineList)
-
-                Dim NameList() As String = File.ReadAllLines(MS_Pounce.OnlineList)
-                For i As Integer = 0 To NameList.Length - 1
-                    If Not OnlineFurreList.ContainsKey(NameList(i)) Then OnlineFurreList.Add(NameList(i), New pFurre)
-                Next
-                Dim Namelist2(OnlineFurreList.Count - 1) As String
-                OnlineFurreList.Keys.CopyTo(Namelist2, 0)
-                For i As Integer = 0 To Namelist2.Length - 1
-                    Dim found As Boolean = False
-                    For j As Integer = 0 To NameList.Length - 1
-                        If ToFurcShortName(NameList(j)) = ToFurcShortName(Namelist2(i)) Then
-                            found = True
-                            Exit For
-                        End If
-                    Next
-                    If Not found Then OnlineFurreList.Remove(Namelist2(i))
-                Next
-                result = True
-            End If
-        End If
-        Return result
-    End Function
+    Private PounceTimer As Threading.Timer
     Dim usingPounce As Integer = 0
-    Private Sub smPounceSend(sender As Object)
-        If (0 = Interlocked.Exchange(usingPounce, 1)) Then
-            '   If _FormClose Then Exit Sub
-            '   If Not bConnected() Then Exit Sub
-            If Not ReadOnlineList() Then Exit Sub
-            smPounce = New PounceConnection("http://on.furcadia.com/q/", Nothing)
-
-            smPounce.RemoveFriends()
-            For Each kv As KeyValuePair(Of String, pFurre) In OnlineFurreList
-                If Not String.IsNullOrEmpty(kv.Key) Then
-                    smPounce.AddFriend(ToFurcShortName(kv.Key))
-                End If
-            Next
-            smPounce.ConnectAsync()
-            Interlocked.Exchange(usingPounce, 0)
-        End If
-    End Sub
 
     Sub Response(friends As String(), dreams As String()) Handles smPounce.Response
 
@@ -479,12 +434,73 @@ Public Class MainMsEngine
         Next
     End Sub
 
+    Private Function ReadOnlineList() As Boolean
+        Dim result As Boolean = False
+        If File.Exists(MS_Pounce.OnlineList) Then
+            If File.GetLastWriteTime(MS_Pounce.OnlineList) <> lastaccess Then
+                lastaccess = File.GetLastWriteTime(MS_Pounce.OnlineList)
+
+                Dim NameList() As String = File.ReadAllLines(MS_Pounce.OnlineList)
+                For i As Integer = 0 To NameList.Length - 1
+                    If Not OnlineFurreList.ContainsKey(NameList(i)) Then OnlineFurreList.Add(NameList(i), New pFurre)
+                Next
+                Dim Namelist2(OnlineFurreList.Count - 1) As String
+                OnlineFurreList.Keys.CopyTo(Namelist2, 0)
+                For i As Integer = 0 To Namelist2.Length - 1
+                    Dim found As Boolean = False
+                    For j As Integer = 0 To NameList.Length - 1
+                        If FurcadiaShortName(NameList(j)) = FurcadiaShortName(Namelist2(i)) Then
+                            found = True
+                            Exit For
+                        End If
+                    Next
+                    If Not found Then OnlineFurreList.Remove(Namelist2(i))
+                Next
+                result = True
+            End If
+        End If
+        Return result
+    End Function
+
+    Private Sub smPounceSend(sender As Object)
+        If (0 = Interlocked.Exchange(usingPounce, 1)) Then
+            '   If _FormClose Then Exit Sub
+            '   If Not bConnected() Then Exit Sub
+            If Not ReadOnlineList() Then Exit Sub
+            smPounce = New PounceConnection("http://on.furcadia.com/q/", Nothing)
+
+            smPounce.RemoveFriends()
+            For Each kv As KeyValuePair(Of String, pFurre) In OnlineFurreList
+                If Not String.IsNullOrEmpty(kv.Key) Then
+                    smPounce.AddFriend(ToFurcShortName(kv.Key))
+                End If
+            Next
+            smPounce.ConnectAsync()
+            Interlocked.Exchange(usingPounce, 0)
+        End If
+    End Sub
+
+    Public Structure pFurre
+
+#Region "Public Fields"
+
+        Public Online As Boolean
+        Public WasOnline As Boolean
+
 #End Region
+
+    End Structure
+#End Region
+
+#Region "Protected Methods"
 
     'TODO Link to Furcadia Proxy Send Client
     Protected Sub SendClientMessage(ByRef System As String, Message As String)
 
     End Sub
+
+#End Region
+
 #Region "Dispose"
     'need Timer Library disposal here and any other Libs that need to be disposed
 

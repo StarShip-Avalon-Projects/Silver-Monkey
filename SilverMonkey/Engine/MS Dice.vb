@@ -4,8 +4,16 @@ Imports Monkeyspeak
 
 Public Class MS_Dice
     Inherits MonkeySpeakLibrary
+
+#Region "Private Fields"
+
     Private writer As TextBoxWriter = Nothing
+
+#End Region
+
     '(5:130) - (5:139)
+
+#Region "Public Constructors"
 
     Public Sub New()
 
@@ -54,66 +62,33 @@ Public Class MS_Dice
 
     End Sub
 
-    '(0:130) When the bot rolls #d# and gets # or highter,
-    Function RollNumber(reader As TriggerReader) As Boolean
+#End Region
+
+#Region "Public Methods"
+
+    '  (5:313) set variable % to the total of rolling # dice with # sides minus #.
+    Public Function DiceMinusNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+
+        Dim dice As New DieCollection
+
         Try
-            If String.IsNullOrEmpty(FurcSession.DiceCompnentMatch) Then Return False
-            Dim DiceCount As Double = reader.ReadVariableOrNumber
+            Dim Var As Variable = reader.ReadVariable(True)
+            Dim Number As Double = reader.ReadVariableOrNumber
             Dim sides As Double = reader.ReadVariableOrNumber
-            Dim DiceModifyer As Double = reader.ReadVariableOrNumber
-            If sides <> FurcSession.DiceSides Then Return False
-            If FurcSession.DiceCount <> DiceCount Then Return False
+            Dim NumberPlus As Double = reader.ReadVariableOrNumber
+
+            dice.Clear()
+            For I As Double = 0 To Number - 1
+                dice.Add(New Die(sides))
+            Next
+            Var.Value = dice.RollAll() - NumberPlus
+            Return True
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False
         End Try
-        Return True
     End Function
 
-    '(0:132) When the bot rolls #d# +# and gets # or highter,
-    Function RollNumberPlusModifyer(reader As TriggerReader) As Boolean
-        Try
-            If Not String.IsNullOrEmpty(FurcSession.DiceCompnentMatch) Then Return False
-            Dim DiceCount As Double = reader.ReadVariableOrNumber
-            Dim sides As Double = reader.ReadVariableOrNumber
-            Dim DiceModifyer As Double = reader.ReadVariableOrNumber
-            If FurcSession.DiceModifyer <> DiceModifyer Then Return False
-            If sides <> FurcSession.DiceSides Then Return False
-            If FurcSession.DiceCount <> DiceCount Then Return False
-
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return FurcSession.DiceCompnentMatch = "+"
-    End Function
-
-    '(0:134) When the bot rolls #d# -# and gets # or highter,
-    Function RollNumberMinusModifyer(reader As TriggerReader) As Boolean
-        Try
-            If Not String.IsNullOrEmpty(FurcSession.DiceCompnentMatch) Then Return False
-            Dim DiceCount As Double = reader.ReadVariableOrNumber
-            Dim sides As Double = reader.ReadVariableOrNumber
-            Dim DiceModifyer As Double = reader.ReadVariableOrNumber
-            If FurcSession.DiceModifyer <> DiceModifyer Then Return False
-            If sides <> FurcSession.DiceSides Then Return False
-            If FurcSession.DiceCount <> DiceCount Then Return False
-
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return FurcSession.DiceCompnentMatch = "-"
-    End Function
-
-    Public Function DiceResultNumberOrHigher(reader As TriggerReader) As Boolean
-        Dim result As Double = reader.ReadVariableOrNumber
-        Return result <= FurcSession.DiceResult
-    End Function
-    Public Function DiceResultNumberOrlower(reader As TriggerReader) As Boolean
-        Dim result As Double = reader.ReadVariableOrNumber
-        Return result >= FurcSession.DiceResult
-    End Function
     '  (5:312) set variable % to the total of rolling # dice with # sides plus #.
     Public Function DicePlusNumber(reader As Monkeyspeak.TriggerReader) As Boolean
         Dim Var As Monkeyspeak.Variable
@@ -139,34 +114,16 @@ Public Class MS_Dice
         End Try
     End Function
 
-    '  (5:313) set variable % to the total of rolling # dice with # sides minus #.
-    Public Function DiceMinusNumber(reader As Monkeyspeak.TriggerReader) As Boolean
-
-        Dim dice As New DieCollection
-
-        Try
-            Dim Var As Variable = reader.ReadVariable(True)
-            Dim Number As Double = reader.ReadVariableOrNumber
-            Dim sides As Double = reader.ReadVariableOrNumber
-            Dim NumberPlus As Double = reader.ReadVariableOrNumber
-
-            dice.Clear()
-            For I As Double = 0 To Number - 1
-                dice.Add(New Die(sides))
-            Next
-            Var.Value = dice.RollAll() - NumberPlus
-            Return True
-        Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
-            Return False
-        End Try
+    Public Function DiceResultNumberOrHigher(reader As TriggerReader) As Boolean
+        Dim result As Double = reader.ReadVariableOrNumber
+        Return result <= FurcSession.DiceResult
     End Function
 
-    Function TrigFurreRolledVariable(reader As TriggerReader) As Boolean
-        Dim v As Variable = reader.ReadVariable(True)
-        v.Value = FurcSession.DiceResult
-        Return True
+    Public Function DiceResultNumberOrlower(reader As TriggerReader) As Boolean
+        Dim result As Double = reader.ReadVariableOrNumber
+        Return result >= FurcSession.DiceResult
     End Function
+
     ' (5:134) roll # furcadia dice with # sides.
     Function RollDice(reader As TriggerReader) As Boolean
         Dim count As Double = reader.ReadVariableOrNumber
@@ -176,6 +133,21 @@ Public Class MS_Dice
             sendServer("roll " + count.ToString + "d" + side.ToString + " " + Message)
         Else
             sendServer("roll " + count.ToString + "d" + side.ToString)
+        End If
+        Return True
+    End Function
+
+    ' (5:136) roll # furcadia dice with # sides minus #.
+    Function RollDiceMinus(reader As TriggerReader) As Boolean
+        Dim count As Double = reader.ReadVariableOrNumber
+        Dim side As Double = reader.ReadVariableOrNumber
+        Dim modifyer As Double = reader.ReadVariableOrNumber
+        Dim Message As String = ""
+        If (reader.TryReadString(Message)) Then
+            sendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString + " " + Message)
+
+        Else
+            sendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString)
         End If
         Return True
     End Function
@@ -193,30 +165,96 @@ Public Class MS_Dice
         End If
         Return True
     End Function
-    ' (5:136) roll # furcadia dice with # sides minus #.
-    Function RollDiceMinus(reader As TriggerReader) As Boolean
-        Dim count As Double = reader.ReadVariableOrNumber
-        Dim side As Double = reader.ReadVariableOrNumber
-        Dim modifyer As Double = reader.ReadVariableOrNumber
-        Dim Message As String = ""
-        If (reader.TryReadString(Message)) Then
-            sendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString + " " + Message)
 
-        Else
-            sendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString)
-        End If
+    '(0:130) When the bot rolls #d# and gets # or highter,
+    Function RollNumber(reader As TriggerReader) As Boolean
+        Try
+            If String.IsNullOrEmpty(FurcSession.DiceCompnentMatch) Then Return False
+            Dim DiceCount As Double = reader.ReadVariableOrNumber
+            Dim sides As Double = reader.ReadVariableOrNumber
+            Dim DiceModifyer As Double = reader.ReadVariableOrNumber
+            If sides <> FurcSession.DiceSides Then Return False
+            If FurcSession.DiceCount <> DiceCount Then Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
         Return True
     End Function
+
+    '(0:134) When the bot rolls #d# -# and gets # or highter,
+    Function RollNumberMinusModifyer(reader As TriggerReader) As Boolean
+        Try
+            If Not String.IsNullOrEmpty(FurcSession.DiceCompnentMatch) Then Return False
+            Dim DiceCount As Double = reader.ReadVariableOrNumber
+            Dim sides As Double = reader.ReadVariableOrNumber
+            Dim DiceModifyer As Double = reader.ReadVariableOrNumber
+            If FurcSession.DiceModifyer <> DiceModifyer Then Return False
+            If sides <> FurcSession.DiceSides Then Return False
+            If FurcSession.DiceCount <> DiceCount Then Return False
+
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+        Return FurcSession.DiceCompnentMatch = "-"
+    End Function
+
+    '(0:132) When the bot rolls #d# +# and gets # or highter,
+    Function RollNumberPlusModifyer(reader As TriggerReader) As Boolean
+        Try
+            If Not String.IsNullOrEmpty(FurcSession.DiceCompnentMatch) Then Return False
+            Dim DiceCount As Double = reader.ReadVariableOrNumber
+            Dim sides As Double = reader.ReadVariableOrNumber
+            Dim DiceModifyer As Double = reader.ReadVariableOrNumber
+            If FurcSession.DiceModifyer <> DiceModifyer Then Return False
+            If sides <> FurcSession.DiceSides Then Return False
+            If FurcSession.DiceCount <> DiceCount Then Return False
+
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+        Return FurcSession.DiceCompnentMatch = "+"
+    End Function
+    Function TrigFurreRolledVariable(reader As TriggerReader) As Boolean
+        Dim v As Variable = reader.ReadVariable(True)
+        v.Value = FurcSession.DiceResult
+        Return True
+    End Function
+
+#End Region
+
 #Region "Helper functions"
 
 #End Region
 
+#Region "Public Classes"
+
     Public Class Die
+
+#Region "Private Fields"
 
         Private Shared faceSelector As New Random
 
         Private _faceCount As Double
         Private _value As Double
+
+#End Region
+
+#Region "Public Constructors"
+
+        Public Sub New(ByVal faceCount As Double)
+            If faceCount <= 0 Then
+                Throw New ArgumentOutOfRangeException("faceCount", "Dice must have one or more faces.")
+            End If
+
+            Me._faceCount = faceCount
+        End Sub
+
+#End Region
+
+#Region "Public Properties"
 
         Public Property FaceCount() As Double
             Get
@@ -233,23 +271,23 @@ Public Class MS_Dice
             End Get
         End Property
 
-        Public Sub New(ByVal faceCount As Double)
-            If faceCount <= 0 Then
-                Throw New ArgumentOutOfRangeException("faceCount", "Dice must have one or more faces.")
-            End If
+#End Region
 
-            Me._faceCount = faceCount
-        End Sub
+#Region "Public Methods"
 
         Public Function Roll() As Double
             Me._value = CDbl(faceSelector.Next(1, CInt(Me.FaceCount)))
             Return Me.Value
         End Function
 
+#End Region
+
     End Class
 
     Public Class DieCollection
         Inherits System.Collections.ObjectModel.Collection(Of Die)
+
+#Region "Public Methods"
 
         Public Function RollAll() As Double
             Dim total As Double = 0
@@ -261,6 +299,10 @@ Public Class MS_Dice
             Return total
         End Function
 
+#End Region
+
     End Class
+
+#End Region
 
 End Class

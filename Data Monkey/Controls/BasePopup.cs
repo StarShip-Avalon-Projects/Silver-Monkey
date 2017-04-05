@@ -7,13 +7,28 @@ namespace DataMonkey.Controls
     /// </summary>
     public class BasePopup : Form
     {
-        protected static Button CanButton;
+        #region Public Fields
+
         public static Button OkButton;
+
+        #endregion Public Fields
+
+        #region Protected Fields
+
+        protected static Button CanButton;
+
+        #endregion Protected Fields
+
+        #region Private Fields
 
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.Container components = null;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public BasePopup()
         {
@@ -22,6 +37,10 @@ namespace DataMonkey.Controls
 
             // TODO: Add any constructor code after InitializeComponent call
         }
+
+        #endregion Public Constructors
+
+        #region Protected Methods
 
         /// <summary>
         /// Clean up any resources being used.
@@ -37,6 +56,8 @@ namespace DataMonkey.Controls
             }
             base.Dispose(disposing);
         }
+
+        #endregion Protected Methods
 
         #region Windows Form Designer generated code
 
