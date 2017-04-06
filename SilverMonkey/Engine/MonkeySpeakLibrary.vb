@@ -9,6 +9,32 @@ Public Class MonkeySpeakLibrary
 
 #End Region
 
+#Region "Public Delegates"
+
+    Public Delegate Sub TextSend(ByRef message As String)
+
+    Public Sub LogError(reader As Monkeyspeak.TriggerReader, ex As Exception)
+        Main.FurcadiaSession.MainEngine.LogError(reader, ex)
+    End Sub
+
+    ''' <summary>
+    '''Sends Client Message to out Furcadia Session
+    ''' </summary>
+    ''' <param name="message">Message sring</param>
+    Public Sub SendClientMessage(ByRef message As String)
+        Main.FurcadiaSession.SendClient(message)
+    End Sub
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="message">Message String</param>
+    Public Sub sendServer(ByRef message As String)
+
+        Main.FurcadiaSession.SendServer(message)
+    End Sub
+
+#End Region
+
 #Region "Protected Fields"
 
     Protected Shared writer As TextBoxWriter = Nothing
@@ -27,6 +53,10 @@ Public Class MonkeySpeakLibrary
 
 #Region "Public Constructors"
 
+    ''' <summary>
+    ''' Default Constructor
+    ''' <para> Loads default Text Writer</para>
+    ''' </summary>
     Sub New()
         MyBase.New()
         writer = New TextBoxWriter(Variables.TextBox1)
@@ -37,26 +67,6 @@ Public Class MonkeySpeakLibrary
         MyDream = Dream
         MyPlayer = Player
         MyMonkeySpeakEngine = MsEngine
-    End Sub
-
-#End Region
-
-#Region "Public Methods"
-
-    Public Shared Sub sendServer(ByRef var As String)
-
-    End Sub
-
-    Public Overloads Sub ClientMessage(ByRef message As String)
-
-    End Sub
-
-    Public Overloads Sub SendClientMessage(ByRef System As String, ByRef message As String)
-        SendClientMessage(String.Format("<b><i>[SM]{0}</i></b>:{1}", System, message))
-    End Sub
-
-    Public Overloads Sub SendClientMessage(ByRef message As String)
-
     End Sub
 
 #End Region

@@ -374,7 +374,7 @@
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Name>MonkeyspeakR6</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Verbot5Library\Verbot5Library.csproj">
+    <ProjectReference Include="..\VerbotSDK\Verbot5Library.csproj">
       <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>
       <Name>Verbot5Library</Name>
     </ProjectReference>

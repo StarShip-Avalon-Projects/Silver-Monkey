@@ -185,8 +185,8 @@
       <Project>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Verbot5Library\Verbot5Library.csproj">
-      <Project>{4D25B13B-4D67-433F-9181-BF5FDFA931B6}</Project>
+    <ProjectReference Include="..\VerbotSDK\Verbot5Library.csproj">
+      <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>
       <Name>Verbot5Library</Name>
     </ProjectReference>
   </ItemGroup>

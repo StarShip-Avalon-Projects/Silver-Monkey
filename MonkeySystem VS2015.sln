@@ -33,8 +33,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SilverMonkey2", "SilverMonk
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Verbot Knowledgebase Editor", "Verbot Knowledgebase Editor\Verbot Knowledgebase Editor.vbproj", "{B008B931-21E4-40B6-92F0-DD1BEBC569F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Verbot5Library", "Verbot5Library\Verbot5Library.csproj", "{4D25B13B-4D67-433F-9181-BF5FDFA931B6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{6EFFEF54-7DBB-4091-8FDF-86BD8E4CA06E}"
 	ProjectSection(SolutionItems) = preProject
 		bin\Mono.TextTemplating.dll = bin\Mono.TextTemplating.dll
@@ -74,6 +72,8 @@ EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "MonkeyCore Help", "MonkeyCore Help\MonkeyCore Help.shfbproj", "{EDBAA3E4-89C2-4220-82AB-9540E16761EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonkeyspeakR6", "MonkeySpeakEx\MonkeyspeakR6.csproj", "{925781E6-8B75-471B-887F-616495BBBFDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Verbot5Library", "VerbotSDK\Verbot5Library.csproj", "{4D25B13B-4D67-433F-9181-BF5FDFA931B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -421,35 +421,6 @@ Global
 		{B008B931-21E4-40B6-92F0-DD1BEBC569F3}.Wix|x64.Build.0 = Release|Any CPU
 		{B008B931-21E4-40B6-92F0-DD1BEBC569F3}.Wix|x86.ActiveCfg = Release|Any CPU
 		{B008B931-21E4-40B6-92F0-DD1BEBC569F3}.Wix|x86.Build.0 = Release|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|x64.Build.0 = Debug|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|x64.ActiveCfg = Release|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|x86.ActiveCfg = Release|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|Any CPU.ActiveCfg = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|Any CPU.Build.0 = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|Mixed Platforms.ActiveCfg = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|Mixed Platforms.Build.0 = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|x64.ActiveCfg = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|x64.Build.0 = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|x86.ActiveCfg = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|x86.Build.0 = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|Any CPU.ActiveCfg = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|Any CPU.Build.0 = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|Mixed Platforms.ActiveCfg = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|Mixed Platforms.Build.0 = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|x64.ActiveCfg = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|x64.Build.0 = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|x86.ActiveCfg = Wix|Any CPU
-		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|x86.Build.0 = Wix|Any CPU
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|Any CPU.Build.0 = Debug|x86
 		{C47E57DC-6454-4798-A802-8D0BAC07E580}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
@@ -796,6 +767,38 @@ Global
 		{925781E6-8B75-471B-887F-616495BBBFDD}.Wix|x64.Build.0 = Wix|Any CPU
 		{925781E6-8B75-471B-887F-616495BBBFDD}.Wix|x86.ActiveCfg = Wix|Any CPU
 		{925781E6-8B75-471B-887F-616495BBBFDD}.Wix|x86.Build.0 = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|x64.Build.0 = Debug|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Debug|x86.Build.0 = Debug|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|x64.ActiveCfg = Release|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|x64.Build.0 = Release|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|x86.ActiveCfg = Release|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Release|x86.Build.0 = Release|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|Any CPU.ActiveCfg = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|Any CPU.Build.0 = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|Mixed Platforms.ActiveCfg = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|Mixed Platforms.Build.0 = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|x64.ActiveCfg = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|x64.Build.0 = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|x86.ActiveCfg = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Special|x86.Build.0 = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|Any CPU.ActiveCfg = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|Any CPU.Build.0 = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|Mixed Platforms.ActiveCfg = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|Mixed Platforms.Build.0 = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|x64.ActiveCfg = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|x64.Build.0 = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|x86.ActiveCfg = Wix|Any CPU
+		{4D25B13B-4D67-433F-9181-BF5FDFA931B6}.Wix|x86.Build.0 = Wix|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

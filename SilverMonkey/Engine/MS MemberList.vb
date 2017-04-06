@@ -9,12 +9,13 @@ Public Class MS_MemberList
 #Region "Private Fields"
 
     Private Shared MemberList As String
-    Private writer As TextBoxWriter = Nothing
 
 #End Region
 
 #Region "Public Constructors"
-
+    Public Sub New()
+        MyBase.New()
+    End Sub
     Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
         MyBase.New(Dream, Player, MsEngine)
         MemberList = "MemberList.txt"

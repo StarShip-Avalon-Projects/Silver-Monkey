@@ -7,12 +7,15 @@ Imports System.Text.RegularExpressions
 Imports System.Diagnostics
 Imports SilverMonkey.PhoenixSpeak
 Imports Furcadia.Net
-Imports Furcadia.Text.Util
+
 Imports System.Threading
 Imports Microsoft.Win32.SafeHandles
 Imports System.Runtime.InteropServices
 Imports Conversive.Verbot5
 
+''' <summary>
+''' Silver Monkey's MonkeySpeak Engine with our Customizations
+''' </summary>
 Public Class MainMsEngine
     Inherits MonkeyspeakEngine
     Implements IDisposable
@@ -20,14 +23,6 @@ Public Class MainMsEngine
 #Region "Const"
     Private Const MS_Footer As String = "*Endtriggers* 8888 *Endtriggers*"
     Private Const MS_Header As String = "*MSPK V04.00 Silver Monkey"
-#End Region
-
-#Region "Verbot"
-    <CLSCompliant(False)>
-    Public kb As KnowledgeBase = New KnowledgeBase()
-    Public kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
-    Public state As State
-    Public verbot As Verbot5Engine
 #End Region
 
 #Region "Public Methods"
@@ -43,8 +38,6 @@ Public Class MainMsEngine
     Public WithEvents MSpage As Page = Nothing
 
     Public Shared MS_Stared As Integer = 0
-
-    Public engine As MonkeyspeakEngine = New MonkeyspeakEngine()
 
     Public EngineRestart As Boolean = False
 
@@ -63,29 +56,17 @@ Public Class MainMsEngine
         EngineStart(True)
     End Sub
 
-    Public Shared Sub LogError(reader As TriggerReader, ex As Exception)
-
-        Console.WriteLine(MS_ErrWarning)
-        Dim ErrorString As String = "Error: (" & reader.TriggerCategory.ToString & ":" & reader.TriggerId.ToString & ") " & ex.Message
-
-        If Not IsNothing(cBot) Then
-            If cBot.log Then
-                LogStream.WriteLine(ErrorString, ex)
-            End If
-        End If
-        Writer.WriteLine(ErrorString)
-    End Sub
-
     Public Shared Function MS_Started() As Boolean
         ' 0 = main load
         ' 1 = engine start
         ' 2 = engine running
         Return MS_Stared >= 2
     End Function
+
     'loads at main load
     Public Sub EngineStart(ByRef LoadPlugins As Boolean)
 
-        MSpage = engine.LoadFromString("")
+        MSpage = LoadFromString("")
         LoadLibrary(LoadPlugins)
 
     End Sub
@@ -203,24 +184,22 @@ Public Class MainMsEngine
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New WmCpyDta(FurcSession.Dream, FurcSession.Player, Me))
+            MSpage.LoadLibrary(New WmCpyDta())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            PounceTimer = New Threading.Timer(AddressOf smPounceSend, Nothing, TimeSpan.Zero, TimeSpan.FromSeconds(30))
-            PounceTimer.InitializeLifetimeService()
-            MSpage.LoadLibrary(New MS_Pounce(FurcSession.Dream, FurcSession.Player, Me))
+            MSpage.LoadLibrary(New MS_Pounce())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New MS_MemberList(FurcSession.Dream, FurcSession.Player, Me))
+            MSpage.LoadLibrary(New MS_MemberList())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
         Try
-            MSpage.LoadLibrary(New MS_Verbot(FurcSession.Dream, FurcSession.Player, Me))
+            MSpage.LoadLibrary(New MS_Verbot())
         Catch ex As Exception
             Dim e As New ErrorLogging(ex, Me)
         End Try
@@ -255,6 +234,18 @@ Public Class MainMsEngine
         End If
     End Sub
 
+    Public Sub LogError(reader As TriggerReader, ex As Exception)
+
+        Console.WriteLine(MS_ErrWarning)
+        Dim ErrorString As String = "Error: (" & reader.TriggerCategory.ToString & ":" & reader.TriggerId.ToString & ") " & ex.Message
+
+        If Not IsNothing(cBot) Then
+            If cBot.log Then
+                LogStream.WriteLine(ErrorString, ex)
+            End If
+        End If
+        Writer.WriteLine(ErrorString)
+    End Sub
     Public Sub LogError(trigger As Trigger, ex As Exception) Handles MSpage.Error
 
         Console.WriteLine(MS_ErrWarning)
@@ -362,7 +353,7 @@ Public Class MainMsEngine
                 VariableList.Add("MSPATH", Paths.SilverMonkeyBotPath)
             End If
             Try
-                MSpage = engine.LoadFromString(cBot.MS_Script)
+                MSpage = LoadFromString(cBot.MS_Script)
             Catch ex As MonkeyspeakException
                 Console.WriteLine(ex.Message)
                 Return False
@@ -396,102 +387,6 @@ Public Class MainMsEngine
     End Function
 #End Region
 
-#Region "smPounce"
-    Private WithEvents smPounce As Furcadia.Net.PounceConnection
-    Public OnlineFurreList As New Dictionary(Of String, pFurre)
-    Dim lastaccess As Date
-    Private PounceTimer As Threading.Timer
-    Dim usingPounce As Integer = 0
-
-    Sub Response(friends As String(), dreams As String()) Handles smPounce.Response
-
-        Dim myKeysArray(OnlineFurreList.Keys.Count - 1) As String
-        OnlineFurreList.Keys.CopyTo(myKeysArray, 0)
-
-        For Each _furre As String In myKeysArray
-            Dim test As pFurre = OnlineFurreList.Item(_furre)
-            test.WasOnline = test.Online
-            test.Online = False
-            For Each [friend] As String In friends
-                If ToFurcShortName(_furre) = ToFurcShortName([friend]) Then
-                    test.Online = True
-                    Exit For
-                End If
-            Next
-            OnlineFurreList.Item(_furre) = test
-            If test.WasOnline = True And test.Online = False Then
-                'Furre Logged off
-                SendClientMessage("smPounce", _furre + " has logged out.")
-                FurcSession.Player = FurcSession.NameToFurre(_furre, True)
-                PageExecute(951, 953)
-            ElseIf test.WasOnline = False And test.Online = True Then
-                'Furre logged on
-                SendClientMessage("smPounce", _furre + " has logged on.")
-                FurcSession.Player = FurcSession.NameToFurre(_furre, True)
-                PageExecute(950, 952)
-            End If
-
-        Next
-    End Sub
-
-    Private Function ReadOnlineList() As Boolean
-        Dim result As Boolean = False
-        If File.Exists(MS_Pounce.OnlineList) Then
-            If File.GetLastWriteTime(MS_Pounce.OnlineList) <> lastaccess Then
-                lastaccess = File.GetLastWriteTime(MS_Pounce.OnlineList)
-
-                Dim NameList() As String = File.ReadAllLines(MS_Pounce.OnlineList)
-                For i As Integer = 0 To NameList.Length - 1
-                    If Not OnlineFurreList.ContainsKey(NameList(i)) Then OnlineFurreList.Add(NameList(i), New pFurre)
-                Next
-                Dim Namelist2(OnlineFurreList.Count - 1) As String
-                OnlineFurreList.Keys.CopyTo(Namelist2, 0)
-                For i As Integer = 0 To Namelist2.Length - 1
-                    Dim found As Boolean = False
-                    For j As Integer = 0 To NameList.Length - 1
-                        If FurcadiaShortName(NameList(j)) = FurcadiaShortName(Namelist2(i)) Then
-                            found = True
-                            Exit For
-                        End If
-                    Next
-                    If Not found Then OnlineFurreList.Remove(Namelist2(i))
-                Next
-                result = True
-            End If
-        End If
-        Return result
-    End Function
-
-    Private Sub smPounceSend(sender As Object)
-        If (0 = Interlocked.Exchange(usingPounce, 1)) Then
-            '   If _FormClose Then Exit Sub
-            '   If Not bConnected() Then Exit Sub
-            If Not ReadOnlineList() Then Exit Sub
-            smPounce = New PounceConnection("http://on.furcadia.com/q/", Nothing)
-
-            smPounce.RemoveFriends()
-            For Each kv As KeyValuePair(Of String, pFurre) In OnlineFurreList
-                If Not String.IsNullOrEmpty(kv.Key) Then
-                    smPounce.AddFriend(ToFurcShortName(kv.Key))
-                End If
-            Next
-            smPounce.ConnectAsync()
-            Interlocked.Exchange(usingPounce, 0)
-        End If
-    End Sub
-
-    Public Structure pFurre
-
-#Region "Public Fields"
-
-        Public Online As Boolean
-        Public WasOnline As Boolean
-
-#End Region
-
-    End Structure
-#End Region
-
 #Region "Protected Methods"
 
     'TODO Link to Furcadia Proxy Send Client
@@ -521,8 +416,7 @@ Public Class MainMsEngine
 
         If disposing Then
             handle.Dispose()
-            ' Free any other managed objects here.
-            If Not IsNothing(PounceTimer) Then PounceTimer.Dispose()
+
         End If
 
         ' Free any unmanaged objects here.

@@ -1595,7 +1595,7 @@ Public Class FurcSession : Inherits NetProxy
     ''' Client sent us some data, Let's deal with it
     ''' </summary>
     ''' <param name="data"></param>
-    Private Sub onClientDataReceived(ByVal data As String) Handles MyBase.ClientDataReceived
+    Private Sub onClientDataReceived(ByVal data As String) Handles MyBase.ClientData2
 
         Try
 

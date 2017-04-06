@@ -7,6 +7,20 @@ Imports MonkeyCore
 Public Class MS_Verbot
     Inherits MonkeySpeakLibrary
 
+    <CLSCompliant(False)>
+
+#Region "Public Fields"
+
+    Public kb As KnowledgeBase = New KnowledgeBase()
+    <CLSCompliant(False)>
+    Public kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
+    <CLSCompliant(False)>
+    Public state As State
+    <CLSCompliant(False)>
+    Public verbot As Verbot5Engine
+
+#End Region
+
 #Region "Private Fields"
 
     Private ChatCMD As String
@@ -15,10 +29,16 @@ Public Class MS_Verbot
 
 #Region "Public Constructors"
 
+    Public Sub New()
+        MyBase.New()
+        verbot = New Verbot5Engine()
+        state = New State()
+    End Sub
+
     Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
         MyBase.New(Dream, Player, MsEngine)
-        MyMonkeySpeakEngine.verbot = New Verbot5Engine()
-        MyMonkeySpeakEngine.state = New State()
+        verbot = New Verbot5Engine()
+        state = New State()
 
         '(0:1500) When the chat engine executes command {...},
         Add(TriggerCategory.Cause, 1500,
@@ -214,11 +234,11 @@ Public Class MS_Verbot
             Dim EngineVar As String = reader.ReadString()
             Dim MS_Var As Variable = reader.ReadVariable(True)
 
-            MS_Var.Value = MyMonkeySpeakEngine.state.Vars.Item(EngineVar)
+            MS_Var.Value = state.Vars.Item(EngineVar)
             Return True
 
         Catch ex As Exception
-            MyMonkeySpeakEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -230,10 +250,10 @@ Public Class MS_Verbot
 
             Dim EngineVar As String = reader.ReadString()
             Dim EngineValue As String = reader.ReadString()
-            If MyMonkeySpeakEngine.state.Vars.ContainsKey(EngineVar) Then
-                MyMonkeySpeakEngine.state.Vars.Item(EngineVar) = EngineValue
+            If state.Vars.ContainsKey(EngineVar) Then
+                state.Vars.Item(EngineVar) = EngineValue
             Else
-                MyMonkeySpeakEngine.state.Vars.Add(EngineVar, EngineValue)
+                state.Vars.Add(EngineVar, EngineValue)
             End If
             Return True
         Catch ex As Exception
@@ -250,17 +270,17 @@ Public Class MS_Verbot
             FileName = Path.Combine(Paths.SilverMonkeyBotPath, FileName)
 
             Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
-            MyMonkeySpeakEngine.kb = CType(xToolbox.LoadXML(FileName), KnowledgeBase)
-            MyMonkeySpeakEngine.kbi.Filename = Path.GetFileName(FileName)
-            MyMonkeySpeakEngine.kbi.Fullpath = Path.GetDirectoryName(FileName) + "\"
-            MyMonkeySpeakEngine.verbot.AddKnowledgeBase(MyMonkeySpeakEngine.kb, MyMonkeySpeakEngine.kbi)
-            MyMonkeySpeakEngine.state.CurrentKBs.Clear()
-            MyMonkeySpeakEngine.state.CurrentKBs.Add(FileName)
+            kb = CType(xToolbox.LoadXML(FileName), KnowledgeBase)
+            kbi.Filename = Path.GetFileName(FileName)
+            kbi.Fullpath = Path.GetDirectoryName(FileName) + "\"
+            verbot.AddKnowledgeBase(kb, kbi)
+            state.CurrentKBs.Clear()
+            state.CurrentKBs.Add(FileName)
 
             Return True
 
         Catch ex As Exception
-            MyMonkeySpeakEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function

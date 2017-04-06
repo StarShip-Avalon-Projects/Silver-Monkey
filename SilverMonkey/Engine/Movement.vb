@@ -9,14 +9,12 @@ Public Class Movement
 #Region "Private Fields"
 
     Private Const RGEX_Mov_Steps As String = "(nw|ne|sw|se|1|3|7|9)"
-    Private writer As TextBoxWriter = Nothing
-
 #End Region
 
 #Region "Public Constructors"
 
     Public Sub New()
-        writer = New TextBoxWriter(Variables.TextBox1)
+        MyBase.New()
         '(0:601) When a furre moves,
         Add(Monkeyspeak.TriggerCategory.Cause, 601,
             Function()

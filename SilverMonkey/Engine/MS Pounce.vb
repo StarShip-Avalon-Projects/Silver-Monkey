@@ -7,6 +7,9 @@ Imports SilverMonkey
 Imports Furcadia.Util
 Imports Furcadia.Net
 
+''' <summary>
+''' Monkey Speak version of the Furcadia Pounce Cliet
+''' </summary>
 Public Class MS_Pounce
     Inherits MonkeySpeakLibrary
 
@@ -18,9 +21,21 @@ Public Class MS_Pounce
 
 #Region "Public Constructors"
 
+    ''' <summary>
+    ''' Default Constructor
+    ''' </summary>
+    Public Sub New()
+        MyBase.New()
+    End Sub
+
+    ''' <summary>
+    ''' Cunstructor to Initialize References
+    ''' </summary>
+    ''' <param name="Dream">Dream Reference</param>
+    ''' <param name="Player">Triggering Furre Reference</param>
+    ''' <param name="MsEngine">MonkeySpeak Engine Reference</param>
     Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
         MyBase.New(Dream, Player, MsEngine)
-
         ' (0:950) When a furre logs on,
         Add(TriggerCategory.Cause, 950,
             Function()
@@ -241,21 +256,22 @@ Public Class MS_Pounce
         CheckCemberList()
         Try
             Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Regex.Replace(Furre.ToLower(), MyMonkeySpeakEngine.REGEX_NameFilter, "")
+            Furre = FurcadiaShortName(Furre)
             Dim line As String = Nothing
             Dim linesList As New List(Of String)(File.ReadAllLines(OnlineList))
-            Dim SR As New StreamReader(OnlineList)
-            line = SR.ReadLine()
-            For i As Integer = 0 To linesList.Count - 1
-                If Regex.Replace(line.ToLower(), MyMonkeySpeakEngine.REGEX_NameFilter, "") = Furre Then
-                    SR.Dispose()
-                    SR.Close()
-                    linesList.RemoveAt(i)
-                    File.WriteAllLines(OnlineList, linesList.ToArray())
-                    Return True
-                End If
+            Using SR As New StreamReader(OnlineList)
                 line = SR.ReadLine()
-            Next i
+                For i As Integer = 0 To linesList.Count - 1
+                    If FurcadiaShortName(line) = Furre Then
+                        SR.Dispose()
+                        SR.Close()
+                        linesList.RemoveAt(i)
+                        File.WriteAllLines(OnlineList, linesList.ToArray())
+                        Return True
+                    End If
+                    line = SR.ReadLine()
+                Next i
+            End Using
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False

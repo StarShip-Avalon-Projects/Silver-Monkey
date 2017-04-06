@@ -2,9 +2,6 @@ Imports RTF
 Imports Furcadia.IO
 Imports Furcadia.Net
 Imports Furcadia.Util
-Imports Furcadia.Text.Base220
-
-Imports System.Net
 Imports System.Text.RegularExpressions
 
 Imports System.Collections
@@ -14,7 +11,6 @@ Imports Furcadia.Drawing
 Imports System.Drawing
 Imports System.Net.NetworkInformation
 Imports System.Runtime.InteropServices
-Imports System.Text
 Imports System.Threading
 Imports System.Diagnostics
 Imports Conversive.Verbot5
@@ -23,7 +19,6 @@ Imports MonkeyCore.Paths
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Settings
-Imports MonkeyCore.Utils
 Imports Furcadia.Net.Proxy
 
 Public Class Main
@@ -39,112 +34,6 @@ Public Class Main
 #End Region
 #Region "SysTray"
     Public WithEvents NotifyIcon1 As NotifyIcon
-#End Region
-#Region "smPounce"
-    'TODO: Move Pounce to FurcadiaSession.MonkeySpeakEngine
-    Private WithEvents smPounce As PounceConnection
-    Public FurreList As New Dictionary(Of String, pFurre)
-    Public HasShare As Boolean = False
-    Public NoEndurance As Boolean = False
-    Public OnlineList As String = CheckBotFolder("OnlineList.txt")
-    Dim lastaccess As Date
-    Private PounceTimer As Threading.Timer
-    Dim usingPounce As Integer = 0
-
-    Sub Response(friends As String(), dreams As String()) Handles smPounce.Response
-
-        Dim myKeysArray(FurreList.Keys.Count - 1) As String
-        FurreList.Keys.CopyTo(myKeysArray, 0)
-
-        For Each _furre As String In myKeysArray
-            Dim test As pFurre = FurreList.Item(_furre)
-            test.WasOnline = test.Online
-            test.Online = False
-            For Each [friend] As String In friends
-                If FurcadiaShortName(_furre) = FurcadiaShortName([friend]) Then
-                    test.Online = True
-                    Exit For
-                End If
-            Next
-            FurreList.Item(_furre) = test
-            If test.WasOnline = True And test.Online = False Then
-                'Furre Logged off
-                SendClientMessage("smPounce", _furre + " has logged out.")
-                Player = NametoFurre(_furre, True)
-                MainMsEngine.PageExecute(951, 953)
-            ElseIf test.WasOnline = False And test.Online = True Then
-                'Furre logged on
-                SendClientMessage("smPounce", _furre + " has logged on.")
-                Player = NametoFurre(_furre, True)
-                MainMsEngine.PageExecute(950, 952)
-            End If
-
-        Next
-    End Sub
-
-    Private Function ReadOnlineList() As Boolean
-        Dim result As Boolean = False
-        If File.Exists(CheckBotFolder(OnlineList)) Then
-            If File.GetLastWriteTime(CheckBotFolder(OnlineList)) <> lastaccess Then
-                lastaccess = File.GetLastWriteTime(CheckBotFolder(OnlineList))
-
-                Dim NameList() As String = File.ReadAllLines(CheckBotFolder(OnlineList))
-                For i As Integer = 0 To NameList.Length - 1
-                    If Not FurreList.ContainsKey(NameList(i)) Then FurreList.Add(NameList(i), New pFurre)
-                Next
-                Dim Namelist2(FurreList.Count - 1) As String
-                FurreList.Keys.CopyTo(Namelist2, 0)
-                For i As Integer = 0 To Namelist2.Length - 1
-                    Dim found As Boolean = False
-                    For j As Integer = 0 To NameList.Length - 1
-                        If FurcadiaShortName(NameList(j)) = FurcadiaShortName(Namelist2(i)) Then
-                            found = True
-                            Exit For
-                        End If
-                    Next
-                    If Not found Then FurreList.Remove(Namelist2(i))
-                Next
-                result = True
-            End If
-        End If
-        Return result
-    End Function
-
-    Private Sub smPounceSend(sender As Object)
-        If (0 = Interlocked.Exchange(usingPounce, 1)) Then
-            If _FormClose Then Exit Sub
-            If Not bConnected() Then Exit Sub
-            If Not ReadOnlineList() Then Exit Sub
-            smPounce = New PounceConnection("http://on.furcadia.com/q/", Nothing)
-
-            smPounce.RemoveFriends()
-            For Each kv As KeyValuePair(Of String, pFurre) In FurreList
-                If Not String.IsNullOrEmpty(kv.Key) Then
-                    smPounce.AddFriend(FurcadiaShortName(kv.Key))
-                End If
-            Next
-            smPounce.ConnectAsync()
-            Interlocked.Exchange(usingPounce, 0)
-        End If
-    End Sub
-
-    Public Structure pFurre
-
-#Region "Public Fields"
-
-        Public Online As Boolean
-        Public WasOnline As Boolean
-
-#End Region
-
-    End Structure
-#End Region
-
-#Region "Verbot"
-    Public kb As KnowledgeBase = New KnowledgeBase()
-    Public kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
-    Public state As State
-    Public verbot As Verbot5Engine
 #End Region
 
 #Region "WmCpyDta"
@@ -164,48 +53,48 @@ Public Class Main
 
     Protected Overrides Sub WndProc(ByRef m As Message)
         If m.Msg = WM_COPYDATA Then
-            'Dim mystr As COPYDATASTRUCT
-            Dim mystr2 As COPYDATASTRUCT = CType(Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT)), COPYDATASTRUCT)
+            ''Dim mystr As COPYDATASTRUCT
+            'Dim mystr2 As COPYDATASTRUCT = CType(Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT)), COPYDATASTRUCT)
 
-            ' If the size matches
-            If mystr2.cdData = Marshal.SizeOf(GetType(MyData)) Then
-                ' Marshal the data from the unmanaged memory block to a
-                ' MyStruct managed struct.
-                Dim myStr As MyData = DirectCast(Marshal.PtrToStructure(mystr2.lpData, GetType(MyData)), MyData)
+            '' If the size matches
+            'If mystr2.cdData = Marshal.SizeOf(GetType(MyData)) Then
+            '    ' Marshal the data from the unmanaged memory block to a
+            '    ' MyStruct managed struct.
+            '    Dim myStr As MyData = DirectCast(Marshal.PtrToStructure(mystr2.lpData, GetType(MyData)), MyData)
 
-                Dim sName As String = myStr.lpName
-                Dim sFID As Integer = 0
-                Dim sTag As String = myStr.lpTag
-                Dim sData As String = myStr.lpMsg
+            '    Dim sName As String = myStr.lpName
+            '    Dim sFID As Integer = 0
+            '    Dim sTag As String = myStr.lpTag
+            '    Dim sData As String = myStr.lpMsg
 
-                If sName = "~DSEX~" Then
-                    If sTag = "Restart" Then
-                        MainMsEngine.EngineRestart = True
-                        cBot.MS_Script = MainMsEngine.msReader(CheckBotFolder(cBot.MS_File))
-                        MainEngine.MSpage = MainMsEngine.engine.LoadFromString(cBot.MS_Script)
-                        MainMsEngine.MS_Stared = 2
-                        ' MainMSEngine.LoadLibrary()
-                        MainMsEngine.EngineRestart = False
-                        ' Main.ResetPrimaryVariables()
-                        sndDisplay("<b><i>[SM]</i></b> Status: File Saved. Engine Restarted")
-                        If smProxy.IsClientConnected Then smProxy.SendClient(")<b><i>[SM]</i></b> Status: File Saved. Engine Restarted" + vbLf)
-                        MainMsEngine.PageExecute(0)
-                    End If
-                Else
-                    If DREAM.FurreList.Contains(sFID) Then
-                        Player = DREAM.FurreList(sFID)
-                    Else
-                        Player = New FURRE(sName)
-                    End If
+            '    If sName = "~DSEX~" Then
+            '        If sTag = "Restart" Then
+            '            MainMsEngine.EngineRestart = True
+            '            cBot.MS_Script = MainMsEngine.msReader(CheckBotFolder(cBot.MS_File))
+            '            MainEngine.MSpage = MainMsEngine.engine.LoadFromString(cBot.MS_Script)
+            '            MainMsEngine.MS_Stared = 2
+            '            ' MainMSEngine.LoadLibrary()
+            '            MainMsEngine.EngineRestart = False
+            '            ' Main.ResetPrimaryVariables()
+            '            sndDisplay("<b><i>[SM]</i></b> Status: File Saved. Engine Restarted")
+            '            If smProxy.IsClientConnected Then smProxy.SendClient(")<b><i>[SM]</i></b> Status: File Saved. Engine Restarted" + vbLf)
+            '            MainMsEngine.PageExecute(0)
+            '        End If
+            '    Else
+            '        If DREAM.FurreList.Contains(sFID) Then
+            '            Player = DREAM.FurreList(sFID)
+            '        Else
+            '            Player = New FURRE(sName)
+            '        End If
 
-                    Player.Message = sData.ToString
-                    MainMsEngine.PageSetVariable(MS_Name, sName)
-                    MainMsEngine.PageSetVariable("MESSAGE", sData)
-                    ' Execute (0:15) When some one whispers something
-                    MainMsEngine.PageExecute(75, 76, 77)
-                    SendClientMessage("Message from: " + sName, sData)
-                End If
-            End If
+            '        Player.Message = sData.ToString
+            '        MainMsEngine.PageSetVariable(MS_Name, sName)
+            '        MainMsEngine.PageSetVariable("MESSAGE", sData)
+            '        ' Execute (0:15) When some one whispers something
+            '        MainMsEngine.PageExecute(75, 76, 77)
+            '        SendClientMessage("Message from: " + sName, sData)
+            '    End If
+            'End If
         Else
             MyBase.WndProc(m)
         End If
@@ -223,10 +112,8 @@ Public Class Main
 
 #Region "Public Fields"
 
+    Public Shared WithEvents FurcadiaSession As FurcSession
     Public Shared NewBot As Boolean = False
-
-    Public serverData As String
-
     Public writer As TextBoxWriter = Nothing
 
 #End Region
@@ -274,18 +161,12 @@ Public Class Main
             Me.Invoke(d)
         Else
             BTN_Go.Text = "Connected."
-            ClientClose = False
-            '  loggingIn = 2
             ConnectTrayIconMenuItem.Enabled = False
             DisconnectTrayIconMenuItem.Enabled = True
             SetBalloonText("Connected to Furcadia.")
             TS_Status_Server.Image = My.Resources.images3
             ''(0:1) When the bot logs into furcadia,
             'MainMSEngine.PageExecute(1)
-            If Not IsNothing(FurcMutex) Then '
-                FurcMutex.Close()
-                FurcMutex.Dispose()
-            End If
         End If
     End Sub
 
@@ -315,7 +196,7 @@ Public Class Main
                 Try
                     g_mass = 0
                     If Not IsNothing(smProxy) Then smProxy.Dispose()
-                    smProxy = New NetProxy(MainConfigSettings.Host, MainConfigSettings.sPort, port)
+                    smProxy = New FurcSession()
                     With smProxy
                         .ProcessCMD = cBot.IniFile
                         .ProcessPath = MainConfigSettings.FurcPath
@@ -372,8 +253,7 @@ Public Class Main
             Me.Invoke(d)
         Else
             If MainConfigSettings.AutoReconnect And Not ClientClose Then
-                Me.ReconnectTimer = New Threading.Timer(AddressOf ReconnectTick,
-                  Nothing, 45000, 45000)
+
                 SetBalloonText("Connection Lost. Reconnecting in 45 Seconds.")
                 Console.WriteLine("Connection Lost. Reconnecting in 45 Seconds.")
             End If
@@ -707,21 +587,15 @@ Public Class Main
 
     Dim DreamUpdateTimer As New System.Timers.Timer()
 
-    Private g_mass As Double = 0
-
     Dim LastSentPS As Integer
 
     Dim LogTimer As New System.Timers.Timer()
 
     Private MSalarm As Threading.Timer
 
-    Dim PingTimer As Threading.Timer
-
     Private ps_mass As Double = 0
 
     Private TickTime As DateTime = DateTime.Now
-
-    Dim usingPing As Integer = 0
 
     Private usingResource As Integer = 0
 
@@ -739,67 +613,6 @@ Public Class Main
     Private Delegate Sub UpDateBtn_StandCallback(ByRef [furre] As FURRE)
     Private Delegate Sub UpDateDreamListCaller(ByRef [dummy] As String) 'ByVal [dummy] As String
     Private Delegate Function WordUnderMouse(ByRef Rtf As RichTextBoxEx, ByVal X As Integer, ByVal Y As Integer) As String
-
-    Public Sub on_Tick(ByVal dt As Double)
-        If IsNothing(smProxy) Then Exit Sub
-        If Not smProxy.IsServerConnected Then Exit Sub
-        If ServerStack.Count = 0 Then Exit Sub
-        If dt <> 0 Then
-            dt = Math.Round(dt, 0) + 1
-        End If
-
-        '/* Send buffered speech. */
-        Dim decay As Double = Math.Round(dt * MASS_DECAYPS / 1000.0F, 0)
-        If (decay > g_mass) Then
-            g_mass = 0
-        Else
-            g_mass = g_mass - decay
-        End If
-
-        If NoEndurance Then
-            SyncLock Lock
-                '/* just send everything right away */
-                While ServerStack.Count > 0 And g_mass <= MASS_CRITICAL
-                    g_mass += ServerStack.Peek.Length + MASS_DEFAULT
-                    smProxy.SendServer(ServerStack.Peek & vbLf)
-                    ServerStack.Dequeue()
-                End While
-            End SyncLock
-        ElseIf Not ThroatTired Then
-            SyncLock Lock
-                ' Only send a speech line if the mass will be under the limit. */
-                While ServerStack.Count > 0 And g_mass + MASS_SPEECH <= MASS_CRITICAL
-                    g_mass += ServerStack.Peek.Length + MASS_DEFAULT
-                    smProxy.SendServer(ServerStack.Peek & vbLf)
-
-                    ServerStack.Dequeue()
-                End While
-            End SyncLock
-        End If
-    End Sub
-
-    Public Sub TroatTiredProcTick(ByVal state As Object)
-        If (0 = Interlocked.Exchange(usingResource, 1)) Then
-            Dim seconds As Double = DateTime.Now.Subtract(TickTime).Milliseconds
-            on_Tick(seconds)
-            CheckPS_Send()
-            TickTime = DateTime.Now
-            Interlocked.Exchange(usingResource, 0)
-        End If
-    End Sub
-    Private Sub PingTimerTick(ByVal state As Object)
-        If (0 = Interlocked.Exchange(usingPing, 1)) Then
-            If g_mass + MASS_SPEECH <= MASS_CRITICAL Then
-                ServerStack.Enqueue("Ping")
-            End If
-            Interlocked.Exchange(usingPing, 0)
-        End If
-    End Sub
-
-    Private Sub TroatTiredDelayTick(ByVal state As Object)
-        ThroatTired = False
-        Me.TroatTiredDelay.Dispose()
-    End Sub
 
 #End Region
 
@@ -1013,22 +826,6 @@ Public Class Main
 #End Region
 #Region " Methods"
 
-    Public Channel As String
-
-    Public DiceCompnentMatch As String
-
-    Public DiceCount As Double = 0.0R
-
-    Public DiceModifyer As Double = 0.0R
-
-    Public DiceResult As Double = 0.0R
-
-    Public DiceSides As Double = 0.0R
-
-    Public Repq As Queue(Of Rep) = New Queue(Of Rep)
-
-    Dim ChannelLock As New Object
-
     Private ImageList As New Dictionary(Of String, Image)
 
     Dim NextLetter As Char = Nothing
@@ -1238,101 +1035,6 @@ Public Class Main
         Return True
     End Function
 
-    Public Function IsBot(ByRef player As FURRE) As Boolean
-        Try
-            Dim str As String = BotName.ToFurcShortName
-            If player.ShortName <> BotName.ToFurcShortName Then Return False
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
-        If BtnSit_stand_Lie.InvokeRequired Then
-            Dim d As New UpDateBtn_StandCallback(AddressOf IsBot)
-            Me.Invoke(d, [player])
-            Return True
-        Else
-            'Update inteface
-            Try
-
-                Select Case player.FrameInfo.pose
-                    Case 0
-                        BtnSit_stand_Lie.Text = "Stand"
-                    Case 1 To 3
-                        BtnSit_stand_Lie.Text = "Lay"
-                    Case 4
-                        BtnSit_stand_Lie.Text = "Sit"
-                End Select
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-            Return True
-        End If
-    End Function
-
-    ''' <summary>
-    ''' Downloads an image file from a web server and Stores it in a temp file location
-    ''' if it doesn't already exist at that location
-    ''' </summary>
-    ''' <param name="url"></param>
-    ''' <returns>image</returns>
-    ''' <remarks></remarks>
-    Public Function LoadImageFromUrl(ByRef url As String) As Image
-        Dim img As Image = Nothing
-        Dim ImageFile As String = System.IO.Path.GetFileName(url)
-        Dim TempPath As String = Path.GetTemApplicationSettingsPath
-        Dim Filename As String = ""
-        If url.StartsWith("fsh://") = False Then Filename = ImageFile.Substring(0, ImageFile.Length - 4)
-        If url.StartsWith("fsh://") Then
-            Dim start As Integer = url.LastIndexOf("/") + 1
-            Dim last As Integer = url.LastIndexOf(":") - start
-            Dim FSH As String = url.Substring(start, last)
-
-            img = GetFrame(CInt(ImageFile), FSH)
-        ElseIf ImageList.ContainsKey(Filename) Then
-            img = ImageList.Item(Filename)
-        ElseIf Not File.Exists(TempPath & "/" & ImageFile) Then
-            Try
-                Dim request As HttpWebRequest = DirectCast(HttpWebRequest.Create(url), HttpWebRequest)
-                Dim response As HttpWebResponse = DirectCast(request.GetResponse, HttpWebResponse)
-                img = Image.FromStream(response.GetResponseStream())
-                response.Close()
-                img.Save(TempPath & "/" & ImageFile)
-            Catch
-                Console.WriteLine("Error 404: Could not read " & ImageFile & " from Apollo.furcadia.com")
-            End Try
-            If ImageList.ContainsKey(Filename) = False Then ImageList.Add(Filename, img)
-        Else
-            img = Image.FromFile(TempPath & "/" & ImageFile)
-            If ImageList.ContainsKey(Filename) = False Then ImageList.Add(Filename, img)
-        End If
-        Return IMGresize(CType(img, Bitmap), log_)
-    End Function
-
-    Public Function NametoFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
-        Dim p As New FURRE
-        p.Name = sname
-        For Each Character As FURRE) In DREAM.List
-            If Character.ShortName = FurcadiaShortName(sname) Then
-                p = Character
-                Exit For
-            End If
-        Next
-        If UbdateMSVariableName Then MainMsEngine.PageSetVariable(MS_Name, sname)
-
-        Return p
-    End Function
-
-    Public Sub PS_Abort()
-        CurrentPS_Stage = PS_BackupStage.off
-        PSS_Stack.Clear()
-        CharacterList.Clear()
-        PSRestoreRunning = False
-        PSBackupRunning = False
-        PSPruneRunning = False
-        psReceiveCounter = 0
-        psSendCounter = 0
-        LastSentPS = 0
-    End Sub
-
     Public Function setLogName(ByRef bfile As cBot) As String
         Select Case bfile.LogOption
             Case 0
@@ -1359,99 +1061,6 @@ Public Class Main
             AddDataToList(log_, data, newColor)
         Catch eX As Exception
             Dim logError As New ErrorLogging(eX, Me)
-        End Try
-    End Sub
-
-    Public Sub sndServer(ByRef data As String)
-        Try
-            If Not bConnected() Then Exit Sub
-            If data.StartsWith("`m ") Then
-                ' TriggerCmd(MS0_MOVE)
-                Select Case data.Substring(2, 1)
-                    Case "7"
-                        '     TriggerCmd(MS0_MOVENW)
-                    Case "9"
-                        '   TriggerCmd(MS0_MOVENE)
-                    Case "1"
-                        '  TriggerCmd(MS0_MOVESW)
-                    Case "3"
-                        '  TriggerCmd(MS0_MOVESE)
-                End Select
-            ElseIf data = "`use" Then
-
-            ElseIf data = "`get" Then
-
-            ElseIf data = "`>" Then
-
-            ElseIf data = "`<" Then
-
-            ElseIf data = "`lie" Then
-
-            ElseIf data = "`liedown" Then
-
-            ElseIf data = "`sit" Then
-
-            ElseIf data = "`stand" Then
-
-            ElseIf data.StartsWith("banish ") Then
-                BanishName = data.Substring(7)
-                MainMsEngine.PageSetVariable("BANISHNAME", BanishName)
-            ElseIf data.StartsWith("banish-off ") Or data.StartsWith("tempbanish ") Then
-                BanishName = data.Substring(11)
-                MainMsEngine.PageSetVariable("BANISHNAME", BanishName)
-            ElseIf data = "banish-list" Then
-                BanishName = ""
-                MainMsEngine.PageSetVariable("BANISHNAME", "")
-            End If
-
-            TextToServer(data)
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
-    End Sub
-
-    Public Sub SndToServer(ByVal data As String)
-        If String.IsNullOrEmpty(data) Then Exit Sub
-        Try
-            SyncLock Lock
-                ServerStack.Enqueue(data)
-                If g_mass + MASS_SPEECH <= MASS_CRITICAL Then
-                    'g_mass = data.Length - 2
-                    on_Tick(0)
-                End If
-            End SyncLock
-
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me, data)
-            Debug.Print("SndToServer: " & data)
-            Debug.Print(eX.Message)
-        End Try
-    End Sub
-
-    Public Sub TextToServer(ByRef arg As String)
-        Try
-
-            If String.IsNullOrWhiteSpace(arg) Then Exit Sub
-            'Clean Text input to match Client
-            Dim result As String = ""
-            Select Case arg.Substring(0, 1)
-                Case "`"
-                    result = arg.Remove(0, 1)
-                Case "/"
-                    result = "wh " & arg.Substring(1)
-                Case ":"
-                    result = arg
-
-                Case "-"
-                    result = arg
-
-                Case Else
-                    result = Chr(34) & arg
-            End Select
-            SndToServer(result)
-
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me, arg.ToString)
         End Try
     End Sub
 
@@ -1642,7 +1251,7 @@ Public Class Main
         If cBot.IniFile = "-pick" Then Exit Sub
 
         Dim p As String = Path.GetDirectoryName(cBot.IniFile)
-        If String.IsNullOrEmpty(p) And Not File.Exists(FurcPath.GetFurcadiaCharactersPath() + Path.DirectorySeparatorChar + Path.GetFileName(cBot.IniFile)) Then
+        If String.IsNullOrEmpty(p) And Not File.Exists(CheckBotFolder(cBot.IniFile)) Then
             MessageBox.Show(cBot.IniFile + " Not found, Aborting connection!", "Important Message")
             Exit Sub
         End If
@@ -1653,40 +1262,24 @@ Public Class Main
                 LogStream = New LogStream(setLogName(cBot), cBot.LogPath)
             End If
             If Not MainMsEngine.ScriptStart() Then Exit Sub
-            My.Settings.LastBotFile = CheckBotFolder(cBot.BotFile)
+            My.Settings.LastBotFile = CheckBotFolder(cBot.IniFile)
             My.Settings.Save()
             ReLogCounter = 0
-            ClientClose = False
-            Dim Ts As TimeSpan = TimeSpan.FromSeconds(MainConfigSettings.ConnectTimeOut)
-            Me.ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
-             Nothing, Ts, Ts)
-            Dim Tss As TimeSpan = TimeSpan.FromSeconds(MainConfigSettings.Ping)
-            If MainConfigSettings.Ping > 0 Then Me.PingTimer = New Threading.Timer(AddressOf PingTimerTick,
-             Nothing, Tss, Tss)
+
             If Not IsNothing(MS_Export) Then MS_Export.Dispose()
             Try
                 ConnectBot()
             Catch Ex As NetProxyException
-                Me.ReconnectTimeOutTimer.Dispose()
-                If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
-                If Not IsNothing(FurcMutex) Then '
-                    FurcMutex.Close()
-                    FurcMutex.Dispose()
-                End If
+
                 DisconnectBot()
                 sndDisplay("Connection Aborting: " + Ex.Message)
             End Try
 
         Else
             ProcExit = False
-            ClientClose = True
-            If Not IsNothing(FurcMutex) Then '
-                FurcMutex.Close()
-                FurcMutex.Dispose()
-            End If
+
             DisconnectBot()
-            If Not IsNothing(ReconnectTimer) Then Me.ReconnectTimer.Dispose()
-            If Not IsNothing(ReconnectTimeOutTimer) Then ReconnectTimeOutTimer.Dispose()
+
         End If
     End Sub
 
@@ -1706,23 +1299,15 @@ Public Class Main
         ' If loggingIn = 0 Then Exit Sub
 
         'TS_Status_Client.Image = My.Resources.images2
-        MainMsEngine.PageExecute(3)
 
         'loggingIn = 0
         If cBot.StandAlone = False Then
 
-            ClientClose = True
-            If MainConfigSettings.CloseProc Then
-                ProcExit = False
-            Else
-                ProcExit = True
-            End If
             DisconnectBot()
         ElseIf bConnected() Then
             smProxy.CloseClient()
             TS_Status_Client.Image = My.Resources.images2
         End If
-        If MainConfigSettings.DisconnectPopupToggle Then SetBalloonText("Furcadia Closed or disconnected")
     End Sub
 
     Private Sub CloseToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CloseToolStripMenuItem.Click, ExitTrayIconMenuItem.Click
@@ -1786,7 +1371,7 @@ Public Class Main
         If Not IsNothing(Me.DreamUpdateTimer) Then Me.DreamUpdateTimer.Dispose()
         If Not IsNothing(Me.ReconnectTimeOutTimer) Then Me.ReconnectTimeOutTimer.Dispose()
         If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
-        If Not IsNothing(Me.PounceTimer) Then Me.PounceTimer.Dispose()
+        If Not IsNothing(Me.PounceTimer1) Then Me.PounceTimer1.Dispose()
         Me.Dispose()
     End Sub
 
@@ -1911,9 +1496,9 @@ Public Class Main
         End Try
         writer = New TextBoxWriter(log_)
         Console.SetOut(writer)
-        MainMsEngine = New MainEngine
+        Fur = New FurcSession
         Me.MSalarm = New Threading.Timer(AddressOf Tick, True, 1000, 1000)
-        FurreList.Clear()
+        FURREList.Clear()
         Plugins = PluginServices.FindPlugins(Path.GetDirectoryName(Application.ExecutablePath) + "\Plugins\", "SilverMonkey.Interfaces.msPlugin")
 
         ' Try to get Furcadia's path from the registry
@@ -1949,8 +1534,8 @@ Public Class Main
             Console.WriteLine("Loaded: """ + My.Settings.LastBotFile + """")
         End If
         Dim ts As TimeSpan = TimeSpan.FromSeconds(30)
-        Me.PounceTimer = New Threading.Timer(AddressOf smPounceSend, Nothing, TimeSpan.Zero, ts)
-        Me.PounceTimer.InitializeLifetimeService()
+        Me.PounceTimer1 = New Threading.Timer(AddressOf smPounceSend, Nothing, TimeSpan.Zero, ts)
+        Me.PounceTimer1.InitializeLifetimeService()
         Me.TroatTiredProc = New Threading.Timer(AddressOf TroatTiredProcTick, Nothing, 3000, 100)
 
         If Not IsNothing(cBot) Then
@@ -2007,7 +1592,7 @@ Public Class Main
         Me.Activate()
     End Sub
 
-    Private Sub onClientDataReceived(ByVal data As String) Handles smProxy.ClientDataReceived
+    Private Sub onClientDataReceived(ByVal data As String) Handles smProxy.ClientData2
         Dim temp As Object = data
         Try
 
@@ -2093,16 +1678,11 @@ Public Class Main
         Try
             ConnectBot()
         Catch Ex As NetProxyException
-            Me.ReconnectTimeOutTimer.Dispose()
-            If Not IsNothing(Me.PingTimer) Then Me.PingTimer.Dispose()
-            If Not IsNothing(FurcMutex) Then '
-                FurcMutex.Close()
-                FurcMutex.Dispose()
-            End If
+
             DisconnectBot()
             sndDisplay("Connection Aborting: " + Ex.Message)
         Finally
-            Me.ReconnectTimer.Dispose()
+
         End Try
 
     End Sub

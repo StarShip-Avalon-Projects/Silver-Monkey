@@ -8,6 +8,10 @@ Public Class WmCpyDta
 
 #Region "Public Constructors"
 
+    Public Sub New()
+        MyBase.New()
+    End Sub
+
     Public Sub New(ByRef Dream As DREAM, ByRef Player As FURRE, ByRef MsEngine As MainMsEngine)
         MyBase.New(Dream, Player, MsEngine)
 
