@@ -6,25 +6,7 @@ Imports System.IO
 Imports FastColoredTextBoxNS
 
 Public Module MyExtensions
-    <System.Runtime.CompilerServices.Extension()> _
-    Public Function IsInteger(ByVal value As String) As Boolean
-        If String.IsNullOrEmpty(value) Then
-            Return False
-        Else
-            Return Integer.TryParse(value, Nothing)
-        End If
-    End Function
-
-    <System.Runtime.CompilerServices.Extension()> _
-    Public Function ToInteger(ByVal value As String) As Integer
-        If value.IsInteger() Then
-            Return Integer.Parse(value)
-        Else
-            Return 0
-        End If
-    End Function
-
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsDouble(ByVal value As String) As Boolean
         If String.IsNullOrEmpty(value) Then
             Return False
@@ -33,7 +15,15 @@ Public Module MyExtensions
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    Public Function IsInteger(ByVal value As String) As Boolean
+        If String.IsNullOrEmpty(value) Then
+            Return False
+        Else
+            Return Integer.TryParse(value, Nothing)
+        End If
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToDouble(ByVal value As String) As Double
         If value.IsDouble() Then
             Return Double.Parse(value)
@@ -41,23 +31,52 @@ Public Module MyExtensions
             Return 0
         End If
     End Function
+
+    Public Function ToInteger(ByVal value As String) As Integer
+        If value.IsInteger() Then
+            Return Integer.Parse(value)
+        Else
+            Return 0
+        End If
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()>
+    <System.Runtime.CompilerServices.Extension()>
 End Module
 
 Public Class wUI
 #Region "Properties"
     'Dim ScriptPath = My.Application.Info.DirectoryPath() & "\Scripts\"
     Public Code As String
+    Public PathIndex As Integer = 0
+    Public wVariables As Dictionary(Of Integer, Object) = New Dictionary(Of Integer, Object)
     Dim WorkFileName As String = ""
     Dim WorkPath As String = ""
-    Public PathIndex As Integer = 0
-
-
-
     Public Structure StructMapSearch
+
+#Region "Public Fields"
+
         Public DreamPath As String
         Public Item As String
+
+#End Region
+
+#Region "Private Fields"
+
+        Private _list As List(Of String)
         Private _MSType As String
         Private _msValue As String
+
+#End Region
+
+#Region "Public Properties"
+
+        Public ReadOnly Property Getlist As List(Of String)
+            Get
+                Return _list
+            End Get
+        End Property
+
         Public Property MSType As String
             Get
                 Return _MSType
@@ -93,12 +112,6 @@ Public Class wUI
                 Return _msValue
             End Get
         End Property
-        Private _list As List(Of String)
-        Public ReadOnly Property Getlist As List(Of String)
-            Get
-                Return _list
-            End Get
-        End Property
         Public Property Setlist As List(Of String)
             Set(value As List(Of String))
                 _list = value
@@ -107,26 +120,29 @@ Public Class wUI
                 Return _list
             End Get
         End Property
+
+#End Region
+
     End Structure
-
-    Public wVariables As Dictionary(Of Integer, Object) = New Dictionary(Of Integer, Object)
-
 #End Region
 
 #Region "Position Functions"
 
+    Private Const RGEX_Coordinate As String = "(\d+)\s*,\s*(\d+)"
+
+    Private Const RGEX_MathCalc As String = "(\d+)(\+|-|\*|/)(\d+)(.*)"""
+
+    Private Const RGEX_MathStep As String = "(\+|-|\*|/)(\d+)"
+
+    Private Const RGEX_Mov_Steps As String = "(nw|ne|sw|se)(\d+)"
+
     'Regexes for calculation parsing
     Private Const RGEX_Movement As String = "(\d+)(nw|ne|sw|se)(\d+)(.*)"""
-    Private Const RGEX_MathCalc As String = "(\d+)(\+|-|\*|/)(\d+)(.*)"""
-    Private Const RGEX_MathStep As String = "(\+|-|\*|/)(\d+)"
-    Private Const RGEX_Coordinate As String = "(\d+)\s*,\s*(\d+)"
     Private Const RGEX_Number As String = "^(\d+)"
-    Private Const RGEX_Mov_Steps As String = "(nw|ne|sw|se)(\d+)"
     Private Const RGEX_Range As String = "^(\d+)(-\s*)(\d+)?"
-    Private Const RPOS_Range_Start As Integer = 1
-    Private Const RPOS_Range_Marker As Integer = 2
     Private Const RPOS_Range_End As Integer = 3
-
+    Private Const RPOS_Range_Marker As Integer = 2
+    Private Const RPOS_Range_Start As Integer = 1
     'Regular Expression match indexes
     'RPOS_Movement_Var = 1;
     'RPOS_Movement_Dir = 2;
@@ -144,13 +160,40 @@ Public Class wUI
     'RPOS_Coord_X = 1;
     'RPOS_Coord_Y = 2;
 
+    Private Function CalcMath(ByRef variable As String, ByRef directions As String) As String
+        'Match Cords
+        Dim x As Integer = variable.ToInteger
+
+        Dim m As MatchCollection = Regex.Matches(directions, RGEX_MathStep, RegexOptions.IgnoreCase)
+
+        For Each s As Match In m
+            Dim spaces As Integer = s.Groups(2).Value.ToInteger
+
+            Select Case s.Groups(1).Value
+                Case "+"
+                    x += spaces
+
+                Case "-"
+                    x -= spaces
+
+                Case "/"
+                    x = CInt(x / spaces)
+
+                Case "*"
+                    x *= spaces
+
+                Case Else
+            End Select
+        Next
+        Return x.ToString
+    End Function
+
     Private Function MoveCoord(ByRef variable As String, ByRef directions As String) As String
         'Match Cords
         Dim x As Integer = Regex.Match(variable, RGEX_Coordinate).Groups(0).Value.ToInteger
         Dim y As Integer = Regex.Match(variable, RGEX_Coordinate).Groups(1).Value.ToInteger
 
         Dim m As MatchCollection = Regex.Matches(directions, RGEX_Mov_Steps, RegexOptions.IgnoreCase)
-
 
         For Each s As Match In m
             Dim spaces As Integer = s.Groups(2).Value.ToInteger
@@ -201,148 +244,9 @@ Public Class wUI
         Next
         Return CStr(x.ToString = "," + y.ToString)
     End Function
-
-    Private Function CalcMath(ByRef variable As String, ByRef directions As String) As String
-        'Match Cords
-        Dim x As Integer = variable.ToInteger
-
-        Dim m As MatchCollection = Regex.Matches(directions, RGEX_MathStep, RegexOptions.IgnoreCase)
-
-
-        For Each s As Match In m
-            Dim spaces As Integer = s.Groups(2).Value.ToInteger
-
-            Select Case s.Groups(1).Value
-                Case "+"
-                    x += spaces
-
-                Case "-"
-                    x -= spaces
-
-                Case "/"
-                    x = CInt(x / spaces)
-
-                Case "*"
-                    x *= spaces
-
-                Case Else
-            End Select
-        Next
-        Return x.ToString
-    End Function
-
 #End Region
 
-    'Main (or second main) form loads!
-    Private Sub Form2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        If wMain.OnToolStripMenuItem.Checked = True And wMain.OnToolStripMenuItem.CheckState = CheckState.Checked Then
-            MyBase.Opacity = 0.0
-            Timer1.Enabled = True
-        End If
-
-        selecter2.SelectedIndex = 0
-        Dim n As Integer = selecter2.SelectedIndex + 1
-        Dim s As String = ScriptIni.GetKeyValue("main", "b" + n.ToString)
-        If s <> "" Then TextBox1.Text = s
-
-    End Sub
-
-
-    Private Sub Form2_OnExit(ByVal sender As System.Object, ByVal e As Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-        If wMain.OnToolStripMenuItem.Checked = True Then
-            Timer1.Enabled = False
-            Timer.Enabled = False
-        End If
-
-    End Sub
-
-
-
-    Private Sub selecter2_SelectedIndexChanged_1(sender As System.Object, e As System.EventArgs) Handles selecter2.SelectedIndexChanged, ListBox1.SelectedIndexChanged
-        Dim lb As ListBox = CType(sender, ListBox)
-        selecter2.SelectedIndex = lb.SelectedIndex
-        ListBox1.SelectedIndex = lb.SelectedIndex
-    End Sub
-    Private Sub selecter2_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles selecter2.Click, ListBox1.Click
-        Dim s = selecter2.GetItemText(selecter2.SelectedItem)
-        Dim Space As Integer = selecter2.SelectedIndex + 1
-        Dim t As String = ScriptIni.GetKeyValue("main", "t" + Space.ToString)
-        If t <> "" Then ToolTip.SetToolTip(selecter2, t)
-
-        SetUI()
-    End Sub
-
-    'Fade effect Timer (fade-in)
-    Private Sub Timer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer.Tick
-        'decreases opacity in turms of timer interval 
-        Me.Opacity -= 0.01
-        'when opacity is zero the form is invisible and we dispose it
-        If Me.Opacity = 0 Then Me.Dispose()
-    End Sub
-
-    'Fade effect Timer1 (fade-out)
-    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        'decreases opacity in turms of timer interval 
-        Me.Opacity += 0.01
-        'when opacity is zero the form is invisible and we dispose it
-        If Me.Opacity = 100 Then
-            Me.Show()
-        End If
-    End Sub
-
-    Private Sub generate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles generate.Click
-
-        NextItem()
-
-    End Sub
-
-    Private Sub TextBox1_TextChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextBox1.KeyDown
-        If e.KeyCode = System.Windows.Forms.Keys.Enter Then
-            NextItem()
-            e.Handled = True
-        End If
-    End Sub
-
-    Private Sub NextItem()
-
-        Dim n As Integer = selecter2.SelectedIndex + 1
-        Dim t As String = "text"
-        Dim s As String = ScriptIni.GetKeyValue("main", "m" + n.ToString).ToLower
-        If s <> Nothing And s <> "" Then t = s
-        Select Case t
-
-            Case "mapsearch"
-                Dim m As New StructMapSearch
-                m.DreamPath = TextBox3.Text
-                m.Item = TextBox1.Text
-                m.MSType = ComboBox1.SelectedItem.ToString
-                If wVariables.ContainsKey(n) Then
-                    wVariables.Item(n) = m
-                Else
-                    wVariables.Add(n, m)
-                End If
-                ListBox1.Items.Item(n - 1) = TextBox1.Text
-                Dim file As String = ""
-                If WorkFileName <> "" Then file = WorkFileName.Remove(WorkFileName.Length - 3, 3) + ".map"
-                TextBox3.Text = file
-                TextBox1.Text = ""
-                ComboBox1.SelectedItem = "Object"
-            Case Else
-                If wVariables.ContainsKey(n) Then
-                    wVariables.Item(n) = TextBox1.Text
-                Else
-                    wVariables.Add(n, TextBox1.Text)
-                End If
-                ListBox1.Items.Item(n - 1) = TextBox1.Text
-                TextBox1.Text = ""
-        End Select
-        If n <> selecter2.Items.Count() Then
-            selecter2.SelectedIndex = n
-            SetUI()
-        Else
-            generate.Enabled = False
-        End If
-    End Sub
+#Region "Public Methods"
 
     Public Sub SetUI()
         Dim n As Integer = selecter2.SelectedIndex + 1
@@ -388,6 +292,156 @@ Public Class wUI
         End If
     End Sub
 
+#End Region
+
+#Region "Private Methods"
+
+    Private Sub BtnImport_Click(sender As System.Object, e As System.EventArgs) Handles BtnImport.Click
+        If IsNothing(MS_Edit.MS_Editor) Then Exit Sub
+        MS_Edit.MS_Editor.InsertText(Solution.Text)
+    End Sub
+
+    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
+        ProcessVariableList()
+    End Sub
+
+    Private Sub CloseToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseToolStripMenuItem.Click
+        If wMain.OnToolStripMenuItem.Checked = True Then
+            Timer1.Enabled = False
+            Timer.Enabled = True
+        Else
+            Me.Dispose()
+        End If
+    End Sub
+
+    'Main (or second main) form loads!
+    Private Sub Form2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        If wMain.OnToolStripMenuItem.Checked = True And wMain.OnToolStripMenuItem.CheckState = CheckState.Checked Then
+            MyBase.Opacity = 0.0
+            Timer1.Enabled = True
+        End If
+
+        selecter2.SelectedIndex = 0
+        Dim n As Integer = selecter2.SelectedIndex + 1
+        Dim s As String = ScriptIni.GetKeyValue("main", "b" + n.ToString)
+        If s <> "" Then TextBox1.Text = s
+
+    End Sub
+
+    Private Sub Form2_OnExit(ByVal sender As System.Object, ByVal e As Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        If wMain.OnToolStripMenuItem.Checked = True Then
+            Timer1.Enabled = False
+            Timer.Enabled = False
+        End If
+
+    End Sub
+
+    Private Sub generate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles generate.Click
+
+        NextItem()
+
+    End Sub
+
+    Private Sub ListBox1_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles ListBox1.MouseWheel
+        Dim lb As ScrollingListBox = CType(sender, ScrollingListBox)
+        selecter2.TopIndex = lb.TopIndex
+    End Sub
+
+    Private Sub ListBox1_OnVerticalScroll(sender As Object, e As System.Windows.Forms.ScrollEventArgs) Handles ListBox1.OnVerticalScroll
+        Dim lb As ScrollingListBox = CType(sender, ScrollingListBox)
+        selecter2.TopIndex = lb.TopIndex
+    End Sub
+
+    Private Sub MS_Editor_TextChangedDelayed(sender As Object, e As TextChangedEventArgs) Handles Solution.TextChanged
+        Dim f As FastColoredTextBox = CType(sender, FastColoredTextBox)
+        f.CommentPrefix = "*"
+        'clear style of changed range
+        e.ChangedRange.ClearStyle(StyleIndex.All)
+
+        'comment highlighting
+        'e.ChangedRange.SetStyle(DS_Comment_Style, "^\*([^\n]*)")
+        e.ChangedRange.SetStyle(DS_Comment_Style, "^\*(.*)$", RegexOptions.Multiline)
+
+        'Line ID highlighting
+        e.ChangedRange.SetStyle(DS_Line_ID_Style, "(\([0-9#]+):[0-9]+\)")
+        'number Variable highlighting
+        e.ChangedRange.SetStyle(DS_Num_Var_Style, "%([A-Za-z0-9_]+)")
+        'number Variable highlighting
+        e.ChangedRange.SetStyle(DS_Str_Var_Style, "~([A-Za-z0-9_]+)")
+
+        'string highlighting
+        e.ChangedRange.SetStyle(DS_String_Style, "\{.*?\}")
+        'number highlighting
+        e.ChangedRange.SetStyle(DS_Num_Style, "([0-9#]+)")
+        'clear folding markers
+        ' sender.Range.ClearFoldingMarkers()
+
+    End Sub
+
+    Private Sub NextItem()
+
+        Dim n As Integer = selecter2.SelectedIndex + 1
+        Dim t As String = "text"
+        Dim s As String = ScriptIni.GetKeyValue("main", "m" + n.ToString).ToLower
+        If s <> Nothing And s <> "" Then t = s
+        Select Case t
+
+            Case "mapsearch"
+                Dim m As New StructMapSearch
+                m.DreamPath = TextBox3.Text
+                m.Item = TextBox1.Text
+                m.MSType = ComboBox1.SelectedItem.ToString
+                If wVariables.ContainsKey(n) Then
+                    wVariables.Item(n) = m
+                Else
+                    wVariables.Add(n, m)
+                End If
+                ListBox1.Items.Item(n - 1) = TextBox1.Text
+                Dim file As String = ""
+                If WorkFileName <> "" Then file = WorkFileName.Remove(WorkFileName.Length - 3, 3) + ".map"
+                TextBox3.Text = file
+                TextBox1.Text = ""
+                ComboBox1.SelectedItem = "Object"
+            Case Else
+                If wVariables.ContainsKey(n) Then
+                    wVariables.Item(n) = TextBox1.Text
+                Else
+                    wVariables.Add(n, TextBox1.Text)
+                End If
+                ListBox1.Items.Item(n - 1) = TextBox1.Text
+                TextBox1.Text = ""
+        End Select
+        If n <> selecter2.Items.Count() Then
+            selecter2.SelectedIndex = n
+            SetUI()
+        Else
+            generate.Enabled = False
+        End If
+    End Sub
+
+    Private Sub ProcessIterations(ByRef Values As List(Of List(Of String)))
+        Solution.Text = ""
+        For i As Integer = 0 To CInt(NumericUpDown1.Value - 1)
+            Dim template As String = Code
+            For t = 1 To Values(i).Count
+                Dim str As String = Values(i)(t - 1)
+                template = Regex.Replace(template, "\^" & t.ToString & "\^", str)
+                Dim m As MatchCollection = Regex.Matches(template, "\^" + RGEX_Movement + "\^", RegexOptions.IgnoreCase)
+                For Each s As Match In m
+                    Dim List As String = s.Groups(2).Value + s.Groups(3).Value + s.Groups(4).Value
+                    template = Regex.Replace(template, Regex.Escape(s.Groups(0).Value), MoveCoord(str, List), RegexOptions.IgnoreCase)
+                Next
+                m = Regex.Matches(template, "\^" + RGEX_MathCalc + "\^", RegexOptions.IgnoreCase)
+                For Each s As Match In m
+                    Dim List As String = s.Groups(2).Value + s.Groups(3).Value + s.Groups(4).Value
+                    template = Regex.Replace(template, Regex.Escape(s.Groups(0).Value), CalcMath(str, List), RegexOptions.IgnoreCase)
+                Next
+            Next
+            Solution.AppendText(template + vbLf)
+        Next
+
+    End Sub
+
     Private Sub ProcessVariableList()
 
         Dim VariableList As List(Of List(Of String)) = New List(Of List(Of String))
@@ -405,7 +459,6 @@ Public Class wUI
                 Dim Str As String = ""
                 Dim type = wVariables(t).GetType()
                 If type Is GetType(System.String) Then
-
 
                     Dim regex As Regex = New Regex(RGEX_Range)
                     Dim match As Match = regex.Match(wVariables.Item(t).ToString)
@@ -447,7 +500,7 @@ Public Class wUI
                 ElseIf type Is GetType(StructMapSearch) Then
                     Dim mlist As List(Of String) = New List(Of String)
                     Dim test As StructMapSearch = CType(wVariables.Item(t), StructMapSearch)
-                    Do While test.Getlist.count <= NumericUpDown1.Value - 1
+                    Do While test.Getlist.Count <= NumericUpDown1.Value - 1
                         Dim start_info As New ProcessStartInfo("mapsearch.exe")
                         start_info.UseShellExecute = False
                         start_info.CreateNoWindow = True
@@ -455,8 +508,8 @@ Public Class wUI
                         start_info.RedirectStandardError = True
                         start_info.WorkingDirectory = WorkPath
                         'Parameters: [/ns] [/n #] [/f,/o,/w,/r,/e ##] <filename>
-                        start_info.Arguments = "/ns /n " + NumericUpDown1.Value.ToString + " / " + _
-                            test.MSValue.ToString + " " + test.Item.ToString + " " + _
+                        start_info.Arguments = "/ns /n " + NumericUpDown1.Value.ToString + " / " +
+                            test.MSValue.ToString + " " + test.Item.ToString + " " +
                             test.DreamPath
                         ' Make the process and set its start information.
                         Dim proc As New Process()
@@ -483,7 +536,7 @@ Public Class wUI
                         If mlist.Count <= NumericUpDown1.Value Then
                             mlist.AddRange(te)
                         End If
-                        If test.Getlist.count >= NumericUpDown1.Value Then
+                        If test.Getlist.Count >= NumericUpDown1.Value Then
                             test.Setlist.AddRange(mlist)
                         End If
                     Loop
@@ -495,51 +548,6 @@ Public Class wUI
             VariableList.Add(VarList)
         Next
         ProcessIterations(VariableList)
-    End Sub
-
-
-    Private Sub ProcessIterations(ByRef Values As List(Of List(Of String)))
-        Solution.Text = ""
-        For i As Integer = 0 To CInt(NumericUpDown1.Value - 1)
-            Dim template As String = Code
-            For t = 1 To Values(i).Count
-                Dim str As String = Values(i)(t - 1)
-                template = Regex.Replace(template, "\^" & t.ToString & "\^", str)
-                Dim m As MatchCollection = Regex.Matches(template, "\^" + RGEX_Movement + "\^", RegexOptions.IgnoreCase)
-                For Each s As Match In m
-                    Dim List As String = s.Groups(2).Value + s.Groups(3).Value + s.Groups(4).Value
-                    template = Regex.Replace(template, Regex.Escape(s.Groups(0).Value), MoveCoord(str, List), RegexOptions.IgnoreCase)
-                Next
-                m = Regex.Matches(template, "\^" + RGEX_MathCalc + "\^", RegexOptions.IgnoreCase)
-                For Each s As Match In m
-                    Dim List As String = s.Groups(2).Value + s.Groups(3).Value + s.Groups(4).Value
-                    template = Regex.Replace(template, Regex.Escape(s.Groups(0).Value), CalcMath(str, List), RegexOptions.IgnoreCase)
-                Next
-            Next
-            Solution.AppendText(template + vbLf)
-        Next
-
-    End Sub
-
-    Private Sub CloseToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseToolStripMenuItem.Click
-        If wMain.OnToolStripMenuItem.Checked = True Then
-            Timer1.Enabled = False
-            Timer.Enabled = True
-        Else
-            Me.Dispose()
-        End If
-    End Sub
-
-    Private Sub ViewFileToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ViewFileToolStripMenuItem.Click
-        If IO.File.Exists(ScriptPaths(PathIndex) & Me.Text()) Then
-            Try
-                System.Diagnostics.Process.Start(ScriptPaths(PathIndex) & Me.Text())
-
-            Catch
-                MsgBox("Error while opening file.  File might not exist.")
-            End Try
-        End If
-
     End Sub
 
     Private Sub ReloadToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReloadToolStripMenuItem.Click
@@ -556,49 +564,9 @@ Public Class wUI
         If s <> "" Then NumericUpDown1.Value = s.ToInteger Else NumericUpDown1.Value = 1
     End Sub
 
-    Private Sub MS_Editor_TextChangedDelayed(sender As Object, e As TextChangedEventArgs) Handles Solution.TextChanged
-        Dim f As FastColoredTextBox = CType(sender, FastColoredTextBox)
-        f.CommentPrefix = "*"
-        'clear style of changed range
-        e.ChangedRange.ClearStyle(StyleIndex.All)
-
-        'comment highlighting
-        'e.ChangedRange.SetStyle(DS_Comment_Style, "^\*([^\n]*)")
-        e.ChangedRange.SetStyle(DS_Comment_Style, "^\*(.*)$", RegexOptions.Multiline)
-
-        'Line ID highlighting
-        e.ChangedRange.SetStyle(DS_Line_ID_Style, "(\([0-9#]+):[0-9]+\)")
-        'number Variable highlighting
-        e.ChangedRange.SetStyle(DS_Num_Var_Style, "%([A-Za-z0-9_]+)")
-        'number Variable highlighting
-        e.ChangedRange.SetStyle(DS_Str_Var_Style, "~([A-Za-z0-9_]+)")
-
-        'string highlighting
-        e.ChangedRange.SetStyle(DS_String_Style, "\{.*?\}")
-        'number highlighting
-        e.ChangedRange.SetStyle(DS_Num_Style, "([0-9#]+)")
-        'clear folding markers
-        ' sender.Range.ClearFoldingMarkers()
-
-
-    End Sub
-
-
-
-
-    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-        ProcessVariableList()
-    End Sub
-
-    Private Sub BtnImport_Click(sender As System.Object, e As System.EventArgs) Handles BtnImport.Click
-        If IsNothing(MS_Edit.MS_Editor) Then Exit Sub
-        MS_Edit.MS_Editor.InsertText(Solution.Text)
-    End Sub
-
-
-    Private Sub ListBox1_OnVerticalScroll(sender As Object, e As System.Windows.Forms.ScrollEventArgs) Handles ListBox1.OnVerticalScroll
+    Private Sub selecter2_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles selecter2.MouseWheel
         Dim lb As ScrollingListBox = CType(sender, ScrollingListBox)
-        selecter2.TopIndex = lb.TopIndex
+        ListBox1.TopIndex = lb.TopIndex
     End Sub
 
     Private Sub selecter2_OnVerticalScroll(sender As Object, e As System.Windows.Forms.ScrollEventArgs) Handles selecter2.OnVerticalScroll
@@ -606,12 +574,56 @@ Public Class wUI
         ListBox1.TopIndex = lb.TopIndex
     End Sub
 
-    Private Sub ListBox1_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles ListBox1.MouseWheel
-        Dim lb As ScrollingListBox = CType(sender, ScrollingListBox)
-        selecter2.TopIndex = lb.TopIndex
+    Private Sub selecter2_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles selecter2.Click, ListBox1.Click
+        Dim s = selecter2.GetItemText(selecter2.SelectedItem)
+        Dim Space As Integer = selecter2.SelectedIndex + 1
+        Dim t As String = ScriptIni.GetKeyValue("main", "t" + Space.ToString)
+        If t <> "" Then ToolTip.SetToolTip(selecter2, t)
+
+        SetUI()
     End Sub
-    Private Sub selecter2_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles selecter2.MouseWheel
-        Dim lb As ScrollingListBox = CType(sender, ScrollingListBox)
-        ListBox1.TopIndex = lb.TopIndex
+
+    Private Sub selecter2_SelectedIndexChanged_1(sender As System.Object, e As System.EventArgs) Handles selecter2.SelectedIndexChanged, ListBox1.SelectedIndexChanged
+        Dim lb As ListBox = CType(sender, ListBox)
+        selecter2.SelectedIndex = lb.SelectedIndex
+        ListBox1.SelectedIndex = lb.SelectedIndex
     End Sub
+    Private Sub TextBox1_TextChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextBox1.KeyDown
+        If e.KeyCode = System.Windows.Forms.Keys.Enter Then
+            NextItem()
+            e.Handled = True
+        End If
+    End Sub
+
+    'Fade effect Timer (fade-in)
+    Private Sub Timer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer.Tick
+        'decreases opacity in turms of timer interval
+        Me.Opacity -= 0.01
+        'when opacity is zero the form is invisible and we dispose it
+        If Me.Opacity = 0 Then Me.Dispose()
+    End Sub
+
+    'Fade effect Timer1 (fade-out)
+    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        'decreases opacity in turms of timer interval
+        Me.Opacity += 0.01
+        'when opacity is zero the form is invisible and we dispose it
+        If Me.Opacity = 100 Then
+            Me.Show()
+        End If
+    End Sub
+    Private Sub ViewFileToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ViewFileToolStripMenuItem.Click
+        If IO.File.Exists(ScriptPaths(PathIndex) & Me.Text()) Then
+            Try
+                System.Diagnostics.Process.Start(ScriptPaths(PathIndex) & Me.Text())
+
+            Catch
+                MsgBox("Error while opening file.  File might not exist.")
+            End Try
+        End If
+
+    End Sub
+
+#End Region
+
 End Class

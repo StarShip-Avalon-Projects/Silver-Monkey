@@ -1,5 +1,7 @@
 ﻿Public Class MiscUtils
 
+#Region "Public Methods"
+
     Public Shared Function Split(expression As String, delimiter As String, qualifier As String, ignoreCase As Boolean) As String()
         Dim _QualifierState As Boolean = False
         Dim _StartIndex As Integer = 0
@@ -31,6 +33,6 @@
         Return cnt
     End Function
 
-   
+#End Region
 
 End Class

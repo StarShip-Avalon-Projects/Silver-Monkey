@@ -2,21 +2,20 @@
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
-' General Information about an assembly is controlled through the following 
+' General Information about an assembly is controlled through the following
 ' set of attributes. Change these attribute values to modify the information
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Silver Monkey")>
-<Assembly: AssemblyDescription("Credits:" & ControlChars.NewLine & _
-"Artex, Squizzle, Dream Dancer, Daiktana, Farrier" & ControlChars.NewLine & _
-"Dragons Eye Productions, Gerolkae" & ControlChars.NewLine & _
-"Special Helpers and Testers:" & ControlChars.NewLine & _
+<Assembly: AssemblyDescription("Credits:" & ControlChars.NewLine &
+"Artex, Squizzle, Dream Dancer, Daiktana, Farrier" & ControlChars.NewLine &
+"Dragons Eye Productions, Gerolkae" & ControlChars.NewLine &
+"Special Helpers and Testers:" & ControlChars.NewLine &
 "Drake, Shadling, Arden, Sidereal")>
 <Assembly: AssemblyCompany("TS-Projects")>
 <Assembly: AssemblyProduct("Silver Monkey")>
-<Assembly: AssemblyCopyright("Copyright © 2012 - 20117")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -27,10 +26,10 @@ Imports System.Runtime.InteropServices
 ' Version information for an assembly consists of the following four values:
 '
 '      Major Version
-'      Minor Version 
+'      Minor Version
 '      Build Number
 '      Revision
 '
-' You can specify all the values or you can default the Build and Revision Numbers 
+' You can specify all the values or you can default the Build and Revision Numbers
 ' by using the '*' as shown below:
 <Assembly: NeutralResourcesLanguageAttribute("en-US")>

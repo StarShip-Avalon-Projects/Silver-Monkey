@@ -7,9 +7,14 @@ Imports MonkeyCore
 
 Public Class smHost
     Implements SilverMonkey.Interfaces.msHost
-    Sub Start(ByRef page As Monkeyspeak.Page) Implements SilverMonkey.Interfaces.msHost.start
-        MainEngine.MSpage = page
-    End Sub
+
+#Region "Private Fields"
+
+    Dim serverData As String
+
+#End Region
+
+#Region "Public Properties"
 
     Public ReadOnly Property BotName As String Implements SilverMonkey.Interfaces.msHost.BotName
         Get
@@ -17,19 +22,12 @@ Public Class smHost
         End Get
     End Property
 
-    Dim serverData As String
     Public Property data As String Implements SilverMonkey.Interfaces.msHost.Data
         Get
             Return serverData
         End Get
         Set(value As String)
             serverData = value
-        End Set
-    End Property
-
-    Public WriteOnly Property Page() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.Page
-        Set(value As Monkeyspeak.Page)
-            MainEngine.MSpage = value
         End Set
     End Property
 
@@ -42,6 +40,12 @@ Public Class smHost
         End Set
     End Property
 
+    Public WriteOnly Property Page() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.Page
+        Set(value As Monkeyspeak.Page)
+            MainEngine.MSpage = value
+        End Set
+    End Property
+
     Public Property Player() As FURRE Implements SilverMonkey.Interfaces.msHost.Player
         Get
             Return callbk.Player
@@ -51,6 +55,13 @@ Public Class smHost
         End Set
     End Property
 
+#End Region
+
+#Region "Public Methods"
+
+    Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements SilverMonkey.Interfaces.msHost.logError
+        Dim Err As New ErrorLogging(Ex, ObjectThrowingError)
+    End Sub
 
     Public Sub SendClientMessage(Tag As String, data As String) Implements SilverMonkey.Interfaces.msHost.SendClientMessage
         callbk.SendClientMessage(Tag, data)
@@ -60,9 +71,10 @@ Public Class smHost
         callbk.TextToServer(var)
     End Sub
 
-    Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements SilverMonkey.Interfaces.msHost.logError
-        Dim Err As New ErrorLogging(Ex, ObjectThrowingError)
+    Sub Start(ByRef page As Monkeyspeak.Page) Implements SilverMonkey.Interfaces.msHost.start
+        MainEngine.MSpage = page
     End Sub
 
+#End Region
 
 End Class

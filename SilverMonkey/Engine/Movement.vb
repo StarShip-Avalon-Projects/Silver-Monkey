@@ -1,16 +1,20 @@
-﻿Imports Furcadia.Net
-Imports System.Text.RegularExpressions
+﻿Imports System.Text.RegularExpressions
+Imports Furcadia.Net
 
-Imports System.Diagnostics
 Imports MonkeyCore
 
 Public Class Movement
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
-    Private writer As TextBoxWriter = Nothing
+    Inherits MonkeySpeakLibrary
+
+#Region "Private Fields"
+
     Private Const RGEX_Mov_Steps As String = "(nw|ne|sw|se|1|3|7|9)"
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
-        writer = New TextBoxWriter(Variables.TextBox1)
+        MyBase.New()
         '(0:601) When a furre moves,
         Add(Monkeyspeak.TriggerCategory.Cause, 601,
             Function()
@@ -83,324 +87,9 @@ Public Class Movement
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 625), AddressOf BotMoveSequence, "(5:625) Move the bot  in this sequence {...} (one, sw, three, se, seven, nw, nine, or ne)")
     End Sub
 
+#End Region
 
-
-    '(0:901) when a furre moves into (x,y),
-    '(1:900) and the triggering furre moved into/is standing at (x,y),
-    Function MoveInto(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Dim X As Double = ReadVariableOrNumber(reader, False)
-            Dim Y As Double = ReadVariableOrNumber(reader, False)
-            Return tPlayer.X = Convert.ToUInt32(X) AndAlso tPlayer.Y = Convert.ToUInt32(Y)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(1:901) and the furre named {...} moved into/is standing at (x,y),
-    Function FurreNamedMoveInto(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
-            Dim X As Double = ReadVariableOrNumber(reader, False)
-            Dim Y As Double = ReadVariableOrNumber(reader, False)
-            Return tPlayer.X = Convert.ToUInt32(X) AndAlso tPlayer.Y = Convert.ToUInt32(Y)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:634) and the triggering furre moved from (x,y),
-    Function MoveFrom(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Dim X As Double = ReadVariableOrNumber(reader, False)
-            Dim Y As Double = ReadVariableOrNumber(reader, False)
-            Return tPlayer.SourceX = Convert.ToUInt32(X) AndAlso tPlayer.SourceY = Convert.ToUInt32(Y)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:635) and the furre named {...} moved from (x,y),
-    Function FurreNamedMoveFrom(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
-            Dim X As Double = ReadVariableOrNumber(reader, False)
-            Dim Y As Double = ReadVariableOrNumber(reader, False)
-            Return tPlayer.SourceX = Convert.ToUInt32(X) AndAlso tPlayer.SourceY = Convert.ToUInt32(Y)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:636) and the triggering furre successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)
-    Function MoveIntoDirection(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Dim Dir As Double = ReadVariableOrNumber(reader, False)
-            Dim Direction As Double = 0
-            If tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
-                Return False
-            End If
-            If (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX = tPlayer.X))) Then
-                Direction = 7
-            ElseIf (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX < tPlayer.X))) Then
-                Direction = 9
-            ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX < tPlayer.X))) Then
-                Direction = 3
-            ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX = tPlayer.X))) Then
-                Direction = 1
-            End If
-            Return Direction = Dir
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(1:637) and the furre named {...}, successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)
-    Function FurreNamedMoveIntoDirection(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
-            Dim Dir As Double = ReadVariableOrNumber(reader, False)
-            Dim Direction As Double = 0
-            If tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
-                Return False
-            End If
-            If (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
-                Direction = 7
-            ElseIf (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
-                Direction = 9
-            ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
-                Direction = 3
-            ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
-                Direction = 1
-            End If
-            Return Direction = Dir
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(1:638) and the triggering furre tried to move but stood still.
-    Function StoodStill(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Return tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(1:636) and the furre named {...} tried to move but stood still.
-    Function FurreNamedStoodStill(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
-            Return tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5:613) move the bot in direction # one space. (seven = North-West, nine = North-East, three = South-East, one = South=West)
-    Function MoveBot(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim Dir As Double = ReadVariableOrNumber(reader, False)
-            Select Case Dir
-                Case 7 Or 9 Or 3 Or 1
-                    sendServer("`m" + Dir.ToString)
-                Case Else
-                    Throw New Exception("Directions must be in the form of  7, 9, 3, or 1")
-            End Select
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5:614) turn the bot clock-wise one space.
-    Function TurnCW(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            sendServer("`>")
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5:615) turn the bot counter-clockwise one space.
-    Function TurnCCW(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            sendServer("`<")
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5:616) set variable %Variable to the X coordinate where the triggering furre moved into/is at.
-    Function SetCordX(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim tPlayer As FURRE = callbk.Player
-            Cord.Value = tPlayer.X
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5:617) set variable %Variable to the Y coordinate where the triggering furre moved into/is at.
-    Function SetCordY(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim tPlayer As FURRE = callbk.Player
-            Cord.Value = tPlayer.Y
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5:618) set variable %Variable to the X coordinate where the furre named {...} moved into/is at.
-    Function FurreNamedSetCordX(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
-            Cord.Value = tPlayer.X
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5:619) set variable %Variable to the Y coordinate where the furre named {...} moved into/is at.
-    Function FurreNamedSetCordY(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
-            Cord.Value = tPlayer.Y
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5:620) set %Variable to the direction number the triggering furre is facing/ moved in.
-    '(seven = North-West, nine = North-East, three = South-East, one = South=West)
-    Function FaceDirectionNumber(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim Dir As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim tPlayer As FURRE = callbk.Player
-            Dim direction As Double = 0
-
-            If tPlayer.SourceX <> tPlayer.X Or tPlayer.SourceY <> tPlayer.Y Then
-
-                If (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
-                    direction = 7
-                ElseIf (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
-                    direction = 9
-                ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
-                    direction = 3
-                ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
-                    direction = 1
-                End If
-
-            ElseIf tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
-
-                Select Case tPlayer.FrameInfo.dir
-                    'SW
-                    Case 0
-                        direction = 1
-                        'SE
-                    Case 1
-                        direction = 3
-                        'NW
-                    Case 3
-                        direction = 7
-                        'NE
-                    Case 4
-                        direction = 9
-                    Case Else
-
-                End Select
-
-            End If
-            Dir.Value = direction
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5:621) set %Variable to the direction number the furre names {...}, is facing/ moved in.
-    Function FurreNamedFaceDirectionNumber(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim Dir As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = callbk.NametoFurre(name, False)
-            Dim direction As Double = 0
-
-            If tPlayer.SourceX <> tPlayer.X Or tPlayer.SourceY <> tPlayer.Y Then
-
-                If (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
-                    direction = 7
-                ElseIf (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
-                    direction = 9
-                ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
-                    direction = 3
-                ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
-                    direction = 1
-                End If
-
-            ElseIf tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
-
-                Select Case tPlayer.FrameInfo.dir
-                    'SW
-                    Case 0
-                        direction = 1
-                        'SE
-                    Case 1
-                        direction = 3
-                        'NW
-                    Case 3
-                        direction = 7
-                        'NE
-                    Case 4
-                        direction = 9
-                    Case Else
-
-                End Select
-
-            End If
-            Dir.Value = direction
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(5:622) make the bot sit down
-    Function BotSit(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            sendServer("`sit")
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
+#Region "Public Methods"
 
     '(5:623) make the bot lay down
     Function BotLie(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -408,21 +97,11 @@ Public Class Movement
             sendServer("`lie")
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
-    '(5:624) make the bot stand up
-    Function BotStand(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            sendServer("`stand")
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
     '(5:625) Move the bot  in this sequence {...} (one, sw, three, se, seven, nw, nine, or ne)
     Function BotMoveSequence(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
@@ -445,15 +124,352 @@ Public Class Movement
 
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
+
+    '(5:622) make the bot sit down
+    Function BotSit(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            sendServer("`sit")
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:624) make the bot stand up
+    Function BotStand(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            sendServer("`stand")
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:620) set %Variable to the direction number the triggering furre is facing/ moved in.
+    '(seven = North-West, nine = North-East, three = South-East, one = South=West)
+    Function FaceDirectionNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim Dir As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim tPlayer As FURRE = FurcSession.Player
+            Dim direction As Double = 0
+
+            If tPlayer.SourceX <> tPlayer.X Or tPlayer.SourceY <> tPlayer.Y Then
+
+                If (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
+                    direction = 7
+                ElseIf (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
+                    direction = 9
+                ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
+                    direction = 3
+                ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
+                    direction = 1
+                End If
+
+            ElseIf tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
+
+                Select Case tPlayer.FrameInfo.dir
+                    'SW
+                    Case 0
+                        direction = 1
+                        'SE
+                    Case 1
+                        direction = 3
+                        'NW
+                    Case 3
+                        direction = 7
+                        'NE
+                    Case 4
+                        direction = 9
+                    Case Else
+
+                End Select
+
+            End If
+            Dir.Value = direction
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:621) set %Variable to the direction number the furre names {...}, is facing/ moved in.
+    Function FurreNamedFaceDirectionNumber(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim Dir As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim name As String = reader.ReadString
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
+            Dim direction As Double = 0
+
+            If tPlayer.SourceX <> tPlayer.X Or tPlayer.SourceY <> tPlayer.Y Then
+
+                If (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
+                    direction = 7
+                ElseIf (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
+                    direction = 9
+                ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
+                    direction = 3
+                ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
+                    direction = 1
+                End If
+
+            ElseIf tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
+
+                Select Case tPlayer.FrameInfo.dir
+                    'SW
+                    Case 0
+                        direction = 1
+                        'SE
+                    Case 1
+                        direction = 3
+                        'NW
+                    Case 3
+                        direction = 7
+                        'NE
+                    Case 4
+                        direction = 9
+                    Case Else
+
+                End Select
+
+            End If
+            Dir.Value = direction
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:635) and the furre named {...} moved from (x,y),
+    Function FurreNamedMoveFrom(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
+            Dim X As Double = ReadVariableOrNumber(reader, False)
+            Dim Y As Double = ReadVariableOrNumber(reader, False)
+            Return tPlayer.SourceX = Convert.ToUInt32(X) AndAlso tPlayer.SourceY = Convert.ToUInt32(Y)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:901) and the furre named {...} moved into/is standing at (x,y),
+    Function FurreNamedMoveInto(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
+            Dim X As Double = ReadVariableOrNumber(reader, False)
+            Dim Y As Double = ReadVariableOrNumber(reader, False)
+            Return tPlayer.X = Convert.ToUInt32(X) AndAlso tPlayer.Y = Convert.ToUInt32(Y)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:637) and the furre named {...}, successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)
+    Function FurreNamedMoveIntoDirection(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Dir As Double = ReadVariableOrNumber(reader, False)
+            Dim Direction As Double = 0
+            If tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
+                Return False
+            End If
+            If (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
+                Direction = 7
+            ElseIf (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
+                Direction = 9
+            ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX < tPlayer.X))) Then
+                Direction = 3
+            ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(tPlayer.SourceY) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(tPlayer.SourceY) And (tPlayer.SourceX = tPlayer.X))) Then
+                Direction = 1
+            End If
+            Return Direction = Dir
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:618) set variable %Variable to the X coordinate where the furre named {...} moved into/is at.
+    Function FurreNamedSetCordX(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim name As String = reader.ReadString
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
+            Cord.Value = tPlayer.X
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:619) set variable %Variable to the Y coordinate where the furre named {...} moved into/is at.
+    Function FurreNamedSetCordY(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim name As String = reader.ReadString
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
+            Cord.Value = tPlayer.Y
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:636) and the furre named {...} tried to move but stood still.
+    Function FurreNamedStoodStill(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
+            Return tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:613) move the bot in direction # one space. (seven = North-West, nine = North-East, three = South-East, one = South=West)
+    Function MoveBot(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim Dir As Double = ReadVariableOrNumber(reader, False)
+            Select Case Dir
+                Case 7 Or 9 Or 3 Or 1
+                    sendServer("`m" + Dir.ToString)
+                Case Else
+                    Throw New Exception("Directions must be in the form of  7, 9, 3, or 1")
+            End Select
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:634) and the triggering furre moved from (x,y),
+    Function MoveFrom(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Dim X As Double = ReadVariableOrNumber(reader, False)
+            Dim Y As Double = ReadVariableOrNumber(reader, False)
+            Return tPlayer.SourceX = Convert.ToUInt32(X) AndAlso tPlayer.SourceY = Convert.ToUInt32(Y)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(0:901) when a furre moves into (x,y),
+    '(1:900) and the triggering furre moved into/is standing at (x,y),
+    Function MoveInto(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Dim X As Double = ReadVariableOrNumber(reader, False)
+            Dim Y As Double = ReadVariableOrNumber(reader, False)
+            Return tPlayer.X = Convert.ToUInt32(X) AndAlso tPlayer.Y = Convert.ToUInt32(Y)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:636) and the triggering furre successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)
+    Function MoveIntoDirection(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Dim Dir As Double = ReadVariableOrNumber(reader, False)
+            Dim Direction As Double = 0
+            If tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
+                Return False
+            End If
+            If (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX = tPlayer.X))) Then
+                Direction = 7
+            ElseIf (tPlayer.SourceY > tPlayer.Y) And ((IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX < tPlayer.X))) Then
+                Direction = 9
+            ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX = tPlayer.X)) Or (Not IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX < tPlayer.X))) Then
+                Direction = 3
+            ElseIf (tPlayer.SourceY < tPlayer.Y) And ((IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX > tPlayer.X)) Or (Not IsOdd(CInt(tPlayer.SourceY)) And (tPlayer.SourceX = tPlayer.X))) Then
+                Direction = 1
+            End If
+            Return Direction = Dir
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(5:616) set variable %Variable to the X coordinate where the triggering furre moved into/is at.
+    Function SetCordX(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim tPlayer As FURRE = FurcSession.Player
+            Cord.Value = tPlayer.X
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:617) set variable %Variable to the Y coordinate where the triggering furre moved into/is at.
+    Function SetCordY(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim Cord As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim tPlayer As FURRE = FurcSession.Player
+            Cord.Value = tPlayer.Y
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:638) and the triggering furre tried to move but stood still.
+    Function StoodStill(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Return tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(5:615) turn the bot counter-clockwise one space.
+    Function TurnCCW(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            sendServer("`<")
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:614) turn the bot clock-wise one space.
+    Function TurnCW(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            sendServer("`>")
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+#End Region
+
 #Region "Helper Functions"
 
-    Sub sendServer(ByRef var As String)
-        callbk.sndServer(var)
-    End Sub
 #End Region
 
 End Class

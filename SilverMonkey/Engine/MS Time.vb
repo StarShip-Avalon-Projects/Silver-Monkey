@@ -3,11 +3,18 @@ Imports MonkeyCore
 
 Public Class MS_Time
     Inherits Libraries.AbstractBaseLibrary
-    Private writer As TextBoxWriter = Nothing
+
+#Region "Private Fields"
+
     Dim lock As New Object
+    Private writer As TextBoxWriter = Nothing
+
+#End Region
+
+#Region "Public Constructors"
+
     Public Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
-
 
         '(0:299) When the time is {...} hh:mm:ss am/pm FST,
         Add(TriggerCategory.Cause, 299,
@@ -46,8 +53,12 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
         '        '(5:37) use variable %Variable as a DateTime string and add Date Time variable %Variable and put it into variable %Variable
         '        Add(Monkeyspeak.TriggerCategory.Effect, 37,
         'AddressOf AddDateTimeVar, "(5:37) use variable %Variable as a DateTime string and add Date Time variable %Variable and put it into variable %Variable")
-        '   
+        '
     End Sub
+
+#End Region
+
+#Region "Public Methods"
 
     Function CurrentTime(reader As TriggerReader) As Boolean
 
@@ -57,7 +68,21 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             Var.Value = Str
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5: ) set variable %Variable to current Furcadia
+    Public Function FurcDateTimeVar(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            SyncLock lock
+                var.Value = Main.FurcTime.ToString("yyyy-MM-dd HH:mm:ss tt")
+            End SyncLock
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -73,7 +98,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             Var.Value = Str
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -83,21 +108,9 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
         Try
             Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
             var.Value = Date.Now.ToString("yyyy-MM-dd HH:mm:ss tt")
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(5: ) set variable %Variable to current Furcadia 
-    Public Function FurcDateTimeVar(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
-            SyncLock lock
-                var.Value = Main.FurcTime.ToString("yyyy-MM-dd HH:mm:ss tt")
-            End SyncLock
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -115,7 +128,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             End If
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -132,10 +145,12 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             End If
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
+
+#End Region
 
     '(5: ) use variable %Variable as a DateTime string and add Date Time string {...} and put it into variable %Variable
 
@@ -153,7 +168,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
     '        End If
     '        Return False
     '    Catch ex As Exception
-    '       MainEngine.LogError(reader, ex)
+    '       MainMsEngine.LogError(reader, ex)
     '       Return False
     '    End Try
     'End Function

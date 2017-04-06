@@ -5,6 +5,8 @@
     dim revisionNumber as integer
 	dim time as DateTime = DateTime.now
 	Dim format As String = "MMdd"
+	Dim YearFormat as string = "Y"
+	Dim CurrentYear as string = time.ToString(YearFormat)
 	dim CurrentDate as string = time.ToString(format)
     try
     
@@ -37,5 +39,6 @@
 '' 
 Imports System.Reflection
 
-<Assembly: AssemblyVersion("2.18.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
-<Assembly: AssemblyFileVersion("2.18.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
+<Assembly: AssemblyVersion("2.19.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
+<Assembly: AssemblyFileVersion("2.19.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
+<Assembly: AssemblyCopyright("Copyright © 2012 - <#= CurrentYear #>")>

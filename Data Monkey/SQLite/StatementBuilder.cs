@@ -1,125 +1,131 @@
 using System.Text;
 
-namespace SQLiteEditor
+namespace DataMonkey
 {
     /// <summary>
     /// Summary description for StatementBuilder.
     /// </summary>
     public class StatementBuilder
-	{
-		public StatementBuilder()
-		{
-		}
+    {
+        #region Public Constructors
 
-		#region BuildTableOpenSql
+        public StatementBuilder()
+        {
+        }
 
-		public static string BuildTableOpenSql(string TableName)
-		{
-			StringBuilder sb = new StringBuilder();
+        #endregion Public Constructors
 
-			//Star could be replaced with a function that pulls out "column" names for 
-			//better readability
-			sb.Append("Select * From ");
-			sb.Append(TableName);
+        #region BuildTableOpenSql
 
-			return sb.ToString();
-		}
-		#endregion
+        public static string BuildTableOpenSql(string TableName)
+        {
+            StringBuilder sb = new StringBuilder();
 
-		#region BuildAddColumnSQL
+            //Star could be replaced with a function that pulls out "column" names for
+            //better readability
+            sb.Append("Select * From ");
+            sb.Append(TableName);
 
-		public static string BuildAddColumnSQL(string TableName, string ColumnName, string ColumnType)
-		{
-			StringBuilder sb = new StringBuilder();
-			sb.Append("Alter Table ");
-			sb.Append(TableName);
-			sb.Append(" Add Column ");
-			sb.Append(ColumnName);
-			sb.Append(" ");
-			sb.Append(ColumnType);
+            return sb.ToString();
+        }
 
-			return sb.ToString();
-		}
+        #endregion BuildTableOpenSql
 
-		#endregion
+        #region BuildAddColumnSQL
 
-		#region Build Add Table Sql
+        public static string BuildAddColumnSQL(string TableName, string ColumnName, string ColumnType)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Alter Table ");
+            sb.Append(TableName);
+            sb.Append(" Add Column ");
+            sb.Append(ColumnName);
+            sb.Append(" ");
+            sb.Append(ColumnType);
 
-		public static string BuildAddTableSQL(string TableName)
-		{
-			StringBuilder sb = new StringBuilder();
-			sb.Append("Create Table ");
-			sb.Append(TableName);
-			sb.Append(" (");
-			sb.Append(TableName);
-			sb.Append("_ID integer)");
+            return sb.ToString();
+        }
 
-			return sb.ToString();
-		}
-		
+        #endregion BuildAddColumnSQL
 
-		#endregion
+        #region Build Add Table Sql
 
-		#region BuildMasterquery
+        public static string BuildAddTableSQL(string TableName)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Create Table ");
+            sb.Append(TableName);
+            sb.Append(" (");
+            sb.Append(TableName);
+            sb.Append("_ID integer)");
 
-		public static string BuildMasterQuery()
-		{
-			return "Select name from sqlite_master where type = 'table' order by name";
-		}	
+            return sb.ToString();
+        }
 
-		#endregion
+        #endregion Build Add Table Sql
 
-		#region BuildRenameTableSQL
+        #region BuildMasterquery
 
-		public static string BuildRenameTableSQL(string TableName, string NewTableName)
-		{
-			StringBuilder sb = new StringBuilder();
-			sb.Append("Alter table ");
-			sb.Append(TableName);
-			sb.Append(" Rename To ");
-			sb.Append(NewTableName);
+        public static string BuildMasterQuery()
+        {
+            return "Select name from sqlite_master where type = 'table' order by name";
+        }
 
-			return sb.ToString();
-		}
+        #endregion BuildMasterquery
 
-		#endregion
+        #region BuildRenameTableSQL
 
-		#region BuildRowDeleteSQL
+        public static string BuildRenameTableSQL(string TableName, string NewTableName)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Alter table ");
+            sb.Append(TableName);
+            sb.Append(" Rename To ");
+            sb.Append(NewTableName);
 
-		public static string BuildRowDeleteSQL(string TableName, string RowName, string RowID)
-		{
-			StringBuilder sb = new StringBuilder();
-			sb.Append("Delete from ");
-			sb.Append(TableName);
-			sb.Append(" Where ");
-			sb.Append(RowName);
-			sb.Append(" = ");
-			sb.Append(RowID);
+            return sb.ToString();
+        }
 
-			return sb.ToString();
-		}
+        #endregion BuildRenameTableSQL
 
-		#endregion
+        #region BuildRowDeleteSQL
 
-		#region BuildTableDeleteSQL
+        public static string BuildRowDeleteSQL(string TableName, string RowName, string RowID)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Delete from ");
+            sb.Append(TableName);
+            sb.Append(" Where ");
+            sb.Append(RowName);
+            sb.Append(" = ");
+            sb.Append(RowID);
 
-		public static string BuildTableDeleteSQL(string TableName)
-		{
-			StringBuilder sb = new StringBuilder();
-			sb.Append("Drop Table ");
-			sb.Append(TableName);
+            return sb.ToString();
+        }
 
-			return sb.ToString();
-		}
-		#endregion
+        #endregion BuildRowDeleteSQL
 
-		#region BuildIntegrityCheckSQL
+        #region BuildTableDeleteSQL
 
-		public static string BuildIntegrityCheckSQL()
-		{
-			string retval = "PRAGMA integrity_check";
-			return retval;
-		}
-		#endregion
-	}
+        public static string BuildTableDeleteSQL(string TableName)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Drop Table ");
+            sb.Append(TableName);
+
+            return sb.ToString();
+        }
+
+        #endregion BuildTableDeleteSQL
+
+        #region BuildIntegrityCheckSQL
+
+        public static string BuildIntegrityCheckSQL()
+        {
+            string retval = "PRAGMA integrity_check";
+            return retval;
+        }
+
+        #endregion BuildIntegrityCheckSQL
+    }
 }

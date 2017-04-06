@@ -1,18 +1,31 @@
 ﻿Imports System.Runtime.InteropServices
 Public Class Logger
-    Dim strErrorFilePath As String
+
+#Region "Private Fields"
+
     Dim Stack As New ArrayList
+    Dim strErrorFilePath As String
+
+#End Region
+
+#Region "Public Constructors"
+
     Public Sub New(Name As String, message As String)
         'Call Log Error
         strErrorFilePath = Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) & "\Silver Monkey\Log\" & Name & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt"
         System.IO.Directory.CreateDirectory(Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) & "\Silver Monkey\Log\")
         LogMessage(message)
     End Sub
+
+#End Region
+
+#Region "Public Methods"
+
     Public Function IsFileInUse(ByVal filePath As String) As Boolean
         Try
             Dim contents() As String = IO.File.ReadAllLines(filePath)
         Catch ex As IO.IOException
-            Return (ex.Message.StartsWith("The process cannot access the file") AndAlso _
+            Return (ex.Message.StartsWith("The process cannot access the file") AndAlso
                     ex.Message.EndsWith("because it is being used by another process."))
         Catch ex As Exception
             Return False
@@ -34,7 +47,7 @@ Public Class Logger
 
             ioFile.Close()
         Catch ex As IO.IOException
-            If (ex.Message.StartsWith("The process cannot access the file") AndAlso _
+            If (ex.Message.StartsWith("The process cannot access the file") AndAlso
                     ex.Message.EndsWith("because it is being used by another process.")) Then
                 Stack.Add(Message)
             End If
@@ -46,9 +59,6 @@ Public Class Logger
         End Try
     End Sub
 
-   
-
-
+#End Region
 
 End Class
-

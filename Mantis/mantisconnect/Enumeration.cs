@@ -13,7 +13,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace Futureware.MantisConnect
+namespace SilverMonkey.BugTraqConnect
 {
     using System;
     using System.Collections.Generic;
@@ -21,23 +21,19 @@ namespace Futureware.MantisConnect
     using System.Text;
 
     /// <summary>
-	/// A class to handle enumerations that are defined in Mantis.
-	/// </summary>
-	/// <remarks>
-	/// The format of Mantis enumerations is as follows:
-	/// "10:viewer,25:reporter,40:updater,55:developer,70:manager,90:administrator"
-	/// </remarks>
+    /// A class to handle enumerations that are defined in Mantis.
+    /// </summary>
+    /// <remarks>
+    /// The format of Mantis enumerations is as follows: "10:viewer,25:reporter,40:updater,55:developer,70:manager,90:administrator"
+    /// </remarks>
     public sealed class MantisEnum
     {
+        #region Private Fields
+
         /// <summary>
         /// The enumeration string supplied at construction time.
         /// </summary>
         private readonly string enumeration;
-
-        /// <summary>
-        /// A dictionary that maps labels to their corresponding code.
-        /// </summary>
-        private Dictionary<string, int> labelToCodeMap;
 
         /// <summary>
         /// A dictionary that maps codes to their corresponding labels.
@@ -45,9 +41,20 @@ namespace Futureware.MantisConnect
         private Dictionary<int, string> codeToLabelMap;
 
         /// <summary>
+        /// A dictionary that maps labels to their corresponding code.
+        /// </summary>
+        private Dictionary<string, int> labelToCodeMap;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
+        /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="enumeration">Enumeration string to work with.</param>
+        /// <param name="enumeration">
+        /// Enumeration string to work with.
+        /// </param>
         public MantisEnum(string enumeration)
         {
             if (string.IsNullOrEmpty(enumeration))
@@ -105,14 +112,34 @@ namespace Futureware.MantisConnect
             }
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        /// <summary>
+        /// The number of values in the enumeration.
+        /// </summary>
+        public int Count
+        {
+            get { return this.labelToCodeMap.Count; }
+        }
+
+        #endregion Public Properties
+
+        #region Public Indexers
+
         /// <summary>
         /// Given an id, this indexer returns the corresponding enumeration name.
         /// </summary>
-        /// <param name="id">The enumeration value id.</param>
-        /// <returns>The enumeration label.</returns>
+        /// <param name="id">
+        /// The enumeration value id.
+        /// </param>
+        /// <returns>
+        /// The enumeration label.
+        /// </returns>
         public string this[int id]
         {
-            get 
+            get
             {
                 string name;
 
@@ -128,11 +155,15 @@ namespace Futureware.MantisConnect
         /// <summary>
         /// Given a name, this indexer returns the corresponding enumeration id.
         /// </summary>
-        /// <param name="name">The enumeration value name.</param>
-        /// <returns>The enumeration code.</returns>
-        public int this [string name]
+        /// <param name="name">
+        /// The enumeration value name.
+        /// </param>
+        /// <returns>
+        /// The enumeration code.
+        /// </returns>
+        public int this[string name]
         {
-            get 
+            get
             {
                 int id;
 
@@ -145,37 +176,16 @@ namespace Futureware.MantisConnect
             }
         }
 
-        /// <summary>
-        /// The number of values in the enumeration.
-        /// </summary>
-        public int Count
-        {
-            get { return this.labelToCodeMap.Count; }
-        }
+        #endregion Public Indexers
 
-        /// <summary>
-        /// Returns a collection containing the labels in the enumeration.
-        /// </summary>
-        /// <returns>A collection of the labels.</returns>
-        public ICollection<string> GetLabels()
-        {
-            Dictionary<string, int>.KeyCollection keys = this.labelToCodeMap.Keys;
-
-            string[] labels = new string[keys.Count];
-
-            int i = 0;
-            foreach (string label in keys)
-            {
-                labels[i++] = label;
-            }
-            
-            return labels;
-        }
+        #region Public Methods
 
         /// <summary>
         /// Returns a collection containing the codes in the enumeration.
         /// </summary>
-        /// <returns>A collection of the codes.</returns>
+        /// <returns>
+        /// A collection of the codes.
+        /// </returns>
         public ICollection<int> GetCodes()
         {
             Dictionary<int, string>.KeyCollection keys = this.codeToLabelMap.Keys;
@@ -192,9 +202,32 @@ namespace Futureware.MantisConnect
         }
 
         /// <summary>
+        /// Returns a collection containing the labels in the enumeration.
+        /// </summary>
+        /// <returns>
+        /// A collection of the labels.
+        /// </returns>
+        public ICollection<string> GetLabels()
+        {
+            Dictionary<string, int>.KeyCollection keys = this.labelToCodeMap.Keys;
+
+            string[] labels = new string[keys.Count];
+
+            int i = 0;
+            foreach (string label in keys)
+            {
+                labels[i++] = label;
+            }
+
+            return labels;
+        }
+
+        /// <summary>
         /// Converts the enum to a string in MantisBT format.
         /// </summary>
-        /// <returns>The enum in string format.</returns>
+        /// <returns>
+        /// The enum in string format.
+        /// </returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -211,5 +244,7 @@ namespace Futureware.MantisConnect
 
             return sb.ToString();
         }
+
+        #endregion Public Methods
     }
 }

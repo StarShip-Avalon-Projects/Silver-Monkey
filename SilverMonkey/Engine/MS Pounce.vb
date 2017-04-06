@@ -3,33 +3,44 @@ Imports System.Text.RegularExpressions
 Imports System.Collections.Generic
 Imports MonkeyCore
 Imports MonkeyCore.IO
+Imports SilverMonkey
+Imports Furcadia.Util
+Imports Furcadia.Net
 
+''' <summary>
+''' Monkey Speak version of the Furcadia Pounce Cliet
+''' </summary>
 Public Class MS_Pounce
-    Inherits Libraries.AbstractBaseLibrary
-    Private writer As TextBoxWriter = Nothing
+    Inherits MonkeySpeakLibrary
+
+#Region "Private Fields"
 
     Private Shared _OnlineList As String
-    Public Shared Property OnlineList As String
-        Get
-            If String.IsNullOrEmpty(_OnlineList) Then
-                _OnlineList = CheckBotFolder("OnlineList.txt")
-            End If
-            Return _OnlineList
-        End Get
-        Set(value As String)
 
-        End Set
-    End Property
+#End Region
 
-    Sub New()
-        writer = New TextBoxWriter(Variables.TextBox1)
+#Region "Public Constructors"
 
+    ''' <summary>
+    ''' Default Constructor
+    ''' </summary>
+    Public Sub New()
+        MyBase.New()
+    End Sub
+
+    ''' <summary>
+    ''' Cunstructor to Initialize References
+    ''' </summary>
+    ''' <param name="Dream">Dream Reference</param>
+    ''' <param name="Player">Triggering Furre Reference</param>
+    ''' <param name="MsEngine">MonkeySpeak Engine Reference</param>
+    Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
+        MyBase.New(Dream, Player, MsEngine)
         ' (0:950) When a furre logs on,
         Add(TriggerCategory.Cause, 950,
             Function()
                 Return True
             End Function, "(0:950) When a furre logs on,")
-
 
         '(0:951) When a furre logs off,
         Add(TriggerCategory.Cause, 951,
@@ -41,9 +52,7 @@ Public Class MS_Pounce
         '(0:953) When the furre named {...} logs off,
         Add(TriggerCategory.Cause, 953, AddressOf NameIs, "(0:953) When the furre named {...} logs off,")
 
-
-
-        '(1;950) and the furre named {...} is online,  
+        '(1;950) and the furre named {...} is online,
         Add(New Trigger(TriggerCategory.Condition, 950), AddressOf FurreNamedOnline, "(1:950) and the furre named {...} is online,")
 
         '(1:951) and the furre named {...} is offline,
@@ -72,14 +81,38 @@ Public Class MS_Pounce
         Add(New Trigger(TriggerCategory.Effect, 954), AddressOf UseMemberFile, "(5:954) use the file named {...} as the smPounce list.")
     End Sub
 
-    Function NameIs(reader As TriggerReader) As Boolean
+#End Region
+
+#Region "Public Properties"
+
+    Public Shared Property OnlineList As String
+        Get
+            If String.IsNullOrEmpty(_OnlineList) Then
+                _OnlineList = Paths.CheckBotFolder("OnlineList.txt")
+            End If
+            Return _OnlineList
+        End Get
+        Set(value As String)
+
+        End Set
+    End Property
+
+#End Region
+
+#Region "Public Methods"
+
+    Function FurreNamedNotOnline(reader As TriggerReader) As Boolean
         Try
             Dim TmpName As String = reader.ReadString()
-            Dim tname As Variable = MainMSEngine.MSpage.GetVariable(MS_Name)
+            For Each OnLineFurre As KeyValuePair(Of String, MainMsEngine.pFurre) In FurcSession.MainEngine.OnlineFurreList
+                If FurcadiaShortName(OnLineFurre.Key) = FurcadiaShortName(TmpName) Then
+                    Return Not OnLineFurre.Value.Online
+                End If
+            Next
             'add Machine Name parser
-            Return TmpName.ToFurcShortName = tname.Value.ToString.ToFurcShortName
+            Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -87,101 +120,35 @@ Public Class MS_Pounce
     Function FurreNamedOnline(reader As TriggerReader) As Boolean
         Try
             Dim TmpName As String = reader.ReadString()
-            Dim Furr As Main.pFurre
-            For Each Fur As KeyValuePair(Of String, Main.pFurre) In callbk.FurreList
-                If Fur.Key.ToFurcShortName = TmpName.ToFurcShortName Then
-                    Furr = Fur.Value
-                    Return Furr.Online
+            For Each OnLineFurre As KeyValuePair(Of String, MainMsEngine.pFurre) In FurcSession.MainEngine.OnlineFurreList
+                If FurcadiaShortName(OnLineFurre.Key) = FurcadiaShortName(TmpName) Then
+                    Return OnLineFurre.Value.Online
                 End If
             Next
             'add Machine Name parser
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
-    Function FurreNamedNotOnline(reader As TriggerReader) As Boolean
+
+    Function NameIs(reader As TriggerReader) As Boolean
         Try
             Dim TmpName As String = reader.ReadString()
-            Dim Furr As Main.pFurre
-            For Each Fur As KeyValuePair(Of String, Main.pFurre) In callbk.FurreList
-                If Fur.Key.ToFurcShortName = TmpName.ToFurcShortName Then
-                    Furr = Fur.Value
-                    Return Not Furr.Online
-                End If
-            Next
+            Dim tname As Variable = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name)
             'add Machine Name parser
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:900) and the triggering furre is on my dream Member List,
-    Private Function TrigFurreIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
-        CheckCemberList()
-        Dim Furre As String = Nothing
-        Dim f() As String
-        Try
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            f = File.ReadAllLines(callbk.OnlineList)
-            For Each l As String In f
-                If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
-            Next
-            Return False
-        Catch ex As exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-    End Function
-    '(1:901) and the furre named {...} is on my Dream Member list.
-    Private Function FurreNamedIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
-        CheckCemberList()
-        Dim Furre As String = Nothing
-        Dim f() As String
-        Try
-            Furre = reader.ReadString
-            f = File.ReadAllLines(callbk.OnlineList)
-            For Each l As String In f
-                If l.ToFurcShortName = Furre.ToFurcShortName Then Return True
-            Next
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-
-    End Function
-    '(1:902) and the triggering furre is not on my Dream Member list.
-    Private Function TrigFurreIsNotMember(reader As Monkeyspeak.TriggerReader) As Boolean
-        Return Not TrigFurreIsMember(reader)
-    End Function
-    '(1:903) and the furre named {...} is not on my Dream Member list.
-    Private Function FurreNamedIsNotMember(reader As Monkeyspeak.TriggerReader) As Boolean
-        Return Not FurreNamedIsMember(reader)
-    End Function
-    '(1:900) add the triggering furre to my Dream Member list if they aren't already on it.
-    Private Function AddTrigFurre(reader As TriggerReader) As Boolean
-        Dim Furre As String = Nothing
-
-        Try
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
-                Dim sw As StreamWriter = New StreamWriter(callbk.OnlineList, True)
-                sw.WriteLine(Furre)
-                sw.Close()
-            End If
-            Return True
+            Return FurcadiaShortName(TmpName) = FurcadiaShortName(tname.Value.ToString)
 
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
-
     End Function
 
+#End Region
+
+#Region "Private Methods"
 
     '(5:901) add the furre named {...} to my Dream Member list if they aren't already on it.
     Private Function AddFurreNamed(reader As TriggerReader) As Boolean
@@ -190,90 +157,163 @@ Public Class MS_Pounce
         Try
             Furre = reader.ReadString
             If FurreNamedIsMember(reader) = False And FurreNamedIsNotMember(reader) Then
-                Dim sw As StreamWriter = New StreamWriter(callbk.OnlineList, True)
+                Dim sw As StreamWriter = New StreamWriter(OnlineList, True)
                 sw.WriteLine(Furre)
                 sw.Close()
             End If
             Return True
 
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
     End Function
-    '(5:902) remove the triggering furre to my Dream Member list if they are on it.
-    Private Function RemoveTrigFurre(reader As TriggerReader) As Boolean
+
+    '(1:900) add the triggering furre to my Dream Member list if they aren't already on it.
+    Private Function AddTrigFurre(reader As TriggerReader) As Boolean
         Dim Furre As String = Nothing
-        CheckCemberList()
+
         Try
-            Furre = MainMSEngine.MSpage.GetVariable(MS_Name).Value.ToString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
-            Dim line As String = Nothing
-            Dim linesList As New List(Of String)(File.ReadAllLines(callbk.OnlineList))
-            Dim SR As New StreamReader(callbk.OnlineList)
-            line = SR.ReadLine()
-            For i As Integer = 0 To linesList.Count - 1
-                If Regex.Replace(line.ToLower(), REGEX_NameFilter, "") = Furre Then
-                    SR.Dispose()
-                    SR.Close()
-                    linesList.RemoveAt(i)
-                    File.WriteAllLines(callbk.OnlineList, linesList.ToArray())
-                    Return True
-                End If
-                line = SR.ReadLine()
-            Next i
+            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
+                Dim sw As StreamWriter = New StreamWriter(OnlineList, True)
+                sw.WriteLine(Furre)
+                sw.Close()
+            End If
+            Return True
+
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
-        Return False
+
     End Function
+
+    Private Sub CheckCemberList()
+        OnlineList = Paths.CheckBotFolder(OnlineList)
+        If File.Exists(OnlineList) = False Then
+            Dim sw As StreamWriter = New StreamWriter(OnlineList, False)
+            sw.Close()
+        End If
+    End Sub
+
+    '(1:901) and the furre named {...} is on my Dream Member list.
+    Private Function FurreNamedIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
+        CheckCemberList()
+        Dim Furre As String = Nothing
+        Dim f() As String
+        Try
+            Furre = reader.ReadString
+            f = File.ReadAllLines(OnlineList)
+            For Each l As String In f
+                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
+            Next
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+    End Function
+
+    '(1:903) and the furre named {...} is not on my Dream Member list.
+    Private Function FurreNamedIsNotMember(reader As Monkeyspeak.TriggerReader) As Boolean
+        Return Not FurreNamedIsMember(reader)
+    End Function
+
     '(5:903) remove the furre named {...} from my Dream Member list if they are on it.
     Private Function RemoveFurreNamed(reader As TriggerReader) As Boolean
         Dim Furre As String = Nothing
         CheckCemberList()
         Try
             Furre = reader.ReadString
-            Furre = Regex.Replace(Furre.ToLower(), REGEX_NameFilter, "")
+            Furre = Regex.Replace(Furre.ToLower(), MyMonkeySpeakEngine.REGEX_NameFilter, "")
             Dim line As String = Nothing
-            Dim linesList As New List(Of String)(File.ReadAllLines(callbk.OnlineList))
-            Dim SR As New StreamReader(callbk.OnlineList)
+            Dim linesList As New List(Of String)(File.ReadAllLines(OnlineList))
+            Dim SR As New StreamReader(OnlineList)
             line = SR.ReadLine()
             For i As Integer = 0 To linesList.Count - 1
-                If Regex.Replace(line.ToLower(), REGEX_NameFilter, "") = Furre Then
+                If Regex.Replace(line.ToLower(), MyMonkeySpeakEngine.REGEX_NameFilter, "") = Furre Then
                     SR.Dispose()
                     SR.Close()
                     linesList.RemoveAt(i)
-                    File.WriteAllLines(callbk.OnlineList, linesList.ToArray())
+                    File.WriteAllLines(OnlineList, linesList.ToArray())
                     Return True
                 End If
                 line = SR.ReadLine()
             Next i
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return False
     End Function
 
-    '(5:904) Use file {...} as the dream member list.  
+    '(5:902) remove the triggering furre to my Dream Member list if they are on it.
+    Private Function RemoveTrigFurre(reader As TriggerReader) As Boolean
+        Dim Furre As String = Nothing
+        CheckCemberList()
+        Try
+            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = FurcadiaShortName(Furre)
+            Dim line As String = Nothing
+            Dim linesList As New List(Of String)(File.ReadAllLines(OnlineList))
+            Using SR As New StreamReader(OnlineList)
+                line = SR.ReadLine()
+                For i As Integer = 0 To linesList.Count - 1
+                    If FurcadiaShortName(line) = Furre Then
+                        SR.Dispose()
+                        SR.Close()
+                        linesList.RemoveAt(i)
+                        File.WriteAllLines(OnlineList, linesList.ToArray())
+                        Return True
+                    End If
+                    line = SR.ReadLine()
+                Next i
+            End Using
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+        Return False
+    End Function
+
+    '(1:900) and the triggering furre is on my dream Member List,
+    Private Function TrigFurreIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
+        CheckCemberList()
+        Dim Furre As String = Nothing
+        Dim f() As String
+        Try
+            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            f = File.ReadAllLines(OnlineList)
+            For Each l As String In f
+                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
+            Next
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+
+    End Function
+    '(1:902) and the triggering furre is not on my Dream Member list.
+    Private Function TrigFurreIsNotMember(reader As Monkeyspeak.TriggerReader) As Boolean
+        Return Not TrigFurreIsMember(reader)
+    End Function
+    '(5:904) Use file {...} as the dream member list.
     Private Function UseMemberFile(reader As TriggerReader) As Boolean
 
         Try
-            callbk.OnlineList = reader.ReadString
+            OnlineList = reader.ReadString
             CheckCemberList()
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
-    Private Sub CheckCemberList()
-        callbk.OnlineList = CheckBotFolder(callbk.OnlineList)
-        If File.Exists(callbk.OnlineList) = False Then
-            Dim sw As StreamWriter = New StreamWriter(callbk.OnlineList, False)
-            sw.Close()
-        End If
-    End Sub
+
+#End Region
+
 End Class

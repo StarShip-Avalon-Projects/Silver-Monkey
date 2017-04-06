@@ -1,16 +1,38 @@
-﻿Imports System.IO
-Imports System.Text
+﻿Imports System.Text
 
-
+'TODO rename this to something meaningful
+''' <summary>
+'''
+''' </summary>
 Public Class IO
+
+#Region "Internal Fields"
+
+    Friend Shared ReadOnly File As Object
+
+#End Region
+
+#Region "Private Fields"
+
     Private _KeysIni As IniFile
     Private _MS_KeysIni As IniFile
-    Friend Shared ReadOnly File As Object
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
 
     End Sub
 
+#End Region
+
+#Region "Public Properties"
+
+    ''' <summary>
+    ''' Monkey Speak File containing MonkeySpeak Editors lines and settings
+    ''' </summary>
+    ''' <returns></returns>
     Public Property KeysIni As IniFile
         Get
             Return _KeysIni
@@ -20,6 +42,10 @@ Public Class IO
         End Set
     End Property
 
+    ''' <summary>
+    ''' Dragon Speak File containing MonkeySpeak Editors lines and settings
+    ''' </summary>
+    ''' <returns></returns>
     Public Property MS_KeysIni As IniFile
         Get
             Return _MS_KeysIni
@@ -29,49 +55,9 @@ Public Class IO
         End Set
     End Property
 
+#End Region
 
-    ''' <summary>
-    ''' News the ds file.
-    ''' </summary>
-    ''' <returns>Generic Preformatted DragonSpeak file</returns>
-    Public Shared Function NewDSFile() As String
-        Dim str As New StringBuilder
-        str.AppendLine(Settings.KeysIni.GetKeyValue("MS-General", "Header"))
-        Dim t As String = " "
-        Dim n As Integer = 0
-        While t <> ""
-            t = Settings.KeysIni.GetKeyValue("MS-General", "H" + n.ToString)
-            If t <> "" Then str.AppendLine(t)
-            n += 1
-        End While
-        For i = 0 To CInt(Settings.KeysIni.GetKeyValue("MS-General", "InitLineSpaces"))
-            str.AppendLine("")
-        Next
-        str.Append(Settings.KeysIni.GetKeyValue("MS-General", "Footer"))
-        Return str.ToString
-    End Function
-
-    ''' <summary>
-    ''' News the ms file.
-    ''' </summary>
-    ''' <returns>Generic Preformated MonkeySpeak file</returns>
-    Public Shared Function NewMSFile() As String
-        Dim str As New StringBuilder
-        str.AppendLine(Settings.MS_KeysIni.GetKeyValue("MS-General", "Header"))
-        Dim t As String = " "
-        Dim n As Integer = 0
-        While t <> ""
-            t = Settings.MS_KeysIni.GetKeyValue("MS-General", "H" + n.ToString)
-            If t <> "" Then str.AppendLine(t)
-            n += 1
-        End While
-        For i = 0 To CInt(Settings.MS_KeysIni.GetKeyValue("MS-General", "InitLineSpaces"))
-            str.AppendLine("")
-        Next
-        str.Append(Settings.MS_KeysIni.GetKeyValue("MS-General", "Footer"))
-        Return str.ToString
-    End Function
-
+#Region "Public Methods"
 
     ''' <summary>
     ''' News the dm script.
@@ -94,14 +80,49 @@ Public Class IO
         Return str.ToString
     End Function
 
-    Public Shared Function CheckBotFolder(ByVal file As String) As String
-        Dim Check As String = Path.GetDirectoryName(file)
-        If String.IsNullOrEmpty(Check) Then
-            Check = Path.Combine(Paths.SilverMonkeyBotPath, file)
-            Return Check
-        End If
-        Return file
+    ''' <summary>
+    ''' New Dragon Speak file default read from configuration *.ini
+    ''' </summary>
+    ''' <returns>Generic preformated DragonSpeak file</returns>
+    Public Shared Function NewDSFile() As String
+        Dim str As New StringBuilder
+        str.AppendLine(Settings.KeysIni.GetKeyValue("MS-General", "Header"))
+        Dim t As String = " "
+        Dim n As Integer = 0
+        While t <> ""
+            t = Settings.KeysIni.GetKeyValue("MS-General", "H" + n.ToString)
+            If t <> "" Then str.AppendLine(t)
+            n += 1
+        End While
+        For i = 0 To CInt(Settings.KeysIni.GetKeyValue("MS-General", "InitLineSpaces"))
+            str.AppendLine("")
+        Next
+        str.Append(Settings.KeysIni.GetKeyValue("MS-General", "Footer"))
+        Return str.ToString
     End Function
 
-End Class
+    ''' <summary>
+    ''' New Monkey Speak fileDefaults
+    ''' <para>Actual format is set in a configuration *.ini file</para>
+    ''' </summary>
+    ''' <returns>Generic preformated MonkeySpeak file</returns>
+    Public Shared Function NewMSFile() As String
+        Dim str As New StringBuilder
+        str.AppendLine(Settings.MS_KeysIni.GetKeyValue("MS-General", "Header"))
+        Dim t As String = " "
+        Dim n As Integer = 0
+        While t <> ""
+            t = Settings.MS_KeysIni.GetKeyValue("MS-General", "H" + n.ToString)
+            If t <> "" Then str.AppendLine(t)
+            n += 1
+        End While
+        For i = 0 To CInt(Settings.MS_KeysIni.GetKeyValue("MS-General", "InitLineSpaces"))
+            str.AppendLine("")
+        Next
+        str.Append(Settings.MS_KeysIni.GetKeyValue("MS-General", "Footer"))
+        Return str.ToString
+    End Function
 
+#End Region
+
+End Class

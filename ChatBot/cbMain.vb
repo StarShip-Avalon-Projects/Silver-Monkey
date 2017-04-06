@@ -4,24 +4,26 @@ Imports Furcadia.Net
 
 Public Class cbMain
     Inherits Form
-    Private verbot As Verbot5Engine
+
+#Region "Public Fields"
+
+    Public Player As FURRE
+
+#End Region
+
+#Region "Private Fields"
+
+    Private _kb As KnowledgeBase = New KnowledgeBase()
+    Dim kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
     Private state As State
     Private stCKBFileFilter As String = "Verbot Knowledge Bases (*.vkb)|*.vkb"
     Private stFormName As String = "Verbot SDK Windows App Sample"
+    Private verbot As Verbot5Engine
 
-    Private _kb As KnowledgeBase = New KnowledgeBase()
-    Public Property kb As KnowledgeBase
-        Get
-            Return _kb
-        End Get
-        Set(value As KnowledgeBase)
+#End Region
 
-            _kb = value
-        End Set
-    End Property
+#Region "Public Constructors"
 
-    Dim kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
-    Public Player As FURRE
     Public Sub New()
         '
         ' Required for Windows Form Designer support
@@ -36,34 +38,61 @@ Public Class cbMain
         Text = stFormName
     End Sub
 
-    Private Sub loadMenuItem_Click(sender As Object, e As EventArgs) Handles loadMenuItem.Click
-        With openFileDialog1
-            If .ShowDialog() = DialogResult.OK Then
-                Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
-                kb = CType(xToolbox.LoadXML(.FileName), KnowledgeBase)
-                kbi.Filename = Path.GetFileName(.FileName)
-                kbi.Fullpath = Path.GetDirectoryName(.FileName) + "\"
-                verbot.AddKnowledgeBase(kb, kbi)
-                state.CurrentKBs.Clear()
-                state.CurrentKBs.Add(.FileName)
+#End Region
+
+#Region "Public Properties"
+
+    Public Property kb As KnowledgeBase
+        Get
+            Return _kb
+        End Get
+        Set(value As KnowledgeBase)
+
+            _kb = value
+        End Set
+    End Property
+
+#End Region
+
+#Region "Public Methods"
+
+    'runProgram(string filename, string args)
+    Public Function splitOnFirstUnquotedSpace(text As String) As String()
+        Dim pieces As String() = New String(1) {}
+        Dim index As Integer = -1
+        Dim isQuoted As Boolean = False
+        'find the first unquoted space
+        For i As Integer = 0 To text.Length - 1
+            If text(i) = """"c Then
+                isQuoted = Not isQuoted
+            ElseIf text(i) = " "c AndAlso Not isQuoted Then
+                index = i
+                Exit For
             End If
-        End With
+        Next
+
+        'break up the string
+        If index <> -1 Then
+            pieces(0) = text.Substring(0, index)
+            pieces(1) = text.Substring(index + 1)
+        Else
+            pieces(0) = text
+            pieces(1) = ""
+        End If
+
+        Return pieces
+    End Function
+
+#End Region
+
+#Region "Private Methods"
+
+    Private Sub cbMain_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        Player = New FURRE
     End Sub
 
     Private Sub exitMenuItem_Click(sender As Object, e As System.EventArgs) Handles exitMenuItem.Click
         Close()
-    End Sub
-
-
-    Private Sub inputTextBox_KeyPress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs) Handles inputTextBox.KeyPress
-        If e.KeyChar = ControlChars.Cr Then
-            e.Handled = True
-            getReply()
-        End If
-    End Sub
-
-    Private Sub getReplyButton_Click(sender As Object, e As System.EventArgs) Handles getReplyButton.Click
-        getReply()
     End Sub
 
     Private Sub getReply()
@@ -84,6 +113,30 @@ Public Class cbMain
         End If
     End Sub
 
+    Private Sub getReplyButton_Click(sender As Object, e As System.EventArgs) Handles getReplyButton.Click
+        getReply()
+    End Sub
+
+    Private Sub inputTextBox_KeyPress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs) Handles inputTextBox.KeyPress
+        If e.KeyChar = ControlChars.Cr Then
+            e.Handled = True
+            getReply()
+        End If
+    End Sub
+
+    Private Sub loadMenuItem_Click(sender As Object, e As EventArgs) Handles loadMenuItem.Click
+        With openFileDialog1
+            If .ShowDialog() = DialogResult.OK Then
+                Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
+                kb = CType(xToolbox.LoadXML(.FileName), KnowledgeBase)
+                kbi.Filename = Path.GetFileName(.FileName)
+                kbi.Fullpath = Path.GetDirectoryName(.FileName) + "\"
+                verbot.AddKnowledgeBase(kb, kbi)
+                state.CurrentKBs.Clear()
+                state.CurrentKBs.Add(.FileName)
+            End If
+        End With
+    End Sub
     Private Sub parseEmbeddedOutputCommands(text As String)
         Dim startCommand As String = "<"
         Dim endCommand As String = ">"
@@ -146,36 +199,8 @@ Public Class cbMain
         Catch
         End Try
     End Sub
-    'runProgram(string filename, string args)
-    Public Function splitOnFirstUnquotedSpace(text As String) As String()
-        Dim pieces As String() = New String(1) {}
-        Dim index As Integer = -1
-        Dim isQuoted As Boolean = False
-        'find the first unquoted space
-        For i As Integer = 0 To text.Length - 1
-            If text(i) = """"c Then
-                isQuoted = Not isQuoted
-            ElseIf text(i) = " "c AndAlso Not isQuoted Then
-                index = i
-                Exit For
-            End If
-        Next
 
-        'break up the string
-        If index <> -1 Then
-            pieces(0) = text.Substring(0, index)
-            pieces(1) = text.Substring(index + 1)
-        Else
-            pieces(0) = text
-            pieces(1) = ""
-        End If
+#End Region
 
-        Return pieces
-    End Function
     'splitOnFirstUnquotedSpace(string text)
-
-
-    Private Sub cbMain_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Player = New FURRE
-    End Sub
 End Class

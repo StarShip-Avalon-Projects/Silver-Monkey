@@ -6,38 +6,41 @@ Imports System.Runtime.InteropServices
 Imports System.Diagnostics
 
 Public Class MessageHelper
-    <DllImport("User32.dll")> _
-    Private Shared Function RegisterWindowMessage(lpString As String) As Integer
-    End Function
+    <DllImport("User32.dll")>
 
-    <DllImport("User32.dll", EntryPoint:="FindWindow")> _
+#Region "Public Methods"
+
     Public Shared Function FindWindow(lpClassName As [String], lpWindowName As [String]) As Int32
     End Function
 
-    <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)> _
-    Private Shared Function SendMessage(hWnd As IntPtr, Msg As Integer, ByVal wParam As IntPtr, ByRef lParam As COPYDATASTRUCT) As IntPtr
-    End Function
-
-    'For use with WM_COPYDATA and COPYDATASTRUCT
-    <DllImport("User32.dll", EntryPoint:="PostMessage")> _
     Public Shared Function PostMessage(hWnd As IntPtr, Msg As Integer, wParam As IntPtr, ByRef lParam As COPYDATASTRUCT) As IntPtr
     End Function
 
-    <DllImport("User32.dll", EntryPoint:="SendMessage")> _
-    Public Shared Function SendMessage(hWnd As IntPtr, Msg As Integer, wParam As Integer, lParam As Integer) As IntPtr
-    End Function
-
-    <DllImport("User32.dll", EntryPoint:="PostMessage")> _
     Public Shared Function PostMessage(hWnd As Integer, Msg As Integer, wParam As IntPtr, lParam As Integer) As IntPtr
     End Function
 
-    <DllImport("User32.dll", EntryPoint:="SetForegroundWindow")> _
+    Public Shared Function SendMessage(hWnd As IntPtr, Msg As Integer, wParam As Integer, lParam As Integer) As IntPtr
+    End Function
+
     Public Shared Function SetForegroundWindow(hWnd As Integer) As Boolean
     End Function
 
-
     Public Function bringAppToFront(hWnd As Integer) As Boolean
         Return SetForegroundWindow(hWnd)
+    End Function
+
+    Public Function getWindowId(className As String, windowName As String) As Integer
+        Return FindWindow(className, windowName)
+    End Function
+
+    Public Function sendWindowsMessage(hWnd As IntPtr, Msg As Integer, wParam As Integer, lParam As Integer) As IntPtr
+        Dim result As IntPtr = IntPtr.Zero
+
+        If hWnd <> IntPtr.Zero Then
+            result = SendMessage(hWnd, Msg, wParam, lParam)
+        End If
+
+        Return result
     End Function
 
     Public Function sendWindowsStringMessage(hWnd As IntPtr, wParam As IntPtr, Name As String, fID As UInteger, Tag As String, msg As String) As IntPtr
@@ -74,17 +77,23 @@ Public Class MessageHelper
         Return result
     End Function
 
-    Public Function sendWindowsMessage(hWnd As IntPtr, Msg As Integer, wParam As Integer, lParam As Integer) As IntPtr
-        Dim result As IntPtr = IntPtr.Zero
+#End Region
 
-        If hWnd <> IntPtr.Zero Then
-            result = SendMessage(hWnd, Msg, wParam, lParam)
-        End If
+#Region "Private Methods"
 
-        Return result
+    Private Shared Function RegisterWindowMessage(lpString As String) As Integer
     End Function
 
-    Public Function getWindowId(className As String, windowName As String) As Integer
-        Return FindWindow(className, windowName)
+    <DllImport("User32.dll", EntryPoint:="FindWindow")>
+    <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
+    Private Shared Function SendMessage(hWnd As IntPtr, Msg As Integer, ByVal wParam As IntPtr, ByRef lParam As COPYDATASTRUCT) As IntPtr
     End Function
+
+#End Region
+
+    'For use with WM_COPYDATA and COPYDATASTRUCT
+    <DllImport("User32.dll", EntryPoint:="PostMessage")>
+    <DllImport("User32.dll", EntryPoint:="SendMessage")>
+    <DllImport("User32.dll", EntryPoint:="PostMessage")>
+    <DllImport("User32.dll", EntryPoint:="SetForegroundWindow")>
 End Class

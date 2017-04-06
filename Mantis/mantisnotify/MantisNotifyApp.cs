@@ -18,25 +18,33 @@ using System.Windows.Forms;
 
 namespace Futureware.MantisNotify
 {
-	/// <summary>
-	/// Application class for Mantis Notify application.
-	/// </summary>
-	public sealed class MantisNotifyApp
-	{
+    /// <summary>
+    /// Application class for Mantis Notify application.
+    /// </summary>
+    public sealed class MantisNotifyApp
+    {
+        #region Private Constructors
+
         /// <summary>
         /// Private Constructor, no need to create instances of this class.
         /// </summary>
-		private MantisNotifyApp()
-		{
-		}
+        private MantisNotifyApp()
+        {
+        }
+
+        #endregion Private Constructors
+
+        #region Private Methods
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main() 
+        private static void Main()
         {
-            Application.Run( new MantisNotifyForm() );
+            Application.Run(new MantisNotifyForm());
         }
+
+        #endregion Private Methods
     }
 }

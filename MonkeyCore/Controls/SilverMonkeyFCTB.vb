@@ -1,27 +1,56 @@
-﻿
-
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Drawing
+Imports System.Net.WebRequestMethods
 Imports FastColoredTextBoxNS
+Imports Irony
 Imports Irony.Parsing
 
 Namespace Controls
     ''' <summary>
     ''' FastColoredTextBox with Irony parser support
     ''' </summary>
+    ''' <see cref="Http://www.codeproject.com/articles/161871/fast-colored-textbox-for-syntax-highlighting"/>
     ''' <see cref="https://github.com/PavelTorgashov/FastColoredTextBox"/>
-    ''' <see cref="http://irony.codeplex.com/"/>
+    ''' <see cref="Http://irony.codeplex.com/"/>
     Public Class SilverMonkeyFCTB
         Inherits FastColoredTextBox
-        Public Event StyleNeeded As EventHandler(Of StyleNeededEventArgs)
 
-        Protected m_parser As Parser
+#Region "Public Fields"
+
         Public WavyStyle As Style = New WavyLineStyle(255, Color.Red)
 
-        ''' <summary>
-        ''' Grammar of custom language
-        ''' </summary>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), EditorBrowsable(EditorBrowsableState.Never)>
+#End Region
+
+#Region "Protected Fields"
+
+        Protected m_parser As Parser
+
+#End Region
+
+#Region "Public Constructors"
+
+        Public Sub New()
+        End Sub
+
+#End Region
+
+#Region "Public Events"
+
+        Public Event StyleNeeded As EventHandler(Of StyleNeededEventArgs)
+
+#End Region
+
+#Region "Public Properties"
+
+        Public Property Parser() As Parser
+            Get
+                Return m_parser
+            End Get
+            Set
+                SetParser(Value)
+            End Set
+        End Property
+
         Public Property Grammar() As Grammar
             Get
                 If m_parser IsNot Nothing AndAlso m_parser.Language IsNot Nothing AndAlso m_parser.Language.Grammar IsNot Nothing Then
@@ -34,20 +63,35 @@ Namespace Controls
             End Set
         End Property
 
-        ''' <summary>
-        ''' Parser of custom language
-        ''' </summary>
-        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), EditorBrowsable(EditorBrowsableState.Never)>
-        Public Property Parser() As Parser
-            Get
-                Return m_parser
-            End Get
-            Set
-                SetParser(Value)
-            End Set
-        End Property
+#End Region
 
-        Public Sub New()
+#Region "Public Methods"
+
+        ''' <summary>
+        ''' Returns range of token
+        ''' </summary>
+        Public Function GetTokenRange(t As Token) As Range
+            Dim loc = t.Location
+
+            Dim place = New Place(loc.Column, loc.Line)
+            Dim r = New Range(Me, place, place)
+
+            For Each c As String In t.Text
+                If c <> ControlChars.Cr Then
+                    r.GoRight(True)
+                End If
+            Next
+
+            Return r
+        End Function
+
+        Public Overridable Sub OnStyleNeeded(e As StyleNeededEventArgs)
+            RaiseEvent StyleNeeded(Me, e)
+        End Sub
+
+        Public Overrides Sub OnTextChangedDelayed(changedRange As Range)
+            DoHighlighting()
+            MyBase.OnTextChangedDelayed(changedRange)
         End Sub
 
         ''' <summary>
@@ -76,10 +120,9 @@ Namespace Controls
             OnTextChanged(Range)
         End Sub
 
-        Public Overrides Sub OnTextChangedDelayed(changedRange As Range)
-            DoHighlighting()
-            MyBase.OnTextChangedDelayed(changedRange)
-        End Sub
+#End Region
+
+#Region "Protected Methods"
 
         Protected Overridable Sub DoHighlighting()
             If m_parser Is Nothing Then
@@ -100,8 +143,8 @@ Namespace Controls
             'highlight errors
             If tree.Status = ParseTreeStatus.[Error] Then
                 ClearStyle(GetStyleIndexMask(New Style() {WavyStyle}))
-                For Each msg As Object In tree.ParserMessages
-                    Dim loc = msg.Location
+                For Each msg As LogMessage In tree.ParserMessages
+                    Dim loc As SourceLocation = msg.Location
                     Dim place = New Place(loc.Column, loc.Line)
                     Dim r = New Range(Me, place, place)
                     Dim f = r.GetFragment("[\S]")
@@ -144,29 +187,6 @@ Namespace Controls
                 End Select
             Next
         End Sub
-
-        Public Overridable Sub OnStyleNeeded(e As StyleNeededEventArgs)
-            RaiseEvent StyleNeeded(Me, e)
-        End Sub
-
-        ''' <summary>
-        ''' Returns range of token
-        ''' </summary>
-        Public Function GetTokenRange(t As Token) As Range
-            Dim loc = t.Location
-
-            Dim place = New Place(loc.Column, loc.Line)
-            Dim r = New Range(Me, place, place)
-
-            For Each c As String In t.Text
-                If c <> ControlChars.Cr Then
-                    r.GoRight(True)
-                End If
-            Next
-
-            Return r
-        End Function
-
         Protected Overridable Sub InitBraces()
             LeftBracket = ControlChars.NullChar
             RightBracket = ControlChars.NullChar
@@ -191,11 +211,38 @@ Namespace Controls
                 RightBracket = ")"c
             End If
         End Sub
+
+#End Region
+
     End Class
 
     Public Class StyleNeededEventArgs
         Inherits EventArgs
+
+#Region "Public Fields"
+
         Public ReadOnly Token As Token
+
+#End Region
+
+#Region "Private Fields"
+
+        Private m_Cancel As Boolean
+
+        Private m_Style As Style
+
+#End Region
+
+#Region "Public Constructors"
+
+        Public Sub New(t As Token)
+            Token = t
+        End Sub
+
+#End Region
+
+#Region "Public Properties"
+
         Public Property Cancel() As Boolean
             Get
                 Return m_Cancel
@@ -204,7 +251,6 @@ Namespace Controls
                 m_Cancel = Value
             End Set
         End Property
-        Private m_Cancel As Boolean
         Public Property Style() As Style
             Get
                 Return m_Style
@@ -213,10 +259,8 @@ Namespace Controls
                 m_Style = Value
             End Set
         End Property
-        Private m_Style As Style
 
-        Public Sub New(t As Token)
-            Token = t
-        End Sub
+#End Region
+
     End Class
 End Namespace

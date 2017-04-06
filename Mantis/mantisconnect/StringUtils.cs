@@ -13,7 +13,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace Futureware.MantisConnect
+namespace SilverMonkey.BugTraqConnect
 {
     using System;
 
@@ -22,38 +22,46 @@ namespace Futureware.MantisConnect
     /// </summary>
     public static class StringUtils
     {
-        /// <summary>
-        /// Converts a multiline string from webservice format to native format that
-        /// is used by the local OS and its controls.
-        /// </summary>
-        /// <remarks>
-        /// This is to be called on fields that support multiline string after
-        /// reading them from the webservice and before setting them in controls
-        /// like textboxes.
-        /// 
-        /// <seealso cref="NativeMultilineToWebservice"/>
-        /// </remarks>
-        /// <param name="webserviceMultiline">The string in webservice format.</param>
-        /// <returns>The string in native format</returns>
-        public static string WebserviceMultilineToNative(string webserviceMultiline)
-        {
-            return webserviceMultiline.Replace("\n", Environment.NewLine);
-        }
+        #region Public Methods
 
         /// <summary>
         /// Converts a multiline string from native format to webservice format.
         /// </summary>
         /// <remarks>
-        /// This is to be called on fields that support multiline strings before 
-        /// sending them to the webservice.
-        /// 
+        /// This is to be called on fields that support multiline strings before sending them to the webservice.
+        ///
         /// <seealso cref="WebserviceMultilineToNative"/>
         /// </remarks>
-        /// <param name="nativeMultiline"></param>
-        /// <returns></returns>
+        /// <param name="nativeMultiline">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static string NativeMultilineToWebservice(string nativeMultiline)
         {
             return nativeMultiline.Replace(Environment.NewLine, "\n");
         }
+
+        /// <summary>
+        /// Converts a multiline string from webservice format to native format that is used by the
+        /// local OS and its controls.
+        /// </summary>
+        /// <remarks>
+        /// This is to be called on fields that support multiline string after reading them from the
+        /// webservice and before setting them in controls like textboxes.
+        ///
+        /// <seealso cref="NativeMultilineToWebservice"/>
+        /// </remarks>
+        /// <param name="webserviceMultiline">
+        /// The string in webservice format.
+        /// </param>
+        /// <returns>
+        /// The string in native format
+        /// </returns>
+        public static string WebserviceMultilineToNative(string webserviceMultiline)
+        {
+            return webserviceMultiline.Replace("\n", Environment.NewLine);
+        }
+
+        #endregion Public Methods
     }
 }

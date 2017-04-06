@@ -1,12 +1,19 @@
-﻿
-Imports System.Diagnostics
+﻿Imports System.Diagnostics
 Imports System.Collections
 Imports MonkeyCore
+Imports System.Collections.Generic
+Imports Furcadia.Util
 
 Public Class Banish
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits MonkeySpeakLibrary
+
+#Region "Private Fields"
+
     Private writer As TextBoxWriter = Nothing
 
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
@@ -76,7 +83,7 @@ Public Class Banish
         '(1:53) and the furre named {...} is on the banish list,
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Condition, 53), AddressOf FurreNamedIsBanished, "(1:53) and the furre named {...} is on the banish list,")
 
-        ' (5: ) save the banish list to the variable % . 
+        ' (5: ) save the banish list to the variable % .
         Add(New Monkeyspeak.Trigger(Monkeyspeak.TriggerCategory.Effect, 49), AddressOf BanishSave,
          "(5:49) save the banish list to the variable % .")
 
@@ -103,44 +110,44 @@ Public Class Banish
 "(5:56) unbanish the furre named {...}.")
     End Sub
 
+#End Region
 
+#Region "Public Methods"
 
-    '(1:50) and the triggering furre is not on the banish list,
-    Function TrigFurreIsNotBanished(reader As Monkeyspeak.TriggerReader) As Boolean
-        Dim banishlist As ArrayList = callbk.BanishString
+    '(0:53) When the bot sucessfilly banishes the furre named {...},
+    '(0: ) When the bot successfully temp banishes the furre named {...},
+    Function AndBanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            For Each Furre As String In banishlist
-                If Furre.ToFurcShortName = callbk.Player.Name.ToFurcShortName Then Return False
-            Next
-            Return True
+            Dim Furre As String = reader.ReadString
+            Return FurcadiaShortName(Furre) = FurcadiaShortName(FurcSession.BanishName)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
-    '(1:51) and the triggering furre is on the banish list,
-    Function TrigFurreIsBanished(reader As Monkeyspeak.TriggerReader) As Boolean
-        Return Not TrigFurreIsNotBanished(reader)
-    End Function
-    '(1:52) and the furre named {...} is not on the banish list,
-    Function FurreNamedIsNotBanished(reader As Monkeyspeak.TriggerReader) As Boolean
-        Dim banishlist As ArrayList = callbk.BanishString
+
+    '(5:x) banish the furre named {...}.
+    Function BanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim f As String = reader.ReadString
-            For Each Furre As String In banishlist
-                If Furre.ToFurcShortName = f.ToFurcShortName Then Return False
-            Next
-            Return True
+            Dim Furre As String = reader.ReadString
+            sendServer("banish " + Furre)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
-    '(1:53) and the furre named {...} is on the banish list,
-    Function FurreNamedIsBanished(reader As Monkeyspeak.TriggerReader) As Boolean
-        Return Not FurreNamedIsNotBanished(reader)
+
+    '(5:x) as the server for the banish-list.
+    Function BanishList(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            sendServer("banish-list")
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+        Return True
     End Function
 
     Function BanishSave(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -150,86 +157,84 @@ Public Class Banish
 
             NewVar = reader.ReadVariable(True)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
 
-        NewVar.Value = String.Join(" ", callbk.BanishString.ToArray)
+        NewVar.Value = String.Join(" ", FurcSession.BanishString.ToArray)
         Return True
     End Function
-
-    '(5:x) as the server for the banish-list.
-    Function BanishList(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            sendServer("banish-list")
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return True
-    End Function
-
 
     '(5:x) banish the triggering furre.
     Function BanishTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            sendServer("banish " + callbk.Player.Name)
+            sendServer("banish " + FurcSession.Player.Name)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
-    '(0:53) When the bot sucessfilly banishes the furre named {...},
-    '(0: ) When the bot successfully temp banishes the furre named {...},
-    Function AndBanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
+
+    '(1:53) and the furre named {...} is on the banish list,
+    Function FurreNamedIsBanished(reader As Monkeyspeak.TriggerReader) As Boolean
+        Return Not FurreNamedIsNotBanished(reader)
+    End Function
+
+    '(1:52) and the furre named {...} is not on the banish list,
+    Function FurreNamedIsNotBanished(reader As Monkeyspeak.TriggerReader) As Boolean
+        Dim banishlist As List(Of String) = FurcSession.BanishString
         Try
-            Dim Furre As String = reader.ReadString
-            Return Furre.ToFurcShortName = callbk.BanishName.ToFurcShortName
+            Dim f As String = reader.ReadString
+            For Each Furre As String In banishlist
+                If FurcadiaShortName(Furre) = FurcadiaShortName(f) Then Return False
+            Next
+            Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
-    '(5:x) banish the furre named {...}.
-    Function BanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim Furre As String = reader.ReadString
-            sendServer("banish " + Furre)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return True
-    End Function
+
     '(5:x) temperary  banish the triggering furre for three days.
     Function TempBanishFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            sendServer("tempbanish " + callbk.Player.Name)
+            sendServer("tempbanish " + FurcSession.Player.Name)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
+
     '(5:x) temperoily banish the furre named {...} for three days.
     Function TempBanishTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim Furre As String = reader.ReadString
             sendServer("tempbanish " + Furre)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
-    '(5:x) unbanish the triggering furre.
-    Function UnBanishTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
+
+    '(1:51) and the triggering furre is on the banish list,
+    Function TrigFurreIsBanished(reader As Monkeyspeak.TriggerReader) As Boolean
+        Return Not TrigFurreIsNotBanished(reader)
+    End Function
+
+    '(1:50) and the triggering furre is not on the banish list,
+    Function TrigFurreIsNotBanished(reader As Monkeyspeak.TriggerReader) As Boolean
+        Dim banishlist As List(Of String) = FurcSession.BanishString
         Try
-            sendServer("banish-off " + callbk.Player.Name)
+            For Each Furre As String In banishlist
+                If FurcadiaShortName(Furre) = FurcSession.Player.ShortName Then Return False
+            Next
+            Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -240,13 +245,23 @@ Public Class Banish
             Dim Furre As String = reader.ReadString
             sendServer("banish-off " + Furre)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
         Return True
     End Function
-    Sub sendServer(ByRef var As String)
-        callbk.sndServer(var)
-    End Sub
+
+    '(5:x) unbanish the triggering furre.
+    Function UnBanishTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            sendServer("banish-off " + FurcSession.Player.Name)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+        Return True
+    End Function
+
+#End Region
 
 End Class

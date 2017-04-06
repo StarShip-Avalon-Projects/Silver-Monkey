@@ -3,11 +3,24 @@ Imports System.Drawing.Imaging
 Imports System.Net
 
 Public Class DownloadImage
-    Private imageUrl As String
+
+#Region "Private Fields"
+
     Private bitmap As Bitmap
+    Private imageUrl As String
+
+#End Region
+
+#Region "Public Constructors"
+
     Public Sub New(ByVal imageUrl As String)
         Me.imageUrl = imageUrl
     End Sub
+
+#End Region
+
+#Region "Public Methods"
+
     Public Sub Download()
         Try
             Dim client As New WebClient()
@@ -27,4 +40,7 @@ Public Class DownloadImage
             bitmap.Save(filename, format)
         End If
     End Sub
+
+#End Region
+
 End Class

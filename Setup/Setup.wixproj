@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <PropertyGroup>
     <EnableProjectHarvesting>True</EnableProjectHarvesting>
   </PropertyGroup>
@@ -19,11 +19,16 @@
     <OutputPath>..\Build\Installer\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug;</DefineConstants>
-    <LeaveTemporaryFiles>True</LeaveTemporaryFiles>
+    <LeaveTemporaryFiles>False</LeaveTemporaryFiles>
     <WixVariables>
     </WixVariables>
     <LinkerAdditionalOptions>
     </LinkerAdditionalOptions>
+    <VerboseOutput>True</VerboseOutput>
+    <SuppressAllWarnings>False</SuppressAllWarnings>
+    <Pedantic>False</Pedantic>
+    <CompilerAdditionalOptions>
+    </CompilerAdditionalOptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>..\Build\Installer\$(Configuration)\</OutputPath>
@@ -31,19 +36,20 @@
   </PropertyGroup>
   <Import Project="$(WixTargetsPath)" />
   <ItemGroup>
-    <None Include="Filter.xslt" />
+    <Resource Include="Filter.xslt" />
     <None Include="license.rtf" />
     <None Include="Setup.build" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyWixUI_InstallDi.wxs" />
-    <Compile Include="MyInstallDirDlg.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
     <HeatProject Include="@(ProjectReference->'%(FullPath)')">
       <ProjectOutputGroups>Binaries;Symbols;Documents;Satellites;Content</ProjectOutputGroups>
     </HeatProject>
+    <!--
+    <HeatProject   TreatWarningsAsErrors="$(HarvestProjectsTreatWarningsAsErrors)"   GenerateGuidsNow="True" OutputFile="$(IntermediateOutputPath)_%(_Project.Filename).wxs" SuppressFragments="True" SuppressUniqueIds="True" Transforms="filters.xslt" Project="@(_Project)" ProjectOutputGroups="Binaries;" />
+	-->
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUtilExtension">
@@ -70,8 +76,8 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
       <Name>DataMonkey</Name>
@@ -79,8 +85,8 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\DSeX\MonkeySpeakEditor.vbproj">
       <Name>MonkeySpeakEditor</Name>
@@ -88,8 +94,8 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Name>FurcadiaLib</Name>
@@ -97,8 +103,8 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
       <Name>Interfaces</Name>
@@ -106,8 +112,26 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
+      <Name>BugTraqConnect</Name>
+      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Mantis\mantisnotify\MantisNotify.csproj">
+      <Name>MantisNotify</Name>
+      <Project>{2a8447ac-e15c-4a8f-bded-8e4373d574d4}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Name>MonkeyCore</Name>
@@ -115,17 +139,8 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\MonkeySpeakR6\MonkeyspeakR6.csproj">
-      <Name>MonkeyspeakR6</Name>
-      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\SilverMonkey\SilverMonkey2.vbproj">
       <Name>SilverMonkey2</Name>
@@ -133,8 +148,8 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\TheClaaaw\TheClaaaw.vbproj">
       <Name>TheClaaaw</Name>
@@ -142,8 +157,8 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>PLUGINS</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Verbot Knowledgebase Editor\Verbot Knowledgebase Editor.vbproj">
       <Name>VerbotKnowledgebaseEditor</Name>
@@ -151,8 +166,8 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Verbot5Library\Verbot5Library.csproj">
       <Name>Verbot5Library</Name>
@@ -160,8 +175,8 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -190,5 +205,8 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent />
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent />
   </PropertyGroup>
 </Project>

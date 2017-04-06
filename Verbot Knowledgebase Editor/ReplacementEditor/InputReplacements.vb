@@ -2,7 +2,14 @@
 Imports Conversive.Verbot5
 
 Public Class InputReplacements
+
+#Region "Public Fields"
+
     Public IP As InputReplacement = New InputReplacement
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
 
@@ -19,13 +26,10 @@ Public Class InputReplacements
 
         ' Add any initialization after the InitializeComponent() call.
     End Sub
-    Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
-        IP.TextToFind = TextBox1.Text
-        IP.TextToInput = TextBox2.Text
 
-        Me.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.Close()
-    End Sub
+#End Region
+
+#Region "Private Methods"
 
     Private Sub Cancel_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
@@ -36,4 +40,15 @@ Public Class InputReplacements
         TextBox1.Text = IP.TextToFind
         TextBox2.Text = IP.TextToInput
     End Sub
+
+    Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
+        IP.TextToFind = TextBox1.Text
+        IP.TextToInput = TextBox2.Text
+
+        Me.DialogResult = System.Windows.Forms.DialogResult.OK
+        Me.Close()
+    End Sub
+
+#End Region
+
 End Class

@@ -3,21 +3,30 @@ Imports System.Windows.Forms
 
 Public Class frmHelp
     Inherits Form
-    Private helpfile As String = "Silver Monkey.chm"
-    Private WithEvents showIndex As System.Windows.Forms.Button
-    Private WithEvents showHelp As System.Windows.Forms.Button
-    Private WithEvents label1 As System.Windows.Forms.Label
-    Private WithEvents navigatorCombo As System.Windows.Forms.ComboBox
-    Private WithEvents showKeyword As System.Windows.Forms.Button
+
+#Region "Fields"
+
     Private WithEvents keyword As System.Windows.Forms.TextBox
+    Private WithEvents label1 As System.Windows.Forms.Label
     Private WithEvents label2 As System.Windows.Forms.Label
     Private WithEvents label3 As System.Windows.Forms.Label
+    Private WithEvents navigatorCombo As System.Windows.Forms.ComboBox
     Private WithEvents parameterTextBox As System.Windows.Forms.TextBox
+    Private WithEvents showHelp As System.Windows.Forms.Button
+    Private WithEvents showIndex As System.Windows.Forms.Button
+    Private WithEvents showKeyword As System.Windows.Forms.Button
 
-    <STAThread()> _
-    Shared Sub Main()
-        Application.Run(New Form1)
-    End Sub 'Main
+#End Region
+
+#Region "Private Fields"
+
+    Private helpfile As String = "Silver Monkey.chm"
+
+#End Region
+
+    <STAThread()>
+
+#Region "Public Constructors"
 
     Public Sub New()
         Me.showIndex = New System.Windows.Forms.Button
@@ -64,7 +73,7 @@ Public Class frmHelp
         Me.showKeyword.Text = "Show Keyword"
 
         ' Help Navigator Combo
-        ' 
+        '
         Me.navigatorCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.navigatorCombo.Location = New System.Drawing.Point(112, 80)
         Me.navigatorCombo.Size = New System.Drawing.Size(168, 21)
@@ -75,9 +84,9 @@ Public Class frmHelp
         Me.keyword.Size = New System.Drawing.Size(160, 20)
         Me.keyword.TabIndex = 5
         Me.keyword.Text = ""
-        ' 
+        '
         ' Parameter TextBox
-        ' 
+        '
         Me.parameterTextBox.Location = New System.Drawing.Point(112, 136)
         Me.parameterTextBox.Size = New System.Drawing.Size(168, 20)
         Me.parameterTextBox.TabIndex = 8
@@ -85,14 +94,14 @@ Public Class frmHelp
 
         ' Set up how the form should be displayed and add the controls to the form.
         Me.ClientSize = New System.Drawing.Size(292, 266)
-        Me.Controls.AddRange(New System.Windows.Forms.Control() {Me.parameterTextBox, _
-                                Me.label3, Me.label2, Me.keyword, Me.showKeyword, _
+        Me.Controls.AddRange(New System.Windows.Forms.Control() {Me.parameterTextBox,
+                                Me.label3, Me.label2, Me.keyword, Me.showKeyword,
                                 Me.label1, Me.navigatorCombo, Me.showHelp, Me.showIndex})
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Text = "Help App"
 
         ' Load the various values of the HelpNavigator enumeration
-        ' into the combo box. 
+        ' into the combo box.
         Dim converter As TypeConverter
         converter = TypeDescriptor.GetConverter(GetType(HelpNavigator))
 
@@ -100,12 +109,24 @@ Public Class frmHelp
         For Each value In converter.GetStandardValues()
             navigatorCombo.Items.Add(value)
         Next value
-    End Sub 'NewNew
+    End Sub
 
-    Private Sub showIndex_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles showIndex.Click
-        ' Display the index for the Help file.
-        Help.ShowHelpIndex(Me, helpfile)
-    End Sub 'showIndex_Click
+#End Region
+
+#Region "Public Methods"
+
+    Shared Sub Main()
+        Application.Run(New Form1)
+    End Sub
+
+#End Region
+
+    'Main
+
+    'NewNew
+
+#Region "Private Methods"
+
     Private Sub showHelp_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles showHelp.Click
         ' Display Help using the Help navigator enumeration
         ' that is selected in the combo box. Some enumeration
@@ -116,9 +137,19 @@ Public Class frmHelp
             navigator = CType(navigatorCombo.SelectedItem, HelpNavigator)
         End If
         Help.ShowHelp(Me, helpfile, navigator, parameterTextBox.Text)
-    End Sub 'showHelp_Click
+    End Sub
+
+    Private Sub showIndex_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles showIndex.Click
+        ' Display the index for the Help file.
+        Help.ShowHelpIndex(Me, helpfile)
+    End Sub 'showIndex_Click
+    'showHelp_Click
     Private Sub showKeyword_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles showKeyword.Click
-        ' Display Help using the provided keyword. 
+        ' Display Help using the provided keyword.
         Help.ShowHelp(Me, helpfile, keyword.Text)
-    End Sub 'showKeyword_Click
+    End Sub
+
+#End Region
+
+    'showKeyword_Click
 End Class 'Form1

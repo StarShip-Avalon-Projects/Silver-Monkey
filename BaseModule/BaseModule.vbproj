@@ -71,6 +71,12 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>BaseModule.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -117,6 +123,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="BaseModule.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -136,11 +143,6 @@
     <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
       <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
       <Name>Interfaces</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\MonkeyspeakR6\MonkeyspeakR6.csproj">
-      <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
-      <Name>MonkeyspeakR6</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

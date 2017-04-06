@@ -2,15 +2,21 @@
 
 Public Class MS_DreamTransfer
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
-    ' Ctrl+T and Editor.ini Dream Name+location 
+    ' Ctrl+T and Editor.ini Dream Name+location
     'http://www.furcadia.com/download/dream.html
 
+#Region "Private Fields"
+
     Private writer As TextBoxWriter = Nothing
+
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
         '(0:960) When the bot has finished uploading a dream,
-        '(0:961) When the bot gets an error from the server about uploading a dream, 
+        '(0:961) When the bot gets an error from the server about uploading a dream,
         '(0:962) When the bot gets an error from the server about an `fdl teleport attempt,
 
         '(5:960) Go to Acropolis.
@@ -25,7 +31,6 @@ Public Class MS_DreamTransfer
         '(5:969) unload the dream {...} in Bot's Dream or if the bot has share.
     End Sub
 
-
-
+#End Region
 
 End Class

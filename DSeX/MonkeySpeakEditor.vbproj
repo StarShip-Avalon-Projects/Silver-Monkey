@@ -36,6 +36,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -67,9 +69,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>MonkeySpeakEditor.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FastColoredTextBox">
-      <HintPath>..\packages\FCTB.2.16.11.0\lib\FastColoredTextBox.dll</HintPath>
+    <Reference Include="FastColoredTextBox, Version=2.16.21.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -211,7 +220,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
-    <Content Include="keys-ms.ini">
+    <Content Include="Keys-MS.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="keys.ini">
@@ -223,6 +232,7 @@
     <Content Include="keyshelp.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="MonkeySpeakEditor.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -232,7 +242,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="packages.config" />
     <Content Include="Scripts-MS\DreamCheck.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -242,6 +251,7 @@
     <Content Include="Scripts\antispam.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="packages.config" />
     <None Include="Scripts\automaticdoor.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -487,8 +497,12 @@
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
+      <Project>{F4391F6F-0239-48E2-B415-C39A6D920303}</Project>
+      <Name>BugTraqConnect</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
-      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Project>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
   </ItemGroup>
@@ -533,12 +547,19 @@ move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\MT.exe"   -manifest "$(ProjectDir)app.manifest"   -outputresource:"$(TargetDir)$(TargetFileName)";#1
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>if $(ConfigurationName) == Release (
 "..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"
 )</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets'))" />
+  </Target>
 </Project>

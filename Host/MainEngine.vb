@@ -2,47 +2,38 @@
 Imports MonkeyCore
 Imports Monkeyspeak
 
-
 Public Class MainEngine
 
-
 #Region "Const"
-    Private Const MS_Header As String = "*MSPK V04.00 Silver Monkey"
     Private Const MS_Footer As String = "*Endtriggers* 8888 *Endtriggers*"
+    Private Const MS_Header As String = "*MSPK V04.00 Silver Monkey"
 #End Region
 
 #Region "MonkeySpeakEngine"
-    Public Function MS_Started() As Boolean
-        ' 0 = main load
-        ' 1 = engine start
-        ' 2 = engine running
-        If MS_Stared = 2 Then Return True Else Return False
-    End Function
-    Public MS_Stared As Integer = 0
-    Private Const RES_MS_begin As String = "*MSPK V"
-    Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
+    Public Shared WithEvents MSpage As Page = Nothing
+
+    Public engine As MonkeyspeakEngine = New MonkeyspeakEngine()
 
     Public EngineRestart As Boolean = False
 
     Public MS_Engine_Running As Boolean = False
-    Public engine As MonkeyspeakEngine = New MonkeyspeakEngine()
-    Public Shared WithEvents MSpage As Page = Nothing
+
+    Public MS_Stared As Integer = 0
+
+    Private Const RES_MS_begin As String = "*MSPK V"
+
+    Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
+
+    Private msVer As Double = 3.0
+
     Public Sub New()
         EngineStart()
     End Sub
-    'Bot Starts
-    Public Sub ScriptStart()
-        Try
 
-            MSpage = engine.LoadFromString("")
-            ' Console.WriteLine("Execute (0:0)")
-            MS_Stared = 1
-            LoadLibrary()
+    Public Shared Sub MS_Error(trigger As Trigger, ex As Exception) Handles MSpage.Error
 
-            MS_Engine_Running = True
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
+        Console.WriteLine("Error, See Debug Window")
+        Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
     End Sub
 
     'loads at main load
@@ -73,13 +64,14 @@ Public Class MainEngine
             objPlugin.Start()
         Next
 
-
     End Sub
 
-
-
-
-    Private msVer As Double = 3.0
+    Public Function MS_Started() As Boolean
+        ' 0 = main load
+        ' 1 = engine start
+        ' 2 = engine running
+        If MS_Stared = 2 Then Return True Else Return False
+    End Function
     Public Function msReader(ByVal file As String) As String
         file = file.Trim
         Dim Data As String = String.Empty
@@ -100,8 +92,6 @@ Public Class MainEngine
                         Exit While
                     End If
 
-
-
                 End While
                 objReader.Close()
                 objReader.Dispose()
@@ -113,6 +103,12 @@ Public Class MainEngine
         End Try
     End Function
 
+    Public Sub PageExecute(ParamArray ID() As Integer)
+
+        MSpage.Execute(ID)
+
+    End Sub
+
     Public Sub PageSetVariable(ByVal varName As String, ByVal data As Object)
 
         Try
@@ -122,6 +118,7 @@ Public Class MainEngine
         End Try
 
     End Sub
+
     Public Sub PageSetVariable(ByVal varName As String, ByVal data As Object, ByVal Constant As Boolean)
         Try
             MSpage.SetVariable("%" & varName.ToUpper, data, Constant) '
@@ -131,20 +128,20 @@ Public Class MainEngine
 
     End Sub
 
-    Public Sub PageExecute(ParamArray ID() As Integer)
+    'Bot Starts
+    Public Sub ScriptStart()
+        Try
 
-        MSpage.Execute(ID)
+            MSpage = engine.LoadFromString("")
+            ' Console.WriteLine("Execute (0:0)")
+            MS_Stared = 1
+            LoadLibrary()
 
+            MS_Engine_Running = True
+        Catch eX As Exception
+            Dim logError As New ErrorLogging(eX, Me)
+        End Try
     End Sub
-
-    Public Shared Sub MS_Error(trigger As Trigger, ex As Exception) Handles MSpage.Error
-
-        Console.WriteLine("Error, See Debug Window")
-        Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
-    End Sub
-
-
-
 #End Region
 
 End Class

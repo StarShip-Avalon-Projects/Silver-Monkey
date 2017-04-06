@@ -1,24 +1,33 @@
 Release Notes:
 Furcadia Framework for 3rd Party Programs
 
-
 MonkeyCore 
 (Core library of shared components)
-New BotCheckFolder function
+
+
+SqliteDatabase:
+
 
 Data Monkey
 (Database Manager)
 
 
+
 Monkey Speak Editor
 (Script Editor)
-Added Angelcat Staff Group Template
+
 
 Silver Monkey
 (Main Bot Application)
 
+
 SQLite Database:
-Tied BotCheckFolder function with MS_Pounce MS IO and MemberList classes  in the Main Engine
+
+[Effects]
+(5:562) insert or ignore Database Setting {...} for Table {...} to {...}.
+(5:563) Sselect Database setting {...} for Table {...} to {...}.
+(5:564) delete Database setting {...} from Table{...}.
+(5:565) delet all Settings Table Database info.
 
 MonkeySpeak
 (Script Engine)
@@ -32,3 +41,5 @@ Chat Bot
 
 Verbot Knowedgebase Editor
 (Chatterbot Catch phrasses and responces)
+
+Wix Setup

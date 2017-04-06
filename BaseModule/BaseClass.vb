@@ -1,41 +1,64 @@
-﻿Imports MonkeySpeak
+﻿Imports Monkeyspeak
 Imports Furcadia.Net
-Imports System.Text.RegularExpressions
 Imports Furcadia.Base95
 
-Public Class BaseClass2
-    Implements SilverMonkey.Interfaces.msPlugin
+Public Class BaseClass
+    Implements Interfaces.msPlugin
 
-    Private msHost As SilverMonkey.Interfaces.msHost
+#Region "Private Fields"
 
-    Public Sub Initialize(ByVal Host As SilverMonkey.Interfaces.msHost) Implements SilverMonkey.Interfaces.msPlugin.Initialize
-        msHost = Host
-    End Sub
+    Private msHost As Interfaces.msHost
 
-    Public ReadOnly Property Name() As String Implements SilverMonkey.Interfaces.msPlugin.Name
-        Get
-            Return "Base Module"
-        End Get
-    End Property
-    Public ReadOnly Property Description() As String Implements SilverMonkey.Interfaces.msPlugin.Description
+#End Region
+
+#Region "Public Properties"
+
+    Public ReadOnly Property Description() As String Implements Interfaces.msPlugin.Description
         Get
             Return "Base Class for building Modules"
         End Get
     End Property
 
-    Public ReadOnly Property Version() As String Implements SilverMonkey.Interfaces.msPlugin.Version
+    Public Property Enabled As Boolean Implements Interfaces.msPlugin.enabled
+
+    Public ReadOnly Property Name() As String Implements Interfaces.msPlugin.Name
+        Get
+            Return "Base Module"
+        End Get
+    End Property
+
+    Public ReadOnly Property Version() As String Implements Interfaces.msPlugin.Version
         Get
             Dim VersionInfo As Version = System.Reflection.Assembly.GetExecutingAssembly.GetName.Version
             Return VersionInfo.Major & "." & VersionInfo.Minor & "." & VersionInfo.Build & "." & VersionInfo.Revision
         End Get
     End Property
 
-    Public Property Enabled As Boolean Implements SilverMonkey.Interfaces.msPlugin.enabled
+#End Region
+
+#Region "Public Methods"
+
+    Public Sub Initialize(ByVal Host As Interfaces.msHost) Implements Interfaces.msPlugin.Initialize
+        msHost = Host
+    End Sub
+
+#End Region
+
 #Region "Global Properties"
 
     Public Player As FURRE
 
+    Private msDream As DREAM
     Private MSpage As Monkeyspeak.Page
+    Public Property Dream As DREAM
+        Get
+            Return msHost.Dream
+        End Get
+        Set(value As DREAM)
+            msHost.Dream = value
+        End Set
+    End Property
+
     Public Property Page As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msPlugin.Page
         Get
             Return MSpage
@@ -46,19 +69,30 @@ Public Class BaseClass2
             msHost.Page = MSpage
         End Set
     End Property
-    Private msDream As DREAM
-    Public Property Dream As DREAM
-        Get
-            Return msHost.Dream
-        End Get
-        Set(value As DREAM)
-            msHost.Dream = value
-        End Set
-    End Property
-
 #End Region
 
-    Public Sub Start() Implements SilverMonkey.Interfaces.msPlugin.Start
+    Function MessagePump(ByRef ServerInstruction As String) As Boolean Implements Interfaces.msPlugin.MessagePump
+        'Set Object At Feet
+        If ServerInstruction.StartsWith("%") Then
+            Player = NameToFurre(msHost.BotName, True)
+            Player.FloorObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
+            Page.Execute(2000, 2001)
+            msHost.Player = Player
+            Dream.FurreList(Player) = Player
+            Return True
+            'Set Object In Paws
+        ElseIf ServerInstruction.StartsWith("^") Then
+            Player = NameToFurre(msHost.BotName, True)
+            Player.PawObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
+            Page.Execute(2000, 2001)
+            msHost.Player = Player
+            Dream.FurreList(Player) = Player
+            Return True
+        End If
+        Return False
+    End Function
+
+    Public Sub Start() Implements Interfaces.msPlugin.Start
         '(0:x) When the bot picks up or drops an object
         'Page.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 2000,
         '    Function()
@@ -69,33 +103,25 @@ Public Class BaseClass2
         'Page.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 2001,
         '    AddressOf PickUpObjectNumber, "(0:2001) When the bot picks up or drops the object #,")
 
-
     End Sub
-
-
-
-    Function MessagePump(ByRef ServerInstruction As String) As Boolean Implements SilverMonkey.Interfaces.msPlugin.MessagePump
-        'Set Object At Feet
-        If ServerInstruction.StartsWith("%") Then
-            Player = NametoFurre(msHost.BotName, True)
-            Player.FloorObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
-            Page.Execute(2000, 2001)
-            msHost.Player = Player
-            Furcadia.Net.DREAM.List(Player.ID) = Player
-            Return True
-            'Set Object In Paws
-        ElseIf ServerInstruction.StartsWith("^") Then
-            Player = NametoFurre(msHost.BotName, True)
-            Player.PawObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
-            Page.Execute(2000, 2001)
-            msHost.Player = Player
-            Furcadia.Net.DREAM.List(Player.ID) = Player
-            Return True
-        End If
-        Return False
+#Region "Helper Functions"
+    Public Function IsBot(ByRef p As FURRE) As Boolean
+        Return p.ShortName = msHost.BotName.ToFurcShortName
     End Function
 
-#Region "Helper Functions"
+    Public Function NameToFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
+        Dim p As New FURRE
+        p.Name = sname
+        For Each Character As FURRE In Dream.FurreList
+            If Character.ShortName = sname.ToFurcShortName Then
+                p = Character
+                Exit For
+            End If
+        Next
+        If UbdateMSVariableName Then Page.SetVariable(VarPrefix & "NAME", sname, True)
+        Return p
+    End Function
+
     Public Function ReadVariableOrNumber(ByVal reader As Monkeyspeak.TriggerReader, Optional addIfNotExist As Boolean = False) As Double
         Dim result As Double = 0
         If reader.PeekVariable Then
@@ -106,32 +132,13 @@ Public Class BaseClass2
         End If
         Return result
     End Function
-
-    Public Function IsBot(ByRef p As FURRE) As Boolean
-        Return p.ShortName = msHost.BotName.ToFurcShortName
-    End Function
-
     Private Function fIDtoFurre(ByRef ID As UInteger) As FURRE
-        Dim Character As KeyValuePair(Of UInteger, FURRE)
-        For Each Character In Dream.List
-            If Character.Value.ID = ID Then
-                Return Character.Value
+
+        For Each Character As FURRE In Dream.FurreList
+            If Character.ID = ID Then
+                Return Character
             End If
         Next
     End Function
-
-    Public Function NametoFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
-        Dim p As New FURRE
-        p.Name = sname
-        For Each Character As KeyValuePair(Of UInteger, FURRE) In Dream.List
-            If Character.Value.ShortName = sname.ToFurcShortName Then
-                p = Character.Value
-                Exit For
-            End If
-        Next
-        If UbdateMSVariableName Then Page.SetVariable(VarPrefix & "NAME", sname, True)
-        Return p
-    End Function
-
 #End Region
 End Class

@@ -3,19 +3,28 @@ Imports Furcadia.Net
 
 Public Interface msPlugin
 
-    Sub Initialize(ByVal Host As SilverMonkey.Interfaces.msHost)
+#Region "Public Properties"
+
+    ReadOnly Property Description() As String
+
+    Property enabled As Boolean
 
     ReadOnly Property Name() As String
-    ReadOnly Property Description() As String
-    ReadOnly Property Version() As String
-    Property enabled As Boolean
-    'Property Player As FURRE
 
     Property Page As Monkeyspeak.Page
 
-    Sub Start()
+    ReadOnly Property Version() As String
 
+#End Region
+
+#Region "Public Methods"
+
+    Sub Initialize(ByVal Host As SilverMonkey.Interfaces.msHost)
     Function MessagePump(ByRef ServerInstruction As String) As Boolean
 
+    'Property Player As FURRE
+    Sub Start()
+
+#End Region
 
 End Interface

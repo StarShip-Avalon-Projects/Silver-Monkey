@@ -1,18 +1,22 @@
 ﻿Imports System.Windows.Forms
 
-
 Public Class Variables
+
+#Region "Private Fields"
 
     Private alarm As Threading.Timer
     'Dim RefreshList As New Thread(AddressOf RefreshMe)
     Dim Lock As New Object
+
+#End Region
+
+#Region "Private Delegates"
+
     Private Delegate Sub dlgUpdateUI()
 
-    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-        updateVariables()
+#End Region
 
-    End Sub
-
+#Region "Public Methods"
 
     Public Sub updateVariables()
 
@@ -21,12 +25,10 @@ Public Class Variables
             ListView1.Invoke(d)
         Else
 
-
-
             SyncLock Lock
 
-                For i As Integer = 0 To MainMSEngine.MSpage.Scope.Count - 1
-                    Dim Var As Monkeyspeak.Variable = MainMSEngine.MSpage.Scope.Item(i)
+                For i As Integer = 0 To FurcSession.MainEngine.MSpage.Scope.Count - 1
+                    Dim Var As Monkeyspeak.Variable = FurcSession.MainEngine.MSpage.Scope.Item(i)
 
                     Dim Variable() As String = {"", "", ""}
                     Variable(0) = Var.Name.ToString
@@ -37,7 +39,6 @@ Public Class Variables
                     Dim itm As ListViewItem = New ListViewItem(Variable)
                     If ListView1.Items.Count > i Then
 
-
                         If ListView1.Items.Item(i).SubItems(2).Text <> itm.SubItems.Item(2).Text Then
                             ListView1.Items.Item(i) = itm
                         End If
@@ -46,7 +47,6 @@ Public Class Variables
                         ListView1.Items.Add(itm)
                     End If
 
-
                     '  ListView1.Groups.
 
                 Next
@@ -54,6 +54,14 @@ Public Class Variables
         End If
     End Sub
 
+#End Region
+
+#Region "Private Methods"
+
+    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
+        updateVariables()
+
+    End Sub
     Private Sub ChkBxRefresh_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkBxRefresh.CheckedChanged
         If ChkBxRefresh.Checked Then
             Me.alarm = New Threading.Timer(AddressOf Tick, Nothing, 1000, 1000)
@@ -61,18 +69,6 @@ Public Class Variables
             Me.alarm.Dispose()
         End If
     End Sub
-
-    Private Sub Variables_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-        If Not IsNothing(Me.alarm) Then Me.alarm.Dispose()
-    End Sub
-
-    Private Sub Variables_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-
-    End Sub
-    Private Sub Tick(ByVal state As Object)
-        updateVariables()
-    End Sub
-
 
     Private Sub ListView1_DoubleClick(sender As Object, e As System.EventArgs) Handles ListView1.DoubleClick
         With SetVariables
@@ -87,5 +83,18 @@ Public Class Variables
         End With
     End Sub
 
+    Private Sub Tick(ByVal state As Object)
+        updateVariables()
+    End Sub
+
+    Private Sub Variables_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        If Not IsNothing(Me.alarm) Then Me.alarm.Dispose()
+    End Sub
+
+    Private Sub Variables_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+
+    End Sub
+
+#End Region
 
 End Class

@@ -9,7 +9,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <AssemblyKeyContainerName />
     <AssemblyName>ModuleExplorer</AssemblyName>
-    <AssemblyOriginatorKeyFile />
+    <AssemblyOriginatorKeyFile>ModuleExplorer.pfx</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
@@ -87,6 +87,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -97,6 +98,9 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
@@ -155,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Dlls\Ionic.Zip.dll" />
+    <None Include="ModuleExplorer.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -186,12 +191,16 @@
       <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
+      <Project>{F4391F6F-0239-48E2-B415-C39A6D920303}</Project>
+      <Name>BugTraqConnect</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Project>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyspeakR6\MonkeyspeakR6.csproj">
-      <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
+    <ProjectReference Include="..\MonkeySpeakEx\MonkeyspeakR6.csproj">
+      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Name>MonkeyspeakR6</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,5 +1,4 @@
-﻿
-Imports Furcadia.Net
+﻿Imports Furcadia.Net
 Imports Furcadia.Base220
 Imports System.Diagnostics
 Imports MonkeyCore
@@ -7,8 +6,14 @@ Imports MonkeyCore
 Public Class Description
 
     Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+
+#Region "Private Fields"
+
     Private writer As TextBoxWriter = Nothing
 
+#End Region
+
+#Region "Public Constructors"
 
     Public Sub New()
         writer = New TextBoxWriter(Variables.TextBox1)
@@ -179,29 +184,19 @@ Public Class Description
 
     End Sub
 
+#End Region
+
+#Region "Public Methods"
 
     '(1:600) and triggering furre's description contains {...}
     Function DescContains(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Dim Pattern As String = reader.ReadString
             If tPlayer.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
             Return tPlayer.Desc.Contains(Pattern)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(1:601) and triggering furre's description does not contain {...}
-    Function NotDescContains(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Dim Pattern As String = reader.ReadString
-            If tPlayer.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
-            Return Not tPlayer.Desc.Contains(Pattern)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -210,124 +205,118 @@ Public Class Description
     Function DescContainsFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString()
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
             Dim Pattern As String = reader.ReadString
             If Target.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
             Return Target.Desc.Contains(Pattern)
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
-
-    '(1:603) and the furre named {...} description does not contain {...}
-    Function NotDescContainsFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
+    '(5:608) set variable %Variable to the furre named {...} colors, if they are in the dream.
+    Function FurreNamedColorsVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = callbk.Player
-            Dim name As String = reader.ReadString()
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Dim Pattern As String = reader.ReadString
-            If Target.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
-            Return Not tPlayer.Desc.Contains(Pattern)
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:604) and the triggering furre is male,
-    Function TriggeringFurreMale(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Select Case tPlayer.LastStat
-                Case -1
-                    Throw New Exception("Gender not found. Try looking at the furre first")
-                Case 0
-                    Return tPlayer.Gender = 1
-                Case 1
-                    If tPlayer.FrameInfo.gender = -1 Then
-                        If tPlayer.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
-                        Return tPlayer.Gender = 1
-                    Else
-                        Return tPlayer.FrameInfo.gender = 1
-                    End If
-            End Select
 
+            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim ColorString As String = Target.Color
+            If Target.Color.Length < 10 Then
+                Throw New Exception("Color string not found. Try looking at the furre first.")
+            ElseIf Target.Color.Length = 10 Then
+                ColorString = Target.Color & ConvertToBase220(Target.Gender) & ConvertToBase220(Target.Species) & ConvertToBase220(Target.Special)
+            Else
+                ColorString = Target.Color
+            End If
+            Var.Value = ColorString
+            Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return False
-    End Function
-    '(1:605) and the triggering furre is female,
-    Function TriggeringFurreFemale(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Select Case tPlayer.LastStat
-                Case -1
-                    Throw New Exception("Gender not found. Try looking at the furre first")
-                Case 0
-                    Return tPlayer.Gender = 0
-                Case 1
-                    If tPlayer.FrameInfo.gender = -1 Then
-                        If tPlayer.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
-                        Return tPlayer.Gender = 0
-                    Else
-                        Return tPlayer.FrameInfo.gender = 0
-                    End If
-            End Select
-
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-        Return False
-    End Function
-    '(1:606) and the triggering furre is unspecified,
-    Function TriggeringFurreUnspecified(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Select Case tPlayer.LastStat
-                Case -1
-                    Throw New Exception("Gender not found. Try looking at the furre first")
-                Case 0
-                    Return tPlayer.Gender = 2
-                Case 1
-                    If tPlayer.FrameInfo.gender = -1 Then
-                        If tPlayer.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
-                        Return tPlayer.Gender = 2
-                    Else
-                        Return tPlayer.FrameInfo.gender = 2
-                    End If
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
-    '(1:608) and the furre named {...} is male,
-    Function FurreNamedMale(reader As Monkeyspeak.TriggerReader) As Boolean
+    '(5:607) set variable %Variable to the furred named {...} description, if they are in the dream.
+    Function FurreNamedDescVar(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            If Target.Desc = Nothing Then Throw New Exception("Description not found, Try looking at the furre first.")
+            Var.Value = Target.Desc
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) and the furre named {...} is facing NE,
+    Function FurreNamedFacingNE(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Select Case Target.LastStat
-                Case -1
-                    Throw New Exception("Gender not found. Try looking at the furre first")
-                Case 0
-                    Return Target.Gender = 1
-                Case 1
-                    If Target.FrameInfo.gender = -1 Then
-                        If Target.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
-                        Return Target.Gender = 1
-                    Else
-                        Return Target.FrameInfo.gender = 1
-                    End If
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Spec As Double = reader.ReadNumber()
+            Select Case Target.FrameInfo.dir
+                Case 3
+                    Return True
             End Select
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) and the furre named {...} is facing NW,
+    Function FurreNamedFacingNW(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Spec As Double = reader.ReadNumber()
+            Select Case Target.FrameInfo.dir
+                Case 2
+                    Return True
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) and the furre named {...} is facing SE,
+    Function FurreNamedFacingSE(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Spec As Double = reader.ReadNumber()
+            Select Case Target.FrameInfo.dir
+                Case 1
+                    Return True
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) and the furre named {...} is facing SW,
+    Function FurreNamedFacingSW(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Spec As Double = reader.ReadNumber()
+            Select Case Target.FrameInfo.dir
+                Case 0
+                    Return True
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -336,7 +325,7 @@ Public Class Description
     Function FurreNamedFemale(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
             Select Case Target.LastStat
                 Case -1
                     Throw New Exception("Gender not found. Try looking at the furre first")
@@ -352,157 +341,75 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
-    '(1:610) and the furre Named {...} is unspecified,
-    Function FurreNamedUnSpecified(reader As Monkeyspeak.TriggerReader) As Boolean
+
+    '(5:605) set variable %Variable to the furre named {...} gender if they are in the dream.
+    Function FurreNamedGenderVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
+            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
             Select Case Target.LastStat
                 Case -1
                     Throw New Exception("Gender not found. Try looking at the furre first")
                 Case 0
-                    Return Target.Gender = 2
+                    Var.Value = Target.Gender
                 Case 1
                     If Target.FrameInfo.gender = -1 Then
                         If Target.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
-                        Return Target.Gender = 2
+                        Var.Value = Convert.ToDouble(Target.Gender)
                     Else
-                        Return Target.FrameInfo.gender = 2
+                        Var.Value = Convert.ToDouble(Target.FrameInfo.gender)
                     End If
             End Select
-            Return False
+            Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-            Return False
-        End Try
-    End Function
-    '(1:612) and the trigger furre is Species # (please see http://www.furcadia.com/dsparams/ for info)
-    Function TriggeringFurreSpecies(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Dim Spec As Double = reader.ReadNumber()
-            Select Case tPlayer.LastStat
-                Case -1
-                    Throw New Exception("Species type not found. Try looking at the furre first")
-                Case 0
-                    Return tPlayer.DSSpecies = Spec
-                Case 1
-                    If tPlayer.FrameInfo.DS_Number = -1 Then
-                        If tPlayer.DSSpecies = -1 Then Throw New Exception("Species type not found, Try looking at the furre first")
-                        Return tPlayer.DSSpecies = Spec
-                    Else
-                        Return tPlayer.FrameInfo.DS_Number = Spec
-                    End If
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
-    '(1:613) and the furre named {...} is Species # (please see http://www.furcadia.com/dsparams/ for info)
-    Function FurreNamedSpecies(reader As Monkeyspeak.TriggerReader) As Boolean
+    '(1:x) and the furre named {...} is laying.
+    Function FurreNamedLaying(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
-            Select Case Target.LastStat
-                Case -1
-                    Throw New Exception("Species not found. Try looking at the furre first")
-                Case 0
-                    Return Target.DSSpecies = Spec
-                Case 1
-                    If Target.FrameInfo.DS_Number = -1 Then
-                        If Target.DSSpecies = -1 Then Throw New Exception("Species not found, Try looking at the furre first")
-                        Return Target.DSSpecies = Spec
-                    Else
-                        Return Target.FrameInfo.DS_Number = Spec
-                    End If
+            Select Case Target.FrameInfo.pose
+                Case 4
+                    Return True
             End Select
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
-    '(1:614) and the triggering furre has wings of type #
-    Function TriggeringFurreWings(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Dim Spec As Double = reader.ReadNumber()
-            Select Case tPlayer.LastStat
-                Case -1
-                    Throw New Exception("Wings type not found. Try looking at the furre first")
-                Case 0
-                    Return tPlayer.Wings = Spec
-                Case 1
-                    If tPlayer.FrameInfo.Wings = -1 Then
-                        If tPlayer.Wings = -1 Then Throw New Exception("Wings type not found, Try looking at the furre first")
-                        Return tPlayer.Wings = Spec
-                    Else
-                        Return tPlayer.FrameInfo.Wings = Spec
-                    End If
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:615) and the triggering furre doesn't wings of type #
-    Function TriggeringFurreNoWings(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Dim Spec As Double = reader.ReadNumber()
-            Select Case tPlayer.LastStat
-                Case -1
-                    Throw New Exception("Wings type not found. Try looking at the furre first")
-                Case 0
-                    Return tPlayer.Wings <> Spec
-                Case 1
-                    If tPlayer.FrameInfo.Wings = -1 Then
-                        If tPlayer.Wings = -1 Then Throw New Exception("Wings type not found, Try looking at the furre first")
-                        Return tPlayer.Wings <> Spec
-                    Else
-                        Return tPlayer.FrameInfo.Wings <> Spec
-                    End If
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(1:616) and the furre named {...} has wings of type #
-    Function FurreNamedWings(reader As Monkeyspeak.TriggerReader) As Boolean
+    '(1:608) and the furre named {...} is male,
+    Function FurreNamedMale(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Dim Spec As Double = reader.ReadNumber()
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
             Select Case Target.LastStat
                 Case -1
-                    Throw New Exception("Wings type not found. Try looking at the furre first")
+                    Throw New Exception("Gender not found. Try looking at the furre first")
                 Case 0
-                    Return Target.Wings = Spec
+                    Return Target.Gender = 1
                 Case 1
-                    If Target.FrameInfo.Wings = -1 Then
-                        If Target.Wings = -1 Then Throw New Exception("Wings type not found, Try looking at the furre first")
-                        Return Target.Wings = Spec
+                    If Target.FrameInfo.gender = -1 Then
+                        If Target.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
+                        Return Target.Gender = 1
                     Else
-                        Return Target.FrameInfo.Wings = Spec
+                        Return Target.FrameInfo.gender = 1
                     End If
             End Select
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -511,7 +418,7 @@ Public Class Description
     Function FurreNamedNoWings(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.LastStat
                 Case -1
@@ -528,130 +435,16 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
-    '(1:x) and the triggering furre is standing.
-    Function TriggeringFurreStanding(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Select Case tPlayer.FrameInfo.pose
-                Case 1 To 3
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the triggering furre is sitting.
-    Function TriggeringFurreSitting(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Select Case tPlayer.FrameInfo.pose
-                Case 0
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the triggering furre is laying.
-    Function TriggeringFurreLaying(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Select Case tPlayer.FrameInfo.pose
-                Case 4
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the triggering furre is facing NE,
-    Function TriggeringFurreFacingNE(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Select Case tPlayer.FrameInfo.dir
-                Case 3
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the triggering furre is facing NW,
-    Function TriggeringFurreFacingNW(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Select Case tPlayer.FrameInfo.dir
-                Case 2
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the triggering furre is facing SE,
-    Function TriggeringFurreFacingSE(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Select Case tPlayer.FrameInfo.dir
-                Case 1
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the triggering furre is facing SW,
-    Function TriggeringFurreFacingSW(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Select Case tPlayer.FrameInfo.dir
-                Case 0
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the furre named {...} is standing.
-    Function FurreNamedStanding(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Dim Spec As Double = reader.ReadNumber()
-            Select Case Target.FrameInfo.pose
-                Case 1 To 3
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
     '(1:x) and the furre named {...} is sitting.
     Function FurreNamedSitting(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.FrameInfo.pose
                 Case 0
@@ -659,109 +452,309 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the furre named {...} is laying.
-    Function FurreNamedLaying(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Dim Spec As Double = reader.ReadNumber()
-            Select Case Target.FrameInfo.pose
-                Case 4
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the furre named {...} is facing NE,
-    Function FurreNamedFacingNE(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Dim Spec As Double = reader.ReadNumber()
-            Select Case Target.FrameInfo.dir
-                Case 3
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the furre named {...} is facing NW,
-    Function FurreNamedFacingNW(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Dim Spec As Double = reader.ReadNumber()
-            Select Case Target.FrameInfo.dir
-                Case 2
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the furre named {...} is facing SE,
-    Function FurreNamedFacingSE(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Dim Spec As Double = reader.ReadNumber()
-            Select Case Target.FrameInfo.dir
-                Case 1
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-    '(1:x) and the furre named {...} is facing SW,
-    Function FurreNamedFacingSW(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Dim Spec As Double = reader.ReadNumber()
-            Select Case Target.FrameInfo.dir
-                Case 0
-                    Return True
-            End Select
-            Return False
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
 
+    '(1:613) and the furre named {...} is Species # (please see http://www.furcadia.com/dsparams/ for info)
+    Function FurreNamedSpecies(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Spec As Double = reader.ReadNumber()
+            Select Case Target.LastStat
+                Case -1
+                    Throw New Exception("Species not found. Try looking at the furre first")
+                Case 0
+                    Return Target.DSSpecies = Spec
+                Case 1
+                    If Target.FrameInfo.DS_Number = -1 Then
+                        If Target.DSSpecies = -1 Then Throw New Exception("Species not found, Try looking at the furre first")
+                        Return Target.DSSpecies = Spec
+                    Else
+                        Return Target.FrameInfo.DS_Number = Spec
+                    End If
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:606) set variable %Variable to the furre named {...} species, if they are in the dream.
+    Function FurreNamedSpeciesVar(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Select Case Target.LastStat
+                Case -1
+                    Throw New Exception("Species not found. Try looking at the furre first")
+                Case 0
+                    Var.Value = Convert.ToDouble(Target.DSSpecies)
+                Case 1
+                    If Target.FrameInfo.DS_Number = -1 Then
+                        If Target.DSSpecies = -1 Then Throw New Exception("Species not found, Try looking at the furre first")
+                        Var.Value = Convert.ToDouble(Target.DSSpecies)
+                    Else
+                        Var.Value = Convert.ToDouble(Target.FrameInfo.DS_Number)
+                    End If
+            End Select
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) and the furre named {...} is standing.
+    Function FurreNamedStanding(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Spec As Double = reader.ReadNumber()
+            Select Case Target.FrameInfo.pose
+                Case 1 To 3
+                    Return True
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:610) and the furre Named {...} is unspecified,
+    Function FurreNamedUnSpecified(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Select Case Target.LastStat
+                Case -1
+                    Throw New Exception("Gender not found. Try looking at the furre first")
+                Case 0
+                    Return Target.Gender = 2
+                Case 1
+                    If Target.FrameInfo.gender = -1 Then
+                        If Target.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
+                        Return Target.Gender = 2
+                    Else
+                        Return Target.FrameInfo.gender = 2
+                    End If
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+            Return False
+        End Try
+    End Function
+
+    '(1:616) and the furre named {...} has wings of type #
+    Function FurreNamedWings(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Spec As Double = reader.ReadNumber()
+            Select Case Target.LastStat
+                Case -1
+                    Throw New Exception("Wings type not found. Try looking at the furre first")
+                Case 0
+                    Return Target.Wings = Spec
+                Case 1
+                    If Target.FrameInfo.Wings = -1 Then
+                        If Target.Wings = -1 Then Throw New Exception("Wings type not found, Try looking at the furre first")
+                        Return Target.Wings = Spec
+                    Else
+                        Return Target.FrameInfo.Wings = Spec
+                    End If
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(5:610) set %Variable to the wings type the furre named {...} is wearing.
+    Function FurreNamedWingsVar(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Select Case Target.LastStat
+                Case -1
+                    Throw New Exception("Wings type not found. Try looking at the furre first")
+                Case 0
+                    Var.Value = Convert.ToDouble(Target.Wings)
+                Case 1
+                    If Target.FrameInfo.Wings = -1 Then
+                        If Target.Wings = -1 Then Throw New Exception("Wings type not found, Try looking at the furre first")
+                        Var.Value = Convert.ToDouble(Target.Wings)
+                    Else
+                        Var.Value = Convert.ToDouble(Target.FrameInfo.Wings)
+                    End If
+            End Select
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:601) and triggering furre's description does not contain {...}
+    Function NotDescContains(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Dim Pattern As String = reader.ReadString
+            If tPlayer.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
+            Return Not tPlayer.Desc.Contains(Pattern)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(1:603) and the furre named {...} description does not contain {...}
+    Function NotDescContainsFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Dim name As String = reader.ReadString()
+            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Pattern As String = reader.ReadString
+            If Target.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
+            Return Not tPlayer.Desc.Contains(Pattern)
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+    '(5:604) set variable %Variable to the triggering furre's colors.
+    Function TriggeringFurreColorsVar(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim ColorString As String = tPlayer.Color
+            If tPlayer.Color.Length < 10 Then
+                Throw New Exception("Color string not found. Try looking at the furre first.")
+            ElseIf tPlayer.Color.Length = 10 Then
+                ColorString = tPlayer.Color & ConvertToBase220(tPlayer.Gender) & ConvertToBase220(tPlayer.Species) & ConvertToBase220(tPlayer.Special)
+            Else
+                ColorString = tPlayer.Color
+            End If
+
+            Var.Value = ColorString
+            Return True
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
 
     '(5:600) set variable %Variable to the Triggering furre's description.
     Function TriggeringFurreDescVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             If tPlayer.Desc = Nothing Then Throw New Exception("Description not found, Try looking at the furre first.")
             Var.Value = tPlayer.Desc
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
+
+    '(1:x) and the triggering furre is facing NE,
+    Function TriggeringFurreFacingNE(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Select Case tPlayer.FrameInfo.dir
+                Case 3
+                    Return True
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) and the triggering furre is facing NW,
+    Function TriggeringFurreFacingNW(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Select Case tPlayer.FrameInfo.dir
+                Case 2
+                    Return True
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) and the triggering furre is facing SE,
+    Function TriggeringFurreFacingSE(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Select Case tPlayer.FrameInfo.dir
+                Case 1
+                    Return True
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) and the triggering furre is facing SW,
+    Function TriggeringFurreFacingSW(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Select Case tPlayer.FrameInfo.dir
+                Case 0
+                    Return True
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:605) and the triggering furre is female,
+    Function TriggeringFurreFemale(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Select Case tPlayer.LastStat
+                Case -1
+                    Throw New Exception("Gender not found. Try looking at the furre first")
+                Case 0
+                    Return tPlayer.Gender = 0
+                Case 1
+                    If tPlayer.FrameInfo.gender = -1 Then
+                        If tPlayer.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
+                        Return tPlayer.Gender = 0
+                    Else
+                        Return tPlayer.FrameInfo.gender = 0
+                    End If
+            End Select
+
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+        Return False
+    End Function
+
     '(5:601 set variable %Variable to the triggering furre's gender.
     Function TriggeringFurreGenderVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Select Case tPlayer.LastStat
                 Case -1
@@ -779,14 +772,119 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
+
+    '(1:x) and the triggering furre is laying.
+    Function TriggeringFurreLaying(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Select Case tPlayer.FrameInfo.pose
+                Case 4
+                    Return True
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:604) and the triggering furre is male,
+    Function TriggeringFurreMale(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Select Case tPlayer.LastStat
+                Case -1
+                    Throw New Exception("Gender not found. Try looking at the furre first")
+                Case 0
+                    Return tPlayer.Gender = 1
+                Case 1
+                    If tPlayer.FrameInfo.gender = -1 Then
+                        If tPlayer.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
+                        Return tPlayer.Gender = 1
+                    Else
+                        Return tPlayer.FrameInfo.gender = 1
+                    End If
+            End Select
+
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+        Return False
+    End Function
+    '(1:615) and the triggering furre doesn't wings of type #
+    Function TriggeringFurreNoWings(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Dim Spec As Double = reader.ReadNumber()
+            Select Case tPlayer.LastStat
+                Case -1
+                    Throw New Exception("Wings type not found. Try looking at the furre first")
+                Case 0
+                    Return tPlayer.Wings <> Spec
+                Case 1
+                    If tPlayer.FrameInfo.Wings = -1 Then
+                        If tPlayer.Wings = -1 Then Throw New Exception("Wings type not found, Try looking at the furre first")
+                        Return tPlayer.Wings <> Spec
+                    Else
+                        Return tPlayer.FrameInfo.Wings <> Spec
+                    End If
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:x) and the triggering furre is sitting.
+    Function TriggeringFurreSitting(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Select Case tPlayer.FrameInfo.pose
+                Case 0
+                    Return True
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
+    '(1:612) and the trigger furre is Species # (please see http://www.furcadia.com/dsparams/ for info)
+    Function TriggeringFurreSpecies(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Dim Spec As Double = reader.ReadNumber()
+            Select Case tPlayer.LastStat
+                Case -1
+                    Throw New Exception("Species type not found. Try looking at the furre first")
+                Case 0
+                    Return tPlayer.DSSpecies = Spec
+                Case 1
+                    If tPlayer.FrameInfo.DS_Number = -1 Then
+                        If tPlayer.DSSpecies = -1 Then Throw New Exception("Species type not found, Try looking at the furre first")
+                        Return tPlayer.DSSpecies = Spec
+                    Else
+                        Return tPlayer.FrameInfo.DS_Number = Spec
+                    End If
+            End Select
+            Return False
+        Catch ex As Exception
+            MainMsEngine.LogError(reader, ex)
+            Return False
+        End Try
+    End Function
+
     '(5:602) set variable %Variable to the triggering furre's species.
     Function TriggeringFurreSpeciesVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Select Case tPlayer.LastStat
                 Case -1
@@ -803,123 +901,77 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
-    '(5:604) set variable %Variable to the triggering furre's colors.
-    Function TriggeringFurreColorsVar(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim tPlayer As FURRE = callbk.Player
-            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim ColorString As String = tPlayer.Color
-            If tPlayer.Color.Length < 10 Then
-                Throw New Exception("Color string not found. Try looking at the furre first.")
-            ElseIf tPlayer.Color.Length = 10 Then
-                ColorString = tPlayer.Color & ConvertToBase220(CUInt(tPlayer.Gender)) & ConvertToBase220(CUInt(tPlayer.Species)) & ConvertToBase220(CUInt(tPlayer.Special))
-            Else
-                ColorString = tPlayer.Color
-            End If
 
-            Var.Value = ColorString
-            Return True
+    '(1:x) and the triggering furre is standing.
+    Function TriggeringFurreStanding(reader As Monkeyspeak.TriggerReader) As Boolean
+        Try
+            Dim tPlayer As FURRE = FurcSession.Player
+            Select Case tPlayer.FrameInfo.pose
+                Case 1 To 3
+                    Return True
+            End Select
+            Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
-    '(5:605) set variable %Variable to the furre named {...} gender if they are in the dream.
-    Function FurreNamedGenderVar(reader As Monkeyspeak.TriggerReader) As Boolean
+
+    '(1:606) and the triggering furre is unspecified,
+    Function TriggeringFurreUnspecified(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Select Case Target.LastStat
+            Dim tPlayer As FURRE = FurcSession.Player
+            Select Case tPlayer.LastStat
                 Case -1
                     Throw New Exception("Gender not found. Try looking at the furre first")
                 Case 0
-                    Var.Value = Target.Gender
+                    Return tPlayer.Gender = 2
                 Case 1
-                    If Target.FrameInfo.gender = -1 Then
-                        If Target.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
-                        Var.Value = Convert.ToDouble(Target.Gender)
+                    If tPlayer.FrameInfo.gender = -1 Then
+                        If tPlayer.Gender = -1 Then Throw New Exception("Gender not found, Try looking at the furre first")
+                        Return tPlayer.Gender = 2
                     Else
-                        Var.Value = Convert.ToDouble(Target.FrameInfo.gender)
+                        Return tPlayer.FrameInfo.gender = 2
                     End If
             End Select
-            Return True
+            Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
-    '(5:606) set variable %Variable to the furre named {...} species, if they are in the dream.
-    Function FurreNamedSpeciesVar(reader As Monkeyspeak.TriggerReader) As Boolean
+    '(1:614) and the triggering furre has wings of type #
+    Function TriggeringFurreWings(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Select Case Target.LastStat
+            Dim tPlayer As FURRE = FurcSession.Player
+            Dim Spec As Double = reader.ReadNumber()
+            Select Case tPlayer.LastStat
                 Case -1
-                    Throw New Exception("Species not found. Try looking at the furre first")
+                    Throw New Exception("Wings type not found. Try looking at the furre first")
                 Case 0
-                    Var.Value = Convert.ToDouble(Target.DSSpecies)
+                    Return tPlayer.Wings = Spec
                 Case 1
-                    If Target.FrameInfo.DS_Number = -1 Then
-                        If Target.DSSpecies = -1 Then Throw New Exception("Species not found, Try looking at the furre first")
-                        Var.Value = Convert.ToDouble(Target.DSSpecies)
+                    If tPlayer.FrameInfo.Wings = -1 Then
+                        If tPlayer.Wings = -1 Then Throw New Exception("Wings type not found, Try looking at the furre first")
+                        Return tPlayer.Wings = Spec
                     Else
-                        Var.Value = Convert.ToDouble(Target.FrameInfo.DS_Number)
+                        Return tPlayer.FrameInfo.Wings = Spec
                     End If
             End Select
-            Return True
+            Return False
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
-    '(5:607) set variable %Variable to the furred named {...} description, if they are in the dream.
-    Function FurreNamedDescVar(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            If Target.Desc = Nothing Then Throw New Exception("Description not found, Try looking at the furre first.")
-            Var.Value = Target.Desc
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
-    '(5:608) set variable %Variable to the furre named {...} colors, if they are in the dream.
-    Function FurreNamedColorsVar(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-
-            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Dim ColorString As String = Target.Color
-            If Target.Color.Length < 10 Then
-                Throw New Exception("Color string not found. Try looking at the furre first.")
-            ElseIf Target.Color.Length = 10 Then
-                ColorString = Target.Color & ConvertToBase220(CUInt(Target.Gender)) & ConvertToBase220(CUInt(Target.Species)) & ConvertToBase220(CUInt(Target.Special))
-            Else
-                ColorString = Target.Color
-            End If
-            Var.Value = ColorString
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
-
     '(5:609) set %Variable to the wings type the triggering furre is wearing.
     Function TriggeringFurreWingsVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = callbk.Player
+            Dim tPlayer As FURRE = FurcSession.Player
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Select Case tPlayer.LastStat
                 Case -1
@@ -936,34 +988,11 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
+            MainMsEngine.LogError(reader, ex)
             Return False
         End Try
     End Function
-    '(5:610) set %Variable to the wings type the furre named {...} is wearing.
-    Function FurreNamedWingsVar(reader As Monkeyspeak.TriggerReader) As Boolean
-        Try
-            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = callbk.NametoFurre(name, False)
-            Select Case Target.LastStat
-                Case -1
-                    Throw New Exception("Wings type not found. Try looking at the furre first")
-                Case 0
-                    Var.Value = Convert.ToDouble(Target.Wings)
-                Case 1
-                    If Target.FrameInfo.Wings = -1 Then
-                        If Target.Wings = -1 Then Throw New Exception("Wings type not found, Try looking at the furre first")
-                        Var.Value = Convert.ToDouble(Target.Wings)
-                    Else
-                        Var.Value = Convert.ToDouble(Target.FrameInfo.Wings)
-                    End If
-            End Select
-            Return True
-        Catch ex As Exception
-            MainMSEngine.LogError(reader, ex)
-            Return False
-        End Try
-    End Function
+
+#End Region
 
 End Class

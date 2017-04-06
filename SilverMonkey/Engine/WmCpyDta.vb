@@ -1,18 +1,20 @@
 ﻿Imports Monkeyspeak
-Imports System.Runtime.InteropServices
+
 Imports System.Diagnostics
-Imports MonkeyCore
+Imports Furcadia.Net
 
 Public Class WmCpyDta
-    Inherits Libraries.AbstractBaseLibrary
-    Private writer As TextBoxWriter = Nothing
+    Inherits MonkeySpeakLibrary
 
-    <DllImport("user32.dll", EntryPoint:="FindWindow")> _
-    Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
-    End Function
+#Region "Public Constructors"
 
     Public Sub New()
-        writer = New TextBoxWriter(Variables.TextBox1)
+        MyBase.New()
+    End Sub
+
+    Public Sub New(ByRef Dream As DREAM, ByRef Player As FURRE, ByRef MsEngine As MainMsEngine)
+        MyBase.New(Dream, Player, MsEngine)
+
         '(0:75) When the bot receives a message from another bot on the same computer,
         Add(TriggerCategory.Cause, 75,
 Function()
@@ -34,6 +36,10 @@ AddressOf SendMessage, "(5:75) send message {...} to bot named {...}.")
 AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot last received.")
     End Sub
 
+#End Region
+
+#Region "Public Methods"
+
     '(0:76) When the bot receives message {...} from another bot on the same computer,
     Function ReceiveMessage(reader As TriggerReader) As Boolean
         Dim msMsg As String = ""
@@ -42,7 +48,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
             'Debug.Print("msgContains Begin Execution")
             msMsg = reader.ReadString()
             'Debug.Print("msMsg = " & msMsg)
-            msg = MainMSEngine.MSpage.GetVariable("MESSAGE").Value.ToString
+            msg = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE").Value.ToString
             'Debug.Print("Msg = " & msg)
             Return msg.Equals(msMsg)
         Catch ex As Exception
@@ -55,6 +61,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
             Return False
         End Try
     End Function
+
     '(0:77) When the bot receives a message containing {...} from another bot on the same computer,
     Function ReceiveMessageContaining(reader As TriggerReader) As Boolean
         Dim msMsg As String = ""
@@ -63,7 +70,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
             'Debug.Print("msgContains Begin Execution")
             msMsg = reader.ReadString()
             'Debug.Print("msMsg = " & msMsg)
-            msg = MainMSEngine.MSpage.GetVariable("MESSAGE").Value.ToString
+            msg = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE").Value.ToString
             'Debug.Print("Msg = " & msg)
             Return msg.Contains(msMsg)
         Catch ex As Exception
@@ -87,7 +94,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
             'Debug.Print("msMsg = " & msMsg)
             Fur = reader.ReadString()
             'Step 1.
-            'To send a message to another application the first thing we need is the 
+            'To send a message to another application the first thing we need is the
             'handle of the receiving application.
             'One way is to use the FindWindow API
             Dim cstrReceiverWindowName As String = "Silver Monkey: " + Fur
@@ -101,8 +108,8 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
 
             Dim iResult As IntPtr = IntPtr.Zero
             If WindowHandle <> IntPtr.Zero Then
-                iResult = msg.sendWindowsStringMessage(WindowHandle, IntPtr.Zero, callbk.BotName, CUInt(callbk.BotUID), strTag, msMsg)
-                callbk.SendClientMessage("SYSTEM Send Windows Message to " + Fur + ": ", msMsg)
+                iResult = msg.sendWindowsStringMessage(WindowHandle, IntPtr.Zero, FurcSession.BotName, FurcSession.BotUID, strTag, msMsg)
+                SendClientMessage("SYSTEM Send Windows Message to " + Fur + ": ", msMsg)
             End If
             'Debug.Print("Msg = " & msg)
             Return True
@@ -122,7 +129,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
         Dim Var As Monkeyspeak.Variable
         Try
             Var = reader.ReadVariable(True)
-            Var.Value = callbk.Player.Message
+            Var.Value = MyPlayer.Message
             Return True
         Catch ex As Exception
             Dim tID As String = reader.TriggerId.ToString
@@ -134,4 +141,14 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
             Return False
         End Try
     End Function
+
+#End Region
+
+#Region "Private Methods"
+
+    Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
+    End Function
+
+#End Region
+
 End Class

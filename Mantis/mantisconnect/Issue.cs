@@ -13,7 +13,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace Futureware.MantisConnect
+namespace SilverMonkey.BugTraqConnect
 {
     using System;
     using System.Text;
@@ -22,86 +22,13 @@ namespace Futureware.MantisConnect
     /// A class to manage information relating to an issue.
     /// </summary>
     /// <remarks>
-    /// This class does not contain information like issue notes, attachments, ...etc
-    /// which is stored in different tables in Mantis database.
+    /// This class does not contain information like issue notes, attachments, ...etc which is stored
+    /// in different tables in Mantis database.
     /// </remarks>
     [Serializable]
     public sealed class Issue
     {
-        /// <summary>
-        /// The issue id.
-        /// </summary>
-        private int id;
-
-        /// <summary>
-        /// The project reference.
-        /// </summary>
-        private ObjectRef project = new ObjectRef();
-
-        /// <summary>
-        /// The total of all sponsorships on this issue.
-        /// </summary>
-        private int sponsorshipTotal;
-
-        /// <summary>
-        /// The reproducibility of the issue.
-        /// </summary>
-        private ObjectRef reproducibility = new ObjectRef();
-
-        /// <summary>
-        /// The status of the issue.
-        /// </summary>
-        private ObjectRef status = new ObjectRef();
-
-        /// <summary>
-        /// The priority of the issue.
-        /// </summary>
-        private ObjectRef priority = new ObjectRef();
-
-        /// <summary>
-        /// The severity of the issue.
-        /// </summary>
-        private ObjectRef severity = new ObjectRef();
-
-        /// <summary>
-        /// The resolution of the issue.
-        /// </summary>
-        private ObjectRef resolution = new ObjectRef();
-
-        /// <summary>
-        /// The projection of the issue.
-        /// </summary>
-        private ObjectRef projection = new ObjectRef();
-
-        /// <summary>
-        /// The eta of the issue.
-        /// </summary>
-        private ObjectRef eta = new ObjectRef();
-
-        /// <summary>
-        /// The view state of the issue.
-        /// </summary>
-        private ObjectRef viewState = new ObjectRef();
-
-        /// <summary>
-        /// The category of the issue.
-        /// </summary>
-        private ObjectRef category = new ObjectRef();
-
-        /// <summary>
-        /// The summary of the issue.
-        /// </summary>
-        private string summary = string.Empty;
-
-        /// <summary>
-        /// The description of the issue.
-        /// </summary>
-        private string description = string.Empty;
-
-        /// <summary>
-        /// The steps to reproduce for the issue.
-        /// </summary>
-        private string stepsToReproduce = string.Empty;
+        #region Private Fields
 
         /// <summary>
         /// The additional information for the issue.
@@ -114,24 +41,49 @@ namespace Futureware.MantisConnect
         private User assignedTo = new User();
 
         /// <summary>
-        /// The person who reported the issue.
+        /// The attachments associated with the issue.
         /// </summary>
-        private User reportedBy = new User();
+        private Attachment[] attachments = new Attachment[0];
 
         /// <summary>
-        /// The product version on which the issue was found.
+        /// The category of the issue.
         /// </summary>
-        private string productVersion = string.Empty;
+        private ObjectRef category = new ObjectRef();
 
         /// <summary>
-        /// The product build on which the issue was found.
+        /// The submission timestamp of the issue.
         /// </summary>
-        private string productBuild = string.Empty;
+        private DateTime dateSubmitted = DateTime.Now;
+
+        /// <summary>
+        /// The description of the issue.
+        /// </summary>
+        private string description = string.Empty;
+
+        /// <summary>
+        /// The eta of the issue.
+        /// </summary>
+        private ObjectRef eta = new ObjectRef();
 
         /// <summary>
         /// The product version in which the issue was resolved.
         /// </summary>
         private string fixedInVersion = string.Empty;
+
+        /// <summary>
+        /// The issue id.
+        /// </summary>
+        private int id;
+
+        /// <summary>
+        /// The last updated timestamp of the issue.
+        /// </summary>
+        private DateTime lastUpdated = DateTime.Now;
+
+        /// <summary>
+        /// The notes associated with the issue.
+        /// </summary>
+        private IssueNote[] notes = new IssueNote[0];
 
         /// <summary>
         /// The OS on which the issue is found.
@@ -149,19 +101,29 @@ namespace Futureware.MantisConnect
         private string platform = string.Empty;
 
         /// <summary>
-        /// The submission timestamp of the issue.
+        /// The priority of the issue.
         /// </summary>
-        private DateTime dateSubmitted = DateTime.Now;
+        private ObjectRef priority = new ObjectRef();
 
         /// <summary>
-        /// The last updated timestamp of the issue.
+        /// The product build on which the issue was found.
         /// </summary>
-        private DateTime lastUpdated = DateTime.Now;
+        private string productBuild = string.Empty;
 
         /// <summary>
-        /// The notes associated with the issue.
+        /// The product version on which the issue was found.
         /// </summary>
-        private IssueNote[] notes = new IssueNote[0];
+        private string productVersion = string.Empty;
+
+        /// <summary>
+        /// The project reference.
+        /// </summary>
+        private ObjectRef project = new ObjectRef();
+
+        /// <summary>
+        /// The projection of the issue.
+        /// </summary>
+        private ObjectRef projection = new ObjectRef();
 
         /// <summary>
         /// The relationships associated with the issue.
@@ -169,9 +131,53 @@ namespace Futureware.MantisConnect
         private IssueRelationship[] relationships = new IssueRelationship[0];
 
         /// <summary>
-        /// The attachments associated with the issue.
+        /// The person who reported the issue.
         /// </summary>
-        private Attachment[] attachments = new Attachment[0];
+        private User reportedBy = new User();
+
+        /// <summary>
+        /// The reproducibility of the issue.
+        /// </summary>
+        private ObjectRef reproducibility = new ObjectRef();
+
+        /// <summary>
+        /// The resolution of the issue.
+        /// </summary>
+        private ObjectRef resolution = new ObjectRef();
+
+        /// <summary>
+        /// The severity of the issue.
+        /// </summary>
+        private ObjectRef severity = new ObjectRef();
+
+        /// <summary>
+        /// The total of all sponsorships on this issue.
+        /// </summary>
+        private int sponsorshipTotal;
+
+        /// <summary>
+        /// The status of the issue.
+        /// </summary>
+        private ObjectRef status = new ObjectRef();
+
+        /// <summary>
+        /// The steps to reproduce for the issue.
+        /// </summary>
+        private string stepsToReproduce = string.Empty;
+
+        /// <summary>
+        /// The summary of the issue.
+        /// </summary>
+        private string summary = string.Empty;
+
+        /// <summary>
+        /// The view state of the issue.
+        /// </summary>
+        private ObjectRef viewState = new ObjectRef();
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Issue"/> class.
@@ -180,162 +186,51 @@ namespace Futureware.MantisConnect
         {
         }
 
+        #endregion Public Constructors
+
+        #region Internal Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Issue"/> class.
         /// </summary>
-        /// <param name="issueData">Issue data from Webservice proxy.</param>
-		internal Issue(MantisConnectWebservice.IssueData issueData)
-		{
-			this.Id = Convert.ToInt32(issueData.id);
-			this.Project = new ObjectRef(issueData.project);
-			this.Category = new ObjectRef(issueData.category);
-			this.Summary = issueData.summary;
-			this.Description = StringUtils.WebserviceMultilineToNative(issueData.description);
-			this.StepsToReproduce = issueData.steps_to_reproduce == null ? String.Empty : StringUtils.WebserviceMultilineToNative(issueData.steps_to_reproduce);
-			this.AdditionalInformation = issueData.additional_information == null ? String.Empty : StringUtils.WebserviceMultilineToNative(issueData.additional_information);
-			this.AssignedTo = issueData.handler == null ? null : new User(issueData.handler);
-			this.ReportedBy = new User(issueData.reporter);
-			this.ProductVersion = issueData.version == null ? String.Empty : issueData.version;
-			this.ProductBuild = issueData.build == null ? String.Empty : issueData.build;
-			this.Os = issueData.os == null ? String.Empty : issueData.os;
-			this.OsBuild = issueData.os_build == null ? String.Empty : issueData.os_build;
-			this.Platform = issueData.platform == null ? String.Empty : issueData.platform;
-			this.FixedInVersion = issueData.fixed_in_version == null ? String.Empty : issueData.fixed_in_version;
-			this.SponsorshipTotal = Convert.ToInt32(issueData.sponsorship_total);
-			this.Reproducibility = new ObjectRef(issueData.reproducibility);
-			this.Resolution = new ObjectRef(issueData.resolution);
-			this.Eta = new ObjectRef(issueData.eta);
-			this.Status = new ObjectRef(issueData.status);
-			this.Priority = new ObjectRef(issueData.priority);
-			this.Severity = new ObjectRef(issueData.severity);
-			this.Projection = new ObjectRef(issueData.projection);
-			this.ViewState = new ObjectRef(issueData.view_state);
-
-			this.Notes = IssueNote.ConvertArray(issueData.notes);
-			this.Attachments = Attachment.ConvertArray(issueData.attachments);
-			this.Relationships = IssueRelationship.ConvertArray(issueData.relationships);
-		}
-
-        /// <summary>
-        /// Convert this instance to the type supported by the webservice proxy.
-        /// </summary>
-        /// <returns>A copy of this instance in the webservice proxy type.</returns>
-		internal MantisConnectWebservice.IssueData ToWebservice()
-		{
-			MantisConnectWebservice.IssueData issueData = new MantisConnectWebservice.IssueData();
-
-			issueData.id = this.Id.ToString();
-			issueData.category = this.Category.Name;
-			issueData.summary = this.Summary;
-			issueData.description = StringUtils.NativeMultilineToWebservice(this.Description);
-			issueData.additional_information = StringUtils.NativeMultilineToWebservice(this.AdditionalInformation);
-			issueData.steps_to_reproduce = StringUtils.NativeMultilineToWebservice(this.StepsToReproduce);
-			issueData.build = this.ProductBuild;
-			issueData.version = this.ProductVersion;
-			issueData.os = this.Os;
-			issueData.os_build = this.OsBuild;
-			issueData.platform = this.Platform;
-			issueData.sponsorship_total = this.SponsorshipTotal.ToString();
-			issueData.fixed_in_version = this.FixedInVersion;
-			issueData.view_state = this.ViewState.ToWebservice();
-			issueData.projection = this.Projection.ToWebservice();
-			issueData.eta = this.Eta.ToWebservice();
-			issueData.priority = this.Priority.ToWebservice();
-			issueData.severity = this.Severity.ToWebservice();
-			issueData.project = this.Project.ToWebservice();
-			issueData.reproducibility = this.Reproducibility.ToWebservice();
-			issueData.resolution = this.Resolution.ToWebservice();
-			issueData.status = this.Status.ToWebservice();
-			issueData.reporter = this.ReportedBy.ToWebservice();
-			issueData.handler = this.AssignedTo == null ? null : this.AssignedTo.ToWebservice();
-			issueData.date_submitted = this.dateSubmitted;
-			issueData.last_updated = this.lastUpdated;
-
-			issueData.notes = IssueNote.ConvertArrayToWebservice(this.Notes);
-
-			// TODO: Attachments
-			// TODO: Relationships
-
-			return issueData;
-		}
-
-        /// <summary>
-        /// Converts an array of instances from webservice proxy type to this type.
-        /// </summary>
-        /// <param name="issuesData">Issues data in webservice proxy type.</param>
-        /// <returns>The array converted to this type.</returns>
-		internal static Issue[] ConvertArray(MantisConnectWebservice.IssueData[] issuesData)
-		{
-            if (issuesData == null)
-            {
-                return null;
-            }
-
-			Issue[] issues = new Issue[issuesData.Length];
-
-            for (int i = 0; i < issuesData.Length; ++i)
-            {
-                issues[i] = new Issue(issuesData[i]);
-            }
-
-			return issues;
-		}
-
-        /// <summary>
-        /// Gets or sets the issue id.
-        /// </summary>
-        /// <value>A value greater than or equal to 0.</value>
-        public int Id
+        /// <param name="issueData">
+        /// Issue data from Webservice proxy.
+        /// </param>
+        internal Issue(MantisConnectWebservice.IssueData issueData)
         {
-            get { return this.id; }
-            set { this.id = value; }
+            this.Id = Convert.ToInt32(issueData.id);
+            this.Project = new ObjectRef(issueData.project);
+            this.Category = new ObjectRef(issueData.category);
+            this.Summary = issueData.summary;
+            this.Description = StringUtils.WebserviceMultilineToNative(issueData.description);
+            this.StepsToReproduce = issueData.steps_to_reproduce == null ? String.Empty : StringUtils.WebserviceMultilineToNative(issueData.steps_to_reproduce);
+            this.AdditionalInformation = issueData.additional_information == null ? String.Empty : StringUtils.WebserviceMultilineToNative(issueData.additional_information);
+            this.AssignedTo = issueData.handler == null ? null : new User(issueData.handler);
+            this.ReportedBy = new User(issueData.reporter);
+            this.ProductVersion = issueData.version == null ? String.Empty : issueData.version;
+            this.ProductBuild = issueData.build == null ? String.Empty : issueData.build;
+            this.Os = issueData.os == null ? String.Empty : issueData.os;
+            this.OsBuild = issueData.os_build == null ? String.Empty : issueData.os_build;
+            this.Platform = issueData.platform == null ? String.Empty : issueData.platform;
+            this.FixedInVersion = issueData.fixed_in_version == null ? String.Empty : issueData.fixed_in_version;
+            this.SponsorshipTotal = Convert.ToInt32(issueData.sponsorship_total);
+            this.Reproducibility = new ObjectRef(issueData.reproducibility);
+            this.Resolution = new ObjectRef(issueData.resolution);
+            this.Eta = new ObjectRef(issueData.eta);
+            this.Status = new ObjectRef(issueData.status);
+            this.Priority = new ObjectRef(issueData.priority);
+            this.Severity = new ObjectRef(issueData.severity);
+            this.Projection = new ObjectRef(issueData.projection);
+            this.ViewState = new ObjectRef(issueData.view_state);
+
+            this.Notes = IssueNote.ConvertArray(issueData.notes);
+            this.Attachments = Attachment.ConvertArray(issueData.attachments);
+            this.Relationships = IssueRelationship.ConvertArray(issueData.relationships);
         }
 
-        /// <summary>
-        /// Gets or sets the project to which this issue belongs.  Null means un-assigned yet.
-        /// </summary>
-        /// <value>A value greater than 0.</value>
-        public ObjectRef Project
-        {
-            get { return this.project; }
-            set { this.project = value; }
-        }
+        #endregion Internal Constructors
 
-        /// <summary>
-        /// Gets or sets the name of category to which the issue belongs.  This field is mandatory.
-        /// </summary>
-        public ObjectRef Category
-        {
-            get { return this.category; }
-            set { this.category = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the summary of the issue.  This field is mandatory.
-        /// </summary>
-        public string Summary
-        {
-            get { return this.summary; }
-            set { this.summary = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the description of the issue.  This field is mandatory.
-        /// </summary>
-        public string Description
-        {
-            get { return this.description; }
-            set { this.description = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the steps to reproduce the issue.
-        /// </summary>
-        public string StepsToReproduce
-        {
-            get { return this.stepsToReproduce; }
-            set { this.stepsToReproduce = value; }
-        }
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the additional information about the issue.
@@ -349,7 +244,9 @@ namespace Futureware.MantisConnect
         /// <summary>
         /// Gets or sets the id of user handling the issue.
         /// </summary>
-        /// <value>User id >= 0</value>
+        /// <value>
+        /// User id &gt;= 0
+        /// </value>
         public User AssignedTo
         {
             get { return this.assignedTo; }
@@ -357,31 +254,94 @@ namespace Futureware.MantisConnect
         }
 
         /// <summary>
-        /// Gets or sets the id of user who reported the issue.
+        /// Gets or sets the attachments.
         /// </summary>
-        /// <value>User id > 0</value>
-        public User ReportedBy
+		public Attachment[] Attachments
         {
-            get { return this.reportedBy; }
-            set { this.reportedBy = value; }
+            get { return this.attachments; }
+            set { this.attachments = value; }
         }
 
         /// <summary>
-        /// Gets or sets the product version
+        /// Gets or sets the name of category to which the issue belongs. This field is mandatory.
         /// </summary>
-        public string ProductVersion
+        public ObjectRef Category
         {
-            get { return this.productVersion; }
-            set { this.productVersion = value; }
+            get { return this.category; }
+            set { this.category = value; }
         }
 
         /// <summary>
-        /// Gets or sets the product build
+        /// Gets or sets the timestamp when issue was submitted.
         /// </summary>
-        public string ProductBuild
+        public DateTime DateSubmitted
         {
-            get { return this.productBuild; }
-            set { this.productBuild = value; }
+            get { return this.dateSubmitted; }
+            set { this.dateSubmitted = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the description of the issue. This field is mandatory.
+        /// </summary>
+        public string Description
+        {
+            get { return this.description; }
+            set { this.description = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Estimated Time of Arrival
+        /// </summary>
+        /// <remarks>
+        /// This matches the ids defined in the eta enumeration in Mantis configuration file.
+        /// </remarks>
+        public ObjectRef Eta
+        {
+            get { return this.eta; }
+            set { this.eta = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the fixed in version field.
+        /// </summary>
+        /// <value>
+        /// Has to be the name of a version that is defined for the project to which this issue is
+        /// being added.
+        /// </value>
+        public string FixedInVersion
+        {
+            get { return this.fixedInVersion; }
+            set { this.fixedInVersion = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the issue id.
+        /// </summary>
+        /// <value>
+        /// A value greater than or equal to 0.
+        /// </value>
+        public int Id
+        {
+            get { return this.id; }
+            set { this.id = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the timestamp when issue was last updated.
+        /// </summary>
+        public DateTime LastUpdated
+        {
+            get { return this.lastUpdated; }
+            set { this.lastUpdated = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the notes.
+        /// </summary>
+		public IssueNote[] Notes
+        {
+            get { return this.notes; }
+            set { this.notes = value; }
         }
 
         /// <summary>
@@ -412,16 +372,111 @@ namespace Futureware.MantisConnect
         }
 
         /// <summary>
-        /// Gets or sets the fixed in version field.
+        /// Gets or sets the Issue Priority
+        /// </summary>
+        /// <remarks>
+        /// This matches the ids defined in the priority enumeration in Mantis configuration file.
+        /// </remarks>
+        public ObjectRef Priority
+        {
+            get { return this.priority; }
+            set { this.priority = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the product build
+        /// </summary>
+        public string ProductBuild
+        {
+            get { return this.productBuild; }
+            set { this.productBuild = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the product version
+        /// </summary>
+        public string ProductVersion
+        {
+            get { return this.productVersion; }
+            set { this.productVersion = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the project to which this issue belongs. Null means un-assigned yet.
         /// </summary>
         /// <value>
-        /// Has to be the name of a version that is defined for the project to
-        /// which this issue is being added.
+        /// A value greater than 0.
         /// </value>
-        public string FixedInVersion
+        public ObjectRef Project
         {
-            get { return this.fixedInVersion; }
-            set { this.fixedInVersion = value; }
+            get { return this.project; }
+            set { this.project = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Projection for the scope of the work associated with resolving the issue.
+        /// </summary>
+        public ObjectRef Projection
+        {
+            get { return this.projection; }
+            set { this.projection = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the relationships.
+        /// </summary>
+		public IssueRelationship[] Relationships
+        {
+            get { return this.relationships; }
+            set { this.relationships = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the id of user who reported the issue.
+        /// </summary>
+        /// <value>
+        /// User id &gt; 0
+        /// </value>
+        public User ReportedBy
+        {
+            get { return this.reportedBy; }
+            set { this.reportedBy = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Issue Reproducibility (eg: always, random, not tried, N/A, ...etc)
+        /// </summary>
+        /// <remarks>
+        /// This matches the ids defined in the reproducibility enumeration in Mantis configuration file.
+        /// </remarks>
+        public ObjectRef Reproducibility
+        {
+            get { return this.reproducibility; }
+            set { this.reproducibility = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Issue Resolution (eg: fixed, duplicate, not an issue)
+        /// </summary>
+        /// <remarks>
+        /// This matches the ids defined in the resolution enumeration in Mantis configuration file.
+        /// </remarks>
+        public ObjectRef Resolution
+        {
+            get { return this.resolution; }
+            set { this.resolution = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Issue Severity
+        /// </summary>
+        /// <remarks>
+        /// This matches the ids defined in the severity enumeration in Mantis configuration file.
+        /// </remarks>
+        public ObjectRef Severity
+        {
+            get { return this.severity; }
+            set { this.severity = value; }
         }
 
         /// <summary>
@@ -437,50 +492,10 @@ namespace Futureware.MantisConnect
         }
 
         /// <summary>
-        /// Gets or sets the Issue Reproducibility (eg: always, random, not tried, N/A, ...etc)
-        /// </summary>
-        /// <remarks>
-        /// This matches the ids defined in the reproducibility enumeration in Mantis configuration
-        /// file.
-        /// </remarks>
-        public ObjectRef Reproducibility
-        {
-            get { return this.reproducibility; }
-            set { this.reproducibility = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the Issue Resolution (eg: fixed, duplicate, not an issue)
-        /// </summary>
-        /// <remarks>
-        /// This matches the ids defined in the resolution enumeration in Mantis configuration
-        /// file.
-        /// </remarks>
-        public ObjectRef Resolution
-        {
-            get { return this.resolution; }
-            set { this.resolution = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the Estimated Time of Arrival
-        /// </summary>
-        /// <remarks>
-        /// This matches the ids defined in the eta enumeration in Mantis configuration
-        /// file.
-        /// </remarks>
-        public ObjectRef Eta
-        {
-            get { return this.eta; }
-            set { this.eta = value; }
-        }
-
-        /// <summary>
         /// Gets or sets the issue status
         /// </summary>
         /// <remarks>
-        /// This matches the ids defined in the status enumeration in Mantis configuration
-        /// file.
+        /// This matches the ids defined in the status enumeration in Mantis configuration file.
         /// </remarks>
         public ObjectRef Status
         {
@@ -489,38 +504,21 @@ namespace Futureware.MantisConnect
         }
 
         /// <summary>
-        /// Gets or sets the Issue Priority
+        /// Gets or sets the steps to reproduce the issue.
         /// </summary>
-        /// <remarks>
-        /// This matches the ids defined in the priority enumeration in Mantis configuration
-        /// file.
-        /// </remarks>
-        public ObjectRef Priority
+        public string StepsToReproduce
         {
-            get { return this.priority; }
-            set { this.priority = value; }
+            get { return this.stepsToReproduce; }
+            set { this.stepsToReproduce = value; }
         }
 
         /// <summary>
-        /// Gets or sets the Issue Severity
+        /// Gets or sets the summary of the issue. This field is mandatory.
         /// </summary>
-        /// <remarks>
-        /// This matches the ids defined in the severity enumeration in Mantis configuration
-        /// file.
-        /// </remarks>
-        public ObjectRef Severity
+        public string Summary
         {
-            get { return this.severity; }
-            set { this.severity = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the Projection for the scope of the work associated with resolving the issue.
-        /// </summary>
-        public ObjectRef Projection
-        {
-            get { return this.projection; }
-            set { this.projection = value; }
+            get { return this.summary; }
+            set { this.summary = value; }
         }
 
         /// <summary>
@@ -532,55 +530,16 @@ namespace Futureware.MantisConnect
             set { this.viewState = value; }
         }
 
-		/// <summary>
-		/// Gets or sets the timestamp when issue was submitted.
-		/// </summary>
-		public DateTime DateSubmitted
-		{
-			get { return this.dateSubmitted; }
-			set { this.dateSubmitted = value; }
-		}
+        #endregion Public Properties
 
-		/// <summary>
-		/// Gets or sets the timestamp when issue was last updated.
-		/// </summary>
-		public DateTime LastUpdated
-		{
-			get { return this.lastUpdated; }
-			set { this.lastUpdated = value; }
-		}
+        #region Public Methods
 
         /// <summary>
-        /// Gets or sets the notes.
-        /// </summary>
-		public IssueNote[] Notes
-		{
-			get { return this.notes; }
-			set { this.notes = value; }
-		}
-
-        /// <summary>
-        /// Gets or sets the relationships.
-        /// </summary>
-		public IssueRelationship[] Relationships
-		{
-			get { return this.relationships; }
-			set { this.relationships = value; }
-		}
-
-        /// <summary>
-        /// Gets or sets the attachments.
-        /// </summary>
-		public Attachment[] Attachments
-		{
-			get { return this.attachments; }
-			set { this.attachments = value; }
-		}
-		
-		/// <summary>
         /// Dumps the issue information to a string.
         /// </summary>
-        /// <returns>String include all issue information.</returns>
+        /// <returns>
+        /// String include all issue information.
+        /// </returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -612,10 +571,87 @@ namespace Futureware.MantisConnect
             sb.AppendFormat("OS Build = '{0}'\n", this.OsBuild);
             sb.AppendFormat("Platform = '{0}'\n", this.Platform);
 
-			sb.AppendFormat("Date Submitted = '{0}'\n", this.DateSubmitted);
-			sb.AppendFormat("Last Updated = '{0}'\n", this.LastUpdated);
+            sb.AppendFormat("Date Submitted = '{0}'\n", this.DateSubmitted);
+            sb.AppendFormat("Last Updated = '{0}'\n", this.LastUpdated);
 
-			return sb.ToString();
+            return sb.ToString();
         }
+
+        #endregion Public Methods
+
+        #region Internal Methods
+
+        /// <summary>
+        /// Converts an array of instances from webservice proxy type to this type.
+        /// </summary>
+        /// <param name="issuesData">
+        /// Issues data in webservice proxy type.
+        /// </param>
+        /// <returns>
+        /// The array converted to this type.
+        /// </returns>
+        internal static Issue[] ConvertArray(MantisConnectWebservice.IssueData[] issuesData)
+        {
+            if (issuesData == null)
+            {
+                return null;
+            }
+
+            Issue[] issues = new Issue[issuesData.Length];
+
+            for (int i = 0; i < issuesData.Length; ++i)
+            {
+                issues[i] = new Issue(issuesData[i]);
+            }
+
+            return issues;
+        }
+
+        /// <summary>
+        /// Convert this instance to the type supported by the webservice proxy.
+        /// </summary>
+        /// <returns>
+        /// A copy of this instance in the webservice proxy type.
+        /// </returns>
+		internal MantisConnectWebservice.IssueData ToWebservice()
+        {
+            MantisConnectWebservice.IssueData issueData = new MantisConnectWebservice.IssueData();
+
+            issueData.id = this.Id.ToString();
+            issueData.category = this.Category.Name;
+            issueData.summary = this.Summary;
+            issueData.description = StringUtils.NativeMultilineToWebservice(this.Description);
+            issueData.additional_information = StringUtils.NativeMultilineToWebservice(this.AdditionalInformation);
+            issueData.steps_to_reproduce = StringUtils.NativeMultilineToWebservice(this.StepsToReproduce);
+            issueData.build = this.ProductBuild;
+            issueData.version = this.ProductVersion;
+            issueData.os = this.Os;
+            issueData.os_build = this.OsBuild;
+            issueData.platform = this.Platform;
+            issueData.sponsorship_total = this.SponsorshipTotal.ToString();
+            issueData.fixed_in_version = this.FixedInVersion;
+            issueData.view_state = this.ViewState.ToWebservice();
+            issueData.projection = this.Projection.ToWebservice();
+            issueData.eta = this.Eta.ToWebservice();
+            issueData.priority = this.Priority.ToWebservice();
+            issueData.severity = this.Severity.ToWebservice();
+            issueData.project = this.Project.ToWebservice();
+            issueData.reproducibility = this.Reproducibility.ToWebservice();
+            issueData.resolution = this.Resolution.ToWebservice();
+            issueData.status = this.Status.ToWebservice();
+            issueData.reporter = this.ReportedBy.ToWebservice();
+            issueData.handler = this.AssignedTo == null ? null : this.AssignedTo.ToWebservice();
+            issueData.date_submitted = this.dateSubmitted;
+            issueData.last_updated = this.lastUpdated;
+
+            issueData.notes = IssueNote.ConvertArrayToWebservice(this.Notes);
+
+            // TODO: Attachments
+            // TODO: Relationships
+
+            return issueData;
+        }
+
+        #endregion Internal Methods
     }
 }

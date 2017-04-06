@@ -1,11 +1,9 @@
-[submodule "MonkeySpeakR6"]
-	path = MonkeySpeakR6
-	url = https://github.com/Gerolkae/MonkeySpeakR6.git
-[submodule "FurcLib"]
-	path = FurcLib
-	url = https://github.com/Gerolkae/FurcLib.git
-[submodule "SilverMonkeyMods"]
+[submodule "MonkeySpeakEx"]
+	path = MonkeySpeakEx
+	url = https://github.com/StarShip-Avalon-Projects/MonkeySpeakEx.git
 
-	path = Plugins
-
-	url = http://proteus:8080/SilverMonkeyMods.git
+[submodule "furclib"]
+	path = FurcLib	url = https://github.com/StarShip-Avalon-Projects/FurcLib.git
+[submodule "VerbotSDK"]
+	path = VerbotSDK
+	url = https://github.com/StarShip-Avalon-Projects/Verbot-SDK.git
