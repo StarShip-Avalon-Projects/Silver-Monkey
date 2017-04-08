@@ -2,9 +2,6 @@
 	path = MonkeySpeakEx
 	url = https://github.com/StarShip-Avalon-Projects/MonkeySpeakEx.git
 
-[submodule "FurcLib"]
-	path = FurcLib	url = https://github.com/StarShip-Avalon-Projects/FurcLib.git
-
 [submodule "VerbotSDK"]
 	
 	path = VerbotSDK
