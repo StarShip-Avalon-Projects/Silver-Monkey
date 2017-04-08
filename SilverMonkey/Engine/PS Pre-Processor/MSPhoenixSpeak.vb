@@ -13,7 +13,7 @@ Namespace PhoenixSpeak
 
 #Region "Fields"
 
-        Private WithEvents SubSys As New SubSystem(MyDream, MyPlayer)
+        Private WithEvents SubSys As New SubSystem()
 
 #End Region
 
@@ -21,10 +21,7 @@ Namespace PhoenixSpeak
 
         Public Sub New()
             MyBase.New()
-        End Sub
 
-        Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
-            MyBase.New(Dream, Player, MsEngine)
             Add(TriggerCategory.Cause, 80,
         Function()
             Return True
@@ -89,7 +86,7 @@ Namespace PhoenixSpeak
                 Dim info As String = reader.ReadString
                 sendServer("ps clear dream." + info)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -102,7 +99,7 @@ Namespace PhoenixSpeak
                 Dim furre As String = reader.ReadString
                 sendServer("ps clear characer." + furre + "." + info)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -112,10 +109,10 @@ Namespace PhoenixSpeak
         Function ForgetTrigFurrePS(reader As TriggerReader) As Boolean
             Try
                 Dim info As String = reader.ReadString
-                Dim furre As String = MyPlayer.ShortName
+                Dim furre As String = FurcadiaSession.Player.ShortName
                 sendServer("ps clear characer." + furre + "." + info)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -132,7 +129,7 @@ Namespace PhoenixSpeak
                 End If
                 Return True
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
         End Function
@@ -143,7 +140,7 @@ Namespace PhoenixSpeak
                 Dim info As String = reader.ReadString
                 sendServer("ps set dream." + info)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -156,7 +153,7 @@ Namespace PhoenixSpeak
                 Dim furre As String = reader.ReadString
                 sendServer("ps set characer." + furre + "." + info)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -166,10 +163,10 @@ Namespace PhoenixSpeak
         Function MemorizeTrigFurrePS(reader As TriggerReader) As Boolean
             Try
                 Dim info As String = reader.ReadString
-                Dim furre As String = MyPlayer.ShortName
+                Dim furre As String = FurcadiaSession.Player.ShortName
                 sendServer("ps set characer." + furre + "." + info)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -187,7 +184,7 @@ Namespace PhoenixSpeak
                 'Debug.Print("Msg = " & msg)
                 Return msg.Contains(msMsg)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
         End Function
@@ -199,7 +196,7 @@ Namespace PhoenixSpeak
                 If msMsg = msg.Value.ToString Then Return True
                 Return False
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
         End Function
@@ -211,7 +208,7 @@ Namespace PhoenixSpeak
                 If msMsg <> msg.Value.ToString Then Return True
                 Return False
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
         End Function
@@ -225,7 +222,7 @@ Namespace PhoenixSpeak
                 If msg.Value.ToString.Contains(msMsg) Then Return False
                 Return True
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
         End Function
@@ -235,7 +232,7 @@ Namespace PhoenixSpeak
                 Dim info As String = reader.ReadString
                 sendServer("ps " + info)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -245,7 +242,7 @@ Namespace PhoenixSpeak
             Try
                 sendServer("ps clear dream ")
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -256,7 +253,7 @@ Namespace PhoenixSpeak
                 Dim Furre As String = reader.ReadString
                 sendServer("ps clear character. " + Furre)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -264,9 +261,9 @@ Namespace PhoenixSpeak
 
         Function PSForgetTriggeringFurre(reader As TriggerReader) As Boolean
             Try
-                sendServer("ps clear character." + MyPlayer.ShortName)
+                sendServer("ps clear character." + FurcadiaSession.Player.ShortName)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -282,7 +279,7 @@ Namespace PhoenixSpeak
                 Next
                 Var.Value = String.Join(" ", L)
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -293,7 +290,7 @@ Namespace PhoenixSpeak
             Try
                 sendServer("ps get character.*")
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -304,7 +301,7 @@ Namespace PhoenixSpeak
             Try
                 sendServer("ps get dream.*")
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -316,7 +313,7 @@ Namespace PhoenixSpeak
                 Dim furre As String = reader.ReadString
                 sendServer("ps get characer." + furre + ".*")
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True
@@ -325,10 +322,10 @@ Namespace PhoenixSpeak
         '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
         Function RemberPSInforTrigFurre(reader As TriggerReader) As Boolean
             Try
-                Dim furre As String = MyPlayer.ShortName
+                Dim furre As String = FurcadiaSession.Player.ShortName
                 sendServer("ps set characer." + furre + ".*")
             Catch ex As Exception
-                MainMsEngine.LogError(reader, ex)
+                LogError(reader, ex)
                 Return False
             End Try
             Return True

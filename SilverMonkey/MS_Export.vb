@@ -26,6 +26,16 @@ Public Class MS_Export
 
 #Region "Private Methods"
 
+#End Region
+
+#Region "Public Classes"
+
+#End Region
+
+    Private FurcadiaSession As FurcSession = Main.FurcadiaSession
+
+#Region "Private Methods"
+
     Private Sub ExitToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ExitToolStripMenuItem.Click
         Me.Close()
     End Sub
@@ -34,7 +44,7 @@ Public Class MS_Export
         'MS_Stared = 0
         'MainMSEngine.EngineStart(False)
         Dim Test As New List(Of String)
-        For Each item As String In FurcSession.MainEngine.MSpage.GetTriggerDescriptions()
+        For Each item As String In FurcadiaSession.MainEngine.MSpage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         EffectList.Clear()
@@ -97,9 +107,9 @@ Public Class MS_Export
 
     Private Sub MS_Export_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         MainMsEngine.MS_Stared = 0
-        FurcSession.MainEngine.EngineStart(False)
+        FurcadiaSession.MainEngine.EngineStart(False)
         Dim Test As New List(Of String)
-        For Each item As String In FurcSession.MainEngine.MSpage.GetTriggerDescriptions()
+        For Each item As String In FurcadiaSession.MainEngine.MSpage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         Dim cat As New Regex("\((.[0-9]*)\:(.[0-9]*)\)")

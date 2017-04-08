@@ -57,10 +57,6 @@ Module MS_Engine
 #Region "Public Constructors"
         Public Sub New()
             MyBase.New()
-        End Sub
-        Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
-            MyBase.New(Dream, Player, MsEngine)
-
             Add(TriggerCategory.Cause, 1,
                 Function()
                     Return True
@@ -78,7 +74,7 @@ Module MS_Engine
             Add(TriggerCategory.Cause, 5,
                       Function()
                           '       Console.WriteLine("Cause (0:5):")
-                          Return Not FurcSession.isBot(MyPlayer)
+                          Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
                       End Function,
                    "(0:5) When someone says something,")
             Add(TriggerCategory.Cause, 6,
@@ -91,7 +87,7 @@ Module MS_Engine
             'Shouts
             Add(TriggerCategory.Cause, 8,
            Function()
-               Return Not FurcSession.isBot(MyPlayer)
+               Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
            End Function,
         "(0:8) When someone shouts something,")
             Add(TriggerCategory.Cause, 9,
@@ -104,7 +100,7 @@ Module MS_Engine
             'emotes
             Add(TriggerCategory.Cause, 11,
            Function()
-               Return Not FurcSession.isBot(MyPlayer)
+               Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
            End Function,
         "(0:11) When someone emotes something,")
             Add(TriggerCategory.Cause, 12,
@@ -117,7 +113,7 @@ Module MS_Engine
             'Whispers
             Add(TriggerCategory.Cause, 15,
            Function()
-               Return Not FurcSession.isBot(MyPlayer)
+               Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
            End Function,
         "(0:15) When someone whispers something,")
             Add(TriggerCategory.Cause, 16,
@@ -130,7 +126,7 @@ Module MS_Engine
             'Says or Emotes
             Add(TriggerCategory.Cause, 18,
                 Function()
-                    Return Not FurcSession.isBot(MyPlayer)
+                    Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
                 End Function, "(0:18) When someone says or emotes something,")
             Add(TriggerCategory.Cause, 19,
                  AddressOf msgIs, "(0:19) When someone says or emotes {.},")
@@ -142,7 +138,7 @@ Module MS_Engine
             'Emits
             Add(TriggerCategory.Cause, 21,
                 Function()
-                    Return Not FurcSession.isBot(MyPlayer)
+                    Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
                 End Function, "(0:21) When someone emits something,")
             Add(TriggerCategory.Cause, 22,
                  AddressOf msgIs, "(0:22) When someone emits {.},")
@@ -152,24 +148,24 @@ Module MS_Engine
                  AddressOf msgContains, "(0:23) When someone emits something with {.} in it,")
 
             'Furre Enters
-            '(0:4) When someone is added to the MyDream manifest,
+            '(0:4) When someone is added to the FurcadiaSession.Dream manifest,
             Add(TriggerCategory.Cause, 24,
                 Function()
 
                     Return True
-                End Function, "(0:24) When someone enters the MyDream,")
-            '(0:25) When a furre Named {.} enters the MyDream,
+                End Function, "(0:24) When someone enters the FurcadiaSession.Dream,")
+            '(0:25) When a furre Named {.} enters the FurcadiaSession.Dream,
             Add(TriggerCategory.Cause, 25,
-                AddressOf NameIs, "(0:25) When a furre Named {.} enters the MyDream,")
+                AddressOf NameIs, "(0:25) When a furre Named {.} enters the FurcadiaSession.Dream,")
             'Furre Leaves
-            '(0:25) When someone leaves the MyDream,
+            '(0:25) When someone leaves the FurcadiaSession.Dream,
             Add(TriggerCategory.Cause, 26,
                 Function()
                     Return True
-                End Function, "(0:26) When someone leaves the MyDream, ")
-            '(0:27) When a furre named {.} leaves the MyDream,
+                End Function, "(0:26) When someone leaves the FurcadiaSession.Dream, ")
+            '(0:27) When a furre named {.} leaves the FurcadiaSession.Dream,
             Add(TriggerCategory.Cause, 27,
-                AddressOf NameIs, "(0:27) When a furre named {.} leaves the MyDream")
+                AddressOf NameIs, "(0:27) When a furre named {.} leaves the FurcadiaSession.Dream")
 
             'Furre In View
             '(0:28) When someone enters the bots view,
@@ -190,7 +186,7 @@ Module MS_Engine
             '(0:32) When someone requests to summon the bot,
             Add(TriggerCategory.Cause, 32,
                 Function()
-                    Return Not FurcSession.isBot(MyPlayer)
+                    Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
                 End Function, "(0:32) When someone requests to summon the bot,")
 
             '(0:33) When a furre named {.} requests to summon the bot,
@@ -200,7 +196,7 @@ Module MS_Engine
             '(0:34) When someone requests to join the bot,
             Add(TriggerCategory.Cause, 34,
                 Function()
-                    Return Not FurcSession.isBot(MyPlayer)
+                    Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
                 End Function, "(0:34) When someone requests to join the bot,")
             '(0:35) When a furre named {.} requests to join the bot,
             Add(TriggerCategory.Cause, 35,
@@ -209,7 +205,7 @@ Module MS_Engine
             '(0:36) When someone requests to follow the bot,
             Add(TriggerCategory.Cause, 36,
                 Function()
-                    Return Not FurcSession.isBot(MyPlayer)
+                    Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
                 End Function, "(0:36) When someone requests to follow the bot,")
             '(0:37) When a furre named {.} requests to follow the bot,
             Add(TriggerCategory.Cause, 37,
@@ -218,7 +214,7 @@ Module MS_Engine
             '(0:38) When someone requests to lead the bot,
             Add(TriggerCategory.Cause, 38,
                 Function()
-                    Return Not FurcSession.isBot(MyPlayer)
+                    Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
                 End Function, "(0:38) When someone requests to lead the bot,")
             '(0:39) When a furre named {.} requests to lead the bot,
             Add(TriggerCategory.Cause, 39,
@@ -227,7 +223,7 @@ Module MS_Engine
             '(0:40) When someone requests to cuddle with the bot.
             Add(TriggerCategory.Cause, 40,
                 Function()
-                    Return Not FurcSession.isBot(MyPlayer)
+                    Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
                 End Function, "(0:40) When someone requests to cuddle with the bot,")
             '(0:41) When a furre named {.} requests to cuddle with the bot,
             Add(TriggerCategory.Cause, 41,
@@ -238,7 +234,7 @@ Module MS_Engine
             '(0:46) When the bot sees a trade request,
             Add(TriggerCategory.Cause, 46,
             Function()
-                Return Not FurcSession.isBot(MyPlayer)
+                Return Not FurcadiaSession.isBot(FurcadiaSession.Player)
             End Function, "(0:46) When the bot sees a trade request,")
             '(0:47) When the bot sees the trade request {.},
             Add(TriggerCategory.Cause, 47,
@@ -248,15 +244,15 @@ Module MS_Engine
             Add(TriggerCategory.Cause, 48,
                  AddressOf msgContains, "(0:48) When the bot sees a trade request with {.} in it,")
 
-            'MyDream
-            '(0:90) When the bot enters a MyDream,
+            'FurcadiaSession.Dream
+            '(0:90) When the bot enters a FurcadiaSession.Dream,
             Add(TriggerCategory.Cause, 90,
                 Function()
                     Return True
-                End Function, "(0:90) When the bot enters a MyDream,")
-            '(0:91) When the bot enters a MyDream named {.},
+                End Function, "(0:90) When the bot enters a FurcadiaSession.Dream,")
+            '(0:91) When the bot enters a FurcadiaSession.Dream named {.},
             Add(TriggerCategory.Cause, 91,
-                AddressOf EnterMyDreamNamed, "(0:91) When the bot enters a MyDream named {.},")
+                AddressOf EnterMyDreamNamed, "(0:91) When the bot enters a FurcadiaSession.Dream named {.},")
 
             '(0:92) When the bot detects the "Your throat is tired. Please wait a few seconds" message,
             Add(TriggerCategory.Cause, 92,
@@ -296,7 +292,7 @@ Module MS_Engine
             '(1:904) and the triggering furre is the Bot Controller,
             Add(New Trigger(TriggerCategory.Condition, 15),
                 Function()
-                    Return MainMsEngine.IsBotControler(FurcSession.MainEngine.MSpage.GetVariable(MS_Name).Value.ToString)
+                    Return MainMsEngine.IsBotControler(FurcadiaSession.MainEngine.MSpage.GetVariable(MS_Name).Value.ToString)
                 End Function, "(1:15) and the triggering furre is the Bot Controller,")
 
             '(1:905) and the triggering furre is not the Bot Controller,
@@ -311,44 +307,44 @@ Module MS_Engine
             '(1:18) and the triggering furre's name is not {.}.
             Add(New Trigger(TriggerCategory.Condition, 18), AddressOf TrigFurreNameIsNot, "(1:18) and the triggering furre's name is not {.},")
 
-            '(1:19) and the bot is the MyDream owner,
-            Add(New Trigger(TriggerCategory.Condition, 19), AddressOf BotIsDREAMOWNER, "(1:19) and the bot is the MyDream owner,")
-            '(1:20) and the bot is not the MyDream owner,
-            Add(New Trigger(TriggerCategory.Condition, 20), AddressOf BotIsNotDREAMOWNER, "(1:20) and the bot is not the MyDream owner,")
-            '(1:21) and the furre named {.} is the MyDream owner,
-            Add(New Trigger(TriggerCategory.Condition, 21), AddressOf FurreNamedIsDREAMOWNER, "(1:21) and the furre named {.} is the MyDream owner,")
-            '(1:22) and the furre named {.} is not the MyDream owner,
-            Add(New Trigger(TriggerCategory.Condition, 22), AddressOf FurreNamedIsNotDREAMOWNER, "(1:22) and the furre named {.} is not the MyDream owner,")
-            '(1:23) and the MyDream Name is {.},
-            Add(New Trigger(TriggerCategory.Condition, 23), AddressOf MyDreamNameIs, "(1:23) and the MyDream Name is {.},")
-            '(1:24) and the MyDream Name is not {.},
-            Add(New Trigger(TriggerCategory.Condition, 24), AddressOf MyDreamNameIsNot, "(1:24) and the MyDream Name is not {.},")
-            '(1:25) and the triggering furre is the MyDream owner
-            Add(New Trigger(TriggerCategory.Condition, 25), AddressOf TriggeringFurreIsDREAMOWNER, "(1:25) and the triggering furre is the MyDream owner,")
-            '(1:26) and the triggering furre is not the MyDream owner
-            Add(New Trigger(TriggerCategory.Condition, 26), AddressOf TriggeringFurreIsNotDREAMOWNER, "(1:26) and the triggering furre is not the MyDream owner,")
+            '(1:19) and the bot is the FurcadiaSession.Dream owner,
+            Add(New Trigger(TriggerCategory.Condition, 19), AddressOf BotIsDREAMOWNER, "(1:19) and the bot is the FurcadiaSession.Dream owner,")
+            '(1:20) and the bot is not the FurcadiaSession.Dream owner,
+            Add(New Trigger(TriggerCategory.Condition, 20), AddressOf BotIsNotDREAMOWNER, "(1:20) and the bot is not the FurcadiaSession.Dream owner,")
+            '(1:21) and the furre named {.} is the FurcadiaSession.Dream owner,
+            Add(New Trigger(TriggerCategory.Condition, 21), AddressOf FurreNamedIsDREAMOWNER, "(1:21) and the furre named {.} is the FurcadiaSession.Dream owner,")
+            '(1:22) and the furre named {.} is not the FurcadiaSession.Dream owner,
+            Add(New Trigger(TriggerCategory.Condition, 22), AddressOf FurreNamedIsNotDREAMOWNER, "(1:22) and the furre named {.} is not the FurcadiaSession.Dream owner,")
+            '(1:23) and the FurcadiaSession.Dream Name is {.},
+            Add(New Trigger(TriggerCategory.Condition, 23), AddressOf MyDreamNameIs, "(1:23) and the FurcadiaSession.Dream Name is {.},")
+            '(1:24) and the FurcadiaSession.Dream Name is not {.},
+            Add(New Trigger(TriggerCategory.Condition, 24), AddressOf MyDreamNameIsNot, "(1:24) and the FurcadiaSession.Dream Name is not {.},")
+            '(1:25) and the triggering furre is the FurcadiaSession.Dream owner
+            Add(New Trigger(TriggerCategory.Condition, 25), AddressOf TriggeringFurreIsDREAMOWNER, "(1:25) and the triggering furre is the FurcadiaSession.Dream owner,")
+            '(1:26) and the triggering furre is not the FurcadiaSession.Dream owner
+            Add(New Trigger(TriggerCategory.Condition, 26), AddressOf TriggeringFurreIsNotDREAMOWNER, "(1:26) and the triggering furre is not the FurcadiaSession.Dream owner,")
 
-            '(1:27) and the bot has share control of the MyDream or is the MyDream owner,
+            '(1:27) and the bot has share control of the FurcadiaSession.Dream or is the FurcadiaSession.Dream owner,
             Add(New Trigger(TriggerCategory.Condition, 27),
                 Function(reader As TriggerReader)
                     Dim tname As Variable = MyMonkeySpeakEngine.MSpage.GetVariable("DREAMOWNER")
-                    If FurcSession.HasShare Or FurcadiaShortName(tname.Value.ToString) = FurcadiaShortName(FurcSession.BotName) Then
+                    If FurcadiaSession.HasShare Or FurcadiaShortName(tname.Value.ToString) = FurcadiaShortName(FurcadiaSession.BotName) Then
                         Return True
                     End If
                     Return False
-                End Function, "(1:27) and the bot has share control of the MyDream or is the MyDream owner,")
+                End Function, "(1:27) and the bot has share control of the FurcadiaSession.Dream or is the FurcadiaSession.Dream owner,")
 
-            '(1:28) and the bot has share control of the MyDream,
+            '(1:28) and the bot has share control of the FurcadiaSession.Dream,
             Add(New Trigger(TriggerCategory.Condition, 28),
                 Function()
-                    Return FurcSession.HasShare
-                End Function, "(1:28) and the bot has share control of the MyDream,")
+                    Return FurcadiaSession.HasShare
+                End Function, "(1:28) and the bot has share control of the FurcadiaSession.Dream,")
 
-            '(1:29) and the bot doesn't have share control in the MyDream,
+            '(1:29) and the bot doesn't have share control in the FurcadiaSession.Dream,
             Add(New Trigger(TriggerCategory.Condition, 29),
                 Function()
-                    Return Not FurcSession.HasShare
-                End Function, "(1:29) and the bot doesn't have share control in the MyDream,")
+                    Return Not FurcadiaSession.HasShare
+                End Function, "(1:29) and the bot doesn't have share control in the FurcadiaSession.Dream,")
             'Says
             ' (5:0) say {.}.
             Add(New Trigger(TriggerCategory.Effect, 0),
@@ -512,10 +508,10 @@ Module MS_Engine
             Add(New Trigger(TriggerCategory.Effect, 20), AddressOf ShareTrigFurre, "(5:20) give share control to the triggering furre.")
             '(5:21) remove shae control from the triggering furre.
             Add(New Trigger(TriggerCategory.Effect, 21), AddressOf UnshareTrigFurre, "(5:21) remove share control from the triggering furre.")
-            '(5:22) remove share from the furre named {.} if they're in the MyDream right now.
-            Add(New Trigger(TriggerCategory.Effect, 22), AddressOf ShareFurreNamed, "(5:22) remove share from the furre named {.} if they're in the MyDream right now.")
-            '(5:23) give share to the furre named {.} if they're in the MyDream right now.
-            Add(New Trigger(TriggerCategory.Effect, 23), AddressOf UnshareFurreNamed, "(5:23) give share to the furre named {.} if they're in the MyDream right now.")
+            '(5:22) remove share from the furre named {.} if they're in the FurcadiaSession.Dream right now.
+            Add(New Trigger(TriggerCategory.Effect, 22), AddressOf ShareFurreNamed, "(5:22) remove share from the furre named {.} if they're in the FurcadiaSession.Dream right now.")
+            '(5:23) give share to the furre named {.} if they're in the FurcadiaSession.Dream right now.
+            Add(New Trigger(TriggerCategory.Effect, 23), AddressOf UnshareFurreNamed, "(5:23) give share to the furre named {.} if they're in the FurcadiaSession.Dream right now.")
 
             '(5:40) Switch the bot to stand alone mode and close the Furcadia client.
             Add(New Trigger(TriggerCategory.Effect, 40), AddressOf StandAloneMode, "(5:40) Switch the bot to stand alone mode and close the Furcadia client.")
@@ -533,11 +529,11 @@ Module MS_Engine
 
 #Region "Public Methods"
 
-        '(1:19) and the bot is the MyDream owner,
+        '(1:19) and the bot is the FurcadiaSession.Dream owner,
         Function BotIsDREAMOWNER(reader As TriggerReader) As Boolean
             Try
                 Dim tname As Variable = MyMonkeySpeakEngine.MSpage.GetVariable("DREAMOWNER")
-                Dim TrigFurreName As String = FurcSession.BotName
+                Dim TrigFurreName As String = FurcadiaSession.BotName
                 'add Machine Name parser
                 Return FurcadiaShortName(tname.Value.ToString()) = FurcadiaShortName(TrigFurreName)
             Catch ex As Exception
@@ -555,7 +551,7 @@ Module MS_Engine
             Return Not BotIsDREAMOWNER(reader)
         End Function
 
-        '(0:91) When the bot enters a MyDream named {.},
+        '(0:91) When the bot enters a FurcadiaSession.Dream named {.},
         Public Function EnterMyDreamNamed(reader As Monkeyspeak.TriggerReader) As Boolean
             Try
                 Dim msMsg As String = reader.ReadString()
@@ -582,7 +578,7 @@ Module MS_Engine
 
         Public Function EnterView(reader As Monkeyspeak.TriggerReader) As Boolean
             Try
-                Dim tPlayer As FURRE = MyPlayer
+                Dim tPlayer As FURRE = FurcadiaSession.Player
                 If tPlayer.Visible = tPlayer.WasVisible Then
                     Return False
                 End If
@@ -617,7 +613,7 @@ Module MS_Engine
         Public Function FurreNamedEnterView(reader As Monkeyspeak.TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
+                Dim tPlayer As FURRE = FurcadiaSession.NameToFurre(name, False)
                 If tPlayer.Visible = tPlayer.WasVisible Then
                     Return False
                 End If
@@ -634,7 +630,7 @@ Module MS_Engine
             End Try
         End Function
 
-        '(1:20) and the furre named {.} is the MyDream owner,
+        '(1:20) and the furre named {.} is the FurcadiaSession.Dream owner,
         Function FurreNamedIsDREAMOWNER(reader As TriggerReader) As Boolean
             Try
                 Dim tname As Variable = MyMonkeySpeakEngine.MSpage.GetVariable("DREAMOWNER")
@@ -659,7 +655,7 @@ Module MS_Engine
         Public Function FurreNamedLeaveView(reader As Monkeyspeak.TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim tPlayer As FURRE = FurcSession.NameToFurre(name, False)
+                Dim tPlayer As FURRE = FurcadiaSession.NameToFurre(name, False)
                 If tPlayer.Visible = tPlayer.WasVisible Then
                     Return False
                 End If
@@ -678,7 +674,7 @@ Module MS_Engine
 
         Public Function LeaveView(reader As Monkeyspeak.TriggerReader) As Boolean
             Try
-                Dim tPlayer As FURRE = MyPlayer
+                Dim tPlayer As FURRE = FurcadiaSession.Player
                 If tPlayer.Visible = tPlayer.WasVisible Then
                     Return False
                 End If
@@ -736,7 +732,7 @@ Module MS_Engine
 
         Public Function msgIs(reader As TriggerReader) As Boolean
             Try
-                Dim safety As Boolean = Not FurcSession.isBot(MyPlayer)
+                Dim safety As Boolean = Not FurcadiaSession.isBot(FurcadiaSession.Player)
                 Dim msMsg As String = StripHTML(reader.ReadString())
                 Dim msg As Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE")
 
@@ -756,7 +752,7 @@ Module MS_Engine
 
         Function msgIsNot(reader As TriggerReader) As Boolean
             Try
-                Dim safety As Boolean = Not FurcSession.isBot(MyPlayer)
+                Dim safety As Boolean = Not FurcadiaSession.isBot(FurcadiaSession.Player)
                 Dim msMsg As String = StripHTML(reader.ReadString())
                 Dim msg As Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE")
 
@@ -850,7 +846,7 @@ Module MS_Engine
             End Try
         End Function
 
-        '(1:21) and the MyDream Name is {.},
+        '(1:21) and the FurcadiaSession.Dream Name is {.},
         Function MyDreamNameIs(reader As TriggerReader) As Boolean
             Try
                 Dim tname As Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MyDreamNAME")
@@ -908,11 +904,11 @@ Module MS_Engine
             Return False
         End Function
 
-        '(5:22) remove share from the furre named {.} if they're in the MyDream right now.
+        '(5:22) remove share from the furre named {.} if they're in the FurcadiaSession.Dream right now.
         Public Function ShareFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
             Try
                 Dim furre As String = reader.ReadString
-                Dim Target As FURRE = FurcSession.NameToFurre(furre, False)
+                Dim Target As FURRE = FurcadiaSession.NameToFurre(furre, False)
                 If InDream(Target.Name) Then sendServer("share " + FurcadiaShortName(furre))
                 Return True
             Catch ex As Exception
@@ -928,7 +924,7 @@ Module MS_Engine
 
         '(5:20) give share control to the triggering furre.
         Public Function ShareTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
-            Dim furre As String = MyPlayer.Name
+            Dim furre As String = FurcadiaSession.Player.Name
             sendServer("share " + furre)
             Return True
         End Function
@@ -968,7 +964,7 @@ Module MS_Engine
         Public Function StandAloneMode(reader As Monkeyspeak.TriggerReader) As Boolean
             Try
                 cBot.StandAlone = True
-                FurcSession.KillProc(FurcSession.FurcProcessId)
+                FurcadiaSession.KillProc(FurcadiaSession.ProcID)
             Catch ex As Exception
                 Dim tID As String = reader.TriggerId.ToString
                 Dim tCat As String = reader.TriggerCategory.ToString
@@ -1006,7 +1002,7 @@ Module MS_Engine
         Function TrigFurreNameIs(reader As TriggerReader) As Boolean
             Try
                 Dim TmpName As String = reader.ReadString()
-                Dim TrigFurreName As String = MyPlayer.ShortName
+                Dim TrigFurreName As String = FurcadiaSession.Player.ShortName
                 'add Machine Name parser
                 Return Furcadia.Util.FurcadiaShortName(TmpName) = TrigFurreName
             Catch ex As Exception
@@ -1024,10 +1020,10 @@ Module MS_Engine
             Return Not TrigFurreNameIs(reader)
         End Function
 
-        '(1:22:) and the triggering furre is the MyDream owner
+        '(1:22:) and the triggering furre is the FurcadiaSession.Dream owner
         Function TriggeringFurreIsDREAMOWNER(reader As TriggerReader) As Boolean
             Try
-                Dim tname As String = MyPlayer.ShortName
+                Dim tname As String = FurcadiaSession.Player.ShortName
                 Dim TrigFurreName As String = MyMonkeySpeakEngine.MSpage.GetVariable("DREAMOWNER").Value.ToString
                 'add Machine Name parser
                 Return tname = FurcadiaShortName(TrigFurreName)
@@ -1046,11 +1042,11 @@ Module MS_Engine
             Return Not TriggeringFurreIsDREAMOWNER(reader)
         End Function
 
-        '(5:23) give share to the furre named {.} if they're in the MyDream right now.
+        '(5:23) give share to the furre named {.} if they're in the FurcadiaSession.Dream right now.
         Public Function UnshareFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
             Try
                 Dim furre As String = reader.ReadString
-                Dim Target As FURRE = FurcSession.NameToFurre(furre, False)
+                Dim Target As FURRE = FurcadiaSession.NameToFurre(furre, False)
                 If InDream(Target.Name) Then sendServer("unshare " + FurcadiaShortName(furre))
                 Return True
             Catch ex As Exception
@@ -1066,7 +1062,7 @@ Module MS_Engine
 
         '(5:21) remove shae control from the triggering furre.
         Public Function UnshareTrigFurre(reader As Monkeyspeak.TriggerReader) As Boolean
-            Dim furre As String = MyPlayer.ShortName
+            Dim furre As String = FurcadiaSession.Player.ShortName
             sendServer("unshare " + furre)
             Return True
         End Function
@@ -1077,7 +1073,7 @@ Module MS_Engine
 
         Private Function InDream(ByRef Name As String) As Boolean
             Dim found As Boolean = False
-            For Each kvp As KeyValuePair(Of Integer, FURRE) In MyDream.FurreList
+            For Each kvp As KeyValuePair(Of Integer, FURRE) In FurcadiaSession.Dream.FurreList
                 If FurcadiaShortName(kvp.Value.Name) = FurcadiaShortName(Name) Then
                     Return True
                 End If
@@ -1085,6 +1081,11 @@ Module MS_Engine
             Return False
         End Function
 
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="Text"></param>
+        ''' <returns></returns>
         Private Function StripHTML(ByVal Text As String) As String
 
             Dim r As New Regex("<(.*?)>")
@@ -1103,11 +1104,6 @@ Module MS_Engine
 
         Public Sub New()
             MyBase.New()
-        End Sub
-
-        Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
-            MyBase.New(Dream, Player, MsEngine)
-
             '(1:60) and variable %Variable matches wildcard expression {.} ( ""*"" or ""?""),
             Add(New Trigger(TriggerCategory.Condition, 60), AddressOf WildCard,
  "(1:60) and variable %Variable matches wildcard expression {.} ( ""*"" or ""?""),")

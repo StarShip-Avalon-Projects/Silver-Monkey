@@ -116,12 +116,12 @@ Public Class MS_Dice
 
     Public Function DiceResultNumberOrHigher(reader As TriggerReader) As Boolean
         Dim result As Double = reader.ReadVariableOrNumber
-        Return result <= FurcSession.DiceResult
+        Return result <= FurcadiaSession.DiceResult
     End Function
 
     Public Function DiceResultNumberOrlower(reader As TriggerReader) As Boolean
         Dim result As Double = reader.ReadVariableOrNumber
-        Return result >= FurcSession.DiceResult
+        Return result >= FurcadiaSession.DiceResult
     End Function
 
     ' (5:134) roll # furcadia dice with # sides.
@@ -169,12 +169,12 @@ Public Class MS_Dice
     '(0:130) When the bot rolls #d# and gets # or highter,
     Function RollNumber(reader As TriggerReader) As Boolean
         Try
-            If String.IsNullOrEmpty(FurcSession.DiceCompnentMatch) Then Return False
+            If String.IsNullOrEmpty(FurcadiaSession.DiceCompnentMatch) Then Return False
             Dim DiceCount As Double = reader.ReadVariableOrNumber
             Dim sides As Double = reader.ReadVariableOrNumber
             Dim DiceModifyer As Double = reader.ReadVariableOrNumber
-            If sides <> FurcSession.DiceSides Then Return False
-            If FurcSession.DiceCount <> DiceCount Then Return False
+            If sides <> FurcadiaSession.DiceSides Then Return False
+            If FurcadiaSession.DiceCount <> DiceCount Then Return False
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False
@@ -185,41 +185,41 @@ Public Class MS_Dice
     '(0:134) When the bot rolls #d# -# and gets # or highter,
     Function RollNumberMinusModifyer(reader As TriggerReader) As Boolean
         Try
-            If Not String.IsNullOrEmpty(FurcSession.DiceCompnentMatch) Then Return False
+            If Not String.IsNullOrEmpty(FurcadiaSession.DiceCompnentMatch) Then Return False
             Dim DiceCount As Double = reader.ReadVariableOrNumber
             Dim sides As Double = reader.ReadVariableOrNumber
             Dim DiceModifyer As Double = reader.ReadVariableOrNumber
-            If FurcSession.DiceModifyer <> DiceModifyer Then Return False
-            If sides <> FurcSession.DiceSides Then Return False
-            If FurcSession.DiceCount <> DiceCount Then Return False
+            If FurcadiaSession.DiceModifyer <> DiceModifyer Then Return False
+            If sides <> FurcadiaSession.DiceSides Then Return False
+            If FurcadiaSession.DiceCount <> DiceCount Then Return False
 
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False
         End Try
-        Return FurcSession.DiceCompnentMatch = "-"
+        Return FurcadiaSession.DiceCompnentMatch = "-"
     End Function
 
     '(0:132) When the bot rolls #d# +# and gets # or highter,
     Function RollNumberPlusModifyer(reader As TriggerReader) As Boolean
         Try
-            If Not String.IsNullOrEmpty(FurcSession.DiceCompnentMatch) Then Return False
+            If Not String.IsNullOrEmpty(FurcadiaSession.DiceCompnentMatch) Then Return False
             Dim DiceCount As Double = reader.ReadVariableOrNumber
             Dim sides As Double = reader.ReadVariableOrNumber
             Dim DiceModifyer As Double = reader.ReadVariableOrNumber
-            If FurcSession.DiceModifyer <> DiceModifyer Then Return False
-            If sides <> FurcSession.DiceSides Then Return False
-            If FurcSession.DiceCount <> DiceCount Then Return False
+            If FurcadiaSession.DiceModifyer <> DiceModifyer Then Return False
+            If sides <> FurcadiaSession.DiceSides Then Return False
+            If FurcadiaSession.DiceCount <> DiceCount Then Return False
 
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
             Return False
         End Try
-        Return FurcSession.DiceCompnentMatch = "+"
+        Return FurcadiaSession.DiceCompnentMatch = "+"
     End Function
     Function TrigFurreRolledVariable(reader As TriggerReader) As Boolean
         Dim v As Variable = reader.ReadVariable(True)
-        v.Value = FurcSession.DiceResult
+        v.Value = FurcadiaSession.DiceResult
         Return True
     End Function
 

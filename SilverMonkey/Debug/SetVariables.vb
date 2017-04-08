@@ -34,12 +34,12 @@
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Var.Value = TxtBxValue.Text
-        FurcSession.MainEngine.MSpage.SetVariable(VarName, Var.Value, Var.IsConstant)
+        FurcadiaSession.MainEngine.MSpage.SetVariable(VarName, Var.Value, Var.IsConstant)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
     End Sub
     Private Sub SetVariables_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Var = FurcSession.MainEngine.MSpage.GetVariable(VarName)
+        Var = FurcadiaSession.MainEngine.MSpage.GetVariable(VarName)
         If Var.IsConstant Then
             Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
             Me.Close()

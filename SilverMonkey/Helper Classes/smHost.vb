@@ -8,7 +8,7 @@ Public Class smHost
 
     Public ReadOnly Property BotName As String Implements SilverMonkey.Interfaces.msHost.BotName
         Get
-            Return FurcSession.BotName
+            Return FurcadiaSession.BotName
         End Get
     End Property
 
@@ -24,25 +24,25 @@ Public Class smHost
 
     Public Property Dream As DREAM Implements Interfaces.msHost.Dream
         Get
-            Return FurcSession.Dream
+            Return FurcadiaSession.Dream
         End Get
         Set(value As DREAM)
-            FurcSession.Dream = value
+            FurcadiaSession.Dream = value
         End Set
     End Property
 
     Public WriteOnly Property Page() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.Page
         Set(value As Monkeyspeak.Page)
-            FurcSession.MainEngine.MSpage = value
+            FurcadiaSession.MainEngine.MSpage = value
         End Set
     End Property
 
     Public Property Player() As FURRE Implements SilverMonkey.Interfaces.msHost.Player
         Get
-            Return FurcSession.Player
+            Return FurcadiaSession.Player
         End Get
         Set(value As FURRE)
-            FurcSession.Player = value
+            FurcadiaSession.Player = value
         End Set
     End Property
 
@@ -63,7 +63,7 @@ Public Class smHost
     End Sub
 
     Sub Start(ByRef page As Monkeyspeak.Page) Implements SilverMonkey.Interfaces.msHost.start
-        FurcSession.MainEngine.MSpage = page
+        FurcadiaSession.MainEngine.MSpage = page
     End Sub
 
 #End Region

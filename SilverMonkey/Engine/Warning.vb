@@ -48,7 +48,7 @@ AddressOf ErrorIs, "(0:801) when the bot sees warning message{...},")
             Dim err As Double = ReadVariableOrNumber(reader, False)
             Dim errNum As Short = 0
             SyncLock Lock
-                errNum = FurcSession.ErrorNum
+                errNum = FurcadiaSession.ErrorNum
             End SyncLock
             'add Machine Name parser
             Return Convert.ToDouble(errNum) <> err
@@ -69,7 +69,7 @@ AddressOf ErrorIs, "(0:801) when the bot sees warning message{...},")
             Dim err As Double = ReadVariableOrNumber(reader, False)
             Dim errNum As Short = 0
             SyncLock Lock
-                errNum = FurcSession.ErrorNum
+                errNum = FurcadiaSession.ErrorNum
             End SyncLock
             'add Machine Name parser
             Return Convert.ToDouble(errNum) = err
@@ -91,7 +91,7 @@ AddressOf ErrorIs, "(0:801) when the bot sees warning message{...},")
             Dim TmpName As String = reader.ReadString()
             Dim errstr As String = ""
             SyncLock Lock
-                errstr = FurcSession.ErrorMsg
+                errstr = FurcadiaSession.ErrorMsg
             End SyncLock
             'add Machine Name parser
             Return TmpName = errstr
@@ -111,7 +111,7 @@ AddressOf ErrorIs, "(0:801) when the bot sees warning message{...},")
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim errNum As Short = 0
             SyncLock Lock
-                errNum = FurcSession.ErrorNum
+                errNum = FurcadiaSession.ErrorNum
             End SyncLock
             'add Machine Name parser
             Var.Value = Convert.ToDouble(errNum)

@@ -26,10 +26,6 @@ Public Class MSPK_MDB
 #Region "Public Constructors"
     Public Sub New()
         MyBase.New()
-    End Sub
-    Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
-        MyBase.New(Dream, Player, MsEngine)
-
         '(1:500) and the Database info {...} about the triggering furre is equal to #,
         Add(New Trigger(TriggerCategory.Condition, 500),
                 AddressOf TriggeringFurreinfoEqualToNumber, "(1:500) and the Database info {...} about the triggering furre is equal to #,")
@@ -200,7 +196,7 @@ Public Class MSPK_MDB
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
             Return Variable = Value
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -215,7 +211,7 @@ Public Class MSPK_MDB
         Try
             Return str = GetValueFromTable(Info, Furre).ToString
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -235,7 +231,7 @@ Public Class MSPK_MDB
             Double.TryParse(check.ToString, Value)
             Return Value > Variable
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -255,7 +251,7 @@ Public Class MSPK_MDB
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
             Return Value >= Variable
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -276,7 +272,7 @@ Public Class MSPK_MDB
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
             Return Value < Variable
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -297,7 +293,7 @@ Public Class MSPK_MDB
             Double.TryParse(check.ToString, Value)
             Return Value <= Variable
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -319,7 +315,7 @@ Public Class MSPK_MDB
             Double.TryParse(check.ToString, Value)
             Return Value <> Variable
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -336,7 +332,7 @@ Public Class MSPK_MDB
         Try
             Return str <> GetValueFromTable(Info, Furre).ToString
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -360,7 +356,7 @@ Public Class MSPK_MDB
 
             Return cache.Item(Info).ToString = Value
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -380,7 +376,7 @@ Public Class MSPK_MDB
             QueryRun = True
             Return cache.Count > 0
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -403,7 +399,7 @@ Public Class MSPK_MDB
             Double.TryParse(cache.Item(Setting).ToString, num)
             Return num > Number
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -427,7 +423,7 @@ Public Class MSPK_MDB
             Double.TryParse(cache.Item(Setting).ToString, num)
             Return num >= Number
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -450,7 +446,7 @@ Public Class MSPK_MDB
             Double.TryParse(cache.Item(Setting).ToString, num)
             Return num < Number
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -474,7 +470,7 @@ Public Class MSPK_MDB
             Double.TryParse(cache.Item(Setting).ToString, num)
             Return num <= Number
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -496,7 +492,7 @@ Public Class MSPK_MDB
             QueryRun = True
             Return cache.Item(Info).ToString <> Value
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -516,7 +512,7 @@ Public Class MSPK_MDB
             QueryRun = True
             Return cache.Count = 0
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -537,7 +533,7 @@ Public Class MSPK_MDB
 
             Return number = Value
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -552,7 +548,7 @@ Public Class MSPK_MDB
         Try
             If str = GetValueFromTable(Info, Furre).ToString Then Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -574,7 +570,7 @@ Public Class MSPK_MDB
             Return Value > number
 
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -596,7 +592,7 @@ Public Class MSPK_MDB
             Return Num >= number
 
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -618,7 +614,7 @@ Public Class MSPK_MDB
 
             Return Num < number
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -639,7 +635,7 @@ Public Class MSPK_MDB
             Double.TryParse(check.ToString, Num)
             Return Num <= number
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -661,7 +657,7 @@ Public Class MSPK_MDB
             Double.TryParse(val, Value)
             Return Value <> number
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -675,7 +671,7 @@ Public Class MSPK_MDB
         Try
             If str <> GetValueFromTable(Info, Furre).ToString Then Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -726,7 +722,7 @@ Public Class MSPK_MDB
             Table = reader.ReadString
             Total = reader.ReadVariable(True)
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Dim sql As String = "SELECT " & Column & " FROM " & Table & " ;"
@@ -791,7 +787,7 @@ Public Class MSPK_MDB
                 Return True
             End SyncLock
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -811,7 +807,7 @@ Public Class MSPK_MDB
             Total.Value = count
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -837,7 +833,7 @@ Public Class MSPK_MDB
             db.Insert("FURRE", data)
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -863,7 +859,7 @@ Public Class MSPK_MDB
             db.Insert("FURRE", data)
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -879,7 +875,7 @@ Public Class MSPK_MDB
             var2.Value = str
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -896,7 +892,7 @@ Public Class MSPK_MDB
             Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -913,7 +909,7 @@ Public Class MSPK_MDB
             Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -931,7 +927,7 @@ Public Class MSPK_MDB
             OutVar = reader.ReadVariable(True)
 
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Dim sql As String = "SELECT " & info & " FROM [" & Table & "] ;"
@@ -976,7 +972,7 @@ Public Class MSPK_MDB
             End If
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -1035,7 +1031,7 @@ Public Class MSPK_MDB
         Try
             Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -1063,6 +1059,7 @@ Public Class MSPK_MDB
         SQLiteDatabase.ExecuteNonQuery("VACUUM")
         Dim ts As TimeSpan = Date.Now.Subtract(start)
         SendClientMessage("SYSTEM:", "Executed Vacum in " + ts.Seconds.ToString + " seconds")
+        'TODO: Provide Database Stats for feedback
         Return True
     End Function
 

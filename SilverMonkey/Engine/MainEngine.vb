@@ -3,15 +3,11 @@ Imports Furcadia.Util
 Imports MonkeyCore
 Imports System.Collections.Generic
 Imports MonkeyCore.Settings
-Imports System.Text.RegularExpressions
 Imports System.Diagnostics
 Imports SilverMonkey.PhoenixSpeak
-Imports Furcadia.Net
 
-Imports System.Threading
 Imports Microsoft.Win32.SafeHandles
 Imports System.Runtime.InteropServices
-Imports Conversive.Verbot5
 
 ''' <summary>
 ''' Silver Monkey's MonkeySpeak Engine with our Customizations
@@ -221,7 +217,7 @@ Public Class MainMsEngine
 
                     If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True Then
                         Console.WriteLine("Loading Plugin: " + objPlugin.Name)
-                        objPlugin.Initialize(FurcSession.objHost)
+                        objPlugin.Initialize(objHost)
                         objPlugin.Page = MSpage
                         objPlugin.Start()
                     End If
@@ -229,7 +225,8 @@ Public Class MainMsEngine
                     Dim e As New ErrorLogging(ex, Me)
                 End Try
             Next
-            If newPlugin Then Main.MainSettings.SaveMainSettings()
+            'TODO: Add to delegate?
+            'If newPlugin Then Main.MainSettings.SaveMainSettings()
 
         End If
     End Sub
@@ -376,7 +373,7 @@ Public Class MainMsEngine
             PageSetVariable(VariableList)
             '(0:0) When the bot starts,
             PageExecute(0)
-            Console.WriteLine("Done! Executed in " & DateTime.Now.Subtract(start).ToString())
+            Console.WriteLine("Done! Executed in " & Date.Now.Subtract(start).ToString())
             'Console.ReadKey()
             MS_Engine_Running = True
         Catch eX As Exception

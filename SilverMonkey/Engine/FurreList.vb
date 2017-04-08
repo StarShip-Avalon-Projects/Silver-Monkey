@@ -159,7 +159,7 @@ Public Class MonkeySpeakFurreList
     Function FurreNamedActive(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Return Target.AFK = 0
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
@@ -171,7 +171,7 @@ Public Class MonkeySpeakFurreList
     Function FurreNamedAFK(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Return Target.AFK > 0
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
@@ -182,7 +182,7 @@ Public Class MonkeySpeakFurreList
     Function FurreNamedCanSe(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Return Target.Visible
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
@@ -193,7 +193,7 @@ Public Class MonkeySpeakFurreList
     Function FurreNamedInDream(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Return InDream(Target.Name)
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
@@ -204,7 +204,7 @@ Public Class MonkeySpeakFurreList
     Function FurreNamedNotCanSe(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Return Not Target.Visible
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
@@ -216,7 +216,7 @@ Public Class MonkeySpeakFurreList
     Function FurreNamedNotInDream(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Return Not InDream(Target.Name)
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
@@ -238,7 +238,7 @@ Public Class MonkeySpeakFurreList
     '(1:700) and the triggering furre in the dream.
     Function TriggeringInDream(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Return InDream(tPlayer.Name)
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
@@ -248,7 +248,7 @@ Public Class MonkeySpeakFurreList
     '(1:705) and the triggering furre is not visible
     Function TriggeringNotCanSe(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Return Not tPlayer.Visible
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)
@@ -259,7 +259,7 @@ Public Class MonkeySpeakFurreList
     '(1:701) and the triggering furre is not in the dream.
     Function TriggeringNotInDream(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Return Not InDream(tPlayer.Name)
         Catch ex As Exception
             MainMsEngine.LogError(reader, ex)

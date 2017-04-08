@@ -1,11 +1,12 @@
 ﻿Imports Furcadia.Net
-Imports Furcadia.Base220
-Imports System.Diagnostics
+Imports Furcadia.Text.Base220
 Imports MonkeyCore
 
+''' <summary>
+''' Work with Furre Descriptions in Monkey Speak
+''' </summary>
 Public Class Description
-
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"
 
@@ -191,12 +192,12 @@ Public Class Description
     '(1:600) and triggering furre's description contains {...}
     Function DescContains(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim Pattern As String = reader.ReadString
             If tPlayer.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
             Return tPlayer.Desc.Contains(Pattern)
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -205,12 +206,12 @@ Public Class Description
     Function DescContainsFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString()
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Pattern As String = reader.ReadString
             If Target.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
             Return Target.Desc.Contains(Pattern)
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -221,7 +222,7 @@ Public Class Description
 
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim ColorString As String = Target.Color
             If Target.Color.Length < 10 Then
                 Throw New Exception("Color string not found. Try looking at the furre first.")
@@ -233,7 +234,7 @@ Public Class Description
             Var.Value = ColorString
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -243,12 +244,12 @@ Public Class Description
         Try
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             If Target.Desc = Nothing Then Throw New Exception("Description not found, Try looking at the furre first.")
             Var.Value = Target.Desc
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -257,7 +258,7 @@ Public Class Description
     Function FurreNamedFacingNE(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.FrameInfo.dir
                 Case 3
@@ -265,7 +266,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -274,7 +275,7 @@ Public Class Description
     Function FurreNamedFacingNW(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.FrameInfo.dir
                 Case 2
@@ -282,7 +283,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -291,7 +292,7 @@ Public Class Description
     Function FurreNamedFacingSE(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.FrameInfo.dir
                 Case 1
@@ -299,7 +300,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -308,7 +309,7 @@ Public Class Description
     Function FurreNamedFacingSW(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.FrameInfo.dir
                 Case 0
@@ -316,7 +317,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -325,7 +326,7 @@ Public Class Description
     Function FurreNamedFemale(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Select Case Target.LastStat
                 Case -1
                     Throw New Exception("Gender not found. Try looking at the furre first")
@@ -341,7 +342,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -351,7 +352,7 @@ Public Class Description
         Try
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Select Case Target.LastStat
                 Case -1
                     Throw New Exception("Gender not found. Try looking at the furre first")
@@ -367,7 +368,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -376,7 +377,7 @@ Public Class Description
     Function FurreNamedLaying(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.FrameInfo.pose
                 Case 4
@@ -384,7 +385,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -393,7 +394,7 @@ Public Class Description
     Function FurreNamedMale(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Select Case Target.LastStat
                 Case -1
                     Throw New Exception("Gender not found. Try looking at the furre first")
@@ -409,7 +410,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -418,7 +419,7 @@ Public Class Description
     Function FurreNamedNoWings(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.LastStat
                 Case -1
@@ -435,7 +436,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -444,7 +445,7 @@ Public Class Description
     Function FurreNamedSitting(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.FrameInfo.pose
                 Case 0
@@ -452,7 +453,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -461,7 +462,7 @@ Public Class Description
     Function FurreNamedSpecies(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.LastStat
                 Case -1
@@ -478,7 +479,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -488,7 +489,7 @@ Public Class Description
         Try
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Select Case Target.LastStat
                 Case -1
                     Throw New Exception("Species not found. Try looking at the furre first")
@@ -504,7 +505,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -513,7 +514,7 @@ Public Class Description
     Function FurreNamedStanding(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.FrameInfo.pose
                 Case 1 To 3
@@ -521,7 +522,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -530,7 +531,7 @@ Public Class Description
     Function FurreNamedUnSpecified(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Select Case Target.LastStat
                 Case -1
                     Throw New Exception("Gender not found. Try looking at the furre first")
@@ -546,7 +547,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
             Return False
         End Try
@@ -556,7 +557,7 @@ Public Class Description
     Function FurreNamedWings(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.LastStat
                 Case -1
@@ -573,7 +574,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -583,7 +584,7 @@ Public Class Description
         Try
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Select Case Target.LastStat
                 Case -1
                     Throw New Exception("Wings type not found. Try looking at the furre first")
@@ -599,7 +600,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -607,33 +608,33 @@ Public Class Description
     '(1:601) and triggering furre's description does not contain {...}
     Function NotDescContains(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim Pattern As String = reader.ReadString
             If tPlayer.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
             Return Not tPlayer.Desc.Contains(Pattern)
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
     '(1:603) and the furre named {...} description does not contain {...}
     Function NotDescContainsFurreNamed(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim name As String = reader.ReadString()
-            Dim Target As FURRE = FurcSession.NameToFurre(name, False)
+            Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
             Dim Pattern As String = reader.ReadString
             If Target.Desc = Nothing Then Throw New Exception("Description not found. Try looking at the furre first")
             Return Not tPlayer.Desc.Contains(Pattern)
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
     '(5:604) set variable %Variable to the triggering furre's colors.
     Function TriggeringFurreColorsVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Dim ColorString As String = tPlayer.Color
             If tPlayer.Color.Length < 10 Then
@@ -647,7 +648,7 @@ Public Class Description
             Var.Value = ColorString
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -655,13 +656,13 @@ Public Class Description
     '(5:600) set variable %Variable to the Triggering furre's description.
     Function TriggeringFurreDescVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             If tPlayer.Desc = Nothing Then Throw New Exception("Description not found, Try looking at the furre first.")
             Var.Value = tPlayer.Desc
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -669,14 +670,14 @@ Public Class Description
     '(1:x) and the triggering furre is facing NE,
     Function TriggeringFurreFacingNE(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Select Case tPlayer.FrameInfo.dir
                 Case 3
                     Return True
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -684,14 +685,14 @@ Public Class Description
     '(1:x) and the triggering furre is facing NW,
     Function TriggeringFurreFacingNW(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Select Case tPlayer.FrameInfo.dir
                 Case 2
                     Return True
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -699,14 +700,14 @@ Public Class Description
     '(1:x) and the triggering furre is facing SE,
     Function TriggeringFurreFacingSE(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Select Case tPlayer.FrameInfo.dir
                 Case 1
                     Return True
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -714,14 +715,14 @@ Public Class Description
     '(1:x) and the triggering furre is facing SW,
     Function TriggeringFurreFacingSW(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Select Case tPlayer.FrameInfo.dir
                 Case 0
                     Return True
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -729,7 +730,7 @@ Public Class Description
     '(1:605) and the triggering furre is female,
     Function TriggeringFurreFemale(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Select Case tPlayer.LastStat
                 Case -1
                     Throw New Exception("Gender not found. Try looking at the furre first")
@@ -745,7 +746,7 @@ Public Class Description
             End Select
 
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -754,7 +755,7 @@ Public Class Description
     '(5:601 set variable %Variable to the triggering furre's gender.
     Function TriggeringFurreGenderVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Select Case tPlayer.LastStat
                 Case -1
@@ -772,7 +773,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -780,14 +781,14 @@ Public Class Description
     '(1:x) and the triggering furre is laying.
     Function TriggeringFurreLaying(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Select Case tPlayer.FrameInfo.pose
                 Case 4
                     Return True
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -795,7 +796,7 @@ Public Class Description
     '(1:604) and the triggering furre is male,
     Function TriggeringFurreMale(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Select Case tPlayer.LastStat
                 Case -1
                     Throw New Exception("Gender not found. Try looking at the furre first")
@@ -811,7 +812,7 @@ Public Class Description
             End Select
 
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Return False
@@ -819,7 +820,7 @@ Public Class Description
     '(1:615) and the triggering furre doesn't wings of type #
     Function TriggeringFurreNoWings(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim Spec As Double = reader.ReadNumber()
             Select Case tPlayer.LastStat
                 Case -1
@@ -836,7 +837,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -844,14 +845,14 @@ Public Class Description
     '(1:x) and the triggering furre is sitting.
     Function TriggeringFurreSitting(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Select Case tPlayer.FrameInfo.pose
                 Case 0
                     Return True
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -859,7 +860,7 @@ Public Class Description
     '(1:612) and the trigger furre is Species # (please see http://www.furcadia.com/dsparams/ for info)
     Function TriggeringFurreSpecies(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim Spec As Double = reader.ReadNumber()
             Select Case tPlayer.LastStat
                 Case -1
@@ -876,7 +877,7 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -884,7 +885,7 @@ Public Class Description
     '(5:602) set variable %Variable to the triggering furre's species.
     Function TriggeringFurreSpeciesVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Select Case tPlayer.LastStat
                 Case -1
@@ -901,7 +902,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -909,14 +910,14 @@ Public Class Description
     '(1:x) and the triggering furre is standing.
     Function TriggeringFurreStanding(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Select Case tPlayer.FrameInfo.pose
                 Case 1 To 3
                     Return True
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -924,7 +925,7 @@ Public Class Description
     '(1:606) and the triggering furre is unspecified,
     Function TriggeringFurreUnspecified(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Select Case tPlayer.LastStat
                 Case -1
                     Throw New Exception("Gender not found. Try looking at the furre first")
@@ -940,14 +941,14 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
     '(1:614) and the triggering furre has wings of type #
     Function TriggeringFurreWings(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim Spec As Double = reader.ReadNumber()
             Select Case tPlayer.LastStat
                 Case -1
@@ -964,14 +965,14 @@ Public Class Description
             End Select
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
     '(5:609) set %Variable to the wings type the triggering furre is wearing.
     Function TriggeringFurreWingsVar(reader As Monkeyspeak.TriggerReader) As Boolean
         Try
-            Dim tPlayer As FURRE = FurcSession.Player
+            Dim tPlayer As FURRE = FurcadiaSession.Player
             Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
             Select Case tPlayer.LastStat
                 Case -1
@@ -988,7 +989,7 @@ Public Class Description
             End Select
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function

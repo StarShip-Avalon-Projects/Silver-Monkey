@@ -130,7 +130,7 @@ Public Class MSPK_Web
                 page = ws.WGet(WebStack)
                 WebStack = page.WebStack
                 If page.ReceivedPage Then
-                    FurcSession.MainEngine.PageExecute(70)
+                    FurcadiaSession.MainEngine.PageExecute(70)
                 End If
             End SyncLock
             If page.Status <> 0 Then Throw New WebException(page.ErrMsg)
@@ -156,7 +156,7 @@ Public Class MSPK_Web
                 page = ws.WPost(WebStack)
                 WebStack = page.WebStack
                 If page.ReceivedPage Then
-                    FurcSession.MainEngine.PageExecute(70)
+                    FurcadiaSession.MainEngine.PageExecute(70)
                 End If
             End SyncLock
             If page.Status <> 0 Then Throw New WebException(page.ErrMsg)

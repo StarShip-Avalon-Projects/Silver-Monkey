@@ -27,8 +27,8 @@ Public Class Variables
 
             SyncLock Lock
 
-                For i As Integer = 0 To FurcSession.MainEngine.MSpage.Scope.Count - 1
-                    Dim Var As Monkeyspeak.Variable = FurcSession.MainEngine.MSpage.Scope.Item(i)
+                For i As Integer = 0 To FurcadiaSession.MainEngine.MSpage.Scope.Count - 1
+                    Dim Var As Monkeyspeak.Variable = FurcadiaSession.MainEngine.MSpage.Scope.Item(i)
 
                     Dim Variable() As String = {"", "", ""}
                     Variable(0) = Var.Name.ToString

@@ -11,7 +11,9 @@ Public Class MonkeySpeakLibrary
 
 #Region "Public Delegates"
 
-    Public Delegate Sub TextSend(ByRef message As String)
+    Public Shared FurcadiaSession As FurcSession = Main.FurcadiaSession
+
+    Public Delegate Sub MessageDelegate(ByRef message As String)
 
     Public Sub LogError(reader As Monkeyspeak.TriggerReader, ex As Exception)
         Main.FurcadiaSession.MainEngine.LogError(reader, ex)
@@ -39,16 +41,6 @@ Public Class MonkeySpeakLibrary
 
     Protected Shared writer As TextBoxWriter = Nothing
 
-    ''' <summary>
-    ''' Current Executing Furcadia Dream
-    ''' </summary>
-    Protected MyDream As Furcadia.Net.DREAM
-
-    ''' <summary>
-    ''' Current Executing Player
-    ''' </summary>
-    Protected MyPlayer As Furcadia.Net.FURRE
-
 #End Region
 
 #Region "Public Constructors"
@@ -62,11 +54,26 @@ Public Class MonkeySpeakLibrary
         writer = New TextBoxWriter(Variables.TextBox1)
     End Sub
 
-    Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
-        Me.New()
-        MyDream = Dream
-        MyPlayer = Player
-        MyMonkeySpeakEngine = MsEngine
+#End Region
+
+#Region "Protected Methods"
+
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="TriggerIDs">MonkeySpeak Triggers</param>
+    Protected Sub PageExecute(ParamArray TriggerIDs() As Integer)
+
+        FurcadiaSession.MainEngine.PageExecute(TriggerIDs)
+    End Sub
+
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="Message"></param>
+    ''' <param name="ServerData"></param>
+    Protected Sub PageSetVariable(Message As String, ServerData As String)
+        FurcadiaSession.MainEngine.PageSetVariable(Message, ServerData)
     End Sub
 
 #End Region
