@@ -24,9 +24,6 @@ build/
 /SRC
 .vs/
 **/bin/*
-/Plugins/AngelCat
-/Plugins/SoundWave
-/FastColoredTextBox
 
 # Ignore NuGet Packages
 *.nupkg
