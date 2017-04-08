@@ -7,11 +7,9 @@
 Public Class BaseSubSystem
     Inherits Utils.ParseServer
 
-
-
 #Region "Public Constructors"
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="Dream"></param>
     ''' <param name="Player"></param>
@@ -39,7 +37,7 @@ Public Class BaseSubSystem
 
     ''' <summary>
     ''' Parse Server Channels
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="data">Raw Server Instruction</param>
     ''' <param name="handled"></param>
@@ -50,5 +48,13 @@ Public Class BaseSubSystem
     End Sub
 
 #End Region
+
+    Public Sub PageExecute(ParamArray TriggerSet() As Integer)
+
+    End Sub
+
+    Public Sub PageSetVariable(Message As String, ServerData As String)
+
+    End Sub
 
 End Class

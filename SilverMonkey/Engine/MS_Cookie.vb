@@ -76,7 +76,7 @@ AddressOf EatCookie,
     Function NameIs(reader As TriggerReader) As Boolean
         Try
             Dim TmpName As String = reader.ReadString()
-            Dim tname As Variable = FurcSession.MainEngine.MSpage.GetVariable(MS_Name)
+            Dim tname As Variable = FurcadiaSession.MainEngine.MSpage.GetVariable(MS_Name)
             'add Machine Name parser
             Return FurcadiaShortName(TmpName) = FurcadiaShortName(tname.Value.ToString)
         Catch ex As Exception

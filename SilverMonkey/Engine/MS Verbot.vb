@@ -7,10 +7,8 @@ Imports MonkeyCore
 Public Class MS_Verbot
     Inherits MonkeySpeakLibrary
 
-    <CLSCompliant(False)>
-
 #Region "Public Fields"
-
+    <CLSCompliant(False)>
     Public kb As KnowledgeBase = New KnowledgeBase()
     <CLSCompliant(False)>
     Public kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
@@ -31,12 +29,6 @@ Public Class MS_Verbot
 
     Public Sub New()
         MyBase.New()
-        verbot = New Verbot5Engine()
-        state = New State()
-    End Sub
-
-    Public Sub New(ByRef Dream As Furcadia.Net.DREAM, ByRef Player As Furcadia.Net.FURRE, ByRef MsEngine As MainMsEngine)
-        MyBase.New(Dream, Player, MsEngine)
         verbot = New Verbot5Engine()
         state = New State()
 
@@ -86,17 +78,17 @@ Public Class MS_Verbot
         Try
             SayText = reader.ReadString
             ResponceText = reader.ReadVariable(True)
-            If MyMonkeySpeakEngine.state.Vars.ContainsKey("botname") Then
-                MyMonkeySpeakEngine.state.Vars.Item("botname") = FurcSession.BotName
+            If state.Vars.ContainsKey("botname") Then
+                state.Vars.Item("botname") = FurcadiaSession.BotName
             Else
-                MyMonkeySpeakEngine.state.Vars.Add("botname", FurcSession.BotName)
+                state.Vars.Add("botname", FurcadiaSession.BotName)
             End If
-            If MyMonkeySpeakEngine.state.Vars.ContainsKey("channel") Then
-                MyMonkeySpeakEngine.state.Vars.Item("channel") = FurcSession.Channel
+            If state.Vars.ContainsKey("channel") Then
+                state.Vars.Item("channel") = FurcadiaSession.Channel
             Else
-                MyMonkeySpeakEngine.state.Vars.Add("channel", FurcSession.Channel)
+                state.Vars.Add("channel", FurcadiaSession.Channel)
             End If
-            Dim reply As Reply = MyMonkeySpeakEngine.verbot.GetReply(MyPlayer, SayText, MyMonkeySpeakEngine.state)
+            Dim reply As Reply = verbot.GetReply(FurcadiaSession.Player, SayText, state)
 
             If reply Is Nothing Then Return False
 
@@ -123,17 +115,17 @@ Public Class MS_Verbot
             SayText = reader.ReadString
             SayName = reader.ReadString
             ResponceText = reader.ReadVariable(True)
-            If MyMonkeySpeakEngine.state.Vars.ContainsKey("botname") Then
-                MyMonkeySpeakEngine.state.Vars.Item("botname") = FurcSession.BotName
+            If state.Vars.ContainsKey("botname") Then
+                state.Vars.Item("botname") = FurcadiaSession.BotName
             Else
-                MyMonkeySpeakEngine.state.Vars.Add("botname", FurcSession.BotName)
+                state.Vars.Add("botname", FurcadiaSession.BotName)
             End If
-            If MyMonkeySpeakEngine.state.Vars.ContainsKey("channel") Then
-                MyMonkeySpeakEngine.state.Vars.Item("channel") = FurcSession.Channel
+            If state.Vars.ContainsKey("channel") Then
+                state.Vars.Item("channel") = FurcadiaSession.Channel
             Else
-                MyMonkeySpeakEngine.state.Vars.Add("channel", FurcSession.Channel)
+                state.Vars.Add("channel", FurcadiaSession.Channel)
             End If
-            Dim reply As Reply = MyMonkeySpeakEngine.verbot.GetReply(FurcSession.NameToFurre(SayName, False), SayText, MyMonkeySpeakEngine.state)
+            Dim reply As Reply = verbot.GetReply(FurcadiaSession.NameToFurre(SayName, False), SayText, state)
 
             If reply Is Nothing Then Return False
 
@@ -196,13 +188,13 @@ Public Class MS_Verbot
                         If VarDataIndex <> -1 Then
                             VarData = args.Substring(VarDataIndex + 1)
                         End If
-                        MyMonkeySpeakEngine.PageSetVariable(VarName, VarData)
+                        PageSetVariable(VarName, VarData)
                     End If
 
                     'ChatExecute
                 Case "executechatcmd"
                     ChatCMD = args
-                    MyMonkeySpeakEngine.PageExecute(1500)
+                    PageExecute(1500)
 
                 Case Else
                     Exit Select
@@ -223,7 +215,7 @@ Public Class MS_Verbot
             Dim cmd As String = reader.ReadString()
             Return ChatCMD.ToLower() = cmd.ToLower()
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -257,7 +249,7 @@ Public Class MS_Verbot
             End If
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function

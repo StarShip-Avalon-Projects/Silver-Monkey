@@ -2,7 +2,7 @@
 Imports MonkeyCore
 
 Public Class MS_Time
-    Inherits Libraries.AbstractBaseLibrary
+    Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"
 
@@ -68,7 +68,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             Var.Value = Str
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -82,7 +82,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             End SyncLock
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -98,7 +98,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             Var.Value = Str
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -110,7 +110,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             var.Value = Date.Now.ToString("yyyy-MM-dd HH:mm:ss tt")
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -128,7 +128,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             End If
             Return False
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -145,7 +145,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
             End If
             Return True
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
     End Function
@@ -168,7 +168,7 @@ AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime stri
     '        End If
     '        Return False
     '    Catch ex As Exception
-    '       MainMsEngine.LogError(reader, ex)
+    '       LogError(reader, ex)
     '       Return False
     '    End Try
     'End Function

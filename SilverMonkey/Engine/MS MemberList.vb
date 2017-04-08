@@ -3,6 +3,8 @@ Imports MonkeyCore
 Imports MonkeyCore.IO
 Imports System.Collections.Generic
 
+Imports Furcadia.Util
+
 Public Class MS_MemberList
     Inherits MonkeySpeakLibrary
 
@@ -65,7 +67,7 @@ Public Class MS_MemberList
             Return True
 
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -76,7 +78,7 @@ Public Class MS_MemberList
         Dim Furre As String = Nothing
 
         Try
-            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MSpage.GetVariable(MS_Name).Value.ToString
             If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
                 Dim sw As StreamWriter = New StreamWriter(MemberList, True)
                 sw.WriteLine(Furre)
@@ -85,7 +87,7 @@ Public Class MS_MemberList
             Return True
 
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
 
@@ -109,16 +111,16 @@ Public Class MS_MemberList
             Furre = reader.ReadString
             f = File.ReadAllLines(MemberList)
             For Each l As String In f
-                If MyMonkeySpeakEngine.ToFurcShortName(l) = MyMonkeySpeakEngine.ToFurcShortName(Furre) Then
+                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then
                     Return True
                 End If
             Next
 
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
-        Return MyMonkeySpeakEngine.IsBotControler(Furre)
+        Return IsBotControler(Furre)
     End Function
 
     '(1:903) and the furre named {...} is not on my Dream Member list.
@@ -135,7 +137,7 @@ Public Class MS_MemberList
             f = File.ReadAllLines(MemberList)
             Furre.Value = String.Join(" ", f)
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -153,7 +155,7 @@ Public Class MS_MemberList
                 While SR.Peek() <> -1
                     line = SR.ReadLine()
                     For i As Integer = 0 To linesList.Count - 1
-                        If MyMonkeySpeakEngine.ToFurcShortName(line) = MyMonkeySpeakEngine.ToFurcShortName(Furre) Then
+                        If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
                             linesList.RemoveAt(i)
                             File.WriteAllLines(MemberList, linesList.ToArray())
                             Exit For
@@ -162,7 +164,7 @@ Public Class MS_MemberList
                 End While
             End Using
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -173,14 +175,14 @@ Public Class MS_MemberList
         Dim Furre As String = Nothing
         CheckMemberList()
         Try
-            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = GetVariable(MS_Name).Value.ToString
             Dim line As String
             Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
             Using SR As New StreamReader(MemberList)
                 While SR.Peek() <> -1
                     line = SR.ReadLine()
                     For i As Integer = 0 To linesList.Count - 1
-                        If MyMonkeySpeakEngine.ToFurcShortName(line) = MyMonkeySpeakEngine.ToFurcShortName(Furre) Then
+                        If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
                             linesList.RemoveAt(i)
                             File.WriteAllLines(MemberList, linesList.ToArray())
                             Exit For
@@ -189,7 +191,7 @@ Public Class MS_MemberList
                 End While
             End Using
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Return True
@@ -201,16 +203,16 @@ Public Class MS_MemberList
         Dim Furre As String = Nothing
         Dim f As New List(Of String)
         Try
-            Furre = MyMonkeySpeakEngine.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = MSpage.GetVariable(MS_Name).Value.ToString
             f.AddRange(File.ReadAllLines(MemberList))
             For Each l As String In f
-                If MyMonkeySpeakEngine.ToFurcShortName(l) = MyMonkeySpeakEngine.ToFurcShortName(Furre) Then Return True
+                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
             Next
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
-        Return MyMonkeySpeakEngine.IsBotControler(Furre)
+        Return IsBotControler(Furre)
     End Function
     '(1:902) and the triggering furre is not on my Dream Member list.
     Private Function TrigFurreIsNotMember(reader As Monkeyspeak.TriggerReader) As Boolean
@@ -223,7 +225,7 @@ Public Class MS_MemberList
             MemberList = reader.ReadString
             CheckMemberList()
         Catch ex As Exception
-            MainMsEngine.LogError(reader, ex)
+            LogError(reader, ex)
             Return False
         End Try
         Return True

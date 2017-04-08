@@ -85,7 +85,8 @@ Public Class FurcSession : Inherits NetProxy
     ''' <returns>Status to the server</returns>
     Public ReadOnly Property ServerStatus As Furcadia.Net.Utils.NetServerArgs
         Get
-            Return CType(LoggingIn, ConnectionStats)
+            Return
+
         End Get
     End Property
 #End Region
@@ -1457,6 +1458,10 @@ Public Class FurcSession : Inherits NetProxy
         sndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
     End Sub
 
+    Public Sub sndDisplay(v As String)
+        Throw New NotImplementedException()
+    End Sub
+
     ''' <summary>
     ''' Format basic furcadia commands and send to server
     ''' <para>
@@ -1675,12 +1680,6 @@ Public Class FurcSession : Inherits NetProxy
     Private Sub SendDisplay(v As String, defaultColor As fColorEnum)
         Throw New NotImplementedException()
     End Sub
-    Private Sub sndDisplay(v As String)
-
-    End Sub
-    Private Sub SndToServer(v As String)
-        SendServer(v)
-    End Sub
 #Region "Dispose"
     'Dim Ts As TimeSpan = TimeSpan.FromSeconds(MainSettings.ConnectTimeOut)
     '        ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
@@ -1688,7 +1687,11 @@ Public Class FurcSession : Inherits NetProxy
     '        Dim Tss As TimeSpan = TimeSpan.FromSeconds(MainSettings.Ping)
     'If MainSettings.Ping > 0 Then PingTimer = New Threading.Timer(AddressOf PingTimerTick,
     '         Nothing, Tss, Tss)
-    Public Overrides Sub SendServer(message As String)
+    ''' <summary>
+    ''' Send Message to Server through the Load Ballancer
+    ''' </summary>
+    ''' <param name="message"></param>
+    Public Sub SendToServer(message As String)
         ServerBalancer.SendToServer(message)
     End Sub
 

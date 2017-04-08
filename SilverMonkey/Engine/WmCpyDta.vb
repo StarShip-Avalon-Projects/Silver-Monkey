@@ -10,11 +10,6 @@ Public Class WmCpyDta
 
     Public Sub New()
         MyBase.New()
-    End Sub
-
-    Public Sub New(ByRef Dream As DREAM, ByRef Player As FURRE, ByRef MsEngine As MainMsEngine)
-        MyBase.New(Dream, Player, MsEngine)
-
         '(0:75) When the bot receives a message from another bot on the same computer,
         Add(TriggerCategory.Cause, 75,
 Function()
@@ -108,7 +103,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
 
             Dim iResult As IntPtr = IntPtr.Zero
             If WindowHandle <> IntPtr.Zero Then
-                iResult = msg.sendWindowsStringMessage(WindowHandle, IntPtr.Zero, FurcSession.BotName, FurcSession.BotUID, strTag, msMsg)
+                iResult = msg.sendWindowsStringMessage(WindowHandle, IntPtr.Zero, FurcadiaSession.BotName, FurcadiaSession.BotUID, strTag, msMsg)
                 SendClientMessage("SYSTEM Send Windows Message to " + Fur + ": ", msMsg)
             End If
             'Debug.Print("Msg = " & msg)
@@ -129,7 +124,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
         Dim Var As Monkeyspeak.Variable
         Try
             Var = reader.ReadVariable(True)
-            Var.Value = MyPlayer.Message
+            Var.Value = FurcadiaSession.Player.Message
             Return True
         Catch ex As Exception
             Dim tID As String = reader.TriggerId.ToString

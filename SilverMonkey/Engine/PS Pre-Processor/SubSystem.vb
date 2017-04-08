@@ -186,9 +186,9 @@ Namespace PhoenixSpeak
 
                         PageOverFlow = False
 
-                        MyEngine.PageSetVariable("MESSAGE", ServerData)
+                        PageSetVariable("MESSAGE", ServerData)
                         'Phoenix Speak Response set
-                        MyEngine.PageExecute(80, 81, 82)
+                        PageExecute(80, 81, 82)
 
                     Else 'Assume Single page responses
                         PSInfoCache = ProcessVariables(data)
@@ -201,8 +201,8 @@ Namespace PhoenixSpeak
                         args.PageOverFlow = PageOverFlow
 
                         ProcessedFromeServer(ServerData, args)
-                        MyEngine.PageSetVariable("MESSAGE", ServerData)
-                        MyEngine.PageExecute(80, 81, 82)
+                        PageSetVariable("MESSAGE", ServerData)
+                        PageExecute(80, 81, 82)
 
                         'trigger Monkey Speak responses
                     End If
@@ -219,12 +219,12 @@ Namespace PhoenixSpeak
                     args.Flag = ResponceMode
                     args.PageOverFlow = PageOverFlow
                     ProcessedFromeServer(ServerData, args)
-                    MyEngine.PageSetVariable("MESSAGE", ServerData)
+                    PageSetVariable("MESSAGE", ServerData)
                     Dim AbortError As New Regex("Sorry, PhoenixSpeak commands are currently not available in this dream.$", SmRegExOptions)
                     If AbortError.Match(data).Success Then
                         Abort()
                         '(0:503) When the bot finishes restoring the dreams character Phoenix Speak,
-                        MyEngine.MSpage.Execute(503)
+                        PageExecute(503)
                     End If
 
                 End If
