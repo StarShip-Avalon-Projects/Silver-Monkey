@@ -1,0 +1,10 @@
+E:\Net Source Code\Monkey System 2\Build\Debug\plugins\license.txt
+E:\Net Source Code\Monkey System 2\Build\Debug\plugins\AngelCatModule.dll
+E:\Net Source Code\Monkey System 2\Build\Debug\plugins\AngelCatModule.pdb
+E:\Net Source Code\Monkey System 2\Net40\Debug\plugins\AngelCatModule.dll
+E:\Net Source Code\Monkey System 2\Net40\Debug\plugins\AngelCatModule.pdb
+E:\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCat Net4.0.vbprojResolveAssemblyReference.cache
+E:\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\SilverMonkey.AngelCatModule.Resources.resources
+E:\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCat Net4.0.vbproj.GenerateResource.Cache
+E:\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCatModule.dll
+E:\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCatModule.pdb

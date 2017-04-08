@@ -1,0 +1,16 @@
+E:\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SoundModule.csproj.GenerateResource.Cache
+E:\Net Source Code\Monkey System 2\Plugins\Build\Debug\plugins\license.txt
+E:\Net Source Code\Monkey System 2\Plugins\Build\Debug\plugins\SoundModule.Plugin.dll
+E:\Net Source Code\Monkey System 2\Plugins\Build\Debug\plugins\SoundModule.Plugin.pdb
+E:\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SoundModule.Plugin.dll
+E:\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SoundModule.Plugin.pdb
+E:\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SilverMonkey.SoundModule.Resources.resources
+E:\Net Source Code\Monkey System 2\Build\Debug\plugins\SoundModule.Plugin.dll
+E:\Net Source Code\Monkey System 2\Build\Debug\plugins\SoundModule.Plugin.pdb
+D:\TS-Projects\Net Source Code\Monkey System 2\Build\Debug\plugins\SoundModule.Plugin.dll
+D:\TS-Projects\Net Source Code\Monkey System 2\Build\Debug\plugins\SoundModule.Plugin.pdb
+D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SoundModule.csprojResolveAssemblyReference.cache
+D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SilverMonkey.SoundModule.Resources.resources
+D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SoundModule.csproj.GenerateResource.Cache
+D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SoundModule.Plugin.dll
+D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SoundModule.Plugin.pdb

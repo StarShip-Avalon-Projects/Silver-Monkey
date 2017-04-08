@@ -1,0 +1,9 @@
+E:\Net Source Code\Monkey System 2\Build\Debug\plugins\SoundWave Net4.0.dll
+E:\Net Source Code\Monkey System 2\Build\Debug\plugins\SoundWave Net4.0.pdb
+E:\Net Source Code\Monkey System 2\Net40\Debug\plugins\SoundWave.dll
+E:\Net Source Code\Monkey System 2\Net40\Debug\plugins\SoundWave.pdb
+E:\Net Source Code\Monkey System 2\Plugins\SoundWave\obj\Debug\SoundWave Net4.0.vbprojResolveAssemblyReference.cache
+E:\Net Source Code\Monkey System 2\Plugins\SoundWave\obj\Debug\SilverMonkey.SoundWave.Resources.resources
+E:\Net Source Code\Monkey System 2\Plugins\SoundWave\obj\Debug\SoundWave Net4.0.vbproj.GenerateResource.Cache
+E:\Net Source Code\Monkey System 2\Plugins\SoundWave\obj\Debug\SoundWave.dll
+E:\Net Source Code\Monkey System 2\Plugins\SoundWave\obj\Debug\SoundWave.pdb

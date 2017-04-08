@@ -1,0 +1,4 @@
+E:\Net Source Code\Monkey System 2\Net40\Release\plugins\SoundWave.dll
+E:\Net Source Code\Monkey System 2\Plugins\SoundWave\obj\Release\SilverMonkey.SoundWave.Resources.resources
+E:\Net Source Code\Monkey System 2\Plugins\SoundWave\obj\Release\SoundWave Net4.0.vbproj.GenerateResource.Cache
+E:\Net Source Code\Monkey System 2\Plugins\SoundWave\obj\Release\SoundWave.dll

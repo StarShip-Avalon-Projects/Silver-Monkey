@@ -1,0 +1,31 @@
+E:\.Net Source Code\SilverMonkeyMods\AngelCat\obj\Debug\AngelCat.vbprojResolveAssemblyReference.cache
+E:\.Net Source Code\SilverMonkeyMods\AngelCat\obj\Debug\SilverMonkey.AngelCatModule.Resources.resources
+E:\.Net Source Code\SilverMonkeyMods\AngelCat\obj\Debug\AngelCat.vbproj.GenerateResource.Cache
+E:\Net Source Code\SilverMonkeyMods\Build\Debug\plugins\AngelCatModule.dll
+E:\Net Source Code\SilverMonkeyMods\Build\Debug\plugins\AngelCatModule.pdb
+E:\Net Source Code\SilverMonkeyMods\AngelCat\obj\Debug\AngelCat.vbprojResolveAssemblyReference.cache
+E:\Net Source Code\SilverMonkeyMods\AngelCat\obj\Debug\SilverMonkey.AngelCatModule.Resources.resources
+E:\Net Source Code\SilverMonkeyMods\AngelCat\obj\Debug\AngelCat.vbproj.GenerateResource.Cache
+E:\Net Source Code\SilverMonkeyMods\AngelCat\obj\Debug\AngelCatModule.dll
+E:\Net Source Code\SilverMonkeyMods\AngelCat\obj\Debug\AngelCatModule.pdb
+C:\Users\Jeremy\Documents\Devel\Net Source Code\Monkey System 2\Build\Debug\plugins\license.txt
+C:\Users\Jeremy\Documents\Devel\Net Source Code\Monkey System 2\Build\Debug\plugins\AngelCatModule.dll
+C:\Users\Jeremy\Documents\Devel\Net Source Code\Monkey System 2\Build\Debug\plugins\AngelCatModule.pdb
+C:\Users\Jeremy\Documents\Devel\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCat.vbprojResolveAssemblyReference.cache
+C:\Users\Jeremy\Documents\Devel\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\SilverMonkey.AngelCatModule.Resources.resources
+C:\Users\Jeremy\Documents\Devel\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCat.vbproj.GenerateResource.Cache
+C:\Users\Jeremy\Documents\Devel\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCatModule.dll
+C:\Users\Jeremy\Documents\Devel\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCatModule.pdb
+E:\Net Source Code\Monkey System 2\Build\Debug\plugins\AngelCatModule.Plugin.dll
+E:\Net Source Code\Monkey System 2\Build\Debug\plugins\AngelCatModule.Plugin.pdb
+E:\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\SilverMonkey.AngelCatModule.Resources.resources
+E:\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCat.vbproj.GenerateResource.Cache
+E:\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCatModule.Plugin.dll
+E:\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCatModule.Plugin.pdb
+D:\TS-Projects\Net Source Code\Monkey System 2\Build\Debug\plugins\AngelCatModule.Plugin.dll
+D:\TS-Projects\Net Source Code\Monkey System 2\Build\Debug\plugins\AngelCatModule.Plugin.pdb
+D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCat.vbprojResolveAssemblyReference.cache
+D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\SilverMonkey.AngelCatModule.Resources.resources
+D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCat.vbproj.GenerateResource.Cache
+D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCatModule.Plugin.dll
+D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCatModule.Plugin.pdb
