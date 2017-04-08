@@ -9,5 +9,5 @@
 
 [submodule "FurcLib"]
 	
-	path = FurcLib	url = https://github.com/StarShip-Avalon-Projects/FurcLib.git
+	path = FurcLib		url = https://github.com/StarShip-Avalon-Projects/FurcLib.git
 
