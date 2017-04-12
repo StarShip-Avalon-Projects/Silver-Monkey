@@ -102,7 +102,7 @@
     <SourceCodeBasePath>
     </SourceCodeBasePath>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\MonkeySpeakR6\MonkeySpeakEx.csproj" />
+      <DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
     </DocumentationSources>
     <RootNamespaceTitle>MonkeySpeakEx API</RootNamespaceTitle>
   </PropertyGroup>

@@ -4,9 +4,9 @@ Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports Furcadia.Net
 Imports Monkeyspeak
-Imports SilverMonkey.PhoenixSpeak.SubSystem
+Imports SilverMonkey.Engine.Libraries.PhoenixSpeak.SubSystem
 
-Namespace PhoenixSpeak
+Namespace Engine.Libraries.PhoenixSpeak
 
     ''' <summary>
     ''' Phoenix mSpeak Even Arguments

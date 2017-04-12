@@ -40,7 +40,7 @@ Public Class smHost
         End Set
     End Property
 
-    Public WriteOnly Property Page() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.Page
+    Public WriteOnly Property MsPage() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.MsPage
         Set(value As Monkeyspeak.Page)
             MainEngine.MSpage = value
         End Set

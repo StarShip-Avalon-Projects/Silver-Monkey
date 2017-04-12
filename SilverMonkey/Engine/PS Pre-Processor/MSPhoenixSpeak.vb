@@ -1,15 +1,16 @@
 ﻿Imports Monkeyspeak
 
 Imports System.Collections.Generic
+Imports SilverMonkey.Engine.Libraries.PhoenixSpeak
 
-Namespace PhoenixSpeak
+Namespace Engine.Libraries
 
     ''' <summary>
     ''' Monkey Speak Interface to the PhoenixSpeak server interface
     ''' <para>Checks and executes Basic PhoenixSpeak response triggers</para>
     ''' </summary>
     Public Class MsPhoenixSpeak
-        Inherits SilverMonkey.MonkeySpeakLibrary
+        Inherits MonkeySpeakLibrary
 
 #Region "Fields"
 
@@ -180,7 +181,7 @@ Namespace PhoenixSpeak
                 'Debug.Print("msgContains Begin Execution")
                 msMsg = reader.ReadString()
                 'Debug.Print("msMsg = " & msMsg)
-                msg = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE").Value.ToString
+                msg = MsPage.GetVariable("MESSAGE").Value.ToString
                 'Debug.Print("Msg = " & msg)
                 Return msg.Contains(msMsg)
             Catch ex As Exception
@@ -192,7 +193,7 @@ Namespace PhoenixSpeak
         Public Function msgIs(reader As TriggerReader) As Boolean
             Try
                 Dim msMsg As String = reader.ReadString()
-                Dim msg As Monkeyspeak.Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
                 If msMsg = msg.Value.ToString Then Return True
                 Return False
             Catch ex As Exception
@@ -204,7 +205,7 @@ Namespace PhoenixSpeak
         Function msgIsNot(reader As TriggerReader) As Boolean
             Try
                 Dim msMsg As String = reader.ReadString()
-                Dim msg As Monkeyspeak.Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
                 If msMsg <> msg.Value.ToString Then Return True
                 Return False
             Catch ex As Exception
@@ -217,7 +218,7 @@ Namespace PhoenixSpeak
             Try
                 Dim msMsg As String = reader.ReadString()
                 'Debug.Print("msMsg = " & msMsg)
-                Dim msg As Monkeyspeak.Variable = MyMonkeySpeakEngine.MSpage.GetVariable("MESSAGE")
+                Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
                 'Debug.Print("Msg = " & msg.Value.ToString)
                 If msg.Value.ToString.Contains(msMsg) Then Return False
                 Return True

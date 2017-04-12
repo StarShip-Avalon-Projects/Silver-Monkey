@@ -27,6 +27,51 @@ Public Class Main
     'TODO: Change Reconnection Manager to FurcadiaSession
     'TODO: Change Server Load Balancer to FurcadiaSession
 
+#Region "Public Fields"
+
+    'Dim TimeUpdater As Threading.Thread
+    Public Shared FurcTime As DateTime
+
+    Public ErrorMsg As String = ""
+    'Public PS_Que As New Queue(Of String)(100)
+    '0 = no error
+    '1 = warning
+    '2 = error
+    Public ErrorNum As Short = 0
+
+    ' Public Bot As FURRE
+    Public LogStream As LogStream
+
+#End Region
+
+#Region "Private Fields"
+
+    ''' <summary>
+    ''' Decouple Our Bot  Stuff from the GUI
+    ''' <para>
+    ''' Move all the Proxy functions to FurcSessilon
+    ''' </para>
+    ''' <para>
+    ''' Move MonkeySpeak Engine to BotSession
+    ''' </para>
+    ''' <para>
+    ''' Move SubSystems to FurcLib (pounce, PhoenixSpeak, Dice ETC)
+    ''' </para>
+    ''' </summary>
+    Public WithEvents FurcadiaSession As BotSession
+    Public Shared NewBot As Boolean = False
+    Public Mainsettings As MonkeyCore.Settings.cMain
+    Public writer As TextBoxWriter = Nothing
+
+    Dim CMD_Idx, CMD_Idx2 As Integer
+    Dim CMD_Lck As Boolean = False
+    'Input History
+    Dim CMD_Max As Integer = 20
+
+    Dim CMDList(CMD_Max) As String
+    Dim curWord As String
+#End Region
+
 #Region "SysTray"
     Public WithEvents NotifyIcon1 As NotifyIcon
 #End Region
@@ -105,23 +150,48 @@ Public Class Main
     Private Declare Function SetForegroundWindow Lib "user32" (ByVal hWnd As Long) As Long
 #End Region
 
-#Region "Public Fields"
+#Region "Public Enums"
 
     ''' <summary>
-    ''' Decouple Our Bot  Stuff from the GUI
-    ''' <para>
-    ''' Move all the Proxy functions to FurcSessilon
-    ''' </para>
-    ''' <para>
-    ''' Move MonkeySpeak Engine to BotSession
-    ''' </para>
-    ''' <para>
-    ''' Move SubSystems to FurcLib (pounce, PhoenixSpeak, Dice ETC)
-    ''' </para>
+    ''' Color enums for rtf display
     ''' </summary>
-    Public Shared WithEvents FurcadiaSession As BotSession
-    Public Shared NewBot As Boolean = False
-    Public writer As TextBoxWriter = Nothing
+    Public Enum fColorEnum
+        ''' <summary>
+        ''' Errors
+        ''' </summary>
+        [Error] = -1
+        ''' <summary>
+        ''' Deneral Default color for everything
+        ''' </summary>
+        DefaultColor
+        ''' <summary>
+        ''' say channels... MySpeech
+        ''' </summary>
+        Say
+        ''' <summary>
+        ''' Shout Channel
+        ''' </summary>
+        Shout
+        ''' <summary>
+        ''' Whispers to the bot
+        ''' </summary>
+        Whisper
+        ''' <summary>
+        ''' Emote Channel
+        ''' </summary>
+        Emote
+        ''' <summary>
+        ''' Emit Channel
+        ''' </summary>
+        Emit
+    End Enum
+#End Region
+
+#Region "Public Methods"
+
+#End Region
+
+#Region "Private Methods"
 
 #End Region
 
@@ -137,18 +207,16 @@ Public Class Main
 
 #Region "Public Enums"
 
-    Public Enum fColorEnum
-        DefaultColor
-        Say
-        Shout
-        Whisper
-        Emote
-        Emit
-    End Enum
-
 #End Region
 
 #Region "Public Methods"
+
+    ''' <summary>
+    '''
+    ''' </summary>
+    Public Shared Sub OnConnected() Handles FurcadiaSession.Connected
+
+    End Sub
 
     Public Sub BotConnecting()
         If Me.BTN_Go.InvokeRequired Then
@@ -171,32 +239,32 @@ Public Class Main
             Me.Invoke(d)
         Else
 
-            If FurcMutex.WaitOne(0, False) = False Then
+            'If FurcMutex.WaitOne(0, False) = False Then
 
-                Console.WriteLine("Another copy  of Silver Monkey is Currently Connecting")
-            Else
-                Dim port As Integer = cBot.lPort
+            '    Console.WriteLine("Another copy  of Silver Monkey is Currently Connecting")
+            'Else
+            '    Dim port As Integer = cBot.lPort
 
-                If Not PortOpen(cBot.lPort) Then
-                    For i As Integer = cBot.lPort To cBot.lPort + 100
-                        If PortOpen(i) Then
-                            port = i
-                            Exit For
-                        End If
-                    Next
-                    'MsgBox("Local Port: " & cBot.lPort.ToString & " is in use, Aborting connection")
-                    'Exit Sub
-                End If
+            '    If Not PortOpen(cBot.lPort) Then
+            '        For i As Integer = cBot.lPort To cBot.lPort + 100
+            '            If PortOpen(i) Then
+            '                port = i
+            '                Exit For
+            '            End If
+            '        Next
+            '        'MsgBox("Local Port: " & cBot.lPort.ToString & " is in use, Aborting connection")
+            '        'Exit Sub
+            '    End If
 
-                TS_Status_Server.Image = My.Resources.images5
-                TS_Status_Client.Image = My.Resources.images5
-                BTN_Go.Text = "Connecting..."
-                sndDisplay("Connecting...")
-                'TS_Status_Server.Image = My.Resources.images2
-                ConnectTrayIconMenuItem.Enabled = False
-                DisconnectTrayIconMenuItem.Enabled = True
-                NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Connecting to Furcadia.", ToolTipIcon.Info)
-            End If
+            '    TS_Status_Server.Image = My.Resources.images5
+            '    TS_Status_Client.Image = My.Resources.images5
+            '    BTN_Go.Text = "Connecting..."
+            '    sndDisplay("Connecting...")
+            '    'TS_Status_Server.Image = My.Resources.images2
+            '    ConnectTrayIconMenuItem.Enabled = False
+            '    DisconnectTrayIconMenuItem.Enabled = True
+            '    NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Connecting to Furcadia.", ToolTipIcon.Info)
+            'End If
         End If
     End Sub
 
@@ -229,11 +297,6 @@ Public Class Main
             Dim d As New UpDateBtn_GoCallback2(AddressOf DisconnectBot)
             Me.Invoke(d)
         Else
-            If MainConfigSettings.AutoReconnect And Not ClientClose Then
-
-                SetBalloonText("Connection Lost. Reconnecting in 45 Seconds.")
-                Console.WriteLine("Connection Lost. Reconnecting in 45 Seconds.")
-            End If
 
             BTN_Go.Text = "Go!"
             TS_Status_Server.Image = My.Resources.images2
@@ -251,9 +314,37 @@ Public Class Main
         End If
     End Sub
 
-    <CLSCompliant(False)>
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="MyColor"></param>
+    ''' <returns></returns>
+    Public Function fColor(Optional ByVal MyColor As fColorEnum = fColorEnum.DefaultColor) As System.Drawing.Color
+        Try
+            Select Case MyColor
+                Case fColorEnum.DefaultColor
+                    Return Mainsettings.DefaultColor
+                Case fColorEnum.Emit
+                    Return Mainsettings.EmitColor
+                Case fColorEnum.Say
+                    Return Mainsettings.SayColor
+                Case fColorEnum.Shout
+                    Return Mainsettings.ShoutColor
+                Case fColorEnum.Whisper
+                    Return Mainsettings.WhColor
+                Case fColorEnum.Emote
+                    Return Mainsettings.EmoteColor
+                Case Else
+                    Return Mainsettings.DefaultColor
+            End Select
+        Catch Ex As Exception
+            Dim logError As New ErrorLogging(Ex, Me)
+        End Try
+        ' Return
+    End Function
+
     Public Sub FormatRichTectBox(ByRef TB As MonkeyCore.Controls.RichTextBoxEx,
-     ByRef style As System.Drawing.FontStyle)
+         ByRef style As System.Drawing.FontStyle)
         With TB
             If .SelectionFont IsNot Nothing Then
                 Dim currentFont As System.Drawing.Font = .SelectionFont
@@ -272,7 +363,12 @@ Public Class Main
             End If
         End With
     End Sub
-
+    ''' <summary>
+    ''' Format text coming from Client and server
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="newColor"></param>
+    ''' <returns></returns>
     Public Function FormatText(ByVal data As String, ByVal newColor As fColorEnum) As String
         data = System.Web.HttpUtility.HtmlDecode(data)
         data = data.Replace("|", " ")
@@ -280,15 +376,15 @@ Public Class Main
         Dim myColor As System.Drawing.Color = fColor(newColor)
         Dim ColorString As String = "{\colortbl ;"
         ColorString += "\red" & myColor.R & "\green" & myColor.G & "\blue" & myColor.B & ";}"
-        Dim FontSize As Single = MainConfigSettings.ApFont.Size
-        Dim FontFace As String = MainConfigSettings.ApFont.Name
+        Dim FontSize As Single = Mainsettings.ApFont.Size
+        Dim FontFace As String = Mainsettings.ApFont.Name
         FontSize *= 2
         Return "{\rtf1\ansi\ansicpg1252\deff0\deflang1033" & ColorString & "{\fonttbl{\f0\fcharset0 " & FontFace & ";}}\viewkind4\uc1\fs" & FontSize.ToString & "\cf1 " & data & " \par}"
     End Function
 
     Public Function FormatURL(ByVal data As String) As String
-        Dim FontSize As Single = MainConfigSettings.ApFont.Size
-        Dim FontFace As String = MainConfigSettings.ApFont.Name
+        Dim FontSize As Single = Mainsettings.ApFont.Size
+        Dim FontFace As String = Mainsettings.ApFont.Name
         FontSize *= 2
         Return "{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fcharset0 " & FontFace & ";}}\viewkind4\uc1\fs" & FontSize.ToString & " " & data & "}"
     End Function
@@ -344,10 +440,10 @@ Public Class Main
     End Function
 
     Public Sub InitializeTextControls()
-        log_.Font = MainConfigSettings.ApFont
-        toServer.Font = MainConfigSettings.ApFont
-        DreamList.Font = MainConfigSettings.ApFont
-        DreamCountTxtBx.Font = MainConfigSettings.ApFont
+        log_.Font = Mainsettings.ApFont
+        toServer.Font = Mainsettings.ApFont
+        DreamList.Font = Mainsettings.ApFont
+        DreamCountTxtBx.Font = Mainsettings.ApFont
     End Sub
 
     Public Sub KillProc(ByRef ID As Integer)
@@ -370,14 +466,6 @@ Public Class Main
         End If
 
     End Sub
-
-    ''' <summary>
-    '''
-    ''' </summary>
-    Public Sub OnConnected(o As Object, e As EventArgs) Handles FurcadiaSession.Connected
-
-    End Sub
-
     Public Function PortOpen(ByRef port As Integer) As Boolean
 
         ' Evaluate current system tcp connections. This is the same information provided
@@ -401,39 +489,15 @@ Public Class Main
     End Sub
 
     Public Sub SendClientMessage(msg As String, data As String)
-        If FurcadiaSession.IsClientConnected Then FurcadiaSession.SendClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """" + vbLf)
+        If FurcadiaSession.IsClientConnected Then FurcadiaSession.SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """" + vbLf)
         sndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
     End Sub
 
 #End Region
 
-#Region "Propertes"
-
 #Region "Private Methods"
 
 #End Region
-
-    'Dim TimeUpdater As Threading.Thread
-    Public Shared FurcTime As DateTime
-
-    Public ErrorMsg As String = ""
-    'Public PS_Que As New Queue(Of String)(100)
-    '0 = no error
-    '1 = warning
-    '2 = error
-    Public ErrorNum As Short = 0
-
-    ' Public Bot As FURRE
-    Public LogStream As LogStream
-
-    Dim CMD_Idx, CMD_Idx2 As Integer
-    Dim CMD_Lck As Boolean = False
-    'Input History
-    Dim CMD_Max As Integer = 20
-
-    Dim CMDList(CMD_Max) As String
-    Dim curWord As String
-
 #Region "Events"
 
     Dim DreamUpdateTimer As New System.Timers.Timer()
@@ -558,7 +622,8 @@ Public Class Main
     Private Sub OpenToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles OpenToolStripMenuItem.Click
         With BotIniOpen
             ' Select Bot ini file
-            .InitialDirectory = mPath()
+            .InitialDirectory = SilverMonkeyBotPath
+
             If .ShowDialog = DialogResult.OK Then
                 cBot = New cBot(.FileName)
                 SaveRecentFile(.FileName)
@@ -689,12 +754,12 @@ Public Class Main
                 build = build.Replace("&lt;", "<")
                 build = build.Replace("&gt;", ">")
 
-                Dim Names As MatchCollection = Regex.Matches(obj, NameFilter)
+                Dim Names As MatchCollection = Regex.Matches(obj, FurcadiaSession.NameFilter)
                 For Each Name As System.Text.RegularExpressions.Match In Names
                     build = build.Replace(Name.ToString, Name.Groups(3).Value)
                 Next
                 '<name shortname='acuara' forced>
-                Dim MyIcon As MatchCollection = Regex.Matches(obj, Iconfilter)
+                Dim MyIcon As MatchCollection = Regex.Matches(obj, FurcadiaSession.Iconfilter)
                 For Each Icon As System.Text.RegularExpressions.Match In MyIcon
                     Select Case Icon.Groups(1).Value
                         Case "91"
@@ -805,28 +870,28 @@ Public Class Main
         End If
     End Sub
 
-    Public Function GetSmily(ByRef ch As Char) As String
+    'Public Function GetSmily(ByRef ch As Char) As String
 
-        Dim RTFimg As New RTFBuilder
-        Dim file As String = ""
-        Dim shape As Integer = 0
-        If (ch >= "A") And (ch <= "P") Then
-            file = "smileys.fsh"
-            shape = Asc(ch) - Asc("A")
-        ElseIf (ch >= "Q" And ch <= "Z") Then
-            file = "smileys2.fsh"
-            shape = Asc(ch) - Asc("Q")
-        ElseIf (ch >= "a" And ch <= "z") Then
-            file = "smileys2.fsh"
-            shape = Asc(ch) - Asc("a") + 10
-        ElseIf (ch >= "1" And ch <= "3") Then
-            file = "smileys2.fsh"
-            shape = Asc(ch) - Asc("1") + 35
-        End If
-        RTFimg.InsertImage(IMGresize(GetFrame(shape, file), log_))
-        Return RTFimg.ToString
+    '    Dim RTFimg As New RTFBuilder
+    '    Dim file As String = ""
+    '    Dim shape As Integer = 0
+    '    If (ch >= "A") And (ch <= "P") Then
+    '        file = "smileys.fsh"
+    '        shape = Asc(ch) - Asc("A")
+    '    ElseIf (ch >= "Q" And ch <= "Z") Then
+    '        file = "smileys2.fsh"
+    '        shape = Asc(ch) - Asc("Q")
+    '    ElseIf (ch >= "a" And ch <= "z") Then
+    '        file = "smileys2.fsh"
+    '        shape = Asc(ch) - Asc("a") + 10
+    '    ElseIf (ch >= "1" And ch <= "3") Then
+    '        file = "smileys2.fsh"
+    '        shape = Asc(ch) - Asc("1") + 35
+    '    End If
+    '    RTFimg.InsertImage(IMGresize(GetFrame(shape, file), log_))
+    '    Return RTFimg.ToString
 
-    End Function
+    'End Function
 
     Function incrementLetter(Input As String) As Char
         Input = Input.Substring(0, 1).ToLower
@@ -893,7 +958,7 @@ Public Class Main
         Try
             'data = data.Replace(vbLf, vbCrLf)
             If cBot.log Then LogStream.WriteLine(data)
-            If CBool(MainConfigSettings.TimeStamp) Then
+            If CBool(Mainsettings.TimeStamp) Then
                 Dim Now As String = DateTime.Now.ToLongTimeString
                 data = Now.ToString & ": " & data
             End If
@@ -931,49 +996,13 @@ Public Class Main
         'Catch eX As Exception
         '    Dim logError As New ErrorLogging(eX, Me, DREAM.FurreList.ToString)
         'logError = New ErrorLogging(eX, p)
-        End Try
+        'End Try
     End Sub
 
     Private Sub DreamList_DoubleClick(sender As Object, e As System.EventArgs) Handles DreamList.DoubleClick
-        If Not bConnected() Then Exit Sub
-        FurcadiaSession.SendServer("l " + Web.HttpUtility.HtmlEncode(DreamList.SelectedItem.ToString))
+        If Not FurcadiaSession.IsServerConnected Then Exit Sub
+        FurcadiaSession.SendToServer("l " + Web.HttpUtility.HtmlEncode(DreamList.SelectedItem.ToString))
     End Sub
-
-    Private Function GetFrame(ByRef Img As Integer, Optional ByRef FSH As String = "system.fsh") As Bitmap
-        If Not File.Exists(FurcPath.GetDefaultPatchPath() & FSH) Then
-            Dim pos As Integer = FSH.LastIndexOf(".")
-            FSH = FSH.Substring(0, pos) & ".fox"
-        End If
-        Dim shape As New FurcadiaShapes(FurcPath.GetDefaultPatchPath() & FSH)
-        Dim anims As Bitmap() = Helper.ToBitmapArray(shape)
-        ' pic.Image = anims(Img)
-
-        Return anims(Img)
-    End Function
-
-    Private Function IMGresize(ByRef bm_source As Bitmap, ByRef RTF As RichTextBoxEx) As Bitmap
-        'Dim g As Graphics = Me.CreateGraphic
-        Dim g As Drawing.Graphics = Me.CreateGraphics()
-        Dim x, y As Integer
-
-        y = CInt(RTF.SelectionFont.Height * 72 / g.DpiX)
-        Dim dy As Integer = y - bm_source.Height
-        x = bm_source.Width - dy
-
-        ' Make a bitmap for the result.
-        Dim bm_dest As New Bitmap(x, y)
-
-        ' Make a Graphics object for the result Bitmap.
-        Dim gr_dest As Graphics = Graphics.FromImage(bm_dest)
-        gr_dest.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
-        ' gr_dest.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
-        ' Copy the source image into the destination bitmap.
-        gr_dest.DrawImage(bm_source, 0, 0, bm_dest.Width, bm_dest.Height)
-        Return bm_dest
-
-        ' Display the result.
-
-    End Function
 
     Private Sub log__KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles log_.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -1101,13 +1130,13 @@ Public Class Main
                 ConnectBot()
             Catch Ex As NetProxyException
 
-                DisconnectBot()
+                FurcadiaSession.Disconnect()
                 sndDisplay("Connection Aborting: " + Ex.Message)
             End Try
 
         Else
 
-            DisconnectBot()
+            FurcadiaSession.Disconnect()
 
         End If
     End Sub
@@ -1132,13 +1161,12 @@ Public Class Main
         'loggingIn = 0
         If cBot.StandAlone = False Then
 
-            DisconnectBot()
-        ElseIf bConnected() Then
+            FurcadiaSession.Disconnect()
+        ElseIf FurcadiaSession.IsServerConnected Then
             FurcadiaSession.CloseClient()
             TS_Status_Client.Image = My.Resources.images2
         End If
     End Sub
-
     Private Sub CloseToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CloseToolStripMenuItem.Click, ExitTrayIconMenuItem.Click
         FormClose()
     End Sub
@@ -1159,13 +1187,13 @@ Public Class Main
 
     Private Sub ContextTryIcon_Opened(sender As Object, e As System.EventArgs) Handles ContextTryIcon.Opened
         Select Case FurcadiaSession.ServerStatus
-            Case 0
+            Case ConnectionPhase.Init
                 DisconnectTrayIconMenuItem.Enabled = False
                 ConnectTrayIconMenuItem.Enabled = True
-            Case 1
+            Case ConnectionPhase.Connecting
                 DisconnectTrayIconMenuItem.Enabled = True
                 ConnectTrayIconMenuItem.Enabled = False
-            Case 2 Or 3
+            Case ConnectionPhase.MOTD Or ConnectionPhase.Connecting
                 DisconnectTrayIconMenuItem.Enabled = True
                 ConnectTrayIconMenuItem.Enabled = False
 
@@ -1186,11 +1214,11 @@ Public Class Main
     Private Sub FormClose()
         _FormClose = True
         My.Settings.MainFormLocation = Me.Location
-        If Not IsNothing(cBot) Then My.Settings.LastBotFile = cBot.BotFile
+        If Not IsNothing(cBot) Then My.Settings.LastBotFile = cBot.IniFile
         'Timers.DestroyTimers()
         'Save the user settings so next time the
         'window will be the same size and location
-        SettingsIni.Save(SetFile)
+        Mainsettings.SaveMainSettings()
         My.Settings.Save()
         NotifyIcon1.Visible = False
         If Not IsNothing(Me.LogTimer) Then Me.LogTimer.Dispose()
@@ -1210,17 +1238,10 @@ Public Class Main
         End If
         Dim processStrt As New ProcessStartInfo
         processStrt.FileName = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "MonkeySpeakEditor.EXE"
-        Dim f As String = cBot.MS_File
-        If Not String.IsNullOrEmpty(f) Then
-            Dim dir As String = Path.GetDirectoryName(cBot.MS_File)
-            If String.IsNullOrEmpty(dir) Then
-                f = mPath() + Path.DirectorySeparatorChar + cBot.MS_File
-            End If
-        End If
-
-        If Not String.IsNullOrEmpty(BotName) And Not String.IsNullOrEmpty(cBot.MS_File) Then
-            processStrt.Arguments = "-B=""" + BotName + """ """ + f + """"
-        ElseIf String.IsNullOrEmpty(BotName) And Not String.IsNullOrEmpty(cBot.MS_File) Then
+        Dim f As String = CheckBotFolder(cBot.MS_File)
+        If Not String.IsNullOrEmpty(FurcadiaSession.BotName) And Not String.IsNullOrEmpty(cBot.MS_File) Then
+            processStrt.Arguments = "-B=""" + FurcadiaSession.BotName + """ """ + f + """"
+        ElseIf String.IsNullOrEmpty(FurcadiaSession.BotName) And Not String.IsNullOrEmpty(cBot.MS_File) Then
             processStrt.Arguments = """" + f + """"
         End If
         Process.Start(processStrt)
@@ -1247,15 +1268,15 @@ Public Class Main
     Private Sub Main_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         Try
 
-            Select Case MainConfigSettings.SysTray
+            Select Case Mainsettings.SysTray
                 Case CheckState.Checked
                     Me.Visible = False
                     e.Cancel = True
                 Case CheckState.Indeterminate
                     If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing,
                      MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
-                        MainConfigSettings.SysTray = CheckState.Checked
-                        MainConfigSettings.SaveMainSettings()
+                        Mainsettings.SysTray = CheckState.Checked
+                        Mainsettings.SaveMainSettings()
                         Me.Visible = False
                         e.Cancel = True
                     Else
@@ -1307,15 +1328,11 @@ Public Class Main
         'catch the Console messages
         _FormClose = False
 
-        cMain = New MainConfigSettings
-        Try
-            FurcPath = New Furcadia.IO.Paths(MainConfigSettings.FurcPath)
-        Catch ex As FurcadiaNotFoundException
-            Config.ShowDialog()
-        End Try
+        Mainsettings = New cMain()
+
         writer = New TextBoxWriter(log_)
         Console.SetOut(writer)
-        FurcadiaSession = New FurcSession()
+        FurcadiaSession = New BotSession()
 
         Plugins = PluginServices.FindPlugins(Path.GetDirectoryName(Application.ExecutablePath) + "\Plugins\", "SilverMonkey.Interfaces.msPlugin")
 
@@ -1345,7 +1362,7 @@ Public Class Main
             cBot = New cBot(File)
             EditBotToolStripMenuItem.Enabled = True
             Console.WriteLine("Loaded: """ + File + """")
-        ElseIf MainConfigSettings.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) And My.Application.CommandLineArgs.Count = 0 Then
+        ElseIf Mainsettings.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) And My.Application.CommandLineArgs.Count = 0 Then
             cBot = New cBot(My.Settings.LastBotFile)
             EditBotToolStripMenuItem.Enabled = True
             Console.WriteLine("Loaded: """ + My.Settings.LastBotFile + """")
@@ -1380,7 +1397,7 @@ Public Class Main
     '    If Not Plugins Is Nothing Then
     '        For intIndex = 0 To Plugins.Length - 1
     '            objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
-    '            If MainConfigSettings.PluginList.Item(objPlugin.Name.Replace(" ", "")) Then
+    '            If Mainsettings.PluginList.Item(objPlugin.Name.Replace(" ", "")) Then
     '                objPlugin.Initialize(objHost)
     '                objPlugin.Page = MainEngine.MSpage
     '                If objPlugin.MessagePump(Server_Instruction) Then Handled = True
@@ -1415,13 +1432,13 @@ Public Class Main
     End Sub
 
 #Region "Action Controls"
-
+    Private ActionCMD As String = Nothing
     Private Sub _ne_Click(sender As System.Object, e As System.EventArgs) Handles _ne.Click
-        FurcadiaSession.SendServer("`m 9")
+        FurcadiaSession.SendToServer("`m 9")
     End Sub
 
     Private Sub _ne_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _ne.MouseDown
-        Me.ActionTmr.Enabled = bConnected()
+        Me.ActionTmr.Enabled = FurcadiaSession.IsServerConnected
         ActionCMD = "`m 9"
     End Sub
 
@@ -1431,11 +1448,11 @@ Public Class Main
     End Sub
 
     Private Sub _nw_Click(sender As System.Object, e As System.EventArgs) Handles _nw.Click
-        FurcadiaSession.SendServer("`m 7")
+        FurcadiaSession.SendToServer("`m 7")
     End Sub
 
     Private Sub _nw_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _nw.MouseDown
-        Me.ActionTmr.Enabled = bConnected()
+        Me.ActionTmr.Enabled = FurcadiaSession.IsServerConnected
         ActionCMD = "`m 7"
     End Sub
 
@@ -1445,19 +1462,19 @@ Public Class Main
     End Sub
 
     Private Sub ActionTmr_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ActionTmr.Tick
-        If Not bConnected() Then Exit Sub
-        FurcadiaSession.SendServer(ActionCMD)
+        If Not FurcadiaSession.IsServerConnected Then Exit Sub
+        FurcadiaSession.SendToServer(ActionCMD)
     End Sub
     Private Sub BTN_TurnL_Click(sender As System.Object, e As System.EventArgs) Handles BTN_TurnL.Click
-        FurcadiaSession.SendServer("`<")
+        FurcadiaSession.SendToServer("`<")
     End Sub
 
     Private Sub BTN_TurnR_Click(sender As System.Object, e As System.EventArgs) Handles BTN_TurnR.Click
-        FurcadiaSession.SendServer("`>")
+        FurcadiaSession.SendToServer("`>")
     End Sub
 
     Private Sub BtnSit_stand_Lie_Click(sender As System.Object, e As System.EventArgs) Handles BtnSit_stand_Lie.Click
-        If Not bConnected() Then Exit Sub
+        If Not FurcadiaSession.IsServerConnected Then Exit Sub
         If BtnSit_stand_Lie.Text = "Stand" Then
             BtnSit_stand_Lie.Text = "Lay"
         ElseIf BtnSit_stand_Lie.Text = "Lay" Then
@@ -1465,18 +1482,18 @@ Public Class Main
         ElseIf BtnSit_stand_Lie.Text = "Sit" Then
             BtnSit_stand_Lie.Text = "Stand"
         End If
-        FurcadiaSession.SendServer("`lie")
+        FurcadiaSession.SendToServer("`lie")
     End Sub
     Private Sub get__Click(sender As Object, e As System.EventArgs) Handles get_.Click
-        FurcadiaSession.SendServer("`get")
+        FurcadiaSession.SendToServer("`get")
     End Sub
 
     Private Sub se__Click(sender As Object, e As System.EventArgs) Handles se_.Click
-        FurcadiaSession.SendServer("`m 3")
+        FurcadiaSession.SendToServer("`m 3")
     End Sub
 
     Private Sub se__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseDown
-        Me.ActionTmr.Enabled = bConnected()
+        Me.ActionTmr.Enabled = FurcadiaSession.IsServerConnected
         ActionCMD = "`m 3"
     End Sub
 
@@ -1486,11 +1503,11 @@ Public Class Main
     End Sub
 
     Private Sub sw__Click(sender As Object, e As System.EventArgs) Handles sw_.Click
-        FurcadiaSession.SendServer("`m 1")
+        FurcadiaSession.SendToServer("`m 1")
     End Sub
 
     Private Sub sw__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseDown
-        Me.ActionTmr.Enabled = bConnected()
+        Me.ActionTmr.Enabled = FurcadiaSession.IsServerConnected
         ActionCMD = "`m 1"
     End Sub
 
@@ -1500,7 +1517,7 @@ Public Class Main
     End Sub
 
     Private Sub use__Click(sender As Object, e As System.EventArgs) Handles use_.Click
-        FurcadiaSession.SendServer("`use")
+        FurcadiaSession.SendToServer("`use")
     End Sub
 #End Region
     Private Sub toServer_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles toServer.KeyDown

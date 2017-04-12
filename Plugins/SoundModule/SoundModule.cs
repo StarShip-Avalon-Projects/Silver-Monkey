@@ -1,5 +1,6 @@
 using Furcadia.Net;
 using Microsoft.VisualBasic.CompilerServices;
+using Monkeyspeak;
 using SilverMonkey.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace SilverMonkey
         private const string REGEX_NameFilter = "[^a-zA-Z0-9\\0x0020_.|]+";
         private msHost msHost;
 
-        private Page MSpage;
+        private Page mspage;
         private SoundPlayer simpleSound;
 
         #endregion Private Fields
@@ -54,6 +55,19 @@ namespace SilverMonkey
             set;
         }
 
+        public Page MsPage
+        {
+            get
+            {
+                return mspage;
+            }
+            set
+            {
+                mspage = value;
+                msHost.MsPage = mspage;
+            }
+        }
+
         public DREAM MyDream
         {
             get
@@ -71,19 +85,6 @@ namespace SilverMonkey
             get
             {
                 return "Sound Module";
-            }
-        }
-
-        public Page Page
-        {
-            get
-            {
-                return MSpage;
-            }
-            set
-            {
-                MSpage = value;
-                msHost.Page = MSpage;
             }
         }
 
@@ -180,19 +181,19 @@ namespace SilverMonkey
 
         public void Start()
         {
-            Page.SetTriggerHandler(TriggerCategory.Effect, 2010, delegate (TriggerReader reader)
+            MsPage.SetTriggerHandler(TriggerCategory.Effect, 2010, delegate (TriggerReader reader)
             {
                 simpleSound = new SoundPlayer(reader.ReadString(true));
                 simpleSound.Play();
                 return true;
             }, "(5:2010) play the wave file {...}.");
-            Page.SetTriggerHandler(TriggerCategory.Effect, 2011, delegate (TriggerReader reader)
+            MsPage.SetTriggerHandler(TriggerCategory.Effect, 2011, delegate (TriggerReader reader)
             {
                 simpleSound = new SoundPlayer(reader.ReadString(true));
                 simpleSound.PlayLooping();
                 return true;
             }, "(5:2011) play the wave file {...} in a loop.");
-            Page.SetTriggerHandler(TriggerCategory.Effect, 2012, delegate (TriggerReader reader)
+            MsPage.SetTriggerHandler(TriggerCategory.Effect, 2012, delegate (TriggerReader reader)
             {
                 //simpleSound = new SoundPlayer(reader.ReadString(true));
                 simpleSound.Stop();

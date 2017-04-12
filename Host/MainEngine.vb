@@ -60,7 +60,7 @@ Public Class MainEngine
             MSpage = engine.LoadFromString("")
             objPlugin = CType(PluginServices.CreateInstance(Main.Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
             objPlugin.Initialize(Main.objHost)
-            objPlugin.Page = MSpage
+            objPlugin.MsPage = MSpage
             objPlugin.Start()
         Next
 

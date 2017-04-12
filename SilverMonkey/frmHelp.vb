@@ -24,7 +24,7 @@ Public Class frmHelp
 
 #End Region
 
-    <STAThread()>
+
 
 #Region "Public Constructors"
 
@@ -114,7 +114,7 @@ Public Class frmHelp
 #End Region
 
 #Region "Public Methods"
-
+    <STAThread()>
     Shared Sub Main()
         Application.Run(New Form1)
     End Sub

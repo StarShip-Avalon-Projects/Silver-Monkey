@@ -14,3 +14,11 @@ D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug
 D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SoundModule.csproj.GenerateResource.Cache
 D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SoundModule.Plugin.dll
 D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Debug\SoundModule.Plugin.pdb
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Plugins\SoundModule\obj\x86\Debug\SoundModule.csprojResolveAssemblyReference.cache
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Plugins\SoundModule\obj\x86\Debug\SilverMonkey.SoundModule.Resources.resources
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Plugins\SoundModule\obj\x86\Debug\SoundModule.csproj.GenerateResource.Cache
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Plugins\SoundModule\obj\x86\Debug\SoundModule.Plugin.dll
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Plugins\SoundModule\obj\x86\Debug\SoundModule.Plugin.pdb
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Debug\plugins\license.txt
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Debug\plugins\SoundModule.Plugin.dll
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Debug\plugins\SoundModule.Plugin.pdb

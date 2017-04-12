@@ -160,10 +160,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Engine\BaseClasses\BaseSubSystem.vb" />
-    <Compile Include="Engine\BaseClasses\MonkeySpeakLibrary.vb" />
-    <Compile Include="Engine\MS Repq.vb" />
-    <Compile Include="Engine\MS Verbot.vb" />
-    <Compile Include="Engine\Pounce\PounceList.vb" />
+    <Compile Include="Engine\Libraries\MonkeySpeakLibrary.vb" />
+    <Compile Include="Engine\Libraries\MS Repq.vb" />
+    <Compile Include="Engine\Libraries\MS Verbot.vb" />
+    <Compile Include="Engine\Pounce\PounceFurre.vb" />
+    <Compile Include="Engine\Pounce\NameList.vb" />
     <Compile Include="Engine\PS Pre-Processor\SubSystem.vb" />
     <Compile Include="Engine\PS Pre-Processor\DatabaseSystem.vb" />
     <Compile Include="Engine\PS Pre-Processor\PhoenixSpeakVariable.vb" />
@@ -191,28 +192,28 @@
     <Compile Include="NewBot.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Engine\Banish.vb" />
-    <Compile Include="Engine\Description.vb" />
-    <Compile Include="Engine\HelperModule.vb" />
+    <Compile Include="Engine\Libraries\Banish.vb" />
+    <Compile Include="Engine\Libraries\Description.vb" />
+    <Compile Include="Engine\Libraries\HelperModule.vb" />
     <Compile Include="Engine\MainEngine.vb" />
-    <Compile Include="Engine\Movement.vb" />
-    <Compile Include="Engine\MS Dice.vb" />
-    <Compile Include="Engine\MS MemberList.vb" />
+    <Compile Include="Engine\Libraries\Movement.vb" />
+    <Compile Include="Engine\Libraries\MS Dice.vb" />
+    <Compile Include="Engine\Libraries\MS MemberList.vb" />
     <Compile Include="Engine\Pounce\MS Pounce.vb" />
-    <Compile Include="Engine\MS Time.vb" />
-    <Compile Include="Engine\MS IO.vb" />
-    <Compile Include="Engine\MSPK_MDB.vb" />
-    <Compile Include="Engine\MS_Cookie.vb" />
-    <Compile Include="Engine\MS_DreamTransfer.vb" />
-    <Compile Include="Engine\MS_Quotes.vb" />
+    <Compile Include="Engine\Libraries\MS Time.vb" />
+    <Compile Include="Engine\Libraries\MS IO.vb" />
+    <Compile Include="Engine\Libraries\MSPK_MDB.vb" />
+    <Compile Include="Engine\Libraries\MS_Cookie.vb" />
+    <Compile Include="Engine\Libraries\MS_DreamTransfer.vb" />
+    <Compile Include="Engine\Libraries\MS_Quotes.vb" />
     <Compile Include="Engine\PS Pre-Processor\MSPhoenixSpeak.vb" />
-    <Compile Include="Engine\FurreList.vb" />
-    <Compile Include="Engine\Warning.vb" />
-    <Compile Include="Engine\WmCpyDta.vb" />
+    <Compile Include="Engine\Libraries\FurreList.vb" />
+    <Compile Include="Engine\Libraries\Warning.vb" />
+    <Compile Include="Engine\Libraries\WmCpyDta.vb" />
     <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="Helper Classes\MiscUtils.vb" />
     <Compile Include="MainModule.vb" />
-    <Compile Include="Engine\MS_Engine.vb" />
+    <Compile Include="Engine\Libraries\MS_Engine.vb" />
     <Compile Include="Helper Classes\DownLoadImage.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
@@ -384,9 +385,9 @@
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeySpeakEx\MonkeyspeakR6.csproj">
+    <ProjectReference Include="..\MonkeySpeakEx\MonkeySpeakEx.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
-      <Name>MonkeyspeakR6</Name>
+      <Name>MonkeySpeakEx</Name>
     </ProjectReference>
     <ProjectReference Include="..\VerbotSDK\Verbot5Library.csproj">
       <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>

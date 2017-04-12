@@ -1,8 +1,15 @@
 ﻿Imports Furcadia.Net
 Imports MonkeyCore
+Imports SilverMonkey
 
 Public Class smHost
     Implements Interfaces.msHost
+
+#Region "Private Fields"
+
+    Private FurcadiaSession As FurcSession
+
+#End Region
 
 #Region "Public Properties"
 
@@ -31,7 +38,7 @@ Public Class smHost
         End Set
     End Property
 
-    Public WriteOnly Property Page() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.Page
+    Public WriteOnly Property MsPage() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.MsPage
         Set(value As Monkeyspeak.Page)
             FurcadiaSession.MainEngine.MSpage = value
         End Set
@@ -50,6 +57,10 @@ Public Class smHost
 
 #Region "Public Methods"
 
+    Public Sub New(Session As FurcSession)
+        FurcadiaSession = Session
+    End Sub
+
     Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements SilverMonkey.Interfaces.msHost.logError
         Dim Err As New ErrorLogging(Ex, ObjectThrowingError)
     End Sub
@@ -65,7 +76,6 @@ Public Class smHost
     Sub Start(ByRef page As Monkeyspeak.Page) Implements SilverMonkey.Interfaces.msHost.start
         FurcadiaSession.MainEngine.MSpage = page
     End Sub
-
 #End Region
 
 End Class

@@ -9,10 +9,8 @@ Public Interface msPlugin
 
     Property enabled As Boolean
 
+    Property MsPage As Monkeyspeak.Page
     ReadOnly Property Name() As String
-
-    Property Page As Monkeyspeak.Page
-
     ReadOnly Property Version() As String
 
 #End Region

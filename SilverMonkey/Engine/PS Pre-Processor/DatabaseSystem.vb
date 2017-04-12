@@ -5,8 +5,9 @@ Imports Furcadia.Util
 Imports MonkeyCore
 Imports MonkeyCore.Utils
 Imports Monkeyspeak
+Imports SilverMonkey.Engine.Libraries.PhoenixSpeak
 
-Namespace PhoenixSpeak
+Namespace Engine.Libraries
 
     'Class Notes
 
@@ -221,7 +222,7 @@ Namespace PhoenixSpeak
         ''' <para>special character [DREAM] for information to host dream</para>
         ''' </summary>
         ''' <returns></returns>
-        Public Property CharacterList As New List(Of Variable)(20)
+        Public Property CharacterList As New List(Of PhoenixSpeak.Variable)(20)
 
         Public Property CurrentPS_Stage As PsBackupStage
 
@@ -448,7 +449,7 @@ Namespace PhoenixSpeak
             If PsProcess <> PsSystemRunning.PsNone Then Exit Sub
             PsProcess = PsSystemRunning.PsRestore
             '(0:500) When the bot starts backing up the character Phoenix Speak,
-            MyMonkeySpeakEngine.MSpage.Execute(502)
+            MsPage.Execute(502)
             If days > 0 Then
                 SendClientMessage("Restoring characters newer than " + days.ToString + " days to the dream.")
             Else
@@ -614,9 +615,9 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
                         'Dream specific Information
                         SendClientMessage("Backing up Dream Characters Set.")
                         '(0:500) When the bot starts backing up the character Phoenix Speak,
-                        MyMonkeySpeakEngine.MSpage.Execute(500)
+                        MsPage.Execute(500)
                         CharacterList.Clear()
-                        Dim f As New Variable("[DREAM]", "'<none>'")
+                        Dim f As New PhoenixSpeak.Variable("[DREAM]", "'<none>'")
                         CharacterList.Add(f)
                         SendClientMessage("Backing Phoenix Speak for character '" + CharacterList(0).Name + "'")
                         SendPStoDatabase(PSiInfoCache, "BACKUP", CharacterList(0).Name)

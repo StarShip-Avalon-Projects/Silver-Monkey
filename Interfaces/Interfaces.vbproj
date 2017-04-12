@@ -134,9 +134,9 @@
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeySpeakEx\MonkeyspeakR6.csproj">
+    <ProjectReference Include="..\MonkeySpeakEx\MonkeySpeakEx.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
-      <Name>MonkeyspeakR6</Name>
+      <Name>MonkeySpeakEx</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +180,7 @@
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildAction="ReBuild" BuildVersion_BuildVersioningStyle="None.None.Increment.MonthAndDayStamp" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.MonthAndDayStamp" BuildVersion_BuildAction="ReBuild" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

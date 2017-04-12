@@ -72,7 +72,7 @@ Public Class Main
         page = Engine.LoadFromString("")
         objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), SilverMonkey.Interfaces.msPlugin)
         objPlugin.Initialize(objHost)
-        objPlugin.Page = page
+        objPlugin.MsPage = page
         objPlugin.Start()
         ExportKeysIni(objPlugin.Name.Replace(" ", "") + ".ini", page)
         Dim path As String = ".\Plugins\"
@@ -177,7 +177,7 @@ Public Class Main
         objPlugin = CType(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), SilverMonkey.Interfaces.msPlugin)
         If objPlugin Is Nothing Then Exit Sub
         objPlugin.Initialize(objHost)
-        objPlugin.Page = page
+        objPlugin.MsPage = page
         objPlugin.Start()
 
         Dim Test As New List(Of String)
@@ -246,7 +246,7 @@ Public Class Main
             objPlugin = CType(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
 
             objPlugin.Initialize(objHost)
-            objPlugin.Page = page
+            objPlugin.MsPage = page
             objPlugin.Start()
             ExportKeysIni(objPlugin.Name.Replace(" ", "") + ".ini", page)
             Using zip As ZipFile = New ZipFile

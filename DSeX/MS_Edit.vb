@@ -2258,7 +2258,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
 #Region "WmCpyDta"
 
-    <DllImport("user32.dll", EntryPoint:="FindWindow")>
     Public Function FindProcessByName(strProcessName As String) As IntPtr
         Dim HandleOfToProcess As IntPtr = IntPtr.Zero
         Dim MyProcess As Process = Process.GetCurrentProcess()
@@ -2322,7 +2321,13 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         End If
 
     End Sub
-
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="_ClassName"></param>
+    ''' <param name="_WindowName"></param>
+    ''' <returns></returns>
+    <DllImport("user32.dll", EntryPoint:="FindWindow")>
     Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
     End Function
     Public Declare Function SetFocusAPI Lib "user32.dll" Alias "SetFocus" (ByVal hWnd As Long) As Long

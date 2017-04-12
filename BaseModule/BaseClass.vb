@@ -1,6 +1,6 @@
 ﻿Imports Monkeyspeak
 Imports Furcadia.Net
-Imports Furcadia.Base95
+Imports Furcadia.Text.Base95
 
 Public Class BaseClass
     Implements Interfaces.msPlugin
@@ -48,8 +48,8 @@ Public Class BaseClass
 
     Public Player As FURRE
 
+    Private _MSpage As Page
     Private msDream As DREAM
-    Private MSpage As Monkeyspeak.Page
     Public Property Dream As DREAM
         Get
             Return msHost.Dream
@@ -59,14 +59,14 @@ Public Class BaseClass
         End Set
     End Property
 
-    Public Property Page As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msPlugin.Page
+    Public Property MsPage As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msPlugin.MsPage
         Get
-            Return MSpage
+            Return _MSpage
         End Get
         Set(value As Monkeyspeak.Page)
 
-            MSpage = value
-            msHost.Page = MSpage
+            _MSpage = value
+            msHost.MsPage = _MSpage
         End Set
     End Property
 #End Region
@@ -76,7 +76,7 @@ Public Class BaseClass
         If ServerInstruction.StartsWith("%") Then
             Player = NameToFurre(msHost.BotName, True)
             Player.FloorObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
-            Page.Execute(2000, 2001)
+            MsPage.Execute(2000, 2001)
             msHost.Player = Player
             Dream.FurreList(Player) = Player
             Return True
@@ -84,7 +84,7 @@ Public Class BaseClass
         ElseIf ServerInstruction.StartsWith("^") Then
             Player = NameToFurre(msHost.BotName, True)
             Player.PawObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
-            Page.Execute(2000, 2001)
+            MsPage.Execute(2000, 2001)
             msHost.Player = Player
             Dream.FurreList(Player) = Player
             Return True
@@ -118,7 +118,7 @@ Public Class BaseClass
                 Exit For
             End If
         Next
-        If UbdateMSVariableName Then Page.SetVariable(VarPrefix & "NAME", sname, True)
+        If UbdateMSVariableName Then MsPage.SetVariable(VarPrefix & "NAME", sname, True)
         Return p
     End Function
 

@@ -5,9 +5,10 @@ Public Class Variables
 #Region "Private Fields"
 
     Private alarm As Threading.Timer
+    Private FurcadiaSession As BotSession
+
     'Dim RefreshList As New Thread(AddressOf RefreshMe)
     Dim Lock As New Object
-
 #End Region
 
 #Region "Private Delegates"
@@ -22,13 +23,13 @@ Public Class Variables
 
         If ListView1.InvokeRequired Then
             Dim d As New dlgUpdateUI(AddressOf updateVariables)
-            ListView1.Invoke(d)
+            ListView1?.Invoke(d)
         Else
 
             SyncLock Lock
 
-                For i As Integer = 0 To FurcadiaSession.MainEngine.MSpage.Scope.Count - 1
-                    Dim Var As Monkeyspeak.Variable = FurcadiaSession.MainEngine.MSpage.Scope.Item(i)
+                For i As Integer = 0 To FurcadiaSession.MainEngine.MsPage.Scope.Count - 1
+                    Dim Var As Monkeyspeak.Variable = FurcadiaSession.MainEngine.MsPage.Scope.Item(i)
 
                     Dim Variable() As String = {"", "", ""}
                     Variable(0) = Var.Name.ToString

@@ -1,4 +1,6 @@
-﻿Public Class SetVariables
+﻿Imports Monkeyspeak
+
+Public Class SetVariables
 
 #Region "Public Fields"
 
@@ -9,6 +11,8 @@
 #Region "Private Fields"
 
     Private _VarName As String
+
+    Private MsPage As Page
 
 #End Region
 
@@ -34,12 +38,14 @@
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Var.Value = TxtBxValue.Text
-        FurcadiaSession.MainEngine.MSpage.SetVariable(VarName, Var.Value, Var.IsConstant)
+        MsPage.SetVariable(VarName, Var.Value, Var.IsConstant)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
     End Sub
     Private Sub SetVariables_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Var = FurcadiaSession.MainEngine.MSpage.GetVariable(VarName)
+
+        MsPage = Main.FurcadiaSession.MSpage
+        Var = MsPage.GetVariable(VarName)
         If Var.IsConstant Then
             Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
             Me.Close()

@@ -70,6 +70,10 @@
       <Name>MonkeyCore</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\MonkeySpeakEx\MonkeySpeakEx.csproj">
+      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
+      <Name>MonkeySpeakEx</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

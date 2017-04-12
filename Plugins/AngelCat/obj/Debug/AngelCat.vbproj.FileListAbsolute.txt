@@ -29,3 +29,11 @@ D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\Silver
 D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCat.vbproj.GenerateResource.Cache
 D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCatModule.Plugin.dll
 D:\TS-Projects\Net Source Code\Monkey System 2\Plugins\AngelCat\obj\Debug\AngelCatModule.Plugin.pdb
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Plugins\AngelCat\obj\Debug\AngelCat.vbprojResolveAssemblyReference.cache
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Plugins\AngelCat\obj\Debug\SilverMonkey.AngelCatModule.Resources.resources
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Plugins\AngelCat\obj\Debug\AngelCat.vbproj.GenerateResource.Cache
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Plugins\AngelCat\obj\Debug\AngelCatModule.Plugin.dll
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Plugins\AngelCat\obj\Debug\AngelCatModule.Plugin.pdb
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Debug\plugins\license.txt
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Debug\plugins\AngelCatModule.Plugin.dll
+D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Debug\plugins\AngelCatModule.Plugin.pdb

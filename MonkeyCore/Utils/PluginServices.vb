@@ -1,7 +1,7 @@
 Imports System.Reflection
 Imports System.IO
 Imports System.Windows.Forms
-
+<CLSCompliant(True)>
 Public Class PluginServices
 
 #Region "Public Fields"
@@ -94,7 +94,7 @@ Public Class PluginServices
 #End Region
 
 #Region "Public Classes"
-
+    <CLSCompliant(True)>
     Public Class AvailablePlugin
 
 #Region "Public Properties"

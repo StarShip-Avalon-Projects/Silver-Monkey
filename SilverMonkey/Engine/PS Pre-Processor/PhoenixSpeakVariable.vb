@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.Serialization
 
 <Assembly: CLSCompliant(True)>
-Namespace PhoenixSpeak
+Namespace Engine.Libraries.PhoenixSpeak
     <Serializable>
     Public Class TypeNotSupportedException
         Inherits Exception
@@ -44,6 +44,18 @@ Namespace PhoenixSpeak
 
 #End Region
 
+#Region "Public Constructors"
+
+#End Region
+
+#Region "Public Properties"
+
+#End Region
+
+#Region "Internal Constructors"
+
+#End Region
+
 #Region "Public Methods"
 
 #End Region
@@ -58,18 +70,22 @@ Namespace PhoenixSpeak
 
 #Region "Internal Constructors"
 
-        Public Sub New(Var As PhoenixSpeak.Variable)
-            _name = Var.Name
-            _value = Var.Value
-        End Sub
-
 #End Region
 
 #Region "Public Constructors"
 
-        Friend Sub New(Name As String, value As Object)
+        Public Sub New()
+
+        End Sub
+
+        Public Sub New(Name As String, value As Object)
             _name = Name
             _value = value
+        End Sub
+
+        Public Sub New(Var As PhoenixSpeak.Variable)
+            _name = Var.Name
+            _value = Var.Value
         End Sub
 
 #End Region

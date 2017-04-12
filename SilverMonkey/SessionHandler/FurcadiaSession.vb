@@ -9,7 +9,7 @@
 'Furre Update events?
 
 Imports System.Collections.Generic
-Imports System.Diagnostics
+
 Imports System.Threading
 Imports Furcadia.Net
 Imports Furcadia.Text.Base220
@@ -18,12 +18,14 @@ Imports MonkeyCore
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Runtime.InteropServices
-Imports System.Net.NetworkInformation
-Imports MonkeyCore.Utils
+
 Imports Furcadia.Util
 Imports Furcadia.Drawing
 Imports Furcadia.Drawing.VisibleArea
 Imports Furcadia.Net.Utils.Movement
+Imports Monkeyspeak
+Imports SilverMonkey.Engine
+Imports SilverMonkey.Engine.Libraries.PhoenixSpeak
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
@@ -35,6 +37,58 @@ Imports Furcadia.Net.Utils.Movement
 ''' </summary>
 Public Class FurcSession : Inherits NetProxy
     Implements IDisposable
+    'TODO: Move MonkeySpeak Engine to BotSession
+
+#Region "Public Fields"
+    'TODO These Feilds Need to move to BotSession
+    ''' <summary>
+    ''' Main MonkeySpeak Engine
+    ''' </summary>
+    Public WithEvents MainEngine As MainMsEngine
+    Public WithEvents MSpage As Page = Nothing
+    Public objHost As New smHost(Me)
+
+#End Region
+
+#Region "Public Events"
+
+#End Region
+
+#Region "Private Fields"
+
+#End Region
+
+#Region "Public Properties"
+
+#End Region
+
+#Region "Public Methods"
+
+#End Region
+
+#Region "Protected Destructors"
+
+#End Region
+
+#Region "Private Methods"
+
+#End Region
+
+#Region "Public Fields"
+
+#End Region
+
+#Region "Protected Destructors"
+
+#End Region
+
+#Region "Private Methods"
+
+#End Region
+
+#Region "Public Events"
+
+#End Region
 
 #Region "Private Fields"
     ''' <summary>
@@ -48,10 +102,17 @@ Public Class FurcSession : Inherits NetProxy
     ''' </summary>
     Private WithEvents ServerBalancer As New Furcadia.Net.Utils.ServerQue
 
-    ''' <summary>
-    ''' Connection Status to server
-    ''' </summary>
-    Private LoggingIn As Integer
+#End Region
+
+#Region "RegEx filters"
+    Friend Const ChannelNameFilter As String = "<channel name='(.*?)' />"
+    Friend Const CookieToMeREGEX As String = "<name shortname='(.*?)'>(.*?)</name> just gave you"
+    Friend Const DescFilter As String = "<desc shortname='([^']*)' />(.*)"
+    Friend Const DiceFilter As String = "^<font color='roll'><img src='fsh://system.fsh:101' alt='@roll' /><channel name='@roll' /> <name shortname='([^ ]+)'>([^ ]+)</name> rolls (\d+)d(\d+)((-|\+)\d+)? ?(.*) & gets (\d+)\.</font>$"
+    Friend Const EntryFilter As String = "^<font color='([^']*?)'>(.*?)</font>$"
+    Friend Const Iconfilter As String = "<img src='fsh://system.fsh:([^']*)'(.*?)/>"
+    Friend Const NameFilter As String = "<name shortname='([^']*)' ?(.*?)?>([\x21-\x3B\=\x3F-\x7E]+)</name>"
+    Friend Const YouSayFilter As String = "You ([\x21-\x3B\=\x3F-\x7E]+), ""([^']*)"""
 #End Region
 
 #Region "Public Events"
@@ -60,7 +121,7 @@ Public Class FurcSession : Inherits NetProxy
     ''' </summary>
     ''' <param name="Sender"></param>
     ''' <param name="e"></param>
-    Public Event ClientStatusChanged(ByRef Sender As Object, e As EventArgs)
+    Public Event ClientStatusChanged(ByRef Sender As Object, e As NetClientEventArgs)
 
     ''' <summary>
     ''' Error Event Handler
@@ -74,18 +135,62 @@ Public Class FurcSession : Inherits NetProxy
     ''' </summary>
     ''' <param name="Sender"></param>
     ''' <param name="e"></param>
-    Public Event ServerStatusChanged(ByRef Sender As Object, e As EventArgs)
+    Public Event ServerStatusChanged(ByVal Sender As Object, e As NetServerEventArgs)
+
+#Region "Client/Server Fata Handling"
+    ''' <summary>
+    ''' Send Data to Furcadia Client or Game Server
+    ''' </summary>
+    ''' <param name="Message">Raw instruction to send</param>
+    ''' <param name="e">Cliemt or Server Event Argumentss with Instruction type</param>
+    Public Delegate Sub DataHandler(ByVal Message As String, ByVal e As EventArgs)
+
+    ''' <summary>
+    ''' OProcess the Data sent to the Furcadia Client
+    ''' </summary>
+    Public Event ProcessClientData As DataHandler
+
+    ''' <summary>
+    ''' Process Display Text and Channels
+    ''' </summary>
+    Public Event ProcessServerChannelData As DataHandler
+
+    ''' <summary>
+    ''' Process the Data coming from the Game server
+    ''' </summary>
+    Public Event ProcessServerData As DataHandler
 #End Region
 
+#End Region
+
+    ''' <summary>
+    ''' Client Connection Status
+    ''' </summary>
+    Private ClientConnectPhase As ConnectionPhase = ConnectionPhase.error
+
+    ''' <summary>
+    ''' Server connection status
+    ''' </summary>
+    Private ServerConnectPhase As ConnectionPhase = ConnectionPhase.error
 #Region "Public Properties"
+
+    ''' <summary>
+    ''' Client Connection status
+    ''' </summary>
+    ''' <returns>Status tog the Furcadia Client</returns>
+    Public ReadOnly Property ClientStatus As ConnectionPhase
+        Get
+            Return ClientConnectPhase
+        End Get
+    End Property
 
     ''' <summary>
     ''' Server Connection status
     ''' </summary>
-    ''' <returns>Status to the server</returns>
-    Public ReadOnly Property ServerStatus As Furcadia.Net.Utils.NetServerArgs
+    ''' <returns>Status of the Furcadia Game server</returns>
+    Public ReadOnly Property ServerStatus As ConnectionPhase
         Get
-            Return
+            Return ServerConnectPhase
 
         End Get
     End Property
@@ -144,16 +249,15 @@ Public Class FurcSession : Inherits NetProxy
         End If
     End Sub
 
-    Public Sub DisconnectBot()
+    Public Overridable Sub Disconnect()
 
         Try
             If MainSettings.CloseProc And ProcExit = False Then
-
-                KillProc(_FurcProcessId)
-                SndToServer("quit")
+                ClientProcess.Kill()
+                MyBase.SendToServer("quit")
                 MyBase.Kill()
             End If
-            SendDisplay("Disconnected.", fColorEnum.DefaultColor)
+
         Catch ex As Exception
             Dim logError As New ErrorLogging(ex, Me)
         End Try
@@ -178,10 +282,6 @@ Public Class FurcSession : Inherits NetProxy
 
 #End Region
 
-    'TODO: Add Server Load Balancer
-    'TODO: add Reconnection Manager
-    'TODO: Implement this Class in restored from back up Main.vb "Main GUI Form"
-
 #Region "Public Fields"
 
 #End Region
@@ -196,40 +296,27 @@ Public Class FurcSession : Inherits NetProxy
 
 #Region "Public Fields"
 
-    Public WithEvents MainEngine As MainMsEngine
+    Public WithEvents SubSys As New SubSystem()
 
-    Public WithEvents SubSys As New PhoenixSpeak.SubSystem()
-
-    Public Shared BanishName As String = ""
-
-    Public Shared BanishString As New List(Of String)
-
-    Public Shared BotName As String
-
-    'Bot specific Settings for Silver
-    Public Shared BotUID As Integer = 0
-
-    Public Shared Channel As String
-
-    Public Shared ClientClose As Boolean = False
-
-    Public Shared ErrorMsg As String = ""
-
-    Public Shared ErrorNum As Short = 0
-
-    Public Shared HasShare As Boolean
-
-    'Property?
-    Public Shared InDream As Boolean = False
-
-    'Silver Monkey Specific Feature
-    Public Shared objHost As New smHost
+    Public BanishName As String = ""
+    Public BanishString As New List(Of String)
     'Monkey Speak Bot specific Variables
-
-    Public Shared ProcExit As Boolean
-
     Public BotLogStream As LogStream
 
+    Public BotName As String
+    'Bot specific Settings for Silver
+    Public BotUID As Integer = 0
+
+    Public Channel As String
+    Public ClientClose As Boolean = False
+    Public ErrorMsg As String = ""
+    Public ErrorNum As Short = 0
+    Public HasShare As Boolean
+    'Property?
+    Public InDream As Boolean = False
+
+    Public ProcExit As Boolean
+    'Silver Monkey Specific Feature
 #End Region
 
 #Region "Protected Destructors"
@@ -255,7 +342,7 @@ Public Class FurcSession : Inherits NetProxy
 
     Private Look As Boolean
 
-    Private MainSettings As Settings.MainConfigSettings
+    Private MainSettings As Settings.cMain
 
     ' Public Bot As FURRE
     Dim newData As Boolean = False
@@ -280,10 +367,6 @@ Public Class FurcSession : Inherits NetProxy
     Public Function isBot(ByRef player As FURRE) As Boolean
         Return player.ShortName <> FurcadiaShortName(BotName)
     End Function
-
-    Public Sub KillProc(ByRef ID As Integer)
-        GetProcessById(ID).Kill()
-    End Sub
 
     Public Function NameToFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
         Dim p As New FURRE
@@ -314,30 +397,18 @@ Public Class FurcSession : Inherits NetProxy
     '            LogStream = New LogStream(setLogName(cBot), cBot.LogPath)
     '        End If
 
-#Region "RegEx filters"
-    Public Const ChannelNameFilter As String = "<channel name='(.*?)' />"
-    Public Const DescFilter As String = "<desc shortname='([^']*)' />(.*)"
-    Public Const EntryFilter As String = "^<font color='([^']*?)'>(.*?)</font>$"
-    Public Const Iconfilter As String = "<img src='fsh://system.fsh:([^']*)'(.*?)/>"
-    Public Const NameFilter As String = "<name shortname='([^']*)' ?(.*?)?>([\x21-\x3B\=\x3F-\x7E]+)</name>"
-    Public Const YouSayFilter As String = "You ([\x21-\x3B\=\x3F-\x7E]+), ""([^']*)"""
-    Private Const CookieToMeREGEX As String = "<name shortname='(.*?)'>(.*?)</name> just gave you"
-
-#End Region
-
 #Region "Dice Rolls"
-    Public Const DiceFilter As String = "^<font color='roll'><img src='fsh://system.fsh:101' alt='@roll' /><channel name='@roll' /> <name shortname='([^ ]+)'>([^ ]+)</name> rolls (\d+)d(\d+)((-|\+)\d+)? ?(.*) & gets (\d+)\.</font>$"
 
-    Public Shared DiceCompnentMatch As String
+    Public DiceCompnentMatch As String
 
-    Public Shared DiceCount As Double = 0.0R
+    Public DiceCount As Double = 0.0R
 
-    Public Shared DiceModifyer As Double = 0.0R
+    Public DiceModifyer As Double = 0.0R
 
-    Public Shared DiceResult As Double = 0.0R
+    Public DiceResult As Double = 0.0R
 
     'TODO Check MS Engine Dice lines
-    Public Shared DiceSides As Double = 0.0R
+    Public DiceSides As Double = 0.0R
 #End Region
 
 #Region "Popup Dialogs"
@@ -379,7 +450,7 @@ Public Class FurcSession : Inherits NetProxy
     ''' </summary>
     ''' <param name="MainSettings"></param>
     ''' <param name="BotSettings"></param>
-    Sub New(MainSettings As Settings.MainConfigSettings, BotSettings As Settings.cBot)
+    Sub New(MainSettings As Settings.cMain, BotSettings As Settings.cBot)
         MyBase.New(MainSettings.Host, MainSettings.sPort, BotSettings.lPort)
 
         MainEngine = New MainMsEngine()
@@ -404,6 +475,11 @@ Public Class FurcSession : Inherits NetProxy
 
     Public Property BadgeTag As New Queue(Of String)
     Public Property NoEndurance As Boolean
+
+    ''' <summary>
+    ''' Server Balancer Status
+    ''' </summary>
+    ''' <returns>State <see cref="Furcadia.Net.Utils.ServerQue.ThroatTired"/></returns>
     Public Property ThroatTired As Boolean
         Get
             Return ServerBalancer.ThroatTired
@@ -417,27 +493,6 @@ Public Class FurcSession : Inherits NetProxy
 #Region "Private Methods"
 
 #End Region
-    ''' <summary>
-    ''' Connect to Furcadia and Launch our engine objects
-    ''' <list type="bullet">
-    ''' <listheader></listheader>
-    ''' <item>Reconnection Manager</item>
-    ''' <item>Launch MonkeySpeak Engine</item>
-    ''' </list>
-    ''' </summary>
-    Public Overloads Sub Connect()
-
-        'TODO: Reconnection.Manager.Start
-        MainEngine.EngineStart(True)
-        MyBase.Connect()
-    End Sub
-
-    ''' <summary>
-    ''' Base Proxy has connected
-    ''' </summary>
-    Public Sub OnConnected() Handles MyBase.Connected
-
-    End Sub
 
     ''' <summary>
     ''' Parse Channel Data
@@ -445,8 +500,7 @@ Public Class FurcSession : Inherits NetProxy
     ''' <param name="data">Raw Game Server to Client instruction</param>
     ''' <param name="Handled">Is this data already handled?</param>
     Public Sub ParseServerChannel(ByRef data As String, ByVal Handled As Boolean)
-        'Strip the trigger Character
-        ' page = engine.LoadFromString(cBot.MS_Script)
+        'TODO: needs to move and refactored to ServerParser Class
         SyncLock ChannelLock
             data = data.Remove(0, 1)
 
@@ -482,11 +536,11 @@ Public Class FurcSession : Inherits NetProxy
 
             If Channel = "@news" Or Channel = "@spice" Then
                 Try
-                    sndDisplay(Text)
+                    RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                 Catch eX As Exception
                     Dim logError As New ErrorLogging(eX, Me)
                 End Try
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf Color = "success" Then
                 Try
@@ -552,8 +606,8 @@ Public Class FurcSession : Inherits NetProxy
                             MainEngine.PageExecute(96)
                         End If
                     End If
-                    sndDisplay(Text)
-                    If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                    RaiseEvent ProcessServerData(data, New NetServerEventArgs())
+                    SendToClient("(" + data)
                     Exit Sub
 
                 Catch eX As Exception
@@ -589,7 +643,7 @@ Public Class FurcSession : Inherits NetProxy
                     MainEngine.PageExecute(133, 134, 135, 136)
                 End If
 
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf Channel = "@dragonspeak" OrElse Channel = "@emit" OrElse Color = "emit" Then
                 Try
@@ -605,7 +659,7 @@ Public Class FurcSession : Inherits NetProxy
                 Catch eX As Exception
                     Dim logError As New ErrorLogging(eX, Me)
                 End Try
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
                 ''BCast (Advertisments, Announcments)
             ElseIf Color = "bcast" Then
@@ -619,15 +673,15 @@ Public Class FurcSession : Inherits NetProxy
                             If MainSettings.Advertisment Then Exit Sub
                             AdRegEx = "\[(.*?)\] (.*?)</font>"
                             Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
-                            sndDisplay(Text)
+                            RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                         Case "@bcast"
                             If MainSettings.Broadcast Then Exit Sub
                             Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
-                            sndDisplay(Text)
+                            RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                         Case "@announcements"
                             If MainSettings.Announcement Then Exit Sub
                             Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
-                            sndDisplay(Text)
+                            RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                         Case Else
 #If DEBUG Then
                             Console.WriteLine("Unknown ")
@@ -638,7 +692,7 @@ Public Class FurcSession : Inherits NetProxy
                 Catch eX As Exception
                     Dim logError As New ErrorLogging(eX, Me)
                 End Try
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
                 ''SAY
             ElseIf Color = "myspeech" Then
@@ -651,7 +705,6 @@ Public Class FurcSession : Inherits NetProxy
                         If Dream.FurreList.Contains(Player) Then Dream.FurreList.Item(Player) = Player
                     End If
 
-                    SendDisplay("You " & u & ", """ & Text & """", fColorEnum.Say)
                     Player.Message = Text
                     MainEngine.PageSetVariable("MESSAGE", Text)
                     ' Execute (0:5) When some one says something
@@ -664,7 +717,7 @@ Public Class FurcSession : Inherits NetProxy
                 Catch eX As Exception
                     Dim logError As New ErrorLogging(eX, Me)
                 End Try
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf User <> "" And Channel = "" And Color = "" And Regex.Match(data, NameFilter).Groups(2).Value <> "forced" Then
                 Dim tt As System.Text.RegularExpressions.Match = Regex.Match(data, "\(you see(.*?)\)", RegexOptions.IgnoreCase)
@@ -680,7 +733,7 @@ Public Class FurcSession : Inherits NetProxy
                             If Dream.FurreList.Contains(Player) Then Dream.FurreList.Item(Player) = Player
                         End If
                         Channel = "say"
-                        SendDisplay(User & " says, """ & Text & """", fColorEnum.Say)
+
                         MainEngine.PageSetVariable(MS_Name, User)
                         MainEngine.PageSetVariable("MESSAGE", Text)
                         Player.Message = Text
@@ -697,7 +750,7 @@ Public Class FurcSession : Inherits NetProxy
 
                     End Try
 
-                    If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                    SendToClient("(" + data)
                     Exit Sub
                 Else
                     Try
@@ -737,16 +790,13 @@ Public Class FurcSession : Inherits NetProxy
                     MainEngine.PageSetVariable(MS_Name, DescName)
                     MainEngine.PageExecute(600)
                     'sndDisplay)
-                    If Player.Tag = "" Then
-                        sndDisplay("You See '" & Player.Name & "'\par" & Desc)
-                    Else
-                        sndDisplay("You See '" & Player.Name & "'\par" & Player.Tag & " " & Desc)
-                    End If
+                    RaiseEvent ProcessServerData(data, New NetServerEventArgs())
+
                     Look = False
                 Catch eX As Exception
                     Dim logError As New ErrorLogging(eX, Me)
                 End Try
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf Color = "shout" Then
                 ''SHOUT
@@ -754,12 +804,7 @@ Public Class FurcSession : Inherits NetProxy
                     Dim t As New Regex(YouSayFilter)
                     Dim u As String = t.Match(data).Groups(1).ToString
                     Text = t.Match(data).Groups(2).ToString
-                    If User = "" Then
-                        SendDisplay("You " & u & ", """ & Text & """", fColorEnum.Shout)
-                    Else
-                        Text = Regex.Match(data, "shouts: (.*)</font>").Groups(1).ToString()
-                        SendDisplay(User & " shouts, """ & Text & """", fColorEnum.Shout)
-                    End If
+
                     If Not isBot(Player) Then
                         MainEngine.PageSetVariable("MESSAGE", Text)
                         Player.Message = Text
@@ -772,7 +817,7 @@ Public Class FurcSession : Inherits NetProxy
                 Catch eX As Exception
                     Dim logError As New ErrorLogging(eX, Me)
                 End Try
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf Color = "query" Then
                 Dim QCMD As String = Regex.Match(data, "<a.*?href='command://(.*?)'>").Groups(1).ToString
@@ -781,7 +826,7 @@ Public Class FurcSession : Inherits NetProxy
                     Case "summon"
                         ''JOIN
                         Try
-                            sndDisplay(User & " requests to join you.")
+                            RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                             'If Not IsBot(Player) Then
                             MainEngine.PageExecute(34, 35)
                             'End If
@@ -791,7 +836,7 @@ Public Class FurcSession : Inherits NetProxy
                     Case "join"
                         ''SUMMON
                         Try
-                            sndDisplay(User & " requests to summon you.")
+                            RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                             'If Not IsBot(Player) Then
                             MainEngine.PageExecute(32, 33)
                             'End If
@@ -801,7 +846,7 @@ Public Class FurcSession : Inherits NetProxy
                     Case "follow"
                         ''LEAD
                         Try
-                            sndDisplay(User & " requests to lead.")
+                            RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                             'If Not IsBot(Player) Then
                             MainEngine.PageExecute(36, 37)
                             'End If
@@ -811,7 +856,7 @@ Public Class FurcSession : Inherits NetProxy
                     Case "lead"
                         ''FOLLOW
                         Try
-                            sndDisplay(User & " requests the bot to follow.")
+                            RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                             'If Not IsBot(Player) Then
                             MainEngine.PageExecute(38, 39)
                             'End If
@@ -820,7 +865,7 @@ Public Class FurcSession : Inherits NetProxy
                         End Try
                     Case "cuddle"
                         Try
-                            sndDisplay(User & " requests the bot to cuddle.")
+                            RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                             'If Not IsBot(Player) Then
                             MainEngine.PageExecute(40, 41)
                             'End If
@@ -828,12 +873,12 @@ Public Class FurcSession : Inherits NetProxy
                             Dim logError As New ErrorLogging(eX, Me)
                         End Try
                     Case Else
-                        sndDisplay("## Unknown " & Channel & "## " & data)
+                        RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                 End Select
 
                 'NameFilter
 
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf Color = "whisper" Then
                 ''WHISPER
@@ -854,7 +899,6 @@ Public Class FurcSession : Inherits NetProxy
 
                         If Dream.FurreList.Contains(Player) Then Dream.FurreList.Item(Player) = Player
 
-                        SendDisplay(User & " whispers""" & WhisperFrom & """ to you.", fColorEnum.Whisper)
                         If Not isBot(Player) Then
                             MainEngine.PageSetVariable("MESSAGE", Player.Message)
                             ' Execute (0:15) When some one whispers something
@@ -863,32 +907,27 @@ Public Class FurcSession : Inherits NetProxy
                             ' Execute (0:17) When some one whispers something with {...} in it
                         End If
 
-                    Else
-                        WhisperTo = WhisperTo.Replace("<wnd>", "")
-                        SendDisplay("You whisper""" & WhisperTo & """ to " & User & ".", fColorEnum.Whisper)
                     End If
                 Catch eX As Exception
                     Dim logError As New ErrorLogging(eX, Me)
                 End Try
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf Color = "warning" Then
 
                 ErrorMsg = Text
                 ErrorNum = 1
                 MainEngine.PageExecute(801)
-                SendDisplay("::WARNING:: " & Text, fColorEnum.DefaultColor)
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf Color = "trade" Then
                 Dim TextStr As String = Regex.Match(data, "\s<name (.*?)</name>").Groups(0).ToString()
                 Text = Text.Substring(6)
                 If User <> "" Then Text = " " & User & Text.Replace(TextStr, "")
-                SendDisplay(Text, fColorEnum.DefaultColor)
                 MainEngine.PageSetVariable("MESSAGE", Text)
                 Player.Message = Text
                 MainEngine.PageExecute(46, 47, 48)
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf Color = "emote" Then
                 Try
@@ -906,7 +945,6 @@ Public Class FurcSession : Inherits NetProxy
                     MainEngine.PageSetVariable("MESSAGE", Text)
                     Player.Message = Text
                     If Dream.FurreList.Contains(Player) Then Dream.FurreList.Item(Player) = Player
-                    SendDisplay(User & " " & Text, fColorEnum.Emote)
                     Dim test As Boolean = isBot(Player)
                     If isBot(Player) = False Then
 
@@ -921,7 +959,7 @@ Public Class FurcSession : Inherits NetProxy
                 Catch eX As Exception
                     Dim logError As New ErrorLogging(eX, Me)
                 End Try
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf Color = "channel" Then
                 'ChannelNameFilter2
@@ -933,8 +971,8 @@ Public Class FurcSession : Inherits NetProxy
                 r = New Regex(NameFilter + ":")
                 ss = r.Match(Text)
                 If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
-                sndDisplay("[" + ChanMatch.Groups(1).Value + "] " + User & ": " & Text)
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                RaiseEvent ProcessServerData(data, New NetServerEventArgs())
+                SendToClient("(" + data)
             ElseIf Color = "notify" Then
                 Dim NameStr As String = ""
                 If Text.StartsWith("Players banished from your dreams: ") Then
@@ -968,8 +1006,7 @@ Public Class FurcSession : Inherits NetProxy
                     MainEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
                 End If
 
-                SendDisplay("[notify> " & Text, fColorEnum.DefaultColor)
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf Color = "error" Then
 
@@ -1011,13 +1048,13 @@ Public Class FurcSession : Inherits NetProxy
                     MainEngine.PageExecute(95)
                 End If
 
-                sndDisplay("Error:>> " & Text)
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                RaiseEvent ProcessServerData(data, New NetServerEventArgs())
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf data.StartsWith("Communication") Then
-                sndDisplay("Error: Communication Error.  Aborting connection.")
+                RaiseEvent ProcessServerData(data, New NetServerEventArgs())
                 ProcExit = False
-                DisconnectBot()
+                Disconnect()
                 'LogSaveTmr.Enabled = False
 
             ElseIf Channel = "@cookie" Then
@@ -1057,7 +1094,7 @@ Public Class FurcSession : Inherits NetProxy
                 'args.Text = data
                 'args.Handled = True
                 'RaiseEvent ServerChannelProcessed(data, args)
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             ElseIf data.StartsWith("PS") Then
                 Color = "PhoenixSpeak"
@@ -1072,24 +1109,24 @@ Public Class FurcSession : Inherits NetProxy
                     'RaiseEvent ServerChannelProcessed(data, args)
                 End If
                 If MainSettings.PSShowClient Then
-                    If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                    SendToClient("(" + data)
                 End If
                 Exit Sub
             ElseIf data.StartsWith("(You enter the dream of") Then
                 MainEngine.PageSetVariable("DREAMNAME", Nothing)
                 MainEngine.PageSetVariable("DREAMOWNER", data.Substring(24, data.Length - 2 - 24))
                 MainEngine.PageExecute(90, 91)
-                sndDisplay(data)
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                RaiseEvent ProcessServerData(data, New NetServerEventArgs())
+                SendToClient("(" + data)
                 Exit Sub
 
             Else
-                sndDisplay(data)
+                RaiseEvent ProcessServerData(data, New NetServerEventArgs())
 
-                If MyBase.IsClientConnected Then MyBase.SendClient("(" + data)
+                SendToClient("(" + data)
                 Exit Sub
             End If
-            ' If MyBase.IsClientConnected Then MyBase.SendClient("(" + data )
+            '  SendClient("(" + data )
             ' Exit Sub
         End SyncLock
     End Sub
@@ -1101,23 +1138,23 @@ Public Class FurcSession : Inherits NetProxy
     ''' <param name="data"></param>
     ''' <param name="Handled"></param>
     Public Sub ParseServerData(ByVal data As String, ByVal Handled As Boolean)
-
+        Dim MyServerInstruction As ServerInstructionType = ServerInstructionType.Unknown
         ' page = engine.LoadFromString(cBot.MS_Script)
         If data = "Dragonroar" Then
             BotConnecting()
             '  Login Sucessful
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
 
             'Logs into Furcadia
         ElseIf data = "&&&&&&&&&&&&&" Then
             'We've connected to Furcadia
             'Stop the reconnection manager
-            LoggingIn = 2
-            RelogCounter = 0
+            ServerConnectPhase = ConnectionPhase.Connected
+            RaiseEvent ServerStatusChanged(data, New NetServerEventArgs(ServerConnectPhase, MyServerInstruction))
             '(0:1) When the bot logs into furcadia,
             MainEngine.PageExecute(1)
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             ' Species Tags
         ElseIf data.StartsWith("]-") Then
@@ -1127,7 +1164,7 @@ Public Class FurcSession : Inherits NetProxy
                 BadgeTag.Enqueue(data.Substring(2))
             End If
 
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             'DS Variables
 
@@ -1144,7 +1181,7 @@ Public Class FurcSession : Inherits NetProxy
             MainEngine.PageSetVariable("MESSAGE", m.Groups(3).Value, True)
             Player.Message = m.Groups(3).Value
             MainEngine.PageExecute(95, 96)
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             ']s(.+)1 (.*?) (.*?) 0
         ElseIf data.StartsWith("]s") Then
@@ -1153,10 +1190,10 @@ Public Class FurcSession : Inherits NetProxy
             If Furcadia.Util.FurcadiaShortName(BotName) = Furcadia.Util.FurcadiaShortName(m.Groups(2).Value) Then
                 MainEngine.PageExecute()
             End If
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             'Look response
-        ElseIf data.StartsWith("]f") And bConnected() And InDream = True Then
+        ElseIf data.StartsWith("]f") And ServerConnectPhase = ConnectionPhase.Connected And InDream = True Then
             Dim length As Short = 14
             If Look Then
                 LookQue.Enqueue(data.Substring(2))
@@ -1177,10 +1214,11 @@ Public Class FurcSession : Inherits NetProxy
                 End Try
 
             End If
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             'Spawn Avatar
-        ElseIf data.StartsWith("<") And bConnected() Then
+        ElseIf data.StartsWith("<") And ServerConnectPhase = ConnectionPhase.Connected Then
+
             Try
                 If data.Length < 29 Then Exit Sub
                 ' Debug.Print(data)
@@ -1255,10 +1293,10 @@ Public Class FurcSession : Inherits NetProxy
                 Dim logError As New ErrorLogging(eX, Me)
                 Exit Sub
             End Try
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             'Remove Furre
-        ElseIf data.StartsWith(")") And bConnected() Then 'And loggingIn = False
+        ElseIf data.StartsWith(")") And ServerConnectPhase = ConnectionPhase.Connected Then  'And loggingIn = False
             Try
                 Dim remID As Integer = ConvertFromBase220(data.Substring(1, 4))
                 ' remove departure from List
@@ -1271,10 +1309,10 @@ Public Class FurcSession : Inherits NetProxy
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             'Animated Move
-        ElseIf data.StartsWith("/") And bConnected() Then 'And loggingIn = False
+        ElseIf data.StartsWith("/") And ServerConnectPhase = ConnectionPhase.Connected Then 'And loggingIn = False
             Try
                 Player = Dream.FurreList.Item(ConvertFromBase220(data.Substring(1, 4)))
                 Player.Position.x = ConvertFromBase220(data.Substring(5, 2)) * 2
@@ -1294,10 +1332,10 @@ Public Class FurcSession : Inherits NetProxy
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             ' Move Avatar
-        ElseIf data.StartsWith("A") And bConnected() Then 'And loggingIn = False
+        ElseIf data.StartsWith("A") And ServerConnectPhase = ConnectionPhase.Connected Then 'And loggingIn = False
             Try
                 Player = Dream.FurreList.Item(ConvertFromBase220(data.Substring(1, 4)))
                 Player.Position.x = ConvertFromBase220(data.Substring(5, 2)) * 2
@@ -1318,10 +1356,10 @@ Public Class FurcSession : Inherits NetProxy
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             ' Update Color Code
-        ElseIf data.StartsWith("B") And bConnected() And InDream Then 'And loggingIn = False
+        ElseIf data.StartsWith("B") And ServerConnectPhase = ConnectionPhase.Connected And InDream Then 'And loggingIn = False
             Try
                 Player = Dream.FurreList.Item(ConvertFromBase220(data.Substring(1, 4)))
                 Player.Shape = ConvertFromBase220(data.Substring(5, 2))
@@ -1336,10 +1374,10 @@ Public Class FurcSession : Inherits NetProxy
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             'Hide Avatar
-        ElseIf data.StartsWith("C") <> False And bConnected() Then 'And loggingIn = False
+        ElseIf data.StartsWith("C") <> False And ServerConnectPhase = ConnectionPhase.Connected Then 'And loggingIn = False
             Try
                 Player = Dream.FurreList.Item(ConvertFromBase220(data.Substring(1, 4)))
                 Player.Position.x = ConvertFromBase220(data.Substring(5, 2)) * 2
@@ -1354,7 +1392,7 @@ Public Class FurcSession : Inherits NetProxy
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             'Display Disconnection Dialog
         ElseIf data.StartsWith("[") Then
@@ -1365,7 +1403,7 @@ Public Class FurcSession : Inherits NetProxy
             Dream.FurreList.Clear()
             ' RaiseEvent UpDateDreamList("")
 
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             MsgBox(data, MsgBoxStyle.Critical, "Disconnection Error")
 
             Exit Sub
@@ -1388,21 +1426,21 @@ Public Class FurcSession : Inherits NetProxy
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
         ElseIf data.StartsWith("]z") Then
             BotUID = Integer.Parse(data.Remove(0, 2))
             'Snag out UID
         ElseIf data.StartsWith("]B") Then
             BotUID = Integer.Parse(data.Substring(2, data.Length - BotName.Length - 3))
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
 
         ElseIf data.StartsWith("]c") Then
 #If DEBUG Then
             Console.WriteLine(data)
 #End If
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
         ElseIf data.StartsWith("]C") Then
             If data.StartsWith("]C0") Then
@@ -1427,7 +1465,7 @@ Public Class FurcSession : Inherits NetProxy
 #If DEBUG Then
             Console.WriteLine(data)
 #End If
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
             Exit Sub
             'Process Channels Seperatly
         ElseIf data.StartsWith("(") Then
@@ -1438,12 +1476,13 @@ Public Class FurcSession : Inherits NetProxy
 
                 '(0:92) When the bot detects the "Your throat is tired. Please wait a few seconds" message,
                 MainEngine.PageExecute(92)
-                If MyBase.IsClientConnected Then MyBase.SendClient(data)
+                SendToClient(data)
             End If
 
             Exit Sub
         Else
-            If MyBase.IsClientConnected Then MyBase.SendClient(data)
+            SendToClient(data)
+            RaiseEvent ServerStatusChanged(data, New NetServerEventArgs(ServerConnectPhase, MyServerInstruction))
         End If
 
     End Sub
@@ -1453,13 +1492,20 @@ Public Class FurcSession : Inherits NetProxy
     ''' </summary>
     ''' <param name="msg">Channel Subsystem?</param>
     ''' <param name="data">Message to send</param>
-    Public Sub SendClientMessage(msg As String, data As String)
-        If MyBase.IsClientConnected Then MyBase.SendClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
-        sndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
+    Public Sub SendClientFormattedText(msg As String, data As String)
+        SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
+        RaiseEvent ProcessClientData("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """", New NetClientEventArgs())
     End Sub
 
-    Public Sub sndDisplay(v As String)
-        Throw New NotImplementedException()
+    Public Overrides Sub SendToClient(data As String)
+        If IsClientConnected Then MyBase.SendToClient(data)
+    End Sub
+    ''' <summary>
+    ''' Send Message to Server through the Load Ballancer
+    ''' </summary>
+    ''' <param name="message">Client to server Instruction</param>
+    Public Overrides Sub SendToServer(message As String)
+        ServerBalancer.SendToServer(message)
     End Sub
 
     ''' <summary>
@@ -1472,7 +1518,7 @@ Public Class FurcSession : Inherits NetProxy
     ''' </para>
     ''' </summary>
     ''' <param name="data">Raw Client to Server instruction</param>
-    Public Sub sndServer(ByRef data As String)
+    Public Overridable Sub sndServer(ByRef data As String)
         Try
             If Not MyBase.IsServerConnected Then Exit Sub
             If data.StartsWith("`m ") Then
@@ -1544,7 +1590,7 @@ Public Class FurcSession : Inherits NetProxy
                 Case Else
                     result = Chr(34) & arg
             End Select
-            SndToServer(result)
+            SendToServer(result)
 
         Catch eX As Exception
             Dim logError As New ErrorLogging(eX, Me, arg.ToString)
@@ -1552,33 +1598,12 @@ Public Class FurcSession : Inherits NetProxy
     End Sub
 
     ''' <summary>
-    ''' Furcadia Client lost Connection (was it intentionally closed?)
-    ''' </summary>
-    Private Sub ClientExit() Handles MyBase.ClientExited
-        If LoggingIn = 0 Then Exit Sub
-        MainEngine.PageExecute(3)
-
-        LoggingIn = 0
-        If cBot.StandAlone = False Then
-
-            ClientClose = True
-            If MainSettings.CloseProc Then
-                ProcExit = False
-            Else
-                ProcExit = True
-            End If
-            DisconnectBot()
-        ElseIf MyBase.IsClientConnected() Then
-            MyBase.CloseClient()
-        End If
-
-    End Sub
-
-    ''' <summary>
     ''' Pump the server to client instructions through Plugins
+    ''' <para>TODO: Move to BotSession</para>
     ''' </summary>
     ''' <param name="Server_Instruction"></param>
     ''' <returns></returns>
+    '''
     Private Function MessagePump(ByRef Server_Instruction As String) As Boolean
         Dim objPlugin As SilverMonkey.Interfaces.msPlugin
         Dim intIndex As Integer
@@ -1588,7 +1613,7 @@ Public Class FurcSession : Inherits NetProxy
                 objPlugin = DirectCast(PluginServices.CreateInstance(Settings.Plugins(intIndex)), Interfaces.msPlugin)
                 If Settings.PluginList.Item(objPlugin.Name.Replace(" ", "")) Then
                     objPlugin.Initialize(objHost)
-                    objPlugin.Page = MainEngine.MSpage
+                    objPlugin.MsPage = MainEngine.MsPage
                     If objPlugin.MessagePump(Server_Instruction) Then Handled = True
                 End If
             Next
@@ -1601,7 +1626,7 @@ Public Class FurcSession : Inherits NetProxy
     ''' </summary>
     ''' <param name="data"></param>
     Private Sub onClientDataReceived(ByVal data As String) Handles MyBase.ClientData2
-
+        'TODO Raise Client Data Received event
         Try
 
             If (Monitor.TryEnter(clientlock)) Then
@@ -1616,12 +1641,9 @@ Public Class FurcSession : Inherits NetProxy
                     BotName = test.Substring(0, test.IndexOf(" "))
                     BotName = BotName.Replace("|", " ")
 
-                    'Hack to Keep Main Form Text Current
-                    'callbk.MainFormText(BotName)
-
                     BotName = BotName.Replace("[^a-zA-Z0-9\0x0020_.| ]+", "").ToLower()
                     MainEngine.PageSetVariable("BOTNAME", BotName)
-                ElseIf data = "vascodagama" And LoggingIn = 2 Then
+                ElseIf data = "vascodagama" And ServerConnectPhase = ConnectionPhase.Connected Then
                     sndServer("`uid")
                     Select Case cBot.GoMapIDX
                         Case 1
@@ -1633,9 +1655,9 @@ Public Class FurcSession : Inherits NetProxy
                         Case 4
                             sndServer("`fdl " + cBot.DreamURL)
                     End Select
-                    LoggingIn = 3
+                    ' ServerConnectPhase = ConnectionPhase.Conne
                 End If
-                MyBase.SendServer(data)
+                SendToServer(data)
             End If
         Catch eX As Exception
             Dim logError As New ErrorLogging(eX, Me)
@@ -1646,6 +1668,33 @@ Public Class FurcSession : Inherits NetProxy
 
     End Sub
 
+    ''' <summary>
+    ''' Furcadia Client lost Connection (was it intentionally closed?)
+    ''' </summary>
+    Private Sub OnClientExited() Handles MyBase.ClientExited
+        MainEngine.PageExecute(3)
+
+        ClientConnectPhase = ConnectionPhase.Disconnected
+        If cBot.StandAlone = False Then
+
+            ClientClose = True
+            If MainSettings.CloseProc Then
+                ProcExit = False
+            Else
+                ProcExit = True
+            End If
+            'DisconnectBot()
+            'Raise Event Client Exited
+        ElseIf MyBase.IsClientConnected() Then
+            MyBase.CloseClient()
+        End If
+
+    End Sub
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="data">Raw Server to Client Instruction</param>
+    <Obsolete()>
     Private Sub onServerDataReceived(ByVal data As String) Handles MyBase.ServerData2
         Try
             Monitor.Enter(DataReceived)
@@ -1659,41 +1708,7 @@ Public Class FurcSession : Inherits NetProxy
             Monitor.Exit(DataReceived)
         End Try
     End Sub
-
-    Private Sub OnServerDisconnect() Handles MyBase.ServerDisConnected
-        If MyBase.IsClientConnected Then
-            ProcExit = False
-
-        End If
-        DisconnectBot()
-    End Sub
-
-    Private Shadows Sub ProxyError(eX As Exception, o As Object, n As String) Handles MyBase.Error
-
-        'TODO: add custom event args
-
-        'Dim args As New Furcadia.Net.Utils..ConnectionEventArgs
-        'args.Status = ConnectionStats.error
-        'RaiseEvent OnError(o, args)
-    End Sub
-
-    Private Sub SendDisplay(v As String, defaultColor As fColorEnum)
-        Throw New NotImplementedException()
-    End Sub
 #Region "Dispose"
-    'Dim Ts As TimeSpan = TimeSpan.FromSeconds(MainSettings.ConnectTimeOut)
-    '        ReconnectTimeOutTimer = New Threading.Timer(AddressOf ReconnectTimeOutTick,
-    '         Nothing, Ts, Ts)
-    '        Dim Tss As TimeSpan = TimeSpan.FromSeconds(MainSettings.Ping)
-    'If MainSettings.Ping > 0 Then PingTimer = New Threading.Timer(AddressOf PingTimerTick,
-    '         Nothing, Tss, Tss)
-    ''' <summary>
-    ''' Send Message to Server through the Load Ballancer
-    ''' </summary>
-    ''' <param name="message"></param>
-    Public Sub SendToServer(message As String)
-        ServerBalancer.SendToServer(message)
-    End Sub
 
     ' Protected implementation of Dispose pattern.
     Protected Overrides Sub Dispose(disposing As Boolean)
