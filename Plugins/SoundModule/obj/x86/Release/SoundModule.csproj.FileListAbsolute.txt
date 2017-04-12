@@ -1,7 +1,0 @@
-E:\Net Source Code\Monkey System 2\Build\Release\plugins\SoundModule.Plugin.dll
-E:\Net Source Code\Monkey System 2\Build\Release\plugins\SoundModule.Plugin.pdb
-E:\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Release\SoundModule.csprojResolveAssemblyReference.cache
-E:\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Release\SilverMonkey.SoundModule.Resources.resources
-E:\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Release\SoundModule.csproj.GenerateResource.Cache
-E:\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Release\SoundModule.Plugin.dll
-E:\Net Source Code\Monkey System 2\Plugins\SoundModule\obj\x86\Release\SoundModule.Plugin.pdb
