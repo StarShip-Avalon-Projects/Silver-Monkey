@@ -7,7 +7,6 @@ Namespace Engine.Libraries
 #Region "Private Fields"
 
         Dim lock As New Object
-        Private writer As TextBoxWriter = Nothing
 
 #End Region
 

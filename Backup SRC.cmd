@@ -1,2 +1,2 @@
-msbuild /t:BuildAll Solution.build
+msbuild /t:BuildAll  Solution.build
 pause

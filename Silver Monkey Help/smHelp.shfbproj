@@ -39,6 +39,7 @@
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
       <DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
+      <DocumentationSource sourceFile="..\Interfaces\Interfaces.vbproj" />
     </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>
@@ -249,6 +250,33 @@
   </ItemGroup>
   <ItemGroup>
     <ContentLayout Include="_ContentLayout.content" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
+      <Name>FurcadiaLib</Name>
+      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
+      <Name>Interfaces</Name>
+      <Project>{b0882700-5eaf-4712-ade5-69dafe473a01}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeySpeakEx\MonkeySpeakEx.csproj">
+      <Name>MonkeySpeakEx</Name>
+      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SilverMonkey\SilverMonkey2.vbproj">
+      <Name>SilverMonkey2</Name>
+      <Project>{cd544712-0665-44db-bb70-5b9d4395b050}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\VerbotSDK\Verbot5Library.csproj">
+      <Name>Verbot5Library</Name>
+      <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

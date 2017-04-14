@@ -17,7 +17,6 @@ Namespace Engine.Libraries
         Private Webrequest As New WebRequests("")
         Dim WebStack As New Dictionary(Of String, String)
         Private WebURL As String = ""
-        Private writer As TextBoxWriter = Nothing
 
 #End Region
 
@@ -293,7 +292,7 @@ Namespace Engine.Libraries
         Dim data As New Dictionary(Of [String], [String])()
         Private UserAgent As String = "Silver Monkey a Furcadia Bot (gerolkae@hotmail.com)"
         Dim Ver As Integer = 1
-        Private WebReferer As String = "http://silvermonkey.codeplex.com"
+        Private WebReferer As String = "http://silvermonkey.tsprojects.org"
 
         '*Value may not always return from post functions
         Dim WebURL As String

@@ -11,12 +11,6 @@ Namespace Engine.Libraries
     Public Class Description
         Inherits MonkeySpeakLibrary
 
-#Region "Private Fields"
-
-        Private writer As TextBoxWriter = Nothing
-
-#End Region
-
 #Region "Public Constructors"
 
         Public Sub New()

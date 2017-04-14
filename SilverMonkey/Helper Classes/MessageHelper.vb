@@ -74,6 +74,12 @@ Public Class MessageHelper
     Private Shared Function PostMessage(hWnd As IntPtr, Msg As Integer, wParam As Integer, ByRef lParam As COPYDATASTRUCT) As IntPtr
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="lpString"></param>
+    ''' <returns></returns>
+    <DllImport("User32,dll")>
     Private Shared Function RegisterWindowMessage(lpString As String) As Integer
     End Function
 

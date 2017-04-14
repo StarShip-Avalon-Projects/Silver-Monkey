@@ -4,7 +4,6 @@ Imports MonkeyCore
 Imports System.Collections.Generic
 Imports MonkeyCore.Settings
 Imports System.Diagnostics
-Imports SilverMonkey.PhoenixSpeak
 
 Imports Microsoft.Win32.SafeHandles
 Imports System.Runtime.InteropServices
@@ -71,7 +70,7 @@ Namespace Engine
         ''' </summary>
         Public Sub New()
 
-            EngineStart(True)
+            'EngineStart(True)
             LibList = New List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
             ' Comment out Libs to Disable
             LibList.Add(New MS_IO())
@@ -109,9 +108,13 @@ Namespace Engine
         End Function
 
         'loads at main load
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="LoadPlugins"></param>
         Public Sub EngineStart(ByRef LoadPlugins As Boolean)
-            MsPage = New Page
-            'MsPage = LoadFromString("")
+            MsPage = New Page(Me)
+            MsPage = LoadFromString("")
             LoadLibrary(LoadPlugins)
 
         End Sub

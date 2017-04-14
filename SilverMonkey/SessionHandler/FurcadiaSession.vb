@@ -48,6 +48,8 @@ Public Class FurcSession : Inherits NetProxy
     Public WithEvents MSpage As Page = Nothing
     Public objHost As New smHost(Me)
 
+    Public Delegate Function GetMsPage(ByRef _msPage As Page) As Page
+
 #End Region
 
 #Region "Public Events"

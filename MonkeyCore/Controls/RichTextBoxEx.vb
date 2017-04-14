@@ -7,6 +7,10 @@ Imports System.Windows.Forms.VisualStyles
 Imports MonkeyCore.Controls.Win32
 
 Namespace Controls
+    ''' <summary>
+    ''' Extended RichTextBox with URL formatting
+    ''' </summary>
+    <CLSCompliant(True)>
     Public Class RichTextBoxEx
         Inherits System.Windows.Forms.RichTextBox
 

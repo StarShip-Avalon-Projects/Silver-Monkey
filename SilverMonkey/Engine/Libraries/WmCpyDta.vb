@@ -2,6 +2,7 @@
 
 Imports System.Diagnostics
 Imports Furcadia.Net
+Imports System.Runtime.InteropServices
 
 Namespace Engine.Libraries
     Public Class WmCpyDta
@@ -142,6 +143,7 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
 
 #Region "Private Methods"
 
+        <DllImport("User32.dll")>
         Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
         End Function
 

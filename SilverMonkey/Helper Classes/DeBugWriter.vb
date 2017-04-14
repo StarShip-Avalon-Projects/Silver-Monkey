@@ -21,6 +21,7 @@ Public Class DeBugWriter
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
 
+
     Public Sub New(ByVal control As RichTextBoxEx)
         Me.control = control
         AddHandler control.HandleCreated,

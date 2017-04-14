@@ -200,10 +200,6 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
-      <Project>{b0882700-5eaf-4712-ade5-69dafe473a01}</Project>
-      <Name>Interfaces</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

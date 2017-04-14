@@ -510,8 +510,10 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Sends PS Info to SQLite Database
         ''' </summary>
-        ''' <param name="s"></param>
-        ''' <returns>True on success</returns>
+        ''' <param name="PsInfo"></param>
+        ''' <param name="TableSet"></param>
+        ''' <param name="PlayerName"></param>
+        ''' <returns></returns>
         Private Shared Function SendPStoDatabase(PsInfo As List(Of PhoenixSpeak.Variable), TableSet As String, PlayerName As String) As Boolean
             Dim Returnval As Boolean
             Dim idx As Integer = 0
