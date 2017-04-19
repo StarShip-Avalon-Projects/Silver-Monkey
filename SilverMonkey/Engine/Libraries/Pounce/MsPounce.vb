@@ -1,16 +1,14 @@
-﻿Imports Monkeyspeak
-
-Imports System.Collections.Generic
-Imports MonkeyCore
-Imports Furcadia.Util
+﻿Imports System.Collections.Generic
 Imports Furcadia.Net.Pounce
-Imports Furcadia.Net
+Imports Furcadia.Util
+Imports MonkeyCore
+Imports Monkeyspeak
 
-Namespace Engine.Libraries
+Namespace Engine.Libraries.Pounce
     ''' <summary>
     ''' Monkey Speak version of the Furcadia Pounce Cliet
     ''' </summary>
-    Public Class MS_Pounce
+    Public Class MsPounce
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"

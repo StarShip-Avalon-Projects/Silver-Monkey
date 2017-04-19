@@ -33,21 +33,23 @@ Namespace IO
         ''' Starts a new instance with a filename
         ''' </summary>
         ''' <param name="PounceListFile">Filename</param>
-        Sub New(PounceListFile As String)
+        Sub New(ListFile As String)
             _PounceList = New List(Of String)
-            filename = PounceListFile
+            If Not String.IsNullOrEmpty(ListFile) Then
 
-            Try
+                filename = ListFile
 
-                If File.Exists(filename) Then
-                    _PounceList.AddRange(File.ReadAllLines(filename))
-                Else
-                    File.Create(filename)
-                End If
-            Catch ex As Exception
-                Throw ex
-            End Try
+                Try
 
+                    If File.Exists(filename) Then
+                        _PounceList.AddRange(File.ReadAllLines(filename))
+                    Else
+                        File.Create(filename)
+                    End If
+                Catch ex As Exception
+                    Throw ex
+                End Try
+            End If
         End Sub
 
 #End Region

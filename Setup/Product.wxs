@@ -65,8 +65,12 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
                 Name='$(var.ProductName)'
                 Description='$(var.ProductName)'
                   Target="[APPLICATIONFOLDER]\$(var.SilverMonkey2.TargetName)" />
-        <RegistryValue Root="HKCU"  Key="Software\$(var.CompanyName)\SilverMonkey"
-          Name="installed" Type="integer" Value="1" KeyPath="yes" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\$(var.CompanyName)\SilverMonkey"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
 
         <ProgId Id="SilverMonkey.exe"  Description="$(var.ProductName) File type" Advertise="no">
           <Extension Id="bini"  ContentType="Text/Plain" Advertise="no">
@@ -83,8 +87,14 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
                   Target="[APPLICATIONFOLDER]$(var.MonkeySpeakEditor.TargetName)"
                   Description="Starts $(var.MonkeySpeakEditor.TargetName)" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
-        <RegistryValue Root="HKCU" Key="Software\$(var.CompanyName)\MonkeySpeakEditor"
-              Name="installed" Type="integer" Value="1" KeyPath="yes" />
+
+        <RegistryValue Root="HKCU"
+                       Key="Software\$(var.CompanyName)\MonkeySpeakEditor"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+
         <ProgId Id="MonkeySpeakEditor.exe" Description="Monkey Speak File" Advertise="no">
           <Extension Id="ms" ContentType="Text/Plain" Advertise="no">
             <Verb Command="Open" Id="open" TargetProperty="MonkeySpeakAssociation"  Argument="%1" />

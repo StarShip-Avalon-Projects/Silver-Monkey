@@ -18,9 +18,6 @@ Namespace Engine
 
 #Region "Public Fields"
 
-        Public WithEvents MsPage As Page
-        Public objHost As smHost
-
 #End Region
 
 #Region "Private Fields"
@@ -28,7 +25,7 @@ Namespace Engine
         ''' <summary>
         ''' Library Objects to load into the Engine
         ''' </summary>
-        Private ReadOnly LibList As List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
+        Private LibList As List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
 
 #End Region
 
@@ -37,17 +34,9 @@ Namespace Engine
         Private Const MS_Header As String = "*MSPK V04.00 Silver Monkey"
 #End Region
 
-#Region "Public Methods"
-
-        Public Shared Function IsBotControler(ByRef Name As String) As Boolean
-            If String.IsNullOrEmpty(cBot.BotController) Then Return False
-            Return FurcadiaShortName(cBot.BotController) = FurcadiaShortName(Name)
-        End Function
-
-#End Region
-
 #Region "MonkeySpeakEngine"
 
+        Private WithEvents MsPage As Page
         Public Shared MS_Stared As Integer = 0
 
         Public EngineRestart As Boolean = False
@@ -61,7 +50,6 @@ Namespace Engine
         Private Shared Writer As TextBoxWriter = New TextBoxWriter(Variables.TextBox1)
 
         Private msVer As Double = 3.0
-
         ''' <summary>
         ''' Default Constructlor.
         ''' <para>
@@ -91,7 +79,7 @@ Namespace Engine
             LibList.Add(New Movement())
             LibList.Add(New WmCpyDta())
             LibList.Add(New MS_MemberList())
-            LibList.Add(New MS_Pounce())
+            LibList.Add(New Pounce.MsPounce())
             LibList.Add(New MS_Verbot())
             LibList.Add(New MS_MemberList())
             LibList.Add(New MS_MemberList())
@@ -120,6 +108,41 @@ Namespace Engine
         End Sub
 
         ''' <summary>
+        ''' Wrapper Functions to read a Monkey Speak Script File and Pass the result to <see cref="LoadFromString"/>
+        ''' </summary>
+        ''' <param name="file">MonkeySpeak filename</param>
+        ''' <returns></returns>
+        Public Function LoadFromScriptFile(ByVal file As String) As Page
+            Dim Data As String = String.Empty
+            Try
+                If Not System.IO.File.Exists(file) Then
+                    Throw New FileNotFoundException("MonkeySpeak script file not found.")
+                End If
+                Dim line As String = ""
+                Using objReader As New StreamReader(file)
+                    ' line = objReader.ReadLine() & Environment.NewLine
+                    While objReader.Peek <> -1
+                        line = objReader.ReadLine()
+                        'Should ad MonkeySpeak Script Version check here
+                        If Not line.StartsWith(RES_MS_begin) Then
+                            Data += line + Environment.NewLine
+                        End If
+
+                        If line = RES_MS_end Then
+                            Exit While
+                        End If
+
+                    End While
+                    objReader.Close()
+                End Using
+
+            Catch eX As Exception
+                Dim LogError As New ErrorLogging(eX, Me)
+            End Try
+            Return LoadFromString(Data)
+        End Function
+
+        ''' <summary>
         ''' Load Libraries into the engine
         ''' </summary>
         ''' <param name="LoadPlugins"></param>
@@ -127,6 +150,8 @@ Namespace Engine
             'Library Loaded?.. Get the Hell out of here
             If MS_Started() Then Exit Sub
             MS_Stared += 1
+
+            MsPage.Reset()
             MsPage.SetTriggerHandler(TriggerCategory.Cause, 0,
              Function()
                  Return True
@@ -141,7 +166,7 @@ Namespace Engine
 #ElseIf CONFIG = "Debug" Then
                 MsPage.SetTriggerHandler(TriggerCategory.Effect, 105,
              Function()
-                 Return True
+                 Return False
              End Function, "(5:105) raise an error.")
 #End If
             Catch ex As Exception
@@ -169,88 +194,57 @@ Namespace Engine
             'TODO Check for Duplicate and use that one instead
             'we don't want this to cause a memory leak.. its prefered to run this one time and thats  it except for checking for new plugins
             'Loop through available plugins, creating instances and adding them to listbox
-            If Not Plugins Is Nothing And LoadPlugins Then
-                Dim objPlugin As Interfaces.msPlugin
-                Dim newPlugin As Boolean = False
-                For intIndex As Integer = 0 To Plugins.Count - 1
-                    Try
-                        objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.msPlugin)
-                        If Not PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
-                            PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
-                            newPlugin = True
-                        End If
+            'If Not Plugins Is Nothing And LoadPlugins Then
+            '    Dim objPlugin As Interfaces.msPlugin
+            '    Dim newPlugin As Boolean = False
+            '    For intIndex As Integer = 0 To Plugins.Count - 1
+            '        Try
+            '            objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.msPlugin)
+            '            If Not PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
+            '                PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
+            '                newPlugin = True
+            '            End If
 
-                        If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True Then
-                            Console.WriteLine("Loading Plugin: " + objPlugin.Name)
-                            objPlugin.Initialize(objHost)
-                            objPlugin.MsPage = MsPage
-                            objPlugin.Start()
-                        End If
-                    Catch ex As Exception
-                        Dim e As New ErrorLogging(ex, Me)
-                    End Try
-                Next
-                'TODO: Add to delegate?
-                'If newPlugin Then Main.MainSettings.SaveMainSettings()
+            '            If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True Then
+            '                Console.WriteLine("Loading Plugin: " + objPlugin.Name)
+            '                objPlugin.Initialize(objHost)
+            '                objPlugin.MsPage = MsPage
+            '                objPlugin.Start()
+            '            End If
+            '        Catch ex As Exception
+            '            Dim e As New ErrorLogging(ex, Me)
+            '        End Try
+            '    Next
+            '    'TODO: Add to delegate?
+            '    'If newPlugin Then Main.MainSettings.SaveMainSettings()
 
-            End If
+            'End If
         End Sub
 
-        Public Sub LogError(reader As TriggerReader, ex As Exception)
+        'Public Sub LogError(reader As TriggerReader, ex As Exception)
 
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & reader.TriggerCategory.ToString & ":" & reader.TriggerId.ToString & ") " & ex.Message
+        '    Console.WriteLine(MS_ErrWarning)
+        '    Dim ErrorString As String = "Error: (" & reader.TriggerCategory.ToString & ":" & reader.TriggerId.ToString & ") " & ex.Message
 
-            If Not IsNothing(cBot) Then
-                If cBot.log Then
-                    LogStream.WriteLine(ErrorString, ex)
-                End If
-            End If
-            Writer.WriteLine(ErrorString)
-        End Sub
-        Public Sub LogError(trigger As Trigger, ex As Exception) Handles MsPage.Error
+        '    If Not IsNothing(cBot) Then
+        '        If cBot.log Then
+        '            LogStream.WriteLine(ErrorString, ex)
+        '        End If
+        '    End If
+        '    Writer.WriteLine(ErrorString)
+        'End Sub
+        'Public Sub LogError(trigger As Trigger, ex As Exception) Handles MsPage.Error
 
-            Console.WriteLine(MS_ErrWarning)
-            Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
+        '    Console.WriteLine(MS_ErrWarning)
+        '    Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
 
-            If Not IsNothing(cBot) Then
-                If cBot.log Then
-                    '  BotLogStream.WriteLine(ErrorString, ex)
-                End If
-            End If
-            Writer.WriteLine(ErrorString)
-        End Sub
-
-        Public Function msReader(ByVal file As String) As String
-            file = file.Trim
-            Dim Data As String = String.Empty
-            Try
-                If Not System.IO.File.Exists(file.Trim) Then
-                    Return ""
-                End If
-                Dim line As String = ""
-                Using objReader As New StreamReader(file)
-                    ' line = objReader.ReadLine() & Environment.NewLine
-                    While objReader.Peek <> -1
-                        line = objReader.ReadLine()
-                        If Not line.StartsWith(RES_MS_begin) Then
-                            Data += line + Environment.NewLine
-                        End If
-
-                        If line = RES_MS_end Then
-                            Exit While
-                        End If
-
-                    End While
-                    objReader.Close()
-                End Using
-                Return Data
-            Catch eX As Exception
-                Dim LogError As New ErrorLogging(eX, Me)
-                Return ""
-            End Try
-        End Function
-
+        '    If Not IsNothing(cBot) Then
+        '        If cBot.log Then
+        '            '  BotLogStream.WriteLine(ErrorString, ex)
+        '        End If
+        '    End If
+        '    Writer.WriteLine(ErrorString)
+        'End Sub
         ''' <summary>
         ''' Execute the Triggers safely
         ''' </summary>
@@ -264,7 +258,11 @@ Namespace Engine
             End If
 
         End Sub
-
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="varName"></param>
+        ''' <param name="data"></param>
         Public Sub PageSetVariable(ByVal varName As String, ByVal data As Object)
             If cBot.MS_Engine_Enable AndAlso MS_Started() Then
                 If data Is Nothing Then data = String.Empty
@@ -295,21 +293,12 @@ Namespace Engine
         End Sub
 
         'Bot Starts
-        Public Function ScriptStart() As Boolean
+        Public Sub Start()
             Try
                 Dim VariableList As New Dictionary(Of String, Object)
 
-                If Not cBot.MS_Engine_Enable Then
-                    Return False
-                End If
-
                 Console.WriteLine("Loading:" & cBot.MS_File)
-                Dim start As DateTime = DateTime.Now
-                If Not File.Exists(cBot.MS_File) Then
-                    Directory.Exists(Path.GetDirectoryName(cBot.MS_File))
-                    cBot.MS_File = Path.Combine(Paths.SilverMonkeyBotPath, cBot.MS_File)
-                End If
-                cBot.MS_Script = msReader(cBot.MS_File)
+
                 If String.IsNullOrEmpty(cBot.MS_Script) Then
                     Console.WriteLine("ERROR: No script loaded! Loading Default ")
                     MS_Engine_Running = False
@@ -319,7 +308,7 @@ Namespace Engine
                     VariableList.Add("MSPATH", Paths.SilverMonkeyBotPath)
                 End If
                 Try
-                    MsPage = LoadFromString(cBot.MS_Script)
+
                 Catch ex As MonkeyspeakException
                     Console.WriteLine(ex.Message)
                     Return False
@@ -342,14 +331,14 @@ Namespace Engine
                 PageSetVariable(VariableList)
                 '(0:0) When the bot starts,
                 PageExecute(0)
-                Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.", MsPage.Size, Date.Now.Subtract(start)))
+                Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.", MsPage.Size, Date.Now.Subtract(Start)))
                 MS_Engine_Running = True
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
-                Return False
+
             End Try
-            Return True
-        End Function
+
+        End Sub
 #End Region
 
 #Region "Dispose"

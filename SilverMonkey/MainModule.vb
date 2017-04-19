@@ -5,7 +5,7 @@ Module MainModule
     'Public EditIni As New IniFile
     'Public MS_KeysIni As IniFile = New IniFile
     Public BotIni As New IniFile
-    Public cBot As Settings.cBot
+
 
     Public Const MS_Name As String = "NAME"
 

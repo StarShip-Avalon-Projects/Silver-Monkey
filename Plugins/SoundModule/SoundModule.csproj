@@ -52,6 +52,7 @@
     <EmbeddedResource Include="Resources.resx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="SoundModule.Plugin.pfx" />
   </ItemGroup>
   <ItemGroup>
