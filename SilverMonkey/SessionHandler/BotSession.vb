@@ -71,7 +71,7 @@ Public Class BotSession : Inherits FurcadiaSession
         Try
             If MainSettings.CloseProc And ProcExit = False Then
                 ClientProcess.Kill()
-                MyBase.SendToServer("quit")
+                SendToServer("quit")
                 MyBase.Disconnect()
             End If
 
@@ -82,7 +82,7 @@ Public Class BotSession : Inherits FurcadiaSession
 
         ' (0:2) When the bot logs off
         MainEngine.PageExecute(2)
-        Monkeyspeak.Libraries.Timers.DestroyTimers()
+
         MainEngine.MS_Engine_Running = False
     End Sub
 
@@ -691,7 +691,7 @@ Public Class BotSession : Inherits FurcadiaSession
                 MainEngine.PageSetVariable(MS_Name, Player.ShortName)
 
                 If Player.Flag = 4 Or Not Dream.FurreList.Contains(Player) Then
-                    Dream.FurreList.add(Player)
+                    Dream.FurreList.Add(Player)
                     '  If InDream Then RaiseEvent UpDateDreamList(Player.Name)
                     If Player.Flag = 2 Then
                         MainEngine.PageExecute(28, 29, 24, 25)
@@ -791,10 +791,6 @@ Public Class BotSession : Inherits FurcadiaSession
 #End If
                 MainEngine.PageSetVariable("DREAMOWNER", "")
                 MainEngine.PageSetVariable("DREAMNAME", "")
-                HasShare = False
-                NoEndurance = False
-
-                Dream.FurreList.Clear()
                 'RaiseEvent UpDateDreamList("")
                 InDream = False
             Catch eX As Exception
@@ -821,15 +817,11 @@ Public Class BotSession : Inherits FurcadiaSession
                 Dim dname As String = data.Substring(10)
                 If dname.Contains(":") Then
                     Dim NameStr As String = dname.Substring(0, dname.IndexOf(":"))
-                    If FurcadiaShortName(NameStr) = FurcadiaShortName(ConnectedCharacterName) Then
-                        HasShare = True
-                    End If
+
                     MainEngine.PageSetVariable("DREAMOWNER", NameStr)
                 ElseIf dname.EndsWith("/") AndAlso Not dname.Contains(":") Then
                     Dim NameStr As String = dname.Substring(0, dname.IndexOf("/"))
-                    If Furcadia.Util.FurcadiaShortName(NameStr) = Furcadia.Util.FurcadiaShortName(ConnectedCharacterName) Then
-                        HasShare = True
-                    End If
+
                     MainEngine.PageSetVariable("DREAMOWNER", NameStr)
                 End If
 

@@ -360,6 +360,7 @@ Namespace Engine
             If disposed Then Return
 
             If disposing Then
+                Monkeyspeak.Libraries.Timers.DestroyTimers()
                 handle.Dispose()
 
             End If
