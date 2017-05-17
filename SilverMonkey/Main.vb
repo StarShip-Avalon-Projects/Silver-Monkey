@@ -7,21 +7,20 @@ Imports System.Text.RegularExpressions
 Imports System.Collections
 Imports System.Collections.Generic
 Imports Furcadia.Drawing.Graphics
-Imports Furcadia.Drawing
 Imports System.Drawing
 Imports System.Net.NetworkInformation
 Imports System.Runtime.InteropServices
-Imports System.Threading
 Imports System.Diagnostics
 Imports System.Windows.Forms
 Imports MonkeyCore.Paths
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Settings
-Imports Furcadia.Net.Proxy
+
+Imports Furcadia.Text.FurcadiaMarkup
 
 Public Class Main
-    Inherits System.Windows.Forms.Form
+    Inherits Form
 
     'TODO: implement Furcadia Session to replace NetProxy Control objects and functions
     'TODO: Change Reconnection Manager to FurcadiaSession
@@ -210,13 +209,6 @@ Public Class Main
 #End Region
 
 #Region "Public Methods"
-
-    ''' <summary>
-    '''
-    ''' </summary>
-    Public Shared Sub OnConnected() Handles FurcadiaSession.Connected
-
-    End Sub
 
     Public Sub BotConnecting()
         If Me.BTN_Go.InvokeRequired Then
@@ -754,12 +746,12 @@ Public Class Main
                 build = build.Replace("&lt;", "<")
                 build = build.Replace("&gt;", ">")
 
-                Dim Names As MatchCollection = Regex.Matches(obj, FurcadiaSession.NameFilter)
+                Dim Names As MatchCollection = Regex.Matches(obj, NameFilter)
                 For Each Name As System.Text.RegularExpressions.Match In Names
                     build = build.Replace(Name.ToString, Name.Groups(3).Value)
                 Next
                 '<name shortname='acuara' forced>
-                Dim MyIcon As MatchCollection = Regex.Matches(obj, FurcadiaSession.Iconfilter)
+                Dim MyIcon As MatchCollection = Regex.Matches(obj, Iconfilter)
                 For Each Icon As System.Text.RegularExpressions.Match In MyIcon
                     Select Case Icon.Groups(1).Value
                         Case "91"
@@ -1047,12 +1039,12 @@ Public Class Main
         'MsgBox(Proto)
     End Sub
 
-    Private Sub ProxyError(eX As Exception, o As Object, n As String) Handles FurcadiaSession.Error
-        sndDisplay(o.ToString + "- " + n + ": " + eX.Message)
-        'sndDisplay(eX.Message)
-        'Dim logError As New ErrorLogging(eX, Me)
+    'Private Sub ProxyError(eX As Exception, o As Object, n As String) Handles FurcadiaSession.
+    '    sndDisplay(o.ToString + "- " + n + ": " + eX.Message)
+    '    'sndDisplay(eX.Message)
+    '    'Dim logError As New ErrorLogging(eX, Me)
 
-    End Sub
+    'End Sub
     Public Structure Rep
 
 #Region "Public Fields"
@@ -1153,20 +1145,6 @@ Public Class Main
         log_.HideSelection = Not CheckBox1.Checked
     End Sub
 
-    Private Sub ClientExit() Handles FurcadiaSession.ClientExited
-        ' If loggingIn = 0 Then Exit Sub
-
-        'TS_Status_Client.Image = My.Resources.images2
-
-        'loggingIn = 0
-        If cBot.StandAlone = False Then
-
-            FurcadiaSession.Disconnect()
-        ElseIf FurcadiaSession.IsServerConnected Then
-            FurcadiaSession.CloseClient()
-            TS_Status_Client.Image = My.Resources.images2
-        End If
-    End Sub
     Private Sub CloseToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CloseToolStripMenuItem.Click, ExitTrayIconMenuItem.Click
         FormClose()
     End Sub
@@ -1177,10 +1155,8 @@ Public Class Main
     End Sub
 
     Private Sub ContentsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ContentsToolStripMenuItem.Click
-        If File.Exists(Application.StartupPath & "/Silver Monkey.chm") Then
-            Process.Start(Application.StartupPath & "/Silver Monkey.chm")
-        Else
-
+        If File.Exists(Path.Combine(Application.StartupPath, "Silver Monkey.chm")) Then
+            Process.Start(Path.Combine(Application.StartupPath, "Silver Monkey.chm"))
         End If
 
     End Sub
@@ -1239,9 +1215,9 @@ Public Class Main
         Dim processStrt As New ProcessStartInfo
         processStrt.FileName = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "MonkeySpeakEditor.EXE"
         Dim f As String = CheckBotFolder(cBot.MS_File)
-        If Not String.IsNullOrEmpty(FurcadiaSession.BotName) And Not String.IsNullOrEmpty(cBot.MS_File) Then
-            processStrt.Arguments = "-B=""" + FurcadiaSession.BotName + """ """ + f + """"
-        ElseIf String.IsNullOrEmpty(FurcadiaSession.BotName) And Not String.IsNullOrEmpty(cBot.MS_File) Then
+        If Not String.IsNullOrEmpty(FurcadiaSession.ConnectedCharacterName) And Not String.IsNullOrEmpty(cBot.MS_File) Then
+            processStrt.Arguments = "-B=""" + FurcadiaSession.ConnectedCharacterName + """ """ + f + """"
+        ElseIf String.IsNullOrEmpty(FurcadiaSession.ConnectedCharacterName) And Not String.IsNullOrEmpty(cBot.MS_File) Then
             processStrt.Arguments = """" + f + """"
         End If
         Process.Start(processStrt)
@@ -1334,11 +1310,11 @@ Public Class Main
         Console.SetOut(writer)
         FurcadiaSession = New BotSession()
 
-        Plugins = PluginServices.FindPlugins(Path.GetDirectoryName(Application.ExecutablePath) + "\Plugins\", "SilverMonkey.Interfaces.msPlugin")
+        Plugins = PluginServices.FindPlugins(Path.Combine(Application.StartupPath, "Plugins"), "SilverMonkey.Interfaces.msPlugin")
 
         ' Try to get Furcadia's path from the registry
 
-        MS_KeysIni.Load(Path.GetDirectoryName(Application.ExecutablePath) + "\Keys-MS.ini")
+        MS_KeysIni.Load(Path.Combine(Application.StartupPath, "Keys-MS.ini"))
         InitializeTextControls()
 
         'Me.Size = My.Settings.MainFormSize
@@ -1358,7 +1334,7 @@ Public Class Main
             Dim File As String = My.Application.CommandLineArgs(0)
             Dim directoryName As String
             directoryName = Path.GetDirectoryName(File)
-            If String.IsNullOrEmpty(directoryName) Then File = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Silver Monkey/" + File
+            If String.IsNullOrEmpty(directoryName) Then File = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Silver Monkey", File)
             cBot = New cBot(File)
             EditBotToolStripMenuItem.Enabled = True
             Console.WriteLine("Loaded: """ + File + """")

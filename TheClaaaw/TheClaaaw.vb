@@ -69,13 +69,10 @@ Public Class TheClaaaw
 
     Private _MSpage As Monkeyspeak.Page
     Private msDream As DREAM
-    Public Property Dream As DREAM
+    Public ReadOnly Property Dream As DREAM
         Get
             Return msHost.Dream
         End Get
-        Set(value As DREAM)
-            msHost.Dream = value
-        End Set
     End Property
 
     Public Property MsPage As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msPlugin.MsPage

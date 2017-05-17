@@ -13,7 +13,7 @@
     <RootNamespace>Monkey_Speak_Editor_Help</RootNamespace>
     <Name>Monkey_Speak_Editor_Help</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Framework 4.6</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
     <OutputPath>..\..\..\..\Bitnami\wampstack-5.6.29-1\apps\silvermonkey\htdocs\help\monkeyspeakeditor\</OutputPath>
     <HtmlHelpName>Monkey_Speak_Editor_Help</HtmlHelpName>
     <Language>en-US</Language>

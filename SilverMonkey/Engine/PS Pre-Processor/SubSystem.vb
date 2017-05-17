@@ -492,7 +492,7 @@ Namespace Engine.Libraries.PhoenixSpeak
         ''' Send the Phoenix Commands to the Server enqueue
         ''' </summary>
         ''' <param name="var"></param>
-        Public Sub sendServer(ByRef var As String)
+        Public Sub sendToServer(ByRef var As String)
             Try
                 Monitor.Enter(SendLock)
                 Dim Id As Short = PsCaptureId(var)
@@ -511,7 +511,6 @@ Namespace Engine.Libraries.PhoenixSpeak
         ''' <summary>
         ''' 'Fills the received PS Buffer
         ''' </summary>
-        ''' <param name="item">CommandKey PsId</param>
         Private Shared Sub ReceivedFromServer(IsID As Short)
             Try
                 Monitor.Enter(bufferlock)

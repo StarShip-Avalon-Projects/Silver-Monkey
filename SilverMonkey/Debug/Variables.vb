@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms
 
 Public Class Variables
+    Inherits Form
 
 #Region "Private Fields"
 
@@ -28,8 +29,8 @@ Public Class Variables
 
             SyncLock Lock
 
-                For i As Integer = 0 To FurcadiaSession.MainEngine.MsPage.Scope.Count - 1
-                    Dim Var As Monkeyspeak.Variable = FurcadiaSession.MainEngine.MsPage.Scope.Item(i)
+                For i As Integer = 0 To FurcadiaSession.MSpage.Scope.Count - 1
+                    Dim Var As Monkeyspeak.Variable = FurcadiaSession.MSpage.Scope.Item(i)
 
                     Dim Variable() As String = {"", "", ""}
                     Variable(0) = Var.Name.ToString

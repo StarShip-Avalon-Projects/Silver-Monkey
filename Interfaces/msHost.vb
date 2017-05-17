@@ -4,9 +4,9 @@
 
     ReadOnly Property BotName As String
     Property Data As String
-    Property Dream As Furcadia.Net.DREAM
+    ReadOnly Property Dream As Furcadia.Net.DREAM
     WriteOnly Property MsPage As Monkeyspeak.Page
-    Property Player As Furcadia.Net.FURRE
+    ReadOnly Property Player As Furcadia.Net.FURRE
 
 #End Region
 

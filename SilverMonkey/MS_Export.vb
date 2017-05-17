@@ -33,7 +33,7 @@ Public Class MS_Export
 
 #End Region
 
-    Private FurcadiaSession As FurcSession = Main.FurcadiaSession
+    Private FurcadiaSession As BotSession = Main.FurcadiaSession
 
 #Region "Private Methods"
 

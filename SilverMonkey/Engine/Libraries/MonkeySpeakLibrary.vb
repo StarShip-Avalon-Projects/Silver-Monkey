@@ -9,7 +9,7 @@ Namespace Engine.Libraries
 
 #Region "Private Fields"
 
-        Private FuscariaSession As FurcSession
+        Private FuscariaSession As BotSession
 
 #End Region
 
@@ -32,12 +32,12 @@ Namespace Engine.Libraries
 
 #Region "Public Delegates"
 
-        Public Shared FurcadiaSession As FurcSession = Main.FurcadiaSession
+        Public Shared FurcadiaSession As BotSession
 
         Public Delegate Sub MessageDelegate(ByRef message As String)
 
         Public Sub LogError(reader As TriggerReader, ex As Exception)
-            Main.FurcadiaSession.MainEngine.LogError(reader, ex)
+            Main.FurcadiaSession..LogError(reader, ex)
         End Sub
 
         ''' <summary>
@@ -70,13 +70,14 @@ Namespace Engine.Libraries
         ''' Default Constructor
         ''' <para> Loads default Text Writer</para>
         ''' </summary>
-        Sub New(ByRef Session As FurcSession)
+        Sub New(ByRef Session As BotSession)
             MyBase.New()
             FurcadiaSession = Session
             writer = New TextBoxWriter(Variables.TextBox1)
         End Sub
         Sub New()
             MyBase.New()
+            FurcadiaSession = Main.FurcadiaSession
             writer = New TextBoxWriter(Variables.TextBox1)
         End Sub
 #End Region
@@ -104,10 +105,6 @@ Namespace Engine.Libraries
 #End Region
 
 #Region "Common Library Methods"
-        Public Function IsBotControler(ByRef Name As String) As Boolean
-            If String.IsNullOrEmpty(cBot.BotController) Then Return False
-            Return FurcadiaShortName(cBot.BotController) = FurcadiaShortName(Name)
-        End Function
 
         ''' <summary>
         ''' Reads a Double or a MonkeySpeak Variable

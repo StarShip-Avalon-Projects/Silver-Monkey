@@ -50,13 +50,11 @@ Public Class BaseClass
 
     Private _MSpage As Page
     Private msDream As DREAM
-    Public Property Dream As DREAM
+    Public ReadOnly Property Dream As DREAM
         Get
             Return msHost.Dream
         End Get
-        Set(value As DREAM)
-            msHost.Dream = value
-        End Set
+
     End Property
 
     Public Property MsPage As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msPlugin.MsPage
@@ -77,16 +75,13 @@ Public Class BaseClass
             Player = NameToFurre(msHost.BotName, True)
             Player.FloorObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
             MsPage.Execute(2000, 2001)
-            msHost.Player = Player
-            Dream.FurreList(Player) = Player
+
             Return True
             'Set Object In Paws
         ElseIf ServerInstruction.StartsWith("^") Then
             Player = NameToFurre(msHost.BotName, True)
             Player.PawObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
             MsPage.Execute(2000, 2001)
-            msHost.Player = Player
-            Dream.FurreList(Player) = Player
             Return True
         End If
         Return False

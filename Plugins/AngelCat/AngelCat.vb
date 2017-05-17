@@ -50,13 +50,10 @@ Namespace Engine.Libraries
 
         Private _MSpage As Page
         Private msDream As DREAM
-        Public Property Dream As DREAM
+        Public ReadOnly Property Dream As DREAM
             Get
                 Return msHost.Dream
             End Get
-            Set(value As DREAM)
-                msHost.Dream = value
-            End Set
         End Property
 
         ''' <summary>

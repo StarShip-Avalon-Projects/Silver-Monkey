@@ -10,14 +10,14 @@ Namespace Engine.Libraries
 
 #Region "Public Fields"
         <CLSCompliant(False)>
+        Public _state As State
         Public kb As KnowledgeBase = New KnowledgeBase()
         <CLSCompliant(False)>
         Public kbi As KnowledgeBaseItem = New KnowledgeBaseItem()
         <CLSCompliant(False)>
-        Public state As State
-        <CLSCompliant(False)>
         Public verbot As Verbot5Engine
 
+        <CLSCompliant(False)>
 #End Region
 
 #Region "Private Fields"
@@ -31,7 +31,7 @@ Namespace Engine.Libraries
         Public Sub New()
             MyBase.New()
             verbot = New Verbot5Engine()
-            state = New State()
+            _state = New State()
 
             '(0:1500) When the chat engine executes command {...},
             Add(TriggerCategory.Cause, 1500,
@@ -62,7 +62,7 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Effect, 1503,
     AddressOf setStateVariable, "(5:1503) Set Chat Engine State Vairable {...} to {...}.")
 
-            '(5:1504) Get chat engine state variable {...} and put it into variable %Variable.
+            '(5:1504) Get chat engine _state variable {...} and put it into variable %Variable.
             Add(TriggerCategory.Effect, 1504,
     AddressOf getStateVariable, "(5:1504) Get chat engine state variable {...} and put it into variable %Variable.")
 
@@ -79,17 +79,17 @@ Namespace Engine.Libraries
             Try
                 SayText = reader.ReadString
                 ResponceText = reader.ReadVariable(True)
-                If state.Vars.ContainsKey("botname") Then
-                    state.Vars.Item("botname") = FurcadiaSession.BotName
+                If _state.Vars.ContainsKey("botname") Then
+                    _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
                 Else
-                    state.Vars.Add("botname", FurcadiaSession.BotName)
+                    _state.Vars.Add("botname", FurcadiaSession.ConnectedCharacterName)
                 End If
-                If state.Vars.ContainsKey("channel") Then
-                    state.Vars.Item("channel") = FurcadiaSession.Channel
+                If _state.Vars.ContainsKey("channel") Then
+                    _state.Vars.Item("channel") = FurcadiaSession.Channel
                 Else
-                    state.Vars.Add("channel", FurcadiaSession.Channel)
+                    _state.Vars.Add("channel", FurcadiaSession.Channel)
                 End If
-                Dim reply As Reply = verbot.GetReply(FurcadiaSession.Player, SayText, state)
+                Dim reply As Reply = verbot.GetReply(FurcadiaSession.Player, SayText, _state)
 
                 If reply Is Nothing Then Return False
 
@@ -116,17 +116,17 @@ Namespace Engine.Libraries
                 SayText = reader.ReadString
                 SayName = reader.ReadString
                 ResponceText = reader.ReadVariable(True)
-                If state.Vars.ContainsKey("botname") Then
-                    state.Vars.Item("botname") = FurcadiaSession.BotName
+                If _state.Vars.ContainsKey("botname") Then
+                    _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
                 Else
-                    state.Vars.Add("botname", FurcadiaSession.BotName)
+                    _state.Vars.Add("botname", FurcadiaSession.ConnectedCharacterName)
                 End If
-                If state.Vars.ContainsKey("channel") Then
-                    state.Vars.Item("channel") = FurcadiaSession.Channel
+                If _state.Vars.ContainsKey("channel") Then
+                    _state.Vars.Item("channel") = FurcadiaSession.Channel
                 Else
-                    state.Vars.Add("channel", FurcadiaSession.Channel)
+                    _state.Vars.Add("channel", FurcadiaSession.Channel)
                 End If
-                Dim reply As Reply = verbot.GetReply(FurcadiaSession.NameToFurre(SayName, False), SayText, state)
+                Dim reply As Reply = verbot.GetReply(SayText, _state)
 
                 If reply Is Nothing Then Return False
 
@@ -221,13 +221,13 @@ Namespace Engine.Libraries
             End Try
         End Function
 
-        '(5:1504) Get chat engine state variable {...} and put it into variable %Variable.
+        '(5:1504) Get chat engine _state variable {...} and put it into variable %Variable.
         Function getStateVariable(reader As TriggerReader) As Boolean
             Try
                 Dim EngineVar As String = reader.ReadString()
                 Dim MS_Var As Variable = reader.ReadVariable(True)
 
-                MS_Var.Value = state.Vars.Item(EngineVar)
+                MS_Var.Value = _state.Vars.Item(EngineVar)
                 Return True
 
             Catch ex As Exception
@@ -243,10 +243,10 @@ Namespace Engine.Libraries
 
                 Dim EngineVar As String = reader.ReadString()
                 Dim EngineValue As String = reader.ReadString()
-                If state.Vars.ContainsKey(EngineVar) Then
-                    state.Vars.Item(EngineVar) = EngineValue
+                If _state.Vars.ContainsKey(EngineVar) Then
+                    _state.Vars.Item(EngineVar) = EngineValue
                 Else
-                    state.Vars.Add(EngineVar, EngineValue)
+                    _state.Vars.Add(EngineVar, EngineValue)
                 End If
                 Return True
             Catch ex As Exception
@@ -267,8 +267,8 @@ Namespace Engine.Libraries
                 kbi.Filename = Path.GetFileName(FileName)
                 kbi.Fullpath = Path.GetDirectoryName(FileName) + "\"
                 verbot.AddKnowledgeBase(kb, kbi)
-                state.CurrentKBs.Clear()
-                state.CurrentKBs.Add(FileName)
+                _state.CurrentKBs.Clear()
+                _state.CurrentKBs.Add(FileName)
 
                 Return True
 

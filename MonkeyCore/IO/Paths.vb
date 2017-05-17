@@ -146,7 +146,7 @@ Public Class Paths
                 If _Paths Is Nothing Then
                     _Paths = New Furcadia.IO.Paths(_FurcadiaProgramFolder)
                 End If
-                _FurcadiaCharactersFolder = _Paths.GetFurcadiaCharactersPath
+                _FurcadiaCharactersFolder = _Paths.CharacterPath
             End If
             Return _FurcadiaCharactersFolder
         End Get
@@ -173,7 +173,7 @@ Public Class Paths
             If _Paths Is Nothing Then
                 _Paths = New Furcadia.IO.Paths(_FurcadiaProgramFolder)
             End If
-            _FurcadiaDocumentsFolder = _Paths.GetFurcadiaDocPath()
+            _FurcadiaDocumentsFolder = _Paths.PersonalDataPath
             Return _FurcadiaDocumentsFolder
         End Get
         Set(ByVal value As String)
@@ -194,7 +194,7 @@ Public Class Paths
         Get
             If String.IsNullOrEmpty(_FurcadiaProgramFolder) Then
                 Try
-                    _FurcadiaProgramFolder = _Paths.GetInstallPath()
+                    _FurcadiaProgramFolder = _Paths.FurcadiaPath
                 Catch ex As Exception
                     Dim Broswe As New Windows.Forms.OpenFileDialog
                     Broswe.Title = "Locate Furcadia.exe"

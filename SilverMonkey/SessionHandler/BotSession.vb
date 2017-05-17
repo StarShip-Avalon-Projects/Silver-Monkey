@@ -12,12 +12,17 @@ Imports System.Text.RegularExpressions
 Imports Furcadia.Drawing
 Imports Furcadia.Drawing.VisibleArea
 Imports Furcadia.Net
+Imports Furcadia.Net.Proxy
 Imports Furcadia.Util
 Imports MonkeyCore
 Imports MonkeyCore.Controls
+Imports MonkeyCore.Utils
 Imports Monkeyspeak
 Imports SilverMonkey.Engine
 Imports SilverMonkey.Engine.Libraries.PhoenixSpeak
+
+Imports Furcadia.Text.FurcadiaMarkup
+Imports System.Text
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
@@ -27,9 +32,14 @@ Imports SilverMonkey.Engine.Libraries.PhoenixSpeak
 ''' <para>Part3: This Class Links loosley to the GUI </para>
 '''
 ''' </summary>
-Public Class BotSession : Inherits FurcadiaSession
+Public Class BotSession : Inherits ProxySession
     Implements IDisposable
-    'TODO: Move MonkeySpeak Engine to BotSession
+
+#Region "Public Events"
+
+    Public Event DisplayText(ByVal DisplayText As String, ByVal e As EventArgs)
+
+#End Region
 
 #Region "Private Fields"
 
@@ -38,16 +48,15 @@ Public Class BotSession : Inherits FurcadiaSession
 #End Region
 
 #Region "Public Fields"
-    'TODO These Feilds Need to move to BotSession
     ''' <summary>
     ''' Main MonkeySpeak Engine
     ''' </summary>
-    Public WithEvents MainEngine As MainMsEngine
+    Public WithEvents MainEngine As Engine.MainMsEngine
     Public WithEvents MSpage As Page = Nothing
     Public objHost As New smHost(Me)
+    Private MainEngineOptions As BotOptions
 
     Public Delegate Function GetMsPage(ByRef _msPage As Page) As Page
-
 #End Region
 
 #Region "Public Methods"
@@ -55,10 +64,11 @@ Public Class BotSession : Inherits FurcadiaSession
     ''' <summary>
     ''' Starts the Furcadia Connection Process
     ''' </summary>
-    Public Sub ConnectBot()
-        MainEngine = New Engine.MainMsEngine()
-        MSpage = MainEngine.LoadFromScriptFile(testScript)
+    Public Overrides Sub Connect()
 
+        MainEngine = New Engine.MainMsEngine(MainEngineOptions.MonkeySpeakEngineOptions)
+        MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+        MainEngine.Start()
         MyBase.Connect()
 
     End Sub
@@ -67,19 +77,7 @@ Public Class BotSession : Inherits FurcadiaSession
     ''' Disconnect from the Game Server and Client
     ''' </summary>
     Public Overrides Sub Disconnect()
-
-        Try
-            If MainSettings.CloseProc And ProcExit = False Then
-                ClientProcess.Kill()
-                SendToServer("quit")
-                MyBase.Disconnect()
-            End If
-
-        Catch ex As Exception
-            Dim logError As New ErrorLogging(ex, Me)
-        End Try
-        InDream = False
-
+        MyBase.Disconnect()
         ' (0:2) When the bot logs off
         MainEngine.PageExecute(2)
 
@@ -123,28 +121,17 @@ Public Class BotSession : Inherits FurcadiaSession
     Sub New(ByRef Write As RichTextBoxEx)
         MyBase.New()
         Writer = New TextBoxWriter(Write)
+        MainEngineOptions = New BotOptions()
     End Sub
 
     ''' <summary>
     ''' New BotSession with Proxy Settings
     ''' </summary>
     ''' <param name="BotSessionOptions"></param>
-    Sub New(ByRef Write As RichTextBoxEx, ByRef BotSessionOptions As Furcadia.Net.Options.ProxySessionOptions)
+    Sub New(ByRef Write As RichTextBoxEx, ByRef BotSessionOptions As BotOptions)
         MyBase.New(BotSessionOptions)
         Writer = New TextBoxWriter(Write)
-
-        Try
-            'TODO Convert to MainSetting and cBot for Setup.
-            'Process
-            '1 Start new instance of MonkeySprak Engine
-
-            '2 Start New Proxy Connection
-
-        Catch ex As Exception
-            'Debug.WriteLine(ex.Message)
-            Throw ex
-        End Try
-
+        MainEngineOptions = BotSessionOptions
     End Sub
 
 #End Region
@@ -163,49 +150,87 @@ Public Class BotSession : Inherits FurcadiaSession
         'Pass Stuff to Base Clqss before we can handle things here
         MyBase.ParseServerChannel(data, Handled)
 
-        If ser = "success" Then
+        'Strip the trigger Character
+        ' page = engine.LoadFromString(cBot.MS_Script)
+        data = data.Remove(0, 1)
+        Dim psCheck As Boolean = False
+        Dim SpecTag As String = ""
+        Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
+        Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
+        Dim User As String = ""
+        Dim Desc As String = ""
+        Dim Text As String = ""
+        If Not Handled Then
+            Text = Regex.Match(data, EntryFilter).Groups(2).Value
+            User = Regex.Match(data, NameFilter).Groups(3).Value
+            If User <> "" Then Player = Dream.FurreList.GerFurreByName(User)
+            Player.Message = ""
+            Desc = Regex.Match(data, DescFilter).Groups(2).Value
+            Dim mm As New Regex(Iconfilter)
+            Dim ds As System.Text.RegularExpressions.Match = mm.Match(Text)
+            Text = mm.Replace(Text, "[" + ds.Groups(1).Value + "] ")
+            Dim s As New Regex(ChannelNameFilter)
+            Text = s.Replace(Text, "")
+        Else
+            User = Player.Name
+            Text = Player.Message
+        End If
+        DiceSides = 0
+        DiceCount = 0
+        DiceCompnentMatch = ""
+        DiceModifyer = 0
+        DiceResult = 0
+
+        If Channel = "@news" Or Channel = "@spice" Then
+            Try
+                RaiseEvent DisplayText(Text, EventArgs.Empty)
+            Catch eX As Exception
+                Dim logError As New ErrorLogging(eX, Me)
+            End Try
+            If IsClientConnected Then SendToClient("(" + data)
+            Exit Sub
+        ElseIf Color = "success" Then
             Try
                 If Text.Contains(" has been banished from your dreams.") Then
                     'banish <name> (online)
                     'Success: (.*?) has been banished from your dreams.
 
-                    '(0:52) When the bot successfully banishes a furre,
-                    '(0:53) When the bot successfully banishes the furre named {...},
+                    '(0:52) When the bot sucessfilly banishes a furre,
+                    '(0:53) When the bot sucessfilly banishes the furre named {...},
+                    Dim t As New Regex("(.*?) has been banished from your dreams.")
+                    BanishName = t.Match(Text).Groups(1).ToString
                     MainEngine.PageSetVariable("BANISHNAME", BanishName)
+
+                    BanishString.Add(BanishName)
                     MainEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
                     MainEngine.PageExecute(52, 53)
 
-                    ' MainMSEngine.PageExecute(53)
+                    ' MainEngine.PageExecute(53)
                 ElseIf Text = "You have canceled all banishments from your dreams." Then
                     'banish-off-all (active list)
                     'Success: You have canceled all banishments from your dreams.
 
                     '(0:60) When the bot successfully clears the banish list
-                    MainEngine.PageSetVariable("BANISHLIST", Nothing)
-                    MainEngine.PageSetVariable("BANISHNAME", Nothing)
+                    BanishString.Clear()
+                    MainEngine.PageSetVariable("BANISHLIST", "")
+                    MainEngine.PageSetVariable("BANISHNAME", "")
                     MainEngine.PageExecute(60)
 
-                ElseIf Player.Message.EndsWith(" has been temporarily banished from your dreams.") Then
+                ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
                     'tempbanish <name> (online)
                     'Success: (.*?) has been temporarily banished from your dreams.
 
-                    '(0:61) When the bot successfully temp banishes a Furre
-                    '(0:62) When the bot successfully temp banishes the furre named {...}
+                    '(0:61) When the bot sucessfully temp banishes a Furre
+                    '(0:62) When the bot sucessfully temp banishes the furre named {...}
+                    Dim t As New Regex("(.*?) has been temporarily banished from your dreams.")
+                    BanishName = t.Match(Text).Groups(1).Value
                     MainEngine.PageSetVariable("BANISHNAME", BanishName)
-                    '  MainMSEngine.PageExecute(61)
+                    '  MainEngine.PageExecute(61)
+                    BanishString.Add(BanishName)
                     MainEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
                     MainEngine.PageExecute(61, 62)
 
-                ElseIf Text = "Control of this dream is now being shared with you." Then
-                    HasShare = True
-
-                ElseIf Text.EndsWith("is now sharing control of this dream with you.") Then
-                    HasShare = True
-
-                ElseIf Text.EndsWith("has stopped sharing control of this dream with you.") Then
-                    HasShare = False
-
-                ElseIf Player.Message.StartsWith("The endurance limits of player ") Then
+                ElseIf Text.StartsWith("The endurance limits of player ") Then
                     Dim t As New Regex("The endurance limits of player (.*?) are now toggled off.")
                     Dim m As String = t.Match(Text).Groups(1).Value.ToString
                     If FurcadiaShortName(m) = FurcadiaShortName(ConnectedCharacterName) Then
@@ -219,13 +244,16 @@ Public Class BotSession : Inherits FurcadiaSession
                         MainEngine.PageExecute(96)
                     End If
                 End If
-
+                RaiseEvent DisplayText(Text, EventArgs.Empty)
+                If IsClientConnected Then SendToClient("(" + data)
                 Exit Sub
 
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
         ElseIf Channel = "@roll" Then
+            Dim DiceREGEX As New Regex(DiceFilter, RegexOptions.IgnoreCase)
+            Dim DiceMatch As System.Text.RegularExpressions.Match = DiceREGEX.Match(data)
 
             'Matches, in order:
             '1:      shortname()
@@ -237,20 +265,30 @@ Public Class BotSession : Inherits FurcadiaSession
             '7:      additional(Message)
             '8:      Final(result)
 
-            MainEngine.PageSetVariable("MESSAGE", Player.Message)
+            Player = NametoFurre(DiceMatch.Groups(3).Value, True)
+            Player.Message = DiceMatch.Groups(7).Value
+            MainEngine.PageSetVariable("MESSAGE", DiceMatch.Groups(7).Value)
+            Double.TryParse(DiceMatch.Groups(4).Value, DiceSides)
+            Double.TryParse(DiceMatch.Groups(3).Value, DiceCount)
+            DiceCompnentMatch = DiceMatch.Groups(6).Value
+            DiceModifyer = 0.0R
+            Double.TryParse(DiceMatch.Groups(5).Value, DiceModifyer)
+            Double.TryParse(DiceMatch.Groups(8).Value, DiceResult)
 
-            If IsBot(Player) Then
+            If IsConnectedCharacter Then
                 MainEngine.PageExecute(130, 131, 132, 136)
             Else
                 MainEngine.PageExecute(133, 134, 135, 136)
             End If
+
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf Channel = "@dragonspeak" OrElse Channel = "@emit" OrElse Color = "emit" Then
             Try
                 '(<font color='dragonspeak'><img src='fsh://system.fsh:91' alt='@emit' /><channel name='@emit' /> Furcadian Academy</font>
-                '  SendDisplay(Text, fColorEnum.Emit)
+                RaiseEvent DisplayText(Text, EventArgs.Empty)
 
-                MainEngine.PageSetVariable("MESSAGE", Player.Message)
+                MainEngine.PageSetVariable("MESSAGE", Text.Substring(5))
                 ' Execute (0:21) When someone emits something
                 MainEngine.PageExecute(21, 22, 23)
                 ' Execute (0:22) When someone emits {...}
@@ -259,7 +297,7 @@ Public Class BotSession : Inherits FurcadiaSession
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
-
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
             ''BCast (Advertisments, Announcments)
         ElseIf Color = "bcast" Then
@@ -270,33 +308,46 @@ Public Class BotSession : Inherits FurcadiaSession
 
                 Select Case chan
                     Case "@advertisements"
-                        If MainSettings.Advertisment Then Exit Sub
+                        If cMain.Advertisment Then Exit Sub
                         AdRegEx = "\[(.*?)\] (.*?)</font>"
                         Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
-
+                        RaiseEvent DisplayText(Text, EventArgs.Empty)
                     Case "@bcast"
-                        If MainSettings.Broadcast Then Exit Sub
+                        If cMain.Broadcast Then Exit Sub
                         Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
-
+                        RaiseEvent DisplayText(Text, EventArgs.Empty)
                     Case "@announcements"
-                        If MainSettings.Announcement Then Exit Sub
+                        If cMain.Announcement Then Exit Sub
                         Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
-
+                        RaiseEvent DisplayText(Text, EventArgs.Empty)
                     Case Else
+#If DEBUG Then
+                        Console.WriteLine("Unknown ")
+                        Console.WriteLine("BCAST:" & data)
+#End If
                 End Select
 
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
             ''SAY
         ElseIf Color = "myspeech" Then
             Try
-                ' Dim t As New Regex(YouSayFilter)
+                Dim t As New Regex(YouSayFilter)
+                Dim u As String = t.Match(data).Groups(1).ToString
+                Text = t.Match(data).Groups(2).ToString
+                If SpeciesTag.Count() > 0 Then
+                    Player.Color = SpeciesTag.Dequeue()
+                    If Dream.FurreList.Contains(Player.ID) Then Dream.FurreList.Item(Player) = Player
+                End If
 
-                MainEngine.PageSetVariable("MESSAGE", Player.Message)
+                RaiseEvent DisplayText(Text, EventArgs.Empty)
+                Player.Message = Text
+                MainEngine.PageSetVariable("MESSAGE", Text)
                 ' Execute (0:5) When some one says something
-                'MainMSEngine.PageExecute(5, 6, 7, 18, 19, 20)
+                'MainEngine.PageExecute(5, 6, 7, 18, 19, 20)
                 '' Execute (0:6) When some one says {...}
                 '' Execute (0:7) When some one says something with {...} in it
                 '' Execute (0:18) When someone says or emotes something
@@ -305,7 +356,7 @@ Public Class BotSession : Inherits FurcadiaSession
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
-
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf User <> "" And Channel = "" And Color = "" And Regex.Match(data, NameFilter).Groups(2).Value <> "forced" Then
             Dim tt As System.Text.RegularExpressions.Match = Regex.Match(data, "\(you see(.*?)\)", RegexOptions.IgnoreCase)
@@ -313,9 +364,19 @@ Public Class BotSession : Inherits FurcadiaSession
             If Not tt.Success Then
 
                 Try
+                    Text = t.Replace(data, "")
+                    Text = Text.Remove(0, 2)
 
+                    If SpeciesTag.Count() > 0 Then
+                        SpecTag = SpeciesTag.Peek
+                        SpeciesTag.Clear()
+                        Player.Color = SpecTag
+                        If Dream.FurreList.ContainsKey(Player.ID) Then Dream.FurreList.Item(Player.ID) = Player
+                    End If
+                    Channel = "say"
+                    RaiseEvent DisplayText(User & " says, """ & Text & """", EventArgs.Empty)
                     MainEngine.PageSetVariable(MS_Name, User)
-                    MainEngine.PageSetVariable("MESSAGE", Player.Message)
+                    MainEngine.PageSetVariable("MESSAGE", Text)
                     Player.Message = Text
                     ' Execute (0:5) When some one says something
                     MainEngine.PageExecute(5, 6, 7, 18, 19, 20)
@@ -329,6 +390,8 @@ Public Class BotSession : Inherits FurcadiaSession
                     Dim logError As New ErrorLogging(eX, Me)
 
                 End Try
+
+                If IsClientConnected Then SendToClient("(" + data)
                 Exit Sub
             Else
                 Try
@@ -341,22 +404,60 @@ Public Class BotSession : Inherits FurcadiaSession
 
         ElseIf Desc <> "" Then
             Try
+                Dim DescName As String = Regex.Match(data, DescFilter).Groups(1).ToString()
 
-                MainEngine.PageSetVariable(MS_Name, Player.Name)
+                Player = NametoFurre(DescName, True)
+                If LookQue.Count > 0 Then
+                    Dim colorcode As String = LookQue.Peek
+                    If colorcode.StartsWith("t") Then
+                        colorcode = colorcode.Substring(0, 14)
+                    ElseIf colorcode.StartsWith("u") Then
+
+                    ElseIf colorcode.StartsWith("v") Then
+                        'RGB Values
+                    End If
+                    Player.Color = LookQue.Dequeue()
+
+                End If
+                If BadgeTag.Count() > 0 Then
+                    SpecTag = BadgeTag.Peek
+                    BadgeTag.Clear()
+                    Player.Badge = SpecTag
+                ElseIf Player.Badge <> "" Then
+                    Player.Badge = ""
+                End If
+                Player.Desc = Desc.Substring(6)
+                If Dream.FurreList.Contains(Player) Then Dream.FurreList.Item(Player.ID) = Player
+                MainEngine.PageSetVariable(MS_Name, DescName)
                 MainEngine.PageExecute(600)
                 'sndDisplay)
+                If Player.Tag = "" Then
+                    RaiseEvent DisplayText("You See '" & Player.Name & "'\par" & Desc, EventArgs.Empty)
 
+                Else
+                    RaiseEvent DisplayText("You See '" & Player.Name & "'\par" & Player.Tag & " " & Desc, EventArgs.Empty)
+                End If
                 Look = False
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf Color = "shout" Then
             ''SHOUT
             Try
+                Dim t As New Regex(YouSayFilter)
+                Dim u As String = t.Match(data).Groups(1).ToString
+                Text = t.Match(data).Groups(2).ToString
+                If User = "" Then
+                    RaiseEvent DisplayText("You " & u & ", """ & Text & """", EventArgs.Empty)
 
-                If Not IsBot(Player) Then
-                    MainEngine.PageSetVariable("MESSAGE", Player.Message)
+                Else
+                    Text = Regex.Match(data, "shouts: (.*)</font>").Groups(1).ToString()
+                    RaiseEvent DisplayText(User & " shouts, """ & Text & """", EventArgs.Empty)
+                End If
+                If Not IsConnectedCharacter Then
+                    MainEngine.PageSetVariable("MESSAGE", Text)
                     Player.Message = Text
                     ' Execute (0:8) When some one shouts something
                     MainEngine.PageExecute(8, 9, 10)
@@ -367,16 +468,17 @@ Public Class BotSession : Inherits FurcadiaSession
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
-
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf Color = "query" Then
             Dim QCMD As String = Regex.Match(data, "<a.*?href='command://(.*?)'>").Groups(1).ToString
-            'Player = NameToFurre(User, True)
+            'Player = NametoFurre(User, True)
             Select Case QCMD
                 Case "summon"
                     ''JOIN
                     Try
-                        'If Not IsBot(Player) Then
+                        RaiseEvent DisplayText(User & " requests to join you.", EventArgs.Empty)
+                        'If Not IsConnectedCharacter Then
                         MainEngine.PageExecute(34, 35)
                         'End If
                     Catch eX As Exception
@@ -385,7 +487,8 @@ Public Class BotSession : Inherits FurcadiaSession
                 Case "join"
                     ''SUMMON
                     Try
-                        'If Not IsBot(Player) Then
+                        RaiseEvent DisplayText(User & " requests to summon you.", EventArgs.Empty)
+                        'If Not IsConnectedCharacter Then
                         MainEngine.PageExecute(32, 33)
                         'End If
                     Catch eX As Exception
@@ -394,7 +497,8 @@ Public Class BotSession : Inherits FurcadiaSession
                 Case "follow"
                     ''LEAD
                     Try
-                        'If Not IsBot(Player) Then
+                        RaiseEvent DisplayText(User & " requests to lead.", EventArgs.Empty)
+                        'If Not IsConnectedCharacter Then
                         MainEngine.PageExecute(36, 37)
                         'End If
                     Catch eX As Exception
@@ -403,7 +507,8 @@ Public Class BotSession : Inherits FurcadiaSession
                 Case "lead"
                     ''FOLLOW
                     Try
-                        'If Not IsBot(Player) Then
+                        RaiseEvent DisplayText(User & " requests the bot to follow.", EventArgs.Empty)
+                        'If Not IsConnectedCharacter Then
                         MainEngine.PageExecute(38, 39)
                         'End If
                     Catch eX As Exception
@@ -411,15 +516,20 @@ Public Class BotSession : Inherits FurcadiaSession
                     End Try
                 Case "cuddle"
                     Try
-                        'If Not IsBot(Player) Then
+                        RaiseEvent DisplayText(User & " requests the bot to cuddle.", EventArgs.Empty)
+                        'If Not IsConnectedCharacter Then
                         MainEngine.PageExecute(40, 41)
                         'End If
                     Catch eX As Exception
                         Dim logError As New ErrorLogging(eX, Me)
                     End Try
                 Case Else
+                    RaiseEvent DisplayText("## Unknown " & Channel & "## " & data, EventArgs.Empty)
             End Select
 
+            'NameFilter
+
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf Color = "whisper" Then
             ''WHISPER
@@ -428,8 +538,21 @@ Public Class BotSession : Inherits FurcadiaSession
                 Dim WhisperTo As String = Regex.Match(data, "You whisper ""(.*?)"" to").Groups(1).Value
                 Dim WhisperDir As String = Regex.Match(data, String.Format("<name shortname='(.*?)' src='whisper-(.*?)'>")).Groups(2).Value
                 If WhisperDir = "from" Then
+                    'Player = NametoFurre(User, True)
+                    Player.Message = WhisperFrom
+                    If BadgeTag.Count() > 0 Then
+                        SpecTag = BadgeTag.Peek
+                        BadgeTag.Clear()
+                        Player.Badge = SpecTag
+                    Else
+                        Player.Badge = ""
+                    End If
 
-                    If Not IsBot(Player) Then
+                    If Dream.FurreList.Contains(Player) Then Dream.FurreList.Item(Player.ID) = Player
+
+                    RaiseEvent DisplayText(User & " whispers""" & WhisperFrom & """ to you.", EventArgs.Empty)
+
+                    If Not IsConnectedCharacter Then
                         MainEngine.PageSetVariable("MESSAGE", Player.Message)
                         ' Execute (0:15) When some one whispers something
                         MainEngine.PageExecute(15, 16, 17)
@@ -437,30 +560,52 @@ Public Class BotSession : Inherits FurcadiaSession
                         ' Execute (0:17) When some one whispers something with {...} in it
                     End If
 
+                Else
+                    WhisperTo = WhisperTo.Replace("<wnd>", "")
+                    RaiseEvent DisplayText("You whisper""" & WhisperTo & """ to " & User & ".", EventArgs.Empty)
+
                 End If
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf Color = "warning" Then
 
-            ErrorMsg = Text
-            ErrorNum = 1
             MainEngine.PageExecute(801)
+            RaiseEvent DisplayText("::WARNING:: " & Text, EventArgs.Empty)
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf Color = "trade" Then
-
-            MainEngine.PageSetVariable("MESSAGE", Player.Message)
-
+            Dim TextStr As String = Regex.Match(data, "\s<name (.*?)</name>").Groups(0).ToString()
+            Text = Text.Substring(6)
+            If User <> "" Then Text = " " & User & Text.Replace(TextStr, "")
+            RaiseEvent DisplayText(Text, EventArgs.Empty)
+            MainEngine.PageSetVariable("MESSAGE", Text)
+            Player.Message = Text
             MainEngine.PageExecute(46, 47, 48)
-
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf Color = "emote" Then
             Try
+                ' ''EMOTE
+                If SpeciesTag.Count() > 0 Then
 
-                MainEngine.PageSetVariable("MESSAGE", Player.Message)
+                    Player.Color = SpeciesTag.Dequeue()
+                End If
+                Dim usr As Regex = New Regex(NameFilter)
+                Dim n As System.Text.RegularExpressions.Match = usr.Match(Text)
+                Text = usr.Replace(Text, "")
 
-                If Not IsBot(Player) Then
+                Player = NametoFurre(n.Groups(3).Value, True)
+                MainEngine.PageSetVariable("MESSAGE", Text)
+                Player.Message = Text
+                If Dream.FurreList.ContainsKey(Player.ID) Then Dream.FurreList.Item(Player.ID) = Player
+
+                RaiseEvent DisplayText(User & " " & Text, EventArgs.Empty)
+
+                Dim test As Boolean = IsConnectedCharacter
+                If IsConnectedCharacter = False Then
 
                     ' Execute (0:11) When someone emotes something
                     MainEngine.PageExecute(11, 12, 13, 18, 19, 20)
@@ -473,17 +618,33 @@ Public Class BotSession : Inherits FurcadiaSession
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf Color = "channel" Then
             'ChannelNameFilter2
+            Dim chan As Regex = New Regex(ChannelNameFilter)
+            Dim ChanMatch As System.Text.RegularExpressions.Match = chan.Match(data)
+            Dim r As New Regex("<img src='(.*?)' alt='(.*?)' />")
+            Dim ss As RegularExpressions.Match = r.Match(Text)
+            If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
+            r = New Regex(NameFilter + ":")
+            ss = r.Match(Text)
+            If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
 
+            RaiseEvent DisplayText("[" + ChanMatch.Groups(1).Value + "] " + User & ": " & Text, EventArgs.Empty)
+
+            If IsClientConnected Then SendToClient("(" + data)
         ElseIf Color = "notify" Then
             Dim NameStr As String = ""
             If Text.StartsWith("Players banished from your dreams: ") Then
                 'Banish-List
                 '[notify> Players banished from your dreams:
                 '`(0:54) When the bot sees the banish list
-
+                BanishString.Clear()
+                Dim tmp() As String = Text.Substring(35).Split(","c)
+                For Each t As String In tmp
+                    BanishString.Add(t)
+                Next
                 MainEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
                 MainEngine.PageExecute(54)
 
@@ -498,7 +659,7 @@ Public Class BotSession : Inherits FurcadiaSession
                 MainEngine.PageSetVariable("BANISHNAME", NameStr)
                 MainEngine.PageExecute(56, 56)
                 For I As Integer = 0 To BanishString.Count - 1
-                    If FurcadiaShortName(BanishString.Item(I).ToString) = FurcadiaShortName(NameStr) Then
+                    If FurcadiaShortName(BanishString.Item(I)) = FurcadiaShortName(NameStr) Then
                         BanishString.RemoveAt(I)
                         Exit For
                     End If
@@ -506,14 +667,15 @@ Public Class BotSession : Inherits FurcadiaSession
                 MainEngine.PageSetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray))
             End If
 
+            RaiseEvent DisplayText("[notify> " & Text, EventArgs.Empty)
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
-        ElseIf Color = "error" Then
 
             ErrorMsg = Text
             ErrorNum = 2
 
             MainEngine.PageExecute(800)
-            Dim NameStr As String = ""
+            NameStr = ""
             If Text.Contains("There are no furres around right now with a name starting with ") Then
                 'Banish <name> (Not online)
                 'Error:>>  There are no furres around right now with a name starting with (.*?) .
@@ -542,14 +704,18 @@ Public Class BotSession : Inherits FurcadiaSession
                 '(0:59) When the bot fails to see the banish list,
                 BanishString.Clear()
                 MainEngine.PageExecute(59)
-                MainEngine.PageSetVariable("BANISHLIST", Nothing)
+                MainEngine.PageSetVariable("BANISHLIST", "")
             ElseIf Text = "You do not have any cookies to give away right now!" Then
                 MainEngine.PageExecute(95)
             End If
 
+            RaiseEvent DisplayText("Error:>> " & Text, EventArgs.Empty)
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf data.StartsWith("Communication") Then
-
+            RaiseEvent DisplayText("Error: Communication Error.  Aborting connection.", EventArgs.Empty)
+            ProcExit = False
+            Disconnect()
             'LogSaveTmr.Enabled = False
 
         ElseIf Channel = "@cookie" Then
@@ -565,8 +731,9 @@ Public Class BotSession : Inherits FurcadiaSession
             End If
             Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
             If CookieToAnyone.Match(data).Success Then
-                'MainMSEngine.PageSetVariable( MS_Name, CookieToAnyone.Match(data).Groups(3).Value)
-                If IsBot(NameToFurre(CookieToAnyone.Match(data).Groups(3).Value)) Then
+                MainEngine.PageSetVariable(MS_Name, CookieToAnyone.Match(data).Groups(3).Value)
+
+                If IsBot(NametoFurre(CookieToAnyone.Match(data).Groups(3).Value, True)) Then
                     MainEngine.PageExecute(42, 43)
                 Else
                     MainEngine.PageExecute(44)
@@ -579,45 +746,32 @@ Public Class BotSession : Inherits FurcadiaSession
             End If
             Dim EatCookie As Regex = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
             If EatCookie.Match(data).Success Then
-                MainEngine.PageSetVariable("MESSAGE", Player.Message)
-
+                MainEngine.PageSetVariable("MESSAGE", "You eat a cookie." + EatCookie.Replace(data, ""))
+                Player.Message = "You eat a cookie." + EatCookie.Replace(data, "")
                 MainEngine.PageExecute(49)
 
             End If
-            'Dim args As New ServerReceiveEventArgs
-            'args.Channel = Channel
-            'args.Text = data
-            'args.Handled = True
-            'RaiseEvent ServerChannelProcessed(data, args)
+            RaiseEvent DisplayText(Text, EventArgs.Empty)
 
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         ElseIf data.StartsWith("PS") Then
-            Color = "PhoenixSpeak"
-            ' ParseServerData(data, Handled)
 
-            If MainSettings.PSShowMainWindow Then
-                'Dim args As New Furcadia.Net.Utils.NetServerArgs
-                'args.ConnectionPhase.
-                'args.Channel = "PhoenixSpeak"
-                'args.Text = data
-                'args.Handled = True
-                'RaiseEvent ServerChannelProcessed(data, args)
-            End If
-            If MainSettings.PSShowClient Then
-
-            End If
-            Exit Sub
         ElseIf data.StartsWith("(You enter the dream of") Then
-            MainEngine.PageSetVariable("DREAMNAME", Nothing)
+            MainEngine.PageSetVariable("DREAMNAME", "")
             MainEngine.PageSetVariable("DREAMOWNER", data.Substring(24, data.Length - 2 - 24))
             MainEngine.PageExecute(90, 91)
+            RaiseEvent DisplayText(data, EventArgs.Empty)
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
 
         Else
+            RaiseEvent DisplayText(data, EventArgs.Empty)
 
+            If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
         End If
-        '  SendClient("(" + data )
+        ' If IsClientConnected Then SendToClient("(" + data )
         ' Exit Sub
 
     End Sub
@@ -685,9 +839,9 @@ Public Class BotSession : Inherits FurcadiaSession
 
             Try
 
-                ' Add New Arrivals to Dream List
+                ' Add New Arrivals to Dream.FurreList
                 ' One or the other will trigger it
-                IsBot(Player)
+                IsConnectedCharacter
                 MainEngine.PageSetVariable(MS_Name, Player.ShortName)
 
                 If Player.Flag = 4 Or Not Dream.FurreList.Contains(Player) Then
@@ -746,7 +900,7 @@ Public Class BotSession : Inherits FurcadiaSession
                 Else
                     Player.Visible = False
                 End If
-                IsBot(Player)
+
                 MainEngine.PageSetVariable(MS_Name, Player.ShortName)
                 MainEngine.PageExecute(28, 29, 30, 31, 601, 602)
             Catch eX As Exception
@@ -857,7 +1011,7 @@ Public Class BotSession : Inherits FurcadiaSession
     ''' </summary>
     ''' <param name="msg">Channel Subsystem?</param>
     ''' <param name="data">Message to send</param>
-    Public Sub SendClientFormattedText(msg As String, data As String)
+    Public Sub SendToClientFormattedText(msg As String, data As String)
         SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
         Writer.WriteLine("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
 

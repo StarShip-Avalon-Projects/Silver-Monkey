@@ -1,4 +1,5 @@
 ﻿Imports Furcadia.Net
+Imports Furcadia.Net.Proxy
 Imports MonkeyCore
 Imports SilverMonkey
 
@@ -7,7 +8,7 @@ Public Class smHost
 
 #Region "Private Fields"
 
-    Private FurcadiaSession As FurcSession
+    Private FurcadiaSession As BotSession
 
 #End Region
 
@@ -15,7 +16,7 @@ Public Class smHost
 
     Public ReadOnly Property BotName As String Implements SilverMonkey.Interfaces.msHost.BotName
         Get
-            Return FurcadiaSession.BotName
+            Return FurcadiaSession.ConnectedCharacterName
         End Get
     End Property
 
@@ -29,35 +30,31 @@ Public Class smHost
         End Set
     End Property
 
-    Public Property Dream As DREAM Implements Interfaces.msHost.Dream
+    Public ReadOnly Property Dream As DREAM Implements Interfaces.msHost.Dream
         Get
             Return FurcadiaSession.Dream
         End Get
-        Set(value As DREAM)
-            FurcadiaSession.Dream = value
-        End Set
+
     End Property
 
     Public WriteOnly Property MsPage() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.MsPage
         Set(value As Monkeyspeak.Page)
-            FurcadiaSession.MainEngine.MSpage = value
+            FurcadiaSession.MSpage = value
         End Set
     End Property
 
-    Public Property Player() As FURRE Implements SilverMonkey.Interfaces.msHost.Player
+    Public ReadOnly Property Player() As FURRE Implements Interfaces.msHost.Player
         Get
             Return FurcadiaSession.Player
         End Get
-        Set(value As FURRE)
-            FurcadiaSession.Player = value
-        End Set
+
     End Property
 
 #End Region
 
 #Region "Public Methods"
 
-    Public Sub New(Session As FurcSession)
+    Public Sub New(Session As BotSession)
         FurcadiaSession = Session
     End Sub
 
@@ -74,7 +71,7 @@ Public Class smHost
     End Sub
 
     Sub Start(ByRef page As Monkeyspeak.Page) Implements SilverMonkey.Interfaces.msHost.start
-        FurcadiaSession.MainEngine.MSpage = page
+        FurcadiaSession.MSpage = page
     End Sub
 #End Region
 

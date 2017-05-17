@@ -1,6 +1,9 @@
 ﻿Imports Monkeyspeak
+Imports System.Windows.Forms
+
 
 Public Class SetVariables
+    Inherits Form
 
 #Region "Public Fields"
 

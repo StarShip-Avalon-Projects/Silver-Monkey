@@ -8,7 +8,7 @@
     <AssemblyName>SoundModule.Plugin</AssemblyName>
     <OutputType>Library</OutputType>
     <RootNamespace>SilverMonkey.SoundModule</RootNamespace>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">

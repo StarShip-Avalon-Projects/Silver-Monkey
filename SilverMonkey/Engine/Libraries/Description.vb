@@ -219,14 +219,14 @@ Namespace Engine.Libraries
 
                 Dim Var As Variable = reader.ReadVariable(True)
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
-                Dim ColorString As String = Target.Color
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+                Dim ColorString As String = Target.Color.ToString
                 If Target.Color.Length < 10 Then
                     Throw New Exception("Color string not found. Try looking at the furre first.")
                 ElseIf Target.Color.Length = 10 Then
                     ColorString = Target.Color & ConvertToBase220(Target.Gender) & ConvertToBase220(Target.Species) & ConvertToBase220(Target.Special)
                 Else
-                    ColorString = Target.Color
+                    ColorString = Target.Color.ToString
                 End If
                 Var.Value = ColorString
                 Return True
@@ -241,8 +241,8 @@ Namespace Engine.Libraries
             Try
                 Dim Var As Variable = reader.ReadVariable(True)
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
-                If Target.Desc = Nothing Then Throw New Exception("Description not found, Try looking at the furre first.")
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+                If Target.Desc = Nothing Then Throw New MonkeyspeakException("Description not found, Try looking at the furre first.")
                 Var.Value = Target.Desc
                 Return True
             Catch ex As Exception
@@ -255,7 +255,7 @@ Namespace Engine.Libraries
         Function FurreNamedFacingNE(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
                 Select Case Target.FrameInfo.dir
                     Case 3
@@ -272,7 +272,7 @@ Namespace Engine.Libraries
         Function FurreNamedFacingNW(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
                 Select Case Target.FrameInfo.dir
                     Case 2
@@ -289,7 +289,7 @@ Namespace Engine.Libraries
         Function FurreNamedFacingSE(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
                 Select Case Target.FrameInfo.dir
                     Case 1
@@ -306,7 +306,7 @@ Namespace Engine.Libraries
         Function FurreNamedFacingSW(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
                 Select Case Target.FrameInfo.dir
                     Case 0
@@ -323,7 +323,7 @@ Namespace Engine.Libraries
         Function FurreNamedFemale(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Select Case Target.LastStat
                     Case -1
                         Throw New Exception("Gender not found. Try looking at the furre first")

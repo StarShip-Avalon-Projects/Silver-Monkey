@@ -6,11 +6,7 @@ Namespace Engine.Libraries
         ' Ctrl+T and Editor.ini Dream Name+location
         'http://www.furcadia.com/download/dream.html
 
-#Region "Private Fields"
 
-        Private writer As TextBoxWriter = Nothing
-
-#End Region
 
 #Region "Public Constructors"
 

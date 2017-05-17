@@ -13,7 +13,7 @@
     <RootNamespace>Documentation</RootNamespace>
     <Name>Documentation</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Framework 4.6</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
     <OutputPath>..\..\..\..\Bitnami\wampstack-5.6.29-1\apps\silvermonkey\htdocs\help\silvermonkey\</OutputPath>
     <HtmlHelpName>Silver Monkey</HtmlHelpName>
     <Language>en-US</Language>

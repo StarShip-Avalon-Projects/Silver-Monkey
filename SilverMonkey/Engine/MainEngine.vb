@@ -8,6 +8,7 @@ Imports System.Diagnostics
 Imports Microsoft.Win32.SafeHandles
 Imports System.Runtime.InteropServices
 Imports SilverMonkey.Engine.Libraries
+Imports System.Text
 
 Namespace Engine
     ''' <summary>
@@ -23,10 +24,19 @@ Namespace Engine
 #Region "Private Fields"
 
         ''' <summary>
+        '''
+        ''' </summary>
+        Private WithEvents MonkeySpeakPage As Page
+
+        ''' <summary>
         ''' Library Objects to load into the Engine
         ''' </summary>
         Private LibList As List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
 
+        ''' <summary>
+        ''' Custome Options for this Engine
+        ''' </summary>
+        Private SilverMonkeyEngineOptions As EngineOptoons
 #End Region
 
 #Region "Const"
@@ -36,7 +46,6 @@ Namespace Engine
 
 #Region "MonkeySpeakEngine"
 
-        Private WithEvents MsPage As Page
         Public Shared MS_Stared As Integer = 0
 
         Public EngineRestart As Boolean = False
@@ -56,7 +65,9 @@ Namespace Engine
         ''' This Loads our MonkeyBeak Libraries
         ''' </para>
         ''' </summary>
-        Public Sub New()
+        Public Sub New(ByRef Options As EngineOptoons)
+            MyBase.New(Options)
+            SilverMonkeyEngineOptions = Options
 
             'EngineStart(True)
             LibList = New List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
@@ -101,11 +112,15 @@ Namespace Engine
         ''' </summary>
         ''' <param name="LoadPlugins"></param>
         Public Sub EngineStart(ByRef LoadPlugins As Boolean)
-            MsPage = New Page(Me)
-            MsPage = LoadFromString("")
+            MonkeySpeakPage = New Page(Me)
+            MonkeySpeakPage = LoadFromString("")
             LoadLibrary(LoadPlugins)
 
         End Sub
+
+        Public Shadows Function IsBotController(ByVal Name As String) As Boolean
+            Return Furcadia.Util.FurcadiaShortName(Name) = Furcadia.Util.FurcadiaShortName(SilverMonkeyEngineOptions.BotController)
+        End Function
 
         ''' <summary>
         ''' Wrapper Functions to read a Monkey Speak Script File and Pass the result to <see cref="LoadFromString"/>
@@ -113,19 +128,23 @@ Namespace Engine
         ''' <param name="file">MonkeySpeak filename</param>
         ''' <returns></returns>
         Public Function LoadFromScriptFile(ByVal file As String) As Page
-            Dim Data As String = String.Empty
+            Dim MonkeySpeakScript As New StringBuilder()
             Try
+
                 If Not System.IO.File.Exists(file) Then
                     Throw New FileNotFoundException("MonkeySpeak script file not found.")
                 End If
-                Dim line As String = ""
-                Using objReader As New StreamReader(file)
-                    ' line = objReader.ReadLine() & Environment.NewLine
-                    While objReader.Peek <> -1
-                        line = objReader.ReadLine()
-                        'Should ad MonkeySpeak Script Version check here
+
+                Using MonkeySpeakScriptReader As New StreamReader(file)
+                    Dim line As String = ""
+
+                    While MonkeySpeakScriptReader.Peek <> -1
+                        line = MonkeySpeakScriptReader.ReadLine()
                         If Not line.StartsWith(RES_MS_begin) Then
-                            Data += line + Environment.NewLine
+                            MonkeySpeakScript.AppendLine(line)
+                        ElseIf line.StartsWith(RES_MS_begin) Then
+                            'MonkeySpeak Script Version Check
+
                         End If
 
                         If line = RES_MS_end Then
@@ -133,13 +152,13 @@ Namespace Engine
                         End If
 
                     End While
-                    objReader.Close()
+                    MonkeySpeakScriptReader.Close()
                 End Using
 
             Catch eX As Exception
                 Dim LogError As New ErrorLogging(eX, Me)
             End Try
-            Return LoadFromString(Data)
+            Return LoadFromString(MonkeySpeakScript.ToString())
         End Function
 
         ''' <summary>
@@ -151,20 +170,20 @@ Namespace Engine
             If MS_Started() Then Exit Sub
             MS_Stared += 1
 
-            MsPage.Reset()
-            MsPage.SetTriggerHandler(TriggerCategory.Cause, 0,
+            MonkeySpeakPage.Reset()
+            MonkeySpeakPage.SetTriggerHandler(TriggerCategory.Cause, 0,
              Function()
                  Return True
              End Function, "(0:0) When the bot starts,")
             Try
-                MsPage.LoadSysLibrary()
+                MonkeySpeakPage.LoadSysLibrary()
 #If CONFIG = "Release" Then
             '(5:105) raise an error.
-            MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
+            MonkeySpeakPage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
             '(5:110) load library from file {...}.
-            MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
+            MonkeySpeakPage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
 #ElseIf CONFIG = "Debug" Then
-                MsPage.SetTriggerHandler(TriggerCategory.Effect, 105,
+                MonkeySpeakPage.SetTriggerHandler(TriggerCategory.Effect, 105,
              Function()
                  Return False
              End Function, "(5:105) raise an error.")
@@ -173,16 +192,16 @@ Namespace Engine
                 Dim e As New ErrorLogging(ex, Me)
             End Try
             Try
-                MsPage.LoadTimerLibrary()
-                MsPage.LoadStringLibrary()
-                MsPage.LoadMathLibrary()
+                MonkeySpeakPage.LoadTimerLibrary()
+                MonkeySpeakPage.LoadStringLibrary()
+                MonkeySpeakPage.LoadMathLibrary()
             Catch ex As Exception
                 Dim e As New ErrorLogging(ex, Me)
             End Try
 
             For Each Library As Monkeyspeak.Libraries.AbstractBaseLibrary In LibList
                 Try
-                    MsPage.LoadLibrary(Library)
+                    MonkeySpeakPage.LoadLibrary(Library)
                     Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
                 Catch ex As Exception
                     Dim e As New ErrorLogging(ex, Library)
@@ -208,7 +227,7 @@ Namespace Engine
             '            If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True Then
             '                Console.WriteLine("Loading Plugin: " + objPlugin.Name)
             '                objPlugin.Initialize(objHost)
-            '                objPlugin.MsPage = MsPage
+            '                objPlugin.MonkeySpeakPage = MonkeySpeakPage
             '                objPlugin.Start()
             '            End If
             '        Catch ex As Exception
@@ -233,7 +252,7 @@ Namespace Engine
         '    End If
         '    Writer.WriteLine(ErrorString)
         'End Sub
-        'Public Sub LogError(trigger As Trigger, ex As Exception) Handles MsPage.Error
+        'Public Sub LogError(trigger As Trigger, ex As Exception) Handles MonkeySpeakPage.Error
 
         '    Console.WriteLine(MS_ErrWarning)
         '    Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
@@ -250,11 +269,8 @@ Namespace Engine
         ''' </summary>
         ''' <param name="ID"></param>
         Public Sub PageExecute(ParamArray ID() As Integer)
-            If Not IsNothing(cBot) Then
-                If cBot.MS_Engine_Enable AndAlso MS_Started() Then
-                    MsPage.Execute(ID)
-
-                End If
+            If SilverMonkeyEngineOptions.EngineEnable AndAlso MS_Started() Then
+                MonkeySpeakPage.Execute(ID)
             End If
 
         End Sub
@@ -264,16 +280,16 @@ Namespace Engine
         ''' <param name="varName"></param>
         ''' <param name="data"></param>
         Public Sub PageSetVariable(ByVal varName As String, ByVal data As Object)
-            If cBot.MS_Engine_Enable AndAlso MS_Started() Then
+            If SilverMonkeyEngineOptions.EngineEnable AndAlso MS_Started() Then
                 If data Is Nothing Then data = String.Empty
                 Debug.Print("Settingg Variable: " + varName + ":" + data.ToString)
-                MsPage.SetVariable(varName.ToUpper, data, True) '
+                MonkeySpeakPage.SetVariable(varName.ToUpper, data, True) '
 
             End If
         End Sub
 
         Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
-            If cBot.MS_Engine_Enable Then
+            If SilverMonkeyEngineOptions.EngineEnable Then
 
                 For Each kv As KeyValuePair(Of String, Object) In VariableList
                     PageSetVariable(kv.Key.ToUpper, kv.Value, True)
@@ -283,26 +299,25 @@ Namespace Engine
         End Sub
 
         Public Sub PageSetVariable(ByVal varName As String, ByVal data As Object, ByVal Constant As Boolean)
-            If Not IsNothing(cBot) Then
-                If cBot.MS_Engine_Enable AndAlso MS_Started() Then
-                    Debug.Print("Settingg Variable: " + varName + ":" + data.ToString)
-                    MsPage.SetVariable(varName.ToUpper, data, Constant) '
-                End If
+
+            If SilverMonkeyEngineOptions.EngineEnable AndAlso MS_Started() Then
+                Debug.Print("Settingg Variable: " + varName + ":" + data.ToString)
+                MonkeySpeakPage.SetVariable(varName.ToUpper, data, Constant) '
             End If
 
         End Sub
-
         'Bot Starts
         Public Sub Start()
             Try
+                Dim TimeStart As DateTime = DateTime.Now
                 Dim VariableList As New Dictionary(Of String, Object)
 
-                Console.WriteLine("Loading:" & cBot.MS_File)
+                Console.WriteLine("Loading:" & SilverMonkeyEngineOptions.MonkeySpeakScriptFile)
 
-                If String.IsNullOrEmpty(cBot.MS_Script) Then
+                If String.IsNullOrEmpty(SilverMonkeyEngineOptions.MonkeySpeakScriptFile) Then
                     Console.WriteLine("ERROR: No script loaded! Loading Default ")
                     MS_Engine_Running = False
-                    msReader(MonkeyCore.IO.NewMSFile)
+                    LoadFromString(MonkeyCore.IO.NewMSFile)
                     VariableList.Add("MSPATH", "!!! Not Specified !!!")
                 Else
                     VariableList.Add("MSPATH", Paths.SilverMonkeyBotPath)
@@ -311,10 +326,9 @@ Namespace Engine
 
                 Catch ex As MonkeyspeakException
                     Console.WriteLine(ex.Message)
-                    Return False
                 Catch ex As Exception
                     Console.WriteLine("There's an error loading the bot script")
-                    Return False
+
                 End Try
                 ' Console.WriteLine("Execute (0:0)")
                 MS_Stared = 1
@@ -323,7 +337,7 @@ Namespace Engine
                 VariableList.Add("DREAMOWNER", "")
                 VariableList.Add("DREAMNAME", "")
                 VariableList.Add("BOTNAME", "")
-                VariableList.Add("BOTCONTROLLER", cBot.BotController)
+                VariableList.Add("BOTCONTROLLER", SilverMonkeyEngineOptions.BotController)
                 VariableList.Add(MS_Name, "")
                 VariableList.Add("MESSAGE", "")
                 VariableList.Add("BANISHNAME", "")
@@ -331,7 +345,7 @@ Namespace Engine
                 PageSetVariable(VariableList)
                 '(0:0) When the bot starts,
                 PageExecute(0)
-                Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.", MsPage.Size, Date.Now.Subtract(Start)))
+                Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.", MonkeySpeakPage.Size, Date.Now.Subtract(TimeStart).Seconds))
                 MS_Engine_Running = True
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
