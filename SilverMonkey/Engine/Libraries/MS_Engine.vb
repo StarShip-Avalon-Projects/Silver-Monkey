@@ -167,7 +167,7 @@ Namespace Engine.Libraries
                 '(0:32) When someone requests to summon the bot,
                 Add(TriggerCategory.Cause, 32,
                   Function()
-                      Return Not FurcadiaSession.IsBot(FurcadiaSession.Player)
+                      Return Not FurcadiaSession.IsConnectedCharacter
                   End Function, "(0:32) When someone requests to summon the bot,")
 
                 '(0:33) When a furre named {.} requests to summon the bot,
@@ -177,7 +177,7 @@ Namespace Engine.Libraries
                 '(0:34) When someone requests to join the bot,
                 Add(TriggerCategory.Cause, 34,
                     Function()
-                        Return Not FurcadiaSession.IsBot(FurcadiaSession.Player)
+                        Return Not FurcadiaSession.IsConnectedCharacter
                     End Function, "(0:34) When someone requests to join the bot,")
                 '(0:35) When a furre named {.} requests to join the bot,
                 Add(TriggerCategory.Cause, 35,
@@ -186,7 +186,7 @@ Namespace Engine.Libraries
                 '(0:36) When someone requests to follow the bot,
                 Add(TriggerCategory.Cause, 36,
                     Function()
-                        Return Not FurcadiaSession.IsBot(FurcadiaSession.Player)
+                        Return Not FurcadiaSession.IsConnectedCharacter
                     End Function, "(0:36) When someone requests to follow the bot,")
                 '(0:37) When a furre named {.} requests to follow the bot,
                 Add(TriggerCategory.Cause, 37,
@@ -195,7 +195,7 @@ Namespace Engine.Libraries
                 '(0:38) When someone requests to lead the bot,
                 Add(TriggerCategory.Cause, 38,
                     Function()
-                        Return Not FurcadiaSession.IsBot(FurcadiaSession.Player)
+                        Return Not FurcadiaSession.IsConnectedCharacter
                     End Function, "(0:38) When someone requests to lead the bot,")
                 '(0:39) When a furre named {.} requests to lead the bot,
                 Add(TriggerCategory.Cause, 39,
@@ -204,7 +204,7 @@ Namespace Engine.Libraries
                 '(0:40) When someone requests to cuddle with the bot.
                 Add(TriggerCategory.Cause, 40,
                     Function()
-                        Return Not FurcadiaSession.IsBot(FurcadiaSession.Player)
+                        Return Not FurcadiaSession.IsConnectedCharacter
                     End Function, "(0:40) When someone requests to cuddle with the bot,")
                 '(0:41) When a furre named {.} requests to cuddle with the bot,
                 Add(TriggerCategory.Cause, 41,
@@ -215,7 +215,7 @@ Namespace Engine.Libraries
                 '(0:46) When the bot sees a trade request,
                 Add(TriggerCategory.Cause, 46,
                     Function()
-                        Return Not FurcadiaSession.IsBot(FurcadiaSession.Player)
+                        Return Not FurcadiaSession.IsConnectedCharacter
                     End Function, "(0:46) When the bot sees a trade request,")
                 '(0:47) When the bot sees the trade request {.},
                 Add(TriggerCategory.Cause, 47,
@@ -273,13 +273,13 @@ Namespace Engine.Libraries
                 '(1:904) and the triggering furre is the Bot Controller,
                 Add(TriggerCategory.Condition, 15,
                 Function()
-                    Return MainEngine.IsBotControler(FurcadiaSession.MSpage.GetVariable(MS_Name).Value.ToString)
+                    Return FurcadiaSession.IsBotController
                 End Function, "(1:15) and the triggering furre is the Bot Controller,")
 
                 '(1:905) and the triggering furre is not the Bot Controller,
                 Add(New Trigger(TriggerCategory.Condition, 16),
                 Function()
-                    Return Not IsBotControler(MsPage.GetVariable(MS_Name).Value.ToString)
+                    Return Not FurcadiaSession.IsBotController
                 End Function, "(1:16) and the triggering furre is not the Bot Controller,")
 
                 '(1:17) and the triggering furre's name is {.}.
@@ -944,7 +944,7 @@ Namespace Engine.Libraries
             '(5:40) Switch the bot to stand alone mode and close the Furcadia client.
             Public Function StandAloneMode(reader As TriggerReader) As Boolean
                 Try
-                    FurcadiaSession..StandAlone = True
+                    FurcadiaSession.StandAlone = True
                     FurcadiaSession.CloseClient()
                 Catch ex As Exception
                     Dim tID As String = reader.TriggerId.ToString

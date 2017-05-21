@@ -157,7 +157,7 @@ Namespace Engine.Libraries
         Function FurreNamedActive(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Return Target.AFK = 0
             Catch ex As Exception
                 LogError(reader, ex)
@@ -169,7 +169,7 @@ Namespace Engine.Libraries
         Function FurreNamedAFK(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Return Target.AFK > 0
             Catch ex As Exception
                 LogError(reader, ex)
@@ -180,7 +180,7 @@ Namespace Engine.Libraries
         Function FurreNamedCanSe(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Return Target.Visible
             Catch ex As Exception
                 LogError(reader, ex)
@@ -191,7 +191,7 @@ Namespace Engine.Libraries
         Function FurreNamedInDream(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Return InDream(Target.Name)
             Catch ex As Exception
                 LogError(reader, ex)
@@ -202,7 +202,7 @@ Namespace Engine.Libraries
         Function FurreNamedNotCanSe(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Return Not Target.Visible
             Catch ex As Exception
                 LogError(reader, ex)
@@ -214,7 +214,7 @@ Namespace Engine.Libraries
         Function FurreNamedNotInDream(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.NameToFurre(name, False)
+                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Return Not InDream(Target.Name)
             Catch ex As Exception
                 LogError(reader, ex)

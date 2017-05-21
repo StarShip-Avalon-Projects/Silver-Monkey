@@ -1,29 +1,30 @@
-﻿Imports Furcadia.Net
+﻿Public Class BaseSubSystem
 
-Public Class BaseSubSystem
-    Inherits Furcadia.IO.ParseServer
+#Region "Private Fields"
 
-    Protected MyDream As Furcadia.Net.DREAM
+    Private ParentSession As BotSession
 
-    Protected MyEngine As MainMsEngine
+#End Region
 
-    Public Sub New(ByRef Dream As DREAM, ByRef Player As FURRE, MsEngine As MainMsEngine)
-        MyBase.New(Dream, Player)
-        MyEngine = MsEngine
+#Region "Public Constructors"
 
+    Sub New(ByRef FurcSession As BotSession)
+        ParentSession = FurcSession
     End Sub
 
-    Public Sub New(ByRef Dream As DREAM, ByRef Player As FURRE)
-        MyBase.New(Dream, Player)
-        MyEngine = New MainMsEngine()
-    End Sub
+#End Region
 
-    Public Overrides Sub ParseServerChannel(ByVal data As String, ByRef handled As Boolean)
-        MyBase.ParseServerChannel(data, handled)
-    End Sub
+#Region "Public Properties"
 
-    Public Overrides Sub ParseServerData(data As String, ByRef handled As Boolean)
-        MyBase.ParseServerData(data, handled)
-    End Sub
+    Public Property FurcadiaSession As BotSession
+        Get
+            Return ParentSession
+        End Get
+        Set(value As BotSession)
+            ParentSession = value
+        End Set
+    End Property
+
+#End Region
 
 End Class

@@ -17,7 +17,7 @@ Namespace Engine.Libraries
         <CLSCompliant(False)>
         Public verbot As Verbot5Engine
 
-        <CLSCompliant(False)>
+        '  <CLSCompliant(False)>
 #End Region
 
 #Region "Private Fields"

@@ -45,7 +45,7 @@ Public Class MS_Export
         'MS_Stared = 0
         'MainMSEngine.EngineStart(False)
         Dim Test As New List(Of String)
-        For Each item As String In FurcadiaSession.MainEngine.MsPage.GetTriggerDescriptions()
+        For Each item As String In FurcadiaSession.MSpage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         EffectList.Clear()
@@ -110,7 +110,7 @@ Public Class MS_Export
         MainMsEngine.MS_Stared = 0
         FurcadiaSession.MainEngine.EngineStart(False)
         Dim Test As New List(Of String)
-        For Each item As String In FurcadiaSession.MainEngine.MsPage.GetTriggerDescriptions()
+        For Each item As String In FurcadiaSession.MSpage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         Dim cat As New Regex("\((.[0-9]*)\:(.[0-9]*)\)")

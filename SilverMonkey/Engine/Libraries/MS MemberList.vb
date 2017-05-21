@@ -118,7 +118,7 @@ Namespace Engine.Libraries
                 LogError(reader, ex)
                 Return False
             End Try
-            Return IsBotControler(Furre)
+            Return FurcadiaSession.IsBotController
         End Function
 
         '(1:903) and the furre named {...} is not on my Dream Member list.
@@ -210,7 +210,7 @@ Namespace Engine.Libraries
                 LogError(reader, ex)
                 Return False
             End Try
-            Return IsBotControler(Furre)
+            Return FurcadiaSession.IsBotController
         End Function
         '(1:902) and the triggering furre is not on my Dream Member list.
         Private Function TrigFurreIsNotMember(reader As TriggerReader) As Boolean

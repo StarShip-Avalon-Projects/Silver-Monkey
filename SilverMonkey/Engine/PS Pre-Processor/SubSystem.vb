@@ -139,7 +139,7 @@ Namespace Engine.Libraries.PhoenixSpeak
         ''' Always clear PSInfoCache unless its a Multi-Page response
         ''' </summary>
         ''' <param name="ServerData">Server Data as string</param>
-        Public Overrides Sub ParseServerChannel(ServerData As String, ByRef Handled As Boolean)
+        Public Sub ParseServerChannel(ServerData As String, ByRef Handled As Boolean)
             Try
                 Monitor.Enter(PSProcessingResource)
                 Dim ReturnVal As Boolean = False
@@ -186,9 +186,9 @@ Namespace Engine.Libraries.PhoenixSpeak
 
                         PageOverFlow = False
 
-                        PageSetVariable("MESSAGE", ServerData)
+                        FurcadiaSession.MainEngine.PageSetVariable("MESSAGE", ServerData)
                         'Phoenix Speak Response set
-                        PageExecute(80, 81, 82)
+                        FurcadiaSession.MainEngine.PageExecute(80, 81, 82)
 
                     Else 'Assume Single page responses
                         PSInfoCache = ProcessVariables(data)
@@ -201,8 +201,8 @@ Namespace Engine.Libraries.PhoenixSpeak
                         args.PageOverFlow = PageOverFlow
 
                         ProcessedFromeServer(ServerData, args)
-                        PageSetVariable("MESSAGE", ServerData)
-                        PageExecute(80, 81, 82)
+                        FurcadiaSession.MainEngine.PageSetVariable("MESSAGE", ServerData)
+                        FurcadiaSession.MainEngine.PageExecute(80, 81, 82)
 
                         'trigger Monkey Speak responses
                     End If
@@ -219,12 +219,12 @@ Namespace Engine.Libraries.PhoenixSpeak
                     args.Flag = ResponceMode
                     args.PageOverFlow = PageOverFlow
                     ProcessedFromeServer(ServerData, args)
-                    PageSetVariable("MESSAGE", ServerData)
+                    FurcadiaSession.MainEngine.PageSetVariable("MESSAGE", ServerData)
                     Dim AbortError As New Regex("Sorry, PhoenixSpeak commands are currently not available in this dream.$", SmRegExOptions)
                     If AbortError.Match(data).Success Then
                         Abort()
                         '(0:503) When the bot finishes restoring the dreams character Phoenix Speak,
-                        PageExecute(503)
+                        FurcadiaSession.MainEngine.PageExecute(503)
                     End If
 
                 End If
@@ -472,12 +472,9 @@ Namespace Engine.Libraries.PhoenixSpeak
         Private Shared psSendToServer As New Queue(Of KeyValuePair(Of String, Short))(20)
 
         Private SendLock As New Object
-        Public Sub New()
-            MyBase.New()
-        End Sub
 
-        Public Sub New(ByRef Dream As DREAM, ByRef Player As FURRE)
-            MyBase.New(Dream, Player)
+        Public Sub New(FurcSession As BotSession)
+            MyBase.New(FurcSession)
         End Sub
 
         Public Shared Sub ProcessedFromeServer(o As Object, e As PhoenixSpeakEventArgs)
@@ -502,7 +499,7 @@ Namespace Engine.Libraries.PhoenixSpeak
                 Dim ServerQueueItem As New KeyValuePair(Of String, Short)(var, Id)
                 ' there are possibilities that PS errors can come from the game server
                 psSendToServer.Enqueue(ServerQueueItem)
-                sendServer(var)
+                FurcadiaSession.SendToServer(var)
             Finally
                 Monitor.Exit(SendLock)
             End Try

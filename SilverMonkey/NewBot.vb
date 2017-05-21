@@ -7,7 +7,7 @@ Public Class NewBott
 
 #Region "Public Fields"
 
-    Public bFile As cBot
+    Public bFile As BotOptions
 
 #End Region
 
@@ -129,8 +129,8 @@ Public Class NewBott
         Main.NewBot = True
 
         'Default BotFile Settings
-        bFile = New cBot
-        bFile.MS_Engine_Enable = True
+        bFile = New BotOptions
+        bFile.MonkeySpeakEngineOptions.MS_Engine_Enable = True
         bFile.AutoConnect = False
         bFile.GoMapIDX = 1
 
@@ -281,7 +281,7 @@ Public Class NewBott
         Dim BotFile As String
         Dim MsFile As String = String.Empty
         If Not String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
-            BotFile = TxtbxFilelocation.Text + Path.DirectorySeparatorChar + TxtbxBotName.Text
+            BotFile = Path.Combine(TxtbxFilelocation.Text, TxtbxBotName.Text)
             MsFile = BotFile
         Else
             BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
@@ -305,11 +305,14 @@ Public Class NewBott
             End If
         End If
 
-        bFile.BiniFile = BotFile
-        bFile.IniFile = TxtbxCharacterINI.Text
+        bFile = New BotOptions(BotFile)
+        bFile.CharacterIniFile = TxtbxCharacterINI.Text
 
         'Bug 23
-        bFile.MS_File = MsFile + ".ms"
+        If String.IsNullOrEmpty(Path.GetExtension(MsFile)) Then
+            MsFile += ".ms"
+        End If
+        bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = MsFile
 
         bFile.LogNameBase = TxtbxBotName.Text
         bFile.log = True
@@ -336,7 +339,7 @@ Public Class NewBott
         End If
 
         bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.BiniFile)
+        Main.SaveRecentFile(bFile.Name)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Dispose()
 

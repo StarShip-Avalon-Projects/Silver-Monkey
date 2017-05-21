@@ -105,7 +105,9 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
 
                 Dim iResult As IntPtr = IntPtr.Zero
                 If WindowHandle <> IntPtr.Zero Then
-                    iResult = msg.sendWindowsStringMessage(WindowHandle, IntPtr.Zero, FurcadiaSession.BotName, FurcadiaSession.BotUID, strTag, msMsg)
+                    iResult = msg.sendWindowsStringMessage(WindowHandle,
+                           IntPtr.Zero, FurcadiaSession.ConnectedCharacterName,
+                           FurcadiaSession.ConnectedCharacterFurcadiaID, strTag, msMsg)
                     'SendClientMessage("SYSTEM Send Windows Message to " + Fur + ": ", msMsg)
                 End If
                 'Debug.Print("Msg = " & msg)

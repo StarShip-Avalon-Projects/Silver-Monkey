@@ -14,8 +14,6 @@ Namespace Engine.Libraries
 
 #Region "Fields"
 
-        Private WithEvents SubSys As New SubSystem()
-
 #End Region
 
 #Region "Public Constructors"

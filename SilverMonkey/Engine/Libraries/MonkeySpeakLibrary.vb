@@ -37,7 +37,7 @@ Namespace Engine.Libraries
         Public Delegate Sub MessageDelegate(ByRef message As String)
 
         Public Sub LogError(reader As TriggerReader, ex As Exception)
-            Main.FurcadiaSession..LogError(reader, ex)
+            '  Main.FurcadiaSession..LogError(reader, ex)
         End Sub
 
         ''' <summary>

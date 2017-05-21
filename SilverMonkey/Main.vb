@@ -59,8 +59,12 @@ Public Class Main
     ''' </summary>
     Public WithEvents FurcadiaSession As BotSession
     Public Shared NewBot As Boolean = False
-    Public Mainsettings As MonkeyCore.Settings.cMain
+    Public Mainsettings As cMain
     Public writer As TextBoxWriter = Nothing
+
+    Private Const HelpFile As String = "Silver Monkey.chm"
+
+    Private BotConfig As BotOptions
 
     Dim CMD_Idx, CMD_Idx2 As Integer
     Dim CMD_Lck As Boolean = False
@@ -570,9 +574,9 @@ Public Class Main
 
     Private Sub EditBotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EditBotToolStripMenuItem.Click
         With BotSetup
-            .bFile = cBot
+            .bFile = BotConfig
             If .ShowDialog() = Windows.Forms.DialogResult.OK Then
-                cBot = .bFile
+                BotConfig = .bFile
             End If
         End With
     End Sub
@@ -605,7 +609,7 @@ Public Class Main
 
         With NewBott
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
-                cBot = .bFile
+                BotConfig = .bFile
                 EditBotToolStripMenuItem.Enabled = True
             End If
         End With
@@ -617,7 +621,7 @@ Public Class Main
             .InitialDirectory = SilverMonkeyBotPath
 
             If .ShowDialog = DialogResult.OK Then
-                cBot = New cBot(.FileName)
+                BotConfig = New BotOptions(.FileName)
                 SaveRecentFile(.FileName)
                 ' BotSetup.BotFile = .FileName
                 ' BotSetup.ShowDialog()
@@ -634,8 +638,8 @@ Public Class Main
     Private Sub RecentFile_click(sender As Object, e As EventArgs)
         'BotSetup.BotFile =
         'BotSetup.ShowDialog()
-        cBot = New cBot(sender.ToString())
-        My.Settings.LastBotFile = cBot.IniFile
+        BotConfig = New BotOptions(sender.ToString())
+        My.Settings.LastBotFile = sender.ToString()
         EditBotToolStripMenuItem.Enabled = True
         My.Settings.Save()
 
@@ -931,14 +935,14 @@ Public Class Main
         Return True
     End Function
 
-    Public Function setLogName(ByRef bfile As cBot) As String
+    Public Function setLogName(ByRef bfile As BotOptions) As String
         Select Case bfile.LogOption
             Case 0
                 Return bfile.LogNameBase
             Case 1
                 bfile.LogIdx += 1
                 bfile.SaveBotSettings()
-                Return bfile.LogNameBase & cBot.LogIdx.ToString
+                Return bfile.LogNameBase & BotConfig.LogIdx.ToString
             Case 2
                 Return bfile.LogNameBase & Date.Now().ToString("MM_dd_yyyy_H-mm-ss")
 
@@ -949,7 +953,7 @@ Public Class Main
     Public Sub sndDisplay(ByRef data As String, Optional ByRef newColor As fColorEnum = fColorEnum.DefaultColor)
         Try
             'data = data.Replace(vbLf, vbCrLf)
-            If cBot.log Then LogStream.WriteLine(data)
+            If BotConfig.log Then LogStream.WriteLine(data)
             If CBool(Mainsettings.TimeStamp) Then
                 Dim Now As String = DateTime.Now.ToLongTimeString
                 data = Now.ToString & ": " & data
@@ -1098,23 +1102,23 @@ Public Class Main
     End Sub
 
     Private Sub BTN_Go_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BTN_Go.Click, ConnectTrayIconMenuItem.Click, DisconnectTrayIconMenuItem.Click
-        If IsNothing(cBot) Then Exit Sub
-        If String.IsNullOrEmpty(cBot.IniFile) Then Exit Sub
-        If cBot.IniFile = "-pick" Then Exit Sub
+        If IsNothing(BotConfig) Then Exit Sub
+        If String.IsNullOrEmpty(BotConfig.CharacterIniFile) Then Exit Sub
+        If BotConfig.CharacterIniFile = "-pick" Then Exit Sub
 
-        Dim p As String = Path.GetDirectoryName(cBot.IniFile)
-        If String.IsNullOrEmpty(p) And Not File.Exists(CheckBotFolder(cBot.IniFile)) Then
-            MessageBox.Show(cBot.IniFile + " Not found, Aborting connection!", "Important Message")
+        Dim p As String = Path.GetDirectoryName(BotConfig.CharacterIniFile)
+        If String.IsNullOrEmpty(p) And Not File.Exists(CheckBotFolder(BotConfig.CharacterIniFile)) Then
+            MessageBox.Show(BotConfig.CharacterIniFile + " Not found, Aborting connection!", "Important Message")
             Exit Sub
         End If
 
         If BTN_Go.Text = "Go!" Then
 
-            If cBot.log Then
-                LogStream = New LogStream(setLogName(cBot), cBot.LogPath)
+            If BotConfig.log Then
+                LogStream = New LogStream(setLogName(BotConfig), BotConfig.LogPath)
             End If
 
-            My.Settings.LastBotFile = CheckBotFolder(cBot.IniFile)
+            My.Settings.LastBotFile = CheckBotFolder(BotConfig.CharacterIniFile)
             My.Settings.Save()
 
             If Not IsNothing(MS_Export) Then MS_Export.Dispose()
@@ -1155,8 +1159,9 @@ Public Class Main
     End Sub
 
     Private Sub ContentsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ContentsToolStripMenuItem.Click
-        If File.Exists(Path.Combine(Application.StartupPath, "Silver Monkey.chm")) Then
-            Process.Start(Path.Combine(Application.StartupPath, "Silver Monkey.chm"))
+        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            Help.ShowHelp(Me, HelpFile)
+            Process.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile))
         End If
 
     End Sub
@@ -1190,7 +1195,7 @@ Public Class Main
     Private Sub FormClose()
         _FormClose = True
         My.Settings.MainFormLocation = Me.Location
-        If Not IsNothing(cBot) Then My.Settings.LastBotFile = cBot.IniFile
+        If Not IsNothing(BotConfig) Then My.Settings.LastBotFile = BotConfig.Name
         'Timers.DestroyTimers()
         'Save the user settings so next time the
         'window will be the same size and location
@@ -1205,7 +1210,7 @@ Public Class Main
     End Sub
 
     Private Sub LaunchEditor()
-        If IsNothing(cBot) OrElse String.IsNullOrEmpty(cBot.MS_File) Then
+        If IsNothing(BotConfig) OrElse String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
             Dim result As Integer = MessageBox.Show("No Botfile Loaded", "caption", MessageBoxButtons.OK)
             If result = DialogResult.OK Then
                 Exit Sub
@@ -1213,12 +1218,19 @@ Public Class Main
 
         End If
         Dim processStrt As New ProcessStartInfo
-        processStrt.FileName = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "MonkeySpeakEditor.EXE"
-        Dim f As String = CheckBotFolder(cBot.MS_File)
-        If Not String.IsNullOrEmpty(FurcadiaSession.ConnectedCharacterName) And Not String.IsNullOrEmpty(cBot.MS_File) Then
+        processStrt.FileName = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar _
+            + "MonkeySpeakEditor.EXE"
+        Dim f As String = CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+        If Not String.IsNullOrEmpty(FurcadiaSession.ConnectedCharacterName) _
+            And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
+
             processStrt.Arguments = "-B=""" + FurcadiaSession.ConnectedCharacterName + """ """ + f + """"
-        ElseIf String.IsNullOrEmpty(FurcadiaSession.ConnectedCharacterName) And Not String.IsNullOrEmpty(cBot.MS_File) Then
+
+        ElseIf String.IsNullOrEmpty(FurcadiaSession.ConnectedCharacterName) _
+            And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
+
             processStrt.Arguments = """" + f + """"
+
         End If
         Process.Start(processStrt)
     End Sub
@@ -1281,9 +1293,9 @@ Public Class Main
             frmHelp.Show()
         ElseIf (e.KeyCode = Keys.N AndAlso e.Modifiers = Keys.Control) Then
             With BotSetup
-                .bFile = New cBot
+                .bFile = New BotOptions
                 If .ShowDialog() = Windows.Forms.DialogResult.OK Then
-                    cBot = .bFile
+                    BotConfig = .bFile
                 End If
             End With
 
@@ -1308,13 +1320,13 @@ Public Class Main
 
         writer = New TextBoxWriter(log_)
         Console.SetOut(writer)
-        FurcadiaSession = New BotSession()
+        FurcadiaSession = New BotSession(log_)
 
-        Plugins = PluginServices.FindPlugins(Path.Combine(Application.StartupPath, "Plugins"), "SilverMonkey.Interfaces.msPlugin")
+        Plugins = PluginServices.FindPlugins(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins"), "SilverMonkey.Interfaces.msPlugin")
 
         ' Try to get Furcadia's path from the registry
 
-        MS_KeysIni.Load(Path.Combine(Application.StartupPath, "Keys-MS.ini"))
+        MS_KeysIni.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Keys-MS.ini"))
         InitializeTextControls()
 
         'Me.Size = My.Settings.MainFormSize
@@ -1335,18 +1347,18 @@ Public Class Main
             Dim directoryName As String
             directoryName = Path.GetDirectoryName(File)
             If String.IsNullOrEmpty(directoryName) Then File = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Silver Monkey", File)
-            cBot = New cBot(File)
+            BotConfig = New BotOptions(File)
             EditBotToolStripMenuItem.Enabled = True
             Console.WriteLine("Loaded: """ + File + """")
         ElseIf Mainsettings.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) And My.Application.CommandLineArgs.Count = 0 Then
-            cBot = New cBot(My.Settings.LastBotFile)
+            BotConfig = New BotOptions(My.Settings.LastBotFile)
             EditBotToolStripMenuItem.Enabled = True
             Console.WriteLine("Loaded: """ + My.Settings.LastBotFile + """")
         End If
         Dim ts As TimeSpan = TimeSpan.FromSeconds(30)
 
-        If Not IsNothing(cBot) Then
-            If cBot.AutoConnect Then
+        If Not IsNothing(BotConfig) Then
+            If BotConfig.AutoConnect Then
                 ConnectBot()
             End If
         End If

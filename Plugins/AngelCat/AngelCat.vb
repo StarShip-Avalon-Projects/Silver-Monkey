@@ -75,19 +75,19 @@ Namespace Engine.Libraries
         Function MessagePump(ByRef ServerInstruction As String) As Boolean Implements SilverMonkey.Interfaces.msPlugin.MessagePump
             'Set Object At Feet
             If ServerInstruction.StartsWith("%") Then
-                Player = NametoFurre(msHost.BotName, True)
+                Player = Dream.FurreList.GerFurreByName(msHost.BotName)
                 Player.FloorObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
                 MsPage.Execute(2000, 2001)
                 msHost.Player = Player
-                Dream.FurreList(Player) = Player
+                Dream.FurreList(Dream.FurreList.IndexOf(Player)) = Player
                 Return True
                 'Set Object In Paws
             ElseIf ServerInstruction.StartsWith("^") Then
-                Player = NametoFurre(msHost.BotName, True)
+                Player = Dream.FurreList.GerFurreByName(msHost.BotName)
                 Player.PawObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
                 MsPage.Execute(2000, 2001)
                 msHost.Player = Player
-                Dream.FurreList(Player) = Player
+                Dream.FurreList(Dream.FurreList.IndexOf(Player)) = Player
                 Return True
             End If
             Return False
@@ -110,19 +110,6 @@ Namespace Engine.Libraries
             Return p.ShortName = msHost.BotName.ToFurcShortName
         End Function
 
-        Public Function NametoFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
-            Dim p As New FURRE
-            p.Name = sname
-            For Each Character As KeyValuePair(Of UInteger, FURRE) In Dream.FurreList
-                If Character.Value.ShortName = sname.ToFurcShortName Then
-                    p = Character.Value
-                    Exit For
-                End If
-            Next
-            If UbdateMSVariableName Then MsPage.SetVariable(VarPrefix & "NAME", sname, True)
-            Return p
-        End Function
-
         Public Function ReadVariableOrNumber(ByVal reader As Monkeyspeak.TriggerReader, Optional addIfNotExist As Boolean = False) As Double
             Dim result As Double = 0
             If reader.PeekVariable Then
@@ -133,14 +120,7 @@ Namespace Engine.Libraries
             End If
             Return result
         End Function
-        Private Function fIDtoFurre(ByRef ID As UInteger) As FURRE
-            Dim Character As KeyValuePair(Of UInteger, FURRE)
-            For Each Character In Dream.FurreList
-                If Character.Value.ID = ID Then
-                    Return Character.Value
-                End If
-            Next
-        End Function
+
 #End Region
     End Class
 End Namespace

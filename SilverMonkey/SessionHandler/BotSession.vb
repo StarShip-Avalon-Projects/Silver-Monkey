@@ -35,6 +35,49 @@ Imports System.Text
 Public Class BotSession : Inherits ProxySession
     Implements IDisposable
 
+#Region "Constructors"
+
+    ''' <summary>
+    '''
+    ''' </summary>
+    Sub New(ByRef Write As RichTextBoxEx)
+        MyBase.New()
+        Writer = New TextBoxWriter(Write)
+        MainEngineOptions = New BotOptions()
+    End Sub
+
+    ''' <summary>
+    ''' New BotSession with Proxy Settings
+    ''' </summary>
+    ''' <param name="BotSessionOptions"></param>
+    Sub New(ByRef Write As RichTextBoxEx, ByRef BotSessionOptions As BotOptions)
+        MyBase.New(BotSessionOptions)
+        Writer = New TextBoxWriter(Write)
+        MainEngineOptions = BotSessionOptions
+    End Sub
+
+#End Region
+
+#Region "Public Properties"
+
+    ''' <summary>
+    ''' Is the Current executing Furre the Bot Controller?
+    ''' </summary>
+    ''' <returns>True on sucess</returns>
+    Public ReadOnly Property IsBotController As Boolean
+        Get
+            Return Player.ShortName = FurcadiaShortName(MainEngineOptions.BotController)
+        End Get
+    End Property
+
+    Public ReadOnly Property BotController As String
+        Get
+            Return MainEngineOptions.BotController
+        End Get
+    End Property
+
+#End Region
+
 #Region "Public Events"
 
     Public Event DisplayText(ByVal DisplayText As String, ByVal e As EventArgs)
@@ -43,8 +86,8 @@ Public Class BotSession : Inherits ProxySession
 
 #Region "Private Fields"
 
+    Private MainSettings As Settings.cMain
     Private Writer As TextBoxWriter
-
 #End Region
 
 #Region "Public Fields"
@@ -53,6 +96,9 @@ Public Class BotSession : Inherits ProxySession
     ''' </summary>
     Public WithEvents MainEngine As Engine.MainMsEngine
     Public WithEvents MSpage As Page = Nothing
+    'Monkey Speak Bot specific Variables
+    Public BotLogStream As LogStream
+
     Public objHost As New smHost(Me)
     Private MainEngineOptions As BotOptions
 
@@ -66,7 +112,7 @@ Public Class BotSession : Inherits ProxySession
     ''' </summary>
     Public Overrides Sub Connect()
 
-        MainEngine = New Engine.MainMsEngine(MainEngineOptions.MonkeySpeakEngineOptions)
+        MainEngine = New Engine.MainMsEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
         MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
         MainEngine.Start()
         MyBase.Connect()
@@ -91,60 +137,6 @@ Public Class BotSession : Inherits ProxySession
         GC.SuppressFinalize(Me)
     End Sub
 
-#End Region
-
-#Region "Private Methods"
-
-#End Region
-
-#Region "Public Fields"
-
-    Public WithEvents SubSys As New SubSystem()
-
-    'Monkey Speak Bot specific Variables
-    Public BotLogStream As LogStream
-
-    'Silver Monkey Specific Feature
-#End Region
-
-#Region "Private Fields"
-
-    Private MainSettings As Settings.cMain
-
-#End Region
-
-#Region "Constructors"
-
-    ''' <summary>
-    '''
-    ''' </summary>
-    Sub New(ByRef Write As RichTextBoxEx)
-        MyBase.New()
-        Writer = New TextBoxWriter(Write)
-        MainEngineOptions = New BotOptions()
-    End Sub
-
-    ''' <summary>
-    ''' New BotSession with Proxy Settings
-    ''' </summary>
-    ''' <param name="BotSessionOptions"></param>
-    Sub New(ByRef Write As RichTextBoxEx, ByRef BotSessionOptions As BotOptions)
-        MyBase.New(BotSessionOptions)
-        Writer = New TextBoxWriter(Write)
-        MainEngineOptions = BotSessionOptions
-    End Sub
-
-#End Region
-
-#Region "Private Methods"
-
-#End Region
-
-    ''' <summary>
-    ''' Parse Channel Data
-    ''' </summary>
-    ''' <param name="data">Raw Game Server to Client instruction</param>
-    ''' <param name="Handled">Is this data already handled?</param>
     Public Overloads Sub ParseServerChannel(ByRef data As String, ByVal Handled As Boolean)
 
         'Pass Stuff to Base Clqss before we can handle things here
@@ -252,34 +244,34 @@ Public Class BotSession : Inherits ProxySession
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
         ElseIf Channel = "@roll" Then
-            Dim DiceREGEX As New Regex(DiceFilter, RegexOptions.IgnoreCase)
-            Dim DiceMatch As System.Text.RegularExpressions.Match = DiceREGEX.Match(data)
+            'Dim DiceREGEX As New Regex(DiceFilter, RegexOptions.IgnoreCase)
+            'Dim DiceMatch As System.Text.RegularExpressions.Match = DiceREGEX.Match(data)
 
-            'Matches, in order:
-            '1:      shortname()
-            '2:      full(name)
-            '3:      dice(count)
-            '4:      sides()
-            '5: +/-#
-            '6: +/-  (component match)
-            '7:      additional(Message)
-            '8:      Final(result)
+            ''Matches, in order:
+            ''1:      shortname()
+            ''2:      full(name)
+            ''3:      dice(count)
+            ''4:      sides()
+            ''5: +/-#
+            ''6: +/-  (component match)
+            ''7:      additional(Message)
+            ''8:      Final(result)
 
-            Player = NametoFurre(DiceMatch.Groups(3).Value, True)
-            Player.Message = DiceMatch.Groups(7).Value
-            MainEngine.PageSetVariable("MESSAGE", DiceMatch.Groups(7).Value)
-            Double.TryParse(DiceMatch.Groups(4).Value, DiceSides)
-            Double.TryParse(DiceMatch.Groups(3).Value, DiceCount)
-            DiceCompnentMatch = DiceMatch.Groups(6).Value
-            DiceModifyer = 0.0R
-            Double.TryParse(DiceMatch.Groups(5).Value, DiceModifyer)
-            Double.TryParse(DiceMatch.Groups(8).Value, DiceResult)
+            'Player = Dream.FurreList.GerFurreByName(DiceMatch.Groups(3).Value)
+            'Player.Message = DiceMatch.Groups(7).Value
+            'MainEngine.PageSetVariable("MESSAGE", DiceMatch.Groups(7).Value)
+            'Double.TryParse(DiceMatch.Groups(4).Value, DiceSides)
+            'Double.TryParse(DiceMatch.Groups(3).Value, DiceCount)
+            'DiceCompnentMatch = DiceMatch.Groups(6).Value
+            'DiceModifyer = 0.0R
+            'Double.TryParse(DiceMatch.Groups(5).Value, DiceModifyer)
+            'Double.TryParse(DiceMatch.Groups(8).Value, DiceResult)
 
-            If IsConnectedCharacter Then
-                MainEngine.PageExecute(130, 131, 132, 136)
-            Else
-                MainEngine.PageExecute(133, 134, 135, 136)
-            End If
+            'If IsConnectedCharacter Then
+            '    MainEngine.PageExecute(130, 131, 132, 136)
+            'Else
+            '    MainEngine.PageExecute(133, 134, 135, 136)
+            'End If
 
             If IsClientConnected Then SendToClient("(" + data)
             Exit Sub
@@ -308,16 +300,12 @@ Public Class BotSession : Inherits ProxySession
 
                 Select Case chan
                     Case "@advertisements"
-                        If cMain.Advertisment Then Exit Sub
+                        ' If cMain.Advertisment Then Exit Sub
                         AdRegEx = "\[(.*?)\] (.*?)</font>"
                         Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
                         RaiseEvent DisplayText(Text, EventArgs.Empty)
-                    Case "@bcast"
-                        If cMain.Broadcast Then Exit Sub
-                        Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
-                        RaiseEvent DisplayText(Text, EventArgs.Empty)
                     Case "@announcements"
-                        If cMain.Announcement Then Exit Sub
+                        ' If cMain.Announcement Then Exit Sub
                         Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
                         RaiseEvent DisplayText(Text, EventArgs.Empty)
                     Case Else
@@ -338,16 +326,12 @@ Public Class BotSession : Inherits ProxySession
                 Dim t As New Regex(YouSayFilter)
                 Dim u As String = t.Match(data).Groups(1).ToString
                 Text = t.Match(data).Groups(2).ToString
-                If SpeciesTag.Count() > 0 Then
-                    Player.Color = SpeciesTag.Dequeue()
-                    If Dream.FurreList.Contains(Player.ID) Then Dream.FurreList.Item(Player) = Player
-                End If
 
                 RaiseEvent DisplayText(Text, EventArgs.Empty)
-                Player.Message = Text
-                MainEngine.PageSetVariable("MESSAGE", Text)
+
+                MainEngine.PageSetVariable("MESSAGE", Player.Message)
                 ' Execute (0:5) When some one says something
-                'MainEngine.PageExecute(5, 6, 7, 18, 19, 20)
+                MainEngine.PageExecute(5, 6, 7, 18, 19, 20)
                 '' Execute (0:6) When some one says {...}
                 '' Execute (0:7) When some one says something with {...} in it
                 '' Execute (0:18) When someone says or emotes something
@@ -367,17 +351,10 @@ Public Class BotSession : Inherits ProxySession
                     Text = t.Replace(data, "")
                     Text = Text.Remove(0, 2)
 
-                    If SpeciesTag.Count() > 0 Then
-                        SpecTag = SpeciesTag.Peek
-                        SpeciesTag.Clear()
-                        Player.Color = SpecTag
-                        If Dream.FurreList.ContainsKey(Player.ID) Then Dream.FurreList.Item(Player.ID) = Player
-                    End If
                     Channel = "say"
                     RaiseEvent DisplayText(User & " says, """ & Text & """", EventArgs.Empty)
-                    MainEngine.PageSetVariable(MS_Name, User)
-                    MainEngine.PageSetVariable("MESSAGE", Text)
-                    Player.Message = Text
+                    MainEngine.PageSetVariable(MS_Name, Player.Name)
+                    MainEngine.PageSetVariable("MESSAGE", Player.Message)
                     ' Execute (0:5) When some one says something
                     MainEngine.PageExecute(5, 6, 7, 18, 19, 20)
                     ' Execute (0:6) When some one says {...}
@@ -406,37 +383,15 @@ Public Class BotSession : Inherits ProxySession
             Try
                 Dim DescName As String = Regex.Match(data, DescFilter).Groups(1).ToString()
 
-                Player = NametoFurre(DescName, True)
-                If LookQue.Count > 0 Then
-                    Dim colorcode As String = LookQue.Peek
-                    If colorcode.StartsWith("t") Then
-                        colorcode = colorcode.Substring(0, 14)
-                    ElseIf colorcode.StartsWith("u") Then
-
-                    ElseIf colorcode.StartsWith("v") Then
-                        'RGB Values
-                    End If
-                    Player.Color = LookQue.Dequeue()
-
-                End If
-                If BadgeTag.Count() > 0 Then
-                    SpecTag = BadgeTag.Peek
-                    BadgeTag.Clear()
-                    Player.Badge = SpecTag
-                ElseIf Player.Badge <> "" Then
-                    Player.Badge = ""
-                End If
-                Player.Desc = Desc.Substring(6)
-                If Dream.FurreList.Contains(Player) Then Dream.FurreList.Item(Player.ID) = Player
                 MainEngine.PageSetVariable(MS_Name, DescName)
                 MainEngine.PageExecute(600)
                 'sndDisplay)
-                If Player.Tag = "" Then
-                    RaiseEvent DisplayText("You See '" & Player.Name & "'\par" & Desc, EventArgs.Empty)
+                'If Player. = "" Then
+                '    RaiseEvent DisplayText("You See '" & Player.Name & "'\par" & Desc, EventArgs.Empty)
 
-                Else
-                    RaiseEvent DisplayText("You See '" & Player.Name & "'\par" & Player.Tag & " " & Desc, EventArgs.Empty)
-                End If
+                'Else
+                '    RaiseEvent DisplayText("You See '" & Player.Name & "'\par" & Player.Tag & " " & Desc, EventArgs.Empty)
+                'End If
                 Look = False
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
@@ -588,24 +543,12 @@ Public Class BotSession : Inherits ProxySession
             Exit Sub
         ElseIf Color = "emote" Then
             Try
-                ' ''EMOTE
-                If SpeciesTag.Count() > 0 Then
 
-                    Player.Color = SpeciesTag.Dequeue()
-                End If
-                Dim usr As Regex = New Regex(NameFilter)
-                Dim n As System.Text.RegularExpressions.Match = usr.Match(Text)
-                Text = usr.Replace(Text, "")
-
-                Player = NametoFurre(n.Groups(3).Value, True)
-                MainEngine.PageSetVariable("MESSAGE", Text)
-                Player.Message = Text
-                If Dream.FurreList.ContainsKey(Player.ID) Then Dream.FurreList.Item(Player.ID) = Player
+                MainEngine.PageSetVariable("MESSAGE", Player.Message)
 
                 RaiseEvent DisplayText(User & " " & Text, EventArgs.Empty)
 
-                Dim test As Boolean = IsConnectedCharacter
-                If IsConnectedCharacter = False Then
+                If Not IsConnectedCharacter Then
 
                     ' Execute (0:11) When someone emotes something
                     MainEngine.PageExecute(11, 12, 13, 18, 19, 20)
@@ -733,7 +676,7 @@ Public Class BotSession : Inherits ProxySession
             If CookieToAnyone.Match(data).Success Then
                 MainEngine.PageSetVariable(MS_Name, CookieToAnyone.Match(data).Groups(3).Value)
 
-                If IsBot(NametoFurre(CookieToAnyone.Match(data).Groups(3).Value, True)) Then
+                If IsConnectedCharacter Then
                     MainEngine.PageExecute(42, 43)
                 Else
                     MainEngine.PageExecute(44)
@@ -746,6 +689,7 @@ Public Class BotSession : Inherits ProxySession
             End If
             Dim EatCookie As Regex = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
             If EatCookie.Match(data).Success Then
+                'TODO Cookie eat message can change by Dragon Speak
                 MainEngine.PageSetVariable("MESSAGE", "You eat a cookie." + EatCookie.Replace(data, ""))
                 Player.Message = "You eat a cookie." + EatCookie.Replace(data, "")
                 MainEngine.PageExecute(49)
@@ -778,7 +722,7 @@ Public Class BotSession : Inherits ProxySession
 
     ''' <summary>
     ''' Parse Server Data
-    ''' <para>TODO: Move this functionality to <see cref="Furcadia.Net.Utils.ParseServer"/></para>
+    ''' <para>TODO: Move this functionality to <see cref="Furcadia.Net"/></para>
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="Handled"></param>
@@ -837,36 +781,36 @@ Public Class BotSession : Inherits ProxySession
             'Spawn Avatar
         ElseIf data.StartsWith("<") And ServerConnectPhase = ConnectionPhase.Connected Then
 
-            Try
+            'Try
 
-                ' Add New Arrivals to Dream.FurreList
-                ' One or the other will trigger it
-                IsConnectedCharacter
-                MainEngine.PageSetVariable(MS_Name, Player.ShortName)
+            '    ' Add New Arrivals to Dream.FurreList
+            '    ' One or the other will trigger it
+            '    ' IsConnectedCharacter
+            '    MainEngine.PageSetVariable(MS_Name, Player.ShortName)
 
-                If Player.Flag = 4 Or Not Dream.FurreList.Contains(Player) Then
-                    Dream.FurreList.Add(Player)
-                    '  If InDream Then RaiseEvent UpDateDreamList(Player.Name)
-                    If Player.Flag = 2 Then
-                        MainEngine.PageExecute(28, 29, 24, 25)
-                    Else
-                        MainEngine.PageExecute(24, 25)
-                    End If
-                ElseIf Player.Flag = 2 Then
+            '    If Player.Flag = 4 Or Not Dream.FurreList.Contains(Player) Then
+            '        Dream.FurreList.Add(Player)
+            '        '  If InDream Then RaiseEvent UpDateDreamList(Player.Name)
+            '        If Player.Flag = 2 Then
+            '            MainEngine.PageExecute(28, 29, 24, 25)
+            '        Else
+            '            MainEngine.PageExecute(24, 25)
+            '        End If
+            '    ElseIf Player.Flag = 2 Then
 
-                    MainEngine.PageExecute(28, 29)
+            '        MainEngine.PageExecute(28, 29)
 
-                ElseIf Player.Flag = 1 Then
+            '    ElseIf Player.Flag = 1 Then
 
-                ElseIf Player.Flag = 0 Then
+            '    ElseIf Player.Flag = 0 Then
 
-                End If
+            '    End If
 
-            Catch eX As Exception
+            'Catch eX As Exception
 
-                Dim logError As New ErrorLogging(eX, Me)
-                Exit Sub
-            End Try
+            '    Dim logError As New ErrorLogging(eX, Me)
+            '    Exit Sub
+            'End Try
             Exit Sub
             'Remove Furre
         ElseIf data.StartsWith(")") And ServerConnectPhase = ConnectionPhase.Connected Then  'And loggingIn = False
@@ -1016,7 +960,9 @@ Public Class BotSession : Inherits ProxySession
         Writer.WriteLine("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
 
     End Sub
+#End Region
 
+#Region "Private Methods"
     ''' <summary>
     '''
     ''' </summary>
@@ -1038,6 +984,7 @@ Public Class BotSession : Inherits ProxySession
         End If
         Return Handled
     End Function
+#End Region
 
 #Region "Dispose"
     Private disposed As Boolean

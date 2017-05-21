@@ -30,10 +30,13 @@ Public Class smHost
         End Set
     End Property
 
-    Public ReadOnly Property Dream As DREAM Implements Interfaces.msHost.Dream
+    Public Property Dream As DREAM Implements Interfaces.msHost.Dream
         Get
             Return FurcadiaSession.Dream
         End Get
+        Set(value As DREAM)
+            FurcadiaSession.Dream = value
+        End Set
 
     End Property
 
@@ -43,10 +46,13 @@ Public Class smHost
         End Set
     End Property
 
-    Public ReadOnly Property Player() As FURRE Implements Interfaces.msHost.Player
+    Public Property Player() As FURRE Implements Interfaces.msHost.Player
         Get
             Return FurcadiaSession.Player
         End Get
+        Set(value As FURRE)
+            FurcadiaSession.Player = value
+        End Set
 
     End Property
 

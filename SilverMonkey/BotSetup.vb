@@ -6,7 +6,7 @@ Public Class BotSetup
 
 #Region "Public Fields"
 
-    Public bFile As New cBot
+    Public bFile As New BotOptions
 
 #End Region
 
@@ -49,18 +49,18 @@ Public Class BotSetup
 #Region "Private Methods"
 
     Private Sub BotSetup_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        If String.IsNullOrEmpty(bFile.BiniFile) Then
+        If String.IsNullOrEmpty(bFile.Name) Then
             Main.NewBot = True
         End If
 
-        TxtHPort.Text = bFile.lPort.ToString
-        TxtBx_CharIni.Text = bFile.IniFile
-        TxtBxMS_File.Text = bFile.MS_File
+        TxtHPort.Text = bFile.LocalhostPort.ToString
+        TxtBx_CharIni.Text = bFile.CharacterIniFile
+        TxtBxMS_File.Text = bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile
 
-        TxtBxBotIni.Text = Path.GetFileName(bFile.BiniFile)
-        MSEnableChkBx.Checked = bFile.MS_Engine_Enable
+        TxtBxBotIni.Text = Path.GetFileName(bFile.Name)
+        MSEnableChkBx.Checked = bFile.MonkeySpeakEngineOptions.EngineEnable
         TxtBxBotConroller.Text = bFile.BotController
-        StandAloneChkBx.Checked = bFile.StandAlone
+        StandAloneChkBx.Checked = bFile.Standalone
         ChkBxAutoConnect.Checked = bFile.AutoConnect
 
         TxtBxDreamURL.Text = bFile.DreamURL
@@ -126,18 +126,18 @@ Public Class BotSetup
             TxtBxBotIni.Text = "New Bot.bini"
         End If
 
-        bFile.BiniFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtBxBotIni.Text)
-        bFile.lPort = Convert.ToInt32(TxtHPort.Text)
+        bFile = New BotOptions(Path.Combine(Paths.SilverMonkeyBotPath, TxtBxBotIni.Text))
+        Integer.TryParse(TxtHPort.Text, bFile.LocalhostPort)
         Try
-            bFile.IniFile = TxtBx_CharIni.Text
+            bFile.CharacterIniFile = TxtBx_CharIni.Text
         Catch ex As ArgumentException
             MessageBox.Show(ex.Message, "+++ERROR+++", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
-        bFile.MS_File = TxtBxMS_File.Text
-        bFile.MS_Engine_Enable = CBool(MSEnableChkBx.CheckState)
+        bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = TxtBxMS_File.Text
+        bFile.MonkeySpeakEngineOptions.MS_Engine_Enable = CBool(MSEnableChkBx.CheckState)
         bFile.BotController = TxtBxBotConroller.Text
-        bFile.StandAlone = Convert.ToBoolean(StandAloneChkBx.Checked)
+        bFile.Standalone = Convert.ToBoolean(StandAloneChkBx.Checked)
         bFile.AutoConnect = ChkBxAutoConnect.Checked
 
         bFile.DreamURL = TxtBxDreamURL.Text
@@ -157,7 +157,7 @@ Public Class BotSetup
         bFile.log = ChckSaveToLog.Checked
 
         bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.IniFile)
+        Main.SaveRecentFile(bFile.Name)
         Me.DialogResult = DialogResult.OK
         Me.Close()
 

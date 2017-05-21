@@ -40,8 +40,6 @@ Namespace Engine.Libraries
 
 #Region "Fields"
 
-        Private WithEvents SubSys As New SubSystem()
-
 #End Region
 
 #Region "Public Fields"
@@ -246,7 +244,7 @@ Namespace Engine.Libraries
             Try
                 If CurrentPS_Stage = PsSystemRunning.PsNone Then
                     CurrentPS_Stage = PsBackupStage.GetDream
-                    SubSys.sendServer("ps get dream.*")
+                    FurcadiaSession.SendToServer("ps get dream.*")
                     Return True
                 End If
             Catch ex As Exception
@@ -591,7 +589,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
             Return str
         End Function
 
-        Private Sub PsReceived(o As Object, e As PhoenixSpeakEventArgs) Handles SubSys.PsReceived
+        Private Sub PsReceived(o As Object, e As PhoenixSpeakEventArgs) 'Handles SubSys.PsReceived
             'PsProcess = PsSystemRunning.PsBackup
             Dim ServerCommand = String.Empty
             If e.PsType = SubSystem.PsResponseType.PsError Then
@@ -688,7 +686,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
 
             End Select
 
-            If Not String.IsNullOrEmpty(ServerCommand) Then SubSys.sendServer(ServerCommand)
+            If Not String.IsNullOrEmpty(ServerCommand) Then SubSys.FurcadiaSession.SendToServer(ServerCommand)
             LastPSId = e.id
 
             'SubSystem.PsId.remove(id)

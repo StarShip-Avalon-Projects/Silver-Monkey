@@ -50,6 +50,7 @@ Namespace Engine
 
         Public EngineRestart As Boolean = False
 
+        Public FurcadiaSession As BotSession
         Public MS_Engine_Running As Boolean = False
 
         Private Const RES_MS_begin As String = "*MSPK V"
@@ -65,10 +66,10 @@ Namespace Engine
         ''' This Loads our MonkeyBeak Libraries
         ''' </para>
         ''' </summary>
-        Public Sub New(ByRef Options As EngineOptoons)
+        Public Sub New(ByRef Options As EngineOptoons, ByRef FurcSession As BotSession)
             MyBase.New(Options)
             SilverMonkeyEngineOptions = Options
-
+            FurcadiaSession = FurcSession
             'EngineStart(True)
             LibList = New List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
             ' Comment out Libs to Disable
@@ -84,7 +85,6 @@ Namespace Engine
             LibList.Add(New MsPhoenixSpeak())
             LibList.Add(New DatabaseSystem())
             LibList.Add(New MS_Dice())
-            LibList.Add(New Description())
             LibList.Add(New MonkeySpeakFurreList())
             LibList.Add(New Warning())
             LibList.Add(New Movement())
@@ -117,10 +117,6 @@ Namespace Engine
             LoadLibrary(LoadPlugins)
 
         End Sub
-
-        Public Shadows Function IsBotController(ByVal Name As String) As Boolean
-            Return Furcadia.Util.FurcadiaShortName(Name) = Furcadia.Util.FurcadiaShortName(SilverMonkeyEngineOptions.BotController)
-        End Function
 
         ''' <summary>
         ''' Wrapper Functions to read a Monkey Speak Script File and Pass the result to <see cref="LoadFromString"/>
@@ -337,7 +333,7 @@ Namespace Engine
                 VariableList.Add("DREAMOWNER", "")
                 VariableList.Add("DREAMNAME", "")
                 VariableList.Add("BOTNAME", "")
-                VariableList.Add("BOTCONTROLLER", SilverMonkeyEngineOptions.BotController)
+                VariableList.Add("BOTCONTROLLER", FurcadiaSession.BotController)
                 VariableList.Add(MS_Name, "")
                 VariableList.Add("MESSAGE", "")
                 VariableList.Add("BANISHNAME", "")
