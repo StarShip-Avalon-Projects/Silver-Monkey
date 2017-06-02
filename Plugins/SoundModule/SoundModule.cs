@@ -1,7 +1,8 @@
 using Furcadia.Net;
 using Microsoft.VisualBasic.CompilerServices;
 using Monkeyspeak;
-using SilverMonkey.Interfaces;
+using SilverMonkeyEngine.Engine;
+using SilverMonkeyEngine.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,20 +12,14 @@ using System.Text.RegularExpressions;
 
 namespace SilverMonkey
 {
-    public class SoundModule : msPlugin
+    public class SoundModule : ImsPlugin
     {
-        #region Public Fields
-
-        public const string VarPrefix = "%";
-
-        #endregion Public Fields
-
         #region Private Fields
 
         private const string REGEX_NameFilter = "[^a-zA-Z0-9\\0x0020_.|]+";
-        private msHost msHost;
+        private ImsHost msHost;
 
-        private Page mspage;
+        private MonkeySpeakPage mspage;
         private SoundPlayer simpleSound;
 
         #endregion Private Fields
@@ -55,7 +50,7 @@ namespace SilverMonkey
             set;
         }
 
-        public Page MsPage
+        public MonkeySpeakPage MsPage
         {
             get
             {
@@ -119,7 +114,7 @@ namespace SilverMonkey
             return Regex.Replace(value, REGEX_NameFilter, "").ToLower();
         }
 
-        public void Initialize(msHost Host)
+        public void Initialize(ImsHost Host)
         {
             msHost = Host;
         }

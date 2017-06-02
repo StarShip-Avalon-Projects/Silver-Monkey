@@ -19,29 +19,29 @@ Partial Class Main
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-    	Me.components = New System.ComponentModel.Container()
-    	Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
-    	Me.ContextTryIcon = New System.Windows.Forms.ContextMenuStrip(Me.components)
-    	Me.RestoreMainToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    	Me.EditorTrayIconMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    	Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-    	Me.ConnectTrayIconMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    	Me.DisconnectTrayIconMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    	Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-    	Me.ExitTrayIconMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    	Me.ActionTmr = New System.Windows.Forms.Timer(Me.components)
-    	Me.TS_Main = New System.Windows.Forms.StatusStrip()
-    	Me.TS_Status_BotName = New System.Windows.Forms.ToolStripStatusLabel()
-    	Me.FurcTimeLbl = New System.Windows.Forms.ToolStripStatusLabel()
-    	Me.TS_Filler = New System.Windows.Forms.ToolStripStatusLabel()
-    	Me.TS_Status_Server = New System.Windows.Forms.ToolStripStatusLabel()
-    	Me.TS_Status_Client = New System.Windows.Forms.ToolStripStatusLabel()
-    	Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
+        Me.ContextTryIcon = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.RestoreMainToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditorTrayIconMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ConnectTrayIconMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DisconnectTrayIconMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ExitTrayIconMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ActionTmr = New System.Windows.Forms.Timer(Me.components)
+        Me.TS_Main = New System.Windows.Forms.StatusStrip()
+        Me.TS_Status_BotName = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.FurcTimeLbl = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.TS_Filler = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripServerStatus = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripClientStatus = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.DreamCountTxtBx = New MonkeyCore.Controls.TextBox_NoFlicker()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-    	Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.toServer = New MonkeyCore.Controls.RichTextBoxEx()
         Me.EditMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.MenuCopy = New System.Windows.Forms.ToolStripMenuItem()
@@ -92,6 +92,7 @@ Partial Class Main
         Me.MainMenu1 = New System.Windows.Forms.MainMenu(Me.components)
         Me.BotIniOpen = New System.Windows.Forms.OpenFileDialog()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.FURREListBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.ContextTryIcon.SuspendLayout()
         Me.TS_Main.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -105,6 +106,7 @@ Partial Class Main
         CType(Me.se_, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.sw_, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
+        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ContextTryIcon
@@ -160,7 +162,7 @@ Partial Class Main
         '
         'TS_Main
         '
-        Me.TS_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TS_Status_BotName, Me.FurcTimeLbl, Me.TS_Filler, Me.TS_Status_Server, Me.TS_Status_Client})
+        Me.TS_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TS_Status_BotName, Me.FurcTimeLbl, Me.TS_Filler, Me.ToolStripServerStatus, Me.ToolStripClientStatus})
         Me.TS_Main.Location = New System.Drawing.Point(0, 351)
         Me.TS_Main.Name = "TS_Main"
         Me.TS_Main.Size = New System.Drawing.Size(437, 22)
@@ -189,33 +191,33 @@ Partial Class Main
         Me.TS_Filler.Size = New System.Drawing.Size(55, 17)
         Me.TS_Filler.Spring = True
         '
-        'TS_Status_Server
+        'ToolStripServerStatus
         '
-        Me.TS_Status_Server.Image = Global.SilverMonkey.My.Resources.Resources.images2
-        Me.TS_Status_Server.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.TS_Status_Server.Name = "TS_Status_Server"
-        Me.TS_Status_Server.Size = New System.Drawing.Size(106, 17)
-        Me.TS_Status_Server.Text = "Server Status"
-        Me.TS_Status_Server.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.TS_Status_Server.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.TS_Status_Server.ToolTipText = "Disconnected"
+        Me.ToolStripServerStatus.Image = Global.SilverMonkey.My.Resources.Resources.DisconnectedImg
+        Me.ToolStripServerStatus.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.ToolStripServerStatus.Name = "ToolStripServerStatus"
+        Me.ToolStripServerStatus.Size = New System.Drawing.Size(106, 17)
+        Me.ToolStripServerStatus.Text = "Server Status"
+        Me.ToolStripServerStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolStripServerStatus.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        Me.ToolStripServerStatus.ToolTipText = "Disconnected"
         '
-        'TS_Status_Client
+        'ToolStripClientStatus
         '
-        Me.TS_Status_Client.AutoSize = False
-        Me.TS_Status_Client.Image = Global.SilverMonkey.My.Resources.Resources.images2
-        Me.TS_Status_Client.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.TS_Status_Client.Name = "TS_Status_Client"
-        Me.TS_Status_Client.Size = New System.Drawing.Size(105, 17)
-        Me.TS_Status_Client.Text = "Client Status"
-        Me.TS_Status_Client.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.TS_Status_Client.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.TS_Status_Client.ToolTipText = "Disconnected"
+        Me.ToolStripClientStatus.AutoSize = False
+        Me.ToolStripClientStatus.Image = Global.SilverMonkey.My.Resources.Resources.DisconnectedImg
+        Me.ToolStripClientStatus.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.ToolStripClientStatus.Name = "ToolStripClientStatus"
+        Me.ToolStripClientStatus.Size = New System.Drawing.Size(105, 17)
+        Me.ToolStripClientStatus.Text = "Client Status"
+        Me.ToolStripClientStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolStripClientStatus.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        Me.ToolStripClientStatus.ToolTipText = "Disconnected"
         '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DreamCountTxtBx)
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.DreamList)
@@ -251,8 +253,9 @@ Partial Class Main
         'DreamList
         '
         Me.DreamList.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                        Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+
         Me.DreamList.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DreamList.FormattingEnabled = True
         Me.DreamList.HorizontalScrollbar = True
@@ -266,7 +269,7 @@ Partial Class Main
         'GroupBox3
         '
         Me.GroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox3.Controls.Add(Me.CheckBox1)
         Me.GroupBox3.Controls.Add(Me.toServer)
         Me.GroupBox3.Controls.Add(Me.Btn_Bold)
@@ -294,10 +297,9 @@ Partial Class Main
         'toServer
         '
         Me.toServer.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                        Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.toServer.ContextMenuStrip = Me.EditMenu
-        Me.toServer.DetectUrls = True
         Me.toServer.HScrollPos = 0
         Me.toServer.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.toServer.Location = New System.Drawing.Point(3, 28)
@@ -386,8 +388,8 @@ Partial Class Main
         'clientGroup
         '
         Me.clientGroup.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                        Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.clientGroup.Controls.Add(Me.log_)
         Me.clientGroup.Location = New System.Drawing.Point(12, 27)
         Me.clientGroup.Name = "clientGroup"
@@ -399,11 +401,10 @@ Partial Class Main
         'log_
         '
         Me.log_.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                        Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.log_.BackColor = System.Drawing.SystemColors.Window
         Me.log_.ContextMenuStrip = Me.CopyMenu
-        Me.log_.DetectUrls = True
         Me.log_.HScrollPos = 0
         Me.log_.Location = New System.Drawing.Point(3, 18)
         Me.log_.Name = "log_"
@@ -674,21 +675,20 @@ Partial Class Main
         'ContentsToolStripMenuItem
         '
         Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
-        Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
         Me.ContentsToolStripMenuItem.Text = "Contents"
-        AddHandler Me.ContentsToolStripMenuItem.Click, AddressOf Me.ContentsToolStripMenuItemClick
         '
         'AboutToolStripMenuItem1
         '
         Me.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1"
-        Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(122, 22)
         Me.AboutToolStripMenuItem1.Text = "About"
         '
         'LinksToolStripMenuItem
         '
         Me.LinksToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSTutorialsToolStripMenuItem})
         Me.LinksToolStripMenuItem.Name = "LinksToolStripMenuItem"
-        Me.LinksToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.LinksToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
         Me.LinksToolStripMenuItem.Text = "Links"
         '
         'TSTutorialsToolStripMenuItem
@@ -711,6 +711,10 @@ Partial Class Main
         '
         Me.BotIniOpen.DefaultExt = "bini"
         Me.BotIniOpen.Filter = "Bot Files|*.bini"
+        '
+        'FURREListBindingSource
+        '
+        Me.FURREListBindingSource.DataSource = GetType(Furcadia.Net.FURREList)
         '
         'Main
         '
@@ -750,15 +754,17 @@ Partial Class Main
         CType(Me.sw_, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
+        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
+
     End Sub
     Friend WithEvents ActionTmr As System.Windows.Forms.Timer
     Friend WithEvents ContextTryIcon As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents TS_Main As System.Windows.Forms.StatusStrip
     Friend WithEvents TS_Status_BotName As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents TS_Status_Server As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents TS_Status_Client As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents ToolStripServerStatus As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents ToolStripClientStatus As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents TS_Filler As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
@@ -824,5 +830,5 @@ Partial Class Main
     Friend WithEvents LinksToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents TSTutorialsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExportMonkeySpeakToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-
+    Friend WithEvents FURREListBindingSource As Windows.Forms.BindingSource
 End Class

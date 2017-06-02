@@ -1,7 +1,7 @@
-﻿Imports System.Windows.Forms
-Imports System.Drawing
-Imports MonkeyCore.Settings
+﻿Imports System.Drawing
+Imports System.Windows.Forms
 Imports MonkeyCore
+Imports SilverMonkeyEngine
 
 Public Class NewBott
 
@@ -19,12 +19,14 @@ Public Class NewBott
 #End Region
 
 #Region "Controls"
+
     Public BtnCharacterINI As New Button
     Public BtnFileLocation As New Button
     Public LblBotController As New Label
     Public LblBotName As New Label
     Public LblCharacterINI As New Label
     Public LblFileLocation As New Label
+
     'Value 4
     Public RadioGoDreamURL As New RadioButton
 
@@ -43,6 +45,7 @@ Public Class NewBott
     Public TxtbxDreamURL As New TextBox
     Public TxtbxFilelocation As New TextBox
     Private Const PageCount As Integer = 2
+
 #End Region
 
 #Region "Public Methods"
@@ -344,6 +347,7 @@ Public Class NewBott
         Me.Dispose()
 
     End Sub
+
     Private Sub SetForm(Index As Integer)
 
         Select Case Index

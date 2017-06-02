@@ -1,5 +1,5 @@
-﻿Imports System.Windows.Forms
-Imports System.Text
+﻿Imports System.Text
+Imports System.Windows.Forms
 Imports MonkeyCore.Controls
 
 <CLSCompliant(True)>
@@ -66,7 +66,7 @@ Public Class TextBoxWriter
     End Sub
 
     Public Shadows Sub WriteLine(ByVal s As String)
-        Write(s + Environment.NewLine)
+        Write(s) '+ Environment.NewLine
     End Sub
 
 #End Region
@@ -95,6 +95,7 @@ Public Class TextBoxWriter
         Builder.Append(s)
 
     End Sub
+
     Private Sub OnHandleCreated(ByVal sender As Object,
        ByVal e As EventArgs)
         If (Builder Is Nothing = False) Then

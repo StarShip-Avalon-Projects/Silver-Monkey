@@ -1,5 +1,4 @@
-﻿Imports Monkeyspeak
-Imports Furcadia.Net
+﻿Imports SilverMonkeyEngine.Engine
 
 Public Interface msPlugin
 
@@ -9,7 +8,7 @@ Public Interface msPlugin
 
     Property enabled As Boolean
 
-    Property MsPage As Monkeyspeak.Page
+    Property MsPage As MonkeySpeakPage
     ReadOnly Property Name() As String
     ReadOnly Property Version() As String
 
@@ -18,6 +17,7 @@ Public Interface msPlugin
 #Region "Public Methods"
 
     Sub Initialize(ByVal Host As SilverMonkey.Interfaces.msHost)
+
     Function MessagePump(ByRef ServerInstruction As String) As Boolean
 
     'Property Player As FURRE

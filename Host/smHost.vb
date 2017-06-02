@@ -1,12 +1,10 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Text
-Imports Monkeyspeak
-Imports Furcadia.Net
+﻿Imports Furcadia.Net
 Imports MonkeyCore
+Imports SilverMonkeyEngine
+Imports SilverMonkeyEngine.Engine
 
 Public Class smHost
-    Implements SilverMonkey.Interfaces.msHost
+    Implements Interfaces.ImsHost
 
 #Region "Private Fields"
 
@@ -16,13 +14,13 @@ Public Class smHost
 
 #Region "Public Properties"
 
-    Public ReadOnly Property BotName As String Implements SilverMonkey.Interfaces.msHost.BotName
+    Public ReadOnly Property BotName As String Implements Interfaces.ImsHost.BotName
         Get
             Return ""
         End Get
     End Property
 
-    Public Property data As String Implements SilverMonkey.Interfaces.msHost.Data
+    Public Property data As String Implements Interfaces.ImsHost.Data
         Get
             Return serverData
         End Get
@@ -31,7 +29,7 @@ Public Class smHost
         End Set
     End Property
 
-    Public Property Dream() As DREAM Implements SilverMonkey.Interfaces.msHost.Dream
+    Public Property Dream() As DREAM Implements Interfaces.ImsHost.Dream
         Get
             Return callbk.DREAM
         End Get
@@ -40,13 +38,13 @@ Public Class smHost
         End Set
     End Property
 
-    Public WriteOnly Property MsPage() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.MsPage
-        Set(value As Monkeyspeak.Page)
-            MainEngine.MSpage = value
+    Public WriteOnly Property MsPage() As MonkeySpeakPage Implements Interfaces.ImsHost.MsPage
+        Set(value As MonkeySpeakPage)
+            MsPage = value
         End Set
     End Property
 
-    Public Property Player() As FURRE Implements SilverMonkey.Interfaces.msHost.Player
+    Public Property Player() As FURRE Implements Interfaces.ImsHost.Player
         Get
             Return callbk.Player
         End Get
@@ -59,20 +57,20 @@ Public Class smHost
 
 #Region "Public Methods"
 
-    Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements SilverMonkey.Interfaces.msHost.logError
+    Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements Interfaces.ImsHost.logError
         Dim Err As New ErrorLogging(Ex, ObjectThrowingError)
     End Sub
 
-    Public Sub SendClientMessage(Tag As String, data As String) Implements SilverMonkey.Interfaces.msHost.SendClientMessage
+    Public Sub SendClientMessage(Tag As String, data As String) Implements Interfaces.ImsHost.SendClientMessage
         callbk.SendClientMessage(Tag, data)
     End Sub
 
-    Sub sendServer(ByRef var As String) Implements SilverMonkey.Interfaces.msHost.sendServer
+    Sub sendServer(ByRef var As String) Implements Interfaces.ImsHost.sendServer
         callbk.TextToServer(var)
     End Sub
 
-    Sub Start(ByRef page As Monkeyspeak.Page) Implements SilverMonkey.Interfaces.msHost.start
-        MainEngine.MSpage = page
+    Sub Start(ByRef page As MonkeySpeakPage) Implements Interfaces.ImsHost.start
+        MsPage = page
     End Sub
 
 #End Region

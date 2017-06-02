@@ -1,37 +1,37 @@
-﻿Imports Monkeyspeak
-Imports Furcadia.Net
-
+﻿Imports Furcadia.Net
 Imports Furcadia.Text.Base95
+Imports Monkeyspeak
+Imports SilverMonkeyEngine
+Imports SilverMonkeyEngine.Engine
 
 ''' <summary>
-'''
 ''' </summary>
 Public Class TheClaaaw
-    Implements Interfaces.msPlugin
+    Implements Interfaces.ImsPlugin
 
 #Region "Private Fields"
 
-    Private msHost As Interfaces.msHost
+    Private msHost As Interfaces.ImsHost
 
 #End Region
 
 #Region "Public Properties"
 
-    Public ReadOnly Property Description() As String Implements Interfaces.msPlugin.Description
+    Public ReadOnly Property Description() As String Implements Interfaces.ImsPlugin.Description
         Get
             Return "Allows the bot to work with own paw and feet objects."
         End Get
     End Property
 
-    Public Property Enabled As Boolean Implements SilverMonkey.Interfaces.msPlugin.enabled
+    Public Property Enabled As Boolean Implements Interfaces.ImsPlugin.enabled
 
-    Public ReadOnly Property Name() As String Implements Interfaces.msPlugin.Name
+    Public ReadOnly Property Name() As String Implements Interfaces.ImsPlugin.Name
         Get
             Return "The Claaaw"
         End Get
     End Property
 
-    Public ReadOnly Property Version() As String Implements SilverMonkey.Interfaces.msPlugin.Version
+    Public ReadOnly Property Version() As String Implements Interfaces.ImsPlugin.Version
         Get
             Dim VersionInfo As Version = System.Reflection.Assembly.GetExecutingAssembly.GetName.Version
             Return VersionInfo.Major & "." & VersionInfo.Minor & "." & VersionInfo.Build & "." & VersionInfo.Revision
@@ -54,10 +54,10 @@ Public Class TheClaaaw
     End Function
 
     ''' <summary>
-    '''
     ''' </summary>
-    ''' <param name="Host"></param>
-    Public Sub Initialize(ByVal Host As Interfaces.msHost) Implements Interfaces.msPlugin.Initialize
+    ''' <param name="Host">
+    ''' </param>
+    Public Sub Initialize(ByVal Host As Interfaces.ImsHost) Implements Interfaces.ImsPlugin.Initialize
         msHost = Host
     End Sub
 
@@ -67,27 +67,29 @@ Public Class TheClaaaw
 
     Public Player As FURRE
 
-    Private _MSpage As Monkeyspeak.Page
+    Private _MSpage As MonkeySpeakPage
     Private msDream As DREAM
+
     Public ReadOnly Property Dream As DREAM
         Get
             Return msHost.Dream
         End Get
     End Property
 
-    Public Property MsPage As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msPlugin.MsPage
+    Public Property MsPage As MonkeySpeakPage Implements Interfaces.ImsPlugin.MsPage
         Get
             Return _MSpage
         End Get
-        Set(value As Monkeyspeak.Page)
+        Set(value As MonkeySpeakPage)
 
             _MSpage = value
             msHost.MsPage = _MSpage
         End Set
     End Property
+
 #End Region
 
-    Function MessagePump(ByRef ServerInstruction As String) As Boolean Implements SilverMonkey.Interfaces.msPlugin.MessagePump
+    Function MessagePump(ByRef ServerInstruction As String) As Boolean Implements Interfaces.ImsPlugin.MessagePump
         'Set Object At Feet
         If ServerInstruction.StartsWith("%") Then
             Player = NameToFurre(msHost.BotName, True)
@@ -177,7 +179,7 @@ Public Class TheClaaaw
         Return True
     End Function
 
-    Public Sub Start() Implements SilverMonkey.Interfaces.msPlugin.Start
+    Public Sub Start() Implements Interfaces.ImsPlugin.Start
         '(0:x) When the bot picks up or drops an object
         MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 2000,
             Function()
@@ -214,6 +216,7 @@ Public Class TheClaaaw
         MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Effect, 2003,
                 AddressOf SetVariableToFloorObject, "(5:2003) set the variable %Variable to the number of the object at the bots feet.")
     End Sub
+
     '(5:2000) use the object in the bots paws.
     Function UseObject(reader As TriggerReader) As Boolean
         Try
@@ -224,17 +227,21 @@ Public Class TheClaaaw
         End Try
         Return True
     End Function
+
 #Region "Helper Functions"
+
     Public Function IsBot(ByRef p As FURRE) As Boolean
         Return p.ShortName = msHost.BotName.ToFurcShortName
     End Function
 
     ''' <summary>
-    '''
     ''' </summary>
-    ''' <param name="sname"></param>
-    ''' <param name="UbdateMSVariableName"></param>
-    ''' <returns></returns>
+    ''' <param name="sname">
+    ''' </param>
+    ''' <param name="UbdateMSVariableName">
+    ''' </param>
+    ''' <returns>
+    ''' </returns>
     Public Function NameToFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
         Dim p As New FURRE
         p.Name = sname
@@ -258,6 +265,7 @@ Public Class TheClaaaw
         End If
         Return result
     End Function
+
     Private Function fIDtoFurre(ByRef ID As Integer) As FURRE
 
         For Each Character As FURRE In Dream.FurreList
@@ -266,5 +274,7 @@ Public Class TheClaaaw
             End If
         Next
     End Function
+
 #End Region
+
 End Class

@@ -1,10 +1,10 @@
 ﻿Imports Furcadia.Net
-Imports Furcadia.Net.Proxy
 Imports MonkeyCore
-Imports SilverMonkey
+Imports SilverMonkeyEngine
+Imports SilverMonkeyEngine.Engine
 
 Public Class smHost
-    Implements Interfaces.msHost
+    Implements Interfaces.ImsHost
 
 #Region "Private Fields"
 
@@ -14,23 +14,23 @@ Public Class smHost
 
 #Region "Public Properties"
 
-    Public ReadOnly Property BotName As String Implements SilverMonkey.Interfaces.msHost.BotName
+    Public ReadOnly Property BotName As String Implements Interfaces.ImsHost.BotName
         Get
             Return FurcadiaSession.ConnectedCharacterName
         End Get
     End Property
 
-    Public Property data As String Implements Interfaces.msHost.Data
+    Public Property data As String Implements Interfaces.ImsHost.Data
         Get
             Return Nothing
-            ' Return FurcSession.
+            'Return FurcSession.
         End Get
         Set(value As String)
             ' FurcSession.serverData = value
         End Set
     End Property
 
-    Public Property Dream As DREAM Implements Interfaces.msHost.Dream
+    Public Property Dream As DREAM Implements Interfaces.ImsHost.Dream
         Get
             Return FurcadiaSession.Dream
         End Get
@@ -40,13 +40,13 @@ Public Class smHost
 
     End Property
 
-    Public WriteOnly Property MsPage() As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msHost.MsPage
-        Set(value As Monkeyspeak.Page)
+    Public WriteOnly Property MsPage() As MonkeySpeakPage Implements Interfaces.ImsHost.MsPage
+        Set(value As MonkeySpeakPage)
             FurcadiaSession.MSpage = value
         End Set
     End Property
 
-    Public Property Player() As FURRE Implements Interfaces.msHost.Player
+    Public Property Player() As FURRE Implements Interfaces.ImsHost.Player
         Get
             Return FurcadiaSession.Player
         End Get
@@ -64,21 +64,22 @@ Public Class smHost
         FurcadiaSession = Session
     End Sub
 
-    Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements SilverMonkey.Interfaces.msHost.logError
+    Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements Interfaces.ImsHost.logError
         Dim Err As New ErrorLogging(Ex, ObjectThrowingError)
     End Sub
 
-    Public Sub SendClientMessage(Tag As String, data As String) Implements SilverMonkey.Interfaces.msHost.SendClientMessage
+    Public Sub SendClientMessage(Tag As String, data As String) Implements Interfaces.ImsHost.SendClientMessage
         SendClientMessage(Tag, data)
     End Sub
 
-    Sub sendServer(ByRef var As String) Implements SilverMonkey.Interfaces.msHost.sendServer
+    Sub sendServer(ByRef var As String) Implements Interfaces.ImsHost.sendServer
 
     End Sub
 
-    Sub Start(ByRef page As Monkeyspeak.Page) Implements SilverMonkey.Interfaces.msHost.start
+    Sub Start(ByRef page As MonkeySpeakPage) Implements Interfaces.ImsHost.start
         FurcadiaSession.MSpage = page
     End Sub
+
 #End Region
 
 End Class

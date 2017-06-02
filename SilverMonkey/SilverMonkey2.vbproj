@@ -150,17 +150,6 @@
     <Compile Include="Debug\SetVariables.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Engine\BaseClasses\BaseSubSystem.vb" />
-    <Compile Include="Engine\EngineOptoons.vb" />
-    <Compile Include="Engine\Libraries\MonkeySpeakLibrary.vb" />
-    <Compile Include="Engine\Libraries\MS Repq.vb" />
-    <Compile Include="Engine\Libraries\MS Verbot.vb" />
-    <Compile Include="Engine\Libraries\Pounce\MsPounce.vb" />
-    <Compile Include="Engine\Libraries\Pounce\PounceFurre.vb" />
-    <Compile Include="IO\NameList.vb" />
-    <Compile Include="Engine\PS Pre-Processor\SubSystem.vb" />
-    <Compile Include="Engine\PS Pre-Processor\DatabaseSystem.vb" />
-    <Compile Include="Engine\PS Pre-Processor\PhoenixSpeakVariable.vb" />
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
@@ -185,26 +174,9 @@
     <Compile Include="NewBot.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Engine\Libraries\Banish.vb" />
-    <Compile Include="Engine\Libraries\HelperModule.vb" />
-    <Compile Include="Engine\MainEngine.vb" />
-    <Compile Include="Engine\Libraries\Movement.vb" />
-    <Compile Include="Engine\Libraries\MS Dice.vb" />
-    <Compile Include="Engine\Libraries\MS MemberList.vb" />
-    <Compile Include="Engine\Libraries\MS Time.vb" />
-    <Compile Include="Engine\Libraries\MS IO.vb" />
-    <Compile Include="Engine\Libraries\MSPK_MDB.vb" />
-    <Compile Include="Engine\Libraries\MS_Cookie.vb" />
-    <Compile Include="Engine\Libraries\MS_DreamTransfer.vb" />
-    <Compile Include="Engine\Libraries\MS_Quotes.vb" />
-    <Compile Include="Engine\PS Pre-Processor\MSPhoenixSpeak.vb" />
-    <Compile Include="Engine\Libraries\FurreList.vb" />
-    <Compile Include="Engine\Libraries\Warning.vb" />
-    <Compile Include="Engine\Libraries\WmCpyDta.vb" />
     <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="Helper Classes\MiscUtils.vb" />
     <Compile Include="MainModule.vb" />
-    <Compile Include="Engine\Libraries\MS_Engine.vb" />
     <Compile Include="Helper Classes\DownLoadImage.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
@@ -229,8 +201,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SessionHandler\BotOptions.vb" />
-    <Compile Include="SessionHandler\BotSession.vb" />
     <Compile Include="Settings.vb" />
     <Compile Include="Debug\Variables.Designer.vb">
       <DependentUpon>Variables.vb</DependentUpon>
@@ -239,8 +209,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Helper Classes\smHost.vb" />
-    <Compile Include="Web Server Access\WebException.vb" />
-    <Compile Include="Web Server Access\WebRequests.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutBox1.resx">
@@ -301,6 +269,7 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\DataSources\Furcadia.Net.FURREList.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
@@ -327,6 +296,12 @@
     <DesignData Include="resources\1240733289676066064.png" />
     <None Include="resources\metal.ico" />
     <None Include="resources\metal.png" />
+    <None Include="resources\Connected.ico" />
+    <None Include="resources\Connecting.ico" />
+    <None Include="resources\Disconnected.ico" />
+    <None Include="resources\Connected.jpg" />
+    <None Include="resources\Connecting.jpg" />
+    <None Include="resources\Disconnected.jpg" />
     <Content Include="SM Lisence.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -335,18 +310,6 @@
     </Content>
     <DesignData Include="resources\1549_Paper_clip_blue.png" />
     <DesignData Include="resources\1549_Paper_clip_gray.png" />
-    <Content Include="resources\images2.ico" />
-    <Content Include="resources\images2.jpg" />
-    <Content Include="resources\images2v.ico" />
-    <Content Include="resources\images2v.jpg" />
-    <Content Include="resources\images3.ico" />
-    <Content Include="resources\images3.jpg" />
-    <Content Include="resources\images3v.ico" />
-    <Content Include="resources\images3v.jpg" />
-    <Content Include="resources\images5.ico" />
-    <Content Include="resources\images5.jpg" />
-    <Content Include="resources\images5v.ico" />
-    <Content Include="resources\images5v.jpg" />
     <None Include="resources\PasteHS.png" />
     <None Include="resources\OpenFile.png" />
     <None Include="resources\NewDocumentHS.png" />
@@ -364,10 +327,6 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
-      <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
-      <Name>Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
       <Project>{F4391F6F-0239-48E2-B415-C39A6D920303}</Project>
       <Name>BugTraqConnect</Name>
@@ -379,6 +338,10 @@
     <ProjectReference Include="..\MonkeySpeakEx\MonkeySpeakEx.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Name>MonkeySpeakEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
+      <Project>{3C0E1CBF-D3B9-4282-AC97-4E0216CA6C97}</Project>
+      <Name>SilverMonkeyEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\VerbotSDK\Verbot5Library.csproj">
       <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>

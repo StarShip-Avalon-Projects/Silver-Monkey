@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms
+Imports SilverMonkeyEngine
 
 Public Class Variables
     Inherits Form
@@ -10,6 +11,7 @@ Public Class Variables
 
     'Dim RefreshList As New Thread(AddressOf RefreshMe)
     Dim Lock As New Object
+
 #End Region
 
 #Region "Private Delegates"
@@ -44,12 +46,11 @@ Public Class Variables
                         If ListView1.Items.Item(i).SubItems(2).Text <> itm.SubItems.Item(2).Text Then
                             ListView1.Items.Item(i) = itm
                         End If
-
                     Else
                         ListView1.Items.Add(itm)
                     End If
 
-                    '  ListView1.Groups.
+                    ' ListView1.Groups.
 
                 Next
             End SyncLock
@@ -64,6 +65,7 @@ Public Class Variables
         updateVariables()
 
     End Sub
+
     Private Sub ChkBxRefresh_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkBxRefresh.CheckedChanged
         If ChkBxRefresh.Checked Then
             Me.alarm = New Threading.Timer(AddressOf Tick, Nothing, 1000, 1000)

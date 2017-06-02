@@ -1,11 +1,13 @@
-﻿Public Interface msHost
+﻿Imports SilverMonkeyEngine.Engine
+
+Public Interface msHost
 
 #Region "Public Properties"
 
     ReadOnly Property BotName As String
     Property Data As String
     Property Dream As Furcadia.Net.DREAM
-    WriteOnly Property MsPage As Monkeyspeak.Page
+    WriteOnly Property MsPage As MonkeySpeakPage
     Property Player As Furcadia.Net.FURRE
 
 #End Region
@@ -18,7 +20,7 @@
 
     Sub sendServer(ByRef var As String)
 
-    Sub start(ByRef page As Monkeyspeak.Page)
+    Sub start(ByRef page As MonkeySpeakPage)
 
 #End Region
 

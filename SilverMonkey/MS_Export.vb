@@ -1,7 +1,7 @@
-﻿Imports System.Text.RegularExpressions
-Imports System.Collections.Generic
-Imports Monkeyspeak
-Imports SilverMonkey.Engine
+﻿Imports System.Collections.Generic
+Imports System.Text.RegularExpressions
+Imports SilverMonkeyEngine
+Imports SilverMonkeyEngine.Engine
 
 Public Class MS_Export
 
@@ -22,14 +22,6 @@ Public Class MS_Export
         Condition = 1
         Effect = 5
     End Enum
-
-#End Region
-
-#Region "Private Methods"
-
-#End Region
-
-#Region "Public Classes"
 
 #End Region
 
@@ -107,8 +99,8 @@ Public Class MS_Export
     End Sub
 
     Private Sub MS_Export_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        MainMsEngine.MS_Stared = 0
-        FurcadiaSession.MainEngine.EngineStart(False)
+        Dim page = New MonkeySpeakPage(FurcadiaSession.MainEngine, CType(FurcadiaSession.MSpage, MonkeySpeakPage))
+        page.Start()
         Dim Test As New List(Of String)
         For Each item As String In FurcadiaSession.MSpage.GetTriggerDescriptions()
             Test.Add(item)
