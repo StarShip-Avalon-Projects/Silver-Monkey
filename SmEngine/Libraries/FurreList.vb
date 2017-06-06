@@ -1,12 +1,10 @@
-﻿Imports Furcadia.Net
+﻿Imports Furcadia.Net.Dream
 Imports Monkeyspeak
 
 Namespace Engine.Libraries
 
     Public Class MonkeySpeakFurreList
         Inherits MonkeySpeakLibrary
-
-
 
 #Region "Public Constructors"
 

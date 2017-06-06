@@ -1,4 +1,4 @@
-using Furcadia.Net;
+using Furcadia.Net.Dream;
 using Microsoft.VisualBasic.CompilerServices;
 using Monkeyspeak;
 using SilverMonkeyEngine.Engine;

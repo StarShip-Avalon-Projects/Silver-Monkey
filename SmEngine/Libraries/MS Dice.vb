@@ -1,6 +1,7 @@
 ﻿Imports Furcadia.Net.Utils.ServerObjects
 Imports Furcadia.Net.Utils.ServerParser
 Imports Monkeyspeak
+Imports Furcadia.Net.Dream
 
 Namespace Engine.Libraries
 

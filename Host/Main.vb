@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Text.RegularExpressions
 Imports Furcadia.Net
+Imports Furcadia.Net.Dream
 Imports Ionic.Zip
 Imports MonkeyCore
 Imports SilverMonkeyEngine

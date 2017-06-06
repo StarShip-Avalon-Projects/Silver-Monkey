@@ -3,11 +3,11 @@
      xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
        xmlns:ui="http://schemas.microsoft.com/wix/UIExtension">
   <?define ProductName="Silver Monkey" ?>
-  <?define CompanyName="TSProjects" ?>
+  <?define CompanyName="Starship Avalon Projects" ?>
   <Product
     Id="*"
     Name="$(var.ProductName)"
-    Version="$(var.BuildVersion)"
+    Version="$(var.FileVersion)"
     Manufacturer="$(var.CompanyName)"
     Language="1033"
     UpgradeCode="A709F3A0-BEE3-403E-AC47-1FE1AD189C77">
@@ -183,6 +183,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <!-- Step 3: Tell WiX to install the shortcut -->
       <ComponentGroupRef Id="SilverMonkey2.Binaries" />
       <ComponentGroupRef Id="SilverMonkey2.Symbols" />
+      <ComponentRef Id="smHelp" />
       <ComponentGroupRef Id="MonkeyCore.Binaries" />
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
       <ComponentGroupRef Id="BugTraqConnect.Binaries" />
@@ -191,17 +192,18 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentRef Id="MonkeySpeakEditorShortcut" />
       <ComponentGroupRef Id="TheClaaaw.Binaries" />
       <ComponentGroupRef Id="TheClaaaw.Symbols" />
-      <ComponentRef Id="TheClaaawIni" />
+      <!-- <ComponentRef Id="TheClaaawIni" /> -->
       <ComponentGroupRef Id="MonkeySpeakEditor.Binaries" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Content" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Symbols" />
+      <ComponentRef Id="MonkeySpeakHelp" />
       <ComponentGroupRef Id="MonkeySpeakEx.Binaries" />
       <ComponentGroupRef Id="MonkeySpeakEx.Symbols" />
-      <ComponentRef Id="smHelp" />
+
       <ComponentGroupRef Id="FurcadiaLib.Binaries" />
       <ComponentGroupRef Id="FurcadiaLib.Symbols" />
-      <ComponentGroupRef Id="Interfaces.Binaries" />
-      <ComponentGroupRef Id="Interfaces.Symbols" />
+      <ComponentGroupRef Id="SilverMonkeyEngine.Binaries" />
+      <ComponentGroupRef Id="SilverMonkeyEngine.Symbols" />
       <ComponentGroupRef Id="Verbot5Library.Binaries" />
       <ComponentGroupRef Id="Verbot5Library.Symbols" />
       <ComponentRef Id="FCTB" />
@@ -210,11 +212,10 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentRef Id="SQLite" />
       <ComponentRef Id="X86" />
       <ComponentRef Id="X64" />
-      <Feature Id="DataMonkey" Title="Database Application" Level="2">
-        <ComponentGroupRef Id="DataMonkey.Binaries" />
-        <ComponentGroupRef Id="DataMonkey.Symbols" />
-        <ComponentRef Id="DataMonkeyShortcut" />
-      </Feature>
+      <ComponentGroupRef Id="DataMonkey.Binaries" />
+      <ComponentGroupRef Id="DataMonkey.Symbols" />
+      <ComponentRef Id="DataMonkeyShortcut" />
+      <ComponentRef Id="DataMokeyHelp" />
       <Feature Id="ChatBot" Title="Chatbot Application" Level="2">
         <ComponentGroupRef Id="ChatBot.Binaries" />
         <ComponentGroupRef Id="ChatBot.Symbols" />
@@ -236,7 +237,13 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
     <!-- Help file-->
     <DirectoryRef Id="APPLICATIONFOLDER">
       <Component Id="smHelp" Guid="{7FEB427A-07AB-4083-8792-2005152C64F3}">
-        <File Id="smHelp" Source="$(var.MonkeySpeakEditor.TargetDir)Silver Monkey.chm" KeyPath="no" Checksum="yes" />
+        <File Id="smHelp" Source="$(var.SolutionDir)Build/Help/Silver Monkey.chm" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="MonkeySpeakHelp" Guid="{34c5d490-ae16-43ea-95b9-84276ad16370}">
+        <File Id="MonkeySpeakEditorHelp" Source="$(var.SolutionDir)Build/Help/Monkey_Speak_Editor_Help.chm" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="DataMokeyHelp" Guid="{0219f1a1-d0d4-4c1b-817b-a6fa3f6e95fd}">
+        <File Id="DataMonkeyHelp" Source="$(var.SolutionDir)Build/Help/Data_Monkey_Help.chm" KeyPath="no" Checksum="yes" />
       </Component>
     </DirectoryRef>
 
@@ -271,10 +278,10 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
     </DirectoryRef>
 
     <!-- Plugin FilesS-->
-    <DirectoryRef Id="PLUGINS">
+    <!--   <DirectoryRef Id="PLUGINS">
       <Component Id="TheClaaawIni" Guid="{0865D700-279F-4369-A1D5-AD4E89CAB1CA}">
         <File Id="TheClaaawIni" Source="$(var.TheClaaaw.TargetDir)TheClaaaw.ini" KeyPath="no" Checksum="yes" />
       </Component>
-    </DirectoryRef>
+    </DirectoryRef> -->
   </Product>
 </Wix>

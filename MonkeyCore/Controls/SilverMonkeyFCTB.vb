@@ -1,17 +1,19 @@
-﻿Imports System.ComponentModel
-Imports System.Drawing
-Imports System.Net.WebRequestMethods
+﻿Imports System.Drawing
 Imports FastColoredTextBoxNS
 Imports Irony
 Imports Irony.Parsing
 
 Namespace Controls
+
     ''' <summary>
     ''' FastColoredTextBox with Irony parser support
     ''' </summary>
     ''' <see cref="Http://www.codeproject.com/articles/161871/fast-colored-textbox-for-syntax-highlighting"/>
+    '''    ''' ''' ''' '''
     ''' <see cref="https://github.com/PavelTorgashov/FastColoredTextBox"/>
+    '''    ''' ''' ''' '''
     ''' <see cref="Http://irony.codeplex.com/"/>
+    '''
     Public Class SilverMonkeyFCTB
         Inherits FastColoredTextBox
 
@@ -23,13 +25,16 @@ Namespace Controls
 
 #Region "Protected Fields"
 
-        Protected m_parser As Parser
+        Private _grammar As Grammar
+        Private m_parser As Parser
 
 #End Region
 
 #Region "Public Constructors"
 
         Public Sub New()
+            _grammar = New Grammar()
+            m_parser = New Parser(_grammar)
         End Sub
 
 #End Region
@@ -53,12 +58,16 @@ Namespace Controls
 
         Public Property Grammar() As Grammar
             Get
-                If m_parser IsNot Nothing AndAlso m_parser.Language IsNot Nothing AndAlso m_parser.Language.Grammar IsNot Nothing Then
+
+                If m_parser IsNot Nothing AndAlso m_parser.Language IsNot Nothing _
+                    AndAlso m_parser.Language.Grammar IsNot Nothing Then
+
                     Return m_parser.Language.Grammar
                 End If
-                Return Nothing
+                Return _grammar
             End Get
             Set
+                _grammar = Value
                 SetParser(Value)
             End Set
         End Property
@@ -187,13 +196,15 @@ Namespace Controls
                 End Select
             Next
         End Sub
+
         Protected Overridable Sub InitBraces()
             LeftBracket = ControlChars.NullChar
             RightBracket = ControlChars.NullChar
             LeftBracket2 = ControlChars.NullChar
             RightBracket2 = ControlChars.NullChar
 
-            ' select the first two pair of braces with the length of exactly one char (FCTB restrictions)
+            ' select the first two pair of braces with the length of exactly
+            ' one char (FCTB restrictions)
             Dim braces = m_parser.Language.Grammar.KeyTerms.[Select](Function(pair) pair.Value).Where(Function(term) term.Flags.IsSet(TermFlags.IsOpenBrace)).Where(Function(term) term.IsPairFor IsNot Nothing AndAlso TypeOf term.IsPairFor Is KeyTerm).Where(Function(term) term.Text.Length = 1).Where(Function(term) DirectCast(term.IsPairFor, KeyTerm).Text.Length = 1).Take(2)
             If braces.Any() Then
                 ' first pair
@@ -251,6 +262,7 @@ Namespace Controls
                 m_Cancel = Value
             End Set
         End Property
+
         Public Property Style() As Style
             Get
                 Return m_Style
@@ -263,4 +275,5 @@ Namespace Controls
 #End Region
 
     End Class
+
 End Namespace

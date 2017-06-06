@@ -1,2 +1,2 @@
-msbuild /t:BuildAll  Solution.build
+msbuild /t:BuildAll /fl /flp:logfile=MyProjectOutput.log;verbosity=diagnostic  Solution.build
 pause

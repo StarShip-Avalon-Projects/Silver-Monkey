@@ -63,7 +63,7 @@ Namespace Engine
             LibList.Add(New Banish(MSEngine.FurcadiaSession))
             LibList.Add(New MathLibrary(MSEngine.FurcadiaSession))
             LibList.Add(New MS_Time(MSEngine.FurcadiaSession))
-            LibList.Add(New MSPK_MDB(MSEngine.FurcadiaSession))
+            ' LibList.Add(New MSPK_MDB(MSEngine.FurcadiaSession))
             LibList.Add(New MSPK_Web(MSEngine.FurcadiaSession))
             LibList.Add(New MS_Cookie(MSEngine.FurcadiaSession))
             LibList.Add(New MsPhoenixSpeak(MSEngine.FurcadiaSession))
@@ -103,7 +103,7 @@ Namespace Engine
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Shadows Function LoadLibrary(ByRef LoadPlugins As Boolean) As MonkeySpeakPage
+        Public Shadows Function LoadLibrary(ByRef LoadPlugins As Boolean) As Page
             'Library Loaded?.. Get the Hell out of here
             If MS_Started() Then Return Me
             MS_Stared += 1
@@ -115,12 +115,13 @@ Namespace Engine
          End Function, "(0:0) When the bot starts,")
             Try
                 MsPage.LoadSysLibrary()
+
 #If CONFIG = "Release" Then
-            '(5:105) raise an error.
-            MonkeySpeakPage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
             '(5:110) load library from file {...}.
-            MonkeySpeakPage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
+            MsPage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
 #ElseIf CONFIG = "Debug" Then
+                '(5:105) raise an error.
+                MsPage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
                 MsPage.SetTriggerHandler(TriggerCategory.Effect, 105,
          Function()
              Return False

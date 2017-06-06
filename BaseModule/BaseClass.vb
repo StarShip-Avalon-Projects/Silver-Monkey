@@ -1,4 +1,5 @@
 ﻿Imports Furcadia.Net
+Imports Furcadia.Net.Dream
 Imports Furcadia.Text.Base95
 Imports SilverMonkeyEngine
 Imports SilverMonkeyEngine.Engine

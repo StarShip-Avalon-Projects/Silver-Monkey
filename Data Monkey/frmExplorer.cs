@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace DataMonkey
@@ -31,6 +32,8 @@ namespace DataMonkey
         private MenuItem menuItem1;
         private MenuItem menuItem2;
         private MenuItem menuItem3;
+        private MenuItem menuItem4;
+        private MenuItem menuItem5;
         private MenuItem objAddColumnSQL;
         private MenuItem objCreateTableSQL;
 
@@ -219,6 +222,8 @@ namespace DataMonkey
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.silverMonkeyFCTB1 = new MonkeyCore.Controls.SilverMonkeyFCTB();
             this.SqlResultsListView = new MonkeyCore.Controls.ListView_NoFlicker();
+            this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.menuItem5 = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.sqlStatementTextBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -238,7 +243,8 @@ namespace DataMonkey
             // mainMenu1
             this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem1,
-            this.menuItem2});
+            this.menuItem2,
+            this.menuItem4});
             // menuItem1
             this.menuItem1.Index = 0;
             this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
@@ -369,12 +375,13 @@ namespace DataMonkey
         '\"',
         '\'',
         '\''};
-            this.sqlStatementTextBox.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.sqlStatementTextBox.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.sqlStatementTextBox.BackBrush = null;
             this.sqlStatementTextBox.CharHeight = 14;
             this.sqlStatementTextBox.CharWidth = 8;
             this.sqlStatementTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.sqlStatementTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.sqlStatementTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.sqlStatementTextBox.IsReplaceMode = false;
             this.sqlStatementTextBox.Location = new System.Drawing.Point(0, 0);
             this.sqlStatementTextBox.Name = "sqlStatementTextBox";
@@ -436,7 +443,7 @@ namespace DataMonkey
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(272, 202);
+            this.tabPage3.Size = new System.Drawing.Size(272, 181);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Templates";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -459,6 +466,7 @@ namespace DataMonkey
             this.SQLAreaTabControl.Location = new System.Drawing.Point(5, 5);
             this.SQLAreaTabControl.Name = "SQLAreaTabControl";
             this.SQLAreaTabControl.SelectedIndex = 0;
+            this.SQLAreaTabControl.ShowCloseButtonOnTabs = true;
             this.SQLAreaTabControl.Size = new System.Drawing.Size(546, 88);
             this.SQLAreaTabControl.TabIndex = 0;
             this.SQLAreaTabControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SQLAreaTabControl_MouseDown);
@@ -484,7 +492,7 @@ namespace DataMonkey
         '\'',
         '\''};
             this.silverMonkeyFCTB1.AutoIndentCharsPatterns = "";
-            this.silverMonkeyFCTB1.AutoScrollMinSize = new System.Drawing.Size(2, 14);
+            this.silverMonkeyFCTB1.AutoScrollMinSize = new System.Drawing.Size(27, 14);
             this.silverMonkeyFCTB1.BackBrush = null;
             this.silverMonkeyFCTB1.CharHeight = 14;
             this.silverMonkeyFCTB1.CharWidth = 8;
@@ -492,13 +500,14 @@ namespace DataMonkey
             this.silverMonkeyFCTB1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.silverMonkeyFCTB1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.silverMonkeyFCTB1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.silverMonkeyFCTB1.Font = new System.Drawing.Font("Courier New", 9.75F);
+            this.silverMonkeyFCTB1.Grammar = new Irony.Parsing.Grammar();
             this.silverMonkeyFCTB1.IsReplaceMode = false;
             this.silverMonkeyFCTB1.Language = FastColoredTextBoxNS.Language.SQL;
             this.silverMonkeyFCTB1.LeftBracket = '(';
             this.silverMonkeyFCTB1.Location = new System.Drawing.Point(3, 3);
             this.silverMonkeyFCTB1.Name = "silverMonkeyFCTB1";
             this.silverMonkeyFCTB1.Paddings = new System.Windows.Forms.Padding(0);
+            this.silverMonkeyFCTB1.Parser = null;
             this.silverMonkeyFCTB1.RightBracket = ')';
             this.silverMonkeyFCTB1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.silverMonkeyFCTB1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("silverMonkeyFCTB1.ServiceColors")));
@@ -517,6 +526,15 @@ namespace DataMonkey
             this.SqlResultsListView.TabIndex = 0;
             this.SqlResultsListView.UseCompatibleStateImageBehavior = false;
             this.SqlResultsListView.View = System.Windows.Forms.View.Details;
+            // menuItem4
+            this.menuItem4.Index = 2;
+            this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem5});
+            this.menuItem4.Text = "Help";
+            // menuItem5
+            this.menuItem5.Index = 0;
+            this.menuItem5.Text = "Contents";
+            this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
             // frmExplorer
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(840, 257);
@@ -593,6 +611,8 @@ namespace DataMonkey
         }
 
         #endregion Windows Form Designer generated code
+
+
 
         #region Private Methods
 
@@ -1113,6 +1133,16 @@ namespace DataMonkey
         }
 
         #endregion ListView Events
+
+        private const string HelpFile = "Monkey_Speak_Editor_Help.chm";
+
+        private void menuItem5_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)))
+            {
+                Help.ShowHelp(this, HelpFile);
+            }
+        }
 
         private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {

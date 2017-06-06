@@ -1,5 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
-Imports Furcadia.Net
+Imports Furcadia.Net.Dream
 Imports Monkeyspeak
 
 Namespace Engine.Libraries

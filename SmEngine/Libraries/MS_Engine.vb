@@ -1,5 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Furcadia.Net
+Imports Furcadia.Net.Dream
 Imports Furcadia.Util
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.SmConstants
@@ -505,9 +506,11 @@ Namespace Engine.Libraries
             Function BotIsDREAMOWNER(reader As TriggerReader) As Boolean
                 Try
                     Dim tname As Variable = MsPage.GetVariable("DREAMOWNER")
-                    Dim TrigFurreName As String = FurcadiaSession.ConnectedCharacterName
                     'add Machine Name parser
-                    Return FurcadiaShortName(tname.Value.ToString()) = FurcadiaShortName(TrigFurreName)
+                    If tname.Value Is Nothing Then
+                        Return False
+                    End If
+                    Return FurcadiaShortName(tname.Value.ToString()) = FurcadiaSession.ConnectedFurre.ShortName
                 Catch ex As Exception
                     Dim tID As String = reader.TriggerId.ToString
                     Dim tCat As String = reader.TriggerCategory.ToString
@@ -564,7 +567,7 @@ Namespace Engine.Libraries
             '(5:41) Disconnect the bot from the Furcadia game server.
             Public Function FurcadiaDisconnect(reader As TriggerReader) As Boolean
                 Try
-                    'DisconnectBot()
+                    FurcadiaSession.Disconnect()
                 Catch ex As Exception
                     Dim tID As String = reader.TriggerId.ToString
                     Dim tCat As String = reader.TriggerCategory.ToString
@@ -596,6 +599,7 @@ Namespace Engine.Libraries
             Function FurreNamedIsDREAMOWNER(reader As TriggerReader) As Boolean
                 Try
                     Dim tname As Variable = MsPage.GetVariable("DREAMOWNER")
+
                     Dim TrigFurreName As String = reader.ReadString
                     'add Machine Name parser
                     Return FurcadiaShortName(tname.Value.ToString()) = FurcadiaShortName(TrigFurreName)

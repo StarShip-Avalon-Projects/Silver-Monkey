@@ -1062,7 +1062,8 @@
         </member>
         <member name="F:SilverMonkey.BugTraqConnect.Project.DefaultProject">
             <summary>
-            The Id to be used when calling APIs to indicate the default project for the logged in user.
+            The Id to be used when calling APIs to indicate the default
+            project for the logged in user.
             </summary>
         </member>
         <member name="F:SilverMonkey.BugTraqConnect.Project.accessMin">
@@ -1141,7 +1142,8 @@
         </member>
         <member name="P:SilverMonkey.BugTraqConnect.Project.Enabled">
             <summary>
-            Gets or sets a value indicating whether this <see cref="T:SilverMonkey.BugTraqConnect.Project"/> is enabled.
+            Gets or sets a value indicating whether this
+            <see cref="T:SilverMonkey.BugTraqConnect.Project"/> is enabled.
             </summary>
             <value>
             <see langword="true"/> if enabled; otherwise, <see langword="false"/>.
@@ -1152,8 +1154,8 @@
             Gets or sets the file path for uploaded files.
             </summary>
             <value>
-            The path of the folder (on the server) in which the attachments are stored. The path may
-            be relative to Mantis folder on the server.
+            The path of the folder (on the server) in which the attachments
+            are stored. The path may be relative to Mantis folder on the server.
             </value>
         </member>
         <member name="P:SilverMonkey.BugTraqConnect.Project.Id">
@@ -1179,6 +1181,10 @@
             <value>
             For example, in development, released, etc.
             </value>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.Project.Subprojects">
+            <summary>
+            </summary>
         </member>
         <member name="P:SilverMonkey.BugTraqConnect.Project.ViewState">
             <summary>
@@ -1312,19 +1318,22 @@
         </member>
         <member name="T:SilverMonkey.BugTraqConnect.Request">
             <summary>
-            A wrapper around <see cref="N:SilverMonkey.BugTraqConnect.MantisConnectWebservice"/> to provide a more friendly interface
-            for the rest of the C# code.
+            A wrapper around <see cref="N:SilverMonkey.BugTraqConnect.MantisConnectWebservice"/> to provide a
+            more friendly interface for the rest of the C# code.
             </summary>
             <remarks>
-            Some methods will do do pre or post processing of data to convert them from the webservice
-            format to one that is easier to access. For example, the webservice may return information
-            about project ids/names as a serialised string, which then gets deserialised by this wrapper
-            into a <see cref="!:DataTable"/> for easier access and binding to standard controls.
+            Some methods will do do pre or post processing of data to convert
+            them from the webservice format to one that is easier to access. For
+            example, the webservice may return information about project
+            ids/names as a serialised string, which then gets deserialised by
+            this wrapper into a <see cref="T:System.Data.DataTable"/> for easier access and
+            binding to standard controls.
             </remarks>
         </member>
         <member name="F:SilverMonkey.BugTraqConnect.Request.session">
             <summary>
-            Session to retrieve the user name / password of the current session from.
+            Session to retrieve the user name / password of the current
+            session from.
             </summary>
         </member>
         <member name="F:SilverMonkey.BugTraqConnect.Request.mc">
@@ -1337,9 +1346,10 @@
             Constructor
             </summary>
             <param name="session">
-            The session to use for all communication with the webservice. The user name and password
-            are used from their to provide such details to the webservice with each call without
-            exposing such detail to the user of the library.
+            The session to use for all communication with the webservice.
+            The user name and password are used from their to provide such
+            details to the webservice with each call without exposing such
+            detail to the user of the library.
             </param>
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.ConfigGet(System.String,System.String@)">
@@ -1347,8 +1357,9 @@
              Get string value of the specified configuration option.
              </summary>
              <remarks>
-             If the caller attempts to retrieve sensitive configuration options like passwords,
-             database name, ...etc, an exception will be raised.
+             If the caller attempts to retrieve sensitive configuration
+             options like passwords, database name, ...etc, an exception will
+             be raised.
             
              TODO: Overload this method to get more types of configurations.
              </remarks>
@@ -1367,7 +1378,8 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.GetIssues(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            Gets the issues based on the specified filter, page, and number per page.
+            Gets the issues based on the specified filter, page, and number
+            per page.
             </summary>
             <param name="projectId">
             The project id to apply the filter ON, or 0 for ALL projects.
@@ -1430,8 +1442,8 @@
             The file path of the file to attach.
             </param>
             <param name="fileName">
-            The name of the file (without any path) to be associated with the uploaded file (if null,
-            will extract name from full path).
+            The name of the file (without any path) to be associated with
+            the uploaded file (if null, will extract name from full path).
             </param>
             <returns>
             The attachment id.
@@ -1450,8 +1462,8 @@
             Gets an attachment given it's id.
             </summary>
             <param name="issueAttachmentId">
-            The attachment id. This is returned when attachment is added or when attachments list is
-            returned with the issue details.
+            The attachment id. This is returned when attachment is added or
+            when attachments list is returned with the issue details.
             </param>
             <returns>
             The attachment contents base 64 encoded.
@@ -1504,8 +1516,8 @@
             The id of the issue to retrieve information for.
             </param>
             <returns>
-            The issue details, this does not include related information in other tables, like issue
-            notes, ...etc.
+            The issue details, this does not include related information in
+            other tables, like issue notes, ...etc.
             </returns>
             <exception cref="T:System.ArgumentOutOfRangeException">
             The issue id is 0 or negative.
@@ -1513,7 +1525,8 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.IssueGetAll(System.Int32,System.Int32)">
             <summary>
-            Gets all issues that are visible to the current user independent of the current project.
+            Gets all issues that are visible to the current user independent
+            of the current project.
             </summary>
             <param name="pageNumber">
             The page number (1-based)
@@ -1527,14 +1540,17 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.IssueGetIdFromSummary(System.String)">
             <summary>
-            Search for an issue with the specified summary and return its issue id.
+            Search for an issue with the specified summary and return its
+            issue id.
             </summary>
             <remarks>
-            This is useful to allow a software which is automatically reporting issues due to
-            exceptions or whatever reason to check first that the issue was not reported before. And
-            if it was, then it knows the issue id and hence is able to add a note or do whatever with
-            this id. Other applications may decide to delete the issue and create a new one,
-            basically it is up to the client application to decide how to use the returned issue id.
+            This is useful to allow a software which is automatically
+            reporting issues due to exceptions or whatever reason to check
+            first that the issue was not reported before. And if it was,
+            then it knows the issue id and hence is able to add a note or do
+            whatever with this id. Other applications may decide to delete
+            the issue and create a new one, basically it is up to the client
+            application to decide how to use the returned issue id.
             </remarks>
             <param name="summary">
             The summary to search for.
@@ -1551,17 +1567,20 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.IssueGetLastId(System.Int32)">
             <summary>
-            Get the id of the last "reported" issue that is accessible to the logged in user.
+            Get the id of the last "reported" issue that is accessible to
+            the logged in user.
             </summary>
             <remarks>
-            This is useful for applications that need to know when new issues are being submitted to
-            refresh a certain view or do something with such knowledge.
+            This is useful for applications that need to know when new
+            issues are being submitted to refresh a certain view or do
+            something with such knowledge.
             </remarks>
             <param name="projectId">
             -1: default, 0: all projects, otherwise: project id
             </param>
             <returns>
-            0: no issues accessible to logged in user, otherwise Id of the last reported issue.
+            0: no issues accessible to logged in user, otherwise Id of the
+               last reported issue.
             </returns>
             <exception cref="T:System.ArgumentOutOfRangeException">
             The project id is invalid.
@@ -1578,7 +1597,8 @@
             The note to add
             </param>
             <remarks>
-            The user must have write access to the issue and the issue must not be readonly.
+            The user must have write access to the issue and the issue must
+            not be readonly.
             </remarks>
             <returns>
             </returns>
@@ -1649,8 +1669,8 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.ProjectGetIssues(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Gets the issues that are visible to the logged in user and belong to the project with the
-            specified id.
+            Gets the issues that are visible to the logged in user and
+            belong to the project with the specified id.
             </summary>
             <param name="projectId">
             The project id or <see cref="F:SilverMonkey.BugTraqConnect.Project.AllProjects"/> or <see cref="F:SilverMonkey.BugTraqConnect.Project.DefaultProject"/>.
@@ -1695,7 +1715,8 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.ProjectGetVersionsUnreleased(System.Int32)">
             <summary>
-            Get unreleased versions defined for the project with the specified id.
+            Get unreleased versions defined for the project with the
+            specified id.
             </summary>
             <param name="projectId">
             project id (greater than 0)
@@ -1709,7 +1730,8 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.ProjectVersionAdd(SilverMonkey.BugTraqConnect.ProjectVersion)">
             <summary>
-            Adds a project version and sets the id on the supplied project version instance.
+            Adds a project version and sets the id on the supplied project
+            version instance.
             </summary>
             <param name="version">
             The new project version details.
@@ -1745,7 +1767,8 @@
             Get projects accessible to the currently logged in user.
             </summary>
             <remarks>
-            This returns a table ("Projects") which includes two columns ("project_id", "name").
+            This returns a table ("Projects") which includes two columns
+            ("project_id", "name").
             </remarks>
             <returns>
             An array of projects.
@@ -1753,7 +1776,8 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.UserGetFilters(System.Int32)">
             <summary>
-            Gets the filters that are available to the current user and the specified project.
+            Gets the filters that are available to the current user and the
+            specified project.
             </summary>
             <param name="projectId">
             0: all projects, otherwise project id
@@ -1767,7 +1791,8 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.ValidateConfigName(System.String)">
             <summary>
-            Validates the name of a configuration option and raises an exception if it is not valid.
+            Validates the name of a configuration option and raises an
+            exception if it is not valid.
             </summary>
             <param name="config">
             configuration option
@@ -1838,7 +1863,8 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.Request.ValidateProjectVersionId(System.Int32)">
             <summary>
-            Validates a project version id and raises an exception if it is not valid.
+            Validates a project version id and raises an exception if it is
+            not valid.
             </summary>
             <param name="projectVersionId">
             Project Version Id
@@ -1846,6 +1872,55 @@
             <exception cref="T:System.ArgumentOutOfRangeException">
             The project version id is 0 or negative.
             </exception>
+        </member>
+        <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType.mc_version">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType.mc_versionAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType.mc_login(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType.mc_loginAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType.mc_enum_status(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType.mc_enum_statusAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
         </member>
         <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData">
             <remarks/>
@@ -1938,6 +2013,123 @@
             <remarks/>
         </member>
         <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult.total_results">
+            <remarks/>
+        </member>
+        <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterCustomField">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterCustomField.field">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterCustomField.value">
+            <remarks/>
+        </member>
+        <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef.id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef.name">
+            <remarks/>
+        </member>
+        <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.project_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.search">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.category">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.severity_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.status_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.priority_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.reporter_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.handler_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.note_user_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.resolution_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.product_version">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.user_monitor_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.hide_status_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.sort">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.sort_direction">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.sticky">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.stickySpecified">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.view_state_id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.fixed_in_version">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.target_version">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.platform">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.os">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.os_build">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.start_day">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.start_month">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.start_year">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.end_day">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.end_month">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.end_year">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.tag_string">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.tag_select">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData.custom_fields">
             <remarks/>
         </member>
         <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData">
@@ -2051,15 +2243,6 @@
         <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData.require_closedSpecified">
             <remarks/>
         </member>
-        <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef.id">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef.name">
-            <remarks/>
-        </member>
         <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData">
             <remarks/>
         </member>
@@ -2126,51 +2309,6 @@
         <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData.obsoleteSpecified">
             <remarks/>
         </member>
-        <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.id">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.view_state">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.last_updated">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.project">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.category">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.priority">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.severity">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.status">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.reporter">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.summary">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.handler">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.resolution">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.attachments_count">
-            <remarks/>
-        </member>
-        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.notes_count">
-            <remarks/>
-        </member>
         <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData">
             <remarks/>
         </member>
@@ -2232,6 +2370,51 @@
             <remarks/>
         </member>
         <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData.new_value">
+            <remarks/>
+        </member>
+        <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.id">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.view_state">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.last_updated">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.project">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.category">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.priority">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.severity">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.status">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.reporter">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.summary">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.handler">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.resolution">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.attachments_count">
+            <remarks/>
+        </member>
+        <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.notes_count">
             <remarks/>
         </member>
         <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldValueForIssueData">
@@ -2438,6 +2621,359 @@
         <member name="P:SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData.tags">
             <remarks/>
         </member>
+        <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeChannel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="endpointConfigurationName"></param>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="endpointConfigurationName"></param>
+            <param name="remoteAddress"></param>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.#ctor(System.String,System.ServiceModel.EndpointAddress)">
+            <summary>
+            
+            </summary>
+            <param name="endpointConfigurationName"></param>
+            <param name="remoteAddress"></param>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.#ctor(System.ServiceModel.Channels.Binding,System.ServiceModel.EndpointAddress)">
+            <summary>
+            
+            </summary>
+            <param name="binding"></param>
+            <param name="remoteAddress"></param>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_version">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_versionAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_login(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_loginAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_status(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_statusAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_priorities(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_prioritiesAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_severities(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_severitiesAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_reproducibilities(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_reproducibilitiesAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_projections(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_projectionsAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_etas(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_etasAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_resolutions(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_resolutionsAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_access_levels(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_access_levelsAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_project_status(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_project_statusAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_project_view_states(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_project_view_statesAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_view_states(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_view_statesAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_custom_field_types(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_custom_field_typesAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_get(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="enumeration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_enum_getAsync(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="enumeration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_issue_exists(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="issue_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_issue_existsAsync(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="issue_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_issue_get(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="issue_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_tag_get_allAsync(System.String,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="page_number"></param>
+            <param name="per_page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_tag_add(System.String,System.String,SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="tag"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_tag_addAsync(System.String,System.String,SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="tag"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_tag_delete(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="tag_id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortTypeClient.mc_tag_deleteAsync(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="tag_id"></param>
+            <returns></returns>
+        </member>
         <member name="T:SilverMonkey.BugTraqConnect.Session">
             <summary>
             Represents a connection session between the webservice client and server.
@@ -2585,6 +3121,24 @@
             Session used to communicate with MantisConnect.
             </summary>
         </member>
+        <member name="M:SilverMonkey.BugTraqConnect.SubmitIssueForm.#ctor">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.SubmitIssueForm.#ctor(System.String)">
+            <summary>
+            </summary>
+            <param name="ErrorFile">
+            </param>
+        </member>
+        <member name="M:SilverMonkey.BugTraqConnect.SubmitIssueForm.walkNode(System.Collections.Generic.List{SilverMonkey.BugTraqConnect.Project},System.Windows.Forms.TreeNode@)">
+            <summary>
+            </summary>
+            <param name="projects">
+            </param>
+            <param name="Tn">
+            </param>
+        </member>
         <member name="M:SilverMonkey.BugTraqConnect.SubmitIssueForm.Dispose(System.Boolean)">
             <summary>
             Clean up any resources being used.
@@ -2592,21 +3146,24 @@
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.SubmitIssueForm.InitializeComponent">
             <summary>
-            Required method for Designer support - do not modify the contents of this method with the
-            code editor.
+            Required method for Designer support - do not modify the
+            contents of this method with the code editor.
             </summary>
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.SubmitIssueForm.browseButton_Click(System.Object,System.EventArgs)">
             <summary>
-            Tracks whether the projects combobox is currently being populated or not.
+            Tracks whether the projects combobox is currently being
+            populated or not.
             </summary>
             <remarks>
-            If being populated, then selection change event for the current project is ignored.
+            If being populated, then selection change event for the current
+            project is ignored.
             </remarks>
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.SubmitIssueForm.PopulateProjectDependentFields">
             <summary>
-            Populates the list of categories and versions based on the currently selected projects.
+            Populates the list of categories and versions based on the
+            currently selected projects.
             </summary>
         </member>
         <member name="M:SilverMonkey.BugTraqConnect.SubmitIssueForm.ResetForm">

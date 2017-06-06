@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -23,6 +23,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>SilverMonkeyEngine.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -92,11 +93,11 @@
   <ItemGroup>
     <Compile Include="BaseClasses\BaseSubSystem.vb" />
     <Compile Include="EngineOptoons.vb" />
-    <Compile Include="HelperClasses\msPlugin.vb" />
-    <Compile Include="HelperClasses\SmConstants.vb" />
-    <Compile Include="HelperClasses\smHost.vb" />
-    <Compile Include="Interfaces\msHost.vb" />
     <Compile Include="Interfaces\msPlugin.vb" />
+    <Compile Include="HelperClasses\SmConstants.vb" />
+    <Compile Include="Interfaces\smHost.vb" />
+    <Compile Include="Interfaces\ImsHost.vb" />
+    <Compile Include="Interfaces\ImsPlugin.vb" />
     <Compile Include="IO\NameList.vb" />
     <Compile Include="Libraries\Banish.vb" />
     <Compile Include="Libraries\FurreList.vb" />

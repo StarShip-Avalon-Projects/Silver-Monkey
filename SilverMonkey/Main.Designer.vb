@@ -712,9 +712,6 @@ Partial Class Main
         Me.BotIniOpen.DefaultExt = "bini"
         Me.BotIniOpen.Filter = "Bot Files|*.bini"
         '
-        'FURREListBindingSource
-        '
-        Me.FURREListBindingSource.DataSource = GetType(Furcadia.Net.FURREList)
         '
         'Main
         '

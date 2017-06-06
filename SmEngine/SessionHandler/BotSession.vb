@@ -13,6 +13,7 @@ Imports System.Text.RegularExpressions
 Imports Furcadia.Drawing
 Imports Furcadia.Drawing.VisibleArea
 Imports Furcadia.Net
+Imports Furcadia.Net.Dream
 Imports Furcadia.Net.Proxy
 Imports Furcadia.Text.FurcadiaMarkup
 Imports Furcadia.Util
@@ -659,7 +660,8 @@ Public Class BotSession : Inherits ProxySession
     ''' </param>
     Public Overrides Sub ParseServerData(ByVal data As String, ByVal Handled As Boolean)
         MyBase.ParseServerData(data, Handled)
-
+        MSpage.SetVariable(MS_Name, Player.ShortName, True)
+        MSpage.SetVariable("MESSAGE", Player.Message, True)
         ' page = engine.LoadFromString(cBot.MS_Script)
         If data = "Dragonroar" Then
             ' BotConnecting() Login Sucessful
@@ -702,19 +704,24 @@ Public Class BotSession : Inherits ProxySession
 
             'Spawn Avatar
         ElseIf data.StartsWith("<") And ServerConnectPhase = ConnectionPhase.Connected Then
+            MSpage.SetVariable(MS_Name, Player.ShortName, True)
+            If IsConnectedCharacter Then
+                MSpage.Execute(28, 29, 24, 25)
+            Else
+                MSpage.Execute(24, 25)
+            End If
 
             'Try
 
             ' ' Add New Arrivals to Dream.FurreList ' One or the other will
-            ' trigger it ' IsConnectedCharacter MSPage.SetVariable(MS_Name, Player.ShortName)
+            ' trigger it ' IsConnectedCharacter
 
             ' If Player.Flag = 4 Or Not Dream.FurreList.Contains(Player)
             ' Then Dream.FurreList.Add(Player) ' If InDream Then RaiseEvent
-            ' UpDateDreamList(Player.Name) If Player.Flag = 2 Then
-            ' MSPage.Execute(28, 29, 24, 25) Else MSPage.Execute(24,
-            ' 25) End If ElseIf Player.Flag = 2 Then
+            ' UpDateDreamList(Player.Name) If Player.Flag = 2 Then End If
+            ' ElseIf Player.Flag = 2 Then
 
-            ' MSPage.Execute(28, 29)
+            'MSpage.Execute(28, 29)
 
             ' ElseIf Player.Flag = 1 Then
 

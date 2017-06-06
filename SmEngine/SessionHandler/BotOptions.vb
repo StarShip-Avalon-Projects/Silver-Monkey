@@ -123,10 +123,10 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     ''' </returns>
     Public Property BotController() As String
         Get
-            Return _BotController
+            Return _MonkeySpeakEngineOption.BotController
         End Get
         Set(ByVal value As String)
-            _BotController = value
+            _MonkeySpeakEngineOption.BotController = value
         End Set
     End Property
 

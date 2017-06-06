@@ -1,5 +1,6 @@
 ﻿Imports System.Threading
 Imports Furcadia.Net
+Imports Furcadia.Net.Dream
 Imports MonkeyCore
 Imports Monkeyspeak
 

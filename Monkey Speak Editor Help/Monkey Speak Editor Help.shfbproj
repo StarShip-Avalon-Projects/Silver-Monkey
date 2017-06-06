@@ -37,12 +37,47 @@
     <SourceCodeBasePath>
     </SourceCodeBasePath>
     <PlugInConfigurations>
+      <PlugInConfig id="Output Deployment" enabled="True">
+        <configuration deleteAfterDeploy="false" verboseLogging="false">
+          <deploymentLocation id="help1x" location="..\Build\Help">
+            <userCredentials useDefault="true" userName="" password="" />
+            <proxyCredentials useProxy="false" proxyServer="">
+              <userCredentials useDefault="true" userName="" password="" />
+            </proxyCredentials>
+          </deploymentLocation>
+          <deploymentLocation id="helpViewer" location="" renameMSHA="false">
+            <userCredentials useDefault="true" userName="" password="" />
+            <proxyCredentials useProxy="false" proxyServer="">
+              <userCredentials useDefault="true" userName="" password="" />
+            </proxyCredentials>
+          </deploymentLocation>
+          <deploymentLocation id="website" location="">
+            <userCredentials useDefault="true" userName="" password="" />
+            <proxyCredentials useProxy="false" proxyServer="">
+              <userCredentials useDefault="true" userName="" password="" />
+            </proxyCredentials>
+          </deploymentLocation>
+          <deploymentLocation id="openXml" location="">
+            <userCredentials useDefault="true" userName="" password="" />
+            <proxyCredentials useProxy="false" proxyServer="">
+              <userCredentials useDefault="true" userName="" password="" />
+            </proxyCredentials>
+          </deploymentLocation>
+          <deploymentLocation id="markdown" location="">
+            <userCredentials useDefault="true" userName="" password="" />
+            <proxyCredentials useProxy="false" proxyServer="">
+              <userCredentials useDefault="true" userName="" password="" />
+            </proxyCredentials>
+          </deploymentLocation>
+        </configuration>
+      </PlugInConfig>
     </PlugInConfigurations>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
-      <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
-      <DocumentationSource sourceFile="..\DSeX\MonkeySpeakEditor.vbproj" />
-    </DocumentationSources>
+<DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
+<DocumentationSource sourceFile="..\DSeX\MonkeySpeakEditor.vbproj" />
+<DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
+<DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" /></DocumentationSources>
     <ComponentConfigurations>
       <ComponentConfig id="API Token Resolution" enabled="True" xmlns="">
         <component id="API Token Resolution">{@TokenFiles}
@@ -86,13 +121,13 @@
     </ComponentConfigurations>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <MaximumGroupParts>10</MaximumGroupParts>
-    <NamespaceGrouping>False</NamespaceGrouping>
+    <NamespaceGrouping>True</NamespaceGrouping>
     <SyntaxFilters>Standard</SyntaxFilters>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <RootNamespaceTitle>Monkey Speak Editor API</RootNamespaceTitle>
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <PresentationStyle>VS2013</PresentationStyle>
-    <Preliminary>False</Preliminary>
+    <Preliminary>True</Preliminary>
     <NamingMethod>Guid</NamingMethod>
     <HelpTitle>Monkey Speak Editor Documentation</HelpTitle>
     <FeedbackEMailLinkText>Lead Developer Gerolkae</FeedbackEMailLinkText>

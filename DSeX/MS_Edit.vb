@@ -1,10 +1,10 @@
-﻿Imports System.Text.RegularExpressions
-Imports System.IO
-Imports FastColoredTextBoxNS
+﻿Imports System.IO
 Imports System.Runtime.InteropServices
-Imports MonkeyCore.IniFile
+Imports System.Text.RegularExpressions
+Imports FastColoredTextBoxNS
 Imports MonkeyCore
 Imports MonkeyCore.Controls
+Imports MonkeyCore.IniFile
 
 Public Class MS_Edit
 
@@ -89,6 +89,7 @@ Public Class MS_Edit
 #End Region
 
 #Region "Sorters"
+
     Class CatSorter
         Implements IComparer(Of String)
 
@@ -169,6 +170,7 @@ Public Class MS_Edit
 #End Region
 
     End Class
+
 #End Region
 
 #Region "Public Methods"
@@ -501,7 +503,6 @@ Public Class MS_Edit
                     If ((tseg.Title = RES_Def_section) And ((i <= 1))) Then
 
                         .Items.Add(TabSections(idx)(i).Title)
-
                     Else
                         .Items.Add(Sects_Indent + TabSections(idx)(i).Title)
                     End If
@@ -593,6 +594,8 @@ Public Class MS_Edit
 #End Region
 
 #Region "Private Methods"
+
+    Private Const HelpFile As String = "Monkey_Speak_Editor_Help.chm"
 
     Private Sub AbutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AbutToolStripMenuItem.Click
         AboutBox1.Show()
@@ -906,7 +909,9 @@ Public Class MS_Edit
     End Sub
 
     Private Sub ContentToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ContentToolStripMenuItem.Click
-        Process.Start("Silver Monkey.chm")
+        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            Help.ShowHelp(Me, HelpFile)
+        End If
     End Sub
 
     Private Sub DisplaySection(ByRef j As Integer)
@@ -969,7 +974,6 @@ Public Class MS_Edit
             Else
                 frm.Show() 'Dialog()
             End If
-
         Catch exc As Exception
 
             MessageBox.Show(exc.Message, exc.Source, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -1349,7 +1353,7 @@ InputBox("What line within the document do you want to send the cursor to?",
                         TabEditStyles.RemoveAt(i)
                         BotName.RemoveAt(i)
 
-                        '  MsgBox(e.CloseReason.ToString)
+                        ' MsgBox(e.CloseReason.ToString)
                     Catch eX As Exception
                         Dim logError As New ErrorLogging(eX, Me)
                     End Try
@@ -1888,7 +1892,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
                         TabControl2.SelectedTab.Text = WorkFileName(TabIdx)
                         TabControl2.RePositionCloseButtons()
                     End If
-
                 Catch ex As Exception
                     MessageBox.Show("There was an error writing to " + WorkFileName(TabIdx))
                 End Try
@@ -2033,7 +2036,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
             Else
                 frm.Show() 'Dialog()
             End If
-
         Catch exc As Exception
 
             MessageBox.Show(exc.Message, exc.Source, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -2159,13 +2161,16 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 #End Region
 
 #Region "Properties"
+
     Public Shared TemplatePaths As List(Of String) = New List(Of String)
     Public Shared TemplatePathsMS As List(Of String) = New List(Of String)
     Public BotName As List(Of String) = New List(Of String)
     Public CanOpen As List(Of Boolean) = New List(Of Boolean)
     Public TabEditStyles As List(Of EditStyles) = New List(Of EditStyles)
+
     ' Public SettingsChanged As List(Of Boolean) = New List(Of Boolean)
     Public WorkFileName As List(Of String) = New List(Of String)
+
     Public WorkPath As List(Of String) = New List(Of String)
     Private Const AppName As String = "Monkey Speak Editor"
     Private Const AutoCompleteSearchPattern As String = "[ \w\.:=!<>\{\}]"
@@ -2190,6 +2195,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
     Private Shared MS_HEADER As String = ""
     Private AutoCompleteMenu1 As AutocompleteMenu
     Private charsToTrim() As Char = {CChar(vbCr), CChar(vbLf)}
+
     'Dim lastTab As Integer = 0
     Dim Flag As Boolean = False
 
@@ -2252,6 +2258,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 #End Region
 
     End Class
+
     '+ TabControl2.SelectedIndex.ToString
 
 #End Region
@@ -2321,15 +2328,19 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         End If
 
     End Sub
+
     ''' <summary>
-    '''
     ''' </summary>
-    ''' <param name="_ClassName"></param>
-    ''' <param name="_WindowName"></param>
-    ''' <returns></returns>
+    ''' <param name="_ClassName">
+    ''' </param>
+    ''' <param name="_WindowName">
+    ''' </param>
+    ''' <returns>
+    ''' </returns>
     <DllImport("user32.dll", EntryPoint:="FindWindow")>
     Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
     End Function
+
     Public Declare Function SetFocusAPI Lib "user32.dll" Alias "SetFocus" (ByVal hWnd As Long) As Long
     Private Declare Function SetForegroundWindow Lib "user32" (ByVal hWnd As Long) As Long
 
@@ -2338,9 +2349,13 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 ByVal Msg As Integer,
 ByVal wParam As IntPtr,
 ByRef lParam As COPYDATASTRUCT) As Boolean
+
 #End Region
 
 #Region "Event Handlers"
+
     Delegate Sub FileSave(ByRef IabIDX As Integer)
+
 #End Region
+
 End Class

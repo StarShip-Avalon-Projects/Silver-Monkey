@@ -1,4 +1,5 @@
-﻿Imports SilverMonkeyEngine.Engine
+﻿Imports Furcadia.Net.Dream
+Imports SilverMonkeyEngine.Engine
 
 Namespace Interfaces
 
@@ -8,9 +9,9 @@ Namespace Interfaces
 
         ReadOnly Property BotName As String
         Property Data As String
-        Property Dream As Furcadia.Net.DREAM
+        Property Dream As DREAM
         WriteOnly Property MsPage As MonkeySpeakPage
-        Property Player As Furcadia.Net.FURRE
+        Property Player As FURRE
 
 #End Region
 

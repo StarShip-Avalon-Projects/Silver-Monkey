@@ -78,6 +78,8 @@ namespace SilverMonkey.BugTraqConnect
 
         #region Public Constructors
 
+        /// <summary>
+        /// </summary>
         public SubmitIssueForm()
         {
             // Required for Windows Form Designer support
@@ -90,6 +92,10 @@ namespace SilverMonkey.BugTraqConnect
             appSettings.Add("MantisPassword", MantisSettings.MantisPassword);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="ErrorFile">
+        /// </param>
         public SubmitIssueForm(string ErrorFile)
         {
             // Required for Windows Form Designer support
@@ -104,6 +110,12 @@ namespace SilverMonkey.BugTraqConnect
 
         #region Public Methods
 
+        /// <summary>
+        /// </summary>
+        /// <param name="projects">
+        /// </param>
+        /// <param name="Tn">
+        /// </param>
         public void walkNode(List<Project> projects, ref TreeNode Tn)
         {
             for (int i = 0; i < projects.Count; i++)
@@ -142,8 +154,8 @@ namespace SilverMonkey.BugTraqConnect
         #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify the contents of this method with the
-        /// code editor.
+        /// Required method for Designer support - do not modify the
+        /// contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -397,10 +409,12 @@ namespace SilverMonkey.BugTraqConnect
         #region Private Methods
 
         /// <summary>
-        /// Tracks whether the projects combobox is currently being populated or not.
+        /// Tracks whether the projects combobox is currently being
+        /// populated or not.
         /// </summary>
         /// <remarks>
-        /// If being populated, then selection change event for the current project is ignored.
+        /// If being populated, then selection change event for the current
+        /// project is ignored.
         /// </remarks>
         // private bool populating = false;
         private void browseButton_Click(object sender, EventArgs e)
@@ -415,7 +429,8 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Populates the list of categories and versions based on the currently selected projects.
+        /// Populates the list of categories and versions based on the
+        /// currently selected projects.
         /// </summary>
         private void PopulateProjectDependentFields()
         {

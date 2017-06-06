@@ -2,7 +2,7 @@
 
 Namespace Interfaces
 
-    Public Interface msPlugin
+    Public Interface ImsPlugin
 
 #Region "Public Properties"
 

@@ -16,26 +16,30 @@
 namespace SilverMonkey.BugTraqConnect
 {
     using System;
+    using System.Data;
     using System.Globalization;
     using System.IO;
     using System.ServiceModel;
 
     /// <summary>
-    /// A wrapper around <see cref="MantisConnectWebservice"/> to provide a more friendly interface
-    /// for the rest of the C# code.
+    /// A wrapper around <see cref="MantisConnectWebservice"/> to provide a
+    /// more friendly interface for the rest of the C# code.
     /// </summary>
     /// <remarks>
-    /// Some methods will do do pre or post processing of data to convert them from the webservice
-    /// format to one that is easier to access. For example, the webservice may return information
-    /// about project ids/names as a serialised string, which then gets deserialised by this wrapper
-    /// into a <see cref="DataTable"/> for easier access and binding to standard controls.
+    /// Some methods will do do pre or post processing of data to convert
+    /// them from the webservice format to one that is easier to access. For
+    /// example, the webservice may return information about project
+    /// ids/names as a serialised string, which then gets deserialised by
+    /// this wrapper into a <see cref="DataTable"/> for easier access and
+    /// binding to standard controls.
     /// </remarks>
     public sealed class Request
     {
         #region Private Fields
 
         /// <summary>
-        /// Session to retrieve the user name / password of the current session from.
+        /// Session to retrieve the user name / password of the current
+        /// session from.
         /// </summary>
         private readonly Session session;
 
@@ -52,9 +56,10 @@ namespace SilverMonkey.BugTraqConnect
         /// Constructor
         /// </summary>
         /// <param name="session">
-        /// The session to use for all communication with the webservice. The user name and password
-        /// are used from their to provide such details to the webservice with each call without
-        /// exposing such detail to the user of the library.
+        /// The session to use for all communication with the webservice.
+        /// The user name and password are used from their to provide such
+        /// details to the webservice with each call without exposing such
+        /// detail to the user of the library.
         /// </param>
         public Request(Session session)
         {
@@ -96,8 +101,9 @@ namespace SilverMonkey.BugTraqConnect
         /// Get string value of the specified configuration option.
         /// </summary>
         /// <remarks>
-        /// If the caller attempts to retrieve sensitive configuration options like passwords,
-        /// database name, ...etc, an exception will be raised.
+        /// If the caller attempts to retrieve sensitive configuration
+        /// options like passwords, database name, ...etc, an exception will
+        /// be raised.
         ///
         /// TODO: Overload this method to get more types of configurations.
         /// </remarks>
@@ -124,7 +130,8 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Gets the issues based on the specified filter, page, and number per page.
+        /// Gets the issues based on the specified filter, page, and number
+        /// per page.
         /// </summary>
         /// <param name="projectId">
         /// The project id to apply the filter ON, or 0 for ALL projects.
@@ -213,8 +220,8 @@ namespace SilverMonkey.BugTraqConnect
         /// The file path of the file to attach.
         /// </param>
         /// <param name="fileName">
-        /// The name of the file (without any path) to be associated with the uploaded file (if null,
-        /// will extract name from full path).
+        /// The name of the file (without any path) to be associated with
+        /// the uploaded file (if null, will extract name from full path).
         /// </param>
         /// <returns>
         /// The attachment id.
@@ -251,8 +258,8 @@ namespace SilverMonkey.BugTraqConnect
         /// Gets an attachment given it's id.
         /// </summary>
         /// <param name="issueAttachmentId">
-        /// The attachment id. This is returned when attachment is added or when attachments list is
-        /// returned with the issue details.
+        /// The attachment id. This is returned when attachment is added or
+        /// when attachments list is returned with the issue details.
         /// </param>
         /// <returns>
         /// The attachment contents base 64 encoded.
@@ -335,8 +342,8 @@ namespace SilverMonkey.BugTraqConnect
         /// The id of the issue to retrieve information for.
         /// </param>
         /// <returns>
-        /// The issue details, this does not include related information in other tables, like issue
-        /// notes, ...etc.
+        /// The issue details, this does not include related information in
+        /// other tables, like issue notes, ...etc.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// The issue id is 0 or negative.
@@ -354,7 +361,8 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Gets all issues that are visible to the current user independent of the current project.
+        /// Gets all issues that are visible to the current user independent
+        /// of the current project.
         /// </summary>
         /// <param name="pageNumber">
         /// The page number (1-based)
@@ -371,14 +379,17 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Search for an issue with the specified summary and return its issue id.
+        /// Search for an issue with the specified summary and return its
+        /// issue id.
         /// </summary>
         /// <remarks>
-        /// This is useful to allow a software which is automatically reporting issues due to
-        /// exceptions or whatever reason to check first that the issue was not reported before. And
-        /// if it was, then it knows the issue id and hence is able to add a note or do whatever with
-        /// this id. Other applications may decide to delete the issue and create a new one,
-        /// basically it is up to the client application to decide how to use the returned issue id.
+        /// This is useful to allow a software which is automatically
+        /// reporting issues due to exceptions or whatever reason to check
+        /// first that the issue was not reported before. And if it was,
+        /// then it knows the issue id and hence is able to add a note or do
+        /// whatever with this id. Other applications may decide to delete
+        /// the issue and create a new one, basically it is up to the client
+        /// application to decide how to use the returned issue id.
         /// </remarks>
         /// <param name="summary">
         /// The summary to search for.
@@ -413,17 +424,20 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Get the id of the last "reported" issue that is accessible to the logged in user.
+        /// Get the id of the last "reported" issue that is accessible to
+        /// the logged in user.
         /// </summary>
         /// <remarks>
-        /// This is useful for applications that need to know when new issues are being submitted to
-        /// refresh a certain view or do something with such knowledge.
+        /// This is useful for applications that need to know when new
+        /// issues are being submitted to refresh a certain view or do
+        /// something with such knowledge.
         /// </remarks>
         /// <param name="projectId">
         /// -1: default, 0: all projects, otherwise: project id
         /// </param>
         /// <returns>
-        /// 0: no issues accessible to logged in user, otherwise Id of the last reported issue.
+        /// 0: no issues accessible to logged in user, otherwise Id of the
+        ///    last reported issue.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// The project id is invalid.
@@ -448,7 +462,8 @@ namespace SilverMonkey.BugTraqConnect
         /// The note to add
         /// </param>
         /// <remarks>
-        /// The user must have write access to the issue and the issue must not be readonly.
+        /// The user must have write access to the issue and the issue must
+        /// not be readonly.
         /// </remarks>
         /// <returns>
         /// </returns>
@@ -573,8 +588,8 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Gets the issues that are visible to the logged in user and belong to the project with the
-        /// specified id.
+        /// Gets the issues that are visible to the logged in user and
+        /// belong to the project with the specified id.
         /// </summary>
         /// <param name="projectId">
         /// The project id or <see cref="Project.AllProjects"/> or <see cref="Project.DefaultProject"/>.
@@ -655,7 +670,8 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Get unreleased versions defined for the project with the specified id.
+        /// Get unreleased versions defined for the project with the
+        /// specified id.
         /// </summary>
         /// <param name="projectId">
         /// project id (greater than 0)
@@ -677,7 +693,8 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Adds a project version and sets the id on the supplied project version instance.
+        /// Adds a project version and sets the id on the supplied project
+        /// version instance.
         /// </summary>
         /// <param name="version">
         /// The new project version details.
@@ -766,7 +783,8 @@ namespace SilverMonkey.BugTraqConnect
         /// Get projects accessible to the currently logged in user.
         /// </summary>
         /// <remarks>
-        /// This returns a table ("Projects") which includes two columns ("project_id", "name").
+        /// This returns a table ("Projects") which includes two columns
+        /// ("project_id", "name").
         /// </remarks>
         /// <returns>
         /// An array of projects.
@@ -779,7 +797,8 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Gets the filters that are available to the current user and the specified project.
+        /// Gets the filters that are available to the current user and the
+        /// specified project.
         /// </summary>
         /// <param name="projectId">
         /// 0: all projects, otherwise project id
@@ -805,7 +824,8 @@ namespace SilverMonkey.BugTraqConnect
         #region Private Methods
 
         /// <summary>
-        /// Validates the name of a configuration option and raises an exception if it is not valid.
+        /// Validates the name of a configuration option and raises an
+        /// exception if it is not valid.
         /// </summary>
         /// <param name="config">
         /// configuration option
@@ -961,7 +981,8 @@ namespace SilverMonkey.BugTraqConnect
         }
 
         /// <summary>
-        /// Validates a project version id and raises an exception if it is not valid.
+        /// Validates a project version id and raises an exception if it is
+        /// not valid.
         /// </summary>
         /// <param name="projectVersionId">
         /// Project Version Id

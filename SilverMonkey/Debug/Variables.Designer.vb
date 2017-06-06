@@ -1,9 +1,18 @@
 ﻿Imports MonkeyCore.Controls
-
+Imports SilverMonkeyEngine
 
 <CompilerServices.DesignerGenerated()>
 Partial Class Variables
     Inherits System.Windows.Forms.Form
+
+    Sub New(ByRef session As BotSession)
+        FurcadiaSession = session
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
