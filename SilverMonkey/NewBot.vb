@@ -5,17 +5,26 @@ Imports SilverMonkeyEngine
 
 Public Class NewBott
 
+#Region "Public Properties"
+
+    Public ReadOnly Property BotConfig As BotOptions
+        Get
+            Return bFile
+        End Get
+    End Property
+
+#End Region
+
 #Region "Public Fields"
 
-    Public bFile As BotOptions
+    Private bFile As BotOptions
 
 #End Region
 
 #Region "Public Constructors"
 
     Public Sub New(ByRef options As BotOptions)
-
-        bFile = New BotOptions()
+        options = New BotOptions()
         bFile = options
         ' This call is required by the designer.
         InitializeComponent()
@@ -324,7 +333,7 @@ Public Class NewBott
             BotFile += ".bini"
             MsFile += ".ms"
         End If
-
+        bFile.DestinationFile = BotFile
         If File.Exists(BotFile) And Not OverWrite Then
             If MessageBox.Show(BotFile + " Exists! Over write settings?", "File Exists Warning",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
@@ -369,7 +378,7 @@ Public Class NewBott
         End If
 
         bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.Name)
+        Main.SaveRecentFile(bFile.DestinationFile)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Dispose()
 

@@ -32,6 +32,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
 
     Sub New()
         _MonkeySpeakEngineOption = New Engine.EngineOptoons()
+        _logPath = Paths.SilverMonkeyLogPath
 
     End Sub
 
@@ -161,6 +162,15 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         End Get
     End Property
 
+    Public Property DestinationFile As String
+        Get
+            Return _BiniFile
+        End Get
+        Set(value As String)
+            _BiniFile = value
+        End Set
+    End Property
+
     Public Property log As Boolean
         Get
             Return _log
@@ -223,7 +233,6 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         If File.Exists(Paths.CheckBotFolder(_BiniFile)) Then
             BotIni.Load(Paths.CheckBotFolder(_BiniFile))
         End If
-
         BotIni.SetKeyValue("Main", "Log", _log.ToString)
         BotIni.SetKeyValue("Main", "LogNameBase", _logNamebase)
         BotIni.SetKeyValue("Main", "LogOption", _logOption.ToString)

@@ -497,10 +497,10 @@ Public Class Main
     End Sub
 
     Private Sub NewBotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles NewBotToolStripMenuItem.Click
-        BotConfig = New BotOptions
         Dim NewBotWindow As New NewBott(BotConfig)
         With NewBotWindow
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
+                BotConfig = NewBotWindow.BotConfig
                 EditBotToolStripMenuItem.Enabled = True
             End If
         End With
