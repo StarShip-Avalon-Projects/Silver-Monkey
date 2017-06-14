@@ -145,7 +145,7 @@ Public Class Config
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        ' RecentToolStripMenuItem.DropDownItems.Clear()
+        'RecentToolStripMenuItem.DropDownItems.Clear()
         'File.Delete(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"))
     End Sub
 
@@ -164,21 +164,18 @@ Public Class Config
         Loadconfig()
     End Sub
 
-    Private Sub ConfigTabs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ConfigTabs.SelectedIndexChanged
+    Private Sub ConfigTabs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles _
+        ConfigTabs.SelectedIndexChanged
         Dim s As TabControl = CType(sender, TabControl)
         My.Settings.ConfigSelectedTab = s.SelectedIndex
     End Sub
 
-    Private Sub DefaultColorBox_Click(sender As Object, e As EventArgs) Handles DefaultColorBox.Click
-        GetColor(DefaultColorBox)
-    End Sub
+    Private Sub DefaultColorBox_Click(sender As Object, e As EventArgs) Handles _
+            DefaultColorBox.Click, EmitColorBox.Click, EmoteColorBox.Click, SayColorBox.Click,
+            ShoutColorBox.Click, WhisperColorBox.Click
 
-    Private Sub EmitColorBox_Click(sender As Object, e As EventArgs) Handles EmitColorBox.Click
-        GetColor(EmitColorBox)
-    End Sub
-
-    Private Sub EmoteColorBox_Click(sender As Object, e As EventArgs) Handles EmoteColorBox.Click
-        GetColor(EmoteColorBox)
+        Dim colrBox As PictureBox = CType(sender, PictureBox)
+        GetColor(colrBox)
     End Sub
 
     Private Sub PopulatePluginList()
@@ -198,18 +195,6 @@ Public Class Config
             item.Checked = PluginList.Item(objPlugin.Name.Replace(" ", ""))
         Next
 
-    End Sub
-
-    Private Sub SayColorBox_Click(sender As Object, e As EventArgs) Handles SayColorBox.Click
-        GetColor(SayColorBox)
-    End Sub
-
-    Private Sub ShoutColorBox_Click(sender As Object, e As EventArgs) Handles ShoutColorBox.Click
-        GetColor(ShoutColorBox)
-    End Sub
-
-    Private Sub WhisperColorBox_Click(sender As Object, e As EventArgs) Handles WhisperColorBox.Click
-        GetColor(WhisperColorBox)
     End Sub
 
 #End Region

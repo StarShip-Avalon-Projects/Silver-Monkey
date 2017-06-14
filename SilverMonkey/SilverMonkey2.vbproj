@@ -151,18 +151,6 @@
     <Compile Include="Debug\SetVariables.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmHelp.Designer.vb">
-      <DependentUpon>frmHelp.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmHelp.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Helper Classes\DeBugWriter.vb" />
     <Compile Include="IO\TextDisplayManager.vb" />
     <Compile Include="My Project\Resources.Designer.vb">

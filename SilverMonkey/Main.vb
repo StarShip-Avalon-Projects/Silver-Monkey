@@ -967,7 +967,9 @@ Public Class Main
             'e.Handled = True
             'e.SuppressKeyPress = True
         ElseIf (e.KeyCode = Keys.F1) Then
-            frmHelp.Show()
+            If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+                Help.ShowHelp(Me, HelpFile)
+            End If
         ElseIf (e.KeyCode = Keys.N AndAlso e.Modifiers = Keys.Control) Then
             With BotSetup
                 .bFile = New BotOptions

@@ -27,8 +27,6 @@
   <listItem>
     <para>%BANISHLIST = Name list the bot sees on the banish list. The Bot Mirrors The banish list and tracks changes to the list to minimize the requests of the server list.</para> </listItem>
   <listItem>
-    <para>%WWW Prefix = WebAPI Variables.</para> </listItem>
-  <listItem>
     <para>%BOTCONTROLLER = Security check with botcontroller in bot setup.</para> </listItem>
   <listItem>
     <para>%DREAMNAME = Name of the Dream the Bot has joined.</para> </listItem>
