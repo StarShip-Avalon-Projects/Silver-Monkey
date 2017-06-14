@@ -374,7 +374,8 @@ Namespace Engine.Libraries
 
                 ElseIf tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
 
-                    Select Case tPlayer.FrameInfo.dir
+                    Select Case tPlayer.Direction
+
                     'SW
                         Case 0
                             direction = 1
@@ -452,7 +453,7 @@ Namespace Engine.Libraries
 
                 ElseIf tPlayer.SourceX = tPlayer.X AndAlso tPlayer.SourceY = tPlayer.Y Then
 
-                    Select Case tPlayer.FrameInfo.dir
+                    Select Case tPlayer.Direction
                     'SW
                         Case 0
                             direction = 1
@@ -482,9 +483,9 @@ Namespace Engine.Libraries
         Function FurreNamedFacingNE(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+                Dim Target As FURRE = Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
-                Select Case Target.FrameInfo.dir
+                Select Case Target.Direction
                     Case 3
                         Return True
                 End Select
@@ -501,7 +502,7 @@ Namespace Engine.Libraries
                 Dim name As String = reader.ReadString
                 Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
-                Select Case Target.FrameInfo.dir
+                Select Case Target.Direction
                     Case 2
                         Return True
                 End Select
@@ -518,7 +519,7 @@ Namespace Engine.Libraries
                 Dim name As String = reader.ReadString
                 Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
-                Select Case Target.FrameInfo.dir
+                Select Case Target.Direction
                     Case 1
                         Return True
                 End Select
@@ -535,7 +536,7 @@ Namespace Engine.Libraries
                 Dim name As String = reader.ReadString
                 Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
-                Select Case Target.FrameInfo.dir
+                Select Case Target.Direction
                     Case 0
                         Return True
                 End Select
@@ -591,7 +592,7 @@ Namespace Engine.Libraries
                 Dim name As String = reader.ReadString
                 Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
-                Select Case Target.FrameInfo.pose
+                Select Case Target.Pose
                     Case 4
                         Return True
                 End Select
@@ -733,9 +734,9 @@ Namespace Engine.Libraries
         Function FurreNamedSitting(reader As TriggerReader) As Boolean
             Try
                 Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+                Dim Target As FURRE = Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
-                Select Case Target.FrameInfo.pose
+                Select Case Target.Pose
                     Case 0
                         Return True
                 End Select
@@ -792,7 +793,7 @@ Namespace Engine.Libraries
                 Dim name As String = reader.ReadString
                 Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
                 Dim Spec As Double = reader.ReadNumber()
-                Select Case Target.FrameInfo.pose
+                Select Case Target.Pose
                     Case 1 To 3
                         Return True
                 End Select
@@ -1043,7 +1044,7 @@ Namespace Engine.Libraries
         Function TriggeringFurreFacingNE(reader As TriggerReader) As Boolean
             Try
 
-                Select Case FurcadiaSession.Player.FrameInfo.dir
+                Select Case Player.Direction
                     Case 3
                         Return True
                 End Select
@@ -1058,7 +1059,7 @@ Namespace Engine.Libraries
         Function TriggeringFurreFacingNW(reader As TriggerReader) As Boolean
             Try
 
-                Select Case FurcadiaSession.Player.FrameInfo.dir
+                Select Case Player.Direction
                     Case 2
                         Return True
                 End Select
@@ -1072,7 +1073,7 @@ Namespace Engine.Libraries
         '(1:x) and the triggering furre is facing SE,
         Function TriggeringFurreFacingSE(reader As TriggerReader) As Boolean
             Try
-                Select Case FurcadiaSession.Player.FrameInfo.dir
+                Select Case Player.Direction
                     Case 1
                         Return True
                 End Select
@@ -1087,7 +1088,7 @@ Namespace Engine.Libraries
         Function TriggeringFurreFacingSW(reader As TriggerReader) As Boolean
             Try
 
-                Select Case FurcadiaSession.Player.FrameInfo.dir
+                Select Case Player.Direction
                     Case 0
                         Return True
                 End Select
@@ -1152,7 +1153,7 @@ Namespace Engine.Libraries
         Function TriggeringFurreLaying(reader As TriggerReader) As Boolean
             Try
 
-                Select Case FurcadiaSession.Player.FrameInfo.pose
+                Select Case Player.Pose
                     Case 4
                         Return True
                 End Select
@@ -1215,7 +1216,7 @@ Namespace Engine.Libraries
         '(1:x) and the triggering furre is sitting.
         Function TriggeringFurreSitting(reader As TriggerReader) As Boolean
             Try
-                Select Case FurcadiaSession.Player.FrameInfo.pose
+                Select Case Player.Pose
                     Case 0
                         Return True
                 End Select
@@ -1269,8 +1270,7 @@ Namespace Engine.Libraries
         '(1:x) and the triggering furre is standing.
         Function TriggeringFurreStanding(reader As TriggerReader) As Boolean
             Try
-                Dim tPlayer As FURRE = FurcadiaSession.Player
-                Select Case FurcadiaSession.Player.FrameInfo.pose
+                Select Case Player.Pose
                     Case 1 To 3
                         Return True
                 End Select

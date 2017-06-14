@@ -48,13 +48,27 @@ Namespace Engine
 
         Private MsPage As Monkeyspeak.Page
 
+        Sub New()
+            MyBase.New(Nothing)
+            options = New EngineOptoons
+            MSEngine = New MainEngine(options, New BotSession(New BotOptions()))
+
+            MsPage = MSEngine.LoadFromString("")
+            Initialize()
+        End Sub
+
         Public Sub New(engine As MainEngine, ByRef Page As Monkeyspeak.Page)
 
             MyBase.New(engine)
             MsPage = Page
+
             MSEngine = engine
             options = engine.Options
+            Initialize()
 
+        End Sub
+
+        Private Sub Initialize()
             LibList = New List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
             ' Comment out Libs to Disable
             LibList.Add(New MS_IO(MSEngine.FurcadiaSession))
@@ -63,8 +77,8 @@ Namespace Engine
             LibList.Add(New Banish(MSEngine.FurcadiaSession))
             LibList.Add(New MathLibrary(MSEngine.FurcadiaSession))
             LibList.Add(New MS_Time(MSEngine.FurcadiaSession))
-            ' LibList.Add(New MSPK_MDB(MSEngine.FurcadiaSession))
-            LibList.Add(New MSPK_Web(MSEngine.FurcadiaSession))
+            LibList.Add(New MSPK_MDB(MSEngine.FurcadiaSession))
+            ' LibList.Add(New MSPK_Web(MSEngine.FurcadiaSession))
             LibList.Add(New MS_Cookie(MSEngine.FurcadiaSession))
             LibList.Add(New MsPhoenixSpeak(MSEngine.FurcadiaSession))
             LibList.Add(New DatabaseSystem(MSEngine.FurcadiaSession))
@@ -80,7 +94,6 @@ Namespace Engine
             'LibList.Add(New MS_MemberList())
             'LibList.Add(New MS_MemberList())
             'LibList.Add(New MS_MemberList())
-
         End Sub
 
 #End Region
@@ -91,6 +104,25 @@ Namespace Engine
             ' 0 = main load 1 = engine start 2 = engine running
             Return MS_Stared >= 2
         End Function
+
+        'Bot Starts
+        Public Sub Export()
+
+            Try
+
+                ' Console.WriteLine("Execute (0:0)")
+                MS_Stared = 0
+
+                MsPage = MSEngine.LoadFromString("")
+                LoadLibrary(False)
+
+                MS_Engine_Running = False
+            Catch eX As Exception
+                Dim logError As New ErrorLogging(eX, Me)
+
+            End Try
+
+        End Sub
 
         Public Shadows Sub LoadLibrary(ByRef Library As Monkeyspeak.Libraries.AbstractBaseLibrary)
             MyBase.LoadLibrary(Library)
@@ -141,11 +173,13 @@ Namespace Engine
             For Each Library As Monkeyspeak.Libraries.AbstractBaseLibrary In LibList
                 Try
                     MsPage.LoadLibrary(Library)
-                    Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
+                    ' Console.WriteLine(String.Format("Loaded Monkey Speak
+                    ' Library: {0}", Library.GetType().Name))
                 Catch ex As Exception
 
                     Dim e As New ErrorLogging(ex, Library)
-                    Console.WriteLine(String.Format("Error loading Monkey Speak Library: {0}", Library.GetType().Name))
+                    ' Console.WriteLine(String.Format("Error loading Monkey
+                    ' Speak Library: {0}", Library.GetType().Name))
                 End Try
             Next
 

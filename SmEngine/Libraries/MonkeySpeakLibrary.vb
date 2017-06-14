@@ -99,6 +99,9 @@ Namespace Engine.Libraries
         ''' </summary>
         Sub New(ByRef Session As BotSession)
             MyBase.New()
+            If Session Is Nothing Then
+                Exit Sub
+            End If
             MsPage = Session.MSpage
             Player = Session.Player
             Dream = Session.Dream

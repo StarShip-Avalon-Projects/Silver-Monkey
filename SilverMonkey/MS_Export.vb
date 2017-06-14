@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.Generic
 Imports System.Text.RegularExpressions
+Imports System.Windows.Forms
 Imports SilverMonkeyEngine
 Imports SilverMonkeyEngine.Engine
 
@@ -25,9 +26,24 @@ Public Class MS_Export
 
 #End Region
 
-    Private FurcadiaSession As BotSession = Main.FurcadiaSession
+    Private MsPage As MonkeySpeakPage
 
 #Region "Private Methods"
+
+    Public Sub New()
+        ' This call is required by the designer.
+        Dim options As New EngineOptoons()
+        Dim engine As New MainEngine(options, New BotSession)
+        Dim mPage As Monkeyspeak.Page = engine.LoadFromString("")
+
+        MsPage = New MonkeySpeakPage(engine, mPage)
+        MsPage.Export()
+
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
 
     Private Sub ExitToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ExitToolStripMenuItem.Click
         Me.Close()
@@ -37,7 +53,7 @@ Public Class MS_Export
         'MS_Stared = 0
         'MainMSEngine.EngineStart(False)
         Dim Test As New List(Of String)
-        For Each item As String In FurcadiaSession.MSpage.GetTriggerDescriptions()
+        For Each item As String In MsPage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         EffectList.Clear()
@@ -95,14 +111,13 @@ Public Class MS_Export
     End Sub
 
     Private Sub IniToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles IniToolStripMenuItem.Click
-        ExportKeysIni("out.ini")
+        ExportKeysIni(Path.Combine(Application.StartupPath, "out.ini"))
     End Sub
 
     Private Sub MS_Export_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Dim page = New MonkeySpeakPage(FurcadiaSession.MainEngine, CType(FurcadiaSession.MSpage, MonkeySpeakPage))
-        page.Start()
+
         Dim Test As New List(Of String)
-        For Each item As String In FurcadiaSession.MSpage.GetTriggerDescriptions()
+        For Each item As String In MsPage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         Dim cat As New Regex("\((.[0-9]*)\:(.[0-9]*)\)")

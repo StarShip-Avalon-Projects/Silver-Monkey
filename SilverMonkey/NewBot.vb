@@ -11,6 +11,21 @@ Public Class NewBott
 
 #End Region
 
+#Region "Public Constructors"
+
+    Public Sub New(ByRef options As BotOptions)
+
+        bFile = New BotOptions()
+        bFile = options
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
+
+#End Region
+
 #Region "Private Fields"
 
     Dim OverWrite As Boolean = False
@@ -68,7 +83,6 @@ Public Class NewBott
         Dim btn As Button = CType(sender, Button)
 
         With FolderBrowserDialog1
-            '.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/Silver Monkey"
 
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
 
@@ -129,10 +143,9 @@ Public Class NewBott
     End Sub
 
     Private Sub Dialog1_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Main.NewBot = True
 
+        bFile = New BotOptions()
         'Default BotFile Settings
-        bFile = New BotOptions
         bFile.MonkeySpeakEngineOptions.MS_Engine_Enable = True
         bFile.AutoConnect = False
         bFile.GoMapIDX = 1
@@ -171,6 +184,7 @@ Public Class NewBott
         TxtbxFilelocation.Size = New Size(207, 20)
         TxtbxFilelocation.Location = New Point(20, 94)
         TxtbxFilelocation.Visible = True
+        TxtbxFilelocation.Text = Paths.SilverMonkeyBotPath
         TxtbxFilelocation.Anchor = System.Windows.Forms.AnchorStyles.Right _
             Or System.Windows.Forms.AnchorStyles.Left
 
@@ -281,17 +295,35 @@ Public Class NewBott
     End Sub
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
+        If String.IsNullOrEmpty(TxtbxBotName.Text) Then
+            If MessageBox.Show("Botname cannot be empty!!!", "Missing Botname",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.OK Then
+                Exit Sub
+            End If
+        End If
+        If String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
+            If MessageBox.Show("Bot path cannot be empty!!!", "Missing Botpath",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.OK Then
+                Exit Sub
+            End If
+        End If
         Dim BotFile As String
         Dim MsFile As String = String.Empty
         If Not String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
             BotFile = Path.Combine(TxtbxFilelocation.Text, TxtbxBotName.Text)
+            MsFile = BotFile
+        ElseIf Not Directory.Exists(TxtbxFilelocation.Text) Then
+            BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
             MsFile = BotFile
         Else
             BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
             MsFile = BotFile
         End If
         Dim ext As String = Path.GetExtension(BotFile)
-        If String.IsNullOrEmpty(ext) Then BotFile = BotFile + ".bini"
+        If String.IsNullOrEmpty(ext) Then
+            BotFile += ".bini"
+            MsFile += ".ms"
+        End If
 
         If File.Exists(BotFile) And Not OverWrite Then
             If MessageBox.Show(BotFile + " Exists! Over write settings?", "File Exists Warning",
@@ -308,13 +340,8 @@ Public Class NewBott
             End If
         End If
 
-        bFile = New BotOptions(BotFile)
         bFile.CharacterIniFile = TxtbxCharacterINI.Text
 
-        'Bug 23
-        If String.IsNullOrEmpty(Path.GetExtension(MsFile)) Then
-            MsFile += ".ms"
-        End If
         bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = MsFile
 
         bFile.LogNameBase = TxtbxBotName.Text

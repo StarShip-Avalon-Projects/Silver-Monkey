@@ -199,27 +199,28 @@ Public Class IniFile
 
     ' Used to save the data back to the file or your choice
     Public Sub Save(ByVal sFileName As String)
-        Dim oWriter As New StreamWriter(sFileName, False)
-        For Each s As IniSection In Sections
+        Using oWriter As New StreamWriter(sFileName, False)
+            For Each s As IniSection In Sections
 
-            Debug.WriteLine(String.Format("Writing Section: [{0}]", s.Name))
+                Debug.WriteLine(String.Format("Writing Section: [{0}]", s.Name))
 
-            oWriter.WriteLine(String.Format("[{0}]", s.Name))
-            For Each k As IniSection.IniKey In s.Keys
-                If k.Value <> String.Empty Then
+                oWriter.WriteLine(String.Format("[{0}]", s.Name))
+                For Each k As IniSection.IniKey In s.Keys
+                    If k.Value <> String.Empty Then
 
-                    Debug.WriteLine(String.Format("Writing Key: {0}={1}", k.Name, k.Value))
+                        Debug.WriteLine(String.Format("Writing Key: {0}={1}", k.Name, k.Value))
 
-                    oWriter.WriteLine(String.Format("{0}={1}", k.Name, k.Value))
-                Else
+                        oWriter.WriteLine(String.Format("{0}={1}", k.Name, k.Value))
+                    Else
 
-                    Debug.WriteLine(String.Format("Writing Key: {0}", k.Name))
+                        Debug.WriteLine(String.Format("Writing Key: {0}", k.Name))
 
-                    oWriter.WriteLine(String.Format("{0}", k.Name))
-                End If
+                        oWriter.WriteLine(String.Format("{0}", k.Name))
+                    End If
+                Next
             Next
-        Next
-        oWriter.Close()
+            oWriter.Close()
+        End Using
     End Sub
     ' Sets a KeyValuePair in a certain section
     Public Function SetKeyValue(ByVal sSection As String, ByVal sKey As String, ByVal sValue As String) As Boolean
@@ -287,12 +288,12 @@ Public Class IniFile
         ' Adds a key to the IniSection object, returns a IniKey object to the new or existing object
         Public Function AddKey(ByVal sKey As String) As IniKey
             sKey = sKey.Trim()
-            Dim k As IniSection.IniKey = Nothing
+            Dim k As IniKey = Nothing
             If sKey.Length <> 0 Then
                 If m_keys.ContainsKey(sKey) Then
                     k = DirectCast(m_keys(sKey), IniKey)
                 Else
-                    k = New IniSection.IniKey(Me, sKey)
+                    k = New IniKey(Me, sKey)
                     m_keys(sKey) = k
                 End If
             End If

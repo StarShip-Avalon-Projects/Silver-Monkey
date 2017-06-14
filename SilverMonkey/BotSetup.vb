@@ -49,9 +49,6 @@ Public Class BotSetup
 #Region "Private Methods"
 
     Private Sub BotSetup_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        If String.IsNullOrEmpty(bFile.Name) Then
-            Main.NewBot = True
-        End If
 
         TxtHPort.Text = bFile.LocalhostPort.ToString
         TxtBx_CharIni.Text = bFile.CharacterIniFile

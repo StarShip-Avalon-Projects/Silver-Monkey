@@ -394,8 +394,10 @@ Public Class Paths
     Public Shared Function CheckBotFolder(ByVal file As String) As String
         Dim Check As String = Path.GetDirectoryName(file)
         If String.IsNullOrEmpty(Check) Then
-            Check = Path.Combine(Paths.SilverMonkeyBotPath, file)
-            Return Check
+            If String.IsNullOrEmpty(file) Then
+                Return SilverMonkeyBotPath
+            End If
+            Return Path.Combine(SilverMonkeyBotPath, file)
         End If
         Return file
     End Function

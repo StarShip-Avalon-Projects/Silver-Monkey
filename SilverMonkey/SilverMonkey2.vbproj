@@ -164,6 +164,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Helper Classes\DeBugWriter.vb" />
+    <Compile Include="IO\TextDisplayManager.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -265,6 +266,7 @@
     <EmbeddedResource Include="My Project\app.manifest">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Furcadia.Net.Dream.FURREList.datasource" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

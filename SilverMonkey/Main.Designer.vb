@@ -36,39 +36,18 @@ Partial Class Main
         Me.TS_Filler = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripServerStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripClientStatus = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.DreamCountTxtBx = New MonkeyCore.Controls.TextBox_NoFlicker()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.toServer = New MonkeyCore.Controls.RichTextBoxEx()
+        Me.FURREListBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
+        Me.FURREListBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.EditMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.MenuCopy = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuCut = New System.Windows.Forms.ToolStripMenuItem()
         Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
-        Me.Btn_Bold = New System.Windows.Forms.Button()
-        Me.BTN_Underline = New System.Windows.Forms.Button()
-        Me.BTN_Italic = New System.Windows.Forms.Button()
-        Me.sendToServer = New System.Windows.Forms.Button()
-        Me.clientGroup = New System.Windows.Forms.GroupBox()
-        Me.log_ = New MonkeyCore.Controls.RichTextBoxEx()
         Me.CopyMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.MenuCopy2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuCut2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
-        Me.GrpAction = New System.Windows.Forms.GroupBox()
-        Me.BtnSit_stand_Lie = New System.Windows.Forms.Button()
-        Me.BTN_TurnL = New System.Windows.Forms.Button()
-        Me.BTN_TurnR = New System.Windows.Forms.Button()
-        Me._ne = New System.Windows.Forms.PictureBox()
-        Me._nw = New System.Windows.Forms.PictureBox()
-        Me.use_ = New System.Windows.Forms.Button()
-        Me.get_ = New System.Windows.Forms.Button()
-        Me.se_ = New System.Windows.Forms.PictureBox()
-        Me.sw_ = New System.Windows.Forms.PictureBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -88,25 +67,58 @@ Partial Class Main
         Me.AboutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.LinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TSTutorialsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BTN_Go = New System.Windows.Forms.Button()
         Me.MainMenu1 = New System.Windows.Forms.MainMenu(Me.components)
         Me.BotIniOpen = New System.Windows.Forms.OpenFileDialog()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.FURREListBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
+        Me.clientGroup = New System.Windows.Forms.GroupBox()
+        Me.log_ = New MonkeyCore.Controls.RichTextBoxEx()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.toServer = New MonkeyCore.Controls.RichTextBoxEx()
+        Me.Btn_Bold = New System.Windows.Forms.Button()
+        Me.BTN_Underline = New System.Windows.Forms.Button()
+        Me.BTN_Italic = New System.Windows.Forms.Button()
+        Me.sendToServer = New System.Windows.Forms.Button()
+        Me.BTN_Go = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DreamCountTxtBx = New MonkeyCore.Controls.TextBox_NoFlicker()
+        Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.GrpAction = New System.Windows.Forms.GroupBox()
+        Me.BtnSit_stand_Lie = New System.Windows.Forms.Button()
+        Me.BTN_TurnL = New System.Windows.Forms.Button()
+        Me.BTN_TurnR = New System.Windows.Forms.Button()
+        Me._ne = New System.Windows.Forms.PictureBox()
+        Me._nw = New System.Windows.Forms.PictureBox()
+        Me.use_ = New System.Windows.Forms.Button()
+        Me.get_ = New System.Windows.Forms.Button()
+        Me.se_ = New System.Windows.Forms.PictureBox()
+        Me.sw_ = New System.Windows.Forms.PictureBox()
         Me.ContextTryIcon.SuspendLayout()
         Me.TS_Main.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
+        CType(Me.FURREListBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.EditMenu.SuspendLayout()
-        Me.clientGroup.SuspendLayout()
         Me.CopyMenu.SuspendLayout()
+        Me.MenuStrip1.SuspendLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
+        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer2.Panel1.SuspendLayout()
+        Me.SplitContainer2.Panel2.SuspendLayout()
+        Me.SplitContainer2.SuspendLayout()
+        Me.clientGroup.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.GrpAction.SuspendLayout()
         CType(Me._ne, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me._nw, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.se_, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.sw_, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.MenuStrip1.SuspendLayout()
-        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ContextTryIcon
@@ -163,9 +175,9 @@ Partial Class Main
         'TS_Main
         '
         Me.TS_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TS_Status_BotName, Me.FurcTimeLbl, Me.TS_Filler, Me.ToolStripServerStatus, Me.ToolStripClientStatus})
-        Me.TS_Main.Location = New System.Drawing.Point(0, 351)
+        Me.TS_Main.Location = New System.Drawing.Point(0, 354)
         Me.TS_Main.Name = "TS_Main"
-        Me.TS_Main.Size = New System.Drawing.Size(437, 22)
+        Me.TS_Main.Size = New System.Drawing.Size(812, 22)
         Me.TS_Main.TabIndex = 50
         Me.TS_Main.Text = "StatusStrip1"
         '
@@ -188,7 +200,7 @@ Partial Class Main
         '
         Me.TS_Filler.Name = "TS_Filler"
         Me.TS_Filler.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always
-        Me.TS_Filler.Size = New System.Drawing.Size(55, 17)
+        Me.TS_Filler.Size = New System.Drawing.Size(430, 17)
         Me.TS_Filler.Spring = True
         '
         'ToolStripServerStatus
@@ -214,102 +226,9 @@ Partial Class Main
         Me.ToolStripClientStatus.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         Me.ToolStripClientStatus.ToolTipText = "Disconnected"
         '
-        'GroupBox1
+        'FURREListBindingSource1
         '
-        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox1.Controls.Add(Me.DreamCountTxtBx)
-        Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Controls.Add(Me.DreamList)
-        Me.GroupBox1.Location = New System.Drawing.Point(281, 27)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(136, 151)
-        Me.GroupBox1.TabIndex = 56
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Dream List"
-        '
-        'DreamCountTxtBx
-        '
-        Me.DreamCountTxtBx.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DreamCountTxtBx.BackColor = System.Drawing.SystemColors.Info
-        Me.DreamCountTxtBx.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DreamCountTxtBx.Location = New System.Drawing.Point(93, 125)
-        Me.DreamCountTxtBx.Name = "DreamCountTxtBx"
-        Me.DreamCountTxtBx.ReadOnly = True
-        Me.DreamCountTxtBx.Size = New System.Drawing.Size(33, 23)
-        Me.DreamCountTxtBx.TabIndex = 14
-        Me.DreamCountTxtBx.Text = "###"
-        '
-        'Label1
-        '
-        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 130)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(84, 13)
-        Me.Label1.TabIndex = 13
-        Me.Label1.Text = "Furres in Dream:"
-        '
-        'DreamList
-        '
-        Me.DreamList.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-
-        Me.DreamList.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DreamList.FormattingEnabled = True
-        Me.DreamList.HorizontalScrollbar = True
-        Me.DreamList.ItemHeight = 16
-        Me.DreamList.Location = New System.Drawing.Point(5, 16)
-        Me.DreamList.Name = "DreamList"
-        Me.DreamList.Size = New System.Drawing.Size(124, 100)
-        Me.DreamList.Sorted = True
-        Me.DreamList.TabIndex = 12
-        '
-        'GroupBox3
-        '
-        Me.GroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox3.Controls.Add(Me.CheckBox1)
-        Me.GroupBox3.Controls.Add(Me.toServer)
-        Me.GroupBox3.Controls.Add(Me.Btn_Bold)
-        Me.GroupBox3.Controls.Add(Me.BTN_Underline)
-        Me.GroupBox3.Controls.Add(Me.BTN_Italic)
-        Me.GroupBox3.Controls.Add(Me.sendToServer)
-        Me.GroupBox3.Location = New System.Drawing.Point(12, 184)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(263, 164)
-        Me.GroupBox3.TabIndex = 55
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Chat"
-        '
-        'CheckBox1
-        '
-        Me.CheckBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(6, 141)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(77, 17)
-        Me.CheckBox1.TabIndex = 59
-        Me.CheckBox1.Text = "Auto Scroll"
-        Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'toServer
-        '
-        Me.toServer.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.toServer.ContextMenuStrip = Me.EditMenu
-        Me.toServer.HScrollPos = 0
-        Me.toServer.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.toServer.Location = New System.Drawing.Point(3, 28)
-        Me.toServer.Name = "toServer"
-        Me.toServer.ShortcutsEnabled = False
-        Me.toServer.Size = New System.Drawing.Size(254, 106)
-        Me.toServer.TabIndex = 58
-        Me.toServer.Text = ""
-        Me.toServer.VerticalContentAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Top
-        Me.toServer.VScrollPos = 0
+        Me.FURREListBindingSource1.DataSource = GetType(Furcadia.Net.Dream.FURREList)
         '
         'EditMenu
         '
@@ -343,77 +262,6 @@ Partial Class Main
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
         Me.ToolStripSeparator3.Size = New System.Drawing.Size(141, 6)
-        '
-        'Btn_Bold
-        '
-        Me.Btn_Bold.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Btn_Bold.Location = New System.Drawing.Point(180, 7)
-        Me.Btn_Bold.Name = "Btn_Bold"
-        Me.Btn_Bold.Size = New System.Drawing.Size(18, 19)
-        Me.Btn_Bold.TabIndex = 60
-        Me.Btn_Bold.Text = "B"
-        Me.Btn_Bold.UseVisualStyleBackColor = True
-        '
-        'BTN_Underline
-        '
-        Me.BTN_Underline.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BTN_Underline.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BTN_Underline.Location = New System.Drawing.Point(228, 7)
-        Me.BTN_Underline.Name = "BTN_Underline"
-        Me.BTN_Underline.Size = New System.Drawing.Size(29, 19)
-        Me.BTN_Underline.TabIndex = 59
-        Me.BTN_Underline.Text = "UL"
-        Me.BTN_Underline.UseVisualStyleBackColor = True
-        '
-        'BTN_Italic
-        '
-        Me.BTN_Italic.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BTN_Italic.Location = New System.Drawing.Point(204, 7)
-        Me.BTN_Italic.Name = "BTN_Italic"
-        Me.BTN_Italic.Size = New System.Drawing.Size(18, 19)
-        Me.BTN_Italic.TabIndex = 58
-        Me.BTN_Italic.Text = "I"
-        Me.BTN_Italic.UseVisualStyleBackColor = True
-        '
-        'sendToServer
-        '
-        Me.sendToServer.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.sendToServer.Location = New System.Drawing.Point(222, 138)
-        Me.sendToServer.Name = "sendToServer"
-        Me.sendToServer.Size = New System.Drawing.Size(35, 20)
-        Me.sendToServer.TabIndex = 4
-        Me.sendToServer.Text = "->"
-        Me.sendToServer.UseVisualStyleBackColor = True
-        '
-        'clientGroup
-        '
-        Me.clientGroup.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.clientGroup.Controls.Add(Me.log_)
-        Me.clientGroup.Location = New System.Drawing.Point(12, 27)
-        Me.clientGroup.Name = "clientGroup"
-        Me.clientGroup.Size = New System.Drawing.Size(263, 151)
-        Me.clientGroup.TabIndex = 51
-        Me.clientGroup.TabStop = False
-        Me.clientGroup.Text = "Log"
-        '
-        'log_
-        '
-        Me.log_.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.log_.BackColor = System.Drawing.SystemColors.Window
-        Me.log_.ContextMenuStrip = Me.CopyMenu
-        Me.log_.HScrollPos = 0
-        Me.log_.Location = New System.Drawing.Point(3, 18)
-        Me.log_.Name = "log_"
-        Me.log_.ReadOnly = True
-        Me.log_.Size = New System.Drawing.Size(254, 127)
-        Me.log_.TabIndex = 49
-        Me.log_.Text = ""
-        Me.log_.VerticalContentAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Top
-        Me.log_.VScrollPos = 0
         '
         'CopyMenu
         '
@@ -450,134 +298,12 @@ Partial Class Main
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
         Me.ToolStripSeparator4.Size = New System.Drawing.Size(141, 6)
         '
-        'GrpAction
-        '
-        Me.GrpAction.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GrpAction.Controls.Add(Me.BtnSit_stand_Lie)
-        Me.GrpAction.Controls.Add(Me.BTN_TurnL)
-        Me.GrpAction.Controls.Add(Me.BTN_TurnR)
-        Me.GrpAction.Controls.Add(Me._ne)
-        Me.GrpAction.Controls.Add(Me._nw)
-        Me.GrpAction.Controls.Add(Me.use_)
-        Me.GrpAction.Controls.Add(Me.get_)
-        Me.GrpAction.Controls.Add(Me.se_)
-        Me.GrpAction.Controls.Add(Me.sw_)
-        Me.GrpAction.Location = New System.Drawing.Point(281, 184)
-        Me.GrpAction.Name = "GrpAction"
-        Me.GrpAction.Size = New System.Drawing.Size(136, 132)
-        Me.GrpAction.TabIndex = 54
-        Me.GrpAction.TabStop = False
-        Me.GrpAction.Text = "Actions"
-        '
-        'BtnSit_stand_Lie
-        '
-        Me.BtnSit_stand_Lie.Location = New System.Drawing.Point(9, 69)
-        Me.BtnSit_stand_Lie.Name = "BtnSit_stand_Lie"
-        Me.BtnSit_stand_Lie.Size = New System.Drawing.Size(33, 23)
-        Me.BtnSit_stand_Lie.TabIndex = 44
-        Me.BtnSit_stand_Lie.Text = "Sit"
-        Me.BtnSit_stand_Lie.UseVisualStyleBackColor = True
-        '
-        'BTN_TurnL
-        '
-        Me.BTN_TurnL.Location = New System.Drawing.Point(9, 19)
-        Me.BTN_TurnL.Name = "BTN_TurnL"
-        Me.BTN_TurnL.Size = New System.Drawing.Size(33, 23)
-        Me.BTN_TurnL.TabIndex = 43
-        Me.BTN_TurnL.Text = "<="
-        Me.BTN_TurnL.UseVisualStyleBackColor = True
-        '
-        'BTN_TurnR
-        '
-        Me.BTN_TurnR.Location = New System.Drawing.Point(9, 43)
-        Me.BTN_TurnR.Name = "BTN_TurnR"
-        Me.BTN_TurnR.Size = New System.Drawing.Size(33, 23)
-        Me.BTN_TurnR.TabIndex = 42
-        Me.BTN_TurnR.Text = "=>"
-        Me.BTN_TurnR.UseVisualStyleBackColor = True
-        '
-        '_ne
-        '
-        Me._ne.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me._ne.Cursor = System.Windows.Forms.Cursors.Hand
-        Me._ne.Image = CType(resources.GetObject("_ne.Image"), System.Drawing.Image)
-        Me._ne.Location = New System.Drawing.Point(90, 19)
-        Me._ne.Name = "_ne"
-        Me._ne.Size = New System.Drawing.Size(36, 36)
-        Me._ne.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me._ne.TabIndex = 41
-        Me._ne.TabStop = False
-        Me._ne.WaitOnLoad = True
-        '
-        '_nw
-        '
-        Me._nw.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me._nw.Cursor = System.Windows.Forms.Cursors.Hand
-        Me._nw.Image = CType(resources.GetObject("_nw.Image"), System.Drawing.Image)
-        Me._nw.Location = New System.Drawing.Point(54, 19)
-        Me._nw.Name = "_nw"
-        Me._nw.Size = New System.Drawing.Size(36, 36)
-        Me._nw.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me._nw.TabIndex = 40
-        Me._nw.TabStop = False
-        Me._nw.WaitOnLoad = True
-        '
-        'use_
-        '
-        Me.use_.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.use_.FlatAppearance.BorderSize = 0
-        Me.use_.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.use_.Location = New System.Drawing.Point(65, 98)
-        Me.use_.Name = "use_"
-        Me.use_.Size = New System.Drawing.Size(35, 23)
-        Me.use_.TabIndex = 38
-        Me.use_.Text = "Use"
-        Me.use_.UseVisualStyleBackColor = True
-        '
-        'get_
-        '
-        Me.get_.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.get_.FlatAppearance.BorderSize = 0
-        Me.get_.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.get_.Location = New System.Drawing.Point(27, 98)
-        Me.get_.Name = "get_"
-        Me.get_.Size = New System.Drawing.Size(32, 23)
-        Me.get_.TabIndex = 37
-        Me.get_.Text = "Get"
-        Me.get_.UseVisualStyleBackColor = True
-        '
-        'se_
-        '
-        Me.se_.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.se_.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.se_.Image = CType(resources.GetObject("se_.Image"), System.Drawing.Image)
-        Me.se_.Location = New System.Drawing.Point(90, 56)
-        Me.se_.Name = "se_"
-        Me.se_.Size = New System.Drawing.Size(36, 36)
-        Me.se_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.se_.TabIndex = 36
-        Me.se_.TabStop = False
-        Me.se_.WaitOnLoad = True
-        '
-        'sw_
-        '
-        Me.sw_.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.sw_.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.sw_.Image = CType(resources.GetObject("sw_.Image"), System.Drawing.Image)
-        Me.sw_.Location = New System.Drawing.Point(54, 56)
-        Me.sw_.Name = "sw_"
-        Me.sw_.Size = New System.Drawing.Size(36, 36)
-        Me.sw_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.sw_.TabIndex = 35
-        Me.sw_.TabStop = False
-        Me.sw_.WaitOnLoad = True
-        '
         'MenuStrip1
         '
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.OptionsToolStripMenuItem, Me.WindowsToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(437, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(812, 24)
         Me.MenuStrip1.TabIndex = 57
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -697,34 +423,359 @@ Partial Class Main
         Me.TSTutorialsToolStripMenuItem.Size = New System.Drawing.Size(141, 22)
         Me.TSTutorialsToolStripMenuItem.Text = "T-S Tutorials"
         '
-        'BTN_Go
-        '
-        Me.BTN_Go.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BTN_Go.Location = New System.Drawing.Point(346, 322)
-        Me.BTN_Go.Name = "BTN_Go"
-        Me.BTN_Go.Size = New System.Drawing.Size(71, 26)
-        Me.BTN_Go.TabIndex = 52
-        Me.BTN_Go.Text = "Go!"
-        Me.BTN_Go.UseVisualStyleBackColor = True
-        '
         'BotIniOpen
         '
         Me.BotIniOpen.DefaultExt = "bini"
         Me.BotIniOpen.Filter = "Bot Files|*.bini"
         '
+        'SplitContainer1
+        '
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 24)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.SplitContainer2)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.BTN_Go)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.GroupBox1)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.GrpAction)
+        Me.SplitContainer1.Size = New System.Drawing.Size(812, 330)
+        Me.SplitContainer1.SplitterDistance = 584
+        Me.SplitContainer1.TabIndex = 59
+        '
+        'SplitContainer2
+        '
+        Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer2.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer2.Name = "SplitContainer2"
+        Me.SplitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'SplitContainer2.Panel1
+        '
+        Me.SplitContainer2.Panel1.Controls.Add(Me.clientGroup)
+        '
+        'SplitContainer2.Panel2
+        '
+        Me.SplitContainer2.Panel2.Controls.Add(Me.GroupBox3)
+        Me.SplitContainer2.Size = New System.Drawing.Size(584, 330)
+        Me.SplitContainer2.SplitterDistance = 195
+        Me.SplitContainer2.TabIndex = 0
+        '
+        'clientGroup
+        '
+        Me.clientGroup.Controls.Add(Me.log_)
+        Me.clientGroup.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.clientGroup.Location = New System.Drawing.Point(0, 0)
+        Me.clientGroup.Name = "clientGroup"
+        Me.clientGroup.Size = New System.Drawing.Size(584, 195)
+        Me.clientGroup.TabIndex = 66
+        Me.clientGroup.TabStop = False
+        Me.clientGroup.Text = "Log"
+        '
+        'log_
+        '
+        Me.log_.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.log_.BackColor = System.Drawing.SystemColors.Window
+        Me.log_.ContextMenuStrip = Me.CopyMenu
+        Me.log_.HScrollPos = 0
+        Me.log_.Location = New System.Drawing.Point(3, 18)
+        Me.log_.Name = "log_"
+        Me.log_.ReadOnly = True
+        Me.log_.Size = New System.Drawing.Size(575, 171)
+        Me.log_.TabIndex = 49
+        Me.log_.Text = ""
+        Me.log_.VerticalContentAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Top
+        Me.log_.VScrollPos = 0
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.CheckBox1)
+        Me.GroupBox3.Controls.Add(Me.toServer)
+        Me.GroupBox3.Controls.Add(Me.Btn_Bold)
+        Me.GroupBox3.Controls.Add(Me.BTN_Underline)
+        Me.GroupBox3.Controls.Add(Me.BTN_Italic)
+        Me.GroupBox3.Controls.Add(Me.sendToServer)
+        Me.GroupBox3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox3.Location = New System.Drawing.Point(0, 0)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(584, 131)
+        Me.GroupBox3.TabIndex = 65
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Chat"
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(6, 108)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(77, 17)
+        Me.CheckBox1.TabIndex = 59
+        Me.CheckBox1.Text = "Auto Scroll"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'toServer
+        '
+        Me.toServer.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.toServer.ContextMenuStrip = Me.EditMenu
+        Me.toServer.HScrollPos = 0
+        Me.toServer.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.toServer.Location = New System.Drawing.Point(3, 28)
+        Me.toServer.Name = "toServer"
+        Me.toServer.ShortcutsEnabled = False
+        Me.toServer.Size = New System.Drawing.Size(575, 73)
+        Me.toServer.TabIndex = 58
+        Me.toServer.Text = ""
+        Me.toServer.VerticalContentAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Top
+        Me.toServer.VScrollPos = 0
+        '
+        'Btn_Bold
+        '
+        Me.Btn_Bold.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Bold.Location = New System.Drawing.Point(501, 7)
+        Me.Btn_Bold.Name = "Btn_Bold"
+        Me.Btn_Bold.Size = New System.Drawing.Size(18, 19)
+        Me.Btn_Bold.TabIndex = 60
+        Me.Btn_Bold.Text = "B"
+        Me.Btn_Bold.UseVisualStyleBackColor = True
+        '
+        'BTN_Underline
+        '
+        Me.BTN_Underline.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BTN_Underline.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTN_Underline.Location = New System.Drawing.Point(549, 7)
+        Me.BTN_Underline.Name = "BTN_Underline"
+        Me.BTN_Underline.Size = New System.Drawing.Size(29, 19)
+        Me.BTN_Underline.TabIndex = 59
+        Me.BTN_Underline.Text = "UL"
+        Me.BTN_Underline.UseVisualStyleBackColor = True
+        '
+        'BTN_Italic
+        '
+        Me.BTN_Italic.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BTN_Italic.Location = New System.Drawing.Point(525, 7)
+        Me.BTN_Italic.Name = "BTN_Italic"
+        Me.BTN_Italic.Size = New System.Drawing.Size(18, 19)
+        Me.BTN_Italic.TabIndex = 58
+        Me.BTN_Italic.Text = "I"
+        Me.BTN_Italic.UseVisualStyleBackColor = True
+        '
+        'sendToServer
+        '
+        Me.sendToServer.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.sendToServer.Location = New System.Drawing.Point(543, 105)
+        Me.sendToServer.Name = "sendToServer"
+        Me.sendToServer.Size = New System.Drawing.Size(35, 20)
+        Me.sendToServer.TabIndex = 4
+        Me.sendToServer.Text = "->"
+        Me.sendToServer.UseVisualStyleBackColor = True
+        '
+        'BTN_Go
+        '
+        Me.BTN_Go.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BTN_Go.Location = New System.Drawing.Point(140, 298)
+        Me.BTN_Go.Name = "BTN_Go"
+        Me.BTN_Go.Size = New System.Drawing.Size(71, 26)
+        Me.BTN_Go.TabIndex = 66
+        Me.BTN_Go.Text = "Go!"
+        Me.BTN_Go.UseVisualStyleBackColor = True
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.DreamCountTxtBx)
+        Me.GroupBox1.Controls.Add(Me.DreamList)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Location = New System.Drawing.Point(0, 0)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(224, 154)
+        Me.GroupBox1.TabIndex = 65
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Dream List"
+        '
+        'DreamCountTxtBx
+        '
+        Me.DreamCountTxtBx.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.DreamCountTxtBx.BackColor = System.Drawing.SystemColors.Info
+        Me.DreamCountTxtBx.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DreamCountTxtBx.Location = New System.Drawing.Point(178, 125)
+        Me.DreamCountTxtBx.Name = "DreamCountTxtBx"
+        Me.DreamCountTxtBx.ReadOnly = True
+        Me.DreamCountTxtBx.Size = New System.Drawing.Size(33, 23)
+        Me.DreamCountTxtBx.TabIndex = 14
+        Me.DreamCountTxtBx.Text = "###"
+        '
+        'DreamList
+        '
+        Me.DreamList.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.DreamList.DataSource = Me.FURREListBindingSource1
+        Me.DreamList.DisplayMember = "Name"
+        Me.DreamList.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DreamList.FormattingEnabled = True
+        Me.DreamList.HorizontalScrollbar = True
+        Me.DreamList.ItemHeight = 16
+        Me.DreamList.Location = New System.Drawing.Point(5, 16)
+        Me.DreamList.Name = "DreamList"
+        Me.DreamList.Size = New System.Drawing.Size(212, 100)
+        Me.DreamList.Sorted = True
+        Me.DreamList.TabIndex = 12
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(72, 130)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(84, 13)
+        Me.Label1.TabIndex = 13
+        Me.Label1.Text = "Furres in Dream:"
+        '
+        'GrpAction
+        '
+        Me.GrpAction.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GrpAction.Controls.Add(Me.BtnSit_stand_Lie)
+        Me.GrpAction.Controls.Add(Me.BTN_TurnL)
+        Me.GrpAction.Controls.Add(Me.BTN_TurnR)
+        Me.GrpAction.Controls.Add(Me._ne)
+        Me.GrpAction.Controls.Add(Me._nw)
+        Me.GrpAction.Controls.Add(Me.use_)
+        Me.GrpAction.Controls.Add(Me.get_)
+        Me.GrpAction.Controls.Add(Me.se_)
+        Me.GrpAction.Controls.Add(Me.sw_)
+        Me.GrpAction.Location = New System.Drawing.Point(38, 160)
+        Me.GrpAction.Name = "GrpAction"
+        Me.GrpAction.Size = New System.Drawing.Size(173, 132)
+        Me.GrpAction.TabIndex = 64
+        Me.GrpAction.TabStop = False
+        Me.GrpAction.Text = "Actions"
+        '
+        'BtnSit_stand_Lie
+        '
+        Me.BtnSit_stand_Lie.Location = New System.Drawing.Point(6, 67)
+        Me.BtnSit_stand_Lie.Name = "BtnSit_stand_Lie"
+        Me.BtnSit_stand_Lie.Size = New System.Drawing.Size(50, 23)
+        Me.BtnSit_stand_Lie.TabIndex = 44
+        Me.BtnSit_stand_Lie.Text = "Sit"
+        Me.BtnSit_stand_Lie.UseVisualStyleBackColor = True
+        '
+        'BTN_TurnL
+        '
+        Me.BTN_TurnL.Location = New System.Drawing.Point(6, 19)
+        Me.BTN_TurnL.Name = "BTN_TurnL"
+        Me.BTN_TurnL.Size = New System.Drawing.Size(50, 23)
+        Me.BTN_TurnL.TabIndex = 43
+        Me.BTN_TurnL.Text = "<="
+        Me.BTN_TurnL.UseVisualStyleBackColor = True
+        '
+        'BTN_TurnR
+        '
+        Me.BTN_TurnR.Location = New System.Drawing.Point(6, 44)
+        Me.BTN_TurnR.Name = "BTN_TurnR"
+        Me.BTN_TurnR.Size = New System.Drawing.Size(50, 23)
+        Me.BTN_TurnR.TabIndex = 42
+        Me.BTN_TurnR.Text = "=>"
+        Me.BTN_TurnR.UseVisualStyleBackColor = True
+        '
+        '_ne
+        '
+        Me._ne.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me._ne.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me._ne.Cursor = System.Windows.Forms.Cursors.Hand
+        Me._ne.Image = CType(resources.GetObject("_ne.Image"), System.Drawing.Image)
+        Me._ne.Location = New System.Drawing.Point(115, 19)
+        Me._ne.Name = "_ne"
+        Me._ne.Size = New System.Drawing.Size(36, 36)
+        Me._ne.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me._ne.TabIndex = 41
+        Me._ne.TabStop = False
+        Me._ne.WaitOnLoad = True
+        '
+        '_nw
+        '
+        Me._nw.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me._nw.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me._nw.Cursor = System.Windows.Forms.Cursors.Hand
+        Me._nw.Image = CType(resources.GetObject("_nw.Image"), System.Drawing.Image)
+        Me._nw.Location = New System.Drawing.Point(70, 19)
+        Me._nw.Name = "_nw"
+        Me._nw.Size = New System.Drawing.Size(36, 36)
+        Me._nw.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me._nw.TabIndex = 40
+        Me._nw.TabStop = False
+        Me._nw.WaitOnLoad = True
+        '
+        'use_
+        '
+        Me.use_.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.use_.FlatAppearance.BorderSize = 0
+        Me.use_.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.use_.Location = New System.Drawing.Point(100, 98)
+        Me.use_.Name = "use_"
+        Me.use_.Size = New System.Drawing.Size(35, 23)
+        Me.use_.TabIndex = 38
+        Me.use_.Text = "Use"
+        Me.use_.UseVisualStyleBackColor = True
+        '
+        'get_
+        '
+        Me.get_.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.get_.FlatAppearance.BorderSize = 0
+        Me.get_.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.get_.Location = New System.Drawing.Point(54, 98)
+        Me.get_.Name = "get_"
+        Me.get_.Size = New System.Drawing.Size(32, 23)
+        Me.get_.TabIndex = 37
+        Me.get_.Text = "Get"
+        Me.get_.UseVisualStyleBackColor = True
+        '
+        'se_
+        '
+        Me.se_.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.se_.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.se_.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.se_.Image = CType(resources.GetObject("se_.Image"), System.Drawing.Image)
+        Me.se_.Location = New System.Drawing.Point(115, 56)
+        Me.se_.Name = "se_"
+        Me.se_.Size = New System.Drawing.Size(36, 36)
+        Me.se_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.se_.TabIndex = 36
+        Me.se_.TabStop = False
+        Me.se_.WaitOnLoad = True
+        '
+        'sw_
+        '
+        Me.sw_.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.sw_.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.sw_.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.sw_.Image = CType(resources.GetObject("sw_.Image"), System.Drawing.Image)
+        Me.sw_.Location = New System.Drawing.Point(70, 56)
+        Me.sw_.Name = "sw_"
+        Me.sw_.Size = New System.Drawing.Size(36, 36)
+        Me.sw_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.sw_.TabIndex = 35
+        Me.sw_.TabStop = False
+        Me.sw_.WaitOnLoad = True
         '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(437, 373)
-        Me.Controls.Add(Me.clientGroup)
-        Me.Controls.Add(Me.GroupBox1)
-        Me.Controls.Add(Me.GroupBox3)
+        Me.ClientSize = New System.Drawing.Size(812, 376)
+        Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TS_Main)
-        Me.Controls.Add(Me.GrpAction)
         Me.Controls.Add(Me.MenuStrip1)
-        Me.Controls.Add(Me.BTN_Go)
         Me.DoubleBuffered = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.IsMdiContainer = True
@@ -736,22 +787,31 @@ Partial Class Main
         Me.ContextTryIcon.ResumeLayout(False)
         Me.TS_Main.ResumeLayout(False)
         Me.TS_Main.PerformLayout()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        CType(Me.FURREListBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.EditMenu.ResumeLayout(False)
+        Me.CopyMenu.ResumeLayout(False)
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
+        Me.SplitContainer2.Panel1.ResumeLayout(False)
+        Me.SplitContainer2.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer2.ResumeLayout(False)
+        Me.clientGroup.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
-        Me.EditMenu.ResumeLayout(False)
-        Me.clientGroup.ResumeLayout(False)
-        Me.CopyMenu.ResumeLayout(False)
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.GrpAction.ResumeLayout(False)
         Me.GrpAction.PerformLayout()
         CType(Me._ne, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me._nw, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.se_, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.sw_, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
-        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -763,33 +823,12 @@ Partial Class Main
     Friend WithEvents ToolStripServerStatus As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ToolStripClientStatus As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents TS_Filler As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
-    Friend WithEvents sendToServer As System.Windows.Forms.Button
-    Friend WithEvents clientGroup As System.Windows.Forms.GroupBox
-    Friend WithEvents log_ As MonkeyCore.Controls.RichTextBoxEx
-    Friend WithEvents GrpAction As System.Windows.Forms.GroupBox
-    Friend WithEvents BtnSit_stand_Lie As System.Windows.Forms.Button
-    Friend WithEvents BTN_TurnL As System.Windows.Forms.Button
-    Friend WithEvents BTN_TurnR As System.Windows.Forms.Button
-    Friend WithEvents _ne As System.Windows.Forms.PictureBox
-    Friend WithEvents _nw As System.Windows.Forms.PictureBox
-    Friend WithEvents use_ As System.Windows.Forms.Button
-    Friend WithEvents get_ As System.Windows.Forms.Button
-    Friend WithEvents se_ As System.Windows.Forms.PictureBox
-    Friend WithEvents sw_ As System.Windows.Forms.PictureBox
-    Friend WithEvents BTN_Go As System.Windows.Forms.Button
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OptionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ConfigToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents WindowsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents Btn_Bold As System.Windows.Forms.Button
-    Friend WithEvents BTN_Underline As System.Windows.Forms.Button
-    Friend WithEvents BTN_Italic As System.Windows.Forms.Button
     Friend WithEvents DebugToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents toServer As MonkeyCore.Controls.RichTextBoxEx
     Friend WithEvents MSEditorToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RestoreMainToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents EditorTrayIconMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -821,11 +860,35 @@ Partial Class Main
     Friend WithEvents AboutToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ContentsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
-    Friend WithEvents DreamList As MonkeyCore.Controls.ListBox_NoFlicker
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
-    Friend WithEvents DreamCountTxtBx As MonkeyCore.Controls.TextBox_NoFlicker
     Friend WithEvents LinksToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents TSTutorialsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExportMonkeySpeakToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FURREListBindingSource As Windows.Forms.BindingSource
+    Friend WithEvents FURREListBindingSource1 As Windows.Forms.BindingSource
+    Friend WithEvents SplitContainer1 As Windows.Forms.SplitContainer
+    Friend WithEvents SplitContainer2 As Windows.Forms.SplitContainer
+    Friend WithEvents GroupBox3 As Windows.Forms.GroupBox
+    Friend WithEvents CheckBox1 As Windows.Forms.CheckBox
+    Friend WithEvents toServer As MonkeyCore.Controls.RichTextBoxEx
+    Friend WithEvents Btn_Bold As Windows.Forms.Button
+    Friend WithEvents BTN_Underline As Windows.Forms.Button
+    Friend WithEvents BTN_Italic As Windows.Forms.Button
+    Friend WithEvents sendToServer As Windows.Forms.Button
+    Friend WithEvents GroupBox1 As Windows.Forms.GroupBox
+    Friend WithEvents DreamCountTxtBx As MonkeyCore.Controls.TextBox_NoFlicker
+    Friend WithEvents DreamList As MonkeyCore.Controls.ListBox_NoFlicker
+    Friend WithEvents Label1 As Windows.Forms.Label
+    Friend WithEvents GrpAction As Windows.Forms.GroupBox
+    Friend WithEvents BtnSit_stand_Lie As Windows.Forms.Button
+    Friend WithEvents BTN_TurnL As Windows.Forms.Button
+    Friend WithEvents BTN_TurnR As Windows.Forms.Button
+    Friend WithEvents _ne As Windows.Forms.PictureBox
+    Friend WithEvents _nw As Windows.Forms.PictureBox
+    Friend WithEvents use_ As Windows.Forms.Button
+    Friend WithEvents get_ As Windows.Forms.Button
+    Friend WithEvents se_ As Windows.Forms.PictureBox
+    Friend WithEvents sw_ As Windows.Forms.PictureBox
+    Friend WithEvents clientGroup As Windows.Forms.GroupBox
+    Friend WithEvents log_ As MonkeyCore.Controls.RichTextBoxEx
+    Friend WithEvents BTN_Go As Windows.Forms.Button
 End Class
