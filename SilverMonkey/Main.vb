@@ -1,6 +1,5 @@
 Imports System.Collections.Generic
 Imports System.Diagnostics
-Imports System.Runtime.InteropServices
 
 Imports System.Windows.Forms
 Imports Furcadia.Net
@@ -392,9 +391,6 @@ Public Class Main
 
     Private Delegate Sub DelTimeupdate()
 
-    'UpDate Btn-Go Text and Actions Group Enable
-    Private Delegate Sub Log_Scoll(ByRef rtb As RichTextBoxEx)
-
     Private Delegate Sub LogSave(ByRef path As String, ByRef filename As String)
 
     Private Delegate Sub UpDateBtn_GoCallback(ByRef [text] As String)
@@ -446,15 +442,16 @@ Public Class Main
             RecentToolStripMenuItem.DropDownItems.Add(fileRecent)
         Next
         'writing menu list to file
-        Dim stringToWrite As New StreamWriter(ApplicationSettingsPath & "/Recent.txt")
-        'create file called "Recent.txt" located on app folder
-        For Each item As String In MRUlist
-            'write list to stream
-            stringToWrite.WriteLine(item)
-        Next
-        stringToWrite.Flush()
-        'write stream to file
-        stringToWrite.Close()
+        Using stringToWrite As New StreamWriter(ApplicationSettingsPath & "/Recent.txt")
+            'create file called "Recent.txt" located on app folder
+            For Each item As String In MRUlist
+
+                'write list to stream
+                stringToWrite.WriteLine(item)
+            Next
+            'write stream to file
+            stringToWrite.Close()
+        End Using
         'close the stream and reclaim memory
     End Sub
 
@@ -479,16 +476,17 @@ Public Class Main
         'try to load file. If file isn't found, do nothing
         MRUlist.Clear()
         Try
-            Dim listToRead As New StreamReader(MonkeyCore.Paths.ApplicationSettingsPath & "/Recent.txt")
-            'read file stream
-            Dim line As String = ""
-            While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
-                'read each line until end of file
-                MRUlist.Enqueue(line)
-            End While
-            'insert to list
-            'close the stream
-            listToRead.Close()
+            Using listToRead As New StreamReader(ApplicationSettingsPath & "/Recent.txt")
+                'read file stream
+                Dim line As String = ""
+                While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
+                    'read each line until end of file
+                    MRUlist.Enqueue(line)
+                End While
+                'insert to list
+                'close the stream
+                listToRead.Close()
+            End Using
 
             'throw;
         Catch generatedExceptionName As Exception
@@ -534,7 +532,7 @@ Public Class Main
     ''' </param>
     ''' <param name="e">
     ''' </param>
-    Private Sub RecentFile_click(sender As Object, e As EventArgs) Handles RecentToolStripMenuItem.Click, RecentToolStripMenuItem.Click
+    Private Sub RecentFile_click(sender As Object, e As EventArgs) Handles RecentToolStripMenuItem.Click
         'BotSetup.BotFile =
         'BotSetup.ShowDialog()
         BotConfig = New BotOptions(sender.ToString())
@@ -544,80 +542,6 @@ Public Class Main
 
         'same as open menu
     End Sub
-
-#End Region
-
-#Region "Log Scroll"
-
-    Private Const SBS_HORZ As Integer = 0
-    Private Const SBS_VERT As Integer = 1
-    Dim Pos_Old As Integer = 0
-
-    Public Enum SBOrientation As Integer
-        SB_HORZ = &H0
-        SB_VERT = &H1
-        SB_CTL = &H2
-        SB_BOTH = &H3
-    End Enum
-
-    Public Enum ScrollInfoMask As UInteger
-        SIF_RANGE = &H1
-        SIF_PAGE = &H2
-        SIF_POS = &H4
-        SIF_DISABLENOSCROLL = &H8
-        SIF_TRACKPOS = &H10
-        SIF_ALL = (SIF_RANGE Or SIF_PAGE Or SIF_POS Or SIF_TRACKPOS)
-    End Enum
-
-    Public Shared Function GetScrollInfo(hWnd As IntPtr,
-            <MarshalAs(UnmanagedType.I4)> fnBar As SBOrientation,
-            <MarshalAs(UnmanagedType.Struct)> ByRef lpsi As SCROLLINFO) As Integer
-    End Function
-
-    Public Declare Function GetScrollPos Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal nBar As Integer) As Integer
-
-    Public Declare Function GetScrollRange Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal nBar As Integer,
-            ByRef lpMinPos As Integer,
-            ByRef lpMaxPos As Integer) As Boolean
-
-    Private Sub ScrollToEnd(ByRef rtb As RichTextBoxEx)
-        If rtb.InvokeRequired Then
-
-            Dim d As New Log_Scoll(AddressOf ScrollToEnd)
-            d.Invoke(rtb)
-        End If
-        Dim scrollMin As Integer = 0
-        Dim Sinfo As New SCROLLINFO
-        Sinfo.cbSize = Marshal.SizeOf(Sinfo)
-        Sinfo.fMask = ScrollInfoMask.SIF_POS
-        Dim scrollMax As Integer = 0
-        Dim test As Integer = GetScrollInfo(rtb.Handle, SBOrientation.SB_VERT, Sinfo)
-
-        If (GetScrollRange(rtb.Handle, SBS_VERT, scrollMin, scrollMax)) Then
-            Dim pos As Integer = GetScrollPos(rtb.Handle, SBS_VERT)
-            If scrollMax = Pos_Old Then
-                rtb.SelectionStart = rtb.Text.Length
-            End If
-            'Pos_Old = GetScrollPos(rtb.Handle, SBS_VERT)
-            ' Detect if they're at the bottom
-        End If
-    End Sub
-
-    Structure SCROLLINFO
-
-#Region "Public Fields"
-
-        Public cbSize As Integer
-        <MarshalAs(UnmanagedType.U4)> Public fMask As ScrollInfoMask
-        Public nMax As Integer
-        Public nMin As Integer
-        Public nPage As UInteger
-        Public nPos As Integer
-        Public nTrackPos As Integer
-
-#End Region
-
-    End Structure
 
 #End Region
 

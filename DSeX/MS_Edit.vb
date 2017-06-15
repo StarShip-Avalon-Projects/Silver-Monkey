@@ -598,8 +598,8 @@ Public Class MS_Edit
     Private Const HelpFile As String = "Monkey_Speak_Editor_Help.chm"
 
     Private Sub AbutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AbutToolStripMenuItem.Click
-        AboutBox1.Show()
-        AboutBox1.Activate()
+        AboutBox2.Show()
+        AboutBox2.Activate()
     End Sub
 
     Private Sub AddNewTab(ByRef n As String, ByRef VL_Name As String, ByRef lst As List(Of String), ByRef LineTab As TabControl)

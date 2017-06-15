@@ -36,10 +36,11 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
-<DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
-<DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
-<DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
-<DocumentationSource sourceFile="..\SilverMonkey\SilverMonkey2.vbproj" /></DocumentationSources>
+      <DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
+      <DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
+      <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
+      <DocumentationSource sourceFile="..\SilverMonkey\SilverMonkey2.vbproj" />
+    </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>
     <HelpFileVersion>2.19.0.0</HelpFileVersion>
@@ -137,6 +138,10 @@
       <Argument Key="logoPlacement" Value="right" />
       <Argument Key="logoAlignment" Value="left" />
       <Argument Key="maxVersionParts" Value="" />
+      <Argument Key="defaultLanguage" Value="cs" />
+      <Argument Key="includeEnumValues" Value="true" />
+      <Argument Key="baseSourceCodeUrl" Value="" />
+      <Argument Key="requestExampleUrl" Value="" />
     </TransformComponentArguments>
     <CatalogName>VisualStudio11</CatalogName>
     <TocParentId>-1</TocParentId>
@@ -151,7 +156,7 @@
     <WorkingPath>..\build\HelpTmp\</WorkingPath>
     <BuildLogFile>..\Build\Help.log</BuildLogFile>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
-    <RootNamespaceTitle>Silver Monkey API</RootNamespaceTitle>
+    <RootNamespaceTitle>Silver Monkey SDK</RootNamespaceTitle>
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="DataMonkey" isDocumented="True" />
@@ -215,6 +220,8 @@
         </configuration>
       </PlugInConfig>
     </PlugInConfigurations>
+    <CopyrightText>Silver Monkey is Released under GNU Lesser Public Lisen e v3</CopyrightText>
+    <CopyrightHref>http://silvermonkey.tsprojects.org/download/GPLv3.htm</CopyrightHref>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -235,6 +242,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Content\" />
     <Folder Include="Media" />
     <Folder Include="icons" />
     <Folder Include="Guides" />
@@ -260,6 +268,7 @@
     <Image Include="Media\metal.png">
       <ImageId>metal</ImageId>
       <AlternateText>metal</AlternateText>
+      <CopyToMedia>True</CopyToMedia>
     </Image>
     <Image Include="Media\MSEditor.png">
       <ImageId>MSEditor</ImageId>
@@ -267,6 +276,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\Credits.aml" />
     <None Include="Guides\AutoSummonBot.aml" />
     <None Include="Guides\DreamMemberList.aml" />
     <None Include="Guides\Getting Started.aml" />

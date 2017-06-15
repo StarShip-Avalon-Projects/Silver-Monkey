@@ -9,11 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Silver Monkey")>
-<Assembly: AssemblyDescription("Credits:" & ControlChars.NewLine &
-"Artex, Squizzle, Dream Dancer, Daiktana, Farrier" & ControlChars.NewLine &
-"Dragons Eye Productions, Gerolkae" & ControlChars.NewLine &
-"Special Helpers and Testers:" & ControlChars.NewLine &
-"Drake, Shadling, Arden, Sidereal")>
+<Assembly: AssemblyDescription("The bot that makes Furbot look like a monkies uncle!!")>
 <Assembly: AssemblyCompany("TS-Projects")>
 <Assembly: AssemblyProduct("Silver Monkey")>
 <Assembly: AssemblyTrademark("")>

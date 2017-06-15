@@ -1,4 +1,5 @@
 ﻿Imports System.Diagnostics
+Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports Furcadia.Text.FurcadiaMarkup
@@ -27,6 +28,9 @@ Public Class TextDisplayManager
 #Region "Private Delegates"
 
     Private Delegate Sub AddDataToListCaller(TextObject As TextDisplayObject)
+
+    'UpDate Btn-Go Text and Actions Group Enable
+    Private Delegate Sub Log_Scoll()
 
 #End Region
 
@@ -359,6 +363,80 @@ Public Class TextDisplayManager
         End Select
         'MsgBox(Proto)
     End Sub
+
+#End Region
+
+#Region "Log Scroll"
+
+    Private Const SBS_HORZ As Integer = 0
+    Private Const SBS_VERT As Integer = 1
+    Dim Pos_Old As Integer = 0
+
+    Public Enum SBOrientation As Integer
+        SB_HORZ = &H0
+        SB_VERT = &H1
+        SB_CTL = &H2
+        SB_BOTH = &H3
+    End Enum
+
+    Public Enum ScrollInfoMask As UInteger
+        SIF_RANGE = &H1
+        SIF_PAGE = &H2
+        SIF_POS = &H4
+        SIF_DISABLENOSCROLL = &H8
+        SIF_TRACKPOS = &H10
+        SIF_ALL = (SIF_RANGE Or SIF_PAGE Or SIF_POS Or SIF_TRACKPOS)
+    End Enum
+
+    Public Shared Function GetScrollInfo(hWnd As IntPtr,
+            <MarshalAs(UnmanagedType.I4)> fnBar As SBOrientation,
+            <MarshalAs(UnmanagedType.Struct)> ByRef lpsi As SCROLLINFO) As Integer
+    End Function
+
+    Public Declare Function GetScrollPos Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal nBar As Integer) As Integer
+
+    Public Declare Function GetScrollRange Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal nBar As Integer,
+            ByRef lpMinPos As Integer,
+            ByRef lpMaxPos As Integer) As Boolean
+
+    Private Sub ScrollToEnd()
+        If lb.InvokeRequired Then
+
+            Dim d As New Log_Scoll(AddressOf ScrollToEnd)
+            d.Invoke()
+        End If
+        Dim scrollMin As Integer = 0
+        Dim Sinfo As New SCROLLINFO
+        Sinfo.cbSize = Marshal.SizeOf(Sinfo)
+        Sinfo.fMask = ScrollInfoMask.SIF_POS
+        Dim scrollMax As Integer = 0
+        Dim test As Integer = GetScrollInfo(lb.Handle, SBOrientation.SB_VERT, Sinfo)
+
+        If (GetScrollRange(lb.Handle, SBS_VERT, scrollMin, scrollMax)) Then
+            Dim pos As Integer = GetScrollPos(lb.Handle, SBS_VERT)
+            If scrollMax = Pos_Old Then
+                lb.SelectionStart = lb.Text.Length
+            End If
+            'Pos_Old = GetScrollPos(rtb.Handle, SBS_VERT)
+            ' Detect if they're at the bottom
+        End If
+    End Sub
+
+    Structure SCROLLINFO
+
+#Region "Public Fields"
+
+        Public cbSize As Integer
+        <MarshalAs(UnmanagedType.U4)> Public fMask As ScrollInfoMask
+        Public nMax As Integer
+        Public nMin As Integer
+        Public nPage As UInteger
+        Public nPos As Integer
+        Public nTrackPos As Integer
+
+#End Region
+
+    End Structure
 
 #End Region
 

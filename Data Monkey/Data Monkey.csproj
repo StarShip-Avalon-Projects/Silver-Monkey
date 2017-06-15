@@ -126,6 +126,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox1.Designer.cs">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </Compile>
     <Compile Include="AssemblyFileVersion.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Controls\RemoveColumn.cs">
@@ -137,6 +143,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="SQLite\StatementBuilder.cs" />
     <Compile Include="SQLite\StatementParser.cs" />
+    <EmbeddedResource Include="AboutBox1.resx">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\RemoveColumn.resx">
       <DependentUpon>RemoveColumn.cs</DependentUpon>
     </EmbeddedResource>

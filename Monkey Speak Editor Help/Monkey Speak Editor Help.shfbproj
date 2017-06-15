@@ -74,10 +74,11 @@
     </PlugInConfigurations>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
-<DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
-<DocumentationSource sourceFile="..\DSeX\MonkeySpeakEditor.vbproj" />
-<DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
-<DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" /></DocumentationSources>
+      <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
+      <DocumentationSource sourceFile="..\DSeX\MonkeySpeakEditor.vbproj" />
+      <DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
+      <DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
+    </DocumentationSources>
     <ComponentConfigurations>
       <ComponentConfig id="API Token Resolution" enabled="True" xmlns="">
         <component id="API Token Resolution">{@TokenFiles}
@@ -163,6 +164,7 @@
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />
+    <None Include="Credits.aml" />
     <None Include="Troubleshooting1.aml" />
   </ItemGroup>
   <ItemGroup>

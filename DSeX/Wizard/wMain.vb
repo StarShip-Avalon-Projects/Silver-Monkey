@@ -1,7 +1,6 @@
 Imports System.IO
-Imports MonkeyCore.IniFile
-Imports MonkeyCore.Paths
 Imports MonkeyCore
+Imports MonkeyCore.Paths
 
 '######### Please Read ##############
 '
@@ -39,7 +38,6 @@ Public Class wMain
             Else
                 wUI.NumericUpDown1.Value = 0
             End If
-
         Catch ex As Exception
             Dim x As New ErrorLogging(ex, Me)
         End Try
@@ -74,7 +72,6 @@ Public Class wMain
                 i += 1
             Loop
             wUI.SetUI()
-
         Catch ex As Exception
             MsgBox(ex.Message & vbCrLf & ex.StackTrace, MsgBoxStyle.Exclamation, "Error!")
         End Try
@@ -84,10 +81,6 @@ Public Class wMain
 #End Region
 
 #Region "Private Methods"
-
-    Private Sub AboutToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        AboutBox1.Show()
-    End Sub
 
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click, Button2.Click
         Dim btn As Button = CType(sender, Button)
@@ -128,6 +121,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         'Gets the scripts.ini files in your "Scripts" folder
         GetScriptIni()
     End Sub
+
     Private Sub GetScriptIni()
         selecter.Items.Clear()
         selecter.BeginUpdate()
@@ -302,7 +296,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
             Else
                 Me.Dispose()
             End If
-
         Else
             If Me.OnToolStripMenuItem.Checked = True Then
                 If OnToolStripMenuItem.Checked = True Then
@@ -315,10 +308,14 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         End If
 
     End Sub
-    Private Sub ToolStripMenuItem8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem8.Click
+
+    Private Sub ToolStripMenuItem8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles _
+                                                                                ToolStripMenuItem8.Click, AboutToolStripMenuItem.Click
         'AboutToolStrip
-        AboutBox1.Show()
+        AboutBox2.Show()
+        AboutBox2.Activate()
     End Sub
+
     Private Sub WizardEdit_Click(sender As System.Object, e As System.EventArgs) Handles WizardEdit.Click
         'MS_Edit.AddNewEditorTab("", "", 0)
         MS_Edit.OpenMS_File(ScriptPaths.Item(selecter.SelectedIndex) + "/" + selecter.SelectedItem.ToString + ".ini")
