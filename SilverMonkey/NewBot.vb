@@ -1,4 +1,5 @@
-﻿Imports System.Drawing
+﻿Imports System.Diagnostics
+Imports System.Drawing
 Imports System.Windows.Forms
 Imports MonkeyCore
 Imports SilverMonkeyEngine
@@ -28,7 +29,7 @@ Public Class NewBott
         bFile = options
         ' This call is required by the designer.
         InitializeComponent()
-
+        ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub
@@ -134,6 +135,7 @@ Public Class NewBott
         LblCharacterINI.Visible = False
         TxtbxCharacterINI.Visible = False
         BtnCharacterINI.Visible = False
+        LinkLabel1.Visible = False
         LblBotController.Visible = False
         TxtbxBotController.Visible = False
 
@@ -218,7 +220,7 @@ Public Class NewBott
         'TxtbxCharacterINI
         TxtbxCharacterINI.Parent = GroupBox1
         TxtbxCharacterINI.Size = New Size(207, 20)
-        TxtbxCharacterINI.Location = New Point(20, 132)
+        TxtbxCharacterINI.Location = New Point(20, 133)
         TxtbxCharacterINI.Visible = True
         TxtbxCharacterINI.Anchor = System.Windows.Forms.AnchorStyles.Right _
             Or System.Windows.Forms.AnchorStyles.Left
@@ -227,11 +229,26 @@ Public Class NewBott
         BtnCharacterINI.Parent = GroupBox1
         BtnCharacterINI.Text = "..."
         BtnCharacterINI.Size = New Size(24, 19)
-        BtnCharacterINI.Location = New Point(245, 132)
+        BtnCharacterINI.Location = New Point(245, 133)
         BtnCharacterINI.Visible = True
         BtnCharacterINI.Anchor = System.Windows.Forms.AnchorStyles.Right _
             Or System.Windows.Forms.AnchorStyles.Left
         AddHandler BtnCharacterINI.Click, AddressOf BtnCharacterINI_click
+
+        '
+        'LinkLabel1
+        '
+        Me.LinkLabel1.AutoSize = True
+        LinkLabel1.Parent = GroupBox1
+        Me.LinkLabel1.Location = New System.Drawing.Point(270, 133)
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.Size = New System.Drawing.Size(13, 13)
+        Me.LinkLabel1.TabIndex = 2
+        Me.LinkLabel1.TabStop = True
+        Me.LinkLabel1.Text = "?"
+        LinkLabel1.Anchor = System.Windows.Forms.AnchorStyles.Right _
+            Or System.Windows.Forms.AnchorStyles.Left
+
         'LblBotController
         LblBotController.Text = "Bot Controller Name"
         LblBotController.Parent = GroupBox1
@@ -397,6 +414,7 @@ Public Class NewBott
                 BtnFileLocation.Visible = True
                 LblCharacterINI.Visible = True
                 TxtbxCharacterINI.Visible = True
+                LinkLabel1.Visible = True
                 BtnCharacterINI.Visible = True
                 LblBotController.Visible = True
                 TxtbxBotController.Visible = True
@@ -422,5 +440,9 @@ Public Class NewBott
     End Sub
 
 #End Region
+
+    Private Sub onFurEdClick(sender As Object, e As EventArgs) Handles LinkLabel1.Click
+        Process.Start("http://www.furcadia.com/services/retrieve/retrieve.php4")
+    End Sub
 
 End Class

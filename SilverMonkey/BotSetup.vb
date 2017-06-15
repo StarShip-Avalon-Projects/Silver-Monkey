@@ -4,6 +4,19 @@ Imports SilverMonkeyEngine
 
 Public Class BotSetup
 
+#Region "Public Constructors"
+
+    Public Sub New(ByRef BotConfig As BotOptions)
+        bFile = BotConfig
+        ' This call is required by the designer.
+        InitializeComponent()
+        ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
+
+#End Region
+
 #Region "Public Fields"
 
     Public bFile As New BotOptions
@@ -154,10 +167,14 @@ Public Class BotSetup
         bFile.log = ChckSaveToLog.Checked
 
         bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.Name)
+        Main.SaveRecentFile(bFile.DestinationFile)
         Me.DialogResult = DialogResult.OK
         Me.Close()
 
+    End Sub
+
+    Private Sub onFurEdClick(sender As Object, e As EventArgs) Handles LinkLabel1.Click
+        Diagnostics.Process.Start("http://www.furcadia.com/services/retrieve/retrieve.php4")
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles RadioButton4.CheckedChanged

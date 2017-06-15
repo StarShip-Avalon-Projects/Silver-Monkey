@@ -424,7 +424,7 @@ Public Class Main
     Public Sub SaveRecentFile(path As String)
         RecentToolStripMenuItem.DropDownItems.Clear()
         'clear all recent list from menu
-        LoadRecentList()
+        LoadRecentList(".bini")
         'load list from file
         If Not (MRUlist.Contains(path)) Then
             'prevent duplication on recent list
@@ -461,18 +461,18 @@ Public Class Main
     End Function
 
     Private Sub EditBotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles EditBotToolStripMenuItem.Click
-        With BotSetup
-            .bFile = BotConfig
-            If .ShowDialog() = Windows.Forms.DialogResult.OK Then
-                BotConfig = .bFile
+        Using Bsetup As New BotSetup(BotConfig)
+            Bsetup.bFile = BotConfig
+            If Bsetup.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                BotConfig = Bsetup.bFile
             End If
-        End With
+        End Using
     End Sub
 
     ''' <summary>
     ''' load recent file list from file
     ''' </summary>
-    Private Sub LoadRecentList()
+    Private Sub LoadRecentList(Extention As String)
         'try to load file. If file isn't found, do nothing
         MRUlist.Clear()
         Try
@@ -480,8 +480,11 @@ Public Class Main
                 'read file stream
                 Dim line As String = ""
                 While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
-                    'read each line until end of file
-                    MRUlist.Enqueue(line)
+                    Dim ext As String = Path.GetExtension(line)
+                    If ext = Extention Then
+                        'read each line until end of file
+                        MRUlist.Enqueue(line)
+                    End If
                 End While
                 'insert to list
                 'close the stream
@@ -489,19 +492,20 @@ Public Class Main
             End Using
 
             'throw;
-        Catch generatedExceptionName As Exception
+        Catch
         End Try
 
     End Sub
 
     Private Sub NewBotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles NewBotToolStripMenuItem.Click
-        Dim NewBotWindow As New NewBott(BotConfig)
-        With NewBotWindow
-            If .ShowDialog = Windows.Forms.DialogResult.OK Then
-                BotConfig = NewBotWindow.BotConfig
-                EditBotToolStripMenuItem.Enabled = True
-            End If
-        End With
+        Using NewBotWindow As New NewBott(BotConfig)
+            With NewBotWindow
+                If .ShowDialog = Windows.Forms.DialogResult.OK Then
+                    BotConfig = NewBotWindow.BotConfig
+                    EditBotToolStripMenuItem.Enabled = True
+                End If
+            End With
+        End Using
     End Sub
 
     ''' <summary>
@@ -895,12 +899,12 @@ Public Class Main
                 Help.ShowHelp(Me, HelpFile)
             End If
         ElseIf (e.KeyCode = Keys.N AndAlso e.Modifiers = Keys.Control) Then
-            With BotSetup
-                .bFile = New BotOptions
-                If .ShowDialog() = Windows.Forms.DialogResult.OK Then
-                    BotConfig = .bFile
+            Using BSetUp As New BotSetup(BotConfig)
+                ' .bFile =
+                If BSetUp.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                    BotConfig = BSetUp.bFile
                 End If
-            End With
+            End Using
 
         End If
 
@@ -941,7 +945,7 @@ Public Class Main
         Me.Text = "Silver Monkey: " & Application.ProductVersion
         Me.Visible = True
 
-        LoadRecentList()
+        LoadRecentList(".bini")
         For Each item As String In MRUlist
             Dim fileRecent As New ToolStripMenuItem(item, Nothing, AddressOf RecentFile_click)
             'create new menu for each item in list
