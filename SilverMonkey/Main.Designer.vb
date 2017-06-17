@@ -62,29 +62,26 @@ Partial Class Main
         Me.WindowsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DebugToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MSEditorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReferenceLinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TSTutorialsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MainMenu1 = New System.Windows.Forms.MainMenu(Me.components)
         Me.BotIniOpen = New System.Windows.Forms.OpenFileDialog()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
         Me.clientGroup = New System.Windows.Forms.GroupBox()
-        Me.log_ = New MonkeyCore.Controls.RichTextBoxEx()
+        Me.Log_ = New MonkeyCore.Controls.RichTextBoxEx()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.toServer = New MonkeyCore.Controls.RichTextBoxEx()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Btn_Bold = New System.Windows.Forms.Button()
         Me.BTN_Underline = New System.Windows.Forms.Button()
         Me.BTN_Italic = New System.Windows.Forms.Button()
         Me.sendToServer = New System.Windows.Forms.Button()
         Me.BTN_Go = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.DreamCountTxtBx = New MonkeyCore.Controls.TextBox_NoFlicker()
-        Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GrpAction = New System.Windows.Forms.GroupBox()
         Me.BtnSit_stand_Lie = New System.Windows.Forms.Button()
@@ -96,6 +93,8 @@ Partial Class Main
         Me.get_ = New System.Windows.Forms.Button()
         Me.se_ = New System.Windows.Forms.PictureBox()
         Me.sw_ = New System.Windows.Forms.PictureBox()
+        Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
+        Me.TextBox_NoFlicker1 = New MonkeyCore.Controls.TextBox_NoFlicker()
         Me.ContextTryIcon.SuspendLayout()
         Me.TS_Main.SuspendLayout()
         CType(Me.FURREListBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -226,10 +225,6 @@ Partial Class Main
         Me.ToolStripClientStatus.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         Me.ToolStripClientStatus.ToolTipText = "Disconnected"
         '
-        'FURREListBindingSource1
-        '
-        Me.FURREListBindingSource1.DataSource = GetType(Furcadia.Net.Dream.FURREList)
-        '
         'EditMenu
         '
         Me.EditMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuCopy, Me.MenuCut, Me.PasteToolStripMenuItem, Me.ToolStripSeparator3})
@@ -300,7 +295,7 @@ Partial Class Main
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.OptionsToolStripMenuItem, Me.WindowsToolStripMenuItem, Me.HelpToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.OptionsToolStripMenuItem, Me.WindowsToolStripMenuItem, Me.ReferenceLinksToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(812, 24)
@@ -391,9 +386,15 @@ Partial Class Main
         Me.MSEditorToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
         Me.MSEditorToolStripMenuItem.Text = "MS Editor"
         '
+        'ReferenceLinksToolStripMenuItem
+        '
+        Me.ReferenceLinksToolStripMenuItem.Name = "ReferenceLinksToolStripMenuItem"
+        Me.ReferenceLinksToolStripMenuItem.Size = New System.Drawing.Size(101, 20)
+        Me.ReferenceLinksToolStripMenuItem.Text = "Reference Links"
+        '
         'HelpToolStripMenuItem
         '
-        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutToolStripMenuItem1, Me.LinksToolStripMenuItem})
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutToolStripMenuItem1})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
         Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.HelpToolStripMenuItem.Text = "Help"
@@ -409,19 +410,6 @@ Partial Class Main
         Me.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1"
         Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(122, 22)
         Me.AboutToolStripMenuItem1.Text = "About"
-        '
-        'LinksToolStripMenuItem
-        '
-        Me.LinksToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSTutorialsToolStripMenuItem})
-        Me.LinksToolStripMenuItem.Name = "LinksToolStripMenuItem"
-        Me.LinksToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-        Me.LinksToolStripMenuItem.Text = "Links"
-        '
-        'TSTutorialsToolStripMenuItem
-        '
-        Me.TSTutorialsToolStripMenuItem.Name = "TSTutorialsToolStripMenuItem"
-        Me.TSTutorialsToolStripMenuItem.Size = New System.Drawing.Size(141, 22)
-        Me.TSTutorialsToolStripMenuItem.Text = "T-S Tutorials"
         '
         'BotIniOpen
         '
@@ -467,7 +455,7 @@ Partial Class Main
         '
         'clientGroup
         '
-        Me.clientGroup.Controls.Add(Me.log_)
+        Me.clientGroup.Controls.Add(Me.Log_)
         Me.clientGroup.Dock = System.Windows.Forms.DockStyle.Fill
         Me.clientGroup.Location = New System.Drawing.Point(0, 0)
         Me.clientGroup.Name = "clientGroup"
@@ -476,27 +464,22 @@ Partial Class Main
         Me.clientGroup.TabStop = False
         Me.clientGroup.Text = "Log"
         '
-        'log_
+        'Log_
         '
-        Me.log_.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.log_.BackColor = System.Drawing.SystemColors.Window
-        Me.log_.ContextMenuStrip = Me.CopyMenu
-        Me.log_.HScrollPos = 0
-        Me.log_.Location = New System.Drawing.Point(3, 18)
-        Me.log_.Name = "log_"
-        Me.log_.ReadOnly = True
-        Me.log_.Size = New System.Drawing.Size(575, 171)
-        Me.log_.TabIndex = 49
-        Me.log_.Text = ""
-        Me.log_.VerticalContentAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Top
-        Me.log_.VScrollPos = 0
+        Me.Log_.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Log_.HScrollPos = 0
+        Me.Log_.Location = New System.Drawing.Point(3, 16)
+        Me.Log_.Name = "Log_"
+        Me.Log_.Size = New System.Drawing.Size(578, 176)
+        Me.Log_.TabIndex = 0
+        Me.Log_.Text = ""
+        Me.Log_.VerticalContentAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Top
+        Me.Log_.VScrollPos = 0
         '
         'GroupBox3
         '
-        Me.GroupBox3.Controls.Add(Me.CheckBox1)
         Me.GroupBox3.Controls.Add(Me.toServer)
+        Me.GroupBox3.Controls.Add(Me.CheckBox1)
         Me.GroupBox3.Controls.Add(Me.Btn_Bold)
         Me.GroupBox3.Controls.Add(Me.BTN_Underline)
         Me.GroupBox3.Controls.Add(Me.BTN_Italic)
@@ -509,6 +492,17 @@ Partial Class Main
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Chat"
         '
+        'toServer
+        '
+        Me.toServer.HScrollPos = 0
+        Me.toServer.Location = New System.Drawing.Point(6, 28)
+        Me.toServer.Name = "toServer"
+        Me.toServer.Size = New System.Drawing.Size(575, 74)
+        Me.toServer.TabIndex = 0
+        Me.toServer.Text = ""
+        Me.toServer.VerticalContentAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Top
+        Me.toServer.VScrollPos = 0
+        '
         'CheckBox1
         '
         Me.CheckBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -519,23 +513,6 @@ Partial Class Main
         Me.CheckBox1.TabIndex = 59
         Me.CheckBox1.Text = "Auto Scroll"
         Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'toServer
-        '
-        Me.toServer.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.toServer.ContextMenuStrip = Me.EditMenu
-        Me.toServer.HScrollPos = 0
-        Me.toServer.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.toServer.Location = New System.Drawing.Point(3, 28)
-        Me.toServer.Name = "toServer"
-        Me.toServer.ShortcutsEnabled = False
-        Me.toServer.Size = New System.Drawing.Size(575, 73)
-        Me.toServer.TabIndex = 58
-        Me.toServer.Text = ""
-        Me.toServer.VerticalContentAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Top
-        Me.toServer.VScrollPos = 0
         '
         'Btn_Bold
         '
@@ -593,7 +570,7 @@ Partial Class Main
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox1.Controls.Add(Me.DreamCountTxtBx)
+        Me.GroupBox1.Controls.Add(Me.TextBox_NoFlicker1)
         Me.GroupBox1.Controls.Add(Me.DreamList)
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Location = New System.Drawing.Point(0, 0)
@@ -602,35 +579,6 @@ Partial Class Main
         Me.GroupBox1.TabIndex = 65
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Dream List"
-        '
-        'DreamCountTxtBx
-        '
-        Me.DreamCountTxtBx.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DreamCountTxtBx.BackColor = System.Drawing.SystemColors.Info
-        Me.DreamCountTxtBx.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DreamCountTxtBx.Location = New System.Drawing.Point(178, 125)
-        Me.DreamCountTxtBx.Name = "DreamCountTxtBx"
-        Me.DreamCountTxtBx.ReadOnly = True
-        Me.DreamCountTxtBx.Size = New System.Drawing.Size(33, 23)
-        Me.DreamCountTxtBx.TabIndex = 14
-        Me.DreamCountTxtBx.Text = "###"
-        '
-        'DreamList
-        '
-        Me.DreamList.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DreamList.DataSource = Me.FURREListBindingSource1
-        Me.DreamList.DisplayMember = "Name"
-        Me.DreamList.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DreamList.FormattingEnabled = True
-        Me.DreamList.HorizontalScrollbar = True
-        Me.DreamList.ItemHeight = 16
-        Me.DreamList.Location = New System.Drawing.Point(5, 16)
-        Me.DreamList.Name = "DreamList"
-        Me.DreamList.Size = New System.Drawing.Size(212, 100)
-        Me.DreamList.Sorted = True
-        Me.DreamList.TabIndex = 12
         '
         'Label1
         '
@@ -768,6 +716,22 @@ Partial Class Main
         Me.sw_.TabStop = False
         Me.sw_.WaitOnLoad = True
         '
+        'DreamList
+        '
+        Me.DreamList.FormattingEnabled = True
+        Me.DreamList.Location = New System.Drawing.Point(6, 16)
+        Me.DreamList.Name = "DreamList"
+        Me.DreamList.Size = New System.Drawing.Size(205, 108)
+        Me.DreamList.TabIndex = 14
+        '
+        'TextBox_NoFlicker1
+        '
+        Me.TextBox_NoFlicker1.Location = New System.Drawing.Point(162, 127)
+        Me.TextBox_NoFlicker1.Name = "TextBox_NoFlicker1"
+        Me.TextBox_NoFlicker1.Size = New System.Drawing.Size(27, 20)
+        Me.TextBox_NoFlicker1.TabIndex = 15
+        Me.TextBox_NoFlicker1.Text = "###"
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -860,8 +824,6 @@ Partial Class Main
     Friend WithEvents AboutToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ContentsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
-    Friend WithEvents LinksToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents TSTutorialsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExportMonkeySpeakToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FURREListBindingSource As Windows.Forms.BindingSource
     Friend WithEvents FURREListBindingSource1 As Windows.Forms.BindingSource
@@ -869,14 +831,11 @@ Partial Class Main
     Friend WithEvents SplitContainer2 As Windows.Forms.SplitContainer
     Friend WithEvents GroupBox3 As Windows.Forms.GroupBox
     Friend WithEvents CheckBox1 As Windows.Forms.CheckBox
-    Friend WithEvents toServer As MonkeyCore.Controls.RichTextBoxEx
     Friend WithEvents Btn_Bold As Windows.Forms.Button
     Friend WithEvents BTN_Underline As Windows.Forms.Button
     Friend WithEvents BTN_Italic As Windows.Forms.Button
     Friend WithEvents sendToServer As Windows.Forms.Button
     Friend WithEvents GroupBox1 As Windows.Forms.GroupBox
-    Friend WithEvents DreamCountTxtBx As MonkeyCore.Controls.TextBox_NoFlicker
-    Friend WithEvents DreamList As MonkeyCore.Controls.ListBox_NoFlicker
     Friend WithEvents Label1 As Windows.Forms.Label
     Friend WithEvents GrpAction As Windows.Forms.GroupBox
     Friend WithEvents BtnSit_stand_Lie As Windows.Forms.Button
@@ -889,6 +848,10 @@ Partial Class Main
     Friend WithEvents se_ As Windows.Forms.PictureBox
     Friend WithEvents sw_ As Windows.Forms.PictureBox
     Friend WithEvents clientGroup As Windows.Forms.GroupBox
-    Friend WithEvents log_ As MonkeyCore.Controls.RichTextBoxEx
     Friend WithEvents BTN_Go As Windows.Forms.Button
+    Friend WithEvents ReferenceLinksToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+    Friend WithEvents toServer As MonkeyCore.Controls.RichTextBoxEx
+    Friend WithEvents Log_ As MonkeyCore.Controls.RichTextBoxEx
+    Friend WithEvents TextBox_NoFlicker1 As MonkeyCore.Controls.TextBox_NoFlicker
+    Friend WithEvents DreamList As MonkeyCore.Controls.ListBox_NoFlicker
 End Class

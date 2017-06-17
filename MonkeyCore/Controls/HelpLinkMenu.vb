@@ -25,11 +25,15 @@ Namespace Controls
 #Region "Public Constructors"
 
         Sub New()
+            MyClass.New(Application.ProductName)
+        End Sub
+
+        Sub New(SectionName As String)
             MyBase.New()
             _MenuItems = New List(Of ToolStripMenuItem)
             HelpIni = New IniFile
             HelpIni.Load(Path.Combine(Paths.ApplicationPath, "HelpLink.ini"))
-            HelpSection = HelpIni.GetSection(Application.ProductName)
+            HelpSection = HelpIni.GetSection(SectionName)
             If Not HelpSection Is Nothing Then
                 For Each KeyVal As IniFile.IniSection.IniKey In HelpSection.Keys
                     Dim HelpItem As New ToolStripMenuItem(KeyVal.Name, Nothing, AddressOf RecentFile_click)

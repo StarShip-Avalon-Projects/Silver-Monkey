@@ -210,7 +210,7 @@ Public Class Main
             NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Now disconnected from Furcadia.", ToolTipIcon.Info)
 
             DreamList.Items.Clear()
-            DreamCountTxtBx.Text = ""
+            TextBox_NoFlicker1.Text = ""
 
             ' (0:2) When the bot logs off PageExecute(2)
 
@@ -288,10 +288,10 @@ Public Class Main
     End Function
 
     Public Sub InitializeTextControls()
-        log_.Font = Mainsettings.ApFont
+        Log_.Font = Mainsettings.ApFont
         toServer.Font = Mainsettings.ApFont
         DreamList.Font = Mainsettings.ApFont
-        DreamCountTxtBx.Font = Mainsettings.ApFont
+        TextBox_NoFlicker1.Font = Mainsettings.ApFont
     End Sub
 
     Public Sub KillProc(ByRef ID As Integer)
@@ -605,7 +605,7 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub log__KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles log_.KeyDown
+    Private Sub log__KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Log_.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
         ElseIf (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
@@ -655,7 +655,7 @@ Public Class Main
     ''' </summary>
     Public Sub UpDateDreamList() '
         Try
-            If Me.DreamList.InvokeRequired OrElse DreamCountTxtBx.InvokeRequired Then
+            If Me.DreamList.InvokeRequired OrElse TextBox_NoFlicker1.InvokeRequired Then
                 Me.Invoke(New UpDateDreamListCaller(AddressOf UpDateDreamList))
             Else
                 DreamList.BeginUpdate()
@@ -668,7 +668,7 @@ Public Class Main
                 DreamList.DisplayMember = "Name"
                 DreamList.ValueMember = "ShortName"
                 DreamList.EndUpdate()
-                DreamCountTxtBx.Text = FurcadiaSession.Dream.FurreList.Count.ToString
+                TextBox_NoFlicker1.Text = FurcadiaSession.Dream.FurreList.Count.ToString
 
             End If
         Catch eX As Exception
@@ -731,7 +731,7 @@ Public Class Main
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBox1.CheckedChanged
-        log_.HideSelection = Not CheckBox1.Checked
+        Log_.HideSelection = Not CheckBox1.Checked
     End Sub
 
     Private Sub CloseToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CloseToolStripMenuItem.Click, ExitTrayIconMenuItem.Click
@@ -842,19 +842,19 @@ Public Class Main
         Process.Start(processStrt)
     End Sub
 
-    Private Sub log__MouseHover(sender As Object, e As System.EventArgs) Handles log_.MouseHover
+    Private Sub log__MouseHover(sender As Object, e As System.EventArgs) Handles Log_.MouseHover
         If Cursor.Current = Cursors.Hand Then
 
-            ToolTip1.Show(curWord, Me.log_)
+            ToolTip1.Show(curWord, Me.Log_)
         Else
-            ToolTip1.Hide(Me.log_)
+            ToolTip1.Hide(Me.Log_)
         End If
     End Sub
 
-    Private Sub log__MouseMove(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles log_.MouseMove
+    Private Sub log__MouseMove(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Log_.MouseMove
         If Cursor.Current = Cursors.Hand Or Cursor.Current = Cursors.Default Then
 
-            curWord = GetWordUnderMouse(Me.log_, e.X, e.Y)
+            curWord = GetWordUnderMouse(Me.Log_, e.X, e.Y)
 
         End If
     End Sub
@@ -926,9 +926,9 @@ Public Class Main
 
         Mainsettings = New cMain()
 
-        TextDisplayer = New TextDisplayManager(Mainsettings, log_)
+        TextDisplayer = New TextDisplayManager(Mainsettings, Log_)
 
-        writer = New TextBoxWriter(log_)
+        writer = New TextBoxWriter(Log_)
         Console.SetOut(writer)
 
         ' Plugins =
@@ -939,6 +939,9 @@ Public Class Main
 
         MS_KeysIni.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Keys-MS.ini"))
         InitializeTextControls()
+
+        Dim HelpItems = New MonkeyCore.Controls.HelpLinkMenu
+        ReferenceLinksToolStripMenuItem.DropDown.Items.AddRange(HelpItems.MenuItems.ToArray)
 
         'Me.Size = My.Settings.MainFormSize
         Me.Location = My.Settings.MainFormLocation
@@ -982,7 +985,7 @@ Public Class Main
     End Sub
 
     Private Sub MenuCopy2_Click(sender As System.Object, e As System.EventArgs) Handles MenuCopy2.Click
-        log_.Copy()
+        Log_.Copy()
     End Sub
 
     Private Sub MenuCut_Click(sender As System.Object, e As System.EventArgs) Handles MenuCut.Click
@@ -1259,10 +1262,6 @@ Public Class Main
             e.Handled = True
         End If
 
-    End Sub
-
-    Private Sub TSTutorialsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles TSTutorialsToolStripMenuItem.Click
-        'Process.Start("http://www.ts-projects.org/tutorials/")
     End Sub
 
 End Class
