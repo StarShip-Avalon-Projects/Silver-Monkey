@@ -101,6 +101,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="CompilerServices.vb" />
+    <Compile Include="Controls\HelpLinkMenu.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ListBox_NoFlicker.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -172,6 +175,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="HelpLink.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="MonkeyCore.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
