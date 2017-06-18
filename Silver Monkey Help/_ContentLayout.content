@@ -8,12 +8,15 @@
     <Topic id="aaa51520-5fac-41f7-b04f-6e9137b32514" visible="True" />
     <Topic id="0beb31ba-cbcb-4284-b346-5ac2f7580345" visible="True" />
   </Topic>
-  <Topic id="a0393599-1958-4080-ab82-fcf3b0cea775" visible="True" noFile="true" apiParentMode="InsertAfter" title="References">
+  <Topic id="a0393599-1958-4080-ab82-fcf3b0cea775" visible="True" noFile="true" isExpanded="true" apiParentMode="InsertAfter" title="References">
+    <Topic id="6b99341b-7b1c-4f60-a21d-372dfc853f24" visible="True" noFile="true" isExpanded="true" isSelected="true" title="Configuration Files">
+      <Topic id="7cfa8277-8dc5-458b-8842-c07b87572396" visible="True" title="HelpLink.ini " />
+    </Topic>
     <Topic id="7180cbcd-d0cd-4db5-820b-2255d5764840" visible="True" title="Furcadia Popup Dialogs" />
     <Topic id="6695954b-b488-4d4d-9781-e9a3fadd25d9" visible="True" title="Bot Hotkeys" />
     <Topic id="a4bffa83-f653-48de-8e7b-157737671503" visible="True" title="MS Editor Hotkeys" />
     <Topic id="2116869f-3015-46a0-a92e-246fdf7ab720" visible="True" title="System Variables" />
     <Topic id="74f669ba-c430-4fa8-bf88-3139f27beaaa" visible="True" title="Version History" />
   </Topic>
-  <Topic id="baa001f9-5b6f-4416-bd04-834030e3034f" visible="True" isSelected="true" />
+  <Topic id="baa001f9-5b6f-4416-bd04-834030e3034f" visible="True" />
 </Topics>

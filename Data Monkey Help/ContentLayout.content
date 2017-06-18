@@ -5,7 +5,10 @@
       <HelpKeyword index="K" term="Welcome" />
     </HelpKeywords>
   </Topic>
-  <Topic id="c46a633e-5177-4929-b306-eb2b6d85a169" visible="True" isExpanded="true" isSelected="true" title="Version History">
+  <Topic id="85c3ff5b-1c6a-456b-a080-11958a1bc924" visible="True" isExpanded="true">
+    <Topic id="7cfa8277-8dc5-458b-8842-c07b87572396" visible="True" isSelected="true" />
+  </Topic>
+  <Topic id="c46a633e-5177-4929-b306-eb2b6d85a169" visible="True" isExpanded="true" apiParentMode="InsertAfter" title="Version History">
     <HelpKeywords>
       <HelpKeyword index="K" term="version, history" />
     </HelpKeywords>

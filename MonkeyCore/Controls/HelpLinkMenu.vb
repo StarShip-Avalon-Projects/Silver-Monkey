@@ -3,6 +3,9 @@ Imports System.Windows.Forms
 
 Namespace Controls
 
+    ''' <summary>
+    ''' Standard menu class for HelpLink Menu Items
+    ''' </summary>
     Public Class HelpLinkMenu : Inherits ToolStripMenuItem
 
 #Region "Private Fields"
@@ -15,6 +18,13 @@ Namespace Controls
 
         Private _MenuItems As List(Of ToolStripMenuItem)
 
+        ''' <summary>
+        ''' Help Link list for the help menu. Initiliaze the Help Menu first
+        ''' and then add range this.ToArray()
+        ''' </summary>
+        ''' <returns>
+        ''' The Lst of links read from the ini file
+        ''' </returns>
         Public ReadOnly Property MenuItems As List(Of ToolStripMenuItem)
             Get
                 Return _MenuItems
@@ -24,10 +34,19 @@ Namespace Controls
 
 #Region "Public Constructors"
 
+        ''' <summary>
+        ''' Read the default Section by <see cref="Application.ProductName"/>
+        ''' </summary>
         Sub New()
             MyClass.New(Application.ProductName)
         End Sub
 
+        ''' <summary>
+        ''' Read section from the ini file and converit it to a list of ToolStripMenuItems
+        ''' </summary>
+        ''' <param name="SectionName">
+        ''' Arbitrary Secion Name
+        ''' </param>
         Sub New(SectionName As String)
             MyBase.New()
             _MenuItems = New List(Of ToolStripMenuItem)
@@ -51,8 +70,10 @@ Namespace Controls
         ''' click menu handler
         ''' </summary>
         ''' <param name="sender">
+        ''' the triggering ToolstripMenu object
         ''' </param>
         ''' <param name="e">
+        ''' event arguments (not needed)
         ''' </param>
         Public Overridable Sub RecentFile_click(sender As Object, e As EventArgs)
 
