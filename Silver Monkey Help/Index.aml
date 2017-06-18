@@ -7,7 +7,7 @@
     <introduction>
       <mediaLink>
         <caption placement="after" lead="Silver Monkey">Version: 2.19.x</caption>
-        <image xlink:href="Metal" placement="center"/>
+        <image xlink:href="SilverMonkeyApp" placement="center"/>
       </mediaLink>
       <para>Silver Monkey adds a new level to Furcadia bots 
       with its DragonSpeak like Language called Monkey Speak. 

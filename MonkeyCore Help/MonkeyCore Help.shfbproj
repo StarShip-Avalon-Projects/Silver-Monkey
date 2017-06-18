@@ -27,8 +27,8 @@
       <Argument Key="maxVersionParts" Value="" xmlns="" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" xmlns="" />
-    </DocumentationSources>
+      <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
+<DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" /></DocumentationSources>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <HelpFileFormat>HtmlHelp1, Website</HelpFileFormat>
@@ -116,6 +116,10 @@
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
     <IncludeFavorites>True</IncludeFavorites>
     <BinaryTOC>True</BinaryTOC>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="MonkeyCore (Group)" isGroup="True" isDocumented="False" xmlns="" />
+<NamespaceSummaryItem name="MonkeyCore" isDocumented="True" xmlns="">General shared core lib for Silver Monkey applications</NamespaceSummaryItem>
+<NamespaceSummaryItem name="MonkeyCore.Controls" isDocumented="True" xmlns="">General shared core form control lib for Silver Monkey applications</NamespaceSummaryItem></NamespaceSummaries>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -145,6 +149,8 @@
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />
+    <None Include="Content\ConfigurationFiles.aml" />
+    <None Include="Content\HelpLink.ini.aml" />
   </ItemGroup>
   <ItemGroup>
     <ContentLayout Include="ContentLayout.content" />
@@ -153,16 +159,6 @@
     <Content Include="icons\Help.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
-      <Name>FurcadiaLib</Name>
-      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
-      <Name>Interfaces</Name>
-      <Project>{b0882700-5eaf-4712-ade5-69dafe473a01}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Name>MonkeyCore</Name>
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>

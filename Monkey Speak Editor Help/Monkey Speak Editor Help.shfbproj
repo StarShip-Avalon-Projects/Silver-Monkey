@@ -156,6 +156,8 @@
   <ItemGroup>
     <Folder Include="Content" />
     <Folder Include="Content\VersionHistory\" />
+    <Folder Include="Content\Reference\" />
+    <Folder Include="Content\Reference\ConfigurationFiles\" />
     <Folder Include="icons" />
     <Folder Include="media" />
   </ItemGroup>
@@ -165,6 +167,9 @@
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />
     <None Include="Credits.aml" />
+    <None Include="Content\Reference\MSEditorHotkeys.aml" />
+    <None Include="Content\Reference\MSEditorHotkeys.aml" />
+    <None Include="Content\Reference\ConfigurationFiles\HelpLink.ini.aml" />
     <None Include="Troubleshooting1.aml" />
   </ItemGroup>
   <ItemGroup>

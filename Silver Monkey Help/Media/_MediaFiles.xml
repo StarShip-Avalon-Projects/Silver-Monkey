@@ -12,7 +12,10 @@
   <item id="MSEditor">
     <image file="MSEditor.png" />
   </item>
-  <item id="Metal">
+  <item id="metal">
     <image file="metal.png" />
+  </item>
+    <item id="SilverMonkeyApp">
+    <image file="silvermonkey.png" />
   </item>
 </stockSharedContentDefinitions>
