@@ -5,8 +5,10 @@
       <HelpKeyword index="K" term="Welcome" />
     </HelpKeywords>
   </Topic>
-  <Topic id="85c3ff5b-1c6a-456b-a080-11958a1bc924" visible="True" isExpanded="true">
-    <Topic id="7cfa8277-8dc5-458b-8842-c07b87572396" visible="True" isSelected="true" />
+  <Topic id="d9be80cc-a78d-4f09-93ee-c0551e45f2f2" visible="True" noFile="true" isExpanded="true" title="Reference">
+    <Topic id="82c952fb-62d6-46b6-9a04-f6a1b43b5543" visible="True" noFile="true" isExpanded="true" title="Configuration Files">
+      <Topic id="7cfa8277-8dc5-458b-8842-c07b87572396" visible="True" isSelected="true" title="Help Menu Links" />
+    </Topic>
   </Topic>
   <Topic id="c46a633e-5177-4929-b306-eb2b6d85a169" visible="True" isExpanded="true" apiParentMode="InsertAfter" title="Version History">
     <HelpKeywords>

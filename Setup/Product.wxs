@@ -186,6 +186,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentRef Id="smHelp" />
       <ComponentGroupRef Id="MonkeyCore.Binaries" />
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
+      <ComponentRef Id="HelpLink" />
       <ComponentGroupRef Id="BugTraqConnect.Binaries" />
       <ComponentGroupRef Id="BugTraqConnect.Symbols" />
       <ComponentRef Id="SilverMonkeyShortcut" />
@@ -244,6 +245,9 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       </Component>
       <Component Id="DataMokeyHelp" Guid="{0219f1a1-d0d4-4c1b-817b-a6fa3f6e95fd}">
         <File Id="DataMonkeyHelp" Source="$(var.SolutionDir)Build/Help/Data_Monkey_Help.chm" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="HelpLink" Guid="{5b5b1659-e3a7-443f-a43e-2b4a31e0a2a1}">
+        <File Id="HelpLink.ini" Source="$(var.MonkeyCore.TargetDir)HelpLink.ini" KeyPath="no" Checksum="yes" />
       </Component>
     </DirectoryRef>
 
