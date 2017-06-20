@@ -18,8 +18,7 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
     <StartupObject>SilverMonkey.My.MyApplication</StartupObject>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>metal.ico</ApplicationIcon>
     <NoWin32Manifest>True</NoWin32Manifest>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <OptionExplicit>Off</OptionExplicit>

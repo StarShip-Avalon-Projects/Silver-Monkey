@@ -212,7 +212,6 @@
   </Target>
   <!-- rename the output msi with Version number -->
   <Target Name="AfterBuild">
-    <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" 
-	DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-$(FileVersion).msi" />
+    <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-$(FileVersion).msi" />
   </Target>
 </Project>

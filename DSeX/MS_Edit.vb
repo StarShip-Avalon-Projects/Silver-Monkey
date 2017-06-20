@@ -1425,8 +1425,9 @@ InputBox("What line within the document do you want to send the cursor to?",
         KeysHelpMSIni.Load(Path.Combine(Paths.ApplicationPath, "KeysHelp-MS.ini"))
         KeysHelpIni.Load(Path.Combine(Paths.ApplicationPath, "KeysHelp.ini"))
 
-        Dim HelpItems = New MonkeyCore.Controls.HelpLinkMenu
+        Dim HelpItems = New MonkeyCore.Controls.HelpLinkToolStripMenu
         ReferenceLinksToolStripMenuItem.DropDown.Items.AddRange(HelpItems.MenuItems.ToArray)
+
         Dim splash As SplashScreen1 = CType(My.Application.SplashScreen, SplashScreen1)
         Dim filename As String = ""
 

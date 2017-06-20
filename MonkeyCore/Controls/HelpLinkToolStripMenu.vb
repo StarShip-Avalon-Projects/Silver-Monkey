@@ -6,7 +6,7 @@ Namespace Controls
     ''' <summary>
     ''' Standard menu class for HelpLink Menu Items
     ''' </summary>
-    Public Class HelpLinkMenu : Inherits MenuItem
+    Public Class HelpLinkToolStripMenu : Inherits ToolStripMenuItem
 
 #Region "Private Fields"
 
@@ -15,7 +15,7 @@ Namespace Controls
 
 #End Region
 
-        Private _MenuItems As List(Of MenuItem)
+        Private _MenuItems As List(Of ToolStripMenuItem)
 
         ''' <summary>
         ''' Help Link list for the help menu. Initiliaze the Help Menu first
@@ -24,7 +24,7 @@ Namespace Controls
         ''' <returns>
         ''' The Lst of links read from the ini file
         ''' </returns>
-        Public Overloads ReadOnly Property MenuItems As List(Of MenuItem)
+        Public ReadOnly Property MenuItems As List(Of ToolStripMenuItem)
             Get
                 Return _MenuItems
             End Get
@@ -48,13 +48,13 @@ Namespace Controls
         ''' </param>
         Sub New(SectionName As String)
             MyBase.New()
-            _MenuItems = New List(Of MenuItem)
+            _MenuItems = New List(Of ToolStripMenuItem)
             HelpIni = New IniFile
             HelpIni.Load(Path.Combine(Paths.ApplicationPath, "HelpLink.ini"))
             HelpSection = HelpIni.GetSection(SectionName)
             If Not HelpSection Is Nothing Then
                 For Each KeyVal As IniFile.IniSection.IniKey In HelpSection.Keys
-                    Dim HelpItem As New MenuItem(KeyVal.Name, AddressOf RecentFile_click)
+                    Dim HelpItem As New ToolStripMenuItem(KeyVal.Name, Nothing, AddressOf RecentFile_click)
                     HelpItem.Name = KeyVal.Name
                     _MenuItems.Add(HelpItem)
                 Next
@@ -76,7 +76,7 @@ Namespace Controls
         ''' </param>
         Public Overridable Sub RecentFile_click(sender As Object, e As EventArgs)
 
-            Dim HelpItem As MenuItem = CType(sender, MenuItem)
+            Dim HelpItem As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
             Dim MyKey As IniFile.IniSection.IniKey = HelpSection.GetKey(HelpItem.Text)
             Process.Start(MyKey.Value.Trim)
 

@@ -186,7 +186,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentRef Id="smHelp" />
       <ComponentGroupRef Id="MonkeyCore.Binaries" />
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
-      <ComponentRef Id="HelpLink" />
+      <ComponentGroupRef Id="MonkeyCore.Content" />
       <ComponentGroupRef Id="BugTraqConnect.Binaries" />
       <ComponentGroupRef Id="BugTraqConnect.Symbols" />
       <ComponentRef Id="SilverMonkeyShortcut" />
@@ -207,12 +207,17 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="SilverMonkeyEngine.Symbols" />
       <ComponentGroupRef Id="Verbot5Library.Binaries" />
       <ComponentGroupRef Id="Verbot5Library.Symbols" />
+
       <ComponentRef Id="FCTB" />
       <ComponentRef Id="Irony" />
       <ComponentRef Id="RTFLib.dll" />
+
+      <ComponentRef Id="EntityFramework" />
+      <ComponentRef Id="EntityFrameworkSqlServer" />
       <ComponentRef Id="SQLite" />
       <ComponentRef Id="X86" />
       <ComponentRef Id="X64" />
+
       <ComponentGroupRef Id="DataMonkey.Binaries" />
       <ComponentGroupRef Id="DataMonkey.Symbols" />
       <ComponentRef Id="DataMonkeyShortcut" />
@@ -246,9 +251,6 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <Component Id="DataMokeyHelp" Guid="{0219f1a1-d0d4-4c1b-817b-a6fa3f6e95fd}">
         <File Id="DataMonkeyHelp" Source="$(var.SolutionDir)Build/Help/Data_Monkey_Help.chm" KeyPath="no" Checksum="yes" />
       </Component>
-      <Component Id="HelpLink" Guid="{5b5b1659-e3a7-443f-a43e-2b4a31e0a2a1}">
-        <File Id="HelpLink.ini" Source="$(var.MonkeyCore.TargetDir)HelpLink.ini" KeyPath="no" Checksum="yes" />
-      </Component>
     </DirectoryRef>
 
     <!-- Misc DLLS-->
@@ -256,6 +258,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <Component Id="FCTB" Guid="{CAA87BC5-9387-47D4-B1BB-A0022C1A71B8}">
         <File Id="FCTB" Source="$(var.SilverMonkey2.TargetDir)FastColoredTextBox.dll" KeyPath="no" Checksum="yes" />
       </Component>
+
       <Component Id="Irony" Guid="{B078886D-97DD-491F-BFBB-5080A889CB12}">
         <File Id="Irony" Source="$(var.SilverMonkey2.TargetDir)Irony.dll" KeyPath="no" Checksum="yes" />
       </Component>
@@ -268,6 +271,12 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
     <DirectoryRef Id="APPLICATIONFOLDER">
       <Component Id="SQLite" Guid="{CADE1E29-CD6A-4301-8315-C611156C6462}">
         <File Id="System.Data.SQLite" Source="$(var.SilverMonkey2.TargetDir)System.Data.SQLite.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="EntityFramework" Guid="{ba158fe8-719e-4979-bbbb-85fd7cffd8f7}">
+        <File Id="EntityFramework.dll" Source="$(var.SilverMonkey2.TargetDir)EntityFramework.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="EntityFrameworkSqlServer" Guid="{ff852303-464b-414d-9a5b-1f431b1db645}">
+        <File Id="EntityFramework.SqlServer.dll" Source="$(var.SilverMonkey2.TargetDir)EntityFramework.SqlServer.dll" KeyPath="no" Checksum="yes" />
       </Component>
     </DirectoryRef>
     <DirectoryRef Id="X86">

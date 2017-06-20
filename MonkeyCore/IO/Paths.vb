@@ -379,7 +379,7 @@ Public Class Paths
     ''' </summary>
     ''' <returns>
     ''' </returns>
-    Public Shared ReadOnly Property SilverMonkeyLogPath() As String
+    Public Shared Property SilverMonkeyLogPath() As String
         Get
             If _SilverMonkeyLogPath Is Nothing Then
                 _SilverMonkeyDocumentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), MyDocumentsPath)
@@ -390,6 +390,9 @@ Public Class Paths
             End If
             Return _SilverMonkeyLogPath
         End Get
+        Set(value As String)
+            _SilverMonkeyLogPath = value
+        End Set
     End Property
 
 #End Region

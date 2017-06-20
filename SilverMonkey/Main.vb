@@ -502,6 +502,10 @@ Public Class Main
             With NewBotWindow
                 If .ShowDialog = Windows.Forms.DialogResult.OK Then
                     BotConfig = NewBotWindow.BotConfig
+
+                    SilverMonkeyBotPath = BotConfig.BotPath
+                    SilverMonkeyLogPath = Path.GetDirectoryName(BotConfig.LogPath)
+
                     EditBotToolStripMenuItem.Enabled = True
                 End If
             End With
@@ -522,6 +526,8 @@ Public Class Main
             If .ShowDialog = DialogResult.OK Then
                 BotConfig = New BotOptions(.FileName)
                 SaveRecentFile(.FileName)
+                SilverMonkeyBotPath = Path.GetDirectoryName(.FileName)
+                SilverMonkeyLogPath = BotConfig.LogPath
                 ' BotSetup.BotFile = .FileName BotSetup.ShowDialog()
                 Me.EditBotToolStripMenuItem.Enabled = True
             End If
@@ -540,6 +546,8 @@ Public Class Main
         'BotSetup.BotFile =
         'BotSetup.ShowDialog()
         BotConfig = New BotOptions(sender.ToString())
+        SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
+        SilverMonkeyLogPath = Path.GetDirectoryName(BotConfig.LogPath)
         My.Settings.LastBotFile = sender.ToString()
         EditBotToolStripMenuItem.Enabled = True
         My.Settings.Save()
@@ -701,7 +709,7 @@ Public Class Main
         If BTN_Go.Text = "Go!" Then
 
             If BotConfig.log Then
-                LogStream = New LogStream(setLogName(BotConfig), BotConfig.LogPath)
+                LogStream = New LogStream(setLogName(BotConfig), SilverMonkeyLogPath)
             End If
 
             My.Settings.LastBotFile = CheckBotFolder(BotConfig.CharacterIniFile)
@@ -940,7 +948,7 @@ Public Class Main
         MS_KeysIni.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Keys-MS.ini"))
         InitializeTextControls()
 
-        Dim HelpItems = New MonkeyCore.Controls.HelpLinkMenu
+        Dim HelpItems = New MonkeyCore.Controls.HelpLinkToolStripMenu
         ReferenceLinksToolStripMenuItem.DropDown.Items.AddRange(HelpItems.MenuItems.ToArray)
 
         'Me.Size = My.Settings.MainFormSize

@@ -34,6 +34,7 @@ namespace DataMonkey
         private MenuItem menuItem3;
         private MenuItem menuItem4;
         private MenuItem menuItem5;
+        private MenuItem menuItem6;
         private MenuItem objAddColumnSQL;
         private MenuItem objCreateTableSQL;
 
@@ -104,6 +105,8 @@ namespace DataMonkey
 
             sqlStatementTextBox.ContextMenu = new ContextMenu();
             sqlStatementTextBox.ContextMenu.MenuItems.Add(objExecuteSQL);
+            var HelpItems = new MonkeyCore.Controls.HelpLinkMenu();
+            menuItem6.MenuItems.AddRange(HelpItems.MenuItems.ToArray());
         }
 
         /// <summary>
@@ -184,6 +187,7 @@ namespace DataMonkey
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmExplorer));
+            Irony.Parsing.Grammar grammar1 = new Irony.Parsing.Grammar();
             this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.OpenDBmenu = new System.Windows.Forms.MenuItem();
@@ -193,6 +197,9 @@ namespace DataMonkey
             this.ExitAppMenu = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.AddAreaMenu = new System.Windows.Forms.MenuItem();
+            this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.menuItem5 = new System.Windows.Forms.MenuItem();
+            this.menuItem6 = new System.Windows.Forms.MenuItem();
             this.objExecuteSQL = new System.Windows.Forms.MenuItem();
             this.objOpenTableSQL = new System.Windows.Forms.MenuItem();
             this.objRenameTableSQL = new System.Windows.Forms.MenuItem();
@@ -222,8 +229,6 @@ namespace DataMonkey
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.silverMonkeyFCTB1 = new MonkeyCore.Controls.SilverMonkeyFCTB();
             this.SqlResultsListView = new MonkeyCore.Controls.ListView_NoFlicker();
-            this.menuItem4 = new System.Windows.Forms.MenuItem();
-            this.menuItem5 = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.sqlStatementTextBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -244,6 +249,7 @@ namespace DataMonkey
             this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem1,
             this.menuItem2,
+            this.menuItem6,
             this.menuItem4});
             // menuItem1
             this.menuItem1.Index = 0;
@@ -282,6 +288,18 @@ namespace DataMonkey
             this.AddAreaMenu.Index = 0;
             this.AddAreaMenu.Text = "Add Area";
             this.AddAreaMenu.Click += new System.EventHandler(this.AddAreaMenu_Click);
+            // menuItem4
+            this.menuItem4.Index = 3;
+            this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem5});
+            this.menuItem4.Text = "Help";
+            // menuItem5
+            this.menuItem5.Index = 0;
+            this.menuItem5.Text = "Contents";
+            this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
+            // menuItem6
+            this.menuItem6.Index = 2;
+            this.menuItem6.Text = "ReferenceLinks";
             // objExecuteSQL
             this.objExecuteSQL.Index = -1;
             this.objExecuteSQL.Text = "Execute";
@@ -394,7 +412,7 @@ namespace DataMonkey
             // statusStrip1
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusStripLog});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 235);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 390);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(840, 22);
             this.statusStrip1.TabIndex = 18;
@@ -411,7 +429,7 @@ namespace DataMonkey
             this.splitContainer1.Panel1.Controls.Add(this.tabControl1);
             // splitContainer1.Panel2
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(840, 207);
+            this.splitContainer1.Size = new System.Drawing.Size(840, 362);
             this.splitContainer1.SplitterDistance = 280;
             this.splitContainer1.TabIndex = 19;
             // tabControl1
@@ -421,14 +439,14 @@ namespace DataMonkey
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(280, 207);
+            this.tabControl1.Size = new System.Drawing.Size(280, 362);
             this.tabControl1.TabIndex = 1;
             // tabPage2
             this.tabPage2.Controls.Add(this.DatabaseTreeView);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(272, 181);
+            this.tabPage2.Size = new System.Drawing.Size(272, 336);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "Database";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -436,14 +454,14 @@ namespace DataMonkey
             this.DatabaseTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DatabaseTreeView.Location = new System.Drawing.Point(3, 3);
             this.DatabaseTreeView.Name = "DatabaseTreeView";
-            this.DatabaseTreeView.Size = new System.Drawing.Size(266, 175);
+            this.DatabaseTreeView.Size = new System.Drawing.Size(266, 330);
             this.DatabaseTreeView.TabIndex = 1;
             this.DatabaseTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DatabaseTreeView_MouseDown);
             // tabPage3
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(272, 181);
+            this.tabPage3.Size = new System.Drawing.Size(272, 336);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Templates";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -457,8 +475,8 @@ namespace DataMonkey
             this.splitContainer2.Panel1.Padding = new System.Windows.Forms.Padding(5);
             // splitContainer2.Panel2
             this.splitContainer2.Panel2.Controls.Add(this.SqlResultsListView);
-            this.splitContainer2.Size = new System.Drawing.Size(556, 207);
-            this.splitContainer2.SplitterDistance = 98;
+            this.splitContainer2.Size = new System.Drawing.Size(556, 362);
+            this.splitContainer2.SplitterDistance = 170;
             this.splitContainer2.TabIndex = 21;
             // SQLAreaTabControl
             this.SQLAreaTabControl.Controls.Add(this.tabPage1);
@@ -467,7 +485,7 @@ namespace DataMonkey
             this.SQLAreaTabControl.Name = "SQLAreaTabControl";
             this.SQLAreaTabControl.SelectedIndex = 0;
             this.SQLAreaTabControl.ShowCloseButtonOnTabs = true;
-            this.SQLAreaTabControl.Size = new System.Drawing.Size(546, 88);
+            this.SQLAreaTabControl.Size = new System.Drawing.Size(546, 160);
             this.SQLAreaTabControl.TabIndex = 0;
             this.SQLAreaTabControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SQLAreaTabControl_MouseDown);
             // tabPage1
@@ -475,7 +493,7 @@ namespace DataMonkey
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(538, 62);
+            this.tabPage1.Size = new System.Drawing.Size(538, 134);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "SQL     ";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -500,18 +518,17 @@ namespace DataMonkey
             this.silverMonkeyFCTB1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.silverMonkeyFCTB1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.silverMonkeyFCTB1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.silverMonkeyFCTB1.Grammar = new Irony.Parsing.Grammar();
+            this.silverMonkeyFCTB1.Grammar = grammar1;
             this.silverMonkeyFCTB1.IsReplaceMode = false;
             this.silverMonkeyFCTB1.Language = FastColoredTextBoxNS.Language.SQL;
             this.silverMonkeyFCTB1.LeftBracket = '(';
             this.silverMonkeyFCTB1.Location = new System.Drawing.Point(3, 3);
             this.silverMonkeyFCTB1.Name = "silverMonkeyFCTB1";
             this.silverMonkeyFCTB1.Paddings = new System.Windows.Forms.Padding(0);
-            this.silverMonkeyFCTB1.Parser = null;
             this.silverMonkeyFCTB1.RightBracket = ')';
             this.silverMonkeyFCTB1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.silverMonkeyFCTB1.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("silverMonkeyFCTB1.ServiceColors")));
-            this.silverMonkeyFCTB1.Size = new System.Drawing.Size(532, 56);
+            this.silverMonkeyFCTB1.Size = new System.Drawing.Size(532, 128);
             this.silverMonkeyFCTB1.TabIndex = 0;
             this.silverMonkeyFCTB1.Zoom = 100;
             // SqlResultsListView
@@ -522,22 +539,13 @@ namespace DataMonkey
             this.SqlResultsListView.LargeImageList = this.ToolBarImages;
             this.SqlResultsListView.Location = new System.Drawing.Point(0, 0);
             this.SqlResultsListView.Name = "SqlResultsListView";
-            this.SqlResultsListView.Size = new System.Drawing.Size(556, 105);
+            this.SqlResultsListView.Size = new System.Drawing.Size(556, 188);
             this.SqlResultsListView.TabIndex = 0;
             this.SqlResultsListView.UseCompatibleStateImageBehavior = false;
             this.SqlResultsListView.View = System.Windows.Forms.View.Details;
-            // menuItem4
-            this.menuItem4.Index = 2;
-            this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem5});
-            this.menuItem4.Text = "Help";
-            // menuItem5
-            this.menuItem5.Index = 0;
-            this.menuItem5.Text = "Contents";
-            this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
             // frmExplorer
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(840, 257);
+            this.ClientSize = new System.Drawing.Size(840, 412);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolBar1);
@@ -1134,7 +1142,7 @@ namespace DataMonkey
 
         #endregion ListView Events
 
-        private const string HelpFile = "Monkey_Speak_Editor_Help.chm";
+        private const string HelpFile = "Data_Monkey_Help.chm";
 
         private void menuItem5_Click(object sender, EventArgs e)
         {

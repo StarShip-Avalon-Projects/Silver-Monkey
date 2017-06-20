@@ -25,11 +25,10 @@ Partial Class MS_Edit
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MS_Edit))
         Me.MSSaveDialog = New System.Windows.Forms.SaveFileDialog()
         Me.MS_BrosweDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.EditMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.EditMenu = New System.Windows.Forms.ContextMenuStrip()
         Me.MenuCopy = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuCut = New System.Windows.Forms.ToolStripMenuItem()
         Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -38,7 +37,7 @@ Partial Class MS_Edit
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.AutocommentOnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutocommentOffToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.imgList = New System.Windows.Forms.ImageList(Me.components)
+        Me.imgList = New System.Windows.Forms.ImageList()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewMonkeySpeakToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MonkeySpeakFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -78,6 +77,7 @@ Partial Class MS_Edit
         Me.MonkeySpeakToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WindowsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DSWizardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReferenceLinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AbutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -90,7 +90,7 @@ Partial Class MS_Edit
         Me.BtnSectionUp = New System.Windows.Forms.Button()
         Me.BtnSectionAdd = New System.Windows.Forms.Button()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
-        Me.SectionMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.SectionMenu = New System.Windows.Forms.ContextMenuStrip()
         Me.RenameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
         Me.NewSection = New System.Windows.Forms.ToolStripMenuItem()
@@ -105,7 +105,7 @@ Partial Class MS_Edit
         Me.BtnTemplateDeleteMS = New System.Windows.Forms.Button()
         Me.BtnTemplateAddMS = New System.Windows.Forms.Button()
         Me.ListBox3 = New System.Windows.Forms.ListBox()
-        Me.TemplateMenuMS = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.TemplateMenuMS = New System.Windows.Forms.ContextMenuStrip()
         Me.MSTemplateRefresh = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
@@ -118,7 +118,7 @@ Partial Class MS_Edit
         Me.BtnTemplateAdd = New System.Windows.Forms.Button()
         Me.BtnTemplateDelete = New System.Windows.Forms.Button()
         Me.ListBox2 = New System.Windows.Forms.ListBox()
-        Me.TemplateMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.TemplateMenu = New System.Windows.Forms.ContextMenuStrip()
         Me.RefreshTemplatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator13 = New System.Windows.Forms.ToolStripSeparator()
         Me.InsertToDSFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -167,8 +167,7 @@ Partial Class MS_Edit
         Me.panelTotalLines = New System.Windows.Forms.StatusBarPanel()
         Me.panelTotalCharacters = New System.Windows.Forms.StatusBarPanel()
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.ReferenceLinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip()
         Me.EditMenu.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -565,6 +564,12 @@ Partial Class MS_Edit
         Me.DSWizardToolStripMenuItem.Name = "DSWizardToolStripMenuItem"
         Me.DSWizardToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
         Me.DSWizardToolStripMenuItem.Text = "DS Wizard"
+        '
+        'ReferenceLinksToolStripMenuItem
+        '
+        Me.ReferenceLinksToolStripMenuItem.Name = "ReferenceLinksToolStripMenuItem"
+        Me.ReferenceLinksToolStripMenuItem.Size = New System.Drawing.Size(98, 20)
+        Me.ReferenceLinksToolStripMenuItem.Text = "ReferenceLinks"
         '
         'HelpToolStripMenuItem
         '
@@ -1335,12 +1340,6 @@ Partial Class MS_Edit
         Me.ColumnHeader3.DisplayIndex = 0
         Me.ColumnHeader3.Text = ""
         Me.ColumnHeader3.Width = 640
-        '
-        'ReferenceLinksToolStripMenuItem
-        '
-        Me.ReferenceLinksToolStripMenuItem.Name = "ReferenceLinksToolStripMenuItem"
-        Me.ReferenceLinksToolStripMenuItem.Size = New System.Drawing.Size(98, 20)
-        Me.ReferenceLinksToolStripMenuItem.Text = "ReferenceLinks"
         '
         'MS_Edit
         '
