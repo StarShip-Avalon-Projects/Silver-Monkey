@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Topics>
-  <Topic id="8fbaf2ab-7e4d-4001-9a0d-1537ea093cdd" visible="True" isDefault="true" isSelected="true" title="Main" />
+  <Topic id="8fbaf2ab-7e4d-4001-9a0d-1537ea093cdd" visible="True" isDefault="true" title="Main" />
   <Topic id="caa72623-9fdc-444a-a6be-c1412810f771" visible="True" />
   <Topic id="3ddd49c6-78c6-4357-a5d1-a7bfb82e0ca2" visible="True" isExpanded="true" title="Guides">
     <Topic id="a9afd3a8-c2a2-47db-a975-8bbb8ea06eef" visible="True" title="Getting Started" />
@@ -9,6 +9,7 @@
     <Topic id="0beb31ba-cbcb-4284-b346-5ac2f7580345" visible="True" />
   </Topic>
   <Topic id="a0393599-1958-4080-ab82-fcf3b0cea775" visible="True" noFile="true" isExpanded="true" apiParentMode="InsertAfter" title="References">
+    <Topic id="84d7fa65-e593-475f-aa52-1be3d4516f3f" visible="True" isSelected="true" />
     <Topic id="6b99341b-7b1c-4f60-a21d-372dfc853f24" visible="True" noFile="true" isExpanded="true" title="Configuration Files">
       <Topic id="7cfa8277-8dc5-458b-8842-c07b87572396" visible="True" title="HelpLink.ini " />
     </Topic>
