@@ -144,7 +144,7 @@ Partial Class BotSetup
         Me.TabControl1.Controls.Add(Me.TabPage4)
         Me.TabControl1.Location = New System.Drawing.Point(6, 3)
         Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.SelectedIndex = _TabIndex
         Me.TabControl1.Size = New System.Drawing.Size(398, 223)
         Me.TabControl1.TabIndex = 11
         '

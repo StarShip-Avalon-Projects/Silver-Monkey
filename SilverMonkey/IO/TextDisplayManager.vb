@@ -11,7 +11,7 @@ Public Class TextDisplayManager
 
 #Region "Private Fields"
 
-    Private WithEvents lb As RichTextBoxEx
+    Public WithEvents lb As RichTextBoxEx
     Private Mainsettings As cMain
 
 #End Region
@@ -20,6 +20,7 @@ Public Class TextDisplayManager
 
     Sub New(settings As cMain, ByRef logBox As RichTextBoxEx)
         lb = logBox
+
         Mainsettings = settings
     End Sub
 
@@ -87,6 +88,8 @@ Public Class TextDisplayManager
             Dim dataArray() As Object = {TextObject}
             lb.Invoke(New AddDataToListCaller(AddressOf AddDataToList), dataArray)
         Else
+            Dim RtfReadonly As Boolean
+
             If lb.GetType().ToString.Contains("Controls.RichTextBoxEx") Then
                 'Pos_Old = GetScrollPos(lb.Handle, SBS_VERT)
                 Dim build As New System.Text.StringBuilder(TextObject.DisplayText)
@@ -102,23 +105,24 @@ Public Class TextDisplayManager
 
                 Dim Names As MatchCollection = Regex.Matches(TextObject.DisplayText, NameFilter)
                 For Each Name As System.Text.RegularExpressions.Match In Names
-                    build = build.Replace(Name.ToString, Name.Groups(3).Value)
+                    build = build.Replace(Name.Value, Name.Groups(3).Value)
                 Next
                 '<name shortname='acuara' forced>
                 Dim MyIcon As MatchCollection = Regex.Matches(TextObject.DisplayText, Iconfilter)
                 For Each Icon As System.Text.RegularExpressions.Match In MyIcon
                     Select Case Icon.Groups(1).Value
                         Case "91"
-                            build = build.Replace(Icon.ToString, "[#]")
+                            build = build.Replace(Icon.Value, "[#]")
                         Case Else
-                            build = build.Replace(Icon.ToString, "[" + Icon.Groups(1).Value + "]")
+                            build = build.Replace(Icon.Value, "[" + Icon.Groups(1).Value + "]")
                     End Select
 
                 Next
 
                 'Dim myColor As System.Drawing.Color = fColor(newColor)
+                RtfReadonly = lb.ReadOnly
                 lb.ReadOnly = False
-                lb.BeginUpdate()
+                ' lb.BeginUpdate()
 
                 lb.SelectionStart = lb.TextLength
                 lb.SelectedRtf = FormatText(build.ToString, TextObject.TextColor)
@@ -134,7 +138,8 @@ Public Class TextDisplayManager
                         Dim matchText As String = mmatch.Groups(2).Value
                         If mmatch.Success Then
                             With lb
-                                .Find(mmatch.ToString)
+                                .BeginUpdate()
+                                .Find(mmatch.Value)
                                 'WAIT Snag Image Links first!
                                 'Dim snag As Match = Regex.Match(matchText, "IMG:(.*?)::")
                                 'If snag.Success Then
@@ -145,6 +150,7 @@ Public Class TextDisplayManager
                                 .SelectedRtf = FormatURL(matchText & "\v #" & matchUrl & "\v0 ")
                                 .Find(matchText & "#" & matchUrl, RichTextBoxFinds.WholeWord)
                                 .SetSelectionLink(True)
+                                .EndUpdate()
                                 'End If
                                 'Put the Link in
 
@@ -152,48 +158,6 @@ Public Class TextDisplayManager
                         End If
                     Next
                 Next
-                'Dim Images As MatchCollection = Regex.Matches(lb.Text, "<img .*?src=[""']?([^'"">]+)[""']?.*?>", RegexOptions.IgnoreCase)
-                'For Each Image As Match In Images
-                '    Dim img As String = Image.Groups(1).Value
-                '    Dim alt As String = Image.Groups(2).Value
-                '    With lb
-                '        .SelectionStart = lb.Text.IndexOf(Image.ToString)
-                '        .SelectionLength = Image.ToString.Length
-                '        Dim RTFimg As New RTFBuilder
-                '        'RTFimg.Append("IMG:" & img & "::")
-                '        RTFimg.InsertImage(LoadImageFromUrl(img))
-                '        .SelectedRtf = RTFimg.ToString
-                '    End With
-                'Next
-
-                'Dim SysImages As MatchCollection = Regex.Matches(lb.Text, "\$(.[0-9]+)\$")
-                'For Each SysMatch As Match In SysImages
-                '    Dim idx As Integer = Convert.ToInt32(SysMatch.Groups(1).ToString)
-                '    With lb
-                '        .Find(SysMatch.ToString)
-                '        Dim RTFimg As New RTFBuilder
-                '        RTFimg.InsertImage(IMGresize(GetFrame(idx), log_))
-                '        .SelectedRtf = RTFimg.ToString
-                '    End With
-                'Next
-                ''
-                'SysImages = Regex.Matches(lb.Text, "#C(.?)?")
-                'For Each SysMatch As Match In SysImages
-                '    Dim idx As Integer = Helper.CharToDescTag(SysMatch.Groups(1).ToString)
-                '    With lb
-                '        .Find(SysMatch.ToString)
-                '        Dim RTFimg As New RTFBuilder
-                '        RTFimg.InsertImage(IMGresize(GetFrame(idx, "desctags.fox"), log_))
-                '        .SelectedRtf = RTFimg.ToString
-                '    End With
-                'Next
-                'SysImages = Regex.Matches(lb.Text, "#S(.?)?")
-                'For Each SysMatch As Match In SysImages
-                '    With lb
-                '        .Find(SysMatch.ToString)
-                '        .SelectedRtf = GetSmily(SysMatch.Groups(1).Value)
-                '    End With
-                'Next
 
                 Try
                     Dim SelStart As Integer = 0
@@ -209,8 +173,8 @@ Public Class TextDisplayManager
                     lb.Clear()
                     Console.WriteLine("Reset Log box due to over flow")
                 End Try
-                lb.EndUpdate()
-                lb.ReadOnly = True
+                ' lb.EndUpdate()
+                lb.ReadOnly = RtfReadonly
 
             End If
 

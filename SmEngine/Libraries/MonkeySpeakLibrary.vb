@@ -30,6 +30,8 @@ Namespace Engine.Libraries
 #Region "Private Fields"
 
         Private _FurcTime As DateTime
+        Private _HasHelp As Boolean
+        Private _SkillLevel As Integer
         Private FurcTimeTimer As Timer
         Private FuscariaSession As BotSession
 
@@ -102,6 +104,8 @@ Namespace Engine.Libraries
             If Session Is Nothing Then
                 Exit Sub
             End If
+            _SkillLevel = 0
+            _HasHelp = False
             MsPage = Session.MSpage
             Player = Session.Player
             Dream = Session.Dream
@@ -113,6 +117,33 @@ Namespace Engine.Libraries
 #End Region
 
 #Region "Protected Methods"
+
+        ''' <summary>
+        ''' Registers a Trigger to the TriggerHandler with optional description
+        ''' </summary>
+        ''' <param name="trigger">
+        ''' MonkeySpeak Trigger catagory
+        ''' </param>
+        ''' <param name="handler">
+        ''' MonkeySpeak Handler
+        ''' </param>
+        ''' <param name="description">
+        ''' Optional Description
+        ''' <para>
+        ''' Inherited from Base
+        ''' </para>
+        ''' </param>
+        ''' <param name="HasHelp">
+        ''' Is Help provided in the help file?
+        ''' </param>
+        ''' <param name="SkilLevel">
+        ''' Skill levels 1-5
+        ''' </param>
+        Protected Overloads Sub Add(trigger As Trigger, handler As TriggerHandler, SkilLevel As Integer, HasHelp As Boolean, Optional description As String = Nothing)
+            MyBase.Add(trigger, handler, description)
+            _HasHelp = HasHelp
+            _SkillLevel = _SkillLevel
+        End Sub
 
         ''' <summary>
         ''' </summary>

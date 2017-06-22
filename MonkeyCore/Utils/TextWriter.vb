@@ -19,18 +19,21 @@ Public Class TextBoxWriter
         Me.control = control
         AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
+        Builder = New StringBuilder()
     End Sub
 
     Public Sub New(ByVal control As RichTextBoxEx)
         Me.control = control
         AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
+        Builder = New StringBuilder()
     End Sub
 
     Public Sub New(ByVal control As RichTextBox)
         Me.control = control
         AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
+        Builder = New StringBuilder()
     End Sub
 
 #End Region
@@ -65,8 +68,8 @@ Public Class TextBoxWriter
         End If
     End Sub
 
-    Public Shadows Sub WriteLine(ByVal s As String)
-        Write(s) '+ Environment.NewLine
+    Public Overrides Sub WriteLine(ByVal s As String)
+        Write(s + Environment.NewLine)
     End Sub
 
 #End Region
@@ -77,30 +80,28 @@ Public Class TextBoxWriter
         If control.InvokeRequired Then
             control.Invoke(New UpDateBtn_GoCallback(AddressOf AppendText), s)
         Else
-            If (Builder Is Nothing = False) Then
+            If Builder.Length > 0 Then
                 control.AppendText(Builder.ToString())
-                Builder = Nothing
+                Builder.Clear()
             End If
             control.AppendText(s)
             ' (ByRef lb As Object, ByRef obj As Object, ByRef newColor As fColorEnum)
             'Main.AddDataToList(Main.log_, s, 0)
+
         End If
     End Sub
 
     Private Sub BufferText(ByRef s As String)
 
-        If (Builder Is Nothing) Then
-            Builder = New StringBuilder()
-        End If
         Builder.Append(s)
 
     End Sub
 
     Private Sub OnHandleCreated(ByVal sender As Object,
        ByVal e As EventArgs)
-        If (Builder Is Nothing = False) Then
+        If Builder.Length > 0 Then
             control.AppendText(Builder.ToString())
-            Builder = Nothing
+            Builder.Clear()
         End If
     End Sub
 

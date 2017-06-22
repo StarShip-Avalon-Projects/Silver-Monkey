@@ -210,7 +210,6 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
       <ComponentRef Id="FCTB" />
       <ComponentRef Id="Irony" />
-      <ComponentRef Id="RTFLib.dll" />
 
       <ComponentRef Id="EntityFramework" />
       <ComponentRef Id="EntityFrameworkSqlServer" />
@@ -261,9 +260,6 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
       <Component Id="Irony" Guid="{B078886D-97DD-491F-BFBB-5080A889CB12}">
         <File Id="Irony" Source="$(var.SilverMonkey2.TargetDir)Irony.dll" KeyPath="no" Checksum="yes" />
-      </Component>
-      <Component Id="RTFLib.dll" Guid="{274422CD-E56A-4157-BD0C-99B19DC07E09}">
-        <File Id="RTFLib.dll" Source="$(var.SilverMonkey2.TargetDir)RTFLib.dll" KeyPath="no" Checksum="yes" />
       </Component>
     </DirectoryRef>
 

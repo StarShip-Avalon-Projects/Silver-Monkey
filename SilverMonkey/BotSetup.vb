@@ -6,14 +6,30 @@ Public Class BotSetup
 
 #Region "Public Constructors"
 
-    Public Sub New(ByRef BotConfig As BotOptions)
-        bFile = BotConfig
+    Public Sub New(ByRef BotConfig As BotOptions, TabIndex As Integer)
+        MyClass.New(BotConfig)
+        _TabIndex = TabIndex
         ' This call is required by the designer.
-        InitializeComponent()
-        ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
+        ' InitializeComponent()
+        'ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
+        ' Add any initialization after the InitializeComponent() call.
+
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub
+
+    Public Sub New(ByRef BotConfig As BotOptions)
+        bFile = BotConfig
+        _TabIndex = 0
+        InitializeComponent()
+        ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
+    End Sub
+
+#End Region
+
+#Region "Private Fields"
+
+    Private _TabIndex As Integer
 
 #End Region
 
@@ -88,6 +104,8 @@ Public Class BotSetup
         setLogOptions()
         TxtBxLogName.Text = bFile.LogNameBase
         TxtBxLogPath.Text = bFile.LogPath
+        ' Set the open tab
+        TabControl1.SelectedIndex = _TabIndex
     End Sub
 
     Private Sub BTN_Browse_Click(sender As System.Object, e As System.EventArgs) Handles BTN_Browse.Click
@@ -115,8 +133,7 @@ Public Class BotSetup
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
         With IniBrowse
             ' Select Character ini file
-            .InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-         "/Silver Monkey/Logs")
+            .InitialDirectory = Paths.SilverMonkeyLogPath
             .RestoreDirectory = True
             If .ShowDialog = DialogResult.OK Then
                 Dim filenameOnly As String = Path.GetFileNameWithoutExtension(.FileName)

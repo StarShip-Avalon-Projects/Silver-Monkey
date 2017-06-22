@@ -82,6 +82,8 @@ Partial Class Main
         Me.sendToServer = New System.Windows.Forms.Button()
         Me.BTN_Go = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TextBox_NoFlicker1 = New MonkeyCore.Controls.TextBox_NoFlicker()
+        Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GrpAction = New System.Windows.Forms.GroupBox()
         Me.BtnSit_stand_Lie = New System.Windows.Forms.Button()
@@ -93,8 +95,6 @@ Partial Class Main
         Me.get_ = New System.Windows.Forms.Button()
         Me.se_ = New System.Windows.Forms.PictureBox()
         Me.sw_ = New System.Windows.Forms.PictureBox()
-        Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
-        Me.TextBox_NoFlicker1 = New MonkeyCore.Controls.TextBox_NoFlicker()
         Me.ContextTryIcon.SuspendLayout()
         Me.TS_Main.SuspendLayout()
         CType(Me.FURREListBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -494,6 +494,9 @@ Partial Class Main
         '
         'toServer
         '
+        Me.toServer.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.toServer.HScrollPos = 0
         Me.toServer.Location = New System.Drawing.Point(6, 28)
         Me.toServer.Name = "toServer"
@@ -579,6 +582,26 @@ Partial Class Main
         Me.GroupBox1.TabIndex = 65
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Dream List"
+        '
+        'TextBox_NoFlicker1
+        '
+        Me.TextBox_NoFlicker1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox_NoFlicker1.Location = New System.Drawing.Point(162, 127)
+        Me.TextBox_NoFlicker1.Name = "TextBox_NoFlicker1"
+        Me.TextBox_NoFlicker1.Size = New System.Drawing.Size(27, 20)
+        Me.TextBox_NoFlicker1.TabIndex = 15
+        Me.TextBox_NoFlicker1.Text = "###"
+        '
+        'DreamList
+        '
+        Me.DreamList.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.DreamList.FormattingEnabled = True
+        Me.DreamList.Location = New System.Drawing.Point(6, 16)
+        Me.DreamList.Name = "DreamList"
+        Me.DreamList.Size = New System.Drawing.Size(205, 108)
+        Me.DreamList.TabIndex = 14
         '
         'Label1
         '
@@ -715,22 +738,6 @@ Partial Class Main
         Me.sw_.TabIndex = 35
         Me.sw_.TabStop = False
         Me.sw_.WaitOnLoad = True
-        '
-        'DreamList
-        '
-        Me.DreamList.FormattingEnabled = True
-        Me.DreamList.Location = New System.Drawing.Point(6, 16)
-        Me.DreamList.Name = "DreamList"
-        Me.DreamList.Size = New System.Drawing.Size(205, 108)
-        Me.DreamList.TabIndex = 14
-        '
-        'TextBox_NoFlicker1
-        '
-        Me.TextBox_NoFlicker1.Location = New System.Drawing.Point(162, 127)
-        Me.TextBox_NoFlicker1.Name = "TextBox_NoFlicker1"
-        Me.TextBox_NoFlicker1.Size = New System.Drawing.Size(27, 20)
-        Me.TextBox_NoFlicker1.TabIndex = 15
-        Me.TextBox_NoFlicker1.Text = "###"
         '
         'Main
         '

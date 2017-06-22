@@ -405,9 +405,6 @@
     <Content Include="Templates\Verbal Warp.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DESUrls.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Templates-MS\Angel Cat Staff Group.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
