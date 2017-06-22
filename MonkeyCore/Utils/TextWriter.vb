@@ -66,7 +66,7 @@ Public Class TextBoxWriter
     End Sub
 
     Public Shadows Sub WriteLine(ByVal s As String)
-        Write(s) '+ Environment.NewLine
+        Write(s + Environment.NewLine)
     End Sub
 
 #End Region
@@ -84,6 +84,7 @@ Public Class TextBoxWriter
             control.AppendText(s)
             ' (ByRef lb As Object, ByRef obj As Object, ByRef newColor As fColorEnum)
             'Main.AddDataToList(Main.log_, s, 0)
+
         End If
     End Sub
 

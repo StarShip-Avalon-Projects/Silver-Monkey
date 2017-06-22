@@ -1,12 +1,12 @@
-﻿Imports System.Runtime.InteropServices
-Imports System.ComponentModel
-Imports System.Windows.Forms
-
+﻿Imports System.ComponentModel
+Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
+Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
 Imports MonkeyCore.Controls.Win32
 
 Namespace Controls
+
     ''' <summary>
     ''' Extended RichTextBox with URL formatting
     ''' </summary>
@@ -31,7 +31,7 @@ Namespace Controls
             ' next to a non-standard link
             Me.DetectUrls = True
             Me._protocols = New List(Of String)
-            Me._protocols.AddRange(New String() {"http://", "furc://", "file://", "mailto://", "ftp://", "https://", "gopher://", "nntp://", "prospero://", "telnet://", "news://", "wais://", "outlook://", "\\"})
+            Me._protocols.AddRange(New String() {"http://", "furc://", "file://", "mailto://", "ftp://", "https://", "gopher://", "nntp://", "prospero://", "telnet://", "news://", "wais://", "outlook://"})
 
         End Sub
 
@@ -59,6 +59,7 @@ Namespace Controls
         End Property
 
         Public Property VerticalContentAlignment As VerticalAlignment
+
         ''' <summary>
         ''' Gets and Sets the Vertical Scroll position of the control.
         ''' </summary>
@@ -88,19 +89,57 @@ Namespace Controls
 #Region "Public Methods"
 
         ''' <summary>
+        ''' Gets or sets the currently selected rich text format (rtf)
+        ''' formated text in the control.
+        ''' </summary>
+        ''' <returns>
+        ''' </returns>
+        Public Overloads Property SelectedRtf As String
+            Get
+                BeginUpdate()
+                Return MyBase.SelectedRtf
+                EndUpdate()
+            End Get
+            Set(value As String)
+                BeginUpdate()
+                MyBase.SelectedRtf = value
+                EndUpdate()
+            End Set
+        End Property
+
+        Public Overrides Property Text As String
+            Get
+                BeginUpdate()
+                Return MyBase.Text
+                EndUpdate()
+            End Get
+            Set(value As String)
+                BeginUpdate()
+                MyBase.Text = value
+                EndUpdate()
+            End Set
+        End Property
+
+        Public Overloads Sub AppendText(text As String)
+            BeginUpdate()
+            MyBase.AppendText(text)
+            EndUpdate()
+        End Sub
+
+        ''' <summary>
         ''' Maintains performance while updating.
         ''' </summary>
         ''' <remarks>
         ''' <para>
-        ''' It is recommended to call this method before doing
-        ''' any major updates that you do not wish the user to
-        ''' see. Remember to call EndUpdate When you are finished
-        ''' with the update. Nested calls are supported.
+        ''' It is recommended to call this method before doing any major
+        ''' updates that you do not wish the user to see. Remember to call
+        ''' EndUpdate When you are finished with the update. Nested calls
+        ''' are supported.
         ''' </para>
         ''' <para>
-        ''' Calling this method will prevent redrawing. It will
-        ''' also setup the event mask of the underlying richedit
-        ''' control so that no events are sent.
+        ''' Calling this method will prevent redrawing. It will also setup
+        ''' the event mask of the underlying richedit control so that no
+        ''' events are sent.
         ''' </para>
         ''' </remarks>
         Public Sub BeginUpdate()
@@ -125,9 +164,9 @@ Namespace Controls
         ''' Resumes drawing and event handling.
         ''' </summary>
         ''' <remarks>
-        ''' This method should be called every time a call is made
-        ''' made to BeginUpdate. It resets the event mask to it's
-        ''' original value and enables redrawing of the control.
+        ''' This method should be called every time a call is made made to
+        ''' BeginUpdate. It resets the event mask to it's original value and
+        ''' enables redrawing of the control.
         ''' </remarks>
         Public Sub EndUpdate()
             ' Deal with nested calls.
@@ -144,18 +183,31 @@ Namespace Controls
             SendMessage(Me.Handle, EM_SETEVENTMASK, IntPtr.Zero, oldEventMask)
         End Sub
 
+        Public Overloads Function Find(Text As String) As Object
+            BeginUpdate()
+            Dim o = MyBase.Find(Text)
+            EndUpdate()
+            Return o
+
+        End Function
+
         ''' <summary>
         ''' Get the link style for the current selection
         ''' </summary>
-        ''' <returns>0: link style not set, 1: link style set, -1: mixed</returns>
+        ''' <returns>
+        ''' 0: link style not set, 1: link style set, -1: mixed
+        ''' </returns>
         Public Function GetSelectionLink() As Integer
             Return GetSelectionStyle(CFM_LINK, CFE_LINK)
         End Function
 
         ''' <summary>
-        ''' Insert a given text as a link into the RichTextBox at the current insert position.
+        ''' Insert a given text as a link into the RichTextBox at the
+        ''' current insert position.
         ''' </summary>
-        ''' <param name="text">Text to be inserted</param>
+        ''' <param name="text">
+        ''' Text to be inserted
+        ''' </param>
         Public Sub InsertLink(ByVal text As String)
             InsertLink(text, Me.SelectionStart)
         End Sub
@@ -163,8 +215,12 @@ Namespace Controls
         ''' <summary>
         ''' Insert a given text at a given position as a link.
         ''' </summary>
-        ''' <param name="text">Text to be inserted</param>
-        ''' <param name="position">Insert position</param>
+        ''' <param name="text">
+        ''' Text to be inserted
+        ''' </param>
+        ''' <param name="position">
+        ''' Insert position
+        ''' </param>
         Public Sub InsertLink(ByVal text As String, ByVal position As Integer)
             If position < 0 OrElse position > Me.Text.Length Then
                 Throw New ArgumentOutOfRangeException("position")
@@ -179,26 +235,35 @@ Namespace Controls
 
         ''' <summary>
         ''' Insert a given text at at the current input position as a link.
-        ''' The link text is followed by a hash (#) and the given hyperlink text, both of
-        ''' them invisible.
-        ''' When clicked on, the whole link text and hyperlink string are given in the
-        ''' LinkClickedEventArgs.
+        ''' The link text is followed by a hash (#) and the given hyperlink
+        ''' text, both of them invisible. When clicked on, the whole link
+        ''' text and hyperlink string are given in the LinkClickedEventArgs.
         ''' </summary>
-        ''' <param name="text">Text to be inserted</param>
-        ''' <param name="hyperlink">Invisible hyperlink string to be inserted</param>
+        ''' <param name="text">
+        ''' Text to be inserted
+        ''' </param>
+        ''' <param name="hyperlink">
+        ''' Invisible hyperlink string to be inserted
+        ''' </param>
         Public Sub InsertLink(ByVal text As String, ByVal hyperlink As String)
             InsertLink(text, hyperlink, Me.SelectionStart)
         End Sub
 
         ''' <summary>
-        ''' Insert a given text at a given position as a link. The link text is followed by
-        ''' a hash (#) and the given hyperlink text, both of them invisible.
-        ''' When clicked on, the whole link text and hyperlink string are given in the
-        ''' LinkClickedEventArgs.
+        ''' Insert a given text at a given position as a link. The link text
+        ''' is followed by a hash (#) and the given hyperlink text, both of
+        ''' them invisible. When clicked on, the whole link text and
+        ''' hyperlink string are given in the LinkClickedEventArgs.
         ''' </summary>
-        ''' <param name="text">Text to be inserted</param>
-        ''' <param name="hyperlink">Invisible hyperlink string to be inserted</param>
-        ''' <param name="position">Insert position</param>
+        ''' <param name="text">
+        ''' Text to be inserted
+        ''' </param>
+        ''' <param name="hyperlink">
+        ''' Invisible hyperlink string to be inserted
+        ''' </param>
+        ''' <param name="position">
+        ''' Insert position
+        ''' </param>
         Public Sub InsertLink(ByVal text As String, ByVal hyperlink As String, ByVal position As Integer)
             If position < 0 OrElse position > Me.Text.Length Then
                 Throw New ArgumentOutOfRangeException("position")
@@ -215,17 +280,36 @@ Namespace Controls
         ''' <summary>
         ''' Set the current selection's link style
         ''' </summary>
-        ''' <param name="link">true: set link style, false: clear link style</param>
+        ''' <param name="link">
+        ''' true: set link style, false: clear link style
+        ''' </param>
         Public Sub SetSelectionLink(ByVal link As Boolean)
+            BeginUpdate()
             SetSelectionStyle(CFM_LINK, If(link, CFE_LINK, 0))
+            EndUpdate()
         End Sub
 
 #End Region
+
+        Public Overloads Property Rtf As String
+            Get
+                BeginUpdate()
+                Return MyBase.Rtf
+                EndUpdate()
+            End Get
+            Set(value As String)
+                BeginUpdate()
+                MyBase.Rtf = value
+                EndUpdate()
+
+            End Set
+        End Property
 
 #Region "Protected Methods"
 
         Protected Overrides Sub OnTextChanged(ByVal e As EventArgs)
             BeginUpdate()
+            MyBase.OnTextChanged(e)
             For Each p As String In _protocols
                 Dim matches As MatchCollection = Regex.Matches(Me.Text, p & "(.*?)\s", RegexOptions.IgnoreCase)
                 For Each m As Match In matches
@@ -256,7 +340,8 @@ Namespace Controls
             cf = CType(Marshal.PtrToStructure(lpar, GetType(CHARFORMAT2_STRUCT)), CHARFORMAT2_STRUCT)
 
             Dim state As Integer
-            ' dwMask holds the information which properties are consistent throughout the selection:
+            ' dwMask holds the information which properties are consistent
+            ' throughout the selection:
             If (cf.dwMask And mask) = mask Then
                 If (cf.dwEffects And effect) = effect Then
                     state = 1
@@ -289,4 +374,5 @@ Namespace Controls
 #End Region
 
     End Class
+
 End Namespace

@@ -36,10 +36,11 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
-<DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
-<DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
-<DocumentationSource sourceFile="..\SilverMonkey\SilverMonkey2.vbproj" />
-<DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" /></DocumentationSources>
+      <DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
+      <DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
+      <DocumentationSource sourceFile="..\SilverMonkey\SilverMonkey2.vbproj" />
+      <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
+    </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>
     <HelpFileVersion>2.19.0.0</HelpFileVersion>
@@ -57,21 +58,56 @@
           <colorizer syntaxFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xml" styleFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xsl" stylesheet="{@SHFBFolder}PresentationStyles\Colorizer\highlight.css" scriptFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.js" disabled="{@DisableCodeBlockComponent}" language="cs" tabSize="0" numberLines="true" outlining="true" keepSeeTags="true" defaultTitle="true" />
         </component>
       </ComponentConfig>
-<ComponentConfig id="IntelliSense Component" enabled="True"><component id="IntelliSense Component"><!-- Output options (optional)
+      <ComponentConfig id="IntelliSense Component" enabled="True">
+        <component id="IntelliSense Component">
+          <!-- Output options (optional)
   Attributes:
     Include namespaces (false by default)
     Namespaces comments filename ("Namespaces" if not specified or empty)
-    Output folder (current folder if not specified or empty) --><output includeNamespaces="true" namespacesFile="Namespaces" folder="{@OutputFolder}" boundedCapacity="100" /></component></ComponentConfig>
-<ComponentConfig id="Syntax Component" enabled="True"><component id="Syntax Component"><syntax input="/document/reference" output="/document/syntax" renderReferenceLinks="false" /><generators>
+    Output folder (current folder if not specified or empty) -->
+          <output includeNamespaces="true" namespacesFile="Namespaces" folder="{@OutputFolder}" boundedCapacity="100" />
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="Syntax Component" enabled="True">
+        <component id="Syntax Component">
+          <syntax input="/document/reference" output="/document/syntax" renderReferenceLinks="false" />
+          <generators>
             {@SyntaxFilters}
-          </generators><containerElement name="codeSnippetGroup" addNoExampleTabs="true" includeOnSingleSnippets="false" groupingEnabled="{@CodeSnippetGrouping}" /><configurations><generator id="C#" /><generator id="Visual Basic"><includeLineContinuation value="false" /></generator><generator id="Visual Basic Usage"><includeLineContinuation value="false" /></generator><generator id="Managed C++" /><generator id="F#" /><generator id="J#" /><generator id="JScript" /><generator id="JavaScript" /><generator id="XAML Usage" /><generator id="ASP.NET" /></configurations></component></ComponentConfig>
-<ComponentConfig id="API Token Resolution" enabled="True"><component id="API Token Resolution">
+          </generators>
+          <containerElement name="codeSnippetGroup" addNoExampleTabs="true" includeOnSingleSnippets="false" groupingEnabled="{@CodeSnippetGrouping}" />
+          <configurations>
+            <generator id="C#" />
+            <generator id="Visual Basic">
+              <includeLineContinuation value="false" />
+            </generator>
+            <generator id="Visual Basic Usage">
+              <includeLineContinuation value="false" />
+            </generator>
+            <generator id="Managed C++" />
+            <generator id="F#" />
+            <generator id="J#" />
+            <generator id="JScript" />
+            <generator id="JavaScript" />
+            <generator id="XAML Usage" />
+            <generator id="ASP.NET" />
+          </configurations>
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="API Token Resolution" enabled="True">
+        <component id="API Token Resolution">
           {@TokenFiles}
-          <replace elements="/*//token" item="string(.)" /></component></ComponentConfig>
-<ComponentConfig id="Comments Index Data (ESENT Cache)" enabled="True"><component id="Comments Index Data (ESENT Cache)"><index name="comments" value="/doc/members/member" key="@name" cache="30" localCacheSize="2500" frameworkCachePath="{@LocalDataFolder}Cache\CommentsIndexCache" projectCachePath="">
+          <replace elements="/*//token" item="string(.)" /></component>
+      </ComponentConfig>
+      <ComponentConfig id="Comments Index Data (ESENT Cache)" enabled="True">
+        <component id="Comments Index Data (ESENT Cache)">
+          <index name="comments" value="/doc/members/member" key="@name" cache="30" localCacheSize="2500" frameworkCachePath="{@LocalDataFolder}Cache\CommentsIndexCache" projectCachePath="">
 	{@FrameworkCommentList}
 	{@CommentFileList}
-</index><copy name="comments" source="*" target="/document/comments" /></component></ComponentConfig></ComponentConfigurations>
+</index>
+          <copy name="comments" source="*" target="/document/comments" />
+        </component>
+      </ComponentConfig>
+    </ComponentConfigurations>
     <FooterText>
     </FooterText>
     <HeaderText>
@@ -234,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Credits.aml" />
+    <None Include="MonkeySpeakHelp.aml" />
     <None Include="HelpLink.ini.aml" />
     <None Include="Guides\AutoSummonBot.aml" />
     <None Include="Guides\DreamMemberList.aml" />

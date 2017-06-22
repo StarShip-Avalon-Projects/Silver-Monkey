@@ -571,7 +571,14 @@ Public Class Main
     ' RTFimg.InsertImage(IMGresize(GetFrame(shape, file), log_)) Return RTFimg.ToString
 
     'End Function
-
+    ''' <summary>
+    ''' Sets the FileName for the LogFile
+    ''' </summary>
+    ''' <param name="bfile">
+    ''' Silver Monkey Bot configuration file
+    ''' </param>
+    ''' <returns>
+    ''' </returns>
     Public Function setLogName(ByRef bfile As BotOptions) As String
         Select Case bfile.LogOption
             Case 0
@@ -903,7 +910,7 @@ Public Class Main
             'e.Handled = True
             'e.SuppressKeyPress = True
         ElseIf (e.KeyCode = Keys.F1) Then
-            If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            If File.Exists(Path.Combine(ApplicationPath, HelpFile)) Then
                 Help.ShowHelp(Me, HelpFile)
             End If
         ElseIf (e.KeyCode = Keys.N AndAlso e.Modifiers = Keys.Control) Then
@@ -911,6 +918,8 @@ Public Class Main
                 ' .bFile =
                 If BSetUp.ShowDialog() = Windows.Forms.DialogResult.OK Then
                     BotConfig = BSetUp.bFile
+                    SilverMonkeyBotPath = BotConfig.BotPath
+                    SilverMonkeyLogPath = BotConfig.LogPath
                 End If
             End Using
 
@@ -934,11 +943,6 @@ Public Class Main
 
         Mainsettings = New cMain()
 
-        TextDisplayer = New TextDisplayManager(Mainsettings, Log_)
-
-        writer = New TextBoxWriter(Log_)
-        Console.SetOut(writer)
-
         ' Plugins =
         ' PluginServices.FindPlugins(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
         ' "Plugins"), "SilverMonkey.Interfaces.msPlugin")
@@ -947,6 +951,10 @@ Public Class Main
 
         MS_KeysIni.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Keys-MS.ini"))
         InitializeTextControls()
+        TextDisplayer = New TextDisplayManager(Mainsettings, Log_)
+
+        writer = New TextBoxWriter(Log_)
+        Console.SetOut(writer)
 
         Dim HelpItems = New MonkeyCore.Controls.HelpLinkToolStripMenu
         ReferenceLinksToolStripMenuItem.DropDown.Items.AddRange(HelpItems.MenuItems.ToArray)
@@ -999,23 +1007,6 @@ Public Class Main
     Private Sub MenuCut_Click(sender As System.Object, e As System.EventArgs) Handles MenuCut.Click
         toServer.Cut()
     End Sub
-
-    'Private Function MessagePump(ByRef Server_Instruction As String) As Boolean
-    '    Dim objPlugin As SilverMonkey.Interfaces.msPlugin
-    '    Dim intIndex As Integer
-    '    Dim Handled As Boolean = False
-    '    If Not Plugins Is Nothing Then
-    '        For intIndex = 0 To Plugins.Length - 1
-    '            objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
-    '            If Mainsettings.PluginList.Item(objPlugin.Name.Replace(" ", "")) Then
-    '                objPlugin.Initialize(objHost)
-    '                objPlugin.Page = MainEngine.MSpage
-    '                If objPlugin.MessagePump(Server_Instruction) Then Handled = True
-    '            End If
-    '        Next
-    '    End If
-    '    Return Handled
-    'End Function
 
     Private Sub MSEditorToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles MSEditorToolStripMenuItem.Click, EditorTrayIconMenuItem.Click
         LaunchEditor()

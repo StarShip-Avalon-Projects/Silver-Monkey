@@ -882,7 +882,7 @@ Public Class BotSession : Inherits ProxySession
         If disposed Then Return
 
         If disposing Then
-            MyBase.Dispose()
+            ' MyBase.Dispose()
             MainEngine.Dispose()
 
         End If
