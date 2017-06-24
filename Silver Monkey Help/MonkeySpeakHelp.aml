@@ -35,6 +35,26 @@
       </glossaryDiv>
             <glossaryDiv address="MonkeuSpeakConditions">
         <title>Monkey Speak Conditions</title>
+        
+                <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+            <term termId="508">508</term>
+			<term>
+			(1:508) and the Database info {...} about the furre named {...} is equal to #, 
+			</term>
+          </terms>
+          <definition>
+          <para>Library Class: <codeEntityReference qualifyHint="false">T:SilverMonkeyEngine.Engine.Libraries.MsSqlite</codeEntityReference></para>
+           <para>MonkeySpeak Line Information: <codeEntityReference qualifyHint="false" autoUpgrade="true">M:SilverMonkeyEngine.Engine.Libraries.MsSqlite.FurreNamedinfoEqualToNumber(Monkeyspeak.TriggerReader)</codeEntityReference></para> 
+          </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
         <glossaryEntry>
           <terms>
             <!-- One or more terms associated with the definition.  Add a termId

@@ -142,37 +142,26 @@ Public Class Main
 
 #Region "Public Methods"
 
-    Public Sub BotConnecting()
-        If Me.BTN_Go.InvokeRequired Then
-            Dim d As New UpDateBtn_GoCallback2(AddressOf BotConnecting)
-            Me.Invoke(d)
-        Else
-            BTN_Go.Text = "Connected."
-            ConnectTrayIconMenuItem.Enabled = False
-            DisconnectTrayIconMenuItem.Enabled = True
-            SetBalloonText("Connected to Furcadia.")
+    'Public Sub BotConnecting()
+    '    If Me.BTN_Go.InvokeRequired Then
+    '        Dim d As New UpDateBtn_GoCallback2(AddressOf BotConnecting)
+    '        Me.Invoke(d)
+    '    Else
+    '        BTN_Go.Text = "Connected."
+    '        ConnectTrayIconMenuItem.Enabled = False
+    '        DisconnectTrayIconMenuItem.Enabled = True
+    '        SetBalloonText("Connected to Furcadia.")
 
-            ''(0:1) When the bot logs into furcadia,
-            'MainMSEngine.PageExecute(1)
-        End If
-    End Sub
+    '        ''(0:1) When the bot logs into furcadia,
+    '        'MainMSEngine.PageExecute(1)
+    '    End If
+    'End Sub
 
     Public Sub ConnectBot()
-        If Me.BTN_Go.InvokeRequired Then
-            Dim d As New UpDateBtn_GoCallback2(AddressOf ConnectBot)
-            Me.Invoke(d)
-        Else
-
-            If FurcadiaSession Is Nothing Then
-                FurcadiaSession = New BotSession(BotConfig)
-            End If
-
+        If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
             FurcadiaSession.Connect()
-            'TooStripServerStatus.Image = My.re
-            'TS_Status_Client.Image = My.Resources.images5
-            BTN_Go.Text = "Connecting..."
+
             sndDisplay("Connecting...")
-            'TS_Status_Server.Image = My.Resources.images2
             ConnectTrayIconMenuItem.Enabled = False
             DisconnectTrayIconMenuItem.Enabled = True
             NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Connecting to Furcadia.", ToolTipIcon.Info)
@@ -202,14 +191,10 @@ Public Class Main
             Me.Invoke(d)
         Else
             FurcadiaSession.Disconnect()
-            BTN_Go.Text = "Go!"
-            'TooStripServerStatus.Image = My.Resources.images2
-            'TS_Status_Client.Image = My.Resources.images2
             ConnectTrayIconMenuItem.Enabled = False
             DisconnectTrayIconMenuItem.Enabled = True
             NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Now disconnected from Furcadia.", ToolTipIcon.Info)
 
-            DreamList.Items.Clear()
             TextBox_NoFlicker1.Text = ""
 
             ' (0:2) When the bot logs off PageExecute(2)
@@ -309,7 +294,7 @@ Public Class Main
             Dim d As New UpDateBtn_GoCallback(AddressOf MainText)
             Me.Invoke(d, str)
         Else
-            Me.Text = "Silver Monkey: " & str.ToString '& " " & Application.ProductVersion
+            Me.Text = Application.ProductName
             Me.NotifyIcon1.Text = "Silver Monkey: " & str.ToString
         End If
 
@@ -323,8 +308,19 @@ Public Class Main
         End If
     End Sub
 
+    Public Sub UpDatButtonGoText(ByRef str As String)
+        If Me.InvokeRequired Then
+
+            Dim d As New UpDateBtn_GoCallback(AddressOf UpDatButtonGoText)
+            Me.Invoke(d, str)
+        Else
+            BTN_Go.Text = str
+        End If
+
+    End Sub
+
     ''' <summary>
-    ''' Deal with Server Statuses and update our UI indicators
+    ''' Deal with Client Statuses and update our UI indicators
     ''' </summary>
     ''' <param name="Sender">
     ''' </param>
@@ -349,7 +345,7 @@ Public Class Main
                 ToolStripClientStatus.Image = My.Resources.ConnectedImg
 
             Case ConnectionPhase.Init
-                ToolStripClientStatus.Image = My.Resources.ConnectingImg
+                ToolStripClientStatus.Image = My.Resources.DisconnectedImg
 
             Case ConnectionPhase.MOTD
             Case Else
@@ -363,13 +359,14 @@ Public Class Main
 
             Case ConnectionPhase.Connected
                 ToolStripServerStatus.Image = My.Resources.ConnectedImg
+                UpDatButtonGoText("Connected.")
 
             Case ConnectionPhase.Connecting
                 ToolStripServerStatus.Image = My.Resources.ConnectedImg
-
+                UpDatButtonGoText("Connecting...")
             Case ConnectionPhase.Disconnected
                 ToolStripServerStatus.Image = My.Resources.DisconnectedImg
-
+                UpDatButtonGoText("Disconnected.")
             Case ConnectionPhase.Auth
                 ToolStripServerStatus.Image = My.Resources.ConnectingImg
 
@@ -377,8 +374,8 @@ Public Class Main
                 ToolStripServerStatus.Image = My.Resources.ConnectedImg
 
             Case ConnectionPhase.Init
-                ToolStripServerStatus.Image = My.Resources.ConnectingImg
-
+                ToolStripServerStatus.Image = My.Resources.DisconnectedImg
+                UpDatButtonGoText("Go!!!")
             Case ConnectionPhase.MOTD
             Case Else
         End Select
@@ -628,12 +625,13 @@ Public Class Main
         End If
     End Sub
 
-    'Private Sub ProxyError(eX As Exception, o As Object, n As String) Handles FurcadiaSession.OnError
-    '    sndDisplay(o.ToString + "- " + n + ": " + eX.Message)
-    '    'sndDisplay(eX.Message)
-    '    'Dim logError As New ErrorLogging(eX, Me)
+    Private Sub ProxyError(o As Object, n As EventArgs) Handles FurcadiaSession.DisplayError
+        sndDisplay("Furcadia Session error:" + o.ToString, TextDisplayManager.fColorEnum.Error)
 
-    'End Sub
+        'sndDisplay(eX.Message)
+        'Dim logError As New ErrorLogging(eX, Me)
+
+    End Sub
 
 #End Region
 
@@ -712,8 +710,10 @@ Public Class Main
             MessageBox.Show(BotConfig.CharacterIniFile + " Not found, Aborting connection!", "Important Message")
             Exit Sub
         End If
-
-        If BTN_Go.Text = "Go!" Then
+        If FurcadiaSession Is Nothing Then
+            FurcadiaSession = New BotSession(BotConfig)
+        End If
+        If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
 
             If BotConfig.log Then
                 LogStream = New LogStream(setLogName(BotConfig), SilverMonkeyLogPath)
@@ -727,12 +727,12 @@ Public Class Main
                 ConnectBot()
             Catch Ex As NetProxyException
 
-                FurcadiaSession.Disconnect()
+                DisconnectBot()
                 sndDisplay("Connection Aborting: " + Ex.Message)
             End Try
         Else
 
-            FurcadiaSession.Disconnect()
+            DisconnectBot()
 
         End If
     End Sub

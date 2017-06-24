@@ -46,10 +46,13 @@ Public Class BotSession : Inherits ProxySession
 
 #Region "Public Methods"
 
-    Public Shared Sub MS_Error(trigger As Trigger, ex As Exception) Handles MSpage.Error
-
-        Console.WriteLine("Error, See Debug Window")
+    Public Sub MS_Error(trigger As Trigger, ex As Exception) Handles MSpage.Error
         Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
+        RaiseEvent DisplayError("Error, See Debug Window", EventArgs.Empty)
+    End Sub
+
+    Public Sub onProxyError(sender As Object, e As EventArgs) Handles MyBase.OnError
+        RaiseEvent DisplayError(sender, e)
     End Sub
 
 #End Region
@@ -100,6 +103,8 @@ Public Class BotSession : Inherits ProxySession
 #End Region
 
 #Region "Public Events"
+
+    Public Event DisplayError(ByVal DisplayText As Object, ByVal e As EventArgs)
 
     Public Event DisplayText(ByVal DisplayText As String, ByVal e As EventArgs)
 

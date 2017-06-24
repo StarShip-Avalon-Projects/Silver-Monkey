@@ -7,11 +7,16 @@ Imports SilverMonkeyEngine.SmConstants
 
 Namespace Engine.Libraries
 
-    Public Class MSPK_MDB
+    ''' <summary>
+    ''' Provides <see cref="System.Data.SQLite"/> access to Silver Monkey
+    ''' </summary>
+    Public Class MsSqlite
         Inherits MonkeySpeakLibrary
 
 #Region "Public Fields"
 
+        ''' <summary>
+        ''' </summary>
         Public Shared SQLreader As SQLiteDataReader = Nothing
 
 #End Region
@@ -27,6 +32,12 @@ Namespace Engine.Libraries
 
 #Region "Public Constructors"
 
+        ''' <summary>
+        ''' Default constructor initilizing the Monkey Speak lines with
+        ''' reference to BotSession
+        ''' </summary>
+        ''' <param name="Session">
+        ''' </param>
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
             '(1:500) and the Database info {...} about the triggering furre is equal to #,
@@ -169,6 +180,12 @@ Namespace Engine.Libraries
 
 #Region "Public Properties"
 
+        ''' <summary>
+        ''' Currenly used database filfe
+        ''' </summary>
+        ''' <returns>
+        ''' SQLite database file with Silver Monkey system tables and user data
+        ''' </returns>
         Public Shared Property SQLitefile As String
             Get
                 If String.IsNullOrEmpty(_SQLitefile) Then
@@ -185,7 +202,17 @@ Namespace Engine.Libraries
 
 #Region "Condition Functions"
 
-        '(1: ) and the Database info {...} about the furre named {...} is equal to #,
+        '
+        ''' <summary>
+        ''' (1:508) and the Database info {...} about the furre named {...}
+        ''' is equal to #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' True if there is no error
+        ''' </returns>
         Public Function FurreNamedinfoEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim Variable As Double = 0
@@ -805,7 +832,7 @@ Namespace Engine.Libraries
             Dim num As Double = 0
 
             Try
-                Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
+                Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
                 Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
                 Total = reader.ReadVariable(True)
                 Dim count As String = SQLiteDatabase.ExecuteScalar("select count(*) from [" & Table & "]")
@@ -889,7 +916,7 @@ Namespace Engine.Libraries
         '(5:411) select Database info {...} about the triggering furre, and put it in variable %Variable.
         Public Function ReadDatabaseInfo(reader As TriggerReader) As Boolean
             Try
-                Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
+                Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
                 Dim Info As String = reader.ReadString
                 Dim Variable As Variable = reader.ReadVariable(True)
                 Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
@@ -906,7 +933,7 @@ Namespace Engine.Libraries
         '(5:412) select Database info {...} about the furre named {...}, and put it in variable %Variable.
         Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
             Try
-                Dim db As New SQLiteDatabase(MSPK_MDB.SQLitefile)
+                Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
                 Dim Info As String = reader.ReadString
                 Dim Furre As String = FurcadiaShortName(reader.ReadString)
                 Dim Variable As Variable = reader.ReadVariable(True)

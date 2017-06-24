@@ -1,7 +1,7 @@
 ﻿Imports System.Diagnostics
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports System.Text.RegularExpressions
-Imports System.Windows.Forms
 Imports Furcadia.Text.FurcadiaMarkup
 Imports MonkeyCore
 Imports MonkeyCore.Controls
@@ -81,6 +81,8 @@ Public Class TextDisplayManager
 
 #End Region
 
+    Private data As New System.Text.StringBuilder()
+
 #Region "Public Methods"
 
     Public Sub AddDataToList(TextObject As TextDisplayObject)
@@ -92,72 +94,47 @@ Public Class TextDisplayManager
 
             If lb.GetType().ToString.Contains("Controls.RichTextBoxEx") Then
                 'Pos_Old = GetScrollPos(lb.Handle, SBS_VERT)
-                Dim build As New System.Text.StringBuilder(TextObject.DisplayText)
-                build = build.Replace("</b>", "\b0 ")
-                build = build.Replace("<b>", "\b ")
-                build = build.Replace("</i>", "\i0 ")
-                build = build.Replace("<i>", "\i ")
-                build = build.Replace("</ul>", "\ul0 ")
-                build = build.Replace("<ul>", "\ul ")
-
-                build = build.Replace("&lt;", "<")
-                build = build.Replace("&gt;", ">")
-
-                Dim Names As MatchCollection = Regex.Matches(TextObject.DisplayText, NameFilter)
-                For Each Name As System.Text.RegularExpressions.Match In Names
-                    build = build.Replace(Name.Value, Name.Groups(3).Value)
-                Next
-                '<name shortname='acuara' forced>
-                Dim MyIcon As MatchCollection = Regex.Matches(TextObject.DisplayText, Iconfilter)
-                For Each Icon As System.Text.RegularExpressions.Match In MyIcon
-                    Select Case Icon.Groups(1).Value
-                        Case "91"
-                            build = build.Replace(Icon.Value, "[#]")
-                        Case Else
-                            build = build.Replace(Icon.Value, "[" + Icon.Groups(1).Value + "]")
-                    End Select
-
-                Next
 
                 'Dim myColor As System.Drawing.Color = fColor(newColor)
                 RtfReadonly = lb.ReadOnly
                 lb.ReadOnly = False
                 ' lb.BeginUpdate()
 
-                lb.SelectionStart = lb.TextLength
-                lb.SelectedRtf = FormatText(build.ToString, TextObject.TextColor)
+                ' lb.SelectionStart = lb.TextLength
+                lb.BeginUpdate()
+                lb.SelectedRtf = FormatText(TextObject.data, TextObject.TextColor)
 
-                'since we Put the Data in the RTB now we Finish Setting the Links
-                Dim param() As String = {"<a.*?href=['""](.*?)['""].*?>(.*?)</a>", "<a.*?href=(.*?)>(.*?)</a>"}
-                For i As Integer = 0 To param.Length - 1
-                    Dim links As MatchCollection = Regex.Matches(lb.Text, param(i), RegexOptions.IgnoreCase)
-                    ' links = links & Regex.Matches(lb.Text,
-                    ' "<a.*?href='(.*?)'.*?>(.*?)</a>", RegexOptions.IgnoreCase)
-                    For Each mmatch As System.Text.RegularExpressions.Match In links
-                        Dim matchUrl As String = mmatch.Groups(1).Value
-                        Dim matchText As String = mmatch.Groups(2).Value
-                        If mmatch.Success Then
-                            With lb
-                                .BeginUpdate()
-                                .Find(mmatch.Value)
-                                'WAIT Snag Image Links first!
-                                'Dim snag As Match = Regex.Match(matchText, "IMG:(.*?)::")
-                                'If snag.Success Then
-                                '    Dim RTFimg As New RTFBuilder
-                                '    RTFimg.InsertImage(LoadImageFromUrl(snag.Groups(1).ToString))
-                                '    .SelectedRtf = RTFimg.ToString
-                                'Else
-                                .SelectedRtf = FormatURL(matchText & "\v #" & matchUrl & "\v0 ")
-                                .Find(matchText & "#" & matchUrl, RichTextBoxFinds.WholeWord)
-                                .SetSelectionLink(True)
-                                .EndUpdate()
-                                'End If
-                                'Put the Link in
+                ''since we Put the Data in the RTB now we Finish Setting the Links
+                'Dim param() As String = {"<a.*?href=['""](.*?)['""].*?>(.*?)</a>", "<a.*?href=(.*?)>(.*?)</a>"}
+                'For i As Integer = 0 To param.Length - 1
+                '    Dim links As MatchCollection = Regex.Matches(lb.Text, param(i), RegexOptions.IgnoreCase)
+                '    ' links = links & Regex.Matches(lb.Text,
+                '    ' "<a.*?href='(.*?)'.*?>(.*?)</a>", RegexOptions.IgnoreCase)
+                '    For Each mmatch As System.Text.RegularExpressions.Match In links
+                '        Dim matchUrl As String = mmatch.Groups(1).Value
+                '        Dim matchText As String = mmatch.Groups(2).Value
+                '        If mmatch.Success Then
+                '            With lb
+                '                .Text.Replace(mmatch.Value, "")
+                '                .SelectionStart = mmatch.Index
+                '                .InsertLink(matchText, matchUrl, mmatch.Index)
+                '                'WAIT Snag Image Links first! 'Dim     snag As Match = Regex.Match(matchText, "IMG:(.*?)::") '
+                '                'If snag.Success Then '
+                '                '    Dim RTFimg As New RTFBuilder '
+                '                'RTFimg.InsertImage(LoadImageFromUrl(snag.Groups(1).ToString))
+                '                ' .SelectedRtf = RTFimg.ToString 'Else
+                '                '.SelectedRtf = FormatURL(matchText & "\v #" & matchUrl & "\v0 ")
+                '                ' .SelectedText = mmatch.Value
 
-                            End With
-                        End If
-                    Next
-                Next
+                ' ' .Find(matchText & "#" & matchUrl, '
+                ' RichTextBoxFinds.WholeWord) .SetSelectionLink(True)
+
+                ' 'End If 'Put the Link in
+
+                '            End With
+                '        End If
+                '    Next
+                'Next
 
                 Try
                     Dim SelStart As Integer = 0
@@ -165,7 +142,7 @@ Public Class TextDisplayManager
                         'Array.Copy(lb.Lines, 1, lb.Lines, 0, lb.Lines.Length - 1)
                         SelStart = lb.SelectionStart
                         lb.SelectionStart = 0
-                        lb.SelectionLength = lb.Text.IndexOf(vbLf, 0) + 1
+                        lb.SelectionLength = lb.Text.IndexOf(Environment.NewLine, 0) + 1
                         lb.SelectedText = ""
                         lb.SelectionStart = SelStart
                     End While
@@ -175,7 +152,7 @@ Public Class TextDisplayManager
                 End Try
                 ' lb.EndUpdate()
                 lb.ReadOnly = RtfReadonly
-
+                lb.EndUpdate()
             End If
 
         End If
@@ -221,8 +198,32 @@ Public Class TextDisplayManager
     ''' <returns>
     ''' </returns>
     Public Function FormatText(ByVal data As String, ByVal newColor As fColorEnum) As String
-        data = System.Web.HttpUtility.HtmlDecode(data)
-        data = data.Replace("|", " ")
+
+        Dim RftData As New StringBuilder(System.Web.HttpUtility.HtmlDecode(data))
+        Dim Names As MatchCollection = Regex.Matches(data, NameFilter)
+        For Each Name As System.Text.RegularExpressions.Match In Names
+            RftData.Replace(Name.Value, Name.Groups(3).Value)
+        Next
+        '<name shortname='acuara' forced>
+        Dim MyIcon As MatchCollection = Regex.Matches(data, Iconfilter)
+        For Each Icon As System.Text.RegularExpressions.Match In MyIcon
+            Select Case Icon.Groups(1).Value
+                Case "91"
+                    RftData.Replace(Icon.Value, "[#]")
+                Case Else
+                    RftData.Replace(Icon.Value, "[" + Icon.Groups(1).Value + "]")
+            End Select
+
+        Next
+
+        RftData.Replace("|", " ")
+
+        RftData.Replace("</b>", "\b0 ")
+        RftData.Replace("<b>", "\b ")
+        RftData.Replace("</i>", "\i0 ")
+        RftData.Replace("<i>", "\i ")
+        RftData.Replace("</ul>", "\ul0 ")
+        RftData.Replace("<ul>", "\ul ")
 
         Dim myColor As System.Drawing.Color = fColor(newColor)
         Dim ColorString As String = "{\colortbl ;"
@@ -230,7 +231,7 @@ Public Class TextDisplayManager
         Dim FontSize As Single = Mainsettings.ApFont.Size
         Dim FontFace As String = Mainsettings.ApFont.Name
         FontSize *= 2
-        Return "{\rtf1\ansi\ansicpg1252\deff0\deflang1033" & ColorString & "{\fonttbl{\f0\fcharset0 " & FontFace & ";}}\viewkind4\uc1\fs" & FontSize.ToString & "\cf1 " & data & " \par}"
+        Return "{\rtf1\ansi\ansicpg1252\deff0\deflang1033" & ColorString & "{\fonttbl{\f0\fcharset0 " & FontFace & ";}}\viewkind4\uc1\fs" & FontSize.ToString & "\cf1 " & RftData.ToString & " \par}"
     End Function
 
     Public Function FormatURL(ByVal data As String) As String
@@ -251,7 +252,7 @@ Public Class TextDisplayManager
 
 #Region "Private Fields"
 
-        Private _DisplayText As String
+        Private _data As String
         Private _TextColor As fColorEnum
 
 #End Region
@@ -259,19 +260,19 @@ Public Class TextDisplayManager
 #Region "Public Constructors"
 
         Sub New(ByRef TextToDisplay As String, ByRef NewColor As fColorEnum)
-            _DisplayText = TextToDisplay
+            _data = TextToDisplay
         End Sub
 
 #End Region
 
 #Region "Public Properties"
 
-        Public Property DisplayText() As String
+        Public Property data() As String
             Get
-                Return _DisplayText
+                Return _data
             End Get
             Set(ByVal value As String)
-                _DisplayText = value
+                _data = value
             End Set
         End Property
 

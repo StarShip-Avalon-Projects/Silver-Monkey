@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.Runtime.InteropServices
-Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
 Imports MonkeyCore.Controls.Win32
@@ -96,14 +95,14 @@ Namespace Controls
         ''' </returns>
         Public Overloads Property SelectedRtf As String
             Get
-                BeginUpdate()
+                ' BeginUpdate()
                 Return MyBase.SelectedRtf
-                EndUpdate()
+                ' EndUpdate()
             End Get
             Set(value As String)
-                BeginUpdate()
+                ' BeginUpdate()
                 MyBase.SelectedRtf = value
-                EndUpdate()
+                ' EndUpdate()
             End Set
         End Property
 
@@ -184,9 +183,9 @@ Namespace Controls
         End Sub
 
         Public Overloads Function Find(Text As String) As Object
-            BeginUpdate()
+            ' BeginUpdate()
             Dim o = MyBase.Find(Text)
-            EndUpdate()
+            ' EndUpdate()
             Return o
 
         End Function
@@ -268,13 +267,13 @@ Namespace Controls
             If position < 0 OrElse position > Me.Text.Length Then
                 Throw New ArgumentOutOfRangeException("position")
             End If
-            BeginUpdate()
+            ' BeginUpdate()
             Me.SelectionStart = position
             Me.SelectedRtf = "{\rtf1\ansi\ansicpg1252\deff0\deflang1033 " & text & "\v #" & hyperlink & "\v0}"
             Me.[Select](position, text.Length + 1 + hyperlink.Length)
             Me.SetSelectionLink(True)
             Me.[Select](position + text.Length + 1 + hyperlink.Length, 0)
-            EndUpdate()
+            ' EndUpdate()
         End Sub
 
         ''' <summary>
@@ -284,43 +283,47 @@ Namespace Controls
         ''' true: set link style, false: clear link style
         ''' </param>
         Public Sub SetSelectionLink(ByVal link As Boolean)
-            BeginUpdate()
+            ' BeginUpdate()
             SetSelectionStyle(CFM_LINK, If(link, CFE_LINK, 0))
-            EndUpdate()
+            ' EndUpdate()
         End Sub
 
 #End Region
 
         Public Overloads Property Rtf As String
             Get
-                BeginUpdate()
+                ' BeginUpdate()
                 Return MyBase.Rtf
-                EndUpdate()
+                ' EndUpdate()
             End Get
             Set(value As String)
-                BeginUpdate()
+                ' BeginUpdate()
                 MyBase.Rtf = value
-                EndUpdate()
+                ' EndUpdate()
 
             End Set
         End Property
 
 #Region "Protected Methods"
 
-        Protected Overrides Sub OnTextChanged(ByVal e As EventArgs)
-            BeginUpdate()
-            MyBase.OnTextChanged(e)
-            For Each p As String In _protocols
-                Dim matches As MatchCollection = Regex.Matches(Me.Text, p & "(.*?)\s", RegexOptions.IgnoreCase)
-                For Each m As Match In matches
-                    If m.Success Then
-                        Me.Select(m.Index, m.Length - 1)
-                        Me.SetSelectionStyle(CFM_LINK, CFE_LINK)
-                    End If
-                Next
-            Next
-            EndUpdate()
+        Sub onSelectedTextChanged()
+
         End Sub
+
+        'Protected Overrides Sub OnTextChanged(ByVal e As EventArgs)
+        '    ' /BeginUpdate()
+
+        ' MyBase.OnTextChanged(e) For Each p As String In _protocols
+
+        ' Dim matches As MatchCollection = Regex.Matches(Me.Text,
+        ' String.Format("<a.*?href=['""]({0}.*?)['""].*?>(.*?)</a>", p),
+        ' RegexOptions.IgnoreCase) For Each m As Match In matches If
+        ' m.Success Then Me.Select(m.Index, m.Length - 1)
+        ' Me.SetSelectionStyle(CFM_LINK, CFE_LINK) End If Next
+
+        '    Next
+        '    ' / EndUpdate()
+        'End Sub
 
 #End Region
 

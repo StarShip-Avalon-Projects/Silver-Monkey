@@ -77,7 +77,7 @@ Namespace Engine
             LibList.Add(New Banish(MSEngine.FurcadiaSession))
             LibList.Add(New MathLibrary(MSEngine.FurcadiaSession))
             LibList.Add(New MS_Time(MSEngine.FurcadiaSession))
-            LibList.Add(New MSPK_MDB(MSEngine.FurcadiaSession))
+            LibList.Add(New MsSqlite(MSEngine.FurcadiaSession))
             ' LibList.Add(New MSPK_Web(MSEngine.FurcadiaSession))
             LibList.Add(New MS_Cookie(MSEngine.FurcadiaSession))
             LibList.Add(New MsPhoenixSpeak(MSEngine.FurcadiaSession))
@@ -173,8 +173,7 @@ Namespace Engine
             For Each Library As Monkeyspeak.Libraries.AbstractBaseLibrary In LibList
                 Try
                     MsPage.LoadLibrary(Library)
-                    ' Console.WriteLine(String.Format("Loaded Monkey Speak
-                    ' Library: {0}", Library.GetType().Name))
+                    Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
                 Catch ex As Exception
 
                     Dim e As New ErrorLogging(ex, Library)

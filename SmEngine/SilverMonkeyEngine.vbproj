@@ -110,7 +110,7 @@
     <Compile Include="Libraries\MS Repq.vb" />
     <Compile Include="Libraries\MS Time.vb" />
     <Compile Include="Libraries\MS Verbot.vb" />
-    <Compile Include="Libraries\MSPK_MDB.vb" />
+    <Compile Include="Libraries\MsSQLite.vb" />
     <Compile Include="Libraries\MS_Cookie.vb" />
     <Compile Include="Libraries\MS_DreamTransfer.vb" />
     <Compile Include="Libraries\MS_Engine.vb" />
