@@ -1,12 +1,41 @@
 ﻿Imports System.Windows.Forms
 Imports MonkeyCore
-Imports MonkeyCore.Settings
+Imports SilverMonkeyEngine
 
 Public Class BotSetup
 
+#Region "Public Constructors"
+
+    Public Sub New(ByRef BotConfig As BotOptions, TabIndex As Integer)
+        MyClass.New(BotConfig)
+        _TabIndex = TabIndex
+        ' This call is required by the designer.
+        ' InitializeComponent()
+        'ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
+        ' Add any initialization after the InitializeComponent() call.
+
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
+
+    Public Sub New(ByRef BotConfig As BotOptions)
+        bFile = BotConfig
+        _TabIndex = 0
+        InitializeComponent()
+        ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
+    End Sub
+
+#End Region
+
+#Region "Private Fields"
+
+    Private _TabIndex As Integer
+
+#End Region
+
 #Region "Public Fields"
 
-    Public bFile As New cBot
+    Public bFile As New BotOptions
 
 #End Region
 
@@ -49,18 +78,15 @@ Public Class BotSetup
 #Region "Private Methods"
 
     Private Sub BotSetup_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        If String.IsNullOrEmpty(bFile.BiniFile) Then
-            Main.NewBot = True
-        End If
 
-        TxtHPort.Text = bFile.lPort.ToString
-        TxtBx_CharIni.Text = bFile.IniFile
-        TxtBxMS_File.Text = bFile.MS_File
+        TxtHPort.Text = bFile.LocalhostPort.ToString
+        TxtBx_CharIni.Text = bFile.CharacterIniFile
+        TxtBxMS_File.Text = bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile
 
-        TxtBxBotIni.Text = Path.GetFileName(bFile.BiniFile)
-        MSEnableChkBx.Checked = bFile.MS_Engine_Enable
+        TxtBxBotIni.Text = Path.GetFileName(bFile.Name)
+        MSEnableChkBx.Checked = bFile.MonkeySpeakEngineOptions.EngineEnable
         TxtBxBotConroller.Text = bFile.BotController
-        StandAloneChkBx.Checked = bFile.StandAlone
+        StandAloneChkBx.Checked = bFile.Standalone
         ChkBxAutoConnect.Checked = bFile.AutoConnect
 
         TxtBxDreamURL.Text = bFile.DreamURL
@@ -78,6 +104,8 @@ Public Class BotSetup
         setLogOptions()
         TxtBxLogName.Text = bFile.LogNameBase
         TxtBxLogPath.Text = bFile.LogPath
+        ' Set the open tab
+        TabControl1.SelectedIndex = _TabIndex
     End Sub
 
     Private Sub BTN_Browse_Click(sender As System.Object, e As System.EventArgs) Handles BTN_Browse.Click
@@ -105,8 +133,7 @@ Public Class BotSetup
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
         With IniBrowse
             ' Select Character ini file
-            .InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-         "/Silver Monkey/Logs")
+            .InitialDirectory = Paths.SilverMonkeyLogPath
             .RestoreDirectory = True
             If .ShowDialog = DialogResult.OK Then
                 Dim filenameOnly As String = Path.GetFileNameWithoutExtension(.FileName)
@@ -126,18 +153,18 @@ Public Class BotSetup
             TxtBxBotIni.Text = "New Bot.bini"
         End If
 
-        bFile.BiniFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtBxBotIni.Text)
-        bFile.lPort = Convert.ToInt32(TxtHPort.Text)
+        bFile = New BotOptions(Path.Combine(Paths.SilverMonkeyBotPath, TxtBxBotIni.Text))
+        Integer.TryParse(TxtHPort.Text, bFile.LocalhostPort)
         Try
-            bFile.IniFile = TxtBx_CharIni.Text
+            bFile.CharacterIniFile = TxtBx_CharIni.Text
         Catch ex As ArgumentException
             MessageBox.Show(ex.Message, "+++ERROR+++", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
-        bFile.MS_File = TxtBxMS_File.Text
-        bFile.MS_Engine_Enable = CBool(MSEnableChkBx.CheckState)
+        bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = TxtBxMS_File.Text
+        bFile.MonkeySpeakEngineOptions.MS_Engine_Enable = CBool(MSEnableChkBx.CheckState)
         bFile.BotController = TxtBxBotConroller.Text
-        bFile.StandAlone = Convert.ToBoolean(StandAloneChkBx.Checked)
+        bFile.Standalone = Convert.ToBoolean(StandAloneChkBx.Checked)
         bFile.AutoConnect = ChkBxAutoConnect.Checked
 
         bFile.DreamURL = TxtBxDreamURL.Text
@@ -157,10 +184,14 @@ Public Class BotSetup
         bFile.log = ChckSaveToLog.Checked
 
         bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.IniFile)
+        Main.SaveRecentFile(bFile.DestinationFile)
         Me.DialogResult = DialogResult.OK
         Me.Close()
 
+    End Sub
+
+    Private Sub onFurEdClick(sender As Object, e As EventArgs) Handles LinkLabel1.Click
+        Diagnostics.Process.Start("http://www.furcadia.com/services/retrieve/retrieve.php4")
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles RadioButton4.CheckedChanged

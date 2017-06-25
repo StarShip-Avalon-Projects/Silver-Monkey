@@ -58,6 +58,7 @@ Public Class Paths
 
     'Settings folder in local AppData
     Private Const SettingsPath As String = "TSProjects/Silver Monkey"
+
     Private Shared _ApplicationPath As String = Nothing
     Private Shared _ApplicationPluginPath As String = Nothing
     Private Shared _ApplicationSettingsPath As String = Nothing
@@ -69,6 +70,7 @@ Public Class Paths
     Private Shared _MonKeySpeakEditorScriptsPath As String = Nothing
     Private Shared _MonKeySpeakEditorTemplatesPath As String = Nothing
     Private Shared _Paths As New Furcadia.IO.Paths()
+
     'Bot folder
     'check current Folder Presumeably Current folder or settings last bot folder
     ' settings last bot folder Save path for all programs last save?
@@ -85,7 +87,7 @@ Public Class Paths
 #Region "Public Properties"
 
     ''' <summary>
-    ''' Silver Monkey Program Files  Folder
+    ''' Silver Monkey Program Files Folder
     ''' </summary>
     ''' <value>
     ''' The application path.
@@ -93,7 +95,7 @@ Public Class Paths
     Public Shared ReadOnly Property ApplicationPath() As String
         Get
             If String.IsNullOrEmpty(_ApplicationPath) Then
-                _ApplicationPath = My.Application.Info.DirectoryPath
+                _ApplicationPath = Application.StartupPath
             End If
             Return _ApplicationPath
         End Get
@@ -139,14 +141,16 @@ Public Class Paths
     ''' <value>
     ''' The Furcadia characters folder.
     ''' </value>
-    ''' <exception cref="System.IO.DirectoryNotFoundException">This needs to be a valid folder</exception>
+    ''' <exception cref="System.IO.DirectoryNotFoundException">
+    ''' This needs to be a valid folder
+    ''' </exception>
     Public Shared Property FurcadiaCharactersFolder() As String
         Get
             If String.IsNullOrEmpty(_FurcadiaCharactersFolder) Then
                 If _Paths Is Nothing Then
                     _Paths = New Furcadia.IO.Paths(_FurcadiaProgramFolder)
                 End If
-                _FurcadiaCharactersFolder = _Paths.GetFurcadiaCharactersPath
+                _FurcadiaCharactersFolder = _Paths.CharacterPath
             End If
             Return _FurcadiaCharactersFolder
         End Get
@@ -164,7 +168,9 @@ Public Class Paths
     ''' <value>
     ''' The Furcadia documents folder.
     ''' </value>
-    ''' <exception cref="System.IO.DirectoryNotFoundException">This needs to be a valid folder</exception>
+    ''' <exception cref="System.IO.DirectoryNotFoundException">
+    ''' This needs to be a valid folder
+    ''' </exception>
     Public Shared Property FurcadiaDocumentsFolder() As String
         Get
             If Not String.IsNullOrEmpty(_FurcadiaDocumentsFolder) Then
@@ -173,7 +179,7 @@ Public Class Paths
             If _Paths Is Nothing Then
                 _Paths = New Furcadia.IO.Paths(_FurcadiaProgramFolder)
             End If
-            _FurcadiaDocumentsFolder = _Paths.GetFurcadiaDocPath()
+            _FurcadiaDocumentsFolder = _Paths.PersonalDataPath
             Return _FurcadiaDocumentsFolder
         End Get
         Set(ByVal value As String)
@@ -183,18 +189,21 @@ Public Class Paths
             _FurcadiaDocumentsFolder = value
         End Set
     End Property
+
     ''' <summary>
     ''' Gets or sets the Furcadia program folder.
     ''' </summary>
     ''' <value>
     ''' The Furcadia program folder.
     ''' </value>
-    ''' <exception cref="System.IO.FileNotFoundException">Furcadia.exe not found in path. Is this a Furcadia folder?</exception>
+    ''' <exception cref="System.IO.FileNotFoundException">
+    ''' Furcadia.exe not found in path. Is this a Furcadia folder?
+    ''' </exception>
     Public Shared Property FurcadiaProgramFolder() As String
         Get
             If String.IsNullOrEmpty(_FurcadiaProgramFolder) Then
                 Try
-                    _FurcadiaProgramFolder = _Paths.GetInstallPath()
+                    _FurcadiaProgramFolder = _Paths.FurcadiaPath
                 Catch ex As Exception
                     Dim Broswe As New Windows.Forms.OpenFileDialog
                     Broswe.Title = "Locate Furcadia.exe"
@@ -227,6 +236,7 @@ Public Class Paths
         End Set
 
     End Property
+
     ''' <summary>
     ''' Gets or sets the Monkey Speak Editor documents scripts path.
     ''' </summary>
@@ -344,6 +354,7 @@ Public Class Paths
         End Set
 
     End Property
+
     ''' <summary>
     ''' Gets or sets the Silver Monkey error log path.
     ''' </summary>
@@ -366,8 +377,9 @@ Public Class Paths
     ''' <summary>
     ''' Default path for bot logs
     ''' </summary>
-    ''' <returns></returns>
-    Public Shared ReadOnly Property SilverMonkeyLogPath() As String
+    ''' <returns>
+    ''' </returns>
+    Public Shared Property SilverMonkeyLogPath() As String
         Get
             If _SilverMonkeyLogPath Is Nothing Then
                 _SilverMonkeyDocumentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), MyDocumentsPath)
@@ -378,6 +390,9 @@ Public Class Paths
             End If
             Return _SilverMonkeyLogPath
         End Get
+        Set(value As String)
+            _SilverMonkeyLogPath = value
+        End Set
     End Property
 
 #End Region
@@ -386,16 +401,22 @@ Public Class Paths
 
     ''' <summary>
     ''' Special Functoin for getting the default paths
-    ''' <para>Ideal logic is to check the location of the Bot.Bini file for the current
-    ''' path and then check the Silver Monkey folder in my documents</para>
+    ''' <para>
+    ''' Ideal logic is to check the location of the Bot.Bini file for the
+    ''' current path and then check the Silver Monkey folder in my documents
+    ''' </para>
     ''' </summary>
-    ''' <param name="file"></param>
-    ''' <returns></returns>
+    ''' <param name="file">
+    ''' </param>
+    ''' <returns>
+    ''' </returns>
     Public Shared Function CheckBotFolder(ByVal file As String) As String
         Dim Check As String = Path.GetDirectoryName(file)
         If String.IsNullOrEmpty(Check) Then
-            Check = Path.Combine(Paths.SilverMonkeyBotPath, file)
-            Return Check
+            If String.IsNullOrEmpty(file) Then
+                Return SilverMonkeyBotPath
+            End If
+            Return Path.Combine(SilverMonkeyBotPath, file)
         End If
         Return file
     End Function

@@ -1,33 +1,35 @@
-﻿Imports Monkeyspeak
-Imports Furcadia.Net
-Imports Furcadia.Base95
+﻿Imports Furcadia.Net
+Imports Furcadia.Net.Dream
+Imports Furcadia.Text.Base95
+Imports SilverMonkeyEngine
+Imports SilverMonkeyEngine.Engine
 
 Public Class BaseClass
-    Implements Interfaces.msPlugin
+    Implements Interfaces.ImsPlugin
 
 #Region "Private Fields"
 
-    Private msHost As Interfaces.msHost
+    Private msHost As Interfaces.ImsHost
 
 #End Region
 
 #Region "Public Properties"
 
-    Public ReadOnly Property Description() As String Implements Interfaces.msPlugin.Description
+    Public ReadOnly Property Description() As String Implements Interfaces.ImsPlugin.Description
         Get
             Return "Base Class for building Modules"
         End Get
     End Property
 
-    Public Property Enabled As Boolean Implements Interfaces.msPlugin.enabled
+    Public Property Enabled As Boolean Implements Interfaces.ImsPlugin.enabled
 
-    Public ReadOnly Property Name() As String Implements Interfaces.msPlugin.Name
+    Public ReadOnly Property Name() As String Implements Interfaces.ImsPlugin.Name
         Get
             Return "Base Module"
         End Get
     End Property
 
-    Public ReadOnly Property Version() As String Implements Interfaces.msPlugin.Version
+    Public ReadOnly Property Version() As String Implements Interfaces.ImsPlugin.Version
         Get
             Dim VersionInfo As Version = System.Reflection.Assembly.GetExecutingAssembly.GetName.Version
             Return VersionInfo.Major & "." & VersionInfo.Minor & "." & VersionInfo.Build & "." & VersionInfo.Revision
@@ -38,7 +40,7 @@ Public Class BaseClass
 
 #Region "Public Methods"
 
-    Public Sub Initialize(ByVal Host As Interfaces.msHost) Implements Interfaces.msPlugin.Initialize
+    Public Sub Initialize(ByVal Host As Interfaces.ImsHost) Implements Interfaces.ImsPlugin.Initialize
         msHost = Host
     End Sub
 
@@ -48,51 +50,48 @@ Public Class BaseClass
 
     Public Player As FURRE
 
+    Private _MSpage As MonkeySpeakPage
     Private msDream As DREAM
-    Private MSpage As Monkeyspeak.Page
-    Public Property Dream As DREAM
+
+    Public ReadOnly Property Dream As DREAM
         Get
             Return msHost.Dream
         End Get
-        Set(value As DREAM)
-            msHost.Dream = value
-        End Set
+
     End Property
 
-    Public Property Page As Monkeyspeak.Page Implements SilverMonkey.Interfaces.msPlugin.Page
+    Public Property MsPage As MonkeySpeakPage Implements Interfaces.ImsPlugin.MsPage
         Get
-            Return MSpage
+            Return _MSpage
         End Get
-        Set(value As Monkeyspeak.Page)
+        Set(value As MonkeySpeakPage)
 
-            MSpage = value
-            msHost.Page = MSpage
+            _MSpage = value
+            msHost.MsPage = _MSpage
         End Set
     End Property
+
 #End Region
 
-    Function MessagePump(ByRef ServerInstruction As String) As Boolean Implements Interfaces.msPlugin.MessagePump
+    Function MessagePump(ByRef ServerInstruction As String) As Boolean Implements Interfaces.ImsPlugin.MessagePump
         'Set Object At Feet
         If ServerInstruction.StartsWith("%") Then
             Player = NameToFurre(msHost.BotName, True)
             Player.FloorObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
-            Page.Execute(2000, 2001)
-            msHost.Player = Player
-            Dream.FurreList(Player) = Player
+            MsPage.Execute(2000, 2001)
+
             Return True
             'Set Object In Paws
         ElseIf ServerInstruction.StartsWith("^") Then
             Player = NameToFurre(msHost.BotName, True)
             Player.PawObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
-            Page.Execute(2000, 2001)
-            msHost.Player = Player
-            Dream.FurreList(Player) = Player
+            MsPage.Execute(2000, 2001)
             Return True
         End If
         Return False
     End Function
 
-    Public Sub Start() Implements Interfaces.msPlugin.Start
+    Public Sub Start() Implements Interfaces.ImsPlugin.Start
         '(0:x) When the bot picks up or drops an object
         'Page.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 2000,
         '    Function()
@@ -104,7 +103,9 @@ Public Class BaseClass
         '    AddressOf PickUpObjectNumber, "(0:2001) When the bot picks up or drops the object #,")
 
     End Sub
+
 #Region "Helper Functions"
+
     Public Function IsBot(ByRef p As FURRE) As Boolean
         Return p.ShortName = msHost.BotName.ToFurcShortName
     End Function
@@ -118,7 +119,7 @@ Public Class BaseClass
                 Exit For
             End If
         Next
-        If UbdateMSVariableName Then Page.SetVariable(VarPrefix & "NAME", sname, True)
+        If UbdateMSVariableName Then MsPage.SetVariable(VarPrefix & "NAME", sname, True)
         Return p
     End Function
 
@@ -132,6 +133,7 @@ Public Class BaseClass
         End If
         Return result
     End Function
+
     Private Function fIDtoFurre(ByRef ID As UInteger) As FURRE
 
         For Each Character As FURRE In Dream.FurreList
@@ -139,6 +141,9 @@ Public Class BaseClass
                 Return Character
             End If
         Next
+        Return Nothing
     End Function
+
 #End Region
+
 End Class

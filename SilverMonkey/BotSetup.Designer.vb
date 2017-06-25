@@ -22,6 +22,7 @@ Partial Class BotSetup
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(BotSetup))
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.OK_Button = New System.Windows.Forms.Button()
@@ -31,6 +32,7 @@ Partial Class BotSetup
         Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.BtnMS_File = New System.Windows.Forms.Button()
         Me.TxtBxMS_File = New System.Windows.Forms.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
@@ -67,6 +69,7 @@ Partial Class BotSetup
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.IniBrowse = New System.Windows.Forms.OpenFileDialog()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -86,7 +89,7 @@ Partial Class BotSetup
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.OK_Button, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Cancel_Button, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(230, 238)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(256, 238)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -133,17 +136,21 @@ Partial Class BotSetup
         '
         'TabControl1
         '
+        Me.TabControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage4)
         Me.TabControl1.Location = New System.Drawing.Point(6, 3)
         Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(372, 223)
+        Me.TabControl1.SelectedIndex = _TabIndex
+        Me.TabControl1.Size = New System.Drawing.Size(398, 223)
         Me.TabControl1.TabIndex = 11
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.LinkLabel1)
         Me.TabPage1.Controls.Add(Me.BtnMS_File)
         Me.TabPage1.Controls.Add(Me.TxtBxMS_File)
         Me.TabPage1.Controls.Add(Me.Label15)
@@ -157,15 +164,25 @@ Partial Class BotSetup
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(364, 197)
+        Me.TabPage1.Size = New System.Drawing.Size(390, 197)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Main"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
+        'LinkLabel1
+        '
+        Me.LinkLabel1.AutoSize = True
+        Me.LinkLabel1.Location = New System.Drawing.Point(366, 40)
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.Size = New System.Drawing.Size(13, 13)
+        Me.LinkLabel1.TabIndex = 79
+        Me.LinkLabel1.TabStop = True
+        Me.LinkLabel1.Text = "?"
+        '
         'BtnMS_File
         '
         Me.BtnMS_File.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BtnMS_File.Location = New System.Drawing.Point(320, 91)
+        Me.BtnMS_File.Location = New System.Drawing.Point(336, 91)
         Me.BtnMS_File.Name = "BtnMS_File"
         Me.BtnMS_File.Size = New System.Drawing.Size(24, 19)
         Me.BtnMS_File.TabIndex = 71
@@ -178,7 +195,7 @@ Partial Class BotSetup
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtBxMS_File.Location = New System.Drawing.Point(120, 91)
         Me.TxtBxMS_File.Name = "TxtBxMS_File"
-        Me.TxtBxMS_File.Size = New System.Drawing.Size(179, 20)
+        Me.TxtBxMS_File.Size = New System.Drawing.Size(205, 20)
         Me.TxtBxMS_File.TabIndex = 70
         '
         'Label15
@@ -209,7 +226,7 @@ Partial Class BotSetup
         'BTN_Browse
         '
         Me.BTN_Browse.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BTN_Browse.Location = New System.Drawing.Point(320, 37)
+        Me.BTN_Browse.Location = New System.Drawing.Point(336, 37)
         Me.BTN_Browse.Name = "BTN_Browse"
         Me.BTN_Browse.Size = New System.Drawing.Size(24, 19)
         Me.BTN_Browse.TabIndex = 68
@@ -222,7 +239,7 @@ Partial Class BotSetup
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtBxBotIni.Location = New System.Drawing.Point(89, 65)
         Me.TxtBxBotIni.Name = "TxtBxBotIni"
-        Me.TxtBxBotIni.Size = New System.Drawing.Size(210, 20)
+        Me.TxtBxBotIni.Size = New System.Drawing.Size(236, 20)
         Me.TxtBxBotIni.TabIndex = 69
         '
         'Label20
@@ -240,7 +257,7 @@ Partial Class BotSetup
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtBx_CharIni.Location = New System.Drawing.Point(92, 37)
         Me.TxtBx_CharIni.Name = "TxtBx_CharIni"
-        Me.TxtBx_CharIni.Size = New System.Drawing.Size(207, 20)
+        Me.TxtBx_CharIni.Size = New System.Drawing.Size(233, 20)
         Me.TxtBx_CharIni.TabIndex = 67
         '
         'Label3
@@ -259,7 +276,7 @@ Partial Class BotSetup
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(364, 197)
+        Me.TabPage2.Size = New System.Drawing.Size(390, 197)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Connect Settings"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -398,7 +415,7 @@ Partial Class BotSetup
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(364, 197)
+        Me.TabPage4.Size = New System.Drawing.Size(390, 197)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Log Options"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -520,13 +537,18 @@ Partial Class BotSetup
         Me.IniBrowse.Filter = "Log Files | *.log"
         Me.IniBrowse.RestoreDirectory = True
         '
+        'ToolTip1
+        '
+        Me.ToolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning
+        Me.ToolTip1.ToolTipTitle = "Legacy Feature"
+        '
         'BotSetup
         '
         Me.AcceptButton = Me.OK_Button
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Cancel_Button
-        Me.ClientSize = New System.Drawing.Size(388, 279)
+        Me.ClientSize = New System.Drawing.Size(414, 279)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
@@ -598,5 +620,6 @@ Partial Class BotSetup
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents IniBrowse As System.Windows.Forms.OpenFileDialog
-
+    Friend WithEvents LinkLabel1 As Windows.Forms.LinkLabel
+    Friend WithEvents ToolTip1 As Windows.Forms.ToolTip
 End Class

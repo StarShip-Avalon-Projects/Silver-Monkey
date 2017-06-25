@@ -1,7 +1,6 @@
 Imports System.IO
-Imports MonkeyCore.IniFile
-Imports MonkeyCore.Paths
 Imports MonkeyCore
+Imports MonkeyCore.Paths
 
 '######### Please Read ##############
 '
@@ -18,6 +17,19 @@ Public Class wMain
 
 #Region "Public Methods"
 
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
+
+    ''' <summary>
+    ''' </summary>
+    ''' <param name="sIni">
+    ''' </param>
     Public Sub GetInfo(ByVal sIni As String)
         Try
             ScriptIni.Load(sIni)
@@ -39,7 +51,6 @@ Public Class wMain
             Else
                 wUI.NumericUpDown1.Value = 0
             End If
-
         Catch ex As Exception
             Dim x As New ErrorLogging(ex, Me)
         End Try
@@ -74,7 +85,6 @@ Public Class wMain
                 i += 1
             Loop
             wUI.SetUI()
-
         Catch ex As Exception
             MsgBox(ex.Message & vbCrLf & ex.StackTrace, MsgBoxStyle.Exclamation, "Error!")
         End Try
@@ -84,10 +94,6 @@ Public Class wMain
 #End Region
 
 #Region "Private Methods"
-
-    Private Sub AboutToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        AboutBox1.Show()
-    End Sub
 
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click, Button2.Click
         Dim btn As Button = CType(sender, Button)
@@ -128,10 +134,11 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         'Gets the scripts.ini files in your "Scripts" folder
         GetScriptIni()
     End Sub
+
     Private Sub GetScriptIni()
         selecter.Items.Clear()
         selecter.BeginUpdate()
-        Dim p As String = Application.StartupPath + "/Scripts/"
+        Dim p As String = Path.Combine(ApplicationPath, "Scripts")
         Directory.CreateDirectory(p)
         ScriptPaths.Clear()
         For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
@@ -140,7 +147,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
             ScriptPaths.Add(p)
         Next
 
-        p = Path.Combine(MonkeyCore.Paths.FurcadiaDocumentsFolder, "Scripts\")
+        p = Path.Combine(Path.Combine(Paths.FurcadiaDocumentsFolder, "Scripts"))
         'path = Enviroment.GetFolderPath(Enviroment.SpecialFolderMyDocuments) + My_Docs + "/Scripts"
         Directory.CreateDirectory(p)
         For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
@@ -242,10 +249,10 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         If wUI.IsDisposed = False Then
             wUI.Dispose()
         End If
-        If System.IO.File.Exists(My.Application.Info.DirectoryPath() & "\help.txt") Then
-            wUI.dsdesc2.Text = FileIO.FileSystem.ReadAllText(My.Application.Info.DirectoryPath() & "\help.txt")
+        If System.IO.File.Exists(Path.Combine(ApplicationPath, "help.txt")) Then
+            wUI.dsdesc2.Text = FileIO.FileSystem.ReadAllText(Path.Combine(ApplicationPath, "help.txt"))
         Else
-            wUI.dsdesc2.Text = "Error: " & My.Application.Info.DirectoryPath() & "\help.txt" & " doesn't exist.  Help contents cannot be displayed."
+            wUI.dsdesc2.Text = "Error: " & Path.Combine(ApplicationPath, "help.txt") & " doesn't exist.  Help contents cannot be displayed."
         End If
         wUI.PathIndex = lb.SelectedIndex
         GetParams(lst(lb.SelectedIndex) & sIni & ".ini")
@@ -302,7 +309,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
             Else
                 Me.Dispose()
             End If
-
         Else
             If Me.OnToolStripMenuItem.Checked = True Then
                 If OnToolStripMenuItem.Checked = True Then
@@ -315,10 +321,14 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         End If
 
     End Sub
-    Private Sub ToolStripMenuItem8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem8.Click
+
+    Private Sub ToolStripMenuItem8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles _
+                                                                                ToolStripMenuItem8.Click, AboutToolStripMenuItem.Click
         'AboutToolStrip
-        AboutBox1.Show()
+        AboutBox2.Show()
+        AboutBox2.Activate()
     End Sub
+
     Private Sub WizardEdit_Click(sender As System.Object, e As System.EventArgs) Handles WizardEdit.Click
         'MS_Edit.AddNewEditorTab("", "", 0)
         MS_Edit.OpenMS_File(ScriptPaths.Item(selecter.SelectedIndex) + "/" + selecter.SelectedItem.ToString + ".ini")

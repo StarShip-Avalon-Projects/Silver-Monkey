@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="84d7fa65-e593-475f-aa52-1be3d4516f3f" revisionNumber="1">
+  <developerGlossaryDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <glossary>
+		<title>Monkey Speak Trigger Definitions</title>
+      <!-- Glossary division.  You can use these to group entries.  If you only
+           have one group, you can omit it and list the glossaryEntry elements
+           directly.
+
+           If used, be sure to give each glossaryDiv a unique address attribute
+           and a title element.  These will be used to create an index at the
+           top of the glossary page.
+
+           Glossary divisions will appear in the order defined in the topic.
+           Glossary entries will be sorted by the first term for the entry.
+           Terms are sorted by their value. -->
+      <glossaryDiv address="MonkeuSpeakCauses">
+        <title>Monkey Speak Causes</title>
+        <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+            <term termId="xyz">1st term</term>
+            <term>Other term (if any)</term>
+          </terms>
+          <definition>
+            <para>The definition of the term(s)</para>
+          </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+      </glossaryDiv>
+            <glossaryDiv address="MonkeuSpeakConditions">
+        <title>Monkey Speak Conditions</title>
+        
+                <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+            <term termId="508">508</term>
+			<term>
+			(1:508) and the Database info {...} about the furre named {...} is equal to #, 
+			</term>
+          </terms>
+          <definition>
+          <para>Library Class: <codeEntityReference qualifyHint="false">T:SilverMonkeyEngine.Engine.Libraries.MsSqlite</codeEntityReference></para>
+           <para>MonkeySpeak Line Information: <codeEntityReference qualifyHint="false" autoUpgrade="true">M:SilverMonkeyEngine.Engine.Libraries.MsSqlite.FurreNamedinfoEqualToNumber(Monkeyspeak.TriggerReader)</codeEntityReference></para> 
+          </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+        <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+            <term termId="600">600</term>
+			<term>
+			(5:600) set variable %Variable to the Triggering furre's description.
+			</term>
+          </terms>
+          <definition>
+            <para>This line only works if the furres description is set. That's handled by a look responnsre.)</para>
+          </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+      </glossaryDiv>
+    </glossary>
+          <glossaryDiv address="MonkeuSpeakEffects">
+        <title>Monkey Speak Effects</title>
+        
+         <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+            <term termId="558">558</term>
+			<term>
+			(5:558) restore phoenix speak character records newer then # days. (zero equals all character records.
+			</term>
+          </terms>
+          <definition>
+          <para>Monkey Spek Effect # 558</para>
+            <para>No information available</para>
+            </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+         <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+            <term termId="559">559</term>
+			<term>
+			(5:559) execute ""VACUUM"" to rebuild the database and reclaim wasted space.
+			</term>
+          </terms>
+          <definition>
+          <para>Monkey Spek Effect # 559</para>
+            <para>This lines rebuilds the database and reclaims wasted space to keep things running efficiently.</para>
+          </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+        <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+            <term termId="600">600</term>
+			<term>
+			(5:600) set variable %Variable to the Triggering furre's description.
+			</term>
+          </terms>
+          <definition>
+          <para>Monkey Spek Effect # 600</para>
+            <para>This line only works if the furres description is set. That's handled by a look responnsre.</para>
+          </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+      </glossaryDiv>
+  </developerGlossaryDocument>
+</topic>

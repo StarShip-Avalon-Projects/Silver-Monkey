@@ -1,10 +1,14 @@
 ﻿Imports System.Windows.Forms
+Imports SilverMonkeyEngine
 
 Public Class Variables
+    Inherits Form
 
 #Region "Private Fields"
 
     Private alarm As Threading.Timer
+    Private FurcadiaSession As BotSession
+
     'Dim RefreshList As New Thread(AddressOf RefreshMe)
     Dim Lock As New Object
 
@@ -22,13 +26,16 @@ Public Class Variables
 
         If ListView1.InvokeRequired Then
             Dim d As New dlgUpdateUI(AddressOf updateVariables)
-            ListView1.Invoke(d)
+            ListView1?.Invoke(d)
         Else
 
             SyncLock Lock
 
-                For i As Integer = 0 To FurcSession.MainEngine.MSpage.Scope.Count - 1
-                    Dim Var As Monkeyspeak.Variable = FurcSession.MainEngine.MSpage.Scope.Item(i)
+                If FurcadiaSession Is Nothing Then
+                    Exit Sub
+                End If
+                For i As Integer = 0 To FurcadiaSession.MSpage.Scope.Count - 1
+                    Dim Var As Monkeyspeak.Variable = FurcadiaSession.MSpage.Scope.Item(i)
 
                     Dim Variable() As String = {"", "", ""}
                     Variable(0) = Var.Name.ToString
@@ -42,12 +49,11 @@ Public Class Variables
                         If ListView1.Items.Item(i).SubItems(2).Text <> itm.SubItems.Item(2).Text Then
                             ListView1.Items.Item(i) = itm
                         End If
-
                     Else
                         ListView1.Items.Add(itm)
                     End If
 
-                    '  ListView1.Groups.
+                    ' ListView1.Groups.
 
                 Next
             End SyncLock
@@ -62,6 +68,7 @@ Public Class Variables
         updateVariables()
 
     End Sub
+
     Private Sub ChkBxRefresh_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ChkBxRefresh.CheckedChanged
         If ChkBxRefresh.Checked Then
             Me.alarm = New Threading.Timer(AddressOf Tick, Nothing, 1000, 1000)

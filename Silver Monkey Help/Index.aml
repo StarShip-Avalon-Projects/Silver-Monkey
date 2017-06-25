@@ -6,10 +6,15 @@
 
     <introduction>
       <mediaLink>
-        <caption placement="after" lead="Silver Monkey">Version: 2.16.x.x</caption>
-        <image xlink:href="Metal" placement="center"/>
+        <caption placement="after" lead="Silver Monkey">Version: 2.19.x</caption>
+        <image xlink:href="SilverMonkeyApp" placement="center"/>
       </mediaLink>
-      <para>Silver Monkey adds a new level to Furcadia bots with its DragonSpeak like Language called Monkey Speak. No longer do you have to spend extra time learning to build a bot to host your dream. Thanks to Squizzel's Monkey Speak Engine and Furcadia framework for 3rd Party Programs, You can pick up and run with Monkey Speak.</para>
+      <para>Silver Monkey adds a new level to Furcadia bots 
+      with its DragonSpeak like Language called Monkey Speak. 
+      No longer do you have to spend extra time learning to
+      build a bot to host your dream. Thanks to Squizzel's 
+      Monkey Speak Engine and Furcadia framework for 3rd Party Programs, 
+      You can pick up and run with Monkey Speak.</para>
     </introduction>
       <section>
         <content>

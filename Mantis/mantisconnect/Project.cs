@@ -32,7 +32,8 @@ namespace SilverMonkey.BugTraqConnect
         public const int AllProjects = 0;
 
         /// <summary>
-        /// The Id to be used when calling APIs to indicate the default project for the logged in user.
+        /// The Id to be used when calling APIs to indicate the default
+        /// project for the logged in user.
         /// </summary>
         public const int DefaultProject = -1;
 
@@ -144,19 +145,20 @@ namespace SilverMonkey.BugTraqConnect
         /// <value>
         /// Can be empty or null.
         /// </value>
-		public string Description
+        public string Description
         {
             get { return this.description; }
             set { this.description = value; }
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="Project"/> is enabled.
+        /// Gets or sets a value indicating whether this
+        /// <see cref="Project"/> is enabled.
         /// </summary>
         /// <value>
         /// <see langword="true"/> if enabled; otherwise, <see langword="false"/>.
         /// </value>
-		public bool Enabled
+        public bool Enabled
         {
             get { return this.enabled; }
             set { this.enabled = value; }
@@ -166,10 +168,10 @@ namespace SilverMonkey.BugTraqConnect
         /// Gets or sets the file path for uploaded files.
         /// </summary>
         /// <value>
-        /// The path of the folder (on the server) in which the attachments are stored. The path may
-        /// be relative to Mantis folder on the server.
+        /// The path of the folder (on the server) in which the attachments
+        /// are stored. The path may be relative to Mantis folder on the server.
         /// </value>
-		public string FilePath
+        public string FilePath
         {
             get { return this.filePath; }
             set { this.filePath = value; }
@@ -181,7 +183,7 @@ namespace SilverMonkey.BugTraqConnect
         /// <value>
         /// Greater than or equal to 1.
         /// </value>
-		public int Id
+        public int Id
         {
             get { return this.id; }
             set { this.id = value; }
@@ -211,6 +213,8 @@ namespace SilverMonkey.BugTraqConnect
             set { this.status = value; }
         }
 
+        /// <summary>
+        /// </summary>
         public List<Project> Subprojects
         {
             get { return this.subprojects; }
@@ -264,7 +268,7 @@ namespace SilverMonkey.BugTraqConnect
         /// <returns>
         /// A copy of this instance in the webservice proxy type.
         /// </returns>
-		internal MantisConnectWebservice.ProjectData ToWebservice()
+        internal MantisConnectWebservice.ProjectData ToWebservice()
         {
             MantisConnectWebservice.ProjectData projectData = new MantisConnectWebservice.ProjectData();
 

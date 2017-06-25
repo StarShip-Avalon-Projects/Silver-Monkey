@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>7.0.9466</ProductVersion>
@@ -24,7 +24,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>0.0</OldToolsVersion>
@@ -147,7 +147,6 @@
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainEngine.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
@@ -187,10 +186,6 @@
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
-      <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
-      <Name>Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
       <Project>{F4391F6F-0239-48E2-B415-C39A6D920303}</Project>
       <Name>BugTraqConnect</Name>
@@ -199,9 +194,13 @@
       <Project>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeySpeakEx\MonkeyspeakR6.csproj">
+    <ProjectReference Include="..\MonkeySpeakEx\MonkeySpeakEx.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
-      <Name>MonkeyspeakR6</Name>
+      <Name>MonkeySpeakEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
+      <Project>{3c0e1cbf-d3b9-4282-ac97-4e0216ca6c97}</Project>
+      <Name>SilverMonkeyEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
