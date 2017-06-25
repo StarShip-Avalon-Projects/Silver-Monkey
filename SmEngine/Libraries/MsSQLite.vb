@@ -211,8 +211,11 @@ Namespace Engine.Libraries
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' True if there is no error
+        ''' True if there is no error, otherwise false and stops further
+        ''' conditions or effects processing in the currnt block
         ''' </returns>
+        ''' <remarks>
+        ''' </remarks>
         Public Function FurreNamedinfoEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim Variable As Double = 0

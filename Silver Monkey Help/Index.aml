@@ -13,7 +13,21 @@
       with its DragonSpeak like Language called Monkey Speak. 
       No longer do you have to spend extra time learning to
       build a bot to host your dream. Thanks to Squizzel's 
-      Monkey Speak Engine and Furcadia framework for 3rd Party Programs, 
+            <externalLink>
+          <linkText>Monkey Speak Engine</linkText>
+
+          <linkUri>https://starship-avalon-projects.github.io/MonkeySpeakExtendedEngine/</linkUri>
+      </externalLink>
+      
+      and
+      
+                  <externalLink>
+          <linkText>Furcadia framework for 3rd Party Programs</linkText>
+
+          <linkUri>https://starship-avalon-projects.github.io/FurcadiaFramework/</linkUri>
+      </externalLink>
+      
+      , 
       You can pick up and run with Monkey Speak.</para>
     </introduction>
       <section>

@@ -18,19 +18,34 @@
        <autoOutline /> 
 
       <para>
-        At first glance Monkey Speak and Dragon speak appear to be the same... This is because 
+        At first glance Monkey Speak and Dragon speak appear to be the same. This is because 
         Monkey Speak was made to resemble Dragonspeak. Both use a sentencing structure to resemble 
         normal speech.</para>
-      <para>Dragon Speak set the standard Monkey Speak adheres to but there are some Differences 
+      <para>Dragon Speak set the standard Monkey Speak adheres to but there are some differences 
       between the two the Furre using the bot needs to understand.</para>
     </introduction>
 
     <!-- Add one or more top-level section elements.  These are collapsible.
          If using <autoOutline />, add an address attribute to identify it
          and specify a title so that it can be jumped to with a hyperlink. -->
-    <section address="Section1">
+         <section address="MonkeySpeak">
+      <title>Introduction:</title>
+      <content>
+      <para>Monkey Speak works on the principle, If the Current line is true, Process the next line</para>
+       <code language="ms" title="Sample Monkey Speak" >
+			(0:xx) When this happens (Cause) 
+				(1:xx) And this is True (Condition) 
+					(5:xx) Do this (Effect) 
+					(5:xx) DO this is Last line was true
+            </code>
+     
+      </content>
+    </section>
+    <section address="Variables">
       <title>Variables</title>
       <content>
+      
+
         <!-- Uncomment this to create a sub-section outline
         <autoOutline /> -->
         <para>Add one or more sections with content</para>
@@ -52,7 +67,10 @@
         <para>Add one or more sections with content</para>
       </content>
     </section>
+
+       
     <relatedTopics>
+
       <!-- One or more of the following:
            - A local link
            - An external link
