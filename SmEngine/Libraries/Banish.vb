@@ -111,33 +111,29 @@ Namespace Engine.Libraries
 #Region "Public Methods"
 
         '(0:53) When the bot sucessfilly banishes the furre named {...},
-        '(0: ) When the bot successfully temp banishes the furre named {...},
+        '
         ''' <summary>
         ''' (0:53) When the bot sucessfilly banishes the furre named {...},
+        ''' <para>
+        ''' (0: ) When the bot successfully temp banishes the furre named {...},
+        ''' </para>
         ''' </summary>
         ''' <param name="reader">
         ''' </param>
         ''' <returns>
         ''' </returns>
         Function AndBanishFurreNamed(reader As TriggerReader) As Boolean
-            Try
-                Dim Furre As String = reader.ReadString
-                Return FurcadiaShortName(Furre) = FurcadiaShortName(FurcadiaSession.BanishName)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Dim Furre As String = reader.ReadString
+            Return FurcadiaShortName(Furre) = FurcadiaShortName(FurcadiaSession.BanishName)
+
             Return True
         End Function
 
         Function AndBanishFurreNamedFailed(reader As TriggerReader) As Boolean
-            Try
-                Dim Furre As String = reader.ReadString
-                Return FurcadiaShortName(Furre) = FurcadiaShortName(FurcadiaSession.BanishName)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim Furre As String = reader.ReadString
+            Return FurcadiaShortName(Furre) = FurcadiaShortName(FurcadiaSession.BanishName)
+
             Return True
         End Function
 
@@ -149,14 +145,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function BanishFurreNamed(reader As TriggerReader) As Boolean
-            Try
-                Dim Furre As String = reader.ReadString
-                sendServer("banish " + Furre)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+            Dim Furre As String = reader.ReadString
+            Return sendServer("banish " + Furre)
+
         End Function
 
         ''' <summary>
@@ -167,25 +158,15 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function BanishList(reader As TriggerReader) As Boolean
-            Try
-                sendServer("banish-list")
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Return sendServer("banish-list")
+
         End Function
 
         Function BanishSave(reader As TriggerReader) As Boolean
             Dim NewVar As Variable
 
-            Try
-
-                NewVar = reader.ReadVariable(True)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            NewVar = reader.ReadVariable(True)
 
             NewVar.Value = String.Join(" ", FurcadiaSession.BanishString.ToArray)
             Return True
@@ -199,13 +180,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function BanishTrigFurre(reader As TriggerReader) As Boolean
-            Try
-                sendServer("banish " + FurcadiaSession.Player.Name)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+            Return sendServer("banish " + FurcadiaSession.Player.Name)
+
         End Function
 
         '
@@ -229,17 +205,13 @@ Namespace Engine.Libraries
         ''' </returns>
         Function FurreNamedIsNotBanished(reader As TriggerReader) As Boolean
             Dim banishlist As List(Of String) = FurcadiaSession.BanishString
-            Try
-                Dim f As String = reader.ReadString
-                For Each Furre As String In banishlist
-                    If FurcadiaShortName(Furre) = FurcadiaShortName(f) Then Return False
-                Next
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim f As String = reader.ReadString
+            For Each Furre As String In banishlist
+                If FurcadiaShortName(Furre) = FurcadiaShortName(f) Then Return False
+            Next
             Return True
+
         End Function
 
         ''' <summary>
@@ -250,13 +222,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function TempBanishFurreNamed(reader As TriggerReader) As Boolean
-            Try
-                sendServer("tempbanish " + FurcadiaSession.Player.Name)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Return sendServer("tempbanish " + FurcadiaSession.Player.Name)
+
         End Function
 
         ''' <summary>
@@ -267,14 +235,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function TempBanishTrigFurre(reader As TriggerReader) As Boolean
-            Try
-                Dim Furre As String = reader.ReadString
-                sendServer("tempbanish " + Furre)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim Furre As String = reader.ReadString
+            Return sendServer("tempbanish " + Furre)
+
         End Function
 
         ''' <summary>
@@ -297,15 +261,11 @@ Namespace Engine.Libraries
         ''' </returns>
         Function TrigFurreIsNotBanished(reader As TriggerReader) As Boolean
             Dim banishlist As List(Of String) = FurcadiaSession.BanishString
-            Try
-                For Each Furre As String In banishlist
-                    If FurcadiaShortName(Furre) = FurcadiaSession.Player.ShortName Then Return False
-                Next
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            For Each Furre As String In banishlist
+                If FurcadiaShortName(Furre) = FurcadiaSession.Player.ShortName Then Return False
+            Next
+
             Return True
         End Function
 
@@ -317,14 +277,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function UnBanishFurreNamed(reader As TriggerReader) As Boolean
-            Try
-                Dim Furre As String = reader.ReadString
-                sendServer("banish-off " + Furre)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim Furre As String = reader.ReadString
+            Return sendServer("banish-off " + Furre)
+
         End Function
 
         ''' <summary>
@@ -335,13 +291,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function UnBanishTrigFurre(reader As TriggerReader) As Boolean
-            Try
-                sendServer("banish-off " + FurcadiaSession.Player.Name)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Return sendServer("banish-off " + FurcadiaSession.Player.Name)
+
         End Function
 
 #End Region

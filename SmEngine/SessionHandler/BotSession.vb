@@ -146,7 +146,7 @@ Public Class BotSession : Inherits ProxySession
         MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
         Dim page = New MonkeySpeakPage(MainEngine, MSpage)
-        page.Start()
+        MSpage = page.Start()
 
         MyBase.Connect()
 
@@ -676,6 +676,7 @@ Public Class BotSession : Inherits ProxySession
             'We've connected to Furcadia
             'Stop the reconnection manager
             '(0:1) When the bot logs into furcadia,
+            MSpage.SetVariable("BOTNAME", ConnectedFurre.ShortName, True)
             MSpage.Execute(1)
 
             ' Species Tags
@@ -697,6 +698,8 @@ Public Class BotSession : Inherits ProxySession
             MSpage.Execute(95, 96)
 
             ']s(.+)1 (.*?) (.*?) 0
+            'Display Dream Info
+            'Portal  Names until a ]t
         ElseIf data.StartsWith("]s") Then
             Dim t As New Regex("\]s(.+)1 (.*?) (.*?) 0", RegexOptions.IgnoreCase)
             Dim m As System.Text.RegularExpressions.Match = t.Match(data)

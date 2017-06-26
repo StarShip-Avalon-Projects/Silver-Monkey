@@ -8,7 +8,10 @@ Imports Monkeyspeak
 '(5:10) - (5:60)
 Namespace Engine.Libraries
 
-    Public Class MSPK_Web
+    ''' <summary>
+    ''' Provide web interface for getting a list of Variables from a web server
+    ''' </summary>
+    Public Class MsWebRequests
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"
@@ -24,32 +27,32 @@ Namespace Engine.Libraries
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
             'WebStack.Clear()
-            '(0:70) When the bot receives a variable list by sending the Web-Array.
+            '(0:70) When the bot receives a variable list by sending the Web-Stack.
             Add(New Trigger(TriggerCategory.Cause, 70),
-        Function()
-            Return True
-        End Function, "(0:70) When the bot receives a variable list by sending the Web-Array.")
+                Function()
+                    Return True
+                End Function, "(0:70) When the bot receives a variable list by sending the Web-Stack.")
 
-            '(1:30) and Web-Array setting {...} is equal to {...},
-            Add(New Trigger(TriggerCategory.Condition, 30), AddressOf WebArrayEqualTo, "(1:30) and Web-Array setting {...} is equal to {...},")
+            '(1:30) and Web-Stack setting {...} is equal to {...},
+            Add(New Trigger(TriggerCategory.Condition, 30), AddressOf WebArrayEqualTo, "(1:30) and Web-Stack setting {...} is equal to {...},")
 
-            '(1:31) and Web-Array setting {...} is not equal to {...},
-            Add(New Trigger(TriggerCategory.Condition, 31), AddressOf WebArrayNotEqualTo, "(1:31) and Web-Array setting {...} is not equal to {...},")
+            '(1:31) and Web-Stack setting {...} is not equal to {...},
+            Add(New Trigger(TriggerCategory.Condition, 31), AddressOf WebArrayNotEqualTo, "(1:31) and Web-Stack setting {...} is not equal to {...},")
 
-            '(1:32) and the Web-Array contains field named {...},
-            Add(New Trigger(TriggerCategory.Condition, 32), AddressOf WebArrayContainArrayField, "(1:32) and the Web-Array contains field named {...},")
+            '(1:32) and the Web-Stack contains field named {...},
+            Add(New Trigger(TriggerCategory.Condition, 32), AddressOf WebArrayContainArrayField, "(1:32) and the Web-Stack contains field named {...},")
 
-            '(1:33) and the Web-Array doesn't contain field named {...},
-            Add(New Trigger(TriggerCategory.Condition, 33), AddressOf WebArrayNotContainArrayField, "(1:33) and the Web-Array doesn't contain field named {...},")
+            '(1:33) and the Web-Stack doesn't contain field named {...},
+            Add(New Trigger(TriggerCategory.Condition, 33), AddressOf WebArrayNotContainArrayField, "(1:33) and the Web-Stack doesn't contain field named {...},")
 
-            '(5:9) remove variable %Variable from the Web-Array
-            Add(New Trigger(TriggerCategory.Effect, 9), AddressOf RemoveWebStack, "(5:9) remove variable %Variable from the Web-Array.")
+            '(5:9) remove variable %Variable from the Web-Stack
+            Add(New Trigger(TriggerCategory.Effect, 9), AddressOf RemoveWebStack, "(5:9) remove variable %Variable from the Web-Stack.")
 
             '(5:10)  Set the web URL to {...}
             Add(New Trigger(TriggerCategory.Effect, 10), AddressOf SetURL, "(5:10)  Set the web URL to {...},")
 
-            '(5:11)  remember setting {...} from Web-Array and store it into variable %Variable.
-            Add(New Trigger(TriggerCategory.Effect, 11), AddressOf RememberSetting, "(5:11)  remember setting {...} from Web-Array and store it into variable %Variable.")
+            '(5:11)  remember setting {...} from Web-Stack and store it into variable %Variable.
+            Add(New Trigger(TriggerCategory.Effect, 11), AddressOf RememberSetting, "(5:11)  remember setting {...} from Web-Stack and store it into variable %Variable.")
 
             '(5:12)
 
@@ -59,15 +62,15 @@ Namespace Engine.Libraries
 
             '(5:15)
 
-            '(5:16) send GET request to send the Web-Array to URL.
-            Add(New Trigger(TriggerCategory.Effect, 16), AddressOf SendGetWebStack, "(5:16) send GET request to send the Web-Array to URL.")
+            '(5:16) send GET request to send the Web-Stack to URL.
+            Add(New Trigger(TriggerCategory.Effect, 16), AddressOf SendGetWebStack, "(5:16) send GET request to send the Web-Stack to URL.")
 
-            '(5:17) store variable %Variable to the Web-Array
-            Add(New Trigger(TriggerCategory.Effect, 17), AddressOf StoreWebStack, "(5:17) store variable %Variable to the Web-Array.")
-            '(5:18) send post request to send the Web-Array to the web host.
-            Add(New Trigger(TriggerCategory.Effect, 18), AddressOf SendWebStack, "(5:18) send POST request to send the Web-Array to URL.")
-            '(5:19) clear the Web-Array.
-            Add(New Trigger(TriggerCategory.Effect, 19), AddressOf ClearWebStack, "(5:19) clear the Web-Array.")
+            '(5:17) store variable %Variable to the Web-Stack
+            Add(New Trigger(TriggerCategory.Effect, 17), AddressOf StoreWebStack, "(5:17) store variable %Variable to the Web-Stack.")
+            '(5:18) send post request to send the Web-Stack to the web host.
+            Add(New Trigger(TriggerCategory.Effect, 18), AddressOf SendWebStack, "(5:18) send POST request to send the Web-Stack to URL.")
+            '(5:19) clear the Web-Stack.
+            Add(New Trigger(TriggerCategory.Effect, 19), AddressOf ClearWebStack, "(5:19) clear the Web-Stack.")
 
         End Sub
 
@@ -75,200 +78,180 @@ Namespace Engine.Libraries
 
 #Region "Private Methods"
 
-        ''(5:19) clear the Web-Array.
+        ''' <summary>
+        ''' (5:19) clear the Web-Stack.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function ClearWebStack(reader As TriggerReader) As Boolean
             If Not IsNothing(WebStack) Then WebStack.Clear()
             Return True
         End Function
 
-        '(5:11)  remember setting {...} from Web-Array and store it into variable %Variable.
+        ''' <summary>
+        ''' (5:11) remember setting {...} from Web-Stack and store it into
+        ''' variable %Variable.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function RememberSetting(reader As TriggerReader) As Boolean
-            Try
-                Dim setting As String = reader.ReadString
-                Dim var As Variable = reader.ReadVariable(True)
-                If WebStack.ContainsKey(setting) Then
-                    var.Value = WebStack.Item(setting)
-                End If
-                Return True
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            Dim setting As String = reader.ReadString
+            Dim var As Variable = reader.ReadVariable(True)
+            If WebStack.ContainsKey(setting) Then
+                var.Value = WebStack.Item(setting)
+            End If
+            Return True
+
         End Function
 
-        '(5:60) remove variable %Variable from the Web-Array
+        ''' <summary>
+        ''' (5:60) remove variable %Variable from the Web-Stack
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function RemoveWebStack(reader As TriggerReader) As Boolean
             Dim var As Monkeyspeak.Variable = Variable.NoValue
-            Try
-                var = reader.ReadVariable()
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            var = reader.ReadVariable()
+
             WebStack.Remove(var.Name)
             Return True
         End Function
 
-        '(5:16) send GET request to send the Web-Array to URL.
+        ''' <summary>
+        ''' (5:16) send GET request to send the Web-Stack to URL.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function SendGetWebStack(reader As TriggerReader) As Boolean
 
             Dim page As WebRequests.WebData = Nothing
             Dim ws As New WebRequests(WebURL)
-            Try
-                SyncLock Me
-                    page = ws.WGet(WebStack)
-                    WebStack = page.WebStack
-                    If page.ReceivedPage Then
-                        FurcadiaSession.MSpage.Execute(70)
-                    End If
-                End SyncLock
-                If page.Status <> 0 Then Throw New WebException(page.ErrMsg)
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            SyncLock Me
+                page = ws.WGet(WebStack)
+                WebStack = page.WebStack
+                If page.ReceivedPage Then
+                    FurcadiaSession.MSpage.Execute(70)
+                End If
+            End SyncLock
+            If page.Status <> 0 Then Throw New WebException(page.ErrMsg)
+
             Return page.Status = 0
         End Function
 
-        '(5:18) send post request to send the Web-Array to the web host.
+        ''' <summary>
+        ''' (5:18) send post request to send the Web-Stack to the web host.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function SendWebStack(reader As TriggerReader) As Boolean
 
             Dim page As WebRequests.WebData = Nothing
             Dim ws As New WebRequests(WebURL)
-            Try
-                SyncLock Me
-                    page = ws.WPost(WebStack)
-                    WebStack = page.WebStack
-                    If page.ReceivedPage Then
-                        PageExecute(70)
-                    End If
-                End SyncLock
-                If page.Status <> 0 Then Throw New WebException(page.ErrMsg)
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            SyncLock Me
+                page = ws.WPost(WebStack)
+                WebStack = page.WebStack
+                If page.ReceivedPage Then
+                    PageExecute(70)
+                End If
+            End SyncLock
+            If page.Status <> 0 Then Throw New WebException(page.ErrMsg)
+
             Return page.Status = 0
         End Function
 
-        '(5:10)  Set the web URL to {...}
+        ''' <summary>
+        ''' (5:10) Set the web URL to {...}.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function SetURL(reader As TriggerReader) As Boolean
-            Try
-                WebURL = reader.ReadString
-                Return True
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            WebURL = reader.ReadString
+            Return True
         End Function
 
-        '(5:17) store variable %Variable to the Web-Array
+        ''' <summary>
+        ''' (5:17) store variable %Variable to the Web-Stack
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function StoreWebStack(reader As TriggerReader) As Boolean
 
-            Try
-                Dim var As Monkeyspeak.Variable = reader.ReadVariable()
-                If WebStack.ContainsKey(var.Name) = False Then
-                    WebStack.Add(var.Name.Substring(1), var.Value.ToString)
-                End If
-                Return True
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+            Dim var As Monkeyspeak.Variable = reader.ReadVariable()
+            If WebStack.ContainsKey(var.Name) = False Then
+                WebStack.Add(var.Name.Substring(1), var.Value.ToString)
+            End If
+            Return True
 
         End Function
 
         Private Function WebArrayContainArrayField(reader As TriggerReader) As Boolean
-            Try
-                Return WebStack.ContainsKey(reader.ReadString)
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            Return WebStack.ContainsKey(reader.ReadString)
+
         End Function
 
-        '(1:30) and Web-Array setting {...} is equal to {...},
+        ''' <summary>
+        ''' (1:30) and Web-Stack setting {...} is equal to {...},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function WebArrayEqualTo(reader As TriggerReader) As Boolean
-            Try
 
-                Dim setting As String
-                Try
-                    setting = WebStack.Item(reader.ReadString)
-                Catch
-                    setting = ""
-                End Try
-                Dim Check As String = reader.ReadString
-                Return setting = Check
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
+            Dim setting As String
+            Try
+                setting = WebStack.Item(reader.ReadString)
+            Catch
+                setting = ""
             End Try
+            Dim Check As String = reader.ReadString
+            Return setting = Check
+
         End Function
 
         Private Function WebArrayNotContainArrayField(reader As TriggerReader) As Boolean
-            Try
-                Return Not WebStack.ContainsKey(reader.ReadString)
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            Return Not WebStack.ContainsKey(reader.ReadString)
+
         End Function
 
-        '(1:31) and Web-Array setting {...} is not equal to {...},
+        ''' <summary>
+        ''' (1:31) and Web-Stack setting {...} is not equal to {...},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function WebArrayNotEqualTo(reader As TriggerReader) As Boolean
-            Try
-                Dim setting As String = Nothing
-                Dim value As String = reader.ReadString
-                If WebStack.ContainsKey(value) Then
-                    setting = WebStack.Item(value)
-                End If
-                Dim Check As String = reader.ReadString
-                Dim b As Boolean = setting <> Check
-                Return setting <> Check
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            Dim setting As String = Nothing
+            Dim value As String = reader.ReadString
+            If WebStack.ContainsKey(value) Then
+                setting = WebStack.Item(value)
+            End If
+            Dim Check As String = reader.ReadString
+            Dim b As Boolean = setting <> Check
+            Return setting <> Check
         End Function
 
 #End Region
@@ -518,6 +501,9 @@ Namespace Engine.Libraries
 
 #Region "Public Classes"
 
+        ''' <summary>
+        ''' Variable List
+        ''' </summary>
         Public Class WebData
 
 #Region "Public Fields"

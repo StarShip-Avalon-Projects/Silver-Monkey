@@ -1,7 +1,6 @@
 ﻿Imports System.Threading
 Imports Furcadia.Net
 Imports Furcadia.Net.Dream
-Imports MonkeyCore
 Imports Monkeyspeak
 
 Namespace Engine.Libraries
@@ -61,33 +60,38 @@ Namespace Engine.Libraries
 
         Public Delegate Sub MessageDelegate(ByRef message As String)
 
-        Public Sub LogError(reader As TriggerReader, ex As Exception)
-            'FurcadiaSession.LogError(reader, ex)
-        End Sub
+        'Public Sub LogError(reader As TriggerReader, ex As Exception)
+        '    '   FurcadiaSession.LogError(reader, ex)
+
+        'End Sub
 
         ''' <summary>
-        '''Sends Client Message to out Furcadia Session
+        ''' Send a raw instruction to the client
         ''' </summary>
-        ''' <param name="message">Message sring</param>
+        ''' <param name="message">
+        ''' Message sring
+        ''' </param>
         Public Sub SendClientMessage(ByRef message As String)
             FurcadiaSession.SendToClient(message)
         End Sub
 
         ''' <summary>
+        ''' Send Formated Text to Server
         ''' </summary>
         ''' <param name="message">
-        ''' Message String
+        ''' Client to server instruction
         ''' </param>
-        Public Sub sendServer(ByRef message As String)
-
-            FurcadiaSession.SendToServer(message)
-        End Sub
-
-#End Region
-
-#Region "Protected Fields"
-
-        Protected Shared writer As TextBoxWriter = Nothing
+        ''' <returns>
+        ''' True is the Server is Connected
+        ''' </returns>
+        Public Function sendServer(ByRef message As String) As Boolean
+            If FurcadiaSession.IsServerConnected Then
+                FurcadiaSession.SendFormattedTextToServer(message)
+                Return True
+            Else
+                Return False
+            End If
+        End Function
 
 #End Region
 

@@ -3,6 +3,9 @@ Imports Monkeyspeak
 
 Namespace Engine.Libraries
 
+    ''' <summary>
+    ''' Bot to Bot Messaging using Window Calls
+    ''' </summary>
     Public Class WmCpyDta
         Inherits MonkeySpeakLibrary
 
@@ -12,72 +15,81 @@ Namespace Engine.Libraries
             MyBase.New(session)
             '(0:75) When the bot receives a message from another bot on the same computer,
             Add(TriggerCategory.Cause, 75,
-Function()
-    Return True
-End Function, "(0:75) When the bot receives a message from another bot on the same computer,")
+                 Function()
+                     Return True
+                 End Function, "(0:75) When the bot receives a message from another bot on the same computer,")
             '(0:76) When the bot receives message {...} from another bot on the same computer,
             Add(TriggerCategory.Cause, 76,
-AddressOf ReceiveMessage, "(0:76) When the bot receives message {...} from another bot on the same computer,")
+                AddressOf ReceiveMessage, "(0:76) When the bot receives message {...} from another bot on the same computer,")
             '(0:77) When the bot receives a message containing {...} from another bot on the same computer,
             Add(TriggerCategory.Cause, 77,
-AddressOf ReceiveMessageContaining, "(0:77) When the bot receives a message containing {...} from another bot on the same computer,")
+               AddressOf ReceiveMessageContaining, "(0:77) When the bot receives a message containing {...} from another bot on the same computer,")
 
             '(5:75) send message {...} to bot named {...}.
             Add(TriggerCategory.Effect, 75,
-AddressOf SendMessage, "(5:75) send message {...} to bot named {...}.")
+                AddressOf SendMessage, "(5:75) send message {...} to bot named {...}.")
 
             '(5:76) set Variable %Variable to the Message the bot last received.
             Add(TriggerCategory.Effect, 76,
-AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot last received.")
+                AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot last received.")
         End Sub
 
 #End Region
 
 #Region "Public Methods"
 
-        '(0:76) When the bot receives message {...} from another bot on the same computer,
+        ''' <summary>
+        ''' (0:76) When the bot receives message {...} from another bot on
+        ''' the same computer,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function ReceiveMessage(reader As TriggerReader) As Boolean
             Dim msMsg As String = ""
             Dim msg As String = ""
-            Try
-                'Debug.Print("msgContains Begin Execution")
-                msMsg = reader.ReadString()
-                'Debug.Print("msMsg = " & msMsg)
-                msg = MsPage.GetVariable("MESSAGE").Value.ToString
-                'Debug.Print("Msg = " & msg)
-                Return msg.Equals(msMsg)
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            'Debug.Print("msgContains Begin Execution")
+            msMsg = reader.ReadString()
+            'Debug.Print("msMsg = " & msMsg)
+            msg = MsPage.GetVariable("MESSAGE").Value.ToString
+            'Debug.Print("Msg = " & msg)
+            Return msg.Equals(msMsg)
+
         End Function
 
-        '(0:77) When the bot receives a message containing {...} from another bot on the same computer,
+        ''' <summary>
+        ''' (0:77) When the bot receives a message containing {...} from
+        ''' another bot on the same computer,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function ReceiveMessageContaining(reader As TriggerReader) As Boolean
             Dim msMsg As String = ""
             Dim msg As String = ""
-            Try
-                'Debug.Print("msgContains Begin Execution")
-                msMsg = reader.ReadString()
-                'Debug.Print("msMsg = " & msMsg)
-                msg = MsPage.GetVariable("MESSAGE").Value.ToString
-                'Debug.Print("Msg = " & msg)
-                Return msg.Contains(msMsg)
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            'Debug.Print("msgContains Begin Execution")
+            msMsg = reader.ReadString()
+            'Debug.Print("msMsg = " & msMsg)
+            msg = MsPage.GetVariable("MESSAGE").Value.ToString
+            'Debug.Print("Msg = " & msg)
+            Return msg.Contains(msMsg)
+
         End Function
 
-        '(5:75) send message {...} to bot named {...}.
+        ''' <summary>
+        ''' (5:75) send message {...} to bot named {...}.
+        ''' <para>
+        ''' Currently Disabled
+        ''' </para>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function SendMessage(reader As TriggerReader) As Boolean
             'Dim msMsg As String = ""
             'Dim Fur As String = ""
@@ -118,20 +130,20 @@ AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot las
             Return False
         End Function
 
-        '(5:76) set Variable %Variable to the Message the bot last received.
+        ''' <summary>
+        ''' (5:76) set Variable %Variable to the Message the bot last received.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function SetVariable(reader As TriggerReader) As Boolean
             Dim Var As Variable
-            Try
-                Var = reader.ReadVariable(True)
-                Var.Value = FurcadiaSession.Player.Message
-                Return True
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+
+            Var = reader.ReadVariable(True)
+            Var.Value = FurcadiaSession.Player.Message
+            Return True
+
         End Function
 
 #End Region

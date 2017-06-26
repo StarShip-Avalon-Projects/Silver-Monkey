@@ -6,7 +6,7 @@ Imports Monkeyspeak
 Namespace Engine.Libraries
 
     ''' <summary>
-    ''' Monkey Speak Interface to the PhoenixSpeak server interface
+    ''' Monkey Speak Interface to the PhoenixSpeak server command line interface
     ''' <para>
     ''' Checks and executes Basic PhoenixSpeak response triggers
     ''' </para>
@@ -36,15 +36,15 @@ Namespace Engine.Libraries
             PSPage = New StringBuilder()
             PSInfoCache = New List(Of PhoenixSpeak.Variable)(100)
             Add(TriggerCategory.Cause, 80,
-        Function()
-            Return True
-        End Function,
-     "(0:80) When the bot sees a Phoenix Speak response")
+                Function()
+                    Return True
+                End Function,
+                 "(0:80) When the bot sees a Phoenix Speak response")
             Add(TriggerCategory.Cause, 81,
-             AddressOf msgIs, "(0:81) When the bot sees the Phoenix Speak response {...},")
+                AddressOf msgIs, "(0:81) When the bot sees the Phoenix Speak response {...},")
 
             Add(TriggerCategory.Cause, 82,
-             AddressOf msgContains, "(0:82) When the bot sees a Phoenix Speak response with {...} in it,")
+                AddressOf msgContains, "(0:82) When the bot sees a Phoenix Speak response with {...} in it,")
 
             '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
             Add(TriggerCategory.Effect, 60, AddressOf RemberPSInforTrigFurre, "(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.")
@@ -93,256 +93,267 @@ Namespace Engine.Libraries
 
 #Region "Public Methods"
 
-        '(5:91) Forget Phoenix Speak info {...} for this dream.
+        ''' <summary>
+        ''' (5:91) Forget Phoenix Speak info {...} for this dream.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function ForgetDreamPS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                sendServer("ps clear dream." + info)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim info As String = reader.ReadString
+            Return sendServer("ps clear dream." + info)
+
         End Function
 
-        '(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.
+        ''' <summary>
+        ''' (5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function ForgetFurreNamedPS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                Dim furre As String = reader.ReadString
-                sendServer("ps clear characer." + furre + "." + info)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim info As String = reader.ReadString
+            Dim furre As String = reader.ReadString
+            Return sendServer("ps clear characer." + furre + "." + info)
+
         End Function
 
-        '(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.
+        ''' <summary>
+        ''' (5:85) Forget Phoenix Speak info {...} for the Triggering Furre.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function ForgetTrigFurrePS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                Dim furre As String = FurcadiaSession.Player.ShortName
-                sendServer("ps clear characer." + furre + "." + info)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim info As String = reader.ReadString
+            Dim furre As String = FurcadiaSession.Player.ShortName
+            Return sendServer("ps clear characer." + furre + "." + info)
         End Function
 
         Public Function getPSinfo(reader As TriggerReader) As Boolean
-            Try
-                Dim Info As New PhoenixSpeak.Variable(reader.ReadString())
-                Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
-                If PSInfoCache.Contains(Info) Then
-                    var = Info
-                Else
-                    var.Value = Nothing
-                End If
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim Info As New PhoenixSpeak.Variable(reader.ReadString())
+            Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            If PSInfoCache.Contains(Info) Then
+                var = Info
+            Else
+                var.Value = Nothing
+            End If
+            Return True
+
         End Function
 
-        '(5:90) Memorize Phoenix Speak info {...} for this dream.
+        ''' <summary>
+        ''' (5:90) Memorize Phoenix Speak info {...} for this dream.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function MemorizeDreamPS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                sendServer("ps set dream." + info)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+            Dim info As String = reader.ReadString
+            Return sendServer("ps set dream." + info)
+
         End Function
 
-        '(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.
+        ''' <summary>
+        ''' (5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function MemorizeFurreNamedPS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                Dim furre As String = reader.ReadString
-                sendServer("ps set characer." + furre + "." + info)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim info As String = reader.ReadString
+            Dim furre As String = reader.ReadString
+            Return sendServer("ps set characer." + furre + "." + info)
+
         End Function
 
-        '(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.
+        ''' <summary>
+        ''' (5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function MemorizeTrigFurrePS(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                Dim furre As String = FurcadiaSession.Player.ShortName
-                sendServer("ps set characer." + furre + "." + info)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim info As String = reader.ReadString
+            Dim furre As String = FurcadiaSession.Player.ShortName
+            Return sendServer("ps set characer." + furre + "." + info)
         End Function
 
-        '(0:17) When someone whispers something with {...} in it,
+        ''' <summary>
+        ''' (0:17) When someone whispers something with {...} in it,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function msgContains(reader As TriggerReader) As Boolean
             Dim msMsg As String = ""
             Dim msg As String = ""
-            Try
-                'Debug.Print("msgContains Begin Execution")
-                msMsg = reader.ReadString()
-                'Debug.Print("msMsg = " & msMsg)
-                msg = MsPage.GetVariable("MESSAGE").Value.ToString
-                'Debug.Print("Msg = " & msg)
-                Return msg.Contains(msMsg)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            'Debug.Print("msgContains Begin Execution")
+            msMsg = reader.ReadString()
+            'Debug.Print("msMsg = " & msMsg)
+            msg = MsPage.GetVariable("MESSAGE").Value.ToString
+            'Debug.Print("Msg = " & msg)
+            Return msg.Contains(msMsg)
+
         End Function
 
+        'TODO: Move to Base Lib
         Public Function msgIs(reader As TriggerReader) As Boolean
-            Try
-                Dim msMsg As String = reader.ReadString()
-                Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
-                If msMsg = msg.Value.ToString Then Return True
-                Return False
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim msMsg As String = reader.ReadString()
+            Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
+            If msMsg = msg.Value.ToString Then Return True
+            Return False
+
         End Function
 
+        'TODO: Move to Base Lib
         Function msgIsNot(reader As TriggerReader) As Boolean
-            Try
-                Dim msMsg As String = reader.ReadString()
-                Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
-                If msMsg <> msg.Value.ToString Then Return True
-                Return False
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim msMsg As String = reader.ReadString()
+            Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
+            If msMsg <> msg.Value.ToString Then Return True
+            Return False
+
         End Function
 
+        'TODO: Move to Base Lib
         Function msgNotContain(reader As TriggerReader) As Boolean
-            Try
-                Dim msMsg As String = reader.ReadString()
-                'Debug.Print("msMsg = " & msMsg)
-                Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
-                'Debug.Print("Msg = " & msg.Value.ToString)
-                If msg.Value.ToString.Contains(msMsg) Then Return False
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim msMsg As String = reader.ReadString()
+            'Debug.Print("msMsg = " & msMsg)
+            Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
+            'Debug.Print("Msg = " & msg.Value.ToString)
+            If msg.Value.ToString.Contains(msMsg) Then Return False
+            Return True
+
         End Function
 
-        '(5:94) execute Phoenix Speak command {...}.
+        ''' <summary>
+        ''' (5:94) execute Phoenix Speak command {...}.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function PSCommand(reader As TriggerReader) As Boolean
-            Try
-                Dim info As String = reader.ReadString
-                sendServer("ps " + info)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim info As String = reader.ReadString
+            Return sendServer("ps " + info)
+
         End Function
 
         Function PSForgetDream(reader As TriggerReader) As Boolean
-            Try
-                sendServer("ps clear dream ")
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Return sendServer("ps clear dream ")
+
         End Function
 
         Function PSForgetFurreNamed(reader As TriggerReader) As Boolean
-            Try
-                Dim Furre As String = reader.ReadString
-                sendServer("ps clear character. " + Furre)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim Furre As String = reader.ReadString
+            Return sendServer("ps clear character. " + Furre)
+
         End Function
 
         Function PSForgetTriggeringFurre(reader As TriggerReader) As Boolean
-            Try
-                sendServer("ps clear character." + FurcadiaSession.Player.ShortName)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Return sendServer("ps clear character." + FurcadiaSession.Player.ShortName)
+
         End Function
 
-        '(5:81) Store PSInfo Key Names to Variable %Variable.
+        ''' <summary>
+        ''' (5:81) Store PSInfo Key Names to Variable %Variable.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function PSInfoKeyToVariable(reader As TriggerReader) As Boolean
-            Try
-                Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
-                Dim L As New List(Of String)
-                For Each Name As PhoenixSpeak.Variable In PSInfoCache
-                    L.Add(Name.Name)
-                Next
-                Var.Value = String.Join(" ", L)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim Var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim L As New List(Of String)
+            For Each Name As PhoenixSpeak.Variable In PSInfoCache
+                L.Add(Name.Name)
+            Next
+            Var.Value = String.Join(" ", L)
+
             Return True
         End Function
 
-        '(5:63) get all Phoenix Speak info for all characters and put it into the PSInfo cache.
+        ''' <summary>
+        ''' (5:63) get all Phoenix Speak info for all characters and put it
+        ''' into the PSInfo cache.
+        ''' <para>
+        ''' TODO: Check Wording for this
+        ''' </para>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function RemberPSInfoAllCharacters(reader As TriggerReader) As Boolean
-            Try
-                sendServer("ps get character.*")
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Return sendServer("ps get character.*")
+
         End Function
 
-        '(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.
+        ''' <summary>
+        ''' (5:62) get All Phoenix Speak info for the dream and put it into
+        ''' the PSInfo Cache.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function RemberPSInfoAllDream(reader As TriggerReader) As Boolean
-            Try
-                sendServer("ps get dream.*")
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Return sendServer("ps get dream.*")
+
         End Function
 
-        '(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.
+        ''' <summary>
+        ''' (5:61) get All Phoenix Speak info for the Furre Named {...} and
+        ''' put it into the PSInfo Cache.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function RemberPSInforFurreNamed(reader As TriggerReader) As Boolean
-            Try
-                Dim furre As String = reader.ReadString
-                sendServer("ps get characer." + furre + ".*")
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim furre As String = reader.ReadString
+            Return sendServer("ps get characer." + furre + ".*")
+
         End Function
 
-        '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
+        ''' <summary>
+        ''' (5:60) get All Phoenix Speak info for the triggering furre and
+        ''' put it into the PSInfo Cache.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function RemberPSInforTrigFurre(reader As TriggerReader) As Boolean
-            Try
-                Dim furre As String = FurcadiaSession.Player.ShortName
-                sendServer("ps set characer." + furre + ".*")
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+
+            Dim furre As String = FurcadiaSession.Player.ShortName
+            Return sendServer("ps set characer." + furre + ".*")
+
         End Function
 
 #End Region

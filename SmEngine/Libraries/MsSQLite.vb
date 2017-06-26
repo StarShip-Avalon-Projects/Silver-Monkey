@@ -221,157 +221,173 @@ Namespace Engine.Libraries
             Dim Variable As Double = 0
             Dim Furre As String = Nothing
 
-            Try
-                info = reader.ReadString
-                Furre = FurcadiaShortName(reader.ReadString)
-                Variable = ReadVariableOrNumber(reader, False)
-                Dim Value As Double = 0
-                Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
-                Return Variable = Value
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim Value As Double = 0
+            Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
+            Return Variable = Value
 
-            Return False
         End Function
 
-        '(1: ) and the Database info {...} about the furre named {...} is equal to {...},
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the furre named {...} is
+        ''' equal to {...},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function FurreNamedinfoEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
             Dim Furre As String = FurcadiaShortName(reader.ReadString())
             Dim str As String = reader.ReadString
-            Try
-                Return str = GetValueFromTable(Info, Furre).ToString
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return False
+
+            Return str = GetValueFromTable(Info, Furre).ToString
+
         End Function
 
-        '(1: ) and the Database info {...} about the furre named {...} is greater than #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the furre named {...} is
+        ''' greater than #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function FurreNamedinfoGreaterThanNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim Variable As Double = 0
             Dim Furre As String = Nothing
-            Try
-                info = reader.ReadString
-                Furre = FurcadiaShortName(reader.ReadString)
-                Variable = ReadVariableOrNumber(reader, False)
-                Dim check As Object = GetValueFromTable(info, Furre)
-                Dim Value As Double = 0
-                Double.TryParse(check.ToString, Value)
-                Return Value > Variable
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
 
-            Return False
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim Value As Double = 0
+            Double.TryParse(check.ToString, Value)
+            Return Value > Variable
+
         End Function
 
-        '(1: ) and the Database info {...} about the furre named {...} is greater than #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the furre named {...} is
+        ''' greater than #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function FurreNamedinfoGreaterThanOrEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim Variable As Double = 0
             Dim Furre As String = Nothing
-            Try
-                info = reader.ReadString
-                Furre = FurcadiaShortName(reader.ReadString)
-                Variable = ReadVariableOrNumber(reader, False)
-                Dim Value As Double = 0
-                Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
-                Return Value >= Variable
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
 
-            Return False
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim Value As Double = 0
+            Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
+            Return Value >= Variable
+
         End Function
 
-        '(1: ) and the Database info {...} about the furre named {...} is less than #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the furre named {...} is
+        ''' less than #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function FurreNamedinfoLessThanNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim Variable As Double = 0
             Dim Furre As String = Nothing
-            Try
-                info = reader.ReadString
-                Furre = FurcadiaShortName(reader.ReadString)
 
-                Variable = ReadVariableOrNumber(reader, False)
-                Dim Value As Double = 0
-                Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
-                Return Value < Variable
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
 
-            Return False
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim Value As Double = 0
+            Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
+            Return Value < Variable
+
         End Function
 
-        '(1: ) and the Database info {...} about the furre named {...} is less than #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the furre named {...} is
+        ''' less than #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function FurreNamedinfoLessThanOrEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim Variable As Double = 0
             Dim Furre As String = Nothing
-            Try
-                info = reader.ReadString
-                Furre = FurcadiaShortName(reader.ReadString)
-                Variable = ReadVariableOrNumber(reader, False)
-                Dim check As Object = GetValueFromTable(info, Furre)
-                Dim Value As Double = 0
-                Double.TryParse(check.ToString, Value)
-                Return Value <= Variable
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
 
-            Return False
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim Value As Double = 0
+            Double.TryParse(check.ToString, Value)
+            Return Value <= Variable
+
         End Function
 
-        '(1: ) and the Database info {...} about the furre named {...} is not equal to #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the furre named {...} is
+        ''' not equal to #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function FurreNamedinfoNotEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim Variable As Double = 0
             Dim Furre As String = Nothing
-            Try
-                info = reader.ReadString
-                Furre = FurcadiaShortName(reader.ReadString)
 
-                Variable = ReadVariableOrNumber(reader, False)
-                Dim check As Object = GetValueFromTable(info, Furre)
-                Dim Value As Double = 0
-                Double.TryParse(check.ToString, Value)
-                Return Value <> Variable
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            info = reader.ReadString
+            Furre = FurcadiaShortName(reader.ReadString)
 
-            Return False
+            Variable = ReadVariableOrNumber(reader, False)
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim Value As Double = 0
+            Double.TryParse(check.ToString, Value)
+            Return Value <> Variable
+
         End Function
 
-        '(1: ) and the Database info {...} about the furre named {...} is not equal to {...},
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the furre named {...} is
+        ''' not equal to {...},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function FurreNamedinfoNotEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
 
             Dim str As String = reader.ReadString
 
-            Try
-                Return str <> GetValueFromTable(Info, Furre).ToString
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return False
+            Return str <> GetValueFromTable(Info, Furre).ToString
+
         End Function
 
-        '(1:x) And the Database info {..} in Settings Table  {...} Is equal to {...},
+        ''' <summary>
+        ''' (1:x) And the Database info {..} in Settings Table {...} Is
+        ''' equal to {...},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function SettingEqualTo(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString(True)
             Dim Table As String = reader.ReadString(True)
@@ -381,20 +397,22 @@ Namespace Engine.Libraries
             "inner join SettingsTableMaster on " +
             "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
             "where SettingsTableMaster.Setting = '" + Info + "' "
-            Try
 
-                Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-                cache = db.GetValueFromTable(cmd)
-                QueryRun = True
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
 
-                Return cache.Item(Info).ToString = Value
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Return cache.Item(Info).ToString = Value
+
         End Function
 
-        '(1:x) And the Database info  {...} in Settings Table {...} exists,
+        ''' <summary>
+        ''' (1:x) And the Database info {...} in Settings Table {...} exists,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function SettingExist(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString(True)
             Dim setting As String = reader.ReadString(True)
@@ -403,18 +421,22 @@ Namespace Engine.Libraries
             "inner join SettingsTableMaster on " +
             "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
             "where SettingsTableMaster.Setting = '" + setting + "' "
-            Try
-                Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-                cache = db.GetValueFromTable(cmd)
-                QueryRun = True
-                Return cache.Count > 0
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Return cache.Count > 0
+
         End Function
 
-        '(1:x) And the Database info {..} in Settings Table  {...} Is greater than #,
+        ''' <summary>
+        ''' (1:x) And the Database info {..} in Settings Table {...} Is
+        ''' greater than #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function SettingGreaterThan(reader As TriggerReader) As Boolean
             Dim Setting As String = reader.ReadString(True)
             Dim Table As String = reader.ReadString(True)
@@ -425,20 +447,23 @@ Namespace Engine.Libraries
             "inner join SettingsTableMaster on " +
             "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
             "where SettingsTableMaster.Setting = '" + Setting + "' "
-            Try
-                cache = db.GetValueFromTable(cmd)
-                QueryRun = True
-                Dim num As Double = 0
-                Double.TryParse(cache.Item(Setting).ToString, num)
-                Return num > Number
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num > Number
 
         End Function
 
-        '(1:x )And the Database info {..} in Settings Table  {...} Is greater than Or equl to #,
+        ''' <summary>
+        ''' (1:x )And the Database info {..} in Settings Table {...} Is
+        ''' greater than Or equl to #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function SettingGreaterThanOrEqualTo(reader As TriggerReader) As Boolean
             Dim Setting As String = reader.ReadString(True)
             Dim Table As String = reader.ReadString(True)
@@ -449,19 +474,23 @@ Namespace Engine.Libraries
             "inner join SettingsTableMaster on " +
             "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
             "where SettingsTableMaster.Setting = '" + Setting + "' "
-            Try
-                cache = db.GetValueFromTable(cmd)
-                QueryRun = True
-                Dim num As Double = 0
-                Double.TryParse(cache.Item(Setting).ToString, num)
-                Return num >= Number
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num >= Number
+
         End Function
 
-        '(1:x )And the Database info {..} in Settings Table  {...} Is less than #,
+        ''' <summary>
+        ''' (1:x )And the Database info {..} in Settings Table {...} Is less
+        ''' than #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function SettingLessThan(reader As TriggerReader) As Boolean
             Dim Setting As String = reader.ReadString(True)
             Dim Table As String = reader.ReadString(True)
@@ -472,20 +501,23 @@ Namespace Engine.Libraries
             "inner join SettingsTableMaster on " +
             "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
             "where SettingsTableMaster.Setting = '" + Setting + "' "
-            Try
-                cache = db.GetValueFromTable(cmd)
-                QueryRun = True
-                Dim num As Double = 0
-                Double.TryParse(cache.Item(Setting).ToString, num)
-                Return num < Number
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num < Number
 
         End Function
 
-        '(1:x )And the Database info {..} in Settings Table  {...} Is less than Or equl to #,
+        ''' <summary>
+        ''' (1:x )And the Database info {..} in Settings Table {...} Is less
+        ''' than Or equl to #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function SettingLessThanOrEqualTo(reader As TriggerReader) As Boolean
             Dim Setting As String = reader.ReadString(True)
             Dim Table As String = reader.ReadString(True)
@@ -496,19 +528,23 @@ Namespace Engine.Libraries
             "inner join SettingsTableMaster on " +
             "SettingsTableMaster." + Setting + " = SettingsTable.[SettingsTableID] " +
             "where SettingsTableMaster.Setting = '" + Setting + "' "
-            Try
-                cache = db.GetValueFromTable(cmd)
-                QueryRun = True
-                Dim num As Double = 0
-                Double.TryParse(cache.Item(Setting).ToString, num)
-                Return num <= Number
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Dim num As Double = 0
+            Double.TryParse(cache.Item(Setting).ToString, num)
+            Return num <= Number
+
         End Function
 
-        '(1:x) And the Database info {..} in Settings Table  {...} Is Not equal to {...},
+        ''' <summary>
+        ''' (1:x) And the Database info {..} in Settings Table {...} Is Not
+        ''' equal to {...},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function SettingNotEqualTo(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString(True)
             Dim Table As String = reader.ReadString(True)
@@ -518,19 +554,22 @@ Namespace Engine.Libraries
             "inner join SettingsTableMaster on " +
             "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
             "where SettingsTableMaster.Setting = '" + Info + "' "
-            Try
 
-                Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-                cache = db.GetValueFromTable(cmd)
-                QueryRun = True
-                Return cache.Item(Info).ToString <> Value
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Return cache.Item(Info).ToString <> Value
+
         End Function
 
-        '(1:x) And the Database info  {...} in Settings Table {...} doesn't exist,
+        ''' <summary>
+        ''' (1:x) And the Database info {...} in Settings Table {...}
+        ''' doesn't exist,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function SettingNotExist(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString(True)
             Dim setting As String = reader.ReadString(True)
@@ -539,173 +578,188 @@ Namespace Engine.Libraries
             "inner join SettingsTableMaster on " +
             "SettingsTableMaster." + Info + " = SettingsTable.[SettingsTableID] " +
             "where SettingsTableMaster.Setting = '" + setting + "' "
-            Try
-                Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
-                cache = db.GetValueFromTable(cmd)
-                QueryRun = True
-                Return cache.Count = 0
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            cache = db.GetValueFromTable(cmd)
+            QueryRun = True
+            Return cache.Count = 0
+
         End Function
 
-        '(1: ) and the Database info {...} about the triggering furre is equal to #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the triggering furre is
+        ''' equal to #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function TriggeringFurreinfoEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim number As Double = 0
             Dim Furre As String = Nothing
             Dim Num As Double = 0
 
-            Try
-                info = reader.ReadString
-                number = ReadVariableOrNumber(reader, False)
-                Furre = MsPage.GetVariable(MS_Name).Value.ToString
-                Dim Value As Double = 0
-                Double.TryParse(GetValueFromTable(info, FurcadiaShortName(Furre)).ToString, Value)
+            info = reader.ReadString
+            number = ReadVariableOrNumber(reader, False)
+            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            Dim Value As Double = 0
+            Double.TryParse(GetValueFromTable(info, FurcadiaShortName(Furre)).ToString, Value)
 
-                Return number = Value
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Return number = Value
 
-            Return False
         End Function
 
-        '(1: ) and the Database info {...} about the triggering furre is equal to {...},
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the triggering furre is
+        ''' equal to {...},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
             Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
             Dim str As String = reader.ReadString
-            Try
-                If str = GetValueFromTable(Info, Furre).ToString Then Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            If str = GetValueFromTable(Info, Furre).ToString Then Return True
             Return False
         End Function
 
-        '(1: ) and the Database info {...} about the triggering furre is greater than #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the triggering furre is
+        ''' greater than #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function TriggeringFurreinfoGreaterThanNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim number As Double = 0
             Dim Furre As String = Nothing
-            Try
-                info = reader.ReadString
-                number = ReadVariableOrNumber(reader, False)
-                Furre = MsPage.GetVariable(MS_Name).Value.ToString
-                Furre = FurcadiaShortName(Furre)
-                Dim check As Object = GetValueFromTable(info, Furre)
-                Dim Value As Double = 0
-                Double.TryParse(check.ToString, Value)
-                Return Value > number
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
 
-            Return False
+            info = reader.ReadString
+            number = ReadVariableOrNumber(reader, False)
+            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            Furre = FurcadiaShortName(Furre)
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim Value As Double = 0
+            Double.TryParse(check.ToString, Value)
+            Return Value > number
+
         End Function
 
-        '(1: ) and the Database info {...} about the triggering furre is greater than or equal to #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the triggering furre is
+        ''' greater than or equal to #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function TriggeringFurreinfoGreaterThanOrEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim number As Double = 0
             Dim Furre As String = Nothing
-            Try
-                info = reader.ReadString
-                number = ReadVariableOrNumber(reader, False)
-                Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
-                Dim Num As Double = 0
-                Dim check As Object = GetValueFromTable(info, Furre)
-                Double.TryParse(check.ToString, Num)
-                Return Num >= number
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
 
-            Return False
+            info = reader.ReadString
+            number = ReadVariableOrNumber(reader, False)
+            Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
+            Dim Num As Double = 0
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Double.TryParse(check.ToString, Num)
+            Return Num >= number
+
         End Function
 
-        '(1: ) and the Database info {...} about the triggering furre is less than #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the triggering furre is
+        ''' less than #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function TriggeringFurreinfoLessThanNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim number As Double = 0
             Dim Furre As String = Nothing
-            Try
-                info = reader.ReadString
-                number = ReadVariableOrNumber(reader, False)
-                Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
-                Dim Num As Double = 0
-                Dim check As Object = GetValueFromTable(info, Furre)
-                Double.TryParse(check.ToString, Num)
 
-                Return Num < number
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            info = reader.ReadString
+            number = ReadVariableOrNumber(reader, False)
+            Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
+            Dim Num As Double = 0
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Double.TryParse(check.ToString, Num)
 
-            Return False
+            Return Num < number
+
         End Function
 
-        '(1: ) and the Database info {...} about the triggering furre is less than #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the triggering furre is
+        ''' less than #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function TriggeringFurreinfoLessThanOrEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim number As Double = 0
             Dim Furre As String = Nothing
-            Try
-                info = reader.ReadString
-                number = ReadVariableOrNumber(reader, False)
-                Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
-                Dim Num As Double = 0
-                Dim check As Object = GetValueFromTable(info, Furre)
-                Double.TryParse(check.ToString, Num)
-                Return Num <= number
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
 
-            Return False
+            info = reader.ReadString
+            number = ReadVariableOrNumber(reader, False)
+            Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
+            Dim Num As Double = 0
+            Dim check As Object = GetValueFromTable(info, Furre)
+            Double.TryParse(check.ToString, Num)
+            Return Num <= number
+
         End Function
 
-        '(1: ) and the Database info {...} about the triggering furre is not equal to #,
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the triggering furre is
+        ''' not equal to #,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function TriggeringFurreinfoNotEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
             Dim number As Double = 0
             Dim Furre As String = Nothing
-            Try
-                info = reader.ReadString
-                number = ReadVariableOrNumber(reader, False)
-                Furre = MsPage.GetVariable(MS_Name).Value.ToString
-                Furre = FurcadiaShortName(Furre)
-                Dim val As String = GetValueFromTable(info, Furre).ToString
-                Dim Value As Double = 0
-                Double.TryParse(val, Value)
-                Return Value <> number
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
 
-            Return False
+            info = reader.ReadString
+            number = ReadVariableOrNumber(reader, False)
+            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            Furre = FurcadiaShortName(Furre)
+            Dim val As String = GetValueFromTable(info, Furre).ToString
+            Dim Value As Double = 0
+            Double.TryParse(val, Value)
+            Return Value <> number
+
         End Function
 
-        '(1: ) and the Database info {...} about the triggering furre is not equal to {...},
+        ''' <summary>
+        ''' (1: ) and the Database info {...} about the triggering furre is
+        ''' not equal to {...},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
             Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
             Dim str As String = reader.ReadString
-            Try
-                If str <> GetValueFromTable(Info, Furre).ToString Then Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            If str <> GetValueFromTable(Info, Furre).ToString Then Return True
+
             Return False
         End Function
 
@@ -736,7 +790,13 @@ Namespace Engine.Libraries
 
 #Region "Effect Functions"
 
-        '(5:513) add column {...} with type {...} to the Furre table.
+        ''' <summary>
+        ''' (5:513) add column {...} with type {...} to the Furre table.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function AddColumn(reader As TriggerReader) As Boolean
             Dim Column As String = reader.ReadString
             Dim Type As String = reader.ReadString
@@ -745,21 +805,24 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-        '(5:423) take the sum of column{...} in table {...} and put it into variable %
+        ''' <summary>
+        ''' (5:423) take the sum of column{...} in table {...} and put it
+        ''' into variable %
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function ColumnSum(reader As TriggerReader) As Boolean
             Dim Table As String = ""
             Dim Column As String = ""
             Dim Total As Variable
             Dim TotalSum As Double = 0
 
-            Try
-                Column = reader.ReadString
-                Table = reader.ReadString
-                Total = reader.ReadVariable(True)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Column = reader.ReadString
+            Table = reader.ReadString
+            Total = reader.ReadVariable(True)
+
             Dim sql As String = "SELECT " & Column & " FROM " & Table & " ;"
             Dim dt As DataTable = SQLiteDatabase.GetDataTable(sql)
             Column = Column.Replace("[", "")
@@ -783,7 +846,13 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-        '(5:419) delete all Database info about the furre named {...}.
+        ''' <summary>
+        ''' (5:419) delete all Database info about the furre named {...}.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
             Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
@@ -791,7 +860,13 @@ Namespace Engine.Libraries
 
         End Function
 
-        '(5:418) delete all Database info about the triggering furre.
+        ''' <summary>
+        ''' (5:418) delete all Database info about the triggering furre.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
             Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
             Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
@@ -799,56 +874,71 @@ Namespace Engine.Libraries
 
         End Function
 
-        '(5:551) execute query {...}. Select * from table where name=%2
-        ' "Has a query been run since the last time someone asked for a result? If so, if read() then export one row.
+        ''' <summary>
+        ''' (5:551) execute query {...}.
+        ''' <para>
+        ''' Select * from table where name=%2 "Has a query been run since
+        ''' the last time someone asked for a result? If so, if read() then
+        ''' export one row.
+        ''' </para>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function ExecuteQuery(reader As TriggerReader) As Boolean
             Dim str As String = ""
 
-            Try
-                str = reader.ReadString
-                str = str.Trim
-                SyncLock (lock)
-                    cache.Clear()
-                    QueryRun = False
-                    If str.ToUpper.StartsWith("SELECT") Then
-                        Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
+            str = reader.ReadString
+            str = str.Trim
+            SyncLock (lock)
+                cache.Clear()
+                QueryRun = False
+                If str.ToUpper.StartsWith("SELECT") Then
+                    Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
 
-                        cache = db.GetValueFromTable(str)
-                        QueryRun = True
+                    cache = db.GetValueFromTable(str)
+                    QueryRun = True
 
-                        Return cache.Count > 0
-                    End If
-                    SQLiteDatabase.ExecuteNonQuery(str)
-                    Return True
-                End SyncLock
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+                    Return cache.Count > 0
+                End If
+                SQLiteDatabase.ExecuteNonQuery(str)
+                Return True
+            End SyncLock
 
         End Function
 
-        '(5:422) get the total number of records from table {...} and put it into variable %.
+        ''' <summary>
+        ''' (5:422) get the total number of records from table {...} and put
+        ''' it into variable %.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function GetTotalRecords(reader As TriggerReader) As Boolean
             Dim Table As String = ""
             Dim Total As Variable
             Dim num As Double = 0
 
-            Try
-                Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
-                Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
-                Total = reader.ReadVariable(True)
-                Dim count As String = SQLiteDatabase.ExecuteScalar("select count(*) from [" & Table & "]")
-                Total.Value = count
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
+            Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
+            Total = reader.ReadVariable(True)
+            Dim count As String = SQLiteDatabase.ExecuteScalar("select count(*) from [" & Table & "]")
+            Total.Value = count
+            Return True
 
         End Function
 
-        '(5:506) add furre named {%NewMember} with the default access level "1" to the Furre Table in the database if he, she, or it doesn't exist.
+        ''' <summary>
+        ''' (5:506) add furre named {%NewMember} with the default access
+        ''' level "1" to the Furre Table in the database if he, she, or it
+        ''' doesn't exist.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function InsertFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
             Dim info As String
@@ -864,16 +954,19 @@ Namespace Engine.Libraries
             data.Add("date added", Date.Now.ToString)
             data.Add("date modified", Date.Now.ToString)
             data.Add("Access Level", info)
-            Try
-                db.Insert("FURRE", data)
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            db.Insert("FURRE", data)
+            Return True
+
         End Function
 
-        '(5:405) Add the triggering furre with default access level to the Furre Table in the database if he, she or it don't already exist.
+        ''' <summary>
+        ''' (5:405) Add the triggering furre with default access level to
+        ''' the Furre Table in the database if he, she or it don't already exist.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
             Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
             Dim info As String = reader.ReadString
@@ -890,81 +983,95 @@ Namespace Engine.Libraries
             data.Add("date added", Date.Now.ToString)
             data.Add("date modified", Date.Now.ToString)
             data.Add("Access Level", value)
-            Try
-                db.Insert("FURRE", data)
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            db.Insert("FURRE", data)
+            Return True
+
         End Function
 
-        '(5:550) take variable %Variable , prepare it for a query, and put it in variable %Variable   (this is your escaping call, which would depend on however you have to do it internally)
+        ''' <summary>
+        ''' (5:550) take variable %Variable , prepare it for a query, and
+        ''' put it in variable %Variable (this is your escaping call, which
+        ''' would depend on however you have to do it internally)
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function PrepQuery(reader As TriggerReader) As Boolean
             Dim var1 As Variable
             Dim var2 As Variable
-            Try
-                var1 = reader.ReadVariable(True)
-                var2 = reader.ReadVariable(True)
-                Dim str As String = var1.Value.ToString
-                str = str.Replace("'", "''")
-                var2.Value = str
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            var1 = reader.ReadVariable(True)
+            var2 = reader.ReadVariable(True)
+            Dim str As String = var1.Value.ToString
+            str = str.Replace("'", "''")
+            var2.Value = str
+            Return True
+
         End Function
 
-        '(5:411) select Database info {...} about the triggering furre, and put it in variable %Variable.
+        ''' <summary>
+        ''' (5:411) select Database info {...} about the triggering furre,
+        ''' and put it in variable %Variable.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function ReadDatabaseInfo(reader As TriggerReader) As Boolean
-            Try
-                Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
-                Dim Info As String = reader.ReadString
-                Dim Variable As Variable = reader.ReadVariable(True)
-                Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
-                'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
-                Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
-                Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
+            Dim Info As String = reader.ReadString
+            Dim Variable As Variable = reader.ReadVariable(True)
+            Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
+            'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
+            Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
+            Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
+            Return True
+
         End Function
 
-        '(5:412) select Database info {...} about the furre named {...}, and put it in variable %Variable.
+        ''' <summary>
+        ''' (5:412) select Database info {...} about the furre named {...},
+        ''' and put it in variable %Variable.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
-            Try
-                Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
-                Dim Info As String = reader.ReadString
-                Dim Furre As String = FurcadiaShortName(reader.ReadString)
-                Dim Variable As Variable = reader.ReadVariable(True)
-                ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
-                Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
-                Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
+            Dim Info As String = reader.ReadString
+            Dim Furre As String = FurcadiaShortName(reader.ReadString)
+            Dim Variable As Variable = reader.ReadVariable(True)
+            ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
+            Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
+            Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
+            Return True
+
         End Function
 
-        '(5:424) in table {...} take info {...} from record index % and and put it into variable %
+        ''' <summary>
+        ''' (5:424) in table {...} take info {...} from record index % and
+        ''' and put it into variable %
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function RecordIndex(reader As TriggerReader) As Boolean
             Dim info As String = ""
             Dim Idx As Variable
             Dim OutVar As Variable
             Dim Table As String = ""
-            Try
-                Table = reader.ReadString(True).Replace("[", "").Replace("]", "").Replace("'", "''")
-                info = reader.ReadString(True)
-                Idx = reader.ReadVariable(True)
-                OutVar = reader.ReadVariable(True)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Table = reader.ReadString(True).Replace("[", "").Replace("]", "").Replace("'", "''")
+            info = reader.ReadString(True)
+            Idx = reader.ReadVariable(True)
+            OutVar = reader.ReadVariable(True)
+
             Dim sql As String = "SELECT " & info & " FROM [" & Table & "] ;"
             Dim dt As DataTable = SQLiteDatabase.GetDataTable(sql)
             info = info.Replace("[", "").Replace("]", "")
@@ -982,37 +1089,46 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-        '(5:552) retrieve field {...} from query and put it into variable %Variable
+        ''' <summary>
+        ''' (5:552) retrieve field {...} from query and put it into variable %Variable
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function RetrieveQuery(reader As TriggerReader) As Boolean
             Dim Field As String
             Dim Var As Variable
 
-            Try
-                Field = reader.ReadString
-                Var = reader.ReadVariable(True)
+            Field = reader.ReadString
+            Var = reader.ReadVariable(True)
 
-                If QueryRun Then
-                    SyncLock (lock)
-                        If cache.Count > 0 Then
+            If QueryRun Then
+                SyncLock (lock)
+                    If cache.Count > 0 Then
 
-                            For Each key As KeyValuePair(Of String, Object) In cache
-                                If key.Key = Field Then
-                                    Var.Value = cache.Item(Field)
-                                    Return True
-                                End If
-                            Next
+                        For Each key As KeyValuePair(Of String, Object) In cache
+                            If key.Key = Field Then
+                                Var.Value = cache.Item(Field)
+                                Return True
+                            End If
+                        Next
 
-                        End If
-                    End SyncLock
-                End If
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+                    End If
+                End SyncLock
+            End If
+            Return True
+
         End Function
 
-        '(5:408) update Database info {...} about the furre named {...} will now be #.
+        ''' <summary>
+        ''' (5:408) update Database info {...} about the furre named {...}
+        ''' will now be #.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function UpdateFurreNamed_Field(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
             Dim Furre As String = reader.ReadString
@@ -1023,15 +1139,19 @@ Namespace Engine.Libraries
             data.Add("Name", FurcadiaShortName(Furre))
             data.Add(info, value)
             data.Add("date modified", Date.Now.ToString)
-            Try
-                Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
-            Catch crap As Exception
-                Dim e As New ErrorLogging(crap, Me)
-                Return False
-            End Try
+
+            Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
+
         End Function
 
-        '(5:410) update Database info {...} about the furre named {...} will now be {...}.
+        ''' <summary>
+        ''' (5:410) update Database info {...} about the furre named {...}
+        ''' will now be {...}.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
@@ -1042,16 +1162,20 @@ Namespace Engine.Libraries
             data.Add("Name", Furre)
             data.Add(info, value)
             data.Add("date modified", Date.Now.ToString)
-            Try
-                db.Update("FURRE", data, "[Name]='" & Furre & "'")
-                Return True
-            Catch crap As Exception
-                Dim e As New ErrorLogging(crap, Me)
-                Return False
-            End Try
+
+            db.Update("FURRE", data, "[Name]='" & Furre & "'")
+            Return True
+
         End Function
 
-        '(5407) update Database info {...} about the triggering furre will now be #.
+        ''' <summary>
+        ''' (5407) update Database info {...} about the triggering furre
+        ''' will now be #.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function UpdateTriggeringFurreField(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
             'Dim Furre As String = reader.ReadString
@@ -1063,15 +1187,18 @@ Namespace Engine.Libraries
             data.Add("Name", Furre)
             data.Add(info, value.ToString)
             data.Add("date modified", Date.Now.ToString)
-            Try
-                Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
         End Function
 
-        '(5:409) update Database info {...} about the triggering furre will now be {...}.
+        ''' <summary>
+        ''' (5:409) update Database info {...} about the triggering furre
+        ''' will now be {...}.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
             'Dim Furre As String = reader.ReadString
@@ -1082,13 +1209,10 @@ Namespace Engine.Libraries
             data.Add("Name", Furre)
             data.Add(info, value)
             data.Add("date modified", Date.Now.ToString)
-            Try
-                db.Update("FURRE", data, "[Name]='" & Furre & "'")
-                Return True
-            Catch crap As Exception
-                Dim e As New ErrorLogging(crap, Me)
-                Return False
-            End Try
+
+            db.Update("FURRE", data, "[Name]='" & Furre & "'")
+            Return True
+
         End Function
 
         Public Function VACUUM(reader As TriggerReader) As Boolean

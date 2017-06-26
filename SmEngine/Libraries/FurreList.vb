@@ -86,184 +86,221 @@ Namespace Engine.Libraries
 
 #Region "Public Methods"
 
-        '(5:702) count the number of active furres in the drean and put it in the variable %Variable.
+        ''' <summary>
+        ''' (5:702) count the number of active furres in the drean and put
+        ''' it in the variable %Variable.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function FurreActiveListCount(reader As TriggerReader) As Boolean
-            Try
-                Dim var As Variable = reader.ReadVariable(True)
-                Dim c As Double = 0
-                For Each fur As FURRE In MyBase.FurcadiaSession.Dream.FurreList
-                    If fur.AFK = 0 Then
-                        c += 1
-                    End If
-                Next
-                var.Value = c
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim var As Variable = reader.ReadVariable(True)
+            Dim c As Double = 0
+            For Each fur As FURRE In MyBase.FurcadiaSession.Dream.FurreList
+                If fur.AFK = 0 Then
+                    c += 1
+                End If
+            Next
+            var.Value = c
+            Return True
+
         End Function
 
         '(5:703) count the number of A.F.K furres in the drean and put it in the variable %Variable.
         Function FurreAFKListCount(reader As TriggerReader) As Boolean
-            Try
-                Dim var As Variable = reader.ReadVariable(True)
-                Dim c As Double = 0
-                For Each fs As FURRE In FurcadiaSession.Dream.FurreList
-                    If fs.AFK > 0 Then
-                        c += 1
-                    End If
-                Next
-                var.Value = c
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim var As Variable = reader.ReadVariable(True)
+            Dim c As Double = 0
+            For Each fs As FURRE In FurcadiaSession.Dream.FurreList
+                If fs.AFK > 0 Then
+                    c += 1
+                End If
+            Next
+            var.Value = c
+            Return True
+
         End Function
 
-        '(5:701) save the dream list count to variable %Variable.
+        ''' <summary>
+        ''' (5:701) save the dream list count to variable %Variable.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function FurreListCount(reader As TriggerReader) As Boolean
-            Try
-                Dim var As Variable = reader.ReadVariable(True)
-                var.Value = Convert.ToDouble(FurcadiaSession.Dream.FurreList.Count.ToString)
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim var As Variable = reader.ReadVariable(True)
+            var.Value = Convert.ToDouble(FurcadiaSession.Dream.FurreList.Count.ToString)
+            Return True
+
         End Function
 
-        '(5:700) Copy the dreams's furre-list to array %Variable
+        ''' <summary>
+        ''' (5:700) Copy the dreams's furre-list to array %Variable
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function FurreListVar(reader As TriggerReader) As Boolean
-            Try
-                Dim var As Variable = reader.ReadVariable(True)
-                Dim str As New ArrayList
-                For Each fur As FURRE In FurcadiaSession.Dream.FurreList
-                    str.Add(fur.Name)
-                Next
-                var.Value = String.Join(", ", str.ToArray)
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim var As Variable = reader.ReadVariable(True)
+            Dim str As New ArrayList
+            For Each fur As FURRE In FurcadiaSession.Dream.FurreList
+                str.Add(fur.Name)
+            Next
+            var.Value = String.Join(", ", str.ToArray)
+            Return True
+
         End Function
 
-        '(1:709) and the furre named {...} is active in the dream,
+        ''' <summary>
+        ''' (1:709) and the furre named {...} is active in the dream,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function FurreNamedActive(reader As TriggerReader) As Boolean
-            Try
-                Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
-                Return Target.AFK = 0
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Return Target.AFK = 0
+
         End Function
 
-        '(1:708) and the furre named {...} is a.f.k.,
+        ''' <summary>
+        ''' (1:708) and the furre named {...} is a.f.k.,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function FurreNamedAFK(reader As TriggerReader) As Boolean
-            Try
-                Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
-                Return Target.AFK > 0
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Return Target.AFK > 0
+
         End Function
 
-        '(1:706) and the furre named {...} is visible.
+        ''' <summary>
+        ''' (1:706) and the furre named {...} is visible.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function FurreNamedCanSe(reader As TriggerReader) As Boolean
-            Try
-                Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
-                Return Target.Visible
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Return Target.Visible
+
         End Function
 
-        '(1:702) and the furre named {...} is in the dream.
+        ''' <summary>
+        ''' (1:702) and the furre named {...} is in the dream.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function FurreNamedInDream(reader As TriggerReader) As Boolean
-            Try
-                Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
-                Return InDream(Target.Name)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Return InDream(Target.Name)
+
         End Function
 
-        '(1:707) and the furre named {...} is not visible
+        ''' <summary>
+        ''' (1:707) and the furre named {...} is not visible
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function FurreNamedNotCanSe(reader As TriggerReader) As Boolean
-            Try
-                Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
-                Return Not Target.Visible
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Return Not Target.Visible
+
         End Function
 
-        '(1:703) and the furre named {...} is not in the dream
+        ''' <summary>
+        ''' (1:703) and the furre named {...} is not in the dream
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function FurreNamedNotInDream(reader As TriggerReader) As Boolean
-            Try
-                Dim name As String = reader.ReadString
-                Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
-                Return Not InDream(Target.Name)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim name As String = reader.ReadString
+            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Return Not InDream(Target.Name)
+
         End Function
 
-        '(1:704) and the triggering furre is visible.
+        ''' <summary>
+        ''' (1:704) and the triggering furre is visible.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function TriggeringCanSe(reader As TriggerReader) As Boolean
-            Try
-                Dim tPlayer As FURRE = FurcadiaSession.Player
-                Return tPlayer.Visible
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim tPlayer As FURRE = FurcadiaSession.Player
+            Return tPlayer.Visible
+
         End Function
 
-        '(1:700) and the triggering furre in the dream.
+        ''' <summary>
+        ''' (1:700) and the triggering furre in the dream.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function TriggeringInDream(reader As TriggerReader) As Boolean
-            Try
-                Dim tPlayer As FURRE = FurcadiaSession.Player
-                Return InDream(tPlayer.Name)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim tPlayer As FURRE = FurcadiaSession.Player
+            Return InDream(tPlayer.Name)
+
         End Function
 
-        '(1:705) and the triggering furre is not visible
+        ''' <summary>
+        ''' (1:705) and the triggering furre is not visible
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function TriggeringNotCanSe(reader As TriggerReader) As Boolean
-            Try
-                Dim tPlayer As FURRE = FurcadiaSession.Player
-                Return Not tPlayer.Visible
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim tPlayer As FURRE = FurcadiaSession.Player
+            Return Not tPlayer.Visible
+
         End Function
 
-        '(1:701) and the triggering furre is not in the dream.
+        ''' <summary>
+        ''' (1:701) and the triggering furre is not in the dream.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function TriggeringNotInDream(reader As TriggerReader) As Boolean
-            Try
-                Dim tPlayer As FURRE = FurcadiaSession.Player
-                Return Not InDream(tPlayer.Name)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Dim tPlayer As FURRE = FurcadiaSession.Player
+            Return Not InDream(tPlayer.Name)
+
         End Function
 
 #End Region

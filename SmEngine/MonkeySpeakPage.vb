@@ -71,7 +71,7 @@ Namespace Engine
         Private Sub Initialize()
             LibList = New List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
             ' Comment out Libs to Disable
-            LibList.Add(New MS_IO(MSEngine.FurcadiaSession))
+            LibList.Add(New MsIO(MSEngine.FurcadiaSession))
             LibList.Add(New StringLibrary(MSEngine.FurcadiaSession))
             LibList.Add(New SayLibrary(MSEngine.FurcadiaSession))
             LibList.Add(New Banish(MSEngine.FurcadiaSession))
@@ -89,7 +89,7 @@ Namespace Engine
             LibList.Add(New WmCpyDta(MSEngine.FurcadiaSession))
             LibList.Add(New MS_MemberList(MSEngine.FurcadiaSession))
             LibList.Add(New Pounce.MsPounce(MSEngine.FurcadiaSession))
-            LibList.Add(New MS_Verbot(MSEngine.FurcadiaSession))
+            LibList.Add(New MsVerbot(MSEngine.FurcadiaSession))
             'LibList.Add(New MS_MemberList())
             'LibList.Add(New MS_MemberList())
             'LibList.Add(New MS_MemberList())
@@ -221,7 +221,7 @@ Namespace Engine
         End Sub
 
         'Bot Starts
-        Public Sub Start()
+        Public Function Start() As Page
 
             Try
                 Dim TimeStart As DateTime = DateTime.Now
@@ -244,14 +244,14 @@ Namespace Engine
                 '(0:0) When the bot starts,
                 MsPage.Execute(0)
                 Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
-                                                Size, Date.Now.Subtract(TimeStart).Seconds))
+                                                MsPage.Size, Date.Now.Subtract(TimeStart).Seconds))
                 MS_Engine_Running = True
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
 
             End Try
-
-        End Sub
+            Return MsPage
+        End Function
 
 #End Region
 

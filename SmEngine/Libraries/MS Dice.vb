@@ -1,7 +1,6 @@
 ﻿Imports Furcadia.Net.Utils.ServerObjects
 Imports Furcadia.Net.Utils.ServerParser
 Imports Monkeyspeak
-Imports Furcadia.Net.Dream
 
 Namespace Engine.Libraries
 
@@ -78,32 +77,40 @@ Namespace Engine.Libraries
 
 #Region "Public Methods"
 
-        ' (5:313) set variable % to the total of rolling # dice with # sides
-        ' minus #.
+        ''' <summary>
+        ''' (5:313) set variable % to the total of rolling # dice with #
+        ''' sides minus #.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function DiceMinusNumber(reader As TriggerReader) As Boolean
 
             Dim dice As New DieCollection
 
-            Try
-                Dim Var As Variable = reader.ReadVariable(True)
-                Dim Number As Double = ReadVariableOrNumber(reader)
-                Dim sides As Double = ReadVariableOrNumber(reader)
-                Dim NumberPlus As Double = ReadVariableOrNumber(reader)
+            Dim Var As Variable = reader.ReadVariable(True)
+            Dim Number As Double = ReadVariableOrNumber(reader)
+            Dim sides As Double = ReadVariableOrNumber(reader)
+            Dim NumberPlus As Double = ReadVariableOrNumber(reader)
 
-                dice.Clear()
-                For I As Double = 0 To Number - 1
-                    dice.Add(New Die(sides))
-                Next
-                Var.Value = dice.RollAll() - NumberPlus
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            dice.Clear()
+            For I As Double = 0 To Number - 1
+                dice.Add(New Die(sides))
+            Next
+            Var.Value = dice.RollAll() - NumberPlus
+            Return True
+
         End Function
 
-        ' (5:312) set variable % to the total of rolling # dice with # sides
-        ' plus #.
+        ''' <summary>
+        ''' (5:312) set variable % to the total of rolling # dice with #
+        ''' sides plus #.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function DicePlusNumber(reader As TriggerReader) As Boolean
             Dim Var As Variable
             Dim Number As Double
@@ -111,21 +118,17 @@ Namespace Engine.Libraries
             Dim NumberPlus As Double = 0
             Dim dice As New DieCollection
 
-            Try
-                Var = reader.ReadVariable(True)
-                Number = ReadVariableOrNumber(reader)
-                sides = ReadVariableOrNumber(reader)
-                NumberPlus = ReadVariableOrNumber(reader)
-                ' dice.Clear()
-                For I As Double = 0 To Number - 1
-                    dice.Add(New Die(CInt(sides)))
-                Next
-                Var.Value = dice.RollAll() + NumberPlus
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Var = reader.ReadVariable(True)
+            Number = ReadVariableOrNumber(reader)
+            sides = ReadVariableOrNumber(reader)
+            NumberPlus = ReadVariableOrNumber(reader)
+            ' dice.Clear()
+            For I As Double = 0 To Number - 1
+                dice.Add(New Die(CInt(sides)))
+            Next
+            Var.Value = dice.RollAll() + NumberPlus
+            Return True
+
         End Function
 
         Public Function DiceResultNumberOrHigher(reader As TriggerReader) As Boolean
@@ -138,88 +141,112 @@ Namespace Engine.Libraries
             Return result >= dice.DiceResult
         End Function
 
-        ' (5:134) roll # furcadia dice with # sides.
+        ''' <summary>
+        ''' (5:134) roll # furcadia dice with # sides.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function RollDice(reader As TriggerReader) As Boolean
             Dim count As Double = ReadVariableOrNumber(reader)
             Dim side As Double = ReadVariableOrNumber(reader)
             Dim Message As String = ""
 
-            sendServer("roll " + count.ToString + "d" + side.ToString + " " + Message)
+            Return sendServer("roll " + count.ToString + "d" + side.ToString + " " + Message)
 
-            Return True
         End Function
 
-        ' (5:136) roll # furcadia dice with # sides minus #.
+        ''' <summary>
+        ''' (5:136) roll # furcadia dice with # sides minus #.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function RollDiceMinus(reader As TriggerReader) As Boolean
             Dim count As Double = ReadVariableOrNumber(reader)
             Dim side As Double = ReadVariableOrNumber(reader)
             Dim modifyer As Double = ReadVariableOrNumber(reader)
             Dim Message As String = ""
 
-            sendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString + " " + Message)
+            Return sendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString + " " + Message)
 
-            Return True
         End Function
 
-        ' (5:135) roll # furcadia dice with # sides plus #.
+        ''' <summary>
+        ''' (5:135) roll # furcadia dice with # sides plus #.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function RollDicePlus(reader As TriggerReader) As Boolean
             Dim count As Double = ReadVariableOrNumber(reader)
             Dim side As Double = ReadVariableOrNumber(reader)
             Dim modifyer As Double = ReadVariableOrNumber(reader)
             Dim Message As String = ""
 
-            sendServer("roll " + count.ToString + "d" + side.ToString + "+" + modifyer.ToString + " " + Message)
+            Return sendServer("roll " + count.ToString + "d" + side.ToString + "+" + modifyer.ToString + " " + Message)
 
-            Return True
         End Function
 
-        '(0:130) When the bot rolls #d# and gets # or highter,
+        ''' <summary>
+        ''' (0:130) When the bot rolls #d# and gets # or highter,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function RollNumber(reader As TriggerReader) As Boolean
-            Try
-                If String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
-                Dim DiceCount As Double = ReadVariableOrNumber(reader)
-                Dim sides As Double = ReadVariableOrNumber(reader)
-                Dim DiceModifyer As Double = ReadVariableOrNumber(reader)
-                If sides <> dice.DiceSides Then Return False
-                If DiceCount <> DiceCount Then Return False
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            If String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
+            Dim DiceCount As Double = ReadVariableOrNumber(reader)
+            Dim sides As Double = ReadVariableOrNumber(reader)
+            Dim DiceModifyer As Double = ReadVariableOrNumber(reader)
+            If sides <> dice.DiceSides Then Return False
+            If DiceCount <> DiceCount Then Return False
+
             Return True
         End Function
 
-        '(0:134) When the bot rolls #d# -# and gets # or highter,
+        ''' <summary>
+        ''' (0:134) When the bot rolls #d# -# and gets # or highter,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function RollNumberMinusModifyer(reader As TriggerReader) As Boolean
-            Try
-                If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
-                Dim DiceCount As Double = ReadVariableOrNumber(reader)
-                Dim sides As Double = ReadVariableOrNumber(reader)
-                Dim DiceModifyer As Double = ReadVariableOrNumber(reader)
-                If dice.DiceModifyer <> DiceModifyer Then Return False
-                If sides <> dice.DiceSides Then Return False
-                If dice.DiceCount <> DiceCount Then Return False
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
+            Dim DiceCount As Double = ReadVariableOrNumber(reader)
+            Dim sides As Double = ReadVariableOrNumber(reader)
+            Dim DiceModifyer As Double = ReadVariableOrNumber(reader)
+            If dice.DiceModifyer <> DiceModifyer Then Return False
+            If sides <> dice.DiceSides Then Return False
+            If dice.DiceCount <> DiceCount Then Return False
+
             Return dice.DiceCompnentMatch = "-"
         End Function
 
-        '(0:132) When the bot rolls #d# +# and gets # or highter,
+        ''' <summary>
+        ''' (0:132) When the bot rolls #d# +# and gets # or highter,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function RollNumberPlusModifyer(reader As TriggerReader) As Boolean
-            Try
-                If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
-                Dim DiceCount As Double = ReadVariableOrNumber(reader)
-                Dim sides As Double = ReadVariableOrNumber(reader)
-                Dim DiceModifyer As Double = ReadVariableOrNumber(reader)
-                If dice.DiceModifyer <> DiceModifyer Then Return False
-                If sides <> dice.DiceSides Then Return False
-                If dice.DiceCount <> DiceCount Then Return False
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
+            Dim DiceCount As Double = ReadVariableOrNumber(reader)
+            Dim sides As Double = ReadVariableOrNumber(reader)
+            Dim DiceModifyer As Double = ReadVariableOrNumber(reader)
+            If dice.DiceModifyer <> DiceModifyer Then Return False
+            If sides <> dice.DiceSides Then Return False
+            If dice.DiceCount <> DiceCount Then Return False
+
             Return dice.DiceCompnentMatch = "+"
         End Function
 

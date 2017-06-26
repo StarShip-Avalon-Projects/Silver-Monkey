@@ -105,11 +105,11 @@
     <Compile Include="Libraries\MonkeySpeakLibrary.vb" />
     <Compile Include="Libraries\Movement.vb" />
     <Compile Include="Libraries\MS Dice.vb" />
-    <Compile Include="Libraries\MS IO.vb" />
     <Compile Include="Libraries\MS MemberList.vb" />
     <Compile Include="Libraries\MS Repq.vb" />
     <Compile Include="Libraries\MS Time.vb" />
     <Compile Include="Libraries\MS Verbot.vb" />
+    <Compile Include="Libraries\MsIO.vb" />
     <Compile Include="Libraries\MsSQLite.vb" />
     <Compile Include="Libraries\MS_Cookie.vb" />
     <Compile Include="Libraries\MS_DreamTransfer.vb" />

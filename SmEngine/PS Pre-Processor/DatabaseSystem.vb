@@ -10,22 +10,42 @@ Namespace Engine.Libraries
 
     'Class Notes
 
-    ' CharacterListLooping.
-    'first build the character list
-    'Send the First PhoenixSpeak Query-set to the server Enqueue
-    'PsReceived will read the incoming server responses and keep track which mode we're in
-    'Read CharacterList(0).name into a variable
-    'Remove character at CharacterList(0)
-    'Enqueue the Next Phoenix Speak Command
-    'Change mode as necessary IE CharacterList.Count = 0
-
-    'PSiInfoCache is the List of PhoenixSpeak.Variables last transmitted by the server
-    'this list does take into account Multi-Page responses from the server and will flag an
-    'an overflow if page 6 is detected.
-
     ''' <summary>
     ''' Monkey Speak interface to the PS backup/restore system
     ''' </summary>
+    ''' <remarks>
+    ''' ' CharacterListLooping.
+    ''' <para>
+    ''' first build the character list
+    ''' </para>
+    ''' <para>
+    ''' Send the First PhoenixSpeak Query-set to the server Enqueue
+    ''' </para>
+    ''' <para>
+    ''' PsReceived will read the incoming server responses and keep track
+    ''' which mode we're in
+    ''' </para>
+    ''' <para>
+    ''' Read CharacterList(0).name into a variable
+    ''' </para>
+    ''' <para>
+    ''' Remove character at CharacterList(0)
+    ''' </para>
+    ''' <para>
+    ''' Enqueue the Next Phoenix Speak Command
+    ''' </para>
+    ''' <para>
+    ''' Change mode as necessary IE CharacterList.Count = 0
+    ''' </para>
+    ''' <para>
+    ''' PSiInfoCache is the List of PhoenixSpeak.Variables last transmitted
+    ''' by the server
+    ''' </para>
+    ''' <para>
+    ''' this list does take into account Multi-Page responses from the
+    ''' server and will flag an 'an overflow if page 6 is detected.
+    ''' </para>
+    ''' </remarks>
     Public Class DatabaseSystem
         Inherits MonkeySpeakLibrary
 
@@ -222,18 +242,21 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-        '(5:553) Backup All Character phoenix speak for the dream
+        ''' <summary>
+        ''' (5:553) Backup All Character phoenix speak for the dream
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function BackupAllPS(reader As TriggerReader) As Boolean
-            Try
-                If CurrentPS_Stage = PsSystemRunning.PsNone Then
-                    CurrentPS_Stage = PsBackupStage.GetDream
-                    FurcadiaSession.SendToServer("ps get dream.*")
-                    Return True
-                End If
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            If CurrentPS_Stage = PsSystemRunning.PsNone Then
+                CurrentPS_Stage = PsBackupStage.GetDream
+                FurcadiaSession.SendToServer("ps get dream.*")
+                Return True
+            End If
+
             Return False
         End Function
 
@@ -242,112 +265,120 @@ Namespace Engine.Libraries
             Return FurcadiaSession.Player.ShortName = FurcadiaShortName(furre)
         End Function
 
-        '(5:554) backup Character named {...} phoenix speak
+        ''' <summary>
+        ''' (5:554) backup Character named {...} phoenix speak.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function BackupSingleCharacterPS(reader As TriggerReader) As Boolean
-            Try
-                If CurrentPS_Stage = PsSystemRunning.PsNone Then
-                    CurrentPS_Stage = PsBackupStage.GetSingle
-                    lastItemName = reader.ReadString
-                End If
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            If CurrentPS_Stage = PsSystemRunning.PsNone Then
+                CurrentPS_Stage = PsBackupStage.GetSingle
+                lastItemName = reader.ReadString
+            End If
+
             Return True
         End Function
 
-        '(1:520) and the bot is not in the middle of a PS Backup Process
+        ''' <summary>
+        ''' (1:520) and the bot is not in the middle of a PS Backup Process
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function BotBackup(reader As TriggerReader) As Boolean
 
-            Try
-                Return CurrentPS_Stage <> PsSystemRunning.PsBackup
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return False
+            Return CurrentPS_Stage <> PsSystemRunning.PsBackup
+
         End Function
 
-        '(1:522) and the bot is not in the middle of a PS Restore Process
+        ''' <summary>
+        ''' (1:522) and the bot is not in the middle of a PS Restore Process
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function BotRestore(reader As TriggerReader) As Boolean
 
-            Try
-                Return CurrentPS_Stage <> PsSystemRunning.PsRestore
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return False
+            Return CurrentPS_Stage <> PsSystemRunning.PsRestore
+
         End Function
 
-        '(1:521) and the bot is in the middle of a PS Backup Process
+        ''' <summary>
+        ''' (1:521) and the bot is in the middle of a PS Backup Process
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function NotBotBackup(reader As TriggerReader) As Boolean
-            Try
-                Return CurrentPS_Stage = PsSystemRunning.PsBackup
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return False
+
+            Return CurrentPS_Stage = PsSystemRunning.PsBackup
+
         End Function
 
-        '(1:523) and the bot is in the middle of a PS Restore Process
+        ''' <summary>
+        ''' '(1:523) and the bot is in the middle of a PS Restore Process
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function NotBotRestore(reader As TriggerReader) As Boolean
 
-            Try
-                Return CurrentPS_Stage = PsSystemRunning.PsRestore
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return False
+            Return CurrentPS_Stage = PsSystemRunning.PsRestore
+
         End Function
 
         Public Function PruneCharacterBackup(reader As TriggerReader) As Boolean
 
-            Try
-                Dim age As Double = ReadVariableOrNumber(reader)
-                If CurrentPS_Stage = PsSystemRunning.PsNone Then
-                    CurrentPS_Stage = PsBackupStage.PruneDatabase
-                    PrunePS(age)
+            Dim age As Double = ReadVariableOrNumber(reader)
+            If CurrentPS_Stage = PsSystemRunning.PsNone Then
+                CurrentPS_Stage = PsBackupStage.PruneDatabase
+                PrunePS(age)
 
-                End If
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            End If
+            Return True
 
         End Function
 
-        '(5:555) restore phoenix speak for character {...}
+        ''' <summary>
+        ''' (5:555) restore phoenix speak for character {...}
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function RestoreCharacterPS(reader As TriggerReader) As Boolean
 
-            Try
-                Dim furre As String = reader.ReadString()
-                Return 0 < Build_PS_CMD(furre)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
-            Return True
+            Dim furre As String = reader.ReadString()
+            Return 0 < Build_PS_CMD(furre)
+
         End Function
 
-        '(5:557) remove Entries older then # days from phoenix speak Character backup.
-        '(5:558) restore phoenix speak characters newer then # days.
+        ''' <summary>
+        ''' (5:557) remove Entries older then # days from phoenix speak
+        ''' Character backup.
+        ''' <para>
+        ''' (5:558) restore phoenix speak characters newer then # days.
+        ''' </para>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function restorePS_DataOldrThanDays(reader As TriggerReader) As Boolean
 
-            Try
-                Dim days As Double = ReadVariableOrNumber(reader)
-                If CurrentPS_Stage = PsSystemRunning.PsNone Then
-                    CurrentPS_Stage = PsBackupStage.RestoreAllCharacterPS
-                    RestorePS(days)
-                End If
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Dim days As Double = ReadVariableOrNumber(reader)
+            If CurrentPS_Stage = PsSystemRunning.PsNone Then
+                CurrentPS_Stage = PsBackupStage.RestoreAllCharacterPS
+                RestorePS(days)
+            End If
+            Return True
 
         End Function
 

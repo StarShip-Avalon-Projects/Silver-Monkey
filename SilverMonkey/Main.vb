@@ -612,7 +612,7 @@ Public Class Main
         If Not FurcadiaSession Is Nothing Then
             If Not DreamList.SelectedItem Is Nothing Then
                 If Not FurcadiaSession.IsServerConnected Then Exit Sub
-                FurcadiaSession.sndServer("l " + CType(DreamList.SelectedItem, FURRE).ShortName)
+                FurcadiaSession.SendFormattedTextToServer("l " + CType(DreamList.SelectedItem, FURRE).ShortName)
             End If
         End If
     End Sub

@@ -5,7 +5,10 @@ Imports Monkeyspeak
 
 Namespace Engine.Libraries
 
-    Public Class MS_Verbot
+    ''' <summary>
+    ''' Chatter Bot interface using the Verbot SDK
+    ''' </summary>
+    Public Class MsVerbot
         Inherits MonkeySpeakLibrary
 
 #Region "Public Fields"
@@ -40,7 +43,7 @@ Namespace Engine.Libraries
 
             '(0:1500) When the chat engine executes command {...},
             Add(TriggerCategory.Cause, 1500,
-    AddressOf ChatExecute, "(0:1500) When the chat engine executes command {...},")
+                 AddressOf ChatExecute, "(0:1500) When the chat engine executes command {...},")
 
             '(1:1500) and the Chat Engine State variable {...} is equal to {..},
             '(1:1501) and the Chat Engine State variable {...} is not equal to {..},
@@ -53,23 +56,23 @@ Namespace Engine.Libraries
 
             '(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.
             Add(TriggerCategory.Effect, 1500,
-    AddressOf useKB_File, "(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.")
+                AddressOf useKB_File, "(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.")
 
             '(5:1501) send text {...} to chat engine and put the response in variable %Variable.
             Add(TriggerCategory.Effect, 1501,
-    AddressOf getReply, "(5:1501) send text {...} to chat engine and put the response in variable %Variable.")
+                AddressOf getReply, "(5:1501) send text {...} to chat engine and put the response in variable %Variable.")
 
             '(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable
             Add(TriggerCategory.Effect, 1502,
-    AddressOf getReplyName, "(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable.")
+                 AddressOf getReplyName, "(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable.")
 
             '(5:1503) Set Chat Engine State Vairable {...} to {...}.
             Add(TriggerCategory.Effect, 1503,
-    AddressOf setStateVariable, "(5:1503) Set Chat Engine State Vairable {...} to {...}.")
+                AddressOf setStateVariable, "(5:1503) Set Chat Engine State Vairable {...} to {...}.")
 
             '(5:1504) Get chat engine _state variable {...} and put it into variable %Variable.
             Add(TriggerCategory.Effect, 1504,
-    AddressOf getStateVariable, "(5:1504) Get chat engine state variable {...} and put it into variable %Variable.")
+                 AddressOf getStateVariable, "(5:1504) Get chat engine state variable {...} and put it into variable %Variable.")
 
         End Sub
 
@@ -77,73 +80,74 @@ Namespace Engine.Libraries
 
 #Region "Chat interface"
 
-        '(5:1501) send text {...} to chat engine and put the response in variable %Variable
+        ''' <summary>
+        ''' (5:1501) send text {...} to chat engine and put the response in
+        ''' variable %Variable
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function getReply(reader As TriggerReader) As Boolean
             Dim SayText As String
             Dim ResponceText As Variable
-            Try
-                SayText = reader.ReadString
-                ResponceText = reader.ReadVariable(True)
-                If _state.Vars.ContainsKey("botname") Then
-                    _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
-                Else
-                    _state.Vars.Add("botname", FurcadiaSession.ConnectedCharacterName)
-                End If
-                If _state.Vars.ContainsKey("channel") Then
-                    _state.Vars.Item("channel") = FurcadiaSession.Channel
-                Else
-                    _state.Vars.Add("channel", FurcadiaSession.Channel)
-                End If
-                Dim reply As Reply = verbot.GetReply(FurcadiaSession.Player, SayText, _state)
 
-                If reply Is Nothing Then Return False
+            SayText = reader.ReadString
+            ResponceText = reader.ReadVariable(True)
+            If _state.Vars.ContainsKey("botname") Then
+                _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
+            Else
+                _state.Vars.Add("botname", FurcadiaSession.ConnectedCharacterName)
+            End If
+            If _state.Vars.ContainsKey("channel") Then
+                _state.Vars.Item("channel") = FurcadiaSession.Channel
+            Else
+                _state.Vars.Add("channel", FurcadiaSession.Channel)
+            End If
+            Dim reply As Reply = verbot.GetReply(FurcadiaSession.Player, SayText, _state)
 
-                ResponceText.Value = reply.Text
-                Me.parseEmbeddedOutputCommands(reply.AgentText)
-                Return True
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                writer.WriteLine(ErrorString)
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+            If reply Is Nothing Then Return False
+
+            ResponceText.Value = reply.Text
+            Me.parseEmbeddedOutputCommands(reply.AgentText)
+            Return True
+
         End Function
 
-        '(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable
+        ''' <summary>
+        ''' (5:1502) send text {...} and Name {...} to chat engine and put
+        ''' the response in variable %Variable
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function getReplyName(reader As TriggerReader) As Boolean
             Dim SayText As String
             Dim SayName As String
             Dim ResponceText As Variable
-            Try
-                SayText = reader.ReadString
-                SayName = reader.ReadString
-                ResponceText = reader.ReadVariable(True)
-                If _state.Vars.ContainsKey("botname") Then
-                    _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
-                Else
-                    _state.Vars.Add("botname", FurcadiaSession.ConnectedCharacterName)
-                End If
-                If _state.Vars.ContainsKey("channel") Then
-                    _state.Vars.Item("channel") = FurcadiaSession.Channel
-                Else
-                    _state.Vars.Add("channel", FurcadiaSession.Channel)
-                End If
-                Dim reply As Reply = verbot.GetReply(SayText, _state)
 
-                If reply Is Nothing Then Return False
+            SayText = reader.ReadString
+            SayName = reader.ReadString
+            ResponceText = reader.ReadVariable(True)
+            If _state.Vars.ContainsKey("botname") Then
+                _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
+            Else
+                _state.Vars.Add("botname", FurcadiaSession.ConnectedCharacterName)
+            End If
+            If _state.Vars.ContainsKey("channel") Then
+                _state.Vars.Item("channel") = FurcadiaSession.Channel
+            Else
+                _state.Vars.Add("channel", FurcadiaSession.Channel)
+            End If
+            Dim reply As Reply = verbot.GetReply(SayText, _state)
 
-                ResponceText.Value = reply.Text
-                Me.parseEmbeddedOutputCommands(reply.AgentText)
-                Return True
-            Catch ex As Exception
-                Dim tID As String = reader.TriggerId.ToString
-                Dim tCat As String = reader.TriggerCategory.ToString
-                Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-                Debug.Print(ErrorString)
-                Return False
-            End Try
+            If reply Is Nothing Then Return False
+
+            ResponceText.Value = reply.Text
+            Me.parseEmbeddedOutputCommands(reply.AgentText)
+            Return True
+
         End Function
 
         Private Sub parseEmbeddedOutputCommands(text As String)
@@ -212,71 +216,80 @@ Namespace Engine.Libraries
 
 #Region "Public Methods"
 
-        '(0:1500) When the chat engine executes command {...},
+        ''' <summary>
+        ''' (0:1500) When the chat engine executes command {...},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function ChatExecute(reader As TriggerReader) As Boolean
 
-            Try
-                Dim cmd As String = reader.ReadString()
-                Return ChatCMD.ToLower() = cmd.ToLower()
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Dim cmd As String = reader.ReadString()
+            Return ChatCMD.ToLower() = cmd.ToLower()
+
         End Function
 
-        '(5:1504) Get chat engine _state variable {...} and put it into variable %Variable.
+        ''' <summary>
+        ''' (5:1504) Get chat engine _state variable {...} and put it into
+        ''' variable %Variable.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function getStateVariable(reader As TriggerReader) As Boolean
-            Try
-                Dim EngineVar As String = reader.ReadString()
-                Dim MS_Var As Variable = reader.ReadVariable(True)
 
-                MS_Var.Value = _state.Vars.Item(EngineVar)
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Dim EngineVar As String = reader.ReadString()
+            Dim MS_Var As Variable = reader.ReadVariable(True)
+
+            MS_Var.Value = _state.Vars.Item(EngineVar)
+            Return True
+
         End Function
 
-        '(5:1503) Set Chat Engine State Vairable {...} to {...}.
+        ''' <summary>
+        ''' (5:1503) Set Chat Engine State Vairable {...} to {...}.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function setStateVariable(reader As TriggerReader) As Boolean
 
-            Try
+            Dim EngineVar As String = reader.ReadString()
+            Dim EngineValue As String = reader.ReadString()
+            If _state.Vars.ContainsKey(EngineVar) Then
+                _state.Vars.Item(EngineVar) = EngineValue
+            Else
+                _state.Vars.Add(EngineVar, EngineValue)
+            End If
+            Return True
 
-                Dim EngineVar As String = reader.ReadString()
-                Dim EngineValue As String = reader.ReadString()
-                If _state.Vars.ContainsKey(EngineVar) Then
-                    _state.Vars.Item(EngineVar) = EngineValue
-                Else
-                    _state.Vars.Add(EngineVar, EngineValue)
-                End If
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
         End Function
 
-        '(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.
+        ''' <summary>
+        ''' (5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function useKB_File(reader As TriggerReader) As Boolean
 
-            Try
-                Dim FileName As String = reader.ReadString
-                FileName = Path.Combine(Paths.SilverMonkeyBotPath, FileName)
+            Dim FileName As String = reader.ReadString
+            FileName = Path.Combine(Paths.SilverMonkeyBotPath, FileName)
 
-                Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
-                kb = CType(xToolbox.LoadXML(FileName), KnowledgeBase)
-                kbi.Filename = Path.GetFileName(FileName)
-                kbi.Fullpath = Path.GetDirectoryName(FileName) + "\"
-                verbot.AddKnowledgeBase(kb, kbi)
-                _state.CurrentKBs.Clear()
-                _state.CurrentKBs.Add(FileName)
+            Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
+            kb = CType(xToolbox.LoadXML(FileName), KnowledgeBase)
+            kbi.Filename = Path.GetFileName(FileName)
+            kbi.Fullpath = Path.GetDirectoryName(FileName) + "\"
+            verbot.AddKnowledgeBase(kb, kbi)
+            _state.CurrentKBs.Clear()
+            _state.CurrentKBs.Add(FileName)
 
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Return True
+
         End Function
 
 #End Region

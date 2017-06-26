@@ -52,41 +52,45 @@ Namespace Engine.Libraries
 
 #Region "Private Methods"
 
-        '(5:901) add the furre named {...} to my Dream Member list if they aren't already on it.
+        ''' <summary>
+        ''' (5:901) add the furre named {...} to my Dream Member list if
+        ''' they aren't already on it.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function AddFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String
 
-            Try
-                Furre = reader.ReadString
-                If FurreNamedIsNotMember(reader) Then
-                    Using sw As StreamWriter = New StreamWriter(MemberList, True)
-                        sw.WriteLine(Furre)
-                    End Using
-                End If
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Furre = reader.ReadString
+            If FurreNamedIsNotMember(reader) Then
+                Using sw As StreamWriter = New StreamWriter(MemberList, True)
+                    sw.WriteLine(Furre)
+                End Using
+            End If
+            Return True
 
         End Function
 
-        '(1:900) add the triggering furre to my Dream Member list if they aren't already on it.
+        ''' <summary>
+        ''' (1:900) add the triggering furre to my Dream Member list if they
+        ''' aren't already on it.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function AddTrigFurre(reader As TriggerReader) As Boolean
             Dim Furre As String = Nothing
 
-            Try
-                Furre = MsPage.GetVariable(MS_Name).Value.ToString
-                If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
-                    Dim sw As StreamWriter = New StreamWriter(MemberList, True)
-                    sw.WriteLine(Furre)
-                    sw.Close()
-                End If
-                Return True
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
+                Dim sw As StreamWriter = New StreamWriter(MemberList, True)
+                sw.WriteLine(Furre)
+                sw.Close()
+            End If
+            Return True
 
         End Function
 
@@ -99,27 +103,36 @@ Namespace Engine.Libraries
             End If
         End Sub
 
-        '(1:901) and the furre named {...} is on my Dream Member list.
+        ''' <summary>
+        ''' (1:901) and the furre named {...} is on my Dream Member list.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function FurreNamedIsMember(reader As TriggerReader) As Boolean
             CheckMemberList()
             Dim Furre As String = Nothing
             Dim f() As String
-            Try
-                Furre = reader.ReadString
-                f = File.ReadAllLines(MemberList)
-                For Each l As String In f
-                    If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then
-                        Return True
-                    End If
-                Next
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Furre = reader.ReadString
+            f = File.ReadAllLines(MemberList)
+            For Each l As String In f
+                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then
+                    Return True
+                End If
+            Next
+
             Return FurcadiaSession.IsBotController
         End Function
 
-        '(1:903) and the furre named {...} is not on my Dream Member list.
+        ''' <summary>
+        ''' (1:903) and the furre named {...} is not on my Dream Member list.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function FurreNamedIsNotMember(reader As TriggerReader) As Boolean
             Return Not FurreNamedIsMember(reader)
         End Function
@@ -128,104 +141,120 @@ Namespace Engine.Libraries
             CheckMemberList()
             Dim Furre As Variable
             Dim f() As String
-            Try
-                Furre = reader.ReadVariable(True)
-                f = File.ReadAllLines(MemberList)
-                Furre.Value = String.Join(" ", f)
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Furre = reader.ReadVariable(True)
+            f = File.ReadAllLines(MemberList)
+            Furre.Value = String.Join(" ", f)
+
             Return True
         End Function
 
-        '(5:903) remove the furre named {...} from my Dream Member list if they are on it.
+        ''' <summary>
+        ''' (5:903) remove the furre named {...} from my Dream Member list
+        ''' if they are on it.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function RemoveFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String = Nothing
             CheckMemberList()
-            Try
-                Furre = reader.ReadString
-                Dim line As String
-                Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
-                Using SR As New StreamReader(MemberList)
-                    While SR.Peek() <> -1
-                        line = SR.ReadLine()
-                        For i As Integer = 0 To linesList.Count - 1
-                            If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
-                                linesList.RemoveAt(i)
-                                File.WriteAllLines(MemberList, linesList.ToArray())
-                                Exit For
-                            End If
-                        Next i
-                    End While
-                End Using
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Furre = reader.ReadString
+            Dim line As String
+            Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
+            Using SR As New StreamReader(MemberList)
+                While SR.Peek() <> -1
+                    line = SR.ReadLine()
+                    For i As Integer = 0 To linesList.Count - 1
+                        If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
+                            linesList.RemoveAt(i)
+                            File.WriteAllLines(MemberList, linesList.ToArray())
+                            Exit For
+                        End If
+                    Next i
+                End While
+            End Using
+
             Return True
         End Function
 
-        '(5:902) remove the triggering furre to my Dream Member list if they are on it.
+        ''' <summary>
+        ''' (5:902) remove the triggering furre to my Dream Member list if
+        ''' they are on it.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function RemoveTrigFurre(reader As TriggerReader) As Boolean
             Dim Furre As String = Nothing
             CheckMemberList()
-            Try
-                Furre = MsPage.GetVariable(MS_Name).Value.ToString
-                Dim line As String
-                Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
-                Using SR As New StreamReader(MemberList)
-                    While SR.Peek() <> -1
-                        line = SR.ReadLine()
-                        For i As Integer = 0 To linesList.Count - 1
-                            If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
-                                linesList.RemoveAt(i)
-                                File.WriteAllLines(MemberList, linesList.ToArray())
-                                Exit For
-                            End If
-                        Next i
-                    End While
-                End Using
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            Dim line As String
+            Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
+            Using SR As New StreamReader(MemberList)
+                While SR.Peek() <> -1
+                    line = SR.ReadLine()
+                    For i As Integer = 0 To linesList.Count - 1
+                        If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
+                            linesList.RemoveAt(i)
+                            File.WriteAllLines(MemberList, linesList.ToArray())
+                            Exit For
+                        End If
+                    Next i
+                End While
+            End Using
+
             Return True
         End Function
 
-        '(1:900) and the triggering furre is on my dream Member List,
+        ''' <summary>
+        ''' (1:900) and the triggering furre is on my dream Member List,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function TrigFurreIsMember(reader As TriggerReader) As Boolean
             CheckMemberList()
             Dim Furre As String = Nothing
             Dim f As New List(Of String)
-            Try
-                Furre = MsPage.GetVariable(MS_Name).Value.ToString
-                f.AddRange(File.ReadAllLines(MemberList))
-                For Each l As String In f
-                    If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
-                Next
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+
+            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            f.AddRange(File.ReadAllLines(MemberList))
+            For Each l As String In f
+                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
+            Next
+
             Return FurcadiaSession.IsBotController
         End Function
 
-        '(1:902) and the triggering furre is not on my Dream Member list.
+        ''' <summary>
+        ''' (1:902) and the triggering furre is not on my Dream Member list.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function TrigFurreIsNotMember(reader As TriggerReader) As Boolean
             Return Not TrigFurreIsMember(reader)
         End Function
 
-        '(5:904) Use file {...} as the dream member list.
+        ''' <summary>
+        ''' (5:904) Use file {...} as the dream member list.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Private Function UseMemberFile(reader As TriggerReader) As Boolean
 
-            Try
-                MemberList = reader.ReadString
-                CheckMemberList()
-            Catch ex As Exception
-                LogError(reader, ex)
-                Return False
-            End Try
+            MemberList = reader.ReadString
+            CheckMemberList()
+
             Return True
         End Function
 
