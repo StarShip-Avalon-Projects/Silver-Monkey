@@ -57,7 +57,7 @@ Namespace Engine.Libraries
 
 #Region "Private Fields"
 
-        Private _SQLitefile As String = MsSqlite.SQLitefile
+        Private _SQLitefile As String = MsDatabase.SQLitefile
         Private lastItemName As String = String.Empty
 
         Private QueryRun As Boolean = False
@@ -409,7 +409,7 @@ Namespace Engine.Libraries
                 str = FurcadiaShortName(str)
             End If
 
-            Dim db As SQLiteDatabase = New SQLiteDatabase(MsSqlite.SQLitefile)
+            Dim db As SQLiteDatabase = New SQLiteDatabase(MsDatabase.SQLitefile)
             Dim dt As Data.DataTable = SQLiteDatabase.GetDataTable(TableJoinSet("BACKUP", str))
             Dim PsVariableList As New List(Of String)
             Dim NameID As Integer = 0
@@ -477,7 +477,7 @@ Namespace Engine.Libraries
                 SendClientMessage("Restoring all characters for the dream")
             End If
             Dim cmd As String = "select * FROM BACKUPMASTER"
-            Dim db As SQLiteDatabase = New SQLiteDatabase(MsSqlite.SQLitefile)
+            Dim db As SQLiteDatabase = New SQLiteDatabase(MsDatabase.SQLitefile)
             Dim dt As System.Data.DataTable = SQLiteDatabase.GetDataTable(cmd)
             Dim i As Integer = 0
             'Build Commands for each character
@@ -673,7 +673,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
                     Data.Add(var.Name, var.Value.ToString)
                 Next
 
-                Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
+                Dim db As New SQLiteDatabase(MsDatabase.SQLitefile)
 
                 'Check for special character to store Dream PS tree
                 Data = SystemDateFixer(TableSet, PlayerName, Data)
@@ -738,7 +738,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
             Dim Table As String = "BACKUP"
             SendClientMessage("Pruning Backup Database")
             Dim cmd2 As String = "SELECT * FROM " + Table + "MASTER"
-            Dim db As SQLiteDatabase = New SQLiteDatabase(MsSqlite.SQLitefile)
+            Dim db As SQLiteDatabase = New SQLiteDatabase(MsDatabase.SQLitefile)
             Dim dt As System.Data.DataTable = SQLiteDatabase.GetDataTable(cmd2)
             Dim result As String = String.Empty
             Dim Counter As Integer = 0

@@ -1,6 +1,8 @@
-﻿Imports System.Threading
+﻿Imports System.Text.RegularExpressions
+Imports System.Threading
 Imports Furcadia.Net
 Imports Furcadia.Net.Dream
+Imports Furcadia.Util
 Imports Monkeyspeak
 
 Namespace Engine.Libraries
@@ -8,8 +10,185 @@ Namespace Engine.Libraries
     Public Class MonkeySpeakLibrary
         Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
 
+#Region "Protected Methods"
+
+        ''' <summary>
+        ''' (0:17) When someone whispers something with {.} in it,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
+        Protected Function msgContains(reader As TriggerReader) As Boolean
+
+            Dim msMsg As String = StripHTML(reader.ReadString())
+            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+
+            Dim test As String = StripHTML(msg.Value.ToString)
+            Return test.Contains(msMsg)
+
+        End Function
+
+        ''' <summary>
+        ''' (1:13) and triggering furre's message ends with {.},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
+        Protected Function msgEndsWith(reader As TriggerReader) As Boolean
+
+            Dim msMsg As String = StripHTML(reader.ReadString())
+            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+
+            Dim test As String = StripHTML(msg.Value.ToString)
+            'Debug.Print("Msg = " & msg)
+            Return test.EndsWith(msMsg)
+
+        End Function
+
+        Protected Function msgIs(reader As TriggerReader) As Boolean
+
+            Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
+            Dim msMsg As String = StripHTML(reader.ReadString())
+            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+
+            Dim test As String = StripHTML(msg.Value.ToString)
+            Dim test2 As Boolean = msMsg.Equals(test) And safety
+            Return msMsg.Equals(test) And safety
+
+        End Function
+
+        Protected Function msgIsNot(reader As TriggerReader) As Boolean
+
+            Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
+            Dim msMsg As String = StripHTML(reader.ReadString())
+            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+
+            Dim test As String = StripHTML(msg.Value.ToString)
+            Return Not msMsg.Equals(test) And safety
+
+        End Function
+
+        Protected Function msgNotContain(reader As TriggerReader) As Boolean
+
+            Dim msMsg As String = StripHTML(reader.ReadString())
+            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+
+            Dim test As String = StripHTML(msg.Value.ToString)
+            Return test.Contains(msMsg)
+
+        End Function
+
+        ''' <summary>
+        ''' (1:14) and triggering furre's message doesn't end with {.},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
+        Protected Function msgNotEndsWith(reader As TriggerReader) As Boolean
+
+            Dim msMsg As String = StripHTML(reader.ReadString())
+            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+
+            Dim test As String = StripHTML(msg.Value.ToString)
+            'Debug.Print("Msg = " & msg)
+            Return Not test.EndsWith(msMsg)
+
+        End Function
+
+        ''' <summary>
+        ''' (1:12) and triggering furre's message doesn't start with {.},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
+        Protected Function msgNotStartsWith(reader As TriggerReader) As Boolean
+
+            Dim msMsg As String = StripHTML(reader.ReadString())
+            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+
+            Dim test As String = StripHTML(msg.Value.ToString)
+            Return Not test.StartsWith(msMsg)
+
+        End Function
+
+        ''' <summary>
+        ''' (1:11) and triggering furre's message starts with {.},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
+        Protected Function msgStartsWith(reader As TriggerReader) As Boolean
+
+            Dim msMsg As String = StripHTML(reader.ReadString())
+            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+
+            Dim test As String = StripHTML(msg.Value.ToString)
+            Return test.StartsWith(msMsg)
+        End Function
+
+        Protected Function NameIs(reader As TriggerReader) As Boolean
+
+            Dim TmpName As String = reader.ReadString()
+            Dim tname As Variable = MsPage.GetVariable("NAME")
+            'add Machine Name parser
+            Return FurcadiaShortName(TmpName) = FurcadiaShortName(tname.Value.ToString)
+
+        End Function
+
+        Protected Function NameIsNot(reader As TriggerReader) As Boolean
+
+            Dim tname As String = MsPage.GetVariable("NAME").Value.ToString
+            Dim TmpName As String = reader.ReadString()
+            'add Machine Name parser
+            If FurcadiaShortName(TmpName) <> FurcadiaShortName(tname) Then Return True
+
+            Return False
+        End Function
+
+        Protected Function TrigFurreNameIs(reader As TriggerReader) As Boolean
+
+            Dim TmpName As String = reader.ReadString()
+            Dim TrigFurreName As String = FurcadiaSession.Player.ShortName
+            'add Machine Name parser
+            Return Furcadia.Util.FurcadiaShortName(TmpName) = TrigFurreName
+
+        End Function
+
+        Protected Function TrigFurreNameIsNot(reader As TriggerReader) As Boolean
+            Return Not TrigFurreNameIs(reader)
+        End Function
+
+#End Region
+
+#Region "Private Methods"
+
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="Text">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
+        Private Function StripHTML(ByVal Text As String) As String
+
+            Dim r As New Regex("<(.*?)>")
+            Text = r.Replace(Text, String.Empty)
+            Return Text.Replace("|", " ").ToLower
+        End Function
+
+#End Region
+
 #Region "Public Properties"
 
+        ''' <summary>
+        ''' Current Furcadia Standard Time (fst)
+        ''' </summary>
+        ''' <returns>
+        ''' </returns>
         Public ReadOnly Property FurcTime As DateTime
             Get
                 Return _FurcTime
@@ -17,6 +196,8 @@ Namespace Engine.Libraries
         End Property
 
 #End Region
+
+
 
 #Region "Private Methods"
 
@@ -32,20 +213,30 @@ Namespace Engine.Libraries
         Private _HasHelp As Boolean
         Private _SkillLevel As Integer
         Private FurcTimeTimer As Timer
-        Private FuscariaSession As BotSession
 
 #End Region
 
 #Region "Public Fields"
 
         ''' <summary>
+        ''' Reference to the Main Bot Session for the bot
+        ''' </summary>
+        Public WithEvents FurcadiaSession As BotSession
+
+        ''' <summary>
+        ''' Reference to the Main Engine in the bot
+        ''' </summary>
+        Public WithEvents MsEngine As MonkeyspeakEngine
+
+        ''' <summary>
+        ''' Reference to the Main Monkey Speak Page for the bot
+        ''' </summary>
+        Public WithEvents MsPage As Page
+
+        ''' <summary>
         ''' Current Dream the Bot is in
         ''' </summary>
         Public Dream As DREAM
-
-        Public MsEngine As MonkeyspeakEngine
-
-        Public MsPage As Page
 
         ''' <summary>
         ''' Current Triggering Furre
@@ -55,15 +246,6 @@ Namespace Engine.Libraries
 #End Region
 
 #Region "Public Delegates"
-
-        Public WithEvents FurcadiaSession As BotSession
-
-        Public Delegate Sub MessageDelegate(ByRef message As String)
-
-        'Public Sub LogError(reader As TriggerReader, ex As Exception)
-        '    '   FurcadiaSession.LogError(reader, ex)
-
-        'End Sub
 
         ''' <summary>
         ''' Send a raw instruction to the client
@@ -100,7 +282,7 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Default Constructor
         ''' <para>
-        ''' Loads default Text Writer
+        ''' References the main components cfrom <see cref="BotSession"/>
         ''' </para>
         ''' </summary>
         Sub New(ByRef Session As BotSession)

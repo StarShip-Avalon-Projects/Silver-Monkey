@@ -1,17 +1,14 @@
 ﻿Namespace Engine.Libraries
 
     ''' <summary>
-    ''' Furcadia Popup Windows
-    ''' <para>
-    ''' TODO: Complete Class
-    ''' </para>
+    ''' Silver Monkey Math Functions
     ''' </summary>
-    Public Class MS_Repq
+    Class MathLibrary
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
 
-        Public Sub New(ByRef Session As BotSession)
+        Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
 
         End Sub

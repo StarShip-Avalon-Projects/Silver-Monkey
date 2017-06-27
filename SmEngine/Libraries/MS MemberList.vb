@@ -6,6 +6,17 @@ Imports SilverMonkeyEngine.SmConstants
 
 Namespace Engine.Libraries
 
+    ''' <summary>
+    ''' Dream Member List managment
+    ''' <para>
+    ''' a Simple dream admin system using a text file to contain a list of
+    ''' Furre as staff
+    ''' </para>
+    ''' <para>
+    ''' NOTE: The BotController is considered to be on the list even if the
+    '''       furres name is not in the text file
+    ''' </para>
+    ''' </summary>
     Public Class MS_MemberList
         Inherits MonkeySpeakLibrary
 
@@ -57,6 +68,7 @@ Namespace Engine.Libraries
         ''' they aren't already on it.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -78,6 +90,7 @@ Namespace Engine.Libraries
         ''' aren't already on it.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -107,6 +120,7 @@ Namespace Engine.Libraries
         ''' (1:901) and the furre named {...} is on my Dream Member list.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -130,6 +144,7 @@ Namespace Engine.Libraries
         ''' (1:903) and the furre named {...} is not on my Dream Member list.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -154,6 +169,7 @@ Namespace Engine.Libraries
         ''' if they are on it.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -185,6 +201,7 @@ Namespace Engine.Libraries
         ''' they are on it.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -215,6 +232,7 @@ Namespace Engine.Libraries
         ''' (1:900) and the triggering furre is on my dream Member List,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -236,6 +254,7 @@ Namespace Engine.Libraries
         ''' (1:902) and the triggering furre is not on my Dream Member list.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -247,6 +266,7 @@ Namespace Engine.Libraries
         ''' (5:904) Use file {...} as the dream member list.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>

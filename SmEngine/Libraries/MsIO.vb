@@ -5,6 +5,15 @@ Imports Monkeyspeak
 
 Namespace Engine.Libraries
 
+    ''' <summary>
+    ''' Create, Delete, Modify text files
+    ''' <para>
+    ''' Conditions (1:200) - (1:203)
+    ''' </para>
+    ''' <para>
+    ''' Effects (5:200) - (5:125)
+    ''' </para>
+    ''' </summary>
     Public Class MsIO
         Inherits MonkeySpeakLibrary
 
@@ -51,10 +60,13 @@ Namespace Engine.Libraries
 #Region "Public Methods"
 
         ''' <summary>
-        ''' (5:125) count the number of lines in text file {...} and put it into variable %Variable .
+        ''' (5:125) count the number of lines in text file {...} and put it
+        ''' into variable %Variable .
         ''' </summary>
-        ''' <param name="reader"></param>
-        ''' <returns></returns>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function CountLines(reader As TriggerReader) As Boolean
             Dim F As String = ""
             Dim Var As Variable
@@ -74,10 +86,13 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:124) read line number # from text file {...} and put it into variable %Variable.
+        ''' (5:124) read line number # from text file {...} and put it into
+        ''' variable %Variable.
         ''' </summary>
-        ''' <param name="reader"></param>
-        ''' <returns></returns>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function ReadTextLine(reader As TriggerReader) As Boolean
 
             Dim num As Double = ReadVariableOrNumber(reader, False)
@@ -98,7 +113,7 @@ Namespace Engine.Libraries
             Else
                 Throw New FileNotFoundException("File """ + F + """ Does not exist.")
             End If
-
+            Return True
         End Function
 
 #End Region
@@ -108,7 +123,6 @@ Namespace Engine.Libraries
         Private Function AppendToFile(reader As TriggerReader) As Boolean
             Dim data As String = reader.ReadString()
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
-
 
             Using SW As StreamWriter = New StreamWriter(f, True)
                 SW.WriteLine(data)

@@ -5,12 +5,15 @@ Imports Monkeyspeak
 Namespace Engine.Libraries
 
     ''' <summary>
+    ''' Lines: (5:130) - (5:139)
+    ''' <para>
     ''' Furcadia Drice Role handler
+    ''' </para>
     ''' </summary>
-    Public Class MS_Dice
+    Public Class MsDice
         Inherits MonkeySpeakLibrary
 
-        '(5:130) - (5:139)
+        '
 
 #Region "Private Fields"
 

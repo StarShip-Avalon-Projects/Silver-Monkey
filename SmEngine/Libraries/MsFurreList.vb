@@ -3,7 +3,19 @@ Imports Monkeyspeak
 
 Namespace Engine.Libraries
 
-    Public Class MonkeySpeakFurreList
+    ''' <summary>
+    ''' Conditions (1:700) - (1:709)
+    ''' <para>
+    ''' Effects (5:700) - (5:703)
+    ''' </para>
+    ''' <para>
+    ''' Furres in dream
+    ''' </para>
+    ''' <para>
+    ''' AFK vs active players
+    ''' </para>
+    ''' </summary>
+    Public Class MsFurreList
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
@@ -60,11 +72,11 @@ Namespace Engine.Libraries
 
             '(5:702) count the number of active furres in the drean and put it in the variable %Variable.
             Add(New Trigger(TriggerCategory.Effect, 702), AddressOf FurreActiveListCount,
-    "(5:702) count the number of active furres in the drean and put it in the variable %Variable.")
+                 "(5:702) count the number of active furres in the drean and put it in the variable %Variable.")
 
             '(5:703) count the number of A.F.K furres in the drean and put it in the variable %Variable.
             Add(New Trigger(TriggerCategory.Effect, 703), AddressOf FurreAFKListCount,
-            "(5:703) count the number of A.F.K furres in the drean and put it in the variable %Variable.")
+             "(5:703) count the number of A.F.K furres in the drean and put it in the variable %Variable.")
 
         End Sub
 
@@ -72,6 +84,15 @@ Namespace Engine.Libraries
 
 #Region "Helper Functions"
 
+        ''' <summary>
+        ''' Is the player named {...} in the dream?
+        ''' </summary>
+        ''' <param name="Name">
+        ''' Furre Name
+        ''' </param>
+        ''' <returns>
+        ''' True on Success
+        ''' </returns>
         Private Function InDream(ByRef Name As String) As Boolean
             Dim found As Boolean = False
             For Each Fur As FURRE In FurcadiaSession.Dream.FurreList
@@ -91,8 +112,10 @@ Namespace Engine.Libraries
         ''' it in the variable %Variable.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' the Number of Furre in dream as a <see cref="Monkeyspeak.Variable"/>
         ''' </returns>
         Function FurreActiveListCount(reader As TriggerReader) As Boolean
 
@@ -108,7 +131,17 @@ Namespace Engine.Libraries
 
         End Function
 
-        '(5:703) count the number of A.F.K furres in the drean and put it in the variable %Variable.
+        ''' <summary>
+        ''' (5:703) count the number of A.F.K furres in the drean and put it
+        ''' in the variable %Variable.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' the number of AFK furres in the Dream as a <see cref="Monkeyspeak.Variable"/>
+        ''' <para>To be counted as AFK, Thier AFK time is greater than zero</para>
+        ''' </returns>
         Function FurreAFKListCount(reader As TriggerReader) As Boolean
 
             Dim var As Variable = reader.ReadVariable(True)
@@ -127,8 +160,10 @@ Namespace Engine.Libraries
         ''' (5:701) save the dream list count to variable %Variable.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' The total number of furres in a <see cref="Monkeyspeak.Variable"/>
         ''' </returns>
         Function FurreListCount(reader As TriggerReader) As Boolean
 
@@ -142,8 +177,10 @@ Namespace Engine.Libraries
         ''' (5:700) Copy the dreams's furre-list to array %Variable
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' a comoa seperated list of Furre Names
         ''' </returns>
         Function FurreListVar(reader As TriggerReader) As Boolean
 
@@ -161,8 +198,10 @@ Namespace Engine.Libraries
         ''' (1:709) and the furre named {...} is active in the dream,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' True is the furre specified has afk time of 0
         ''' </returns>
         Function FurreNamedActive(reader As TriggerReader) As Boolean
 
@@ -176,8 +215,10 @@ Namespace Engine.Libraries
         ''' (1:708) and the furre named {...} is a.f.k.,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' returns true if the Furre has a afk time greater than zero
         ''' </returns>
         Function FurreNamedAFK(reader As TriggerReader) As Boolean
 
@@ -191,8 +232,10 @@ Namespace Engine.Libraries
         ''' (1:706) and the furre named {...} is visible.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' True if the specified furre is visible
         ''' </returns>
         Function FurreNamedCanSe(reader As TriggerReader) As Boolean
 
@@ -206,8 +249,10 @@ Namespace Engine.Libraries
         ''' (1:702) and the furre named {...} is in the dream.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true if the furre specified is in the dream
         ''' </returns>
         Function FurreNamedInDream(reader As TriggerReader) As Boolean
 
@@ -221,8 +266,10 @@ Namespace Engine.Libraries
         ''' (1:707) and the furre named {...} is not visible
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' returns true if the spcified furre is not visible
         ''' </returns>
         Function FurreNamedNotCanSe(reader As TriggerReader) As Boolean
 
@@ -236,8 +283,10 @@ Namespace Engine.Libraries
         ''' (1:703) and the furre named {...} is not in the dream
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true if the specified furre is not in the dream
         ''' </returns>
         Function FurreNamedNotInDream(reader As TriggerReader) As Boolean
 
@@ -251,27 +300,30 @@ Namespace Engine.Libraries
         ''' (1:704) and the triggering furre is visible.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true is the triggering furre is visible
         ''' </returns>
         Function TriggeringCanSe(reader As TriggerReader) As Boolean
 
-            Dim tPlayer As FURRE = FurcadiaSession.Player
-            Return tPlayer.Visible
+            Return Player.Visible
 
         End Function
 
         ''' <summary>
         ''' (1:700) and the triggering furre in the dream.
+        ''' <para>Consider Whisperibg furres</para>
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true if the triggering furre is in the dream
         ''' </returns>
         Function TriggeringInDream(reader As TriggerReader) As Boolean
 
-            Dim tPlayer As FURRE = FurcadiaSession.Player
-            Return InDream(tPlayer.Name)
+            Return InDream(Player.Name)
 
         End Function
 
@@ -279,22 +331,26 @@ Namespace Engine.Libraries
         ''' (1:705) and the triggering furre is not visible
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' returns true if the triggering furre is not visible
         ''' </returns>
         Function TriggeringNotCanSe(reader As TriggerReader) As Boolean
 
-            Dim tPlayer As FURRE = FurcadiaSession.Player
-            Return Not tPlayer.Visible
+            Return Not Player.Visible
 
         End Function
 
         ''' <summary>
         ''' (1:701) and the triggering furre is not in the dream.
+        ''' <para>considering a whispering furre</para>
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true if the triggering furre is not in the dream
         ''' </returns>
         Function TriggeringNotInDream(reader As TriggerReader) As Boolean
 

@@ -1,7 +1,6 @@
 ﻿Imports MonkeyCore
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries
-Imports SilverMonkeyEngine.Engine.Libraries.MS_Engine
 Imports SilverMonkeyEngine.SmConstants
 
 Namespace Engine
@@ -76,14 +75,14 @@ Namespace Engine
             LibList.Add(New SayLibrary(MSEngine.FurcadiaSession))
             LibList.Add(New Banish(MSEngine.FurcadiaSession))
             LibList.Add(New MathLibrary(MSEngine.FurcadiaSession))
-            LibList.Add(New MS_Time(MSEngine.FurcadiaSession))
-            LibList.Add(New MsSqlite(MSEngine.FurcadiaSession))
-            ' LibList.Add(New MSPK_Web(MSEngine.FurcadiaSession))
+            LibList.Add(New MsTime(MSEngine.FurcadiaSession))
+            LibList.Add(New MsDatabase(MSEngine.FurcadiaSession))
+            LibList.Add(New MsWebRequests(MSEngine.FurcadiaSession))
             LibList.Add(New MS_Cookie(MSEngine.FurcadiaSession))
             LibList.Add(New MsPhoenixSpeak(MSEngine.FurcadiaSession))
             LibList.Add(New DatabaseSystem(MSEngine.FurcadiaSession))
-            LibList.Add(New MS_Dice(MSEngine.FurcadiaSession))
-            LibList.Add(New MonkeySpeakFurreList(MSEngine.FurcadiaSession))
+            LibList.Add(New MsDice(MSEngine.FurcadiaSession))
+            LibList.Add(New MsFurreList(MSEngine.FurcadiaSession))
             LibList.Add(New Warning(MSEngine.FurcadiaSession))
             LibList.Add(New Movement(MSEngine.FurcadiaSession))
             LibList.Add(New WmCpyDta(MSEngine.FurcadiaSession))

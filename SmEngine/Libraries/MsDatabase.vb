@@ -9,8 +9,14 @@ Namespace Engine.Libraries
 
     ''' <summary>
     ''' Provides <see cref="System.Data.SQLite"/> access to Silver Monkey
+    ''' <para>
+    ''' Conditions (1:500) (1:531)
+    ''' </para>
+    ''' <para>
+    ''' Effects: (5:500) - (5:559)
+    ''' </para>
     ''' </summary>
-    Public Class MsSqlite
+    Public Class MsDatabase
         Inherits MonkeySpeakLibrary
 
 #Region "Public Fields"
@@ -921,7 +927,7 @@ Namespace Engine.Libraries
             Dim Total As Variable
             Dim num As Double = 0
 
-            Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
+            Dim db As New SQLiteDatabase(MsDatabase.SQLitefile)
             Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
             Total = reader.ReadVariable(True)
             Dim count As String = SQLiteDatabase.ExecuteScalar("select count(*) from [" & Table & "]")
@@ -1021,7 +1027,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function ReadDatabaseInfo(reader As TriggerReader) As Boolean
 
-            Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
+            Dim db As New SQLiteDatabase(MsDatabase.SQLitefile)
             Dim Info As String = reader.ReadString
             Dim Variable As Variable = reader.ReadVariable(True)
             Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
@@ -1042,7 +1048,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
 
-            Dim db As New SQLiteDatabase(MsSqlite.SQLitefile)
+            Dim db As New SQLiteDatabase(MsDatabase.SQLitefile)
             Dim Info As String = reader.ReadString
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
             Dim Variable As Variable = reader.ReadVariable(True)

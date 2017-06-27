@@ -2,7 +2,16 @@
 
 Namespace Engine.Libraries
 
-    Public Class MS_Time
+    ''' <summary>
+    ''' MonkeySpeak Time functions
+    ''' <para>
+    ''' Cause (0:299)
+    ''' </para>
+    ''' <para>
+    ''' Effects: (5:30) - (5:35)
+    ''' </para>
+    ''' </summary>
+    Public Class MsTime
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"
@@ -73,6 +82,7 @@ Namespace Engine.Libraries
         ''' (5: ) set variable %Variable to current Furcadia
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -90,6 +100,7 @@ Namespace Engine.Libraries
         ''' (5: ) set variable %Variable to current DateTime
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -118,6 +129,7 @@ Namespace Engine.Libraries
         ''' Date Time string {...} and put it into variable %Variable
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -141,6 +153,7 @@ Namespace Engine.Libraries
         ''' Date Time variable %Variable and put it into variable %Variable
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
