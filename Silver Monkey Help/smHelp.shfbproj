@@ -198,7 +198,10 @@
 &lt;a href="https://starship-avalon-projects.github.io/MonkeySpeakExtendedEngine/html/8d0a663e-8095-408a-b860-f55d2fc3ccbe.htm"&gt;Monkey Speak Ex Documentation&lt;/a&gt;</NamespaceSummaryItem>
 <NamespaceSummaryItem name="SilverMonkeyEngine.My" isDocumented="False" />
 <NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries (Group)" isGroup="True" isDocumented="True">The Core  Monkey Speak Libraries Silver monkey uses.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True">The Core  Monkey Speak Libraries Silver monkey uses.</NamespaceSummaryItem></NamespaceSummaries>
+<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True">The Core  Monkey Speak Libraries Silver monkey uses.
+&lt;p&gt; Please see 
+&lt;codeEntityReference qualifyHint="false"&gt;T:Monkeyspeak.Libraries&lt;/codeEntityReference&gt;
+&lt;/p&gt;</NamespaceSummaryItem></NamespaceSummaries>
     <PlugInConfigurations>
       <PlugInConfig id="Output Deployment" enabled="True">
         <configuration deleteAfterDeploy="false" verboseLogging="false">

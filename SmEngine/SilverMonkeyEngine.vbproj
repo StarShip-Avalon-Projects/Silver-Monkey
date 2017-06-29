@@ -116,6 +116,7 @@
     <Compile Include="Libraries\MsFurreList.vb" />
     <Compile Include="Libraries\MsIO.vb" />
     <Compile Include="Libraries\MsMath.vb" />
+    <Compile Include="Libraries\MsSound.vb" />
     <Compile Include="Libraries\MsTime.vb" />
     <Compile Include="Libraries\MS_Cookie.vb" />
     <Compile Include="Libraries\MS_DreamTransfer.vb" />

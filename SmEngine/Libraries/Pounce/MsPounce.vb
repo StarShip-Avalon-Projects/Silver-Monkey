@@ -3,9 +3,10 @@ Imports Furcadia.Net.Pounce
 Imports Furcadia.Util
 Imports MonkeyCore
 Imports Monkeyspeak
+Imports SilverMonkeyEngine.Engine.Libraries.Pounce
 Imports SilverMonkeyEngine.SmConstants
 
-Namespace Engine.Libraries.Pounce
+Namespace Engine.Libraries
 
     ''' <summary>
     ''' Monkey Speak version of the Furcadia Pounce Cliet
