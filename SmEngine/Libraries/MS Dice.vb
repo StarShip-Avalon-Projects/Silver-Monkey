@@ -5,11 +5,23 @@ Imports Monkeyspeak
 Namespace Engine.Libraries
 
     ''' <summary>
-    ''' Lines: (5:130) - (5:139)
+    ''' Cause: (0:130 - (0:136
+    ''' <para>
+    ''' Conditions: (1:130) - (1:131)
+    ''' </para>
+    ''' <para>
+    ''' Effect: (5:130) - (5:139)
+    ''' </para>
     ''' <para>
     ''' Furcadia Drice Role handler
     ''' </para>
     ''' </summary>
+    ''' <remarks>
+    ''' This Lib contains the following unnamed delegates
+    ''' <para>
+    ''' (0:136) When any one rolls anything,
+    ''' </para>
+    ''' </remarks>
     Public Class MsDice
         Inherits MonkeySpeakLibrary
 
@@ -85,6 +97,7 @@ Namespace Engine.Libraries
         ''' sides minus #.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -111,6 +124,7 @@ Namespace Engine.Libraries
         ''' sides plus #.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -134,11 +148,27 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' (1:130) and the dice roll result is # or higher,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function DiceResultNumberOrHigher(reader As TriggerReader) As Boolean
             Dim result As Double = ReadVariableOrNumber(reader)
             Return result <= dice.DiceResult
         End Function
 
+        ''' <summary>
+        ''' (1:131) and the dice roll result is # or lower,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Function DiceResultNumberOrlower(reader As TriggerReader) As Boolean
             Dim result As Double = ReadVariableOrNumber(reader)
             Return result >= dice.DiceResult
@@ -148,13 +178,14 @@ Namespace Engine.Libraries
         ''' (5:134) roll # furcadia dice with # sides.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
         Function RollDice(reader As TriggerReader) As Boolean
             Dim count As Double = ReadVariableOrNumber(reader)
             Dim side As Double = ReadVariableOrNumber(reader)
-            Dim Message As String = ""
+            Dim Message As String = reader.ReadString
 
             Return sendServer("roll " + count.ToString + "d" + side.ToString + " " + Message)
 
@@ -164,6 +195,7 @@ Namespace Engine.Libraries
         ''' (5:136) roll # furcadia dice with # sides minus #.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -181,6 +213,7 @@ Namespace Engine.Libraries
         ''' (5:135) roll # furcadia dice with # sides plus #.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -198,6 +231,7 @@ Namespace Engine.Libraries
         ''' (0:130) When the bot rolls #d# and gets # or highter,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -217,6 +251,7 @@ Namespace Engine.Libraries
         ''' (0:134) When the bot rolls #d# -# and gets # or highter,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -237,6 +272,7 @@ Namespace Engine.Libraries
         ''' (0:132) When the bot rolls #d# +# and gets # or highter,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -253,6 +289,13 @@ Namespace Engine.Libraries
             Return dice.DiceCompnentMatch = "+"
         End Function
 
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function TrigFurreRolledVariable(reader As TriggerReader) As Boolean
             Dim v As Variable = reader.ReadVariable(True)
             v.Value = dice.DiceResult
@@ -263,6 +306,9 @@ Namespace Engine.Libraries
 
 #Region "Public Classes"
 
+        ''' <summary>
+        ''' Single Die object for Dice
+        ''' </summary>
         Public Class Die
 
 #Region "Private Fields"
@@ -307,6 +353,12 @@ Namespace Engine.Libraries
 
 #Region "Public Methods"
 
+            ''' <summary>
+            ''' Roll a single die
+            ''' </summary>
+            ''' <returns>
+            ''' <see cref="Double"/>
+            ''' </returns>
             Public Function Roll() As Double
                 Me._value = CDbl(faceSelector.Next(1, CInt(Me.FaceCount)))
                 Return Me.Value
@@ -316,11 +368,20 @@ Namespace Engine.Libraries
 
         End Class
 
+        ''' <summary>
+        ''' Generic Collection representinh multiple dice being rolled
+        ''' </summary>
         Public Class DieCollection
             Inherits System.Collections.ObjectModel.Collection(Of Die)
 
 #Region "Public Methods"
 
+            ''' <summary>
+            ''' roll all the dice In hand
+            ''' </summary>
+            ''' <returns>
+            ''' Sum of the result as <see cref="Double"/>
+            ''' </returns>
             Public Function RollAll() As Double
                 Dim total As Double = 0
 
@@ -339,7 +400,14 @@ Namespace Engine.Libraries
 
 #Region "Private Methods"
 
-        Private Shared Sub ParseData(obj As ChannelObject, e As EventArgs) 'Handles FurcadiaSession.ProcessServerChannelData
+        ''' <summary>
+        ''' Parse the dice rolls from the game server
+        ''' </summary>
+        ''' <param name="obj">
+        ''' </param>
+        ''' <param name="e">
+        ''' </param>
+        Private Shared Sub ParseData(obj As ChannelObject, e As EventArgs) Handles FurcadiaSession.ProcessServerChannelData
             Dim DiceObject As DiceRolls = Nothing
             If obj.GetType().Equals(GetType(DiceRolls)) Then
                 DiceObject = CType(obj, DiceRolls)

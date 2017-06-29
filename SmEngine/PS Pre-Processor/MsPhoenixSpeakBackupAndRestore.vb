@@ -8,10 +8,12 @@ Imports SilverMonkeyEngine.Engine.Libraries.PhoenixSpeak
 
 Namespace Engine.Libraries
 
-    'Class Notes
-
     ''' <summary>
     ''' Monkey Speak interface to the PS backup/restore system
+    ''' <para>
+    ''' NOTE: PhoenixSpeak Database is not SQL based like SQLite. Phoenix
+    '''       Speak resembles an XML style system
+    ''' </para>
     ''' </summary>
     ''' <remarks>
     ''' ' CharacterListLooping.
@@ -46,7 +48,7 @@ Namespace Engine.Libraries
     ''' server and will flag an 'an overflow if page 6 is detected.
     ''' </para>
     ''' </remarks>
-    Public Class DatabaseSystem
+    Public Class MsPhoenixSpeakBackupAndRestore
         Inherits MonkeySpeakLibrary
 
 #Region "Public Fields"

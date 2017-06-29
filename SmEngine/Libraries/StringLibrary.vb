@@ -3,6 +3,19 @@ Imports Monkeyspeak
 
 Namespace Engine.Libraries
 
+    ''' <summary>
+    ''' <para>
+    ''' Conditions: (1:60) - (1:61)
+    ''' </para>
+    ''' <para>
+    ''' Effects: (5:120)- (5:127)
+    ''' </para>
+    ''' Tied wigth a string!!
+    ''' <para>
+    ''' well not really but, this class extends monkey Speak ability to work
+    ''' with strings in <see cref="Monkeyspeak.Variable"/> s
+    ''' </para>
+    ''' </summary>
     Class StringLibrary
         Inherits MonkeySpeakLibrary
 

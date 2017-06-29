@@ -317,6 +317,13 @@ Public Class Paths
 
     ''' <summary>
     ''' Gets or sets the Silver Monkey bot path.
+    ''' <para>
+    ''' Set this path at Engine Start. Use path of Bot.bini if outside
+    ''' "Documents\Silver monkey"
+    ''' </para>
+    ''' <para>
+    ''' Default Path: "Documents\Silver Monkey"
+    ''' </para>
     ''' </summary>
     ''' <value>
     ''' The Silver Monkey bot path.
@@ -406,19 +413,25 @@ Public Class Paths
     ''' current path and then check the Silver Monkey folder in my documents
     ''' </para>
     ''' </summary>
-    ''' <param name="file">
+    ''' <param name="FileToCheck">
+    ''' file path to check
     ''' </param>
     ''' <returns>
+    ''' the correct file path
     ''' </returns>
-    Public Shared Function CheckBotFolder(ByVal file As String) As String
-        Dim Check As String = Path.GetDirectoryName(file)
-        If String.IsNullOrEmpty(Check) Then
-            If String.IsNullOrEmpty(file) Then
+
+    Public Shared Function CheckBotFolder(ByVal FileToCheck As String) As String
+        Dim FilePath As String = Path.GetDirectoryName(FileToCheck)
+        If String.IsNullOrEmpty(FilePath) Then
+            If String.IsNullOrEmpty(FileToCheck) Then
                 Return SilverMonkeyBotPath
             End If
-            Return Path.Combine(SilverMonkeyBotPath, file)
+            Return Path.Combine(SilverMonkeyBotPath, FileToCheck)
         End If
-        Return file
+        If File.Exists(FileToCheck) Then
+            Return FileToCheck
+        End If
+        Return SilverMonkeyBotPath
     End Function
 
 #End Region

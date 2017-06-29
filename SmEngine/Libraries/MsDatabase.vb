@@ -15,6 +15,13 @@ Namespace Engine.Libraries
     ''' <para>
     ''' Effects: (5:500) - (5:559)
     ''' </para>
+    ''' <para>
+    ''' Default SQLite database file: <see cref="Paths.SilverMonkeyBotPath"/>\SilverMonkey.db
+    ''' </para>
+    ''' <para>
+    ''' NOTE: PhoenixSpeak Database is not SQL based like SQLite. Phoenix
+    '''       Speak resembles an XML style system
+    ''' </para>
     ''' </summary>
     Public Class MsDatabase
         Inherits MonkeySpeakLibrary
@@ -29,9 +36,13 @@ Namespace Engine.Libraries
 
 #Region "Private Fields"
 
+        ''' <summary>
+        ''' Shared(Static) Database file
+        ''' </summary>
         Private Shared _SQLitefile As String
-        Dim cache As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
-        Dim lock As New Object
+
+        Private cache As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
+        Private lock As New Object
         Private QueryRun As Boolean = False
 
 #End Region
@@ -46,90 +57,132 @@ Namespace Engine.Libraries
         ''' </param>
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
+            SQLitefile = Path.Combine(Paths.SilverMonkeyBotPath, "SilverMonkey.db")
             '(1:500) and the Database info {...} about the triggering furre is equal to #,
             Add(New Trigger(TriggerCategory.Condition, 500),
-                AddressOf TriggeringFurreinfoEqualToNumber, "(1:500) and the Database info {...} about the triggering furre is equal to #,")
+                AddressOf TriggeringFurreinfoEqualToNumber,
+                "(1:500) and the Database info {...} about the triggering furre is equal to #,")
+
             '(1:501) and the Database info {...} about the triggering furre is not equal to #,
             Add(New Trigger(TriggerCategory.Condition, 501),
-            AddressOf TriggeringFurreinfoNotEqualToNumber, "(1:501) and the Database info {...} about the triggering furre is not equal to #,")
+            AddressOf TriggeringFurreinfoNotEqualToNumber,
+                "(1:501) and the Database info {...} about the triggering furre is not equal to #,")
+
             '(1:502) and the Database info {...} about the triggering furre is greater than #,
             Add(New Trigger(TriggerCategory.Condition, 502),
-            AddressOf TriggeringFurreinfoGreaterThanNumber, "(1:502) and the Database info {...} about the triggering furre is greater than #,")
+                AddressOf TriggeringFurreinfoGreaterThanNumber,
+                "(1:502) and the Database info {...} about the triggering furre is greater than #,")
             '(1:503) and the Database info {...} about the triggering furre is less than #,
             Add(New Trigger(TriggerCategory.Condition, 503),
-            AddressOf TriggeringFurreinfoLessThanNumber, "(1:503) and the Database info {...} about the triggering furre is less than #,")
+            AddressOf TriggeringFurreinfoLessThanNumber,
+                "(1:503) and the Database info {...} about the triggering furre is less than #,")
 
             '(1:504) and the Database info {...} about the triggering furre is greater than or equal to #,
             Add(New Trigger(TriggerCategory.Condition, 504),
-            AddressOf TriggeringFurreinfoGreaterThanOrEqualToNumber, "(1:504) and the Database info {...} about the triggering furre is greater than or equal to #,")
+            AddressOf TriggeringFurreinfoGreaterThanOrEqualToNumber,
+                "(1:504) and the Database info {...} about the triggering furre is greater than or equal to #,")
+
             '(1:505) and the Database info {...} about the triggering furre is less than or equal to#,
             Add(New Trigger(TriggerCategory.Condition, 505),
-            AddressOf TriggeringFurreinfoLessThanOrEqualToNumber, "(1:505) and the Database info {...} about the triggering furre is less than or equal to #,")
+            AddressOf TriggeringFurreinfoLessThanOrEqualToNumber,
+                "(1:505) and the Database info {...} about the triggering furre is less than or equal to #,")
 
             '(1:508) and the Database info {...} about the furre named {...} is equal to #,
             Add(New Trigger(TriggerCategory.Condition, 508),
             AddressOf FurreNamedinfoEqualToNumber, "(1:508) and the Database info {...} about the furre named {...} is equal to #,")
+
             '(1:509) and the Database info {...} about the furre named {...} is not equal to #,
             Add(New Trigger(TriggerCategory.Condition, 509),
-            AddressOf FurreNamedinfoNotEqualToNumber, "(1:509) and the Database info {...} about the furre named {...} is not equal to #,")
+            AddressOf FurreNamedinfoNotEqualToNumber,
+                "(1:509) and the Database info {...} about the furre named {...} is not equal to #,")
+
             '(1:510) and the Database info {...} about the furre named {...} is greater than #,
             Add(New Trigger(TriggerCategory.Condition, 510),
-            AddressOf FurreNamedinfoGreaterThanNumber, "(1:510) and the Database info {...} about the furre named {...} is greater than #,")
+            AddressOf FurreNamedinfoGreaterThanNumber,
+                "(1:510) and the Database info {...} about the furre named {...} is greater than #,")
+
             '(1:511) and the Database info {...} about the furre named {...} is less than #,
             Add(New Trigger(TriggerCategory.Condition, 511),
-            AddressOf FurreNamedinfoLessThanNumber, "(1:511) and the Database info {...} about the furre named {...} is less than #,")
+            AddressOf FurreNamedinfoLessThanNumber,
+                "(1:511) and the Database info {...} about the furre named {...} is less than #,")
 
             '(1:510) and the Database info {...} about the furre named {...} is greater than or equal to #,
             Add(New Trigger(TriggerCategory.Condition, 512),
-        AddressOf FurreNamedinfoGreaterThanOrEqualToNumber, "(1:512) and the Database info {...} about the furre named {...} is greater than or equal to #,")
+        AddressOf FurreNamedinfoGreaterThanOrEqualToNumber,
+                "(1:512) and the Database info {...} about the furre named {...} is greater than or equal to #,")
             '(1:511) and the Database info {...} about the furre named {...} is less than or equal to #,
             Add(New Trigger(TriggerCategory.Condition, 513),
-        AddressOf FurreNamedinfoLessThanOrEqualToNumber, "(1:513) and the Database info {...} about the furre named {...} is less than or equal to #,")
+        AddressOf FurreNamedinfoLessThanOrEqualToNumber,
+                "(1:513) and the Database info {...} about the furre named {...} is less than or equal to #,")
 
             '(1:516) and the Database info {...} about the furre named {...} is equal to {...},
             Add(New Trigger(TriggerCategory.Condition, 516),
-       AddressOf FurreNamedinfoEqualToSTR, "(1:516) and the Database info {...} about the furre named {...} is equal to string {...},")
+                AddressOf FurreNamedinfoEqualToSTR,
+                "(1:516) and the Database info {...} about the furre named {...} is equal to string {...},")
+
             '(1:517) and the Database info {...} about the furre named {...} is not equal to {...},
             Add(New Trigger(TriggerCategory.Condition, 517),
-        AddressOf FurreNamedinfoNotEqualToSTR, "(1:517) and the Database info {...} about the furre named {...} is not equal to string {...},")
+        AddressOf FurreNamedinfoNotEqualToSTR,
+                "(1:517) and the Database info {...} about the furre named {...} is not equal to string {...},")
+
             '(1:518) and the Database info {...} about the triggering furre is equal to {...},
             Add(New Trigger(TriggerCategory.Condition, 518),
-            AddressOf TriggeringFurreinfoEqualToSTR, "(1:518) and the Database info {...} about the triggering furre is equal to string {...},")
+                AddressOf TriggeringFurreinfoEqualToSTR,
+                "(1:518) and the Database info {...} about the triggering furre is equal to string {...},")
+
             '(1:519) and the Database info {...} about the triggering furre is not equal to {...},
             Add(New Trigger(TriggerCategory.Condition, 519),
-            AddressOf TriggeringFurreinfoNotEqualToSTR, "(1:519) and the Database info {...} about the triggering furre is not equal to string {...},")
+            AddressOf TriggeringFurreinfoNotEqualToSTR,
+                "(1:519) and the Database info {...} about the triggering furre is not equal to string {...},")
 
             'Installed 7/13/120`16
             '(1:524) and the Database info  {...} in Settings Table {...} exists,
             Add(New Trigger(TriggerCategory.Condition, 524),
-                 AddressOf SettingExist, "(1:524) and the Database info  {...} in Settings Table {...} exists,")
+                 AddressOf SettingExist,
+                "(1:524) and the Database info  {...} in Settings Table {...} exists,")
+
             '(1:525) and the Database info  {...} in Settings Table {...} doesn't exist,
             Add(New Trigger(TriggerCategory.Condition, 525),
-                 AddressOf SettingNotExist, "(1:525) and the Database info  {...} in Settings Table {...} doesn't exist,")
+                 AddressOf SettingNotExist,
+                "(1:525) and the Database info  {...} in Settings Table {...} doesn't exist,")
+
             '(1:526) and the Database info {..} in Settings Table  {...} Is equal to {...},
             Add(New Trigger(TriggerCategory.Condition, 526),
                  AddressOf SettingEqualTo, "(1:526) and the Database info {..} in Settings Table  {...} Is equal to {...},")
+
             '(1:527) and the Database info {..} in Settings Table  {...} Is Not equal to {...},
             Add(New Trigger(TriggerCategory.Condition, 527),
-                 AddressOf SettingNotEqualTo, "(1:527) and the Database info {..} in Settings Table  {...} Is not equal to {...},")
+                 AddressOf SettingNotEqualTo,
+                "(1:527) and the Database info {..} in Settings Table  {...} Is not equal to {...},")
+
             '(1:528) and the Database info {..} in Settings Table  {...} Is greater than #,
             Add(New Trigger(TriggerCategory.Condition, 528),
-                 AddressOf SettingGreaterThan, "(1:528) and the Database info {..} in Settings Table  {...} Is greater than #,")
+                 AddressOf SettingGreaterThan,
+                "(1:528) and the Database info {..} in Settings Table  {...} Is greater than #,")
+
             '(1:529) and the Database info {..} in Settings Table  {...} Is greater than or equal to #,
             Add(New Trigger(TriggerCategory.Condition, 529),
-                 AddressOf SettingGreaterThanOrEqualTo, "(1:529) and the Database info {..} in Settings Table  {...} Is greater than or equal to #,")
+                 AddressOf SettingGreaterThanOrEqualTo,
+                "(1:529) and the Database info {..} in Settings Table  {...} Is greater than or equal to #,")
+
             '(1:530) and the Database info {..} in Settings Table  {...} Is less than #,
             Add(New Trigger(TriggerCategory.Condition, 530),
-                 AddressOf SettingLessThan, "(1:530) and the Database info {..} in Settings Table  {...} Is less than #,")
+                 AddressOf SettingLessThan,
+                "(1:530) and the Database info {..} in Settings Table  {...} Is less than #,")
+
             '(1:530) and the Database info {..} in Settings Table  {...} Is less than #,
             Add(New Trigger(TriggerCategory.Condition, 531),
-                 AddressOf SettingLessThanOrEqualTo, "(1:531) and the Database info {..} in Settings Table  {...} Is less than or equal to #,")
+                 AddressOf SettingLessThanOrEqualTo,
+                "(1:531) and the Database info {..} in Settings Table  {...} Is less than or equal to #,")
 
             '(5:500) use SQLite database file {...} or create file if it does not exist.
-            Add(New Trigger(TriggerCategory.Effect, 500), AddressOf createMDB, "(5:500) use SQLite database file {...} or create file if it does not exist.")
+            Add(New Trigger(TriggerCategory.Effect, 500), AddressOf UseOrCreateSQLiteFileIfNotExist,
+                "(5:500) use SQLite database file {...} or create file if it does not exist.")
 
             '(5:505 ) Add the triggering furre with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
-            Add(New Trigger(TriggerCategory.Effect, 505), AddressOf insertTriggeringFurreRecord, "(5:505) add the triggering furre with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
+            Add(New Trigger(TriggerCategory.Effect, 505), AddressOf insertTriggeringFurreRecord,
+                "(5:505) add the triggering furre with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
+
             '(5:506) Add furre named {...} with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
             Add(New Trigger(TriggerCategory.Effect, 506), AddressOf InsertFurreNamed, "(5:506) add furre named {...} with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
 
@@ -148,7 +201,8 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Effect, 512), AddressOf ReadDatabaseInfoName, "(5:512) select Database info {...} about the furre named {...}, and put it in variable %.")
 
             '(5:513) add column {...} with type {...} to the Furre table.
-            Add(New Trigger(TriggerCategory.Effect, 513), AddressOf AddColumn, "(5:513) add column {...} with type {...} to the Furre table.")
+            Add(New Trigger(TriggerCategory.Effect, 513), AddressOf AddColumn,
+                "(5:513) add column {...} with type {...} to the Furre table.")
 
             '(5:518) delete all Database info about the triggering furre.
             Add(New Trigger(TriggerCategory.Effect, 518), AddressOf DeleteTriggeringFurre, "(5:518) delete all Database info about the triggering furre.")
@@ -237,12 +291,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the furre named {...} is
-        ''' equal to {...},
+        ''' (1:516) and the Database info {...} about the furre named {...}
+        ''' is equal to string {...},
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function FurreNamedinfoEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
@@ -254,12 +310,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the furre named {...} is
-        ''' greater than #,
+        ''' (1:510) and the Database info {...} about the furre named {...}
+        ''' is greater than #, greater than #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function FurreNamedinfoGreaterThanNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -277,12 +335,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the furre named {...} is
-        ''' greater than #,
+        ''' (1:512) and the Database info {...} about the furre named {...}
+        ''' is greater than or equal to #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function FurreNamedinfoGreaterThanOrEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -299,12 +359,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the furre named {...} is
-        ''' less than #,
+        ''' (1:511) and the Database info {...} about the furre named {...}
+        ''' is less than #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function FurreNamedinfoLessThanNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -322,12 +384,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the furre named {...} is
-        ''' less than #,
+        ''' (1:513) and the Database info {...} about the furre named {...}
+        ''' is less than or equal to #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function FurreNamedinfoLessThanOrEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -345,12 +409,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the furre named {...} is
-        ''' not equal to #,
+        ''' (1:509) and the Database info {...} about the furre named {...}
+        ''' is not equal to #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function FurreNamedinfoNotEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -369,12 +435,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the furre named {...} is
-        ''' not equal to {...},
+        ''' (1:517) and the Database info {...} about the furre named {...}
+        ''' is not equal to string {...},
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function FurreNamedinfoNotEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
@@ -387,12 +455,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:x) And the Database info {..} in Settings Table {...} Is
+        ''' (1:526) and the Database info {..} in Settings Table {...} Is
         ''' equal to {...},
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function SettingEqualTo(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString(True)
@@ -413,11 +483,13 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:x) And the Database info {...} in Settings Table {...} exists,
+        ''' (1:524) and the Database info {...} in Settings Table {...} exists,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function SettingExist(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString(True)
@@ -436,12 +508,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:x) And the Database info {..} in Settings Table {...} Is
+        ''' (1:528) and the Database info {..} in Settings Table {...} Is
         ''' greater than #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function SettingGreaterThan(reader As TriggerReader) As Boolean
             Dim Setting As String = reader.ReadString(True)
@@ -463,12 +537,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:x )And the Database info {..} in Settings Table {...} Is
-        ''' greater than Or equl to #,
+        ''' (1:529) and the Database info {..} in Settings Table {...} Is
+        ''' greater than or equal to #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function SettingGreaterThanOrEqualTo(reader As TriggerReader) As Boolean
             Dim Setting As String = reader.ReadString(True)
@@ -490,12 +566,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:x )And the Database info {..} in Settings Table {...} Is less
-        ''' than #,
+        ''' (1:530) and the Database info {..} in Settings Table {...} Is
+        ''' less than #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function SettingLessThan(reader As TriggerReader) As Boolean
             Dim Setting As String = reader.ReadString(True)
@@ -517,12 +595,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:x )And the Database info {..} in Settings Table {...} Is less
-        ''' than Or equl to #,
+        ''' (1:531) and the Database info {..} in Settings Table {...} Is
+        ''' less than or equal to #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function SettingLessThanOrEqualTo(reader As TriggerReader) As Boolean
             Dim Setting As String = reader.ReadString(True)
@@ -544,12 +624,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:x) And the Database info {..} in Settings Table {...} Is Not
-        ''' equal to {...},
+        ''' (1:527) and the Database info {..} in Settings Table {...} Is
+        ''' not equal to {...},
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function SettingNotEqualTo(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString(True)
@@ -569,12 +651,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:x) And the Database info {...} in Settings Table {...}
-        ''' doesn't exist,
+        ''' (1:525) and the Database info {...} in Settings Table {...}
+        ''' doesn't exist, doesn't exist,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function SettingNotExist(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString(True)
@@ -593,12 +677,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the triggering furre is
-        ''' equal to #,
+        ''' (1:500) and the Database info {...} about the triggering furre
+        ''' is equal to #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function TriggeringFurreinfoEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -617,12 +703,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the triggering furre is
-        ''' equal to {...},
+        ''' "(1:518) and the Database info {...} about the triggering furre
+        ''' is equal to string {...},
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
@@ -634,12 +722,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the triggering furre is
-        ''' greater than #,
+        ''' (1:502) and the Database info {...} about the triggering furre
+        ''' is greater than #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function TriggeringFurreinfoGreaterThanNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -658,12 +748,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the triggering furre is
-        ''' greater than or equal to #,
+        ''' (1:504) and the Database info {...} about the triggering furre
+        ''' is greater than or equal to #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function TriggeringFurreinfoGreaterThanOrEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -681,12 +773,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the triggering furre is
-        ''' less than #,
+        ''' (1:503) and the Database info {...} about the triggering furre
+        ''' is less than #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function TriggeringFurreinfoLessThanNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -705,12 +799,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the triggering furre is
-        ''' less than #,
+        ''' (1:505) and the Database info {...} about the triggering furre
+        ''' is less than or equal to #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function TriggeringFurreinfoLessThanOrEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -728,12 +824,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the triggering furre is
-        ''' not equal to #,
+        ''' (1:501) and the Database info {...} about the triggering furre
+        ''' is not equal to #,
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function TriggeringFurreinfoNotEqualToNumber(reader As TriggerReader) As Boolean
             Dim info As String = Nothing
@@ -752,12 +850,14 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1: ) and the Database info {...} about the triggering furre is
-        ''' not equal to {...},
+        ''' (1:519) and the Database info {...} about the triggering furre
+        ''' is not equal to string {...},
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
@@ -773,6 +873,18 @@ Namespace Engine.Libraries
 
 #Region "Condition Helper Functions"
 
+        ''' <summary>
+        ''' Gets information from the Furre Table for the specified furre
+        ''' </summary>
+        ''' <param name="Column">
+        ''' Collunm Name as string
+        ''' </param>
+        ''' <param name="Name">
+        ''' Furre Name as string
+        ''' </param>
+        ''' <returns>
+        ''' the Value for the specified Collumn for the specified furre
+        ''' </returns>
         Private Function GetValueFromTable(Column As String, ByRef Name As String) As Object
             Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
             Dim str As String = "SELECT * FROM FURRE WHERE Name='" & Name & "';"
@@ -800,8 +912,10 @@ Namespace Engine.Libraries
         ''' (5:513) add column {...} with type {...} to the Furre table.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function AddColumn(reader As TriggerReader) As Boolean
             Dim Column As String = reader.ReadString
@@ -816,8 +930,10 @@ Namespace Engine.Libraries
         ''' into variable %
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function ColumnSum(reader As TriggerReader) As Boolean
             Dim Table As String = ""
@@ -844,20 +960,14 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-        Public Function createMDB(reader As TriggerReader) As Boolean
-            SQLitefile = Paths.CheckBotFolder(reader.ReadString())
-            Console.WriteLine("NOTICE: SQLite Database file has changed to" + SQLitefile)
-            Dim db As New SQLiteDatabase(SQLitefile)
-            'db.CreateTbl("FURRE", FurreTable)
-            Return True
-        End Function
-
         ''' <summary>
         ''' (5:419) delete all Database info about the furre named {...}.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
@@ -870,8 +980,10 @@ Namespace Engine.Libraries
         ''' (5:418) delete all Database info about the triggering furre.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
             Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
@@ -883,14 +995,17 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' (5:551) execute query {...}.
         ''' <para>
-        ''' Select * from table where name=%2 "Has a query been run since
-        ''' the last time someone asked for a result? If so, if read() then
-        ''' export one row.
+        ''' Execute raw SQL commands on the database.
+        ''' </para>
+        ''' <para>
+        ''' For SELECT statements <see cref="RetrieveQuery"/>
         ''' </para>
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function ExecuteQuery(reader As TriggerReader) As Boolean
             Dim str As String = ""
@@ -919,8 +1034,10 @@ Namespace Engine.Libraries
         ''' it into variable %.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function GetTotalRecords(reader As TriggerReader) As Boolean
             Dim Table As String = ""
@@ -942,8 +1059,10 @@ Namespace Engine.Libraries
         ''' doesn't exist.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function InsertFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
@@ -970,8 +1089,10 @@ Namespace Engine.Libraries
         ''' the Furre Table in the database if he, she or it don't already exist.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
             Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
@@ -1001,8 +1122,10 @@ Namespace Engine.Libraries
         ''' would depend on however you have to do it internally)
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function PrepQuery(reader As TriggerReader) As Boolean
             Dim var1 As Variable
@@ -1022,8 +1145,10 @@ Namespace Engine.Libraries
         ''' and put it in variable %Variable.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function ReadDatabaseInfo(reader As TriggerReader) As Boolean
 
@@ -1043,12 +1168,14 @@ Namespace Engine.Libraries
         ''' and put it in variable %Variable.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
 
-            Dim db As New SQLiteDatabase(MsDatabase.SQLitefile)
+            Dim db As New SQLiteDatabase(SQLitefile)
             Dim Info As String = reader.ReadString
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
             Dim Variable As Variable = reader.ReadVariable(True)
@@ -1064,8 +1191,10 @@ Namespace Engine.Libraries
         ''' and put it into variable %
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function RecordIndex(reader As TriggerReader) As Boolean
             Dim info As String = ""
@@ -1097,10 +1226,15 @@ Namespace Engine.Libraries
 
         ''' <summary>
         ''' (5:552) retrieve field {...} from query and put it into variable %Variable
+        ''' <para>
+        ''' <see cref="ExecuteQuery"/>
+        ''' </para>
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function RetrieveQuery(reader As TriggerReader) As Boolean
             Dim Field As String
@@ -1132,8 +1266,10 @@ Namespace Engine.Libraries
         ''' will now be #.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function UpdateFurreNamed_Field(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
@@ -1155,8 +1291,10 @@ Namespace Engine.Libraries
         ''' will now be {...}.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
@@ -1179,8 +1317,10 @@ Namespace Engine.Libraries
         ''' will now be #.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function UpdateTriggeringFurreField(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
@@ -1202,8 +1342,10 @@ Namespace Engine.Libraries
         ''' will now be {...}.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
@@ -1221,6 +1363,34 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' (5:500) use SQLite database file {...} or create file if it does
+        ''' not exist.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' true on success
+        ''' </returns>
+        Public Function UseOrCreateSQLiteFileIfNotExist(reader As TriggerReader) As Boolean
+            SQLitefile = Paths.CheckBotFolder(reader.ReadString())
+            Console.WriteLine("NOTICE: SQLite Database file has changed to" + SQLitefile)
+            Dim db As New SQLiteDatabase(SQLitefile)
+            'db.CreateTbl("FURRE", FurreTable)
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' (5:559) execute ""VACUUM"" to rebuild the database and reclaim
+        ''' wasted space.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' true on success
+        ''' </returns>
         Public Function VACUUM(reader As TriggerReader) As Boolean
             Dim start As Date = Date.Now
             SQLiteDatabase.ExecuteNonQuery("VACUUM")

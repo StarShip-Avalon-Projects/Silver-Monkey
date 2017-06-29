@@ -237,10 +237,12 @@ Namespace Engine.Libraries
                 End Function, "(0:93) When the bot resumes processing after seeing ""Your throat is tired"" message,")
 
             ' (1:3) and the triggering furre's name is {.},
-            Add(New Trigger(TriggerCategory.Condition, 5), AddressOf NameIs, "(1:5) and the triggering furre's name is {.},")
+            Add(New Trigger(TriggerCategory.Condition, 5), AddressOf NameIs,
+                "(1:5) and the triggering furre's name is {.},")
 
             ' (1:4) and the triggering furre's name is not {.},
-            Add(New Trigger(TriggerCategory.Condition, 6), AddressOf NameIsNot, "(1:6) and the triggering furre's name is not {.},")
+            Add(New Trigger(TriggerCategory.Condition, 6), AddressOf NameIsNot,
+                "(1:6) and the triggering furre's name is not {.},")
 
             ' (1:5) and the Triggering Furre's message is {.}, (say, emote,
             ' shot, whisper, or emit Channels)

@@ -16,6 +16,9 @@ Namespace Engine.Libraries
     ''' NOTE: The BotController is considered to be on the list even if the
     '''       furres name is not in the text file
     ''' </para>
+    ''' <para>
+    ''' Default Memberlist: <see cref="Paths.SilverMonkeyBotPath"/>\MemberList.txt
+    ''' </para>
     ''' </summary>
     Public Class MS_MemberList
         Inherits MonkeySpeakLibrary
@@ -107,11 +110,18 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' Check for the member list file, If it doesn't exist created it.
+        ''' <para>
+        ''' Checks default <see cref="Paths.SilverMonkeyBotPath"/>
+        ''' </para>
+        ''' </summary>
         Private Sub CheckMemberList()
             MemberList = Paths.CheckBotFolder(MemberList)
             If Not File.Exists(MemberList) Then
                 Using f As New StreamWriter(MemberList)
                     f.WriteLine("")
+                    f.Close()
                 End Using
             End If
         End Sub

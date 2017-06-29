@@ -27,6 +27,7 @@
     <Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" WorkingDirectory="Data Monkey/"/>
     <Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" WorkingDirectory="MonkeyCore/"/>
     <Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" WorkingDirectory="SilverMonkey/"/>
+	    <Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" WorkingDirectory="SmEngine/"/>
 <CallTarget Targets="GetVersion"/>
 <PropertyGroup>
 <Configuration>Release</Configuration>

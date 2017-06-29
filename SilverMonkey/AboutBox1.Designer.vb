@@ -24,7 +24,7 @@ Partial Class AboutBox1
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AboutBox1))
         Me.OKButton = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.CreditButton = New System.Windows.Forms.Button()
         Me.TextBoxDescription = New System.Windows.Forms.TextBox()
         Me.LabelCompanyName = New System.Windows.Forms.Label()
         Me.LabelCopyright = New System.Windows.Forms.Label()
@@ -48,13 +48,13 @@ Partial Class AboutBox1
         '
         'Button1
         '
-        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Button1.Location = New System.Drawing.Point(8, 235)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(119, 20)
-        Me.Button1.TabIndex = 1
-        Me.Button1.Text = "&Credits"
+        Me.CreditButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CreditButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.CreditButton.Location = New System.Drawing.Point(8, 235)
+        Me.CreditButton.Name = "Button1"
+        Me.CreditButton.Size = New System.Drawing.Size(119, 20)
+        Me.CreditButton.TabIndex = 1
+        Me.CreditButton.Text = "&Credits"
         '
         'TextBoxDescription
         '
@@ -140,7 +140,7 @@ Partial Class AboutBox1
         Me.TableLayoutPanel.Controls.Add(Me.LabelCopyright, 1, 2)
         Me.TableLayoutPanel.Controls.Add(Me.LabelCompanyName, 1, 3)
         Me.TableLayoutPanel.Controls.Add(Me.TextBoxDescription, 1, 4)
-        Me.TableLayoutPanel.Controls.Add(Me.Button1, 0, 6)
+        Me.TableLayoutPanel.Controls.Add(Me.CreditButton, 0, 6)
         Me.TableLayoutPanel.Controls.Add(Me.OKButton, 1, 6)
         Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel.Location = New System.Drawing.Point(9, 9)
@@ -179,7 +179,7 @@ Partial Class AboutBox1
     End Sub
 
     Friend WithEvents OKButton As Windows.Forms.Button
-    Friend WithEvents Button1 As Windows.Forms.Button
+    Friend WithEvents CreditButton As Windows.Forms.Button
     Friend WithEvents TextBoxDescription As Windows.Forms.TextBox
     Friend WithEvents LabelCompanyName As Windows.Forms.Label
     Friend WithEvents LabelCopyright As Windows.Forms.Label

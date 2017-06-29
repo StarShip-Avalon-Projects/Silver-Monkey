@@ -91,6 +91,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyFileVersion.vb">
+      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="BaseClasses\BaseSubSystem.vb" />
     <Compile Include="EngineOptoons.vb" />
     <Compile Include="Interfaces\msPlugin.vb" />
@@ -138,8 +143,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="PS Pre-Processor\DatabaseSystem.vb" />
     <Compile Include="PS Pre-Processor\MSPhoenixSpeak.vb" />
+    <Compile Include="PS Pre-Processor\MsPhoenixSpeakBackupAndRestore.vb" />
     <Compile Include="PS Pre-Processor\PSObjects\PhoenicSpeakDataObject.vb" />
     <Compile Include="PS Pre-Processor\PSObjects\PhoenixSpeakEventArgs.vb" />
     <Compile Include="PS Pre-Processor\PSObjects\PhoenixSpeakId.vb" />
@@ -190,6 +195,12 @@
       <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>
       <Name>Verbot5Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AssemblyFileVersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.105.1\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.105.1\build\net45\System.Data.SQLite.Core.targets')" />

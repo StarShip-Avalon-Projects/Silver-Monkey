@@ -80,7 +80,7 @@ Namespace Engine
             LibList.Add(New MsWebRequests(MSEngine.FurcadiaSession))
             LibList.Add(New MS_Cookie(MSEngine.FurcadiaSession))
             LibList.Add(New MsPhoenixSpeak(MSEngine.FurcadiaSession))
-            LibList.Add(New DatabaseSystem(MSEngine.FurcadiaSession))
+            LibList.Add(New MsPhoenixSpeakBackupAndRestore(MSEngine.FurcadiaSession))
             LibList.Add(New MsDice(MSEngine.FurcadiaSession))
             LibList.Add(New MsFurreList(MSEngine.FurcadiaSession))
             LibList.Add(New Warning(MSEngine.FurcadiaSession))

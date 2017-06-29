@@ -36,10 +36,11 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
-<DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
-<DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
-<DocumentationSource sourceFile="..\SilverMonkey\SilverMonkey2.vbproj" />
-<DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" /></DocumentationSources>
+      <DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
+      <DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
+      <DocumentationSource sourceFile="..\SilverMonkey\SilverMonkey2.vbproj" />
+      <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
+    </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>
     <HelpFileVersion>2.19.0.0</HelpFileVersion>
@@ -161,7 +162,7 @@
     <MSHelpViewerSdkLinkType>None</MSHelpViewerSdkLinkType>
     <CatalogVersion>100</CatalogVersion>
     <CatalogProductId>VS</CatalogProductId>
-    <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, InheritedFrameworkInternalMembers, InheritedFrameworkPrivateMembers, Internals, Privates, PublicCompilerGenerated</VisibleItems>
+    <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, InheritedFrameworkInternalMembers, InheritedFrameworkPrivateMembers, Internals, Privates, Protected, NoPIATypes, PublicCompilerGenerated</VisibleItems>
     <HtmlHelp1xCompilerPath>C:\Program Files (x86)\HTML Help Workshop\</HtmlHelp1xCompilerPath>
     <WorkingPath>..\build\HelpTmp\</WorkingPath>
     <BuildLogFile>..\Build\Help.log</BuildLogFile>
@@ -170,34 +171,36 @@
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="DataMonkey" isDocumented="True" />
-      <NamespaceSummaryItem name="Furcadia (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Furcadia" isDocumented="False">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Furcadia.Drawing (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths&lt;p&gt;
+<NamespaceSummaryItem name="Furcadia (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Furcadia" isDocumented="False">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Furcadia.Drawing (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths&lt;p&gt;
         the Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here&lt;/a&gt;</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="Furcadia.Drawing" isDocumented="True" />
-      <NamespaceSummaryItem name="Furcadia.Drawing.Graphics" isDocumented="True" />
-      <NamespaceSummaryItem name="Furcadia.EventArgs" isDocumented="True" />
-      <NamespaceSummaryItem name="Furcadia.FurcMap" isDocumented="True" />
-      <NamespaceSummaryItem name="Furcadia.IO (Group)" isGroup="True" isDocumented="True" />
-      <NamespaceSummaryItem name="Furcadia.IO" isDocumented="True" />
-      <NamespaceSummaryItem name="Furcadia.IO.SubSystem" isDocumented="True" />
-      <NamespaceSummaryItem name="Furcadia.Net" isDocumented="True" />
-      <NamespaceSummaryItem name="MonkeyCore (Group)" isGroup="True" isDocumented="False" />
-      <NamespaceSummaryItem name="MonkeyCore" isDocumented="True" />
-      <NamespaceSummaryItem name="MonkeyCore.Controls" isDocumented="True" />
-      <NamespaceSummaryItem name="MonkeyCore.My" isDocumented="False" />
-      <NamespaceSummaryItem name="SilverMonkey (Group)" isGroup="True" isDocumented="True" />
-      <NamespaceSummaryItem name="SilverMonkey" isDocumented="True" />
-      <NamespaceSummaryItem name="SilverMonkey.DataMonkey.Controls" isDocumented="True" />
-      <NamespaceSummaryItem name="SilverMonkey.My" isDocumented="True" />
-      <NamespaceSummaryItem name="SilverMonkey.PhoenixSpeak" isDocumented="True" />
-      <NamespaceSummaryItem name="(global)" isDocumented="False" />
-      <NamespaceSummaryItem name="SilverMonkey.Engine.Libraries (Group)" isGroup="True" isDocumented="True" />
-      <NamespaceSummaryItem name="Monkeyspeak" isDocumented="True">Provides Functionality of Monkey Speak
+<NamespaceSummaryItem name="Furcadia.Drawing" isDocumented="True" />
+<NamespaceSummaryItem name="Furcadia.Drawing.Graphics" isDocumented="True" />
+<NamespaceSummaryItem name="Furcadia.EventArgs" isDocumented="True" />
+<NamespaceSummaryItem name="Furcadia.FurcMap" isDocumented="True" />
+<NamespaceSummaryItem name="Furcadia.IO (Group)" isGroup="True" isDocumented="True" />
+<NamespaceSummaryItem name="Furcadia.IO" isDocumented="True" />
+<NamespaceSummaryItem name="Furcadia.IO.SubSystem" isDocumented="True" />
+<NamespaceSummaryItem name="Furcadia.Net" isDocumented="True" />
+<NamespaceSummaryItem name="MonkeyCore (Group)" isGroup="True" isDocumented="False" />
+<NamespaceSummaryItem name="MonkeyCore" isDocumented="True" />
+<NamespaceSummaryItem name="MonkeyCore.Controls" isDocumented="True" />
+<NamespaceSummaryItem name="MonkeyCore.My" isDocumented="False" />
+<NamespaceSummaryItem name="SilverMonkey (Group)" isGroup="True" isDocumented="False" />
+<NamespaceSummaryItem name="SilverMonkey" isDocumented="False" />
+<NamespaceSummaryItem name="SilverMonkey.DataMonkey.Controls" isDocumented="False" />
+<NamespaceSummaryItem name="SilverMonkey.My" isDocumented="False" />
+<NamespaceSummaryItem name="SilverMonkey.PhoenixSpeak" isDocumented="True" />
+<NamespaceSummaryItem name="(global)" isDocumented="False" />
+<NamespaceSummaryItem name="SilverMonkey.Engine.Libraries (Group)" isGroup="True" isDocumented="True" />
+<NamespaceSummaryItem name="Monkeyspeak" isDocumented="True">Provides Functionality of Monkey Speak
 &lt;a href="https://starship-avalon-projects.github.io/MonkeySpeakExtendedEngine/html/8d0a663e-8095-408a-b860-f55d2fc3ccbe.htm"&gt;Monkey Speak Ex Documentation&lt;/a&gt;</NamespaceSummaryItem>
-    </NamespaceSummaries>
+<NamespaceSummaryItem name="SilverMonkeyEngine.My" isDocumented="False" />
+<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries (Group)" isGroup="True" isDocumented="True">The Core  Monkey Speak Libraries Silver monkey uses.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True">The Core  Monkey Speak Libraries Silver monkey uses.</NamespaceSummaryItem></NamespaceSummaries>
     <PlugInConfigurations>
-      <PlugInConfig id="Output Deployment" enabled="True" xmlns="">
+      <PlugInConfig id="Output Deployment" enabled="True">
         <configuration deleteAfterDeploy="false" verboseLogging="false">
           <deploymentLocation id="help1x" location="D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Help">
             <userCredentials useDefault="true" userName="" password="" />
@@ -229,6 +232,13 @@
               <userCredentials useDefault="true" userName="" password="" />
             </proxyCredentials>
           </deploymentLocation>
+        </configuration>
+      </PlugInConfig>
+      <PlugInConfig id="Additional Reference Links" enabled="True">
+        <configuration>
+          <targets>
+            <target htmlSdkLinkType="Msdn" helpViewerSdkLinkType="Id" websiteSdkLinkType="Msdn" helpFileProject="..\..\Furcadia Frame Work for Third Party Programs\Documentation\Furcadia Framework Help\Furcadia Framework Help.shfbproj" />
+          </targets>
         </configuration>
       </PlugInConfig>
     </PlugInConfigurations>
@@ -321,6 +331,9 @@
   </ItemGroup>
   <ItemGroup>
     <XamlConfiguration Include="highlight.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Tokens Include="MsLibTokens.tokens" />
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

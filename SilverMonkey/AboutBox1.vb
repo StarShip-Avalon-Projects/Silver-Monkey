@@ -26,7 +26,7 @@ Public NotInheritable Class AboutBox1
         Me.TextBoxDescription.Text = My.Application.Info.Description
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles CreditButton.Click
         If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
             Help.ShowHelp(Me, HelpFile, "html/baa001f9-5b6f-4416-bd04-834030e3034f.htm")
         End If

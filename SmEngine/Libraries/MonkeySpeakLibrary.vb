@@ -7,6 +7,11 @@ Imports Monkeyspeak
 
 Namespace Engine.Libraries
 
+    ''' <summary>
+    ''' The base library in which all Silver Monkey's Monkey Speak Libraries
+    ''' are built on. This Library contains the commonly used functions for
+    ''' all the other libraries
+    ''' </summary>
     Public Class MonkeySpeakLibrary
         Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
 
@@ -14,10 +19,15 @@ Namespace Engine.Libraries
 
         ''' <summary>
         ''' (0:17) When someone whispers something with {.} in it,
+        ''' <para>
+        ''' Comparasons are done with Fucadia Markup Stripped
+        ''' </para>
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' True is the MESSAGE system variable contains the specified string
         ''' </returns>
         Protected Function msgContains(reader As TriggerReader) As Boolean
 
@@ -33,8 +43,10 @@ Namespace Engine.Libraries
         ''' (1:13) and triggering furre's message ends with {.},
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true if the System MESSAGE varible ends with the specified string
         ''' </returns>
         Protected Function msgEndsWith(reader As TriggerReader) As Boolean
 
@@ -47,6 +59,13 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Protected Function msgIs(reader As TriggerReader) As Boolean
 
             Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
@@ -59,6 +78,13 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Protected Function msgIsNot(reader As TriggerReader) As Boolean
 
             Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
@@ -70,6 +96,13 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Protected Function msgNotContain(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
@@ -84,6 +117,7 @@ Namespace Engine.Libraries
         ''' (1:14) and triggering furre's message doesn't end with {.},
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -102,6 +136,7 @@ Namespace Engine.Libraries
         ''' (1:12) and triggering furre's message doesn't start with {.},
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -119,6 +154,7 @@ Namespace Engine.Libraries
         ''' (1:11) and triggering furre's message starts with {.},
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
@@ -131,6 +167,34 @@ Namespace Engine.Libraries
             Return test.StartsWith(msMsg)
         End Function
 
+        ''' <summary>
+        ''' (0:25) When a furre Named {.} enters the Dream,
+        ''' <para>
+        ''' (0:27) When a furre named {.} leaves the Dream
+        ''' </para>
+        ''' (0:33) When a furre named {.} requests to summon the bot,"
+        ''' <para>
+        ''' (0:35) When a furre named {.} requests to join the bot,
+        ''' </para>
+        ''' <para>
+        ''' (0:37) When a furre named {.} requests to follow the bot,
+        ''' </para>
+        ''' <para>
+        ''' (0:39) When a furre named {.} requests to lead the bot,
+        ''' </para>
+        ''' <para>
+        ''' (0:41) When a furre named {.} requests to cuddle with the bot,
+        ''' </para>
+        ''' <para>
+        ''' (1:5) and the triggering furre's name is {.},
+        ''' </para>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' True on Name match
+        ''' </returns>
         Protected Function NameIs(reader As TriggerReader) As Boolean
 
             Dim TmpName As String = reader.ReadString()
@@ -140,6 +204,15 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' (1:6) and the triggering furre's name is not {.},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' True on Name Match
+        ''' </returns>
         Protected Function NameIsNot(reader As TriggerReader) As Boolean
 
             Dim tname As String = MsPage.GetVariable("NAME").Value.ToString
@@ -150,6 +223,13 @@ Namespace Engine.Libraries
             Return False
         End Function
 
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Protected Function TrigFurreNameIs(reader As TriggerReader) As Boolean
 
             Dim TmpName As String = reader.ReadString()
@@ -159,6 +239,13 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Protected Function TrigFurreNameIsNot(reader As TriggerReader) As Boolean
             Return Not TrigFurreNameIs(reader)
         End Function
