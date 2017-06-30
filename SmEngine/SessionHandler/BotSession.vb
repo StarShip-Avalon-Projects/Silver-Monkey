@@ -90,7 +90,7 @@ Public Class BotSession : Inherits ProxySession
     ''' </returns>
     Public ReadOnly Property IsBotController As Boolean
         Get
-            Return Player.ShortName = FurcadiaShortName(MainEngineOptions.BotController)
+            Return Player.ShortName = MainEngineOptions.BotControllerShortName
         End Get
     End Property
 

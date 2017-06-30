@@ -1,7 +1,7 @@
-﻿Imports System.Collections.Generic
-Imports SilverMonkey
-Imports Furcadia.Util
+﻿Imports Furcadia.Util
+
 Namespace Engine.Libraries.Pounce
+
     Public Class PounceFurre
         Implements IEquatable(Of String)
 
@@ -30,15 +30,23 @@ Namespace Engine.Libraries.Pounce
         ''' <summary>
         ''' Furre logged off the Game server
         ''' </summary>
-        ''' <param name="Furre">PounceFurre Object</param>
-        ''' <param name="e">Event Arguments.Empty</param>
+        ''' <param name="Furre">
+        ''' PounceFurre Object
+        ''' </param>
+        ''' <param name="e">
+        ''' Event Arguments.Empty
+        ''' </param>
         Public Event FurreLoggedOff(ByVal Furre As Object, e As EventArgs)
 
         ''' <summary>
         ''' Furre Logged onto the Gameserver
         ''' </summary>
-        ''' <param name="Furre">PounceFurre Object</param>
-        ''' <param name="e">Event Arguments.Empty</param>
+        ''' <param name="Furre">
+        ''' PounceFurre Object
+        ''' </param>
+        ''' <param name="e">
+        ''' Event Arguments.Empty
+        ''' </param>
         Public Event FurreLoggedOn(ByVal Furre As Object, e As EventArgs)
 
 #End Region
@@ -80,10 +88,11 @@ Namespace Engine.Libraries.Pounce
 #Region "Public Methods"
 
         ''' <summary>
-        '''
         ''' </summary>
-        ''' <param name="other"></param>
-        ''' <returns></returns>
+        ''' <param name="other">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Public Shadows Function Equals(other As String) As Boolean Implements IEquatable(Of String).Equals
             Return FurcadiaShortName(Me._FurrName) = FurcadiaShortName(other)
         End Function
@@ -91,4 +100,5 @@ Namespace Engine.Libraries.Pounce
 #End Region
 
     End Class
+
 End Namespace

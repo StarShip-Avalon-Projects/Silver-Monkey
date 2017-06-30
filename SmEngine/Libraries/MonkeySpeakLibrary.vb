@@ -18,7 +18,6 @@ Namespace Engine.Libraries
 #Region "Protected Methods"
 
         ''' <summary>
-        ''' (0:17) When someone whispers something with {.} in it,
         ''' <para>
         ''' Comparasons are done with Fucadia Markup Stripped
         ''' </para>
@@ -27,9 +26,9 @@ Namespace Engine.Libraries
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' True is the MESSAGE system variable contains the specified string
+        ''' True if the MESSAGE system variable contains the specified string
         ''' </returns>
-        Protected Function msgContains(reader As TriggerReader) As Boolean
+        Protected Overridable Function msgContains(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
             Dim msg As Variable = MsPage.GetVariable("MESSAGE")
@@ -40,7 +39,6 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:13) and triggering furre's message ends with {.},
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
@@ -48,7 +46,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true if the System MESSAGE varible ends with the specified string
         ''' </returns>
-        Protected Function msgEndsWith(reader As TriggerReader) As Boolean
+        Protected Overridable Function msgEndsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
             Dim msg As Variable = MsPage.GetVariable("MESSAGE")
@@ -60,13 +58,15 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
+        ''' the Main Message is Comparason function
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
-        Protected Function msgIs(reader As TriggerReader) As Boolean
+        Protected Overridable Function msgIs(reader As TriggerReader) As Boolean
 
             Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
             Dim msMsg As String = StripHTML(reader.ReadString())
@@ -79,13 +79,21 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
+        ''' Generic Message is Not Functions
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true if the last message seen is not the specified message
         ''' </returns>
-        Protected Function msgIsNot(reader As TriggerReader) As Boolean
+        ''' <remarks>
+        ''' Message Comparason is done with Markup stripped
+        ''' <para>
+        ''' The Bot ignores self messages
+        ''' </para>
+        ''' </remarks>
+        Protected Overridable Function msgIsNot(reader As TriggerReader) As Boolean
 
             Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
             Dim msMsg As String = StripHTML(reader.ReadString())
@@ -97,13 +105,21 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
+        ''' Generic Message does not contain text function
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true if the last message seen does not contain the specified text
         ''' </returns>
-        Protected Function msgNotContain(reader As TriggerReader) As Boolean
+        ''' <remarks>
+        ''' Message Comparason is done with Markup stripped
+        ''' <para>
+        ''' The Bot ignores self messages
+        ''' </para>
+        ''' </remarks>
+        Protected Overridable Function msgNotContain(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
             Dim msg As Variable = MsPage.GetVariable("MESSAGE")
@@ -168,26 +184,7 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (0:25) When a furre Named {.} enters the Dream,
-        ''' <para>
-        ''' (0:27) When a furre named {.} leaves the Dream
-        ''' </para>
-        ''' (0:33) When a furre named {.} requests to summon the bot,"
-        ''' <para>
-        ''' (0:35) When a furre named {.} requests to join the bot,
-        ''' </para>
-        ''' <para>
-        ''' (0:37) When a furre named {.} requests to follow the bot,
-        ''' </para>
-        ''' <para>
-        ''' (0:39) When a furre named {.} requests to lead the bot,
-        ''' </para>
-        ''' <para>
-        ''' (0:41) When a furre named {.} requests to cuddle with the bot,
-        ''' </para>
-        ''' <para>
-        ''' (1:5) and the triggering furre's name is {.},
-        ''' </para>
+        ''' Generic base Furre named {...} is Triggering Furre
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
@@ -195,59 +192,34 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True on Name match
         ''' </returns>
-        Protected Function NameIs(reader As TriggerReader) As Boolean
+        ''' <remarks>
+        ''' any name is acepted and converted to Furcadia Machine name
+        ''' (ShortName version, lowercase with special characters stripped)
+        ''' </remarks>
+        Protected Overridable Function NameIs(reader As TriggerReader) As Boolean
 
             Dim TmpName As String = reader.ReadString()
-            Dim tname As Variable = MsPage.GetVariable("NAME")
-            'add Machine Name parser
-            Return FurcadiaShortName(TmpName) = FurcadiaShortName(tname.Value.ToString)
+            Return FurcadiaShortName(TmpName) = Player.ShortName
 
         End Function
 
         ''' <summary>
-        ''' (1:6) and the triggering furre's name is not {.},
+        ''' Generic base Furre named {...} is not the Triggering Furre
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' True on Name Match
+        ''' True on Name match
         ''' </returns>
-        Protected Function NameIsNot(reader As TriggerReader) As Boolean
-
-            Dim tname As String = MsPage.GetVariable("NAME").Value.ToString
-            Dim TmpName As String = reader.ReadString()
-            'add Machine Name parser
-            If FurcadiaShortName(TmpName) <> FurcadiaShortName(tname) Then Return True
-
-            Return False
-        End Function
-
-        ''' <summary>
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
-        Protected Function TrigFurreNameIs(reader As TriggerReader) As Boolean
+        ''' <remarks>
+        ''' any name is acepted and converted to Furcadia Machine name
+        ''' (ShortName version, lowercase with special characters stripped)
+        ''' </remarks>
+        Protected Overridable Function NameIsNot(reader As TriggerReader) As Boolean
 
             Dim TmpName As String = reader.ReadString()
-            Dim TrigFurreName As String = FurcadiaSession.Player.ShortName
-            'add Machine Name parser
-            Return Furcadia.Util.FurcadiaShortName(TmpName) = TrigFurreName
-
-        End Function
-
-        ''' <summary>
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
-        Protected Function TrigFurreNameIsNot(reader As TriggerReader) As Boolean
-            Return Not TrigFurreNameIs(reader)
+            Return FurcadiaShortName(TmpName) <> Player.ShortName
         End Function
 
 #End Region
@@ -255,10 +227,12 @@ Namespace Engine.Libraries
 #Region "Private Methods"
 
         ''' <summary>
+        ''' Strip Markup
         ''' </summary>
         ''' <param name="Text">
         ''' </param>
         ''' <returns>
+        ''' Markup stripped string
         ''' </returns>
         Private Function StripHTML(ByVal Text As String) As String
 
@@ -275,6 +249,7 @@ Namespace Engine.Libraries
         ''' Current Furcadia Standard Time (fst)
         ''' </summary>
         ''' <returns>
+        ''' Furcadia Time Object in Furcadia Standard Time (fst)
         ''' </returns>
         Public ReadOnly Property FurcTime As DateTime
             Get
@@ -288,6 +263,12 @@ Namespace Engine.Libraries
 
 #Region "Private Methods"
 
+        ''' <summary>
+        ''' Furcadia Clock updater
+        ''' </summary>
+        ''' <param name="obj">
+        ''' Nothing
+        ''' </param>
         Private Sub TimeUpdate(obj As Object)
             _FurcTime = Now
         End Sub
@@ -372,10 +353,13 @@ Namespace Engine.Libraries
         ''' References the main components cfrom <see cref="BotSession"/>
         ''' </para>
         ''' </summary>
+        ''' <exception cref="ArgumentException">
+        ''' Thrown when Session is not provided
+        ''' </exception>
         Sub New(ByRef Session As BotSession)
             MyBase.New()
             If Session Is Nothing Then
-                Exit Sub
+                Throw New ArgumentException("Session cannot be null")
             End If
             _SkillLevel = 0
             _HasHelp = False
@@ -384,7 +368,8 @@ Namespace Engine.Libraries
             Dream = Session.Dream
             MsEngine = Session.MainEngine
             FurcadiaSession = Session
-            FurcTimeTimer = New Timer(AddressOf TimeUpdate, Nothing, TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500))
+            FurcTimeTimer = New Timer(AddressOf TimeUpdate, Nothing,
+                                      TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500))
         End Sub
 
 #End Region
@@ -412,13 +397,17 @@ Namespace Engine.Libraries
         ''' <param name="SkilLevel">
         ''' Skill levels 1-5
         ''' </param>
-        Protected Overloads Sub Add(trigger As Trigger, handler As TriggerHandler, SkilLevel As Integer, HasHelp As Boolean, Optional description As String = Nothing)
+        Protected Overloads Sub Add(trigger As Trigger, handler As TriggerHandler,
+                                    SkilLevel As Integer, HasHelp As Boolean,
+                                    Optional description As String = Nothing)
             MyBase.Add(trigger, handler, description)
             _HasHelp = HasHelp
             _SkillLevel = _SkillLevel
         End Sub
 
         ''' <summary>
+        ''' Execute array of Trigger cause integers from the Current
+        ''' monkeyspeak page
         ''' </summary>
         ''' <param name="TriggerIDs">
         ''' MonkeySpeak Triggers
@@ -428,13 +417,16 @@ Namespace Engine.Libraries
         End Sub
 
         ''' <summary>
+        ''' Set Bot assigned moneky speak variables as Constant
         ''' </summary>
-        ''' <param name="Message">
+        ''' <param name="Name">
+        ''' <see cref="Monkeyspeak.Variable.Name"/>
         ''' </param>
-        ''' <param name="ServerData">
+        ''' <param name="Value">
+        ''' <see cref="Monkeyspeak.Variable.Value"/>
         ''' </param>
-        Protected Sub PageSetVariable(Message As String, ServerData As String)
-            MsPage.SetVariable(Message, ServerData, True)
+        Protected Sub PageSetVariable(Name As String, Value As String)
+            MsPage.SetVariable(Name.ToUpper, Value, True)
         End Sub
 
 #End Region
@@ -448,12 +440,16 @@ Namespace Engine.Libraries
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <param name="addIfNotExist">
-        ''' Add Variable to Variable Scope is it Does not exist
+        ''' Add Variable to Variable Scope is it Does not exist,
+        ''' <para>
+        ''' Default Value is False
+        ''' </para>
         ''' </param>
         ''' <returns>
         ''' <see cref="Double"/>
         ''' </returns>
-        Public Function ReadVariableOrNumber(ByVal reader As TriggerReader, Optional addIfNotExist As Boolean = False) As Double
+        Public Function ReadVariableOrNumber(ByVal reader As TriggerReader,
+                                             Optional addIfNotExist As Boolean = False) As Double
             Dim result As Double = 0
             If reader.PeekVariable Then
                 Dim value As String = reader.ReadVariable(addIfNotExist).Value.ToString

@@ -132,7 +132,7 @@ Namespace Engine.Libraries
         Function ForgetTrigFurrePS(reader As TriggerReader) As Boolean
 
             Dim info As String = reader.ReadString
-            Dim furre As String = FurcadiaSession.Player.ShortName
+            Dim furre As String = Player.ShortName
             Return sendServer("ps clear characer." + furre + "." + info)
         End Function
 
@@ -192,58 +192,6 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (0:17) When someone whispers something with {...} in it,
-        ''' </summary>
-        ''' <param name="reader">
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
-        Function msgContains(reader As TriggerReader) As Boolean
-            Dim msMsg As String = ""
-            Dim msg As String = ""
-
-            'Debug.Print("msgContains Begin Execution")
-            msMsg = reader.ReadString()
-            'Debug.Print("msMsg = " & msMsg)
-            msg = MsPage.GetVariable("MESSAGE").Value.ToString
-            'Debug.Print("Msg = " & msg)
-            Return msg.Contains(msMsg)
-
-        End Function
-
-        'TODO: Move to Base Lib
-        Public Function msgIs(reader As TriggerReader) As Boolean
-
-            Dim msMsg As String = reader.ReadString()
-            Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
-            If msMsg = msg.Value.ToString Then Return True
-            Return False
-
-        End Function
-
-        'TODO: Move to Base Lib
-        Function msgIsNot(reader As TriggerReader) As Boolean
-
-            Dim msMsg As String = reader.ReadString()
-            Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
-            If msMsg <> msg.Value.ToString Then Return True
-            Return False
-
-        End Function
-
-        'TODO: Move to Base Lib
-        Function msgNotContain(reader As TriggerReader) As Boolean
-
-            Dim msMsg As String = reader.ReadString()
-            'Debug.Print("msMsg = " & msMsg)
-            Dim msg As Monkeyspeak.Variable = MsPage.GetVariable("MESSAGE")
-            'Debug.Print("Msg = " & msg.Value.ToString)
-            If msg.Value.ToString.Contains(msMsg) Then Return False
-            Return True
-
-        End Function
-
-        ''' <summary>
         ''' (5:94) execute Phoenix Speak command {...}.
         ''' </summary>
         ''' <param name="reader">
@@ -257,12 +205,24 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function PSForgetDream(reader As TriggerReader) As Boolean
 
             Return sendServer("ps clear dream ")
 
         End Function
 
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function PSForgetFurreNamed(reader As TriggerReader) As Boolean
 
             Dim Furre As String = reader.ReadString
@@ -272,7 +232,7 @@ Namespace Engine.Libraries
 
         Function PSForgetTriggeringFurre(reader As TriggerReader) As Boolean
 
-            Return sendServer("ps clear character." + FurcadiaSession.Player.ShortName)
+            Return sendServer("ps clear character." + Player.ShortName)
 
         End Function
 
@@ -331,8 +291,10 @@ Namespace Engine.Libraries
         ''' put it into the PSInfo Cache.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function RemberPSInforFurreNamed(reader As TriggerReader) As Boolean
 
@@ -346,8 +308,10 @@ Namespace Engine.Libraries
         ''' put it into the PSInfo Cache.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function RemberPSInforTrigFurre(reader As TriggerReader) As Boolean
 
@@ -355,6 +319,45 @@ Namespace Engine.Libraries
             Return sendServer("ps set characer." + furre + ".*")
 
         End Function
+
+        ''' <summary>
+        ''' (0:17) When someone whispers something with {...} in it,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' true on success
+        ''' </returns>
+        Protected Overrides Function msgContains(reader As TriggerReader) As Boolean
+            Return MyBase.msgContains(reader)
+        End Function
+
+        ''' <summary>
+        ''' (0:81) When the bot sees the Phoenix Speak response {...},
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' true on success
+        ''' </returns>
+        Protected Overrides Function msgIs(reader As TriggerReader) As Boolean
+
+            Return MyBase.msgIs(reader)
+
+        End Function
+
+        'Protected Overrides Function msgIsNot(reader As TriggerReader) As Boolean
+
+        ' Return MyBase.msgIsNot(reader)
+
+        'End Function
+
+        'Protected Overrides Function msgNotContain(reader As TriggerReader) As Boolean
+        '    Return MyBase.msgNotContain(reader)
+
+        'End Function
 
 #End Region
 

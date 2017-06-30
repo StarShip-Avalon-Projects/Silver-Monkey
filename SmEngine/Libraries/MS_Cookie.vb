@@ -1,7 +1,5 @@
 ﻿Imports Furcadia.Net.Dream
-Imports Furcadia.Util
 Imports Monkeyspeak
-Imports SilverMonkeyEngine.SmConstants
 
 Namespace Engine.Libraries
 
@@ -63,13 +61,22 @@ Namespace Engine.Libraries
 
             Add(TriggerCategory.Effect, 45,
                  AddressOf EatCookie,
-                "(5:45) set variable %Variable to the cookie message the bot received")
+                "(5:45) set variable %Variable to the cookie message the bot received.")
         End Sub
 
 #End Region
 
 #Region "Public Methods"
 
+        ''' <summary>
+        ''' (5:45) set variable %Variable to the cookie message the bot received.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="triggerreader"/>
+        ''' </param>
+        ''' <returns>
+        ''' true on success
+        ''' </returns>
         Function EatCookie(reader As TriggerReader) As Boolean
 
             Dim tPlayer As FURRE = Player
@@ -80,13 +87,15 @@ Namespace Engine.Libraries
 
         End Function
 
-        Function NameIs(reader As TriggerReader) As Boolean
-
-            Dim TmpName As String = reader.ReadString()
-            Dim tname As Variable = FurcadiaSession.MSpage.GetVariable(MS_Name)
-            'add Machine Name parser
-            Return FurcadiaShortName(TmpName) = FurcadiaShortName(tname.Value.ToString)
-
+        ''' <summary>
+        ''' (0:43) When a furre named {...} gives a cookie to the bot,
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
+        Protected Overrides Function NameIs(reader As TriggerReader) As Boolean
+            Return MyBase.NameIs(reader)
         End Function
 
 #End Region

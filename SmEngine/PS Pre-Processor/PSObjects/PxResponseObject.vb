@@ -1,4 +1,5 @@
-﻿Imports SilverMonkeyEngine.Engine.Libraries.PhoenixSpeak
+﻿Imports SilverMonkeyEngine.Engine.Libraries
+Imports SilverMonkeyEngine.Engine.Libraries.PhoenixSpeak
 
 Public Class PsResponseObject : Inherits Furcadia.Net.ParseChannelArgs
 

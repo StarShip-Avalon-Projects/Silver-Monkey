@@ -33,7 +33,7 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
-            MemberList = "MemberList.txt"
+            MemberList = Paths.CheckBotFolder("MemberList.txt")
 
             '(1:900) and the triggering furre is on my Dream Member List,
             Add(New Trigger(TriggerCategory.Condition, 900), AddressOf TrigFurreIsMember, "(1:900) and the triggering furre is on my dream Member List,")

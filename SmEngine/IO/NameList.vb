@@ -34,7 +34,7 @@ Namespace IO
         ''' <summary>
         ''' Starts a new instance with a filename
         ''' </summary>
-        ''' <param name="PounceListFile">
+        ''' <param name="ListFile">
         ''' Filename
         ''' </param>
         Sub New(ListFile As String)

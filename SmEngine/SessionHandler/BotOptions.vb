@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports Furcadia.Net
+Imports Furcadia.Util
 Imports MonkeyCore
 
 <CLSCompliant(True)>
@@ -129,6 +130,12 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         Set(ByVal value As String)
             _MonkeySpeakEngineOption.BotController = value
         End Set
+    End Property
+
+    Public ReadOnly Property BotControllerShortName() As String
+        Get
+            Return FurcadiaShortName(_MonkeySpeakEngineOption.BotController)
+        End Get
     End Property
 
     ''' <summary>

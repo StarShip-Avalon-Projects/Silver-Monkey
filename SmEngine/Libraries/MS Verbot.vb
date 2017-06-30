@@ -16,6 +16,7 @@ Namespace Engine.Libraries
         <CLSCompliant(False)>
         Public _state As State
 
+        <CLSCompliant(False)>
         Public kb As KnowledgeBase = New KnowledgeBase()
 
         <CLSCompliant(False)>

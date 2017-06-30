@@ -159,11 +159,11 @@ Namespace Engine.Libraries
 
 #Region "Public Enums"
 
-        Public Enum PsBackupStage As SByte
-            [error] = -1
-            off = 0
+        Public Enum PsBackupStage As Byte
+            [error] = 0
+            off = 1
 
-            GetDream = 1
+            GetDream
 
             ''' <summary>
             ''' Read Multi Page responses for character list
@@ -206,11 +206,11 @@ Namespace Engine.Libraries
         ''' </summary>
         <CLSCompliant(False)>
         Public Enum PsSystemRunning As SByte
-            [Error] = -1
-            PsNone = 0
-            PsBackup = 1
-            PsRestore = 2
-            PsPrune = 3
+            [Error] = 0
+            PsNone
+            PsBackup
+            PsRestore
+            PsPrune
         End Enum
 
 #End Region
