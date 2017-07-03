@@ -5,6 +5,13 @@ Imports SilverMonkeyEngine.SmConstants
 
 Namespace Engine
 
+    ''' <summary>
+    ''' Silver Monkey's <see cref="Monkeyspeak.Page"/> handler
+    ''' <para>
+    ''' In here we handle loading the Monkey Speak script file and load the
+    ''' Monkey Speak Default Libraries and the Silver Monkey Libraries
+    ''' </para>
+    ''' </summary>
     Public Class MonkeySpeakPage : Inherits Monkeyspeak.Page
 
         'Public Sub LoadPluginLibrary(Optional ByRef start As Boolean = False)
@@ -38,7 +45,14 @@ Namespace Engine
         ''' </summary>
         Private LibList As List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
 
+        ''' <summary>
+        ''' The Main Monkey Speak Script engine for Silver Monkey
+        ''' </summary>
         Private MSEngine As MainEngine
+
+        ''' <summary>
+        ''' MonkeySpeak Engine configuration options
+        ''' </summary>
         Private options As EngineOptoons
 
 #End Region
@@ -104,7 +118,9 @@ Namespace Engine
             Return MS_Stared >= 2
         End Function
 
-        'Bot Starts
+        ''' <summary>
+        ''' Export MonkeySpeak descriptions
+        ''' </summary>
         Public Sub Export()
 
             Try
@@ -123,6 +139,11 @@ Namespace Engine
 
         End Sub
 
+        ''' <summary>
+        ''' Loads monkey speak libraries
+        ''' </summary>
+        ''' <param name="Library">
+        ''' </param>
         Public Shadows Sub LoadLibrary(ByRef Library As Monkeyspeak.Libraries.AbstractBaseLibrary)
             MyBase.LoadLibrary(Library)
         End Sub
@@ -133,6 +154,7 @@ Namespace Engine
         ''' <param name="LoadPlugins">
         ''' </param>
         ''' <returns>
+        ''' reference to the active <see cref="MonkeySpeak.Page"/>
         ''' </returns>
         Public Shadows Function LoadLibrary(ByRef LoadPlugins As Boolean) As Page
             'Library Loaded?.. Get the Hell out of here
