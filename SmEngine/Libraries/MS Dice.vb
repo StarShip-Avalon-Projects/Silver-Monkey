@@ -13,7 +13,7 @@ Namespace Engine.Libraries
     ''' Effect: (5:130) - (5:139)
     ''' </para>
     ''' <para>
-    ''' Furcadia Drice Role handler
+    ''' Furcadia Dice Role handler
     ''' </para>
     ''' </summary>
     ''' <remarks>
@@ -22,7 +22,7 @@ Namespace Engine.Libraries
     ''' (0:136) When any one rolls anything,
     ''' </para>
     ''' </remarks>
-    Public Class MsDice
+    Partial Public Class MsDice
         Inherits MonkeySpeakLibrary
 
         '
@@ -103,7 +103,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function DiceMinusNumber(reader As TriggerReader) As Boolean
 
-            Dim dice As New DieCollection
+            Dim dice As New DiceRollCollection
 
             Dim Var As Variable = reader.ReadVariable(True)
             Dim Number As Double = ReadVariableOrNumber(reader)
@@ -133,7 +133,7 @@ Namespace Engine.Libraries
             Dim Number As Double
             Dim sides As Double = 0
             Dim NumberPlus As Double = 0
-            Dim dice As New DieCollection
+            Dim dice As New DiceRollCollection
 
             Var = reader.ReadVariable(True)
             Number = ReadVariableOrNumber(reader)
@@ -307,7 +307,7 @@ Namespace Engine.Libraries
 #Region "Public Classes"
 
         ''' <summary>
-        ''' Single Die object for Dice
+        ''' Single Die object for Silver Monkey generating a Dice Roll
         ''' </summary>
         Public Class Die
 
@@ -362,34 +362,6 @@ Namespace Engine.Libraries
             Public Function Roll() As Double
                 Me._value = CDbl(faceSelector.Next(1, CInt(Me.FaceCount)))
                 Return Me.Value
-            End Function
-
-#End Region
-
-        End Class
-
-        ''' <summary>
-        ''' Generic Collection representinh multiple dice being rolled
-        ''' </summary>
-        Public Class DieCollection
-            Inherits System.Collections.ObjectModel.Collection(Of Die)
-
-#Region "Public Methods"
-
-            ''' <summary>
-            ''' roll all the dice In hand
-            ''' </summary>
-            ''' <returns>
-            ''' Sum of the result as <see cref="Double"/>
-            ''' </returns>
-            Public Function RollAll() As Double
-                Dim total As Double = 0
-
-                For Each die As Die In Me.Items
-                    total += die.Roll()
-                Next
-
-                Return total
             End Function
 
 #End Region

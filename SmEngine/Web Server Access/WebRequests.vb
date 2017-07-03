@@ -5,11 +5,14 @@ Imports System.Web
 Imports Monkeyspeak
 
 'Web Module
-'(5:10) - (5:60)
+'
 Namespace Engine.Libraries
 
     ''' <summary>
     ''' Provide web interface for getting a list of Variables from a web server
+    ''' <para>
+    ''' Effects: (5:10) - (5:60)
+    ''' </para>
     ''' </summary>
     Public Class MsWebRequests
         Inherits MonkeySpeakLibrary

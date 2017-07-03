@@ -7,20 +7,20 @@ Imports SilverMonkeyEngine.SmConstants
 Namespace Engine.Libraries
 
     ''' <summary>
-    ''' Dream Member List managment
+    ''' Dream Member List management
     ''' <para>
-    ''' a Simple dream admin system using a text file to contain a list of
-    ''' Furre as staff
+    ''' a Simple dream administration system using a text file to contain a
+    ''' list of Furre as staff
     ''' </para>
     ''' <para>
     ''' NOTE: The BotController is considered to be on the list even if the
     '''       furres name is not in the text file
     ''' </para>
     ''' <para>
-    ''' Default Memberlist: <see cref="Paths.SilverMonkeyBotPath"/>\MemberList.txt
+    ''' Default Member-List file: <see cref="Paths.SilverMonkeyBotPath"/>\MemberList.txt
     ''' </para>
     ''' </summary>
-    Public Class MS_MemberList
+    Public Class MsMemberList
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"

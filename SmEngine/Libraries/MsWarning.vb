@@ -2,7 +2,10 @@
 
 Namespace Engine.Libraries
 
-    Public Class Warning
+    ''' <summary>
+    ''' General waring messages (Warning Channel?) Furcadia sends.
+    ''' </summary>
+    Public Class MsWarning
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"

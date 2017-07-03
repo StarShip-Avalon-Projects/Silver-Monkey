@@ -1,5 +1,11 @@
 ﻿Namespace Engine.Libraries
 
+    ''' <summary>
+    ''' Future support for Dream uploads
+    ''' <para>
+    ''' Currently not used
+    ''' </para>
+    ''' </summary>
     Public Class MS_DreamTransfer
         Inherits MonkeySpeakLibrary
         ' Ctrl+T and Editor.ini Dream Name+location

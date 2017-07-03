@@ -9,7 +9,8 @@ Imports SilverMonkeyEngine.SmConstants
 Namespace Engine.Libraries
 
     ''' <summary>
-    ''' Monkey Speak version of the Furcadia Pounce Cliet
+    ''' Pounce Server interface with a list of furres contained in a simple
+    ''' text file. This system is styled after <see cref="MsMemberList"/>
     ''' </summary>
     Public Class MsPounce
         Inherits MonkeySpeakLibrary

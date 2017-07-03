@@ -9,14 +9,19 @@ Imports SilverMonkeyEngine.Engine.Libraries.PhoenixSpeak
 Namespace Engine.Libraries
 
     ''' <summary>
-    ''' Monkey Speak interface to the PS backup/restore system
+    ''' Backup and restore a dreams
+    ''' <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha">Phoenix
+    ''' Speak</see> database to Silver Monkey's built in SQLite database
+    ''' system. Silver Monkey uses the Command Line interface to walk and
+    ''' backup or restore the database for the dream.
     ''' <para>
     ''' NOTE: PhoenixSpeak Database is not SQL based like SQLite. Phoenix
     '''       Speak resembles an XML style system
     ''' </para>
+    ''' ''' <pra>Bot Testers: Be aware this class needs to be tested any way possible!</pra>
     ''' </summary>
     ''' <remarks>
-    ''' ' CharacterListLooping.
+    ''' Character List Looping.
     ''' <para>
     ''' first build the character list
     ''' </para>

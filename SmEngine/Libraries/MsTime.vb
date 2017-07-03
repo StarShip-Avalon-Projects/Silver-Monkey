@@ -3,7 +3,9 @@
 Namespace Engine.Libraries
 
     ''' <summary>
-    ''' MonkeySpeak Time functions
+    ''' Causes and effects to work with time and date material. Use this
+    ''' Monkey Speak to launch a Phoenix Speak back up operation, to track
+    ''' the date a furre was last seen in the dream,
     ''' <para>
     ''' Cause (0:299)
     ''' </para>
@@ -69,6 +71,13 @@ Namespace Engine.Libraries
 
 #Region "Public Methods"
 
+        ''' <summary>
+        ''' (5:30) set variable %Variable to the current local time.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
         Function CurrentTime(reader As TriggerReader) As Boolean
 
             Dim Var As Variable = reader.ReadVariable(True)

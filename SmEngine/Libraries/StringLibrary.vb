@@ -10,7 +10,7 @@ Namespace Engine.Libraries
     ''' <para>
     ''' Effects: (5:120)- (5:127)
     ''' </para>
-    ''' Tied wigth a string!!
+    ''' Tied width a string!!
     ''' <para>
     ''' well not really but, this class extends monkey Speak ability to work
     ''' with strings in <see cref="Monkeyspeak.Variable"/> s
@@ -24,12 +24,12 @@ Namespace Engine.Libraries
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
 
-            '(1:60) and variable %Variable matches wildcard expression {.} ( ""*"" or ""?""),
+            '(1:60) and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),
             Add(New Trigger(TriggerCategory.Condition, 60), AddressOf WildCard,
-              "(1:60) and variable %Variable matches wildcard expression {.} ( ""*"" or ""?""),")
+              "(1:60) and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),")
 
             Add(New Trigger(TriggerCategory.Condition, 61), AddressOf NotWildCard,
-             "(1:61) and variable %Variable doesn't match wildcard expression {.} ( ""*"" or ""?""),")
+             "(1:61) and variable %Variable doesn't match wild-card expression {.} ( ""*"" or ""?""),")
 
             '(5:110) use variable % and take word # and put it into variable %
             Add(New Trigger(TriggerCategory.Effect, 120), AddressOf StringSplit,
@@ -163,7 +163,7 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:61) and variable %Variable doesn't match wildcard expression
+        ''' (1:61) and variable %Variable doesn't match wild-card expression
         ''' {.} ( ""*"" or ""?""),
         ''' </summary>
         ''' <param name="reader">
@@ -192,7 +192,7 @@ Namespace Engine.Libraries
             Dim NewVar As Variable = reader.ReadVariable(True)
             Dim fields() As String = Split(Var.Value.ToString, " ")
             If i < fields.Length Then
-                NewVar.Value = fields(CInt(i))
+                NewVar.Value = fields(i)
             End If
             Return True
 
@@ -222,7 +222,7 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:60) and variable %Variable matches wildcard expression {.} (
+        ''' (1:60) and variable %Variable matches wild-card expression {.} (
         ''' ""*"" or ""?""),
         ''' </summary>
         ''' <param name="reader">

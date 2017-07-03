@@ -2,6 +2,12 @@
 
     ''' <summary>
     ''' Silver Monkey Math Functions
+    ''' <para>
+    ''' Place holder to put in special non MonkeySpeak Default math functions.
+    ''' </para>
+    ''' <para>
+    ''' Currently not used
+    ''' </para>
     ''' </summary>
     Class MathLibrary
         Inherits MonkeySpeakLibrary

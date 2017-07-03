@@ -109,15 +109,17 @@
     <Compile Include="Libraries\MonkeySpeakLibrary.vb" />
     <Compile Include="Libraries\Movement.vb" />
     <Compile Include="Libraries\MS Dice.vb" />
-    <Compile Include="Libraries\MS MemberList.vb" />
     <Compile Include="Libraries\MS Repq.vb" />
     <Compile Include="Libraries\MS Verbot.vb" />
     <Compile Include="Libraries\MsDatabase.vb" />
+    <Compile Include="Libraries\DiceRolls\MsDice.DiceRollCollection.vb" />
     <Compile Include="Libraries\MsFurreList.vb" />
     <Compile Include="Libraries\MsIO.vb" />
     <Compile Include="Libraries\MsMath.vb" />
+    <Compile Include="Libraries\MsMemberList.vb" />
     <Compile Include="Libraries\MsSound.vb" />
     <Compile Include="Libraries\MsTime.vb" />
+    <Compile Include="Libraries\MsWarning.vb" />
     <Compile Include="Libraries\MS_Cookie.vb" />
     <Compile Include="Libraries\MS_DreamTransfer.vb" />
     <Compile Include="Libraries\MS_Quotes.vb" />
@@ -125,7 +127,6 @@
     <Compile Include="Libraries\Pounce\PounceFurre.vb" />
     <Compile Include="Libraries\SayLibrary.vb" />
     <Compile Include="Libraries\StringLibrary.vb" />
-    <Compile Include="Libraries\Warning.vb" />
     <Compile Include="Libraries\WmCpyDta.vb" />
     <Compile Include="MainEngine.vb" />
     <Compile Include="MonkeySpeakPage.vb" />

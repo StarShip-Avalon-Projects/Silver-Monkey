@@ -15,10 +15,6 @@ Imports SilverMonkeyEngine
 Public Class Main
     Inherits Form
 
-    'TODO: implement Furcadia Session to replace NetProxy Control objects and functions
-    'TODO: Change Reconnection Manager to FurcadiaSession
-    'TODO: Change Server Load Balancer to FurcadiaSession
-
 #Region "Public Fields"
 
     ''' <summary>
@@ -635,33 +631,23 @@ Public Class Main
 
 #End Region
 
-    Public Sub SetBalloonText(ByRef txt As String)
-        'If Me.NotifyIcon1.Then Then
-        '    Dim d As New UpDateBtn_GoCallback(AddressOf SetBalloonText)
-        '    Me.Invoke(d, txt, {[Text]})
-        'Else
-        NotifyIcon1.BalloonTipText = txt
-        NotifyIcon1.ShowBalloonTip(3000)
-        'End If
-    End Sub
+    'Public Function TagCloser(ByRef Str As String, ByRef Tag As String) As String
+    '    'Tag Counters
+    '    Dim OpenCount, CloseCount As Integer
 
-    Public Function TagCloser(ByRef Str As String, ByRef Tag As String) As String
-        'Tag Counters
-        Dim OpenCount, CloseCount As Integer
-
-        Dim CloseCounter As Integer
-        OpenCount = CountOccurrences(Str, "<" + Tag + ">")
-        CloseCount = CountOccurrences(Str, "</" + Tag + ">")
-        If OpenCount > CloseCount Then
-            CloseCounter = OpenCount - CloseCount
-            Dim CloseTags As String = ""
-            For I As Integer = 0 To CloseCounter - 1
-                CloseTags = CloseTags & "</" + Tag + ">"
-            Next I
-            Str = Str & CloseTags
-        End If
-        Return Str
-    End Function
+    '    Dim CloseCounter As Integer
+    '    OpenCount = CountOccurrences(Str, "<" + Tag + ">")
+    '    CloseCount = CountOccurrences(Str, "</" + Tag + ">")
+    '    If OpenCount > CloseCount Then
+    '        CloseCounter = OpenCount - CloseCount
+    '        Dim CloseTags As String = ""
+    '        For I As Integer = 0 To CloseCounter - 1
+    '            CloseTags = CloseTags & "</" + Tag + ">"
+    '        Next I
+    '        Str = Str & CloseTags
+    '    End If
+    '    Return Str
+    'End Function
 
     ''' <summary>
     ''' Update Dream Furre list
@@ -703,7 +689,6 @@ Public Class Main
 
         If IsNothing(BotConfig) Then Exit Sub
         If String.IsNullOrEmpty(BotConfig.CharacterIniFile) Then Exit Sub
-        If BotConfig.CharacterIniFile = "-pick" Then Exit Sub
 
         Dim p As String = Path.GetDirectoryName(BotConfig.CharacterIniFile)
         If String.IsNullOrEmpty(p) And Not File.Exists(CheckBotFolder(BotConfig.CharacterIniFile)) Then
@@ -816,7 +801,6 @@ Public Class Main
         My.Settings.MainFormLocation = Me.Location
         If Not IsNothing(BotConfig) Then My.Settings.LastBotFile = BotConfig.Name
         If Not FurcadiaSession Is Nothing Then FurcadiaSession.Dispose()
-        'Timers.DestroyTimers()
         'Save the user settings so next time the
         'window will be the same size and location
         Mainsettings.SaveMainSettings()
@@ -824,10 +808,6 @@ Public Class Main
         NotifyIcon1.Dispose()
 
         Me.Dispose()
-    End Sub
-
-    Private Sub get__Click_1(sender As Object, e As EventArgs) Handles get_.Click
-
     End Sub
 
     Private Sub LaunchEditor()
@@ -1028,6 +1008,15 @@ Public Class Main
         FurcadiaSession.SendToServer(data)
     End Sub
 
+    ''' <summary>
+    ''' Parse the Server Channels
+    ''' </summary>
+    ''' <param name="InstructionObject">
+    ''' Processed Channel Object with triggering furre
+    ''' </param>
+    ''' <param name="Args">
+    ''' Parse server Args
+    ''' </param>
     Private Sub onProcessServerChannelData(InstructionObject As ChannelObject, Args As ParseServerArgs) _
         Handles FurcadiaSession.ProcessServerChannelData
 

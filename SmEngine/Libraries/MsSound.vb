@@ -7,7 +7,7 @@ Namespace Engine.Libraries
     ''' <summary>
     ''' Effects: (5:2010) - (5:2012)
     ''' <para>
-    ''' &gt; Simple way to play wave files
+    ''' Simple way to play wave files
     ''' </para>
     ''' <para>
     ''' Default wave folder: <see cref="Paths.SilverMonkeyBotPath"/>

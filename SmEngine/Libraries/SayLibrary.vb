@@ -9,7 +9,13 @@ Namespace Engine.Libraries
     ''' <summary>
     ''' Legacy Furcadia channel processing
     ''' <para>
-    ''' TODO: Upgrade to AngelCat style Channels and Reintergrate into the
+    ''' This lib handles the basic channels, Emote, Say (Speech and Spoken
+    ''' furcadia commands), Whispers
+    ''' </para>
+    ''' <pra> Bot Testers: Be aware this class needs to be tested any way
+    ''' possible! </pra>
+    ''' <para>
+    ''' TODO: Upgrade to AngelCat style Channels and Reintegrate into the
     '''       engine. These channels may still work with the existing
     '''       system.
     '''       <see href="http://bugtraq.tsprojects.org/view.php?id=107">[BUG: 107]</see>
@@ -128,7 +134,7 @@ Namespace Engine.Libraries
     ''' (5:6) whisper {..} to furre named {..}.
     ''' </para>
     ''' <para>
-    ''' (5:7) whisper {..} to furre named {..} even if they're offline.
+    ''' (5:7) whisper {..} to furre named {..} even if they're off-line.
     ''' </para>
     ''' </remarks>
     Class SayLibrary
@@ -199,6 +205,7 @@ Namespace Engine.Libraries
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function,
                   "(0:15) When someone whispers something,")
+
             Add(TriggerCategory.Cause, 16,
                 AddressOf msgIs, "(0:16) When someone whispers {..},")
 
@@ -211,6 +218,7 @@ Namespace Engine.Libraries
                  Function()
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function, "(0:18) When someone says or emotes something,")
+
             Add(TriggerCategory.Cause, 19,
                 AddressOf msgIs, "(0:19) When someone says or emotes {..},")
 
@@ -223,6 +231,7 @@ Namespace Engine.Libraries
                  Function()
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function, "(0:21) When someone emits something,")
+
             Add(TriggerCategory.Cause, 22,
                      AddressOf msgIs, "(0:22) When someone emits {..},")
 
@@ -231,12 +240,13 @@ Namespace Engine.Libraries
                  AddressOf msgContains, "(0:23) When someone emits something with {..} in it,")
 
             'Furre Enters
-            '(0:4) When someone is added to the FurcadiaSession.Dream manifest,
+            '(0:4) When someone is added to the Dream manifest,
             Add(TriggerCategory.Cause, 24,
                 Function()
                     Return True
                 End Function, "(0:24) When someone enters the Dream,")
-            '(0:25) When a furre Named {..} enters the FurcadiaSession.Dream,
+
+            '(0:25) When a furre Named {..} enters the Dream,
             Add(TriggerCategory.Cause, 25,
                 AddressOf NameIs, "(0:25) When a furre Named {..} enters the Dream,")
 
@@ -252,6 +262,7 @@ Namespace Engine.Libraries
                 AddressOf NameIs, "(0:27) When a furre named {..} leaves the Dream,")
 
             'Furre In View
+            'TODO: Move to Movement?
             '(0:28) When someone enters the bots view,
             Add(TriggerCategory.Cause, 28,
                 AddressOf EnterView, "(0:28) When someone enters the bots view, ")
@@ -340,12 +351,12 @@ Namespace Engine.Libraries
                 AddressOf msgContains, "(0:48) When the bot sees a trade request with {..} in it,")
 
             'FurcadiaSession.Dream
-            '(0:90) When the bot enters a FurcadiaSession.Dream,
+            '(0:90) When the bot enters a Dream,
             Add(TriggerCategory.Cause, 90,
                 Function()
                     Return True
                 End Function, "(0:90) When the bot enters a Dream,")
-            '(0:91) When the bot enters a FurcadiaSession.Dream named {..},
+            '(0:91) When the bot enters a Dream named {..},
             Add(TriggerCategory.Cause, 91,
                 AddressOf DreamNameIs, "(0:91) When the bot enters a Dream named {..},")
 
@@ -379,11 +390,13 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Condition, 8), AddressOf msgContains,
                 "(1:8) and the triggering furre's message contains {..} in it,")
 
-            '(1:9) and the triggering furre's message does not contain {..} in it, (say, emote, shot, whisper, or emit Channels)
+            '(1:9) and the triggering furre's message does not contain {..} in it,
+            '(say, emote, shot, whisper, or emit Channels)
             Add(New Trigger(TriggerCategory.Condition, 9), AddressOf msgNotContain,
                 "(1:9) and the triggering furre's message does not contain {..} in it,")
 
-            '(1:10) and the triggering furre's message is not {..}, (say, emote, shot, whisper, or emit Channels)
+            '(1:10) and the triggering furre's message is not {..},
+            '(say, emote, shot, whisper, or emit Channels)
             Add(New Trigger(TriggerCategory.Condition, 10), AddressOf msgIsNot,
                 "(1:10) and the triggering furre's message is not {..},")
 
@@ -423,18 +436,18 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Condition, 20), AddressOf BotIsNotDreamOwner,
                 "(1:20) and the bot is not the Dream-Owner,")
 
-            '(1:21) and the furre named {..} is the FurcadiaSession.Dream owner,
+            '(1:21) and the furre named {..} is the Dream owner,
             Add(New Trigger(TriggerCategory.Condition, 21), AddressOf FurreNamedIsDREAMOWNER,
                 "(1:21) and the furre named {..} is the Dream owner,")
 
-            '(1:22) and the furre named {..} is not the FurcadiaSession.Dream owner,
+            '(1:22) and the furre named {..} is not the Dream owner,
             Add(New Trigger(TriggerCategory.Condition, 22), AddressOf FurreNamedIsNotDREAMOWNER,
                 "(1:22) and the furre named {..} is not the Dream owner,")
-            '(1:23) and the FurcadiaSession.Dream Name is {..},
+            '(1:23) and the Dream Name is {..},
 
             Add(New Trigger(TriggerCategory.Condition, 23), AddressOf DreamNameIs,
                 "(1:23) and the Dream Name is {..},")
-            '(1:24) and the FurcadiaSession.Dream Name is not {..},
+            '(1:24) and the Dream Name is not {..},
 
             Add(New Trigger(TriggerCategory.Condition, 24), AddressOf DreamNameIsNot,
                 "(1:24) and the Dream Name is not {..},")
@@ -457,13 +470,13 @@ Namespace Engine.Libraries
                     Return False
                 End Function, "(1:27) and the bot has share control of the Dream or is the Dream owner,")
 
-            '(1:28) and the bot has share control of the FurcadiaSession.Dream,
+            '(1:28) and the bot has share control of the Dream,
             Add(New Trigger(TriggerCategory.Condition, 28),
                  Function()
                      Return FurcadiaSession.HasShare
                  End Function, "(1:28) and the bot has share control of the Dream,")
 
-            '(1:29) and the bot doesn't have share control in the FurcadiaSession.Dream,
+            '(1:29) and the bot doesn't have share control in the Dream,
             Add(New Trigger(TriggerCategory.Condition, 29),
                  Function()
                      Return Not FurcadiaSession.HasShare
@@ -549,7 +562,7 @@ Namespace Engine.Libraries
                  End Function,
                          "(5:6) whisper {..} to furre named {..}.")
 
-            ' (5:7) whisper {..} to {..} even if they're offline.
+            ' (5:7) whisper {..} to {..} even if they're off-line.
             Add(New Trigger(TriggerCategory.Effect, 7),
                   Function(reader As TriggerReader)
 
@@ -560,18 +573,19 @@ Namespace Engine.Libraries
                       Return True
 
                   End Function,
-                      "(5:7) whisper {..} to furre named {..} even if they're offline.")
+                      "(5:7) whisper {..} to furre named {..} even if they're off-line.")
 
             '(5:20) give share control to the triggering furre.
             Add(New Trigger(TriggerCategory.Effect, 20), AddressOf ShareTrigFurre,
                 "(5:20) give share control to the triggering furre.")
-            '(5:21) remove shae control from the triggering furre.
+            '(5:21) remove share control from the triggering furre.
             Add(New Trigger(TriggerCategory.Effect, 21), AddressOf UnshareTrigFurre,
                 "(5:21) remove share control from the triggering furre.")
-            '(5:22) remove share from the furre named {..} if they're in the FurcadiaSession.Dream right now.
+            '(5:22) remove share from the furre named {..} if they're in the Dream right now.
             Add(New Trigger(TriggerCategory.Effect, 22), AddressOf ShareFurreNamed,
                 "(5:22) remove share from the furre named {..} if they're in the Dream right now.")
-            '(5:23) give share to the furre named {..} if they're in the FurcadiaSession.Dream right now.
+
+            '(5:23) give share to the furre named {..} if they're in the Dream right now.
             Add(New Trigger(TriggerCategory.Effect, 23), AddressOf UnshareFurreNamed,
                 "(5:23) give share to the furre named {..} if they're in the Dream right now.")
 
@@ -982,7 +996,7 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:21) remove shae control from the triggering furre.
+        ''' (5:21) remove share control from the triggering furre.
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>

@@ -6,10 +6,14 @@ Imports Monkeyspeak
 Namespace Engine.Libraries
 
     ''' <summary>
-    ''' Monkey Speak Interface to the PhoenixSpeak server command line interface
+    ''' Monkey Speak Interface to the
+    ''' <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha">Phoenix
+    ''' Speak</see> server command line interface
     ''' <para>
-    ''' Checks and executes Basic PhoenixSpeak response triggers
+    ''' Checks and executes predefined Phoenix Speak commands to manages a
+    ''' dreams database.
     ''' </para>
+    ''' <pra>Bot Testers: Be aware this class needs to be tested any way possible!</pra>
     ''' </summary>
     Public Class MsPhoenixSpeak
         Inherits MonkeySpeakLibrary
@@ -179,6 +183,8 @@ Namespace Engine.Libraries
 
         ''' <summary>
         ''' (5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.
+        ''' <para>
+        ''' </para>
         ''' </summary>
         ''' <param name="reader">
         ''' </param>

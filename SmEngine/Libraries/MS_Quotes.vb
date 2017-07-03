@@ -4,6 +4,12 @@ Imports MonkeyCore
 
 Namespace Engine.Libraries
 
+    ''' <summary>
+    ''' Intended as a Quote list manager
+    ''' <para>
+    ''' Currently not used
+    ''' </para>
+    ''' </summary>
     Public Class MS_Quotes
         Inherits MonkeySpeakLibrary
 

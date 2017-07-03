@@ -8,13 +8,18 @@ Imports SilverMonkeyEngine.SmConstants
 Namespace Engine.Libraries
 
     ''' <summary>
-    ''' Provides <see cref="System.Data.SQLite"/> access to Silver Monkey
+    ''' SQLite Database Access... Create tables Store records ect. in Silver Monkey
+    ''' <para>
+    ''' To view and edit these tables manually Please look as Data Monkey
+    ''' </para>
     ''' <para>
     ''' Conditions (1:500) (1:531)
     ''' </para>
     ''' <para>
     ''' Effects: (5:500) - (5:559)
     ''' </para>
+    ''' <pra> Bot Testers: Be aware this class needs to be tested any way
+    ''' possible! </pra>
     ''' <para>
     ''' Default SQLite database file: <see cref="Paths.SilverMonkeyBotPath"/>\SilverMonkey.db
     ''' </para>
