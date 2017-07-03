@@ -32,27 +32,6 @@
         Me.ClmDescription = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ClmVersion = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
-        Me.ChkBxSysTray = New System.Windows.Forms.CheckBox()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.EmoteColorBox = New System.Windows.Forms.PictureBox()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.DefaultColorBox = New System.Windows.Forms.PictureBox()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.WhisperColorBox = New System.Windows.Forms.PictureBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.ShoutColorBox = New System.Windows.Forms.PictureBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.SayColorBox = New System.Windows.Forms.PictureBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.EmitColorBox = New System.Windows.Forms.PictureBox()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.ChkTimeStamp = New System.Windows.Forms.CheckBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.ComboFontSize = New System.Windows.Forms.ComboBox()
-        Me.ComboFontFace = New System.Windows.Forms.ComboBox()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label30 = New System.Windows.Forms.Label()
@@ -94,17 +73,29 @@
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.FindFurc = New System.Windows.Forms.OpenFileDialog()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.ComboFontFace = New System.Windows.Forms.ComboBox()
+        Me.ComboFontSize = New System.Windows.Forms.ComboBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.ChkTimeStamp = New System.Windows.Forms.CheckBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.EmitColorBox = New System.Windows.Forms.PictureBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.SayColorBox = New System.Windows.Forms.PictureBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.ShoutColorBox = New System.Windows.Forms.PictureBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.WhisperColorBox = New System.Windows.Forms.PictureBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.DefaultColorBox = New System.Windows.Forms.PictureBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.EmoteColorBox = New System.Windows.Forms.PictureBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.ChkBxSysTray = New System.Windows.Forms.CheckBox()
+        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.TabPage4.SuspendLayout()
         Me.TabPage2.SuspendLayout()
-        Me.GroupBox9.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
-        CType(Me.EmoteColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DefaultColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.WhisperColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ShoutColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.SayColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EmitColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox2.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.NumPing, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -119,11 +110,21 @@
         Me.TabPage6.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
         Me.TabPage7.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        CType(Me.EmitColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SayColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ShoutColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.WhisperColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DefaultColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EmoteColorBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox3.SuspendLayout()
+        Me.GroupBox9.SuspendLayout()
         Me.SuspendLayout()
         '
         'BTN_Ok
         '
-        Me.BTN_Ok.Location = New System.Drawing.Point(201, 274)
+        Me.BTN_Ok.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BTN_Ok.Location = New System.Drawing.Point(309, 283)
         Me.BTN_Ok.Name = "BTN_Ok"
         Me.BTN_Ok.Size = New System.Drawing.Size(75, 23)
         Me.BTN_Ok.TabIndex = 10
@@ -132,7 +133,8 @@
         '
         'BTN_Cancel
         '
-        Me.BTN_Cancel.Location = New System.Drawing.Point(287, 274)
+        Me.BTN_Cancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BTN_Cancel.Location = New System.Drawing.Point(395, 283)
         Me.BTN_Cancel.Name = "BTN_Cancel"
         Me.BTN_Cancel.Size = New System.Drawing.Size(75, 23)
         Me.BTN_Cancel.TabIndex = 9
@@ -145,7 +147,7 @@
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(371, 230)
+        Me.TabPage4.Size = New System.Drawing.Size(460, 235)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Plugins"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -154,11 +156,12 @@
         '
         Me.LstVwPlugin.CheckBoxes = True
         Me.LstVwPlugin.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ClmEnabled, Me.ClmName, Me.ClmDescription, Me.ClmVersion})
+        Me.LstVwPlugin.Dock = System.Windows.Forms.DockStyle.Fill
         Me.LstVwPlugin.GridLines = True
-        Me.LstVwPlugin.Location = New System.Drawing.Point(6, 6)
+        Me.LstVwPlugin.Location = New System.Drawing.Point(3, 3)
         Me.LstVwPlugin.MultiSelect = False
         Me.LstVwPlugin.Name = "LstVwPlugin"
-        Me.LstVwPlugin.Size = New System.Drawing.Size(359, 218)
+        Me.LstVwPlugin.Size = New System.Drawing.Size(454, 229)
         Me.LstVwPlugin.TabIndex = 0
         Me.LstVwPlugin.UseCompatibleStateImageBehavior = False
         Me.LstVwPlugin.View = System.Windows.Forms.View.Details
@@ -190,225 +193,10 @@
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(371, 230)
+        Me.TabPage2.Size = New System.Drawing.Size(460, 235)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Display"
         Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'GroupBox9
-        '
-        Me.GroupBox9.Controls.Add(Me.ChkBxSysTray)
-        Me.GroupBox9.Location = New System.Drawing.Point(244, 87)
-        Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(124, 137)
-        Me.GroupBox9.TabIndex = 5
-        Me.GroupBox9.TabStop = False
-        Me.GroupBox9.Text = "SysTray"
-        '
-        'ChkBxSysTray
-        '
-        Me.ChkBxSysTray.AutoSize = True
-        Me.ChkBxSysTray.Checked = True
-        Me.ChkBxSysTray.CheckState = System.Windows.Forms.CheckState.Indeterminate
-        Me.ChkBxSysTray.Location = New System.Drawing.Point(3, 23)
-        Me.ChkBxSysTray.Name = "ChkBxSysTray"
-        Me.ChkBxSysTray.Size = New System.Drawing.Size(115, 17)
-        Me.ChkBxSysTray.TabIndex = 0
-        Me.ChkBxSysTray.Text = "Minimize to Systray"
-        Me.ChkBxSysTray.UseVisualStyleBackColor = True
-        '
-        'GroupBox3
-        '
-        Me.GroupBox3.Controls.Add(Me.Label13)
-        Me.GroupBox3.Controls.Add(Me.EmoteColorBox)
-        Me.GroupBox3.Controls.Add(Me.Label11)
-        Me.GroupBox3.Controls.Add(Me.DefaultColorBox)
-        Me.GroupBox3.Controls.Add(Me.Label10)
-        Me.GroupBox3.Controls.Add(Me.WhisperColorBox)
-        Me.GroupBox3.Controls.Add(Me.Label9)
-        Me.GroupBox3.Controls.Add(Me.ShoutColorBox)
-        Me.GroupBox3.Controls.Add(Me.Label8)
-        Me.GroupBox3.Controls.Add(Me.SayColorBox)
-        Me.GroupBox3.Controls.Add(Me.Label7)
-        Me.GroupBox3.Controls.Add(Me.EmitColorBox)
-        Me.GroupBox3.Location = New System.Drawing.Point(6, 87)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(232, 137)
-        Me.GroupBox3.TabIndex = 4
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Color Options"
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(118, 24)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(64, 13)
-        Me.Label13.TabIndex = 15
-        Me.Label13.Text = "Emote Color"
-        '
-        'EmoteColorBox
-        '
-        Me.EmoteColorBox.BackColor = System.Drawing.Color.Lime
-        Me.EmoteColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.EmoteColorBox.Location = New System.Drawing.Point(192, 23)
-        Me.EmoteColorBox.Name = "EmoteColorBox"
-        Me.EmoteColorBox.Size = New System.Drawing.Size(15, 14)
-        Me.EmoteColorBox.TabIndex = 14
-        Me.EmoteColorBox.TabStop = False
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(12, 102)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(68, 13)
-        Me.Label11.TabIndex = 13
-        Me.Label11.Text = "Default Color"
-        '
-        'DefaultColorBox
-        '
-        Me.DefaultColorBox.BackColor = System.Drawing.Color.Lime
-        Me.DefaultColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.DefaultColorBox.Location = New System.Drawing.Point(86, 101)
-        Me.DefaultColorBox.Name = "DefaultColorBox"
-        Me.DefaultColorBox.Size = New System.Drawing.Size(15, 14)
-        Me.DefaultColorBox.TabIndex = 12
-        Me.DefaultColorBox.TabStop = False
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(7, 24)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(73, 13)
-        Me.Label10.TabIndex = 11
-        Me.Label10.Text = "Whisper Color"
-        '
-        'WhisperColorBox
-        '
-        Me.WhisperColorBox.BackColor = System.Drawing.Color.Lime
-        Me.WhisperColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.WhisperColorBox.Location = New System.Drawing.Point(86, 23)
-        Me.WhisperColorBox.Name = "WhisperColorBox"
-        Me.WhisperColorBox.Size = New System.Drawing.Size(15, 14)
-        Me.WhisperColorBox.TabIndex = 10
-        Me.WhisperColorBox.TabStop = False
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(18, 42)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(62, 13)
-        Me.Label9.TabIndex = 9
-        Me.Label9.Text = "Shout Color"
-        '
-        'ShoutColorBox
-        '
-        Me.ShoutColorBox.BackColor = System.Drawing.Color.Lime
-        Me.ShoutColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.ShoutColorBox.Location = New System.Drawing.Point(86, 41)
-        Me.ShoutColorBox.Name = "ShoutColorBox"
-        Me.ShoutColorBox.Size = New System.Drawing.Size(15, 14)
-        Me.ShoutColorBox.TabIndex = 8
-        Me.ShoutColorBox.TabStop = False
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(28, 82)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(52, 13)
-        Me.Label8.TabIndex = 7
-        Me.Label8.Text = "Say Color"
-        '
-        'SayColorBox
-        '
-        Me.SayColorBox.BackColor = System.Drawing.Color.Lime
-        Me.SayColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.SayColorBox.Location = New System.Drawing.Point(86, 81)
-        Me.SayColorBox.Name = "SayColorBox"
-        Me.SayColorBox.Size = New System.Drawing.Size(15, 14)
-        Me.SayColorBox.TabIndex = 6
-        Me.SayColorBox.TabStop = False
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(26, 62)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(54, 13)
-        Me.Label7.TabIndex = 5
-        Me.Label7.Text = "Emit Color"
-        '
-        'EmitColorBox
-        '
-        Me.EmitColorBox.BackColor = System.Drawing.Color.Lime
-        Me.EmitColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.EmitColorBox.Location = New System.Drawing.Point(86, 61)
-        Me.EmitColorBox.Name = "EmitColorBox"
-        Me.EmitColorBox.Size = New System.Drawing.Size(15, 14)
-        Me.EmitColorBox.TabIndex = 4
-        Me.EmitColorBox.TabStop = False
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.Controls.Add(Me.ChkTimeStamp)
-        Me.GroupBox2.Controls.Add(Me.Label6)
-        Me.GroupBox2.Controls.Add(Me.ComboFontSize)
-        Me.GroupBox2.Controls.Add(Me.ComboFontFace)
-        Me.GroupBox2.Controls.Add(Me.Label5)
-        Me.GroupBox2.Location = New System.Drawing.Point(6, 6)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(359, 75)
-        Me.GroupBox2.TabIndex = 3
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Font Style"
-        '
-        'ChkTimeStamp
-        '
-        Me.ChkTimeStamp.AutoSize = True
-        Me.ChkTimeStamp.Location = New System.Drawing.Point(86, 46)
-        Me.ChkTimeStamp.Name = "ChkTimeStamp"
-        Me.ChkTimeStamp.Size = New System.Drawing.Size(82, 17)
-        Me.ChkTimeStamp.TabIndex = 5
-        Me.ChkTimeStamp.Text = "Time Stamp"
-        Me.ChkTimeStamp.UseVisualStyleBackColor = True
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(213, 22)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(51, 13)
-        Me.Label6.TabIndex = 4
-        Me.Label6.Text = "Font Size"
-        '
-        'ComboFontSize
-        '
-        Me.ComboFontSize.FormattingEnabled = True
-        Me.ComboFontSize.Location = New System.Drawing.Point(269, 19)
-        Me.ComboFontSize.Name = "ComboFontSize"
-        Me.ComboFontSize.Size = New System.Drawing.Size(73, 21)
-        Me.ComboFontSize.TabIndex = 3
-        '
-        'ComboFontFace
-        '
-        Me.ComboFontFace.FormattingEnabled = True
-        Me.ComboFontFace.Location = New System.Drawing.Point(86, 19)
-        Me.ComboFontFace.Name = "ComboFontFace"
-        Me.ComboFontFace.Size = New System.Drawing.Size(121, 21)
-        Me.ComboFontFace.TabIndex = 2
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(25, 22)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(55, 13)
-        Me.Label5.TabIndex = 1
-        Me.Label5.Text = "Font Face"
         '
         'TabPage1
         '
@@ -416,13 +204,16 @@
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(371, 230)
+        Me.TabPage1.Size = New System.Drawing.Size(460, 235)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Connection"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.Label30)
         Me.GroupBox1.Controls.Add(Me.NumPing)
         Me.GroupBox1.Controls.Add(Me.Label29)
@@ -441,15 +232,16 @@
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Location = New System.Drawing.Point(3, 6)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(359, 218)
+        Me.GroupBox1.Size = New System.Drawing.Size(450, 225)
         Me.GroupBox1.TabIndex = 2
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Configuration"
         '
         'Label30
         '
+        Me.Label30.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(208, 184)
+        Me.Label30.Location = New System.Drawing.Point(299, 189)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(53, 13)
         Me.Label30.TabIndex = 77
@@ -457,17 +249,20 @@
         '
         'NumPing
         '
-        Me.NumPing.Location = New System.Drawing.Point(109, 182)
+        Me.NumPing.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.NumPing.Location = New System.Drawing.Point(109, 187)
         Me.NumPing.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
         Me.NumPing.Name = "NumPing"
-        Me.NumPing.Size = New System.Drawing.Size(88, 20)
-        Me.NumPing.TabIndex = 76
+        Me.NumPing.Size = New System.Drawing.Size(177, 20)
+        Me.NumPing.TabIndex = 7
         Me.NumPing.Value = New Decimal(New Integer() {30, 0, 0, 0})
         '
         'Label29
         '
+        Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(21, 184)
+        Me.Label29.Location = New System.Drawing.Point(21, 189)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(82, 13)
         Me.Label29.TabIndex = 75
@@ -475,8 +270,9 @@
         '
         'Label27
         '
+        Me.Label27.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label27.AutoSize = True
-        Me.Label27.Location = New System.Drawing.Point(250, 124)
+        Me.Label27.Location = New System.Drawing.Point(341, 129)
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(53, 13)
         Me.Label27.TabIndex = 74
@@ -484,8 +280,9 @@
         '
         'Label28
         '
+        Me.Label28.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label28.AutoSize = True
-        Me.Label28.Location = New System.Drawing.Point(9, 124)
+        Me.Label28.Location = New System.Drawing.Point(18, 129)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(106, 13)
         Me.Label28.TabIndex = 73
@@ -493,15 +290,18 @@
         '
         'NumSonnectTimeOut
         '
-        Me.NumSonnectTimeOut.Location = New System.Drawing.Point(124, 122)
+        Me.NumSonnectTimeOut.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.NumSonnectTimeOut.Location = New System.Drawing.Point(124, 127)
         Me.NumSonnectTimeOut.Name = "NumSonnectTimeOut"
-        Me.NumSonnectTimeOut.Size = New System.Drawing.Size(120, 20)
-        Me.NumSonnectTimeOut.TabIndex = 71
+        Me.NumSonnectTimeOut.Size = New System.Drawing.Size(209, 20)
+        Me.NumSonnectTimeOut.TabIndex = 5
         '
         'Label24
         '
+        Me.Label24.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label24.AutoSize = True
-        Me.Label24.Location = New System.Drawing.Point(232, 150)
+        Me.Label24.Location = New System.Drawing.Point(323, 155)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(53, 13)
         Me.Label24.TabIndex = 69
@@ -509,8 +309,9 @@
         '
         'Label22
         '
+        Me.Label22.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(12, 150)
+        Me.Label22.Location = New System.Drawing.Point(12, 155)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(124, 13)
         Me.Label22.TabIndex = 67
@@ -518,26 +319,29 @@
         '
         'NumericUpDown4
         '
-        Me.NumericUpDown4.Location = New System.Drawing.Point(138, 148)
+        Me.NumericUpDown4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.NumericUpDown4.Location = New System.Drawing.Point(140, 153)
         Me.NumericUpDown4.Name = "NumericUpDown4"
-        Me.NumericUpDown4.Size = New System.Drawing.Size(88, 20)
-        Me.NumericUpDown4.TabIndex = 65
+        Me.NumericUpDown4.Size = New System.Drawing.Size(177, 20)
+        Me.NumericUpDown4.TabIndex = 6
         Me.NumericUpDown4.Value = New Decimal(New Integer() {30, 0, 0, 0})
         '
         'ChkBxAutoReconnect
         '
+        Me.ChkBxAutoReconnect.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ChkBxAutoReconnect.AutoSize = True
-        Me.ChkBxAutoReconnect.Location = New System.Drawing.Point(235, 88)
+        Me.ChkBxAutoReconnect.Location = New System.Drawing.Point(320, 61)
         Me.ChkBxAutoReconnect.Name = "ChkBxAutoReconnect"
         Me.ChkBxAutoReconnect.Size = New System.Drawing.Size(104, 17)
-        Me.ChkBxAutoReconnect.TabIndex = 63
+        Me.ChkBxAutoReconnect.TabIndex = 4
         Me.ChkBxAutoReconnect.Text = "Auto Reconnect"
         Me.ChkBxAutoReconnect.UseVisualStyleBackColor = True
         '
         'Label21
         '
         Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(21, 57)
+        Me.Label21.Location = New System.Drawing.Point(18, 62)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(97, 13)
         Me.Label21.TabIndex = 55
@@ -545,7 +349,7 @@
         '
         'ReconnectUpDown
         '
-        Me.ReconnectUpDown.Location = New System.Drawing.Point(124, 55)
+        Me.ReconnectUpDown.Location = New System.Drawing.Point(124, 60)
         Me.ReconnectUpDown.Name = "ReconnectUpDown"
         Me.ReconnectUpDown.Size = New System.Drawing.Size(88, 20)
         Me.ReconnectUpDown.TabIndex = 3
@@ -553,7 +357,8 @@
         '
         'TxtSPort
         '
-        Me.TxtSPort.Location = New System.Drawing.Point(287, 29)
+        Me.TxtSPort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TxtSPort.Location = New System.Drawing.Point(385, 29)
         Me.TxtSPort.MaxLength = 5
         Me.TxtSPort.Name = "TxtSPort"
         Me.TxtSPort.Size = New System.Drawing.Size(39, 20)
@@ -566,14 +371,15 @@
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtBx_Server.Location = New System.Drawing.Point(67, 29)
         Me.TxtBx_Server.Name = "TxtBx_Server"
-        Me.TxtBx_Server.Size = New System.Drawing.Size(145, 20)
+        Me.TxtBx_Server.Size = New System.Drawing.Size(236, 20)
         Me.TxtBx_Server.TabIndex = 1
         Me.TxtBx_Server.Text = "lightbringer.Furcadia.com"
         '
         'Label1
         '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(218, 32)
+        Me.Label1.Location = New System.Drawing.Point(317, 32)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(63, 13)
         Me.Label1.TabIndex = 2
@@ -590,6 +396,9 @@
         '
         'ConfigTabs
         '
+        Me.ConfigTabs.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ConfigTabs.Controls.Add(Me.TabPage1)
         Me.ConfigTabs.Controls.Add(Me.TabPage2)
         Me.ConfigTabs.Controls.Add(Me.TabPage4)
@@ -600,7 +409,7 @@
         Me.ConfigTabs.Location = New System.Drawing.Point(12, 12)
         Me.ConfigTabs.Name = "ConfigTabs"
         Me.ConfigTabs.SelectedIndex = 0
-        Me.ConfigTabs.Size = New System.Drawing.Size(379, 256)
+        Me.ConfigTabs.Size = New System.Drawing.Size(468, 261)
         Me.ConfigTabs.TabIndex = 10
         '
         'TabPage3
@@ -609,7 +418,7 @@
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(371, 230)
+        Me.TabPage3.Size = New System.Drawing.Size(460, 235)
         Me.TabPage3.TabIndex = 5
         Me.TabPage3.Text = "Client Options"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -622,9 +431,10 @@
         Me.GroupBox10.Controls.Add(Me.Button2)
         Me.GroupBox10.Controls.Add(Me.ChkBxAutoCloseProc)
         Me.GroupBox10.Controls.Add(Me.chkBxAutoLoadLastBotFile)
-        Me.GroupBox10.Location = New System.Drawing.Point(6, 6)
+        Me.GroupBox10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox10.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox10.Name = "GroupBox10"
-        Me.GroupBox10.Size = New System.Drawing.Size(359, 218)
+        Me.GroupBox10.Size = New System.Drawing.Size(454, 229)
         Me.GroupBox10.TabIndex = 0
         Me.GroupBox10.TabStop = False
         Me.GroupBox10.Text = "Client Options"
@@ -635,7 +445,7 @@
         Me.chkBxClientDisconnectToggle.Location = New System.Drawing.Point(98, 124)
         Me.chkBxClientDisconnectToggle.Name = "chkBxClientDisconnectToggle"
         Me.chkBxClientDisconnectToggle.Size = New System.Drawing.Size(179, 17)
-        Me.chkBxClientDisconnectToggle.TabIndex = 22
+        Me.chkBxClientDisconnectToggle.TabIndex = 3
         Me.chkBxClientDisconnectToggle.Text = "Toggle Client Disconnect Popup"
         Me.chkBxClientDisconnectToggle.UseVisualStyleBackColor = True
         '
@@ -653,14 +463,14 @@
         Me.TxtBxFurPath.Location = New System.Drawing.Point(17, 65)
         Me.TxtBxFurPath.Name = "TxtBxFurPath"
         Me.TxtBxFurPath.Size = New System.Drawing.Size(202, 20)
-        Me.TxtBxFurPath.TabIndex = 20
+        Me.TxtBxFurPath.TabIndex = 1
         '
         'Button2
         '
         Me.Button2.Location = New System.Drawing.Point(225, 63)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(51, 23)
-        Me.Button2.TabIndex = 19
+        Me.Button2.TabIndex = 2
         Me.Button2.Text = "Open"
         Me.Button2.UseVisualStyleBackColor = True
         '
@@ -670,7 +480,7 @@
         Me.ChkBxAutoCloseProc.Location = New System.Drawing.Point(98, 147)
         Me.ChkBxAutoCloseProc.Name = "ChkBxAutoCloseProc"
         Me.ChkBxAutoCloseProc.Size = New System.Drawing.Size(178, 17)
-        Me.ChkBxAutoCloseProc.TabIndex = 16
+        Me.ChkBxAutoCloseProc.TabIndex = 4
         Me.ChkBxAutoCloseProc.Text = "Auto Close Client on Disconnect"
         Me.ChkBxAutoCloseProc.UseVisualStyleBackColor = True
         '
@@ -680,7 +490,7 @@
         Me.chkBxAutoLoadLastBotFile.Location = New System.Drawing.Point(98, 170)
         Me.chkBxAutoLoadLastBotFile.Name = "chkBxAutoLoadLastBotFile"
         Me.chkBxAutoLoadLastBotFile.Size = New System.Drawing.Size(165, 17)
-        Me.chkBxAutoLoadLastBotFile.TabIndex = 18
+        Me.chkBxAutoLoadLastBotFile.TabIndex = 5
         Me.chkBxAutoLoadLastBotFile.Text = "Auto Load Last used Bot file?"
         Me.chkBxAutoLoadLastBotFile.UseVisualStyleBackColor = True
         '
@@ -690,7 +500,7 @@
         Me.TabPage5.Location = New System.Drawing.Point(4, 22)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(371, 230)
+        Me.TabPage5.Size = New System.Drawing.Size(460, 235)
         Me.TabPage5.TabIndex = 6
         Me.TabPage5.Text = "Channel Ignores"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -743,7 +553,7 @@
         Me.TabPage6.Location = New System.Drawing.Point(4, 22)
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(371, 230)
+        Me.TabPage6.Size = New System.Drawing.Size(460, 235)
         Me.TabPage6.TabIndex = 7
         Me.TabPage6.Text = "Misc."
         Me.TabPage6.UseVisualStyleBackColor = True
@@ -776,7 +586,7 @@
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(371, 230)
+        Me.TabPage7.Size = New System.Drawing.Size(460, 235)
         Me.TabPage7.TabIndex = 8
         Me.TabPage7.Text = "PS Verbosity"
         Me.TabPage7.UseVisualStyleBackColor = True
@@ -789,7 +599,7 @@
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.Size = New System.Drawing.Size(289, 56)
         Me.TextBox1.TabIndex = 3
-        Me.TextBox1.Text = "These settings can hide the Phoenix Speak responces as" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "they come in from the ser" & _
+        Me.TextBox1.Text = "These settings can hide the Phoenix Speak responces as" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "they come in from the ser" &
     "ver whil the bot is in a Backup " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "or restore mode"
         '
         'Label3
@@ -831,33 +641,241 @@
         Me.FindFurc.FileName = "OpenFileDialog1"
         Me.FindFurc.Filter = "Executable Files | *.exe"
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(25, 22)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(55, 13)
+        Me.Label5.TabIndex = 1
+        Me.Label5.Text = "Font Face"
+        '
+        'ComboFontFace
+        '
+        Me.ComboFontFace.FormattingEnabled = True
+        Me.ComboFontFace.Location = New System.Drawing.Point(86, 19)
+        Me.ComboFontFace.Name = "ComboFontFace"
+        Me.ComboFontFace.Size = New System.Drawing.Size(121, 21)
+        Me.ComboFontFace.TabIndex = 2
+        '
+        'ComboFontSize
+        '
+        Me.ComboFontSize.FormattingEnabled = True
+        Me.ComboFontSize.Location = New System.Drawing.Point(269, 19)
+        Me.ComboFontSize.Name = "ComboFontSize"
+        Me.ComboFontSize.Size = New System.Drawing.Size(73, 21)
+        Me.ComboFontSize.TabIndex = 3
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(213, 22)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(51, 13)
+        Me.Label6.TabIndex = 4
+        Me.Label6.Text = "Font Size"
+        '
+        'ChkTimeStamp
+        '
+        Me.ChkTimeStamp.AutoSize = True
+        Me.ChkTimeStamp.Location = New System.Drawing.Point(86, 46)
+        Me.ChkTimeStamp.Name = "ChkTimeStamp"
+        Me.ChkTimeStamp.Size = New System.Drawing.Size(82, 17)
+        Me.ChkTimeStamp.TabIndex = 5
+        Me.ChkTimeStamp.Text = "Time Stamp"
+        Me.ChkTimeStamp.UseVisualStyleBackColor = True
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.ChkTimeStamp)
+        Me.GroupBox2.Controls.Add(Me.Label6)
+        Me.GroupBox2.Controls.Add(Me.ComboFontSize)
+        Me.GroupBox2.Controls.Add(Me.ComboFontFace)
+        Me.GroupBox2.Controls.Add(Me.Label5)
+        Me.GroupBox2.Location = New System.Drawing.Point(6, 6)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(441, 81)
+        Me.GroupBox2.TabIndex = 3
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Font Style"
+        '
+        'EmitColorBox
+        '
+        Me.EmitColorBox.BackColor = System.Drawing.Color.Lime
+        Me.EmitColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.EmitColorBox.Location = New System.Drawing.Point(86, 61)
+        Me.EmitColorBox.Name = "EmitColorBox"
+        Me.EmitColorBox.Size = New System.Drawing.Size(15, 14)
+        Me.EmitColorBox.TabIndex = 4
+        Me.EmitColorBox.TabStop = False
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(26, 62)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(54, 13)
+        Me.Label7.TabIndex = 5
+        Me.Label7.Text = "Emit Color"
+        '
+        'SayColorBox
+        '
+        Me.SayColorBox.BackColor = System.Drawing.Color.Lime
+        Me.SayColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.SayColorBox.Location = New System.Drawing.Point(86, 81)
+        Me.SayColorBox.Name = "SayColorBox"
+        Me.SayColorBox.Size = New System.Drawing.Size(15, 14)
+        Me.SayColorBox.TabIndex = 6
+        Me.SayColorBox.TabStop = False
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(28, 82)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(52, 13)
+        Me.Label8.TabIndex = 7
+        Me.Label8.Text = "Say Color"
+        '
+        'ShoutColorBox
+        '
+        Me.ShoutColorBox.BackColor = System.Drawing.Color.Lime
+        Me.ShoutColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.ShoutColorBox.Location = New System.Drawing.Point(86, 41)
+        Me.ShoutColorBox.Name = "ShoutColorBox"
+        Me.ShoutColorBox.Size = New System.Drawing.Size(15, 14)
+        Me.ShoutColorBox.TabIndex = 8
+        Me.ShoutColorBox.TabStop = False
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(18, 42)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(62, 13)
+        Me.Label9.TabIndex = 9
+        Me.Label9.Text = "Shout Color"
+        '
+        'WhisperColorBox
+        '
+        Me.WhisperColorBox.BackColor = System.Drawing.Color.Lime
+        Me.WhisperColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.WhisperColorBox.Location = New System.Drawing.Point(86, 23)
+        Me.WhisperColorBox.Name = "WhisperColorBox"
+        Me.WhisperColorBox.Size = New System.Drawing.Size(15, 14)
+        Me.WhisperColorBox.TabIndex = 10
+        Me.WhisperColorBox.TabStop = False
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(7, 24)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(73, 13)
+        Me.Label10.TabIndex = 11
+        Me.Label10.Text = "Whisper Color"
+        '
+        'DefaultColorBox
+        '
+        Me.DefaultColorBox.BackColor = System.Drawing.Color.Lime
+        Me.DefaultColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.DefaultColorBox.Location = New System.Drawing.Point(86, 101)
+        Me.DefaultColorBox.Name = "DefaultColorBox"
+        Me.DefaultColorBox.Size = New System.Drawing.Size(15, 14)
+        Me.DefaultColorBox.TabIndex = 12
+        Me.DefaultColorBox.TabStop = False
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(12, 102)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(68, 13)
+        Me.Label11.TabIndex = 13
+        Me.Label11.Text = "Default Color"
+        '
+        'EmoteColorBox
+        '
+        Me.EmoteColorBox.BackColor = System.Drawing.Color.Lime
+        Me.EmoteColorBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.EmoteColorBox.Location = New System.Drawing.Point(192, 23)
+        Me.EmoteColorBox.Name = "EmoteColorBox"
+        Me.EmoteColorBox.Size = New System.Drawing.Size(15, 14)
+        Me.EmoteColorBox.TabIndex = 14
+        Me.EmoteColorBox.TabStop = False
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(118, 24)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(64, 13)
+        Me.Label13.TabIndex = 15
+        Me.Label13.Text = "Emote Color"
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox3.Controls.Add(Me.Label13)
+        Me.GroupBox3.Controls.Add(Me.EmoteColorBox)
+        Me.GroupBox3.Controls.Add(Me.Label11)
+        Me.GroupBox3.Controls.Add(Me.DefaultColorBox)
+        Me.GroupBox3.Controls.Add(Me.Label10)
+        Me.GroupBox3.Controls.Add(Me.WhisperColorBox)
+        Me.GroupBox3.Controls.Add(Me.Label9)
+        Me.GroupBox3.Controls.Add(Me.ShoutColorBox)
+        Me.GroupBox3.Controls.Add(Me.Label8)
+        Me.GroupBox3.Controls.Add(Me.SayColorBox)
+        Me.GroupBox3.Controls.Add(Me.Label7)
+        Me.GroupBox3.Controls.Add(Me.EmitColorBox)
+        Me.GroupBox3.Location = New System.Drawing.Point(6, 87)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(229, 142)
+        Me.GroupBox3.TabIndex = 4
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Color Options"
+        '
+        'ChkBxSysTray
+        '
+        Me.ChkBxSysTray.AutoSize = True
+        Me.ChkBxSysTray.Checked = True
+        Me.ChkBxSysTray.CheckState = System.Windows.Forms.CheckState.Indeterminate
+        Me.ChkBxSysTray.Location = New System.Drawing.Point(3, 23)
+        Me.ChkBxSysTray.Name = "ChkBxSysTray"
+        Me.ChkBxSysTray.Size = New System.Drawing.Size(115, 17)
+        Me.ChkBxSysTray.TabIndex = 0
+        Me.ChkBxSysTray.Text = "Minimize to Systray"
+        Me.ChkBxSysTray.UseVisualStyleBackColor = True
+        '
+        'GroupBox9
+        '
+        Me.GroupBox9.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox9.Controls.Add(Me.ChkBxSysTray)
+        Me.GroupBox9.Location = New System.Drawing.Point(248, 87)
+        Me.GroupBox9.Name = "GroupBox9"
+        Me.GroupBox9.Size = New System.Drawing.Size(202, 142)
+        Me.GroupBox9.TabIndex = 5
+        Me.GroupBox9.TabStop = False
+        Me.GroupBox9.Text = "SysTray"
+        '
         'Config
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(405, 309)
+        Me.ClientSize = New System.Drawing.Size(494, 314)
         Me.Controls.Add(Me.ConfigTabs)
         Me.Controls.Add(Me.BTN_Ok)
         Me.Controls.Add(Me.BTN_Cancel)
-        'Me.DataBindings.Add(New System.Windows.Forms.Binding("Location", Global.SilverMonkey.My.MySettings.Default, "ConfigFormLocation", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        'Me.Location = Global.SilverMonkey.My.MySettings.Default.ConfigFormLocation
         Me.Name = "Config"
         Me.Text = "Configuration"
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
-        Me.GroupBox9.ResumeLayout(False)
-        Me.GroupBox9.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
-        CType(Me.EmoteColorBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DefaultColorBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.WhisperColorBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ShoutColorBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.SayColorBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EmitColorBox, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
         Me.TabPage1.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
@@ -876,6 +894,18 @@
         Me.GroupBox7.ResumeLayout(False)
         Me.TabPage7.ResumeLayout(False)
         Me.TabPage7.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        CType(Me.EmitColorBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SayColorBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ShoutColorBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.WhisperColorBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DefaultColorBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmoteColorBox, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.GroupBox9.ResumeLayout(False)
+        Me.GroupBox9.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -883,27 +913,6 @@
     Friend WithEvents BTN_Cancel As System.Windows.Forms.Button
     Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
     Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
-    Friend WithEvents GroupBox9 As System.Windows.Forms.GroupBox
-    Friend WithEvents ChkBxSysTray As System.Windows.Forms.CheckBox
-    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label13 As System.Windows.Forms.Label
-    Friend WithEvents EmoteColorBox As System.Windows.Forms.PictureBox
-    Friend WithEvents Label11 As System.Windows.Forms.Label
-    Friend WithEvents DefaultColorBox As System.Windows.Forms.PictureBox
-    Friend WithEvents Label10 As System.Windows.Forms.Label
-    Friend WithEvents WhisperColorBox As System.Windows.Forms.PictureBox
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents ShoutColorBox As System.Windows.Forms.PictureBox
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents SayColorBox As System.Windows.Forms.PictureBox
-    Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents EmitColorBox As System.Windows.Forms.PictureBox
-    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
-    Friend WithEvents ChkTimeStamp As System.Windows.Forms.CheckBox
-    Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents ComboFontSize As System.Windows.Forms.ComboBox
-    Friend WithEvents ComboFontFace As System.Windows.Forms.ComboBox
-    Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents TxtSPort As System.Windows.Forms.TextBox
@@ -950,5 +959,26 @@
     Friend WithEvents ClmDescription As System.Windows.Forms.ColumnHeader
     Friend WithEvents ClmVersion As System.Windows.Forms.ColumnHeader
     Friend WithEvents ClmEnabled As System.Windows.Forms.ColumnHeader
+    Friend WithEvents GroupBox9 As Windows.Forms.GroupBox
+    Friend WithEvents ChkBxSysTray As Windows.Forms.CheckBox
+    Friend WithEvents GroupBox3 As Windows.Forms.GroupBox
+    Friend WithEvents Label13 As Windows.Forms.Label
+    Friend WithEvents EmoteColorBox As Windows.Forms.PictureBox
+    Friend WithEvents Label11 As Windows.Forms.Label
+    Friend WithEvents DefaultColorBox As Windows.Forms.PictureBox
+    Friend WithEvents Label10 As Windows.Forms.Label
+    Friend WithEvents WhisperColorBox As Windows.Forms.PictureBox
+    Friend WithEvents Label9 As Windows.Forms.Label
+    Friend WithEvents ShoutColorBox As Windows.Forms.PictureBox
+    Friend WithEvents Label8 As Windows.Forms.Label
+    Friend WithEvents SayColorBox As Windows.Forms.PictureBox
+    Friend WithEvents Label7 As Windows.Forms.Label
+    Friend WithEvents EmitColorBox As Windows.Forms.PictureBox
+    Friend WithEvents GroupBox2 As Windows.Forms.GroupBox
+    Friend WithEvents ChkTimeStamp As Windows.Forms.CheckBox
+    Friend WithEvents Label6 As Windows.Forms.Label
+    Friend WithEvents ComboFontSize As Windows.Forms.ComboBox
+    Friend WithEvents ComboFontFace As Windows.Forms.ComboBox
+    Friend WithEvents Label5 As Windows.Forms.Label
 End Class
 

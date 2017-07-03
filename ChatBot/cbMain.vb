@@ -1,6 +1,7 @@
 ﻿Imports Conversive.Verbot5
 Imports System.IO
 Imports Furcadia.Net
+Imports Furcadia.Net.Dream
 
 Public Class cbMain
     Inherits Form

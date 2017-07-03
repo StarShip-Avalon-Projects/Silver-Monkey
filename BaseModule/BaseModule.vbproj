@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -13,7 +13,7 @@
     <AssemblyName>BaseModule.Plugin</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -51,7 +51,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\Build\Release\plugins\</OutputPath>
+    <OutputPath>..\Build\Debug\plugins\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>
@@ -123,6 +123,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="BaseModule.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -140,10 +141,13 @@
       <Name>FurcadiaLib</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Interfaces\Interfaces.vbproj">
-      <Project>{B0882700-5EAF-4712-ADE5-69DAFE473A01}</Project>
-      <Name>Interfaces</Name>
-      <Private>False</Private>
+    <ProjectReference Include="..\MonkeySpeakEx\MonkeySpeakEx.csproj">
+      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
+      <Name>MonkeySpeakEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
+      <Project>{3c0e1cbf-d3b9-4282-ac97-4e0216ca6c97}</Project>
+      <Name>SilverMonkeyEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

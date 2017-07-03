@@ -24,9 +24,6 @@ build/
 /SRC
 .vs/
 **/bin/*
-/Plugins/AngelCat
-/Plugins/SoundWave
-/FastColoredTextBox
 
 # Ignore NuGet Packages
 *.nupkg
@@ -42,3 +39,9 @@ build/
 /Monkey Speak Extended/Help
 /ps errors.txt
 /Z.txt
+obj
+obj
+obj
+/Silver_Monkey_Error_06_13_2017_23-35-46.txt
+/BugReports
+/FastColoredTextBox_Help.chm

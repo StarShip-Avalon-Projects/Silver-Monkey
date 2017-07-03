@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="84d7fa65-e593-475f-aa52-1be3d4516f3f" revisionNumber="1">
+  <developerGlossaryDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <glossary>
+      <glossaryDiv address="MonkeySpeak">
+        <title>Monkey Speak Triggers</title>
+        <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+            <term termId="Cause0">Engine Cause (0:0)</term>
+          </terms>
+          <definition>
+          <para>
+          (0:0) When the bot starts,
+          </para>
+            <para>
+            This announces that the Monkey Speak Engine has started processing 
+            the Monkey Speak file.
+            </para>
+            <token>UnNamedDelegate</token>
+          </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+         <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+            <term termId="MsSqliteCondition508">MsSqlite Condition (1:508)</term>
+          </terms>
+          <definition>
+          <para>
+          (1:508) and the Database info {...} about the furre named {...} is equal to #, 
+          </para>
+          <para>Library Class: <codeEntityReference qualifyHint="false">T:SilverMonkeyEngine.Engine.Libraries.MsSqlite</codeEntityReference></para>
+           <para>
+           MonkeySpeak Line Information: 
+           <codeEntityReference qualifyHint="false" autoUpgrade="true">M:SilverMonkeyEngine.Engine.Libraries.MsSqlite.FurreNamedinfoEqualToNumber(Monkeyspeak.TriggerReader)
+           </codeEntityReference>
+           </para>
+         <para><link xlink:href="a5f911eb-aab7-4f12-9464-dddc830e0147#FurreTable" >Furre Table</link></para>
+         
+         </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+        <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+            <term termId="Effect600">Effect600</term>
+			<term>
+			(5:600) set variable %Variable to the Triggering furre's description.
+			</term>
+          </terms>
+          <definition>
+            <para>
+            This line only works if the furres description is set.
+            That's handled by a look responnsre.
+            </para>
+          </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>      
+         <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+             <term termId="PhoenixSpeakEffect559">PhoenixSpeak Effect: (5:558)</term>
+          </terms>
+          <definition>
+          <para>
+          	(5:558) restore phoenix speak character records newer then 
+			# days. (zero equals all character records.
+          </para>
+            <para>No information available</para>
+            </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+         <glossaryEntry>
+          <terms>
+            <!-- One or more terms associated with the definition.  Add a termId
+               attribute if you need to link to it from a relatedEntry element.
+               Otherwise, it can be omitted.  Terms appear as a comma-separated
+               list above the definition. -->
+                <term termId="MsSqliteEffect559">MsSqlite Effect: (5:559)</term>
+          </terms>
+          <definition>
+          <para>(5:559) execute ""VACUUM"" to rebuild the database and reclaim wasted space.</para>
+            <para>
+            This lines rebuilds the database and reclaims wasted space to keep
+            things running efficiently.
+            </para>
+            <para>
+            <codeEntityReference qualifyHint="false"
+            autoUpgrade="true">M:SilverMonkeyEngine.Engine.Libraries.MsSqlite.FurreNamedinfoEqualToNumber(Monkeyspeak.TriggerReader)
+            </codeEntityReference>
+            </para>
+          </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+        <glossaryEntry>
+          <terms>
+            <term termId="Effect600">Effect600</term>
+			<term>
+			(5:600) set variable %Variable to the Triggering furre's description.
+			</term>
+          </terms>
+          <definition>
+          <para>Monkey Spek Effect # 600</para>
+            <para>
+            This line only works if the furres description is set. That's
+            handled by a look response.
+            </para>
+          </definition>
+          <!-- One or more optional related entries.  Creates a "See Also"
+               line after the definition with links to each related term. -->
+          <!-- <relatedEntry termId="xyz" /> -->
+        </glossaryEntry>
+      </glossaryDiv>
+       </glossary>
+  </developerGlossaryDocument>
+</topic>

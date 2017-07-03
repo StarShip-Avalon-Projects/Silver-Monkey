@@ -52,52 +52,108 @@
     <HelpTitle>Data Monkey Documentation</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <ComponentConfigurations>
-      <ComponentConfig id="API Token Resolution" enabled="True" xmlns="">
+      <ComponentConfig id="API Token Resolution" enabled="True">
         <component id="API Token Resolution">{@TokenFiles}
 <replace elements="/*//token" item="string(.)" /></component>
       </ComponentConfig>
-<ComponentConfig id="Code Block Component" enabled="True" xmlns=""><component id="Code Block Component">
-  <basePath value="{@HtmlEncProjectFolder}" />
-  <outputPaths>{@HelpFormatOutputPaths}</outputPaths>
-  <allowMissingSource value="false" />
-  <removeRegionMarkers value="false" />
-  <colorizer syntaxFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xml" styleFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xsl" stylesheet="{@SHFBFolder}PresentationStyles\Colorizer\highlight.css" scriptFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.js" disabled="{@DisableCodeBlockComponent}" language="cs" tabSize="0" numberLines="true" outlining="true" keepSeeTags="false" defaultTitle="true" />
-</component></ComponentConfig>
-<ComponentConfig id="IntelliSense Component" enabled="True" xmlns=""><component id="IntelliSense Component"><!-- Output options (optional)
+      <ComponentConfig id="Code Block Component" enabled="True">
+        <component id="Code Block Component">
+          <basePath value="{@HtmlEncProjectFolder}" />
+          <outputPaths>{@HelpFormatOutputPaths}</outputPaths>
+          <allowMissingSource value="false" />
+          <removeRegionMarkers value="false" />
+          <colorizer syntaxFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xml" styleFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xsl" stylesheet="{@SHFBFolder}PresentationStyles\Colorizer\highlight.css" scriptFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.js" disabled="{@DisableCodeBlockComponent}" language="cs" tabSize="0" numberLines="true" outlining="true" keepSeeTags="false" defaultTitle="true" />
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="IntelliSense Component" enabled="True">
+        <component id="IntelliSense Component">
+          <!-- Output options (optional)
   Attributes:
     Include namespaces (false by default)
     Namespaces comments filename ("Namespaces" if not specified or empty)
-    Output folder (current folder if not specified or empty) --><output includeNamespaces="false" namespacesFile="Namespaces" folder="{@OutputFolder}" boundedCapacity="100" /></component></ComponentConfig>
-<ComponentConfig id="Syntax Component" enabled="True" xmlns=""><component id="Syntax Component">
-  <syntax input="/document/reference" output="/document/syntax" renderReferenceLinks="false" />
-  <generators>
+    Output folder (current folder if not specified or empty) -->
+          <output includeNamespaces="false" namespacesFile="Namespaces" folder="{@OutputFolder}" boundedCapacity="100" />
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="Syntax Component" enabled="True">
+        <component id="Syntax Component">
+          <syntax input="/document/reference" output="/document/syntax" renderReferenceLinks="false" />
+          <generators>
     {@SyntaxFilters}
 </generators>
-  <containerElement name="codeSnippetGroup" addNoExampleTabs="true" includeOnSingleSnippets="false" groupingEnabled="{@CodeSnippetGrouping}" />
-  <configurations>
-    <generator id="C#" />
-    <generator id="Visual Basic">
-      <includeLineContinuation value="false" />
-    </generator>
-    <generator id="Visual Basic Usage">
-      <includeLineContinuation value="false" />
-    </generator>
-    <generator id="Managed C++" />
-    <generator id="F#" />
-    <generator id="J#" />
-    <generator id="JScript" />
-    <generator id="JavaScript" />
-    <generator id="XAML Usage" />
-    <generator id="ASP.NET" />
-  </configurations>
-</component></ComponentConfig></ComponentConfigurations>
+          <containerElement name="codeSnippetGroup" addNoExampleTabs="true" includeOnSingleSnippets="false" groupingEnabled="{@CodeSnippetGrouping}" />
+          <configurations>
+            <generator id="C#" />
+            <generator id="Visual Basic">
+              <includeLineContinuation value="false" />
+            </generator>
+            <generator id="Visual Basic Usage">
+              <includeLineContinuation value="false" />
+            </generator>
+            <generator id="Managed C++" />
+            <generator id="F#" />
+            <generator id="J#" />
+            <generator id="JScript" />
+            <generator id="JavaScript" />
+            <generator id="XAML Usage" />
+            <generator id="ASP.NET" />
+          </configurations>
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="Reflection Index Data (ESENT Cache)" enabled="True">
+        <component id="Reflection Index Data (ESENT Cache)">
+          <index name="reflection" value="/reflection/apis/api" key="@id" cache="15" localCacheSize="2500" frameworkCachePath="{@LocalDataFolder}Cache\ReflectionIndexCache" projectCachePath="">
+            <data base="{@FrameworkReflectionDataFolder}" recurse="true" files="*.xml" duplicateWarning="false" groupId="ReflectionIndexCache">
+		{@ReferenceLinkNamespaceFiles}
+	</data>
+            <data files="reflection.xml" groupId="Project_Ref_{@UniqueID}" />
+          </index>
+          <copy name="reflection" source="*" target="/document/reference" />
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="Comments Index Data (ESENT Cache)" enabled="True">
+        <component id="Comments Index Data (ESENT Cache)">
+          <index name="comments" value="/doc/members/member" key="@name" cache="30" localCacheSize="2500" frameworkCachePath="{@LocalDataFolder}Cache\CommentsIndexCache" projectCachePath="">
+	{@FrameworkCommentList}
+	{@CommentFileList}
+</index>
+          <copy name="comments" source="*" target="/document/comments" />
+        </component>
+      </ComponentConfig>
+    </ComponentConfigurations>
     <PlugInConfigurations>
-      <PlugInConfig id="Additional Reference Links" enabled="True" xmlns="">
-        <configuration>
-          <targets>
-            <target htmlSdkLinkType="Msdn" helpViewerSdkLinkType="Id" websiteSdkLinkType="Msdn" helpFileProject="..\Monkey Speak Editor Help\Monkey Speak Editor Help.shfbproj" />
-            <target htmlSdkLinkType="Msdn" helpViewerSdkLinkType="Id" websiteSdkLinkType="Msdn" helpFileProject="..\Silver Monkey Help\smHelp.shfbproj" />
-          </targets>
+      <PlugInConfig id="Output Deployment" enabled="True">
+        <configuration deleteAfterDeploy="false" verboseLogging="false">
+          <deploymentLocation id="help1x" location="..\Build\Help">
+            <userCredentials useDefault="true" userName="" password="" />
+            <proxyCredentials useProxy="false" proxyServer="">
+              <userCredentials useDefault="true" userName="" password="" />
+            </proxyCredentials>
+          </deploymentLocation>
+          <deploymentLocation id="helpViewer" location="" renameMSHA="false">
+            <userCredentials useDefault="true" userName="" password="" />
+            <proxyCredentials useProxy="false" proxyServer="">
+              <userCredentials useDefault="true" userName="" password="" />
+            </proxyCredentials>
+          </deploymentLocation>
+          <deploymentLocation id="website" location="">
+            <userCredentials useDefault="true" userName="" password="" />
+            <proxyCredentials useProxy="false" proxyServer="">
+              <userCredentials useDefault="true" userName="" password="" />
+            </proxyCredentials>
+          </deploymentLocation>
+          <deploymentLocation id="openXml" location="">
+            <userCredentials useDefault="true" userName="" password="" />
+            <proxyCredentials useProxy="false" proxyServer="">
+              <userCredentials useDefault="true" userName="" password="" />
+            </proxyCredentials>
+          </deploymentLocation>
+          <deploymentLocation id="markdown" location="">
+            <userCredentials useDefault="true" userName="" password="" />
+            <proxyCredentials useProxy="false" proxyServer="">
+              <userCredentials useDefault="true" userName="" password="" />
+            </proxyCredentials>
+          </deploymentLocation>
         </configuration>
       </PlugInConfig>
     </PlugInConfigurations>
@@ -128,19 +184,45 @@
   <ItemGroup>
     <Folder Include="Content" />
     <Folder Include="Content\VersionHistory" />
+    <Folder Include="Content\Reference\" />
+    <Folder Include="Content\Reference\ConfigurationFiles\" />
     <Folder Include="icons" />
     <Folder Include="media" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\Credits.aml" />
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />
+    <None Include="Content\Reference\ConfigurationFiles\HelpLink.ini.aml" />
   </ItemGroup>
   <ItemGroup>
     <ContentLayout Include="ContentLayout.content" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
+      <Name>Data Monkey</Name>
+      <Project>{9072cd13-8b7e-4a22-bc28-6087785a5d9a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
+      <Name>FurcadiaLib</Name>
+      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
+      <Name>BugTraqConnect</Name>
+      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Name>MonkeyCore</Name>
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

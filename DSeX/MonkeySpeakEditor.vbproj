@@ -9,7 +9,7 @@
     <AssemblyName>MonkeySpeakEditor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <OptionInfer>On</OptionInfer>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <StartupObject>MonkeySpeakEditor.My.MyApplication</StartupObject>
@@ -120,6 +120,12 @@
     <Compile Include="Config.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Controls\AboutBox2.Designer.vb">
+      <DependentUpon>AboutBox2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AboutBox2.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\InputBoxFrm.Designer.vb">
       <DependentUpon>InputBoxFrm.vb</DependentUpon>
     </Compile>
@@ -155,12 +161,6 @@
     <Compile Include="SplashScreen1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Wizard\AboutBox1.Designer.vb">
-      <DependentUpon>AboutBox1.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Wizard\AboutBox1.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Wizard\ApplicationEvents.vb" />
     <Compile Include="Wizard\wMain.Designer.vb">
       <DependentUpon>wMain.vb</DependentUpon>
@@ -185,6 +185,9 @@
       <DependentUpon>Config.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AboutBox2.resx">
+      <DependentUpon>AboutBox2.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\InputBoxFrm.resx">
       <DependentUpon>InputBoxFrm.vb</DependentUpon>
     </EmbeddedResource>
@@ -199,10 +202,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SplashScreen1.resx">
       <DependentUpon>SplashScreen1.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\AboutBox1.resx">
-      <DependentUpon>AboutBox1.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\wMain.resx">
@@ -406,9 +405,6 @@
     <Content Include="Templates\Verbal Warp.ds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DESUrls.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Templates-MS\Angel Cat Staff Group.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -553,7 +549,8 @@ move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</
   <PropertyGroup>
     <PreBuildEvent>if $(ConfigurationName) == Release (
 "..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"
-)</PreBuildEvent>
+)
+xcopy  /Y  "$(SolutionDir)Build\Help\Monkey_Speak_Editor_Help.chm" "$(TargetDir)"</PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

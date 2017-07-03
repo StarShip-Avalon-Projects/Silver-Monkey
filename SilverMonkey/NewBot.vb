@@ -1,13 +1,38 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.Diagnostics
 Imports System.Drawing
-Imports MonkeyCore.Settings
+Imports System.Windows.Forms
 Imports MonkeyCore
+Imports SilverMonkeyEngine
 
 Public Class NewBott
 
+#Region "Public Properties"
+
+    Public ReadOnly Property BotConfig As BotOptions
+        Get
+            Return bFile
+        End Get
+    End Property
+
+#End Region
+
 #Region "Public Fields"
 
-    Public bFile As cBot
+    Private bFile As BotOptions
+
+#End Region
+
+#Region "Public Constructors"
+
+    Public Sub New(ByRef options As BotOptions)
+        options = New BotOptions()
+        bFile = options
+        ' This call is required by the designer.
+        InitializeComponent()
+        ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
 
 #End Region
 
@@ -19,12 +44,14 @@ Public Class NewBott
 #End Region
 
 #Region "Controls"
+
     Public BtnCharacterINI As New Button
     Public BtnFileLocation As New Button
     Public LblBotController As New Label
     Public LblBotName As New Label
     Public LblCharacterINI As New Label
     Public LblFileLocation As New Label
+
     'Value 4
     Public RadioGoDreamURL As New RadioButton
 
@@ -43,6 +70,7 @@ Public Class NewBott
     Public TxtbxDreamURL As New TextBox
     Public TxtbxFilelocation As New TextBox
     Private Const PageCount As Integer = 2
+
 #End Region
 
 #Region "Public Methods"
@@ -65,7 +93,6 @@ Public Class NewBott
         Dim btn As Button = CType(sender, Button)
 
         With FolderBrowserDialog1
-            '.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/Silver Monkey"
 
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
 
@@ -108,6 +135,7 @@ Public Class NewBott
         LblCharacterINI.Visible = False
         TxtbxCharacterINI.Visible = False
         BtnCharacterINI.Visible = False
+        LinkLabel1.Visible = False
         LblBotController.Visible = False
         TxtbxBotController.Visible = False
 
@@ -126,11 +154,10 @@ Public Class NewBott
     End Sub
 
     Private Sub Dialog1_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Main.NewBot = True
 
+        bFile = New BotOptions()
         'Default BotFile Settings
-        bFile = New cBot
-        bFile.MS_Engine_Enable = True
+        bFile.MonkeySpeakEngineOptions.MS_Engine_Enable = True
         bFile.AutoConnect = False
         bFile.GoMapIDX = 1
 
@@ -168,6 +195,7 @@ Public Class NewBott
         TxtbxFilelocation.Size = New Size(207, 20)
         TxtbxFilelocation.Location = New Point(20, 94)
         TxtbxFilelocation.Visible = True
+        TxtbxFilelocation.Text = Paths.SilverMonkeyBotPath
         TxtbxFilelocation.Anchor = System.Windows.Forms.AnchorStyles.Right _
             Or System.Windows.Forms.AnchorStyles.Left
 
@@ -192,7 +220,7 @@ Public Class NewBott
         'TxtbxCharacterINI
         TxtbxCharacterINI.Parent = GroupBox1
         TxtbxCharacterINI.Size = New Size(207, 20)
-        TxtbxCharacterINI.Location = New Point(20, 132)
+        TxtbxCharacterINI.Location = New Point(20, 133)
         TxtbxCharacterINI.Visible = True
         TxtbxCharacterINI.Anchor = System.Windows.Forms.AnchorStyles.Right _
             Or System.Windows.Forms.AnchorStyles.Left
@@ -201,11 +229,26 @@ Public Class NewBott
         BtnCharacterINI.Parent = GroupBox1
         BtnCharacterINI.Text = "..."
         BtnCharacterINI.Size = New Size(24, 19)
-        BtnCharacterINI.Location = New Point(245, 132)
+        BtnCharacterINI.Location = New Point(245, 133)
         BtnCharacterINI.Visible = True
         BtnCharacterINI.Anchor = System.Windows.Forms.AnchorStyles.Right _
             Or System.Windows.Forms.AnchorStyles.Left
         AddHandler BtnCharacterINI.Click, AddressOf BtnCharacterINI_click
+
+        '
+        'LinkLabel1
+        '
+        Me.LinkLabel1.AutoSize = True
+        LinkLabel1.Parent = GroupBox1
+        Me.LinkLabel1.Location = New System.Drawing.Point(270, 133)
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.Size = New System.Drawing.Size(13, 13)
+        Me.LinkLabel1.TabIndex = 2
+        Me.LinkLabel1.TabStop = True
+        Me.LinkLabel1.Text = "?"
+        LinkLabel1.Anchor = System.Windows.Forms.AnchorStyles.Right _
+            Or System.Windows.Forms.AnchorStyles.Left
+
         'LblBotController
         LblBotController.Text = "Bot Controller Name"
         LblBotController.Parent = GroupBox1
@@ -278,18 +321,36 @@ Public Class NewBott
     End Sub
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
+        If String.IsNullOrEmpty(TxtbxBotName.Text) Then
+            If MessageBox.Show("Botname cannot be empty!!!", "Missing Botname",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.OK Then
+                Exit Sub
+            End If
+        End If
+        If String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
+            If MessageBox.Show("Bot path cannot be empty!!!", "Missing Botpath",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.OK Then
+                Exit Sub
+            End If
+        End If
         Dim BotFile As String
         Dim MsFile As String = String.Empty
         If Not String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
-            BotFile = TxtbxFilelocation.Text + Path.DirectorySeparatorChar + TxtbxBotName.Text
+            BotFile = Path.Combine(TxtbxFilelocation.Text, TxtbxBotName.Text)
+            MsFile = BotFile
+        ElseIf Not Directory.Exists(TxtbxFilelocation.Text) Then
+            BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
             MsFile = BotFile
         Else
             BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
             MsFile = BotFile
         End If
         Dim ext As String = Path.GetExtension(BotFile)
-        If String.IsNullOrEmpty(ext) Then BotFile = BotFile + ".bini"
-
+        If String.IsNullOrEmpty(ext) Then
+            BotFile += ".bini"
+            MsFile += ".ms"
+        End If
+        bFile.DestinationFile = BotFile
         If File.Exists(BotFile) And Not OverWrite Then
             If MessageBox.Show(BotFile + " Exists! Over write settings?", "File Exists Warning",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
@@ -305,11 +366,9 @@ Public Class NewBott
             End If
         End If
 
-        bFile.BiniFile = BotFile
-        bFile.IniFile = TxtbxCharacterINI.Text
+        bFile.CharacterIniFile = TxtbxCharacterINI.Text
 
-        'Bug 23
-        bFile.MS_File = MsFile + ".ms"
+        bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = MsFile
 
         bFile.LogNameBase = TxtbxBotName.Text
         bFile.log = True
@@ -336,11 +395,12 @@ Public Class NewBott
         End If
 
         bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.BiniFile)
+        Main.SaveRecentFile(bFile.DestinationFile)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Dispose()
 
     End Sub
+
     Private Sub SetForm(Index As Integer)
 
         Select Case Index
@@ -354,6 +414,7 @@ Public Class NewBott
                 BtnFileLocation.Visible = True
                 LblCharacterINI.Visible = True
                 TxtbxCharacterINI.Visible = True
+                LinkLabel1.Visible = True
                 BtnCharacterINI.Visible = True
                 LblBotController.Visible = True
                 TxtbxBotController.Visible = True
@@ -379,5 +440,9 @@ Public Class NewBott
     End Sub
 
 #End Region
+
+    Private Sub onFurEdClick(sender As Object, e As EventArgs) Handles LinkLabel1.Click
+        Process.Start("http://www.furcadia.com/services/retrieve/retrieve.php4")
+    End Sub
 
 End Class

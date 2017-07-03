@@ -2,6 +2,7 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports System.IO
+Imports Furcadia.Net
 
 'Structure Data (Main Settings, Individual Program Groups)
 'Read Master settings.ini
@@ -99,598 +100,12 @@ Public Class Settings
 
 #Region "Public Classes"
 
-    Public Class cBot
+    Public Class cMain
 
 #Region "Private Fields"
-
-        Private Shared _BiniFile As String = ""
-        Private Shared _IniFile As String = ""
-        Private Shared _MS_Engine_Enable As Boolean = False
-        Private _AutoConnect As Boolean = False
-        Private _BotController As String = ""
-        Private _DreamURL As String = "furc://"
-        Private _FormattedOptions As String = ""
-        Private _GoMap As Integer = 3
-        Private _log As Boolean
-        Private _logIdx As Integer
-        Private _logNamebase As String = "Default"
-        Private _logOption As Short
-        Private _logPath As String = Path.Combine(Paths.SilverMonkeyDocumentsPath, "Logs")
-        Private _lPort As Integer = 6700
-        Private _MS_Script As String = ""
-        Private _MsFileName As String = ""
-        Private _StandAlone As Boolean = False
-
-#End Region
-
-#Region "Public Constructors"
-
-        Public Sub New()
-
-        End Sub
-
-        Public Sub New(ByRef BFile As String)
-            If BotIni Is Nothing Then BotIni = New IniFile
-            If File.Exists(Paths.CheckBotFolder(BFile)) Then
-                Dim p As String = Path.GetDirectoryName(BFile)
-                If Not String.IsNullOrEmpty(p) Then
-                    Paths.SilverMonkeyBotPath = p
-                End If
-                BotIni.Load(BFile)
-            End If
-            _BiniFile = BFile
-            Dim s As String = ""
-            s = BotIni.GetKeyValue("Main", "Log")
-            If Not String.IsNullOrEmpty(s) Then _log = Convert.ToBoolean(s)
-
-            s = BotIni.GetKeyValue("Main", "LogOption")
-            If Not String.IsNullOrEmpty(s) Then _logOption = Convert.ToInt16(s)
-
-            s = BotIni.GetKeyValue("Main", "LogNameBase")
-            If Not String.IsNullOrEmpty(s) Then _logNamebase = s
-
-            s = BotIni.GetKeyValue("Main", "LogNamePath")
-            If Not String.IsNullOrEmpty(s) Then _logPath = s
-
-            s = BotIni.GetKeyValue("Bot", "BotIni")
-            If Not String.IsNullOrEmpty(s) Then _IniFile = s
-
-            s = BotIni.GetKeyValue("Bot", "LPort")
-            If Not String.IsNullOrEmpty(s) Then
-                _lPort = 0
-                Integer.TryParse(s, _lPort)
-            End If
-
-            s = BotIni.GetKeyValue("Bot", "MS_File")
-            If Not String.IsNullOrEmpty(s) Then _MsFileName = s
-
-            s = BotIni.GetKeyValue("Bot", "MSEngineEnable")
-            If Not String.IsNullOrEmpty(s) Then _MS_Engine_Enable = Convert.ToBoolean(s)
-
-            s = BotIni.GetKeyValue("Bot", "BotController")
-            If Not String.IsNullOrEmpty(s) Then _BotController = s
-
-            s = BotIni.GetKeyValue("Bot", "StandAlone")
-            If Not String.IsNullOrEmpty(s) Then _StandAlone = Convert.ToBoolean(s)
-
-            s = BotIni.GetKeyValue("Bot", "AutoConnect")
-            If Not String.IsNullOrEmpty(s) Then _AutoConnect = Convert.ToBoolean(s)
-
-            s = BotIni.GetKeyValue("Bot", "NoEndurance")
-
-            '  _options()
-            s = BotIni.GetKeyValue("GoMap", "IDX")
-            If Not String.IsNullOrEmpty(s) Then
-                _GoMap = 0
-                Integer.TryParse(s, _GoMap)
-            End If
-
-            s = BotIni.GetKeyValue("GoMap", "DreamURL")
-            If Not String.IsNullOrEmpty(s) Then _DreamURL = s
-
-        End Sub
-
-#End Region
-
-#Region "Public Properties"
-
-        Public Property AutoConnect As Boolean
-            Get
-                Return _AutoConnect
-            End Get
-            Set(value As Boolean)
-                _AutoConnect = value
-            End Set
-        End Property
-
-        Public Property BiniFile() As String
-            Get
-                Return _BiniFile
-            End Get
-            Set(ByVal value As String)
-                _BiniFile = value
-            End Set
-        End Property
-
-        Public Property BotController As String
-            Get
-                Return _BotController
-            End Get
-            Set(value As String)
-                _BotController = value
-            End Set
-        End Property
-
-        Public Property DreamURL As String
-            Get
-                Return _DreamURL
-            End Get
-            Set(value As String)
-                _DreamURL = value
-            End Set
-        End Property
-
-        Public Property GoMapIDX() As Integer
-            Get
-                Return _GoMap
-            End Get
-            Set(ByVal value As Integer)
-                _GoMap = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets or sets the Character ini file.
-        ''' </summary>
-        ''' <value>
-        ''' The ini file.
-        ''' </value>
-        Public Property IniFile() As String
-            Get
-                Return _IniFile
-            End Get
-            Set(ByVal value As String)
-                _IniFile = value
-            End Set
-        End Property
-
-        Public Property log As Boolean
-            Get
-                Return _log
-            End Get
-            Set(ByVal value As Boolean)
-                _log = value
-            End Set
-        End Property
-
-        Public Property LogIdx As Integer
-            Get
-                Return _logIdx
-            End Get
-            Set(value As Integer)
-                _logIdx = value
-            End Set
-        End Property
-
-        Public Property LogNameBase As String
-            Get
-                Return _logNamebase
-            End Get
-            Set(value As String)
-                _logNamebase = value
-            End Set
-        End Property
-
-        Public Property LogOption As Short
-            Get
-                Return _logOption
-            End Get
-            Set(value As Short)
-                _logOption = value
-            End Set
-        End Property
-
-        Public Property LogPath As String
-            Get
-                Return _logPath
-            End Get
-            Set(value As String)
-                _logPath = value
-            End Set
-        End Property
-
-        Public Property lPort() As Integer
-            Get
-                Return _lPort
-            End Get
-            Set(ByVal value As Integer)
-                _lPort = value
-            End Set
-        End Property
-
-        Public Property MS_Engine_Enable As Boolean
-            Get
-                Return _MS_Engine_Enable
-            End Get
-            Set(ByVal value As Boolean)
-                _MS_Engine_Enable = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets or sets the m s_ file.
-        ''' </summary>
-        ''' <value>
-        ''' The ms file name.
-        ''' </value>
-        Public Property MS_File As String
-            Get
-                Return _MsFileName
-            End Get
-            Set(value As String)
-                If Not value.ToLower().EndsWith(".ms") Then
-                    Throw New ArgumentException("Invalid File type, Not a ""*.ms"" file.")
-                End If
-                _MsFileName = value
-            End Set
-        End Property
-
-        Public Property MS_Script As String
-            Get
-                Return _MS_Script
-            End Get
-            Set(value As String)
-                _MS_Script = value
-            End Set
-        End Property
-
-        Public Property StandAlone() As Boolean
-            Get
-                Return _StandAlone
-            End Get
-            Set(ByVal value As Boolean)
-                _StandAlone = value
-            End Set
-        End Property
-
-#End Region
-
-#Region "Private Properties"
-
-        Private Property BotIni As IniFile
-
-#End Region
-
-#Region "Public Methods"
-
-        Public Sub SaveBotSettings()
-            BotIni = New IniFile()
-            If File.Exists(Paths.CheckBotFolder(_BiniFile)) Then
-                BotIni.Load(Paths.CheckBotFolder(_BiniFile))
-            End If
-
-            BotIni.SetKeyValue("Main", "Log", _log.ToString)
-            BotIni.SetKeyValue("Main", "LogNameBase", _logNamebase)
-            BotIni.SetKeyValue("Main", "LogOption", _logOption.ToString)
-            BotIni.SetKeyValue("Main", "LogNamePath", _logPath)
-            BotIni.SetKeyValue("Bot", "BotIni", _IniFile)
-            BotIni.SetKeyValue("Bot", "MS_File", _MsFileName)
-            BotIni.SetKeyValue("Bot", "LPort", _lPort.ToString)
-            BotIni.SetKeyValue("Bot", "MSEngineEnable", _MS_Engine_Enable.ToString)
-            BotIni.SetKeyValue("Bot", "BotController", _BotController)
-            BotIni.SetKeyValue("Bot", "StandAlone", _StandAlone.ToString)
-            BotIni.SetKeyValue("Bot", "AutoConnect", _AutoConnect.ToString)
-
-            BotIni.SetKeyValue("GoMap", "IDX", _GoMap.ToString)
-            BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL)
-
-            BotIni.Save(Paths.CheckBotFolder(_BiniFile))
-        End Sub
-
-#End Region
-
-    End Class
-
-    Public Class EditSettings
-
-#Region "Private Fields"
-
-        Private _AutoCompleteEnable As Boolean
-        Private _CommentColor As Color
-        Private _FurcPath As String
-        'Dragon Speak
-        Private _IDcolor As Color
-        Private _MS_CommentColor As Color
-        'Monkey Speak
-        Private _MS_IDcolor As Color
-
-        Private _MS_NumberColor As Color
-        Private _MS_StringColor As Color
-        Private _MS_VariableColor As Color
-        Private _NumberColor As Color
-        Private _StringColor As Color
-        Private _StringVariableColor As Color
-        Private _VariableColor As Color
-        Private KeysIni As IniFile = Settings.KeysIni
-        Private MS_KeysIni As IniFile = Settings.MS_KeysIni
-
-#End Region
-
-#Region "Public Constructors"
-
-        ''' <summary>
-        ''' Initializes a new instance of the <see cref="EditSettings"/> class.
-        ''' </summary>
-        Public Sub New()
-            ' Load defaults
-            '
-            Dim s As String = ""
-            ini.AddSection(MSEditorSection).AddKey("IDColor").Value = Color.Blue.ToArgb.ToString
-            ini.AddSection(MSEditorSection).AddKey("CommentColor").Value = Color.Green.ToArgb.ToString
-            ini.AddSection(MSEditorSection).AddKey("StringColor").Value = Color.Red.ToArgb.ToString
-            ini.AddSection(MSEditorSection).AddKey("VariableColor").Value = Color.DarkGray.ToArgb.ToString
-            ini.AddSection(MSEditorSection).AddKey("StringVariableColor").Value = Color.Blue.ToArgb.ToString
-            ini.AddSection(MSEditorSection).AddKey("NumberColor").Value = Color.Brown.ToArgb.ToString
-
-            'MonkeySpeak
-            ini.AddSection(MonkeySpeak).AddKey("IDColor").Value = Color.Blue.ToArgb.ToString
-            ini.AddSection(MonkeySpeak).AddKey("CommentColor").Value = Color.Green.ToArgb.ToString
-            ini.AddSection(MonkeySpeak).AddKey("StringColor").Value = Color.Red.ToArgb.ToString
-            ini.AddSection(MonkeySpeak).AddKey("VariableColor").Value = Color.DarkGray.ToArgb.ToString
-            ini.AddSection(MonkeySpeak).AddKey("NumberColor").Value = Color.Brown.ToArgb.ToString.ToString
-
-            ini.AddSection(MSEditorSection).AddKey("AutoComplete").Value = True.ToString
-
-            'Load DS  settings from Keys.ini in the application folder
-            Dim Count As Integer = 0
-            Integer.TryParse(KeysIni.GetKeyValue("Init-Types", "Count"), Count)
-            ini.AddSection("Init-Types").AddKey("Count").Value = Count.ToString
-
-            For i As Integer = 1 To Count
-                Dim key As String = KeysIni.GetKeyValue("Init-Types", i.ToString)
-                Dim val As String = KeysIni.GetKeyValue("Indent-Lookup", key)
-                ini.SetKeyValue("Ident-LookUp", key, i.ToString)
-                ini.SetKeyValue("Init-Types", i.ToString, key)
-
-                Dim dvalue As Integer = 0
-                Integer.TryParse(KeysIni.GetKeyValue("C-Indents", key), dvalue)
-
-                ini.AddSection("C-Indents")
-                ini.SetKeyValue("C-Indents", key, dvalue.ToString)
-
-            Next
-
-            'Load Monkey Speak defaults from MS_Keys.ini in the application folder
-            Count = 0
-            Integer.TryParse(MS_KeysIni.GetKeyValue("Init-Types", "Count"), Count)
-            ini.AddSection("MS-Init-Types").AddKey("Count").Value = Count.ToString
-            For i As Integer = 1 To Count
-                Dim key As String = MS_KeysIni.GetKeyValue("Init-Types", i.ToString)
-                Dim val As String = MS_KeysIni.GetKeyValue("Indent-Lookup", key)
-                ini.AddSection("MS-Init-Types").AddKey(i.ToString).Value = key
-                ini.AddSection("MS-Indent-Lookup").AddKey(key).Value = val
-
-                Dim dvalue As Integer = 0
-                Integer.TryParse(MS_KeysIni.GetKeyValue("C-Indents", key), dvalue)
-                ini.AddSection("MS-C-Indents").AddKey(key).Value = dvalue.ToString
-
-            Next
-
-            ' Defaults are now loaded
-            ' Lets Read local appData Settings.ini for  last used Settings and Override existing settings
-            If File.Exists(SettingsFile) Then
-                ini.Load(SettingsFile, True)
-            End If
-
-            'Dragon Speak
-            _IDcolor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "IDColor"))
-            _CommentColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "CommentColor"))
-            _StringColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "StringColor"))
-            _VariableColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "VariableColor"))
-            _StringVariableColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "StringVariableColor"))
-            _NumberColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "NumberColor"))
-
-            'Monkey Speak
-            _MS_IDcolor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "IDColor"))
-            _MS_CommentColor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "CommentColor"))
-            _MS_StringColor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "StringColor"))
-            _MS_VariableColor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "VariableColor"))
-            _MS_NumberColor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "NumberColor"))
-
-            _AutoCompleteEnable = Convert.ToBoolean(ini.GetKeyValue(MSEditorSection, "AutoComplete"))
-
-            Dim DSSection As IniSection = ini.GetSection("plugins")
-            If Not IsNothing(DSSection) Then
-                PluginList = New Dictionary(Of String, Boolean)
-                For Each K As IniSection.IniKey In DSSection.Keys
-                    s = K.Value
-                    If Not String.IsNullOrEmpty(s) Then
-                        PluginList.Add(K.Name, Convert.ToBoolean(K.Value))
-                    Else
-                        PluginList.Add(K.Name, True)
-                    End If
-                Next
-            End If
-
-            s = ini.GetKeyValue(MainSection, "FurcPath")
-            If Not String.IsNullOrEmpty(s) Then _FurcPath = s
-        End Sub
-
-#End Region
-
-#Region "Public Properties"
-
-        Public Property AutoCompleteEnable As Boolean
-            Get
-                Return _AutoCompleteEnable
-            End Get
-            Set(value As Boolean)
-                _AutoCompleteEnable = value
-            End Set
-        End Property
-
-        Public Property CommentColor() As Color
-            Get
-                Return _CommentColor
-            End Get
-            Set(ByVal value As Color)
-                _CommentColor = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Furcadia Application folder
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property FurcPath As String
-            Get
-                If String.IsNullOrEmpty(_FurcPath) Then
-                    Return Paths.FurcadiaProgramFolder
-                End If
-                Return _FurcPath
-            End Get
-            Set(value As String)
-                _FurcPath = value
-            End Set
-        End Property
-        Public Property IDColor() As Color
-            Get
-                Return _IDcolor
-            End Get
-            Set(ByVal value As Color)
-                _IDcolor = value
-            End Set
-        End Property
-        Public Property MS_CommentColor() As Color
-            Get
-                Return _MS_CommentColor
-            End Get
-            Set(ByVal value As Color)
-                _MS_CommentColor = value
-            End Set
-        End Property
-
-        'MonkeySpeak
-        Public Property MS_IDColor() As Color
-            Get
-                Return _MS_IDcolor
-            End Get
-            Set(ByVal value As Color)
-                _MS_IDcolor = value
-            End Set
-        End Property
-
-        Public Property MS_NumberColor() As Color
-            Get
-                Return _MS_NumberColor
-            End Get
-            Set(ByVal value As Color)
-                _MS_NumberColor = value
-            End Set
-        End Property
-
-        Public Property MS_StringColor() As Color
-            Get
-                Return _MS_StringColor
-            End Get
-            Set(ByVal value As Color)
-                _MS_StringColor = value
-            End Set
-        End Property
-
-        Public Property MS_VariableColor() As Color
-            Get
-                Return _MS_VariableColor
-            End Get
-            Set(ByVal value As Color)
-                _MS_VariableColor = value
-            End Set
-        End Property
-
-        Public Property NumberColor() As Color
-            Get
-                Return _NumberColor
-            End Get
-            Set(ByVal value As Color)
-                _NumberColor = value
-            End Set
-        End Property
-
-        Public Property PluginList As Dictionary(Of String, Boolean)
-
-        Public Property StringColor() As Color
-            Get
-                Return _StringColor
-            End Get
-            Set(ByVal value As Color)
-                _StringColor = value
-            End Set
-        End Property
-        Public Property StringVariableColor() As Color
-            Get
-                Return _StringVariableColor
-            End Get
-            Set(ByVal value As Color)
-                _StringVariableColor = value
-            End Set
-        End Property
-
-        Public Property VariableColor() As Color
-            Get
-                Return _VariableColor
-            End Get
-            Set(ByVal value As Color)
-                _VariableColor = value
-            End Set
-        End Property
-
-#End Region
-
-#Region "Public Methods"
-
-        Public Sub SaveEditorSettings()
-
-            ' Lets Read local appData Settings.ini for  last used Settings as other programs use the file too
-            If File.Exists(SettingsFile) Then
-                ini.Load(SettingsFile, True)
-            End If
-            'Main Settings
-            ini.SetKeyValue(MainSection, "FurcPath", _FurcPath)
-
-            ini.SetKeyValue(MSEditorSection, "IDColor", ColorTranslator.ToHtml(_IDcolor).ToString)
-            ini.SetKeyValue(MSEditorSection, "NumberColor", ColorTranslator.ToHtml(_NumberColor).ToString)
-            ini.SetKeyValue(MSEditorSection, "StringColor", ColorTranslator.ToHtml(_StringColor).ToString)
-            ini.SetKeyValue(MSEditorSection, "VariableColor", ColorTranslator.ToHtml(_VariableColor).ToString)
-            ini.SetKeyValue(MSEditorSection, "StringVariableColor", ColorTranslator.ToHtml(_StringVariableColor).ToString)
-            ini.SetKeyValue(MSEditorSection, "CommentColor", ColorTranslator.ToHtml(_CommentColor).ToString)
-
-            ini.SetKeyValue(MonkeySpeak, "IDColor", ColorTranslator.ToHtml(_MS_IDcolor).ToString)
-            ini.SetKeyValue(MonkeySpeak, "NumberColor", ColorTranslator.ToHtml(_MS_NumberColor).ToString)
-            ini.SetKeyValue(MonkeySpeak, "StringColor", ColorTranslator.ToHtml(_MS_StringColor).ToString)
-            ini.SetKeyValue(MonkeySpeak, "VariableColor", ColorTranslator.ToHtml(_MS_VariableColor).ToString)
-            ini.SetKeyValue(MonkeySpeak, "CommentColor", ColorTranslator.ToHtml(_MS_CommentColor).ToString)
-
-            ini.SetKeyValue(MSEditorSection, "AutoComplete", _AutoCompleteEnable.ToString)
-
-            ini.RemoveSection("Plugins")
-            For Each kv As KeyValuePair(Of String, Boolean) In PluginList
-                ini.SetKeyValue("Plugins", kv.Key, kv.Value.ToString)
-            Next
-
-            ini.Save(SettingsFile)
-        End Sub
-
-#End Region
-
-    End Class
-
-    Public Class MainConfigSettings
-
-#Region "Private Fields"
-
         Private _Advertisment As Boolean = False
         Private _Announcement As Boolean = False
-        Private _AppFont As New Font(_FontFace, _FontSize, FontStyle.Regular)
+        Private _AppFont As New Font("Microsoft Sans Serif", 10, FontStyle.Regular)
         Private _AutoReconnect As Boolean = False
         Private _Broadcast As Boolean = False
         Private _CloseProc As Boolean = False
@@ -703,7 +118,6 @@ Public Class Settings
         Private _FontFace As String = "Microsoft Sans Serif"
         'Display Settings
         Private _FontSize As Integer = 10
-
         Private _FurcPath As String = ""
         Private _Host As String = Main_Host
         Private _LoadLastBotFile As Boolean = False
@@ -1146,6 +560,299 @@ Public Class Settings
         Public Sub SetDefault()
             _debug = False
             _TimeStamp = 0
+        End Sub
+
+#End Region
+
+    End Class
+
+    Public Class EditSettings
+
+#Region "Private Fields"
+
+        Private _AutoCompleteEnable As Boolean
+        Private _CommentColor As Color
+        Private _FurcPath As String
+        'Dragon Speak
+        Private _IDcolor As Color
+        Private _MS_CommentColor As Color
+        'Monkey Speak
+        Private _MS_IDcolor As Color
+
+        Private _MS_NumberColor As Color
+        Private _MS_StringColor As Color
+        Private _MS_VariableColor As Color
+        Private _NumberColor As Color
+        Private _StringColor As Color
+        Private _StringVariableColor As Color
+        Private _VariableColor As Color
+        Private KeysIni As IniFile = Settings.KeysIni
+        Private MS_KeysIni As IniFile = Settings.MS_KeysIni
+
+#End Region
+
+#Region "Public Constructors"
+
+        ''' <summary>
+        ''' Initializes a new instance of the <see cref="EditSettings"/> class.
+        ''' </summary>
+        Public Sub New()
+            ' Load defaults
+            '
+            Dim s As String = ""
+            ini.AddSection(MSEditorSection).AddKey("IDColor").Value = Color.Blue.ToArgb.ToString
+            ini.AddSection(MSEditorSection).AddKey("CommentColor").Value = Color.Green.ToArgb.ToString
+            ini.AddSection(MSEditorSection).AddKey("StringColor").Value = Color.Red.ToArgb.ToString
+            ini.AddSection(MSEditorSection).AddKey("VariableColor").Value = Color.DarkGray.ToArgb.ToString
+            ini.AddSection(MSEditorSection).AddKey("StringVariableColor").Value = Color.Blue.ToArgb.ToString
+            ini.AddSection(MSEditorSection).AddKey("NumberColor").Value = Color.Brown.ToArgb.ToString
+
+            'MonkeySpeak
+            ini.AddSection(MonkeySpeak).AddKey("IDColor").Value = Color.Blue.ToArgb.ToString
+            ini.AddSection(MonkeySpeak).AddKey("CommentColor").Value = Color.Green.ToArgb.ToString
+            ini.AddSection(MonkeySpeak).AddKey("StringColor").Value = Color.Red.ToArgb.ToString
+            ini.AddSection(MonkeySpeak).AddKey("VariableColor").Value = Color.DarkGray.ToArgb.ToString
+            ini.AddSection(MonkeySpeak).AddKey("NumberColor").Value = Color.Brown.ToArgb.ToString.ToString
+
+            ini.AddSection(MSEditorSection).AddKey("AutoComplete").Value = True.ToString
+
+            'Load DS  settings from Keys.ini in the application folder
+            Dim Count As Integer = 0
+            Integer.TryParse(KeysIni.GetKeyValue("Init-Types", "Count"), Count)
+            ini.AddSection("Init-Types").AddKey("Count").Value = Count.ToString
+
+            For i As Integer = 1 To Count
+                Dim key As String = KeysIni.GetKeyValue("Init-Types", i.ToString)
+                Dim val As String = KeysIni.GetKeyValue("Indent-Lookup", key)
+                ini.SetKeyValue("Ident-LookUp", key, i.ToString)
+                ini.SetKeyValue("Init-Types", i.ToString, key)
+
+                Dim dvalue As Integer = 0
+                Integer.TryParse(KeysIni.GetKeyValue("C-Indents", key), dvalue)
+
+                ini.AddSection("C-Indents")
+                ini.SetKeyValue("C-Indents", key, dvalue.ToString)
+
+            Next
+
+            'Load Monkey Speak defaults from MS_Keys.ini in the application folder
+            Count = 0
+            Integer.TryParse(MS_KeysIni.GetKeyValue("Init-Types", "Count"), Count)
+            ini.AddSection("MS-Init-Types").AddKey("Count").Value = Count.ToString
+            For i As Integer = 1 To Count
+                Dim key As String = MS_KeysIni.GetKeyValue("Init-Types", i.ToString)
+                Dim val As String = MS_KeysIni.GetKeyValue("Indent-Lookup", key)
+                ini.AddSection("MS-Init-Types").AddKey(i.ToString).Value = key
+                ini.AddSection("MS-Indent-Lookup").AddKey(key).Value = val
+
+                Dim dvalue As Integer = 0
+                Integer.TryParse(MS_KeysIni.GetKeyValue("C-Indents", key), dvalue)
+                ini.AddSection("MS-C-Indents").AddKey(key).Value = dvalue.ToString
+
+            Next
+
+            ' Defaults are now loaded
+            ' Lets Read local appData Settings.ini for  last used Settings and Override existing settings
+            If File.Exists(SettingsFile) Then
+                ini.Load(SettingsFile, True)
+            End If
+
+            'Dragon Speak
+            _IDcolor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "IDColor"))
+            _CommentColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "CommentColor"))
+            _StringColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "StringColor"))
+            _VariableColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "VariableColor"))
+            _StringVariableColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "StringVariableColor"))
+            _NumberColor = ColorTranslator.FromHtml(ini.GetKeyValue(MSEditorSection, "NumberColor"))
+
+            'Monkey Speak
+            _MS_IDcolor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "IDColor"))
+            _MS_CommentColor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "CommentColor"))
+            _MS_StringColor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "StringColor"))
+            _MS_VariableColor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "VariableColor"))
+            _MS_NumberColor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "NumberColor"))
+
+            _AutoCompleteEnable = Convert.ToBoolean(ini.GetKeyValue(MSEditorSection, "AutoComplete"))
+
+            Dim DSSection As IniSection = ini.GetSection("plugins")
+            If Not IsNothing(DSSection) Then
+                PluginList = New Dictionary(Of String, Boolean)
+                For Each K As IniSection.IniKey In DSSection.Keys
+                    s = K.Value
+                    If Not String.IsNullOrEmpty(s) Then
+                        PluginList.Add(K.Name, Convert.ToBoolean(K.Value))
+                    Else
+                        PluginList.Add(K.Name, True)
+                    End If
+                Next
+            End If
+
+            s = ini.GetKeyValue(MainSection, "FurcPath")
+            If Not String.IsNullOrEmpty(s) Then _FurcPath = s
+        End Sub
+
+#End Region
+
+#Region "Public Properties"
+
+        Public Property AutoCompleteEnable As Boolean
+            Get
+                Return _AutoCompleteEnable
+            End Get
+            Set(value As Boolean)
+                _AutoCompleteEnable = value
+            End Set
+        End Property
+
+        Public Property CommentColor() As Color
+            Get
+                Return _CommentColor
+            End Get
+            Set(ByVal value As Color)
+                _CommentColor = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Furcadia Application folder
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property FurcPath As String
+            Get
+                If String.IsNullOrEmpty(_FurcPath) Then
+                    Return Paths.FurcadiaProgramFolder
+                End If
+                Return _FurcPath
+            End Get
+            Set(value As String)
+                _FurcPath = value
+            End Set
+        End Property
+        Public Property IDColor() As Color
+            Get
+                Return _IDcolor
+            End Get
+            Set(ByVal value As Color)
+                _IDcolor = value
+            End Set
+        End Property
+        Public Property MS_CommentColor() As Color
+            Get
+                Return _MS_CommentColor
+            End Get
+            Set(ByVal value As Color)
+                _MS_CommentColor = value
+            End Set
+        End Property
+
+        'MonkeySpeak
+        Public Property MS_IDColor() As Color
+            Get
+                Return _MS_IDcolor
+            End Get
+            Set(ByVal value As Color)
+                _MS_IDcolor = value
+            End Set
+        End Property
+
+        Public Property MS_NumberColor() As Color
+            Get
+                Return _MS_NumberColor
+            End Get
+            Set(ByVal value As Color)
+                _MS_NumberColor = value
+            End Set
+        End Property
+
+        Public Property MS_StringColor() As Color
+            Get
+                Return _MS_StringColor
+            End Get
+            Set(ByVal value As Color)
+                _MS_StringColor = value
+            End Set
+        End Property
+
+        Public Property MS_VariableColor() As Color
+            Get
+                Return _MS_VariableColor
+            End Get
+            Set(ByVal value As Color)
+                _MS_VariableColor = value
+            End Set
+        End Property
+
+        Public Property NumberColor() As Color
+            Get
+                Return _NumberColor
+            End Get
+            Set(ByVal value As Color)
+                _NumberColor = value
+            End Set
+        End Property
+
+        Public Property PluginList As Dictionary(Of String, Boolean)
+
+        Public Property StringColor() As Color
+            Get
+                Return _StringColor
+            End Get
+            Set(ByVal value As Color)
+                _StringColor = value
+            End Set
+        End Property
+        Public Property StringVariableColor() As Color
+            Get
+                Return _StringVariableColor
+            End Get
+            Set(ByVal value As Color)
+                _StringVariableColor = value
+            End Set
+        End Property
+
+        Public Property VariableColor() As Color
+            Get
+                Return _VariableColor
+            End Get
+            Set(ByVal value As Color)
+                _VariableColor = value
+            End Set
+        End Property
+
+#End Region
+
+#Region "Public Methods"
+
+        Public Sub SaveEditorSettings()
+
+            ' Lets Read local appData Settings.ini for  last used Settings as other programs use the file too
+            If File.Exists(SettingsFile) Then
+                ini.Load(SettingsFile, True)
+            End If
+            'Main Settings
+            ini.SetKeyValue(MainSection, "FurcPath", _FurcPath)
+
+            ini.SetKeyValue(MSEditorSection, "IDColor", ColorTranslator.ToHtml(_IDcolor).ToString)
+            ini.SetKeyValue(MSEditorSection, "NumberColor", ColorTranslator.ToHtml(_NumberColor).ToString)
+            ini.SetKeyValue(MSEditorSection, "StringColor", ColorTranslator.ToHtml(_StringColor).ToString)
+            ini.SetKeyValue(MSEditorSection, "VariableColor", ColorTranslator.ToHtml(_VariableColor).ToString)
+            ini.SetKeyValue(MSEditorSection, "StringVariableColor", ColorTranslator.ToHtml(_StringVariableColor).ToString)
+            ini.SetKeyValue(MSEditorSection, "CommentColor", ColorTranslator.ToHtml(_CommentColor).ToString)
+
+            ini.SetKeyValue(MonkeySpeak, "IDColor", ColorTranslator.ToHtml(_MS_IDcolor).ToString)
+            ini.SetKeyValue(MonkeySpeak, "NumberColor", ColorTranslator.ToHtml(_MS_NumberColor).ToString)
+            ini.SetKeyValue(MonkeySpeak, "StringColor", ColorTranslator.ToHtml(_MS_StringColor).ToString)
+            ini.SetKeyValue(MonkeySpeak, "VariableColor", ColorTranslator.ToHtml(_MS_VariableColor).ToString)
+            ini.SetKeyValue(MonkeySpeak, "CommentColor", ColorTranslator.ToHtml(_MS_CommentColor).ToString)
+
+            ini.SetKeyValue(MSEditorSection, "AutoComplete", _AutoCompleteEnable.ToString)
+
+            ini.RemoveSection("Plugins")
+            For Each kv As KeyValuePair(Of String, Boolean) In PluginList
+                ini.SetKeyValue("Plugins", kv.Key, kv.Value.ToString)
+            Next
+
+            ini.Save(SettingsFile)
         End Sub
 
 #End Region

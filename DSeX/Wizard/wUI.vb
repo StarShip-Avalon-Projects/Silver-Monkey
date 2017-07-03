@@ -15,6 +15,12 @@ Public Module MyExtensions
         End If
     End Function
 
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsInteger(ByVal value As String) As Boolean
         If String.IsNullOrEmpty(value) Then
             Return False
@@ -31,7 +37,12 @@ Public Module MyExtensions
             Return 0
         End If
     End Function
-
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToInteger(ByVal value As String) As Integer
         If value.IsInteger() Then
             Return Integer.Parse(value)
@@ -40,8 +51,6 @@ Public Module MyExtensions
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()>
-    <System.Runtime.CompilerServices.Extension()>
 End Module
 
 Public Class wUI
@@ -296,7 +305,7 @@ Public Class wUI
 
 #Region "Private Methods"
 
-    Private Sub BtnImport_Click(sender As System.Object, e As System.EventArgs) Handles BtnImport.Click
+    Private Sub BtnImport_Click(sender As Object, e As System.EventArgs) Handles BtnImport.Click
         If IsNothing(MS_Edit.MS_Editor) Then Exit Sub
         MS_Edit.MS_Editor.InsertText(Solution.Text)
     End Sub

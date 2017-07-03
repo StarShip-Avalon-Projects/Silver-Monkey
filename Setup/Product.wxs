@@ -3,11 +3,11 @@
      xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
        xmlns:ui="http://schemas.microsoft.com/wix/UIExtension">
   <?define ProductName="Silver Monkey" ?>
-  <?define CompanyName="TSProjects" ?>
+  <?define CompanyName="Starship Avalon Projects" ?>
   <Product
     Id="*"
     Name="$(var.ProductName)"
-    Version="$(var.BuildVersion)"
+    Version="$(var.FileVersion)"
     Manufacturer="$(var.CompanyName)"
     Language="1033"
     UpgradeCode="A709F3A0-BEE3-403E-AC47-1FE1AD189C77">
@@ -65,8 +65,12 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
                 Name='$(var.ProductName)'
                 Description='$(var.ProductName)'
                   Target="[APPLICATIONFOLDER]\$(var.SilverMonkey2.TargetName)" />
-        <RegistryValue Root="HKCU"  Key="Software\$(var.CompanyName)\SilverMonkey"
-          Name="installed" Type="integer" Value="1" KeyPath="yes" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\$(var.CompanyName)\SilverMonkey"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
 
         <ProgId Id="SilverMonkey.exe"  Description="$(var.ProductName) File type" Advertise="no">
           <Extension Id="bini"  ContentType="Text/Plain" Advertise="no">
@@ -83,8 +87,14 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
                   Target="[APPLICATIONFOLDER]$(var.MonkeySpeakEditor.TargetName)"
                   Description="Starts $(var.MonkeySpeakEditor.TargetName)" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
-        <RegistryValue Root="HKCU" Key="Software\$(var.CompanyName)\MonkeySpeakEditor"
-              Name="installed" Type="integer" Value="1" KeyPath="yes" />
+
+        <RegistryValue Root="HKCU"
+                       Key="Software\$(var.CompanyName)\MonkeySpeakEditor"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+
         <ProgId Id="MonkeySpeakEditor.exe" Description="Monkey Speak File" Advertise="no">
           <Extension Id="ms" ContentType="Text/Plain" Advertise="no">
             <Verb Command="Open" Id="open" TargetProperty="MonkeySpeakAssociation"  Argument="%1" />
@@ -173,38 +183,44 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <!-- Step 3: Tell WiX to install the shortcut -->
       <ComponentGroupRef Id="SilverMonkey2.Binaries" />
       <ComponentGroupRef Id="SilverMonkey2.Symbols" />
+      <ComponentRef Id="smHelp" />
       <ComponentGroupRef Id="MonkeyCore.Binaries" />
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
+      <ComponentGroupRef Id="MonkeyCore.Content" />
       <ComponentGroupRef Id="BugTraqConnect.Binaries" />
       <ComponentGroupRef Id="BugTraqConnect.Symbols" />
       <ComponentRef Id="SilverMonkeyShortcut" />
       <ComponentRef Id="MonkeySpeakEditorShortcut" />
       <ComponentGroupRef Id="TheClaaaw.Binaries" />
       <ComponentGroupRef Id="TheClaaaw.Symbols" />
-      <ComponentRef Id="TheClaaawIni" />
+      <!-- <ComponentRef Id="TheClaaawIni" /> -->
       <ComponentGroupRef Id="MonkeySpeakEditor.Binaries" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Content" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Symbols" />
+      <ComponentRef Id="MonkeySpeakHelp" />
       <ComponentGroupRef Id="MonkeySpeakEx.Binaries" />
       <ComponentGroupRef Id="MonkeySpeakEx.Symbols" />
-      <ComponentRef Id="smHelp" />
+
       <ComponentGroupRef Id="FurcadiaLib.Binaries" />
       <ComponentGroupRef Id="FurcadiaLib.Symbols" />
-      <ComponentGroupRef Id="Interfaces.Binaries" />
-      <ComponentGroupRef Id="Interfaces.Symbols" />
+      <ComponentGroupRef Id="SilverMonkeyEngine.Binaries" />
+      <ComponentGroupRef Id="SilverMonkeyEngine.Symbols" />
       <ComponentGroupRef Id="Verbot5Library.Binaries" />
       <ComponentGroupRef Id="Verbot5Library.Symbols" />
+
       <ComponentRef Id="FCTB" />
       <ComponentRef Id="Irony" />
-      <ComponentRef Id="RTFLib.dll" />
+
+      <ComponentRef Id="EntityFramework" />
+      <ComponentRef Id="EntityFrameworkSqlServer" />
       <ComponentRef Id="SQLite" />
       <ComponentRef Id="X86" />
       <ComponentRef Id="X64" />
-      <Feature Id="DataMonkey" Title="Database Application" Level="2">
-        <ComponentGroupRef Id="DataMonkey.Binaries" />
-        <ComponentGroupRef Id="DataMonkey.Symbols" />
-        <ComponentRef Id="DataMonkeyShortcut" />
-      </Feature>
+
+      <ComponentGroupRef Id="DataMonkey.Binaries" />
+      <ComponentGroupRef Id="DataMonkey.Symbols" />
+      <ComponentRef Id="DataMonkeyShortcut" />
+      <ComponentRef Id="DataMokeyHelp" />
       <Feature Id="ChatBot" Title="Chatbot Application" Level="2">
         <ComponentGroupRef Id="ChatBot.Binaries" />
         <ComponentGroupRef Id="ChatBot.Symbols" />
@@ -226,7 +242,13 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
     <!-- Help file-->
     <DirectoryRef Id="APPLICATIONFOLDER">
       <Component Id="smHelp" Guid="{7FEB427A-07AB-4083-8792-2005152C64F3}">
-        <File Id="smHelp" Source="$(var.MonkeySpeakEditor.TargetDir)Silver Monkey.chm" KeyPath="no" Checksum="yes" />
+        <File Id="smHelp" Source="$(var.SolutionDir)Build/Help/Silver Monkey.chm" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="MonkeySpeakHelp" Guid="{34c5d490-ae16-43ea-95b9-84276ad16370}">
+        <File Id="MonkeySpeakEditorHelp" Source="$(var.SolutionDir)Build/Help/Monkey_Speak_Editor_Help.chm" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="DataMokeyHelp" Guid="{0219f1a1-d0d4-4c1b-817b-a6fa3f6e95fd}">
+        <File Id="DataMonkeyHelp" Source="$(var.SolutionDir)Build/Help/Data_Monkey_Help.chm" KeyPath="no" Checksum="yes" />
       </Component>
     </DirectoryRef>
 
@@ -235,11 +257,9 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <Component Id="FCTB" Guid="{CAA87BC5-9387-47D4-B1BB-A0022C1A71B8}">
         <File Id="FCTB" Source="$(var.SilverMonkey2.TargetDir)FastColoredTextBox.dll" KeyPath="no" Checksum="yes" />
       </Component>
+
       <Component Id="Irony" Guid="{B078886D-97DD-491F-BFBB-5080A889CB12}">
         <File Id="Irony" Source="$(var.SilverMonkey2.TargetDir)Irony.dll" KeyPath="no" Checksum="yes" />
-      </Component>
-      <Component Id="RTFLib.dll" Guid="{274422CD-E56A-4157-BD0C-99B19DC07E09}">
-        <File Id="RTFLib.dll" Source="$(var.SilverMonkey2.TargetDir)RTFLib.dll" KeyPath="no" Checksum="yes" />
       </Component>
     </DirectoryRef>
 
@@ -247,6 +267,12 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
     <DirectoryRef Id="APPLICATIONFOLDER">
       <Component Id="SQLite" Guid="{CADE1E29-CD6A-4301-8315-C611156C6462}">
         <File Id="System.Data.SQLite" Source="$(var.SilverMonkey2.TargetDir)System.Data.SQLite.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="EntityFramework" Guid="{ba158fe8-719e-4979-bbbb-85fd7cffd8f7}">
+        <File Id="EntityFramework.dll" Source="$(var.SilverMonkey2.TargetDir)EntityFramework.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="EntityFrameworkSqlServer" Guid="{ff852303-464b-414d-9a5b-1f431b1db645}">
+        <File Id="EntityFramework.SqlServer.dll" Source="$(var.SilverMonkey2.TargetDir)EntityFramework.SqlServer.dll" KeyPath="no" Checksum="yes" />
       </Component>
     </DirectoryRef>
     <DirectoryRef Id="X86">
@@ -261,10 +287,10 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
     </DirectoryRef>
 
     <!-- Plugin FilesS-->
-    <DirectoryRef Id="PLUGINS">
+    <!--   <DirectoryRef Id="PLUGINS">
       <Component Id="TheClaaawIni" Guid="{0865D700-279F-4369-A1D5-AD4E89CAB1CA}">
         <File Id="TheClaaawIni" Source="$(var.TheClaaaw.TargetDir)TheClaaaw.ini" KeyPath="no" Checksum="yes" />
       </Component>
-    </DirectoryRef>
+    </DirectoryRef> -->
   </Product>
 </Wix>

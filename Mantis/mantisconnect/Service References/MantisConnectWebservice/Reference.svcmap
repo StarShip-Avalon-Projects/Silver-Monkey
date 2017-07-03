@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e5b7b493-68d8-4c62-9cd4-310382f02d48" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="bc819a99-e50c-4802-b482-2a923ae26cda" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
-    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
     <EnableDataBinding>true</EnableDataBinding>
     <ExcludedTypes />
     <ImportXmlTypes>false</ImportXmlTypes>
@@ -21,7 +22,7 @@
     <MetadataSource Address="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="mantisconnect1.wsdl" MetadataType="Wsdl" ID="517aeed2-e828-4e79-a797-2d1240bc34ef" SourceId="1" SourceUrl="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php?wsdl" />
+    <MetadataFile FileName="mantisconnect.wsdl" MetadataType="Wsdl" ID="58ba3e38-522e-4a61-82af-fa595bd9e30e" SourceId="1" SourceUrl="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

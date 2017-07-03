@@ -1,9 +1,12 @@
-﻿Imports Furcadia.Net
+﻿Imports System.Collections.Generic
 Imports System.IO
-Imports System.Collections.Generic
-Imports Ionic.Zip
 Imports System.Text.RegularExpressions
+Imports Furcadia.Net
+Imports Furcadia.Net.Dream
+Imports Ionic.Zip
 Imports MonkeyCore
+Imports SilverMonkeyEngine
+Imports SilverMonkeyEngine.Engine
 
 Public Class Main
 
@@ -65,14 +68,14 @@ Public Class Main
         Dim lv As ListView = ListView1
         If IsNothing(lv.FocusedItem) Then Exit Sub
 
-        Dim objPlugin As SilverMonkey.Interfaces.msPlugin
-        Dim Engine As New Monkeyspeak.MonkeyspeakEngine
-        Dim page As Monkeyspeak.Page
+        Dim objPlugin As Interfaces.ImsPlugin
+        Dim Engine As New MainEngine(New Engine.EngineOptoons, Nothing)
+        Dim page As MonkeySpeakPage
 
-        page = Engine.LoadFromString("")
-        objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), SilverMonkey.Interfaces.msPlugin)
+        page = CType(Engine.LoadFromString(""), MonkeySpeakPage)
+        objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), Interfaces.ImsPlugin)
         objPlugin.Initialize(objHost)
-        objPlugin.Page = page
+        objPlugin.MsPage = page
         objPlugin.Start()
         ExportKeysIni(objPlugin.Name.Replace(" ", "") + ".ini", page)
         Dim path As String = ".\Plugins\"
@@ -161,27 +164,27 @@ Public Class Main
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Plugins = PluginServices.FindPlugins(Paths.ApplicationPluginPath, "SilverMonkey.Interfaces.msPlugin")
-        PopulatePluginList()
-        MainMSEngine = New MainEngine
-        MainMSEngine.ScriptStart()
+        'Plugins = PluginServices.FindPlugins(Paths.ApplicationPluginPath, "Interfaces.imsPlugin")
+        'PopulatePluginList()
+        'MainMSEngine = New MainEngine
+        'MainMSEngine.ScriptStart()
     End Sub
 
     Private Sub ListView1_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ListView1.SelectedIndexChanged
         Dim lv As ListView = DirectCast(sender, ListView)
         If IsNothing(lv.FocusedItem) Then Exit Sub
-        Dim objPlugin As SilverMonkey.Interfaces.msPlugin
-        Dim Engine As New Monkeyspeak.MonkeyspeakEngine
-        Dim page As Monkeyspeak.Page
-        page = Engine.LoadFromString("")
-        objPlugin = CType(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), SilverMonkey.Interfaces.msPlugin)
+        Dim objPlugin As Interfaces.ImsPlugin
+        Dim Engine As New MainEngine(New Engine.EngineOptoons, Nothing)
+        Dim page As MonkeySpeakPage
+        page = CType(Engine.LoadFromString(""), MonkeySpeakPage)
+        objPlugin = CType(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), Interfaces.ImsPlugin)
         If objPlugin Is Nothing Then Exit Sub
         objPlugin.Initialize(objHost)
-        objPlugin.Page = page
+        objPlugin.MsPage = page
         objPlugin.Start()
 
         Dim Test As New List(Of String)
-        For Each item As String In MainEngine.MSpage.GetTriggerDescriptions()
+        For Each item As String In page.GetTriggerDescriptions()
             Test.Add(item)
         Next
         Dim cat As New Regex("\((.[0-9]*)\:(.[0-9]*)\)")
@@ -233,20 +236,20 @@ Public Class Main
     End Sub
 
     Private Sub LoadPlugins()
-        Dim objPlugin As SilverMonkey.Interfaces.msPlugin
+        Dim objPlugin As Interfaces.ImsPlugin
         Dim intIndex As Integer
         Dim Engine As New Monkeyspeak.MonkeyspeakEngine
-        Dim page As Monkeyspeak.Page
+        Dim page As MonkeySpeakPage
         Dim path As String = ".\Plugins\"
         For Each f As String In Directory.GetFiles(path, "*.zip")
             File.Delete(f)
         Next
         For intIndex = 0 To Plugins.Count - 1
-            page = Engine.LoadFromString("")
-            objPlugin = CType(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
+            page = CType(Engine.LoadFromString(""), MonkeySpeakPage)
+            objPlugin = CType(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.ImsPlugin)
 
             objPlugin.Initialize(objHost)
-            objPlugin.Page = page
+            objPlugin.MsPage = page
             objPlugin.Start()
             ExportKeysIni(objPlugin.Name.Replace(" ", "") + ".ini", page)
             Using zip As ZipFile = New ZipFile
@@ -264,13 +267,13 @@ Public Class Main
     End Sub
 
     Private Sub PopulatePluginList()
-        Dim objPlugin As SilverMonkey.Interfaces.msPlugin
+        Dim objPlugin As Interfaces.ImsPlugin
         Dim intIndex As Integer
 
         'Loop through available plugins, creating instances and adding them to listbox
         For intIndex = 0 To Plugins.Count - 1
             Try
-                objPlugin = TryCast(PluginServices.CreateInstance(Plugins(intIndex)), SilverMonkey.Interfaces.msPlugin)
+                objPlugin = TryCast(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.ImsPlugin)
                 Dim item As ListViewItem = ListView1.Items.Add(intIndex.ToString)
                 item.SubItems.Add(objPlugin.Name)
                 item.SubItems.Add(objPlugin.Description)

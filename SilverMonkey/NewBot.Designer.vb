@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports System.Drawing
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class NewBott
     Inherits System.Windows.Forms.Form
 
@@ -22,14 +24,17 @@ Partial Class NewBott
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.OK_Button = New System.Windows.Forms.Button()
         Me.Cancel_Button = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -73,6 +78,7 @@ Partial Class NewBott
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.LinkLabel1)
         Me.GroupBox1.Controls.Add(Me.Button2)
         Me.GroupBox1.Controls.Add(Me.Button1)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
@@ -81,6 +87,13 @@ Partial Class NewBott
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Basic Settings"
+        '
+        'LinkLabel1
+        '
+        Me.LinkLabel1.Location = New System.Drawing.Point(0, 0)
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.Size = New System.Drawing.Size(100, 23)
+        Me.LinkLabel1.TabIndex = 0
         '
         'Button2
         '
@@ -107,6 +120,11 @@ Partial Class NewBott
         Me.OpenFileDialog1.DefaultExt = "ini"
         Me.OpenFileDialog1.Filter = "Furcadia Character Files |*.ini"
         Me.OpenFileDialog1.RestoreDirectory = True
+        '
+        'ToolTip1
+        '
+        Me.ToolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning
+        Me.ToolTip1.ToolTipTitle = "Legacy Feature"
         '
         'NewBott
         '
@@ -138,5 +156,6 @@ Partial Class NewBott
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents FolderBrowserDialog1 As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
-
+    Friend WithEvents LinkLabel1 As Windows.Forms.LinkLabel
+    Friend WithEvents ToolTip1 As Windows.Forms.ToolTip
 End Class
