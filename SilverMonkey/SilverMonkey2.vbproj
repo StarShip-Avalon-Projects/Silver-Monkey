@@ -292,9 +292,6 @@
     <Content Include="SM Lisence.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="README.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <DesignData Include="resources\1549_Paper_clip_blue.png" />
     <DesignData Include="resources\1549_Paper_clip_gray.png" />
     <None Include="resources\PasteHS.png" />
@@ -306,8 +303,8 @@
     <None Include="resources\PageNumber.png" />
     <Content Include="resources\SaveAsWebPageHS.png" />
     <None Include="resources\SaveAsWebPageHS1.png" />
-    <Content Include="TextFile1.txt" />
-    <Content Include="TODO.txt" />
+    <None Include="TextFile1.txt" />
+    <None Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
