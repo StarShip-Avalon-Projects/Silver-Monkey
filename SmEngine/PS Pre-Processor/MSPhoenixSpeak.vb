@@ -51,45 +51,61 @@ Namespace Engine.Libraries
                 AddressOf msgContains, "(0:82) When the bot sees a Phoenix Speak response with {...} in it,")
 
             '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
-            Add(TriggerCategory.Effect, 60, AddressOf RemberPSInforTrigFurre, "(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.")
+            Add(TriggerCategory.Effect, 60, AddressOf RemberPSInforTrigFurre,
+                "(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.")
 
             '(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.
-            Add(TriggerCategory.Effect, 61, AddressOf RemberPSInforFurreNamed, "(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.")
+            Add(TriggerCategory.Effect, 61, AddressOf RemberPSInforFurreNamed,
+                "(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.")
 
             '(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.
-            Add(TriggerCategory.Effect, 62, AddressOf RemberPSInfoAllDream, "(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.")
+            Add(TriggerCategory.Effect, 62, AddressOf RemberPSInfoAllDream,
+                "(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.")
 
             '(5:63) get all Phoenix Speak info for all characters and put it into the PSInfo cache.
-            Add(TriggerCategory.Effect, 63, AddressOf RemberPSInfoAllCharacters, "(5:63) get all Phoenix Speak info for all characters and put it into the PSInfo cache.")
+            Add(TriggerCategory.Effect, 63, AddressOf RemberPSInfoAllCharacters,
+                "(5:63) get all list of all characters and put it into the PSInfo cache.")
 
             '(5:80) retrieve  Phoenix Speak info {...} and place the value into variable %Variable.
-            Add(TriggerCategory.Effect, 80, AddressOf getPSinfo, "(5:80) retrieve  Phoenix Speak info {...} and place the value into variable %Variable.")
+            Add(TriggerCategory.Effect, 80, AddressOf getPSinfo,
+                "(5:80) retrieve  Phoenix Speak info {...} and place the value into variable %Variable.")
 
             '(5:81) Store PSInfo Key Names to Variable %Variable.
-            Add(TriggerCategory.Effect, 81, AddressOf PSInfoKeyToVariable, "(5:81) Store PSInfo Key Names to Variable %Variable.")
+            Add(TriggerCategory.Effect, 81, AddressOf PSInfoKeyToVariable,
+                "(5:81) Store PSInfo Key Names to Variable %Variable.")
 
             '(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.
-            Add(TriggerCategory.Effect, 82, AddressOf MemorizeFurreNamedPS, "(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.")
+            Add(TriggerCategory.Effect, 82, AddressOf MemorizeFurreNamedPS,
+                "(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.")
 
             '(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.
-            Add(TriggerCategory.Effect, 83, AddressOf ForgetFurreNamedPS, "(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.")
+            Add(TriggerCategory.Effect, 83, AddressOf ForgetFurreNamedPS,
+                "(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.")
 
             '(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.
-            Add(TriggerCategory.Effect, 84, AddressOf MemorizeTrigFurrePS, "(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.")
+            Add(TriggerCategory.Effect, 84, AddressOf MemorizeTrigFurrePS,
+                "(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.")
 
             '(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.
-            Add(TriggerCategory.Effect, 85, AddressOf ForgetTrigFurrePS, "(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.")
+            Add(TriggerCategory.Effect, 85, AddressOf ForgetTrigFurrePS,
+                "(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.")
 
             '(5:90) Memorize Phoenix Speak info {...} for this dream.
-            Add(TriggerCategory.Effect, 90, AddressOf MemorizeDreamPS, "(5:90) Memorize Phoenix Speak info {...} for this dream.")
+            Add(TriggerCategory.Effect, 90, AddressOf MemorizeDreamPS,
+                "(5:90) Memorize Phoenix Speak info {...} for this dream.")
             '(5:91) Forget Phoenix Speak info {...} for this dream.
-            Add(TriggerCategory.Effect, 91, AddressOf ForgetDreamPS, "(5:91) Forget Phoenix Speak info {...} for this dream.")
+            Add(TriggerCategory.Effect, 91, AddressOf ForgetDreamPS,
+                "(5:91) Forget Phoenix Speak info {...} for this dream.")
 
             '(5:94) execute Phoenix Speak command {...}.
             Add(TriggerCategory.Effect, 94, AddressOf PSCommand, "(5:94) execute Phoenix Speak command {...}.")
-            Add(TriggerCategory.Effect, 95, AddressOf PSForgetTriggeringFurre, "(5:95) Forget ALL Phoenix Speak info for the triggering furre")
-            Add(TriggerCategory.Effect, 96, AddressOf PSForgetFurreNamed, "(5:96) Forget ALL Phoenix Speak info for the furre named {...}.")
-            Add(TriggerCategory.Effect, 97, AddressOf PSForgetDream, "(5:97) Forget ALL Phoenix Speak info for this dream.")
+            Add(TriggerCategory.Effect, 95, AddressOf PSForgetTriggeringFurre,
+                "(5:95) Forget ALL Phoenix Speak info for the triggering furre")
+
+            Add(TriggerCategory.Effect, 96, AddressOf PSForgetFurreNamed,
+                "(5:96) Forget ALL Phoenix Speak info for the furre named {...}.")
+            Add(TriggerCategory.Effect, 97, AddressOf PSForgetDream,
+                "(5:97) Forget ALL Phoenix Speak info for this dream.")
 
         End Sub
 
@@ -101,8 +117,10 @@ Namespace Engine.Libraries
         ''' (5:91) Forget Phoenix Speak info {...} for this dream.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function ForgetDreamPS(reader As TriggerReader) As Boolean
 
@@ -115,8 +133,10 @@ Namespace Engine.Libraries
         ''' (5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function ForgetFurreNamedPS(reader As TriggerReader) As Boolean
 
@@ -130,8 +150,10 @@ Namespace Engine.Libraries
         ''' (5:85) Forget Phoenix Speak info {...} for the Triggering Furre.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function ForgetTrigFurrePS(reader As TriggerReader) As Boolean
 
@@ -140,6 +162,16 @@ Namespace Engine.Libraries
             Return sendServer("ps clear characer." + furre + "." + info)
         End Function
 
+        ''' <summary>
+        ''' (5:80) retrieve Phoenix Speak info {...} and place the value
+        ''' into variable %Variable.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' true on success
+        ''' </returns>
         Public Function getPSinfo(reader As TriggerReader) As Boolean
 
             Dim Info As New PhoenixSpeak.Variable(reader.ReadString())
@@ -157,8 +189,10 @@ Namespace Engine.Libraries
         ''' (5:90) Memorize Phoenix Speak info {...} for this dream.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function MemorizeDreamPS(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
@@ -170,8 +204,10 @@ Namespace Engine.Libraries
         ''' (5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function MemorizeFurreNamedPS(reader As TriggerReader) As Boolean
 
@@ -187,8 +223,10 @@ Namespace Engine.Libraries
         ''' </para>
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function MemorizeTrigFurrePS(reader As TriggerReader) As Boolean
 
@@ -201,8 +239,10 @@ Namespace Engine.Libraries
         ''' (5:94) execute Phoenix Speak command {...}.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function PSCommand(reader As TriggerReader) As Boolean
 
@@ -212,10 +252,13 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
+        ''' (5:97) Forget ALL Phoenix Speak info for this dream.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function PSForgetDream(reader As TriggerReader) As Boolean
 
@@ -224,10 +267,13 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
+        ''' (5:96) Forget ALL Phoenix Speak info for the furre named {...}.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function PSForgetFurreNamed(reader As TriggerReader) As Boolean
 
@@ -236,6 +282,15 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' (5:95) Forget ALL Phoenix Speak info for the triggering furre
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <returns>
+        ''' true on success
+        ''' </returns>
         Function PSForgetTriggeringFurre(reader As TriggerReader) As Boolean
 
             Return sendServer("ps clear character." + Player.ShortName)
@@ -246,8 +301,10 @@ Namespace Engine.Libraries
         ''' (5:81) Store PSInfo Key Names to Variable %Variable.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function PSInfoKeyToVariable(reader As TriggerReader) As Boolean
 
@@ -262,15 +319,13 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:63) get all Phoenix Speak info for all characters and put it
-        ''' into the PSInfo cache.
-        ''' <para>
-        ''' TODO: Check Wording for this
-        ''' </para>
+        ''' (5:63) get all list of all characters and put it into the PSInfo cache.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function RemberPSInfoAllCharacters(reader As TriggerReader) As Boolean
 
@@ -283,8 +338,10 @@ Namespace Engine.Libraries
         ''' the PSInfo Cache.
         ''' </summary>
         ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
+        ''' true on success
         ''' </returns>
         Function RemberPSInfoAllDream(reader As TriggerReader) As Boolean
 
