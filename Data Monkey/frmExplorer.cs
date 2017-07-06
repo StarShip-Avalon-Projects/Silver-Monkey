@@ -101,7 +101,7 @@ namespace DataMonkey
             //
             //sqlStatementTextBox
             //
-            GenerateTabPage();
+            GenerateNewTabPage();
 
             sqlStatementTextBox.ContextMenu = new ContextMenu();
             sqlStatementTextBox.ContextMenu.MenuItems.Add(objExecuteSQL);
@@ -140,13 +140,13 @@ namespace DataMonkey
 
         private void CloseTab(int i)
         {
-            if (i > SQLAreaTabControl.TabCount - 1)
+            if (SQLAreaTabControl.TabCount == 0)
                 return;
             SQLAreaTabControl.TabPages.RemoveAt(i);
             SQLAreaTabControl.RePositionCloseButtons();
             if (SQLAreaTabControl.TabPages.Count == 0 & Disposing == false)
             {
-                SQLAreaTabControl.TabPages.Add(GenerateTabPage());
+                SQLAreaTabControl.TabPages.Add(GenerateNewTabPage());
             }
         }
 
@@ -176,7 +176,7 @@ namespace DataMonkey
 
         private void FNewTab_Click(object sender, EventArgs e)
         {
-            SQLAreaTabControl.TabPages.Add(GenerateTabPage());
+            SQLAreaTabControl.TabPages.Add(GenerateNewTabPage());
         }
 
         /// <summary>
@@ -307,6 +307,7 @@ namespace DataMonkey
             // objOpenTableSQL
             this.objOpenTableSQL.Index = 0;
             this.objOpenTableSQL.Text = "Open Table";
+
             this.objOpenTableSQL.Click += new System.EventHandler(this.objOpenTableSQL_Click);
             // objRenameTableSQL
             this.objRenameTableSQL.Index = 1;
@@ -456,6 +457,7 @@ namespace DataMonkey
             this.DatabaseTreeView.Name = "DatabaseTreeView";
             this.DatabaseTreeView.Size = new System.Drawing.Size(266, 330);
             this.DatabaseTreeView.TabIndex = 1;
+            this.DatabaseTreeView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DatabaseTreeView_MouseDoubleClick);
             this.DatabaseTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DatabaseTreeView_MouseDown);
             // tabPage3
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -488,6 +490,7 @@ namespace DataMonkey
             this.SQLAreaTabControl.Size = new System.Drawing.Size(546, 160);
             this.SQLAreaTabControl.TabIndex = 0;
             this.SQLAreaTabControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SQLAreaTabControl_MouseDown);
+            this.SQLAreaTabControl.CloseButtonClick += SQLAreaTabControl_CloseButtonClick;
             // tabPage1
             this.tabPage1.Controls.Add(this.silverMonkeyFCTB1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -577,8 +580,13 @@ namespace DataMonkey
         {
             e.Cancel = true;
             Button t = (Button)sender;
-            CloseTab(t.TabIndex);
+            TabPage tp = (TabPage)t.Tag;
+            SQLAreaTabControl.TabPages.Remove(tp);
             SQLAreaTabControl.RePositionCloseButtons();
+            if (SQLAreaTabControl.TabPages.Count == 0 & Disposing == false)
+            {
+                SQLAreaTabControl.TabPages.Add(GenerateNewTabPage());
+            }
         }
 
         private void SQLAreaTabControl_MouseDown(object sender, MouseEventArgs e)
@@ -673,7 +681,7 @@ namespace DataMonkey
 
         #region GenerateSQLArea TabPage
 
-        private TabPage GenerateTabPage()
+        private TabPage GenerateNewTabPage()
         {
             FastColoredTextBox tempTextBox = new SilverMonkeyFCTB();
             TabPage tempTabPage = new TabPage();
@@ -836,7 +844,7 @@ namespace DataMonkey
 
         private void AddAreaMenu_Click(object sender, EventArgs e)
         {
-            SQLAreaTabControl.Controls.Add(GenerateTabPage());
+            SQLAreaTabControl.Controls.Add(GenerateNewTabPage());
         }
 
         private void CheckIntegrity_Click(object sender, EventArgs e)
@@ -1004,7 +1012,7 @@ namespace DataMonkey
             //Place sqlstatement into the text box
             if (!string.IsNullOrEmpty(((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text))
             {
-                SQLAreaTabControl.TabPages.Add(GenerateTabPage());
+                SQLAreaTabControl.TabPages.Add(GenerateNewTabPage());
                 SQLAreaTabControl.SelectTab(SQLAreaTabControl.TabCount - 1);
             }
                 ((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text = sqlStatement;

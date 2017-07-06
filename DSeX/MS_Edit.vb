@@ -131,6 +131,7 @@ Public Class MS_Edit
 
             'Creates the listview and displays it in the new tab
             Dim lstView As FastColoredTextBox = New FastColoredTextBox()
+
             lstView.ContextMenuStrip = EditMenu
             lstView.AcceptsTab = True
             lstView.Parent = tp
@@ -151,6 +152,7 @@ Public Class MS_Edit
             AddHandler lstView.MouseClick, AddressOf MS_Editor_CursorChanged
             AddHandler lstView.KeyUp, AddressOf MS_Editor_CursorChanged
             AddHandler lstView.MouseDoubleClick, AddressOf MS_Editor_MouseDoubleClick
+
         End SyncLock
     End Sub
 

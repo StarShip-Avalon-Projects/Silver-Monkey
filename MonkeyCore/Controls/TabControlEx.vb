@@ -1,9 +1,11 @@
 ﻿Option Strict On
+
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
 
 Namespace Controls
+
     <ToolboxBitmap(GetType(Windows.Forms.TabControl))>
     Public Class TabControlEx
         Inherits TabControl
@@ -67,6 +69,7 @@ Namespace Controls
                         btn.Location = New Point(rect.X + rect.Width - rect.Height - 2, rect.Y + 2)
                     Else
                         btn.BackColor = Color.FromKnownColor(KnownColor.ButtonFace)
+                        btn.ForeColor = Color.FromKnownColor(KnownColor.ButtonShadow)
                         btn.Size = New Size(rect.Height - 2, rect.Height - 2)
                         btn.Location = New Point(rect.X + rect.Width - rect.Height - 2, rect.Y + 2)
                     End If
@@ -83,13 +86,15 @@ Namespace Controls
         Protected Overridable Function AddCloseButton(ByVal tp As TabPage) As Button
             Dim closeButton As New Button
             With closeButton
-                '' TODO: Give a good visual appearance to the Close button, maybe by assigning images etc.
-                ''       Here I have not used images to keep things simple.
+                '' TODO: Give a good visual appearance to the Close button,
+                ''       maybe by assigning images etc. Here I have not used
+                ''       images to keep things simple.
                 .Text = "X"
-                .FlatStyle = FlatStyle.Flat
+                .FlatStyle = FlatStyle.Popup
                 .BackColor = Color.FromKnownColor(KnownColor.ButtonFace)
                 .ForeColor = Color.White
                 .Font = New Font("Microsoft Sans Serif", 5, FontStyle.Bold)
+                .Tag = tp
             End With
             Return closeButton
         End Function
@@ -101,7 +106,7 @@ Namespace Controls
         Protected Overridable Sub OnCloseButtonClick(ByVal sender As Object, ByVal e As EventArgs)
             If Not DesignMode Then
                 Dim btn As Button = DirectCast(sender, Button)
-                Dim tp As TabPage = CloseButtonCollection(btn)
+                Dim tp As TabPage = DirectCast(btn.Tag, TabPage)
                 Dim ee As New CancelEventArgs
                 RaiseEvent CloseButtonClick(sender, ee)
                 If Not ee.Cancel Then
@@ -138,6 +143,7 @@ Namespace Controls
 
             RePositionCloseButtons()
         End Sub
+
         Protected Overrides Sub OnLayout(ByVal levent As Windows.Forms.LayoutEventArgs)
             MyBase.OnLayout(levent)
             RePositionCloseButtons()
@@ -146,4 +152,5 @@ Namespace Controls
 #End Region
 
     End Class
+
 End Namespace
