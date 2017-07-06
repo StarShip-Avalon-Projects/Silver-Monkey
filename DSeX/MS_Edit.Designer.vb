@@ -25,10 +25,11 @@ Partial Class MS_Edit
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MS_Edit))
         Me.MSSaveDialog = New System.Windows.Forms.SaveFileDialog()
         Me.MS_BrosweDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.EditMenu = New System.Windows.Forms.ContextMenuStrip()
+        Me.EditMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.MenuCopy = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuCut = New System.Windows.Forms.ToolStripMenuItem()
         Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -37,7 +38,7 @@ Partial Class MS_Edit
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.AutocommentOnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutocommentOffToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.imgList = New System.Windows.Forms.ImageList()
+        Me.imgList = New System.Windows.Forms.ImageList(Me.components)
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewMonkeySpeakToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MonkeySpeakFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -90,7 +91,7 @@ Partial Class MS_Edit
         Me.BtnSectionUp = New System.Windows.Forms.Button()
         Me.BtnSectionAdd = New System.Windows.Forms.Button()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
-        Me.SectionMenu = New System.Windows.Forms.ContextMenuStrip()
+        Me.SectionMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.RenameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
         Me.NewSection = New System.Windows.Forms.ToolStripMenuItem()
@@ -105,7 +106,7 @@ Partial Class MS_Edit
         Me.BtnTemplateDeleteMS = New System.Windows.Forms.Button()
         Me.BtnTemplateAddMS = New System.Windows.Forms.Button()
         Me.ListBox3 = New System.Windows.Forms.ListBox()
-        Me.TemplateMenuMS = New System.Windows.Forms.ContextMenuStrip()
+        Me.TemplateMenuMS = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.MSTemplateRefresh = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
@@ -118,7 +119,7 @@ Partial Class MS_Edit
         Me.BtnTemplateAdd = New System.Windows.Forms.Button()
         Me.BtnTemplateDelete = New System.Windows.Forms.Button()
         Me.ListBox2 = New System.Windows.Forms.ListBox()
-        Me.TemplateMenu = New System.Windows.Forms.ContextMenuStrip()
+        Me.TemplateMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.RefreshTemplatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator13 = New System.Windows.Forms.ToolStripSeparator()
         Me.InsertToDSFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -167,7 +168,8 @@ Partial Class MS_Edit
         Me.panelTotalLines = New System.Windows.Forms.StatusBarPanel()
         Me.panelTotalCharacters = New System.Windows.Forms.StatusBarPanel()
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ToolTip1 = New System.Windows.Forms.ToolTip()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.MokeySpeakLinesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditMenu.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -573,7 +575,7 @@ Partial Class MS_Edit
         '
         'HelpToolStripMenuItem
         '
-        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentToolStripMenuItem, Me.AbutToolStripMenuItem})
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentToolStripMenuItem, Me.MokeySpeakLinesToolStripMenuItem, Me.AbutToolStripMenuItem})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
         Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.HelpToolStripMenuItem.Text = "Help"
@@ -581,13 +583,13 @@ Partial Class MS_Edit
         'ContentToolStripMenuItem
         '
         Me.ContentToolStripMenuItem.Name = "ContentToolStripMenuItem"
-        Me.ContentToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.ContentToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
         Me.ContentToolStripMenuItem.Text = "Contents"
         '
         'AbutToolStripMenuItem
         '
         Me.AbutToolStripMenuItem.Name = "AbutToolStripMenuItem"
-        Me.AbutToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.AbutToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
         Me.AbutToolStripMenuItem.Text = "About"
         '
         'SplitContainer1
@@ -1341,6 +1343,12 @@ Partial Class MS_Edit
         Me.ColumnHeader3.Text = ""
         Me.ColumnHeader3.Width = 640
         '
+        'MokeySpeakLinesToolStripMenuItem
+        '
+        Me.MokeySpeakLinesToolStripMenuItem.Name = "MokeySpeakLinesToolStripMenuItem"
+        Me.MokeySpeakLinesToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
+        Me.MokeySpeakLinesToolStripMenuItem.Text = "Mokey Speak Lines"
+        '
         'MS_Edit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1540,4 +1548,5 @@ Partial Class MS_Edit
     Friend WithEvents Label1 As Label
     Friend WithEvents ContentToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ReferenceLinksToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MokeySpeakLinesToolStripMenuItem As ToolStripMenuItem
 End Class

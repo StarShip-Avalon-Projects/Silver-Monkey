@@ -5,18 +5,32 @@ Imports FastColoredTextBoxNS
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.IniFile
+Imports MonkeySpeakEditor.Controls
+Imports MonkeySpeakEditor.Controls.LineFinder
 
+''' <summary>
+''' Silver Monkey Main Form
+''' </summary>
 Public Class MS_Edit
+
+#Region "Private Fields"
+
+    Private Const HelpFile As String = "Monkey_Speak_Editor_Help.chm"
+    'Private Const MonkeySpeakLineHelp As String = "Silver Monkey.chm"
+
+#End Region
 
 #Region "Public Fields"
 
-    Public Shared EditSettings As New MonkeyCore.Settings.EditSettings
+    Public Shared EditSettings As MonkeyCore.Settings.EditSettings
 
     Public DS_autoCompleteList As New List(Of AutocompleteItem)
 
     Public MS_autoCompleteList As New List(Of AutocompleteItem)
 
 #End Region
+
+
 
 #Region "Private Fields"
 
@@ -59,6 +73,10 @@ Public Class MS_Edit
 
 #Region "Public Properties"
 
+    ''' <summary>
+    ''' </summary>
+    ''' <returns>
+    ''' </returns>
     Public Shared Property ini As IniFile
         Get
             Return Settings.ini
@@ -85,91 +103,6 @@ Public Class MS_Edit
             Settings.MS_KeysIni = value
         End Set
     End Property
-
-#End Region
-
-#Region "Sorters"
-
-    Class CatSorter
-        Implements IComparer(Of String)
-
-#Region "Public Methods"
-
-        Public Function Compare(ByVal item1 As String, ByVal item2 As String) As Integer Implements IComparer(Of String).Compare
-
-            Dim cat As New Regex("\((.[0-9]*?)\:(.[0-9]*?)\)")
-            Dim num1 As Integer = 0
-            Dim num2 As Integer = 0
-            Dim num3 As Integer = 0
-            Dim num4 As Integer = 0
-
-            Integer.TryParse(cat.Match(item1).Groups(1).Value, num1)
-            Integer.TryParse(cat.Match(item2).Groups(1).Value, num2)
-            Integer.TryParse(cat.Match(item1).Groups(2).Value, num3)
-            Integer.TryParse(cat.Match(item2).Groups(2).Value, num4)
-
-            If num3 > num4 Then
-                If num1 > num2 Then Return 1
-                If num1 < num2 Then Return -1
-                Return 1
-            ElseIf num3 < num4 Then
-                If num1 > num2 Then Return 1
-                If num1 < num2 Then Return -1
-                Return -1
-            Else
-                If num1 > num2 Then Return 1
-                If num1 < num2 Then Return -1
-                Return 0
-            End If
-        End Function
-
-#End Region
-
-    End Class
-
-    Class MyCustomSorter
-
-        Implements IComparer
-
-#Region "Public Methods"
-
-        Public Function Compare(ByVal x As Object, ByVal y As Object) As Integer Implements System.Collections.IComparer.Compare
-
-            Dim item1 As ListViewItem = CType(x, ListViewItem)
-            Dim item2 As ListViewItem = CType(y, ListViewItem)
-
-            Dim cat As New Regex("\((.[0-9]*?)\:(.[0-9]*?)\)")
-            Dim num1 As Integer = 0
-            Dim num2 As Integer = 0
-            Dim num3 As Integer = 0
-            Dim num4 As Integer = 0
-
-            Integer.TryParse(cat.Match(item1.Text).Groups(1).Value, num1)
-            Integer.TryParse(cat.Match(item2.Text).Groups(1).Value, num2)
-            Integer.TryParse(cat.Match(item1.Text).Groups(2).Value, num3)
-            Integer.TryParse(cat.Match(item2.Text).Groups(2).Value, num4)
-
-            If num3 > num4 Then
-                If num1 > num2 Then Return 1
-                If num1 < num2 Then Return -1
-                Return 1
-            ElseIf num3 < num4 Then
-                If num1 > num2 Then Return 1
-                If num1 < num2 Then Return -1
-                Return -1
-            Else
-                If num1 > num2 Then Return 1
-                If num1 < num2 Then Return -1
-                Return 0
-            End If
-
-            Return 0
-
-        End Function
-
-#End Region
-
-    End Class
 
 #End Region
 
@@ -471,6 +404,13 @@ Public Class MS_Edit
 
     End Sub
 
+    ''' <summary>
+    ''' Read a CSV line
+    ''' </summary>
+    ''' <param name="input">
+    ''' </param>
+    ''' <returns>
+    ''' </returns>
     Public Function SplitCSV(ByRef input As String) As String()
 
         Try
@@ -595,13 +535,22 @@ Public Class MS_Edit
 
 #Region "Private Methods"
 
-    Private Const HelpFile As String = "Monkey_Speak_Editor_Help.chm"
-
     Private Sub AbutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AbutToolStripMenuItem.Click
         AboutBox2.Show()
         AboutBox2.Activate()
     End Sub
 
+    ''' <summary>
+    ''' Add a new MS/DS editor tab
+    ''' </summary>
+    ''' <param name="n">
+    ''' </param>
+    ''' <param name="VL_Name">
+    ''' </param>
+    ''' <param name="lst">
+    ''' </param>
+    ''' <param name="LineTab">
+    ''' </param>
     Private Sub AddNewTab(ByRef n As String, ByRef VL_Name As String, ByRef lst As List(Of String), ByRef LineTab As TabControl)
         LineTab.TabPages.Add(n)
         'Adds a new tab to your tab control
@@ -613,83 +562,69 @@ Public Class MS_Edit
         'LineTab.SelectedTab = LineTab.TabPages(intLastTabIndex)
 
         'Creates the listview and displays it in the new tab
-        Dim lstView As ListView_NoFlicker = New ListView_NoFlicker()
+        Dim LineFinderListView As New ListView_NoFlicker()
 
-        lstView.Tag = n
-        lstView.Dock = DockStyle.Fill
-        lstView.Sorting = SortOrder.Ascending
-        lstView.Columns.Add(n)
-        lstView.Location = New System.Drawing.Point(6, 3)
-        lstView.Height = LineTab.Height
-        lstView.Width = LineTab.Width
-        lstView.MultiSelect = False
-        lstView.BeginUpdate()
+        LineFinderListView.Tag = n
+        LineFinderListView.Dock = DockStyle.Fill
+        LineFinderListView.Sorting = SortOrder.Ascending
+        LineFinderListView.Columns.Add(n)
+        LineFinderListView.Location = New System.Drawing.Point(6, 3)
+        LineFinderListView.Height = LineTab.Height
+        LineFinderListView.Width = LineTab.Width
+        LineFinderListView.MultiSelect = False
+        LineFinderListView.BeginUpdate()
         For Each t In lst
-            lstView.Items.Add(t)
+            LineFinderListView.Items.Add(t)
         Next
-        lstView.EndUpdate()
-        lstView.Parent = LineTab.TabPages(intLastTabIndex)
-        lstView.ListViewItemSorter = New MyCustomSorter
-        lstView.HeaderStyle = ColumnHeaderStyle.None
-        lstView.Name = VL_Name
-        lstView.FullRowSelect = True
-        lstView.View = View.Details
-        lstView.Columns(0).Width() = lstView.Width
-        AddHandler lstView.DoubleClick, AddressOf ListCauses_DoubleClick
-        AddHandler lstView.Resize, AddressOf ListView_resize
-        AddHandler lstView.MouseClick, AddressOf ListCauses_MouseClick
-        AddHandler lstView.SelectedIndexChanged, AddressOf ListCauses_MouseClick
+        LineFinderListView.EndUpdate()
+        LineFinderListView.Parent = LineTab.TabPages(intLastTabIndex)
+        LineFinderListView.ListViewItemSorter = New MsDsCustomeSorter
+        LineFinderListView.HeaderStyle = ColumnHeaderStyle.None
+        LineFinderListView.Name = VL_Name
+        LineFinderListView.FullRowSelect = True
+        LineFinderListView.View = View.Details
+        LineFinderListView.Columns(0).Width() = LineFinderListView.Width
+        AddHandler LineFinderListView.DoubleClick, AddressOf ListCauses_DoubleClick
+        AddHandler LineFinderListView.Resize, AddressOf ListView_resize
+        AddHandler LineFinderListView.MouseClick, AddressOf ListCauses_MouseClick
+        AddHandler LineFinderListView.SelectedIndexChanged, AddressOf ListCauses_MouseClick
         'This covers a very strange order bug involving sorted listboxes
         'Without this (or a .Show()) it will never actually update the internal list order
         'until it becomes visible in the application. (Triggering .Sort() doesn't work)
-        lstView.Visible = True
+        LineFinderListView.Visible = True
 
     End Sub
 
-    Private Sub ApplyComment()
+    Private Sub ApplyCommentToolStripMenuItem1_Click(sender As Object, e As EventArgs) _
+        Handles BtnComment.Click, ApplyCommentToolStripMenuItem.Click, AutocommentOnToolStripMenuItem.Click
+
         If IsNothing(MS_Editor) Then Exit Sub
 
-        Dim this As String = MS_Editor.Selection.Text
-
-        Dim str() As String = this.Replace(vbCr, "").Split(Chr(10))
-        Dim str2 As String = ""
+        Dim str() As String = MS_Editor.SelectedText.Replace(vbCr, "").Split(Convert.ToChar(vbLf))
         If str.Length > 1 Then
             For i As Integer = 0 To str.Length - 1
-                str2 &= vbCrLf & "*" & str(i)
+                If str(i).Length > 0 Then
+                    str(i) = "*" + str(i)
+                End If
             Next
-            MS_Editor.SelectedText = str2.Substring(1)
+            MS_Editor.SelectedText = String.Join(Environment.NewLine, str)
 
         End If
     End Sub
 
-    Private Sub ApplyCommentToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ApplyCommentToolStripMenuItem1.Click
+    Private Sub AutoCommentOffToolStripMenuItem_Click(sender As Object, e As EventArgs) _
+        Handles AutoCommentOffToolStripMenuItem.Click, AutocommentOffToolStripMenuItem1.Click
+
         If IsNothing(MS_Editor) Then Exit Sub
 
-        Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(Convert.ToChar(vbLf))
-        If str.Length > 1 Then
-            For i As Integer = 0 To str.Length - 1
-                str(i) = "*" + str(i)
-            Next
-            MS_Editor.SelectedText = String.Join(vbCrLf, str)
-
-        End If
-    End Sub
-
-    Private Sub AutoCommentOffToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoCommentOffToolStripMenuItem.Click, AutocommentOffToolStripMenuItem1.Click
-        If IsNothing(MS_Editor) Then Exit Sub
-
-        Dim str() As String = MS_Editor.Text.Replace(vbCr, "").Split(Convert.ToChar(vbLf))
+        Dim str() As String = MS_Editor.SelectedText.Replace(vbCr, "").Split(Convert.ToChar(vbLf))
         If str.Length > 1 Then
             For i As Integer = 0 To str.Length - 1
                 If str(i).StartsWith("*") Then str(i) = str(i).Remove(0, 1)
             Next
-            MS_Editor.Text = String.Join(vbCrLf, str)
+            MS_Editor.SelectedText = String.Join(Environment.NewLine, str)
 
         End If
-    End Sub
-
-    Private Sub BtnComment_Click(sender As Object, e As EventArgs) Handles BtnComment.Click, ApplyCommentToolStripMenuItem.Click, AutocommentOnToolStripMenuItem.Click
-        ApplyComment()
     End Sub
 
     Private Sub BtnFind_Click(sender As Object, e As EventArgs) Handles BtnFind.Click
@@ -811,16 +746,16 @@ Public Class MS_Edit
     End Sub
 
     Private Sub BtnTemplateAdd_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click, BtnTemplateAdd.Click
-        Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + My_Docs + "/Templates/"
+        Dim TemplatePath As String = (Path.Combine(Paths.SilverMonkeyDocumentsPath, "Templates"))
         Dim message, title As String
         Dim myValue As String
         message = "Name of file?"
         title = "Template Name"
         myValue = InputBox(message, title, "")
         If String.IsNullOrEmpty(myValue) Then Exit Sub
-        TemplatePaths.Add(path)
+        TemplatePaths.Add(TemplatePath)
         ListBox2.Items.Add(myValue)
-        File.WriteAllText(path + myValue.ToString + ".ds", MS_Editor.Selection.Text)
+        File.WriteAllText(TemplatePath + myValue.ToString + ".ds", MS_Editor.Selection.Text)
     End Sub
 
     Private Sub BtnTemplateAddMS_Click(sender As Object, e As EventArgs) Handles BtnTemplateAddMS.Click, MSTemplateMenuAdd.Click
@@ -831,9 +766,9 @@ Public Class MS_Edit
         title = "Template Name"
         myValue = InputBox(message, title, "")
         If String.IsNullOrEmpty(myValue) Then Exit Sub
-        TemplatePathsMS.Add(Paths.MonKeySpeakEditorDocumentsTemplatesPath)
+        TemplatePathsMS.Add(Paths.MonkeySpeakEditorDocumentsTemplatesPath)
         ListBox3.Items.Add(myValue)
-        File.WriteAllText(Path.Combine(Paths.MonKeySpeakEditorDocumentsTemplatesPath, myValue.ToString + ".ms"), MS_Editor.Selection.Text)
+        File.WriteAllText(Path.Combine(Paths.MonkeySpeakEditorDocumentsTemplatesPath, myValue.ToString + ".ms"), MS_Editor.Selection.Text)
     End Sub
 
     Private Sub BtnTemplateDelete_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
@@ -1092,7 +1027,7 @@ Public Class MS_Edit
             TemplatePathsMS.Clear()
             ListBox3.Items.Clear()
 
-            p = Paths.MonKeySpeakEditorDocumentsTemplatesPath
+            p = Paths.MonkeySpeakEditorDocumentsTemplatesPath
             If Directory.Exists(p) Then
                 fileEntries = Directory.GetFiles(p, "*.ms", SearchOption.TopDirectoryOnly)
                 For Each s As String In fileEntries
@@ -1144,8 +1079,8 @@ Public Class MS_Edit
     Private Sub GotoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GotoToolStripMenuItem.Click, ToolStripButton1.Click
         If IsNothing(MS_Editor) Then Exit Sub
         Dim i As String =
-InputBox("What line within the document do you want to send the cursor to?",
-" Location to send the Cursor?", "0")
+                    InputBox("What line within the document do you want to send the cursor to?",
+                            " Location to send the Cursor?", "0")
         If String.IsNullOrEmpty(i) Then Exit Sub
         If IsInteger(i) And i.ToInteger > 0 Then
             If CInt(i) > MS_Editor.Lines.Count - 1 Then i = CStr(MS_Editor.Lines.Count - 1)
@@ -1395,11 +1330,7 @@ InputBox("What line within the document do you want to send the cursor to?",
         Dispose()
     End Sub
 
-    Private Sub MS_Edit_ImeModeChanged(sender As Object, e As EventArgs) Handles Me.ImeModeChanged
-
-    End Sub
-
-    Private Sub MS_Edit_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub MS_Edit_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
         If (e.KeyCode = Keys.O AndAlso e.Modifiers = Keys.Control) Then
             OpenMS_File()
         ElseIf (e.KeyCode = Keys.W AndAlso e.Modifiers = Keys.Control) Then
@@ -1407,7 +1338,9 @@ InputBox("What line within the document do you want to send the cursor to?",
         ElseIf (e.KeyCode = Keys.S AndAlso e.Modifiers = Keys.Control) Then
             ' SaveMS_File(WorkPath(TabControl2.SelectedIndex), WorkFileName(TabControl2.SelectedIndex))
         ElseIf (e.KeyCode = Keys.F1) Then
-            Process.Start("Silver Monkey.chm")
+            If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+                Help.ShowHelp(Me, HelpFile)
+            End If
         ElseIf e.KeyCode = Keys.F5 Then
             GotoBookPrevMark()
         ElseIf e.KeyCode = Keys.F5 Then
@@ -1419,11 +1352,13 @@ InputBox("What line within the document do you want to send the cursor to?",
     End Sub
 
     Private Sub MS_Edit_Load(sender As Object, e As EventArgs) Handles Me.Load
-        CallBk = Me
+
         KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys.ini"))
         MS_KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys-MS.ini"))
         KeysHelpMSIni.Load(Path.Combine(Paths.ApplicationPath, "KeysHelp-MS.ini"))
         KeysHelpIni.Load(Path.Combine(Paths.ApplicationPath, "KeysHelp.ini"))
+
+        EditSettings = New MonkeyCore.Settings.EditSettings
 
         Dim HelpItems = New MonkeyCore.Controls.HelpLinkToolStripMenu
         ReferenceLinksToolStripMenuItem.DropDown.Items.AddRange(HelpItems.MenuItems.ToArray)
@@ -1460,13 +1395,13 @@ InputBox("What line within the document do you want to send the cursor to?",
         Visible = True
 
         Dim items As List(Of AutocompleteItem) = New List(Of AutocompleteItem)()
-        Dim KeyCount As Integer = Integer.Parse(KeysIni.GetKeyValue("Init-Types", "Count"))
-        Dim MS_KeyCount As Integer = Integer.Parse(MS_KeysIni.GetKeyValue("Init-Types", "Count"))
-        For i As Integer = 1 To KeyCount
+        Dim DsKeyCount As Integer = Integer.Parse(KeysIni.GetKeyValue("Init-Types", "Count"))
+        Dim MsKeyCount As Integer = Integer.Parse(MS_KeysIni.GetKeyValue("Init-Types", "Count"))
+        For i As Integer = 1 To DsKeyCount
             items.Clear()
             Dim DSLines As New List(Of String)
             Dim key As String = KeysIni.GetKeyValue("Init-Types", i.ToString)
-            splash.UpdateProgress("Loading DS " + key + "...", CInt(i / (KeyCount + MS_KeyCount + 2) * 100))
+            splash.UpdateProgress("Loading DS " + key + "...", i / (DsKeyCount + MsKeyCount + 2) * 100)
             Dim DSSection As IniSection = KeysIni.GetSection(key)
 
             For Each K As IniSection.IniKey In DSSection.Keys
@@ -1483,30 +1418,30 @@ InputBox("What line within the document do you want to send the cursor to?",
 
         Next
 
-        For i As Integer = 1 To MS_KeyCount
+        For i As Integer = 1 To MsKeyCount
             items.Clear()
-            Dim MSLines As New List(Of String)
+            Dim MsLineFinderSet As New List(Of String)
             Dim key As String = MS_KeysIni.GetKeyValue("Init-Types", i.ToString)
-            splash.UpdateProgress("Loading MS " + key + "...", CInt((i + KeyCount) / (KeyCount + MS_KeyCount + 2) * 100))
-            Dim DSSection As IniSection = MS_KeysIni.GetSection(key)
+            splash.UpdateProgress("Loading MS " + key + "...", i + DsKeyCount / (DsKeyCount + MsKeyCount + 2) * 100)
+            Dim MsSection As IniSection = MS_KeysIni.GetSection(key)
 
-            For Each K As IniSection.IniKey In DSSection.Keys
+            For Each K As IniSection.IniKey In MsSection.Keys
 
-                Dim fields As String() = SplitCSV(K.Value)
+                Dim MsIniKeyFields As String() = SplitCSV(K.Value)
 
-                If Not IsNothing(fields) Then
-                    MSLines.Add(fields(2))
-                    items.Add(New DA_AUtoCompleteMenu(fields(2)))
+                If Not IsNothing(MsIniKeyFields) Then
+                    MsLineFinderSet.Add(MsIniKeyFields(2))
+                    items.Add(New DA_AUtoCompleteMenu(MsIniKeyFields(2)))
                 End If
 
             Next
 
-            AddNewTab(key, i.ToString, MSLines, TabControl3)
+            AddNewTab(key, i.ToString, MsLineFinderSet, TabControl3)
             MS_autoCompleteList.AddRange(items)
 
         Next
 
-        splash.UpdateProgress("Finishing up...", CInt((KeyCount + MS_KeyCount + 1) / (KeyCount + MS_KeyCount + 2) * 100))
+        splash.UpdateProgress("Finishing up...", DsKeyCount + MsKeyCount + 1 / (DsKeyCount + MsKeyCount + 2) * 100)
 
         SetDSHilighter()
         SetMSHilighter()
@@ -1518,7 +1453,7 @@ InputBox("What line within the document do you want to send the cursor to?",
             'AddNewEditorTab(filename, mPath, 0)
             OpenMS_File(filename)
         Else
-            AddNewEditorTab("", Paths.SilverMonkeyBotPath, 0)
+            AddNewEditorTab("", Paths.SilverMonkeyDocumentsPath, 0)
             NewFile(EditStyles.ms)
         End If
 
@@ -2121,49 +2056,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
 #End Region
 
-#Region "Private Classes"
-
-    Private Class DA_AUtoCompleteMenu
-        Inherits AutocompleteItem
-
-#Region "Public Fields"
-
-        Public Shared RegexSpecSymbolsPattern As String = "[ \.\(\)]"
-
-#End Region
-
-#Region "Public Constructors"
-
-        Public Sub New(snippet As String)
-            MyBase.New(snippet)
-        End Sub
-
-#End Region
-
-#Region "Public Methods"
-
-        '[\ \^\$\\(\)\.\\\*\+\|\?]
-        ''' <summary>
-        ''' Compares fragment text with this item
-        ''' </summary>
-        Public Overrides Function Compare(fragmentText As String) As CompareResult
-            fragmentText = fragmentText.Trim
-            Dim pattern = Regex.Replace(fragmentText, RegexSpecSymbolsPattern, "$0").Trim
-            If Regex.IsMatch(Text, pattern, RegexOptions.IgnoreCase) Then
-                If Regex.IsMatch(Text, "\{" & fragmentText & "\}?", RegexOptions.IgnoreCase) Then
-                    Return CompareResult.Hidden
-                End If
-                Return CompareResult.Visible
-            End If
-            Return CompareResult.Hidden
-        End Function
-
-#End Region
-
-    End Class
-
-#End Region
-
 #Region "Properties"
 
     Public Shared TemplatePaths As List(Of String) = New List(Of String)
@@ -2179,7 +2071,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
     Private Const AppName As String = "Monkey Speak Editor"
     Private Const AutoCompleteSearchPattern As String = "[ \w\.:=!<>\{\}]"
     Private Const BotProcessName As String = "Silver Monkey: "
-    Private Const My_Docs As String = "/Silver Monkey"
     Private Const MyProcessName As String = "MonkeySpeakEditor"
     Private Const New_File_Tag As String = "(New File)"
     Private Const RES_Def_section As String = "Default Section"
@@ -2359,6 +2250,13 @@ ByRef lParam As COPYDATASTRUCT) As Boolean
 #Region "Event Handlers"
 
     Delegate Sub FileSave(ByRef IabIDX As Integer)
+
+    Private Sub MokeySpeakLinesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MokeySpeakLinesToolStripMenuItem.Click
+        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            Help.ShowHelp(Me, HelpFile, "/html/N_SilverMonkeyEngine_Engine_Libraries.htm")
+
+        End If
+    End Sub
 
 #End Region
 

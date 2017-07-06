@@ -74,7 +74,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <ProgId Id="SilverMonkey.exe"  Description="$(var.ProductName) File type" Advertise="no">
           <Extension Id="bini"  ContentType="Text/Plain" Advertise="no">
-            <Verb Command="Open" Id="open" TargetProperty="FileAssociationProperty" Argument="%1" />
+            <Verb Command="Open" Id="open" TargetProperty="FileAssociationProperty" Argument="&quot;%1&quot;" />
           </Extension>
         </ProgId>
       </Component>
@@ -97,7 +97,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <ProgId Id="MonkeySpeakEditor.exe" Description="Monkey Speak File" Advertise="no">
           <Extension Id="ms" ContentType="Text/Plain" Advertise="no">
-            <Verb Command="Open" Id="open" TargetProperty="MonkeySpeakAssociation"  Argument="%1" />
+            <Verb Command="Open" Id="open" TargetProperty="MonkeySpeakAssociation"  Argument="&quot;%1&quot;" />
           </Extension>
         </ProgId>
       </Component>

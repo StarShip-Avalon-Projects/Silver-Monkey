@@ -1,7 +1,4 @@
 ﻿Imports System.IO
-Imports System.Drawing.Text
-Imports System.Drawing
-Imports Furcadia.IO
 Imports MonkeyCore.Settings
 
 Public Class Config
@@ -166,11 +163,15 @@ Public Class Config
         My.Settings.ConfigSelectedTab = t.SelectedIndex
     End Sub
 
-    Private Sub ListBox1_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles ListBox2.MouseUp, ListBox1.MouseUp
+    Private Sub ListBox1_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) _
+        Handles ListBox2.MouseUp, ListBox1.MouseUp
+
         Dim l As ListBox = CType(sender, ListBox)
-        Dim str As String = l.SelectedItem.ToString
-        Dim Val As Integer = str.Split("="c)(1).ToInteger
-        NumericUpDown1.Value = Val
+        If Not l.SelectedItem Is Nothing Then
+            Dim str As String = l.SelectedItem.ToString
+            Dim Val As Integer = str.Split("="c)(1).ToInteger
+            NumericUpDown1.Value = Val
+        End If
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ListBox2.SelectedIndexChanged, ListBox1.SelectedIndexChanged

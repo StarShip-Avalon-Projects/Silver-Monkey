@@ -1,11 +1,10 @@
-﻿Imports MonkeyCore.Controls
+﻿Imports System.IO
 Imports System.Text.RegularExpressions
-Imports MonkeySpeakEditor.ConfigStructs
-Imports MonkeySpeakEditor.IniFile
-Imports System.IO
 Imports FastColoredTextBoxNS
+Imports MonkeyCore.Controls
 
 Public Module MyExtensions
+
     <System.Runtime.CompilerServices.Extension()>
     Public Function IsDouble(ByVal value As String) As Boolean
         If String.IsNullOrEmpty(value) Then
@@ -16,10 +15,11 @@ Public Module MyExtensions
     End Function
 
     ''' <summary>
-    '''
     ''' </summary>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
+    ''' <param name="value">
+    ''' </param>
+    ''' <returns>
+    ''' </returns>
     <System.Runtime.CompilerServices.Extension()>
     Public Function IsInteger(ByVal value As String) As Boolean
         If String.IsNullOrEmpty(value) Then
@@ -37,11 +37,13 @@ Public Module MyExtensions
             Return 0
         End If
     End Function
+
     ''' <summary>
-    '''
     ''' </summary>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
+    ''' <param name="value">
+    ''' </param>
+    ''' <returns>
+    ''' </returns>
     <System.Runtime.CompilerServices.Extension()>
     Public Function ToInteger(ByVal value As String) As Integer
         If value.IsInteger() Then
@@ -53,14 +55,21 @@ Public Module MyExtensions
 
 End Module
 
+''' <summary>
+''' Draconian Magick User Interface
+''' </summary>
 Public Class wUI
+
 #Region "Properties"
+
     'Dim ScriptPath = My.Application.Info.DirectoryPath() & "\Scripts\"
     Public Code As String
+
     Public PathIndex As Integer = 0
     Public wVariables As Dictionary(Of Integer, Object) = New Dictionary(Of Integer, Object)
     Dim WorkFileName As String = ""
     Dim WorkPath As String = ""
+
     Public Structure StructMapSearch
 
 #Region "Public Fields"
@@ -116,11 +125,13 @@ Public Class wUI
                 _MSType = value
             End Set
         End Property
+
         Public ReadOnly Property MSValue As String
             Get
                 Return _msValue
             End Get
         End Property
+
         Public Property Setlist As List(Of String)
             Set(value As List(Of String))
                 _list = value
@@ -133,6 +144,7 @@ Public Class wUI
 #End Region
 
     End Structure
+
 #End Region
 
 #Region "Position Functions"
@@ -147,6 +159,7 @@ Public Class wUI
 
     'Regexes for calculation parsing
     Private Const RGEX_Movement As String = "(\d+)(nw|ne|sw|se)(\d+)(.*)"""
+
     Private Const RGEX_Number As String = "^(\d+)"
     Private Const RGEX_Range As String = "^(\d+)(-\s*)(\d+)?"
     Private Const RPOS_Range_End As Integer = 3
@@ -253,6 +266,7 @@ Public Class wUI
         Next
         Return CStr(x.ToString = "," + y.ToString)
     End Function
+
 #End Region
 
 #Region "Public Methods"
@@ -329,12 +343,12 @@ Public Class wUI
             MyBase.Opacity = 0.0
             Timer1.Enabled = True
         End If
-
-        selecter2.SelectedIndex = 0
-        Dim n As Integer = selecter2.SelectedIndex + 1
-        Dim s As String = ScriptIni.GetKeyValue("main", "b" + n.ToString)
-        If s <> "" Then TextBox1.Text = s
-
+        If selecter2.Items.Count > 0 Then
+            selecter2.SelectedIndex = 0
+            Dim n As Integer = selecter2.SelectedIndex + 1
+            Dim s As String = ScriptIni.GetKeyValue("main", "b" + n.ToString)
+            If s <> "" Then TextBox1.Text = s
+        End If
     End Sub
 
     Private Sub Form2_OnExit(ByVal sender As System.Object, ByVal e As Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -392,7 +406,7 @@ Public Class wUI
         Dim n As Integer = selecter2.SelectedIndex + 1
         Dim t As String = "text"
         Dim s As String = ScriptIni.GetKeyValue("main", "m" + n.ToString).ToLower
-        If s <> Nothing And s <> "" Then t = s
+        If Not String.IsNullOrEmpty(s) Then t = s
         Select Case t
 
             Case "mapsearch"
@@ -573,17 +587,23 @@ Public Class wUI
         If s <> "" Then NumericUpDown1.Value = s.ToInteger Else NumericUpDown1.Value = 1
     End Sub
 
-    Private Sub selecter2_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles selecter2.MouseWheel
+    Private Sub selecter2_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) _
+        Handles selecter2.MouseWheel
+
         Dim lb As ScrollingListBox = CType(sender, ScrollingListBox)
         ListBox1.TopIndex = lb.TopIndex
     End Sub
 
-    Private Sub selecter2_OnVerticalScroll(sender As Object, e As System.Windows.Forms.ScrollEventArgs) Handles selecter2.OnVerticalScroll
+    Private Sub selecter2_OnVerticalScroll(sender As Object, e As System.Windows.Forms.ScrollEventArgs) _
+        Handles selecter2.OnVerticalScroll
+
         Dim lb As ScrollingListBox = CType(sender, ScrollingListBox)
         ListBox1.TopIndex = lb.TopIndex
     End Sub
 
-    Private Sub selecter2_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles selecter2.Click, ListBox1.Click
+    Private Sub selecter2_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+        Handles selecter2.Click, ListBox1.Click
+
         Dim s = selecter2.GetItemText(selecter2.SelectedItem)
         Dim Space As Integer = selecter2.SelectedIndex + 1
         Dim t As String = ScriptIni.GetKeyValue("main", "t" + Space.ToString)
@@ -592,19 +612,30 @@ Public Class wUI
         SetUI()
     End Sub
 
-    Private Sub selecter2_SelectedIndexChanged_1(sender As System.Object, e As System.EventArgs) Handles selecter2.SelectedIndexChanged, ListBox1.SelectedIndexChanged
+    Private Sub selecter2_SelectedIndexChanged_1(sender As System.Object, e As System.EventArgs) _
+        Handles selecter2.SelectedIndexChanged, ListBox1.SelectedIndexChanged
+
         Dim lb As ListBox = CType(sender, ListBox)
         selecter2.SelectedIndex = lb.SelectedIndex
         ListBox1.SelectedIndex = lb.SelectedIndex
     End Sub
-    Private Sub TextBox1_TextChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextBox1.KeyDown
+
+    Private Sub TextBox1_TextChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) _
+        Handles TextBox1.KeyDown
+
         If e.KeyCode = System.Windows.Forms.Keys.Enter Then
             NextItem()
             e.Handled = True
         End If
     End Sub
 
-    'Fade effect Timer (fade-in)
+    ''' <summary>
+    ''' Fade effect Timer (fade-in)
+    ''' </summary>
+    ''' <param name="sender">
+    ''' </param>
+    ''' <param name="e">
+    ''' </param>
     Private Sub Timer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer.Tick
         'decreases opacity in turms of timer interval
         Me.Opacity -= 0.01
@@ -612,7 +643,9 @@ Public Class wUI
         If Me.Opacity = 0 Then Me.Dispose()
     End Sub
 
-    'Fade effect Timer1 (fade-out)
+    ''' <summary>
+    ''' Fade effect Timer1 (fade-out)
+    ''' </summary>
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         'decreases opacity in turms of timer interval
         Me.Opacity += 0.01
@@ -621,11 +654,13 @@ Public Class wUI
             Me.Show()
         End If
     End Sub
-    Private Sub ViewFileToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ViewFileToolStripMenuItem.Click
+
+    Private Sub ViewFileToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+        Handles ViewFileToolStripMenuItem.Click
+
         If IO.File.Exists(ScriptPaths(PathIndex) & Me.Text()) Then
             Try
                 System.Diagnostics.Process.Start(ScriptPaths(PathIndex) & Me.Text())
-
             Catch
                 MsgBox("Error while opening file.  File might not exist.")
             End Try

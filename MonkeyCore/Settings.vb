@@ -1,8 +1,7 @@
-﻿Imports MonkeyCore.IniFile
-Imports System.Drawing
-Imports System.Windows.Forms
+﻿Imports System.Drawing
 Imports System.IO
-Imports Furcadia.Net
+Imports System.Windows.Forms
+Imports MonkeyCore.IniFile
 
 'Structure Data (Main Settings, Individual Program Groups)
 'Read Master settings.ini
@@ -37,10 +36,11 @@ Public Class Settings
     Private Const MSEditorSection As String = "Editor"
     Private Const SettingFile As String = "Settings.Ini"
     Private Shared _ini As New IniFile
+
     ''' <summary>
-    '''
     ''' </summary>
     Private Shared _KeysIni As New IniFile
+
     Private Shared _MS_KeysIni As New IniFile
 
     Private Shared _PluginList As New Dictionary(Of String, Boolean)
@@ -63,7 +63,8 @@ Public Class Settings
     ''' <summary>
     ''' System to load Key.ini for Dragon Speak Settings
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' </returns>
     Public Shared Property KeysIni As IniFile
         Get
 
@@ -77,7 +78,8 @@ Public Class Settings
     ''' <summary>
     ''' Loads Key.ini file for Monkey Speak display
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' </returns>
     Public Shared Property MS_KeysIni As IniFile
         Get
             Return _MS_KeysIni
@@ -100,9 +102,13 @@ Public Class Settings
 
 #Region "Public Classes"
 
+    ''' <summary>
+    ''' Main Configuration for every application in package
+    ''' </summary>
     Public Class cMain
 
 #Region "Private Fields"
+
         Private _Advertisment As Boolean = False
         Private _Announcement As Boolean = False
         Private _AppFont As New Font("Microsoft Sans Serif", 10, FontStyle.Regular)
@@ -116,8 +122,10 @@ Public Class Settings
         Private _emitColor As Color = Color.Blue
         Private _emoteColor As Color = Color.DarkCyan
         Private _FontFace As String = "Microsoft Sans Serif"
+
         'Display Settings
         Private _FontSize As Integer = 10
+
         Private _FurcPath As String = ""
         Private _Host As String = Main_Host
         Private _LoadLastBotFile As Boolean = False
@@ -129,6 +137,7 @@ Public Class Settings
         Private _shoutColor As Color = Color.DarkRed
         Private _sPort As Integer = 6500
         Private _TimeStamp As UShort = 0
+
         'systray Status
         Private _TrayIcon As CheckState = CheckState.Indeterminate
 
@@ -320,6 +329,7 @@ Public Class Settings
                 _CloseProc = value
             End Set
         End Property
+
         Public Property ConnectTimeOut As Integer
             Get
                 Return _ConnectTimeOut
@@ -365,6 +375,7 @@ Public Class Settings
                 _emitColor = value
             End Set
         End Property
+
         Public Property EmoteColor() As Color
             Get
                 Return _emoteColor
@@ -448,6 +459,7 @@ Public Class Settings
                 _sayColor = value
             End Set
         End Property
+
         Public Property ShoutColor() As Color
             Get
                 Return _shoutColor
@@ -456,6 +468,7 @@ Public Class Settings
                 _shoutColor = value
             End Set
         End Property
+
         Public Property sPort() As Integer
             Get
                 Return _sPort
@@ -512,7 +525,8 @@ Public Class Settings
 #Region "Public Methods"
 
         Public Sub SaveMainSettings()
-            ' Lets Read local appData Settings.ini for  last used Settings as other programs use the file too
+            ' Lets Read local appData Settings.ini for last used Settings as
+            ' other programs use the file too
             If File.Exists(SettingsFile) Then
                 ini.Load(SettingsFile, True)
             End If
@@ -573,9 +587,12 @@ Public Class Settings
         Private _AutoCompleteEnable As Boolean
         Private _CommentColor As Color
         Private _FurcPath As String
+
         'Dragon Speak
         Private _IDcolor As Color
+
         Private _MS_CommentColor As Color
+
         'Monkey Speak
         Private _MS_IDcolor As Color
 
@@ -598,7 +615,6 @@ Public Class Settings
         ''' </summary>
         Public Sub New()
             ' Load defaults
-            '
             Dim s As String = ""
             ini.AddSection(MSEditorSection).AddKey("IDColor").Value = Color.Blue.ToArgb.ToString
             ini.AddSection(MSEditorSection).AddKey("CommentColor").Value = Color.Green.ToArgb.ToString
@@ -651,8 +667,8 @@ Public Class Settings
 
             Next
 
-            ' Defaults are now loaded
-            ' Lets Read local appData Settings.ini for  last used Settings and Override existing settings
+            ' Defaults are now loaded Lets Read local appData Settings.ini
+            ' for last used Settings and Override existing settings
             If File.Exists(SettingsFile) Then
                 ini.Load(SettingsFile, True)
             End If
@@ -716,7 +732,8 @@ Public Class Settings
         ''' <summary>
         ''' Furcadia Application folder
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' </returns>
         Public Property FurcPath As String
             Get
                 If String.IsNullOrEmpty(_FurcPath) Then
@@ -728,6 +745,7 @@ Public Class Settings
                 _FurcPath = value
             End Set
         End Property
+
         Public Property IDColor() As Color
             Get
                 Return _IDcolor
@@ -736,6 +754,7 @@ Public Class Settings
                 _IDcolor = value
             End Set
         End Property
+
         Public Property MS_CommentColor() As Color
             Get
                 Return _MS_CommentColor
@@ -801,6 +820,7 @@ Public Class Settings
                 _StringColor = value
             End Set
         End Property
+
         Public Property StringVariableColor() As Color
             Get
                 Return _StringVariableColor
@@ -825,7 +845,8 @@ Public Class Settings
 
         Public Sub SaveEditorSettings()
 
-            ' Lets Read local appData Settings.ini for  last used Settings as other programs use the file too
+            ' Lets Read local appData Settings.ini for last used Settings as
+            ' other programs use the file too
             If File.Exists(SettingsFile) Then
                 ini.Load(SettingsFile, True)
             End If
@@ -858,6 +879,7 @@ Public Class Settings
 #End Region
 
     End Class
+
     <CLSCompliant(True)>
     Public Class MantisConnectSettings
 
@@ -957,7 +979,8 @@ Public Class Settings
 #Region "Public Methods"
 
         Public Sub SaveSettings()
-            ' Lets Read local appData Settings.ini for  last used Settings as other programs use the file too
+            ' Lets Read local appData Settings.ini for last used Settings as
+            ' other programs use the file too
             If File.Exists(SettingsFile) Then
                 ini.Load(SettingsFile, True)
             End If

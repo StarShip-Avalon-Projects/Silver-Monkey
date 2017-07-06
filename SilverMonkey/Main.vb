@@ -791,9 +791,9 @@ Public Class Main
     ''' <param name="e">
     ''' </param>
     Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
-        'MsExport = New MS_Export()
-        'MsExport.Show()
-        'MsExport.Activate()
+        MsExport = New MS_Export()
+        MsExport.Show()
+        MsExport.Activate()
     End Sub
 
     Private Sub FormClose()

@@ -80,8 +80,10 @@
       <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.105.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
     <Reference Include="System.DirectoryServices" />
@@ -126,6 +128,7 @@
     <Compile Include="Controls\AboutBox2.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Controls\DA_AUtoCompleteMenu.vb" />
     <Compile Include="Controls\InputBoxFrm.Designer.vb">
       <DependentUpon>InputBoxFrm.vb</DependentUpon>
     </Compile>
@@ -137,6 +140,7 @@
     <Compile Include="MS_Edit.Designer.vb">
       <DependentUpon>MS_Edit.vb</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LineFinder\MsDsCustomeSorter.vb" />
     <Compile Include="MS_Edit.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -161,7 +165,6 @@
     <Compile Include="SplashScreen1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Wizard\ApplicationEvents.vb" />
     <Compile Include="Wizard\wMain.Designer.vb">
       <DependentUpon>wMain.vb</DependentUpon>
     </Compile>

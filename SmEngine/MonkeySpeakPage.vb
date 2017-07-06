@@ -121,7 +121,7 @@ Namespace Engine
         ''' <summary>
         ''' Export MonkeySpeak descriptions
         ''' </summary>
-        Public Sub Export()
+        Public Function Export() As Page
 
             Try
 
@@ -129,15 +129,15 @@ Namespace Engine
                 MS_Stared = 0
 
                 MsPage = MSEngine.LoadFromString("")
-                LoadLibrary(False)
+                LoadLibrary(False, True)
 
                 MS_Engine_Running = False
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
 
             End Try
-
-        End Sub
+            Return MsPage
+        End Function
 
         ''' <summary>
         ''' Loads monkey speak libraries
@@ -156,7 +156,7 @@ Namespace Engine
         ''' <returns>
         ''' reference to the active <see cref="MonkeySpeak.Page"/>
         ''' </returns>
-        Public Shadows Function LoadLibrary(ByRef LoadPlugins As Boolean) As Page
+        Public Shadows Function LoadLibrary(ByRef LoadPlugins As Boolean, ByVal silent As Boolean) As Page
             'Library Loaded?.. Get the Hell out of here
             If MS_Started() Then Return Me
             MS_Stared += 1
@@ -194,7 +194,7 @@ Namespace Engine
             For Each Library As Monkeyspeak.Libraries.AbstractBaseLibrary In LibList
                 Try
                     MsPage.LoadLibrary(Library)
-                    Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
+                    If Not silent Then Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
                 Catch ex As Exception
 
                     Dim e As New ErrorLogging(ex, Library)
@@ -251,7 +251,7 @@ Namespace Engine
                 ' Console.WriteLine("Execute (0:0)")
                 MS_Stared = 1
                 MsPage.Reset()
-                LoadLibrary(True)
+                LoadLibrary(False, False)
 
                 VariableList.Add("DREAMOWNER", Nothing)
                 VariableList.Add("DREAMNAME", Nothing)
