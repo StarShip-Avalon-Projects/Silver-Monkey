@@ -156,15 +156,6 @@ Public Class MS_Edit
         End SyncLock
     End Sub
 
-    Public Sub CloseFirstTab()
-
-        If WorkFileName(0) = "" And CanOpen(0) Then
-            CloseTab(0)
-            TabControl2.RePositionCloseButtons()
-        End If
-
-    End Sub
-
     Public Function FileTab(ByRef File As String) As Integer
         Dim f As String = Path.GetFileName(File)
         Dim p As String = Path.GetDirectoryName(File)
@@ -337,7 +328,6 @@ Public Class MS_Edit
         TabControl2.RePositionCloseButtons(TabControl2.SelectedTab)
         UpdateSegments()
         UpdateSegmentList()
-        CloseFirstTab()
     End Sub
 
     Public Function RegExEscapedSring(ByVal text As String) As String
@@ -800,39 +790,45 @@ Public Class MS_Edit
         SplitContainer3.Panel1Collapsed = True
     End Sub
 
-    Private Sub CloseAllButThis(ByRef i As Integer)
-        For j = TabControl2.TabPages.Count - 1 To 0 Step -1
-            If i <> j Then CloseTab(j)
-        Next
+    Private Sub CloseTab(TabBtn As Button)
+
+        If TabControl2.TabCount = 0 Then Exit Sub
+        Dim tb As TabPage = DirectCast(TabBtn.Tag, TabPage)
+
+        CloseTab(tb)
     End Sub
 
-    Private Sub CloseTab(ByVal i As Integer)
-        If i > TabControl2.TabCount - 1 Then Exit Sub
-        Dim fname As String = WorkFileName(i)
+    Private Sub CloseTab(tb As TabPage)
+
+        Dim TabPageIndex As Integer = TabControl2.TabPages.IndexOf(tb)
+        Dim fname As String = WorkFileName(TabPageIndex)
         If fname = "" Then
             fname = New_File_Tag
         End If
 
-        If Not CanOpen(i) Then
+        If Not CanOpen(TabPageIndex) Then
             Dim reply As DialogResult = MessageBox.Show(fname + " has been modified." + Environment.NewLine + "Save the changes?", "Warning",
       MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
 
             If reply = DialogResult.Yes Then
-                SaveMS_File(i)
+                SaveMS_File(TabPageIndex)
             ElseIf reply = DialogResult.Cancel Then
                 Exit Sub
             End If
 
         End If
-        TabControl2.TabPages.RemoveAt(i)
-        CanOpen.RemoveAt(i)
-        WorkFileName.RemoveAt(i)
-        WorkPath.RemoveAt(i)
-        frmTitle.RemoveAt(i)
-        SectionIdx.RemoveAt(i)
-        FullFile.RemoveAt(i)
-        TabSections.RemoveAt(i)
-        TabEditStyles.RemoveAt(i)
+
+        TabControl2.TabPages.Remove(tb)
+        CanOpen.RemoveAt(TabPageIndex)
+        WorkFileName.RemoveAt(TabPageIndex)
+        WorkPath.RemoveAt(TabPageIndex)
+        frmTitle.RemoveAt(TabPageIndex)
+        SectionIdx.RemoveAt(TabPageIndex)
+        FullFile.RemoveAt(TabPageIndex)
+        TabSections.RemoveAt(TabPageIndex)
+        TabEditStyles.RemoveAt(TabPageIndex)
+        TabControl2.RePositionCloseButtons()
+
         If TabControl2.TabPages.Count = 0 And Disposing = False Then
             AddNewEditorTab("", "", 0)
             NewFile(EditStyles.ms)
@@ -892,14 +888,17 @@ Public Class MS_Edit
 
     Private Sub FCloseAllTab_Click(sender As Object, e As EventArgs)
         Dim t As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
-        Dim i As Integer = Integer.Parse(t.Tag.ToString)
-        CloseAllButThis(i)
+        Dim CurrentTab As TabPage = TabControl2.SelectedTab
+        For Each tb As TabPage In TabControl2.TabPages
+            If Not tb Is CurrentTab Then
+                CloseTab(tb)
+            End If
+        Next
     End Sub
 
     Private Sub FCloseTab_Click(sender As Object, e As EventArgs)
         Dim t As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
-        Dim i As Integer = Integer.Parse(t.Tag.ToString)
-        CloseTab(i)
+        CloseTab(TabControl2.SelectedTab)
     End Sub
 
     Private Sub FindReplace()
@@ -1900,9 +1899,8 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
     Private Sub TabControl2_CloseButtonClick(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles TabControl2.CloseButtonClick
         e.Cancel = True
-        Dim t As Button = CType(sender, Button)
-        CloseTab(t.TabIndex)
-        TabControl2.RePositionCloseButtons()
+        Dim t As Button = DirectCast(sender, Button)
+        CloseTab(DirectCast(t.Tag, TabPage))
     End Sub
 
     Private Sub TabControl2_MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TabControl2.MouseDown
@@ -1930,7 +1928,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         ElseIf e.Button = Windows.Forms.MouseButtons.Middle Then
             For i As Integer = 0 To TabControl2.TabPages.Count - 1
                 If TabControl2.GetTabRect(i).Contains(e.X, e.Y) Then
-                    CloseTab(i)
+                    CloseTab(TabControl2.TabPages.Item(i))
                     Exit For
                 End If
             Next

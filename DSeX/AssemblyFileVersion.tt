@@ -5,7 +5,7 @@
     dim revisionNumber as integer
 	dim time as DateTime = DateTime.now
 	Dim format As String = "MMdd"
-	Dim YearFormat As String = "Y"
+	Dim YearFormat As String = "yyyy"
 	dim CurrentDate as string = time.ToString(format)
 	Dim CurrentYear as string = time.ToString(YearFormat)
     try
