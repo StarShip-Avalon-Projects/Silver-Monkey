@@ -69,7 +69,6 @@ Namespace Controls
                         btn.Location = New Point(rect.X + rect.Width - rect.Height - 2, rect.Y + 2)
                     Else
                         btn.BackColor = Color.FromKnownColor(KnownColor.ButtonFace)
-                        btn.ForeColor = Color.FromKnownColor(KnownColor.ButtonShadow)
                         btn.Size = New Size(rect.Height - 2, rect.Height - 2)
                         btn.Location = New Point(rect.X + rect.Width - rect.Height - 2, rect.Y + 2)
                     End If
@@ -90,7 +89,7 @@ Namespace Controls
                 ''       maybe by assigning images etc. Here I have not used
                 ''       images to keep things simple.
                 .Text = "X"
-                .FlatStyle = FlatStyle.Popup
+                .FlatStyle = FlatStyle.Flat
                 .BackColor = Color.FromKnownColor(KnownColor.ButtonFace)
                 .ForeColor = Color.White
                 .Font = New Font("Microsoft Sans Serif", 5, FontStyle.Bold)

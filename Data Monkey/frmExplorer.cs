@@ -143,8 +143,10 @@ namespace DataMonkey
         {
             if (SQLAreaTabControl.TabCount == 0)
                 return;
+
             SQLAreaTabControl.TabPages.Remove(tb);
             SQLAreaTabControl.RePositionCloseButtons();
+            GC.Collect();
             if (SQLAreaTabControl.TabPages.Count == 0 & Disposing == false)
             {
                 SQLAreaTabControl.TabPages.Add(GenerateTabPage());
@@ -390,6 +392,7 @@ namespace DataMonkey
             this.sqlStatementTextBox.CharWidth = 8;
             this.sqlStatementTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.sqlStatementTextBox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.sqlStatementTextBox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.sqlStatementTextBox.IsReplaceMode = false;
             this.sqlStatementTextBox.Location = new System.Drawing.Point(0, 0);
             this.sqlStatementTextBox.Name = "sqlStatementTextBox";
@@ -477,7 +480,7 @@ namespace DataMonkey
             this.SQLAreaTabControl.ShowCloseButtonOnTabs = true;
             this.SQLAreaTabControl.Size = new System.Drawing.Size(546, 160);
             this.SQLAreaTabControl.TabIndex = 0;
-            this.SQLAreaTabControl.CloseButtonClick += new CancelEventHandler(this.SQLAreaTabControl_CloseButtonClick);
+            this.SQLAreaTabControl.CloseButtonClick += new System.ComponentModel.CancelEventHandler(this.SQLAreaTabControl_CloseButtonClick);
             this.SQLAreaTabControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SQLAreaTabControl_MouseDown);
             // SqlResultsListView
             this.SqlResultsListView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -574,8 +577,7 @@ namespace DataMonkey
         {
             DatabaseTreeView.Nodes.Clear();
 
-            int LastSlash = ActiveDatabaseLocation.LastIndexOf("\\");
-            string DatabaseName = ActiveDatabaseLocation.Substring(LastSlash + 1, ActiveDatabaseLocation.Length - LastSlash - 1);
+            string DatabaseName = Path.GetFileNameWithoutExtension(ActiveDatabaseLocation);
 
             TreeNode topNode = new TreeNode();
             topNode.Text = DatabaseName;
@@ -596,7 +598,7 @@ namespace DataMonkey
                     string TableName = dr[0].ToString();
                     TreeNode tableNode = new TreeNode();
                     tableNode.Text = TableName;
-                    tableNode.Tag = TableName;
+                    tableNode.Tag = "Table";
                     tableNode.Nodes.Add(new TreeNode("Columns"));
 
                     tablesNode.Nodes.Add(tableNode);
@@ -633,7 +635,7 @@ namespace DataMonkey
             tempTabPage.Controls.Add(tempTextBox);
             tempTabPage.Location = new Point(4, 22);
             tempTabPage.Size = new Size(608, 158);
-            tempTabPage.Text = string.Format("SQL Command Box # {0}", SQLAreaTabControl.TabCount + 1);
+            tempTabPage.Text = string.Format("SQL Command {0}", SQLAreaTabControl.TabCount + 1);
 
             return tempTabPage;
         }
@@ -647,40 +649,40 @@ namespace DataMonkey
             SqlResultsListView.Items.Clear();
             SqlResultsListView.Columns.Clear();
 
-            if (ds != null)
+            if (ds == null || ds.Tables.Count == 0)
+                return;
+
+            TableName = tableName;
+            foreach (DataColumn dc in ds.Tables[0].Columns)
             {
-                TableName = tableName;
-                foreach (DataColumn dc in ds.Tables[0].Columns)
-                {
-                    SqlResultsListView.Columns.Add(dc.ColumnName, 50, HorizontalAlignment.Left);
-                }
-
-                int iCounter = 0;
-
-                foreach (DataRow dr in ds.Tables[0].Rows)
-                {
-                    SqlResultsListView.Items.Add(dr[0].ToString(), 0);
-
-                    for (int i = 1; i < dr.ItemArray.Length; i++)
-                    {
-                        SqlResultsListView.Items[iCounter].SubItems.Add(dr[i].ToString());
-                    }
-
-                    //-- Assign alternating backcolor
-                    if (iCounter % 2 == 0)
-                    {
-                        SqlResultsListView.Items[iCounter].BackColor = Color.AliceBlue;
-                    }
-
-                    iCounter++;
-                }
-
-                foreach (ColumnHeader ch in SqlResultsListView.Columns)
-                {
-                    ch.Width = -2;
-                }
-                SqlResultsListView.Visible = true;
+                SqlResultsListView.Columns.Add(dc.ColumnName, 50, HorizontalAlignment.Left);
             }
+
+            int iCounter = 0;
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                SqlResultsListView.Items.Add(dr[0].ToString(), 0);
+
+                for (int i = 1; i < dr.ItemArray.Length; i++)
+                {
+                    SqlResultsListView.Items[iCounter].SubItems.Add(dr[i].ToString());
+                }
+
+                //-- Assign alternating backcolor
+                if (iCounter % 2 == 0)
+                {
+                    SqlResultsListView.Items[iCounter].BackColor = Color.AliceBlue;
+                }
+
+                iCounter++;
+            }
+
+            foreach (ColumnHeader ch in SqlResultsListView.Columns)
+            {
+                ch.Width = -2;
+            }
+            SqlResultsListView.Visible = true;
         }
 
         #endregion BuildSqlResultsListView
@@ -947,25 +949,29 @@ namespace DataMonkey
 
         private void objOpenTableSQL_Click(object sender, EventArgs e)
         {
-            //GetTable Names
-            DataSet ds = null;
-            string sqlStatement = StatementBuilder.BuildTableOpenSql(DatabaseTreeView.SelectedNode.Text);
+            if (DatabaseTreeView.SelectedNode.Tag != null)
+                if (DatabaseTreeView.SelectedNode.Tag.ToString() == "Table")
+                {
+                    //GetTable Names
+                    DataSet ds = null;
+                    string sqlStatement = StatementBuilder.BuildTableOpenSql(DatabaseTreeView.SelectedNode.Text);
 
-            //Place sqlstatement into the text box
-            if (!string.IsNullOrEmpty(((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text))
-            {
-                SQLAreaTabControl.TabPages.Add(GenerateTabPage());
-                SQLAreaTabControl.SelectTab(SQLAreaTabControl.TabCount - 1);
-            }
-                ((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text = sqlStatement;
+                    //Place sqlstatement into the text box
+                    if (!string.IsNullOrEmpty(((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text))
+                    {
+                        SQLAreaTabControl.TabPages.Add(GenerateTabPage());
+                        SQLAreaTabControl.SelectTab(SQLAreaTabControl.TabCount - 1);
+                    }
+                    ((SilverMonkeyFCTB)SQLAreaTabControl.SelectedTab.Controls[0]).Text = sqlStatement;
 
-            //Parse Results
-            string LogMessage;
-            StatementParser.ReturnResults(sqlStatement, ActiveDatabaseLocation, ref ds, out LogMessage);
+                    //Parse Results
+                    string LogMessage;
+                    StatementParser.ReturnResults(sqlStatement, ActiveDatabaseLocation, ref ds, out LogMessage);
 
-            //Build ListView
-            BuildSqlResultsListView(ds, DatabaseTreeView.SelectedNode.Text);
-            StatusStripLog.Text = LogMessage;
+                    //Build ListView
+                    BuildSqlResultsListView(ds, DatabaseTreeView.SelectedNode.Text);
+                    StatusStripLog.Text = LogMessage;
+                }
         }
 
         private void objRemoveColumnSQL_Click(object sender, EventArgs e)
