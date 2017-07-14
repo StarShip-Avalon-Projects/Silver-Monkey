@@ -12,8 +12,7 @@ Namespace Engine.Libraries
     ''' This lib handles the basic channels, Emote, Say (Speech and Spoken
     ''' furcadia commands), Whispers
     ''' </para>
-    ''' <pra> Bot Testers: Be aware this class needs to be tested any way
-    ''' possible! </pra>
+    ''' <pra>Bot Testers: Be aware this class needs to be tested any way possible!</pra>
     ''' <para>
     ''' TODO: Upgrade to AngelCat style Channels and Reintegrate into the
     '''       engine. These channels may still work with the existing
@@ -599,7 +598,7 @@ Namespace Engine.Libraries
 
             '(5:42) start a new instance to Silver Monkey with botfile {..}.
             Add(New Trigger(TriggerCategory.Effect, 42), AddressOf StartNewBot,
-            "(5:42) start a new instance to Silver Monkey with botfile {..}.")
+            "(5:42) start a new instance to Silver Monkey with bot-file {..}.")
 
         End Sub
 

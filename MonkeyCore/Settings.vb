@@ -640,7 +640,7 @@ Public Class Settings
             For i As Integer = 1 To Count
                 Dim key As String = KeysIni.GetKeyValue("Init-Types", i.ToString)
                 Dim val As String = KeysIni.GetKeyValue("Indent-Lookup", key)
-                ini.SetKeyValue("Ident-LookUp", key, i.ToString)
+                ini.SetKeyValue("Indent-Lookup", key, i.ToString)
                 ini.SetKeyValue("Init-Types", i.ToString, key)
 
                 Dim dvalue As Integer = 0

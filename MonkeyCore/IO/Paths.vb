@@ -528,10 +528,9 @@ Public Class Paths
             End If
             Return Path.Combine(SilverMonkeyBotPath, FileToCheck)
         End If
-        If File.Exists(FileToCheck) Then
-            Return FileToCheck
-        End If
-        Return SilverMonkeyBotPath
+
+        Return FileToCheck
+
     End Function
 
 #End Region

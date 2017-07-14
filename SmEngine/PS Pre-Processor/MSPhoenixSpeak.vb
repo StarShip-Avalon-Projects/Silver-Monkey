@@ -142,7 +142,7 @@ Namespace Engine.Libraries
 
             Dim info As String = reader.ReadString
             Dim furre As String = reader.ReadString
-            Return sendServer("ps clear characer." + furre + "." + info)
+            Return sendServer("ps clear character." + furre + "." + info)
 
         End Function
 
@@ -159,7 +159,7 @@ Namespace Engine.Libraries
 
             Dim info As String = reader.ReadString
             Dim furre As String = Player.ShortName
-            Return sendServer("ps clear characer." + furre + "." + info)
+            Return sendServer("ps clear character." + furre + "." + info)
         End Function
 
         ''' <summary>
@@ -213,7 +213,7 @@ Namespace Engine.Libraries
 
             Dim info As String = reader.ReadString
             Dim furre As String = reader.ReadString
-            Return sendServer("ps set characer." + furre + "." + info)
+            Return sendServer("ps set character." + furre + "." + info)
 
         End Function
 
@@ -232,7 +232,7 @@ Namespace Engine.Libraries
 
             Dim info As String = reader.ReadString
             Dim furre As String = FurcadiaSession.Player.ShortName
-            Return sendServer("ps set characer." + furre + "." + info)
+            Return sendServer("ps set character." + furre + "." + info)
         End Function
 
         ''' <summary>
@@ -362,7 +362,7 @@ Namespace Engine.Libraries
         Function RemberPSInforFurreNamed(reader As TriggerReader) As Boolean
 
             Dim furre As String = reader.ReadString
-            Return sendServer("ps get characer." + furre + ".*")
+            Return sendServer("ps get character." + furre + ".*")
 
         End Function
 
@@ -379,7 +379,7 @@ Namespace Engine.Libraries
         Function RemberPSInforTrigFurre(reader As TriggerReader) As Boolean
 
             Dim furre As String = FurcadiaSession.Player.ShortName
-            Return sendServer("ps set characer." + furre + ".*")
+            Return sendServer("ps set character." + furre + ".*")
 
         End Function
 

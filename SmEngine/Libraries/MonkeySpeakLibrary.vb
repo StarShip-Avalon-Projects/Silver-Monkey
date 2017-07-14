@@ -19,7 +19,7 @@ Namespace Engine.Libraries
 
         ''' <summary>
         ''' <para>
-        ''' Comparasons are done with Fucadia Markup Stripped
+        ''' Comparisons are done with Fucadia Markup Stripped
         ''' </para>
         ''' </summary>
         ''' <param name="reader">

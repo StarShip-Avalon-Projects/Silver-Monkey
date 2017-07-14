@@ -833,6 +833,8 @@ Public Class Main
 
                 processStrt.Arguments = """" + f + """"
             End If
+        Else
+            processStrt.Arguments = String.Format("[0}", BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
         End If
         Process.Start(processStrt)
     End Sub
