@@ -170,7 +170,7 @@ Public Class BotSession : Inherits ProxySession
         GC.SuppressFinalize(Me)
     End Sub
 
-    Public Overloads Sub ParseServerChannel(ByRef data As String, ByVal Handled As Boolean)
+    Public Overrides Sub ParseServerChannel(data As String, Handled As Boolean)
         'Pass Stuff to Base Clqss before we can handle things here
         MyBase.ParseServerChannel(data, Handled)
 
@@ -184,6 +184,8 @@ Public Class BotSession : Inherits ProxySession
         Dim User As String = ""
         Dim Desc As String = ""
         Dim Text As String = ""
+
+        MSpage.SetVariable(MS_Name, Player.Name, True)
 
         If Channel = "@news" Or Channel = "@spice" Then
             Try
@@ -281,7 +283,7 @@ Public Class BotSession : Inherits ProxySession
                 '(<font color='dragonspeak'><img src='fsh://system.fsh:91' alt='@emit' /><channel name='@emit' /> Furcadian Academy</font>
                 RaiseEvent DisplayText(Text, EventArgs.Empty)
 
-                MSpage.SetVariable("MESSAGE", Text.Substring(5), True)
+                MSpage.SetVariable("MESSAGE", Player.Message, True)
                 ' Execute (0:21) When someone emits something
                 MSpage.Execute(21, 22, 23)
                 ' Execute (0:22) When someone emits {...}
@@ -341,7 +343,7 @@ Public Class BotSession : Inherits ProxySession
 
                     Channel = "say"
                     RaiseEvent DisplayText(User & " says, """ & Text & """", EventArgs.Empty)
-                    MSpage.SetVariable(MS_Name, Player.Name, True)
+
                     MSpage.SetVariable("MESSAGE", Player.Message, True)
                     ' Execute (0:5) When some one says something
                     MSpage.Execute(5, 6, 7, 18, 19, 20)
