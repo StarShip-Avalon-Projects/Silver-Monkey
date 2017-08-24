@@ -232,7 +232,7 @@ Namespace Engine
         End Function
 
         Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
-            If options.EngineEnable Then
+            If options.MS_Engine_Enable Then
 
                 For Each kv As KeyValuePair(Of String, Object) In VariableList
                     MsPage.SetVariable(kv.Key.ToUpper, kv.Value, True)

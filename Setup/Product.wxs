@@ -11,7 +11,7 @@
     Manufacturer="$(var.CompanyName)"
     Language="1033"
     UpgradeCode="A709F3A0-BEE3-403E-AC47-1FE1AD189C77">
-    <Package InstallerVersion="500" InstallPrivileges="elevated"  Compressed="yes" />
+    <Package InstallerVersion="400" InstallPrivileges="elevated"  Compressed="yes" />
 
     <UI>
       <UIRef Id="WixUI_Advanced" />

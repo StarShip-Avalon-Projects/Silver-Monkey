@@ -274,7 +274,7 @@ Public Class MS_Edit
         Text = frmTitle(TabControl2.SelectedIndex)
 
         Try
-            Dim reader As New StreamReader(WorkPath(TabControl2.SelectedIndex) + "/" + WorkFileName(TabControl2.SelectedIndex))
+            Dim reader As New StreamReader(Path.Combine(WorkPath(TabControl2.SelectedIndex), WorkFileName(TabControl2.SelectedIndex)))
             MS_Editor.Text = ""
             Do While reader.Peek <> -1
                 Dim line As String = reader.ReadLine
@@ -861,8 +861,7 @@ Public Class MS_Edit
         TabEditStyles(TabControl2.SelectedIndex) = EditStyles.ds
 
         SetLineTabs(TabControl2.SelectedIndex)
-        popupMenu.Enabled = False
-        popupMenu = New AutocompleteMenu(MS_Editor)
+        If Not popupMenu Is Nothing Then popupMenu.Dispose()
         popupMenu.Enabled = True
 
         popupMenu.SearchPattern = AutoCompleteSearchPattern
@@ -884,6 +883,38 @@ Public Class MS_Edit
 
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Close()
+    End Sub
+
+    ''' <summary>
+    ''' Export Highlighted code to HTML file
+    ''' </summary>
+    ''' <param name="sender">
+    ''' </param>
+    ''' <param name="e">
+    ''' </param>
+    Private Sub ExportToHTMLToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportToHTMLToolStripMenuItem.Click
+
+        With MSSaveDialog
+            .Filter = "HTML files|*.html"
+            If .ShowDialog = DialogResult.OK Then
+                Dim HtmlTitle As String = Path.GetFileNameWithoutExtension(.FileName)
+                Using Writer As New StreamWriter(.FileName)
+                    '' Dim body As String = System.Web.HttpUtility.HtmlDecode()
+                    Dim HtmlExportTemplate = String.Format(
+"<html>
+    <head>
+        <title>{0}</title>
+    </head>
+    <body>
+    {1}
+    </body>
+</html>", HtmlTitle, MS_Editor.Html)
+
+                    Writer.Write(HtmlExportTemplate)
+                End Using
+
+            End If
+        End With
     End Sub
 
     Private Sub FCloseAllTab_Click(sender As Object, e As EventArgs)
@@ -917,6 +948,13 @@ Public Class MS_Edit
         End Try
     End Sub
 
+    ''' <summary>
+    ''' Fix line indents for Dragon Speak and MonkeySpeak
+    ''' </summary>
+    ''' <param name="sender">
+    ''' </param>
+    ''' <param name="e">
+    ''' </param>
     Private Sub FindReplaceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FindReplaceToolStripMenuItem.Click
         FindReplace()
     End Sub
@@ -968,7 +1006,7 @@ Public Class MS_Edit
             Next
         Next
 
-        MS_Editor.Text = String.Join(vbCrLf, StrArray)
+        MS_Editor.Text = String.Join(Environment.NewLine, StrArray)
 
         MS_Editor.SelectionStart = insertPos
     End Sub
@@ -1254,7 +1292,8 @@ Public Class MS_Edit
         TabEditStyles(TabControl2.SelectedIndex) = EditStyles.ms
 
         SetLineTabs(TabControl2.SelectedIndex)
-        popupMenu.Enabled = False
+        If Not popupMenu Is Nothing Then popupMenu.Dispose()
+
         popupMenu = New AutocompleteMenu(MS_Editor)
         popupMenu.Enabled = True
 
@@ -2122,6 +2161,11 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         Return control
     End Function
 
+    ''' <summary>
+    ''' Selected FCTB by Current Selected Tab
+    ''' </summary>
+    ''' <returns>
+    ''' </returns>
     Public Function MS_Editor() As FastColoredTextBox
         If TabControl2.TabCount = 0 Then Return Nothing
         Return MS_Editor(TabControl2.SelectedIndex)

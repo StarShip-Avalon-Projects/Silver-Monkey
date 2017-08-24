@@ -81,6 +81,7 @@ Partial Class MS_Edit
         Me.ReferenceLinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MokeySpeakLinesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AbutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
@@ -169,7 +170,7 @@ Partial Class MS_Edit
         Me.panelTotalCharacters = New System.Windows.Forms.StatusBarPanel()
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.MokeySpeakLinesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExportToHTMLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditMenu.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -316,7 +317,7 @@ Partial Class MS_Edit
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewMonkeySpeakToolStripMenuItem, Me.OpenToolStripMenuItem, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.RestartBotEngineToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem, Me.CloseToolStripMenuItem, Me.CloseAllToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewMonkeySpeakToolStripMenuItem, Me.OpenToolStripMenuItem, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.RestartBotEngineToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem, Me.CloseToolStripMenuItem, Me.CloseAllToolStripMenuItem, Me.ExportToHTMLToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -585,6 +586,12 @@ Partial Class MS_Edit
         Me.ContentToolStripMenuItem.Name = "ContentToolStripMenuItem"
         Me.ContentToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
         Me.ContentToolStripMenuItem.Text = "Contents"
+        '
+        'MokeySpeakLinesToolStripMenuItem
+        '
+        Me.MokeySpeakLinesToolStripMenuItem.Name = "MokeySpeakLinesToolStripMenuItem"
+        Me.MokeySpeakLinesToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
+        Me.MokeySpeakLinesToolStripMenuItem.Text = "Mokey Speak Lines"
         '
         'AbutToolStripMenuItem
         '
@@ -1343,11 +1350,11 @@ Partial Class MS_Edit
         Me.ColumnHeader3.Text = ""
         Me.ColumnHeader3.Width = 640
         '
-        'MokeySpeakLinesToolStripMenuItem
+        'ExportToHTMLToolStripMenuItem
         '
-        Me.MokeySpeakLinesToolStripMenuItem.Name = "MokeySpeakLinesToolStripMenuItem"
-        Me.MokeySpeakLinesToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
-        Me.MokeySpeakLinesToolStripMenuItem.Text = "Mokey Speak Lines"
+        Me.ExportToHTMLToolStripMenuItem.Name = "ExportToHTMLToolStripMenuItem"
+        Me.ExportToHTMLToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
+        Me.ExportToHTMLToolStripMenuItem.Text = "Export to HTML"
         '
         'MS_Edit
         '
@@ -1549,4 +1556,5 @@ Partial Class MS_Edit
     Friend WithEvents ContentToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ReferenceLinksToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MokeySpeakLinesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ExportToHTMLToolStripMenuItem As ToolStripMenuItem
 End Class

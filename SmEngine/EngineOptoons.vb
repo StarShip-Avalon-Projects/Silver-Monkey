@@ -10,7 +10,6 @@ Namespace Engine
 #Region "Private Fields"
 
         Private _BotController As String
-        Private _EngineEnable As Boolean
         Private _MS_Engine_Enable As Boolean
         Private _MsFileName As String
 
@@ -33,7 +32,7 @@ Namespace Engine
             VariableCountLimit = 1000
             StringLengthLimit = Int32.MaxValue
             TimerLimit = 100
-
+            _MS_Engine_Enable = True
         End Sub
 
 #End Region
@@ -43,20 +42,6 @@ Namespace Engine
         Private _MonkeySpeakScriptFile As String
 
         Private _MonkeySpeakScriptVersion As Double
-
-        ''' <summary>
-        ''' MonkeySpeak Engine Enabled
-        ''' </summary>
-        ''' <returns>
-        ''' </returns>
-        Public Property EngineEnable() As Boolean
-            Get
-                Return _EngineEnable
-            End Get
-            Set(ByVal value As Boolean)
-                _EngineEnable = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' Monkey Speak Script File Name
