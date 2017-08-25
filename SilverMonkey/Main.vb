@@ -1066,10 +1066,7 @@ Public Class Main
     Private ActionCMD As String
 
     Private Sub _ne_Click(sender As System.Object, e As System.EventArgs) Handles _ne.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`m 9")
-        End If
+        SendCommandToServer("`m 9")
     End Sub
 
     Private Sub _ne_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _ne.MouseDown
@@ -1086,10 +1083,7 @@ Public Class Main
     End Sub
 
     Private Sub _nw_Click(sender As System.Object, e As System.EventArgs) Handles _nw.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`m 7")
-        End If
+        SendCommandToServer("`m 7")
     End Sub
 
     Private Sub _nw_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _nw.MouseDown
@@ -1108,24 +1102,15 @@ Public Class Main
     End Sub
 
     Private Sub ActionTmr_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ActionTmr.Tick
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer(ActionCMD)
-        End If
+        SendCommandToServer(ActionCMD)
     End Sub
 
     Private Sub BTN_TurnL_Click(sender As System.Object, e As System.EventArgs) Handles BTN_TurnL.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`<")
-        End If
+        SendCommandToServer("`<")
     End Sub
 
     Private Sub BTN_TurnR_Click(sender As System.Object, e As System.EventArgs) Handles BTN_TurnR.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`>")
-        End If
+        SendCommandToServer("`>")
     End Sub
 
     Private Sub BtnSit_stand_Lie_Click(sender As System.Object, e As System.EventArgs) Handles BtnSit_stand_Lie.Click
@@ -1139,22 +1124,16 @@ Public Class Main
             ElseIf BtnSit_stand_Lie.Text = "Sit" Then
                 BtnSit_stand_Lie.Text = "Stand"
             End If
-            FurcadiaSession.SendToServer("`lie")
+            SendCommandToServer("`lie")
         End If
     End Sub
 
     Private Sub get__Click(sender As Object, e As System.EventArgs) Handles get_.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`get")
-        End If
+        SendCommandToServer("`get")
     End Sub
 
     Private Sub se__Click(sender As Object, e As System.EventArgs) Handles se_.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`m 3")
-        End If
+        SendCommandToServer("`m 3")
     End Sub
 
     Private Sub se__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseDown
@@ -1170,11 +1149,20 @@ Public Class Main
         ActionCMD = ""
     End Sub
 
-    Private Sub sw__Click(sender As Object, e As System.EventArgs) Handles sw_.Click
+    ''' <summary>
+    ''' Sends a text command to the server if we are connected to server
+    ''' </summary>
+    ''' <param name="command">
+    ''' </param>
+    Private Sub SendCommandToServer(ByVal command As String)
         If Not FurcadiaSession Is Nothing Then
             If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`m 1")
+            FurcadiaSession.TextToServer(command)
         End If
+    End Sub
+
+    Private Sub sw__Click(sender As Object, e As System.EventArgs) Handles sw_.Click
+        SendCommandToServer("`m 1")
     End Sub
 
     Private Sub sw__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseDown
@@ -1190,21 +1178,15 @@ Public Class Main
     End Sub
 
     Private Sub use__Click(sender As Object, e As System.EventArgs) Handles use_.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`use")
-        End If
+        SendCommandToServer("`use")
     End Sub
 
 #End Region
 
-    Private Sub sendToServer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles sendToServer.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer(toServer.Text.Replace(vbCrLf, ""))
-            toServer.Clear()
-        End If
-
+    Private Sub sendToServer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+        Handles sendToServer.Click
+        SendCommandToServer(toServer.Text.Replace(vbCrLf, ""))
+        toServer.Clear()
     End Sub
 
     Private Sub toServer_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles toServer.KeyDown
@@ -1242,11 +1224,7 @@ Public Class Main
             e.Handled = True
             'trl Redo
         ElseIf (e.KeyCode = Keys.Enter) Then
-            If Not FurcadiaSession Is Nothing Then
-                If Not FurcadiaSession.IsServerConnected Then Exit Sub
-                FurcadiaSession.SendToServer(toServer.Text.Replace(vbLf, "").Replace(vbCr, ""))
-                toServer.Clear()
-            End If
+            SendCommandToServer(toServer.Text.Replace(vbLf, "").Replace(vbCr, ""))
 
             e.SuppressKeyPress = True
             e.Handled = True
