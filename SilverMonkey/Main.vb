@@ -1225,7 +1225,7 @@ Public Class Main
             'trl Redo
         ElseIf (e.KeyCode = Keys.Enter) Then
             SendCommandToServer(toServer.Text.Replace(vbLf, "").Replace(vbCr, ""))
-
+            toServer.Clear()
             e.SuppressKeyPress = True
             e.Handled = True
         End If
