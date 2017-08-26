@@ -1,20 +1,12 @@
 ﻿Imports System.IO
 Imports System.Text.RegularExpressions
+Imports Furcadia.Text.FurcadiaMarkup
 
 ''' <summary>
 ''' Log stream for normal log messages
 ''' </summary>
 <CLSCompliant(True)>
 Public Class LogStream
-
-#Region "Private Fields"
-
-    Private Const Iconfilter As String = "<img src='fsh://system.fsh:([^']*)'(.*?)/>"
-    Private Const IMGFILTER As String = "<img src='?""?(.*?)'?""? ?/?>"
-    Private Const NameFilter As String = "<name shortname='([^']*)' ?(.*?)?>([\x21-\x3B\=\x3F-\x7E]+)</name>"
-    Private Const URLFILTER As String = "<a href='?""?(.*?)'?""?>(.*?)</a>"
-
-#End Region
 
 #Region "logging functions"
 
@@ -67,11 +59,11 @@ Public Class LogStream
 
         Next
 
-        Dim URLS As MatchCollection = Regex.Matches(Message, URLFILTER)
+        Dim URLS As MatchCollection = Regex.Matches(Message, UrlFilter)
         For Each URL As Match In URLS
             build = build.Replace(URL.ToString, "URL:" + URL.Groups(2).Value + "(" + URL.Groups(1).Value + ")")
         Next
-        Dim IMGS As MatchCollection = Regex.Matches(Message, IMGFILTER)
+        Dim IMGS As MatchCollection = Regex.Matches(Message, ImgTagFilter)
         For Each IMG As Match In IMGS
             build = build.Replace(IMG.ToString, "img")
         Next
@@ -145,11 +137,11 @@ Public Class LogStream
 
         Next
 
-        Dim URLS As MatchCollection = Regex.Matches(Message, URLFILTER)
+        Dim URLS As MatchCollection = Regex.Matches(Message, UrlFilter)
         For Each URL As Match In URLS
             build = build.Replace(URL.ToString, "URL:" + URL.Groups(2).Value + "(" + URL.Groups(1).Value + ")")
         Next
-        Dim IMGS As MatchCollection = Regex.Matches(Message, IMGFILTER)
+        Dim IMGS As MatchCollection = Regex.Matches(Message, ImgTagFilter)
         For Each IMG As Match In IMGS
             build = build.Replace(IMG.ToString, "img")
         Next

@@ -30,10 +30,11 @@ Public Class ErrorLogging
 #Region "Public Constructors"
 
     ''' <summary>
-    '''
     ''' </summary>
-    ''' <param name="Ex"></param>
-    ''' <param name="ObjectThrowingError"></param>
+    ''' <param name="Ex">
+    ''' </param>
+    ''' <param name="ObjectThrowingError">
+    ''' </param>
     Public Sub New(ByRef Ex As System.Exception, ByVal ObjectThrowingError As Object)
         'Call Log Error
 
@@ -43,11 +44,13 @@ Public Class ErrorLogging
     End Sub
 
     ''' <summary>
-    '''
     ''' </summary>
-    ''' <param name="Ex"></param>
-    ''' <param name="ObjectThrowingError"></param>
-    ''' <param name="ObJectCheck"></param>
+    ''' <param name="Ex">
+    ''' </param>
+    ''' <param name="ObjectThrowingError">
+    ''' </param>
+    ''' <param name="ObJectCheck">
+    ''' </param>
     Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'Call Log Error
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
@@ -62,7 +65,8 @@ Public Class ErrorLogging
     ''' <summary>
     ''' Fullpath the error document was written to.
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' </returns>
     Public ReadOnly Property LogFile As String
         Get
             Return strErrorFilePath
@@ -74,158 +78,159 @@ Public Class ErrorLogging
 #Region "Public Methods"
 
     ''' <summary>
-    '''
     ''' </summary>
-    ''' <param name="ex"></param>
-    ''' <param name="ObjectThrowingError"></param>
+    ''' <param name="ex">
+    ''' </param>
+    ''' <param name="ObjectThrowingError">
+    ''' </param>
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
 
-        Dim ioFile As System.IO.StreamWriter = Nothing
-        Try
-            ioFile = New System.IO.StreamWriter(strErrorFilePath, False)
+        Using LogFile As System.IO.StreamWriter = New System.IO.StreamWriter(strErrorFilePath, False)
+            Try
 
-            '***********************************************************
-            '* Error Log Formatting
-            '***********************************************************
-            ioFile.WriteLine("-------------------------------------------------------")
-                ioFile.WriteLine("")
-                ioFile.WriteLine(My.Application.Info.ProductName & " Error Report")
-                ioFile.WriteLine(My.Application.Info.Version.ToString & " Product Version")
-                ioFile.WriteLine("")
-                ioFile.WriteLine("Date: " & Date.Now().ToString("d"))
-                ioFile.WriteLine("")
-                ioFile.WriteLine("System Details")
-                ioFile.WriteLine("-------------------------------------------------------")
-                ioFile.WriteLine("Windows Version: " & My.Computer.Info.OSFullName)
-                ioFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
+                '***********************************************************
+                '* Error Log Formatting
+                '***********************************************************
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("")
+                LogFile.WriteLine(My.Application.Info.ProductName & " Error Report")
+                LogFile.WriteLine(My.Application.Info.Version.ToString & " Product Version")
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Date: " & Date.Now().ToString("d"))
+                LogFile.WriteLine("")
+                LogFile.WriteLine("System Details")
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("Windows Version: " & My.Computer.Info.OSFullName)
+                LogFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
                 'Determine if 64-bit
                 If Environment.Is64BitOperatingSystem Then
-                    ioFile.WriteLine("64-Bit OS")
+                    LogFile.WriteLine("64-Bit OS")
                 Else
-                    ioFile.WriteLine("32-Bit OS")
+                    LogFile.WriteLine("32-Bit OS")
                 End If
 
                 If Environment.Is64BitProcess = True Then
-                    ioFile.WriteLine("64-Bit Process")
+                    LogFile.WriteLine("64-Bit Process")
                 Else
-                    ioFile.WriteLine("32-Bit Process")
+                    LogFile.WriteLine("32-Bit Process")
                 End If
 
-                ioFile.WriteLine("")
-                ioFile.WriteLine("Program Location: " & My.Application.Info.DirectoryPath)
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Program Location: " & My.Application.Info.DirectoryPath)
 
-                ioFile.WriteLine("")
-                ioFile.WriteLine("")
-                ioFile.WriteLine("Error Details")
-                ioFile.WriteLine("-------------------------------------------------------")
-                ioFile.WriteLine("Error: " & ex.Message)
-                ioFile.WriteLine("")
+                LogFile.WriteLine("")
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Error Details")
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("Error: " & ex.Message)
+                LogFile.WriteLine("")
                 If Not ex.InnerException Is Nothing Then
-                    ioFile.WriteLine("Inner Error: " & ex.InnerException.Message)
-                    ioFile.WriteLine("")
+                    LogFile.WriteLine("Inner Error: " & ex.InnerException.Message)
+                    LogFile.WriteLine("")
                 End If
-                ioFile.WriteLine("Source: " & ObjectThrowingError.ToString)
-                ioFile.WriteLine("")
+                LogFile.WriteLine("Source: " & ObjectThrowingError.ToString)
+                LogFile.WriteLine("")
                 Dim st As New StackTrace(ex, True)
-                ioFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("-------------------------------------------------------")
 
-                ioFile.WriteLine("Stack Trace: " & st.ToString())
-                ioFile.WriteLine("")
-                ioFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("Stack Trace: " & st.ToString())
+                LogFile.WriteLine("")
+                LogFile.WriteLine("-------------------------------------------------------")
                 If Not ex.InnerException Is Nothing Then
                     Dim stInner As New StackTrace(ex.InnerException, True)
-                    ioFile.WriteLine("Inner Stack Trace: " & stInner.ToString())
-                    ioFile.WriteLine("")
-                    ioFile.WriteLine("-------------------------------------------------------")
+                    LogFile.WriteLine("Inner Stack Trace: " & stInner.ToString())
+                    LogFile.WriteLine("")
+                    LogFile.WriteLine("-------------------------------------------------------")
                 End If
 
                 '***********************************************************
-
             Finally
-                If Not IsNothing(ioFile) Then
-                    ioFile.Close()
+                If Not IsNothing(LogFile) Then
+                    LogFile.Close()
                 End If
             End Try
-
+        End Using
     End Sub
+
     ''' <summary>
-    '''
     ''' </summary>
-    ''' <param name="ex"></param>
-    ''' <param name="ObjectThrowingError"></param>
-    ''' <param name="ObJectCheck"></param>
+    ''' <param name="ex">
+    ''' </param>
+    ''' <param name="ObjectThrowingError">
+    ''' </param>
+    ''' <param name="ObJectCheck">
+    ''' </param>
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        Dim ioFile As StreamWriter = Nothing
-        Try
+        Using LogFile As StreamWriter = New StreamWriter(strErrorFilePath, False)
+            Try
 
-            ioFile = New StreamWriter(strErrorFilePath, False)
+                '***********************************************************
+                '* Error Log Formatting
+                '***********************************************************
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("")
+                LogFile.WriteLine(My.Application.Info.ProductName & " Error Report")
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Date: " & Date.Now().ToString("d"))
+                LogFile.WriteLine("")
+                LogFile.WriteLine("System Details")
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("Windows Version: " & My.Computer.Info.OSFullName)
+                LogFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
+                'Determine if 64-bit
+                If Environment.Is64BitOperatingSystem Then
+                    LogFile.WriteLine("64-Bit OS")
+                Else
+                    LogFile.WriteLine("32-Bit OS")
+                End If
+                If Environment.Is64BitProcess = True Then
+                    LogFile.WriteLine("64-Bit Process")
+                Else
+                    LogFile.WriteLine("32-Bit Process")
+                End If
 
-            '***********************************************************
-            '* Error Log Formatting
-            '***********************************************************
-            ioFile.WriteLine("-------------------------------------------------------")
-            ioFile.WriteLine("")
-            ioFile.WriteLine(My.Application.Info.ProductName & " Error Report")
-            ioFile.WriteLine("")
-            ioFile.WriteLine("Date: " & Date.Now().ToString("d"))
-            ioFile.WriteLine("")
-            ioFile.WriteLine("System Details")
-            ioFile.WriteLine("-------------------------------------------------------")
-            ioFile.WriteLine("Windows Version: " & My.Computer.Info.OSFullName)
-            ioFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
-            'Determine if 64-bit
-            If Environment.Is64BitOperatingSystem Then
-                ioFile.WriteLine("64-Bit OS")
-            Else
-                ioFile.WriteLine("32-Bit OS")
-            End If
-            If Environment.Is64BitProcess = True Then
-                ioFile.WriteLine("64-Bit Process")
-            Else
-                ioFile.WriteLine("32-Bit Process")
-            End If
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Program Location: " & My.Application.Info.DirectoryPath)
 
-            ioFile.WriteLine("")
-            ioFile.WriteLine("Program Location: " & My.Application.Info.DirectoryPath)
+                LogFile.WriteLine("")
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Error Details")
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("Error: " & ex.Message)
+                LogFile.WriteLine("")
+                If Not IsNothing(ex.InnerException) Then
+                    LogFile.WriteLine("Inner Error: " & ex.InnerException.Message)
+                    LogFile.WriteLine("")
+                End If
+                LogFile.WriteLine("Source: " & ObjectThrowingError.ToString)
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Object Check: " & ObJectCheck.ToString)
+                LogFile.WriteLine("")
+                Dim st As New StackTrace(ex, True)
+                LogFile.WriteLine("Stack Frames: ")
+                For Each Frame As StackFrame In st.GetFrames()
+                    LogFile.WriteLine("Line:" + Frame.GetFileLineNumber().ToString + Frame.GetFileName().ToString, Frame.GetMethod().ToString)
+                Next
+                LogFile.WriteLine("-------------------------------------------------------")
 
-            ioFile.WriteLine("")
-            ioFile.WriteLine("")
-            ioFile.WriteLine("Error Details")
-            ioFile.WriteLine("-------------------------------------------------------")
-            ioFile.WriteLine("Error: " & ex.Message)
-            ioFile.WriteLine("")
-            If Not IsNothing(ex.InnerException) Then
-                ioFile.WriteLine("Inner Error: " & ex.InnerException.Message)
-                ioFile.WriteLine("")
-            End If
-            ioFile.WriteLine("Source: " & ObjectThrowingError.ToString)
-            ioFile.WriteLine("")
-            ioFile.WriteLine("Object Check: " & ObJectCheck.ToString)
-            ioFile.WriteLine("")
-            Dim st As New StackTrace(ex, True)
-            ioFile.WriteLine("Stack Frames: ")
-            For Each Frame As StackFrame In st.GetFrames()
-                ioFile.WriteLine("Line:" + Frame.GetFileLineNumber().ToString + Frame.GetFileName().ToString, Frame.GetMethod().ToString)
-            Next
-            ioFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("Stack Trace: " & st.ToString())
+                LogFile.WriteLine("")
+                LogFile.WriteLine("-------------------------------------------------------")
+                If Not ex.InnerException Is Nothing Then
+                    Dim stInner As New StackTrace(ex.InnerException, True)
+                    LogFile.WriteLine("Inner Stack Trace: " & stInner.ToString())
+                    LogFile.WriteLine("")
+                    LogFile.WriteLine("-------------------------------------------------------")
+                End If
 
-            ioFile.WriteLine("Stack Trace: " & st.ToString())
-            ioFile.WriteLine("")
-            ioFile.WriteLine("-------------------------------------------------------")
-            If Not ex.InnerException Is Nothing Then
-                Dim stInner As New StackTrace(ex.InnerException, True)
-                ioFile.WriteLine("Inner Stack Trace: " & stInner.ToString())
-                ioFile.WriteLine("")
-                ioFile.WriteLine("-------------------------------------------------------")
-            End If
-
-            '***********************************************************
-        Finally
-            If Not IsNothing(ioFile) Then
-                ioFile.Close()
-            End If
-        End Try
+                '***********************************************************
+            Finally
+                If Not IsNothing(LogFile) Then
+                    LogFile.Close()
+                End If
+            End Try
+        End Using
     End Sub
 
 #End Region
