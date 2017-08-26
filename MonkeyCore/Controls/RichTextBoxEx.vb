@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Runtime.InteropServices
+Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
 Imports MonkeyCore.Controls.Win32
@@ -30,7 +31,7 @@ Namespace Controls
             ' next to a non-standard link
             Me.DetectUrls = True
             Me._protocols = New List(Of String)
-            Me._protocols.AddRange(New String() {"http://", "furc://", "file://", "mailto://", "ftp://", "https://", "gopher://", "nntp://", "prospero://", "telnet://", "news://", "wais://", "outlook://"})
+            Me._protocols.AddRange(New String() {"http://", "help://", "furc://", "file://", "mailto://", "ftp://", "https://", "gopher://", "nntp://", "prospero://", "telnet://", "news://", "wais://", "outlook://"})
 
         End Sub
 
@@ -72,7 +73,7 @@ Namespace Controls
         End Property
 
         <Editor(("System.Windows.Forms.Design.StringCollectionEditor," _
-           + "System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),
+           + "System.Design, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),
            GetType(System.Drawing.Design.UITypeEditor))>
         Public Shadows Property DetectUrls() As Boolean
             Get
@@ -86,25 +87,6 @@ Namespace Controls
 #End Region
 
 #Region "Public Methods"
-
-        ''' <summary>
-        ''' Gets or sets the currently selected rich text format (rtf)
-        ''' formated text in the control.
-        ''' </summary>
-        ''' <returns>
-        ''' </returns>
-        Public Overloads Property SelectedRtf As String
-            Get
-                ' BeginUpdate()
-                Return MyBase.SelectedRtf
-                ' EndUpdate()
-            End Get
-            Set(value As String)
-                ' BeginUpdate()
-                MyBase.SelectedRtf = value
-                ' EndUpdate()
-            End Set
-        End Property
 
         Public Overrides Property Text As String
             Get
@@ -290,40 +272,29 @@ Namespace Controls
 
 #End Region
 
-        Public Overloads Property Rtf As String
-            Get
-                ' BeginUpdate()
-                Return MyBase.Rtf
-                ' EndUpdate()
-            End Get
-            Set(value As String)
-                ' BeginUpdate()
-                MyBase.Rtf = value
-                ' EndUpdate()
-
-            End Set
-        End Property
-
 #Region "Protected Methods"
 
-        Sub onSelectedTextChanged()
+        Protected Overrides Sub OnTextChanged(e As EventArgs)
+
+            ' BeginUpdate()
+            Dim HtmlRegex As String = "<a.*?href=['""](.*?)['""].*?>(.*?)</a>"
+            For Each p As String In _protocols
+
+                Dim matches As MatchCollection = Regex.Matches(Me.Text,
+                String.Format(HtmlRegex),
+                RegexOptions.IgnoreCase)
+                For Each m As Match In matches
+                    Dim position As Integer = Me.Text.IndexOf(m.Value)
+                    ' Dim link As New Regex(HtmlRegex, RegexOptions.IgnoreCase)
+                    Me.SelectionStart = position
+                    Me.SelectionLength = m.Value.Length
+                    Me.InsertLink(m.Groups(2).Value, m.Groups(1).Value, position)
+                Next
+
+            Next
+            ' EndUpdate()
 
         End Sub
-
-        'Protected Overrides Sub OnTextChanged(ByVal e As EventArgs)
-        '    ' /BeginUpdate()
-
-        ' MyBase.OnTextChanged(e) For Each p As String In _protocols
-
-        ' Dim matches As MatchCollection = Regex.Matches(Me.Text,
-        ' String.Format("<a.*?href=['""]({0}.*?)['""].*?>(.*?)</a>", p),
-        ' RegexOptions.IgnoreCase) For Each m As Match In matches If
-        ' m.Success Then Me.Select(m.Index, m.Length - 1)
-        ' Me.SetSelectionStyle(CFM_LINK, CFE_LINK) End If Next
-
-        '    Next
-        '    ' / EndUpdate()
-        'End Sub
 
 #End Region
 

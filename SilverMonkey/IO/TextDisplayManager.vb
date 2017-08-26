@@ -207,12 +207,13 @@ Public Class TextDisplayManager
         '<name shortname='acuara' forced>
         Dim MyIcon As MatchCollection = Regex.Matches(data, Iconfilter)
         For Each Icon As System.Text.RegularExpressions.Match In MyIcon
-            Select Case Icon.Groups(1).Value
-                Case "91"
-                    RftData.Replace(Icon.Value, "[#]")
-                Case Else
-                    RftData.Replace(Icon.Value, "[" + Icon.Groups(1).Value + "]")
-            End Select
+            RftData.Replace(Icon.Value, "")
+            'Select Case Icon.Groups(1).Value
+            '    Case "91"
+            '        RftData.Replace(Icon.Value, "[#]")
+            '    Case Else
+            '        RftData.Replace(Icon.Value, "[" + Icon.Groups(1).Value + "]")
+            'End Select
 
         Next
 
@@ -298,8 +299,8 @@ Public Class TextDisplayManager
         Dim Str As String = e.LinkText
         Try
             If Str.Contains("#") Then
-                Proto = Str.Substring(InStr(Str, "#"))
-                Proto = Proto.Substring(0, InStr(Proto, "://") - 1)
+                Proto = Str.Substring(Str.IndexOf("#"), Str.IndexOf("://"))
+
             End If
         Catch
         End Try
@@ -307,7 +308,7 @@ Public Class TextDisplayManager
             Case "http"
                 Try
                     lb.Cursor = System.Windows.Forms.Cursors.AppStarting
-                    Dim url As String = Str.Substring(InStr(Str, "#"))
+                    Dim url As String = Str.Substring(Str.IndexOf("#"))
                     Process.Start(url)
                 Catch ex As Exception
                 Finally
@@ -316,7 +317,7 @@ Public Class TextDisplayManager
             Case "https"
                 Try
                     lb.Cursor = System.Windows.Forms.Cursors.AppStarting
-                    Dim url As String = Str.Substring(InStr(Str, "#"))
+                    Dim url As String = Str.Substring(Str.IndexOf("#"))
                     Process.Start(url)
                 Catch ex As Exception
                 Finally
