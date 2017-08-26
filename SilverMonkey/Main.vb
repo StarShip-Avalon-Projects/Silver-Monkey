@@ -497,7 +497,7 @@ Public Class Main
                     BotConfig = NewBotWindow.BotConfig
 
                     SilverMonkeyBotPath = BotConfig.BotPath
-                    SilverMonkeyLogPath = Path.GetDirectoryName(BotConfig.LogPath)
+                    SilverMonkeyLogPath = BotConfig.LogPath
 
                     EditBotToolStripMenuItem.Enabled = True
                 End If
@@ -540,7 +540,7 @@ Public Class Main
         'BotSetup.ShowDialog()
         BotConfig = New BotOptions(sender.ToString())
         SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
-        SilverMonkeyLogPath = Path.GetDirectoryName(BotConfig.LogPath)
+        SilverMonkeyLogPath = BotConfig.LogPath
         My.Settings.LastBotFile = sender.ToString()
         EditBotToolStripMenuItem.Enabled = True
         My.Settings.Save()
@@ -1023,7 +1023,7 @@ Public Class Main
         Handles FurcadiaSession.ProcessServerChannelData
 
         If Not String.IsNullOrEmpty(InstructionObject.ChannelText) Then
-            sndDisplay(InstructionObject.ChannelText)
+            sndDisplay(InstructionObject.FormattedChannelText)
         ElseIf Not String.IsNullOrEmpty(InstructionObject.Player.Message) Then
             sndDisplay(InstructionObject.Player.Message)
         Else

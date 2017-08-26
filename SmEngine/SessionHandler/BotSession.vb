@@ -126,7 +126,6 @@ Public Class BotSession : Inherits ProxySession
     Public WithEvents MSpage As Monkeyspeak.Page = Nothing
 
     'Monkey Speak Bot specific Variables
-    Public BotLogStream As LogStream
 
     Public objHost As New smHost(Me)
     Private MainEngineOptions As BotOptions
@@ -174,9 +173,6 @@ Public Class BotSession : Inherits ProxySession
         'Pass Stuff to Base Clqss before we can handle things here
         MyBase.ParseServerChannel(data, Handled)
 
-        'Strip the trigger Character
-        ' page = engine.LoadFromString(cBot.MS_Script)
-        data = data.Remove(0, 1)
         Dim psCheck As Boolean = False
         Dim SpecTag As String = ""
         Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
@@ -662,19 +658,17 @@ Public Class BotSession : Inherits ProxySession
     ''' </para>
     ''' </summary>
     ''' <param name="data">
+    ''' raw server instruction
     ''' </param>
     ''' <param name="Handled">
+    ''' has this instruction been handled elsewhere
     ''' </param>
     Public Overrides Sub ParseServerData(ByVal data As String, ByVal Handled As Boolean)
         MyBase.ParseServerData(data, Handled)
         MSpage.SetVariable(MS_Name, Player.ShortName, True)
         MSpage.SetVariable("MESSAGE", Player.Message, True)
-        ' page = engine.LoadFromString(cBot.MS_Script)
-        If data = "Dragonroar" Then
-            ' BotConnecting() Login Sucessful
 
-            'Logs into Furcadia
-        ElseIf data = "&&&&&&&&&&&&&" Then
+        If data = "&&&&&&&&&&&&&" Then
             'We've connected to Furcadia
             'Stop the reconnection manager
             '(0:1) When the bot logs into furcadia,
@@ -714,7 +708,7 @@ Public Class BotSession : Inherits ProxySession
 
             'Spawn Avatar
         ElseIf data.StartsWith("<") And ServerConnectPhase = ConnectionPhase.Connected Then
-            MSpage.SetVariable(MS_Name, Player.ShortName, True)
+
             If IsConnectedCharacter Then
                 MSpage.Execute(28, 29, 24, 25)
             Else
@@ -762,8 +756,7 @@ Public Class BotSession : Inherits ProxySession
         ElseIf data.StartsWith("A") And ServerConnectPhase = ConnectionPhase.Connected Then 'And loggingIn = False
             Try
 
-                Dim Bot As FURRE = Dream.FurreList.Item(ConnectedFurre)
-                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(Bot.Position.x, Bot.Position.y)
+                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(ConnectedFurre.Position.x, ConnectedFurre.Position.y)
                 If VisableRectangle.X <= Me.Player.Position.x And VisableRectangle.Y <= Me.Player.Position.y And VisableRectangle.height >= Me.Player.Position.y And VisableRectangle.length >= Me.Player.Position.x Then
 
                     Player.Visible = True
