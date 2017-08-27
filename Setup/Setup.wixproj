@@ -9,7 +9,7 @@
     <ProductVersion>3.9</ProductVersion>
     <ProjectGuid>{c47e57dc-6454-4798-a802-8d0bac07e580}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>SetupProject</OutputName>
+    <OutputName>Setup</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\WiX Toolset\v4\wix.targets</WixTargetsPath>
     <WixToolPath>C:\Program Files (x86)\WiX Toolset v4.0\bin\</WixToolPath>
@@ -202,6 +202,9 @@
     </GetAssemblyIdentity>
     <CreateProperty Value="%(AsmInfo.Version)">
       <Output TaskParameter="Value" PropertyName="FileVersion" />
+    </CreateProperty>
+    <CreateProperty Value="%(AsmInfo.AssemblyInformationalVersion)">
+      <Output TaskParameter="Value" PropertyName="InfoVersion" />
     </CreateProperty>
     <CreateProperty Value="$(DefineConstants)">
       <Output TaskParameter="Value" PropertyName="DefineConstantsOriginal" />

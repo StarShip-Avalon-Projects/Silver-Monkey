@@ -117,6 +117,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfoersion.vb">
+      <Link>AssemblyInfoersion.vb</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
+    </Compile>
     <Compile Include="AboutBox1.Designer.vb">
       <DependentUpon>AboutBox1.vb</DependentUpon>
     </Compile>
@@ -125,9 +131,9 @@
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="AssemblyFileVersion.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="BotSetup.Designer.vb">
       <DependentUpon>BotSetup.vb</DependentUpon>
@@ -246,6 +252,11 @@
     <None Include="FileAssociation.nsh">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="..\AssemblyInfoersion.tt">
+      <Link>AssemblyInfoersion.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
+    </Content>
     <Content Include="metal.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

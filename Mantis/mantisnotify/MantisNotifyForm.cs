@@ -33,8 +33,9 @@ namespace Futureware.MantisNotify
         #region Private Fields
 
         /// <summary>
-        /// Eventually this should be saved between runs of the application. Till then a notification
-        /// will always be generated on the first check after running the tool.
+        /// Eventually this should be saved between runs of the application.
+        /// Till then a notification will always be generated on the first
+        /// check after running the tool.
         /// </summary>
         private static int lastIssueId;
 
@@ -111,8 +112,8 @@ namespace Futureware.MantisNotify
         #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify the contents of this method with the
-        /// code editor.
+        /// Required method for Designer support - do not modify the
+        /// contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -314,7 +315,8 @@ namespace Futureware.MantisNotify
 
                 if (issueId != lastIssueId)
                 {
-                    // set it here so that if user clicks on the text, the handler can open the issue.
+                    // set it here so that if user clicks on the text, the
+                    // handler can open the issue.
                     lastIssueId = issueId;
 
                     ShowIssue(issueId);
@@ -378,7 +380,7 @@ namespace Futureware.MantisNotify
         {
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.UseShellExecute = true;
-            startInfo.FileName = string.Format("{0}view.php?id={1}", MantisBugtrackerUrl, lastIssueId);
+            startInfo.FileName = string.Format("{0}/view.php?id={1}", MantisBugtrackerUrl, lastIssueId);
 
             try
             {
@@ -481,7 +483,8 @@ namespace Futureware.MantisNotify
                     return;
                 }
 
-                // set it here so that if user clicks on the text, the handler can open the issue.
+                // set it here so that if user clicks on the text, the
+                // handler can open the issue.
                 lastIssueId = issueId;
 
                 if (issueId > 0)

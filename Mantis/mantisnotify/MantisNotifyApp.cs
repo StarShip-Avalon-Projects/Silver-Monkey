@@ -14,6 +14,8 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Futureware.MantisNotify
@@ -36,13 +38,23 @@ namespace Futureware.MantisNotify
 
         #region Private Methods
 
+        private static Mutex mutex = new Mutex(true, "{8F6F0AC4-B9A1-45fd-A8CF-72F04E6BDE8F}");
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main()
+        private static void Main(string[] args)
         {
+            var param1 = args.SingleOrDefault(arg => arg.StartsWith("-v="));
+            var ErrorLox = args.Single(arg => arg.StartsWith("-e="));
+            //if (mutex.WaitOne(TimeSpan.Zero, true))
+            //{
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MantisNotifyForm());
+            //    mutex.ReleaseMutex();
+            //}
         }
 
         #endregion Private Methods

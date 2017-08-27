@@ -108,6 +108,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfoersion.vb">
+      <Link>AssemblyInfoersion.vb</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
+    </Compile>
     <Compile Include="advanceSearch.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -223,6 +229,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
+    <Content Include="..\AssemblyInfoersion.tt">
+      <Link>AssemblyInfoersion.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
+    </Content>
     <Content Include="Keys-MS.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

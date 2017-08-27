@@ -183,6 +183,17 @@
       <DependentUpon>RenameTable.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="AssemblyFileVersion.tt" />
+    <Content Include="..\AssemblyInfoersion.tt">
+      <Link>AssemblyInfoersion.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
+    </Content>
+    <Content Include="..\AssemblyInfoersion.vb">
+      <Link>AssemblyInfoersion.vb</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
+    </Content>
     <Content Include="Icons\Add.ico" />
     <Content Include="Icons\App.ico" />
   </ItemGroup>
@@ -212,6 +223,9 @@
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <PropertyGroup>

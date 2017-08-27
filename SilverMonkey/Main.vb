@@ -648,7 +648,6 @@ Public Class Main
     '    End If
     '    Return Str
     'End Function
-
     ''' <summary>
     ''' Update Dream Furre list
     ''' </summary>
@@ -974,7 +973,7 @@ Public Class Main
                 ConnectBot()
             End If
         End If
-
+        Throw New Exception("Test")
         'Paths.InstallPath = SettingsIni.GetKeyValue("Main", "FurcPath")
     End Sub
 

@@ -19,8 +19,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Futureware.MantisNotify</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>Futureware.MantisNotify.MantisNotifyApp</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
