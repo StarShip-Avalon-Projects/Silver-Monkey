@@ -199,6 +199,8 @@ Public Class TextDisplayManager
     ''' </returns>
     Public Function FormatText(ByVal data As String, ByVal newColor As fColorEnum) As String
 
+        SystemFshIcon(data, "")
+        ChannelTag(data, "[$1]")
         Dim RftData As New StringBuilder(System.Web.HttpUtility.HtmlDecode(data))
         Dim Names As MatchCollection = Regex.Matches(data, NameFilter)
         For Each Name As System.Text.RegularExpressions.Match In Names
@@ -206,16 +208,6 @@ Public Class TextDisplayManager
         Next
         '<name shortname='acuara' forced>
         Dim MyIcon As MatchCollection = Regex.Matches(data, Iconfilter)
-        For Each Icon As System.Text.RegularExpressions.Match In MyIcon
-            RftData.Replace(Icon.Value, "")
-            'Select Case Icon.Groups(1).Value
-            '    Case "91"
-            '        RftData.Replace(Icon.Value, "[#]")
-            '    Case Else
-            '        RftData.Replace(Icon.Value, "[" + Icon.Groups(1).Value + "]")
-            'End Select
-
-        Next
 
         RftData.Replace("|", " ")
 

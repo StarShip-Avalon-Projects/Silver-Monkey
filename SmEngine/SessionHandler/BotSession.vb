@@ -106,8 +106,6 @@ Public Class BotSession : Inherits ProxySession
 
     Public Event DisplayError(ByVal DisplayText As Object, ByVal e As EventArgs)
 
-    Public Event DisplayText(ByVal DisplayText As String, ByVal e As EventArgs)
-
 #End Region
 
 #Region "Private Fields"
@@ -175,7 +173,7 @@ Public Class BotSession : Inherits ProxySession
 
         Dim psCheck As Boolean = False
         Dim SpecTag As String = ""
-        Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
+        ' Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
         Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
         Dim User As String = ""
         Dim Desc As String = ""
@@ -183,14 +181,7 @@ Public Class BotSession : Inherits ProxySession
 
         MSpage.SetVariable(MS_Name, Player.Name, True)
 
-        If Channel = "@news" Or Channel = "@spice" Then
-            Try
-                RaiseEvent DisplayText(Text, EventArgs.Empty)
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-
-        ElseIf Color = "success" Then
+        If Color = "success" Then
             Try
                 If Text.Contains(" has been banished from your dreams.") Then
                     'banish <name> (online)
@@ -238,9 +229,6 @@ Public Class BotSession : Inherits ProxySession
                         MSpage.Execute(96)
                     End If
                 End If
-                RaiseEvent DisplayText(Text, EventArgs.Empty)
-                ' If IsClientConnected Then SendToClient("(" + data)
-                Exit Sub
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
@@ -277,7 +265,6 @@ Public Class BotSession : Inherits ProxySession
         ElseIf Channel = "@dragonspeak" OrElse Channel = "@emit" OrElse Color = "emit" Then
             Try
                 '(<font color='dragonspeak'><img src='fsh://system.fsh:91' alt='@emit' /><channel name='@emit' /> Furcadian Academy</font>
-                RaiseEvent DisplayText(Text, EventArgs.Empty)
 
                 MSpage.SetVariable("MESSAGE", Player.Message, True)
                 ' Execute (0:21) When someone emits something
@@ -300,11 +287,11 @@ Public Class BotSession : Inherits ProxySession
                         ' If cMain.Advertisment Then Exit Sub
                         AdRegEx = "\[(.*?)\] (.*?)</font>"
                         Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
-                        RaiseEvent DisplayText(Text, EventArgs.Empty)
+
                     Case "@announcements"
                         ' If cMain.Announcement Then Exit Sub
                         Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
-                        RaiseEvent DisplayText(Text, EventArgs.Empty)
+
                     Case Else
                 End Select
             Catch eX As Exception
@@ -314,7 +301,6 @@ Public Class BotSession : Inherits ProxySession
             ''SAY
         ElseIf Color = "myspeech" Then
             Try
-                RaiseEvent DisplayText(Text, EventArgs.Empty)
 
                 MSpage.SetVariable("MESSAGE", Player.Message, True)
                 ' Execute (0:5) When some one says something
@@ -328,34 +314,24 @@ Public Class BotSession : Inherits ProxySession
                 Dim logError As New ErrorLogging(eX, Me)
             End Try
 
-        ElseIf User <> "" And Channel = "" And Color = "" And Regex.Match(data, NameFilter).Groups(2).Value <> "forced" Then
+        ElseIf Channel = "say" Then
             Dim tt As System.Text.RegularExpressions.Match = Regex.Match(data, "\(you see(.*?)\)", RegexOptions.IgnoreCase)
-            Dim t As New Regex(NameFilter)
             If Not tt.Success Then
 
                 Try
-                    Text = t.Replace(data, "")
-                    Text = Text.Remove(0, 2)
-
-                    Channel = "say"
-                    RaiseEvent DisplayText(User & " says, """ & Text & """", EventArgs.Empty)
-
                     MSpage.SetVariable("MESSAGE", Player.Message, True)
-                    ' Execute (0:5) When some one says something
+                    ' (0:5) When some one says something
                     MSpage.Execute(5, 6, 7, 18, 19, 20)
-                    ' Execute (0:6) When some one says {...} Execute (0:7)
-                    ' When some one says something with {...} in it Execute
-                    ' (0:18) When someone says or emotes something Execute
-                    ' (0:19) When someone says or emotes {...} Execute
+                    ' (0:6) When some one says {...}
+                    '(0:7) When some one says something with {...} in it
+                    ' (0:18) When someone says or emotes something
+                    ' (0:19) When someone says or emotes {...}
                     ' (0:20) When someone says or emotes something with
                     ' {...} in it
                 Catch eX As Exception
                     Dim logError As New ErrorLogging(eX, Me)
 
                 End Try
-
-                ' If IsClientConnected Then SendToClient("(" + data)
-                Exit Sub
             Else
                 Try
                     'sndDisplay("You See '" & User & "'")
@@ -382,10 +358,8 @@ Public Class BotSession : Inherits ProxySession
                 Dim u As String = t.Match(data).Groups(1).ToString
                 Text = t.Match(data).Groups(2).ToString
                 If User = "" Then
-                    RaiseEvent DisplayText("You " & u & ", """ & Text & """", EventArgs.Empty)
                 Else
                     Text = Regex.Match(data, "shouts: (.*)</font>").Groups(1).ToString()
-                    RaiseEvent DisplayText(User & " shouts, """ & Text & """", EventArgs.Empty)
                 End If
                 If Not IsConnectedCharacter Then
                     MSpage.SetVariable("MESSAGE", Text, True)
@@ -402,12 +376,11 @@ Public Class BotSession : Inherits ProxySession
 
         ElseIf Color = "query" Then
             Dim QCMD As String = Regex.Match(data, "<a.*?href='command://(.*?)'>").Groups(1).ToString
-            'Player = NametoFurre(User, True)
+
             Select Case QCMD
                 Case "summon"
                     ''JOIN
                     Try
-                        RaiseEvent DisplayText(User & " requests to join you.", EventArgs.Empty)
                         If Not IsConnectedCharacter Then
                             MSpage.Execute(34, 35)
                         End If
@@ -417,7 +390,7 @@ Public Class BotSession : Inherits ProxySession
                 Case "join"
                     ''SUMMON
                     Try
-                        RaiseEvent DisplayText(User & " requests to summon you.", EventArgs.Empty)
+
                         If Not IsConnectedCharacter Then
                             MSpage.Execute(32, 33)
                         End If
@@ -427,7 +400,6 @@ Public Class BotSession : Inherits ProxySession
                 Case "follow"
                     ''LEAD
                     Try
-                        RaiseEvent DisplayText(User & " requests to lead.", EventArgs.Empty)
                         If Not IsConnectedCharacter Then
                             MSpage.Execute(36, 37)
                         End If
@@ -437,7 +409,6 @@ Public Class BotSession : Inherits ProxySession
                 Case "lead"
                     ''FOLLOW
                     Try
-                        RaiseEvent DisplayText(User & " requests the bot to follow.", EventArgs.Empty)
                         If Not IsConnectedCharacter Then
                             MSpage.Execute(38, 39)
                         End If
@@ -446,15 +417,13 @@ Public Class BotSession : Inherits ProxySession
                     End Try
                 Case "cuddle"
                     Try
-                        RaiseEvent DisplayText(User & " requests the bot to cuddle.", EventArgs.Empty)
-                        'If Not IsConnectedCharacter Then
-                        MSpage.Execute(40, 41)
-                        'End If
+
+                        If Not IsConnectedCharacter Then
+                            MSpage.Execute(40, 41)
+                        End If
                     Catch eX As Exception
                         Dim logError As New ErrorLogging(eX, Me)
                     End Try
-                Case Else
-                    RaiseEvent DisplayText("## Unknown " & Channel & "## " & data, EventArgs.Empty)
             End Select
 
             'NameFilter
@@ -462,13 +431,11 @@ Public Class BotSession : Inherits ProxySession
         ElseIf Color = "whisper" Then
             ''WHISPER
             Try
+                'TODO Refactor to FurcadiaMarkup
                 Dim WhisperFrom As String = Regex.Match(data, "whispers, ""(.*?)"" to you").Groups(1).Value
                 Dim WhisperTo As String = Regex.Match(data, "You whisper ""(.*?)"" to").Groups(1).Value
                 Dim WhisperDir As String = Regex.Match(data, String.Format("<name shortname='(.*?)' src='whisper-(.*?)'>")).Groups(2).Value
                 If WhisperDir = "from" Then
-                    'Player = NametoFurre(User, True)
-
-                    RaiseEvent DisplayText(User & " whispers""" & WhisperFrom & """ to you.", EventArgs.Empty)
 
                     If Not IsConnectedCharacter Then
                         MSpage.SetVariable("NAME", Player.Name, True)
@@ -481,7 +448,6 @@ Public Class BotSession : Inherits ProxySession
                     End If
                 Else
                     WhisperTo = WhisperTo.Replace("<wnd>", "")
-                    RaiseEvent DisplayText("You whisper""" & WhisperTo & """ to " & User & ".", EventArgs.Empty)
 
                 End If
             Catch eX As Exception
@@ -491,22 +457,19 @@ Public Class BotSession : Inherits ProxySession
         ElseIf Color = "warning" Then
 
             MSpage.Execute(801)
-            RaiseEvent DisplayText("::WARNING:: " & Text, EventArgs.Empty)
 
         ElseIf Color = "trade" Then
             Dim TextStr As String = Regex.Match(data, "\s<name (.*?)</name>").Groups(0).ToString()
             Text = Text.Substring(6)
             If User <> "" Then Text = " " & User & Text.Replace(TextStr, "")
-            RaiseEvent DisplayText(Text, EventArgs.Empty)
-            MSpage.SetVariable("MESSAGE", Text, True)
+
+            MSpage.SetVariable("MESSAGE", Player.Message, True)
             MSpage.Execute(46, 47, 48)
 
         ElseIf Color = "emote" Then
             Try
 
                 MSpage.SetVariable("MESSAGE", Player.Message, True)
-
-                RaiseEvent DisplayText(User & " " & Text, EventArgs.Empty)
 
                 If Not IsConnectedCharacter Then
 
@@ -534,8 +497,6 @@ Public Class BotSession : Inherits ProxySession
             ss = r.Match(Text)
             If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
 
-            RaiseEvent DisplayText("[" + ChanMatch.Groups(1).Value + "] " + User & ": " & Text, EventArgs.Empty)
-
         ElseIf Color = "notify" Then
             Dim NameStr As String = ""
             If Text.StartsWith("Players banished from your dreams: ") Then
@@ -558,8 +519,6 @@ Public Class BotSession : Inherits ProxySession
                 MSpage.SetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray), True)
 
             End If
-
-            RaiseEvent DisplayText("[notify> " & Text, EventArgs.Empty)
 
             MSpage.Execute(800)
 
@@ -594,10 +553,7 @@ Public Class BotSession : Inherits ProxySession
                 MSpage.Execute(95)
             End If
 
-            RaiseEvent DisplayText("Error:>> " & Text, EventArgs.Empty)
-
         ElseIf data.StartsWith("Communication") Then
-            RaiseEvent DisplayText("Error: Communication Error.  Aborting connection.", EventArgs.Empty)
             ' ProcExit = False
             'LogSaveTmr.Enabled = False
 
@@ -635,17 +591,11 @@ Public Class BotSession : Inherits ProxySession
                 MSpage.Execute(49)
 
             End If
-            RaiseEvent DisplayText(Text, EventArgs.Empty)
-
-        ElseIf data.StartsWith("PS") Then
 
         ElseIf data.StartsWith("(You enter the dream of") Then
             MSpage.SetVariable("DREAMNAME", "", True)
             MSpage.SetVariable("DREAMOWNER", data.Substring(24, data.Length - 2 - 24), True)
             MSpage.Execute(90, 91)
-            RaiseEvent DisplayText(data, EventArgs.Empty)
-        Else
-            RaiseEvent DisplayText(data, EventArgs.Empty)
 
         End If
 
@@ -818,7 +768,7 @@ Public Class BotSession : Inherits ProxySession
                 MSpage.Execute(90, 91)
             End If
 
-            'Process Channels Seperatly
+            'Process Channels Separately
         ElseIf data.StartsWith("(") Then
             If ThroatTired = True And data.StartsWith("(<font color='warning'>Your throat is tired. Try again in a few seconds.</font>") Then
 

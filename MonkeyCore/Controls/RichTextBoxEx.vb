@@ -3,6 +3,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
+Imports Furcadia.Text.FurcadiaMarkup
 Imports MonkeyCore.Controls.Win32
 
 Namespace Controls
@@ -277,15 +278,13 @@ Namespace Controls
         Protected Overrides Sub OnTextChanged(e As EventArgs)
 
             ' BeginUpdate()
-            Dim HtmlRegex As String = "<a.*?href=['""](.*?)['""].*?>(.*?)</a>"
             For Each p As String In _protocols
 
                 Dim matches As MatchCollection = Regex.Matches(Me.Text,
-                String.Format(HtmlRegex),
+                String.Format(UrlFilter),
                 RegexOptions.IgnoreCase)
                 For Each m As Match In matches
                     Dim position As Integer = Me.Text.IndexOf(m.Value)
-                    ' Dim link As New Regex(HtmlRegex, RegexOptions.IgnoreCase)
                     Me.SelectionStart = position
                     Me.SelectionLength = m.Value.Length
                     Me.InsertLink(m.Groups(2).Value, m.Groups(1).Value, position)

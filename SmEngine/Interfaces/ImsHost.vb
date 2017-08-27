@@ -11,7 +11,7 @@ Namespace Interfaces
         Property Data As String
         Property Dream As DREAM
         WriteOnly Property MsPage As MonkeySpeakPage
-        Property Player As FURRE
+        ReadOnly Property Player As FURRE
 
 #End Region
 
