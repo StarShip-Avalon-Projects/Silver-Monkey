@@ -132,6 +132,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfoersionCS.cs">
+      <Link>AssemblyInfoersionCS.cs</Link>
+    </Compile>
     <Compile Include="AboutBox1.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -229,11 +229,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
-    <Content Include="..\AssemblyInfoersion.tt">
+    <None Include="..\AssemblyInfoersion.tt">
       <Link>AssemblyInfoersion.tt</Link>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Keys-MS.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
