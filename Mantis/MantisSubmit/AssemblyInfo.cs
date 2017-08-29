@@ -22,13 +22,13 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("Mantis Submit Issues")]
-[assembly: AssemblyDescription("A tool to submit issues to a Mantis installation")]
+[assembly: AssemblyTitle("Bugtraq Submit Issues")]
+[assembly: AssemblyDescription("A tool to submit issues to Ts Projects BugTraq")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Futureware.Biz")]
-[assembly: AssemblyProduct("MantisConnect Notifier")]
-[assembly: AssemblyCopyright("Copyright 2004 Victor Boctor - Futureware")]
-[assembly: AssemblyTrademark("MantisConnect")]
+[assembly: AssemblyCompany("Starship Avalon Projects")]
+[assembly: AssemblyProduct("Bugtraq Submit")]
+[assembly: AssemblyCopyright("Copyright 2017 Starship Avalon Projects")]
+[assembly: AssemblyTrademark("Silver Monkeu=y")]
 [assembly: AssemblyCulture("")]
 
 //

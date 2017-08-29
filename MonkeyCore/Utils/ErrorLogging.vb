@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Imports MonkeyCore.Paths
-
+Imports SilverMonkey.BugTraqConnect.Libs
 ''' <summary>
 '''Error Logging Class
 '''<para>Author: Tim Wilson</para>
@@ -24,6 +24,7 @@ Public Class ErrorLogging
 #Region "Private Fields"
 
     Private ReadOnly strErrorFilePath As String
+    Public BugReport As ProjectReport
 
 #End Region
 
@@ -37,7 +38,7 @@ Public Class ErrorLogging
     ''' </param>
     Public Sub New(ByRef Ex As System.Exception, ByVal ObjectThrowingError As Object)
         'Call Log Error
-
+        BugReport = New ProjectReport
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
         strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         LogError(Ex, ObjectThrowingError.ToString())
@@ -54,6 +55,8 @@ Public Class ErrorLogging
     Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'Call Log Error
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
+        BugReport = New ProjectReport
+
         strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck.ToString)
     End Sub
@@ -85,6 +88,11 @@ Public Class ErrorLogging
     ''' </param>
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
 
+        BugReport.ProcuctName = My.Application.Info.ProductName
+        BugReport.AttachmentFile = strErrorFilePath
+        BugReport.ReportSubject = ex.Message
+
+
         Using LogFile As System.IO.StreamWriter = New System.IO.StreamWriter(strErrorFilePath, False)
             Try
 
@@ -94,7 +102,9 @@ Public Class ErrorLogging
                 LogFile.WriteLine("-------------------------------------------------------")
                 LogFile.WriteLine("")
                 LogFile.WriteLine(My.Application.Info.ProductName & " Error Report")
+
                 LogFile.WriteLine(My.Application.Info.Version.ToString & " Product Version")
+
                 LogFile.WriteLine(FileVersionInfo.GetVersionInfo(My.Application.Info.AssemblyName + ".exe").ProductVersion & " Informational Version")
                 LogFile.WriteLine("")
                 LogFile.WriteLine("Date: " & Date.Now().ToString("d"))
@@ -163,6 +173,11 @@ Public Class ErrorLogging
     ''' </param>
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
+
+        BugReport.ProcuctName = My.Application.Info.ProductName
+        BugReport.AttachmentFile = strErrorFilePath
+        BugReport.ReportSubject = ex.Message
+
         Using LogFile As StreamWriter = New StreamWriter(strErrorFilePath, False)
             Try
 

@@ -973,7 +973,7 @@ Public Class Main
                 ConnectBot()
             End If
         End If
-        Throw New Exception("Test")
+
         'Paths.InstallPath = SettingsIni.GetKeyValue("Main", "FurcPath")
     End Sub
 

@@ -117,6 +117,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfoersion.vb">
+      <Link>AssemblyInfoersion.vb</Link>
+    </Compile>
     <Compile Include="AboutBox1.Designer.vb">
       <DependentUpon>AboutBox1.vb</DependentUpon>
     </Compile>
@@ -312,7 +315,7 @@
       <Name>FurcadiaLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
-      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
+      <Project>{F4391F6F-0239-48E2-B415-C39A6D920303}</Project>
       <Name>BugTraqConnect</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">

@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.Diagnostics
+Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Devices
 Imports MonkeyCore
@@ -36,12 +37,12 @@ Namespace My
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
 
             Dim logError As New ErrorLogging(e.Exception, sender)
-            Dim SubmitError As New SubmitIssueForm(logError.LogFile)
-            'Dim dialog As DialogResult = MessageBox.Show("An error log has been saved to" + logError.LogFile + " Press Ok To continue ", "Unhandled Exception", MessageBoxButtons.OKCancel, MessageBoxIcon.Error)
-            'e.ExitApplication = (dialog = DialogResult.Cancel)
-            If SubmitError.ShowDialog = DialogResult.OK Then
-                ' File.Delete(logError.LogFile)
-            End If
+
+            Dim SendError As New ProcessStartInfo
+            SendError.Arguments = String.Join(" ", logError.BugReport.ToArray())
+            SendError.FileName = Path.Combine(Application.Info.DirectoryPath, "BugTragSubmit.exe")
+            Process.Start(SendError)
+
         End Sub
 
 #End Region
