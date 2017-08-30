@@ -55,7 +55,6 @@ using System.Runtime.InteropServices;
 // AssemblyKeyFile("..\\..\\mykey.snk")] (*) Delay Signing is an advanced option - see the Microsoft
 // .NET Framework documentation for more information on this.
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyName("")]
 [assembly: CLSCompliant(true)]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: Guid("3A6C3DF8-1269-477B-A291-3E404BDF46CF")]

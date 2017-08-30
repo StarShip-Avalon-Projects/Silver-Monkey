@@ -42,4 +42,4 @@ Imports System.Reflection
 <Assembly: AssemblyVersion("1.1.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
 <Assembly: AssemblyFileVersion("1.1.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
 <Assembly: AssemblyCopyright("Copyright © 2017 - <#= CurrentYear #>")>
-<Assembly: AssemblyInformationalVersion("2.19.x PreAlpha 5")>
+

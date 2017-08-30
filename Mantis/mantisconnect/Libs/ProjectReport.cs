@@ -16,8 +16,8 @@ namespace SilverMonkey.BugTraqConnect.Libs
         private string projectName;
         private string projectVersion;
         private string reportDescription;
-        private string reportSubject;
-
+        private string reportSummary;
+        private string severity;
         private bool projectVersionIsDefault;
         private bool projectNameIsDefault;
         //TODO: add CPU profile detection.
@@ -42,7 +42,8 @@ namespace SilverMonkey.BugTraqConnect.Libs
             var ErrorLog = args.SingleOrDefault(arg => arg.StartsWith("-e="));
             var description = args.SingleOrDefault(arg => arg.StartsWith("-d="));
             var reportSubject = args.SingleOrDefault(arg => arg.StartsWith("-s="));
-            var projectName = args.SingleOrDefault(arg => arg.StartsWith("-n="));
+            var ProjectNameVar = args.SingleOrDefault(arg => arg.StartsWith("-n="));
+            var ProjectSeverity = args.SingleOrDefault(arg => arg.StartsWith("-ss="));
 
             if (!string.IsNullOrEmpty(ErrorLog))
                 errorLogFile = ErrorLog.Replace("-e=", "");
@@ -54,13 +55,15 @@ namespace SilverMonkey.BugTraqConnect.Libs
             if (!string.IsNullOrEmpty(description))
                 reportDescription = description.Replace("-d=", "");
             if (!string.IsNullOrEmpty(reportSubject))
-                reportSubject = reportSubject.Replace("-s=", "");
+                reportSummary = reportSubject.Replace("-s=", "");
 
-            if (!string.IsNullOrEmpty(projectName))
+            if (!string.IsNullOrEmpty(ProjectNameVar))
             {
-                projectName = projectName.Replace("-n=", "");
+                projectName = ProjectNameVar.Replace("-n=", "");
                 projectNameIsDefault = false;
             }
+            if (!string.IsNullOrEmpty(ProjectSeverity))
+                severity = ProjectSeverity.Replace("-ss=", "");
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace SilverMonkey.BugTraqConnect.Libs
         /// </summary>
         public string ReportSubject
         {
-            get { return reportSubject; }
-            set { reportSubject = value; }
+            get { return reportSummary; }
+            set { reportSummary = value; }
         }
 
         /// <summary>
@@ -129,6 +132,18 @@ namespace SilverMonkey.BugTraqConnect.Libs
         }
 
         /// <summary>
+        /// How Sever the bug is
+        /// <para>
+        /// For Unhandled Exceptions, mark it as 'crass'
+        /// </para>
+        /// </summary>
+        public string Severity
+        {
+            get { return severity; }
+            set { severity = value; }
+        }
+
+        /// <summary>
         /// output command line argument array
         /// </summary>
         /// <returns>string array</returns>
@@ -142,10 +157,12 @@ namespace SilverMonkey.BugTraqConnect.Libs
                 ArgList.Add("-v=\"" + projectVersion + "\"");
             if (!string.IsNullOrEmpty(reportDescription))
                 ArgList.Add("-d=\"" + reportDescription + "\"");
-            if (!string.IsNullOrEmpty(reportSubject))
-                ArgList.Add("-s=\"" + reportSubject + "\"");
+            if (!string.IsNullOrEmpty(reportSummary))
+                ArgList.Add("-s=\"" + reportSummary + "\"");
             if (!string.IsNullOrEmpty(projectName) && !projectNameIsDefault)
                 ArgList.Add("-n=\"" + projectName + "\"");
+            if(!string.IsNullOrEmpty(severity))
+                ArgList.Add("-ss=\"" + severity + "\"");
 
             return ArgList.ToArray<string>();
         }

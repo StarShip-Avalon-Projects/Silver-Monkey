@@ -1,4 +1,5 @@
 Imports System.Collections.Generic
+Imports System.ComponentModel
 Imports System.Diagnostics
 
 Imports System.Windows.Forms
@@ -696,7 +697,10 @@ Public Class Main
         End If
         If FurcadiaSession Is Nothing Then
             FurcadiaSession = New BotSession(BotConfig)
+        ElseIf FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
+            FurcadiaSession = New BotSession(BotConfig)
         End If
+
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
 
             If BotConfig.log Then
@@ -856,31 +860,7 @@ Public Class Main
     End Sub
 
     Private Sub Main_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-        Try
 
-            Select Case Mainsettings.SysTray
-                Case CheckState.Checked
-                    Me.Visible = False
-                    e.Cancel = True
-                Case CheckState.Indeterminate
-                    If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing,
-                     MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
-                        Mainsettings.SysTray = CheckState.Checked
-                        Mainsettings.SaveMainSettings()
-                        Me.Visible = False
-                        e.Cancel = True
-                    Else
-                        e.Cancel = False
-                        FormClose()
-                    End If
-                Case CheckState.Unchecked
-                    FormClose()
-
-            End Select
-            'TimeUpdater.Abort()
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
     End Sub
 
     Private Sub Main_KeyUp(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyUp
@@ -1229,6 +1209,34 @@ Public Class Main
             e.Handled = True
         End If
 
+    End Sub
+
+    Private Sub Main_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Try
+
+            Select Case Mainsettings.SysTray
+                Case CheckState.Checked
+                    Me.Visible = False
+                    e.Cancel = True
+                Case CheckState.Indeterminate
+                    If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing,
+                     MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
+                        Mainsettings.SysTray = CheckState.Checked
+                        Mainsettings.SaveMainSettings()
+                        Me.Visible = False
+                        e.Cancel = True
+                    Else
+                        e.Cancel = False
+                        FormClose()
+                    End If
+                Case CheckState.Unchecked
+                    FormClose()
+
+            End Select
+            'TimeUpdater.Abort()
+        Catch eX As Exception
+            Dim logError As New ErrorLogging(eX, Me)
+        End Try
     End Sub
 
 End Class

@@ -24,7 +24,7 @@
 #IF DEBUG THEN
 
 #ELSE
-            revisionNumber += 1
+			revisionNumber += 1
 #END IF
         end using
     catch e as exception

@@ -13,26 +13,50 @@
 // </summary>
 //-----------------------------------------------------------------------
 
+using MonkeyCore;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
 namespace Futureware.MantisNotify
 {
+
+
     /// <summary>
     /// Application class for Mantis Notify application.
     /// </summary>
     public sealed class MantisNotifyApp
     {
-        #region Private Constructors
 
         /// <summary>
-        /// Private Constructor, no need to create instances of this class.
+        /// Handles the UnhandledException event of the CurrentDomain control.
         /// </summary>
-        private MantisNotifyApp()
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="UnhandledExceptionEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            var ex = (Exception)e.ExceptionObject;
+            var logError = new ErrorLogging(ref ex, sender);
+            var args = string.Join(" ", logError.BugReport.ToArray());
+            var Proc = Path.Combine(Application.StartupPath, "BugTragSubmit.exe");
+            Process.Start(Proc, args);
+
+            //Exception ex = (Exception)e.ExceptionObject;
+            //ErrorLogging logError = new ErrorLogging(ref ex, sender);
+            // MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //Process.Start(Paths.SilverMonkeyErrorLogPath);
+            // Application.Exit();
+
         }
+        #region Private Constructors
+
 
         #endregion Private Constructors
 
@@ -44,17 +68,15 @@ namespace Futureware.MantisNotify
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main(string[] args)
+        private static void Main()
         {
-            var param1 = args.SingleOrDefault(arg => arg.StartsWith("-v="));
-            var ErrorLox = args.Single(arg => arg.StartsWith("-e="));
-            //if (mutex.WaitOne(TimeSpan.Zero, true))
-            //{
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Application.Run(new MantisNotifyForm());
-            //    mutex.ReleaseMutex();
-            //}
+
         }
 
         #endregion Private Methods

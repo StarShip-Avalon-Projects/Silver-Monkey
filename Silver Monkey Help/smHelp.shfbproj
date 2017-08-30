@@ -206,7 +206,7 @@
     <PlugInConfigurations>
       <PlugInConfig id="Output Deployment" enabled="True">
         <configuration deleteAfterDeploy="false" verboseLogging="false">
-          <deploymentLocation id="help1x" location="D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Help">
+          <deploymentLocation id="help1x" location="..\build\Help">
             <userCredentials useDefault="true" userName="" password="" />
             <proxyCredentials useProxy="false" proxyServer="">
               <userCredentials useDefault="true" userName="" password="" />
@@ -236,13 +236,6 @@
               <userCredentials useDefault="true" userName="" password="" />
             </proxyCredentials>
           </deploymentLocation>
-        </configuration>
-      </PlugInConfig>
-      <PlugInConfig id="Additional Reference Links" enabled="True">
-        <configuration>
-          <targets>
-            <target htmlSdkLinkType="Msdn" helpViewerSdkLinkType="Id" websiteSdkLinkType="Msdn" helpFileProject="..\..\Furcadia Frame Work for Third Party Programs\Documentation\Furcadia Framework Help\Furcadia Framework Help.shfbproj" />
-          </targets>
         </configuration>
       </PlugInConfig>
     </PlugInConfigurations>

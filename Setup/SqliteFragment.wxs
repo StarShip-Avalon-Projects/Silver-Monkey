@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+
+    <ComponentGroup Directory="APPLICATIONFOLDER" Id="SQLite">
+      <Component Id="EntityFrameworkSqlServer" Guid="{ff852303-464b-414d-9a5b-1f431b1db645}">
+        <File Id="EntityFramework.SqlServer.dll" Source="$(var.SilverMonkey2.TargetDir)EntityFramework.SqlServer.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="SQLite" Guid="{CADE1E29-CD6A-4301-8315-C611156C6462}">
+        <File Id="System.Data.SQLite" Source="$(var.SilverMonkey2.TargetDir)System.Data.SQLite.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="EntityFramework" Guid="{ba158fe8-719e-4979-bbbb-85fd7cffd8f7}">
+        <File Id="EntityFramework.dll" Source="$(var.SilverMonkey2.TargetDir)EntityFramework.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      
+    </ComponentGroup>
+  </Fragment>
+</Wix>

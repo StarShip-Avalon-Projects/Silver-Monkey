@@ -235,7 +235,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -315,7 +317,7 @@
       <Name>FurcadiaLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
-      <Project>{F4391F6F-0239-48E2-B415-C39A6D920303}</Project>
+      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
       <Name>BugTraqConnect</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
@@ -352,7 +354,8 @@
   </PropertyGroup>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.101.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.101.0\build\net46\System.Data.SQLite.Core.targets')" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy  /Y  "$(SolutionDir)Build\Help\Silver Monkey.chm" "$(TargetDir)"</PreBuildEvent>
+    <PreBuildEvent>IF EXIST "$(SolutionDir)Build\Help\Silver Monkey.chm" (
+xcopy  /Y  "$(SolutionDir)Build\Help\Silver Monkey.chm" "$(TargetDir)")</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>

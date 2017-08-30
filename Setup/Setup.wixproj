@@ -15,7 +15,7 @@
     <WixToolPath>C:\Program Files (x86)\WiX Toolset v4.0\bin\</WixToolPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Installer\Debug\</OutputPath>
+    <OutputPath>..\Build\Installer\Debug\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug;</DefineConstants>
     <LeaveTemporaryFiles>False</LeaveTemporaryFiles>
@@ -61,7 +61,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Satellites</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
@@ -79,7 +79,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Mantis\mantisnotify\MantisNotify.csproj">

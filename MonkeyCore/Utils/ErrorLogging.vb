@@ -91,6 +91,7 @@ Public Class ErrorLogging
         BugReport.ProcuctName = My.Application.Info.ProductName
         BugReport.AttachmentFile = strErrorFilePath
         BugReport.ReportSubject = ex.Message
+        BugReport.Severity = "crash"
 
 
         Using LogFile As System.IO.StreamWriter = New System.IO.StreamWriter(strErrorFilePath, False)
@@ -177,6 +178,7 @@ Public Class ErrorLogging
         BugReport.ProcuctName = My.Application.Info.ProductName
         BugReport.AttachmentFile = strErrorFilePath
         BugReport.ReportSubject = ex.Message
+        BugReport.Severity = "crash"
 
         Using LogFile As StreamWriter = New StreamWriter(strErrorFilePath, False)
             Try
