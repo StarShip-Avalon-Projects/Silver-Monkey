@@ -38,7 +38,6 @@ Public Class ErrorLogging
     ''' </param>
     Public Sub New(ByRef Ex As System.Exception, ByVal ObjectThrowingError As Object)
         'Call Log Error
-        BugReport = New ProjectReport
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
         strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         LogError(Ex, ObjectThrowingError.ToString())
@@ -55,7 +54,7 @@ Public Class ErrorLogging
     Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'Call Log Error
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        BugReport = New ProjectReport
+
 
         strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck.ToString)
@@ -87,11 +86,8 @@ Public Class ErrorLogging
     ''' <param name="ObjectThrowingError">
     ''' </param>
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
+        BugReport = New ProjectReport
 
-        BugReport.ProcuctName = My.Application.Info.ProductName
-        BugReport.AttachmentFile = strErrorFilePath
-        BugReport.ReportSubject = ex.Message
-        BugReport.Severity = "crash"
 
 
         Using LogFile As System.IO.StreamWriter = New System.IO.StreamWriter(strErrorFilePath, False)
@@ -162,6 +158,16 @@ Public Class ErrorLogging
                 End If
             End Try
         End Using
+
+
+        Try
+            BugReport.ProcuctName = My.Application.Info.ProductName
+            BugReport.AttachmentFile = strErrorFilePath
+            BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
+            BugReport.Severity = "crash"
+        Catch
+        End Try
+
     End Sub
 
     ''' <summary>
@@ -174,12 +180,7 @@ Public Class ErrorLogging
     ''' </param>
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-
-        BugReport.ProcuctName = My.Application.Info.ProductName
-        BugReport.AttachmentFile = strErrorFilePath
-        BugReport.ReportSubject = ex.Message
-        BugReport.Severity = "crash"
-
+        BugReport = New ProjectReport
         Using LogFile As StreamWriter = New StreamWriter(strErrorFilePath, False)
             Try
 
@@ -251,6 +252,14 @@ Public Class ErrorLogging
                 End If
             End Try
         End Using
+
+        Try
+            BugReport.ProcuctName = My.Application.Info.ProductName
+            BugReport.AttachmentFile = strErrorFilePath
+            BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
+            BugReport.Severity = "crash"
+        Catch
+        End Try
     End Sub
 
 #End Region

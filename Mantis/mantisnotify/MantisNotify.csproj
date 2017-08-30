@@ -135,6 +135,11 @@
     <Compile Include="TaskbarNotifier.cs">
       <SubType>Form</SubType>
     </Compile>
+    <None Include="AssemblyFileVersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyFileVersion1.cs</LastGenOutput>
+      <CustomToolNamespace>TextTemplatingFileGenerator</CustomToolNamespace>
+    </None>
     <EmbeddedResource Include="close.bmp" />
     <EmbeddedResource Include="MantisNotifyForm.resx">
       <DependentUpon>MantisNotifyForm.cs</DependentUpon>
@@ -180,6 +185,9 @@
       <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
       <Name>BugTraqConnect</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

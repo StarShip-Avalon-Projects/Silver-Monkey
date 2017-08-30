@@ -109,8 +109,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SilverMonkeyEngine", "SmEng
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MantisSubmit", "Mantis\MantisSubmit\MantisSubmit.csproj", "{580C279D-3855-45F7-8EE2-BB036A1CA4A4}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup2", "Setup2\Setup2.wixproj", "{3E828EF7-3381-4870-86EF-52FB6B313D3E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1063,40 +1061,6 @@ Global
 		{580C279D-3855-45F7-8EE2-BB036A1CA4A4}.Wix|x64.Build.0 = Release|Any CPU
 		{580C279D-3855-45F7-8EE2-BB036A1CA4A4}.Wix|x86.ActiveCfg = Release|Any CPU
 		{580C279D-3855-45F7-8EE2-BB036A1CA4A4}.Wix|x86.Build.0 = Release|Any CPU
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Debug|ARM.ActiveCfg = Debug|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Debug|x64.ActiveCfg = Debug|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Debug|x86.ActiveCfg = Debug|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Debug|x86.Build.0 = Debug|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Release|Any CPU.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Release|ARM.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Release|Mixed Platforms.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Release|x64.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Release|x86.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Release|x86.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Special|Any CPU.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Special|Any CPU.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Special|ARM.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Special|ARM.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Special|Mixed Platforms.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Special|Mixed Platforms.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Special|x64.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Special|x64.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Special|x86.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Special|x86.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Wix|Any CPU.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Wix|Any CPU.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Wix|ARM.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Wix|ARM.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Wix|Mixed Platforms.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Wix|Mixed Platforms.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Wix|x64.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Wix|x64.Build.0 = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Wix|x86.ActiveCfg = Release|x86
-		{3E828EF7-3381-4870-86EF-52FB6B313D3E}.Wix|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

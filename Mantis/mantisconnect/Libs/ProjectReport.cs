@@ -20,6 +20,7 @@ namespace SilverMonkey.BugTraqConnect.Libs
         private string severity;
         private bool projectVersionIsDefault;
         private bool projectNameIsDefault;
+        private bool severityIsDefault;
         //TODO: add CPU profile detection.
 
         public ProjectReport()
@@ -30,6 +31,9 @@ namespace SilverMonkey.BugTraqConnect.Libs
 
             projectName = Application.ProductName;
             projectNameIsDefault = true;
+
+            severity = "minor";
+            severityIsDefault = true;
         }
 
         /// <summary>
@@ -63,7 +67,10 @@ namespace SilverMonkey.BugTraqConnect.Libs
                 projectNameIsDefault = false;
             }
             if (!string.IsNullOrEmpty(ProjectSeverity))
+            {
                 severity = ProjectSeverity.Replace("-ss=", "");
+                severityIsDefault = false;
+            }
         }
 
         /// <summary>
@@ -140,7 +147,11 @@ namespace SilverMonkey.BugTraqConnect.Libs
         public string Severity
         {
             get { return severity; }
-            set { severity = value; }
+            set
+            {
+                severity = value;
+                severityIsDefault = false;
+            }
         }
 
         /// <summary>
@@ -161,7 +172,7 @@ namespace SilverMonkey.BugTraqConnect.Libs
                 ArgList.Add("-s=\"" + reportSummary + "\"");
             if (!string.IsNullOrEmpty(projectName) && !projectNameIsDefault)
                 ArgList.Add("-n=\"" + projectName + "\"");
-            if(!string.IsNullOrEmpty(severity))
+            if (!string.IsNullOrEmpty(severity) && !severityIsDefault)
                 ArgList.Add("-ss=\"" + severity + "\"");
 
             return ArgList.ToArray<string>();

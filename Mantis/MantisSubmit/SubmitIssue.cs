@@ -188,16 +188,16 @@ namespace Futureware.MantisSubmit
             // 
             // summaryTextBox
             // 
-            this.summaryTextBox.Location = new System.Drawing.Point(221, 577);
+            this.summaryTextBox.Location = new System.Drawing.Point(136, 282);
             this.summaryTextBox.Name = "summaryTextBox";
-            this.summaryTextBox.Size = new System.Drawing.Size(1049, 38);
+            this.summaryTextBox.Size = new System.Drawing.Size(646, 26);
             this.summaryTextBox.TabIndex = 7;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(70, 568);
+            this.label1.Location = new System.Drawing.Point(12, 282);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(260, 54);
+            this.label1.Size = new System.Drawing.Size(116, 33);
             this.label1.TabIndex = 1;
             this.label1.Text = "Summary";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -205,18 +205,18 @@ namespace Futureware.MantisSubmit
             // submitButton
             // 
             this.submitButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.submitButton.Location = new System.Drawing.Point(732, 1192);
+            this.submitButton.Location = new System.Drawing.Point(533, 604);
             this.submitButton.Name = "submitButton";
-            this.submitButton.Size = new System.Drawing.Size(195, 55);
+            this.submitButton.Size = new System.Drawing.Size(120, 33);
             this.submitButton.TabIndex = 9;
             this.submitButton.Text = "Submit";
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(546, 341);
+            this.label2.Location = new System.Drawing.Point(317, 159);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(260, 50);
+            this.label2.Size = new System.Drawing.Size(160, 31);
             this.label2.TabIndex = 3;
             this.label2.Text = "Priority";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -224,24 +224,24 @@ namespace Futureware.MantisSubmit
             // priorityComboBox
             // 
             this.priorityComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.priorityComboBox.Location = new System.Drawing.Point(762, 348);
+            this.priorityComboBox.Location = new System.Drawing.Point(483, 161);
             this.priorityComboBox.Name = "priorityComboBox";
-            this.priorityComboBox.Size = new System.Drawing.Size(457, 39);
+            this.priorityComboBox.Size = new System.Drawing.Size(281, 28);
             this.priorityComboBox.TabIndex = 4;
             // 
             // severityComboBox
             // 
             this.severityComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.severityComboBox.Location = new System.Drawing.Point(762, 409);
+            this.severityComboBox.Location = new System.Drawing.Point(483, 195);
             this.severityComboBox.Name = "severityComboBox";
-            this.severityComboBox.Size = new System.Drawing.Size(457, 39);
+            this.severityComboBox.Size = new System.Drawing.Size(281, 28);
             this.severityComboBox.TabIndex = 5;
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(536, 402);
+            this.label3.Location = new System.Drawing.Point(317, 193);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(260, 50);
+            this.label3.Size = new System.Drawing.Size(160, 31);
             this.label3.TabIndex = 5;
             this.label3.Text = "Severity";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -249,42 +249,42 @@ namespace Futureware.MantisSubmit
             // reproducibilityComboBox
             // 
             this.reproducibilityComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.reproducibilityComboBox.Location = new System.Drawing.Point(762, 467);
+            this.reproducibilityComboBox.Location = new System.Drawing.Point(483, 229);
             this.reproducibilityComboBox.Name = "reproducibilityComboBox";
-            this.reproducibilityComboBox.Size = new System.Drawing.Size(457, 39);
+            this.reproducibilityComboBox.Size = new System.Drawing.Size(281, 28);
             this.reproducibilityComboBox.TabIndex = 6;
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(525, 460);
+            this.label4.Location = new System.Drawing.Point(317, 227);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(260, 50);
+            this.label4.Size = new System.Drawing.Size(160, 31);
             this.label4.TabIndex = 7;
             this.label4.Text = "Reproducibility";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(63, 676);
+            this.label5.Location = new System.Drawing.Point(12, 315);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(172, 55);
+            this.label5.Size = new System.Drawing.Size(106, 34);
             this.label5.TabIndex = 10;
             this.label5.Text = "Description";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // descriptionTextBox
             // 
-            this.descriptionTextBox.Location = new System.Drawing.Point(241, 676);
+            this.descriptionTextBox.Location = new System.Drawing.Point(136, 319);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(1029, 289);
+            this.descriptionTextBox.Size = new System.Drawing.Size(634, 177);
             this.descriptionTextBox.TabIndex = 8;
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(85, 148);
+            this.label6.Location = new System.Drawing.Point(52, 91);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(260, 50);
+            this.label6.Size = new System.Drawing.Size(160, 30);
             this.label6.TabIndex = 11;
             this.label6.Text = "Project";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -292,25 +292,25 @@ namespace Futureware.MantisSubmit
             // label7
             // 
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(83, 38);
+            this.label7.Location = new System.Drawing.Point(51, 23);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(939, 93);
+            this.label7.Size = new System.Drawing.Size(578, 57);
             this.label7.TabIndex = 13;
             this.label7.Text = "Ts Projects Bugtraq Submit";
             // 
             // versionComboBox
             // 
             this.versionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.versionComboBox.Location = new System.Drawing.Point(762, 208);
+            this.versionComboBox.Location = new System.Drawing.Point(483, 93);
             this.versionComboBox.Name = "versionComboBox";
-            this.versionComboBox.Size = new System.Drawing.Size(457, 39);
+            this.versionComboBox.Size = new System.Drawing.Size(281, 28);
             this.versionComboBox.TabIndex = 2;
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(546, 201);
+            this.label8.Location = new System.Drawing.Point(317, 91);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(260, 50);
+            this.label8.Size = new System.Drawing.Size(160, 31);
             this.label8.TabIndex = 16;
             this.label8.Text = "Version";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -318,25 +318,25 @@ namespace Futureware.MantisSubmit
             // categoryComboBox
             // 
             this.categoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.categoryComboBox.Location = new System.Drawing.Point(762, 280);
+            this.categoryComboBox.Location = new System.Drawing.Point(483, 127);
             this.categoryComboBox.Name = "categoryComboBox";
-            this.categoryComboBox.Size = new System.Drawing.Size(457, 39);
+            this.categoryComboBox.Size = new System.Drawing.Size(281, 28);
             this.categoryComboBox.TabIndex = 3;
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(546, 273);
+            this.label9.Location = new System.Drawing.Point(317, 123);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(260, 50);
+            this.label9.Size = new System.Drawing.Size(160, 31);
             this.label9.TabIndex = 18;
             this.label9.Text = "Category";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblCustomField1
             // 
-            this.lblCustomField1.Location = new System.Drawing.Point(12, 990);
+            this.lblCustomField1.Location = new System.Drawing.Point(7, 502);
             this.lblCustomField1.Name = "lblCustomField1";
-            this.lblCustomField1.Size = new System.Drawing.Size(260, 55);
+            this.lblCustomField1.Size = new System.Drawing.Size(123, 33);
             this.lblCustomField1.TabIndex = 19;
             this.lblCustomField1.Text = "Custom Field 1";
             this.lblCustomField1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -344,24 +344,24 @@ namespace Futureware.MantisSubmit
             // firstCustomFieldTextBox
             // 
             this.firstCustomFieldTextBox.Enabled = false;
-            this.firstCustomFieldTextBox.Location = new System.Drawing.Point(221, 990);
+            this.firstCustomFieldTextBox.Location = new System.Drawing.Point(136, 502);
             this.firstCustomFieldTextBox.Name = "firstCustomFieldTextBox";
-            this.firstCustomFieldTextBox.Size = new System.Drawing.Size(1049, 38);
+            this.firstCustomFieldTextBox.Size = new System.Drawing.Size(646, 26);
             this.firstCustomFieldTextBox.TabIndex = 20;
             // 
             // secondCustomFieldTextBox
             // 
             this.secondCustomFieldTextBox.Enabled = false;
-            this.secondCustomFieldTextBox.Location = new System.Drawing.Point(221, 1059);
+            this.secondCustomFieldTextBox.Location = new System.Drawing.Point(136, 539);
             this.secondCustomFieldTextBox.Name = "secondCustomFieldTextBox";
-            this.secondCustomFieldTextBox.Size = new System.Drawing.Size(1049, 38);
+            this.secondCustomFieldTextBox.Size = new System.Drawing.Size(646, 26);
             this.secondCustomFieldTextBox.TabIndex = 22;
             // 
             // lblCustomField2
             // 
-            this.lblCustomField2.Location = new System.Drawing.Point(12, 1059);
+            this.lblCustomField2.Location = new System.Drawing.Point(7, 535);
             this.lblCustomField2.Name = "lblCustomField2";
-            this.lblCustomField2.Size = new System.Drawing.Size(260, 55);
+            this.lblCustomField2.Size = new System.Drawing.Size(123, 34);
             this.lblCustomField2.TabIndex = 21;
             this.lblCustomField2.Text = "Custom Field 2";
             this.lblCustomField2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -372,25 +372,25 @@ namespace Futureware.MantisSubmit
             // 
             // attachmentTextBox
             // 
-            this.attachmentTextBox.Location = new System.Drawing.Point(221, 1123);
+            this.attachmentTextBox.Location = new System.Drawing.Point(136, 572);
             this.attachmentTextBox.Name = "attachmentTextBox";
-            this.attachmentTextBox.Size = new System.Drawing.Size(1049, 38);
+            this.attachmentTextBox.Size = new System.Drawing.Size(646, 26);
             this.attachmentTextBox.TabIndex = 24;
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(12, 1114);
+            this.label10.Location = new System.Drawing.Point(7, 569);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(196, 54);
+            this.label10.Size = new System.Drawing.Size(121, 33);
             this.label10.TabIndex = 23;
             this.label10.Text = "Attachment";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // browseButton
             // 
-            this.browseButton.Location = new System.Drawing.Point(1293, 1114);
+            this.browseButton.Location = new System.Drawing.Point(807, 535);
             this.browseButton.Name = "browseButton";
-            this.browseButton.Size = new System.Drawing.Size(75, 55);
+            this.browseButton.Size = new System.Drawing.Size(46, 33);
             this.browseButton.TabIndex = 25;
             this.browseButton.Text = "...";
             this.browseButton.UseVisualStyleBackColor = true;
@@ -398,31 +398,31 @@ namespace Futureware.MantisSubmit
             // 
             // treeView1
             // 
-            this.treeView1.Location = new System.Drawing.Point(76, 201);
+            this.treeView1.Location = new System.Drawing.Point(47, 123);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(403, 343);
+            this.treeView1.Size = new System.Drawing.Size(248, 135);
             this.treeView1.TabIndex = 26;
             // 
             // statusBarPanel
             // 
             this.statusBarPanel.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring;
             this.statusBarPanel.Name = "statusBarPanel";
-            this.statusBarPanel.Width = 1369;
+            this.statusBarPanel.Width = 840;
             // 
             // statusBar
             // 
-            this.statusBar.Location = new System.Drawing.Point(0, 1255);
+            this.statusBar.Location = new System.Drawing.Point(0, 651);
             this.statusBar.Name = "statusBar";
             this.statusBar.Panels.AddRange(new System.Windows.Forms.StatusBarPanel[] {
             this.statusBarPanel});
             this.statusBar.ShowPanels = true;
-            this.statusBar.Size = new System.Drawing.Size(1410, 52);
+            this.statusBar.Size = new System.Drawing.Size(865, 32);
             this.statusBar.TabIndex = 14;
             // 
             // SubmitIssueForm
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(13, 31);
-            this.ClientSize = new System.Drawing.Size(1410, 1307);
+            this.AutoScaleBaseSize = new System.Drawing.Size(8, 19);
+            this.ClientSize = new System.Drawing.Size(865, 683);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.browseButton);
             this.Controls.Add(this.attachmentTextBox);
@@ -449,7 +449,8 @@ namespace Futureware.MantisSubmit
             this.Controls.Add(this.label2);
             this.Controls.Add(this.submitButton);
             this.Controls.Add(this.label1);
-            this.MaximumSize = new System.Drawing.Size(1442, 1395);
+            this.MaximumSize = new System.Drawing.Size(887, 739);
+            this.MinimumSize = new System.Drawing.Size(887, 739);
             this.Name = "SubmitIssueForm";
             this.Text = "Mantis Connect - Submit Issue";
             this.Load += new System.EventHandler(this.SubmitIssue_Load);

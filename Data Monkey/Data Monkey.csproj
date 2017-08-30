@@ -185,18 +185,10 @@
     <EmbeddedResource Include="Controls\RenameTable.resx">
       <DependentUpon>RenameTable.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="AssemblyFileVersion.tt" />
-    <Content Include="..\AssemblyInfoersion.tt">
-      <Link>AssemblyInfoersion.tt</Link>
+    <None Include="AssemblyFileVersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
-    </Content>
-    <Content Include="..\AssemblyInfoersion.vb">
-      <Link>AssemblyInfoersion.vb</Link>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
-    </Content>
+      <LastGenOutput>AssemblyFileVersion1.cs</LastGenOutput>
+    </None>
     <Content Include="Icons\Add.ico" />
     <Content Include="Icons\App.ico" />
   </ItemGroup>

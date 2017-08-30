@@ -698,13 +698,22 @@ Public Class Main
         If FurcadiaSession Is Nothing Then
             FurcadiaSession = New BotSession(BotConfig)
         ElseIf FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
+            FurcadiaSession.Dispose()
             FurcadiaSession = New BotSession(BotConfig)
         End If
 
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
 
             If BotConfig.log Then
-                LogStream = New LogStream(setLogName(BotConfig), SilverMonkeyLogPath)
+                Dim LogFile As String = Nothing
+                Try
+                    LogFile = setLogName(BotConfig)
+                    LogStream = New LogStream(LogFile, SilverMonkeyLogPath)
+                Catch
+                    FurcadiaSession.Dispose()
+                    sndDisplay("There's an error with log-file" + LogFile, TextDisplayManager.fColorEnum.Error)
+                    Exit Sub
+                End Try
             End If
 
             My.Settings.LastBotFile = CheckBotFolder(BotConfig.CharacterIniFile)
