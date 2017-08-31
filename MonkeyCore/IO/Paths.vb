@@ -520,17 +520,26 @@ Public Class Paths
     ''' the correct file path
     ''' </returns>
 
-    Public Shared Function CheckBotFolder(ByVal FileToCheck As String) As String
+    Public Shared Function CheckBotFolder(ByRef FileToCheck As String) As String
         Dim FilePath As String = Path.GetDirectoryName(FileToCheck)
         If String.IsNullOrEmpty(FilePath) Then
-            If String.IsNullOrEmpty(FileToCheck) Then
-                Return SilverMonkeyBotPath
-            End If
-            Return Path.Combine(SilverMonkeyBotPath, FileToCheck)
+            FileToCheck = Path.Combine(SilverMonkeyBotPath, FileToCheck)
         End If
 
         Return FileToCheck
+    End Function
 
+    ''' <summary>
+    ''' Check the Furcadia character folder for a character
+    ''' </summary>
+    ''' <param name="FileToCheck"></param>
+    ''' <returns></returns>
+    Public Shared Function CheckCharacterFolder(ByRef FileToCheck As String) As String
+        Dim FilePath As String = Path.GetDirectoryName(FileToCheck)
+        If String.IsNullOrEmpty(FilePath) Then
+            FileToCheck = Path.Combine(FurcadiaCharactersFolder, FileToCheck)
+        End If
+        Return FileToCheck
     End Function
 
 #End Region

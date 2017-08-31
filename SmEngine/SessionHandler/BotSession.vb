@@ -45,12 +45,21 @@ Public Class BotSession : Inherits ProxySession
     Implements IDisposable
 
 #Region "Public Methods"
-
-    Public Sub MS_Error(trigger As Trigger, ex As Exception) Handles MSpage.Error
-        Dim ErrorString As String = "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString & ") " & ex.Message
+    ''' <summary>
+    ''' Handle MonkeySpeak Page errors
+    ''' </summary>
+    ''' <param name="trigger"></param>
+    ''' <param name="ex"></param>
+    Public Sub MOnMsPageError(trigger As Trigger, ex As MonkeyspeakException) Handles MSpage.Error
+        Dim ErrorString As String = "Error: " + trigger.ToString + ex.Message
         RaiseEvent DisplayError("Error, See Debug Window", EventArgs.Empty)
     End Sub
 
+    ''' <summary>
+    ''' Handle Furcadia NetProxy Errors
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Public Sub onProxyError(sender As Object, e As EventArgs) Handles MyBase.OnError
         RaiseEvent DisplayError(sender, e)
     End Sub
@@ -103,7 +112,11 @@ Public Class BotSession : Inherits ProxySession
 #End Region
 
 #Region "Public Events"
-
+    ''' <summary>
+    ''' Error Message handler
+    ''' </summary>
+    ''' <param name="DisplayText"></param>
+    ''' <param name="e"></param>
     Public Event DisplayError(ByVal DisplayText As Object, ByVal e As EventArgs)
 
 #End Region
@@ -139,14 +152,19 @@ Public Class BotSession : Inherits ProxySession
     ''' </summary>
     Public Overrides Sub Connect()
 
-        MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
-        MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+        Try
 
-        Dim page = New MonkeySpeakPage(MainEngine, MSpage)
-        MSpage = page.Start()
 
-        MyBase.Connect()
+            MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
+            MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
+            Dim page = New MonkeySpeakPage(MainEngine, MSpage)
+            MSpage = page.Start()
+
+            MyBase.Connect()
+        Catch ex As Exception
+            Throw ex
+        End Try
     End Sub
 
     ''' <summary>
@@ -160,12 +178,7 @@ Public Class BotSession : Inherits ProxySession
         MainEngine.MS_Engine_Running = False
     End Sub
 
-    ' Public implementation of Dispose pattern callable by consumers.
-    Public Overloads Sub Dispose() _
-              Implements IDisposable.Dispose
-        Dispose(True)
-        GC.SuppressFinalize(Me)
-    End Sub
+
 
     Public Overrides Sub ParseServerChannel(data As String, Handled As Boolean)
         'Pass Stuff to Base Clqss before we can handle things here
@@ -212,7 +225,7 @@ Public Class BotSession : Inherits ProxySession
 
                     MSpage.SetVariable("BANISHNAME", BanishName, True)
                     ' MSPage.Execute(61)
-                    MSpage.SetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray), True)
+                    MSpage.SetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray()), True)
                     MSpage.Execute(61, 62)
 
                 ElseIf Text.StartsWith("The endurance limits of player ") Then
@@ -224,7 +237,7 @@ Public Class BotSession : Inherits ProxySession
 
                 ElseIf Channel = "@cookie" Then
                     '(0:96) When the Bot sees "Your cookies are ready."
-                    Dim CookiesReady As Regex = New Regex(String.Format("{0}", "Your cookies are ready.  http://furcadia.com/cookies/ for more info!"))
+                    Dim CookiesReady As Regex = New Regex(<a>"Your cookies are ready.  http://furcadia.com/cookies/ for more info!"</a>)
                     If CookiesReady.Match(data).Success Then
                         MSpage.Execute(96)
                     End If
@@ -742,16 +755,12 @@ Public Class BotSession : Inherits ProxySession
             ';{mapfile}	Load a local map (one in the furcadia folder)
             ']q {name} {id}	Request to download a specific patch
         ElseIf data.StartsWith(";") OrElse data.StartsWith("]q") OrElse data.StartsWith("]r") Then
-            Try
-
-                MSpage.SetVariable("DREAMOWNER", "", True)
-                MSpage.SetVariable("DREAMNAME", "", True)
+            MSpage.SetVariable("DREAMOWNER", "", True)
+            MSpage.SetVariable("DREAMNAME", "", True)
                 'RaiseEvent UpDateDreamList("")
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
 
-        ElseIf data.StartsWith("]z") Then
+
+                ElseIf data.StartsWith("]z") Then
             '   ConnectedCharacterFurcadiaID = Integer.Parse(data.Remove(0, 2))
             'Snag out UID
         ElseIf data.StartsWith("]B") Then
@@ -830,19 +839,35 @@ Public Class BotSession : Inherits ProxySession
 
     Private disposed As Boolean
 
-    ' Protected implementation of Dispose pattern.
-    Protected Overrides Sub Dispose(disposing As Boolean)
-        If disposed Then Return
+    ' IDisposable
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        If Not Me.disposed Then
 
-        If disposing Then
-            ' MyBase.Dispose()
             MainEngine.Dispose()
 
+            ' Free your own state (unmanaged objects).
+            ' Set large fields to null.
         End If
-
-        ' Free any unmanaged objects here.
-        disposed = True
+        Me.disposed = True
     End Sub
+
+#Region " IDisposable Support "
+
+    Public Overrides Sub Dispose()
+        Dispose(True)
+        GC.SuppressFinalize(Me)
+    End Sub
+
+    Protected Overrides Sub Finalize()
+        ' Do not change this code. 
+        ' Put cleanup code in
+        ' Dispose(ByVal disposing As Boolean) above.
+        Dispose(False)
+        MyBase.Finalize()
+    End Sub
+#End Region
+
+
 
 #End Region
 

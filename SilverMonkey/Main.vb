@@ -156,13 +156,16 @@ Public Class Main
 
     Public Sub ConnectBot()
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
-            FurcadiaSession.Connect()
+            Try
+                sndDisplay("Connecting...")
+                FurcadiaSession.Connect()
 
-            sndDisplay("Connecting...")
-            ConnectTrayIconMenuItem.Enabled = False
-            DisconnectTrayIconMenuItem.Enabled = True
-            NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Connecting to Furcadia.", ToolTipIcon.Info)
-            UpDateDreamList() '
+                ConnectTrayIconMenuItem.Enabled = False
+                DisconnectTrayIconMenuItem.Enabled = True
+                UpDateDreamList() '
+            Catch ex As Exception
+                sndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
+            End Try
         End If
     End Sub
 
@@ -300,7 +303,7 @@ Public Class Main
     Public Sub SendClientMessage(msg As String, data As String)
         If Not FurcadiaSession Is Nothing Then
 
-            If FurcadiaSession.IsClientConnected Then FurcadiaSession.SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """" + vbLf)
+            FurcadiaSession.SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
             sndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
         End If
     End Sub
@@ -363,7 +366,7 @@ Public Class Main
                 UpDatButtonGoText("Connecting...")
             Case ConnectionPhase.Disconnected
                 ToolStripServerStatus.Image = My.Resources.DisconnectedImg
-                UpDatButtonGoText("Disconnected.")
+                UpDatButtonGoText("Go!")
             Case ConnectionPhase.Auth
                 ToolStripServerStatus.Image = My.Resources.ConnectingImg
 
@@ -372,7 +375,7 @@ Public Class Main
 
             Case ConnectionPhase.Init
                 ToolStripServerStatus.Image = My.Resources.DisconnectedImg
-                UpDatButtonGoText("Go!!!")
+                UpDatButtonGoText("Go!")
             Case ConnectionPhase.MOTD
             Case Else
         End Select
@@ -415,14 +418,14 @@ Public Class Main
     ''' </summary>
     ''' <param name="path">
     ''' </param>
-    Public Sub SaveRecentFile(path As String)
+    Public Sub SaveRecentFile(FilePath As String)
         RecentToolStripMenuItem.DropDownItems.Clear()
         'clear all recent list from menu
         LoadRecentList(".bini")
         'load list from file
-        If Not (MRUlist.Contains(path)) Then
+        If Not (MRUlist.Contains(FilePath)) Then
             'prevent duplication on recent list
-            MRUlist.Enqueue(path)
+            MRUlist.Enqueue(FilePath)
         End If
         'insert given path into list
         While MRUlist.Count > MRUnumber
@@ -436,10 +439,9 @@ Public Class Main
             RecentToolStripMenuItem.DropDownItems.Add(fileRecent)
         Next
         'writing menu list to file
-        Using stringToWrite As New StreamWriter(ApplicationSettingsPath & "/Recent.txt")
+        Using stringToWrite As New StreamWriter(Path.Combine(ApplicationSettingsPath, "Recent.txt"))
             'create file called "Recent.txt" located on app folder
             For Each item As String In MRUlist
-
                 'write list to stream
                 stringToWrite.WriteLine(item)
             Next
@@ -470,7 +472,7 @@ Public Class Main
         'try to load file. If file isn't found, do nothing
         MRUlist.Clear()
         Try
-            Using listToRead As New StreamReader(ApplicationSettingsPath & "/Recent.txt")
+            Using listToRead As New StreamReader(Path.Combine(ApplicationSettingsPath, "Recent.txt"))
                 'read file stream
                 Dim line As String = ""
                 While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
@@ -587,7 +589,11 @@ Public Class Main
         End Select
         Return "Default"
     End Function
-
+    ''' <summary>
+    ''' Send formatted text to log box
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="newColor"></param>
     Public Sub sndDisplay(ByRef data As String, Optional ByVal newColor As TextDisplayManager.fColorEnum = TextDisplayManager.fColorEnum.DefaultColor)
         Try
             'data = data.Replace(vbLf, vbCrLf)
@@ -624,10 +630,6 @@ Public Class Main
 
     Private Sub ProxyError(o As Object, n As EventArgs) Handles FurcadiaSession.DisplayError
         sndDisplay("Furcadia Session error:" + o.ToString, TextDisplayManager.fColorEnum.Error)
-
-        'sndDisplay(eX.Message)
-        'Dim logError As New ErrorLogging(eX, Me)
-
     End Sub
 
 #End Region
@@ -691,7 +693,7 @@ Public Class Main
         If String.IsNullOrEmpty(BotConfig.CharacterIniFile) Then Exit Sub
 
         Dim p As String = Path.GetDirectoryName(BotConfig.CharacterIniFile)
-        If String.IsNullOrEmpty(p) And Not File.Exists(CheckBotFolder(BotConfig.CharacterIniFile)) Then
+        If String.IsNullOrEmpty(p) And Not File.Exists(CheckCharacterFolder(BotConfig.CharacterIniFile)) Then
             MessageBox.Show(BotConfig.CharacterIniFile + " Not found, Aborting connection!", "Important Message")
             Exit Sub
         End If
@@ -764,21 +766,23 @@ Public Class Main
 
     Private Sub ContextTryIcon_Opened(sender As Object, e As System.EventArgs) Handles ContextTryIcon.Opened
 
-        Select Case FurcadiaSession.ServerStatus
+        If Not FurcadiaSession Is Nothing Then
+            Select Case FurcadiaSession.ServerStatus
 
-            Case ConnectionPhase.Init
-                DisconnectTrayIconMenuItem.Enabled = False
-                ConnectTrayIconMenuItem.Enabled = True
+                Case ConnectionPhase.Init
+                    DisconnectTrayIconMenuItem.Enabled = False
+                    ConnectTrayIconMenuItem.Enabled = True
 
-            Case ConnectionPhase.Connecting
-                DisconnectTrayIconMenuItem.Enabled = True
-                ConnectTrayIconMenuItem.Enabled = False
+                Case ConnectionPhase.Connecting
+                    DisconnectTrayIconMenuItem.Enabled = True
+                    ConnectTrayIconMenuItem.Enabled = False
 
-            Case ConnectionPhase.MOTD Or ConnectionPhase.Connecting
-                DisconnectTrayIconMenuItem.Enabled = True
-                ConnectTrayIconMenuItem.Enabled = False
+                Case ConnectionPhase.MOTD Or ConnectionPhase.Connecting
+                    DisconnectTrayIconMenuItem.Enabled = True
+                    ConnectTrayIconMenuItem.Enabled = False
 
-        End Select
+            End Select
+        End If
     End Sub
 
     ''' <summary>

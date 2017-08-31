@@ -141,7 +141,11 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
-    <Compile Include="AssemblyFileVersion.cs" />
+    <Compile Include="AssemblyFileVersion1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
+    </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Controls\RemoveColumn.cs">
       <SubType>Form</SubType>

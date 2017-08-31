@@ -179,6 +179,8 @@ Public Class TextDisplayManager
                     Return Mainsettings.WhColor
                 Case fColorEnum.Emote
                     Return Mainsettings.EmoteColor
+                Case fColorEnum.Error
+                    Return Mainsettings.ErrorColor
                 Case Else
                     Return Mainsettings.DefaultColor
             End Select
@@ -210,7 +212,7 @@ Public Class TextDisplayManager
         Dim MyIcon As MatchCollection = Regex.Matches(data, Iconfilter)
 
         RftData.Replace("|", " ")
-
+        RftData.Replace("\", "\\")
         RftData.Replace("</b>", "\b0 ")
         RftData.Replace("<b>", "\b ")
         RftData.Replace("</i>", "\i0 ")
@@ -254,6 +256,7 @@ Public Class TextDisplayManager
 
         Sub New(ByRef TextToDisplay As String, ByRef NewColor As fColorEnum)
             _data = TextToDisplay
+            _TextColor = NewColor
         End Sub
 
 #End Region

@@ -121,6 +121,7 @@ Public Class Settings
         Private _DisconnectPopupToggle As Boolean = True
         Private _emitColor As Color = Color.Blue
         Private _emoteColor As Color = Color.DarkCyan
+        Private _errorColor As Color = Color.Red
         Private _FontFace As String = "Microsoft Sans Serif"
 
         'Display Settings
@@ -376,6 +377,15 @@ Public Class Settings
             End Set
         End Property
 
+        Public Property ErrorColor() As Color
+            Get
+                Return _errorColor
+            End Get
+            Set(ByVal value As Color)
+                _errorColor = value
+            End Set
+        End Property
+
         Public Property EmoteColor() As Color
             Get
                 Return _emoteColor
@@ -524,6 +534,9 @@ Public Class Settings
 
 #Region "Public Methods"
 
+        ''' <summary>
+        ''' Save Application settings
+        ''' </summary>
         Public Sub SaveMainSettings()
             ' Lets Read local appData Settings.ini for last used Settings as
             ' other programs use the file too
