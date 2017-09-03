@@ -171,6 +171,7 @@ Namespace Controls
             SIF_ALL = (SIF_RANGE Or SIF_PAGE Or SIF_POS Or SIF_TRACKPOS)
         End Enum
 
+        <DllImport("user32.dll")>
         Public Shared Function GetScrollPos(ByVal hWnd As IntPtr, ByVal nBar As Integer) As Integer
         End Function
 

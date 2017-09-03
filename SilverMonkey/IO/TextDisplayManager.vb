@@ -11,7 +11,11 @@ Public Class TextDisplayManager
 
 #Region "Private Fields"
 
+    ''' <summary>
+    ''' RichTextBoxEx to work with
+    ''' </summary>
     Public WithEvents lb As RichTextBoxEx
+
     Private Mainsettings As cMain
 
 #End Region
@@ -100,52 +104,46 @@ Public Class TextDisplayManager
                 lb.ReadOnly = False
                 ' lb.BeginUpdate()
 
-                ' lb.SelectionStart = lb.TextLength
+                If lb.TextLength > 1 AndAlso lb.SelectionStart <> lb.TextLength - 1 Then
+                    lb.SelectionStart = lb.TextLength - 1
+                End If
                 lb.BeginUpdate()
                 lb.SelectedRtf = FormatText(TextObject.data, TextObject.TextColor)
 
                 ''since we Put the Data in the RTB now we Finish Setting the Links
-                'Dim param() As String = {"<a.*?href=['""](.*?)['""].*?>(.*?)</a>", "<a.*?href=(.*?)>(.*?)</a>"}
-                'For i As Integer = 0 To param.Length - 1
-                '    Dim links As MatchCollection = Regex.Matches(lb.Text, param(i), RegexOptions.IgnoreCase)
-                '    ' links = links & Regex.Matches(lb.Text,
-                '    ' "<a.*?href='(.*?)'.*?>(.*?)</a>", RegexOptions.IgnoreCase)
-                '    For Each mmatch As System.Text.RegularExpressions.Match In links
-                '        Dim matchUrl As String = mmatch.Groups(1).Value
-                '        Dim matchText As String = mmatch.Groups(2).Value
-                '        If mmatch.Success Then
-                '            With lb
-                '                .Text.Replace(mmatch.Value, "")
-                '                .SelectionStart = mmatch.Index
-                '                .InsertLink(matchText, matchUrl, mmatch.Index)
-                '                'WAIT Snag Image Links first! 'Dim     snag As Match = Regex.Match(matchText, "IMG:(.*?)::") '
-                '                'If snag.Success Then '
-                '                '    Dim RTFimg As New RTFBuilder '
-                '                'RTFimg.InsertImage(LoadImageFromUrl(snag.Groups(1).ToString))
-                '                ' .SelectedRtf = RTFimg.ToString 'Else
-                '                '.SelectedRtf = FormatURL(matchText & "\v #" & matchUrl & "\v0 ")
-                '                ' .SelectedText = mmatch.Value
 
-                ' ' .Find(matchText & "#" & matchUrl, '
-                ' RichTextBoxFinds.WholeWord) .SetSelectionLink(True)
+                Dim links As New Regex(UrlFilter, RegexOptions.IgnoreCase)
+                ' links = links & Regex.Matches(lb.Text,
+                ' "<a.*?href='(.*?)'.*?>(.*?)</a>", RegexOptions.IgnoreCase)
+                For Each mmatch As System.Text.RegularExpressions.Match In links.Matches(lb.Text)
+                    Dim matchUrl As String = mmatch.Groups(1).Value
+                    Dim matchText As String = mmatch.Groups(2).Value
+                    If mmatch.Success Then
+                        With lb
 
-                ' 'End If 'Put the Link in
+                            Dim Idx = .Text.IndexOf(mmatch.Groups(0).Value)
+                            Dim link As New Regex(UrlFilter, RegexOptions.IgnoreCase)
+                            .Text = link.Replace(.Text, "", 1)
 
-                '            End With
-                '        End If
-                '    Next
-                'Next
+                            '  .Text.Replace(mmatch.Groups(0).Value, "")
+
+                            .InsertLink(matchText, matchUrl, Idx)
+                            '   .SelectionStart = Idx
+
+                        End With
+                    End If
+                Next
 
                 Try
-                    Dim SelStart As Integer = 0
-                    While (lb.Lines.Length > 350)
-                        'Array.Copy(lb.Lines, 1, lb.Lines, 0, lb.Lines.Length - 1)
-                        SelStart = lb.SelectionStart
-                        lb.SelectionStart = 0
-                        lb.SelectionLength = lb.Text.IndexOf(Environment.NewLine, 0) + 1
-                        lb.SelectedText = ""
-                        lb.SelectionStart = SelStart
-                    End While
+                    'Dim SelStart As Integer = 0
+                    'While (lb.Lines.Length > 350)
+                    '    'Array.Copy(lb.Lines, 1, lb.Lines, 0, lb.Lines.Length - 1)
+                    '    SelStart = lb.SelectionStart
+                    '    lb.SelectionStart = 0
+                    '    lb.SelectionLength = lb.Text.IndexOf(Environment.NewLine, 0) + 1
+                    '    lb.SelectedText = ""
+                    '    lb.SelectionStart = SelStart
+                    'End While
                 Catch
                     lb.Clear()
                     Console.WriteLine("Reset Log box due to over flow")

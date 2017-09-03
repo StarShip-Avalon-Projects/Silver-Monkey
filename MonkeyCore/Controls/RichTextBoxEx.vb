@@ -32,7 +32,14 @@ Namespace Controls
             ' next to a non-standard link
             Me.DetectUrls = True
             Me._protocols = New List(Of String)
-            Me._protocols.AddRange(New String() {"http://", "help://", "furc://", "file://", "mailto://", "ftp://", "https://", "gopher://", "nntp://", "prospero://", "telnet://", "news://", "wais://", "outlook://"})
+            Me._protocols.AddRange(New String() {
+                                        "http://", "help://", "furc://",
+                                        "file://", "mailto://", "ftp://",
+                                        "https://", "gopher://",
+                                        "nntp://", "prospero://",
+                                        "telnet://", "news://", "wais://",
+                                        "command://", "outlook://"
+                                   })
 
         End Sub
 
@@ -251,11 +258,14 @@ Namespace Controls
                 Throw New ArgumentOutOfRangeException("position")
             End If
             ' BeginUpdate()
+
             Me.SelectionStart = position
-            Me.SelectedRtf = "{\rtf1\ansi\ansicpg1252\deff0\deflang1033 " & text & "\v #" & hyperlink & "\v0}"
-            Me.[Select](position, text.Length + 1 + hyperlink.Length)
+            Me.SelectedRtf = "{\rtf1\ansi\deff0\uc1 " + text + "\v #" + hyperlink + "\v0}"
+            Me.Select(position, text.Length + hyperlink.Length + 1)
             Me.SetSelectionLink(True)
-            Me.[Select](position + text.Length + 1 + hyperlink.Length, 0)
+            Me.Select(position + text.Length + hyperlink.Length + 1, 0)
+
+            '  Me.Select(position + text.Length + 1 + hyperlink.Length, 0)
             ' EndUpdate()
         End Sub
 
@@ -275,25 +285,7 @@ Namespace Controls
 
 #Region "Protected Methods"
 
-        Protected Overrides Sub OnTextChanged(e As EventArgs)
 
-            ' BeginUpdate()
-            For Each p As String In _protocols
-
-                Dim matches As MatchCollection = Regex.Matches(Me.Text,
-                String.Format(UrlFilter),
-                RegexOptions.IgnoreCase)
-                For Each m As Match In matches
-                    Dim position As Integer = Me.Text.IndexOf(m.Value)
-                    Me.SelectionStart = position
-                    Me.SelectionLength = m.Value.Length
-                    Me.InsertLink(m.Groups(2).Value, m.Groups(1).Value, position)
-                Next
-
-            Next
-            ' EndUpdate()
-
-        End Sub
 
 #End Region
 
@@ -331,7 +323,7 @@ Namespace Controls
 
         Private Sub SetSelectionStyle(ByVal mask As Integer, ByVal effect As Integer)
             Dim cf As New CHARFORMAT2_STRUCT()
-            cf.cbSize = CType(Marshal.SizeOf(cf), Integer)
+            cf.cbSize = Marshal.SizeOf(cf)
             cf.dwMask = mask
             cf.dwEffects = effect
 

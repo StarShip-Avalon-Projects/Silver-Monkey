@@ -327,6 +327,7 @@ Public Class Main
     ''' <param name="e">
     ''' </param>
     Private Sub ClientStatusUpdate(Sender As Object, e As NetClientEventArgs) Handles FurcadiaSession.ClientStatusChanged
+
         Select Case e.ConnectPhase
 
             Case ConnectionPhase.Connected
@@ -589,6 +590,7 @@ Public Class Main
         End Select
         Return "Default"
     End Function
+
     ''' <summary>
     ''' Send formatted text to log box
     ''' </summary>
@@ -606,6 +608,7 @@ Public Class Main
             TextDisplayer.AddDataToList(textObject)
         Catch eX As Exception
             Dim logError As New ErrorLogging(eX, Me)
+
         End Try
     End Sub
 
@@ -628,9 +631,10 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub ProxyError(o As Object, n As EventArgs) Handles FurcadiaSession.DisplayError
-        sndDisplay("Furcadia Session error:" + o.ToString, TextDisplayManager.fColorEnum.Error)
+    Private Sub ProxyError(e As Exception, o As Object, text As String) Handles FurcadiaSession.Error
+        sndDisplay("Furcadia Session error:" + e.Message + o.ToString, TextDisplayManager.fColorEnum.Error)
     End Sub
+
 
 #End Region
 
@@ -815,7 +819,7 @@ Public Class Main
     Private Sub FormClose()
         _FormClose = True
         My.Settings.MainFormLocation = Me.Location
-        If Not IsNothing(BotConfig) Then My.Settings.LastBotFile = BotConfig.Name
+        If Not BotConfig Is Nothing Then My.Settings.LastBotFile = BotConfig.Name
         If Not FurcadiaSession Is Nothing Then FurcadiaSession.Dispose()
         'Save the user settings so next time the
         'window will be the same size and location
@@ -902,15 +906,19 @@ Public Class Main
     End Sub
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-        If IsNothing(NotifyIcon1) Then
-            NotifyIcon1 = New NotifyIcon
+        If Not NotifyIcon1 Is Nothing Then
+            RemoveHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
+            NotifyIcon1.Dispose()
+        End If
+        If NotifyIcon1 Is Nothing Then
+            NotifyIcon1 = New NotifyIcon()
             NotifyIcon1.ContextMenuStrip = ContextTryIcon
             NotifyIcon1.Icon = My.Resources.metal
             NotifyIcon1.BalloonTipTitle = My.Application.Info.ProductName
             NotifyIcon1.Text = My.Application.Info.ProductName + ": " + My.Application.Info.Version.ToString
             AddHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
         End If
+
         If Not NotifyIcon1.Visible Then NotifyIcon1.Visible = True
         'catch the Console messages
         _FormClose = False
@@ -991,7 +999,7 @@ Public Class Main
     End Sub
 
     Private Sub NotifyIcon1_DoubleClick(sender As Object, e As System.EventArgs) Handles NotifyIcon1.DoubleClick
-        If Not IsNothing(NotifyIcon1) Then
+        If Not NotifyIcon1 Is Nothing Then
             Me.Show()
             Me.Activate()
         End If

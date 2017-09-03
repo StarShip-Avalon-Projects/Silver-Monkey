@@ -55,14 +55,7 @@ Public Class BotSession : Inherits ProxySession
         RaiseEvent DisplayError("Error, See Debug Window", EventArgs.Empty)
     End Sub
 
-    ''' <summary>
-    ''' Handle Furcadia NetProxy Errors
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Public Sub onProxyError(sender As Object, e As EventArgs) Handles MyBase.OnError
-        RaiseEvent DisplayError(sender, e)
-    End Sub
+
 
 #End Region
 
