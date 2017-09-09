@@ -16,7 +16,6 @@ Imports Furcadia.Net
 Imports Furcadia.Net.Dream
 Imports Furcadia.Net.Proxy
 Imports Furcadia.Text.FurcadiaMarkup
-Imports Furcadia.Util
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine
@@ -45,15 +44,6 @@ Public Class BotSession : Inherits ProxySession
     Implements IDisposable
 
 #Region "Public Methods"
-    ''' <summary>
-    ''' Handle MonkeySpeak Page errors
-    ''' </summary>
-    ''' <param name="trigger"></param>
-    ''' <param name="ex"></param>
-    Public Sub MOnMsPageError(trigger As Trigger, ex As MonkeyspeakException) Handles MSpage.Error
-        Dim ErrorString As String = "Error: " + trigger.ToString + ex.Message
-        RaiseEvent DisplayError("Error, See Debug Window", EventArgs.Empty)
-    End Sub
 
 
 
@@ -104,16 +94,6 @@ Public Class BotSession : Inherits ProxySession
 
 #End Region
 
-#Region "Public Events"
-    ''' <summary>
-    ''' Error Message handler
-    ''' </summary>
-    ''' <param name="DisplayText"></param>
-    ''' <param name="e"></param>
-    Public Event DisplayError(ByVal DisplayText As Object, ByVal e As EventArgs)
-
-#End Region
-
 #Region "Private Fields"
 
     Private MainSettings As Settings.cMain
@@ -136,8 +116,6 @@ Public Class BotSession : Inherits ProxySession
 
 #End Region
 
-
-
 #Region "Public Methods"
 
     ''' <summary>
@@ -146,7 +124,6 @@ Public Class BotSession : Inherits ProxySession
     Public Overrides Sub Connect()
 
         Try
-
 
             MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
             MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
@@ -171,8 +148,6 @@ Public Class BotSession : Inherits ProxySession
         MainEngine.MS_Engine_Running = False
     End Sub
 
-
-
     Public Overrides Sub ParseServerChannel(data As String, Handled As Boolean)
         'Pass Stuff to Base Clqss before we can handle things here
         MyBase.ParseServerChannel(data, Handled)
@@ -186,311 +161,39 @@ Public Class BotSession : Inherits ProxySession
         Dim Text As String = ""
 
         MSpage.SetVariable(MS_Name, Player.Name, True)
+        MSpage.SetVariable("MESSAGE", Player.Message, True)
 
-        If Color = "success" Then
-            Try
-                If Text.Contains(" has been banished from your dreams.") Then
-                    'banish <name> (online)
-                    'Success: (.*?) has been banished from your dreams.
-
-                    '(0:52) When the bot sucessfilly banishes a furre,
-                    '(0:53) When the bot sucessfilly banishes the furre named {...},
-
-                    MSpage.SetVariable("BANISHNAME", BanishName, True)
-                    MSpage.SetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray), True)
-                    MSpage.Execute(52, 53)
-
-                    ' MSPage.Execute(53)
-                ElseIf Text = "You have canceled all banishments from your dreams." Then
-                    'banish-off-all (active list)
-                    'Success: You have canceled all banishments from your dreams.
-
-                    MSpage.SetVariable("BANISHLIST", Nothing, True)
-                    MSpage.SetVariable("BANISHNAME", Nothing, True)
-                    MSpage.Execute(60)
-
-                ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
-                    'tempbanish <name> (online)
-                    'Success: (.*?) has been temporarily banished from your dreams.
-
-                    '(0:61) When the bot sucessfully temp banishes a Furre
-                    '(0:62) When the bot sucessfully temp banishes the furre named {...}
-
-                    MSpage.SetVariable("BANISHNAME", BanishName, True)
-                    ' MSPage.Execute(61)
-                    MSpage.SetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray()), True)
-                    MSpage.Execute(61, 62)
-
-                ElseIf Text.StartsWith("The endurance limits of player ") Then
-                    Dim t As New Regex("The endurance limits of player (.*?) are now toggled off.")
-                    Dim m As String = t.Match(Text).Groups(1).Value.ToString
-                    If FurcadiaShortName(m) = FurcadiaShortName(ConnectedCharacterName) Then
-                        ' NoEndurance = True
-                    End If
-
-                ElseIf Channel = "@cookie" Then
-                    '(0:96) When the Bot sees "Your cookies are ready."
-                    Dim CookiesReady As Regex = New Regex(<a>"Your cookies are ready.  http://furcadia.com/cookies/ for more info!"</a>)
-                    If CookiesReady.Match(data).Success Then
-                        MSpage.Execute(96)
-                    End If
-                End If
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-        ElseIf Channel = "@roll" Then
-            'Dim DiceREGEX As New Regex(DiceFilter, RegexOptions.IgnoreCase)
-            'Dim DiceMatch As System.Text.RegularExpressions.Match = DiceREGEX.Match(data)
-
-            ''Matches, in order:
-            ''1:      shortname()
-            ''2:      full(name)
-            ''3:      dice(count)
-            ''4:      sides()
-            ''5: +/-#
-            ''6: +/-  (component match)
-            ''7:      additional(Message)
-            ''8:      Final(result)
-
-            'Player = Dream.FurreList.GerFurreByName(DiceMatch.Groups(3).Value)
-            'Player.Message = DiceMatch.Groups(7).Value
-            'MSPage.SetVariable("MESSAGE", DiceMatch.Groups(7).Value)
-            'Double.TryParse(DiceMatch.Groups(4).Value, DiceSides)
-            'Double.TryParse(DiceMatch.Groups(3).Value, DiceCount)
-            'DiceCompnentMatch = DiceMatch.Groups(6).Value
-            'DiceModifyer = 0.0R
-            'Double.TryParse(DiceMatch.Groups(5).Value, DiceModifyer)
-            'Double.TryParse(DiceMatch.Groups(8).Value, DiceResult)
-
-            'If IsConnectedCharacter Then
-            '    MSPage.Execute(130, 131, 132, 136)
-            'Else
-            '    MSPage.Execute(133, 134, 135, 136)
-            'End If
-
-        ElseIf Channel = "@dragonspeak" OrElse Channel = "@emit" OrElse Color = "emit" Then
-            Try
-                '(<font color='dragonspeak'><img src='fsh://system.fsh:91' alt='@emit' /><channel name='@emit' /> Furcadian Academy</font>
-
-                MSpage.SetVariable("MESSAGE", Player.Message, True)
-                ' Execute (0:21) When someone emits something
-                MSpage.Execute(21, 22, 23)
-                ' Execute (0:22) When someone emits {...}
-                '' Execute (0:23) When someone emits something with {...} in it
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-
-            ''BCast (Advertisments, Announcments)
-        ElseIf Color = "bcast" Then
+        If Color = "bcast" Then
             Dim AdRegEx As String = "<channel name='(.*)' />"
 
             Dim chan As String = Regex.Match(data, AdRegEx).Groups(1).Value
-            Try
 
-                Select Case chan
-                    Case "@advertisements"
-                        ' If cMain.Advertisment Then Exit Sub
-                        AdRegEx = "\[(.*?)\] (.*?)</font>"
-                        Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
+            Select Case chan
+                Case "@advertisements"
+                    ' If cMain.Advertisment Then Exit Sub
+                    AdRegEx = "\[(.*?)\] (.*?)</font>"
+                    Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
 
-                    Case "@announcements"
-                        ' If cMain.Announcement Then Exit Sub
-                        Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
+                Case "@announcements"
+                    ' If cMain.Announcement Then Exit Sub
+                    Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
 
-                    Case Else
-                End Select
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-
-            ''SAY
-        ElseIf Color = "myspeech" Then
-            Try
-
-                MSpage.SetVariable("MESSAGE", Player.Message, True)
-                ' Execute (0:5) When some one says something
-                MSpage.Execute(5, 6, 7, 18, 19, 20)
-                '' Execute (0:6) When some one says {...} Execute (0:7) When
-                '' some one says something with {...} in it Execute (0:18)
-                '' When someone says or emotes something Execute (0:19) When
-                '' someone says or emotes {...} Execute (0:20) When someone
-                '' says or emotes something with {...} in it
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-
-        ElseIf Channel = "say" Then
-            Dim tt As System.Text.RegularExpressions.Match = Regex.Match(data, "\(you see(.*?)\)", RegexOptions.IgnoreCase)
-            If Not tt.Success Then
-
-                Try
-                    MSpage.SetVariable("MESSAGE", Player.Message, True)
-                    ' (0:5) When some one says something
-                    MSpage.Execute(5, 6, 7, 18, 19, 20)
-                    ' (0:6) When some one says {...}
-                    '(0:7) When some one says something with {...} in it
-                    ' (0:18) When someone says or emotes something
-                    ' (0:19) When someone says or emotes {...}
-                    ' (0:20) When someone says or emotes something with
-                    ' {...} in it
-                Catch eX As Exception
-                    Dim logError As New ErrorLogging(eX, Me)
-
-                End Try
-            Else
-                Try
-                    'sndDisplay("You See '" & User & "'")
-                    'Look = True
-                Catch eX As Exception
-                    Dim logError As New ErrorLogging(eX, Me)
-                End Try
-            End If
-
-        ElseIf Desc <> "" Then
-            Try
-                Dim DescName As String = Regex.Match(data, DescFilter).Groups(1).ToString()
-
-                MSpage.SetVariable(MS_Name, DescName, True)
-                MSpage.Execute(600)
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-
-        ElseIf Color = "shout" Then
-            ''SHOUT
-            Try
-                Dim t As New Regex(YouSayFilter)
-                Dim u As String = t.Match(data).Groups(1).ToString
-                Text = t.Match(data).Groups(2).ToString
-                If User = "" Then
-                Else
-                    Text = Regex.Match(data, "shouts: (.*)</font>").Groups(1).ToString()
-                End If
-                If Not IsConnectedCharacter Then
-                    MSpage.SetVariable("MESSAGE", Text, True)
-                    Player.Message = Text
-                    ' Execute (0:8) When some one shouts something
-                    MSpage.Execute(8, 9, 10)
-                    ' Execute (0:9) When some one shouts {...} Execute
-                    ' (0:10) When some one shouts something with {...} in it
-
-                End If
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
-
-        ElseIf Color = "query" Then
-            Dim QCMD As String = Regex.Match(data, "<a.*?href='command://(.*?)'>").Groups(1).ToString
-
-            Select Case QCMD
-                Case "summon"
-                    ''JOIN
-                    Try
-                        If Not IsConnectedCharacter Then
-                            MSpage.Execute(34, 35)
-                        End If
-                    Catch eX As Exception
-                        Dim logError As New ErrorLogging(eX, Me)
-                    End Try
-                Case "join"
-                    ''SUMMON
-                    Try
-
-                        If Not IsConnectedCharacter Then
-                            MSpage.Execute(32, 33)
-                        End If
-                    Catch eX As Exception
-                        Dim logError As New ErrorLogging(eX, Me)
-                    End Try
-                Case "follow"
-                    ''LEAD
-                    Try
-                        If Not IsConnectedCharacter Then
-                            MSpage.Execute(36, 37)
-                        End If
-                    Catch eX As Exception
-                        Dim logError As New ErrorLogging(eX, Me)
-                    End Try
-                Case "lead"
-                    ''FOLLOW
-                    Try
-                        If Not IsConnectedCharacter Then
-                            MSpage.Execute(38, 39)
-                        End If
-                    Catch eX As Exception
-                        Dim logError As New ErrorLogging(eX, Me)
-                    End Try
-                Case "cuddle"
-                    Try
-
-                        If Not IsConnectedCharacter Then
-                            MSpage.Execute(40, 41)
-                        End If
-                    Catch eX As Exception
-                        Dim logError As New ErrorLogging(eX, Me)
-                    End Try
+                Case Else
             End Select
 
+        ElseIf Desc <> "" Then
+
+            Dim DescName As String = Regex.Match(data, DescFilter).Groups(1).ToString()
+
+            MSpage.SetVariable(MS_Name, DescName, True)
+            MSpage.Execute(600)
+
+
             'NameFilter
-
-        ElseIf Color = "whisper" Then
-            ''WHISPER
-            Try
-                'TODO Refactor to FurcadiaMarkup
-                Dim WhisperFrom As String = Regex.Match(data, "whispers, ""(.*?)"" to you").Groups(1).Value
-                Dim WhisperTo As String = Regex.Match(data, "You whisper ""(.*?)"" to").Groups(1).Value
-                Dim WhisperDir As String = Regex.Match(data, String.Format("<name shortname='(.*?)' src='whisper-(.*?)'>")).Groups(2).Value
-                If WhisperDir = "from" Then
-
-                    If Not IsConnectedCharacter Then
-                        MSpage.SetVariable("NAME", Player.Name, True)
-                        MSpage.SetVariable("MESSAGE", Player.Message, True)
-                        ' Execute (0:15) When some one whispers something
-                        MSpage.Execute(15, 16, 17)
-                        ' Execute (0:16) When some one whispers {...}
-                        ' Execute (0:17) When some one whispers something
-                        ' with {...} in it
-                    End If
-                Else
-                    WhisperTo = WhisperTo.Replace("<wnd>", "")
-
-                End If
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
 
         ElseIf Color = "warning" Then
 
             MSpage.Execute(801)
-
-        ElseIf Color = "trade" Then
-            Dim TextStr As String = Regex.Match(data, "\s<name (.*?)</name>").Groups(0).ToString()
-            Text = Text.Substring(6)
-            If User <> "" Then Text = " " & User & Text.Replace(TextStr, "")
-
-            MSpage.SetVariable("MESSAGE", Player.Message, True)
-            MSpage.Execute(46, 47, 48)
-
-        ElseIf Color = "emote" Then
-            Try
-
-                MSpage.SetVariable("MESSAGE", Player.Message, True)
-
-                If Not IsConnectedCharacter Then
-
-                    ' Execute (0:11) When someone emotes something
-                    MSpage.Execute(11, 12, 13, 18, 19, 20)
-                    ' Execute (0:12) When someone emotes {...} Execute
-                    ' (0:13) When someone emotes something with {...} in it
-                    ' Execute (0:18) When someone says or emotes something
-                    ' Execute (0:19) When someone says or emotes {...}
-                    ' Execute (0:20) When someone says or emotes something
-                    ' with {...} in it
-                End If
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
 
         ElseIf Color = "channel" Then
             'ChannelNameFilter2
@@ -503,100 +206,7 @@ Public Class BotSession : Inherits ProxySession
             ss = r.Match(Text)
             If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
 
-        ElseIf Color = "notify" Then
-            Dim NameStr As String = ""
-            If Text.StartsWith("Players banished from your dreams: ") Then
-                'Banish-List
-                '[notify> Players banished from your dreams:
-                '`(0:54) When the bot sees the banish list
-                MSpage.SetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray), True)
-                MSpage.Execute(54)
-
-            ElseIf Text.StartsWith("The banishment of player ") Then
-                'banish-off <name> (on list)
-                '[notify> The banishment of player (.*?) has ended.
-
-                '(0:56) When the bot successfully removes a furre from the banish list,
-                '(0:58) When the bot successfully removes the furre named {...} from the banish list,
-                Dim t As New Regex("The banishment of player (.*?) has ended.")
-                NameStr = t.Match(data).Groups(1).Value
-                MSpage.SetVariable("BANISHNAME", NameStr, True)
-                MSpage.Execute(56, 56)
-                MSpage.SetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray), True)
-
-            End If
-
-            MSpage.Execute(800)
-
-            If Text.Contains("There are no furres around right now with a name starting with ") Then
-                'Banish <name> (Not online)
-                'Error:>>  There are no furres around right now with a name starting with (.*?) .
-
-                '(0:50) When the Bot fails to banish a furre,
-                '(0:51) When the bot fails to banish the furre named {...},
-                Dim t As New Regex("There are no furres around right now with a name starting with (.*?) .")
-                NameStr = t.Match(data).Groups(1).Value
-                MSpage.SetVariable("BANISHNAME", NameStr, True)
-                MSpage.Execute(50, 51)
-                MSpage.SetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray), True)
-            ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
-                'banish-off <name> (not on list)
-                'Error:>> Sorry, this player has not been banished from your dreams.
-
-                '(0:55) When the Bot fails to remove a furre from the banish list,
-                '(0:56) When the bot fails to remove the furre named {...} from the banish list,
-                MSpage.SetVariable("BANISHNAME", BanishName, True)
-                MSpage.SetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray), True)
-                MSpage.Execute(50, 51)
-            ElseIf Text = "You have not banished anyone." Then
-                'banish-off-all (empty List)
-                'Error:>> You have not banished anyone.
-
-                '(0:59) When the bot fails to see the banish list,
-                MSpage.Execute(59)
-                MSpage.SetVariable("BANISHLIST", "", True)
-            ElseIf Text = "You do not have any cookies to give away right now!" Then
-                MSpage.Execute(95)
-            End If
-
-        ElseIf data.StartsWith("Communication") Then
-            ' ProcExit = False
-            'LogSaveTmr.Enabled = False
-
-        ElseIf Channel = "@cookie" Then
-            ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Cookie <a href='http://www.furcadia.com/cookies/Cookie%20Economy.html'>bank</a> has currently collected: 0</font>
-            ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> All-time Cookie total: 0</font>
-            ' <font color='success'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Your cookies are ready.  http://furcadia.com/cookies/ for more info!</font>
-            '<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.
-
-            Dim CookieToMe As Regex = New Regex(String.Format("{0}", CookieToMeREGEX))
-            If CookieToMe.Match(data).Success Then
-                MSpage.SetVariable(MS_Name, CookieToMe.Match(data).Groups(2).Value, True)
-                MSpage.Execute(42, 43)
-            End If
-            Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
-            If CookieToAnyone.Match(data).Success Then
-                MSpage.SetVariable(MS_Name, CookieToAnyone.Match(data).Groups(3).Value, True)
-
-                If IsConnectedCharacter Then
-                    MSpage.Execute(42, 43)
-                Else
-                    MSpage.Execute(44)
-                End If
-
-            End If
-            Dim CookieFail As Regex = New Regex(String.Format("You do not have any (.*?) left!"))
-            If CookieFail.Match(data).Success Then
-                MSpage.Execute(45)
-            End If
-            Dim EatCookie As Regex = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
-            If EatCookie.Match(data).Success Then
-                'TODO Cookie eat message can change by Dragon Speak
-                MSpage.SetVariable("MESSAGE", "You eat a cookie." + EatCookie.Replace(data, ""), True)
-                Player.Message = "You eat a cookie." + EatCookie.Replace(data, "")
-                MSpage.Execute(49)
-
-            End If
+            'ElseIf Color = "notify" Then
 
         ElseIf data.StartsWith("(You enter the dream of") Then
             MSpage.SetVariable("DREAMNAME", "", True)
@@ -750,10 +360,9 @@ Public Class BotSession : Inherits ProxySession
         ElseIf data.StartsWith(";") OrElse data.StartsWith("]q") OrElse data.StartsWith("]r") Then
             MSpage.SetVariable("DREAMOWNER", "", True)
             MSpage.SetVariable("DREAMNAME", "", True)
-                'RaiseEvent UpDateDreamList("")
+            'RaiseEvent UpDateDreamList("")
 
-
-                ElseIf data.StartsWith("]z") Then
+        ElseIf data.StartsWith("]z") Then
             '   ConnectedCharacterFurcadiaID = Integer.Parse(data.Remove(0, 2))
             'Snag out UID
         ElseIf data.StartsWith("]B") Then
@@ -842,6 +451,7 @@ Public Class BotSession : Inherits ProxySession
             ' Set large fields to null.
         End If
         Me.disposed = True
+        Me.Finalize()
     End Sub
 
 #Region " IDisposable Support "
@@ -852,15 +462,14 @@ Public Class BotSession : Inherits ProxySession
     End Sub
 
     Protected Overrides Sub Finalize()
-        ' Do not change this code. 
+        ' Do not change this code.
         ' Put cleanup code in
         ' Dispose(ByVal disposing As Boolean) above.
         Dispose(False)
         MyBase.Finalize()
     End Sub
+
 #End Region
-
-
 
 #End Region
 

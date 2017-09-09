@@ -882,10 +882,11 @@ Public Class Settings
             ini.SetKeyValue(MSEditorSection, "AutoComplete", _AutoCompleteEnable.ToString)
 
             ini.RemoveSection("Plugins")
-            For Each kv As KeyValuePair(Of String, Boolean) In PluginList
-                ini.SetKeyValue("Plugins", kv.Key, kv.Value.ToString)
-            Next
-
+            If Not PluginList Is Nothing Then
+                For Each kv As KeyValuePair(Of String, Boolean) In PluginList
+                    ini.SetKeyValue("Plugins", kv.Key, kv.Value.ToString)
+                Next
+            End If
             ini.Save(SettingsFile)
         End Sub
 

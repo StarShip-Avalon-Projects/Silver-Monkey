@@ -305,6 +305,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Credits.aml" />
+    <None Include="References\StartupProcess.aml" />
     <None Include="HelpLink.ini.aml" />
     <None Include="Guides\AutoSummonBot.aml" />
     <None Include="Guides\DreamMemberList.aml" />

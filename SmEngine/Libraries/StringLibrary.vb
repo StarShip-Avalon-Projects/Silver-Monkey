@@ -240,8 +240,16 @@ Namespace Engine.Libraries
         Public Function AndVariableContains(reader As TriggerReader) As Boolean
 
             Dim VariableToCheck As Monkeyspeak.Variable = reader.ReadVariable()
-            Dim Argument As String = reader.ReadString
-            Return VariableToCheck.Value.ToString.Contains(Argument)
+            Dim Argument As String
+            If reader.PeekVariable Then
+                Argument = reader.ReadVariable.Value
+            ElseIf reader.PeekNumber Then
+                Argument = reader.ReadNumber.ToString()
+            Else
+                Argument = reader.ReadString
+            End If
+
+            Return VariableToCheck.Value.Contains(Argument)
 
         End Function
 
@@ -257,16 +265,23 @@ Namespace Engine.Libraries
         Public Function AndVariableNotContains(reader As TriggerReader) As Boolean
 
             Dim VariableToCheck As Monkeyspeak.Variable = reader.ReadVariable()
-            Dim Argument As String = reader.ReadString
-            Return Not VariableToCheck.Value.ToString.Contains(Argument)
+            Dim Argument As String
+            If reader.PeekVariable Then
+                Argument = reader.ReadVariable.Value
+            ElseIf reader.PeekNumber Then
+                Argument = reader.ReadNumber.ToString()
+            Else
+                Argument = reader.ReadString
+            End If
+            Return Not VariableToCheck.Value.Contains(Argument)
 
         End Function
 
-        Private Function MatchWildcardString(pattern As String, input As String) As [Boolean]
-            If [String].Compare(pattern, input) = 0 Then
+        Private Function MatchWildcardString(pattern As String, input As String) As Boolean
+            If String.Compare(pattern, input) = 0 Then
                 Return True
-            ElseIf [String].IsNullOrEmpty(input) Then
-                If [String].IsNullOrEmpty(pattern.Trim(New [Char](0) {"*"c})) Then
+            ElseIf String.IsNullOrEmpty(input) Then
+                If String.IsNullOrEmpty(pattern.Trim(New Char() {"*"c})) Then
                     Return True
                 Else
                     Return False

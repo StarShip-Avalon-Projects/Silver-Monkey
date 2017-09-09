@@ -122,6 +122,7 @@
     <Compile Include="Libraries\MsMemberList.vb" />
     <Compile Include="Libraries\MsSound.vb" />
     <Compile Include="Libraries\MsTime.vb" />
+    <Compile Include="Libraries\MsTrades.vb" />
     <Compile Include="Libraries\MsWarning.vb" />
     <Compile Include="Libraries\MS_Cookie.vb" />
     <Compile Include="Libraries\MS_DreamTransfer.vb" />

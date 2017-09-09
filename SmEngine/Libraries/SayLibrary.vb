@@ -1,5 +1,7 @@
-﻿Imports Furcadia.Net
+﻿Imports System.Text.RegularExpressions
+Imports Furcadia.Net
 Imports Furcadia.Net.Dream
+Imports Furcadia.Net.Utils.ServerParser
 Imports Furcadia.Util
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.SmConstants
@@ -79,10 +81,6 @@ Namespace Engine.Libraries
     ''' </para>
     ''' <para>
     ''' (0:40) When someone requests to cuddle with the bot,
-    ''' <para>Ignores Bots speech</para>
-    ''' </para>
-    ''' <para>
-    ''' (0:46) When the bot sees a trade request
     ''' <para>Ignores Bots speech</para>
     ''' </para>
     ''' <para>
@@ -177,6 +175,7 @@ Namespace Engine.Libraries
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function,
              "(0:8) When someone shouts something,")
+
             Add(TriggerCategory.Cause, 9,
              AddressOf msgIs, "(0:9) When someone shouts {..},")
 
@@ -334,20 +333,7 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 41,
             AddressOf NameIs, "(0:41) When a furre named {..} requests to cuddle with the bot,")
 
-            'Trade rewuests
 
-            '(0:46) When the bot sees a trade request,
-            Add(TriggerCategory.Cause, 46,
-                Function()
-                    Return Not FurcadiaSession.IsConnectedCharacter
-                End Function, "(0:46) When the bot sees a trade request,")
-            '(0:47) When the bot sees the trade request {..},
-            Add(TriggerCategory.Cause, 47,
-                AddressOf msgIs, "(0:47) When the bot sees the trade request {..},")
-
-            '(0:48) When the bot sees a trade request with {..} in it,
-            Add(TriggerCategory.Cause, 48,
-                AddressOf msgContains, "(0:48) When the bot sees a trade request with {..} in it,")
 
             'FurcadiaSession.Dream
             '(0:90) When the bot enters a Dream,
@@ -650,7 +636,7 @@ Namespace Engine.Libraries
             Dim DreamNameVariable As Monkeyspeak.Variable = MsPage.GetVariable("DREAMNAME")
             'add Machine Name parser
             If DreamNameVariable.Value.ToString() <> Dream.Name Then
-                Throw New Exception("%DREAMNAME does not match Dream.Name")
+                Throw New MonkeyspeakException("%DREAMNAME does not match Dream.Name")
             End If
 
             Return Dream.ShortName = FurcadiaShortName(DreamName)
@@ -863,7 +849,7 @@ Namespace Engine.Libraries
         ''' Send an off line whisper to the server queue
         ''' </summary>
         ''' <param name="name">
-        ''' recepients name
+        ''' recipients name
         ''' </param>
         ''' <param name="msg">
         ''' Message to send
@@ -898,7 +884,7 @@ Namespace Engine.Libraries
         ''' Send a whisper to the server queue
         ''' </summary>
         ''' <param name="name">
-        ''' recepients name
+        ''' recipients name
         ''' </param>
         ''' <param name="msg">
         ''' Message to send
@@ -925,7 +911,7 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:42) start a new instance to Silver Monkey with botfile {..}.
+        ''' (5:42) start a new instance to Silver Monkey with bot-file {..}.
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
@@ -940,6 +926,7 @@ Namespace Engine.Libraries
             Dim p As New ProcessStartInfo
             p.Arguments = File
             p.FileName = "SilverMonkey.exe"
+            p.WorkingDirectory = MonkeyCore.Paths.ApplicationPath
             Process.Start(p)
             Return True
         End Function
@@ -989,8 +976,10 @@ Namespace Engine.Libraries
 
             Dim furre As String = reader.ReadString
             Dim Target As FURRE = Dream.FurreList.GerFurreByName(furre)
-            If InDream(Target.Name) Then sendServer("unshare " + FurcadiaShortName(furre))
-            Return True
+            If InDream(Target.Name) Then
+                Return sendServer("unshare " + FurcadiaShortName(furre))
+            End If
+            Return False
 
         End Function
 
@@ -1010,7 +999,8 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' 0:17) When someone whispers something with {..} in it,
+        ''' (0:17) When someone whispers something with {..} in it,
+        ''' <para>(0:10) When someone shouts something with {..} in it,</para>
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
@@ -1051,9 +1041,6 @@ Namespace Engine.Libraries
         ''' </para>
         ''' <para>
         ''' (0:22) When someone emits {..},
-        ''' </para>
-        ''' <para>
-        ''' (0:47) When the bot sees the trade request {..},
         ''' </para>
         ''' <para>
         ''' (1:7) and the triggering furre's message is {..},
@@ -1166,6 +1153,93 @@ Namespace Engine.Libraries
         End Function
 
 #End Region
+
+        Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerChannelData
+            If FurcadiaSession.IsConnectedCharacter Then Exit Sub
+            Player = InstructionObject.Player
+            MsPage.SetVariable("NAME", Player.Name, True)
+            MsPage.SetVariable("MESSAGE", Player.Message, True)
+            Dim Text As String = InstructionObject.ChannelText
+
+            Select Case InstructionObject.Channel
+                Case "shout"
+                    '(0:8) When someone shouts something,
+                    '(0:9) When someone shouts {..},
+                    '(0:10) When someone shouts something with {..} in it,
+                    MsPage.Execute(8, 9, 10)
+                Case "say"
+                    ' (0:5) When some one says something
+                    ' (0:6) When some one says {...}
+                    '(0:7) When some one says something with {...} in it
+                    ' (0:18) When someone says or emotes something
+                    ' (0:19) When someone says or emotes {...}
+                    ' (0:20) When someone says or emotes something with
+                    ' {...} in it"
+
+                    MsPage.Execute(5, 6, 7, 18, 19, 20)
+
+                Case "whisper"
+
+                    ' (0:15) When some one whispers something
+                    ' (0:16) When some one whispers {...}
+                    ' (0:17) When some one whispers something
+                    ' with {...} in it
+                    MsPage.Execute(15, 16, 17)
+
+                Case "emote"
+                    ' (0:12) When someone emotes {...} Execute
+                    ' (0:13) When someone emotes something with {...} in it
+                    ' (0:18) When someone says or emotes something
+                    ' (0:19) When someone says or emotes {...}
+                    ' (0:20) When someone says or emotes something
+                    ' with {...} in it
+
+                    MsPage.Execute(11, 12, 13, 18, 19, 20)
+
+                Case "@emit" Or "emit"
+                    ' (0:21) When someone emits something
+                    ' (0:22) When someone emits {...}
+                    ' (0:23) When someone emits something with {...} in it
+
+                    MsPage.Execute(21, 22, 23)
+
+                Case "query"
+
+                    Dim QueryComand As String = New Regex("<a.*?href='command://(.*?)'>").Match(Text).Groups(1).Value
+
+                    Select Case QueryComand
+                        Case "summon"
+                            ''JOIN
+
+                            MsPage.Execute(34, 35)
+
+                        Case "join"
+                            ''SUMMON
+
+                            MsPage.Execute(32, 33)
+
+                        Case "follow"
+                            ''LEAD
+
+                            MsPage.Execute(36, 37)
+
+                        Case "lead"
+                            ''FOLLOW
+
+                            MsPage.Execute(38, 39)
+
+                        Case "cuddle"
+
+                            MsPage.Execute(40, 41)
+
+                    End Select
+
+                Case Else
+                    'TODO: plugin Dynamic(Group)  Channels here
+
+            End Select
+
+        End Sub
 
     End Class
 

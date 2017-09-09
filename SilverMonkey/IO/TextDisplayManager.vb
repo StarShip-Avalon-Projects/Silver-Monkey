@@ -204,7 +204,7 @@ Public Class TextDisplayManager
         Dim RftData As New StringBuilder(System.Web.HttpUtility.HtmlDecode(data))
         Dim Names As MatchCollection = Regex.Matches(data, NameFilter)
         For Each Name As System.Text.RegularExpressions.Match In Names
-            RftData.Replace(Name.Value, Name.Groups(3).Value)
+            RftData.Replace(Name.Value, Name.Groups(2).Value)
         Next
         '<name shortname='acuara' forced>
         Dim MyIcon As MatchCollection = Regex.Matches(data, Iconfilter)

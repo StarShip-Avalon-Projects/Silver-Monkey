@@ -35,10 +35,6 @@ Public Class Main
     Public WithEvents NotifyIcon1 As NotifyIcon
     Private WithEvents TextDisplayer As TextDisplayManager
 
-    'Dim TimeUpdater As Threading.Thread
-    '  Public Shared FurcTime As DateTime
-
-    ' Public Bot As FURRE
     Public LogStream As LogStream
 
     Public Mainsettings As cMain
@@ -635,7 +631,6 @@ Public Class Main
         sndDisplay("Furcadia Session error:" + e.Message + o.ToString, TextDisplayManager.fColorEnum.Error)
     End Sub
 
-
 #End Region
 
     'Public Function TagCloser(ByRef Str As String, ByRef Tag As String) As String
@@ -1053,6 +1048,8 @@ Public Class Main
                 UpDateDreamList()
             Case ServerInstructionType.RemoveAvatar
                 UpDateDreamList()
+                'Case ServerInstructionType.LoadDreamEvent
+                '    UpDateDreamList()
         End Select
 
     End Sub
@@ -1064,6 +1061,15 @@ Public Class Main
 #Region "Action Controls"
 
     Private ActionCMD As String
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
 
     Private Sub _ne_Click(sender As System.Object, e As System.EventArgs) Handles _ne.Click
         SendCommandToServer("`m 9")
@@ -1230,6 +1236,12 @@ Public Class Main
             e.Handled = True
         End If
 
+    End Sub
+
+    Private Sub StartupProcessToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            Help.ShowHelp(Me, HelpFile, "/html/4c192ea5-9a9c-4dae-927f-7581b05c0f65.htm")
+        End If
     End Sub
 
     Private Sub Main_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing

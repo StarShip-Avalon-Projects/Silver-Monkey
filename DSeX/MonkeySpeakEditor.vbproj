@@ -109,9 +109,6 @@
   <ItemGroup>
     <Compile Include="..\AssemblyInfoersion.vb">
       <Link>AssemblyInfoersion.vb</Link>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
     </Compile>
     <Compile Include="advanceSearch.vb">
       <SubType>Form</SubType>
@@ -227,11 +224,6 @@
     <None Include="AssemblyFileVersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
-    </None>
-    <None Include="..\AssemblyInfoersion.tt">
-      <Link>AssemblyInfoersion.tt</Link>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
     </None>
     <Content Include="Keys-MS.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -382,6 +374,9 @@
     </Content>
     <Content Include="Templates-MS\PS Backup %27n%27 Restore.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates-MS\Startup Notification.ms">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates-MS\TradeDemo.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

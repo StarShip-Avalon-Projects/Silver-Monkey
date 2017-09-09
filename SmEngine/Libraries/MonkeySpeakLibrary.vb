@@ -34,9 +34,10 @@ Namespace Engine.Libraries
             Dim msg As Variable = MsPage.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
-            Return test.Contains(msMsg)
+            Return test.ToLower.Contains(msMsg.ToLower)
 
         End Function
+
 
         ''' <summary>
         ''' </summary>

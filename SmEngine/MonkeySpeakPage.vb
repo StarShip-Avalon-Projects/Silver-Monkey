@@ -104,7 +104,7 @@ Namespace Engine
             LibList.Add(New MsPounce(MSEngine.FurcadiaSession))
             LibList.Add(New MsVerbot(MSEngine.FurcadiaSession))
             LibList.Add(New MsSound(MSEngine.FurcadiaSession))
-            'LibList.Add(New MS_MemberList())
+            LibList.Add(New MsTrades(MSEngine.FurcadiaSession))
             'LibList.Add(New MS_MemberList())
             'LibList.Add(New MS_MemberList())
         End Sub
