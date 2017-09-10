@@ -219,7 +219,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="app.manifest" />
     <None Include="AssemblyFileVersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

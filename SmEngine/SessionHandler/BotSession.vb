@@ -10,14 +10,9 @@
 
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Furcadia.Drawing
-Imports Furcadia.Drawing.VisibleArea
-Imports Furcadia.Net
-Imports Furcadia.Net.Dream
 Imports Furcadia.Net.Proxy
 Imports Furcadia.Text.FurcadiaMarkup
 Imports MonkeyCore
-Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Interfaces
 Imports SilverMonkeyEngine.SmConstants
@@ -42,12 +37,6 @@ Imports SilverMonkeyEngine.SmConstants
 <CLSCompliant(True)>
 Public Class BotSession : Inherits ProxySession
     Implements IDisposable
-
-#Region "Public Methods"
-
-
-
-#End Region
 
 #Region "Constructors"
 
@@ -188,7 +177,6 @@ Public Class BotSession : Inherits ProxySession
             MSpage.SetVariable(MS_Name, DescName, True)
             MSpage.Execute(600)
 
-
             'NameFilter
 
         ElseIf Color = "warning" Then
@@ -217,181 +205,181 @@ Public Class BotSession : Inherits ProxySession
 
     End Sub
 
-    ''' <summary>
-    ''' Parse Server Data
-    ''' <para>
-    ''' TODO: Move this functionality to <see cref="Furcadia.Net"/>
-    ''' </para>
-    ''' </summary>
-    ''' <param name="data">
-    ''' raw server instruction
-    ''' </param>
-    ''' <param name="Handled">
-    ''' has this instruction been handled elsewhere
-    ''' </param>
-    Public Overrides Sub ParseServerData(ByVal data As String, ByVal Handled As Boolean)
-        MyBase.ParseServerData(data, Handled)
-        MSpage.SetVariable(MS_Name, Player.ShortName, True)
-        MSpage.SetVariable("MESSAGE", Player.Message, True)
+    '''' <summary>
+    '''' Parse Server Data
+    '''' <para>
+    '''' TODO: Move this functionality to <see cref="Furcadia.Net"/>
+    '''' </para>
+    '''' </summary>
+    '''' <param name="data">
+    '''' raw server instruction
+    '''' </param>
+    '''' <param name="Handled">
+    '''' has this instruction been handled elsewhere
+    '''' </param>
+    'Public Overrides Sub ParseServerData(ByVal data As String, ByVal Handled As Boolean)
+    '    MyBase.ParseServerData(data, Handled)
+    '    MSpage.SetVariable(MS_Name, Player.ShortName, True)
+    '    MSpage.SetVariable("MESSAGE", Player.Message, True)
 
-        If data = "&&&&&&&&&&&&&" Then
-            'We've connected to Furcadia
-            'Stop the reconnection manager
-            '(0:1) When the bot logs into furcadia,
-            MSpage.SetVariable("BOTNAME", ConnectedFurre.ShortName, True)
-            MSpage.Execute(1)
+    '    If data = "&&&&&&&&&&&&&" Then
+    '        'We've connected to Furcadia
+    '        'Stop the reconnection manager
+    '        '(0:1) When the bot logs into furcadia,
+    '        MSpage.SetVariable("BOTNAME", ConnectedFurre.ShortName, True)
+    '        MSpage.Execute(1)
 
-            ' Species Tags
-        ElseIf data.StartsWith("]-") Then
+    '        ' Species Tags
+    '    ElseIf data.StartsWith("]-") Then
 
-            'DS Variables
+    '        'DS Variables
 
-            'Popup Dialogs!
-        ElseIf data.StartsWith("]#") Then
-            ']#<idstring> <style 0-17> <message that might have spaces in>
-            Dim repqq As Regex = New Regex("^\]#(.*?) (\d+) (.*?)$")
-            Dim m As Match = repqq.Match(data)
-            Dim r As Rep
-            r.ID = m.Groups(1).Value
-            Dim num As Integer = 0
-            Integer.TryParse(m.Groups(2).Value, r.Type)
-            Repq.Enqueue(r)
-            MSpage.SetVariable("MESSAGE", Player.Message, True)
-            MSpage.Execute(95, 96)
+    '        'Popup Dialogs!
+    '    ElseIf data.StartsWith("]#") Then
+    '        ']#<idstring> <style 0-17> <message that might have spaces in>
+    '        Dim repqq As Regex = New Regex("^\]#(.*?) (\d+) (.*?)$")
+    '        Dim m As Match = repqq.Match(data)
+    '        Dim r As Rep
+    '        r.ID = m.Groups(1).Value
+    '        Dim num As Integer = 0
+    '        Integer.TryParse(m.Groups(2).Value, r.Type)
+    '        Repq.Enqueue(r)
+    '        MSpage.SetVariable("MESSAGE", Player.Message, True)
+    '        MSpage.Execute(95, 96)
 
-            ']s(.+)1 (.*?) (.*?) 0
-            'Display Dream Info
-            'Portal  Names until a ]t
-        ElseIf data.StartsWith("]s") Then
-            Dim t As New Regex("\]s(.+)1 (.*?) (.*?) 0", RegexOptions.IgnoreCase)
-            Dim m As System.Text.RegularExpressions.Match = t.Match(data)
-            If Furcadia.Util.FurcadiaShortName(ConnectedCharacterName) = Furcadia.Util.FurcadiaShortName(m.Groups(2).Value) Then
-                MSpage.Execute()
-            End If
+    '        ']s(.+)1 (.*?) (.*?) 0
+    '        'Display Dream Info
+    '        'Portal  Names until a ]t
+    '    ElseIf data.StartsWith("]s") Then
+    '        Dim t As New Regex("\]s(.+)1 (.*?) (.*?) 0", RegexOptions.IgnoreCase)
+    '        Dim m As System.Text.RegularExpressions.Match = t.Match(data)
+    '        If Furcadia.Util.FurcadiaShortName(ConnectedCharacterName) = Furcadia.Util.FurcadiaShortName(m.Groups(2).Value) Then
+    '            MSpage.Execute()
+    '        End If
 
-            'Look response
-        ElseIf data.StartsWith("]f") And ServerConnectPhase = ConnectionPhase.Connected And InDream = True Then
+    '        'Look response
+    '    ElseIf data.StartsWith("]f") And ServerConnectPhase = ConnectionPhase.Connected And InDream = True Then
 
-            'Spawn Avatar
-        ElseIf data.StartsWith("<") And ServerConnectPhase = ConnectionPhase.Connected Then
+    '        'Spawn Avatar
+    '    ElseIf data.StartsWith("<") And ServerConnectPhase = ConnectionPhase.Connected Then
 
-            If IsConnectedCharacter Then
-                MSpage.Execute(28, 29, 24, 25)
-            Else
-                MSpage.Execute(24, 25)
-            End If
+    '        If IsConnectedCharacter Then
+    '            MSpage.Execute(28, 29, 24, 25)
+    '        Else
+    '            MSpage.Execute(24, 25)
+    '        End If
 
-            'Try
+    '        'Try
 
-            ' ' Add New Arrivals to Dream.FurreList ' One or the other will
-            ' trigger it ' IsConnectedCharacter
+    '        ' ' Add New Arrivals to Dream.FurreList ' One or the other will
+    '        ' trigger it ' IsConnectedCharacter
 
-            ' If Player.Flag = 4 Or Not Dream.FurreList.Contains(Player)
-            ' Then Dream.FurreList.Add(Player) ' If InDream Then RaiseEvent
-            ' UpDateDreamList(Player.Name) If Player.Flag = 2 Then End If
-            ' ElseIf Player.Flag = 2 Then
+    '        ' If Player.Flag = 4 Or Not Dream.FurreList.Contains(Player)
+    '        ' Then Dream.FurreList.Add(Player) ' If InDream Then RaiseEvent
+    '        ' UpDateDreamList(Player.Name) If Player.Flag = 2 Then End If
+    '        ' ElseIf Player.Flag = 2 Then
 
-            'MSpage.Execute(28, 29)
+    '        'MSpage.Execute(28, 29)
 
-            ' ElseIf Player.Flag = 1 Then
+    '        ' ElseIf Player.Flag = 1 Then
 
-            ' ElseIf Player.Flag = 0 Then
+    '        ' ElseIf Player.Flag = 0 Then
 
-            ' End If
+    '        ' End If
 
-            'Catch eX As Exception
+    '        'Catch eX As Exception
 
-            '    Dim logError As New ErrorLogging(eX, Me)
-            '    Exit Sub
-            'End Try
+    '        '    Dim logError As New ErrorLogging(eX, Me)
+    '        '    Exit Sub
+    '        'End Try
 
-            'Remove Furre
-        ElseIf data.StartsWith(")") And ServerConnectPhase = ConnectionPhase.Connected Then  'And loggingIn = False
+    '        'Remove Furre
+    '    ElseIf data.StartsWith(")") And ServerConnectPhase = ConnectionPhase.Connected Then  'And loggingIn = False
 
-            'Animated Move
-        ElseIf data.StartsWith("/") And ServerConnectPhase = ConnectionPhase.Connected Then 'And loggingIn = False
-            Try
+    '        'Animated Move
+    '    ElseIf data.StartsWith("/") And ServerConnectPhase = ConnectionPhase.Connected Then 'And loggingIn = False
+    '        Try
 
-                MSpage.SetVariable(MS_Name, Player.ShortName, True)
-                MSpage.Execute(28, 29, 30, 31, 601, 602)
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
+    '            MSpage.SetVariable(MS_Name, Player.ShortName, True)
+    '            MSpage.Execute(28, 29, 30, 31, 601, 602)
+    '        Catch eX As Exception
+    '            Dim logError As New ErrorLogging(eX, Me)
+    '        End Try
 
-            ' Move Avatar
-        ElseIf data.StartsWith("A") And ServerConnectPhase = ConnectionPhase.Connected Then 'And loggingIn = False
-            Try
+    '        ' Move Avatar
+    '    ElseIf data.StartsWith("A") And ServerConnectPhase = ConnectionPhase.Connected Then 'And loggingIn = False
+    '        Try
 
-                Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(ConnectedFurre.Position.x, ConnectedFurre.Position.y)
-                If VisableRectangle.X <= Me.Player.Position.x And VisableRectangle.Y <= Me.Player.Position.y And VisableRectangle.height >= Me.Player.Position.y And VisableRectangle.length >= Me.Player.Position.x Then
+    '            Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(ConnectedFurre.Position.x, ConnectedFurre.Position.y)
+    '            If VisableRectangle.X <= Me.Player.Position.x And VisableRectangle.Y <= Me.Player.Position.y And VisableRectangle.height >= Me.Player.Position.y And VisableRectangle.length >= Me.Player.Position.x Then
 
-                    Player.Visible = True
-                Else
-                    Player.Visible = False
-                End If
+    '                Player.Visible = True
+    '            Else
+    '                Player.Visible = False
+    '            End If
 
-                MSpage.SetVariable(MS_Name, Player.ShortName, True)
-                MSpage.Execute(28, 29, 30, 31, 601, 602)
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
+    '            MSpage.SetVariable(MS_Name, Player.ShortName, True)
+    '            MSpage.Execute(28, 29, 30, 31, 601, 602)
+    '        Catch eX As Exception
+    '            Dim logError As New ErrorLogging(eX, Me)
+    '        End Try
 
-            ' Update Color Code
-        ElseIf data.StartsWith("B") And ServerConnectPhase = ConnectionPhase.Connected And InDream Then
+    '        ' Update Color Code
+    '    ElseIf data.StartsWith("B") And ServerConnectPhase = ConnectionPhase.Connected And InDream Then
 
-            'Hide Avatar
-        ElseIf data.StartsWith("C") <> False And ServerConnectPhase = ConnectionPhase.Connected Then
-            Try
+    '        'Hide Avatar
+    '    ElseIf data.StartsWith("C") <> False And ServerConnectPhase = ConnectionPhase.Connected Then
+    '        Try
 
-                MSpage.SetVariable(MS_Name, Player.ShortName, True)
-                MSpage.Execute(30, 31)
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-            End Try
+    '            MSpage.SetVariable(MS_Name, Player.ShortName, True)
+    '            MSpage.Execute(30, 31)
+    '        Catch eX As Exception
+    '            Dim logError As New ErrorLogging(eX, Me)
+    '        End Try
 
-            'Display Disconnection Dialog
-        ElseIf data.StartsWith("[") Then
-            ' RaiseEvent UpDateDreamList("")
+    '        'Display Disconnection Dialog
+    '    ElseIf data.StartsWith("[") Then
+    '        ' RaiseEvent UpDateDreamList("")
 
-            MsgBox(data, MsgBoxStyle.Critical, "Disconnection Error")
+    '        MsgBox(data, MsgBoxStyle.Critical, "Disconnection Error")
 
-            ';{mapfile}	Load a local map (one in the furcadia folder)
-            ']q {name} {id}	Request to download a specific patch
-        ElseIf data.StartsWith(";") OrElse data.StartsWith("]q") OrElse data.StartsWith("]r") Then
-            MSpage.SetVariable("DREAMOWNER", "", True)
-            MSpage.SetVariable("DREAMNAME", "", True)
-            'RaiseEvent UpDateDreamList("")
+    '        ';{mapfile}	Load a local map (one in the furcadia folder)
+    '        ']q {name} {id}	Request to download a specific patch
+    '    ElseIf data.StartsWith(";") OrElse data.StartsWith("]q") OrElse data.StartsWith("]r") Then
+    '        MSpage.SetVariable("DREAMOWNER", "", True)
+    '        MSpage.SetVariable("DREAMNAME", "", True)
+    '        'RaiseEvent UpDateDreamList("")
 
-        ElseIf data.StartsWith("]z") Then
-            '   ConnectedCharacterFurcadiaID = Integer.Parse(data.Remove(0, 2))
-            'Snag out UID
-        ElseIf data.StartsWith("]B") Then
-            ' ConnectedCharacterFurcadiaID = Integer.Parse(data.Substring(2,
-            ' data.Length - ConnectedCharacterName.Length - 3))
+    '    ElseIf data.StartsWith("]z") Then
+    '        '   ConnectedCharacterFurcadiaID = Integer.Parse(data.Remove(0, 2))
+    '        'Snag out UID
+    '    ElseIf data.StartsWith("]B") Then
+    '        ' ConnectedCharacterFurcadiaID = Integer.Parse(data.Substring(2,
+    '        ' data.Length - ConnectedCharacterName.Length - 3))
 
-        ElseIf data.StartsWith("]c") Then
+    '    ElseIf data.StartsWith("]c") Then
 
-        ElseIf data.StartsWith("]C") Then
-            If data.StartsWith("]C0") Then
+    '    ElseIf data.StartsWith("]C") Then
+    '        If data.StartsWith("]C0") Then
 
-                MSpage.SetVariable("DREAMOWNER", Dream.Owner, True)
-                MSpage.SetVariable("DREAMNAME", Dream.Name, True)
-                MSpage.Execute(90, 91)
-            End If
+    '            MSpage.SetVariable("DREAMOWNER", Dream.Owner, True)
+    '            MSpage.SetVariable("DREAMNAME", Dream.Name, True)
+    '            MSpage.Execute(90, 91)
+    '        End If
 
-            'Process Channels Separately
-        ElseIf data.StartsWith("(") Then
-            If ThroatTired = True And data.StartsWith("(<font color='warning'>Your throat is tired. Try again in a few seconds.</font>") Then
+    '        'Process Channels Separately
+    '    ElseIf data.StartsWith("(") Then
+    '        If ThroatTired = True And data.StartsWith("(<font color='warning'>Your throat is tired. Try again in a few seconds.</font>") Then
 
-                '(0:92) When the bot detects the "Your throat is tired. Please wait a few seconds" message,
-                MSpage.Execute(92)
+    '            '(0:92) When the bot detects the "Your throat is tired. Please wait a few seconds" message,
+    '            MSpage.Execute(92)
 
-            End If
-        Else
+    '        End If
+    '    Else
 
-        End If
+    '    End If
 
-    End Sub
+    'End Sub
 
     ''' <summary>
     ''' Send a formatted string to the client and log window
@@ -459,14 +447,6 @@ Public Class BotSession : Inherits ProxySession
     Public Overrides Sub Dispose()
         Dispose(True)
         GC.SuppressFinalize(Me)
-    End Sub
-
-    Protected Overrides Sub Finalize()
-        ' Do not change this code.
-        ' Put cleanup code in
-        ' Dispose(ByVal disposing As Boolean) above.
-        Dispose(False)
-        MyBase.Finalize()
     End Sub
 
 #End Region

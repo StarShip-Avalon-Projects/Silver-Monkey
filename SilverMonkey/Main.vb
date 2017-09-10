@@ -538,12 +538,17 @@ Public Class Main
     Private Sub RecentFile_click(sender As Object, e As EventArgs) Handles RecentToolStripMenuItem.Click
         'BotSetup.BotFile =
         'BotSetup.ShowDialog()
-        BotConfig = New BotOptions(sender.ToString())
-        SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
-        SilverMonkeyLogPath = BotConfig.LogPath
-        My.Settings.LastBotFile = sender.ToString()
-        EditBotToolStripMenuItem.Enabled = True
-        My.Settings.Save()
+
+        If FurcadiaSession Is Nothing OrElse Not FurcadiaSession.IsServerConnected Then
+                BotConfig = New BotOptions(sender.ToString())
+                FurcadiaSession = New BotSession(BotConfig)
+                SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
+                SilverMonkeyLogPath = BotConfig.LogPath
+                My.Settings.LastBotFile = sender.ToString()
+                EditBotToolStripMenuItem.Enabled = True
+                My.Settings.Save()
+            End If
+
 
         'same as open menu
     End Sub
@@ -593,19 +598,15 @@ Public Class Main
     ''' <param name="data"></param>
     ''' <param name="newColor"></param>
     Public Sub sndDisplay(ByRef data As String, Optional ByVal newColor As TextDisplayManager.fColorEnum = TextDisplayManager.fColorEnum.DefaultColor)
-        Try
-            'data = data.Replace(vbLf, vbCrLf)
-            If BotConfig.log Then LogStream.WriteLine(data)
+
+        If BotConfig.log Then LogStream.WriteLine(data)
             If CBool(Mainsettings.TimeStamp) Then
                 Dim Now As String = DateTime.Now.ToLongTimeString
                 data = Now.ToString & ": " & data
             End If
             Dim textObject As New TextDisplayManager.TextDisplayObject(data, newColor)
             TextDisplayer.AddDataToList(textObject)
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
 
-        End Try
     End Sub
 
     '
@@ -627,7 +628,13 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub ProxyError(e As Exception, o As Object, text As String) Handles FurcadiaSession.Error
+    ''' <summary>
+    ''' Furcadia Session error handler
+    ''' </summary>
+    ''' <param name="e"></param>
+    ''' <param name="o"></param>
+    ''' <param name="text"></param>
+    Private Sub OnFurcadiaSessionError(e As Exception, o As Object, text As String) Handles FurcadiaSession.Error
         sndDisplay("Furcadia Session error:" + e.Message + o.ToString, TextDisplayManager.fColorEnum.Error)
     End Sub
 
@@ -673,7 +680,6 @@ Public Class Main
             End If
         Catch eX As Exception
             Dim logError As New ErrorLogging(eX, Me, FurcadiaSession.Dream.FurreList.ToString)
-            logError = New ErrorLogging(eX, p)
         End Try
     End Sub
 
@@ -1272,4 +1278,39 @@ Public Class Main
         End Try
     End Sub
 
+
+
+    Private Sub log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles Log_.LinkClicked
+        Dim Proto As String = ""
+        Dim Str As String = e.LinkText
+
+        If Str.Contains("#") Then
+            Str = Str.Substring(0, Str.IndexOf("#"))
+        End If
+        Proto = Str.Substring(0, Str.IndexOf("://"))
+        Select Case Proto.ToLower
+            Case "http"
+                Try
+                    Me.Cursor = System.Windows.Forms.Cursors.AppStarting
+
+                    Process.Start(Str)
+                Catch
+                Finally
+                    Me.Cursor = System.Windows.Forms.Cursors.Default
+                End Try
+            Case "https"
+                Try
+                    Me.Cursor = System.Windows.Forms.Cursors.AppStarting
+
+                    Process.Start(Str)
+                Catch
+                Finally
+                    Me.Cursor = System.Windows.Forms.Cursors.Default
+                End Try
+
+            Case Else
+                MsgBox("Protocol: """ & Proto & """ Not yet implemented")
+        End Select
+        'MsgBox(Proto)
+    End Sub
 End Class

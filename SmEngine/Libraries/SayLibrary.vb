@@ -866,7 +866,7 @@ Namespace Engine.Libraries
         ''' </param>
         Public Function sndSay(ByRef msg As String) As Boolean
 
-            Return sendServer("""" + msg)
+            Return sendServer(msg)
 
         End Function
 
@@ -1195,8 +1195,13 @@ Namespace Engine.Libraries
                     ' with {...} in it
 
                     MsPage.Execute(11, 12, 13, 18, 19, 20)
+                Case "emit"
+                    ' (0:21) When someone emits something
+                    ' (0:22) When someone emits {...}
+                    ' (0:23) When someone emits something with {...} in it
 
-                Case "@emit" Or "emit"
+                    MsPage.Execute(21, 22, 23)
+                Case "@emit"
                     ' (0:21) When someone emits something
                     ' (0:22) When someone emits {...}
                     ' (0:23) When someone emits something with {...} in it

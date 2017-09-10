@@ -378,6 +378,11 @@ Namespace Engine.Libraries
 
         End Function
 
+        ''' <summary>
+        ''' Banish Event Parser Event Handler
+        ''' </summary>
+        ''' <param name="InstructionObject"></param>
+        ''' <param name="Args"></param>
         Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerChannelData
             '   If FurcadiaSession.IsConnectedCharacter Then Exit Sub
             Player = InstructionObject.Player

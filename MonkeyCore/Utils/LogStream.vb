@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Furcadia.Text.FurcadiaMarkup
 
@@ -27,9 +28,9 @@ Public Class LogStream
             Directory.CreateDirectory(FilePath)
         End If
 
-        If Not File.Exists(strErrorFilePath) Then
-            File.Create(strErrorFilePath)
-        End If
+        'If Not File.Exists(strErrorFilePath) Then
+        '    File.Create(strErrorFilePath)
+        'End If
 
     End Sub
 
@@ -119,7 +120,7 @@ Public Class LogStream
     ''' <param name="Message">
     ''' </param>
     Public Shared Sub WriteLine(Message As String)
-        Dim build As New Text.StringBuilder(Message)
+        Dim build As New StringBuilder(Message)
         Dim Names As MatchCollection = Regex.Matches(Message, NameFilter)
         For Each Name As Match In Names
             build = build.Replace(Name.ToString, Name.Groups(3).Value)
@@ -150,18 +151,18 @@ Public Class LogStream
         Dim Now As String = Date.Now().ToString("MM/dd/yyyy H:mm:ss")
         Message = Now & ": " & Message
 
-        Dim ioFile As New StreamWriter(strErrorFilePath, True)
+        Using ioFile As New StreamWriter(strErrorFilePath, True)
 
-        ' Try
+            ' Try
 
-        For Each line In Stack.ToArray
-            ioFile.WriteLine(line)
-        Next
-        Stack.Clear()
-        ioFile.WriteLine(Message)
-        ioFile.Flush()
-        ioFile.Close()
-
+            For Each line In Stack.ToArray
+                ioFile.WriteLine(line)
+            Next
+            Stack.Clear()
+            ioFile.WriteLine(Message)
+            ioFile.Flush()
+            ioFile.Close()
+        End Using
         'Catch ex As IOException
         '    If (ex.Message.StartsWith("The process cannot access the file") AndAlso
         '        ex.Message.EndsWith("because it is being used by another process.")) Then

@@ -288,38 +288,38 @@ Public Class TextDisplayManager
 #Region "Private Methods"
 
     Private Sub log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles lb.LinkClicked
-        Dim Proto As String = ""
-        Dim Str As String = e.LinkText
-        Try
-            If Str.Contains("#") Then
-                Proto = Str.Substring(Str.IndexOf("#"), Str.IndexOf("://"))
+        'Dim Proto As String = ""
+        'Dim Str As String = e.LinkText
+        'Try
+        '    If Str.Contains("#") Then
+        '        Proto = Str.Substring(Str.IndexOf("#"), Str.IndexOf("://"))
 
-            End If
-        Catch
-        End Try
-        Select Case Proto.ToLower
-            Case "http"
-                Try
-                    lb.Cursor = System.Windows.Forms.Cursors.AppStarting
-                    Dim url As String = Str.Substring(Str.IndexOf("#"))
-                    Process.Start(url)
-                Catch ex As Exception
-                Finally
-                    lb.Cursor = System.Windows.Forms.Cursors.Default
-                End Try
-            Case "https"
-                Try
-                    lb.Cursor = System.Windows.Forms.Cursors.AppStarting
-                    Dim url As String = Str.Substring(Str.IndexOf("#"))
-                    Process.Start(url)
-                Catch ex As Exception
-                Finally
-                    lb.Cursor = System.Windows.Forms.Cursors.Default
-                End Try
+        '    End If
+        'Catch
+        'End Try
+        'Select Case Proto.ToLower
+        '    Case "http"
+        '        Try
+        '            lb.Cursor = System.Windows.Forms.Cursors.AppStarting
+        '            Dim url As String = Str.Substring(Str.IndexOf("#"))
+        '            Process.Start(url)
+        '        Catch ex As Exception
+        '        Finally
+        '            lb.Cursor = System.Windows.Forms.Cursors.Default
+        '        End Try
+        '    Case "https"
+        '        Try
+        '            lb.Cursor = System.Windows.Forms.Cursors.AppStarting
+        '            Dim url As String = Str.Substring(Str.IndexOf("#"))
+        '            Process.Start(url)
+        '        Catch ex As Exception
+        '        Finally
+        '            lb.Cursor = System.Windows.Forms.Cursors.Default
+        '        End Try
 
-            Case Else
-                MsgBox("Protocol: """ & Proto & """ Not yet implemented")
-        End Select
+        '    Case Else
+        '        MsgBox("Protocol: """ & Proto & """ Not yet implemented")
+        'End Select
         'MsgBox(Proto)
     End Sub
 

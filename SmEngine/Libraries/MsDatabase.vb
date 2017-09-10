@@ -62,7 +62,7 @@ Namespace Engine.Libraries
         ''' </param>
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
-            SQLitefile = Path.Combine(Paths.SilverMonkeyBotPath, "SilverMonkey.db")
+            SQLitefile = Paths.CheckBotFolder("SilverMonkey.db")
             '(1:500) and the Database info {...} about the triggering furre is equal to #,
             Add(New Trigger(TriggerCategory.Condition, 500),
                 AddressOf TriggeringFurreinfoEqualToNumber,
