@@ -1,5 +1,5 @@
 
-git pull --all
+git pull
 IF "%~1"=="" GOTO BuildAll
 IF "%~1"=="VersionBump" GOTO VersionBump
 
