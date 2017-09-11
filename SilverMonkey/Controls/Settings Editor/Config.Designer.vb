@@ -66,7 +66,7 @@
         Me.chkBxBroadcast = New System.Windows.Forms.CheckBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
-        Me.RecentBtnClear = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -560,7 +560,7 @@
         '
         'GroupBox7
         '
-        Me.GroupBox7.Controls.Add(Me.RecentBtnClear)
+        Me.GroupBox7.Controls.Add(Me.Button3)
         Me.GroupBox7.Location = New System.Drawing.Point(93, 54)
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.Size = New System.Drawing.Size(200, 120)
@@ -570,12 +570,12 @@
         '
         'Button3
         '
-        Me.RecentBtnClear.Location = New System.Drawing.Point(41, 50)
-        Me.RecentBtnClear.Name = "Button3"
-        Me.RecentBtnClear.Size = New System.Drawing.Size(126, 23)
-        Me.RecentBtnClear.TabIndex = 0
-        Me.RecentBtnClear.Text = "Purge Recent Menu"
-        Me.RecentBtnClear.UseVisualStyleBackColor = True
+        Me.Button3.Location = New System.Drawing.Point(41, 50)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(126, 23)
+        Me.Button3.TabIndex = 0
+        Me.Button3.Text = "Purge Recent Menu"
+        Me.Button3.UseVisualStyleBackColor = True
         '
         'TabPage7
         '
@@ -947,7 +947,7 @@
     Friend WithEvents chkBxBroadcast As System.Windows.Forms.CheckBox
     Friend WithEvents TabPage6 As System.Windows.Forms.TabPage
     Friend WithEvents GroupBox7 As System.Windows.Forms.GroupBox
-    Friend WithEvents RecentBtnClear As System.Windows.Forms.Button
+    Friend WithEvents Button3 As System.Windows.Forms.Button
     Friend WithEvents chkBxClientDisconnectToggle As System.Windows.Forms.CheckBox
     Friend WithEvents TabPage7 As System.Windows.Forms.TabPage
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox

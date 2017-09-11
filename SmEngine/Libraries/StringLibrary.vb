@@ -31,12 +31,6 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Condition, 61), AddressOf NotWildCard,
              "(1:61) and variable %Variable doesn't match wild-card expression {.} ( ""*"" or ""?""),")
 
-            Add(New Trigger(TriggerCategory.Condition, 62), AddressOf AndVariableContains,
-             "(1:62) and variable %variable contains text {...},")
-
-            Add(New Trigger(TriggerCategory.Condition, 63), AddressOf AndVariableNotContains,
-             "(1:63) and variable %variable does not contain text {...},")
-
             '(5:110) use variable % and take word # and put it into variable %
             Add(New Trigger(TriggerCategory.Effect, 120), AddressOf StringSplit,
                  "(5:120) use variable %Variable and take word position # and put it into variable %Variable.")
@@ -72,10 +66,8 @@ Namespace Engine.Libraries
         ''' last # characters of it.
         ''' </summary>
         ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' true on success
         ''' </returns>
         Public Function ChopEndString(reader As TriggerReader) As Boolean
             Dim Var As Variable
@@ -100,10 +92,8 @@ Namespace Engine.Libraries
         ''' the first # characters of it.
         ''' </summary>
         ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' true on success
         ''' </returns>
         Public Function ChopStartString(reader As TriggerReader) As Boolean
             Dim Var As Variable
@@ -126,10 +116,8 @@ Namespace Engine.Libraries
         ''' %variable and put them into variable %Variable .
         ''' </summary>
         ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' true on success
         ''' </returns>
         Public Function CountChars(reader As TriggerReader) As Boolean
 
@@ -141,147 +129,11 @@ Namespace Engine.Libraries
 
         End Function
 
-        ''' <summary>
-        ''' (1:61) and variable %Variable doesn't match wild-card expression
-        ''' {.} ( ""*"" or ""?""),
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Function NotWildCard(reader As TriggerReader) As Boolean
-
-            Dim var As Variable = reader.ReadVariable
-            Dim Pattern As String = reader.ReadString
-            Return Not MatchWildcardString(Pattern, var.Value.ToString)
-
-        End Function
-
-        ''' <summary>
-        ''' (5:120) use variable % and take word # and put it into variable %
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Function StringSplit(reader As TriggerReader) As Boolean
-
-            Dim Var As Variable = reader.ReadVariable()
-            Dim i As Double = ReadVariableOrNumber(reader)
-            Dim NewVar As Variable = reader.ReadVariable(True)
-            Dim fields() As String = Split(Var.Value.ToString, " ")
-            If i < fields.Length Then
-                NewVar.Value = fields(i)
-            End If
-            Return True
-
-        End Function
-
-        ''' <summary>
-        ''' (5:121) use variable % then remove character {.} and put it into
-        ''' variable %.
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Public Function StripCharacters(reader As TriggerReader) As Boolean
-            Dim ch As Char = Nothing
-            Dim NewVar As Variable
-            Dim Var As Variable
-
-            Var = reader.ReadVariable()
-            ch = CChar(reader.ReadString)
-            NewVar = reader.ReadVariable()
-
-            Dim varStr As String = Var.Value.ToString
-            Dim NewStr As String = varStr.Replace(ch, String.Empty)
-            NewVar.Value = NewStr
-            Return True
-        End Function
-
-        ''' <summary>
-        ''' (1:60) and variable %Variable matches wild-card expression {.} (
-        ''' ""*"" or ""?""),
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Function WildCard(reader As TriggerReader) As Boolean
-
-            Dim var As Variable = reader.ReadVariable
-            Dim Pattern As String = reader.ReadString
-            Return MatchWildcardString(Pattern, var.Value.ToString)
-
-        End Function
-
-#End Region
-
-#Region "Private Methods"
-
-        ''' <summary>
-        ''' (1:62) and variable %variable contains text {...},
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Public Function AndVariableContains(reader As TriggerReader) As Boolean
-
-            Dim VariableToCheck As Monkeyspeak.Variable = reader.ReadVariable()
-            Dim Argument As String
-            If reader.PeekVariable Then
-                Argument = reader.ReadVariable.Value
-            ElseIf reader.PeekNumber Then
-                Argument = reader.ReadNumber.ToString()
-            Else
-                Argument = reader.ReadString
-            End If
-
-            Return VariableToCheck.Value.Contains(Argument)
-
-        End Function
-
-        ''' <summary>
-        ''' (1:63) and variable %variable does not contain text {...},
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Public Function AndVariableNotContains(reader As TriggerReader) As Boolean
-
-            Dim VariableToCheck As Monkeyspeak.Variable = reader.ReadVariable()
-            Dim Argument As String
-            If reader.PeekVariable Then
-                Argument = reader.ReadVariable.Value
-            ElseIf reader.PeekNumber Then
-                Argument = reader.ReadNumber.ToString()
-            Else
-                Argument = reader.ReadString
-            End If
-            Return Not VariableToCheck.Value.Contains(Argument)
-
-        End Function
-
-        Private Function MatchWildcardString(pattern As String, input As String) As Boolean
-            If String.Compare(pattern, input) = 0 Then
+        Public Function MatchWildcardString(pattern As String, input As String) As [Boolean]
+            If [String].Compare(pattern, input) = 0 Then
                 Return True
-            ElseIf String.IsNullOrEmpty(input) Then
-                If String.IsNullOrEmpty(pattern.Trim(New Char() {"*"c})) Then
+            ElseIf [String].IsNullOrEmpty(input) Then
+                If [String].IsNullOrEmpty(pattern.Trim(New [Char](0) {"*"c})) Then
                     Return True
                 Else
                     Return False
@@ -311,15 +163,84 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:127) take variable %Variable and convert it to Furcadia short
-        ''' name. (without special characters or spaces or pipe ""|"").
+        ''' (1:61) and variable %Variable doesn't match wild-card expression
+        ''' {.} ( ""*"" or ""?""),
         ''' </summary>
         ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' true on success
         ''' </returns>
+        Function NotWildCard(reader As TriggerReader) As Boolean
+
+            Dim var As Variable = reader.ReadVariable
+            Dim Pattern As String = reader.ReadString
+            Return Not MatchWildcardString(Pattern, var.Value.ToString)
+
+        End Function
+
+        ''' <summary>
+        ''' (5:120) use variable % and take word # and put it into variable %
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
+        Function StringSplit(reader As TriggerReader) As Boolean
+
+            Dim Var As Variable = reader.ReadVariable()
+            Dim i As Double = ReadVariableOrNumber(reader)
+            Dim NewVar As Variable = reader.ReadVariable(True)
+            Dim fields() As String = Split(Var.Value.ToString, " ")
+            If i < fields.Length Then
+                NewVar.Value = fields(i)
+            End If
+            Return True
+
+        End Function
+
+        ''' <summary>
+        ''' (5:121) use variable % then remove character {.} and put it into
+        ''' variable %.
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
+        Public Function StripCharacters(reader As TriggerReader) As Boolean
+            Dim ch As Char = Nothing
+            Dim NewVar As Variable
+            Dim Var As Variable
+
+            Var = reader.ReadVariable()
+            ch = CChar(reader.ReadString)
+            NewVar = reader.ReadVariable()
+
+            Dim varStr As String = Var.Value.ToString
+            Dim NewStr As String = varStr.Replace(ch, String.Empty)
+            NewVar.Value = NewStr
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' (1:60) and variable %Variable matches wild-card expression {.} (
+        ''' ""*"" or ""?""),
+        ''' </summary>
+        ''' <param name="reader">
+        ''' </param>
+        ''' <returns>
+        ''' </returns>
+        Function WildCard(reader As TriggerReader) As Boolean
+
+            Dim var As Variable = reader.ReadVariable
+            Dim Pattern As String = reader.ReadString
+            Return MatchWildcardString(Pattern, var.Value.ToString)
+
+        End Function
+
+#End Region
+
+#Region "Private Methods"
+
         Private Function ToShortName(reader As TriggerReader) As Boolean
 
             If reader.PeekVariable Then

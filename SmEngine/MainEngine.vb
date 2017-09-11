@@ -82,8 +82,8 @@ Namespace Engine
             Dim MonkeySpeakScript As New StringBuilder()
             Try
 
-                If Not System.IO.File.Exists(Paths.CheckBotFolder(file)) Then
-                    Throw New FileNotFoundException("MonkeySpeak file (" + file + ") not found. Did you forget to define on or check the file path?")
+                If Not System.IO.File.Exists(file) Then
+                    Throw New FileNotFoundException("MonkeySpeak script file not found.")
                 End If
 
                 Using MonkeySpeakScriptReader As New StreamReader(file)
@@ -105,13 +105,10 @@ Namespace Engine
                     End While
                     MonkeySpeakScriptReader.Close()
                 End Using
-                Return LoadFromString(MonkeySpeakScript.ToString())
             Catch eX As Exception
-                Throw eX
+                Dim LogError As New ErrorLogging(eX, Me)
             End Try
-
-            Return Nothing
-
+            Return LoadFromString(MonkeySpeakScript.ToString())
         End Function
 
         'Public Sub LogError(reader As TriggerReader, ex As Exception)

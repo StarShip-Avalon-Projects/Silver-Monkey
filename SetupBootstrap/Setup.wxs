@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
-     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+   xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 <Bundle Name="Bootstrapper" Version="1.0.0.0" Manufacturer="Billy"
         UpgradeCode="8C1601FA-26C9-4458-9757-FC8902EB560E">
 

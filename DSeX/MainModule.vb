@@ -1,12 +1,12 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports MonkeyCore
 Imports FastColoredTextBoxNS
-Imports MonkeyCore
+Imports System.Runtime.InteropServices
 
 Public Module MainModule
 
     Public Const WM_COPYDATA As Integer = &H4A
     Public Const WM_USER As Integer = &H400
-
+    Public CallBk As MS_Edit
     Public DS_Comment_Style As TextStyle = New TextStyle(New SolidBrush(Color.Green), Nothing, FontStyle.Regular)
     Public DS_Default_Style As TextStyle = New TextStyle(New SolidBrush(Color.Green), Nothing, FontStyle.Regular)
     Public DS_Footer_Style As TextStyle = New TextStyle(New SolidBrush(Color.Green), Nothing, FontStyle.Bold)
@@ -26,14 +26,12 @@ Public Module MainModule
     Public MS_Num_Style As TextStyle = New TextStyle(New SolidBrush(Color.Green), Nothing, FontStyle.Regular)
     Public MS_Num_Var_Style As TextStyle = New TextStyle(New SolidBrush(Color.Green), Nothing, FontStyle.Regular)
     Public MS_String_Style As TextStyle = New TextStyle(Brushes.Brown, Nothing, FontStyle.Italic)
-
     Public Enum EditStyles
         none = 0
         ini
         ds
         ms
     End Enum
-
     'Used for WM_COPYDATA for string messages
     <StructLayout(LayoutKind.Sequential)>
     Public Structure COPYDATASTRUCT
@@ -54,7 +52,6 @@ Public Module MainModule
 
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=2048)>
         Public lpMsg As String
-
     End Structure
 
 End Module

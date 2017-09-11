@@ -33,16 +33,16 @@ Public Class wMain
     Public Sub GetInfo(ByVal sIni As String)
         Try
             ScriptIni.Load(sIni)
-            DsDescription.Text = ""
+            dsdesc.Text = ""
             Dim s As String = " "
             Dim i As Integer = 1
             s = ScriptIni.GetKeyValue("main", "name")
-            If s <> "" Then DsDescription.AppendText("Name: " + s + vbLf)
+            If s <> "" Then dsdesc.AppendText("Name: " + s + vbLf)
             s = ScriptIni.GetKeyValue("main", "Author")
-            If s <> "" Then DsDescription.AppendText("Author: " + s + vbLf)
+            If s <> "" Then dsdesc.AppendText("Author: " + s + vbLf)
             Do While s <> ""
                 s = ScriptIni.GetKeyValue("main", "d" + i.ToString)
-                DsDescription.AppendText(s + vbLf)
+                dsdesc.AppendText(s + vbLf)
                 i += 1
             Loop
             s = ScriptIni.GetKeyValue("main", "DefaultRepeat")
@@ -59,8 +59,7 @@ Public Class wMain
 
     Public Sub GetParams(ByVal sIni As String)
         Try
-            If Not File.Exists(sIni) Then Throw New FileNotFoundException(String.Format("{0} does not exist!", sIni))
-            ScriptIni.Load(sIni)
+
             wUI.Code = ScriptIni.Code
             wUI.selecter2.Items.Clear()
             wUI.ListBox1.Items.Clear()
@@ -132,72 +131,52 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
             MyBase.Opacity = 0.0
             Timer1.Enabled = True
         End If
-        'Gets the scripts.ini files in your "Scripts" folder(s)
+        'Gets the scripts.ini files in your "Scripts" folder
         GetScriptIni()
     End Sub
 
     Private Sub GetScriptIni()
         selecter.Items.Clear()
         selecter.BeginUpdate()
-        Dim p As String = Paths.MonkeySpeakEditorDsScriptsPath
+        Dim p As String = Path.Combine(ApplicationPath, "Scripts")
+        Directory.CreateDirectory(p)
         ScriptPaths.Clear()
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
-                s = Path.GetFileNameWithoutExtension(s)
-                selecter.Items.Add(s)
-                ScriptPaths.Add(p)
-            Next
-        End If
+        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
+            s = Path.GetFileNameWithoutExtension(s)
+            selecter.Items.Add(s)
+            ScriptPaths.Add(p)
+        Next
 
-        p = Paths.MonkeySpeakEditorDocumentsDsScriptsPath
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
-                s = Path.GetFileNameWithoutExtension(s)
-                selecter.Items.Add(s)
-                ScriptPaths.Add(p)
-            Next
-        End If
-        p = Path.Combine(Paths.FurcadiaProgramFolder, "Scripts")
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, " * .ini")
-                s = Path.GetFileNameWithoutExtension(s)
-                selecter.Items.Add(s)
-                ScriptPaths.Add(p)
-            Next
-        End If
-        p = Path.Combine(Paths.FurcadiaDocumentsFolder, "Scripts")
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, " * .ini")
-                s = Path.GetFileNameWithoutExtension(s)
-                selecter.Items.Add(s)
-                ScriptPaths.Add(p)
-            Next
-        End If
+        p = Path.Combine(Path.Combine(Paths.FurcadiaDocumentsFolder, "Scripts"))
+        'path = Enviroment.GetFolderPath(Enviroment.SpecialFolderMyDocuments) + My_Docs + "/Scripts"
+        Directory.CreateDirectory(p)
+        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
+            s = Path.GetFileNameWithoutExtension(s)
+            selecter.Items.Add(s)
+            ScriptPaths.Add(p)
+        Next
         selecter.EndUpdate()
 
         selector2.Items.Clear()
         selector2.BeginUpdate()
-
-        ScriptPaths_MS.Clear()
-
-        p = MonkeySpeakEditorDocumentsScriptsPath
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
-                s = Path.GetFileNameWithoutExtension(s)
-                selector2.Items.Add(s)
-                ScriptPaths_MS.Add(p)
-            Next
-        End If
-
         p = MonKeySpeakEditorScriptsPath
-        If Directory.Exists(p) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
-                Dim e As String = Path.GetExtension(s)
-                s = Path.GetFileNameWithoutExtension(s)
-                selector2.Items.Add(s)
-                ScriptPaths_MS.Add(p)
-            Next
-        End If
+        Directory.CreateDirectory(p)
+        ScriptPaths_MS.Clear()
+        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
+            s = Path.GetFileNameWithoutExtension(s)
+            selector2.Items.Add(s)
+            ScriptPaths_MS.Add(p)
+        Next
+
+        'p = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Scripts-MS/"
+        p = MonKeySpeakEditorDocumentsScriptsPath
+        Directory.CreateDirectory(p)
+        For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
+            Dim e As String = Path.GetExtension(s)
+            s = Path.GetFileNameWithoutExtension(s)
+            selector2.Items.Add(s)
+            ScriptPaths_MS.Add(p)
+        Next
         selector2.EndUpdate()
     End Sub
 
@@ -257,35 +236,26 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
     End Sub
 
-    ''' <summary>
-    ''' DS/MS script Selector ListBox
-    ''' </summary>
-    ''' <param name="sender">
-    ''' </param>
-    ''' <param name="e">
-    ''' </param>
-    Private Sub selecter_DoubleClick(sender As Object, e As System.EventArgs) Handles _
-        selecter.DoubleClick, selector2.DoubleClick
-
-        Dim ScriptSelectorScrollListBox As MonkeyCore.Controls.ScrollingListBox = CType(sender, MonkeyCore.Controls.ScrollingListBox)
+    Private Sub selecter_DoubleClick(sender As Object, e As System.EventArgs) Handles selecter.DoubleClick, selector2.DoubleClick
+        Dim lb As ListBox = CType(sender, ListBox)
         Dim lst As List(Of String)
-        If ScriptSelectorScrollListBox.Name = "selecter" Then
+        If lb.Name = "selecter" Then
             lst = ScriptPaths
         Else
             lst = ScriptPaths_MS
         End If
 
-        Dim sIni = ScriptSelectorScrollListBox.GetItemText(ScriptSelectorScrollListBox.SelectedItem)
+        Dim sIni = lb.GetItemText(lb.SelectedItem)
         If wUI.IsDisposed = False Then
             wUI.Dispose()
         End If
-        If File.Exists(Path.Combine(ApplicationPath, "help.txt")) Then
+        If System.IO.File.Exists(Path.Combine(ApplicationPath, "help.txt")) Then
             wUI.dsdesc2.Text = FileIO.FileSystem.ReadAllText(Path.Combine(ApplicationPath, "help.txt"))
         Else
-            wUI.dsdesc2.Text = "Error:  " & Path.Combine(ApplicationPath, "help.txt") & " doesn't exist.  Help contents cannot be displayed."
+            wUI.dsdesc2.Text = "Error: " & Path.Combine(ApplicationPath, "help.txt") & " doesn't exist.  Help contents cannot be displayed."
         End If
-        wUI.PathIndex = ScriptSelectorScrollListBox.SelectedIndex
-        GetParams(Path.Combine(lst(ScriptSelectorScrollListBox.SelectedIndex), sIni & ".ini"))
+        wUI.PathIndex = lb.SelectedIndex
+        GetParams(lst(lb.SelectedIndex) & sIni & ".ini")
         wUI.wVariables.Clear()
         wUI.NumericUpDown1.Value = 1
         wUI.wVariables.Clear()

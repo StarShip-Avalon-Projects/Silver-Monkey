@@ -9,9 +9,8 @@
     <Topic id="0beb31ba-cbcb-4284-b346-5ac2f7580345" visible="True" />
   </Topic>
   <Topic id="a0393599-1958-4080-ab82-fcf3b0cea775" visible="True" noFile="true" isExpanded="true" apiParentMode="InsertAfter" title="References">
-    <Topic id="4c192ea5-9a9c-4dae-927f-7581b05c0f65" visible="True" isSelected="true" />
     <Topic id="84d7fa65-e593-475f-aa52-1be3d4516f3f" visible="True" isExpanded="true" title="Monkey SpeakTrigger Documentation">
-      <Topic id="a5f911eb-aab7-4f12-9464-dddc830e0147" visible="True" title="SQLIite Database" />
+      <Topic id="a5f911eb-aab7-4f12-9464-dddc830e0147" visible="True" isSelected="true" title="SQLIite Database" />
     </Topic>
     <Topic id="6b99341b-7b1c-4f60-a21d-372dfc853f24" visible="True" noFile="true" isExpanded="true" title="Configuration Files">
       <Topic id="7cfa8277-8dc5-458b-8842-c07b87572396" visible="True" title="HelpLink.ini " />

@@ -89,15 +89,9 @@ Namespace Engine.Libraries
         ''' (5:124) read line number # from text file {...} and put it into
         ''' variable %Variable.
         ''' </summary>
-        ''' <exception cref="FileNotFoundException">
-        ''' </exception>
-        ''' <exception cref="IndexOutOfRangeException">
-        ''' </exception>
         ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' True
         ''' </returns>
         Function ReadTextLine(reader As TriggerReader) As Boolean
 
@@ -126,13 +120,6 @@ Namespace Engine.Libraries
 
 #Region "Private Methods"
 
-        ''' <summary>
-        ''' (5:200) append {...} to file {...}."
-        ''' </summary>
-        ''' <param name="reader">
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
         Private Function AppendToFile(reader As TriggerReader) As Boolean
             Dim data As String = reader.ReadString()
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
@@ -144,13 +131,6 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-        ''' <summary>
-        ''' (1:202) and the file {...} can be read from,
-        ''' </summary>
-        ''' <param name="reader">
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
         Private Function CanReadFile(reader As TriggerReader) As Boolean
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
 
@@ -160,13 +140,6 @@ Namespace Engine.Libraries
 
         End Function
 
-        ''' <summary>
-        ''' (1:203) and the file {...} can be written to,
-        ''' </summary>
-        ''' <param name="reader">
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
         Private Function CanWriteFile(reader As TriggerReader) As Boolean
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
 
@@ -176,13 +149,6 @@ Namespace Engine.Libraries
 
         End Function
 
-        ''' <summary>
-        ''' (5:203) create file {...}.
-        ''' </summary>
-        ''' <param name="reader">
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
         Private Function CreateFile(reader As TriggerReader) As Boolean
             If reader.PeekString() = False Then
                 Return False
@@ -192,56 +158,26 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-        ''' <summary>
-        ''' (5:202) delete file {...}.
-        ''' </summary>
-        ''' <param name="reader">
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
         Private Function DeleteFile(reader As TriggerReader) As Boolean
 
             If reader.PeekString() = False Then
                 Return False
             End If
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
-            If File.Exists(f) Then
-                File.Delete(f)
-                Return True
-            End If
-            Return False
+            File.Delete(f)
+            Return True
+
         End Function
 
-        ''' <summary>
-        ''' (1:200) and the file {...} exists,
-        ''' </summary>
-        ''' <param name="reader">
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
         Private Function FileExists(reader As TriggerReader) As Boolean
             Dim f As String = If((reader.PeekString()), Paths.CheckBotFolder(reader.ReadString()), "")
             Return File.Exists(f)
         End Function
 
-        ''' <summary>
-        ''' (1:201) and the file {...} does not exist,
-        ''' </summary>
-        ''' <param name="reader">
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
         Private Function FileNotExists(reader As TriggerReader) As Boolean
             Return FileExists(reader) = False
         End Function
 
-        ''' <summary>
-        ''' (5:201) read from file {...} and put it into variable %Variable.
-        ''' </summary>
-        ''' <param name="reader">
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
         Private Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
 
             Dim f As String = Paths.CheckBotFolder(reader.ReadString(True))

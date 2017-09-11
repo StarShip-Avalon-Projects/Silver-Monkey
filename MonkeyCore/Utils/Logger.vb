@@ -16,21 +16,14 @@ Public Class Logger
 
     ''' <summary>
     ''' Constructor
-    ''' <para>
-    ''' Sets the name of the log file for the duration of the instance
-    ''' </para>
+    ''' <para>Sets the name of the log file for the duration of the instance</para>
     ''' </summary>
-    ''' <param name="Name">
-    ''' </param>
-    ''' <param name="message">
-    ''' First string to prime the log with
-    ''' </param>
+    ''' <param name="Name"></param>
+    ''' <param name="message"> First string to prime the log with</param>
     Public Sub New(Name As String, message As String)
         'Call Log Error
-        strErrorFilePath = Path.Combine(Paths.SilverMonkeyLogPath, Name & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
-        If Not Directory.Exists(Paths.SilverMonkeyLogPath) Then
-            Directory.CreateDirectory(Paths.SilverMonkeyLogPath)
-        End If
+        strErrorFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "\Silver Monkey\Log\" & Name & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt"
+        Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "\Silver Monkey\Log\")
         LogMessage(message)
     End Sub
 
@@ -41,28 +34,50 @@ Public Class Logger
     ''' <summary>
     ''' Sends a string to the log file
     ''' </summary>
-    ''' <param name="Message">
-    ''' </param>
+    ''' <param name="Message"></param>
     Public Sub LogMessage(Message As String)
-        Using LogFile As StreamWriter = New StreamWriter(strErrorFilePath, True)
+        Using ioFile As StreamWriter = New StreamWriter(strErrorFilePath, True)
             Try
                 For Each line In Stack.ToArray
-                    LogFile.WriteLine(line)
+                    ioFile.WriteLine(line)
                 Next
                 Stack.Clear()
-                LogFile.WriteLine(Message)
+                ioFile.WriteLine(Message)
+
             Catch ex As IOException
                 If (ex.Message.StartsWith("The process cannot access the file") AndAlso
                         ex.Message.EndsWith("because it is being used by another process.")) Then
                     Stack.Add(Message)
                 End If
+
             Finally
-                If Not IsNothing(LogFile) Then
-                    LogFile.Close()
+                If Not IsNothing(ioFile) Then
+                    ioFile.Close()
                 End If
             End Try
         End Using
     End Sub
+
+#End Region
+
+#Region "Private Methods"
+
+    ''' <summary>
+    ''' Checks to see if a file is in use
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    ''' <returns></returns>
+    Private Function IsFileInUse(ByVal filePath As String) As Boolean
+        Try
+            Dim contents() As String = File.ReadAllLines(filePath)
+        Catch ex As IOException
+            Return (ex.Message.StartsWith("The process cannot access the file") AndAlso
+                    ex.Message.EndsWith("because it is being used by another process."))
+        Catch ex As Exception
+            Return False
+        End Try
+        Return False
+    End Function
 
 #End Region
 

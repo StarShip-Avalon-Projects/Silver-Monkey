@@ -80,14 +80,12 @@
       <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -107,9 +105,6 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AssemblyInfoersion.vb">
-      <Link>AssemblyInfoersion.vb</Link>
-    </Compile>
     <Compile Include="advanceSearch.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -131,7 +126,6 @@
     <Compile Include="Controls\AboutBox2.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\DA_AUtoCompleteMenu.vb" />
     <Compile Include="Controls\InputBoxFrm.Designer.vb">
       <DependentUpon>InputBoxFrm.vb</DependentUpon>
     </Compile>
@@ -143,7 +137,6 @@
     <Compile Include="MS_Edit.Designer.vb">
       <DependentUpon>MS_Edit.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LineFinder\MsDsCustomeSorter.vb" />
     <Compile Include="MS_Edit.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -168,6 +161,7 @@
     <Compile Include="SplashScreen1.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Wizard\ApplicationEvents.vb" />
     <Compile Include="Wizard\wMain.Designer.vb">
       <DependentUpon>wMain.vb</DependentUpon>
     </Compile>
@@ -219,9 +213,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="app.config" />
     <EmbeddedResource Include="app.manifest" />
     <None Include="AssemblyFileVersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -376,9 +368,6 @@
     </Content>
     <Content Include="Templates-MS\PS Backup %27n%27 Restore.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates-MS\Startup Notification.ms">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates-MS\TradeDemo.ms">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -561,8 +550,7 @@ move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</
     <PreBuildEvent>if $(ConfigurationName) == Release (
 "..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"
 )
-IF EXIST "$(SolutionDir)Build\Help\Monkey_Speak_Editor_Help.chm" (
-xcopy  /Y  "$(SolutionDir)Build\Help\Monkey_Speak_Editor_Help.chm" "$(TargetDir)")</PreBuildEvent>
+xcopy  /Y  "$(SolutionDir)Build\Help\Monkey_Speak_Editor_Help.chm" "$(TargetDir)"</PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

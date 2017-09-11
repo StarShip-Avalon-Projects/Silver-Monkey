@@ -104,7 +104,7 @@ Namespace Engine
             LibList.Add(New MsPounce(MSEngine.FurcadiaSession))
             LibList.Add(New MsVerbot(MSEngine.FurcadiaSession))
             LibList.Add(New MsSound(MSEngine.FurcadiaSession))
-            LibList.Add(New MsTrades(MSEngine.FurcadiaSession))
+            'LibList.Add(New MS_MemberList())
             'LibList.Add(New MS_MemberList())
             'LibList.Add(New MS_MemberList())
         End Sub
@@ -121,7 +121,7 @@ Namespace Engine
         ''' <summary>
         ''' Export MonkeySpeak descriptions
         ''' </summary>
-        Public Function Export() As Page
+        Public Sub Export()
 
             Try
 
@@ -129,15 +129,15 @@ Namespace Engine
                 MS_Stared = 0
 
                 MsPage = MSEngine.LoadFromString("")
-                LoadLibrary(False, True)
+                LoadLibrary(False)
 
                 MS_Engine_Running = False
             Catch eX As Exception
                 Dim logError As New ErrorLogging(eX, Me)
 
             End Try
-            Return MsPage
-        End Function
+
+        End Sub
 
         ''' <summary>
         ''' Loads monkey speak libraries
@@ -156,7 +156,7 @@ Namespace Engine
         ''' <returns>
         ''' reference to the active <see cref="MonkeySpeak.Page"/>
         ''' </returns>
-        Public Shadows Function LoadLibrary(ByRef LoadPlugins As Boolean, ByVal silent As Boolean) As Page
+        Public Shadows Function LoadLibrary(ByRef LoadPlugins As Boolean) As Page
             'Library Loaded?.. Get the Hell out of here
             If MS_Started() Then Return Me
             MS_Stared += 1
@@ -194,7 +194,7 @@ Namespace Engine
             For Each Library As Monkeyspeak.Libraries.AbstractBaseLibrary In LibList
                 Try
                     MsPage.LoadLibrary(Library)
-                    If Not silent Then Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
+                    Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
                 Catch ex As Exception
 
                     Dim e As New ErrorLogging(ex, Library)
@@ -232,7 +232,7 @@ Namespace Engine
         End Function
 
         Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
-            If options.MS_Engine_Enable Then
+            If options.EngineEnable Then
 
                 For Each kv As KeyValuePair(Of String, Object) In VariableList
                     MsPage.SetVariable(kv.Key.ToUpper, kv.Value, True)
@@ -251,7 +251,7 @@ Namespace Engine
                 ' Console.WriteLine("Execute (0:0)")
                 MS_Stared = 1
                 MsPage.Reset()
-                LoadLibrary(False, False)
+                LoadLibrary(True)
 
                 VariableList.Add("DREAMOWNER", Nothing)
                 VariableList.Add("DREAMNAME", Nothing)

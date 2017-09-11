@@ -48,10 +48,13 @@ Namespace Interfaces
             End Set
         End Property
 
-        Public ReadOnly Property Player() As FURRE Implements Interfaces.ImsHost.Player
+        Public Property Player() As FURRE Implements Interfaces.ImsHost.Player
             Get
                 Return FurcadiaSession.Player
             End Get
+            Set(value As FURRE)
+                FurcadiaSession.Player = value
+            End Set
 
         End Property
 

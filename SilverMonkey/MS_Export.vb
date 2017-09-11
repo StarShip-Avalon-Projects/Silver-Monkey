@@ -26,24 +26,21 @@ Public Class MS_Export
 
 #End Region
 
-    Private mPage As Monkeyspeak.Page
-
-    Private Session As BotSession
+    Private MsPage As MonkeySpeakPage
 
 #Region "Private Methods"
 
     Public Sub New()
         ' This call is required by the designer.
+        Dim options As New EngineOptoons()
+        Dim engine As New MainEngine(options, New BotSession)
+        Dim mPage As Monkeyspeak.Page = engine.LoadFromString("")
 
-        Dim options As New BotOptions()
-        Session = New BotSession(options)
-        Dim engine As New MainEngine(options.MonkeySpeakEngineOptions, Session)
-        ' mPage = engine.LoadFromString("")
-
-        Dim MsPage = New MonkeySpeakPage(engine, mPage)
-        mPage = MsPage.Export
+        MsPage = New MonkeySpeakPage(engine, mPage)
+        MsPage.Export()
 
         InitializeComponent()
+
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub
@@ -56,7 +53,7 @@ Public Class MS_Export
         'MS_Stared = 0
         'MainMSEngine.EngineStart(False)
         Dim Test As New List(Of String)
-        For Each item As String In mPage.GetTriggerDescriptions()
+        For Each item As String In MsPage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         EffectList.Clear()
@@ -120,7 +117,7 @@ Public Class MS_Export
     Private Sub MS_Export_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         Dim Test As New List(Of String)
-        For Each item As String In mPage.GetTriggerDescriptions()
+        For Each item As String In MsPage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         Dim cat As New Regex("\((.[0-9]*)\:(.[0-9]*)\)")

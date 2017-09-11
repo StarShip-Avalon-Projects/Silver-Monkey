@@ -736,15 +736,18 @@ namespace CustomUIControls
             {
                 Hide();
 
-                CloseClick?.Invoke(this, new EventArgs());
+                if (CloseClick != null)
+                    CloseClick(this, new EventArgs());
             }
             else if (bIsMouseOverTitle)
             {
-                TitleClick?.Invoke(this, new EventArgs());
+                if (TitleClick != null)
+                    TitleClick(this, new EventArgs());
             }
             else if (bIsMouseOverContent)
             {
-                ContentClick?.Invoke(this, new EventArgs());
+                if (ContentClick != null)
+                    ContentClick(this, new EventArgs());
             }
         }
 
@@ -817,18 +820,5 @@ namespace CustomUIControls
         }
 
         #endregion TaskbarNotifier Events Overrides
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // TaskbarNotifier
-            // 
-            this.ClientSize = new System.Drawing.Size(292, 212);
-            this.ForeColor = System.Drawing.SystemColors.Info;
-            this.Name = "TaskbarNotifier";
-            this.ResumeLayout(false);
-
-        }
     }
 }

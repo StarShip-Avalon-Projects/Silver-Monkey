@@ -156,10 +156,10 @@ Public Class NewBott
     Private Sub Dialog1_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         bFile = New BotOptions()
-        ''Default BotFile Settings
-        'bFile.MonkeySpeakEngineOptions.MS_Engine_Enable = True
-        'bFile.AutoConnect = False
-        'bFile.GoMapIDX = 1
+        'Default BotFile Settings
+        bFile.MonkeySpeakEngineOptions.MS_Engine_Enable = True
+        bFile.AutoConnect = False
+        bFile.GoMapIDX = 1
 
         GroupBox1.Text = "Basic Settings"
 

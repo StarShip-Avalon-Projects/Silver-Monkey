@@ -68,7 +68,7 @@ Namespace Engine.Libraries
 
             '(5:701) save the dream list count to variable %Variable.
             Add(New Trigger(TriggerCategory.Effect, 701), AddressOf FurreListCount,
-            "(5:701) save the dream furre list count to variable %Variable.")
+            "(5:701) save the dream list count to variable %Variable.")
 
             '(5:702) count the number of active furres in the drean and put it in the variable %Variable.
             Add(New Trigger(TriggerCategory.Effect, 702), AddressOf FurreActiveListCount,

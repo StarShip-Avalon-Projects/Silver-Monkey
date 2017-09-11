@@ -14,11 +14,6 @@
   </item>
   <item id="metal">
     <image file="metal.png" />
-    
-  </item>
-    <item id="imetal">
-    <image file="imetal.png" />
-    
   </item>
     <item id="SilverMonkeyApp">
     <image file="silvermonkey.png" />

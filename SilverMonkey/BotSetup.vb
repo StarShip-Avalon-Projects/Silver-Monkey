@@ -9,8 +9,12 @@ Public Class BotSetup
     Public Sub New(ByRef BotConfig As BotOptions, TabIndex As Integer)
         MyClass.New(BotConfig)
         _TabIndex = TabIndex
-        InitializeComponent()
-        ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
+        ' This call is required by the designer.
+        ' InitializeComponent()
+        'ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
+        ' Add any initialization after the InitializeComponent() call.
+
+        ' Add any initialization after the InitializeComponent() call.
 
     End Sub
 
@@ -80,7 +84,7 @@ Public Class BotSetup
         TxtBxMS_File.Text = bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile
 
         TxtBxBotIni.Text = Path.GetFileName(bFile.Name)
-        MSEnableChkBx.Checked = bFile.MonkeySpeakEngineOptions.MS_Engine_Enable
+        MSEnableChkBx.Checked = bFile.MonkeySpeakEngineOptions.EngineEnable
         TxtBxBotConroller.Text = bFile.BotController
         StandAloneChkBx.Checked = bFile.Standalone
         ChkBxAutoConnect.Checked = bFile.AutoConnect
@@ -158,8 +162,7 @@ Public Class BotSetup
         End Try
 
         bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = TxtBxMS_File.Text
-        bFile.MonkeySpeakEngineOptions.MS_Engine_Enable = MSEnableChkBx.Checked
-
+        bFile.MonkeySpeakEngineOptions.MS_Engine_Enable = CBool(MSEnableChkBx.CheckState)
         bFile.BotController = TxtBxBotConroller.Text
         bFile.Standalone = Convert.ToBoolean(StandAloneChkBx.Checked)
         bFile.AutoConnect = ChkBxAutoConnect.Checked

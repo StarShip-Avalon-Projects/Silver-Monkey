@@ -13,12 +13,6 @@ Namespace Engine.Libraries
     ''' Effects: (5:30) - (5:35)
     ''' </para>
     ''' </summary>
-    ''' <remarks>
-    ''' This Library includes the following MonkeySpeak unnamed delegates:
-    ''' <para>
-    ''' (0:299) When the time is {...} hh:mm:ss am/pm FST,
-    ''' </para>
-    ''' </remarks>
     Public Class MsTime
         Inherits MonkeySpeakLibrary
 
@@ -81,10 +75,8 @@ Namespace Engine.Libraries
         ''' (5:30) set variable %Variable to the current local time.
         ''' </summary>
         ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' True
         ''' </returns>
         Function CurrentTime(reader As TriggerReader) As Boolean
 
@@ -96,13 +88,12 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:33) set variable %Variable to current Furcadia DateTime.
+        ''' (5: ) set variable %Variable to current Furcadia
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' True
         ''' </returns>
         Public Function FurcDateTimeVar(reader As TriggerReader) As Boolean
 
@@ -115,13 +106,12 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:32) set variable %Variable to current local DateTime.
+        ''' (5: ) set variable %Variable to current DateTime
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' True
         ''' </returns>
         Public Function LocalDateTimeVar(reader As TriggerReader) As Boolean
 
@@ -131,15 +121,6 @@ Namespace Engine.Libraries
 
         End Function
 
-        ''' <summary>
-        ''' (5:31) set variable %Variable to the current Furcadia Standard time.
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' True
-        ''' </returns>
         Function MsFurcTime(reader As TriggerReader) As Boolean
 
             Dim Var As Variable = reader.ReadVariable(True)
@@ -153,56 +134,49 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:34) use variable %Variable as a DateTime string and subtract
-        ''' Date Time string {...} and put it into variable %Variable.
+        ''' (5: ) use variable %Variable as a DateTime string and subtract
+        ''' Date Time string {...} and put it into variable %Variable
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
-        ''' Thrown when DateTimeVariable and DateTimeString are not in the
-        ''' correct format
-        ''' </exception>
         ''' <returns>
-        ''' True
         ''' </returns>
         Public Function SubsractDateTimeStr(reader As TriggerReader) As Boolean
 
-            Dim DateTimeVariable As Variable = reader.ReadVariable(True)
-            Dim DateTimeString As String = reader.ReadString
-            Dim ResultVariable As Variable = reader.ReadVariable(True)
+            Dim var As Variable = reader.ReadVariable(True)
+            Dim str As String = reader.ReadString
+            Dim optVar As Variable = reader.ReadVariable(True)
             Dim time As DateTime
             Dim time2 As DateTime
-            If DateTime.TryParse(DateTimeVariable.Value.ToString, time) And DateTime.TryParse(DateTimeString, time2) Then
-                ResultVariable.Value = time.Subtract(time2).ToString
+            If DateTime.TryParse(var.Value.ToString, time) And DateTime.TryParse(str, time2) Then
+                optVar.Value = time.Subtract(time2).ToString
                 Return True
             End If
-            Throw New MonkeyspeakException("unable to parse DateTime variable and/or DateTimeString")
+            Return False
 
         End Function
 
         ''' <summary>
-        ''' (5:35) use variable %Variable as a DateTime string and subtract
-        ''' Date Time variable %Variable and put it into variable %Variable.
+        ''' (5: ) use variable %Variable as a DateTime string and subtract
+        ''' Date Time variable %Variable and put it into variable %Variable
         ''' </summary>
         ''' <param name="reader">
-        ''' <exception cref="MonkeyspeakException">Thrown when
-        ''' DateTimeVariable and DateTimeString are not in the correct format</exception><see cref="TriggerReader"/>
+        ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' True
         ''' </returns>
         Public Function SubsractDateTimeVar(reader As TriggerReader) As Boolean
 
-            Dim DateTimeVariable As Variable = reader.ReadVariable(True)
-            Dim DateTimeString As Variable = reader.ReadVariable
-            Dim ResultVariable As Variable = reader.ReadVariable(True)
+            Dim var As Variable = reader.ReadVariable(True)
+            Dim str As Variable = reader.ReadVariable
+            Dim optVar As Variable = reader.ReadVariable(True)
             Dim time As DateTime
             Dim time2 As DateTime
-            If DateTime.TryParse(DateTimeVariable.Value.ToString, time) And DateTime.TryParse(DateTimeString.Value.ToString, time2) Then
-                ResultVariable.Value = time.Subtract(time2).ToString
+            If DateTime.TryParse(var.Value.ToString, time) And DateTime.TryParse(str.Value.ToString, time2) Then
+                optVar.Value = time.Subtract(time2).ToString
             End If
-            Throw New MonkeyspeakException("unable to parse DateTime variable and/or DateTimeString")
+            Return True
 
         End Function
 

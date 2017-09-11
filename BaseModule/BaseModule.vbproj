@@ -148,7 +148,6 @@
     <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
       <Project>{3c0e1cbf-d3b9-4282-ac97-4e0216ca6c97}</Project>
       <Name>SilverMonkeyEngine</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

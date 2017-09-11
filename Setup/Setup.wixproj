@@ -9,13 +9,13 @@
     <ProductVersion>3.9</ProductVersion>
     <ProjectGuid>{c47e57dc-6454-4798-a802-8d0bac07e580}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>Setup</OutputName>
+    <OutputName>SetupProject</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\WiX Toolset\v4\wix.targets</WixTargetsPath>
     <WixToolPath>C:\Program Files (x86)\WiX Toolset v4.0\bin\</WixToolPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>..\Build\Installer\Debug\</OutputPath>
+    <OutputPath>D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Installer\Debug\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug;</DefineConstants>
     <LeaveTemporaryFiles>False</LeaveTemporaryFiles>
@@ -55,15 +55,6 @@
       <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\Mantis\MantisSubmit\MantisSubmit.csproj">
-      <Name>MantisSubmit</Name>
-      <Project>{580c279d-3855-45f7-8ee2-bb036a1ca4a4}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Name>MonkeyCore</Name>
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
@@ -72,14 +63,6 @@
       </DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\MonkeySpeakEx\MonkeySpeakEx.csproj">
-      <Name>MonkeySpeakEx</Name>
-      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
       <Name>SilverMonkeyEngine</Name>
@@ -129,6 +112,15 @@
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Name>FurcadiaLib</Name>
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeySpeakEx\MonkeySpeakEx.csproj">
+      <Name>MonkeySpeakEx</Name>
+      <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
@@ -210,9 +202,6 @@
     </GetAssemblyIdentity>
     <CreateProperty Value="%(AsmInfo.Version)">
       <Output TaskParameter="Value" PropertyName="FileVersion" />
-    </CreateProperty>
-    <CreateProperty Value="%(AsmInfo.AssemblyInformationalVersion)">
-      <Output TaskParameter="Value" PropertyName="InfoVersion" />
     </CreateProperty>
     <CreateProperty Value="$(DefineConstants)">
       <Output TaskParameter="Value" PropertyName="DefineConstantsOriginal" />

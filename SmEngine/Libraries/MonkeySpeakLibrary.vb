@@ -19,7 +19,7 @@ Namespace Engine.Libraries
 
         ''' <summary>
         ''' <para>
-        ''' Comparisons are done with Fucadia Markup Stripped
+        ''' Comparasons are done with Fucadia Markup Stripped
         ''' </para>
         ''' </summary>
         ''' <param name="reader">
@@ -34,10 +34,9 @@ Namespace Engine.Libraries
             Dim msg As Variable = MsPage.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
-            Return test.ToLower.Contains(msMsg.ToLower)
+            Return test.Contains(msMsg)
 
         End Function
-
 
         ''' <summary>
         ''' </summary>

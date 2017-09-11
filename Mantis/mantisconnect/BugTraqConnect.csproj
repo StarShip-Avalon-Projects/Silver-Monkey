@@ -12,7 +12,7 @@
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>BugTraqConnect</AssemblyName>
-    <AssemblyOriginatorKeyFile>bugTraqConnect.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>mantisconnect.snk</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -73,7 +73,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <Prefer32Bit>false</Prefer32Bit>
-    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\..\Build\Release\</OutputPath>
@@ -125,11 +124,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyFileVersion.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
-    </Compile>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -154,7 +148,6 @@
     <Compile Include="IssueRelationship.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Libs\ProjectReport.cs" />
     <Compile Include="MimeTypes.cs" />
     <Compile Include="ObjectRef.cs">
       <SubType>Code</SubType>
@@ -184,11 +177,14 @@
     <Compile Include="StringUtils.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SubmitIssue.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="User.cs">
       <SubType>Code</SubType>
     </Compile>
     <None Include="app.config" />
-    <None Include="bugTraqConnect.pfx" />
+    <None Include="mantisconnect.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -258,6 +254,18 @@
     <WCFMetadataStorage Include="Service References\MantisConnectWebservice\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="SubmitIssue.resx">
+      <DependentUpon>SubmitIssue.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MonkeyCore\MonkeyCore.vbproj">
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Name>MonkeyCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Service References\MantisConnectWebservice\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -268,15 +276,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="AssemblyFileVersion.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyFileVersion.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

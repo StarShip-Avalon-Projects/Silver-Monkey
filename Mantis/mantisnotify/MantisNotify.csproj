@@ -19,7 +19,8 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Futureware.MantisNotify</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <StartupObject>Futureware.MantisNotify.MantisNotifyApp</StartupObject>
+    <StartupObject>
+    </StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -68,7 +69,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\..\Build\Release\</OutputPath>
@@ -118,11 +118,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
-    <Compile Include="AssemblyFileVersion1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
-    </Compile>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -140,11 +135,6 @@
     <Compile Include="TaskbarNotifier.cs">
       <SubType>Form</SubType>
     </Compile>
-    <None Include="AssemblyFileVersion.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyFileVersion1.cs</LastGenOutput>
-      <CustomToolNamespace>TextTemplatingFileGenerator</CustomToolNamespace>
-    </None>
     <EmbeddedResource Include="close.bmp" />
     <EmbeddedResource Include="MantisNotifyForm.resx">
       <DependentUpon>MantisNotifyForm.cs</DependentUpon>
@@ -182,17 +172,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MonkeyCore\MonkeyCore.vbproj">
-      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
-      <Name>MonkeyCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\mantisconnect\BugTraqConnect.csproj">
-      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
+      <Project>{F4391F6F-0239-48E2-B415-C39A6D920303}</Project>
       <Name>BugTraqConnect</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

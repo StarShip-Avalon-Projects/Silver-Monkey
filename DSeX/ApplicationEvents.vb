@@ -3,18 +3,13 @@ Imports MonkeyCore
 Imports SilverMonkey.BugTraqConnect
 
 Namespace My
-
     ' The following events are available for MyApplication:
     '
-    ' Startup: Raised when the application starts, before the startup form
-    '          is created.
-    ' Shutdown: Raised after all application forms are closed. This event is
-    '           not raised if the application terminates abnormally.
+    ' Startup: Raised when the application starts, before the startup form is created.
+    ' Shutdown: Raised after all application forms are closed.  This event is not raised if the application terminates abnormally.
     ' UnhandledException: Raised if the application encounters an unhandled exception.
-    ' StartupNextInstance: Raised when launching a single-instance
-    '                      application and the application is already active.
-    ' NetworkAvailabilityChanged: Raised when the network connection is
-    '                             connected or disconnected.
+    ' StartupNextInstance: Raised when launching a single-instance application and the application is already active.
+    ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
 
 #Region "Public Properties"
@@ -60,15 +55,15 @@ Namespace My
                     BotName = e.CommandLine.Item(0)
                 End If
                 filename = e.CommandLine.Item(e.CommandLine.Count - 1)
-                'filename = String.Join(" ", e.CommandLine.ToArray)
+
                 If Not String.IsNullOrEmpty(filename) And Not String.IsNullOrEmpty(BotName) Then
-                    MS_Edit.OpenMS_File(filename, BotName)
+                    CallBk.OpenMS_File(filename, BotName)
 
                 ElseIf Not String.IsNullOrEmpty(filename) And String.IsNullOrEmpty(BotName) Then
-                    MS_Edit.OpenMS_File(filename)
+                    CallBk.OpenMS_File(filename)
                 Else
-                    MS_Edit.AddNewEditorTab(filename, "", 0)
-                    MS_Edit.NewFile(EditStyles.ms)
+                    CallBk.AddNewEditorTab(filename, "", 0)
+                    CallBk.NewFile(EditStyles.ms)
                 End If
             End If
 
@@ -76,9 +71,11 @@ Namespace My
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
             Dim logError As New ErrorLogging(e.Exception, sender)
-            Dim args As String = String.Join(" ", logError.BugReport.ToArray())
-            Dim Proc As String = Path.Combine(Application.Info.DirectoryPath, "BugTragSubmit.exe")
-            Process.Start(Proc, args)
+            Dim SubmitError As New SubmitIssueForm(logError.LogFile)
+            'MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If SubmitError.ShowDialog = DialogResult.OK Then
+                File.Delete(logError.LogFile)
+            End If
         End Sub
 
 #End Region

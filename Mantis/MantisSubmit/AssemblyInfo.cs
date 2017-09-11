@@ -22,12 +22,13 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("Bugtraq Submit Issues")]
-[assembly: AssemblyDescription("A tool to submit issues to Ts Projects BugTraq")]
+[assembly: AssemblyTitle("Mantis Submit Issues")]
+[assembly: AssemblyDescription("A tool to submit issues to a Mantis installation")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Starship Avalon Projects")]
-[assembly: AssemblyProduct("Bugtraq Submit")]
-[assembly: AssemblyTrademark("Silver Monkeuy")]
+[assembly: AssemblyCompany("Futureware.Biz")]
+[assembly: AssemblyProduct("MantisConnect Notifier")]
+[assembly: AssemblyCopyright("Copyright 2004 Victor Boctor - Futureware")]
+[assembly: AssemblyTrademark("MantisConnect")]
 [assembly: AssemblyCulture("")]
 
 //
@@ -40,6 +41,8 @@ using System.Runtime.CompilerServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 

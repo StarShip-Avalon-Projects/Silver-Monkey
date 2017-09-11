@@ -21,32 +21,6 @@ Partial Class Main
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
-        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
-        Me.clientGroup = New System.Windows.Forms.GroupBox()
-        Me.Log_ = New MonkeyCore.Controls.RichTextBoxEx()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.toServer = New MonkeyCore.Controls.RichTextBoxEx()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.Btn_Bold = New System.Windows.Forms.Button()
-        Me.BTN_Underline = New System.Windows.Forms.Button()
-        Me.BTN_Italic = New System.Windows.Forms.Button()
-        Me.sendToServer = New System.Windows.Forms.Button()
-        Me.BTN_Go = New System.Windows.Forms.Button()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.TextBox_NoFlicker1 = New MonkeyCore.Controls.TextBox_NoFlicker()
-        Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.GrpAction = New System.Windows.Forms.GroupBox()
-        Me.BtnSit_stand_Lie = New System.Windows.Forms.Button()
-        Me.BTN_TurnL = New System.Windows.Forms.Button()
-        Me.BTN_TurnR = New System.Windows.Forms.Button()
-        Me._ne = New System.Windows.Forms.PictureBox()
-        Me._nw = New System.Windows.Forms.PictureBox()
-        Me.use_ = New System.Windows.Forms.Button()
-        Me.get_ = New System.Windows.Forms.Button()
-        Me.se_ = New System.Windows.Forms.PictureBox()
-        Me.sw_ = New System.Windows.Forms.PictureBox()
         Me.ContextTryIcon = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.RestoreMainToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditorTrayIconMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -95,6 +69,39 @@ Partial Class Main
         Me.MainMenu1 = New System.Windows.Forms.MainMenu(Me.components)
         Me.BotIniOpen = New System.Windows.Forms.OpenFileDialog()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
+        Me.clientGroup = New System.Windows.Forms.GroupBox()
+        Me.Log_ = New MonkeyCore.Controls.RichTextBoxEx()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.toServer = New MonkeyCore.Controls.RichTextBoxEx()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.Btn_Bold = New System.Windows.Forms.Button()
+        Me.BTN_Underline = New System.Windows.Forms.Button()
+        Me.BTN_Italic = New System.Windows.Forms.Button()
+        Me.sendToServer = New System.Windows.Forms.Button()
+        Me.BTN_Go = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TextBox_NoFlicker1 = New MonkeyCore.Controls.TextBox_NoFlicker()
+        Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.GrpAction = New System.Windows.Forms.GroupBox()
+        Me.BtnSit_stand_Lie = New System.Windows.Forms.Button()
+        Me.BTN_TurnL = New System.Windows.Forms.Button()
+        Me.BTN_TurnR = New System.Windows.Forms.Button()
+        Me._ne = New System.Windows.Forms.PictureBox()
+        Me._nw = New System.Windows.Forms.PictureBox()
+        Me.use_ = New System.Windows.Forms.Button()
+        Me.get_ = New System.Windows.Forms.Button()
+        Me.se_ = New System.Windows.Forms.PictureBox()
+        Me.sw_ = New System.Windows.Forms.PictureBox()
+        Me.ContextTryIcon.SuspendLayout()
+        Me.TS_Main.SuspendLayout()
+        CType(Me.FURREListBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.EditMenu.SuspendLayout()
+        Me.CopyMenu.SuspendLayout()
+        Me.MenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -111,166 +118,504 @@ Partial Class Main
         CType(Me._nw, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.se_, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.sw_, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextTryIcon.SuspendLayout()
-        Me.TS_Main.SuspendLayout()
-        CType(Me.FURREListBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.EditMenu.SuspendLayout()
-        Me.CopyMenu.SuspendLayout()
-        Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
+        '
+        'ContextTryIcon
+        '
+        Me.ContextTryIcon.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RestoreMainToolStripMenuItem, Me.EditorTrayIconMenuItem, Me.ToolStripSeparator1, Me.ConnectTrayIconMenuItem, Me.DisconnectTrayIconMenuItem, Me.ToolStripSeparator2, Me.ExitTrayIconMenuItem})
+        Me.ContextTryIcon.Name = "ContextMenuStrip1"
+        Me.ContextTryIcon.Size = New System.Drawing.Size(149, 126)
+        '
+        'RestoreMainToolStripMenuItem
+        '
+        Me.RestoreMainToolStripMenuItem.Name = "RestoreMainToolStripMenuItem"
+        Me.RestoreMainToolStripMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.RestoreMainToolStripMenuItem.Text = "Main Window"
+        '
+        'EditorTrayIconMenuItem
+        '
+        Me.EditorTrayIconMenuItem.Name = "EditorTrayIconMenuItem"
+        Me.EditorTrayIconMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.EditorTrayIconMenuItem.Text = "Editor"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(145, 6)
+        '
+        'ConnectTrayIconMenuItem
+        '
+        Me.ConnectTrayIconMenuItem.Name = "ConnectTrayIconMenuItem"
+        Me.ConnectTrayIconMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.ConnectTrayIconMenuItem.Text = "Connect"
+        '
+        'DisconnectTrayIconMenuItem
+        '
+        Me.DisconnectTrayIconMenuItem.Enabled = False
+        Me.DisconnectTrayIconMenuItem.Name = "DisconnectTrayIconMenuItem"
+        Me.DisconnectTrayIconMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.DisconnectTrayIconMenuItem.Text = "Disconnect"
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(145, 6)
+        '
+        'ExitTrayIconMenuItem
+        '
+        Me.ExitTrayIconMenuItem.Name = "ExitTrayIconMenuItem"
+        Me.ExitTrayIconMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.ExitTrayIconMenuItem.Text = "Exit"
+        '
+        'ActionTmr
+        '
+        Me.ActionTmr.Interval = 250
+        '
+        'TS_Main
+        '
+        Me.TS_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TS_Status_BotName, Me.FurcTimeLbl, Me.TS_Filler, Me.ToolStripServerStatus, Me.ToolStripClientStatus})
+        Me.TS_Main.Location = New System.Drawing.Point(0, 354)
+        Me.TS_Main.Name = "TS_Main"
+        Me.TS_Main.Size = New System.Drawing.Size(812, 22)
+        Me.TS_Main.TabIndex = 50
+        Me.TS_Main.Text = "StatusStrip1"
+        '
+        'TS_Status_BotName
+        '
+        Me.TS_Status_BotName.AutoSize = False
+        Me.TS_Status_BotName.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.TS_Status_BotName.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.TS_Status_BotName.Name = "TS_Status_BotName"
+        Me.TS_Status_BotName.Size = New System.Drawing.Size(0, 17)
+        Me.TS_Status_BotName.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'FurcTimeLbl
+        '
+        Me.FurcTimeLbl.Name = "FurcTimeLbl"
+        Me.FurcTimeLbl.Size = New System.Drawing.Size(156, 17)
+        Me.FurcTimeLbl.Text = "Furcadia Time: ##:##:## am"
+        '
+        'TS_Filler
+        '
+        Me.TS_Filler.Name = "TS_Filler"
+        Me.TS_Filler.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always
+        Me.TS_Filler.Size = New System.Drawing.Size(430, 17)
+        Me.TS_Filler.Spring = True
+        '
+        'ToolStripServerStatus
+        '
+        Me.ToolStripServerStatus.Image = Global.SilverMonkey.My.Resources.Resources.DisconnectedImg
+        Me.ToolStripServerStatus.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.ToolStripServerStatus.Name = "ToolStripServerStatus"
+        Me.ToolStripServerStatus.Size = New System.Drawing.Size(106, 17)
+        Me.ToolStripServerStatus.Text = "Server Status"
+        Me.ToolStripServerStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolStripServerStatus.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        Me.ToolStripServerStatus.ToolTipText = "Disconnected"
+        '
+        'ToolStripClientStatus
+        '
+        Me.ToolStripClientStatus.AutoSize = False
+        Me.ToolStripClientStatus.Image = Global.SilverMonkey.My.Resources.Resources.DisconnectedImg
+        Me.ToolStripClientStatus.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.ToolStripClientStatus.Name = "ToolStripClientStatus"
+        Me.ToolStripClientStatus.Size = New System.Drawing.Size(105, 17)
+        Me.ToolStripClientStatus.Text = "Client Status"
+        Me.ToolStripClientStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ToolStripClientStatus.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        Me.ToolStripClientStatus.ToolTipText = "Disconnected"
+        '
+        'EditMenu
+        '
+        Me.EditMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuCopy, Me.MenuCut, Me.PasteToolStripMenuItem, Me.ToolStripSeparator3})
+        Me.EditMenu.Name = "EditMenu"
+        Me.EditMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.EditMenu.Size = New System.Drawing.Size(145, 76)
+        '
+        'MenuCopy
+        '
+        Me.MenuCopy.Name = "MenuCopy"
+        Me.MenuCopy.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+        Me.MenuCopy.Size = New System.Drawing.Size(144, 22)
+        Me.MenuCopy.Text = "Copy"
+        '
+        'MenuCut
+        '
+        Me.MenuCut.Name = "MenuCut"
+        Me.MenuCut.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.K), System.Windows.Forms.Keys)
+        Me.MenuCut.Size = New System.Drawing.Size(144, 22)
+        Me.MenuCut.Text = "Cut"
+        '
+        'PasteToolStripMenuItem
+        '
+        Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
+        Me.PasteToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
+        Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
+        Me.PasteToolStripMenuItem.Text = "Paste"
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(141, 6)
+        '
+        'CopyMenu
+        '
+        Me.CopyMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuCopy2, Me.MenuCut2, Me.ToolStripMenuItem3, Me.ToolStripSeparator4})
+        Me.CopyMenu.Name = "EditMenu"
+        Me.CopyMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.CopyMenu.Size = New System.Drawing.Size(145, 76)
+        '
+        'MenuCopy2
+        '
+        Me.MenuCopy2.Name = "MenuCopy2"
+        Me.MenuCopy2.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+        Me.MenuCopy2.Size = New System.Drawing.Size(144, 22)
+        Me.MenuCopy2.Text = "Copy"
+        '
+        'MenuCut2
+        '
+        Me.MenuCut2.Enabled = False
+        Me.MenuCut2.Name = "MenuCut2"
+        Me.MenuCut2.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.K), System.Windows.Forms.Keys)
+        Me.MenuCut2.Size = New System.Drawing.Size(144, 22)
+        Me.MenuCut2.Text = "Cut"
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Enabled = False
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(144, 22)
+        Me.ToolStripMenuItem3.Text = "Paste"
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(141, 6)
+        '
+        'MenuStrip1
+        '
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.OptionsToolStripMenuItem, Me.WindowsToolStripMenuItem, Me.ReferenceLinksToolStripMenuItem, Me.HelpToolStripMenuItem})
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(812, 24)
+        Me.MenuStrip1.TabIndex = 57
+        Me.MenuStrip1.Text = "MenuStrip1"
+        '
+        'FileToolStripMenuItem
+        '
+        Me.FileToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewBotToolStripMenuItem, Me.OpenToolStripMenuItem, Me.EditBotToolStripMenuItem, Me.RecentToolStripMenuItem, Me.ToolStripSeparator5, Me.CloseToolStripMenuItem})
+        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
+        Me.FileToolStripMenuItem.Text = "File"
+        '
+        'NewBotToolStripMenuItem
+        '
+        Me.NewBotToolStripMenuItem.Name = "NewBotToolStripMenuItem"
+        Me.NewBotToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
+        Me.NewBotToolStripMenuItem.Text = "New Bot"
+        '
+        'OpenToolStripMenuItem
+        '
+        Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
+        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
+        Me.OpenToolStripMenuItem.Text = "Open"
+        '
+        'EditBotToolStripMenuItem
+        '
+        Me.EditBotToolStripMenuItem.Name = "EditBotToolStripMenuItem"
+        Me.EditBotToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
+        Me.EditBotToolStripMenuItem.Text = "Edit Bot"
+        '
+        'RecentToolStripMenuItem
+        '
+        Me.RecentToolStripMenuItem.Name = "RecentToolStripMenuItem"
+        Me.RecentToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
+        Me.RecentToolStripMenuItem.Text = "Recent"
+        '
+        'ToolStripSeparator5
+        '
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(116, 6)
+        '
+        'CloseToolStripMenuItem
+        '
+        Me.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem"
+        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
+        Me.CloseToolStripMenuItem.Text = "Exit"
+        '
+        'OptionsToolStripMenuItem
+        '
+        Me.OptionsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfigToolStripMenuItem, Me.ExportMonkeySpeakToolStripMenuItem})
+        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
+        Me.OptionsToolStripMenuItem.Text = "Options"
+        '
+        'ConfigToolStripMenuItem
+        '
+        Me.ConfigToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ConfigToolStripMenuItem.Name = "ConfigToolStripMenuItem"
+        Me.ConfigToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.ConfigToolStripMenuItem.Text = "Config"
+        '
+        'ExportMonkeySpeakToolStripMenuItem
+        '
+        Me.ExportMonkeySpeakToolStripMenuItem.Name = "ExportMonkeySpeakToolStripMenuItem"
+        Me.ExportMonkeySpeakToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.ExportMonkeySpeakToolStripMenuItem.Text = "Export MonkeySpeak"
+        '
+        'WindowsToolStripMenuItem
+        '
+        Me.WindowsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.WindowsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DebugToolStripMenuItem, Me.MSEditorToolStripMenuItem})
+        Me.WindowsToolStripMenuItem.Name = "WindowsToolStripMenuItem"
+        Me.WindowsToolStripMenuItem.Size = New System.Drawing.Size(68, 20)
+        Me.WindowsToolStripMenuItem.Text = "Windows"
+        '
+        'DebugToolStripMenuItem
+        '
+        Me.DebugToolStripMenuItem.Name = "DebugToolStripMenuItem"
+        Me.DebugToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
+        Me.DebugToolStripMenuItem.Text = "Debug"
+        '
+        'MSEditorToolStripMenuItem
+        '
+        Me.MSEditorToolStripMenuItem.Name = "MSEditorToolStripMenuItem"
+        Me.MSEditorToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
+        Me.MSEditorToolStripMenuItem.Text = "MS Editor"
+        '
+        'ReferenceLinksToolStripMenuItem
+        '
+        Me.ReferenceLinksToolStripMenuItem.Name = "ReferenceLinksToolStripMenuItem"
+        Me.ReferenceLinksToolStripMenuItem.Size = New System.Drawing.Size(101, 20)
+        Me.ReferenceLinksToolStripMenuItem.Text = "Reference Links"
+        '
+        'HelpToolStripMenuItem
+        '
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutToolStripMenuItem1})
+        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
+        Me.HelpToolStripMenuItem.Text = "Help"
+        '
+        'ContentsToolStripMenuItem
+        '
+        Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
+        Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.ContentsToolStripMenuItem.Text = "Contents"
+        '
+        'AboutToolStripMenuItem1
+        '
+        Me.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1"
+        Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(122, 22)
+        Me.AboutToolStripMenuItem1.Text = "About"
+        '
+        'BotIniOpen
+        '
+        Me.BotIniOpen.DefaultExt = "bini"
+        Me.BotIniOpen.Filter = "Bot Files|*.bini"
         '
         'SplitContainer1
         '
-        resources.ApplyResources(Me.SplitContainer1, "SplitContainer1")
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 24)
         Me.SplitContainer1.Name = "SplitContainer1"
         '
         'SplitContainer1.Panel1
         '
-        resources.ApplyResources(Me.SplitContainer1.Panel1, "SplitContainer1.Panel1")
         Me.SplitContainer1.Panel1.Controls.Add(Me.SplitContainer2)
-        Me.ToolTip1.SetToolTip(Me.SplitContainer1.Panel1, resources.GetString("SplitContainer1.Panel1.ToolTip"))
         '
         'SplitContainer1.Panel2
         '
-        resources.ApplyResources(Me.SplitContainer1.Panel2, "SplitContainer1.Panel2")
         Me.SplitContainer1.Panel2.Controls.Add(Me.BTN_Go)
         Me.SplitContainer1.Panel2.Controls.Add(Me.GroupBox1)
         Me.SplitContainer1.Panel2.Controls.Add(Me.GrpAction)
-        Me.ToolTip1.SetToolTip(Me.SplitContainer1.Panel2, resources.GetString("SplitContainer1.Panel2.ToolTip"))
-        Me.ToolTip1.SetToolTip(Me.SplitContainer1, resources.GetString("SplitContainer1.ToolTip"))
+        Me.SplitContainer1.Size = New System.Drawing.Size(812, 330)
+        Me.SplitContainer1.SplitterDistance = 584
+        Me.SplitContainer1.TabIndex = 59
         '
         'SplitContainer2
         '
-        resources.ApplyResources(Me.SplitContainer2, "SplitContainer2")
+        Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer2.Location = New System.Drawing.Point(0, 0)
         Me.SplitContainer2.Name = "SplitContainer2"
+        Me.SplitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
         'SplitContainer2.Panel1
         '
-        resources.ApplyResources(Me.SplitContainer2.Panel1, "SplitContainer2.Panel1")
         Me.SplitContainer2.Panel1.Controls.Add(Me.clientGroup)
-        Me.ToolTip1.SetToolTip(Me.SplitContainer2.Panel1, resources.GetString("SplitContainer2.Panel1.ToolTip"))
         '
         'SplitContainer2.Panel2
         '
-        resources.ApplyResources(Me.SplitContainer2.Panel2, "SplitContainer2.Panel2")
         Me.SplitContainer2.Panel2.Controls.Add(Me.GroupBox3)
-        Me.ToolTip1.SetToolTip(Me.SplitContainer2.Panel2, resources.GetString("SplitContainer2.Panel2.ToolTip"))
-        Me.ToolTip1.SetToolTip(Me.SplitContainer2, resources.GetString("SplitContainer2.ToolTip"))
+        Me.SplitContainer2.Size = New System.Drawing.Size(584, 330)
+        Me.SplitContainer2.SplitterDistance = 195
+        Me.SplitContainer2.TabIndex = 0
         '
         'clientGroup
         '
-        resources.ApplyResources(Me.clientGroup, "clientGroup")
         Me.clientGroup.Controls.Add(Me.Log_)
+        Me.clientGroup.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.clientGroup.Location = New System.Drawing.Point(0, 0)
         Me.clientGroup.Name = "clientGroup"
+        Me.clientGroup.Size = New System.Drawing.Size(584, 195)
+        Me.clientGroup.TabIndex = 66
         Me.clientGroup.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.clientGroup, resources.GetString("clientGroup.ToolTip"))
+        Me.clientGroup.Text = "Log"
         '
         'Log_
         '
-        resources.ApplyResources(Me.Log_, "Log_")
+        Me.Log_.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Log_.HScrollPos = 0
+        Me.Log_.Location = New System.Drawing.Point(3, 16)
         Me.Log_.Name = "Log_"
-        Me.ToolTip1.SetToolTip(Me.Log_, resources.GetString("Log_.ToolTip"))
+        Me.Log_.Size = New System.Drawing.Size(578, 176)
+        Me.Log_.TabIndex = 0
+        Me.Log_.Text = ""
         Me.Log_.VerticalContentAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Top
         Me.Log_.VScrollPos = 0
         '
         'GroupBox3
         '
-        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
         Me.GroupBox3.Controls.Add(Me.toServer)
         Me.GroupBox3.Controls.Add(Me.CheckBox1)
         Me.GroupBox3.Controls.Add(Me.Btn_Bold)
         Me.GroupBox3.Controls.Add(Me.BTN_Underline)
         Me.GroupBox3.Controls.Add(Me.BTN_Italic)
         Me.GroupBox3.Controls.Add(Me.sendToServer)
+        Me.GroupBox3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox3.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(584, 131)
+        Me.GroupBox3.TabIndex = 65
         Me.GroupBox3.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.GroupBox3, resources.GetString("GroupBox3.ToolTip"))
+        Me.GroupBox3.Text = "Chat"
         '
         'toServer
         '
-        resources.ApplyResources(Me.toServer, "toServer")
+        Me.toServer.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.toServer.HScrollPos = 0
+        Me.toServer.Location = New System.Drawing.Point(6, 28)
         Me.toServer.Name = "toServer"
-        Me.ToolTip1.SetToolTip(Me.toServer, resources.GetString("toServer.ToolTip"))
+        Me.toServer.Size = New System.Drawing.Size(575, 74)
+        Me.toServer.TabIndex = 0
+        Me.toServer.Text = ""
         Me.toServer.VerticalContentAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Top
         Me.toServer.VScrollPos = 0
         '
         'CheckBox1
         '
-        resources.ApplyResources(Me.CheckBox1, "CheckBox1")
+        Me.CheckBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(6, 108)
         Me.CheckBox1.Name = "CheckBox1"
-        Me.ToolTip1.SetToolTip(Me.CheckBox1, resources.GetString("CheckBox1.ToolTip"))
+        Me.CheckBox1.Size = New System.Drawing.Size(77, 17)
+        Me.CheckBox1.TabIndex = 59
+        Me.CheckBox1.Text = "Auto Scroll"
         Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'Btn_Bold
         '
-        resources.ApplyResources(Me.Btn_Bold, "Btn_Bold")
+        Me.Btn_Bold.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Btn_Bold.Location = New System.Drawing.Point(501, 7)
         Me.Btn_Bold.Name = "Btn_Bold"
-        Me.ToolTip1.SetToolTip(Me.Btn_Bold, resources.GetString("Btn_Bold.ToolTip"))
+        Me.Btn_Bold.Size = New System.Drawing.Size(18, 19)
+        Me.Btn_Bold.TabIndex = 60
+        Me.Btn_Bold.Text = "B"
         Me.Btn_Bold.UseVisualStyleBackColor = True
         '
         'BTN_Underline
         '
-        resources.ApplyResources(Me.BTN_Underline, "BTN_Underline")
+        Me.BTN_Underline.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BTN_Underline.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BTN_Underline.Location = New System.Drawing.Point(549, 7)
         Me.BTN_Underline.Name = "BTN_Underline"
-        Me.ToolTip1.SetToolTip(Me.BTN_Underline, resources.GetString("BTN_Underline.ToolTip"))
+        Me.BTN_Underline.Size = New System.Drawing.Size(29, 19)
+        Me.BTN_Underline.TabIndex = 59
+        Me.BTN_Underline.Text = "UL"
         Me.BTN_Underline.UseVisualStyleBackColor = True
         '
         'BTN_Italic
         '
-        resources.ApplyResources(Me.BTN_Italic, "BTN_Italic")
+        Me.BTN_Italic.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BTN_Italic.Location = New System.Drawing.Point(525, 7)
         Me.BTN_Italic.Name = "BTN_Italic"
-        Me.ToolTip1.SetToolTip(Me.BTN_Italic, resources.GetString("BTN_Italic.ToolTip"))
+        Me.BTN_Italic.Size = New System.Drawing.Size(18, 19)
+        Me.BTN_Italic.TabIndex = 58
+        Me.BTN_Italic.Text = "I"
         Me.BTN_Italic.UseVisualStyleBackColor = True
         '
         'sendToServer
         '
-        resources.ApplyResources(Me.sendToServer, "sendToServer")
+        Me.sendToServer.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.sendToServer.Location = New System.Drawing.Point(543, 105)
         Me.sendToServer.Name = "sendToServer"
-        Me.ToolTip1.SetToolTip(Me.sendToServer, resources.GetString("sendToServer.ToolTip"))
+        Me.sendToServer.Size = New System.Drawing.Size(35, 20)
+        Me.sendToServer.TabIndex = 4
+        Me.sendToServer.Text = "->"
         Me.sendToServer.UseVisualStyleBackColor = True
         '
         'BTN_Go
         '
-        resources.ApplyResources(Me.BTN_Go, "BTN_Go")
+        Me.BTN_Go.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BTN_Go.Location = New System.Drawing.Point(140, 298)
         Me.BTN_Go.Name = "BTN_Go"
-        Me.ToolTip1.SetToolTip(Me.BTN_Go, resources.GetString("BTN_Go.ToolTip"))
+        Me.BTN_Go.Size = New System.Drawing.Size(71, 26)
+        Me.BTN_Go.TabIndex = 66
+        Me.BTN_Go.Text = "Go!"
         Me.BTN_Go.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
+        Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.TextBox_NoFlicker1)
         Me.GroupBox1.Controls.Add(Me.DreamList)
         Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(224, 154)
+        Me.GroupBox1.TabIndex = 65
         Me.GroupBox1.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.GroupBox1, resources.GetString("GroupBox1.ToolTip"))
+        Me.GroupBox1.Text = "Dream List"
         '
         'TextBox_NoFlicker1
         '
-        resources.ApplyResources(Me.TextBox_NoFlicker1, "TextBox_NoFlicker1")
+        Me.TextBox_NoFlicker1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox_NoFlicker1.Location = New System.Drawing.Point(162, 127)
         Me.TextBox_NoFlicker1.Name = "TextBox_NoFlicker1"
-        Me.ToolTip1.SetToolTip(Me.TextBox_NoFlicker1, resources.GetString("TextBox_NoFlicker1.ToolTip"))
+        Me.TextBox_NoFlicker1.Size = New System.Drawing.Size(27, 20)
+        Me.TextBox_NoFlicker1.TabIndex = 15
+        Me.TextBox_NoFlicker1.Text = "###"
         '
         'DreamList
         '
-        resources.ApplyResources(Me.DreamList, "DreamList")
+        Me.DreamList.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DreamList.FormattingEnabled = True
+        Me.DreamList.Location = New System.Drawing.Point(6, 16)
         Me.DreamList.Name = "DreamList"
-        Me.ToolTip1.SetToolTip(Me.DreamList, resources.GetString("DreamList.ToolTip"))
+        Me.DreamList.Size = New System.Drawing.Size(205, 108)
+        Me.DreamList.TabIndex = 14
         '
         'Label1
         '
-        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(72, 130)
         Me.Label1.Name = "Label1"
-        Me.ToolTip1.SetToolTip(Me.Label1, resources.GetString("Label1.ToolTip"))
+        Me.Label1.Size = New System.Drawing.Size(84, 13)
+        Me.Label1.TabIndex = 13
+        Me.Label1.Text = "Furres in Dream:"
         '
         'GrpAction
         '
-        resources.ApplyResources(Me.GrpAction, "GrpAction")
+        Me.GrpAction.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GrpAction.Controls.Add(Me.BtnSit_stand_Lie)
         Me.GrpAction.Controls.Add(Me.BTN_TurnL)
         Me.GrpAction.Controls.Add(Me.BTN_TurnR)
@@ -280,351 +625,145 @@ Partial Class Main
         Me.GrpAction.Controls.Add(Me.get_)
         Me.GrpAction.Controls.Add(Me.se_)
         Me.GrpAction.Controls.Add(Me.sw_)
+        Me.GrpAction.Location = New System.Drawing.Point(38, 160)
         Me.GrpAction.Name = "GrpAction"
+        Me.GrpAction.Size = New System.Drawing.Size(173, 132)
+        Me.GrpAction.TabIndex = 64
         Me.GrpAction.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.GrpAction, resources.GetString("GrpAction.ToolTip"))
+        Me.GrpAction.Text = "Actions"
         '
         'BtnSit_stand_Lie
         '
-        resources.ApplyResources(Me.BtnSit_stand_Lie, "BtnSit_stand_Lie")
+        Me.BtnSit_stand_Lie.Location = New System.Drawing.Point(6, 67)
         Me.BtnSit_stand_Lie.Name = "BtnSit_stand_Lie"
-        Me.ToolTip1.SetToolTip(Me.BtnSit_stand_Lie, resources.GetString("BtnSit_stand_Lie.ToolTip"))
+        Me.BtnSit_stand_Lie.Size = New System.Drawing.Size(50, 23)
+        Me.BtnSit_stand_Lie.TabIndex = 44
+        Me.BtnSit_stand_Lie.Text = "Sit"
         Me.BtnSit_stand_Lie.UseVisualStyleBackColor = True
         '
         'BTN_TurnL
         '
-        resources.ApplyResources(Me.BTN_TurnL, "BTN_TurnL")
+        Me.BTN_TurnL.Location = New System.Drawing.Point(6, 19)
         Me.BTN_TurnL.Name = "BTN_TurnL"
-        Me.ToolTip1.SetToolTip(Me.BTN_TurnL, resources.GetString("BTN_TurnL.ToolTip"))
+        Me.BTN_TurnL.Size = New System.Drawing.Size(50, 23)
+        Me.BTN_TurnL.TabIndex = 43
+        Me.BTN_TurnL.Text = "<="
         Me.BTN_TurnL.UseVisualStyleBackColor = True
         '
         'BTN_TurnR
         '
-        resources.ApplyResources(Me.BTN_TurnR, "BTN_TurnR")
+        Me.BTN_TurnR.Location = New System.Drawing.Point(6, 44)
         Me.BTN_TurnR.Name = "BTN_TurnR"
-        Me.ToolTip1.SetToolTip(Me.BTN_TurnR, resources.GetString("BTN_TurnR.ToolTip"))
+        Me.BTN_TurnR.Size = New System.Drawing.Size(50, 23)
+        Me.BTN_TurnR.TabIndex = 42
+        Me.BTN_TurnR.Text = "=>"
         Me.BTN_TurnR.UseVisualStyleBackColor = True
         '
         '_ne
         '
-        resources.ApplyResources(Me._ne, "_ne")
+        Me._ne.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me._ne.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me._ne.Cursor = System.Windows.Forms.Cursors.Hand
+        Me._ne.Image = CType(resources.GetObject("_ne.Image"), System.Drawing.Image)
+        Me._ne.Location = New System.Drawing.Point(115, 19)
         Me._ne.Name = "_ne"
+        Me._ne.Size = New System.Drawing.Size(36, 36)
+        Me._ne.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me._ne.TabIndex = 41
         Me._ne.TabStop = False
-        Me.ToolTip1.SetToolTip(Me._ne, resources.GetString("_ne.ToolTip"))
+        Me._ne.WaitOnLoad = True
         '
         '_nw
         '
-        resources.ApplyResources(Me._nw, "_nw")
+        Me._nw.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me._nw.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me._nw.Cursor = System.Windows.Forms.Cursors.Hand
+        Me._nw.Image = CType(resources.GetObject("_nw.Image"), System.Drawing.Image)
+        Me._nw.Location = New System.Drawing.Point(70, 19)
         Me._nw.Name = "_nw"
+        Me._nw.Size = New System.Drawing.Size(36, 36)
+        Me._nw.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me._nw.TabIndex = 40
         Me._nw.TabStop = False
-        Me.ToolTip1.SetToolTip(Me._nw, resources.GetString("_nw.ToolTip"))
+        Me._nw.WaitOnLoad = True
         '
         'use_
         '
-        resources.ApplyResources(Me.use_, "use_")
         Me.use_.Cursor = System.Windows.Forms.Cursors.Hand
         Me.use_.FlatAppearance.BorderSize = 0
+        Me.use_.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.use_.Location = New System.Drawing.Point(100, 98)
         Me.use_.Name = "use_"
-        Me.ToolTip1.SetToolTip(Me.use_, resources.GetString("use_.ToolTip"))
+        Me.use_.Size = New System.Drawing.Size(35, 23)
+        Me.use_.TabIndex = 38
+        Me.use_.Text = "Use"
         Me.use_.UseVisualStyleBackColor = True
         '
         'get_
         '
-        resources.ApplyResources(Me.get_, "get_")
         Me.get_.Cursor = System.Windows.Forms.Cursors.Hand
         Me.get_.FlatAppearance.BorderSize = 0
+        Me.get_.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.get_.Location = New System.Drawing.Point(54, 98)
         Me.get_.Name = "get_"
-        Me.ToolTip1.SetToolTip(Me.get_, resources.GetString("get_.ToolTip"))
+        Me.get_.Size = New System.Drawing.Size(32, 23)
+        Me.get_.TabIndex = 37
+        Me.get_.Text = "Get"
         Me.get_.UseVisualStyleBackColor = True
         '
         'se_
         '
-        resources.ApplyResources(Me.se_, "se_")
+        Me.se_.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.se_.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.se_.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.se_.Image = CType(resources.GetObject("se_.Image"), System.Drawing.Image)
+        Me.se_.Location = New System.Drawing.Point(115, 56)
         Me.se_.Name = "se_"
+        Me.se_.Size = New System.Drawing.Size(36, 36)
+        Me.se_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.se_.TabIndex = 36
         Me.se_.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.se_, resources.GetString("se_.ToolTip"))
+        Me.se_.WaitOnLoad = True
         '
         'sw_
         '
-        resources.ApplyResources(Me.sw_, "sw_")
+        Me.sw_.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.sw_.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.sw_.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.sw_.Image = CType(resources.GetObject("sw_.Image"), System.Drawing.Image)
+        Me.sw_.Location = New System.Drawing.Point(70, 56)
         Me.sw_.Name = "sw_"
+        Me.sw_.Size = New System.Drawing.Size(36, 36)
+        Me.sw_.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.sw_.TabIndex = 35
         Me.sw_.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.sw_, resources.GetString("sw_.ToolTip"))
-        '
-        'ContextTryIcon
-        '
-        resources.ApplyResources(Me.ContextTryIcon, "ContextTryIcon")
-        Me.ContextTryIcon.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.ContextTryIcon.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RestoreMainToolStripMenuItem, Me.EditorTrayIconMenuItem, Me.ToolStripSeparator1, Me.ConnectTrayIconMenuItem, Me.DisconnectTrayIconMenuItem, Me.ToolStripSeparator2, Me.ExitTrayIconMenuItem})
-        Me.ContextTryIcon.Name = "ContextMenuStrip1"
-        Me.ToolTip1.SetToolTip(Me.ContextTryIcon, resources.GetString("ContextTryIcon.ToolTip"))
-        '
-        'RestoreMainToolStripMenuItem
-        '
-        resources.ApplyResources(Me.RestoreMainToolStripMenuItem, "RestoreMainToolStripMenuItem")
-        Me.RestoreMainToolStripMenuItem.Name = "RestoreMainToolStripMenuItem"
-        '
-        'EditorTrayIconMenuItem
-        '
-        resources.ApplyResources(Me.EditorTrayIconMenuItem, "EditorTrayIconMenuItem")
-        Me.EditorTrayIconMenuItem.Name = "EditorTrayIconMenuItem"
-        '
-        'ToolStripSeparator1
-        '
-        resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        '
-        'ConnectTrayIconMenuItem
-        '
-        resources.ApplyResources(Me.ConnectTrayIconMenuItem, "ConnectTrayIconMenuItem")
-        Me.ConnectTrayIconMenuItem.Name = "ConnectTrayIconMenuItem"
-        '
-        'DisconnectTrayIconMenuItem
-        '
-        resources.ApplyResources(Me.DisconnectTrayIconMenuItem, "DisconnectTrayIconMenuItem")
-        Me.DisconnectTrayIconMenuItem.Name = "DisconnectTrayIconMenuItem"
-        '
-        'ToolStripSeparator2
-        '
-        resources.ApplyResources(Me.ToolStripSeparator2, "ToolStripSeparator2")
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        '
-        'ExitTrayIconMenuItem
-        '
-        resources.ApplyResources(Me.ExitTrayIconMenuItem, "ExitTrayIconMenuItem")
-        Me.ExitTrayIconMenuItem.Name = "ExitTrayIconMenuItem"
-        '
-        'ActionTmr
-        '
-        Me.ActionTmr.Interval = 250
-        '
-        'TS_Main
-        '
-        resources.ApplyResources(Me.TS_Main, "TS_Main")
-        Me.TS_Main.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.TS_Main.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TS_Status_BotName, Me.FurcTimeLbl, Me.TS_Filler, Me.ToolStripServerStatus, Me.ToolStripClientStatus})
-        Me.TS_Main.Name = "TS_Main"
-        Me.ToolTip1.SetToolTip(Me.TS_Main, resources.GetString("TS_Main.ToolTip"))
-        '
-        'TS_Status_BotName
-        '
-        resources.ApplyResources(Me.TS_Status_BotName, "TS_Status_BotName")
-        Me.TS_Status_BotName.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.TS_Status_BotName.Name = "TS_Status_BotName"
-        '
-        'FurcTimeLbl
-        '
-        resources.ApplyResources(Me.FurcTimeLbl, "FurcTimeLbl")
-        Me.FurcTimeLbl.Name = "FurcTimeLbl"
-        '
-        'TS_Filler
-        '
-        resources.ApplyResources(Me.TS_Filler, "TS_Filler")
-        Me.TS_Filler.Name = "TS_Filler"
-        Me.TS_Filler.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always
-        Me.TS_Filler.Spring = True
-        '
-        'ToolStripServerStatus
-        '
-        resources.ApplyResources(Me.ToolStripServerStatus, "ToolStripServerStatus")
-        Me.ToolStripServerStatus.Image = Global.SilverMonkey.My.Resources.Resources.DisconnectedImg
-        Me.ToolStripServerStatus.Name = "ToolStripServerStatus"
-        '
-        'ToolStripClientStatus
-        '
-        resources.ApplyResources(Me.ToolStripClientStatus, "ToolStripClientStatus")
-        Me.ToolStripClientStatus.Image = Global.SilverMonkey.My.Resources.Resources.DisconnectedImg
-        Me.ToolStripClientStatus.Name = "ToolStripClientStatus"
-        '
-        'EditMenu
-        '
-        resources.ApplyResources(Me.EditMenu, "EditMenu")
-        Me.EditMenu.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.EditMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuCopy, Me.MenuCut, Me.PasteToolStripMenuItem, Me.ToolStripSeparator3})
-        Me.EditMenu.Name = "EditMenu"
-        Me.EditMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.ToolTip1.SetToolTip(Me.EditMenu, resources.GetString("EditMenu.ToolTip"))
-        '
-        'MenuCopy
-        '
-        resources.ApplyResources(Me.MenuCopy, "MenuCopy")
-        Me.MenuCopy.Name = "MenuCopy"
-        '
-        'MenuCut
-        '
-        resources.ApplyResources(Me.MenuCut, "MenuCut")
-        Me.MenuCut.Name = "MenuCut"
-        '
-        'PasteToolStripMenuItem
-        '
-        resources.ApplyResources(Me.PasteToolStripMenuItem, "PasteToolStripMenuItem")
-        Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
-        '
-        'ToolStripSeparator3
-        '
-        resources.ApplyResources(Me.ToolStripSeparator3, "ToolStripSeparator3")
-        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        '
-        'CopyMenu
-        '
-        resources.ApplyResources(Me.CopyMenu, "CopyMenu")
-        Me.CopyMenu.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.CopyMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuCopy2, Me.MenuCut2, Me.ToolStripMenuItem3, Me.ToolStripSeparator4})
-        Me.CopyMenu.Name = "EditMenu"
-        Me.CopyMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.ToolTip1.SetToolTip(Me.CopyMenu, resources.GetString("CopyMenu.ToolTip"))
-        '
-        'MenuCopy2
-        '
-        resources.ApplyResources(Me.MenuCopy2, "MenuCopy2")
-        Me.MenuCopy2.Name = "MenuCopy2"
-        '
-        'MenuCut2
-        '
-        resources.ApplyResources(Me.MenuCut2, "MenuCut2")
-        Me.MenuCut2.Name = "MenuCut2"
-        '
-        'ToolStripMenuItem3
-        '
-        resources.ApplyResources(Me.ToolStripMenuItem3, "ToolStripMenuItem3")
-        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        '
-        'ToolStripSeparator4
-        '
-        resources.ApplyResources(Me.ToolStripSeparator4, "ToolStripSeparator4")
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        '
-        'MenuStrip1
-        '
-        resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
-        Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.OptionsToolStripMenuItem, Me.WindowsToolStripMenuItem, Me.ReferenceLinksToolStripMenuItem, Me.HelpToolStripMenuItem})
-        Me.MenuStrip1.Name = "MenuStrip1"
-        Me.ToolTip1.SetToolTip(Me.MenuStrip1, resources.GetString("MenuStrip1.ToolTip"))
-        '
-        'FileToolStripMenuItem
-        '
-        resources.ApplyResources(Me.FileToolStripMenuItem, "FileToolStripMenuItem")
-        Me.FileToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewBotToolStripMenuItem, Me.OpenToolStripMenuItem, Me.EditBotToolStripMenuItem, Me.RecentToolStripMenuItem, Me.ToolStripSeparator5, Me.CloseToolStripMenuItem})
-        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        '
-        'NewBotToolStripMenuItem
-        '
-        resources.ApplyResources(Me.NewBotToolStripMenuItem, "NewBotToolStripMenuItem")
-        Me.NewBotToolStripMenuItem.Name = "NewBotToolStripMenuItem"
-        '
-        'OpenToolStripMenuItem
-        '
-        resources.ApplyResources(Me.OpenToolStripMenuItem, "OpenToolStripMenuItem")
-        Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
-        '
-        'EditBotToolStripMenuItem
-        '
-        resources.ApplyResources(Me.EditBotToolStripMenuItem, "EditBotToolStripMenuItem")
-        Me.EditBotToolStripMenuItem.Name = "EditBotToolStripMenuItem"
-        '
-        'RecentToolStripMenuItem
-        '
-        resources.ApplyResources(Me.RecentToolStripMenuItem, "RecentToolStripMenuItem")
-        Me.RecentToolStripMenuItem.Name = "RecentToolStripMenuItem"
-        '
-        'ToolStripSeparator5
-        '
-        resources.ApplyResources(Me.ToolStripSeparator5, "ToolStripSeparator5")
-        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        '
-        'CloseToolStripMenuItem
-        '
-        resources.ApplyResources(Me.CloseToolStripMenuItem, "CloseToolStripMenuItem")
-        Me.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem"
-        '
-        'OptionsToolStripMenuItem
-        '
-        resources.ApplyResources(Me.OptionsToolStripMenuItem, "OptionsToolStripMenuItem")
-        Me.OptionsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfigToolStripMenuItem, Me.ExportMonkeySpeakToolStripMenuItem})
-        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        '
-        'ConfigToolStripMenuItem
-        '
-        resources.ApplyResources(Me.ConfigToolStripMenuItem, "ConfigToolStripMenuItem")
-        Me.ConfigToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ConfigToolStripMenuItem.Name = "ConfigToolStripMenuItem"
-        '
-        'ExportMonkeySpeakToolStripMenuItem
-        '
-        resources.ApplyResources(Me.ExportMonkeySpeakToolStripMenuItem, "ExportMonkeySpeakToolStripMenuItem")
-        Me.ExportMonkeySpeakToolStripMenuItem.Name = "ExportMonkeySpeakToolStripMenuItem"
-        '
-        'WindowsToolStripMenuItem
-        '
-        resources.ApplyResources(Me.WindowsToolStripMenuItem, "WindowsToolStripMenuItem")
-        Me.WindowsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.WindowsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DebugToolStripMenuItem, Me.MSEditorToolStripMenuItem})
-        Me.WindowsToolStripMenuItem.Name = "WindowsToolStripMenuItem"
-        '
-        'DebugToolStripMenuItem
-        '
-        resources.ApplyResources(Me.DebugToolStripMenuItem, "DebugToolStripMenuItem")
-        Me.DebugToolStripMenuItem.Name = "DebugToolStripMenuItem"
-        '
-        'MSEditorToolStripMenuItem
-        '
-        resources.ApplyResources(Me.MSEditorToolStripMenuItem, "MSEditorToolStripMenuItem")
-        Me.MSEditorToolStripMenuItem.Name = "MSEditorToolStripMenuItem"
-        '
-        'ReferenceLinksToolStripMenuItem
-        '
-        resources.ApplyResources(Me.ReferenceLinksToolStripMenuItem, "ReferenceLinksToolStripMenuItem")
-        Me.ReferenceLinksToolStripMenuItem.Name = "ReferenceLinksToolStripMenuItem"
-        '
-        'HelpToolStripMenuItem
-        '
-        resources.ApplyResources(Me.HelpToolStripMenuItem, "HelpToolStripMenuItem")
-        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutToolStripMenuItem1})
-        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        '
-        'ContentsToolStripMenuItem
-        '
-        resources.ApplyResources(Me.ContentsToolStripMenuItem, "ContentsToolStripMenuItem")
-        Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
-        '
-        'AboutToolStripMenuItem1
-        '
-        resources.ApplyResources(Me.AboutToolStripMenuItem1, "AboutToolStripMenuItem1")
-        Me.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1"
-        '
-        'MainMenu1
-        '
-        resources.ApplyResources(Me.MainMenu1, "MainMenu1")
-        '
-        'BotIniOpen
-        '
-        Me.BotIniOpen.DefaultExt = "bini"
-        resources.ApplyResources(Me.BotIniOpen, "BotIniOpen")
+        Me.sw_.WaitOnLoad = True
         '
         'Main
         '
-        resources.ApplyResources(Me, "$this")
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(812, 376)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.TS_Main)
         Me.Controls.Add(Me.MenuStrip1)
         Me.DoubleBuffered = True
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.IsMdiContainer = True
         Me.KeyPreview = True
         Me.MainMenuStrip = Me.MenuStrip1
+        Me.MinimumSize = New System.Drawing.Size(445, 400)
         Me.Name = "Main"
-        Me.ToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip"))
+        Me.Text = "SilverMonkey 2.0"
+        Me.ContextTryIcon.ResumeLayout(False)
+        Me.TS_Main.ResumeLayout(False)
+        Me.TS_Main.PerformLayout()
+        CType(Me.FURREListBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.EditMenu.ResumeLayout(False)
+        Me.CopyMenu.ResumeLayout(False)
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
         Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -644,15 +783,6 @@ Partial Class Main
         CType(Me._nw, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.se_, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.sw_, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextTryIcon.ResumeLayout(False)
-        Me.TS_Main.ResumeLayout(False)
-        Me.TS_Main.PerformLayout()
-        CType(Me.FURREListBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.EditMenu.ResumeLayout(False)
-        Me.CopyMenu.ResumeLayout(False)
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
