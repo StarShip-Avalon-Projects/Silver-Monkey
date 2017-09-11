@@ -40,10 +40,8 @@ Public Class Paths
 
 #Region "Private Fields"
 
+    Private Const DsScriptsDocsPath As String = "Scripts"
     Private Const DsTemplateDocsPath As String = "Templates"
-
-    Private Const DxScriptseDocsPath As String = "Scripts"
-
     Private Const ErrorLogPath As String = "Error"
 
     Private Const LogPath As String = "Logs"
@@ -65,10 +63,15 @@ Public Class Paths
     Private Shared _FurcadiaCharactersFolder As String = Nothing
     Private Shared _FurcadiaDocumentsFolder As String = Nothing
     Private Shared _FurcadiaProgramFolder As String = Nothing
-    Private Shared _MonKeySpeakEditorDocumentsScriptsPath As String = Nothing
-    Private Shared _MonKeySpeakEditorDocumentsTemplatesPath As String = Nothing
-    Private Shared _MonKeySpeakEditorScriptsPath As String = Nothing
-    Private Shared _MonKeySpeakEditorTemplatesPath As String = Nothing
+
+    Private Shared _MonKeySpeakEditorDocumentsDsScriptsPath As String
+    Private Shared _MonKeySpeakEditorDocumentsDsTemplatesPath As String
+    Private Shared _MonKeySpeakEditorDocumentsScriptsPath As String
+    Private Shared _MonKeySpeakEditorDocumentsTemplatesPath As String
+    Private Shared _MonKeySpeakEditorDsScriptsPath As String
+    Private Shared _MonKeySpeakEditorDsTemplatesPath As String
+    Private Shared _MonKeySpeakEditorScriptsPath As String
+    Private Shared _MonKeySpeakEditorTemplatesPath As String
     Private Shared _Paths As New Furcadia.IO.Paths()
 
     'Bot folder
@@ -238,15 +241,61 @@ Public Class Paths
     End Property
 
     ''' <summary>
-    ''' Gets or sets the Monkey Speak Editor documents scripts path.
+    ''' Gets or sets the Monkey Speak Editor documents MonkeySpeak scripts path.
+    ''' <para>
+    ''' Default: Documents\Silver Monkey\Scripts
+    ''' </para>
     ''' </summary>
     ''' <value>
     ''' The Monkey Speak Editor documents scripts path.
     ''' </value>
-    Public Shared Property MonKeySpeakEditorDocumentsScriptsPath() As String
+    Public Shared Property MonkeySpeakEditorDocumentsDsScriptsPath() As String
         Get
             If String.IsNullOrEmpty(_MonKeySpeakEditorDocumentsScriptsPath) Then
-                _MonKeySpeakEditorDocumentsScriptsPath = Path.Combine(SilverMonkeyDocumentsPath, MsTemplateDocsPath)
+                _MonKeySpeakEditorDocumentsDsScriptsPath = Path.Combine(SilverMonkeyDocumentsPath, DsScriptsDocsPath)
+            End If
+            Return _MonKeySpeakEditorDocumentsDsScriptsPath
+        End Get
+        Set(ByVal value As String)
+            _MonKeySpeakEditorDocumentsDsScriptsPath = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Gets or sets the Monkey Speak Editor Dragon Speak documents
+    ''' templates path.
+    ''' <para>
+    ''' Default: Documents\Silver Monkey\Templates
+    ''' </para>
+    ''' </summary>
+    ''' <value>
+    ''' The Monkey Speak Editor documents templates path.
+    ''' </value>
+    Public Shared Property MonkeySpeakEditorDocumentsDsTemplatesPath() As String
+        Get
+            If String.IsNullOrEmpty(_MonKeySpeakEditorDocumentsDsTemplatesPath) Then
+                _MonKeySpeakEditorDocumentsDsTemplatesPath = Path.Combine(SilverMonkeyDocumentsPath, DsTemplateDocsPath)
+            End If
+            Return _MonKeySpeakEditorDocumentsDsTemplatesPath
+        End Get
+        Set(ByVal value As String)
+            _MonKeySpeakEditorDocumentsDsTemplatesPath = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Gets or sets the Monkey Speak Editor documents MonkeySpeak scripts path.
+    ''' <para>
+    ''' Default: Documents\Silver Monkey\Scripts-MS
+    ''' </para>
+    ''' </summary>
+    ''' <value>
+    ''' The Monkey Speak Editor documents scripts path.
+    ''' </value>
+    Public Shared Property MonkeySpeakEditorDocumentsScriptsPath() As String
+        Get
+            If String.IsNullOrEmpty(_MonKeySpeakEditorDocumentsScriptsPath) Then
+                _MonKeySpeakEditorDocumentsScriptsPath = Path.Combine(SilverMonkeyDocumentsPath, MsScriptseDocsPath)
                 If Not Directory.Exists(_MonKeySpeakEditorDocumentsScriptsPath) Then
                     Directory.CreateDirectory(_MonKeySpeakEditorDocumentsScriptsPath)
                 End If
@@ -260,11 +309,14 @@ Public Class Paths
 
     ''' <summary>
     ''' Gets or sets the Monkey Speak documents templates path.
+    ''' <para>
+    ''' Default: Documents\Silver Monkey\Templates-MS
+    ''' </para>
     ''' </summary>
     ''' <value>
     ''' The Monkey Speak Editor documents templates path.
     ''' </value>
-    Public Shared Property MonKeySpeakEditorDocumentsTemplatesPath() As String
+    Public Shared Property MonkeySpeakEditorDocumentsTemplatesPath() As String
         Get
             If String.IsNullOrEmpty(_MonKeySpeakEditorDocumentsTemplatesPath) Then
                 _MonKeySpeakEditorDocumentsTemplatesPath = Path.Combine(SilverMonkeyDocumentsPath, MsTemplateDocsPath)
@@ -277,7 +329,52 @@ Public Class Paths
     End Property
 
     ''' <summary>
-    ''' Gets or sets the Monkey Speak Editor scripts path.
+    ''' Gets or sets the Monkey Speak Editor Dragon Speak scripts path.
+    ''' <para>
+    ''' Default: Program Files(x86)\Silver Monkey\Scripts
+    ''' </para>
+    ''' </summary>
+    ''' <value>
+    ''' The Monkey Speak Editor scripts path.
+    ''' </value>
+    Public Shared Property MonkeySpeakEditorDsScriptsPath() As String
+        Get
+            If String.IsNullOrEmpty(_MonKeySpeakEditorDsScriptsPath) Then
+                _MonKeySpeakEditorDsScriptsPath = Path.Combine(ApplicationPath, DsScriptsDocsPath)
+            End If
+            Return _MonKeySpeakEditorDsScriptsPath
+        End Get
+        Set(ByVal value As String)
+            _MonKeySpeakEditorDsScriptsPath = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Gets or sets the Monkey Speak templates path.
+    ''' <para>
+    ''' Default: Program Files(x86)\Silver Monkey\Templates
+    ''' </para>
+    ''' </summary>
+    ''' <value>
+    ''' The Monkey Speak Editor templates path.
+    ''' </value>
+    Public Shared Property MonKeySpeakEditorDsTemplatesPath() As String
+        Get
+            If String.IsNullOrEmpty(_MonKeySpeakEditorDsTemplatesPath) Then
+                _MonKeySpeakEditorDsTemplatesPath = Path.Combine(ApplicationPath, DsTemplateDocsPath)
+            End If
+            Return _MonKeySpeakEditorDsTemplatesPath
+        End Get
+        Set(ByVal value As String)
+            _MonKeySpeakEditorDsTemplatesPath = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Gets or sets the Monkey Speak Editor MonkeySpeak scripts path.
+    ''' <para>
+    ''' Default: Program Files(x86)\Silver Monkey\Scripts-MS
+    ''' </para>
     ''' </summary>
     ''' <value>
     ''' The Monkey Speak Editor scripts path.
@@ -285,7 +382,7 @@ Public Class Paths
     Public Shared Property MonKeySpeakEditorScriptsPath() As String
         Get
             If String.IsNullOrEmpty(_MonKeySpeakEditorScriptsPath) Then
-                _MonKeySpeakEditorScriptsPath = Path.Combine(ApplicationPath, MsTemplateDocsPath)
+                _MonKeySpeakEditorScriptsPath = Path.Combine(ApplicationPath, MsScriptseDocsPath)
                 If Not Directory.Exists(_MonKeySpeakEditorScriptsPath) Then
                     Directory.CreateDirectory(_MonKeySpeakEditorScriptsPath)
                 End If
@@ -299,6 +396,9 @@ Public Class Paths
 
     ''' <summary>
     ''' Gets or sets the Monkey Speak templates path.
+    ''' <para>
+    ''' Default: Program Files(x86)\Silver Monkey\Templates-MS
+    ''' </para>
     ''' </summary>
     ''' <value>
     ''' The Monkey Speak Editor templates path.
@@ -420,18 +520,26 @@ Public Class Paths
     ''' the correct file path
     ''' </returns>
 
-    Public Shared Function CheckBotFolder(ByVal FileToCheck As String) As String
+    Public Shared Function CheckBotFolder(ByRef FileToCheck As String) As String
         Dim FilePath As String = Path.GetDirectoryName(FileToCheck)
         If String.IsNullOrEmpty(FilePath) Then
-            If String.IsNullOrEmpty(FileToCheck) Then
-                Return SilverMonkeyBotPath
-            End If
-            Return Path.Combine(SilverMonkeyBotPath, FileToCheck)
+            FileToCheck = Path.Combine(SilverMonkeyBotPath, FileToCheck)
         End If
-        If File.Exists(FileToCheck) Then
-            Return FileToCheck
+
+        Return FileToCheck
+    End Function
+
+    ''' <summary>
+    ''' Check the Furcadia character folder for a character
+    ''' </summary>
+    ''' <param name="FileToCheck"></param>
+    ''' <returns></returns>
+    Public Shared Function CheckCharacterFolder(ByRef FileToCheck As String) As String
+        Dim FilePath As String = Path.GetDirectoryName(FileToCheck)
+        If String.IsNullOrEmpty(FilePath) Then
+            FileToCheck = Path.Combine(FurcadiaCharactersFolder, FileToCheck)
         End If
-        Return SilverMonkeyBotPath
+        Return FileToCheck
     End Function
 
 #End Region

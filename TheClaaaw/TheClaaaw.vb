@@ -96,7 +96,7 @@ Public Class TheClaaaw
             Player = NameToFurre(msHost.BotName, True)
             Player.FloorObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
             MsPage.Execute(2000, 2001)
-            msHost.Player = Player
+            ' msHost.Player = Player
             Dream.FurreList(Player) = Player
             ServerInstruction = ServerInstruction
             Return True
@@ -105,7 +105,7 @@ Public Class TheClaaaw
             Player = NameToFurre(msHost.BotName, True)
             Player.PawObjectCurrent = ConvertFromBase95(ServerInstruction.Substring(1))
             MsPage.Execute(2000, 2001)
-            msHost.Player = Player
+            ' msHost.Player = Player
             Dream.FurreList(Player) = Player
             ServerInstruction = ServerInstruction
             Return True

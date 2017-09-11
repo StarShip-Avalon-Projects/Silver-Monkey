@@ -1,8 +1,4 @@
-﻿'(5:210) - (5:220)
-
-Imports MonkeyCore
-
-Namespace Engine.Libraries
+﻿Namespace Engine.Libraries
 
     ''' <summary>
     ''' Intended as a Quote list manager
@@ -12,12 +8,6 @@ Namespace Engine.Libraries
     ''' </summary>
     Public Class MS_Quotes
         Inherits MonkeySpeakLibrary
-
-#Region "Private Fields"
-
-        Private writer As TextBoxWriter = Nothing
-
-#End Region
 
 #Region "Public Constructors"
 

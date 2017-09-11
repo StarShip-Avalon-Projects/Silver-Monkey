@@ -9,9 +9,9 @@ Namespace Controls
     ''' FastColoredTextBox with Irony parser support
     ''' </summary>
     ''' <see cref="Http://www.codeproject.com/articles/161871/fast-colored-textbox-for-syntax-highlighting"/>
-    '''    ''' ''' ''' ''' ''' ''' ''' ''' '''
+    '''    ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' '''
     ''' <see cref="https://github.com/PavelTorgashov/FastColoredTextBox"/>
-    '''    ''' ''' ''' ''' ''' ''' ''' ''' '''
+    '''    ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' '''
     ''' <see cref="Http://irony.codeplex.com/"/>
     '''
     Public Class SilverMonkeyFCTB
@@ -33,6 +33,7 @@ Namespace Controls
 #Region "Public Constructors"
 
         Public Sub New()
+            MyBase.New()
             _grammar = New Grammar()
             m_parser = New Parser(_grammar)
         End Sub
@@ -99,8 +100,9 @@ Namespace Controls
         End Sub
 
         Public Overrides Sub OnTextChangedDelayed(changedRange As Range)
-            DoHighlighting()
+
             MyBase.OnTextChangedDelayed(changedRange)
+            ' DoHighlighting()
         End Sub
 
         ''' <summary>
@@ -144,17 +146,9 @@ Namespace Controls
             If String.IsNullOrEmpty(Text) Then
                 Exit Sub
             End If
+
             'parse text
-            Dim tree As ParseTree
-
-            Try
-
-                tree = m_parser.Parse(Text)
-            Catch ex As Exception
-                Console.WriteLine(ex.Message)
-                'oops...
-                Return
-            End Try
+            Dim tree As ParseTree = m_parser.Parse(Text)
 
             'highlight errors
             If tree.Status = ParseTreeStatus.[Error] Then

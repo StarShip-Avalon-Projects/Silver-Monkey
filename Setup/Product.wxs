@@ -11,7 +11,7 @@
     Manufacturer="$(var.CompanyName)"
     Language="1033"
     UpgradeCode="A709F3A0-BEE3-403E-AC47-1FE1AD189C77">
-    <Package InstallerVersion="500" InstallPrivileges="elevated"  Compressed="yes" />
+    <Package InstallerVersion="400" InstallPrivileges="elevated"  Compressed="yes" />
 
     <UI>
       <UIRef Id="WixUI_Advanced" />
@@ -64,7 +64,9 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
                 Advertise="no"
                 Name='$(var.ProductName)'
                 Description='$(var.ProductName)'
+                  WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]\$(var.SilverMonkey2.TargetName)" />
+
         <RegistryValue Root="HKCU"
                        Key="Software\$(var.CompanyName)\SilverMonkey"
                        Name="installed"
@@ -74,7 +76,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <ProgId Id="SilverMonkey.exe"  Description="$(var.ProductName) File type" Advertise="no">
           <Extension Id="bini"  ContentType="Text/Plain" Advertise="no">
-            <Verb Command="Open" Id="open" TargetProperty="FileAssociationProperty" Argument="%1" />
+            <Verb Command="Open" Id="open" TargetProperty="FileAssociationProperty" Argument="&quot;%1&quot;" />
           </Extension>
         </ProgId>
       </Component>
@@ -83,8 +85,9 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <Shortcut Id="$(var.MonkeySpeakEditor.TargetName)Shortcut"
                   Name="$(var.MonkeySpeakEditor.TargetName)"
-                  WorkingDirectory='APPLICATIONFOLDER'
+                               WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]$(var.MonkeySpeakEditor.TargetName)"
+
                   Description="Starts $(var.MonkeySpeakEditor.TargetName)" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
 
@@ -97,7 +100,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <ProgId Id="MonkeySpeakEditor.exe" Description="Monkey Speak File" Advertise="no">
           <Extension Id="ms" ContentType="Text/Plain" Advertise="no">
-            <Verb Command="Open" Id="open" TargetProperty="MonkeySpeakAssociation"  Argument="%1" />
+            <Verb Command="Open" Id="open" TargetProperty="MonkeySpeakAssociation"  Argument="&quot;%1&quot;" />
           </Extension>
         </ProgId>
       </Component>
@@ -106,7 +109,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <Shortcut Id="$(var.DataMonkey.TargetName)Shortcut"
                   Name="$(var.DataMonkey.TargetName)"
-                  WorkingDirectory='APPLICATIONFOLDER'
+                               WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]$(var.DataMonkey.TargetName)"
                   Description="Starts $(var.DataMonkey.TargetName)"
 
@@ -122,7 +125,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <Shortcut Id="$(var.VerbotKnowledgebaseEditor.TargetName)Shortcut"
                   Name="$(var.VerbotKnowledgebaseEditor.TargetName)"
-                  WorkingDirectory='APPLICATIONFOLDER'
+                               WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]$(var.VerbotKnowledgebaseEditor.TargetName)"
                   Description="Starts $(var.VerbotKnowledgebaseEditor.TargetName)"
  />
@@ -136,7 +139,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <Shortcut Id="$(var.MantisNotify.TargetName)Shortcut"
                   Name="$(var.MantisNotify.TargetName)"
-                  WorkingDirectory='APPLICATIONFOLDER'
+                             WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]$(var.MantisNotify.TargetName)"
                   Description="Starts $(var.MantisNotify.TargetName)"
  />
@@ -146,7 +149,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
           Name="installed" Type="integer" Value="1"
           KeyPath="yes" />
       </Component>
-      <Component Id="MantisNotifyShortcutStartup" Guid="{9C0C4CC8-09D1-4FE4-BC69-C1A237FB34B8}">
+      <!--    <Component Id="MantisNotifyShortcutStartup" Guid="{9C0C4CC8-09D1-4FE4-BC69-C1A237FB34B8}">
 
         <Shortcut Id="$(var.MantisNotify.TargetName)ShortcutStartup"
                   Directory="StartupFolder"
@@ -160,13 +163,13 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
           Key="Software\$(var.CompanyName)\MantisNotifyStartup"
           Name="installed" Type="integer" Value="1"
           KeyPath="yes" />
-      </Component>
+      </Component> -->
 
       <Component Id="ChatBotShortcut" Guid="{F9E10352-4CD5-4000-B334-0000FAEF4FCD}">
 
         <Shortcut Id="$(var.ChatBot.TargetName)Shortcut"
                   Name="$(var.ChatBot.TargetName)"
-                  WorkingDirectory='APPLICATIONFOLDER'
+                               WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]$(var.ChatBot.TargetName)"
                   Description="Starts $(var.ChatBot.TargetName)"
 
@@ -205,6 +208,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="FurcadiaLib.Symbols" />
       <ComponentGroupRef Id="SilverMonkeyEngine.Binaries" />
       <ComponentGroupRef Id="SilverMonkeyEngine.Symbols" />
+      <ComponentGroupRef Id="SilverMonkeyEngine.Content" />
       <ComponentGroupRef Id="Verbot5Library.Binaries" />
       <ComponentGroupRef Id="Verbot5Library.Symbols" />
 
@@ -214,6 +218,8 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentRef Id="EntityFramework" />
       <ComponentRef Id="EntityFrameworkSqlServer" />
       <ComponentRef Id="SQLite" />
+      <ComponentRef Id="SQLiteEF6" />
+      <ComponentRef Id="SQLiteLinq" />
       <ComponentRef Id="X86" />
       <ComponentRef Id="X64" />
 
@@ -221,6 +227,16 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="DataMonkey.Symbols" />
       <ComponentRef Id="DataMonkeyShortcut" />
       <ComponentRef Id="DataMokeyHelp" />
+
+      <ComponentGroupRef Id="MantisSubmit.Binaries" />
+      <ComponentGroupRef Id="MantisSubmit.Symbols" />
+      <ComponentGroupRef Id="MantisSubmit.Content" />
+
+      <ComponentGroupRef Id="MantisNotify.Binaries" />
+      <ComponentGroupRef Id="MantisNotify.Symbols" />
+      <ComponentRef Id="MantisNotifyShortcut" />
+      <!--   <ComponentRef Id="MantisNotifyShortcutStartup" /> -->
+
       <Feature Id="ChatBot" Title="Chatbot Application" Level="2">
         <ComponentGroupRef Id="ChatBot.Binaries" />
         <ComponentGroupRef Id="ChatBot.Symbols" />
@@ -231,12 +247,8 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
         <ComponentGroupRef Id="VerbotKnowledgebaseEditor.Symbols" />
         <ComponentRef Id="VerbotKnowledgebaseEditorShortcut" />
       </Feature>
-      <Feature Id="MantisNotify" Title="BugTraq Notifyer" Level="2">
-        <ComponentGroupRef Id="MantisNotify.Binaries" />
-        <ComponentGroupRef Id="MantisNotify.Symbols" />
-        <ComponentRef Id="MantisNotifyShortcut" />
-        <ComponentRef Id="MantisNotifyShortcutStartup" />
-      </Feature>
+      <!--   <Feature Id="MantisNotify" Title="BugTraq Notifyer" Level="2">
+      </Feature>-->
     </Feature>
 
     <!-- Help file-->
@@ -267,6 +279,12 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
     <DirectoryRef Id="APPLICATIONFOLDER">
       <Component Id="SQLite" Guid="{CADE1E29-CD6A-4301-8315-C611156C6462}">
         <File Id="System.Data.SQLite" Source="$(var.SilverMonkey2.TargetDir)System.Data.SQLite.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="SQLiteLinq" Guid="{82579691-5906-4861-9f12-7c855ed7848f}">
+        <File Id="System.Data.SQLite.Linq.dll" Source="$(var.SilverMonkey2.TargetDir)System.Data.SQLite.Linq.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="SQLiteEF6" Guid="{0ae9984b-ac3c-4ec9-ab3c-717a4bebf455}">
+        <File Id="System.Data.SQLite.EF6.dll" Source="$(var.SilverMonkey2.TargetDir)System.Data.SQLite.EF6.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="EntityFramework" Guid="{ba158fe8-719e-4979-bbbb-85fd7cffd8f7}">
         <File Id="EntityFramework.dll" Source="$(var.SilverMonkey2.TargetDir)EntityFramework.dll" KeyPath="no" Checksum="yes" />

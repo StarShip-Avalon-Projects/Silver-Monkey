@@ -57,7 +57,7 @@ Namespace Engine.Libraries
 
             '(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.
             Add(TriggerCategory.Effect, 1500,
-                AddressOf useKB_File, "(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.")
+                AddressOf useKB_File, "(5:1500) use knowledgebase file {...} (*.vkb) and start the chat engine.")
 
             '(5:1501) send text {...} to chat engine and put the response in variable %Variable.
             Add(TriggerCategory.Effect, 1501,

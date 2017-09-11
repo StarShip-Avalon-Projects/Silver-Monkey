@@ -46,8 +46,8 @@ Partial Class wUI
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Solution = New FastColoredTextBoxNS.FastColoredTextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.selecter2 = New ScrollingListBox()
-        Me.ListBox1 = New ScrollingListBox()
+        Me.selecter2 = New MonkeyCore.Controls.ScrollingListBox()
+        Me.ListBox1 = New MonkeyCore.Controls.ScrollingListBox()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Solution, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -106,13 +106,13 @@ Partial Class wUI
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CloseToolStripMenuItem})
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(35, 20)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
         'CloseToolStripMenuItem
         '
         Me.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem"
-        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(103, 22)
         Me.CloseToolStripMenuItem.Text = "Close"
         '
         'InfoToolStripMenuItem
@@ -120,19 +120,19 @@ Partial Class wUI
         Me.InfoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReloadToolStripMenuItem, Me.ViewFileToolStripMenuItem})
         Me.InfoToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText
         Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
-        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
+        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(40, 20)
         Me.InfoToolStripMenuItem.Text = "Info"
         '
         'ReloadToolStripMenuItem
         '
         Me.ReloadToolStripMenuItem.Name = "ReloadToolStripMenuItem"
-        Me.ReloadToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.ReloadToolStripMenuItem.Size = New System.Drawing.Size(120, 22)
         Me.ReloadToolStripMenuItem.Text = "Reload"
         '
         'ViewFileToolStripMenuItem
         '
         Me.ViewFileToolStripMenuItem.Name = "ViewFileToolStripMenuItem"
-        Me.ViewFileToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.ViewFileToolStripMenuItem.Size = New System.Drawing.Size(120, 22)
         Me.ViewFileToolStripMenuItem.Text = "View File"
         '
         'Timer
@@ -147,7 +147,7 @@ Partial Class wUI
         Me.BtnImport.Name = "BtnImport"
         Me.BtnImport.Size = New System.Drawing.Size(533, 23)
         Me.BtnImport.TabIndex = 8
-        Me.BtnImport.Text = "Export To DSeX"
+        Me.BtnImport.Text = "Export To Monkey Speak Editor" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.BtnImport.UseVisualStyleBackColor = True
         '
         'NumericUpDown1
@@ -247,6 +247,7 @@ Partial Class wUI
         Me.Solution.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Solution.AutoCompleteBracketsList = New Char() {Global.Microsoft.VisualBasic.ChrW(40), Global.Microsoft.VisualBasic.ChrW(41), Global.Microsoft.VisualBasic.ChrW(123), Global.Microsoft.VisualBasic.ChrW(125), Global.Microsoft.VisualBasic.ChrW(91), Global.Microsoft.VisualBasic.ChrW(93), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(34), Global.Microsoft.VisualBasic.ChrW(39), Global.Microsoft.VisualBasic.ChrW(39)}
         Me.Solution.AutoIndent = False
         Me.Solution.AutoScrollMinSize = New System.Drawing.Size(27, 14)
         Me.Solution.BackBrush = Nothing
@@ -254,12 +255,14 @@ Partial Class wUI
         Me.Solution.CharWidth = 8
         Me.Solution.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.Solution.DisabledColor = System.Drawing.Color.FromArgb(CType(CType(100, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer))
+        Me.Solution.Font = New System.Drawing.Font("Courier New", 9.75!)
         Me.Solution.Hotkeys = resources.GetString("Solution.Hotkeys")
         Me.Solution.IsReplaceMode = False
         Me.Solution.Location = New System.Drawing.Point(12, 237)
         Me.Solution.Name = "Solution"
         Me.Solution.Paddings = New System.Windows.Forms.Padding(0)
         Me.Solution.SelectionColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Solution.ServiceColors = CType(resources.GetObject("Solution.ServiceColors"), FastColoredTextBoxNS.ServiceColors)
         Me.Solution.Size = New System.Drawing.Size(514, 189)
         Me.Solution.TabIndex = 27
         Me.Solution.Zoom = 100
@@ -351,6 +354,5 @@ Partial Class wUI
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents selecter2 As ScrollingListBox
     Friend WithEvents ListBox1 As ScrollingListBox
-
 
 End Class

@@ -24,7 +24,7 @@
 #IF DEBUG THEN
 
 #ELSE
-            revisionNumber += 1
+			revisionNumber += 1
 #END IF
         end using
     catch e as exception
@@ -42,3 +42,4 @@ Imports System.Reflection
 <Assembly: AssemblyVersion("2.19.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
 <Assembly: AssemblyFileVersion("2.19.<#= revisionNumber.ToString("D3") #>.<#= CurrentDate #>")> 
 <Assembly: AssemblyCopyright("Copyright © 2012 - <#= CurrentYear #>")>
+

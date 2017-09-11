@@ -1,4 +1,5 @@
 Imports System.Collections.Generic
+Imports System.ComponentModel
 Imports System.Diagnostics
 
 Imports System.Windows.Forms
@@ -34,10 +35,6 @@ Public Class Main
     Public WithEvents NotifyIcon1 As NotifyIcon
     Private WithEvents TextDisplayer As TextDisplayManager
 
-    'Dim TimeUpdater As Threading.Thread
-    '  Public Shared FurcTime As DateTime
-
-    ' Public Bot As FURRE
     Public LogStream As LogStream
 
     Public Mainsettings As cMain
@@ -155,13 +152,16 @@ Public Class Main
 
     Public Sub ConnectBot()
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
-            FurcadiaSession.Connect()
+            Try
+                sndDisplay("Connecting...")
+                FurcadiaSession.Connect()
 
-            sndDisplay("Connecting...")
-            ConnectTrayIconMenuItem.Enabled = False
-            DisconnectTrayIconMenuItem.Enabled = True
-            NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Connecting to Furcadia.", ToolTipIcon.Info)
-            UpDateDreamList() '
+                ConnectTrayIconMenuItem.Enabled = False
+                DisconnectTrayIconMenuItem.Enabled = True
+                UpDateDreamList() '
+            Catch ex As Exception
+                sndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
+            End Try
         End If
     End Sub
 
@@ -299,7 +299,7 @@ Public Class Main
     Public Sub SendClientMessage(msg As String, data As String)
         If Not FurcadiaSession Is Nothing Then
 
-            If FurcadiaSession.IsClientConnected Then FurcadiaSession.SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """" + vbLf)
+            FurcadiaSession.SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
             sndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
         End If
     End Sub
@@ -323,6 +323,7 @@ Public Class Main
     ''' <param name="e">
     ''' </param>
     Private Sub ClientStatusUpdate(Sender As Object, e As NetClientEventArgs) Handles FurcadiaSession.ClientStatusChanged
+
         Select Case e.ConnectPhase
 
             Case ConnectionPhase.Connected
@@ -362,7 +363,7 @@ Public Class Main
                 UpDatButtonGoText("Connecting...")
             Case ConnectionPhase.Disconnected
                 ToolStripServerStatus.Image = My.Resources.DisconnectedImg
-                UpDatButtonGoText("Disconnected.")
+                UpDatButtonGoText("Go!")
             Case ConnectionPhase.Auth
                 ToolStripServerStatus.Image = My.Resources.ConnectingImg
 
@@ -371,7 +372,7 @@ Public Class Main
 
             Case ConnectionPhase.Init
                 ToolStripServerStatus.Image = My.Resources.DisconnectedImg
-                UpDatButtonGoText("Go!!!")
+                UpDatButtonGoText("Go!")
             Case ConnectionPhase.MOTD
             Case Else
         End Select
@@ -414,14 +415,14 @@ Public Class Main
     ''' </summary>
     ''' <param name="path">
     ''' </param>
-    Public Sub SaveRecentFile(path As String)
+    Public Sub SaveRecentFile(FilePath As String)
         RecentToolStripMenuItem.DropDownItems.Clear()
         'clear all recent list from menu
         LoadRecentList(".bini")
         'load list from file
-        If Not (MRUlist.Contains(path)) Then
+        If Not (MRUlist.Contains(FilePath)) Then
             'prevent duplication on recent list
-            MRUlist.Enqueue(path)
+            MRUlist.Enqueue(FilePath)
         End If
         'insert given path into list
         While MRUlist.Count > MRUnumber
@@ -435,10 +436,9 @@ Public Class Main
             RecentToolStripMenuItem.DropDownItems.Add(fileRecent)
         Next
         'writing menu list to file
-        Using stringToWrite As New StreamWriter(ApplicationSettingsPath & "/Recent.txt")
+        Using stringToWrite As New StreamWriter(Path.Combine(ApplicationSettingsPath, "Recent.txt"))
             'create file called "Recent.txt" located on app folder
             For Each item As String In MRUlist
-
                 'write list to stream
                 stringToWrite.WriteLine(item)
             Next
@@ -469,7 +469,7 @@ Public Class Main
         'try to load file. If file isn't found, do nothing
         MRUlist.Clear()
         Try
-            Using listToRead As New StreamReader(ApplicationSettingsPath & "/Recent.txt")
+            Using listToRead As New StreamReader(Path.Combine(ApplicationSettingsPath, "Recent.txt"))
                 'read file stream
                 Dim line As String = ""
                 While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
@@ -497,7 +497,7 @@ Public Class Main
                     BotConfig = NewBotWindow.BotConfig
 
                     SilverMonkeyBotPath = BotConfig.BotPath
-                    SilverMonkeyLogPath = Path.GetDirectoryName(BotConfig.LogPath)
+                    SilverMonkeyLogPath = BotConfig.LogPath
 
                     EditBotToolStripMenuItem.Enabled = True
                 End If
@@ -538,12 +538,17 @@ Public Class Main
     Private Sub RecentFile_click(sender As Object, e As EventArgs) Handles RecentToolStripMenuItem.Click
         'BotSetup.BotFile =
         'BotSetup.ShowDialog()
-        BotConfig = New BotOptions(sender.ToString())
-        SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
-        SilverMonkeyLogPath = Path.GetDirectoryName(BotConfig.LogPath)
-        My.Settings.LastBotFile = sender.ToString()
-        EditBotToolStripMenuItem.Enabled = True
-        My.Settings.Save()
+
+        If FurcadiaSession Is Nothing OrElse Not FurcadiaSession.IsServerConnected Then
+                BotConfig = New BotOptions(sender.ToString())
+                FurcadiaSession = New BotSession(BotConfig)
+                SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
+                SilverMonkeyLogPath = BotConfig.LogPath
+                My.Settings.LastBotFile = sender.ToString()
+                EditBotToolStripMenuItem.Enabled = True
+                My.Settings.Save()
+            End If
+
 
         'same as open menu
     End Sub
@@ -587,19 +592,21 @@ Public Class Main
         Return "Default"
     End Function
 
+    ''' <summary>
+    ''' Send formatted text to log box
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="newColor"></param>
     Public Sub sndDisplay(ByRef data As String, Optional ByVal newColor As TextDisplayManager.fColorEnum = TextDisplayManager.fColorEnum.DefaultColor)
-        Try
-            'data = data.Replace(vbLf, vbCrLf)
-            If BotConfig.log Then LogStream.WriteLine(data)
+
+        If BotConfig.log Then LogStream.WriteLine(data)
             If CBool(Mainsettings.TimeStamp) Then
                 Dim Now As String = DateTime.Now.ToLongTimeString
                 data = Now.ToString & ": " & data
             End If
             Dim textObject As New TextDisplayManager.TextDisplayObject(data, newColor)
             TextDisplayer.AddDataToList(textObject)
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
+
     End Sub
 
     '
@@ -621,12 +628,14 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub ProxyError(o As Object, n As EventArgs) Handles FurcadiaSession.DisplayError
-        sndDisplay("Furcadia Session error:" + o.ToString, TextDisplayManager.fColorEnum.Error)
-
-        'sndDisplay(eX.Message)
-        'Dim logError As New ErrorLogging(eX, Me)
-
+    ''' <summary>
+    ''' Furcadia Session error handler
+    ''' </summary>
+    ''' <param name="e"></param>
+    ''' <param name="o"></param>
+    ''' <param name="text"></param>
+    Private Sub OnFurcadiaSessionError(e As Exception, o As Object, text As String) Handles FurcadiaSession.Error
+        sndDisplay("Furcadia Session error:" + e.Message + o.ToString, TextDisplayManager.fColorEnum.Error)
     End Sub
 
 #End Region
@@ -648,7 +657,6 @@ Public Class Main
     '    End If
     '    Return Str
     'End Function
-
     ''' <summary>
     ''' Update Dream Furre list
     ''' </summary>
@@ -672,7 +680,6 @@ Public Class Main
             End If
         Catch eX As Exception
             Dim logError As New ErrorLogging(eX, Me, FurcadiaSession.Dream.FurreList.ToString)
-            logError = New ErrorLogging(eX, p)
         End Try
     End Sub
 
@@ -691,17 +698,29 @@ Public Class Main
         If String.IsNullOrEmpty(BotConfig.CharacterIniFile) Then Exit Sub
 
         Dim p As String = Path.GetDirectoryName(BotConfig.CharacterIniFile)
-        If String.IsNullOrEmpty(p) And Not File.Exists(CheckBotFolder(BotConfig.CharacterIniFile)) Then
+        If String.IsNullOrEmpty(p) And Not File.Exists(CheckCharacterFolder(BotConfig.CharacterIniFile)) Then
             MessageBox.Show(BotConfig.CharacterIniFile + " Not found, Aborting connection!", "Important Message")
             Exit Sub
         End If
         If FurcadiaSession Is Nothing Then
             FurcadiaSession = New BotSession(BotConfig)
+        ElseIf FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
+            FurcadiaSession.Dispose()
+            FurcadiaSession = New BotSession(BotConfig)
         End If
+
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
 
             If BotConfig.log Then
-                LogStream = New LogStream(setLogName(BotConfig), SilverMonkeyLogPath)
+                Dim LogFile As String = Nothing
+                Try
+                    LogFile = setLogName(BotConfig)
+                    LogStream = New LogStream(LogFile, SilverMonkeyLogPath)
+                Catch
+                    FurcadiaSession.Dispose()
+                    sndDisplay("There's an error with log-file" + LogFile, TextDisplayManager.fColorEnum.Error)
+                    Exit Sub
+                End Try
             End If
 
             My.Settings.LastBotFile = CheckBotFolder(BotConfig.CharacterIniFile)
@@ -752,21 +771,23 @@ Public Class Main
 
     Private Sub ContextTryIcon_Opened(sender As Object, e As System.EventArgs) Handles ContextTryIcon.Opened
 
-        Select Case FurcadiaSession.ServerStatus
+        If Not FurcadiaSession Is Nothing Then
+            Select Case FurcadiaSession.ServerStatus
 
-            Case ConnectionPhase.Init
-                DisconnectTrayIconMenuItem.Enabled = False
-                ConnectTrayIconMenuItem.Enabled = True
+                Case ConnectionPhase.Init
+                    DisconnectTrayIconMenuItem.Enabled = False
+                    ConnectTrayIconMenuItem.Enabled = True
 
-            Case ConnectionPhase.Connecting
-                DisconnectTrayIconMenuItem.Enabled = True
-                ConnectTrayIconMenuItem.Enabled = False
+                Case ConnectionPhase.Connecting
+                    DisconnectTrayIconMenuItem.Enabled = True
+                    ConnectTrayIconMenuItem.Enabled = False
 
-            Case ConnectionPhase.MOTD Or ConnectionPhase.Connecting
-                DisconnectTrayIconMenuItem.Enabled = True
-                ConnectTrayIconMenuItem.Enabled = False
+                Case ConnectionPhase.MOTD Or ConnectionPhase.Connecting
+                    DisconnectTrayIconMenuItem.Enabled = True
+                    ConnectTrayIconMenuItem.Enabled = False
 
-        End Select
+            End Select
+        End If
     End Sub
 
     ''' <summary>
@@ -791,15 +812,15 @@ Public Class Main
     ''' <param name="e">
     ''' </param>
     Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
-        'MsExport = New MS_Export()
-        'MsExport.Show()
-        'MsExport.Activate()
+        MsExport = New MS_Export()
+        MsExport.Show()
+        MsExport.Activate()
     End Sub
 
     Private Sub FormClose()
         _FormClose = True
         My.Settings.MainFormLocation = Me.Location
-        If Not IsNothing(BotConfig) Then My.Settings.LastBotFile = BotConfig.Name
+        If Not BotConfig Is Nothing Then My.Settings.LastBotFile = BotConfig.Name
         If Not FurcadiaSession Is Nothing Then FurcadiaSession.Dispose()
         'Save the user settings so next time the
         'window will be the same size and location
@@ -833,6 +854,8 @@ Public Class Main
 
                 processStrt.Arguments = """" + f + """"
             End If
+        Else
+            processStrt.Arguments = """" + BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile + """"
         End If
         Process.Start(processStrt)
     End Sub
@@ -855,31 +878,7 @@ Public Class Main
     End Sub
 
     Private Sub Main_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-        Try
 
-            Select Case Mainsettings.SysTray
-                Case CheckState.Checked
-                    Me.Visible = False
-                    e.Cancel = True
-                Case CheckState.Indeterminate
-                    If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing,
-                     MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
-                        Mainsettings.SysTray = CheckState.Checked
-                        Mainsettings.SaveMainSettings()
-                        Me.Visible = False
-                        e.Cancel = True
-                    Else
-                        e.Cancel = False
-                        FormClose()
-                    End If
-                Case CheckState.Unchecked
-                    FormClose()
-
-            End Select
-            'TimeUpdater.Abort()
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
     End Sub
 
     Private Sub Main_KeyUp(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyUp
@@ -908,15 +907,19 @@ Public Class Main
     End Sub
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-        If IsNothing(NotifyIcon1) Then
-            NotifyIcon1 = New NotifyIcon
+        If Not NotifyIcon1 Is Nothing Then
+            RemoveHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
+            NotifyIcon1.Dispose()
+        End If
+        If NotifyIcon1 Is Nothing Then
+            NotifyIcon1 = New NotifyIcon()
             NotifyIcon1.ContextMenuStrip = ContextTryIcon
             NotifyIcon1.Icon = My.Resources.metal
             NotifyIcon1.BalloonTipTitle = My.Application.Info.ProductName
             NotifyIcon1.Text = My.Application.Info.ProductName + ": " + My.Application.Info.Version.ToString
             AddHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
         End If
+
         If Not NotifyIcon1.Visible Then NotifyIcon1.Visible = True
         'catch the Console messages
         _FormClose = False
@@ -997,7 +1000,7 @@ Public Class Main
     End Sub
 
     Private Sub NotifyIcon1_DoubleClick(sender As Object, e As System.EventArgs) Handles NotifyIcon1.DoubleClick
-        If Not IsNothing(NotifyIcon1) Then
+        If Not NotifyIcon1 Is Nothing Then
             Me.Show()
             Me.Activate()
         End If
@@ -1021,7 +1024,7 @@ Public Class Main
         Handles FurcadiaSession.ProcessServerChannelData
 
         If Not String.IsNullOrEmpty(InstructionObject.ChannelText) Then
-            sndDisplay(InstructionObject.ChannelText)
+            sndDisplay(InstructionObject.FormattedChannelText)
         ElseIf Not String.IsNullOrEmpty(InstructionObject.Player.Message) Then
             sndDisplay(InstructionObject.Player.Message)
         Else
@@ -1051,6 +1054,8 @@ Public Class Main
                 UpDateDreamList()
             Case ServerInstructionType.RemoveAvatar
                 UpDateDreamList()
+                'Case ServerInstructionType.LoadDreamEvent
+                '    UpDateDreamList()
         End Select
 
     End Sub
@@ -1063,11 +1068,17 @@ Public Class Main
 
     Private ActionCMD As String
 
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
+
     Private Sub _ne_Click(sender As System.Object, e As System.EventArgs) Handles _ne.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`m 9")
-        End If
+        SendCommandToServer("`m 9")
     End Sub
 
     Private Sub _ne_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _ne.MouseDown
@@ -1084,10 +1095,7 @@ Public Class Main
     End Sub
 
     Private Sub _nw_Click(sender As System.Object, e As System.EventArgs) Handles _nw.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`m 7")
-        End If
+        SendCommandToServer("`m 7")
     End Sub
 
     Private Sub _nw_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _nw.MouseDown
@@ -1106,24 +1114,15 @@ Public Class Main
     End Sub
 
     Private Sub ActionTmr_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ActionTmr.Tick
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer(ActionCMD)
-        End If
+        SendCommandToServer(ActionCMD)
     End Sub
 
     Private Sub BTN_TurnL_Click(sender As System.Object, e As System.EventArgs) Handles BTN_TurnL.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`<")
-        End If
+        SendCommandToServer("`<")
     End Sub
 
     Private Sub BTN_TurnR_Click(sender As System.Object, e As System.EventArgs) Handles BTN_TurnR.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`>")
-        End If
+        SendCommandToServer("`>")
     End Sub
 
     Private Sub BtnSit_stand_Lie_Click(sender As System.Object, e As System.EventArgs) Handles BtnSit_stand_Lie.Click
@@ -1137,22 +1136,16 @@ Public Class Main
             ElseIf BtnSit_stand_Lie.Text = "Sit" Then
                 BtnSit_stand_Lie.Text = "Stand"
             End If
-            FurcadiaSession.SendToServer("`lie")
+            SendCommandToServer("`lie")
         End If
     End Sub
 
     Private Sub get__Click(sender As Object, e As System.EventArgs) Handles get_.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`get")
-        End If
+        SendCommandToServer("`get")
     End Sub
 
     Private Sub se__Click(sender As Object, e As System.EventArgs) Handles se_.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`m 3")
-        End If
+        SendCommandToServer("`m 3")
     End Sub
 
     Private Sub se__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseDown
@@ -1168,11 +1161,20 @@ Public Class Main
         ActionCMD = ""
     End Sub
 
-    Private Sub sw__Click(sender As Object, e As System.EventArgs) Handles sw_.Click
+    ''' <summary>
+    ''' Sends a text command to the server if we are connected to server
+    ''' </summary>
+    ''' <param name="command">
+    ''' </param>
+    Private Sub SendCommandToServer(ByVal command As String)
         If Not FurcadiaSession Is Nothing Then
             If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`m 1")
+            FurcadiaSession.TextToServer(command)
         End If
+    End Sub
+
+    Private Sub sw__Click(sender As Object, e As System.EventArgs) Handles sw_.Click
+        SendCommandToServer("`m 1")
     End Sub
 
     Private Sub sw__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseDown
@@ -1188,21 +1190,15 @@ Public Class Main
     End Sub
 
     Private Sub use__Click(sender As Object, e As System.EventArgs) Handles use_.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer("`use")
-        End If
+        SendCommandToServer("`use")
     End Sub
 
 #End Region
 
-    Private Sub sendToServer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles sendToServer.Click
-        If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            FurcadiaSession.SendToServer(toServer.Text.Replace(vbCrLf, ""))
-            toServer.Clear()
-        End If
-
+    Private Sub sendToServer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+        Handles sendToServer.Click
+        SendCommandToServer(toServer.Text.Replace(vbCrLf, ""))
+        toServer.Clear()
     End Sub
 
     Private Sub toServer_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles toServer.KeyDown
@@ -1240,16 +1236,81 @@ Public Class Main
             e.Handled = True
             'trl Redo
         ElseIf (e.KeyCode = Keys.Enter) Then
-            If Not FurcadiaSession Is Nothing Then
-                If Not FurcadiaSession.IsServerConnected Then Exit Sub
-                FurcadiaSession.SendToServer(toServer.Text.Replace(vbLf, "").Replace(vbCr, ""))
-                toServer.Clear()
-            End If
-
+            SendCommandToServer(toServer.Text.Replace(vbLf, "").Replace(vbCr, ""))
+            toServer.Clear()
             e.SuppressKeyPress = True
             e.Handled = True
         End If
 
     End Sub
 
+    Private Sub StartupProcessToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            Help.ShowHelp(Me, HelpFile, "/html/4c192ea5-9a9c-4dae-927f-7581b05c0f65.htm")
+        End If
+    End Sub
+
+    Private Sub Main_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Try
+
+            Select Case Mainsettings.SysTray
+                Case CheckState.Checked
+                    Me.Visible = False
+                    e.Cancel = True
+                Case CheckState.Indeterminate
+                    If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing,
+                     MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
+                        Mainsettings.SysTray = CheckState.Checked
+                        Mainsettings.SaveMainSettings()
+                        Me.Visible = False
+                        e.Cancel = True
+                    Else
+                        e.Cancel = False
+                        FormClose()
+                    End If
+                Case CheckState.Unchecked
+                    FormClose()
+
+            End Select
+            'TimeUpdater.Abort()
+        Catch eX As Exception
+            Dim logError As New ErrorLogging(eX, Me)
+        End Try
+    End Sub
+
+
+
+    Private Sub log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles Log_.LinkClicked
+        Dim Proto As String = ""
+        Dim Str As String = e.LinkText
+
+        If Str.Contains("#") Then
+            Str = Str.Substring(0, Str.IndexOf("#"))
+        End If
+        Proto = Str.Substring(0, Str.IndexOf("://"))
+        Select Case Proto.ToLower
+            Case "http"
+                Try
+                    Me.Cursor = System.Windows.Forms.Cursors.AppStarting
+
+                    Process.Start(Str)
+                Catch
+                Finally
+                    Me.Cursor = System.Windows.Forms.Cursors.Default
+                End Try
+            Case "https"
+                Try
+                    Me.Cursor = System.Windows.Forms.Cursors.AppStarting
+
+                    Process.Start(Str)
+                Catch
+                Finally
+                    Me.Cursor = System.Windows.Forms.Cursors.Default
+                End Try
+
+            Case Else
+                MsgBox("Protocol: """ & Proto & """ Not yet implemented")
+        End Select
+        'MsgBox(Proto)
+    End Sub
 End Class

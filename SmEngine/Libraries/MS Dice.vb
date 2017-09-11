@@ -29,6 +29,9 @@ Namespace Engine.Libraries
 
 #Region "Private Fields"
 
+        ''' <summary>
+        ''' Last Dice roll object
+        ''' </summary>
         Private Shared dice As DiceObject
 
 #End Region
@@ -40,12 +43,12 @@ Namespace Engine.Libraries
             dice = New DiceObject()
             '(0:130) When the bot rolls #d#,
             Add(New Trigger(TriggerCategory.Cause, 130), AddressOf RollNumber, "(0:130) When the bot rolls #d#,")
-            '(0:132) When the bot rolls #d#+#,
+            '(0:131) When the bot rolls #d#+#,
             Add(New Trigger(TriggerCategory.Cause, 131), AddressOf RollNumberPlusModifyer, "(0:131) When the bot rolls #d#+#,")
-            '(0:134) When the bot rolls #d#-#,
+            '(0:132) When the bot rolls #d#-#,
             Add(New Trigger(TriggerCategory.Cause, 132), AddressOf RollNumberMinusModifyer, "(0:132) When the bot rolls #d#-#,")
 
-            '(0:136) When a furre rolls #d#,
+            '(0:133) When a furre rolls #d#,
             Add(New Trigger(TriggerCategory.Cause, 133), AddressOf RollNumber, "(0:133) When a furre rolls #d#,")
             '(0:138) When a fuure rolls #d#+#,
             Add(New Trigger(TriggerCategory.Cause, 134), AddressOf RollNumberPlusModifyer, "(0:134) When a furre rolls #d#+#,")
@@ -323,7 +326,7 @@ Namespace Engine.Libraries
 #Region "Public Constructors"
 
             Public Sub New(ByVal faceCount As Double)
-                If faceCount <= 0 Then
+                If faceCount < 1 Then
                     Throw New ArgumentOutOfRangeException("faceCount", "Dice must have one or more faces.")
                 End If
 
@@ -379,14 +382,30 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <param name="e">
         ''' </param>
-        Private Shared Sub ParseData(obj As ChannelObject, e As EventArgs) Handles FurcadiaSession.ProcessServerChannelData
+        Private Sub OnServerChannel(obj As ChannelObject, e As EventArgs) Handles FurcadiaSession.ProcessServerChannelData
             Dim DiceObject As DiceRolls = Nothing
             If obj.GetType().Equals(GetType(DiceRolls)) Then
                 DiceObject = CType(obj, DiceRolls)
             Else
                 Exit Sub
             End If
-            dice = DiceObject.Dice
+            Select Case DiceObject.Channel
+                Case "@roll"
+                    dice = DiceObject.Dice
+                    If FurcadiaSession.IsConnectedCharacter Then
+                        '(0:130) When the bot rolls #d#,
+                        '(0:132) When the bot rolls #d#+#,
+                        '(0:134) When the bot rolls #d#-#,
+                        '(0:136) When any one rolls anything,
+                        MsPage.Execute(130, 131, 132, 136)
+                    Else
+                        '(0:136) When a furre rolls #d#,
+                        '(0:138) When a fuure rolls #d#+#,
+                        '(0:140) When a furre rolls #d#-#,
+                        '(0:136) When any one rolls anything,
+                        MsPage.Execute(133, 134, 135, 136)
+                    End If
+            End Select
 
         End Sub
 

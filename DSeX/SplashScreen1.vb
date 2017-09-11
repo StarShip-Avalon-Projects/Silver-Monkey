@@ -4,7 +4,7 @@
 
     Private Delegate Sub CloseDelegate()
 
-    Private Delegate Sub UpdateProgressDelegate(ByVal msg As String, ByVal percentage As Integer)
+    Private Delegate Sub UpdateProgressDelegate(ByVal msg As String, ByVal percentage As Double)
 
 #End Region
 
@@ -18,13 +18,13 @@
         End If
     End Sub
 
-    Public Sub UpdateProgress(ByVal msg As String, ByVal percentage As Integer)
+    Public Sub UpdateProgress(ByVal msg As String, ByVal percentage As Double)
         If Me.InvokeRequired Then
             Me.Invoke(New UpdateProgressDelegate(AddressOf UpdateProgress), New Object() {msg, percentage})
         Else
             Me.Label2.Text = msg
             If percentage >= Me.Status.Minimum AndAlso percentage <= Me.Status.Maximum Then
-                Me.Status.Value = percentage
+                Me.Status.Value = CInt(percentage)
             End If
         End If
     End Sub

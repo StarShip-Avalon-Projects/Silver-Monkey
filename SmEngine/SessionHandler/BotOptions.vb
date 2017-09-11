@@ -39,6 +39,11 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
 
     Public Sub New(ByRef BFile As String)
         _MonkeySpeakEngineOption = New Engine.EngineOptoons()
+
+        Dim dir As String = Path.GetDirectoryName(BFile)
+        If String.IsNullOrEmpty(dir) Then
+            BFile = Path.Combine(Paths.SilverMonkeyBotPath, BFile)
+        End If
         If BotIni Is Nothing Then BotIni = New IniFile
         If File.Exists(Paths.CheckBotFolder(BFile)) Then
             Dim p As String = Path.GetDirectoryName(BFile)
@@ -74,7 +79,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         If Not String.IsNullOrEmpty(s) Then _MonkeySpeakEngineOption.MonkeySpeakScriptFile = s
 
         s = BotIni.GetKeyValue("Bot", "MSEngineEnable")
-        If Not String.IsNullOrEmpty(s) Then _MonkeySpeakEngineOption.EngineEnable = Convert.ToBoolean(s)
+        If Not String.IsNullOrEmpty(s) Then _MonkeySpeakEngineOption.MS_Engine_Enable = Convert.ToBoolean(s)
 
         s = BotIni.GetKeyValue("Bot", "BotController")
         If Not String.IsNullOrEmpty(s) Then _MonkeySpeakEngineOption.BotController = s
@@ -236,10 +241,11 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
 #Region "Public Methods"
 
     Public Sub SaveBotSettings()
-        BotIni = New IniFile()
-        If File.Exists(Paths.CheckBotFolder(_BiniFile)) Then
-            BotIni.Load(Paths.CheckBotFolder(_BiniFile))
-        End If
+        If BotIni Is Nothing Then BotIni = New IniFile()
+
+        'If File.Exists(Paths.CheckBotFolder(_BiniFile)) Then
+        '    BotIni.Load(Paths.CheckBotFolder(_BiniFile))
+        'End If
         BotIni.SetKeyValue("Main", "Log", _log.ToString)
         BotIni.SetKeyValue("Main", "LogNameBase", _logNamebase)
         BotIni.SetKeyValue("Main", "LogOption", _logOption.ToString)
@@ -247,7 +253,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         BotIni.SetKeyValue("Bot", "BotIni", CharacterIniFile)
         BotIni.SetKeyValue("Bot", "MS_File", _MonkeySpeakEngineOption.MonkeySpeakScriptFile)
         BotIni.SetKeyValue("Bot", "LPort", LocalhostPort.ToString)
-        BotIni.SetKeyValue("Bot", "MSEngineEnable", _MonkeySpeakEngineOption.EngineEnable.ToString)
+        BotIni.SetKeyValue("Bot", "MSEngineEnable", _MonkeySpeakEngineOption.MS_Engine_Enable.ToString)
         BotIni.SetKeyValue("Bot", "BotController", _MonkeySpeakEngineOption.BotController)
         BotIni.SetKeyValue("Bot", "StandAlone", Standalone.ToString)
         BotIni.SetKeyValue("Bot", "AutoConnect", _AutoConnect.ToString)

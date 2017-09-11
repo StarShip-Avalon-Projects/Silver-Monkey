@@ -12,7 +12,6 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Comon core Library for Silver Monkey Applications")>
 <Assembly: AssemblyCompany("TS Projecgts")>
 <Assembly: AssemblyProduct("MonkeyCore")>
-<Assembly: AssemblyCopyright("Copyright ©  2017")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

@@ -1,6 +1,7 @@
 ﻿using MonkeyCore;
 using SilverMonkey.BugTraqConnect;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -21,16 +22,18 @@ namespace DataMonkey
         /// </param>
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Exception Ex = (Exception)e.ExceptionObject;
-            ErrorLogging logError = new ErrorLogging(ref Ex, sender);
-            SubmitIssueForm SubmitError = new SubmitIssueForm(logError.LogFile);
+            var ex = (Exception)e.ExceptionObject;
+            var logError = new ErrorLogging(ref ex, sender);
+            var args = string.Join(" ", logError.BugReport.ToArray());
+            var Proc = Path.Combine(Application.StartupPath, "BugTragSubmit.exe");
+            Process.Start(Proc, args);
+
             //Exception ex = (Exception)e.ExceptionObject;
             //ErrorLogging logError = new ErrorLogging(ref ex, sender);
             // MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //Process.Start(Paths.SilverMonkeyErrorLogPath);
             // Application.Exit();
-            if (SubmitError.ShowDialog() == DialogResult.OK)
-                File.Delete(logError.LogFile);
+
         }
 
         /// <summary>

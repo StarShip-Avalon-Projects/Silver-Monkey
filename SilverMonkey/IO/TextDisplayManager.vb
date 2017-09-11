@@ -11,7 +11,11 @@ Public Class TextDisplayManager
 
 #Region "Private Fields"
 
+    ''' <summary>
+    ''' RichTextBoxEx to work with
+    ''' </summary>
     Public WithEvents lb As RichTextBoxEx
+
     Private Mainsettings As cMain
 
 #End Region
@@ -100,52 +104,46 @@ Public Class TextDisplayManager
                 lb.ReadOnly = False
                 ' lb.BeginUpdate()
 
-                ' lb.SelectionStart = lb.TextLength
+                If lb.TextLength > 1 AndAlso lb.SelectionStart <> lb.TextLength - 1 Then
+                    lb.SelectionStart = lb.TextLength - 1
+                End If
                 lb.BeginUpdate()
                 lb.SelectedRtf = FormatText(TextObject.data, TextObject.TextColor)
 
                 ''since we Put the Data in the RTB now we Finish Setting the Links
-                'Dim param() As String = {"<a.*?href=['""](.*?)['""].*?>(.*?)</a>", "<a.*?href=(.*?)>(.*?)</a>"}
-                'For i As Integer = 0 To param.Length - 1
-                '    Dim links As MatchCollection = Regex.Matches(lb.Text, param(i), RegexOptions.IgnoreCase)
-                '    ' links = links & Regex.Matches(lb.Text,
-                '    ' "<a.*?href='(.*?)'.*?>(.*?)</a>", RegexOptions.IgnoreCase)
-                '    For Each mmatch As System.Text.RegularExpressions.Match In links
-                '        Dim matchUrl As String = mmatch.Groups(1).Value
-                '        Dim matchText As String = mmatch.Groups(2).Value
-                '        If mmatch.Success Then
-                '            With lb
-                '                .Text.Replace(mmatch.Value, "")
-                '                .SelectionStart = mmatch.Index
-                '                .InsertLink(matchText, matchUrl, mmatch.Index)
-                '                'WAIT Snag Image Links first! 'Dim     snag As Match = Regex.Match(matchText, "IMG:(.*?)::") '
-                '                'If snag.Success Then '
-                '                '    Dim RTFimg As New RTFBuilder '
-                '                'RTFimg.InsertImage(LoadImageFromUrl(snag.Groups(1).ToString))
-                '                ' .SelectedRtf = RTFimg.ToString 'Else
-                '                '.SelectedRtf = FormatURL(matchText & "\v #" & matchUrl & "\v0 ")
-                '                ' .SelectedText = mmatch.Value
 
-                ' ' .Find(matchText & "#" & matchUrl, '
-                ' RichTextBoxFinds.WholeWord) .SetSelectionLink(True)
+                Dim links As New Regex(UrlFilter, RegexOptions.IgnoreCase)
+                ' links = links & Regex.Matches(lb.Text,
+                ' "<a.*?href='(.*?)'.*?>(.*?)</a>", RegexOptions.IgnoreCase)
+                For Each mmatch As System.Text.RegularExpressions.Match In links.Matches(lb.Text)
+                    Dim matchUrl As String = mmatch.Groups(1).Value
+                    Dim matchText As String = mmatch.Groups(2).Value
+                    If mmatch.Success Then
+                        With lb
 
-                ' 'End If 'Put the Link in
+                            Dim Idx = .Text.IndexOf(mmatch.Groups(0).Value)
+                            Dim link As New Regex(UrlFilter, RegexOptions.IgnoreCase)
+                            .Text = link.Replace(.Text, "", 1)
 
-                '            End With
-                '        End If
-                '    Next
-                'Next
+                            '  .Text.Replace(mmatch.Groups(0).Value, "")
+
+                            .InsertLink(matchText, matchUrl, Idx)
+                            '   .SelectionStart = Idx
+
+                        End With
+                    End If
+                Next
 
                 Try
-                    Dim SelStart As Integer = 0
-                    While (lb.Lines.Length > 350)
-                        'Array.Copy(lb.Lines, 1, lb.Lines, 0, lb.Lines.Length - 1)
-                        SelStart = lb.SelectionStart
-                        lb.SelectionStart = 0
-                        lb.SelectionLength = lb.Text.IndexOf(Environment.NewLine, 0) + 1
-                        lb.SelectedText = ""
-                        lb.SelectionStart = SelStart
-                    End While
+                    'Dim SelStart As Integer = 0
+                    'While (lb.Lines.Length > 350)
+                    '    'Array.Copy(lb.Lines, 1, lb.Lines, 0, lb.Lines.Length - 1)
+                    '    SelStart = lb.SelectionStart
+                    '    lb.SelectionStart = 0
+                    '    lb.SelectionLength = lb.Text.IndexOf(Environment.NewLine, 0) + 1
+                    '    lb.SelectedText = ""
+                    '    lb.SelectionStart = SelStart
+                    'End While
                 Catch
                     lb.Clear()
                     Console.WriteLine("Reset Log box due to over flow")
@@ -179,6 +177,8 @@ Public Class TextDisplayManager
                     Return Mainsettings.WhColor
                 Case fColorEnum.Emote
                     Return Mainsettings.EmoteColor
+                Case fColorEnum.Error
+                    Return Mainsettings.ErrorColor
                 Case Else
                     Return Mainsettings.DefaultColor
             End Select
@@ -199,25 +199,18 @@ Public Class TextDisplayManager
     ''' </returns>
     Public Function FormatText(ByVal data As String, ByVal newColor As fColorEnum) As String
 
+        SystemFshIcon(data, "")
+        ChannelTag(data, "[$1]")
         Dim RftData As New StringBuilder(System.Web.HttpUtility.HtmlDecode(data))
         Dim Names As MatchCollection = Regex.Matches(data, NameFilter)
         For Each Name As System.Text.RegularExpressions.Match In Names
-            RftData.Replace(Name.Value, Name.Groups(3).Value)
+            RftData.Replace(Name.Value, Name.Groups(2).Value)
         Next
         '<name shortname='acuara' forced>
         Dim MyIcon As MatchCollection = Regex.Matches(data, Iconfilter)
-        For Each Icon As System.Text.RegularExpressions.Match In MyIcon
-            Select Case Icon.Groups(1).Value
-                Case "91"
-                    RftData.Replace(Icon.Value, "[#]")
-                Case Else
-                    RftData.Replace(Icon.Value, "[" + Icon.Groups(1).Value + "]")
-            End Select
-
-        Next
 
         RftData.Replace("|", " ")
-
+        RftData.Replace("\", "\\")
         RftData.Replace("</b>", "\b0 ")
         RftData.Replace("<b>", "\b ")
         RftData.Replace("</i>", "\i0 ")
@@ -261,6 +254,7 @@ Public Class TextDisplayManager
 
         Sub New(ByRef TextToDisplay As String, ByRef NewColor As fColorEnum)
             _data = TextToDisplay
+            _TextColor = NewColor
         End Sub
 
 #End Region
@@ -294,38 +288,38 @@ Public Class TextDisplayManager
 #Region "Private Methods"
 
     Private Sub log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles lb.LinkClicked
-        Dim Proto As String = ""
-        Dim Str As String = e.LinkText
-        Try
-            If Str.Contains("#") Then
-                Proto = Str.Substring(InStr(Str, "#"))
-                Proto = Proto.Substring(0, InStr(Proto, "://") - 1)
-            End If
-        Catch
-        End Try
-        Select Case Proto.ToLower
-            Case "http"
-                Try
-                    lb.Cursor = System.Windows.Forms.Cursors.AppStarting
-                    Dim url As String = Str.Substring(InStr(Str, "#"))
-                    Process.Start(url)
-                Catch ex As Exception
-                Finally
-                    lb.Cursor = System.Windows.Forms.Cursors.Default
-                End Try
-            Case "https"
-                Try
-                    lb.Cursor = System.Windows.Forms.Cursors.AppStarting
-                    Dim url As String = Str.Substring(InStr(Str, "#"))
-                    Process.Start(url)
-                Catch ex As Exception
-                Finally
-                    lb.Cursor = System.Windows.Forms.Cursors.Default
-                End Try
+        'Dim Proto As String = ""
+        'Dim Str As String = e.LinkText
+        'Try
+        '    If Str.Contains("#") Then
+        '        Proto = Str.Substring(Str.IndexOf("#"), Str.IndexOf("://"))
 
-            Case Else
-                MsgBox("Protocol: """ & Proto & """ Not yet implemented")
-        End Select
+        '    End If
+        'Catch
+        'End Try
+        'Select Case Proto.ToLower
+        '    Case "http"
+        '        Try
+        '            lb.Cursor = System.Windows.Forms.Cursors.AppStarting
+        '            Dim url As String = Str.Substring(Str.IndexOf("#"))
+        '            Process.Start(url)
+        '        Catch ex As Exception
+        '        Finally
+        '            lb.Cursor = System.Windows.Forms.Cursors.Default
+        '        End Try
+        '    Case "https"
+        '        Try
+        '            lb.Cursor = System.Windows.Forms.Cursors.AppStarting
+        '            Dim url As String = Str.Substring(Str.IndexOf("#"))
+        '            Process.Start(url)
+        '        Catch ex As Exception
+        '        Finally
+        '            lb.Cursor = System.Windows.Forms.Cursors.Default
+        '        End Try
+
+        '    Case Else
+        '        MsgBox("Protocol: """ & Proto & """ Not yet implemented")
+        'End Select
         'MsgBox(Proto)
     End Sub
 

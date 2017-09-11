@@ -24,7 +24,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("StarshipAvalonProjects")]
 [assembly: AssemblyProduct("BugTraqConnect")]
-[assembly: AssemblyCopyright("Copyright 2016 StarshipAvalonProjects")]
+
 [assembly: AssemblyTrademark("MantisConnect")]
 [assembly: AssemblyCulture("")]
 
@@ -35,8 +35,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers by using the '*'
 // as shown below:
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
 
 // In order to sign your assembly you must specify a key to use. Refer to the Microsoft .NET
 // Framework documentation for more information on assembly signing.
@@ -55,7 +53,6 @@ using System.Runtime.InteropServices;
 // AssemblyKeyFile("..\\..\\mykey.snk")] (*) Delay Signing is an advanced option - see the Microsoft
 // .NET Framework documentation for more information on this.
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyName("")]
 [assembly: CLSCompliant(true)]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: Guid("3A6C3DF8-1269-477B-A291-3E404BDF46CF")]

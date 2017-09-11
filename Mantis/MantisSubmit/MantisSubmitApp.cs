@@ -13,9 +13,10 @@
 // </summary>
 //-----------------------------------------------------------------------
 
+using SilverMonkey.BugTraqConnect.Libs;
 using System;
+using System.Linq;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace Futureware.MantisSubmit
 {
@@ -24,17 +25,32 @@ namespace Futureware.MantisSubmit
     /// </summary>
     public sealed class MantisSubmitApp
     {
+        #region Private Constructors
+
         private MantisSubmitApp()
         {
         }
+
+        #endregion Private Constructors
+
+        #region Private Methods
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main() 
+        private static void Main(string[] args)
         {
-            Application.Run( new SubmitIssueForm() );
+
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+                Application.Run(new SubmitIssueForm(new ProjectReport(args)));
+
+
         }
+
+        #endregion Private Methods
     }
 }

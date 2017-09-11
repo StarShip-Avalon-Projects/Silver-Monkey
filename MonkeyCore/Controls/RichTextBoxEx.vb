@@ -1,7 +1,9 @@
 ﻿Imports System.ComponentModel
 Imports System.Runtime.InteropServices
+Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
+Imports Furcadia.Text.FurcadiaMarkup
 Imports MonkeyCore.Controls.Win32
 
 Namespace Controls
@@ -30,7 +32,14 @@ Namespace Controls
             ' next to a non-standard link
             Me.DetectUrls = True
             Me._protocols = New List(Of String)
-            Me._protocols.AddRange(New String() {"http://", "furc://", "file://", "mailto://", "ftp://", "https://", "gopher://", "nntp://", "prospero://", "telnet://", "news://", "wais://", "outlook://"})
+            Me._protocols.AddRange(New String() {
+                                        "http://", "help://", "furc://",
+                                        "file://", "mailto://", "ftp://",
+                                        "https://", "gopher://",
+                                        "nntp://", "prospero://",
+                                        "telnet://", "news://", "wais://",
+                                        "command://", "outlook://"
+                                   })
 
         End Sub
 
@@ -72,7 +81,7 @@ Namespace Controls
         End Property
 
         <Editor(("System.Windows.Forms.Design.StringCollectionEditor," _
-           + "System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),
+           + "System.Design, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),
            GetType(System.Drawing.Design.UITypeEditor))>
         Public Shadows Property DetectUrls() As Boolean
             Get
@@ -86,25 +95,6 @@ Namespace Controls
 #End Region
 
 #Region "Public Methods"
-
-        ''' <summary>
-        ''' Gets or sets the currently selected rich text format (rtf)
-        ''' formated text in the control.
-        ''' </summary>
-        ''' <returns>
-        ''' </returns>
-        Public Overloads Property SelectedRtf As String
-            Get
-                ' BeginUpdate()
-                Return MyBase.SelectedRtf
-                ' EndUpdate()
-            End Get
-            Set(value As String)
-                ' BeginUpdate()
-                MyBase.SelectedRtf = value
-                ' EndUpdate()
-            End Set
-        End Property
 
         Public Overrides Property Text As String
             Get
@@ -268,11 +258,14 @@ Namespace Controls
                 Throw New ArgumentOutOfRangeException("position")
             End If
             ' BeginUpdate()
+
             Me.SelectionStart = position
-            Me.SelectedRtf = "{\rtf1\ansi\ansicpg1252\deff0\deflang1033 " & text & "\v #" & hyperlink & "\v0}"
-            Me.[Select](position, text.Length + 1 + hyperlink.Length)
+            Me.SelectedRtf = "{\rtf1\ansi\deff0\uc1 " + text + "\v #" + hyperlink + "\v0}"
+            Me.Select(position, text.Length + hyperlink.Length + 1)
             Me.SetSelectionLink(True)
-            Me.[Select](position + text.Length + 1 + hyperlink.Length, 0)
+            Me.Select(position + text.Length + hyperlink.Length + 1, 0)
+
+            '  Me.Select(position + text.Length + 1 + hyperlink.Length, 0)
             ' EndUpdate()
         End Sub
 
@@ -290,40 +283,9 @@ Namespace Controls
 
 #End Region
 
-        Public Overloads Property Rtf As String
-            Get
-                ' BeginUpdate()
-                Return MyBase.Rtf
-                ' EndUpdate()
-            End Get
-            Set(value As String)
-                ' BeginUpdate()
-                MyBase.Rtf = value
-                ' EndUpdate()
-
-            End Set
-        End Property
-
 #Region "Protected Methods"
 
-        Sub onSelectedTextChanged()
 
-        End Sub
-
-        'Protected Overrides Sub OnTextChanged(ByVal e As EventArgs)
-        '    ' /BeginUpdate()
-
-        ' MyBase.OnTextChanged(e) For Each p As String In _protocols
-
-        ' Dim matches As MatchCollection = Regex.Matches(Me.Text,
-        ' String.Format("<a.*?href=['""]({0}.*?)['""].*?>(.*?)</a>", p),
-        ' RegexOptions.IgnoreCase) For Each m As Match In matches If
-        ' m.Success Then Me.Select(m.Index, m.Length - 1)
-        ' Me.SetSelectionStyle(CFM_LINK, CFE_LINK) End If Next
-
-        '    Next
-        '    ' / EndUpdate()
-        'End Sub
 
 #End Region
 
@@ -361,7 +323,7 @@ Namespace Controls
 
         Private Sub SetSelectionStyle(ByVal mask As Integer, ByVal effect As Integer)
             Dim cf As New CHARFORMAT2_STRUCT()
-            cf.cbSize = CType(Marshal.SizeOf(cf), Integer)
+            cf.cbSize = Marshal.SizeOf(cf)
             cf.dwMask = mask
             cf.dwEffects = effect
 

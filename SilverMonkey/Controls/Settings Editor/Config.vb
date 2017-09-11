@@ -144,9 +144,23 @@ Public Class Config
 
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        'RecentToolStripMenuItem.DropDownItems.Clear()
-        'File.Delete(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"))
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles RecentBtnClear.Click
+
+        Dim msg = "Do you want to continue?"
+        Dim title = "Warning"
+        Dim style = MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2 Or
+            MsgBoxStyle.Exclamation
+
+        ' Display the message box and save the response, Yes or No.
+        Dim response = MsgBox(msg, style, title)
+
+        ' Take some action based on the response.
+        If response = MsgBoxResult.Yes Then
+            Main.RecentToolStripMenuItem.DropDownItems.Clear()
+            File.Delete(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"))
+
+        End If
+
     End Sub
 
     Private Sub ChkTimeStamp_CheckedChanged(sender As Object, e As EventArgs) Handles ChkTimeStamp.CheckedChanged
