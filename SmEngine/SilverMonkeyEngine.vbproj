@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3C0E1CBF-D3B9-4282-AC97-4E0216CA6C97}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SilverMonkeyEngine</RootNamespace>
+    <AssemblyName>SilverMonkeyEngine</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\Build\Debug\</OutputPath>
+    <DocumentationFile>SilverMonkeyEngine.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Build\Release\</OutputPath>
+    <DocumentationFile>SilverMonkeyEngine.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>SmEnging.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.105.2\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.105.2\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.105.2, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.105.2\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfoersion.vb">
+      <Link>AssemblyInfoersion.vb</Link>
+    </Compile>
+    <Compile Include="AssemblyFileVersion.vb">
+      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="BaseClasses\BaseSubSystem.vb" />
+    <Compile Include="EngineOptoons.vb" />
+    <Compile Include="Interfaces\msPlugin.vb" />
+    <Compile Include="HelperClasses\SmConstants.vb" />
+    <Compile Include="Interfaces\smHost.vb" />
+    <Compile Include="Interfaces\ImsHost.vb" />
+    <Compile Include="Interfaces\ImsPlugin.vb" />
+    <Compile Include="IO\NameList.vb" />
+    <Compile Include="Libraries\Banish.vb" />
+    <Compile Include="Libraries\HelperModule.vb" />
+    <Compile Include="Libraries\MonkeySpeakLibrary.vb" />
+    <Compile Include="Libraries\Movement.vb" />
+    <Compile Include="Libraries\MS Dice.vb" />
+    <Compile Include="Libraries\MS Repq.vb" />
+    <Compile Include="Libraries\MS Verbot.vb" />
+    <Compile Include="Libraries\MsDatabase.vb" />
+    <Compile Include="Libraries\DiceRolls\MsDice.DiceRollCollection.vb" />
+    <Compile Include="Libraries\MsFurreList.vb" />
+    <Compile Include="Libraries\MsIO.vb" />
+    <Compile Include="Libraries\MsMath.vb" />
+    <Compile Include="Libraries\MsMemberList.vb" />
+    <Compile Include="Libraries\MsSound.vb" />
+    <Compile Include="Libraries\MsTime.vb" />
+    <Compile Include="Libraries\MsTrades.vb" />
+    <Compile Include="Libraries\MsWarning.vb" />
+    <Compile Include="Libraries\MS_Cookie.vb" />
+    <Compile Include="Libraries\MS_DreamTransfer.vb" />
+    <Compile Include="Libraries\MS_Quotes.vb" />
+    <Compile Include="Libraries\Pounce\MsPounce.vb" />
+    <Compile Include="Libraries\Pounce\PounceFurre.vb" />
+    <Compile Include="Libraries\SayLibrary.vb" />
+    <Compile Include="Libraries\StringLibrary.vb" />
+    <Compile Include="Libraries\WmCpyDta.vb" />
+    <Compile Include="MainEngine.vb" />
+    <Compile Include="MonkeySpeakPage.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="PS Pre-Processor\MSPhoenixSpeak.vb" />
+    <Compile Include="PS Pre-Processor\MsPhoenixSpeakBackupAndRestore.vb" />
+    <Compile Include="PS Pre-Processor\PSObjects\PhoenicSpeakDataObject.vb" />
+    <Compile Include="PS Pre-Processor\PSObjects\PhoenixSpeakEventArgs.vb" />
+    <Compile Include="PS Pre-Processor\PSObjects\PhoenixSpeakId.vb" />
+    <Compile Include="PS Pre-Processor\PSObjects\PhoenixSpeakVariable.vb" />
+    <Compile Include="PS Pre-Processor\PSObjects\PxResponseObject.vb" />
+    <Compile Include="PS Pre-Processor\SubSystem.vb" />
+    <Compile Include="SessionHandler\BotOptions.vb" />
+    <Compile Include="SessionHandler\BotSession.vb" />
+    <Compile Include="Web Server Access\WebException.vb" />
+    <Compile Include="Web Server Access\WebRequests.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="SmEnging.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
+      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
+      <Name>FurcadiaLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Name>MonkeyCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeySpeakEx\MonkeySpeakEx.csproj">
+      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
+      <Name>MonkeySpeakEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VerbotSDK\Verbot5Library.csproj">
+      <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>
+      <Name>Verbot5Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AssemblyFileVersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.105.2\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.105.2\build\net45\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.105.2\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.105.2\build\net45\System.Data.SQLite.Core.targets'))" />
+  </Target>
+</Project>
