@@ -14,4 +14,5 @@ msbuild /t:BuildAll  Solution.build
 git add --all
 git commit -m"Update docs" --all
 git push
+git request-pull mastter https://github.com/StarShip-Avalon-Projects/Silver-Monkey.git
 
