@@ -204,43 +204,11 @@
 &lt;/p&gt;</NamespaceSummaryItem>
     </NamespaceSummaries>
     <PlugInConfigurations>
-      <PlugInConfig id="Output Deployment" enabled="True">
-        <configuration deleteAfterDeploy="false" verboseLogging="false">
-          <deploymentLocation id="help1x" location="..\build\Help">
-            <userCredentials useDefault="true" userName="" password="" />
-            <proxyCredentials useProxy="false" proxyServer="">
-              <userCredentials useDefault="true" userName="" password="" />
-            </proxyCredentials>
-          </deploymentLocation>
-          <deploymentLocation id="helpViewer" location="" renameMSHA="false">
-            <userCredentials useDefault="true" userName="" password="" />
-            <proxyCredentials useProxy="false" proxyServer="">
-              <userCredentials useDefault="true" userName="" password="" />
-            </proxyCredentials>
-          </deploymentLocation>
-          <deploymentLocation id="website" location="">
-            <userCredentials useDefault="true" userName="" password="" />
-            <proxyCredentials useProxy="false" proxyServer="">
-              <userCredentials useDefault="true" userName="" password="" />
-            </proxyCredentials>
-          </deploymentLocation>
-          <deploymentLocation id="openXml" location="">
-            <userCredentials useDefault="true" userName="" password="" />
-            <proxyCredentials useProxy="false" proxyServer="">
-              <userCredentials useDefault="true" userName="" password="" />
-            </proxyCredentials>
-          </deploymentLocation>
-          <deploymentLocation id="markdown" location="">
-            <userCredentials useDefault="true" userName="" password="" />
-            <proxyCredentials useProxy="false" proxyServer="">
-              <userCredentials useDefault="true" userName="" password="" />
-            </proxyCredentials>
-          </deploymentLocation>
-        </configuration>
-      </PlugInConfig>
     </PlugInConfigurations>
     <CopyrightText>Silver Monkey is Released under GNU Lesser Public Lisen e v3</CopyrightText>
     <CopyrightHref>http://silvermonkey.tsprojects.org/download/GPLv3.htm</CopyrightHref>
+    <PostBuildEvent>xcopy /y "$(OutputPath)Silver Monkey.chm" "$(SolutionDir)build\$(Configuration)"</PostBuildEvent>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->

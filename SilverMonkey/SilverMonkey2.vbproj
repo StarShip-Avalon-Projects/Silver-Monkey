@@ -366,8 +366,8 @@
   </PropertyGroup>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.101.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.101.0\build\net46\System.Data.SQLite.Core.targets')" />
   <PropertyGroup>
-    <PreBuildEvent>IF EXIST "$(SolutionDir)Build\Help\Silver Monkey.chm" (
-xcopy  /Y  "$(SolutionDir)Build\Help\Silver Monkey.chm" "$(TargetDir)")</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
