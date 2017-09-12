@@ -1,0 +1,7 @@
+# Being intended for interactive session, we are not enabling batch mode
+# Connect
+open mysession
+# Synchronize paths provided via environment variables
+synchronize remote "%1%" "%2%"
+# Exit WinSCP
+exit
