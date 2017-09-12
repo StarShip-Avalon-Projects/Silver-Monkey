@@ -1,4 +1,4 @@
-@echo off
+
 git pull
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto fail 
