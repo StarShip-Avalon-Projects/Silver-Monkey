@@ -1,1 +1,0 @@
-winscp.com /script=example.txt /parameter // %1 "/domains/silvermonkey.tsprojects.org/www/help/%~n1%~x1"

@@ -206,7 +206,7 @@
     <PlugInConfigurations>
       <PlugInConfig id="Output Deployment" enabled="True">
         <configuration deleteAfterDeploy="false" verboseLogging="false">
-          <deploymentLocation id="help1x" location="">
+          <deploymentLocation id="help1x" location="..\Build\Help">
             <userCredentials useDefault="true" userName="" password="" />
             <proxyCredentials useProxy="false" proxyServer="">
               <userCredentials useDefault="true" userName="" password="" />
@@ -218,7 +218,7 @@
               <userCredentials useDefault="true" userName="" password="" />
             </proxyCredentials>
           </deploymentLocation>
-          <deploymentLocation id="website" location="D:\Bitnami\wampstack-5.6.29-1\apps\silvermonkey\htdocs\help\silvermonkey">
+          <deploymentLocation id="website" location="..\Build\Help\help\silvermonkey">
             <userCredentials useDefault="true" userName="" password="" />
             <proxyCredentials useProxy="false" proxyServer="">
               <userCredentials useDefault="true" userName="" password="" />
