@@ -30,5 +30,5 @@ git submodule foreach "git commit -m'Auto Update SubModules'-a"
 git submodule foreach "git push -f origin HEAD:master"
 git push -f --all --recurse-submodules=on-demand
 
-git request-pull master https://github.com/StarShip-Avalon-Projects/Silver-Monkey.git
+git request-pull v2.19.x_Elta https://github.com/StarShip-Avalon-Projects/Silver-Monkey.git
 
