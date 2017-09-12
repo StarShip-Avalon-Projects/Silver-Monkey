@@ -14,7 +14,7 @@
     <Name>Monkey_Speak_Editor_Help</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
-    <OutputPath>..\..\..\..\Bitnami\wampstack-5.6.29-1\apps\silvermonkey\htdocs\help\monkeyspeakeditor\</OutputPath>
+    <OutputPath>..\help\docs\monkeyspeakeditor\</OutputPath>
     <HtmlHelpName>Monkey_Speak_Editor_Help</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
@@ -51,7 +51,7 @@
               <userCredentials useDefault="true" userName="" password="" />
             </proxyCredentials>
           </deploymentLocation>
-          <deploymentLocation id="website" location="">
+          <deploymentLocation id="website" location="..\Build\Help\help\monkeyspeakeditor">
             <userCredentials useDefault="true" userName="" password="" />
             <proxyCredentials useProxy="false" proxyServer="">
               <userCredentials useDefault="true" userName="" password="" />

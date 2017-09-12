@@ -1,0 +1,3750 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>MonkeyCore</name>
+  </assembly>
+  <members>
+    <member name="T:MonkeyCore.ErrorLogging">
+      <summary>
+Error Logging Class
+<para>Author: Tim Wilson</para><para>Created: Sept 10, 2011</para><para>Updated and maintained by Gerolkae</para><para>To Call Class </para><para>Example of calling Custom Error Logging Code</para><example>
+   Try
+        Throw New Exception("This is an example exception demonstrating the Error
+Logging Exception Routine") 'Don't require this... this is just manually throwing an error
+ to demo the class, actual code you'd just have the try/catch
+    Catch ex As Exception
+        Dim logError As New ErrorLogging(ex, Me) 'Passes the new constructor in the Error Logging Class the exception and 'me' (the calling object)
+    End Try</example><para>To provide more details for individual object types create a new constructor by copying and pasting one below and then adjusting the argument. </para></summary>
+    </member>
+    <member name="M:MonkeyCore.ErrorLogging.#ctor(System.Exception@,System.Object)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.ErrorLogging</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Ex">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Ex</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.#ctor(System.Exception@,System.Object)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="ObjectThrowingError">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ObjectThrowingError</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.#ctor(System.Exception@,System.Object)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.ErrorLogging.#ctor(System.Exception@,System.Object@,System.Object@)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.ErrorLogging</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Ex">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Ex</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.#ctor(System.Exception@,System.Object@,System.Object@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="ObjectThrowingError">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ObjectThrowingError</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.#ctor(System.Exception@,System.Object@,System.Object@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="ObJectCheck">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ObJectCheck</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.#ctor(System.Exception@,System.Object@,System.Object@)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="F:MonkeyCore.ErrorLogging.BugReport">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>F:MonkeyCore.ErrorLogging.BugReport</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.ErrorLogging.LogError(System.Exception@,System.Object@)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.LogError(System.Exception@,System.Object@)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="ex">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ex</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.LogError(System.Exception@,System.Object@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="ObjectThrowingError">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ObjectThrowingError</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.LogError(System.Exception@,System.Object@)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.ErrorLogging.LogError(System.Exception@,System.Object@,System.Object@)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.LogError(System.Exception@,System.Object@,System.Object@)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="ex">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ex</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.LogError(System.Exception@,System.Object@,System.Object@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="ObjectThrowingError">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ObjectThrowingError</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.LogError(System.Exception@,System.Object@,System.Object@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="ObJectCheck">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ObJectCheck</parameter>
+            <parameter>M:MonkeyCore.ErrorLogging.LogError(System.Exception@,System.Object@,System.Object@)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="P:MonkeyCore.ErrorLogging.LogFile">
+      <summary>
+ Fullpath the error document was written to.
+ </summary>
+      <returns></returns>
+    </member>
+    <member name="T:MonkeyCore.IniFile">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.IniFile</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.IniFile.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.IniFile</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.IniFile.AddSection(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.AddSection(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.AddSection(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.AddSection(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="P:MonkeyCore.IniFile.Code">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.IniFile.Code</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.IniFile.GetKeyValue(System.String,System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.GetKeyValue(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.GetKeyValue(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="sKey">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sKey</parameter>
+            <parameter>M:MonkeyCore.IniFile.GetKeyValue(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.GetKeyValue(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.GetSection(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.GetSection(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.GetSection(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.GetSection(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.Load(System.String,System.Boolean)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.Load(System.String,System.Boolean)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sFileName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sFileName</parameter>
+            <parameter>M:MonkeyCore.IniFile.Load(System.String,System.Boolean)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="bMerge">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>bMerge</parameter>
+            <parameter>M:MonkeyCore.IniFile.Load(System.String,System.Boolean)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.IniFile.RemoveAllSections">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveAllSections</parameter>
+          </include>
+        </markup>
+      </summary>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveAllSections</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.RemoveKey(System.String,System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveKey(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveKey(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="sKey">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sKey</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveKey(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveKey(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.RemoveSection(MonkeyCore.IniFile.IniSection)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveSection(MonkeyCore.IniFile.IniSection)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Section">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Section</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveSection(MonkeyCore.IniFile.IniSection)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveSection(MonkeyCore.IniFile.IniSection)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.RemoveSection(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveSection(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveSection(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.RemoveSection(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.RenameKey(System.String,System.String,System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.RenameKey(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.RenameKey(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="sKey">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sKey</parameter>
+            <parameter>M:MonkeyCore.IniFile.RenameKey(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="sNewKey">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sNewKey</parameter>
+            <parameter>M:MonkeyCore.IniFile.RenameKey(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.RenameKey(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.RenameSection(System.String,System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.RenameSection(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.RenameSection(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="sNewSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sNewSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.RenameSection(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.RenameSection(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.Save(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.Save(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sFileName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sFileName</parameter>
+            <parameter>M:MonkeyCore.IniFile.Save(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="P:MonkeyCore.IniFile.Sections">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.IniFile.Sections</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.IniFile.SetKeyValue(System.String,System.String,System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.SetKeyValue(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.SetKeyValue(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="sKey">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sKey</parameter>
+            <parameter>M:MonkeyCore.IniFile.SetKeyValue(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="sValue">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sValue</parameter>
+            <parameter>M:MonkeyCore.IniFile.SetKeyValue(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.SetKeyValue(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="T:MonkeyCore.IniFile.IniSection">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.IniFile.IniSection</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.#ctor(MonkeyCore.IniFile,System.String)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.IniFile.IniSection</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="parent">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>parent</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.#ctor(MonkeyCore.IniFile,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="sSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.#ctor(MonkeyCore.IniFile,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.AddKey(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.AddKey(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sKey">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sKey</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.AddKey(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.AddKey(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.GetKey(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.GetKey(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sKey">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sKey</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.GetKey(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.GetKey(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.GetName">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.GetName</parameter>
+          </include>
+        </markup>
+      </summary>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.GetName</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="P:MonkeyCore.IniFile.IniSection.Keys">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.IniFile.IniSection.Keys</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.IniFile.IniSection.Name">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.IniFile.IniSection.Name</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.RemoveAllKeys">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.RemoveAllKeys</parameter>
+          </include>
+        </markup>
+      </summary>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.RemoveAllKeys</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.RemoveKey(MonkeyCore.IniFile.IniSection.IniKey)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.RemoveKey(MonkeyCore.IniFile.IniSection.IniKey)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Key">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Key</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.RemoveKey(MonkeyCore.IniFile.IniSection.IniKey)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.RemoveKey(MonkeyCore.IniFile.IniSection.IniKey)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.RemoveKey(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.RemoveKey(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sKey">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sKey</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.RemoveKey(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.RemoveKey(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.SetName(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.SetName(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sSection">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sSection</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.SetName(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.SetName(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="T:MonkeyCore.IniFile.IniSection.IniKey">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.IniFile.IniSection.IniKey</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.IniKey.#ctor(MonkeyCore.IniFile.IniSection,System.String)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.IniFile.IniSection.IniKey</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="parent">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>parent</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.#ctor(MonkeyCore.IniFile.IniSection,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="sKey">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sKey</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.#ctor(MonkeyCore.IniFile.IniSection,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.IniKey.GetName">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.GetName</parameter>
+          </include>
+        </markup>
+      </summary>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.GetName</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.IniKey.GetValue">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.GetValue</parameter>
+          </include>
+        </markup>
+      </summary>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.GetValue</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="P:MonkeyCore.IniFile.IniSection.IniKey.Name">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.IniFile.IniSection.IniKey.Name</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.IniKey.SetName(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.SetName(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sKey">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sKey</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.SetName(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.SetName(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IniFile.IniSection.IniKey.SetValue(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.SetValue(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sValue">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sValue</parameter>
+            <parameter>M:MonkeyCore.IniFile.IniSection.IniKey.SetValue(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="P:MonkeyCore.IniFile.IniSection.IniKey.Value">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.IniFile.IniSection.IniKey.Value</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.IO">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.IO</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.IO.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.IO</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.IO.KeysIni">
+      <summary>
+ Monkey Speak File containing MonkeySpeak Editors lines and settings
+ </summary>
+      <returns></returns>
+    </member>
+    <member name="P:MonkeyCore.IO.MS_KeysIni">
+      <summary>
+ Dragon Speak File containing MonkeySpeak Editors lines and settings
+ </summary>
+      <returns></returns>
+    </member>
+    <member name="M:MonkeyCore.IO.NewDMScript">
+      <summary>
+ News the dm script.
+ </summary>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.IO.NewDMScript</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.IO.NewDSFile">
+      <summary>
+ New Dragon Speak file default read from configuration *.ini
+ </summary>
+      <returns>Generic preformated DragonSpeak file</returns>
+    </member>
+    <member name="M:MonkeyCore.IO.NewMSFile">
+      <summary>
+ New Monkey Speak fileDefaults
+ <para>Actual format is set in a configuration *.ini file</para></summary>
+      <returns>Generic preformated MonkeySpeak file</returns>
+    </member>
+    <member name="T:MonkeyCore.Logger">
+      <summary>
+ trouble shooting Class for tracing what functions do
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.Logger.#ctor(System.String,System.String)">
+      <summary>
+ Constructor
+ <para>
+ Sets the name of the log file for the duration of the instance
+ </para></summary>
+      <param name="Name">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Name</parameter>
+            <parameter>M:MonkeyCore.Logger.#ctor(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="message">
+ First string to prime the log with
+ </param>
+    </member>
+    <member name="M:MonkeyCore.Logger.LogMessage(System.String)">
+      <summary>
+ Sends a string to the log file
+ </summary>
+      <param name="Message">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Message</parameter>
+            <parameter>M:MonkeyCore.Logger.LogMessage(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="T:MonkeyCore.LogStream">
+      <summary>
+ Log stream for normal log messages
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.LogStream.#ctor(System.String,System.String)">
+      <summary>
+ Create a new instance of the log file
+ </summary>
+      <param name="FileName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>FileName</parameter>
+            <parameter>M:MonkeyCore.LogStream.#ctor(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="FilePath">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>FilePath</parameter>
+            <parameter>M:MonkeyCore.LogStream.#ctor(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.LogStream.WriteLine(System.String)">
+      <summary>
+ Write a line to the log file
+ </summary>
+      <param name="Message">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Message</parameter>
+            <parameter>M:MonkeyCore.LogStream.WriteLine(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.LogStream.WriteLine(System.String,System.Exception@)">
+      <summary>
+ Write a an exception line to the log file
+ </summary>
+      <param name="Message">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Message</parameter>
+            <parameter>M:MonkeyCore.LogStream.WriteLine(System.String,System.Exception@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="ObjectException">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ObjectException</parameter>
+            <parameter>M:MonkeyCore.LogStream.WriteLine(System.String,System.Exception@)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="T:MonkeyCore.Paths">
+      <summary>
+ Monkey System core File Paths
+ Silver Monkey standard Paths.
+<para>
+This Class contains All the Shared paths For Furcadia Folders  And Silver Monkey Paths.
+</para><para>
+Furcadia Programs (Furcadia.exe)
+</para><para>
+Furcadia Documents Folder (DSC Templates/Scripts, Character Files)
+</para><para>
+Furcadia Characters Folder (Furcadia uses My Documents/Furcadia/Furcadia Characters but we could use our own location Like If
+our clients want To include a character file With a bot In a zip package
+</para><para>
+Furcadia Setting Folder  (Currently Unused)</para><para>
+Furcadia Temporary Cache, Temp Dreams, Custom Portraits, Main Maps, Dynamic Avatars (Currently unused)
+</para><para>
+Silver Monkey Application Path (Default DS tempates,DS Scripts, MS Templates, MS Scripts) Defaul Program Settings IE Keys.ini MS_Keys.ini</para><para> Silver Monkey Documents (BotFiles[bini,ms,db,txt(Memberlist,PounceList)],Scripts,Templates)</para><para> Silver Monkey Settings Folder (User Application Data)</para><para> Active Bot folder (Default To Current  folder where .bini Is, Preset To Documents\Silver Monkey)</para><para> Search Paths, (File Browse Dialogs)</para><para> Furcadia install path Program Files(x86)</para><para> Monkey Speak Bots (Default Documents\Silver Monkey)</para><para> TODO: Exceptions Handling</para><para> Furcadia Paths need To be valid</para><para> Let Furcadia.IO.Paths Populate our Default settings we can Override the Settings For our use Like If
+we have multiple Furcadia installations Like DevClient And Live Client. Perhaps we want the Bot To
+ Use its own Furcadia Stash due To mangling the Furcadia Settings  With a localdir.ini installation</para></summary>
+    </member>
+    <member name="M:MonkeyCore.Paths.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Paths</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.ApplicationPath">
+      <summary>
+ Silver Monkey Program Files Folder
+ </summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.ApplicationPluginPath">
+      <summary>
+ Gets the application plugin path.
+ </summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.ApplicationSettingsPath">
+      <summary>
+ Silver Monkey Program Settings path (Local AppData)
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.Paths.CheckBotFolder(System.String@)">
+      <summary>
+ Special Functoin for getting the default paths
+ <para>
+ Ideal logic is to check the location of the Bot.Bini file for the
+ current path and then check the Silver Monkey folder in my documents
+ </para></summary>
+      <param name="FileToCheck">
+ file path to check
+ </param>
+      <returns>
+ the correct file path
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.Paths.CheckCharacterFolder(System.String@)">
+      <summary>
+ Check the Furcadia character folder for a character
+ </summary>
+      <param name="FileToCheck">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>FileToCheck</parameter>
+            <parameter>M:MonkeyCore.Paths.CheckCharacterFolder(System.String@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.Paths.CheckCharacterFolder(System.String@)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="P:MonkeyCore.Paths.FurcadiaCharactersFolder">
+      <summary>
+ Gets or sets the Furcadia characters folder.
+ </summary>
+      <exception cref="T:System.IO.DirectoryNotFoundException">
+ This needs to be a valid folder
+ </exception>
+    </member>
+    <member name="P:MonkeyCore.Paths.FurcadiaDocumentsFolder">
+      <summary>
+ Gets or sets the Furcadia documents folder.
+ </summary>
+      <exception cref="T:System.IO.DirectoryNotFoundException">
+ This needs to be a valid folder
+ </exception>
+    </member>
+    <member name="P:MonkeyCore.Paths.FurcadiaProgramFolder">
+      <summary>
+ Gets or sets the Furcadia program folder.
+ </summary>
+      <exception cref="T:System.IO.FileNotFoundException">
+ Furcadia.exe not found in path. Is this a Furcadia folder?
+ </exception>
+    </member>
+    <member name="P:MonkeyCore.Paths.MonkeySpeakEditorDocumentsDsScriptsPath">
+      <summary>
+ Gets or sets the Monkey Speak Editor documents MonkeySpeak scripts path.
+ <para>
+ Default: Documents\Silver Monkey\Scripts
+ </para></summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.MonkeySpeakEditorDocumentsDsTemplatesPath">
+      <summary>
+ Gets or sets the Monkey Speak Editor Dragon Speak documents
+ templates path.
+ <para>
+ Default: Documents\Silver Monkey\Templates
+ </para></summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.MonkeySpeakEditorDocumentsScriptsPath">
+      <summary>
+ Gets or sets the Monkey Speak Editor documents MonkeySpeak scripts path.
+ <para>
+ Default: Documents\Silver Monkey\Scripts-MS
+ </para></summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.MonkeySpeakEditorDocumentsTemplatesPath">
+      <summary>
+ Gets or sets the Monkey Speak documents templates path.
+ <para>
+ Default: Documents\Silver Monkey\Templates-MS
+ </para></summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.MonkeySpeakEditorDsScriptsPath">
+      <summary>
+ Gets or sets the Monkey Speak Editor Dragon Speak scripts path.
+ <para>
+ Default: Program Files(x86)\Silver Monkey\Scripts
+ </para></summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.MonKeySpeakEditorDsTemplatesPath">
+      <summary>
+ Gets or sets the Monkey Speak templates path.
+ <para>
+ Default: Program Files(x86)\Silver Monkey\Templates
+ </para></summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.MonKeySpeakEditorScriptsPath">
+      <summary>
+ Gets or sets the Monkey Speak Editor MonkeySpeak scripts path.
+ <para>
+ Default: Program Files(x86)\Silver Monkey\Scripts-MS
+ </para></summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.MonKeySpeakEditorTemplatesPath">
+      <summary>
+ Gets or sets the Monkey Speak templates path.
+ <para>
+ Default: Program Files(x86)\Silver Monkey\Templates-MS
+ </para></summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.SilverMonkeyBotPath">
+      <summary>
+ Gets or sets the Silver Monkey bot path.
+ <para>
+ Set this path at Engine Start. Use path of Bot.bini if outside
+ "Documents\Silver monkey"
+ </para><para>
+ Default Path: "Documents\Silver Monkey"
+ </para></summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.SilverMonkeyDocumentsPath">
+      <summary>
+ Gets or sets the Silver Monkey documents path.
+ </summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.SilverMonkeyErrorLogPath">
+      <summary>
+ Gets or sets the Silver Monkey error log path.
+ </summary>
+    </member>
+    <member name="P:MonkeyCore.Paths.SilverMonkeyLogPath">
+      <summary>
+ Default path for bot logs
+ </summary>
+      <returns></returns>
+    </member>
+    <member name="T:MonkeyCore.PluginServices">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.PluginServices</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.PluginServices.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.PluginServices</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.PluginServices.CreateInstance(MonkeyCore.PluginServices.AvailablePlugin)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.PluginServices.CreateInstance(MonkeyCore.PluginServices.AvailablePlugin)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Plugin">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Plugin</parameter>
+            <parameter>M:MonkeyCore.PluginServices.CreateInstance(MonkeyCore.PluginServices.AvailablePlugin)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.PluginServices.CreateInstance(MonkeyCore.PluginServices.AvailablePlugin)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.PluginServices.FindPlugins(System.String,System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.PluginServices.FindPlugins(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="strPath">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>strPath</parameter>
+            <parameter>M:MonkeyCore.PluginServices.FindPlugins(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="strInterface">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>strInterface</parameter>
+            <parameter>M:MonkeyCore.PluginServices.FindPlugins(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.PluginServices.FindPlugins(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="F:MonkeyCore.PluginServices.Plugins">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>F:MonkeyCore.PluginServices.Plugins</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.PluginServices.AvailablePlugin">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.PluginServices.AvailablePlugin</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.PluginServices.AvailablePlugin.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.PluginServices.AvailablePlugin</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.PluginServices.AvailablePlugin.AssemblyPath">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.PluginServices.AvailablePlugin.AssemblyPath</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.PluginServices.AvailablePlugin.ClassName">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.PluginServices.AvailablePlugin.ClassName</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.PluginServices.AvailablePlugin.Equals(System.Object)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.PluginServices.AvailablePlugin.Equals(System.Object)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="obj">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>obj</parameter>
+            <parameter>M:MonkeyCore.PluginServices.AvailablePlugin.Equals(System.Object)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.PluginServices.AvailablePlugin.Equals(System.Object)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.PluginServices.AvailablePlugin.GetHashCode">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.PluginServices.AvailablePlugin.GetHashCode</parameter>
+          </include>
+        </markup>
+      </summary>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.PluginServices.AvailablePlugin.GetHashCode</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="P:MonkeyCore.PluginServices.AvailablePlugin.Library">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.PluginServices.AvailablePlugin.Library</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Settings">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Settings</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Settings.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Settings</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.ini">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.ini</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.KeysIni">
+      <summary>
+ System to load Key.ini for Dragon Speak Settings
+ </summary>
+      <returns></returns>
+    </member>
+    <member name="P:MonkeyCore.Settings.MS_KeysIni">
+      <summary>
+ Loads Key.ini file for Monkey Speak display
+ </summary>
+      <returns></returns>
+    </member>
+    <member name="P:MonkeyCore.Settings.PluginList">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.PluginList</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="F:MonkeyCore.Settings.Plugins">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>F:MonkeyCore.Settings.Plugins</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Settings.cMain">
+      <summary>
+ Main Configuration for every application in package
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.Settings.cMain.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Settings.cMain</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.Advertisment">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.Advertisment</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.Announcement">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.Announcement</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.ApFont">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.ApFont</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.AutoReconnect">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.AutoReconnect</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.Broadcast">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.Broadcast</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.CloseProc">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.CloseProc</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.ConnectTimeOut">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.ConnectTimeOut</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.debug">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.debug</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.DefaultColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.DefaultColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.DisconnectPopupToggle">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.DisconnectPopupToggle</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.EmitColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.EmitColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.EmoteColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.EmoteColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.ErrorColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.ErrorColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.FurcPath">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.FurcPath</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.Host">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.Host</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.LoadLastBotFile">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.LoadLastBotFile</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.Ping">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.Ping</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.PSShowClient">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.PSShowClient</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.PSShowMainWindow">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.PSShowMainWindow</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.ReconnectMax">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.ReconnectMax</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Settings.cMain.SaveMainSettings">
+      <summary>
+ Save Application settings
+ </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.SayColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.SayColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Settings.cMain.SetDefault">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Settings.cMain.SetDefault</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.ShoutColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.ShoutColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.sPort">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.sPort</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.SysTray">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.SysTray</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.TimeStamp">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.TimeStamp</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.TT_TimeOut">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.TT_TimeOut</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.cMain.WhColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.cMain.WhColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Settings.EditSettings">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Settings.EditSettings</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Settings.EditSettings.#ctor">
+      <summary>
+ Initializes a new instance of the <see cref="T:MonkeyCore.Settings.EditSettings" /> class.
+ </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.AutoCompleteEnable">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.AutoCompleteEnable</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.CommentColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.CommentColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.FurcPath">
+      <summary>
+ Furcadia Application folder
+ </summary>
+      <returns></returns>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.IDColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.IDColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.MS_CommentColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.MS_CommentColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.MS_IDColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.MS_IDColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.MS_NumberColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.MS_NumberColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.MS_StringColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.MS_StringColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.MS_VariableColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.MS_VariableColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.NumberColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.NumberColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.PluginList">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.PluginList</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Settings.EditSettings.SaveEditorSettings">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Settings.EditSettings.SaveEditorSettings</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.StringColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.StringColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.StringVariableColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.StringVariableColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.EditSettings.VariableColor">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.EditSettings.VariableColor</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Settings.MantisConnectSettings">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Settings.MantisConnectSettings</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Settings.MantisConnectSettings.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Settings.MantisConnectSettings</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.MantisConnectSettings.HttpPassword">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.MantisConnectSettings.HttpPassword</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.MantisConnectSettings.HttpUserName">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.MantisConnectSettings.HttpUserName</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.MantisConnectSettings.MantisPassword">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.MantisConnectSettings.MantisPassword</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.MantisConnectSettings.MantisUserName">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.MantisConnectSettings.MantisUserName</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Settings.MantisConnectSettings.SaveSettings">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Settings.MantisConnectSettings.SaveSettings</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Settings.MantisConnectSettings.StoreSettings">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Settings.MantisConnectSettings.StoreSettings</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.SQLiteDatabase">
+      <summary>
+ Monkey Systems generic interface to System.Data.Sqlite
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.#ctor">
+      <summary>
+ Default Constructor for SQLiteDatabase Class.
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.#ctor(System.Collections.Generic.Dictionary{System.String,System.String})">
+      <summary>
+ Single Param Constructor for specifying advanced connection options.
+ </summary>
+      <param name="connectionOpts">
+ A dictionary containing all desired options and their values
+ </param>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.#ctor(System.String)">
+      <summary>
+ Single Param Constructor for specifying the DB file.
+ </summary>
+      <param name="inputFile">
+ The File containing the DB
+ </param>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String)">
+      <summary>
+ Adds a column to the specified table
+ </summary>
+      <param name="tableName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>tableName</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="columnName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>columnName</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String,System.String)">
+      <summary>
+ Adds a column to the specified table
+ </summary>
+      <param name="tableName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>tableName</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="columnName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>columnName</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="columnType">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>columnType</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String,System.String,System.String)">
+      <summary>
+ Adds a column to the specified table
+ </summary>
+      <param name="tableName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>tableName</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="columnName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>columnName</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="columnType">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>columnType</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="DefaultValue">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>DefaultValue</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.addColumn(System.String,System.String,System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.ClearDB">
+      <summary>
+ Allows the programmer to easily delete all data from the DB.
+ </summary>
+      <returns>
+ A boolean true or false to signify success or failure.
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.ClearTable(System.String)">
+      <summary>
+ Allows the user to easily clear all data from a specific table.
+ </summary>
+      <param name="table">
+ The name of the table to clear.
+ </param>
+      <returns>
+ A boolean true or false to signify success or failure.
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.CreateTbl(System.String,System.String@)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.CreateTbl(System.String,System.String@)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Table">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Table</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.CreateTbl(System.String,System.String@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="Titles">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Titles</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.CreateTbl(System.String,System.String@)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.Delete(System.String,System.String)">
+      <summary>
+ Allows the programmer to easily delete rows from the DB.
+ </summary>
+      <param name="tableName">
+ The table from which to delete.
+ </param>
+      <param name="where">
+ The where clause for the delete.
+ </param>
+      <returns>
+ A boolean true or false to signify success or failure.
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.ExecuteNonQuery(System.String)">
+      <summary>
+ Allows the programmer to interact with the database for purposes
+ other than a query.
+ </summary>
+      <param name="sql">
+ The SQL to be run.
+ </param>
+      <returns>
+ An Integer containing the number of rows updated.
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.ExecuteQuery(System.String)">
+      <summary>
+ Executes the query.
+ </summary>
+      <param name="sql">
+ The SQL.
+ </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.ExecuteQuery(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.ExecuteScalar(System.String)">
+      <summary>
+ Allows the programmer to retrieve single items from the DB.
+ </summary>
+      <param name="sql">
+ The query to run.
+ </param>
+      <returns>
+ A string.
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.GetDataTable(System.String)">
+      <summary>
+ Allows the programmer to run a query against the Database.
+ </summary>
+      <param name="sql">
+ The SQL to run
+ </param>
+      <returns>
+ A DataTable containing the result set.
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.GetValueFromTable(System.String)">
+      <summary>
+ Get a set of values from the specified table
+ </summary>
+      <param name="str">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>str</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.GetValueFromTable(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+ a dictionary of values
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.Insert(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+      <summary>
+ Allows the programmer to easily insert into the DB
+ </summary>
+      <param name="tableName">
+ The table into which we insert the data.
+ </param>
+      <param name="data">
+ A dictionary containing the column names and data for the insert.
+ </param>
+      <returns>
+ A boolean true or false to signify success or failure.
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.InsertMultiRow(System.String,System.Int32,System.Collections.Generic.Dictionary{System.String,System.String})">
+      <summary>
+ Allows the programmer to easily insert into the DB
+ </summary>
+      <param name="tableName">
+ The table into which we insert the data.
+ </param>
+      <param name="data">
+ A dictionary containing the column names and data for the insert.
+ </param>
+      <param name="ID">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ID</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.InsertMultiRow(System.String,System.Int32,System.Collections.Generic.Dictionary{System.String,System.String})</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+ A boolean true or false to signify success or failure.
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.isColumnExist(System.String,System.String)">
+      <summary>
+ Does the Column name exist in the specified table
+ </summary>
+      <param name="columnName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>columnName</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.isColumnExist(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="tableName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>tableName</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.isColumnExist(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.isColumnExist(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.isTableExists(System.String)">
+      <summary>
+ Determines whether [is table exists] [the specified table name].
+ </summary>
+      <param name="tableName">
+ Name of the table.
+ </param>
+      <returns>
+ True if ExecuteNonQurey returns one or more tables
+ </returns>
+    </member>
+    <member name="F:MonkeyCore.SQLiteDatabase.PlayerDbName">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>F:MonkeyCore.SQLiteDatabase.PlayerDbName</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.removeColumn(System.String,System.String)">
+      <summary>
+ removes a column of data from the specified table
+ </summary>
+      <param name="tableName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>tableName</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.removeColumn(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="columnName">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>columnName</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.removeColumn(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.SQLiteDatabase.removeColumn(System.String,System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.SQLiteDatabase.Update(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+      <summary>
+ Allows the programmer to easily update rows in the DB.
+ </summary>
+      <param name="tableName">
+ The table to update.
+ </param>
+      <param name="data">
+ A dictionary containing Column names and their new values.
+ </param>
+      <param name="where">
+ The where clause for the update statement.
+ </param>
+      <returns>
+ A boolean true or false to signify success or failure.
+ </returns>
+    </member>
+    <member name="T:MonkeyCore.SQLiteSyntaxException">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.SQLiteSyntaxException</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.SQLiteSyntaxException.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.SQLiteSyntaxException</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.SQLiteSyntaxException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.SQLiteSyntaxException</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="info">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>info</parameter>
+            <parameter>M:MonkeyCore.SQLiteSyntaxException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="context">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>context</parameter>
+            <parameter>M:MonkeyCore.SQLiteSyntaxException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.SQLiteSyntaxException.#ctor(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.SQLiteSyntaxException</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="message">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>message</parameter>
+            <parameter>M:MonkeyCore.SQLiteSyntaxException.#ctor(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.SQLiteSyntaxException.#ctor(System.String,System.Exception)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.SQLiteSyntaxException</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="message">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>message</parameter>
+            <parameter>M:MonkeyCore.SQLiteSyntaxException.#ctor(System.String,System.Exception)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="inner">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>inner</parameter>
+            <parameter>M:MonkeyCore.SQLiteSyntaxException.#ctor(System.String,System.Exception)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="T:MonkeyCore.TabControleExTabs">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.TabControleExTabs</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.TabControleExTabs.#ctor(MonkeyCore.Controls.TabControlEx@,System.String)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.TabControleExTabs</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="TabControlObject">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>TabControlObject</parameter>
+            <parameter>M:MonkeyCore.TabControleExTabs.#ctor(MonkeyCore.Controls.TabControlEx@,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="name">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>name</parameter>
+            <parameter>M:MonkeyCore.TabControleExTabs.#ctor(MonkeyCore.Controls.TabControlEx@,System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="T:MonkeyCore.TextBoxWriter">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.TextBoxWriter</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.TextBoxWriter.#ctor(MonkeyCore.Controls.RichTextBoxEx)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.TextBoxWriter</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="control">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>control</parameter>
+            <parameter>M:MonkeyCore.TextBoxWriter.#ctor(MonkeyCore.Controls.RichTextBoxEx)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.TextBoxWriter.#ctor(System.Windows.Forms.RichTextBox)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.TextBoxWriter</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="control">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>control</parameter>
+            <parameter>M:MonkeyCore.TextBoxWriter.#ctor(System.Windows.Forms.RichTextBox)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.TextBoxWriter.#ctor(System.Windows.Forms.TextBox)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.TextBoxWriter</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="control">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>control</parameter>
+            <parameter>M:MonkeyCore.TextBoxWriter.#ctor(System.Windows.Forms.TextBox)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="P:MonkeyCore.TextBoxWriter.Encoding">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.TextBoxWriter.Encoding</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.TextBoxWriter.Write(System.Char)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.TextBoxWriter.Write(System.Char)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="ch">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>ch</parameter>
+            <parameter>M:MonkeyCore.TextBoxWriter.Write(System.Char)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.TextBoxWriter.Write(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.TextBoxWriter.Write(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="s">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>s</parameter>
+            <parameter>M:MonkeyCore.TextBoxWriter.Write(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.TextBoxWriter.WriteLine(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.TextBoxWriter.WriteLine(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="s">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>s</parameter>
+            <parameter>M:MonkeyCore.TextBoxWriter.WriteLine(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="T:MonkeyCore.TextBoxWriter.UpDateBtn_GoCallback">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.TextBoxWriter.UpDateBtn_GoCallback</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Utils">
+      <summary>
+ General Utility functions we haven't found a home for yet
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.Utils.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Utils</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Utils.DateTimeToUnixTimestamp(System.DateTime)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Utils.DateTimeToUnixTimestamp(System.DateTime)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="dTime">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>dTime</parameter>
+            <parameter>M:MonkeyCore.Utils.DateTimeToUnixTimestamp(System.DateTime)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.Utils.DateTimeToUnixTimestamp(System.DateTime)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.Utils.GetFileVersionInfo(System.String)">
+      <summary>
+ Gets the file version information.
+ </summary>
+      <param name="filename">The filename.</param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.Utils.GetFileVersionInfo(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.Utils.incrementLetter(System.String@)">
+      <summary>
+ Letter increment for walking PS tables
+ </summary>
+      <param name="Input">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Input</parameter>
+            <parameter>M:MonkeyCore.Utils.incrementLetter(System.String@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.Utils.incrementLetter(System.String@)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.Utils.UnixTimeStampToDateTime(System.Double@)">
+      <summary>
+ Converts a number representing a Unix Time stamp and converts it to a usable DateTime format
+ </summary>
+      <param name="unixTimeStamp">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>unixTimeStamp</parameter>
+            <parameter>M:MonkeyCore.Utils.UnixTimeStampToDateTime(System.Double@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>DataTime</returns>
+    </member>
+    <member name="T:MonkeyCore.Utils.fColorEnum">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Utils.fColorEnum</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Controls.HelpLinkMenu">
+      <summary>
+ Standard menu class for HelpLink Menu Items
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.HelpLinkMenu.#ctor">
+      <summary>
+ Read the default Section by <see cref="P:System.Windows.Forms.Application.ProductName" /></summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.HelpLinkMenu.#ctor(System.String)">
+      <summary>
+ Read section from the ini file and converit it to a list of ToolStripMenuItems
+ </summary>
+      <param name="SectionName">
+ Arbitrary Secion Name
+ </param>
+    </member>
+    <member name="P:MonkeyCore.Controls.HelpLinkMenu.MenuItems">
+      <summary>
+ Help Link list for the help menu. Initiliaze the Help Menu first
+ and then add range this.ToArray()
+ </summary>
+      <returns>
+ The Lst of links read from the ini file
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.Controls.HelpLinkMenu.RecentFile_click(System.Object,System.EventArgs)">
+      <summary>
+ click menu handler
+ </summary>
+      <param name="sender">
+ the triggering ToolstripMenu object
+ </param>
+      <param name="e">
+ event arguments (not needed)
+ </param>
+    </member>
+    <member name="T:MonkeyCore.Controls.HelpLinkToolStripMenu">
+      <summary>
+ Standard menu class for HelpLink Menu Items
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.HelpLinkToolStripMenu.#ctor">
+      <summary>
+ Read the default Section by <see cref="P:System.Windows.Forms.Application.ProductName" /></summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.HelpLinkToolStripMenu.#ctor(System.String)">
+      <summary>
+ Read section from the ini file and converit it to a list of ToolStripMenuItems
+ </summary>
+      <param name="SectionName">
+ Arbitrary Secion Name
+ </param>
+    </member>
+    <member name="P:MonkeyCore.Controls.HelpLinkToolStripMenu.MenuItems">
+      <summary>
+ Help Link list for the help menu. Initiliaze the Help Menu first
+ and then add range this.ToArray()
+ </summary>
+      <returns>
+ The Lst of links read from the ini file
+ </returns>
+    </member>
+    <member name="M:MonkeyCore.Controls.HelpLinkToolStripMenu.RecentFile_click(System.Object,System.EventArgs)">
+      <summary>
+ click menu handler
+ </summary>
+      <param name="sender">
+ the triggering ToolstripMenu object
+ </param>
+      <param name="e">
+ event arguments (not needed)
+ </param>
+    </member>
+    <member name="T:MonkeyCore.Controls.ListBox_NoFlicker">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Controls.ListBox_NoFlicker</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.ListBox_NoFlicker.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Controls.ListBox_NoFlicker</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Controls.ListView_NoFlicker">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Controls.ListView_NoFlicker</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.ListView_NoFlicker.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Controls.ListView_NoFlicker</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Controls.RecentFileMenu">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Controls.RecentFileMenu</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.RecentFileMenu.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Controls.RecentFileMenu</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.RecentFileMenu.LoadRecentList">
+      <summary>
+ load recent file list from file
+ </summary>
+    </member>
+    <member name="F:MonkeyCore.Controls.RecentFileMenu.MRUlist">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>F:MonkeyCore.Controls.RecentFileMenu.MRUlist</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Controls.RecentFileMenu.RecentFile">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Controls.RecentFileMenu.RecentFile</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.RecentFileMenu.RecentFile_click(System.Object,System.EventArgs)">
+      <summary>
+ click menu handler
+ </summary>
+      <param name="sender">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sender</parameter>
+            <parameter>M:MonkeyCore.Controls.RecentFileMenu.RecentFile_click(System.Object,System.EventArgs)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="e">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>e</parameter>
+            <parameter>M:MonkeyCore.Controls.RecentFileMenu.RecentFile_click(System.Object,System.EventArgs)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.RecentFileMenu.SaveRecentFile(System.String)">
+      <summary>
+ store a list to file and refresh list
+ </summary>
+      <param name="path">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>path</parameter>
+            <parameter>M:MonkeyCore.Controls.RecentFileMenu.SaveRecentFile(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="T:MonkeyCore.Controls.RichTextBoxEx">
+      <summary>
+ Extended RichTextBox with URL formatting
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Controls.RichTextBoxEx</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.AppendText(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.RichTextBoxEx.AppendText(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="text">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>text</parameter>
+            <parameter>M:MonkeyCore.Controls.RichTextBoxEx.AppendText(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.BeginUpdate">
+      <summary>
+ Maintains performance while updating.
+ </summary>
+    </member>
+    <member name="P:MonkeyCore.Controls.RichTextBoxEx.DetectUrls">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Controls.RichTextBoxEx.DetectUrls</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.EndUpdate">
+      <summary>
+ Resumes drawing and event handling.
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.Find(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.RichTextBoxEx.Find(System.String)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Text">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Text</parameter>
+            <parameter>M:MonkeyCore.Controls.RichTextBoxEx.Find(System.String)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.Controls.RichTextBoxEx.Find(System.String)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.GetSelectionLink">
+      <summary>
+ Get the link style for the current selection
+ </summary>
+      <returns>
+ 0: link style not set, 1: link style set, -1: mixed
+ </returns>
+    </member>
+    <member name="P:MonkeyCore.Controls.RichTextBoxEx.HScrollPos">
+      <summary>
+ Gets and Sets the Horizontal Scroll position of the control.
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.InsertLink(System.String)">
+      <summary>
+ Insert a given text as a link into the RichTextBox at the
+ current insert position.
+ </summary>
+      <param name="text">
+ Text to be inserted
+ </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.InsertLink(System.String,System.Int32)">
+      <summary>
+ Insert a given text at a given position as a link.
+ </summary>
+      <param name="text">
+ Text to be inserted
+ </param>
+      <param name="position">
+ Insert position
+ </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.InsertLink(System.String,System.String)">
+      <summary>
+ Insert a given text at at the current input position as a link.
+ The link text is followed by a hash (#) and the given hyperlink
+ text, both of them invisible. When clicked on, the whole link
+ text and hyperlink string are given in the LinkClickedEventArgs.
+ </summary>
+      <param name="text">
+ Text to be inserted
+ </param>
+      <param name="hyperlink">
+ Invisible hyperlink string to be inserted
+ </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.InsertLink(System.String,System.String,System.Int32)">
+      <summary>
+ Insert a given text at a given position as a link. The link text
+ is followed by a hash (#) and the given hyperlink text, both of
+ them invisible. When clicked on, the whole link text and
+ hyperlink string are given in the LinkClickedEventArgs.
+ </summary>
+      <param name="text">
+ Text to be inserted
+ </param>
+      <param name="hyperlink">
+ Invisible hyperlink string to be inserted
+ </param>
+      <param name="position">
+ Insert position
+ </param>
+    </member>
+    <member name="P:MonkeyCore.Controls.RichTextBoxEx.Protocols">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Controls.RichTextBoxEx.Protocols</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.RichTextBoxEx.SetSelectionLink(System.Boolean)">
+      <summary>
+ Set the current selection's link style
+ </summary>
+      <param name="link">
+ true: set link style, false: clear link style
+ </param>
+    </member>
+    <member name="P:MonkeyCore.Controls.RichTextBoxEx.Text">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Controls.RichTextBoxEx.Text</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Controls.RichTextBoxEx.VerticalContentAlignment">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Controls.RichTextBoxEx.VerticalContentAlignment</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Controls.RichTextBoxEx.VScrollPos">
+      <summary>
+ Gets and Sets the Vertical Scroll position of the control.
+ </summary>
+    </member>
+    <member name="T:MonkeyCore.Controls.ScrollingListBox">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Controls.ScrollingListBox</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.ScrollingListBox.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Controls.ScrollingListBox</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="E:MonkeyCore.Controls.ScrollingListBox.OnHorizontalScroll">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>E:MonkeyCore.Controls.ScrollingListBox.OnHorizontalScroll</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="E:MonkeyCore.Controls.ScrollingListBox.OnVerticalScroll">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>E:MonkeyCore.Controls.ScrollingListBox.OnVerticalScroll</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.ScrollingListBox.WndProc(System.Windows.Forms.Message@)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.ScrollingListBox.WndProc(System.Windows.Forms.Message@)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="msg">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>msg</parameter>
+            <parameter>M:MonkeyCore.Controls.ScrollingListBox.WndProc(System.Windows.Forms.Message@)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="T:MonkeyCore.Controls.SilverMonkeyFCTB">
+      <summary>
+ FastColoredTextBox with Irony parser support
+ </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.SilverMonkeyFCTB.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Controls.SilverMonkeyFCTB</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.SilverMonkeyFCTB.DoHighlighting">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.DoHighlighting</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.SilverMonkeyFCTB.GetTokenRange(Irony.Parsing.Token)">
+      <summary>
+ Returns range of token
+ </summary>
+      <param name="t">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>t</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.GetTokenRange(Irony.Parsing.Token)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.GetTokenRange(Irony.Parsing.Token)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="P:MonkeyCore.Controls.SilverMonkeyFCTB.Grammar">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Controls.SilverMonkeyFCTB.Grammar</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.SilverMonkeyFCTB.InitBraces">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.InitBraces</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.SilverMonkeyFCTB.OnStyleNeeded(MonkeyCore.Controls.StyleNeededEventArgs)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.OnStyleNeeded(MonkeyCore.Controls.StyleNeededEventArgs)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="e">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>e</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.OnStyleNeeded(MonkeyCore.Controls.StyleNeededEventArgs)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.SilverMonkeyFCTB.OnTextChangedDelayed(FastColoredTextBoxNS.Range)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.OnTextChangedDelayed(FastColoredTextBoxNS.Range)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="changedRange">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>changedRange</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.OnTextChangedDelayed(FastColoredTextBoxNS.Range)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="P:MonkeyCore.Controls.SilverMonkeyFCTB.Parser">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Controls.SilverMonkeyFCTB.Parser</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.SilverMonkeyFCTB.SetParser(Irony.Parsing.Grammar)">
+      <summary>
+ Sets Irony parser (based on Grammar)
+ </summary>
+      <param name="grammar">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>grammar</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.SetParser(Irony.Parsing.Grammar)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.SilverMonkeyFCTB.SetParser(Irony.Parsing.LanguageData)">
+      <summary>
+ Sets Irony parser (based on LanguageData)
+ </summary>
+      <param name="language">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>language</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.SetParser(Irony.Parsing.LanguageData)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.SilverMonkeyFCTB.SetParser(Irony.Parsing.Parser)">
+      <summary>
+ Sets Irony parser
+ </summary>
+      <param name="parser">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>parser</parameter>
+            <parameter>M:MonkeyCore.Controls.SilverMonkeyFCTB.SetParser(Irony.Parsing.Parser)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="E:MonkeyCore.Controls.SilverMonkeyFCTB.StyleNeeded">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>E:MonkeyCore.Controls.SilverMonkeyFCTB.StyleNeeded</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="F:MonkeyCore.Controls.SilverMonkeyFCTB.WavyStyle">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>F:MonkeyCore.Controls.SilverMonkeyFCTB.WavyStyle</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Controls.StyleNeededEventArgs">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Controls.StyleNeededEventArgs</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.StyleNeededEventArgs.#ctor(Irony.Parsing.Token)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Controls.StyleNeededEventArgs</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="t">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>t</parameter>
+            <parameter>M:MonkeyCore.Controls.StyleNeededEventArgs.#ctor(Irony.Parsing.Token)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="P:MonkeyCore.Controls.StyleNeededEventArgs.Cancel">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Controls.StyleNeededEventArgs.Cancel</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="P:MonkeyCore.Controls.StyleNeededEventArgs.Style">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Controls.StyleNeededEventArgs.Style</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="F:MonkeyCore.Controls.StyleNeededEventArgs.Token">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>F:MonkeyCore.Controls.StyleNeededEventArgs.Token</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Controls.TabControlEx">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Controls.TabControlEx</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.TabControlEx.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Controls.TabControlEx</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.TabControlEx.AddCloseButton(System.Windows.Forms.TabPage)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.AddCloseButton(System.Windows.Forms.TabPage)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="tp">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>tp</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.AddCloseButton(System.Windows.Forms.TabPage)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.AddCloseButton(System.Windows.Forms.TabPage)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="E:MonkeyCore.Controls.TabControlEx.CloseButtonClick">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>E:MonkeyCore.Controls.TabControlEx.CloseButtonClick</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="F:MonkeyCore.Controls.TabControlEx.CloseButtonCollection">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>F:MonkeyCore.Controls.TabControlEx.CloseButtonCollection</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.TabControlEx.CloseButtonOfTabPage(System.Windows.Forms.TabPage)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.CloseButtonOfTabPage(System.Windows.Forms.TabPage)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="tp">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>tp</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.CloseButtonOfTabPage(System.Windows.Forms.TabPage)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.CloseButtonOfTabPage(System.Windows.Forms.TabPage)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:MonkeyCore.Controls.TabControlEx.OnCloseButtonClick(System.Object,System.EventArgs)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.OnCloseButtonClick(System.Object,System.EventArgs)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="sender">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>sender</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.OnCloseButtonClick(System.Object,System.EventArgs)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="e">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>e</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.OnCloseButtonClick(System.Object,System.EventArgs)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.TabControlEx.OnControlAdded(System.Windows.Forms.ControlEventArgs)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.OnControlAdded(System.Windows.Forms.ControlEventArgs)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="e">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>e</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.OnControlAdded(System.Windows.Forms.ControlEventArgs)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.TabControlEx.OnControlRemoved(System.Windows.Forms.ControlEventArgs)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.OnControlRemoved(System.Windows.Forms.ControlEventArgs)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="e">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>e</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.OnControlRemoved(System.Windows.Forms.ControlEventArgs)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.TabControlEx.OnCreateControl">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.OnCreateControl</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.TabControlEx.OnLayout(System.Windows.Forms.LayoutEventArgs)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.OnLayout(System.Windows.Forms.LayoutEventArgs)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="levent">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>levent</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.OnLayout(System.Windows.Forms.LayoutEventArgs)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:MonkeyCore.Controls.TabControlEx.RePositionCloseButtons">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.RePositionCloseButtons</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.TabControlEx.RePositionCloseButtons(System.Windows.Forms.TabPage)">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.RePositionCloseButtons(System.Windows.Forms.TabPage)</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="tp">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>tp</parameter>
+            <parameter>M:MonkeyCore.Controls.TabControlEx.RePositionCloseButtons(System.Windows.Forms.TabPage)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="P:MonkeyCore.Controls.TabControlEx.ShowCloseButtonOnTabs">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:MonkeyCore.Controls.TabControlEx.ShowCloseButtonOnTabs</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="T:MonkeyCore.Controls.TextBox_NoFlicker">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>T:MonkeyCore.Controls.TextBox_NoFlicker</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:MonkeyCore.Controls.TextBox_NoFlicker.#ctor">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>MonkeyCore.Controls.TextBox_NoFlicker</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+  </members>
+</doc>
