@@ -470,8 +470,8 @@
       </summary>
       <param name="filePath">output file path</param>
       <exception cref="T:System.ArgumentException">
-            Thrown when no file path is supplied
-            </exception>
+             Thrown when no file path is supplied
+             </exception>
     </member>
     <member name="M:Monkeyspeak.Page.CompileToStream(System.IO.Stream)">
       <summary>
@@ -1460,6 +1460,69 @@
           </include>
         </markup>
       </summary>
+    </member>
+    <member name="M:Monkeyspeak.Variable.#ctor(System.String,System.Object)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>Monkeyspeak.Variable</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Name">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Name</parameter>
+            <parameter>M:Monkeyspeak.Variable.#ctor(System.String,System.Object)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="value">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>value</parameter>
+            <parameter>M:Monkeyspeak.Variable.#ctor(System.String,System.Object)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:Monkeyspeak.Variable.#ctor(System.String,System.Object,System.Boolean)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>Monkeyspeak.Variable</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Name">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Name</parameter>
+            <parameter>M:Monkeyspeak.Variable.#ctor(System.String,System.Object,System.Boolean)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="value">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>value</parameter>
+            <parameter>M:Monkeyspeak.Variable.#ctor(System.String,System.Object,System.Boolean)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="constant">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>constant</parameter>
+            <parameter>M:Monkeyspeak.Variable.#ctor(System.String,System.Object,System.Boolean)</parameter>
+          </include>
+        </markup>
+      </param>
     </member>
     <member name="M:Monkeyspeak.Variable.Clone(System.Boolean)">
       <summary>
