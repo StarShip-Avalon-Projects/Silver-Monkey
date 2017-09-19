@@ -819,16 +819,6 @@
             </summary>
       <returns></returns>
     </member>
-    <member name="F:Monkeyspeak.Page.syncObj">
-      <summary>
-        <markup>
-          <include item="SMCMissingTag">
-            <parameter>summary</parameter>
-            <parameter>F:Monkeyspeak.Page.syncObj</parameter>
-          </include>
-        </markup>
-      </summary>
-    </member>
     <member name="E:Monkeyspeak.Page.TriggerAdded">
       <summary>
             Called when a Trigger and TriggerHandler is added to the Page

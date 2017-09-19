@@ -90,12 +90,6 @@ Namespace Engine.Libraries
     ''' tired"" message,
     ''' </para>
     ''' <para>
-    ''' (1:15) and the triggering furre is the Bot Controller,
-    ''' </para>
-    ''' <para>
-    ''' (1:16) and the triggering furre is not the Bot Controller,
-    ''' </para>
-    ''' <para>
     ''' (5:0) say {..}. (Normal Furcadia Text commands)
     ''' </para>
     ''' <para>

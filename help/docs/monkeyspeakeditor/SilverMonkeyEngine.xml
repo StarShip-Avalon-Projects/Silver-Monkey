@@ -3166,7 +3166,7 @@
     </member>
     <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.DreamNameIs(Monkeyspeak.TriggerReader)">
       <summary>
- (1:21) and the Dream Name is {..},
+ (1:23) and the Dream Name is {..},
  <para>
  (0:91) When the bot enters a Dream named {..},
  </para></summary>
@@ -3200,7 +3200,7 @@
     </member>
     <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.FurreNamedIsDREAMOWNER(Monkeyspeak.TriggerReader)">
       <summary>
- (1:20) and the furre named {..} is the Dream owner,
+ (1:21) and the furre named {..} is the Dream owner,
  </summary>
       <param name="reader">
         <see cref="T:Monkeyspeak.TriggerReader" />
