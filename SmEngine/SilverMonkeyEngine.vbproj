@@ -116,6 +116,7 @@
     <Compile Include="Libraries\MS Verbot.vb" />
     <Compile Include="Libraries\MsDatabase.vb" />
     <Compile Include="Libraries\DiceRolls\MsDice.DiceRollCollection.vb" />
+    <Compile Include="Libraries\MsDreamInfo.vb" />
     <Compile Include="Libraries\MsFurreList.vb" />
     <Compile Include="Libraries\MsIO.vb" />
     <Compile Include="Libraries\MsMath.vb" />

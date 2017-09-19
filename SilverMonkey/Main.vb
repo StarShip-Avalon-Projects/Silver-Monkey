@@ -1,7 +1,7 @@
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Diagnostics
-
+Imports System.Text
 Imports System.Windows.Forms
 Imports Furcadia.Net
 Imports Furcadia.Net.Dream
@@ -11,6 +11,7 @@ Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Paths
 Imports MonkeyCore.Settings
+Imports Monkeyspeak
 Imports SilverMonkeyEngine
 
 Public Class Main
@@ -153,8 +154,10 @@ Public Class Main
     Public Sub ConnectBot()
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
             Try
-                sndDisplay("Connecting...")
+                sndDisplay("New Session" + DateTime.Now.ToString)
+
                 FurcadiaSession.Connect()
+                AddHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
 
                 ConnectTrayIconMenuItem.Enabled = False
                 DisconnectTrayIconMenuItem.Enabled = True
@@ -187,6 +190,7 @@ Public Class Main
             Me.Invoke(d)
         Else
             FurcadiaSession.Disconnect()
+            RemoveHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
             ConnectTrayIconMenuItem.Enabled = False
             DisconnectTrayIconMenuItem.Enabled = True
             NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Now disconnected from Furcadia.", ToolTipIcon.Info)
@@ -540,15 +544,18 @@ Public Class Main
         'BotSetup.ShowDialog()
 
         If FurcadiaSession Is Nothing OrElse Not FurcadiaSession.IsServerConnected Then
-                BotConfig = New BotOptions(sender.ToString())
-                FurcadiaSession = New BotSession(BotConfig)
-                SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
-                SilverMonkeyLogPath = BotConfig.LogPath
-                My.Settings.LastBotFile = sender.ToString()
-                EditBotToolStripMenuItem.Enabled = True
-                My.Settings.Save()
-            End If
 
+            BotConfig = New BotOptions(sender.ToString())
+
+            FurcadiaSession = New BotSession(BotConfig)
+            MsPage = FurcadiaSession.MSpage
+
+            SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
+            SilverMonkeyLogPath = BotConfig.LogPath
+            My.Settings.LastBotFile = sender.ToString()
+            EditBotToolStripMenuItem.Enabled = True
+            My.Settings.Save()
+        End If
 
         'same as open menu
     End Sub
@@ -600,12 +607,12 @@ Public Class Main
     Public Sub sndDisplay(ByRef data As String, Optional ByVal newColor As TextDisplayManager.fColorEnum = TextDisplayManager.fColorEnum.DefaultColor)
 
         If BotConfig.log Then LogStream.WriteLine(data)
-            If CBool(Mainsettings.TimeStamp) Then
-                Dim Now As String = DateTime.Now.ToLongTimeString
-                data = Now.ToString & ": " & data
-            End If
-            Dim textObject As New TextDisplayManager.TextDisplayObject(data, newColor)
-            TextDisplayer.AddDataToList(textObject)
+        If CBool(Mainsettings.TimeStamp) Then
+            Dim Now As String = DateTime.Now.ToLongTimeString
+            data = Now.ToString & ": " & data
+        End If
+        Dim textObject As New TextDisplayManager.TextDisplayObject(data, newColor)
+        TextDisplayer.AddDataToList(textObject)
 
     End Sub
 
@@ -637,6 +644,53 @@ Public Class Main
     Private Sub OnFurcadiaSessionError(e As Exception, o As Object, text As String) Handles FurcadiaSession.Error
         sndDisplay("Furcadia Session error:" + e.Message + o.ToString, TextDisplayManager.fColorEnum.Error)
     End Sub
+
+    Private WithEvents MsPage As Monkeyspeak.Page
+
+    Public Sub OnMonkeySpeakPageError(trig As Trigger, ex As Exception)
+        If Not trig Is Nothing Then
+            sndDisplay("MonkeySpeak error:" + trig.ToString() + " " + ex.Message, TextDisplayManager.fColorEnum.Error)
+        Else
+            sndDisplay("MonkeySpeak error: " + ex.Message, TextDisplayManager.fColorEnum.Error)
+        End If
+
+        If Not ex.InnerException Is Nothing Then
+            If ex.InnerException.GetType() Is GetType(Engine.Libraries.WebException) Then
+                Dim InnerEx = CType(ex.InnerException, Engine.Libraries.WebException)
+                SendTextToDebugWindow(InnerEx.ToString)
+            Else
+                SendTextToDebugWindow(ex.InnerException.ToString)
+            End If
+
+        End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Send text like MonkeySpeak inner exception errors to the Debug Window
+    ''' <para>
+    ''' Some Monkey Speak lines expect errors under certain conditions. These are what we want to send to the DebugWindow
+    ''' so the Bot User can handle then accordingly
+    ''' </para>
+    ''' </summary>
+    ''' <param name="text"></param>
+    Private Sub SendTextToDebugWindow(ByVal text As String)
+        If DebugWindow Is Nothing OrElse DebugWindow.IsDisposed() Then
+            DebugLogs.AppendLine(text)
+            Exit Sub
+        End If
+        If DebugWindow.ErrorLogTxtBx.InvokeRequired Then
+            DebugWindow.ErrorLogTxtBx.Invoke(New SendTextDelegate(AddressOf SendTextToDebugWindow), text)
+        Else
+            DebugWindow.ErrorLogTxtBx.AppendText(text)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Send text to DebugWindow Delegate
+    ''' </summary>
+    ''' <param name="text"></param>
+    Public Delegate Sub SendTextDelegate(text As String)
 
 #End Region
 
@@ -704,9 +758,11 @@ Public Class Main
         End If
         If FurcadiaSession Is Nothing Then
             FurcadiaSession = New BotSession(BotConfig)
+            MsPage = FurcadiaSession.MSpage
         ElseIf FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
             FurcadiaSession.Dispose()
             FurcadiaSession = New BotSession(BotConfig)
+            MsPage = FurcadiaSession.MSpage
         End If
 
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
@@ -798,11 +854,19 @@ Public Class Main
     ''' <param name="e">
     ''' </param>
     Private Sub DebugToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DebugToolStripMenuItem.Click
-        Dim Vars As New Variables(FurcadiaSession)
+        If DebugWindow Is Nothing OrElse DebugWindow.IsDisposed() Then
+            DebugWindow = New Variables(FurcadiaSession)
+        End If
 
-        Vars.Show()
-        Vars.Activate()
+        DebugWindow.Show()
+        DebugWindow.Activate()
+        If DebugLogs.Length > 0 Then
+            DebugWindow.ErrorLogTxtBx.AppendText(DebugLogs.ToString)
+            DebugLogs.Clear()
+        End If
     End Sub
+
+    Private DebugLogs As New StringBuilder()
 
     ''' <summary>
     ''' Open the MonkeySpeak Export Window
@@ -1054,8 +1118,10 @@ Public Class Main
                 UpDateDreamList()
             Case ServerInstructionType.RemoveAvatar
                 UpDateDreamList()
-                'Case ServerInstructionType.LoadDreamEvent
-                '    UpDateDreamList()
+            Case ServerInstructionType.BookmarkDream
+                UpDateDreamList()
+            Case ServerInstructionType.LoadDreamEvent
+                UpDateDreamList()
         End Select
 
     End Sub
@@ -1067,6 +1133,8 @@ Public Class Main
 #Region "Action Controls"
 
     Private ActionCMD As String
+
+    Private WithEvents DebugWindow As Variables
 
     Public Sub New()
 
@@ -1278,8 +1346,6 @@ Public Class Main
         End Try
     End Sub
 
-
-
     Private Sub log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles Log_.LinkClicked
         Dim Proto As String = ""
         Dim Str As String = e.LinkText
@@ -1313,4 +1379,5 @@ Public Class Main
         End Select
         'MsgBox(Proto)
     End Sub
+
 End Class

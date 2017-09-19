@@ -196,11 +196,6 @@ Public Class BotSession : Inherits ProxySession
 
             'ElseIf Color = "notify" Then
 
-        ElseIf data.StartsWith("(You enter the dream of") Then
-            MSpage.SetVariable("DREAMNAME", "", True)
-            MSpage.SetVariable("DREAMOWNER", data.Substring(24, data.Length - 2 - 24), True)
-            MSpage.Execute(90, 91)
-
         End If
 
     End Sub

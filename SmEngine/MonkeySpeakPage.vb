@@ -1,4 +1,5 @@
-﻿Imports MonkeyCore
+﻿Imports Furcadia.Net.NetProxy
+Imports MonkeyCore
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.SmConstants
@@ -59,7 +60,7 @@ Namespace Engine
 
 #Region "Public Constructors"
 
-        Private MsPage As Monkeyspeak.Page
+        Private WithEvents MsPage As Monkeyspeak.Page
 
         Sub New()
             MyBase.New(Nothing)
@@ -67,6 +68,7 @@ Namespace Engine
             MSEngine = New MainEngine(options, New BotSession(New BotOptions()))
 
             MsPage = MSEngine.LoadFromString("")
+
             Initialize()
         End Sub
 
@@ -105,7 +107,7 @@ Namespace Engine
             LibList.Add(New MsVerbot(MSEngine.FurcadiaSession))
             LibList.Add(New MsSound(MSEngine.FurcadiaSession))
             LibList.Add(New MsTrades(MSEngine.FurcadiaSession))
-            'LibList.Add(New MS_MemberList())
+            LibList.Add(New MsDreamInfo(MSEngine.FurcadiaSession))
             'LibList.Add(New MS_MemberList())
         End Sub
 
@@ -275,6 +277,8 @@ Namespace Engine
         End Function
 
 #End Region
+
+
 
     End Class
 
