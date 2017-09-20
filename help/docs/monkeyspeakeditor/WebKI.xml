@@ -39,18 +39,17 @@
     <HelpKINode Title="MonkeySpeakLibrary.Add Method " Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_Add.htm" />
     <HelpKINode Title="NameList.Add Method " Url="html/M_SilverMonkeyEngine_IO_NameList_Add.htm" />
   </HelpKINode>
-  <HelpKINode Title="add method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebRequests_add.htm" />
   <HelpKINode Title="AddCloseButton method" Url="html/M_MonkeyCore_Controls_TabControlEx_AddCloseButton.htm" />
-  <HelpKINode Title="AddColumn method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDatabase_AddColumn.htm" />
   <HelpKINode Title="addColumn method" Url="html/Overload_MonkeyCore_SQLiteDatabase_addColumn.htm" />
+  <HelpKINode Title="AddColumn method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDatabase_AddColumn.htm" />
   <HelpKINode Title="AddFriend method" Url="html/M_Furcadia_Net_Pounce_PounceConnection_AddFriend.htm" />
   <HelpKINode Title="Addition operator">
     <HelpKINode Title="Base220.Addition Operator " Url="html/M_Furcadia_Text_Base220_op_Addition.htm" />
     <HelpKINode Title="Base95.Addition Operator " Url="html/M_Furcadia_Text_Base95_op_Addition.htm" />
   </HelpKINode>
   <HelpKINode Title="AddKey method">
-    <HelpKINode Title="IniFile.IniSection.AddKey Method " Url="html/M_Furcadia_IO_IniFile_IniSection_AddKey.htm" />
     <HelpKINode Title="IniFile.IniSection.AddKey Method " Url="html/M_MonkeyCore_IniFile_IniSection_AddKey.htm" />
+    <HelpKINode Title="IniFile.IniSection.AddKey Method " Url="html/M_Furcadia_IO_IniFile_IniSection_AddKey.htm" />
   </HelpKINode>
   <HelpKINode Title="AddNewEditorTab method" Url="html/M_MonkeySpeakEditor_MS_Edit_AddNewEditorTab.htm" />
   <HelpKINode Title="AddSection method">
@@ -260,6 +259,7 @@
   <HelpKINode Title="BaseSubSystem.ParseServerChannel method" Url="html/M_SilverMonkeyEngine_BaseSubSystem_ParseServerChannel.htm" />
   <HelpKINode Title="BeforeTriggerHandled event" Url="html/E_Monkeyspeak_Page_BeforeTriggerHandled.htm" />
   <HelpKINode Title="BeginUpdate method" Url="html/M_MonkeyCore_Controls_RichTextBoxEx_BeginUpdate.htm" />
+  <HelpKINode Title="BookmarkDream enumeration member" Url="html/T_Furcadia_Net_ServerInstructionType.htm" />
   <HelpKINode Title="BootRemap field" Url="html/F_Furcadia_Drawing_Graphics_Remapper_BootRemap.htm" />
   <HelpKINode Title="Boots property" Url="html/P_Furcadia_Movement_ColorString_Boots.htm" />
   <HelpKINode Title="BotBackup method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsPhoenixSpeakBackupAndRestore_BotBackup.htm" />
@@ -269,6 +269,8 @@
     <HelpKINode Title="EngineOptoons.BotController Property " Url="html/P_SilverMonkeyEngine_Engine_EngineOptoons_BotController.htm" />
   </HelpKINode>
   <HelpKINode Title="BotControllerShortName property" Url="html/P_SilverMonkeyEngine_BotOptions_BotControllerShortName.htm" />
+  <HelpKINode Title="BotIsDreamOwner method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_BotIsDreamOwner.htm" />
+  <HelpKINode Title="BotIsNotDreamOwner method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_BotIsNotDreamOwner.htm" />
   <HelpKINode Title="BotLie method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Movement_BotLie.htm" />
   <HelpKINode Title="BotMoveSequence method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Movement_BotMoveSequence.htm" />
   <HelpKINode Title="BotName field" Url="html/F_MonkeySpeakEditor_MS_Edit_BotName.htm" />
@@ -495,8 +497,8 @@
   </HelpKINode>
   <HelpKINode Title="Code field" Url="html/F_MonkeySpeakEditor_wUI_Code.htm" />
   <HelpKINode Title="Code property">
-    <HelpKINode Title="IniFile.Code Property " Url="html/P_MonkeyCore_IniFile_Code.htm" />
     <HelpKINode Title="IniFile.Code Property " Url="html/P_Furcadia_IO_IniFile_Code.htm" />
+    <HelpKINode Title="IniFile.Code Property " Url="html/P_MonkeyCore_IniFile_Code.htm" />
   </HelpKINode>
   <HelpKINode Title="Color property" Url="html/P_Furcadia_Net_Dream_FURRE_Color.htm" />
   <HelpKINode Title="Colors field" Url="html/F_Furcadia_Drawing_Graphics_Palette_Colors.htm" />
@@ -776,10 +778,25 @@
   <HelpKINode Title="DREAM.ShortName property" Url="html/P_Furcadia_Net_Dream_DREAM_ShortName.htm" />
   <HelpKINode Title="DREAM.Title property" Url="html/P_Furcadia_Net_Dream_DREAM_Title.htm" />
   <HelpKINode Title="DREAM.URL property" Url="html/P_Furcadia_Net_Dream_DREAM_URL.htm" />
+  <HelpKINode Title="DreamBookmark class">
+    <HelpKINode Title="DreamBookmark Class" Url="html/T_Furcadia_Net_Utils_ServerParser_DreamBookmark.htm" />
+    <HelpKINode Title="about DreamBookmark class" Url="html/T_Furcadia_Net_Utils_ServerParser_DreamBookmark.htm" />
+    <HelpKINode Title="constructor" Url="html/Overload_Furcadia_Net_Utils_ServerParser_DreamBookmark__ctor.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_Furcadia_Net_Utils_ServerParser_DreamBookmark.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Furcadia_Net_Utils_ServerParser_DreamBookmark.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Furcadia_Net_Utils_ServerParser_DreamBookmark.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DreamBookmark.DreamBookmark constructor" Url="html/Overload_Furcadia_Net_Utils_ServerParser_DreamBookmark__ctor.htm" />
+  <HelpKINode Title="DreamBookmark.DreamType property" Url="html/P_Furcadia_Net_Utils_ServerParser_DreamBookmark_DreamType.htm" />
+  <HelpKINode Title="DreamBookmark.DreamUrl property" Url="html/P_Furcadia_Net_Utils_ServerParser_DreamBookmark_DreamUrl.htm" />
   <HelpKINode Title="DreamName property" Url="html/P_Furcadia_Net_Utils_ServerParser_LoadDream_DreamName.htm" />
+  <HelpKINode Title="DreamNameIs method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_DreamNameIs.htm" />
+  <HelpKINode Title="DreamNameIsNot method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_DreamNameIsNot.htm" />
   <HelpKINode Title="DreamPath field" Url="html/F_MonkeySpeakEditor_wUI_StructMapSearch_DreamPath.htm" />
   <HelpKINode Title="DreamsPath property" Url="html/P_Furcadia_IO_Paths_DreamsPath.htm" />
+  <HelpKINode Title="DreamType property" Url="html/P_Furcadia_Net_Utils_ServerParser_DreamBookmark_DreamType.htm" />
   <HelpKINode Title="DreamURL property" Url="html/P_SilverMonkeyEngine_BotOptions_DreamURL.htm" />
+  <HelpKINode Title="DreamUrl property" Url="html/P_Furcadia_Net_Utils_ServerParser_DreamBookmark_DreamUrl.htm" />
   <HelpKINode Title="ds enumeration member" Url="html/T_MonkeySpeakEditor_MainModule_EditStyles.htm" />
   <HelpKINode Title="DSSpecies property" Url="html/P_Furcadia_Net_Dream_FURRE_DSSpecies.htm" />
   <HelpKINode Title="DS_autoCompleteList field" Url="html/F_MonkeySpeakEditor_MS_Edit_DS_autoCompleteList.htm" />
@@ -928,8 +945,8 @@
   <HelpKINode Title="Frame structure">
     <HelpKINode Title="Frame Structure" Url="html/T_Furcadia_Drawing_Graphics_Frame.htm" />
     <HelpKINode Title="about Frame structure" Url="html/T_Furcadia_Drawing_Graphics_Frame.htm" />
-    <HelpKINode Title="fields" Url="html/Fields_T_Furcadia_Net_Dream_Avatar_Frame.htm" />
     <HelpKINode Title="fields" Url="html/Fields_T_Furcadia_Drawing_Graphics_Frame.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_Furcadia_Net_Dream_Avatar_Frame.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Furcadia_Drawing_Graphics_Frame.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Furcadia_Net_Dream_Avatar_Frame.htm" />
   </HelpKINode>
@@ -1064,6 +1081,7 @@
   <HelpKINode Title="Furcadia.Net.Utils.ServerParser.BaseServerInstruction class" Url="html/T_Furcadia_Net_Utils_ServerParser_BaseServerInstruction.htm" />
   <HelpKINode Title="Furcadia.Net.Utils.ServerParser.ChannelObject class" Url="html/T_Furcadia_Net_Utils_ServerParser_ChannelObject.htm" />
   <HelpKINode Title="Furcadia.Net.Utils.ServerParser.DiceRolls class" Url="html/T_Furcadia_Net_Utils_ServerParser_DiceRolls.htm" />
+  <HelpKINode Title="Furcadia.Net.Utils.ServerParser.DreamBookmark class" Url="html/T_Furcadia_Net_Utils_ServerParser_DreamBookmark.htm" />
   <HelpKINode Title="Furcadia.Net.Utils.ServerParser.LoadDream class" Url="html/T_Furcadia_Net_Utils_ServerParser_LoadDream.htm" />
   <HelpKINode Title="Furcadia.Net.Utils.ServerParser.RemoveAvatar class" Url="html/T_Furcadia_Net_Utils_ServerParser_RemoveAvatar.htm" />
   <HelpKINode Title="Furcadia.Net.Utils.ServerParser.SpawnAvatar class" Url="html/T_Furcadia_Net_Utils_ServerParser_SpawnAvatar.htm" />
@@ -1142,6 +1160,7 @@
     <HelpKINode Title="BaseSubSystem.FurcadiaSession Property " Url="html/P_SilverMonkeyEngine_BaseSubSystem_FurcadiaSession.htm" />
     <HelpKINode Title="MonkeySpeakLibrary.FurcadiaSession Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_FurcadiaSession.htm" />
     <HelpKINode Title="MsDice.FurcadiaSession Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_MsDice_FurcadiaSession.htm" />
+    <HelpKINode Title="MsDreamInfo.FurcadiaSession Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_FurcadiaSession.htm" />
     <HelpKINode Title="MsPhoenixSpeak.FurcadiaSession Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_MsPhoenixSpeak_FurcadiaSession.htm" />
     <HelpKINode Title="MsTrades.FurcadiaSession Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_MsTrades_FurcadiaSession.htm" />
     <HelpKINode Title="MS_Cookie.FurcadiaSession Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_MS_Cookie_FurcadiaSession.htm" />
@@ -1300,7 +1319,9 @@
   <HelpKINode Title="FurreNamedinfoNotEqualToNumber method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDatabase_FurreNamedinfoNotEqualToNumber.htm" />
   <HelpKINode Title="FurreNamedinfoNotEqualToSTR method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDatabase_FurreNamedinfoNotEqualToSTR.htm" />
   <HelpKINode Title="FurreNamedIsBanished method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Banish_FurreNamedIsBanished.htm" />
+  <HelpKINode Title="FurreNamedIsDREAMOWNER method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_FurreNamedIsDREAMOWNER.htm" />
   <HelpKINode Title="FurreNamedIsNotBanished method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Banish_FurreNamedIsNotBanished.htm" />
+  <HelpKINode Title="FurreNamedIsNotDREAMOWNER method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_FurreNamedIsNotDREAMOWNER.htm" />
   <HelpKINode Title="FurreNamedLaying method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Movement_FurreNamedLaying.htm" />
   <HelpKINode Title="FurreNamedMale method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Movement_FurreNamedMale.htm" />
   <HelpKINode Title="FurreNamedMoveFrom method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Movement_FurreNamedMoveFrom.htm" />
@@ -1373,17 +1394,17 @@
     <HelpKINode Title="FurrePosition.GetHashCode Method " Url="html/M_Furcadia_Drawing_FurrePosition_GetHashCode.htm" />
     <HelpKINode Title="PluginServices.AvailablePlugin.GetHashCode Method " Url="html/M_MonkeyCore_PluginServices_AvailablePlugin_GetHashCode.htm" />
     <HelpKINode Title="Trigger.GetHashCode Method " Url="html/M_Monkeyspeak_Trigger_GetHashCode.htm" />
-    <HelpKINode Title="Variable.GetHashCode Method " Url="html/M_Monkeyspeak_Variable_GetHashCode.htm" />
     <HelpKINode Title="Variable.GetHashCode Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable_GetHashCode.htm" />
+    <HelpKINode Title="Variable.GetHashCode Method " Url="html/M_Monkeyspeak_Variable_GetHashCode.htm" />
   </HelpKINode>
   <HelpKINode Title="GetInfo method" Url="html/M_MonkeySpeakEditor_wMain_GetInfo.htm" />
   <HelpKINode Title="GetKey method">
-    <HelpKINode Title="IniFile.IniSection.GetKey Method " Url="html/M_Furcadia_IO_IniFile_IniSection_GetKey.htm" />
     <HelpKINode Title="IniFile.IniSection.GetKey Method " Url="html/M_MonkeyCore_IniFile_IniSection_GetKey.htm" />
+    <HelpKINode Title="IniFile.IniSection.GetKey Method " Url="html/M_Furcadia_IO_IniFile_IniSection_GetKey.htm" />
   </HelpKINode>
   <HelpKINode Title="GetKeyValue method">
-    <HelpKINode Title="IniFile.GetKeyValue Method " Url="html/M_Furcadia_IO_IniFile_GetKeyValue.htm" />
     <HelpKINode Title="IniFile.GetKeyValue Method " Url="html/M_MonkeyCore_IniFile_GetKeyValue.htm" />
+    <HelpKINode Title="IniFile.GetKeyValue Method " Url="html/M_Furcadia_IO_IniFile_GetKeyValue.htm" />
   </HelpKINode>
   <HelpKINode Title="GetLevel method" Url="html/M_Furcadia_Badges_GetLevel.htm" />
   <HelpKINode Title="GetList enumeration member" Url="html/T_SilverMonkeyEngine_Engine_Libraries_MsPhoenixSpeakBackupAndRestore_PsBackupStage.htm" />
@@ -1403,8 +1424,8 @@
   <HelpKINode Title="getReply method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsVerbot_getReply.htm" />
   <HelpKINode Title="getReplyName method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsVerbot_getReplyName.htm" />
   <HelpKINode Title="GetSection method">
-    <HelpKINode Title="IniFile.GetSection Method " Url="html/M_MonkeyCore_IniFile_GetSection.htm" />
     <HelpKINode Title="IniFile.GetSection Method " Url="html/M_Furcadia_IO_IniFile_GetSection.htm" />
+    <HelpKINode Title="IniFile.GetSection Method " Url="html/M_MonkeyCore_IniFile_GetSection.htm" />
   </HelpKINode>
   <HelpKINode Title="GetSelectionLink method" Url="html/M_MonkeyCore_Controls_RichTextBoxEx_GetSelectionLink.htm" />
   <HelpKINode Title="GetSetting method" Url="html/M_Furcadia_Text_IniParser_GetSetting.htm" />
@@ -1447,8 +1468,8 @@
   <HelpKINode Title="HasShare property" Url="html/P_Furcadia_Net_Proxy_ProxySession_HasShare.htm" />
   <HelpKINode Title="HasVariable method" Url="html/Overload_Monkeyspeak_Page_HasVariable.htm" />
   <HelpKINode Title="Header field" Url="html/F_Furcadia_Drawing_Graphics_FurcadiaShapes_Header.htm" />
-  <HelpKINode Title="Height field" Url="html/F_Furcadia_Drawing_Graphics_Frame_Height.htm" />
   <HelpKINode Title="height field" Url="html/F_Furcadia_Drawing_ViewArea_height.htm" />
+  <HelpKINode Title="Height field" Url="html/F_Furcadia_Drawing_Graphics_Frame_Height.htm" />
   <HelpKINode Title="Height property" Url="html/P_Furcadia_FurcMap_Map_Height.htm" />
   <HelpKINode Title="Helper class">
     <HelpKINode Title="Helper Class" Url="html/T_Furcadia_Drawing_Helper.htm" />
@@ -1484,15 +1505,15 @@
   <HelpKINode Title="HttpPassword property" Url="html/P_MonkeyCore_Settings_MantisConnectSettings_HttpPassword.htm" />
   <HelpKINode Title="HttpUserName property" Url="html/P_MonkeyCore_Settings_MantisConnectSettings_HttpUserName.htm" />
   <HelpKINode Title="Iconfilter field" Url="html/F_Furcadia_Text_FurcadiaMarkup_Iconfilter.htm" />
-  <HelpKINode Title="Id property">
-    <HelpKINode Title="PsId.Id Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_PsId_Id.htm" />
-    <HelpKINode Title="Trigger.Id Property " Url="html/P_Monkeyspeak_Trigger_Id.htm" />
-  </HelpKINode>
+  <HelpKINode Title="id property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_PhoenixSpeakEventArgs_id.htm" />
   <HelpKINode Title="ID property">
     <HelpKINode Title="FURRE.ID Property " Url="html/P_Furcadia_Net_Dream_FURRE_ID.htm" />
     <HelpKINode Title="ProxySession.Rep.ID Property " Url="html/P_Furcadia_Net_Proxy_ProxySession_Rep_ID.htm" />
   </HelpKINode>
-  <HelpKINode Title="id property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_PhoenixSpeakEventArgs_id.htm" />
+  <HelpKINode Title="Id property">
+    <HelpKINode Title="PsId.Id Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_PsId_Id.htm" />
+    <HelpKINode Title="Trigger.Id Property " Url="html/P_Monkeyspeak_Trigger_Id.htm" />
+  </HelpKINode>
   <HelpKINode Title="IDColor property" Url="html/P_MonkeyCore_Settings_EditSettings_IDColor.htm" />
   <HelpKINode Title="ImageData field" Url="html/F_Furcadia_Drawing_Graphics_Frame_ImageData.htm" />
   <HelpKINode Title="ImageDataSize field" Url="html/F_Furcadia_Drawing_Graphics_Frame_ImageDataSize.htm" />
@@ -1528,6 +1549,7 @@
   <HelpKINode Title="ImsPlugin.Version property" Url="html/P_SilverMonkeyEngine_Interfaces_ImsPlugin_Version.htm" />
   <HelpKINode Title="incrementLetter method" Url="html/M_MonkeyCore_Utils_incrementLetter.htm" />
   <HelpKINode Title="IndexOf method" Url="html/M_Furcadia_Net_Dream_FURREList_IndexOf.htm" />
+  <HelpKINode Title="InDream method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_InDream.htm" />
   <HelpKINode Title="InDream property" Url="html/P_Furcadia_Net_Proxy_ProxySession_InDream.htm" />
   <HelpKINode Title="Inequality operator">
     <HelpKINode Title="Base220.Inequality Operator " Url="html/M_Furcadia_Text_Base220_op_Inequality.htm" />
@@ -1549,32 +1571,32 @@
     <HelpKINode Title="Settings.ini Property " Url="html/P_MonkeyCore_Settings_ini.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile class">
-    <HelpKINode Title="IniFile Class" Url="html/T_MonkeyCore_IniFile.htm" />
     <HelpKINode Title="IniFile Class" Url="html/T_Furcadia_IO_IniFile.htm" />
+    <HelpKINode Title="IniFile Class" Url="html/T_MonkeyCore_IniFile.htm" />
     <HelpKINode Title="about IniFile class" Url="html/T_Furcadia_IO_IniFile.htm" />
     <HelpKINode Title="about IniFile class" Url="html/T_MonkeyCore_IniFile.htm" />
     <HelpKINode Title="constructor" Url="html/M_Furcadia_IO_IniFile__ctor.htm" />
     <HelpKINode Title="constructor" Url="html/M_MonkeyCore_IniFile__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_MonkeyCore_IniFile.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Furcadia_IO_IniFile.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_MonkeyCore_IniFile.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Furcadia_IO_IniFile.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_MonkeyCore_IniFile.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.AddSection method">
-    <HelpKINode Title="IniFile.AddSection Method " Url="html/M_Furcadia_IO_IniFile_AddSection.htm" />
     <HelpKINode Title="IniFile.AddSection Method " Url="html/M_MonkeyCore_IniFile_AddSection.htm" />
+    <HelpKINode Title="IniFile.AddSection Method " Url="html/M_Furcadia_IO_IniFile_AddSection.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.Code property">
-    <HelpKINode Title="IniFile.Code Property " Url="html/P_Furcadia_IO_IniFile_Code.htm" />
     <HelpKINode Title="IniFile.Code Property " Url="html/P_MonkeyCore_IniFile_Code.htm" />
+    <HelpKINode Title="IniFile.Code Property " Url="html/P_Furcadia_IO_IniFile_Code.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.GetKeyValue method">
     <HelpKINode Title="IniFile.GetKeyValue Method " Url="html/M_Furcadia_IO_IniFile_GetKeyValue.htm" />
     <HelpKINode Title="IniFile.GetKeyValue Method " Url="html/M_MonkeyCore_IniFile_GetKeyValue.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.GetSection method">
-    <HelpKINode Title="IniFile.GetSection Method " Url="html/M_Furcadia_IO_IniFile_GetSection.htm" />
     <HelpKINode Title="IniFile.GetSection Method " Url="html/M_MonkeyCore_IniFile_GetSection.htm" />
+    <HelpKINode Title="IniFile.GetSection Method " Url="html/M_Furcadia_IO_IniFile_GetSection.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniFile constructor">
     <HelpKINode Title="IniFile Constructor " Url="html/M_Furcadia_IO_IniFile__ctor.htm" />
@@ -1585,60 +1607,60 @@
     <HelpKINode Title="IniFile.IniSection Class" Url="html/T_MonkeyCore_IniFile_IniSection.htm" />
     <HelpKINode Title="about IniFile.IniSection class" Url="html/T_Furcadia_IO_IniFile_IniSection.htm" />
     <HelpKINode Title="about IniFile.IniSection class" Url="html/T_MonkeyCore_IniFile_IniSection.htm" />
-    <HelpKINode Title="constructor" Url="html/M_MonkeyCore_IniFile_IniSection__ctor.htm" />
     <HelpKINode Title="constructor" Url="html/M_Furcadia_IO_IniFile_IniSection__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_MonkeyCore_IniFile_IniSection__ctor.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.AddKey method">
-    <HelpKINode Title="IniFile.IniSection.AddKey Method " Url="html/M_MonkeyCore_IniFile_IniSection_AddKey.htm" />
     <HelpKINode Title="IniFile.IniSection.AddKey Method " Url="html/M_Furcadia_IO_IniFile_IniSection_AddKey.htm" />
+    <HelpKINode Title="IniFile.IniSection.AddKey Method " Url="html/M_MonkeyCore_IniFile_IniSection_AddKey.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.GetKey method">
     <HelpKINode Title="IniFile.IniSection.GetKey Method " Url="html/M_MonkeyCore_IniFile_IniSection_GetKey.htm" />
     <HelpKINode Title="IniFile.IniSection.GetKey Method " Url="html/M_Furcadia_IO_IniFile_IniSection_GetKey.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.GetName method">
-    <HelpKINode Title="IniFile.IniSection.GetName Method " Url="html/M_Furcadia_IO_IniFile_IniSection_GetName.htm" />
     <HelpKINode Title="IniFile.IniSection.GetName Method " Url="html/M_MonkeyCore_IniFile_IniSection_GetName.htm" />
+    <HelpKINode Title="IniFile.IniSection.GetName Method " Url="html/M_Furcadia_IO_IniFile_IniSection_GetName.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.IniKey class">
-    <HelpKINode Title="IniFile.IniSection.IniKey Class" Url="html/T_MonkeyCore_IniFile_IniSection_IniKey.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey Class" Url="html/T_Furcadia_IO_IniFile_IniSection_IniKey.htm" />
+    <HelpKINode Title="IniFile.IniSection.IniKey Class" Url="html/T_MonkeyCore_IniFile_IniSection_IniKey.htm" />
     <HelpKINode Title="about IniFile.IniSection.IniKey class" Url="html/T_MonkeyCore_IniFile_IniSection_IniKey.htm" />
     <HelpKINode Title="about IniFile.IniSection.IniKey class" Url="html/T_Furcadia_IO_IniFile_IniSection_IniKey.htm" />
-    <HelpKINode Title="constructor" Url="html/M_MonkeyCore_IniFile_IniSection_IniKey__ctor.htm" />
     <HelpKINode Title="constructor" Url="html/M_Furcadia_IO_IniFile_IniSection_IniKey__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/M_MonkeyCore_IniFile_IniSection_IniKey__ctor.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.IniKey.GetName method">
     <HelpKINode Title="IniFile.IniSection.IniKey.GetName Method " Url="html/M_MonkeyCore_IniFile_IniSection_IniKey_GetName.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey.GetName Method " Url="html/M_Furcadia_IO_IniFile_IniSection_IniKey_GetName.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.IniKey.GetValue method">
-    <HelpKINode Title="IniFile.IniSection.IniKey.GetValue Method " Url="html/M_MonkeyCore_IniFile_IniSection_IniKey_GetValue.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey.GetValue Method " Url="html/M_Furcadia_IO_IniFile_IniSection_IniKey_GetValue.htm" />
+    <HelpKINode Title="IniFile.IniSection.IniKey.GetValue Method " Url="html/M_MonkeyCore_IniFile_IniSection_IniKey_GetValue.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.IniKey.IniKey constructor">
-    <HelpKINode Title="IniFile.IniSection.IniKey Constructor " Url="html/M_MonkeyCore_IniFile_IniSection_IniKey__ctor.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey Constructor " Url="html/M_Furcadia_IO_IniFile_IniSection_IniKey__ctor.htm" />
+    <HelpKINode Title="IniFile.IniSection.IniKey Constructor " Url="html/M_MonkeyCore_IniFile_IniSection_IniKey__ctor.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.IniKey.Name property">
     <HelpKINode Title="IniFile.IniSection.IniKey.Name Property " Url="html/P_MonkeyCore_IniFile_IniSection_IniKey_Name.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey.Name Property " Url="html/P_Furcadia_IO_IniFile_IniSection_IniKey_Name.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.IniKey.SetName method">
-    <HelpKINode Title="IniFile.IniSection.IniKey.SetName Method " Url="html/M_MonkeyCore_IniFile_IniSection_IniKey_SetName.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey.SetName Method " Url="html/M_Furcadia_IO_IniFile_IniSection_IniKey_SetName.htm" />
+    <HelpKINode Title="IniFile.IniSection.IniKey.SetName Method " Url="html/M_MonkeyCore_IniFile_IniSection_IniKey_SetName.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.IniKey.SetValue method">
-    <HelpKINode Title="IniFile.IniSection.IniKey.SetValue Method " Url="html/M_MonkeyCore_IniFile_IniSection_IniKey_SetValue.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey.SetValue Method " Url="html/M_Furcadia_IO_IniFile_IniSection_IniKey_SetValue.htm" />
+    <HelpKINode Title="IniFile.IniSection.IniKey.SetValue Method " Url="html/M_MonkeyCore_IniFile_IniSection_IniKey_SetValue.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.IniKey.Value property">
-    <HelpKINode Title="IniFile.IniSection.IniKey.Value Property " Url="html/P_Furcadia_IO_IniFile_IniSection_IniKey_Value.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey.Value Property " Url="html/P_MonkeyCore_IniFile_IniSection_IniKey_Value.htm" />
+    <HelpKINode Title="IniFile.IniSection.IniKey.Value Property " Url="html/P_Furcadia_IO_IniFile_IniSection_IniKey_Value.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.IniSection constructor">
-    <HelpKINode Title="IniFile.IniSection Constructor " Url="html/M_Furcadia_IO_IniFile_IniSection__ctor.htm" />
     <HelpKINode Title="IniFile.IniSection Constructor " Url="html/M_MonkeyCore_IniFile_IniSection__ctor.htm" />
+    <HelpKINode Title="IniFile.IniSection Constructor " Url="html/M_Furcadia_IO_IniFile_IniSection__ctor.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.Keys property">
     <HelpKINode Title="IniFile.IniSection.Keys Property " Url="html/P_MonkeyCore_IniFile_IniSection_Keys.htm" />
@@ -1649,12 +1671,12 @@
     <HelpKINode Title="IniFile.IniSection.Name Property " Url="html/P_Furcadia_IO_IniFile_IniSection_Name.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.RemoveAllKeys method">
-    <HelpKINode Title="IniFile.IniSection.RemoveAllKeys Method " Url="html/M_Furcadia_IO_IniFile_IniSection_RemoveAllKeys.htm" />
     <HelpKINode Title="IniFile.IniSection.RemoveAllKeys Method " Url="html/M_MonkeyCore_IniFile_IniSection_RemoveAllKeys.htm" />
+    <HelpKINode Title="IniFile.IniSection.RemoveAllKeys Method " Url="html/M_Furcadia_IO_IniFile_IniSection_RemoveAllKeys.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.RemoveKey method">
-    <HelpKINode Title="IniSection.RemoveKey Method " Url="html/Overload_Furcadia_IO_IniFile_IniSection_RemoveKey.htm" />
     <HelpKINode Title="IniSection.RemoveKey Method " Url="html/Overload_MonkeyCore_IniFile_IniSection_RemoveKey.htm" />
+    <HelpKINode Title="IniSection.RemoveKey Method " Url="html/Overload_Furcadia_IO_IniFile_IniSection_RemoveKey.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.IniSection.SetName method">
     <HelpKINode Title="IniFile.IniSection.SetName Method " Url="html/M_MonkeyCore_IniFile_IniSection_SetName.htm" />
@@ -1677,16 +1699,16 @@
     <HelpKINode Title="IniFile.RemoveSection Method " Url="html/Overload_MonkeyCore_IniFile_RemoveSection.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.RenameKey method">
-    <HelpKINode Title="IniFile.RenameKey Method " Url="html/M_Furcadia_IO_IniFile_RenameKey.htm" />
     <HelpKINode Title="IniFile.RenameKey Method " Url="html/M_MonkeyCore_IniFile_RenameKey.htm" />
+    <HelpKINode Title="IniFile.RenameKey Method " Url="html/M_Furcadia_IO_IniFile_RenameKey.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.RenameSection method">
     <HelpKINode Title="IniFile.RenameSection Method " Url="html/M_MonkeyCore_IniFile_RenameSection.htm" />
     <HelpKINode Title="IniFile.RenameSection Method " Url="html/M_Furcadia_IO_IniFile_RenameSection.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.Save method">
-    <HelpKINode Title="IniFile.Save Method " Url="html/M_MonkeyCore_IniFile_Save.htm" />
     <HelpKINode Title="IniFile.Save Method " Url="html/M_Furcadia_IO_IniFile_Save.htm" />
+    <HelpKINode Title="IniFile.Save Method " Url="html/M_MonkeyCore_IniFile_Save.htm" />
   </HelpKINode>
   <HelpKINode Title="IniFile.Sections property">
     <HelpKINode Title="IniFile.Sections Property " Url="html/P_Furcadia_IO_IniFile_Sections.htm" />
@@ -1699,8 +1721,8 @@
   <HelpKINode Title="IniKey class">
     <HelpKINode Title="methods" Url="html/Methods_T_Furcadia_IO_IniFile_IniSection_IniKey.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_MonkeyCore_IniFile_IniSection_IniKey.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_MonkeyCore_IniFile_IniSection_IniKey.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Furcadia_IO_IniFile_IniSection_IniKey.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_MonkeyCore_IniFile_IniSection_IniKey.htm" />
   </HelpKINode>
   <HelpKINode Title="IniParser class">
     <HelpKINode Title="IniParser Class" Url="html/T_Furcadia_Text_IniParser.htm" />
@@ -1791,8 +1813,8 @@
   <HelpKINode Title="kb field" Url="html/F_SilverMonkeyEngine_Engine_Libraries_MsVerbot_kb.htm" />
   <HelpKINode Title="kbi field" Url="html/F_SilverMonkeyEngine_Engine_Libraries_MsVerbot_kbi.htm" />
   <HelpKINode Title="Keys property">
-    <HelpKINode Title="IniFile.IniSection.Keys Property " Url="html/P_Furcadia_IO_IniFile_IniSection_Keys.htm" />
     <HelpKINode Title="IniFile.IniSection.Keys Property " Url="html/P_MonkeyCore_IniFile_IniSection_Keys.htm" />
+    <HelpKINode Title="IniFile.IniSection.Keys Property " Url="html/P_Furcadia_IO_IniFile_IniSection_Keys.htm" />
   </HelpKINode>
   <HelpKINode Title="KeysHelpIni field" Url="html/F_MonkeySpeakEditor_MainModule_KeysHelpIni.htm" />
   <HelpKINode Title="KeysHelpMSIni field" Url="html/F_MonkeySpeakEditor_MainModule_KeysHelpMSIni.htm" />
@@ -1814,8 +1836,8 @@
   <HelpKINode Title="Level property" Url="html/P_Furcadia_Net_Dream_FURRE_Level.htm" />
   <HelpKINode Title="Library property" Url="html/P_MonkeyCore_PluginServices_AvailablePlugin_Library.htm" />
   <HelpKINode Title="LieDown enumeration member" Url="html/T_Furcadia_Net_Dream_Avatar_FurrePose.htm" />
-  <HelpKINode Title="Lines property" Url="html/P_Furcadia_Net_Dream_DREAM_Lines.htm" />
   <HelpKINode Title="lines property" Url="html/P_MonkeySpeakEditor_MS_Edit_TDSSegment_lines.htm" />
+  <HelpKINode Title="Lines property" Url="html/P_Furcadia_Net_Dream_DREAM_Lines.htm" />
   <HelpKINode Title="ListBox_NoFlicker class">
     <HelpKINode Title="ListBox_NoFlicker Class" Url="html/T_MonkeyCore_Controls_ListBox_NoFlicker.htm" />
     <HelpKINode Title="about ListBox_NoFlicker class" Url="html/T_MonkeyCore_Controls_ListBox_NoFlicker.htm" />
@@ -1836,8 +1858,8 @@
   <HelpKINode Title="ListView_NoFlicker.ListView_NoFlicker constructor" Url="html/M_MonkeyCore_Controls_ListView_NoFlicker__ctor.htm" />
   <HelpKINode Title="Load method">
     <HelpKINode Title="Character.Load Method " Url="html/M_Furcadia_Text_Character_Load.htm" />
-    <HelpKINode Title="IniFile.Load Method " Url="html/M_Furcadia_IO_IniFile_Load.htm" />
     <HelpKINode Title="IniFile.Load Method " Url="html/M_MonkeyCore_IniFile_Load.htm" />
+    <HelpKINode Title="IniFile.Load Method " Url="html/M_Furcadia_IO_IniFile_Load.htm" />
     <HelpKINode Title="Settings.Load Method " Url="html/Overload_Furcadia_Text_Settings_Load.htm" />
   </HelpKINode>
   <HelpKINode Title="LoadCompiledFile method" Url="html/M_Monkeyspeak_MonkeyspeakEngine_LoadCompiledFile.htm" />
@@ -2219,6 +2241,7 @@
   <HelpKINode Title="MonkeySpeakLibrary.Dream field" Url="html/F_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_Dream.htm" />
   <HelpKINode Title="MonkeySpeakLibrary.FurcadiaSession property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_FurcadiaSession.htm" />
   <HelpKINode Title="MonkeySpeakLibrary.FurcTime property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_FurcTime.htm" />
+  <HelpKINode Title="MonkeySpeakLibrary.InDream method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_InDream.htm" />
   <HelpKINode Title="MonkeySpeakLibrary.MonkeySpeakLibrary constructor" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary__ctor.htm" />
   <HelpKINode Title="MonkeySpeakLibrary.MsEngine property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_MsEngine.htm" />
   <HelpKINode Title="MonkeySpeakLibrary.msgContains method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_msgContains.htm" />
@@ -2426,6 +2449,29 @@
   <HelpKINode Title="MsDice.RollNumberMinusModifyer method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDice_RollNumberMinusModifyer.htm" />
   <HelpKINode Title="MsDice.RollNumberPlusModifyer method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDice_RollNumberPlusModifyer.htm" />
   <HelpKINode Title="MsDice.TrigFurreRolledVariable method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDice_TrigFurreRolledVariable.htm" />
+  <HelpKINode Title="MsDreamInfo class">
+    <HelpKINode Title="MsDreamInfo Class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo.htm" />
+    <HelpKINode Title="about MsDreamInfo class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo.htm" />
+    <HelpKINode Title="constructor" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo__ctor.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo.htm" />
+  </HelpKINode>
+  <HelpKINode Title="MsDreamInfo.BotIsDreamOwner method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_BotIsDreamOwner.htm" />
+  <HelpKINode Title="MsDreamInfo.BotIsNotDreamOwner method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_BotIsNotDreamOwner.htm" />
+  <HelpKINode Title="MsDreamInfo.DreamNameIs method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_DreamNameIs.htm" />
+  <HelpKINode Title="MsDreamInfo.DreamNameIsNot method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_DreamNameIsNot.htm" />
+  <HelpKINode Title="MsDreamInfo.FurcadiaSession property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_FurcadiaSession.htm" />
+  <HelpKINode Title="MsDreamInfo.FurreNamedIsDREAMOWNER method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_FurreNamedIsDREAMOWNER.htm" />
+  <HelpKINode Title="MsDreamInfo.FurreNamedIsNotDREAMOWNER method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_FurreNamedIsNotDREAMOWNER.htm" />
+  <HelpKINode Title="MsDreamInfo.MsDreamInfo constructor" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo__ctor.htm" />
+  <HelpKINode Title="MsDreamInfo.NameIs method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_NameIs.htm" />
+  <HelpKINode Title="MsDreamInfo.ShareFurreNamed method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_ShareFurreNamed.htm" />
+  <HelpKINode Title="MsDreamInfo.ShareTrigFurre method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_ShareTrigFurre.htm" />
+  <HelpKINode Title="MsDreamInfo.TriggeringFurreIsDreamOwner method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_TriggeringFurreIsDreamOwner.htm" />
+  <HelpKINode Title="MsDreamInfo.TriggeringFurreIsNotDreamOwner method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_TriggeringFurreIsNotDreamOwner.htm" />
+  <HelpKINode Title="MsDreamInfo.UnshareFurreNamed method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_UnshareFurreNamed.htm" />
+  <HelpKINode Title="MsDreamInfo.UnshareTrigFurre method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_UnshareTrigFurre.htm" />
   <HelpKINode Title="MsEngine property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_MsEngine.htm" />
   <HelpKINode Title="MsFurcTime method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsTime_MsFurcTime.htm" />
   <HelpKINode Title="MsFurreList class">
@@ -2488,9 +2534,9 @@
   </HelpKINode>
   <HelpKINode Title="MsMemberList.MsMemberList constructor" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsMemberList__ctor.htm" />
   <HelpKINode Title="MsPage property">
-    <HelpKINode Title="MonkeySpeakLibrary.MsPage Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_MsPage.htm" />
     <HelpKINode Title="ImsHost.MsPage Property " Url="html/P_SilverMonkeyEngine_Interfaces_ImsHost_MsPage.htm" />
     <HelpKINode Title="ImsPlugin.MsPage Property " Url="html/P_SilverMonkeyEngine_Interfaces_ImsPlugin_MsPage.htm" />
+    <HelpKINode Title="MonkeySpeakLibrary.MsPage Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_MsPage.htm" />
     <HelpKINode Title="msPlugin.MsPage Property " Url="html/P_SilverMonkeyEngine_Interfaces_msPlugin_MsPage.htm" />
     <HelpKINode Title="smHost.MsPage Property " Url="html/P_SilverMonkeyEngine_Interfaces_smHost_MsPage.htm" />
   </HelpKINode>
@@ -2805,20 +2851,21 @@
     <HelpKINode Title="DREAM.Name Property " Url="html/P_Furcadia_Net_Dream_DREAM_Name.htm" />
     <HelpKINode Title="FURRE.Name Property " Url="html/P_Furcadia_Net_Dream_FURRE_Name.htm" />
     <HelpKINode Title="ImsPlugin.Name Property " Url="html/P_SilverMonkeyEngine_Interfaces_ImsPlugin_Name.htm" />
-    <HelpKINode Title="IniFile.IniSection.IniKey.Name Property " Url="html/P_MonkeyCore_IniFile_IniSection_IniKey_Name.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey.Name Property " Url="html/P_Furcadia_IO_IniFile_IniSection_IniKey_Name.htm" />
-    <HelpKINode Title="IniFile.IniSection.Name Property " Url="html/P_Furcadia_IO_IniFile_IniSection_Name.htm" />
+    <HelpKINode Title="IniFile.IniSection.IniKey.Name Property " Url="html/P_MonkeyCore_IniFile_IniSection_IniKey_Name.htm" />
     <HelpKINode Title="IniFile.IniSection.Name Property " Url="html/P_MonkeyCore_IniFile_IniSection_Name.htm" />
+    <HelpKINode Title="IniFile.IniSection.Name Property " Url="html/P_Furcadia_IO_IniFile_IniSection_Name.htm" />
     <HelpKINode Title="Map.Name Property " Url="html/P_Furcadia_FurcMap_Map_Name.htm" />
     <HelpKINode Title="msPlugin.Name Property " Url="html/P_SilverMonkeyEngine_Interfaces_msPlugin_Name.htm" />
     <HelpKINode Title="PounceClient.PounceFurre.Name Property " Url="html/P_Furcadia_Net_Pounce_PounceClient_PounceFurre_Name.htm" />
     <HelpKINode Title="PounceFurre.Name Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_Pounce_PounceFurre_Name.htm" />
-    <HelpKINode Title="Variable.Name Property " Url="html/P_Monkeyspeak_Variable_Name.htm" />
     <HelpKINode Title="Variable.Name Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable_Name.htm" />
+    <HelpKINode Title="Variable.Name Property " Url="html/P_Monkeyspeak_Variable_Name.htm" />
   </HelpKINode>
   <HelpKINode Title="NameFilter field" Url="html/F_Furcadia_Text_FurcadiaMarkup_NameFilter.htm" />
   <HelpKINode Title="NameIs method">
     <HelpKINode Title="MonkeySpeakLibrary.NameIs Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_NameIs.htm" />
+    <HelpKINode Title="MsDreamInfo.NameIs Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_NameIs.htm" />
     <HelpKINode Title="MsPounce.NameIs Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsPounce_NameIs.htm" />
     <HelpKINode Title="MS_Cookie.NameIs Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_MS_Cookie_NameIs.htm" />
   </HelpKINode>
@@ -2948,11 +2995,11 @@
   <HelpKINode Title="NewFile method" Url="html/M_MonkeySpeakEditor_MS_Edit_NewFile.htm" />
   <HelpKINode Title="NewMSFile method" Url="html/M_MonkeyCore_IO_NewMSFile.htm" />
   <HelpKINode Title="NoEndurance property" Url="html/P_Furcadia_Net_Utils_ServerQue_NoEndurance.htm" />
+  <HelpKINode Title="none enumeration member" Url="html/T_MonkeySpeakEditor_MainModule_EditStyles.htm" />
   <HelpKINode Title="None enumeration member">
     <HelpKINode Title="Avatar.FurrePose Enumeration" Url="html/T_Furcadia_Net_Dream_Avatar_FurrePose.htm" />
     <HelpKINode Title="ServerInstructionType Enumeration" Url="html/T_Furcadia_Net_ServerInstructionType.htm" />
   </HelpKINode>
-  <HelpKINode Title="none enumeration member" Url="html/T_MonkeySpeakEditor_MainModule_EditStyles.htm" />
   <HelpKINode Title="NotBotBackup method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsPhoenixSpeakBackupAndRestore_NotBotBackup.htm" />
   <HelpKINode Title="NotBotRestore method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsPhoenixSpeakBackupAndRestore_NotBotRestore.htm" />
   <HelpKINode Title="NotDescContains method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Movement_NotDescContains.htm" />
@@ -3023,7 +3070,6 @@
     <HelpKINode Title="about Page class" Url="html/T_Monkeyspeak_Page.htm" />
     <HelpKINode Title="constructor" Url="html/M_Monkeyspeak_Page__ctor.htm" />
     <HelpKINode Title="events" Url="html/Events_T_Monkeyspeak_Page.htm" />
-    <HelpKINode Title="fields" Url="html/Fields_T_Monkeyspeak_Page.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Monkeyspeak_Page.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Monkeyspeak_Page.htm" />
   </HelpKINode>
@@ -3052,7 +3098,6 @@
   <HelpKINode Title="Page.SetTriggerHandler method" Url="html/Overload_Monkeyspeak_Page_SetTriggerHandler.htm" />
   <HelpKINode Title="Page.SetVariable method" Url="html/M_Monkeyspeak_Page_SetVariable.htm" />
   <HelpKINode Title="Page.Size property" Url="html/P_Monkeyspeak_Page_Size.htm" />
-  <HelpKINode Title="Page.syncObj field" Url="html/F_Monkeyspeak_Page_syncObj.htm" />
   <HelpKINode Title="Page.TriggerAdded event" Url="html/E_Monkeyspeak_Page_TriggerAdded.htm" />
   <HelpKINode Title="PageExecute method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_PageExecute.htm" />
   <HelpKINode Title="PageOverFlow field" Url="html/F_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_PhoenixSpeakEventArgs_PageOverFlow.htm" />
@@ -3115,10 +3160,10 @@
     <HelpKINode Title="about Paths class" Url="html/T_Furcadia_IO_Paths.htm" />
     <HelpKINode Title="constructor" Url="html/M_MonkeyCore_Paths__ctor.htm" />
     <HelpKINode Title="constructor" Url="html/Overload_Furcadia_IO_Paths__ctor.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_MonkeyCore_Paths.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Furcadia_IO_Paths.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_MonkeyCore_Paths.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_MonkeyCore_Paths.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Furcadia_IO_Paths.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_MonkeyCore_Paths.htm" />
   </HelpKINode>
   <HelpKINode Title="Paths.ApplicationPath property" Url="html/P_MonkeyCore_Paths_ApplicationPath.htm" />
   <HelpKINode Title="Paths.ApplicationPluginPath property" Url="html/P_MonkeyCore_Paths_ApplicationPluginPath.htm" />
@@ -3221,11 +3266,11 @@
   <HelpKINode Title="PhoenixSpeakID property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_PhoenicSpeakDataObject_PhoenixSpeakID.htm" />
   <HelpKINode Title="Ping property" Url="html/P_MonkeyCore_Settings_cMain_Ping.htm" />
   <HelpKINode Title="PingDelayTime property" Url="html/P_Furcadia_Net_Utils_ServerQue_PingDelayTime.htm" />
+  <HelpKINode Title="Player field" Url="html/F_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_Player.htm" />
   <HelpKINode Title="player field">
     <HelpKINode Title="SpawnAvatar.player Field" Url="html/F_Furcadia_Net_Utils_ServerParser_SpawnAvatar_player.htm" />
     <HelpKINode Title="UpdateColorString.player Field" Url="html/F_Furcadia_Net_Utils_ServerParser_UpdateColorString_player.htm" />
   </HelpKINode>
-  <HelpKINode Title="Player field" Url="html/F_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_Player.htm" />
   <HelpKINode Title="Player property">
     <HelpKINode Title="ChannelObject.Player Property " Url="html/P_Furcadia_Net_Utils_ServerParser_ChannelObject_Player.htm" />
     <HelpKINode Title="ImsHost.Player Property " Url="html/P_SilverMonkeyEngine_Interfaces_ImsHost_Player.htm" />
@@ -3325,10 +3370,10 @@
     <HelpKINode Title="about PounceFurre class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_Pounce_PounceFurre.htm" />
     <HelpKINode Title="constructor" Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_Pounce_PounceFurre__ctor.htm" />
     <HelpKINode Title="events" Url="html/Events_T_SilverMonkeyEngine_Engine_Libraries_Pounce_PounceFurre.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Furcadia_Net_Pounce_PounceClient_PounceFurre.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_SilverMonkeyEngine_Engine_Libraries_Pounce_PounceFurre.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_SilverMonkeyEngine_Engine_Libraries_Pounce_PounceFurre.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Furcadia_Net_Pounce_PounceClient_PounceFurre.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Furcadia_Net_Pounce_PounceClient_PounceFurre.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_SilverMonkeyEngine_Engine_Libraries_Pounce_PounceFurre.htm" />
   </HelpKINode>
   <HelpKINode Title="PounceFurre.Equals method" Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_Pounce_PounceFurre_Equals.htm" />
   <HelpKINode Title="PounceFurre.FurreLoggedOff event" Url="html/E_SilverMonkeyEngine_Engine_Libraries_Pounce_PounceFurre_FurreLoggedOff.htm" />
@@ -3601,17 +3646,17 @@
   <HelpKINode Title="RemberPSInforFurreNamed method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsPhoenixSpeak_RemberPSInforFurreNamed.htm" />
   <HelpKINode Title="RemberPSInforTrigFurre method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsPhoenixSpeak_RemberPSInforTrigFurre.htm" />
   <HelpKINode Title="Remove method">
-    <HelpKINode Title="NameList.Remove Method " Url="html/M_SilverMonkeyEngine_IO_NameList_Remove.htm" />
     <HelpKINode Title="FURREList.Remove Method " Url="html/Overload_Furcadia_Net_Dream_FURREList_Remove.htm" />
+    <HelpKINode Title="NameList.Remove Method " Url="html/M_SilverMonkeyEngine_IO_NameList_Remove.htm" />
   </HelpKINode>
   <HelpKINode Title="remove method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_PsId_remove.htm" />
   <HelpKINode Title="RemoveAllKeys method">
-    <HelpKINode Title="IniFile.IniSection.RemoveAllKeys Method " Url="html/M_MonkeyCore_IniFile_IniSection_RemoveAllKeys.htm" />
     <HelpKINode Title="IniFile.IniSection.RemoveAllKeys Method " Url="html/M_Furcadia_IO_IniFile_IniSection_RemoveAllKeys.htm" />
+    <HelpKINode Title="IniFile.IniSection.RemoveAllKeys Method " Url="html/M_MonkeyCore_IniFile_IniSection_RemoveAllKeys.htm" />
   </HelpKINode>
   <HelpKINode Title="RemoveAllSections method">
-    <HelpKINode Title="IniFile.RemoveAllSections Method " Url="html/M_Furcadia_IO_IniFile_RemoveAllSections.htm" />
     <HelpKINode Title="IniFile.RemoveAllSections Method " Url="html/M_MonkeyCore_IniFile_RemoveAllSections.htm" />
+    <HelpKINode Title="IniFile.RemoveAllSections Method " Url="html/M_Furcadia_IO_IniFile_RemoveAllSections.htm" />
   </HelpKINode>
   <HelpKINode Title="RemoveAt method" Url="html/M_Furcadia_Net_Dream_FURREList_RemoveAt.htm" />
   <HelpKINode Title="RemoveAvatar class">
@@ -3630,8 +3675,8 @@
   <HelpKINode Title="RemoveKey method">
     <HelpKINode Title="IniFile.RemoveKey Method " Url="html/M_MonkeyCore_IniFile_RemoveKey.htm" />
     <HelpKINode Title="IniFile.RemoveKey Method " Url="html/M_Furcadia_IO_IniFile_RemoveKey.htm" />
-    <HelpKINode Title="IniSection.RemoveKey Method " Url="html/Overload_MonkeyCore_IniFile_IniSection_RemoveKey.htm" />
     <HelpKINode Title="IniSection.RemoveKey Method " Url="html/Overload_Furcadia_IO_IniFile_IniSection_RemoveKey.htm" />
+    <HelpKINode Title="IniSection.RemoveKey Method " Url="html/Overload_MonkeyCore_IniFile_IniSection_RemoveKey.htm" />
   </HelpKINode>
   <HelpKINode Title="RemoveSection method">
     <HelpKINode Title="IniFile.RemoveSection Method " Url="html/Overload_Furcadia_IO_IniFile_RemoveSection.htm" />
@@ -3639,8 +3684,8 @@
   </HelpKINode>
   <HelpKINode Title="RemoveTriggerHandler method" Url="html/Overload_Monkeyspeak_Page_RemoveTriggerHandler.htm" />
   <HelpKINode Title="RenameKey method">
-    <HelpKINode Title="IniFile.RenameKey Method " Url="html/M_Furcadia_IO_IniFile_RenameKey.htm" />
     <HelpKINode Title="IniFile.RenameKey Method " Url="html/M_MonkeyCore_IniFile_RenameKey.htm" />
+    <HelpKINode Title="IniFile.RenameKey Method " Url="html/M_Furcadia_IO_IniFile_RenameKey.htm" />
   </HelpKINode>
   <HelpKINode Title="RenameSection method">
     <HelpKINode Title="IniFile.RenameSection Method " Url="html/M_Furcadia_IO_IniFile_RenameSection.htm" />
@@ -3737,8 +3782,8 @@
   <HelpKINode Title="SecNormal enumeration member" Url="html/T_MonkeySpeakEditor_MS_Edit_TSecType.htm" />
   <HelpKINode Title="Section property" Url="html/P_MonkeySpeakEditor_InputBoxFrm_Section.htm" />
   <HelpKINode Title="Sections property">
-    <HelpKINode Title="IniFile.Sections Property " Url="html/P_Furcadia_IO_IniFile_Sections.htm" />
     <HelpKINode Title="IniFile.Sections Property " Url="html/P_MonkeyCore_IniFile_Sections.htm" />
+    <HelpKINode Title="IniFile.Sections Property " Url="html/P_Furcadia_IO_IniFile_Sections.htm" />
   </HelpKINode>
   <HelpKINode Title="SecType property" Url="html/P_MonkeySpeakEditor_MS_Edit_TDSSegment_SecType.htm" />
   <HelpKINode Title="SendClientMessage method">
@@ -3752,26 +3797,26 @@
     <HelpKINode Title="MessageHelper.SendMessage Method " Url="html/M_MonkeySpeakEditor_MessageHelper_SendMessage.htm" />
     <HelpKINode Title="WmCpyDta.SendMessage Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_WmCpyDta_SendMessage.htm" />
   </HelpKINode>
-  <HelpKINode Title="SendServer method">
-    <HelpKINode Title="ClientBase.SendServer Method " Url="html/Overload_Furcadia_Net_DirectConnection_ClientBase_SendServer.htm" />
-    <HelpKINode Title="NetConnection.SendServer Method " Url="html/Overload_Furcadia_Net_DirectConnection_NetConnection_SendServer.htm" />
-  </HelpKINode>
   <HelpKINode Title="sendServer method">
     <HelpKINode Title="ImsHost.sendServer Method " Url="html/M_SilverMonkeyEngine_Interfaces_ImsHost_sendServer.htm" />
     <HelpKINode Title="MonkeySpeakLibrary.sendServer Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_MonkeySpeakLibrary_sendServer.htm" />
     <HelpKINode Title="smHost.sendServer Method " Url="html/M_SilverMonkeyEngine_Interfaces_smHost_sendServer.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SendServer method">
+    <HelpKINode Title="NetConnection.SendServer Method " Url="html/Overload_Furcadia_Net_DirectConnection_NetConnection_SendServer.htm" />
+    <HelpKINode Title="ClientBase.SendServer Method " Url="html/Overload_Furcadia_Net_DirectConnection_ClientBase_SendServer.htm" />
   </HelpKINode>
   <HelpKINode Title="SendToClient method">
     <HelpKINode Title="NetProxy.SendToClient Method " Url="html/Overload_Furcadia_Net_NetProxy_SendToClient.htm" />
     <HelpKINode Title="ProxySession.SendToClient Method " Url="html/Overload_Furcadia_Net_Proxy_ProxySession_SendToClient.htm" />
   </HelpKINode>
   <HelpKINode Title="SendToClientFormattedText method" Url="html/M_SilverMonkeyEngine_BotSession_SendToClientFormattedText.htm" />
+  <HelpKINode Title="sendToServer method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_SubSystem_sendToServer.htm" />
   <HelpKINode Title="SendToServer method">
     <HelpKINode Title="NetProxy.SendToServer Method " Url="html/Overload_Furcadia_Net_NetProxy_SendToServer.htm" />
     <HelpKINode Title="ProxySession.SendToServer Method " Url="html/Overload_Furcadia_Net_Proxy_ProxySession_SendToServer.htm" />
     <HelpKINode Title="ServerQue.SendToServer Method " Url="html/M_Furcadia_Net_Utils_ServerQue_SendToServer.htm" />
   </HelpKINode>
-  <HelpKINode Title="sendToServer method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_SubSystem_sendToServer.htm" />
   <HelpKINode Title="sendWindowsMessage method" Url="html/M_MonkeySpeakEditor_MessageHelper_sendWindowsMessage.htm" />
   <HelpKINode Title="sendWindowsStringMessage method" Url="html/M_MonkeySpeakEditor_MessageHelper_sendWindowsStringMessage.htm" />
   <HelpKINode Title="ServerConnectedPhase property" Url="html/P_Furcadia_Net_ParseServerArgs_ServerConnectedPhase.htm" />
@@ -3828,16 +3873,16 @@
   <HelpKINode Title="SetFocusAPI method" Url="html/M_MonkeySpeakEditor_MS_Edit_SetFocusAPI.htm" />
   <HelpKINode Title="SetForegroundWindow method" Url="html/M_MonkeySpeakEditor_MessageHelper_SetForegroundWindow.htm" />
   <HelpKINode Title="SetKeyValue method">
-    <HelpKINode Title="IniFile.SetKeyValue Method " Url="html/M_MonkeyCore_IniFile_SetKeyValue.htm" />
     <HelpKINode Title="IniFile.SetKeyValue Method " Url="html/M_Furcadia_IO_IniFile_SetKeyValue.htm" />
+    <HelpKINode Title="IniFile.SetKeyValue Method " Url="html/M_MonkeyCore_IniFile_SetKeyValue.htm" />
   </HelpKINode>
   <HelpKINode Title="SetLineTabs method" Url="html/M_MonkeySpeakEditor_MS_Edit_SetLineTabs.htm" />
   <HelpKINode Title="Setlist property" Url="html/P_MonkeySpeakEditor_wUI_StructMapSearch_Setlist.htm" />
   <HelpKINode Title="SetName method">
-    <HelpKINode Title="IniFile.IniSection.IniKey.SetName Method " Url="html/M_Furcadia_IO_IniFile_IniSection_IniKey_SetName.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey.SetName Method " Url="html/M_MonkeyCore_IniFile_IniSection_IniKey_SetName.htm" />
-    <HelpKINode Title="IniFile.IniSection.SetName Method " Url="html/M_Furcadia_IO_IniFile_IniSection_SetName.htm" />
+    <HelpKINode Title="IniFile.IniSection.IniKey.SetName Method " Url="html/M_Furcadia_IO_IniFile_IniSection_IniKey_SetName.htm" />
     <HelpKINode Title="IniFile.IniSection.SetName Method " Url="html/M_MonkeyCore_IniFile_IniSection_SetName.htm" />
+    <HelpKINode Title="IniFile.IniSection.SetName Method " Url="html/M_Furcadia_IO_IniFile_IniSection_SetName.htm" />
   </HelpKINode>
   <HelpKINode Title="setObjectAt method" Url="html/M_Furcadia_FurcMap_Map_setObjectAt.htm" />
   <HelpKINode Title="SetParser method" Url="html/Overload_MonkeyCore_Controls_SilverMonkeyFCTB_SetParser.htm" />
@@ -3853,17 +3898,17 @@
   <HelpKINode Title="SettingNotEqualTo method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDatabase_SettingNotEqualTo.htm" />
   <HelpKINode Title="SettingNotExist method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDatabase_SettingNotExist.htm" />
   <HelpKINode Title="Settings class">
-    <HelpKINode Title="Settings Class" Url="html/T_Furcadia_Text_Settings.htm" />
     <HelpKINode Title="Settings Class" Url="html/T_MonkeyCore_Settings.htm" />
+    <HelpKINode Title="Settings Class" Url="html/T_Furcadia_Text_Settings.htm" />
     <HelpKINode Title="about Settings class" Url="html/T_MonkeyCore_Settings.htm" />
     <HelpKINode Title="about Settings class" Url="html/T_Furcadia_Text_Settings.htm" />
-    <HelpKINode Title="constructor" Url="html/Overload_Furcadia_Text_Settings__ctor.htm" />
     <HelpKINode Title="constructor" Url="html/M_MonkeyCore_Settings__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/Overload_Furcadia_Text_Settings__ctor.htm" />
     <HelpKINode Title="fields" Url="html/Fields_T_MonkeyCore_Settings.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_MonkeyCore_Settings.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Furcadia_Text_Settings.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_MonkeyCore_Settings.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Furcadia_Text_Settings.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_MonkeyCore_Settings.htm" />
   </HelpKINode>
   <HelpKINode Title="Settings.cMain class">
     <HelpKINode Title="Settings.cMain Class" Url="html/T_MonkeyCore_Settings_cMain.htm" />
@@ -3976,6 +4021,8 @@
   <HelpKINode Title="Shape.ShapeNum field" Url="html/F_Furcadia_Drawing_Graphics_Shape_ShapeNum.htm" />
   <HelpKINode Title="ShapeNum field" Url="html/F_Furcadia_Drawing_Graphics_Shape_ShapeNum.htm" />
   <HelpKINode Title="Shapes field" Url="html/F_Furcadia_Drawing_Graphics_FurcadiaShapes_Shapes.htm" />
+  <HelpKINode Title="ShareFurreNamed method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_ShareFurreNamed.htm" />
+  <HelpKINode Title="ShareTrigFurre method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_ShareTrigFurre.htm" />
   <HelpKINode Title="ShortName property">
     <HelpKINode Title="DREAM.ShortName Property " Url="html/P_Furcadia_Net_Dream_DREAM_ShortName.htm" />
     <HelpKINode Title="FURRE.ShortName Property " Url="html/P_Furcadia_Net_Dream_FURRE_ShortName.htm" />
@@ -4000,6 +4047,7 @@
   <HelpKINode Title="SilverMonkeyEngine.Engine.Libraries.MsDice class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_MsDice.htm" />
   <HelpKINode Title="SilverMonkeyEngine.Engine.Libraries.MsDice.DiceRollCollection class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_MsDice_DiceRollCollection.htm" />
   <HelpKINode Title="SilverMonkeyEngine.Engine.Libraries.MsDice.Die class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_MsDice_Die.htm" />
+  <HelpKINode Title="SilverMonkeyEngine.Engine.Libraries.MsDreamInfo class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo.htm" />
   <HelpKINode Title="SilverMonkeyEngine.Engine.Libraries.MsFurreList class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_MsFurreList.htm" />
   <HelpKINode Title="SilverMonkeyEngine.Engine.Libraries.MsIO class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_MsIO.htm" />
   <HelpKINode Title="SilverMonkeyEngine.Engine.Libraries.MsMemberList class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_MsMemberList.htm" />
@@ -4174,14 +4222,14 @@
   </HelpKINode>
   <HelpKINode Title="Stand1 enumeration member" Url="html/T_Furcadia_Net_Dream_Avatar_FurrePose.htm" />
   <HelpKINode Title="Stand2 enumeration member" Url="html/T_Furcadia_Net_Dream_Avatar_FurrePose.htm" />
-  <HelpKINode Title="Standalone property" Url="html/P_Furcadia_Net_Options_ProxyOptions_Standalone.htm" />
   <HelpKINode Title="StandAlone property" Url="html/P_Furcadia_Net_Proxy_ProxySession_StandAlone.htm" />
+  <HelpKINode Title="Standalone property" Url="html/P_Furcadia_Net_Options_ProxyOptions_Standalone.htm" />
   <HelpKINode Title="Start method">
+    <HelpKINode Title="ImsPlugin.Start Method " Url="html/M_SilverMonkeyEngine_Interfaces_ImsPlugin_Start.htm" />
     <HelpKINode Title="MonkeySpeakPage.Start Method " Url="html/M_SilverMonkeyEngine_Engine_MonkeySpeakPage_Start.htm" />
+    <HelpKINode Title="msPlugin.Start Method " Url="html/M_SilverMonkeyEngine_Interfaces_msPlugin_Start.htm" />
     <HelpKINode Title="ProxyReconnect.Start Method " Url="html/M_Furcadia_Net_Utils_ProxyReconnect_Start.htm" />
     <HelpKINode Title="smHost.Start Method " Url="html/M_SilverMonkeyEngine_Interfaces_smHost_Start.htm" />
-    <HelpKINode Title="ImsPlugin.Start Method " Url="html/M_SilverMonkeyEngine_Interfaces_ImsPlugin_Start.htm" />
-    <HelpKINode Title="msPlugin.Start Method " Url="html/M_SilverMonkeyEngine_Interfaces_msPlugin_Start.htm" />
   </HelpKINode>
   <HelpKINode Title="start method" Url="html/M_SilverMonkeyEngine_Interfaces_ImsHost_start.htm" />
   <HelpKINode Title="Status property">
@@ -4256,7 +4304,6 @@
     <HelpKINode Title="Base95.Subtraction Operator " Url="html/M_Furcadia_Text_Base95_op_Subtraction.htm" />
   </HelpKINode>
   <HelpKINode Title="SW enumeration member" Url="html/T_Furcadia_Net_Dream_Avatar_av_DIR.htm" />
-  <HelpKINode Title="syncObj field" Url="html/F_Monkeyspeak_Page_syncObj.htm" />
   <HelpKINode Title="SyncRoot property" Url="html/P_Furcadia_Net_Dream_FURREList_SyncRoot.htm" />
   <HelpKINode Title="SystemFshIcon method" Url="html/M_Furcadia_Text_FurcadiaMarkup_SystemFshIcon.htm" />
   <HelpKINode Title="SysTray property" Url="html/P_MonkeyCore_Settings_cMain_SysTray.htm" />
@@ -4370,6 +4417,7 @@
     <HelpKINode Title="Trigger.ToString Method " Url="html/M_Monkeyspeak_Trigger_ToString.htm" />
     <HelpKINode Title="Variable.ToString Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable_ToString.htm" />
     <HelpKINode Title="Variable.ToString Method " Url="html/M_Monkeyspeak_Variable_ToString.htm" />
+    <HelpKINode Title="WebException.ToString Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebException_ToString.htm" />
   </HelpKINode>
   <HelpKINode Title="TotalFurresOnline property" Url="html/P_Furcadia_Net_Pounce_PounceConnection_TotalFurresOnline.htm" />
   <HelpKINode Title="TrigFurreIsBanished method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Banish_TrigFurreIsBanished.htm" />
@@ -4423,6 +4471,8 @@
   <HelpKINode Title="TriggeringFurreinfoLessThanOrEqualToNumber method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDatabase_TriggeringFurreinfoLessThanOrEqualToNumber.htm" />
   <HelpKINode Title="TriggeringFurreinfoNotEqualToNumber method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDatabase_TriggeringFurreinfoNotEqualToNumber.htm" />
   <HelpKINode Title="TriggeringFurreinfoNotEqualToSTR method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDatabase_TriggeringFurreinfoNotEqualToSTR.htm" />
+  <HelpKINode Title="TriggeringFurreIsDreamOwner method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_TriggeringFurreIsDreamOwner.htm" />
+  <HelpKINode Title="TriggeringFurreIsNotDreamOwner method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_TriggeringFurreIsNotDreamOwner.htm" />
   <HelpKINode Title="TriggeringFurreLaying method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Movement_TriggeringFurreLaying.htm" />
   <HelpKINode Title="TriggeringFurreMale method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Movement_TriggeringFurreMale.htm" />
   <HelpKINode Title="TriggeringFurreNoWings method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_Movement_TriggeringFurreNoWings.htm" />
@@ -4480,16 +4530,16 @@
   <HelpKINode Title="TypeNotSupportedException class">
     <HelpKINode Title="TypeNotSupportedException Class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_TypeNotSupportedException.htm" />
     <HelpKINode Title="TypeNotSupportedException Class" Url="html/T_Monkeyspeak_TypeNotSupportedException.htm" />
-    <HelpKINode Title="about TypeNotSupportedException class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_TypeNotSupportedException.htm" />
     <HelpKINode Title="about TypeNotSupportedException class" Url="html/T_Monkeyspeak_TypeNotSupportedException.htm" />
-    <HelpKINode Title="constructor" Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_TypeNotSupportedException__ctor.htm" />
+    <HelpKINode Title="about TypeNotSupportedException class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_TypeNotSupportedException.htm" />
     <HelpKINode Title="constructor" Url="html/Overload_Monkeyspeak_TypeNotSupportedException__ctor.htm" />
-    <HelpKINode Title="events" Url="html/Events_T_Monkeyspeak_TypeNotSupportedException.htm" />
+    <HelpKINode Title="constructor" Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_TypeNotSupportedException__ctor.htm" />
     <HelpKINode Title="events" Url="html/Events_T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_TypeNotSupportedException.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_TypeNotSupportedException.htm" />
+    <HelpKINode Title="events" Url="html/Events_T_Monkeyspeak_TypeNotSupportedException.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Monkeyspeak_TypeNotSupportedException.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_TypeNotSupportedException.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_TypeNotSupportedException.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Monkeyspeak_TypeNotSupportedException.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_TypeNotSupportedException.htm" />
   </HelpKINode>
   <HelpKINode Title="TypeNotSupportedException.TypeNotSupportedException constructor">
     <HelpKINode Title="TypeNotSupportedException Constructor " Url="html/Overload_Monkeyspeak_TypeNotSupportedException__ctor.htm" />
@@ -4502,6 +4552,8 @@
   <HelpKINode Title="Undefined enumeration member" Url="html/T_Monkeyspeak_TriggerCategory.htm" />
   <HelpKINode Title="UnixTimeStampToDateTime method" Url="html/M_MonkeyCore_Utils_UnixTimeStampToDateTime.htm" />
   <HelpKINode Title="Unknown enumeration member" Url="html/T_Furcadia_Net_ServerInstructionType.htm" />
+  <HelpKINode Title="UnshareFurreNamed method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_UnshareFurreNamed.htm" />
+  <HelpKINode Title="UnshareTrigFurre method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_MsDreamInfo_UnshareTrigFurre.htm" />
   <HelpKINode Title="Update method">
     <HelpKINode Title="ColorString.Update Method " Url="html/M_Furcadia_Movement_ColorString_Update.htm" />
     <HelpKINode Title="SQLiteDatabase.Update Method " Url="html/M_MonkeyCore_SQLiteDatabase_Update.htm" />
@@ -4574,26 +4626,26 @@
     <HelpKINode Title="StepBlock.Value Field" Url="html/F_Furcadia_Drawing_Graphics_StepBlock_Value.htm" />
   </HelpKINode>
   <HelpKINode Title="Value property">
-    <HelpKINode Title="IniFile.IniSection.IniKey.Value Property " Url="html/P_MonkeyCore_IniFile_IniSection_IniKey_Value.htm" />
     <HelpKINode Title="IniFile.IniSection.IniKey.Value Property " Url="html/P_Furcadia_IO_IniFile_IniSection_IniKey_Value.htm" />
+    <HelpKINode Title="IniFile.IniSection.IniKey.Value Property " Url="html/P_MonkeyCore_IniFile_IniSection_IniKey_Value.htm" />
     <HelpKINode Title="MsDice.Die.Value Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_MsDice_Die_Value.htm" />
     <HelpKINode Title="Variable.Value Property " Url="html/P_Monkeyspeak_Variable_Value.htm" />
     <HelpKINode Title="Variable.Value Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable_Value.htm" />
   </HelpKINode>
   <HelpKINode Title="Variable class">
-    <HelpKINode Title="Variable Class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable.htm" />
     <HelpKINode Title="Variable Class" Url="html/T_Monkeyspeak_Variable.htm" />
-    <HelpKINode Title="about Variable class" Url="html/T_Monkeyspeak_Variable.htm" />
+    <HelpKINode Title="Variable Class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable.htm" />
     <HelpKINode Title="about Variable class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable.htm" />
+    <HelpKINode Title="about Variable class" Url="html/T_Monkeyspeak_Variable.htm" />
     <HelpKINode Title="constructor" Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable__ctor.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Monkeyspeak_Variable__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/Overload_Monkeyspeak_Variable__ctor.htm" />
     <HelpKINode Title="fields" Url="html/Fields_T_Monkeyspeak_Variable.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Monkeyspeak_Variable.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable.htm" />
     <HelpKINode Title="operators" Url="html/Operators_T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable.htm" />
     <HelpKINode Title="operators" Url="html/Operators_T_Monkeyspeak_Variable.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Monkeyspeak_Variable.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable.htm" />
   </HelpKINode>
   <HelpKINode Title="Variable.Clone method" Url="html/M_Monkeyspeak_Variable_Clone.htm" />
   <HelpKINode Title="Variable.Equality operator">
@@ -4610,26 +4662,26 @@
     <HelpKINode Title="Variable.GetHashCode Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable_GetHashCode.htm" />
   </HelpKINode>
   <HelpKINode Title="Variable.Inequality operator">
-    <HelpKINode Title="Variable.Inequality Operator " Url="html/M_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable_op_Inequality.htm" />
     <HelpKINode Title="Variable.Inequality Operator " Url="html/M_Monkeyspeak_Variable_op_Inequality.htm" />
+    <HelpKINode Title="Variable.Inequality Operator " Url="html/M_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable_op_Inequality.htm" />
   </HelpKINode>
   <HelpKINode Title="Variable.IsConstant property" Url="html/P_Monkeyspeak_Variable_IsConstant.htm" />
   <HelpKINode Title="Variable.Name property">
-    <HelpKINode Title="Variable.Name Property " Url="html/P_Monkeyspeak_Variable_Name.htm" />
     <HelpKINode Title="Variable.Name Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable_Name.htm" />
+    <HelpKINode Title="Variable.Name Property " Url="html/P_Monkeyspeak_Variable_Name.htm" />
   </HelpKINode>
   <HelpKINode Title="Variable.NoValue field" Url="html/F_Monkeyspeak_Variable_NoValue.htm" />
   <HelpKINode Title="Variable.ToString method">
-    <HelpKINode Title="Variable.ToString Method " Url="html/M_Monkeyspeak_Variable_ToString.htm" />
     <HelpKINode Title="Variable.ToString Method " Url="html/M_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable_ToString.htm" />
+    <HelpKINode Title="Variable.ToString Method " Url="html/M_Monkeyspeak_Variable_ToString.htm" />
   </HelpKINode>
   <HelpKINode Title="Variable.Value property">
     <HelpKINode Title="Variable.Value Property " Url="html/P_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable_Value.htm" />
     <HelpKINode Title="Variable.Value Property " Url="html/P_Monkeyspeak_Variable_Value.htm" />
   </HelpKINode>
   <HelpKINode Title="Variable.Variable constructor">
+    <HelpKINode Title="Variable Constructor " Url="html/Overload_Monkeyspeak_Variable__ctor.htm" />
     <HelpKINode Title="Variable Constructor " Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_PhoenixSpeak_Variable__ctor.htm" />
-    <HelpKINode Title="Variable Constructor " Url="html/M_Monkeyspeak_Variable__ctor.htm" />
   </HelpKINode>
   <HelpKINode Title="VariableColor property" Url="html/P_MonkeyCore_Settings_EditSettings_VariableColor.htm" />
   <HelpKINode Title="VariableCountLimit property" Url="html/P_Monkeyspeak_Options_VariableCountLimit.htm" />
@@ -4692,19 +4744,22 @@
   <HelpKINode Title="WebException class">
     <HelpKINode Title="WebException Class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_WebException.htm" />
     <HelpKINode Title="about WebException class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_WebException.htm" />
-    <HelpKINode Title="constructor" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebException__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_WebException__ctor.htm" />
     <HelpKINode Title="events" Url="html/Events_T_SilverMonkeyEngine_Engine_Libraries_WebException.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_SilverMonkeyEngine_Engine_Libraries_WebException.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_SilverMonkeyEngine_Engine_Libraries_WebException.htm" />
   </HelpKINode>
-  <HelpKINode Title="WebException.WebException constructor" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebException__ctor.htm" />
+  <HelpKINode Title="WebException.ToString method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebException_ToString.htm" />
+  <HelpKINode Title="WebException.WebException constructor" Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_WebException__ctor.htm" />
+  <HelpKINode Title="WebException.WebObject property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_WebException_WebObject.htm" />
+  <HelpKINode Title="WebObject property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_WebException_WebObject.htm" />
+  <HelpKINode Title="WebPage property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_WebRequests_WebData_WebPage.htm" />
   <HelpKINode Title="WebRequests class">
     <HelpKINode Title="WebRequests Class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_WebRequests.htm" />
     <HelpKINode Title="about WebRequests class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_WebRequests.htm" />
-    <HelpKINode Title="constructor" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebRequests__ctor.htm" />
+    <HelpKINode Title="constructor" Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_WebRequests__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_SilverMonkeyEngine_Engine_Libraries_WebRequests.htm" />
   </HelpKINode>
-  <HelpKINode Title="WebRequests.add method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebRequests_add.htm" />
   <HelpKINode Title="WebRequests.PackURLEncod method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebRequests_PackURLEncod.htm" />
   <HelpKINode Title="WebRequests.WebData class">
     <HelpKINode Title="WebRequests.WebData Class" Url="html/T_SilverMonkeyEngine_Engine_Libraries_WebRequests_WebData.htm" />
@@ -4716,8 +4771,9 @@
   <HelpKINode Title="WebRequests.WebData.ReceivedPage property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_WebRequests_WebData_ReceivedPage.htm" />
   <HelpKINode Title="WebRequests.WebData.Status property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_WebRequests_WebData_Status.htm" />
   <HelpKINode Title="WebRequests.WebData.WebData constructor" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebRequests_WebData__ctor.htm" />
+  <HelpKINode Title="WebRequests.WebData.WebPage property" Url="html/P_SilverMonkeyEngine_Engine_Libraries_WebRequests_WebData_WebPage.htm" />
   <HelpKINode Title="WebRequests.WebData.WebStack field" Url="html/F_SilverMonkeyEngine_Engine_Libraries_WebRequests_WebData_WebStack.htm" />
-  <HelpKINode Title="WebRequests.WebRequests constructor" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebRequests__ctor.htm" />
+  <HelpKINode Title="WebRequests.WebRequests constructor" Url="html/Overload_SilverMonkeyEngine_Engine_Libraries_WebRequests__ctor.htm" />
   <HelpKINode Title="WebRequests.WGet method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebRequests_WGet.htm" />
   <HelpKINode Title="WebRequests.WPost method" Url="html/M_SilverMonkeyEngine_Engine_Libraries_WebRequests_WPost.htm" />
   <HelpKINode Title="WebStack field" Url="html/F_SilverMonkeyEngine_Engine_Libraries_WebRequests_WebData_WebStack.htm" />
@@ -4798,23 +4854,23 @@
   <HelpKINode Title="wUI.wUI constructor" Url="html/M_MonkeySpeakEditor_wUI__ctor.htm" />
   <HelpKINode Title="wUI.wVariables field" Url="html/F_MonkeySpeakEditor_wUI_wVariables.htm" />
   <HelpKINode Title="wVariables field" Url="html/F_MonkeySpeakEditor_wUI_wVariables.htm" />
-  <HelpKINode Title="x field">
-    <HelpKINode Title="MapTile.x Field" Url="html/F_Furcadia_FurcMap_MapTile_x.htm" />
-    <HelpKINode Title="MapPosition.x Field" Url="html/F_Furcadia_FurcMap_MapPosition_x.htm" />
-  </HelpKINode>
   <HelpKINode Title="X field">
-    <HelpKINode Title="Frame.Pos.X Field" Url="html/F_Furcadia_Drawing_Graphics_Frame_Pos_X.htm" />
     <HelpKINode Title="ViewArea.X Field" Url="html/F_Furcadia_Drawing_ViewArea_X.htm" />
+    <HelpKINode Title="Frame.Pos.X Field" Url="html/F_Furcadia_Drawing_Graphics_Frame_Pos_X.htm" />
+  </HelpKINode>
+  <HelpKINode Title="x field">
+    <HelpKINode Title="MapPosition.x Field" Url="html/F_Furcadia_FurcMap_MapPosition_x.htm" />
+    <HelpKINode Title="MapTile.x Field" Url="html/F_Furcadia_FurcMap_MapTile_x.htm" />
   </HelpKINode>
   <HelpKINode Title="x property" Url="html/P_Furcadia_Drawing_FurrePosition_x.htm" />
   <HelpKINode Title="X property" Url="html/P_Furcadia_Net_Dream_FURRE_X.htm" />
-  <HelpKINode Title="y field">
-    <HelpKINode Title="MapTile.y Field" Url="html/F_Furcadia_FurcMap_MapTile_y.htm" />
-    <HelpKINode Title="MapPosition.y Field" Url="html/F_Furcadia_FurcMap_MapPosition_y.htm" />
-  </HelpKINode>
   <HelpKINode Title="Y field">
     <HelpKINode Title="Frame.Pos.Y Field" Url="html/F_Furcadia_Drawing_Graphics_Frame_Pos_Y.htm" />
     <HelpKINode Title="ViewArea.Y Field" Url="html/F_Furcadia_Drawing_ViewArea_Y.htm" />
+  </HelpKINode>
+  <HelpKINode Title="y field">
+    <HelpKINode Title="MapPosition.y Field" Url="html/F_Furcadia_FurcMap_MapPosition_y.htm" />
+    <HelpKINode Title="MapTile.y Field" Url="html/F_Furcadia_FurcMap_MapTile_y.htm" />
   </HelpKINode>
   <HelpKINode Title="y property" Url="html/P_Furcadia_Drawing_FurrePosition_y.htm" />
   <HelpKINode Title="Y property" Url="html/P_Furcadia_Net_Dream_FURRE_Y.htm" />

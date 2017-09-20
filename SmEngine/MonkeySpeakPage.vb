@@ -59,7 +59,7 @@ Namespace Engine
 
 #Region "Public Constructors"
 
-        Private MsPage As Monkeyspeak.Page
+        Private WithEvents MsPage As Monkeyspeak.Page
 
         Sub New()
             MyBase.New(Nothing)
@@ -67,6 +67,7 @@ Namespace Engine
             MSEngine = New MainEngine(options, New BotSession(New BotOptions()))
 
             MsPage = MSEngine.LoadFromString("")
+
             Initialize()
         End Sub
 
@@ -105,7 +106,7 @@ Namespace Engine
             LibList.Add(New MsVerbot(MSEngine.FurcadiaSession))
             LibList.Add(New MsSound(MSEngine.FurcadiaSession))
             LibList.Add(New MsTrades(MSEngine.FurcadiaSession))
-            'LibList.Add(New MS_MemberList())
+            LibList.Add(New MsDreamInfo(MSEngine.FurcadiaSession))
             'LibList.Add(New MS_MemberList())
         End Sub
 
@@ -123,19 +124,14 @@ Namespace Engine
         ''' </summary>
         Public Function Export() As Page
 
-            Try
+            ' Console.WriteLine("Execute (0:0)")
+            MS_Stared = 0
 
-                ' Console.WriteLine("Execute (0:0)")
-                MS_Stared = 0
+            MsPage = MSEngine.LoadFromString("")
+            LoadLibrary(False, True)
 
-                MsPage = MSEngine.LoadFromString("")
-                LoadLibrary(False, True)
+            MS_Engine_Running = False
 
-                MS_Engine_Running = False
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
-
-            End Try
             Return MsPage
         End Function
 
@@ -166,40 +162,32 @@ Namespace Engine
          Function()
              Return True
          End Function, "(0:0) When the bot starts,")
-            Try
-                MsPage.LoadSysLibrary()
+
+            MsPage.LoadSysLibrary()
 
 #If CONFIG = "Release" Then
             '(5:110) load library from file {...}.
             MsPage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
 #ElseIf CONFIG = "Debug" Then
-                '(5:105) raise an error.
-                MsPage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
-                MsPage.SetTriggerHandler(TriggerCategory.Effect, 105,
-         Function()
-             Return False
-         End Function, "(5:105) raise an error.")
+            '(5:105) raise an error.
+            MsPage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
+            MsPage.SetTriggerHandler(TriggerCategory.Effect, 105,
+     Function()
+         Return False
+     End Function, "(5:105) raise an error.")
 #End If
-            Catch ex As Exception
-                Dim e As New ErrorLogging(ex, Me)
-            End Try
-            Try
-                MsPage.LoadTimerLibrary()
-                MsPage.LoadStringLibrary()
-                MsPage.LoadMathLibrary()
-            Catch ex As Exception
-                Dim e As New ErrorLogging(ex, Me)
-            End Try
+
+            MsPage.LoadTimerLibrary()
+            MsPage.LoadStringLibrary()
+            MsPage.LoadMathLibrary()
 
             For Each Library As Monkeyspeak.Libraries.AbstractBaseLibrary In LibList
                 Try
                     MsPage.LoadLibrary(Library)
                     If Not silent Then Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
                 Catch ex As Exception
-
-                    Dim e As New ErrorLogging(ex, Library)
-                    ' Console.WriteLine(String.Format("Error loading Monkey
-                    ' Speak Library: {0}", Library.GetType().Name))
+                    Throw New MonkeyspeakException(Library.GetType().Name + " " + ex.Message, ex)
+                    Return Nothing
                 End Try
             Next
 
@@ -244,8 +232,8 @@ Namespace Engine
         'Bot Starts
         Public Function Start() As Page
 
-            Try
-                Dim TimeStart As DateTime = DateTime.Now
+
+            Dim TimeStart = DateTime.Now
                 Dim VariableList As New Dictionary(Of String, Object)
 
                 ' Console.WriteLine("Execute (0:0)")
@@ -267,10 +255,7 @@ Namespace Engine
                 Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                                 MsPage.Size, Date.Now.Subtract(TimeStart).Seconds))
                 MS_Engine_Running = True
-            Catch eX As Exception
-                Dim logError As New ErrorLogging(eX, Me)
 
-            End Try
             Return MsPage
         End Function
 

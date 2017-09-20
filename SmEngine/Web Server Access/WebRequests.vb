@@ -19,8 +19,8 @@ Namespace Engine.Libraries
 
 #Region "Private Fields"
 
-        Private Webrequest As New WebRequests("")
-        Dim WebStack As New Dictionary(Of String, String)
+        Private Webrequest As New WebRequests()
+        Private WebStack As New List(Of Variable)()
         Private WebURL As String = ""
 
 #End Region
@@ -30,32 +30,32 @@ Namespace Engine.Libraries
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
             'WebStack.Clear()
-            '(0:70) When the bot receives a variable list by sending the Web-Stack.
+            '(0:70) When the bot receives a variable list by sending the Web-Cache.
             Add(New Trigger(TriggerCategory.Cause, 70),
                 Function()
                     Return True
-                End Function, "(0:70) When the bot receives a variable list by sending the Web-Stack.")
+                End Function, "(0:70) When the bot receives a variable list by sending the Web-Cache.")
 
-            '(1:30) and Web-Stack setting {...} is equal to {...},
-            Add(New Trigger(TriggerCategory.Condition, 30), AddressOf WebArrayEqualTo, "(1:30) and Web-Stack setting {...} is equal to {...},")
+            '(1:30) and Web-Cache setting {...} is equal to {...},
+            Add(New Trigger(TriggerCategory.Condition, 30), AddressOf WebArrayEqualTo, "(1:30) and Web-Cache setting {...} is equal to {...},")
 
-            '(1:31) and Web-Stack setting {...} is not equal to {...},
-            Add(New Trigger(TriggerCategory.Condition, 31), AddressOf WebArrayNotEqualTo, "(1:31) and Web-Stack setting {...} is not equal to {...},")
+            '(1:31) and Web-Cache setting {...} is not equal to {...},
+            Add(New Trigger(TriggerCategory.Condition, 31), AddressOf WebArrayNotEqualTo, "(1:31) and Web-Cache setting {...} is not equal to {...},")
 
-            '(1:32) and the Web-Stack contains field named {...},
-            Add(New Trigger(TriggerCategory.Condition, 32), AddressOf WebArrayContainArrayField, "(1:32) and the Web-Stack contains field named {...},")
+            '(1:32) and the Web-Cache contains field named {...},
+            Add(New Trigger(TriggerCategory.Condition, 32), AddressOf WebArrayContainArrayField, "(1:32) and the Web-Cache contains field named {...},")
 
-            '(1:33) and the Web-Stack doesn't contain field named {...},
-            Add(New Trigger(TriggerCategory.Condition, 33), AddressOf WebArrayNotContainArrayField, "(1:33) and the Web-Stack doesn't contain field named {...},")
+            '(1:33) and the Web-Cache doesn't contain field named {...},
+            Add(New Trigger(TriggerCategory.Condition, 33), AddressOf WebArrayNotContainArrayField, "(1:33) and the Web-Cache doesn't contain field named {...},")
 
-            '(5:9) remove variable %Variable from the Web-Stack
-            Add(New Trigger(TriggerCategory.Effect, 9), AddressOf RemoveWebStack, "(5:9) remove variable %Variable from the Web-Stack.")
+            '(5:9) remove variable %Variable from the Web-Cache
+            Add(New Trigger(TriggerCategory.Effect, 9), AddressOf RemoveWebStack, "(5:9) remove variable %Variable from the Web-Cache.")
 
             '(5:10)  Set the web URL to {...}
             Add(New Trigger(TriggerCategory.Effect, 10), AddressOf SetURL, "(5:10)  Set the web URL to {...},")
 
-            '(5:11)  remember setting {...} from Web-Stack and store it into variable %Variable.
-            Add(New Trigger(TriggerCategory.Effect, 11), AddressOf RememberSetting, "(5:11)  remember setting {...} from Web-Stack and store it into variable %Variable.")
+            '(5:11)  remember setting {...} from Web-Cache and store it into variable %Variable.
+            Add(New Trigger(TriggerCategory.Effect, 11), AddressOf RememberSetting, "(5:11)  remember setting {...} from Web-Cache and store it into variable %Variable.")
 
             '(5:12)
 
@@ -65,15 +65,15 @@ Namespace Engine.Libraries
 
             '(5:15)
 
-            '(5:16) send GET request to send the Web-Stack to URL.
-            Add(New Trigger(TriggerCategory.Effect, 16), AddressOf SendGetWebStack, "(5:16) send GET request to send the Web-Stack to URL.")
+            '(5:16) send GET request to send the Web-Cache to URL.
+            Add(New Trigger(TriggerCategory.Effect, 16), AddressOf SendGetWebStack, "(5:16) send GET request to send the Web-Cache to URL.")
 
-            '(5:17) store variable %Variable to the Web-Stack
-            Add(New Trigger(TriggerCategory.Effect, 17), AddressOf StoreWebStack, "(5:17) store variable %Variable to the Web-Stack.")
-            '(5:18) send post request to send the Web-Stack to the web host.
-            Add(New Trigger(TriggerCategory.Effect, 18), AddressOf SendWebStack, "(5:18) send POST request to send the Web-Stack to URL.")
-            '(5:19) clear the Web-Stack.
-            Add(New Trigger(TriggerCategory.Effect, 19), AddressOf ClearWebStack, "(5:19) clear the Web-Stack.")
+            '(5:17) store variable %Variable to the Web-Cache
+            Add(New Trigger(TriggerCategory.Effect, 17), AddressOf StoreWebStack, "(5:17) store variable %Variable to the Web-Cache.")
+            '(5:18) send post request to send the Web-Cache to the web host.
+            Add(New Trigger(TriggerCategory.Effect, 18), AddressOf SendWebStack, "(5:18) send POST request to send the Web-Cache to URL.")
+            '(5:19) clear the Web-Cache.
+            Add(New Trigger(TriggerCategory.Effect, 19), AddressOf ClearWebStack, "(5:19) clear the Web-Cache.")
 
         End Sub
 
@@ -82,7 +82,7 @@ Namespace Engine.Libraries
 #Region "Private Methods"
 
         ''' <summary>
-        ''' (5:19) clear the Web-Stack.
+        ''' (5:19) clear the Web-Cache.
         ''' </summary>
         ''' <param name="reader">
         ''' </param>
@@ -94,7 +94,7 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:11) remember setting {...} from Web-Stack and store it into
+        ''' (5:11) remember setting {...} from Web-Cache and store it into
         ''' variable %Variable.
         ''' </summary>
         ''' <param name="reader">
@@ -103,17 +103,17 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function RememberSetting(reader As TriggerReader) As Boolean
 
-            Dim setting As String = reader.ReadString
+            Dim setting = New Variable(reader.ReadString, Nothing)
             Dim var As Variable = reader.ReadVariable(True)
-            If WebStack.ContainsKey(setting) Then
-                var.Value = WebStack.Item(setting)
+            If WebStack.Contains(setting) Then
+                var.Value = WebStack(WebStack.IndexOf(setting))
             End If
             Return True
 
         End Function
 
         ''' <summary>
-        ''' (5:60) remove variable %Variable from the Web-Stack
+        ''' (5:60) remove variable %Variable from the Web-Cache
         ''' </summary>
         ''' <param name="reader">
         ''' </param>
@@ -124,12 +124,12 @@ Namespace Engine.Libraries
 
             var = reader.ReadVariable()
 
-            WebStack.Remove(var.Name)
+            WebStack.Remove(var)
             Return True
         End Function
 
         ''' <summary>
-        ''' (5:16) send GET request to send the Web-Stack to URL.
+        ''' (5:16) send GET request to send the Web-Cache to URL.
         ''' </summary>
         ''' <param name="reader">
         ''' </param>
@@ -153,7 +153,7 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:18) send post request to send the Web-Stack to the web host.
+        ''' (5:18) send post request to send the Web-Cache to the web host.
         ''' </summary>
         ''' <param name="reader">
         ''' </param>
@@ -168,10 +168,10 @@ Namespace Engine.Libraries
                 page = ws.WPost(WebStack)
                 WebStack = page.WebStack
                 If page.ReceivedPage Then
-                    PageExecute(70)
+                    MsPage.Execute(70)
                 End If
             End SyncLock
-            If page.Status <> 0 Then Throw New WebException(page.ErrMsg)
+            If page.Status <> 0 Then Throw New WebException(page.ErrMsg, page)
 
             Return page.Status = 0
         End Function
@@ -190,7 +190,7 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (5:17) store variable %Variable to the Web-Stack
+        ''' (5:17) store variable %Variable to the Web-Cache
         ''' </summary>
         ''' <param name="reader">
         ''' </param>
@@ -199,21 +199,23 @@ Namespace Engine.Libraries
         Private Function StoreWebStack(reader As TriggerReader) As Boolean
 
             Dim var As Monkeyspeak.Variable = reader.ReadVariable()
-            If WebStack.ContainsKey(var.Name) = False Then
-                WebStack.Add(var.Name.Substring(1), var.Value.ToString)
+            If WebStack.Contains(var) Then
+                WebStack.Item(WebStack.IndexOf(var)) = var
+            Else
+                WebStack.Add(var)
             End If
             Return True
 
         End Function
 
         Private Function WebArrayContainArrayField(reader As TriggerReader) As Boolean
-
-            Return WebStack.ContainsKey(reader.ReadString)
+            Dim var = New Variable(reader.ReadString, Nothing)
+            Return WebStack.Contains(var)
 
         End Function
 
         ''' <summary>
-        ''' (1:30) and Web-Stack setting {...} is equal to {...},
+        ''' (1:30) and Web-Cache setting {...} is equal to {...},
         ''' </summary>
         ''' <param name="reader">
         ''' </param>
@@ -223,23 +225,22 @@ Namespace Engine.Libraries
 
             Dim setting As String
             Try
-                setting = WebStack.Item(reader.ReadString)
+                setting = WebStack.Item(WebStack.IndexOf(New Variable(reader.ReadString, Nothing))).Value
             Catch
                 setting = ""
             End Try
-            Dim Check As String = reader.ReadString
-            Return setting = Check
+            Return setting = reader.ReadString
 
         End Function
 
         Private Function WebArrayNotContainArrayField(reader As TriggerReader) As Boolean
 
-            Return Not WebStack.ContainsKey(reader.ReadString)
+            Return Not WebStack.Contains(New Variable(reader.ReadString, Nothing))
 
         End Function
 
         ''' <summary>
-        ''' (1:31) and Web-Stack setting {...} is not equal to {...},
+        ''' (1:31) and Web-Cache setting {...} is not equal to {...},
         ''' </summary>
         ''' <param name="reader">
         ''' </param>
@@ -247,25 +248,26 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function WebArrayNotEqualTo(reader As TriggerReader) As Boolean
 
-            Dim setting As String = Nothing
-            Dim value As String = reader.ReadString
-            If WebStack.ContainsKey(value) Then
-                setting = WebStack.Item(value)
+            Dim setting As Variable = Nothing
+            Dim value = New Variable(reader.ReadString, Nothing)
+            If WebStack.Contains(value) Then
+                setting = WebStack.Item(WebStack.IndexOf(value))
             End If
-            Dim Check As String = reader.ReadString
-            Dim b As Boolean = setting <> Check
-            Return setting <> Check
+            Return setting.Value <> reader.ReadString
         End Function
 
 #End Region
 
     End Class
 
+    ''' <summary>
+    '''
+    ''' </summary>
     Public Class WebRequests
 
 #Region "Private Fields"
 
-        Dim data As New Dictionary(Of [String], [String])()
+        Dim data As New List(Of Variable)()
         Private UserAgent As String = "Silver Monkey a Furcadia Bot (gerolkae@hotmail.com)"
         Dim Ver As Integer = 1
         Private WebReferer As String = "http://silvermonkey.tsprojects.org"
@@ -281,54 +283,47 @@ Namespace Engine.Libraries
         'Section=[section]
         'Key={key]
         '*Value=[Value]
-        Public Sub New(ByRef URL As String)
+
+        ''' <summary>
+        '''
+        ''' </summary>
+        Public Sub New()
             'cBot = New cBot
-            WebURL = URL
+            WebURL = String.Empty
+        End Sub
+
+        Public Sub New(Url As String)
+            'cBot = New cBot
+            WebURL = Url
         End Sub
 
 #End Region
 
 #Region "Public Methods"
 
-        ' Sample Data
-        Sub add(ByVal Key As String, ByVal Value As String)
-            Try
-                data.Add(Key, Value)
-            Catch ex As Exception
-                data.Item(Key) = Value
-            End Try
-
-        End Sub
-
-        Public Function PackURLEncod() As String
-            Dim str As String = ""
-            For Each row As KeyValuePair(Of String, String) In data
-                Dim temp As String = ""
-                If row.Value <> "" Then
-                    temp = HttpUtility.UrlEncode(row.Value)
-                End If
-                str += String.Format("{0}={1}&", row.Key, temp)
+        ''' <summary>
+        ''' Pack the Variables into a URL Encoded String as ServerData
+        ''' </summary>
+        ''' <param name="VariableList"></param>
+        ''' <returns></returns>
+        Public Function PackURLEncod(VariableList As List(Of Variable)) As String
+            Dim FormattedVariables As New StringBuilder()
+            For Each item As Variable In VariableList
+                FormattedVariables.AppendFormat(String.Format("{0}={1}&",
+                      HttpUtility.UrlEncode(item.Name.Replace("%", String.Empty)), HttpUtility.UrlEncode(item.Value.ToString())))
             Next
-            Return str.Substring(0, str.Length - 1)
+            Return FormattedVariables.ToString()
         End Function
 
-        Public Function WGet(ByRef array As Dictionary(Of String, String)) As WebData
+        ''' <summary>
+        ''' send a "GET" request to the server
+        ''' </summary>
+        ''' <param name="array"></param>
+        ''' <returns></returns>
+        Public Function WGet(ByRef array As List(Of Variable)) As WebData
             Dim result As New WebData
+            Dim str As String = PackURLEncod(array)
 
-            For Each item As KeyValuePair(Of String, String) In array
-                Dim Key As String = item.Key
-                If Key.StartsWith("WWW") Then Key = Key.Substring(3)
-                data.Add(Key, item.Value)
-            Next
-            Dim str As String = PackURLEncod()
-
-            Try
-            Catch ex As Exception
-                result.Status = 1
-                result.ErrMsg = ex.Message.ToString
-                result.Packet = ""
-                Return result
-            End Try
             Dim requesttring As String = WebURL & "?" & str
             Dim request As Net.HttpWebRequest = DirectCast(Net.WebRequest.Create(requesttring), Net.HttpWebRequest)
             request.UserAgent = UserAgent
@@ -360,61 +355,63 @@ Namespace Engine.Libraries
                         Exit Do
                     ElseIf line.StartsWith("s=") Then
                         result.Status = CInt(line.Substring(2))
-                        If CDbl(line.Substring(2)) > 0 Then
+                        If line.Substring(2) > 0 Then
                             result.ErrMsg = "The server returned error code " + result.Status.ToString
                             Exit Do
                         End If
                         readKVPs = True
                     Else
                         If readKVPs Then
-                            Dim pos As Integer = line.IndexOf("=")
-                            If pos > 0 Then
+                            Dim pos() = line.Split("=", 0, 1)
+                            If pos.Length > 0 Then
                                 result.ReceivedPage = True
-                                Dim key As String = line.Substring(0, pos)
-                                Dim Value As String = line.Substring(pos + 1)
-
+                                Dim var = New Variable(pos(0), pos(1))
                                 'Assign Variables
                                 Try
-                                    result.WebStack.Add(key, Value)
+                                    result.WebStack.Add(var)
                                 Catch
-                                    result.WebStack.Item(key) = Value
+                                    result.WebStack.Item(result.WebStack.IndexOf(var)) = var
                                 End Try
                             End If
                         End If
 
                     End If
                 Loop
-            Catch ex As Exception
+            Catch ex As WebException
                 result.ErrMsg = ex.Message.ToString
                 result.Packet = ""
-                Return result
+                Dim message = New StringBuilder()
+                If Not ex.Response Is Nothing Then
+                    For i = 0 To ex.Response.Headers.Count - 1
+                        message.AppendLine(String.Format("Header Name:{0}, Header value :{1}", ex.Response.Headers.Keys(i), ex.Response.Headers(i)))
+                    Next
+
+                    If ex.Status = WebExceptionStatus.ProtocolError Then
+                        message.AppendLine(String.Format("Status Code : {0}", DirectCast(ex.Response, HttpWebResponse).StatusCode))
+                        message.AppendLine(String.Format("Status Description : {0}", DirectCast(ex.Response, HttpWebResponse).StatusDescription))
+
+                        Using reader As New StreamReader(ex.Response.GetResponseStream())
+                            message.Append(reader.ReadToEnd().Replace(vbNewLine, vbCrLf))
+                        End Using
+                    End If
+                End If
+                result.WebPage = message.ToString()
+
             End Try
 
             Return result
 
         End Function
 
-        Public Function WPost(ByRef array As Dictionary(Of String, String)) As WebData
+        Public Function WPost(ByRef array As List(Of Variable)) As WebData
             Dim Result As New WebData
 
-            For Each item As KeyValuePair(Of String, String) In array
-                Dim Key As String = item.Key
-                If Key.StartsWith("WWW") Then Key = Key.Substring(3)
-                data.Add(Key, item.Value)
-            Next
-            Dim str As String = PackURLEncod()
+            Dim PostData = PackURLEncod(array)
 
-            Dim encoding As New UTF8Encoding
-            Dim byteData As Byte() = encoding.GetBytes(str)
+            Dim PostDataEncoding = Encoding.GetEncoding(1252)
+            Dim byteData = PostDataEncoding.GetBytes(PostData)
 
-            Try
-            Catch ex As Exception
-                Result.Status = 1
-                Result.ErrMsg = ex.Message.ToString
-                Result.Packet = ""
-                Return Result
-            End Try
-            Dim postReq As Net.HttpWebRequest = DirectCast(Net.WebRequest.Create(WebURL), Net.HttpWebRequest)
+            Dim postReq = DirectCast(Net.WebRequest.Create(WebURL), Net.HttpWebRequest)
             postReq.Method = "POST"
             postReq.KeepAlive = False
             postReq.ContentType = "application/x-www-form-urlencoded"
@@ -422,24 +419,36 @@ Namespace Engine.Libraries
             postReq.UserAgent = UserAgent
             'postReq.ContentLength = byteData.Length
             Try
-                Dim postreqstream As Stream = postReq.GetRequestStream()
+                Dim postreqstream = postReq.GetRequestStream()
                 postreqstream.Write(byteData, 0, byteData.Length)
                 postreqstream.Flush()
                 postreqstream.Close()
-            Catch ex As Exception
-                Result.ErrMsg = ex.Message.ToString
-                Result.Packet = ""
-                Result.Status = 1
-                Return Result
+            Catch ex As WebException
+                result.ErrMsg = ex.Message.ToString
+                result.Packet = ""
+                Dim message = New StringBuilder()
+                If Not ex.Response Is Nothing Then
+                    For i = 0 To ex.Response.Headers.Count - 1
+                        message.AppendLine(String.Format("Header Name:{0}, Header value :{1}", ex.Response.Headers.Keys(i), ex.Response.Headers(i)))
+                    Next
 
+                    If ex.Status = WebExceptionStatus.ProtocolError Then
+                        message.AppendLine(String.Format("Status Code : {0}", DirectCast(ex.Response, HttpWebResponse).StatusCode))
+                        message.AppendLine(String.Format("Status Description : {0}", DirectCast(ex.Response, HttpWebResponse).StatusDescription))
+
+                        Using reader As New StreamReader(ex.Response.GetResponseStream())
+                            message.Append(reader.ReadToEnd().Replace(vbNewLine, vbCrLf))
+                        End Using
+                    End If
+                End If
+                Result.WebPage = message.ToString()
+                Return Result
             End Try
 
             Try
-                Dim postresponse As HttpWebResponse
+                Dim postresponse = DirectCast(postReq.GetResponse(), HttpWebResponse)
 
-                postresponse = DirectCast(postReq.GetResponse(), HttpWebResponse)
-
-                Dim postreqreader As New StreamReader(postresponse.GetResponseStream())
+                Dim postreqreader = New StreamReader(postresponse.GetResponseStream())
                 Dim line As String
                 Dim readKVPs As Boolean = False
                 Dim MS As Boolean = False
@@ -453,6 +462,7 @@ Namespace Engine.Libraries
                         MS = True
                     ElseIf line <> "SM" And Not MS Then
                         line += postreqreader.ReadToEnd
+                        Result.WebPage = line
                         Debug.Print(line)
                         line = line.Replace("<br />", vbCrLf)
                         Result.ErrMsg = "Invalid Format- Not Monkey Speak Response" & line
@@ -470,17 +480,16 @@ Namespace Engine.Libraries
                         readKVPs = True
                     Else
                         If readKVPs Then
-                            Dim pos As Integer = line.IndexOf("=")
-                            If pos > 0 Then
+                            Dim pos() = line.Split("=", 0, 1)
+                            If pos.Length > 0 Then
                                 Result.ReceivedPage = True
-                                Dim key As String = line.Substring(0, pos)
-                                Dim Value As String = line.Substring(pos + 1)
+                                Dim var = New Variable(pos(0), pos(1))
 
                                 'Assign Variables
                                 Try
-                                    Result.WebStack.Add(key, Value)
+                                    Result.WebStack.Add(var)
                                 Catch
-                                    Result.WebStack.Item(key) = Value
+                                    Result.WebStack.Item(Result.WebStack.IndexOf(var)) = var
                                 End Try
                             End If
                         End If
@@ -489,11 +498,25 @@ Namespace Engine.Libraries
                 Loop
 
                 'trigger (0: )
-            Catch ex As Exception
-                Result.ErrMsg = ex.Message.ToString
-                Result.Packet = ""
-                Result.Status = 4
-                Return Result
+            Catch ex As WebException
+                result.ErrMsg = ex.Message.ToString
+                result.Packet = ""
+                Dim message = New StringBuilder()
+                If Not ex.Response Is Nothing Then
+                    For i = 0 To ex.Response.Headers.Count - 1
+                        message.AppendLine(String.Format("Header Name:{0}, Header value :{1}", ex.Response.Headers.Keys(i), ex.Response.Headers(i)))
+                    Next
+
+                    If ex.Status = WebExceptionStatus.ProtocolError Then
+                        message.AppendLine(String.Format("Status Code : {0}", DirectCast(ex.Response, HttpWebResponse).StatusCode))
+                        message.AppendLine(String.Format("Status Description : {0}", DirectCast(ex.Response, HttpWebResponse).StatusDescription))
+
+                        Using reader As New StreamReader(ex.Response.GetResponseStream())
+                            message.Append(reader.ReadToEnd().Replace(vbNewLine, vbCrLf))
+                        End Using
+                    End If
+                End If
+                result.WebPage = message.ToString()
             End Try
 
             Return Result
@@ -505,36 +528,57 @@ Namespace Engine.Libraries
 #Region "Public Classes"
 
         ''' <summary>
-        ''' Variable List
+        ''' web response page object
         ''' </summary>
         Public Class WebData
 
 #Region "Public Fields"
 
-            Public ErrMsg As String = ""
-            Public Packet As String = ""
-            Public WebStack As New Dictionary(Of String, String)
+            Private _webPage As String
+            Public ErrMsg As String
+            Public Packet As String
+            Public WebStack As New List(Of Variable)()
 
 #End Region
 
 #Region "Private Fields"
 
-            Private _Status As Integer = 0
+            Private _Status As Integer
 
 #End Region
 
 #Region "Public Constructors"
 
             Public Sub New()
-
+                _Status = -1
+                ReceivedPage = False
+                ErrMsg = String.Empty
+                Packet = String.Empty
             End Sub
 
 #End Region
 
 #Region "Public Properties"
 
-            Public Property ReceivedPage As Boolean = False
+            ''' <summary>
+            ''' Raw text for the received web page
+            ''' </summary>
+            ''' <returns></returns>
+            Public Property WebPage As String
+                Get
+                    Return _webPage
+                End Get
+                Set(value As String)
+                    _webPage = value
+                End Set
+            End Property
 
+            Public Property ReceivedPage As Boolean
+
+            ''' <summary>
+            ''' Web server status code
+            ''' </summary>
+            ''' <returns></returns>
             Public Property Status As Integer
                 Get
                     Return _Status

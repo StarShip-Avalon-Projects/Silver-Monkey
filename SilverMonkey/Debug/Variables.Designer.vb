@@ -38,7 +38,7 @@ Partial Class Variables
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.ListView1 = New ListView_NoFlicker()
+        Me.ListView1 = New MonkeyCore.Controls.ListView_NoFlicker()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -46,7 +46,7 @@ Partial Class Variables
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.ErrorLogTxtBx = New System.Windows.Forms.TextBox()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -55,15 +55,18 @@ Partial Class Variables
         '
         'ContextMenuStrip1
         '
+        Me.ContextMenuStrip1.ImageScalingSize = New System.Drawing.Size(48, 48)
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
         '
         'MenuStrip1
         '
+        Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(48, 48)
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(19, 6, 0, 6)
         Me.MenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.MenuStrip1.Size = New System.Drawing.Size(421, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(789, 24)
         Me.MenuStrip1.TabIndex = 3
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -71,6 +74,7 @@ Partial Class Variables
         '
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SplitContainer1.Location = New System.Drawing.Point(0, 24)
+        Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
@@ -84,9 +88,10 @@ Partial Class Variables
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.Label2)
-        Me.SplitContainer1.Panel2.Controls.Add(Me.TextBox1)
-        Me.SplitContainer1.Size = New System.Drawing.Size(421, 343)
-        Me.SplitContainer1.SplitterDistance = 182
+        Me.SplitContainer1.Panel2.Controls.Add(Me.ErrorLogTxtBx)
+        Me.SplitContainer1.Size = New System.Drawing.Size(789, 611)
+        Me.SplitContainer1.SplitterDistance = 324
+        Me.SplitContainer1.SplitterWidth = 11
         Me.SplitContainer1.TabIndex = 4
         '
         'ListView1
@@ -98,10 +103,11 @@ Partial Class Variables
         Me.ListView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.ListView1.FullRowSelect = True
         Me.ListView1.GridLines = True
-        Me.ListView1.Location = New System.Drawing.Point(15, 32)
+        Me.ListView1.Location = New System.Drawing.Point(48, 91)
+        Me.ListView1.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.ListView1.MultiSelect = False
         Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New System.Drawing.Size(394, 122)
+        Me.ListView1.Size = New System.Drawing.Size(695, 146)
         Me.ListView1.TabIndex = 6
         Me.ListView1.UseCompatibleStateImageBehavior = False
         Me.ListView1.View = System.Windows.Forms.View.Details
@@ -125,9 +131,10 @@ Partial Class Variables
         '
         Me.ChkBxRefresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.ChkBxRefresh.AutoSize = True
-        Me.ChkBxRefresh.Location = New System.Drawing.Point(12, 160)
+        Me.ChkBxRefresh.Location = New System.Drawing.Point(38, 269)
+        Me.ChkBxRefresh.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.ChkBxRefresh.Name = "ChkBxRefresh"
-        Me.ChkBxRefresh.Size = New System.Drawing.Size(88, 17)
+        Me.ChkBxRefresh.Size = New System.Drawing.Size(249, 41)
         Me.ChkBxRefresh.TabIndex = 5
         Me.ChkBxRefresh.Text = "Auto Refresh"
         Me.ChkBxRefresh.UseVisualStyleBackColor = True
@@ -135,18 +142,20 @@ Partial Class Variables
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 16)
+        Me.Label1.Location = New System.Drawing.Point(38, 46)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(10, 0, 10, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(64, 13)
+        Me.Label1.Size = New System.Drawing.Size(194, 37)
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "Variable List"
         '
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(334, 156)
+        Me.Button1.Location = New System.Drawing.Point(514, 250)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.Size = New System.Drawing.Size(238, 65)
         Me.Button1.TabIndex = 3
         Me.Button1.Text = "Refresh"
         Me.Button1.UseVisualStyleBackColor = True
@@ -154,33 +163,36 @@ Partial Class Variables
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(12, 0)
+        Me.Label2.Location = New System.Drawing.Point(38, 0)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(10, 0, 10, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(109, 13)
+        Me.Label2.Size = New System.Drawing.Size(323, 37)
         Me.Label2.TabIndex = 5
         Me.Label2.Text = "Monkey Speak Errors"
         '
-        'TextBox1
+        'ErrorLogTxtBx
         '
-        Me.TextBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ErrorLogTxtBx.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox1.Location = New System.Drawing.Point(12, 31)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox1.Size = New System.Drawing.Size(397, 114)
-        Me.TextBox1.TabIndex = 4
-        Me.TextBox1.WordWrap = False
+        Me.ErrorLogTxtBx.Location = New System.Drawing.Point(38, 88)
+        Me.ErrorLogTxtBx.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
+        Me.ErrorLogTxtBx.Multiline = True
+        Me.ErrorLogTxtBx.Name = "ErrorLogTxtBx"
+        Me.ErrorLogTxtBx.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.ErrorLogTxtBx.Size = New System.Drawing.Size(705, 146)
+        Me.ErrorLogTxtBx.TabIndex = 4
+        Me.ErrorLogTxtBx.WordWrap = False
         '
         'Variables
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(421, 367)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
+        Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.ClientSize = New System.Drawing.Size(789, 635)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.MainMenuStrip = Me.MenuStrip1
+        Me.Margin = New System.Windows.Forms.Padding(10, 9, 10, 9)
         Me.Name = "Variables"
         Me.Text = "Debug Window"
         Me.SplitContainer1.Panel1.ResumeLayout(False)
@@ -199,7 +211,7 @@ Partial Class Variables
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents ErrorLogTxtBx As System.Windows.Forms.TextBox
     Friend WithEvents ChkBxRefresh As System.Windows.Forms.CheckBox
     Friend WithEvents ListView1 As ListView_NoFlicker
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader

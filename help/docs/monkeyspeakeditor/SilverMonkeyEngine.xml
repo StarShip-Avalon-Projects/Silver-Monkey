@@ -1053,6 +1053,17 @@
  Furcadia Time Object in Furcadia Standard Time (fst)
  </returns>
     </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MonkeySpeakLibrary.InDream(System.String@)">
+      <summary>
+ Is the specified furre in the dream?
+ </summary>
+      <param name="Name">
+ Furre Name
+ </param>
+      <returns>
+ True if the furre is in the dream
+ </returns>
+    </member>
     <member name="P:SilverMonkeyEngine.Engine.Libraries.MonkeySpeakLibrary.MsEngine">
       <summary>
         <markup>
@@ -3108,6 +3119,188 @@
         </markup>
       </summary>
     </member>
+    <member name="T:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo">
+      <summary>
+ Dream Information triggers
+ </summary>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.#ctor(SilverMonkeyEngine.BotSession@)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>SilverMonkeyEngine.Engine.Libraries.MsDreamInfo</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Session">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>Session</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.#ctor(SilverMonkeyEngine.BotSession@)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.BotIsDreamOwner(Monkeyspeak.TriggerReader)">
+      <summary>
+ (1:19) and the bot is the Dream owner,
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.BotIsNotDreamOwner(Monkeyspeak.TriggerReader)">
+      <summary>
+ (1:20) and the bot is not the Dream-Owner,
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.DreamNameIs(Monkeyspeak.TriggerReader)">
+      <summary>
+ (1:23) and the Dream Name is {..},
+ <para>
+ (0:91) When the bot enters a Dream named {..},
+ </para></summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.DreamNameIsNot(Monkeyspeak.TriggerReader)">
+      <summary>
+ (1:24) and the Dream Name is not {..},
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="P:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.FurcadiaSession">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.FurcadiaSession</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.FurreNamedIsDREAMOWNER(Monkeyspeak.TriggerReader)">
+      <summary>
+ (1:21) and the furre named {..} is the Dream owner,
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.FurreNamedIsNotDREAMOWNER(Monkeyspeak.TriggerReader)">
+      <summary>
+ (1:22) and the furre named {..} is not the Dream owner,
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.NameIs(Monkeyspeak.TriggerReader)">
+      <summary>
+ (0:25) When a furre Named {.} enters the Dream,
+ <para>
+ (0:27) When a furre named {.} leaves the Dream
+ </para></summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.ShareFurreNamed(Monkeyspeak.TriggerReader)">
+      <summary>
+ (5:22) remove share from the furre named {..} if they're in the
+ Dream right now.
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.ShareTrigFurre(Monkeyspeak.TriggerReader)">
+      <summary>
+ (5:20) give share control to the triggering furre.
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.TriggeringFurreIsDreamOwner(Monkeyspeak.TriggerReader)">
+      <summary>
+ (1:22:) and the triggering furre is the Dream owner
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.TriggeringFurreIsNotDreamOwner(Monkeyspeak.TriggerReader)">
+      <summary>
+ (1:26) and the triggering furre is not the Dream owner,"
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.UnshareFurreNamed(Monkeyspeak.TriggerReader)">
+      <summary>
+ (5:23) give share to the furre named {..} if they're in the
+ FurcadiaSession.Dream right now.
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.MsDreamInfo.UnshareTrigFurre(Monkeyspeak.TriggerReader)">
+      <summary>
+ (5:21) remove share control from the triggering furre.
+ </summary>
+      <param name="reader">
+        <see cref="T:Monkeyspeak.TriggerReader" />
+      </param>
+      <returns>
+ true on success
+ </returns>
+    </member>
     <member name="T:SilverMonkeyEngine.Engine.Libraries.MsFurreList">
       <summary>
  Conditions (1:700) - (1:709)
@@ -4650,6 +4843,33 @@
         </markup>
       </summary>
     </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>SilverMonkeyEngine.Engine.Libraries.WebException</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="serializationInfo">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>serializationInfo</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="streamingContext">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>streamingContext</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
     <member name="M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.String)">
       <summary>
         <markup>
@@ -4668,6 +4888,61 @@
         </markup>
       </param>
     </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.String,SilverMonkeyEngine.Engine.Libraries.WebRequests.WebData)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>SilverMonkeyEngine.Engine.Libraries.WebException</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="message">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>message</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.String,SilverMonkeyEngine.Engine.Libraries.WebRequests.WebData)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="WebObject">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>WebObject</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.String,SilverMonkeyEngine.Engine.Libraries.WebRequests.WebData)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebException.ToString">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebException.ToString</parameter>
+          </include>
+        </markup>
+      </summary>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebException.ToString</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="P:SilverMonkeyEngine.Engine.Libraries.WebException.WebObject">
+      <summary>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>summary</parameter>
+            <parameter>P:SilverMonkeyEngine.Engine.Libraries.WebException.WebObject</parameter>
+          </include>
+        </markup>
+      </summary>
+    </member>
     <member name="T:SilverMonkeyEngine.Engine.Libraries.WebRequests">
       <summary>
         <markup>
@@ -4678,7 +4953,7 @@
         </markup>
       </summary>
     </member>
-    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.#ctor(System.String@)">
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.#ctor">
       <summary>
         <markup>
           <include item="SMCAutoDocConstructor">
@@ -4686,68 +4961,75 @@
           </include>
         </markup>
       </summary>
-      <param name="URL">
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.#ctor(System.String)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>SilverMonkeyEngine.Engine.Libraries.WebRequests</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="Url">
         <markup>
           <include item="SMCMissingParamTag">
             <parameter>param</parameter>
-            <parameter>URL</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.#ctor(System.String@)</parameter>
+            <parameter>Url</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.#ctor(System.String)</parameter>
           </include>
         </markup>
       </param>
     </member>
-    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.add(System.String,System.String)">
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.PackURLEncod(System.Collections.Generic.List{Monkeyspeak.Variable})">
       <summary>
-        <markup>
-          <include item="SMCMissingTag">
-            <parameter>summary</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.add(System.String,System.String)</parameter>
-          </include>
-        </markup>
-      </summary>
-      <param name="Key">
+ Pack the Variables into a URL Encoded String as ServerData
+ </summary>
+      <param name="VariableList">
         <markup>
           <include item="SMCMissingParamTag">
             <parameter>param</parameter>
-            <parameter>Key</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.add(System.String,System.String)</parameter>
+            <parameter>VariableList</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.PackURLEncod(System.Collections.Generic.List{Monkeyspeak.Variable})</parameter>
           </include>
         </markup>
       </param>
-      <param name="Value">
-        <markup>
-          <include item="SMCMissingParamTag">
-            <parameter>param</parameter>
-            <parameter>Value</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.add(System.String,System.String)</parameter>
-          </include>
-        </markup>
-      </param>
-    </member>
-    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.PackURLEncod">
-      <summary>
-        <markup>
-          <include item="SMCMissingTag">
-            <parameter>summary</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.PackURLEncod</parameter>
-          </include>
-        </markup>
-      </summary>
       <returns>
         <markup>
           <include item="SMCMissingTag">
             <parameter>returns</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.PackURLEncod</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.PackURLEncod(System.Collections.Generic.List{Monkeyspeak.Variable})</parameter>
           </include>
         </markup>
       </returns>
     </member>
-    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WGet(System.Collections.Generic.Dictionary{System.String,System.String}@)">
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WGet(System.Collections.Generic.List{Monkeyspeak.Variable}@)">
+      <summary>
+ send a "GET" request to the server
+ </summary>
+      <param name="array">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>array</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WGet(System.Collections.Generic.List{Monkeyspeak.Variable}@)</parameter>
+          </include>
+        </markup>
+      </param>
+      <returns>
+        <markup>
+          <include item="SMCMissingTag">
+            <parameter>returns</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WGet(System.Collections.Generic.List{Monkeyspeak.Variable}@)</parameter>
+          </include>
+        </markup>
+      </returns>
+    </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WPost(System.Collections.Generic.List{Monkeyspeak.Variable}@)">
       <summary>
         <markup>
           <include item="SMCMissingTag">
             <parameter>summary</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WGet(System.Collections.Generic.Dictionary{System.String,System.String}@)</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WPost(System.Collections.Generic.List{Monkeyspeak.Variable}@)</parameter>
           </include>
         </markup>
       </summary>
@@ -4756,7 +5038,7 @@
           <include item="SMCMissingParamTag">
             <parameter>param</parameter>
             <parameter>array</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WGet(System.Collections.Generic.Dictionary{System.String,System.String}@)</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WPost(System.Collections.Generic.List{Monkeyspeak.Variable}@)</parameter>
           </include>
         </markup>
       </param>
@@ -4764,41 +5046,14 @@
         <markup>
           <include item="SMCMissingTag">
             <parameter>returns</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WGet(System.Collections.Generic.Dictionary{System.String,System.String}@)</parameter>
-          </include>
-        </markup>
-      </returns>
-    </member>
-    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WPost(System.Collections.Generic.Dictionary{System.String,System.String}@)">
-      <summary>
-        <markup>
-          <include item="SMCMissingTag">
-            <parameter>summary</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WPost(System.Collections.Generic.Dictionary{System.String,System.String}@)</parameter>
-          </include>
-        </markup>
-      </summary>
-      <param name="array">
-        <markup>
-          <include item="SMCMissingParamTag">
-            <parameter>param</parameter>
-            <parameter>array</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WPost(System.Collections.Generic.Dictionary{System.String,System.String}@)</parameter>
-          </include>
-        </markup>
-      </param>
-      <returns>
-        <markup>
-          <include item="SMCMissingTag">
-            <parameter>returns</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WPost(System.Collections.Generic.Dictionary{System.String,System.String}@)</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WPost(System.Collections.Generic.List{Monkeyspeak.Variable}@)</parameter>
           </include>
         </markup>
       </returns>
     </member>
     <member name="T:SilverMonkeyEngine.Engine.Libraries.WebRequests.WebData">
       <summary>
- Variable List
+ web response page object
  </summary>
     </member>
     <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WebData.#ctor">
@@ -4842,13 +5097,15 @@
     </member>
     <member name="P:SilverMonkeyEngine.Engine.Libraries.WebRequests.WebData.Status">
       <summary>
-        <markup>
-          <include item="SMCMissingTag">
-            <parameter>summary</parameter>
-            <parameter>P:SilverMonkeyEngine.Engine.Libraries.WebRequests.WebData.Status</parameter>
-          </include>
-        </markup>
-      </summary>
+ Web server status code
+ </summary>
+      <returns></returns>
+    </member>
+    <member name="P:SilverMonkeyEngine.Engine.Libraries.WebRequests.WebData.WebPage">
+      <summary>
+ Raw text for the received web page
+ </summary>
+      <returns></returns>
     </member>
     <member name="F:SilverMonkeyEngine.Engine.Libraries.WebRequests.WebData.WebStack">
       <summary>

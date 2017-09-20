@@ -163,7 +163,8 @@
     <CatalogVersion>100</CatalogVersion>
     <CatalogProductId>VS</CatalogProductId>
     <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, InheritedFrameworkInternalMembers, InheritedFrameworkPrivateMembers, Internals, Privates, Protected, NoPIATypes, PublicCompilerGenerated</VisibleItems>
-    <HtmlHelp1xCompilerPath>C:\Program Files (x86)\HTML Help Workshop\</HtmlHelp1xCompilerPath>
+    <HtmlHelp1xCompilerPath>
+    </HtmlHelp1xCompilerPath>
     <WorkingPath>..\build\HelpTmp\</WorkingPath>
     <BuildLogFile>..\Build\Help.log</BuildLogFile>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>

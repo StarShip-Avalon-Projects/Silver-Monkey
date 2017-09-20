@@ -72,11 +72,11 @@ Namespace Engine.Libraries
 
             '(5:702) count the number of active furres in the drean and put it in the variable %Variable.
             Add(New Trigger(TriggerCategory.Effect, 702), AddressOf FurreActiveListCount,
-                 "(5:702) count the number of active furres in the drean and put it in the variable %Variable.")
+                 "(5:702) count the number of active furres in the dream and put it in the variable %Variable.")
 
             '(5:703) count the number of A.F.K furres in the drean and put it in the variable %Variable.
             Add(New Trigger(TriggerCategory.Effect, 703), AddressOf FurreAFKListCount,
-             "(5:703) count the number of A.F.K furres in the drean and put it in the variable %Variable.")
+             "(5:703) count the number of A.F.K furres in the dream and put it in the variable %Variable.")
 
         End Sub
 
