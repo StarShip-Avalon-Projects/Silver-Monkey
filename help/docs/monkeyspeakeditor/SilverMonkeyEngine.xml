@@ -4843,6 +4843,33 @@
         </markup>
       </summary>
     </member>
+    <member name="M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+        <markup>
+          <include item="SMCAutoDocConstructor">
+            <parameter>SilverMonkeyEngine.Engine.Libraries.WebException</parameter>
+          </include>
+        </markup>
+      </summary>
+      <param name="serializationInfo">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>serializationInfo</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)</parameter>
+          </include>
+        </markup>
+      </param>
+      <param name="streamingContext">
+        <markup>
+          <include item="SMCMissingParamTag">
+            <parameter>param</parameter>
+            <parameter>streamingContext</parameter>
+            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)</parameter>
+          </include>
+        </markup>
+      </param>
+    </member>
     <member name="M:SilverMonkeyEngine.Engine.Libraries.WebException.#ctor(System.String)">
       <summary>
         <markup>
@@ -4955,13 +4982,8 @@
     </member>
     <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.PackURLEncod(System.Collections.Generic.List{Monkeyspeak.Variable})">
       <summary>
-        <markup>
-          <include item="SMCMissingTag">
-            <parameter>summary</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.PackURLEncod(System.Collections.Generic.List{Monkeyspeak.Variable})</parameter>
-          </include>
-        </markup>
-      </summary>
+ Pack the Variables into a URL Encoded String as ServerData
+ </summary>
       <param name="VariableList">
         <markup>
           <include item="SMCMissingParamTag">
@@ -4982,13 +5004,8 @@
     </member>
     <member name="M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WGet(System.Collections.Generic.List{Monkeyspeak.Variable}@)">
       <summary>
-        <markup>
-          <include item="SMCMissingTag">
-            <parameter>summary</parameter>
-            <parameter>M:SilverMonkeyEngine.Engine.Libraries.WebRequests.WGet(System.Collections.Generic.List{Monkeyspeak.Variable}@)</parameter>
-          </include>
-        </markup>
-      </summary>
+ send a "GET" request to the server
+ </summary>
       <param name="array">
         <markup>
           <include item="SMCMissingParamTag">

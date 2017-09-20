@@ -260,6 +260,9 @@ Namespace Engine.Libraries
 
     End Class
 
+    ''' <summary>
+    '''
+    ''' </summary>
     Public Class WebRequests
 
 #Region "Private Fields"
@@ -298,26 +301,29 @@ Namespace Engine.Libraries
 
 #Region "Public Methods"
 
+        ''' <summary>
+        ''' Pack the Variables into a URL Encoded String as ServerData
+        ''' </summary>
+        ''' <param name="VariableList"></param>
+        ''' <returns></returns>
         Public Function PackURLEncod(VariableList As List(Of Variable)) As String
             Dim FormattedVariables As New StringBuilder()
             For Each item As Variable In VariableList
                 FormattedVariables.AppendFormat(String.Format("{0}={1}&",
-                      HttpUtility.UrlEncode(item.Name), HttpUtility.UrlEncode(item.Value.ToString())))
+                      HttpUtility.UrlEncode(item.Name.Replace("%", String.Empty)), HttpUtility.UrlEncode(item.Value.ToString())))
             Next
             Return FormattedVariables.ToString()
         End Function
 
+        ''' <summary>
+        ''' send a "GET" request to the server
+        ''' </summary>
+        ''' <param name="array"></param>
+        ''' <returns></returns>
         Public Function WGet(ByRef array As List(Of Variable)) As WebData
             Dim result As New WebData
             Dim str As String = PackURLEncod(array)
 
-            Try
-            Catch ex As Exception
-                result.Status = 1
-                result.ErrMsg = ex.Message.ToString
-                result.Packet = ""
-                Return result
-            End Try
             Dim requesttring As String = WebURL & "?" & str
             Dim request As Net.HttpWebRequest = DirectCast(Net.WebRequest.Create(requesttring), Net.HttpWebRequest)
             request.UserAgent = UserAgent
@@ -371,10 +377,26 @@ Namespace Engine.Libraries
 
                     End If
                 Loop
-            Catch ex As Exception
+            Catch ex As WebException
                 result.ErrMsg = ex.Message.ToString
                 result.Packet = ""
-                Return result
+                Dim message = New StringBuilder()
+                If Not ex.Response Is Nothing Then
+                    For i = 0 To ex.Response.Headers.Count - 1
+                        message.AppendLine(String.Format("Header Name:{0}, Header value :{1}", ex.Response.Headers.Keys(i), ex.Response.Headers(i)))
+                    Next
+
+                    If ex.Status = WebExceptionStatus.ProtocolError Then
+                        message.AppendLine(String.Format("Status Code : {0}", DirectCast(ex.Response, HttpWebResponse).StatusCode))
+                        message.AppendLine(String.Format("Status Description : {0}", DirectCast(ex.Response, HttpWebResponse).StatusDescription))
+
+                        Using reader As New StreamReader(ex.Response.GetResponseStream())
+                            message.Append(reader.ReadToEnd().Replace(vbNewLine, vbCrLf))
+                        End Using
+                    End If
+                End If
+                result.WebPage = message.ToString()
+
             End Try
 
             Return result
@@ -401,18 +423,32 @@ Namespace Engine.Libraries
                 postreqstream.Write(byteData, 0, byteData.Length)
                 postreqstream.Flush()
                 postreqstream.Close()
-            Catch ex As Exception
-                Result.ErrMsg = ex.Message.ToString
-                Result.Packet = ""
-                Result.Status = 1
-                Return Result
+            Catch ex As WebException
+                result.ErrMsg = ex.Message.ToString
+                result.Packet = ""
+                Dim message = New StringBuilder()
+                If Not ex.Response Is Nothing Then
+                    For i = 0 To ex.Response.Headers.Count - 1
+                        message.AppendLine(String.Format("Header Name:{0}, Header value :{1}", ex.Response.Headers.Keys(i), ex.Response.Headers(i)))
+                    Next
 
+                    If ex.Status = WebExceptionStatus.ProtocolError Then
+                        message.AppendLine(String.Format("Status Code : {0}", DirectCast(ex.Response, HttpWebResponse).StatusCode))
+                        message.AppendLine(String.Format("Status Description : {0}", DirectCast(ex.Response, HttpWebResponse).StatusDescription))
+
+                        Using reader As New StreamReader(ex.Response.GetResponseStream())
+                            message.Append(reader.ReadToEnd().Replace(vbNewLine, vbCrLf))
+                        End Using
+                    End If
+                End If
+                Result.WebPage = message.ToString()
+                Return Result
             End Try
 
             Try
                 Dim postresponse = DirectCast(postReq.GetResponse(), HttpWebResponse)
 
-                Dim postreqreader As New StreamReader(postresponse.GetResponseStream())
+                Dim postreqreader = New StreamReader(postresponse.GetResponseStream())
                 Dim line As String
                 Dim readKVPs As Boolean = False
                 Dim MS As Boolean = False
@@ -462,11 +498,25 @@ Namespace Engine.Libraries
                 Loop
 
                 'trigger (0: )
-            Catch ex As Exception
-                Result.ErrMsg = ex.Message.ToString
-                Result.Packet = ""
-                Result.Status = 4
-                Return Result
+            Catch ex As WebException
+                result.ErrMsg = ex.Message.ToString
+                result.Packet = ""
+                Dim message = New StringBuilder()
+                If Not ex.Response Is Nothing Then
+                    For i = 0 To ex.Response.Headers.Count - 1
+                        message.AppendLine(String.Format("Header Name:{0}, Header value :{1}", ex.Response.Headers.Keys(i), ex.Response.Headers(i)))
+                    Next
+
+                    If ex.Status = WebExceptionStatus.ProtocolError Then
+                        message.AppendLine(String.Format("Status Code : {0}", DirectCast(ex.Response, HttpWebResponse).StatusCode))
+                        message.AppendLine(String.Format("Status Description : {0}", DirectCast(ex.Response, HttpWebResponse).StatusDescription))
+
+                        Using reader As New StreamReader(ex.Response.GetResponseStream())
+                            message.Append(reader.ReadToEnd().Replace(vbNewLine, vbCrLf))
+                        End Using
+                    End If
+                End If
+                result.WebPage = message.ToString()
             End Try
 
             Return Result

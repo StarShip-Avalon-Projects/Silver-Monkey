@@ -1,12 +1,16 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.Serialization
+Imports System.Text
 Imports SilverMonkeyEngine.Engine.Libraries.WebRequests
 
 Namespace Engine.Libraries
+
     Public Class WebException
-        Inherits Exception
+        Inherits Net.WebException
 
 #Region "Public Constructors"
+
         Private _WebObject As WebData
+
         Public Sub New(ByVal message As String)
             MyBase.New(message)
         End Sub
@@ -15,7 +19,14 @@ Namespace Engine.Libraries
             MyBase.New(message)
             _WebObject = WebObject
         End Sub
+
+        Protected Sub New(serializationInfo As SerializationInfo,
+                            streamingContext As StreamingContext)
+            MyBase.New(serializationInfo, streamingContext)
+        End Sub
+
 #End Region
+
         Public ReadOnly Property WebObject As WebData
             Get
                 Return _WebObject
@@ -23,7 +34,7 @@ Namespace Engine.Libraries
         End Property
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
@@ -36,4 +47,5 @@ Namespace Engine.Libraries
         End Function
 
     End Class
+
 End Namespace
