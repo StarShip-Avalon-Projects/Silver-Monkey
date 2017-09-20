@@ -45,8 +45,6 @@ set GIT_STATUS=%ERRORLEVEL%
 if not %GIT_STATUS%==0 goto fail 
 
 git submodule foreach "git commit -ma'Auto Update SubModules'"
-# set GIT_STATUS=%ERRORLEVEL% 
-# if not %GIT_STATUS%==0 goto fail 
 
 git submodule foreach "git push -f origin HEAD:master"
 set GIT_STATUS=%ERRORLEVEL% 
