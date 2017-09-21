@@ -46,13 +46,10 @@ if not %GIT_STATUS%==0 goto fail
 
 git submodule foreach "git commit -ma'Auto Update SubModules'"
 
-git submodule foreach "git push -f origin HEAD:master"
-set GIT_STATUS=%ERRORLEVEL% 
-if not %GIT_STATUS%==0 goto fail 
-
 git push -f --all --recurse-submodules=on-demand
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto fail 
+
 
 git request-pull v2.19.x_Elta https://github.com/StarShip-Avalon-Projects/Silver-Monkey.git
 
