@@ -14,7 +14,7 @@
     <Name>Data_Monkey_Help</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
-    <OutputPath>..\build\docs\datamonkey\</OutputPath>
+    <OutputPath>..\build\help\datamonkey\</OutputPath>
     <HtmlHelpName>Data_Monkey_Help</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
@@ -136,7 +136,7 @@
               <userCredentials useDefault="true" userName="" password="" />
             </proxyCredentials>
           </deploymentLocation>
-          <deploymentLocation id="website" location="..\Build\Help\help\datamonkey">
+          <deploymentLocation id="website" location="..\build\help\docs\datamonkey">
             <userCredentials useDefault="true" userName="" password="" />
             <proxyCredentials useProxy="false" proxyServer="">
               <userCredentials useDefault="true" userName="" password="" />

@@ -14,7 +14,7 @@
     <Name>Documentation</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
-    <OutputPath>..\build\help\docs\silvermonkey\</OutputPath>
+    <OutputPath>..\build\help\silvermonkey\</OutputPath>
     <HtmlHelpName>Silver Monkey</HtmlHelpName>
     <Language>en-US</Language>
     <BuildAssemblerVerbosity>OnlyErrors</BuildAssemblerVerbosity>
@@ -165,7 +165,8 @@
     <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, InheritedFrameworkInternalMembers, InheritedFrameworkPrivateMembers, Internals, Privates, Protected, NoPIATypes, PublicCompilerGenerated</VisibleItems>
     <HtmlHelp1xCompilerPath>
     </HtmlHelp1xCompilerPath>
-    <WorkingPath>..\build\HelpTmp\</WorkingPath>
+    <WorkingPath>
+    </WorkingPath>
     <BuildLogFile>..\Build\Help.log</BuildLogFile>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <RootNamespaceTitle>Silver Monkey SDK</RootNamespaceTitle>
@@ -219,7 +220,7 @@
               <userCredentials useDefault="true" userName="" password="" />
             </proxyCredentials>
           </deploymentLocation>
-          <deploymentLocation id="website" location="..\Build\Help\help\silvermonkey">
+          <deploymentLocation id="website" location="..\build\help\docs\silvermonkey">
             <userCredentials useDefault="true" userName="" password="" />
             <proxyCredentials useProxy="false" proxyServer="">
               <userCredentials useDefault="true" userName="" password="" />

@@ -30,7 +30,7 @@
     </CompilerAdditionalOptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>D:\TS-Projects\Net Source Code\Monkey System 2 Elta\Build\Installer\Release\</OutputPath>
+    <OutputPath>..\Build\Installer\Release\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <Import Project="$(WixTargetsPath)" />
