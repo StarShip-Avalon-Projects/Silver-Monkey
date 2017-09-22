@@ -160,8 +160,10 @@
     <Compile Include="PS Pre-Processor\SubSystem.vb" />
     <Compile Include="SessionHandler\BotOptions.vb" />
     <Compile Include="SessionHandler\BotSession.vb" />
-    <Compile Include="Web Server Access\WebException.vb" />
-    <Compile Include="Web Server Access\WebRequests.vb" />
+    <Compile Include="Libraries\MsWebRequests.vb" />
+    <Compile Include="Libraries\web\WebException.vb" />
+    <Compile Include="Libraries\web\WebRequests.vb" />
+    <Compile Include="Libraries\web\WebUtilities.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

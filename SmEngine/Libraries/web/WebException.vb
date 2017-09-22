@@ -1,8 +1,8 @@
 ﻿Imports System.Runtime.Serialization
 Imports System.Text
-Imports SilverMonkeyEngine.Engine.Libraries.WebRequests
+Imports SilverMonkeyEngine.Engine.Libraries.Web.WebRequests
 
-Namespace Engine.Libraries
+Namespace Engine.Libraries.Web
 
     Public Class WebException
         Inherits Net.WebException
