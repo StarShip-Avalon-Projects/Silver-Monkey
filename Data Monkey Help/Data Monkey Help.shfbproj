@@ -136,9 +136,6 @@
           </deploymentLocation>
         </configuration>
       </PlugInConfig>
-      <PlugInConfig id="IntelliSense Only" enabled="True">
-        <configuration />
-      </PlugInConfig>
     </PlugInConfigurations>
     <WebsiteSdkLinkType>Msdn</WebsiteSdkLinkType>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
