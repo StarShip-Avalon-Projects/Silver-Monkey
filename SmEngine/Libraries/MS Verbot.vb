@@ -57,7 +57,7 @@ Namespace Engine.Libraries
 
             '(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.
             Add(TriggerCategory.Effect, 1500,
-                AddressOf useKB_File, "(5:1500) use knowledgebase file {...} (*.vkb) and start the chat engine.")
+                AddressOf UseKkbFile, "(5:1500) use knowledge base file {...} (*.vkb) and start the chat engine.")
 
             '(5:1501) send text {...} to chat engine and put the response in variable %Variable.
             Add(TriggerCategory.Effect, 1501,
@@ -110,7 +110,7 @@ Namespace Engine.Libraries
             If reply Is Nothing Then Return False
 
             ResponceText.Value = reply.Text
-            Me.parseEmbeddedOutputCommands(reply.AgentText)
+            parseEmbeddedOutputCommands(reply.AgentText)
             Return True
 
         End Function
@@ -124,13 +124,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function getReplyName(reader As TriggerReader) As Boolean
-            Dim SayText As String
-            Dim SayName As String
-            Dim ResponceText As Variable
 
-            SayText = reader.ReadString
-            SayName = reader.ReadString
-            ResponceText = reader.ReadVariable(True)
+            Dim SayText = reader.ReadString
+            Dim ResponceText = reader.ReadVariable(True)
             If _state.Vars.ContainsKey("botname") Then
                 _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
             Else
@@ -162,8 +158,8 @@ Namespace Engine.Libraries
                 [end] = text.IndexOf(endCommand, start)
                 If [end] <> -1 Then
                     Dim command As String = text.Substring(start + 1, [end] - start - 1).Trim()
-                    If command <> "" Then
-                        Me.runEmbeddedOutputCommand(command)
+                    If String.IsNullOrEmpty(command) Then
+                        runEmbeddedOutputCommand(command)
                     End If
                 End If
                 start = text.IndexOf(startCommand, start + 1)
@@ -187,8 +183,8 @@ Namespace Engine.Libraries
             Try
                 Select Case [function]
                     Case "setmsvariable"
-                        Dim VarIndex As Integer = args.IndexOf(" ")
-                        Dim VarDataIndex As Integer = args.IndexOf("=")
+                        Dim VarIndex = args.IndexOf(" ")
+                        Dim VarDataIndex = args.IndexOf("=")
                         Dim VarName As String = Nothing
                         Dim VarData As String = Nothing
 
@@ -241,8 +237,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Function getStateVariable(reader As TriggerReader) As Boolean
 
-            Dim EngineVar As String = reader.ReadString()
-            Dim MS_Var As Variable = reader.ReadVariable(True)
+            Dim EngineVar = reader.ReadString()
+            Dim MS_Var = reader.ReadVariable(True)
 
             MS_Var.Value = _state.Vars.Item(EngineVar)
             Return True
@@ -258,8 +254,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Function setStateVariable(reader As TriggerReader) As Boolean
 
-            Dim EngineVar As String = reader.ReadString()
-            Dim EngineValue As String = reader.ReadString()
+            Dim EngineVar = reader.ReadString()
+            Dim EngineValue = reader.ReadString()
             If _state.Vars.ContainsKey(EngineVar) Then
                 _state.Vars.Item(EngineVar) = EngineValue
             Else
@@ -276,12 +272,12 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function useKB_File(reader As TriggerReader) As Boolean
+        Function UseKkbFile(reader As TriggerReader) As Boolean
 
-            Dim FileName As String = reader.ReadString
+            Dim FileName = reader.ReadString
             FileName = Path.Combine(Paths.SilverMonkeyBotPath, FileName)
 
-            Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(KnowledgeBase))
+            Dim xToolbox = New XMLToolbox(GetType(KnowledgeBase))
             kb = CType(xToolbox.LoadXML(FileName), KnowledgeBase)
             kbi.Filename = Path.GetFileName(FileName)
             kbi.Fullpath = Path.GetDirectoryName(FileName) + "\"

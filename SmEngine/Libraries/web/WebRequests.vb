@@ -23,7 +23,7 @@ Namespace Engine.Libraries.Web
         Private WebReferer As String = "http://silvermonkey.tsprojects.org"
 
         '*Value may not always return from post functions
-        Private WebURL As String
+        Private WebURL As Uri
 
 #End Region
 
@@ -38,14 +38,14 @@ Namespace Engine.Libraries.Web
         ''' Default constructor
         ''' </summary>
         Public Sub New()
-            WebURL = String.Empty
+            WebURL = New Uri(String.Empty)
         End Sub
 
         ''' <summary>
         ''' Constructor Specifying the Web url to connect to
         ''' </summary>
         ''' <param name="Url"></param>
-        Public Sub New(Url As String)
+        Public Sub New(Url As Uri)
             WebURL = Url
         End Sub
 
@@ -58,7 +58,7 @@ Namespace Engine.Libraries.Web
         ''' </summary>
         ''' <param name="VariableList"></param>
         ''' <returns></returns>
-        Public Function PackURLEncod(VariableList As List(Of Variable)) As String
+        Public Shared Function EncodeWebVariables(VariableList As List(Of Variable)) As String
             Dim FormattedVariables As New StringBuilder()
             For Each item As Variable In VariableList
                 FormattedVariables.AppendFormat(String.Format("{0}={1}&",
@@ -74,9 +74,9 @@ Namespace Engine.Libraries.Web
         ''' <returns></returns>
         Public Function WGet(ByRef array As List(Of Variable)) As WebData
             Dim result As New WebData
-            Dim str As String = PackURLEncod(array)
+            Dim EncodedWebVariables = EncodeWebVariables(array)
 
-            Dim requesttring As String = WebURL & "?" & str
+            Dim requesttring = New Uri(WebURL.Host + "?" + EncodedWebVariables)
             Dim request As Net.HttpWebRequest =
                 DirectCast(Net.WebRequest.Create(requesttring),
                                Net.HttpWebRequest)
@@ -84,8 +84,7 @@ Namespace Engine.Libraries.Web
             request.UserAgent = UserAgent
             request.Referer = WebReferer
             'request.Method = "GET"
-            WebReferer = WebURL
-            Dim packet As String = ""
+            WebReferer = WebURL.ToString
             Dim readKVPs As Boolean = False
             Try
                 Dim response As HttpWebResponse = DirectCast(request.GetResponse(), HttpWebResponse)
@@ -94,7 +93,7 @@ Namespace Engine.Libraries.Web
                 Dim line As String
                 Do While Not postreqreader.EndOfStream
                     line = postreqreader.ReadLine
-                    If line = "" Then
+                    If String.IsNullOrEmpty(line) Then
                         'Loop
 
                     ElseIf line = "SM" And Not MS Then
@@ -158,10 +157,14 @@ Namespace Engine.Libraries.Web
 
         End Function
 
-        Public Function WPost(ByRef array As List(Of Variable)) As WebData
+        Public Function WPost(ByRef WebVariables As List(Of Variable)) As WebData
+            If WebVariables Is Nothing Then
+                Throw New ArgumentNullException(NameOf(WebVariables))
+            End If
+
             Dim Result As New WebData
 
-            Dim PostData = PackURLEncod(array)
+            Dim PostData = EncodeWebVariables(WebVariables)
 
             Dim PostDataEncoding = WebEncoding
             Dim byteData = PostDataEncoding.GetBytes(PostData)
@@ -207,10 +210,10 @@ Namespace Engine.Libraries.Web
                 Dim line As String
                 Dim readKVPs As Boolean = False
                 Dim MS As Boolean = False
-                Dim ReceivePage As Boolean = False
+
                 Do While Not postreqreader.EndOfStream
                     line = postreqreader.ReadLine
-                    If line = "" Then
+                    If String.IsNullOrEmpty(line) Then
                         'Loop
 
                     ElseIf line = "SM" And Not MS Then
@@ -228,7 +231,7 @@ Namespace Engine.Libraries.Web
 
                     ElseIf line.StartsWith("s=") Then
                         Result.Status = CInt(line.Substring(2))
-                        If CDbl(line.Substring(2)) > 0 Then
+                        If line.Substring(2) > 0 Then
                             Result.ErrMsg = "The server returned error code " + Result.Status.ToString
                             Exit Do
                         End If
@@ -282,73 +285,7 @@ Namespace Engine.Libraries.Web
 
 #Region "Public Classes"
 
-        ''' <summary>
-        ''' web response page object
-        ''' </summary>
-        Public Class WebData
 
-#Region "Public Fields"
-
-            Private _webPage As String
-            Public ErrMsg As String
-            Public Packet As String
-            Public WebStack As New List(Of Variable)()
-
-#End Region
-
-#Region "Private Fields"
-
-            Private _Status As Integer
-
-#End Region
-
-#Region "Public Constructors"
-
-            Public Sub New()
-                _Status = -1
-                ReceivedPage = False
-                ErrMsg = String.Empty
-                Packet = String.Empty
-            End Sub
-
-#End Region
-
-#Region "Public Properties"
-
-            ''' <summary>
-            ''' Raw text for the received web page
-            ''' </summary>
-            ''' <returns></returns>
-            Public Property WebPage As String
-                Get
-                    Return _webPage
-                End Get
-                Set(value As String)
-                    _webPage = value
-                End Set
-            End Property
-
-            Public Property ReceivedPage As Boolean
-
-            ''' <summary>
-            ''' Web server status code
-            ''' </summary>
-            ''' <returns></returns>
-            ''' <remarks>
-            ''' 
-            ''' </remarks>
-            Public Property Status As Integer
-                Get
-                    Return _Status
-                End Get
-                Set(value As Integer)
-                    _Status = value
-                End Set
-            End Property
-
-#End Region
-
-        End Class
 
 #End Region
 

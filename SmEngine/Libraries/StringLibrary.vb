@@ -237,7 +237,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function AndVariableContains(reader As TriggerReader) As Boolean
+        Public Shared Function AndVariableContains(reader As TriggerReader) As Boolean
 
             Dim VariableToCheck As Monkeyspeak.Variable = reader.ReadVariable()
             Dim Argument As String
@@ -262,7 +262,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function AndVariableNotContains(reader As TriggerReader) As Boolean
+        Public Shared Function AndVariableNotContains(reader As TriggerReader) As Boolean
 
             Dim VariableToCheck As Monkeyspeak.Variable = reader.ReadVariable()
             Dim Argument As String
@@ -320,7 +320,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Private Function ToShortName(reader As TriggerReader) As Boolean
+        Private Shared Function ToShortName(reader As TriggerReader) As Boolean
 
             If reader.PeekVariable Then
                 Dim var As Variable = reader.ReadVariable
