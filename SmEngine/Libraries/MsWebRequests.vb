@@ -1,8 +1,8 @@
 ﻿Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.Web
 
-
 Namespace Engine.Libraries
+
     ''' <summary>
     ''' Provides web interface for getting a list of Variables from a web server
     ''' <para>
@@ -19,8 +19,7 @@ Namespace Engine.Libraries
 
         Private Webrequest As New WebRequests()
         Private WebStack As New List(Of Variable)()
-        Private WebURL As String = ""
-
+        Private WebURL As Uri
 
 #End Region
 
@@ -137,16 +136,14 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function SendGetWebStack(reader As TriggerReader) As Boolean
 
-            Dim page As WebRequests.WebData = Nothing
             Dim ws As New WebRequests(WebURL)
 
-            SyncLock Me
-                page = ws.WGet(WebStack)
-                WebStack = page.WebStack
-                If page.ReceivedPage Then
-                    FurcadiaSession.MSpage.Execute(70)
-                End If
-            End SyncLock
+            Dim page = ws.WGet(WebStack)
+            WebStack = page.WebStack
+            If page.ReceivedPage Then
+                FurcadiaSession.MSpage.Execute(70)
+            End If
+
             If page.Status <> 0 Then Throw New WebException(page.ErrMsg)
 
             Return page.Status = 0
@@ -161,7 +158,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function SendWebStack(reader As TriggerReader) As Boolean
 
-            Dim page As WebRequests.WebData = Nothing
+            Dim page As New WebData
             Dim ws As New WebRequests(WebURL)
 
             SyncLock Me
@@ -186,7 +183,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function SetURL(reader As TriggerReader) As Boolean
 
-            WebURL = reader.ReadString
+            WebURL = New Uri(reader.ReadString)
             Return True
         End Function
 
@@ -260,4 +257,5 @@ Namespace Engine.Libraries
 #End Region
 
     End Class
+
 End Namespace

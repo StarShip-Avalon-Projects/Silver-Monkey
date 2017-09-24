@@ -57,7 +57,7 @@ Namespace Engine.Libraries
         ''' </summary>
         ''' <param name="InstructionObject">Server Instruction</param>
         ''' <param name="Args">Server Event Arguments</param>
-        Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
+        Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerChannelData
             Player = InstructionObject.Player
             Dim Text = InstructionObject.ChannelText
 

@@ -10,7 +10,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
 
     Private _AutoConnect As Boolean
     Private _BiniFile As String
-    Private _DreamURL As System.Uri
+    Private _DreamURL As String
     Private _GoMap As Integer
     Private _MonkeySpeakEngineOption As Engine.EngineOptoons
 
@@ -100,7 +100,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         End If
 
         s = BotIni.GetKeyValue("GoMap", "DreamURL")
-        If Not String.IsNullOrEmpty(s) Then _DreamURL = New System.Uri(s)
+        If Not String.IsNullOrEmpty(s) Then _DreamURL = s
 
     End Sub
 
@@ -148,11 +148,11 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     ''' </summary>
     ''' <returns>
     ''' </returns>
-    Public Property DreamURL As System.Uri
+    Public Property DreamLink As String
         Get
             Return _DreamURL
         End Get
-        Set(value As System.Uri)
+        Set(value As String)
             _DreamURL = value
         End Set
     End Property

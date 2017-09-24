@@ -141,8 +141,6 @@ Public Class BotSession : Inherits ProxySession
         'Pass Stuff to Base Clqss before we can handle things here
         MyBase.ParseServerChannel(data, Handled)
 
-        Dim psCheck As Boolean = False
-        Dim SpecTag As String = ""
         ' Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
         Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
         Dim Desc As String = ""

@@ -4,6 +4,7 @@ Imports System.Text
 Imports System.Web
 Imports Monkeyspeak
 
+
 'Web Module
 '
 Namespace Engine.Libraries.Web
@@ -38,7 +39,7 @@ Namespace Engine.Libraries.Web
         ''' Default constructor
         ''' </summary>
         Public Sub New()
-            WebURL = New Uri(String.Empty)
+            WebURL = Nothing
         End Sub
 
         ''' <summary>
@@ -280,12 +281,6 @@ Namespace Engine.Libraries.Web
             Return Result
 
         End Function
-
-#End Region
-
-#Region "Public Classes"
-
-
 
 #End Region
 

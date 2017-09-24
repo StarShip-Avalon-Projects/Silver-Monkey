@@ -375,7 +375,7 @@ Public Class NewBott
 
         bFile.BotController = TxtbxBotController.Text
 
-        bFile.DreamURL = TxtbxDreamURL.Text
+        bFile.DreamLink = TxtbxDreamURL.Text
 
         If RadioGoMapAllgeriaIsland.Checked = True Then
             bFile.GoMapIDX = 1

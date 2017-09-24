@@ -13,7 +13,7 @@
     <RootNamespace>Monkey_Speak_Editor_Help</RootNamespace>
     <Name>Monkey_Speak_Editor_Help</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
+    <FrameworkVersion>Cross-platform (.NET Core/.NET Standard)</FrameworkVersion>
     <OutputPath>..\build\help\monkeyspeakeditor\</OutputPath>
     <HtmlHelpName>Monkey_Speak_Editor_Help</HtmlHelpName>
     <Language>en-US</Language>
@@ -226,11 +226,6 @@
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Name>FurcadiaLib</Name>
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
-      <Name>BugTraqConnect</Name>
-      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
