@@ -922,7 +922,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function AddColumn(reader As TriggerReader) As Boolean
+        Public Shared Function AddColumn(reader As TriggerReader) As Boolean
             Dim Column As String = reader.ReadString
             Dim Type As String = reader.ReadString
             Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
@@ -940,11 +940,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function ColumnSum(reader As TriggerReader) As Boolean
+        Public Shared Function ColumnSum(reader As TriggerReader) As Boolean
             Dim Table As String = ""
             Dim Column As String = ""
             Dim Total As Variable
-            Dim TotalSum As Double = 0
 
             Column = reader.ReadString
             Table = reader.ReadString
@@ -974,7 +973,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function DeleteFurreNamed(reader As TriggerReader) As Boolean
+        Public Shared Function DeleteFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
             Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
             Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
@@ -1044,10 +1043,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function GetTotalRecords(reader As TriggerReader) As Boolean
+        Public Shared Function GetTotalRecords(reader As TriggerReader) As Boolean
             Dim Table As String = ""
             Dim Total As Variable
-            Dim num As Double = 0
 
             Dim db As New SQLiteDatabase(MsDatabase.SQLitefile)
             Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
@@ -1101,7 +1099,6 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
             Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
-            Dim info As String = reader.ReadString
             Dim value As String = "0"
             If reader.PeekNumber Or reader.PeekVariable Then
                 value = ReadVariableOrNumber(reader).ToString()
@@ -1132,7 +1129,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function PrepQuery(reader As TriggerReader) As Boolean
+        Public Shared Function PrepQuery(reader As TriggerReader) As Boolean
             Dim var1 As Variable
             Dim var2 As Variable
 
@@ -1157,11 +1154,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function ReadDatabaseInfo(reader As TriggerReader) As Boolean
 
-            Dim db As New SQLiteDatabase(MsDatabase.SQLitefile)
-            Dim Info As String = reader.ReadString
-            Dim Variable As Variable = reader.ReadVariable(True)
-            Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
-            'Dim db As SQLiteDatabase = New SQLiteDatabase(file)
+            Dim Info = reader.ReadString
+            Dim Variable = reader.ReadVariable(True)
+            Dim Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
+
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
             Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
             Return True
@@ -1178,7 +1174,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
+        Public Shared Function ReadDatabaseInfoName(reader As TriggerReader) As Boolean
 
             Dim db As New SQLiteDatabase(SQLitefile)
             Dim Info As String = reader.ReadString
@@ -1201,7 +1197,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function RecordIndex(reader As TriggerReader) As Boolean
+        Public Shared Function RecordIndex(reader As TriggerReader) As Boolean
             Dim info As String = ""
             Dim Idx As Variable
             Dim OutVar As Variable
@@ -1301,7 +1297,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
+        Public Shared Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
             'Dim Furre As String = MSpage.GetVariable("~Name").Value.ToString
@@ -1378,11 +1374,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function UseOrCreateSQLiteFileIfNotExist(reader As TriggerReader) As Boolean
+        Public Shared Function UseOrCreateSQLiteFileIfNotExist(reader As TriggerReader) As Boolean
             SQLitefile = Paths.CheckBotFolder(reader.ReadString())
             Console.WriteLine("NOTICE: SQLite Database file has changed to" + SQLitefile)
-            Dim db As New SQLiteDatabase(SQLitefile)
-            'db.CreateTbl("FURRE", FurreTable)
             Return True
         End Function
 
@@ -1396,7 +1390,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function VACUUM(reader As TriggerReader) As Boolean
+        Public Shared Function VACUUM(reader As TriggerReader) As Boolean
             Dim start As Date = Date.Now
             SQLiteDatabase.ExecuteNonQuery("VACUUM")
             Dim ts As TimeSpan = Date.Now.Subtract(start)

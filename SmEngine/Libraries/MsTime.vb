@@ -86,7 +86,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True
         ''' </returns>
-        Function CurrentTime(reader As TriggerReader) As Boolean
+        Shared Function CurrentTime(reader As TriggerReader) As Boolean
 
             Dim Var As Variable = reader.ReadVariable(True)
             Dim Str As String = DateTime.Now.ToLongTimeString.ToLower
@@ -123,7 +123,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True
         ''' </returns>
-        Public Function LocalDateTimeVar(reader As TriggerReader) As Boolean
+        Public Shared Function LocalDateTimeVar(reader As TriggerReader) As Boolean
 
             Dim var As Variable = reader.ReadVariable(True)
             var.Value = Date.Now.ToString("yyyy-MM-dd HH:mm:ss tt")
@@ -142,7 +142,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function MsFurcTime(reader As TriggerReader) As Boolean
 
-            Dim Var As Variable = reader.ReadVariable(True)
+            Dim Var = reader.ReadVariable(True)
             Dim Str As String = ""
             SyncLock lock
                 Str = FurcTime.ToLongTimeString.ToLower
@@ -166,7 +166,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True
         ''' </returns>
-        Public Function SubsractDateTimeStr(reader As TriggerReader) As Boolean
+        Public Shared Function SubsractDateTimeStr(reader As TriggerReader) As Boolean
 
             Dim DateTimeVariable As Variable = reader.ReadVariable(True)
             Dim DateTimeString As String = reader.ReadString
@@ -192,7 +192,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True
         ''' </returns>
-        Public Function SubsractDateTimeVar(reader As TriggerReader) As Boolean
+        Public Shared Function SubsractDateTimeVar(reader As TriggerReader) As Boolean
 
             Dim DateTimeVariable As Variable = reader.ReadVariable(True)
             Dim DateTimeString As Variable = reader.ReadVariable

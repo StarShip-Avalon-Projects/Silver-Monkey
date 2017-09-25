@@ -321,6 +321,7 @@ Public Class Main
 
     ''' <summary>
     ''' Deal with Client Statuses and update our UI indicators
+    ''' TODO: Add Invoke request due to cross threading
     ''' </summary>
     ''' <param name="Sender">
     ''' </param>
@@ -655,8 +656,8 @@ Public Class Main
         End If
 
         If Not ex.InnerException Is Nothing Then
-            If ex.InnerException.GetType() Is GetType(Engine.Libraries.WebException) Then
-                Dim InnerEx = CType(ex.InnerException, Engine.Libraries.WebException)
+            If ex.InnerException.GetType() Is GetType(Engine.Libraries.Web.WebException) Then
+                Dim InnerEx = CType(ex.InnerException, Engine.Libraries.Web.WebException)
                 SendTextToDebugWindow(InnerEx.ToString)
             Else
                 SendTextToDebugWindow(ex.InnerException.ToString)

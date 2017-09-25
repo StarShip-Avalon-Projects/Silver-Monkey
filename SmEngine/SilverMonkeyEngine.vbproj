@@ -24,6 +24,9 @@
     <DocumentationFile>SilverMonkeyEngine.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -108,14 +111,15 @@
     <Compile Include="Interfaces\ImsPlugin.vb" />
     <Compile Include="IO\NameList.vb" />
     <Compile Include="Libraries\Banish.vb" />
+    <Compile Include="Libraries\Dice\Die.vb" />
     <Compile Include="Libraries\HelperModule.vb" />
     <Compile Include="Libraries\MonkeySpeakLibrary.vb" />
     <Compile Include="Libraries\Movement.vb" />
-    <Compile Include="Libraries\MS Dice.vb" />
-    <Compile Include="Libraries\MS Repq.vb" />
+    <Compile Include="Libraries\MsDice.vb.vb" />
+    <None Include="Libraries\MS Repq.vb" />
     <Compile Include="Libraries\MS Verbot.vb" />
     <Compile Include="Libraries\MsDatabase.vb" />
-    <Compile Include="Libraries\DiceRolls\MsDice.DiceRollCollection.vb" />
+    <Compile Include="Libraries\Dice\MsDice.DiceRollCollection.vb" />
     <Compile Include="Libraries\MsDreamInfo.vb" />
     <Compile Include="Libraries\MsFurreList.vb" />
     <Compile Include="Libraries\MsIO.vb" />
@@ -126,12 +130,13 @@
     <Compile Include="Libraries\MsTrades.vb" />
     <Compile Include="Libraries\MsWarning.vb" />
     <Compile Include="Libraries\MS_Cookie.vb" />
-    <Compile Include="Libraries\MS_DreamTransfer.vb" />
+    <None Include="Libraries\MS_DreamTransfer.vb" />
     <Compile Include="Libraries\MS_Quotes.vb" />
     <Compile Include="Libraries\Pounce\MsPounce.vb" />
     <Compile Include="Libraries\Pounce\PounceFurre.vb" />
     <Compile Include="Libraries\SayLibrary.vb" />
     <Compile Include="Libraries\StringLibrary.vb" />
+    <Compile Include="Libraries\web\WenData.vb" />
     <Compile Include="Libraries\WmCpyDta.vb" />
     <Compile Include="MainEngine.vb" />
     <Compile Include="MonkeySpeakPage.vb" />
@@ -160,8 +165,9 @@
     <Compile Include="PS Pre-Processor\SubSystem.vb" />
     <Compile Include="SessionHandler\BotOptions.vb" />
     <Compile Include="SessionHandler\BotSession.vb" />
-    <Compile Include="Web Server Access\WebException.vb" />
-    <Compile Include="Web Server Access\WebRequests.vb" />
+    <Compile Include="Libraries\MsWebRequests.vb" />
+    <Compile Include="Libraries\web\WebException.vb" />
+    <Compile Include="Libraries\web\WebRequests.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

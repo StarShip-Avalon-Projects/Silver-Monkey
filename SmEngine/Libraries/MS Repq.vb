@@ -9,7 +9,7 @@ Namespace Engine.Libraries
     ''' TODO: Complete Class
     ''' </para>
     ''' </summary>
-    Public Class MS_Repq
+    Public Class MsRepQ
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
@@ -26,14 +26,14 @@ Namespace Engine.Libraries
         ''' </summary>
         ''' <param name="InstructionObject">Server Instruction</param>
         ''' <param name="Args">Server Event Arguments</param>
-        Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerChannelData
-            Player = InstructionObject.Player
-            Dim Text = InstructionObject.ChannelText
+        Private Shared Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerChannelData
+            'Player = InstructionObject.Player
+            'Dim Text = InstructionObject.ChannelText
 
-            Select Case Text
-                Case "trade"
-                    MsPage.Execute(46, 47, 48)
-            End Select
+            'Select Case Text
+            '    Case "trade"
+            '        MsPage.Execute(46, 47, 48)
+            'End Select
         End Sub
 
         ''' <summary>

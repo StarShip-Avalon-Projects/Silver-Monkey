@@ -1,7 +1,9 @@
 ﻿Imports Furcadia.Util
 
 Namespace Engine.Libraries.Pounce
-
+    ''' <summary>
+    ''' 
+    ''' </summary>
     Public Class PounceFurre
         Implements IEquatable(Of String)
 

@@ -387,7 +387,7 @@ Namespace Engine.Libraries
                 Function(reader As TriggerReader)
 
                     Dim msg As String = reader.ReadString(True)
-                    Return sndSay(msg)
+                    Return SendSay(msg)
 
                 End Function,
          "(5:0) say {..}.")
@@ -397,7 +397,7 @@ Namespace Engine.Libraries
                 Function(reader As TriggerReader)
 
                     Dim msg As String = reader.ReadString
-                    sndEmote(msg)
+                    SendEmote(msg)
                     Return True
 
                 End Function,
@@ -421,7 +421,7 @@ Namespace Engine.Libraries
                 Function(reader As TriggerReader)
 
                     Dim msg As String = reader.ReadString
-                    sndEmit(msg)
+                    SendEmit(msg)
                     Return True
 
                 End Function,
@@ -431,7 +431,7 @@ Namespace Engine.Libraries
                  Function(reader As TriggerReader)
 
                      Dim msg As String = reader.ReadString
-                     sndEmitLoud(msg)
+                     SendEmitLoud(msg)
                      Return True
 
                  End Function,
@@ -469,7 +469,7 @@ Namespace Engine.Libraries
                       Dim msg As String = reader.ReadString
                       Dim tname As String = reader.ReadString
 
-                      sndOffWhisper(tname, msg)
+                      SendOffLineWhisper(tname, msg)
                       Return True
 
                   End Function,
@@ -592,7 +592,7 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' message to send
         ''' </param>
-        Public Sub sndEmit(ByRef msg As String)
+        Public Sub SendEmit(ByRef msg As String)
             If Not String.IsNullOrEmpty(msg) Then sendServer("emit " & msg)
         End Sub
 
@@ -602,7 +602,7 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' message to send
         ''' </param>
-        Public Sub sndEmitLoud(ByRef msg As String)
+        Public Sub SendEmitLoud(ByRef msg As String)
             If Not String.IsNullOrEmpty(msg) Then sendServer("emitloud " & msg)
         End Sub
 
@@ -612,7 +612,7 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' message to send
         ''' </param>
-        Public Sub sndEmote(ByRef msg As String)
+        Public Sub SendEmote(ByRef msg As String)
             If Not String.IsNullOrEmpty(msg) Then sendServer(":" & msg)
         End Sub
 
@@ -625,7 +625,7 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' Message to send
         ''' </param>
-        Public Sub sndOffWhisper(ByRef name As String, ByRef msg As String)
+        Public Sub SendOffLineWhisper(ByRef name As String, ByRef msg As String)
             If Not String.IsNullOrEmpty(msg) Then sendServer("/%%" & FurcadiaShortName(name) & " " & msg)
         End Sub
 
@@ -635,7 +635,7 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' message to send
         ''' </param>
-        Public Function sndSay(ByRef msg As String) As Boolean
+        Public Function SendSay(ByRef msg As String) As Boolean
 
             Return sendServer(msg)
 
@@ -690,7 +690,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function StartNewBot(reader As TriggerReader) As Boolean
+        Public Shared Function StartNewBot(reader As TriggerReader) As Boolean
 
             'Dim ps As Process = New Process()
             Dim File As String = reader.ReadString

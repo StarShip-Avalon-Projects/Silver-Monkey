@@ -85,7 +85,7 @@ Public Class BotSetup
         StandAloneChkBx.Checked = bFile.Standalone
         ChkBxAutoConnect.Checked = bFile.AutoConnect
 
-        TxtBxDreamURL.Text = bFile.DreamURL
+        TxtBxDreamURL.Text = bFile.DreamLink.ToString
         Select Case bFile.GoMapIDX
             Case 1
                 RadioButton1.Checked = True
@@ -164,7 +164,7 @@ Public Class BotSetup
         bFile.Standalone = Convert.ToBoolean(StandAloneChkBx.Checked)
         bFile.AutoConnect = ChkBxAutoConnect.Checked
 
-        bFile.DreamURL = TxtBxDreamURL.Text
+        bFile.DreamLink = TxtBxDreamURL.Text
         If RadioButton1.Checked = True Then
             bFile.GoMapIDX = 1
         ElseIf RadioButton2.Checked = True Then

@@ -141,36 +141,17 @@ Public Class BotSession : Inherits ProxySession
         'Pass Stuff to Base Clqss before we can handle things here
         MyBase.ParseServerChannel(data, Handled)
 
-        Dim psCheck As Boolean = False
-        Dim SpecTag As String = ""
         ' Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
         Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
-        Dim User As String = ""
         Dim Desc As String = ""
         Dim Text As String = ""
 
         MSpage.SetVariable(MS_Name, Player.Name, True)
         MSpage.SetVariable("MESSAGE", Player.Message, True)
 
-        If Color = "bcast" Then
-            Dim AdRegEx As String = "<channel name='(.*)' />"
 
-            Dim chan As String = Regex.Match(data, AdRegEx).Groups(1).Value
 
-            Select Case chan
-                Case "@advertisements"
-                    ' If cMain.Advertisment Then Exit Sub
-                    AdRegEx = "\[(.*?)\] (.*?)</font>"
-                    Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
-
-                Case "@announcements"
-                    ' If cMain.Announcement Then Exit Sub
-                    Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
-
-                Case Else
-            End Select
-
-        ElseIf Desc <> "" Then
+        If Not String.IsNullOrEmpty(Desc) Then
 
             Dim DescName As String = Regex.Match(data, DescFilter).Groups(1).ToString()
 
@@ -185,8 +166,8 @@ Public Class BotSession : Inherits ProxySession
 
         ElseIf Color = "channel" Then
             'ChannelNameFilter2
-            Dim chan As Regex = New Regex(ChannelNameFilter)
-            Dim ChanMatch As System.Text.RegularExpressions.Match = chan.Match(data)
+
+
             Dim r As New Regex("<img src='(.*?)' alt='(.*?)' />")
             Dim ss As RegularExpressions.Match = r.Match(Text)
             If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")

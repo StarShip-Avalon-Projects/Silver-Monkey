@@ -148,7 +148,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     ''' </summary>
     ''' <returns>
     ''' </returns>
-    Public Property DreamURL As String
+    Public Property DreamLink As String
         Get
             Return _DreamURL
         End Get
@@ -157,6 +157,10 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         End Set
     End Property
 
+    ''' <summary>
+    ''' Which map are we going to?
+    ''' </summary>
+    ''' <returns></returns>
     Public Property GoMapIDX() As Integer
         Get
             Return _GoMap
@@ -259,7 +263,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         BotIni.SetKeyValue("Bot", "AutoConnect", _AutoConnect.ToString)
 
         BotIni.SetKeyValue("GoMap", "IDX", _GoMap.ToString)
-        BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL)
+        BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL.ToString())
 
         BotIni.Save(Paths.CheckBotFolder(_BiniFile))
     End Sub
