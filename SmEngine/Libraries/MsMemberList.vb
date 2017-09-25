@@ -116,12 +116,11 @@ Namespace Engine.Libraries
         ''' Checks default <see cref="Paths.SilverMonkeyBotPath"/>
         ''' </para>
         ''' </summary>
-        Private Sub CheckMemberList()
+        Private Shared Sub CheckMemberList()
             MemberList = Paths.CheckBotFolder(MemberList)
             If Not File.Exists(MemberList) Then
                 Using f As New StreamWriter(MemberList)
                     f.WriteLine("")
-                    f.Close()
                 End Using
             End If
         End Sub

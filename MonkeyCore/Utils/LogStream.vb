@@ -82,7 +82,6 @@ Public Class LogStream
             ioFile.WriteLine(Message)
             ioFile.WriteLine("Error: " & ObjectException.Message)
             ioFile.WriteLine("")
-            Dim st As New StackTrace(ObjectException, True)
             If Not ObjectException.InnerException Is Nothing Then
                 ioFile.WriteLine("Inner Error: " & ObjectException.InnerException.Message)
                 ioFile.WriteLine("")
@@ -103,12 +102,12 @@ Public Class LogStream
                 Stack.Add(ObjectException.StackTrace)
             End If
         Catch ex As Exception
-            Throw New Exception("there was an error with" + strErrorFilePath, ex)
+            Throw ex
         Finally
             If Not ioFile.Equals(Nothing) Then
                 ioFile.Flush()
                 ioFile.Close()
-
+                ioFile.Dispose()
             End If
         End Try
 

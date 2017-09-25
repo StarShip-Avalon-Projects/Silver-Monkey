@@ -67,18 +67,15 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function CountLines(reader As TriggerReader) As Boolean
-            Dim F As String = ""
-            Dim Var As Variable
-            Dim count As Double = 0
+        Public Shared Function CountLines(reader As TriggerReader) As Boolean
 
-            F = Paths.CheckBotFolder(reader.ReadString)
-            Var = reader.ReadVariable(True)
+            Dim FilePath = Paths.CheckBotFolder(reader.ReadString)
+            Dim Var = reader.ReadVariable(True)
             Var.Value = 0.0R
-            If File.Exists(F) Then
+            If File.Exists(FilePath) Then
                 Dim test As New List(Of String)
-                test.AddRange(File.ReadAllLines(F))
-                Var.Value = test.Count.ToString()
+                test.AddRange(File.ReadAllLines(FilePath))
+                Var.Value = test.Count
 
             End If
 
@@ -99,7 +96,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True
         ''' </returns>
-        Function ReadTextLine(reader As TriggerReader) As Boolean
+        Shared Function ReadTextLine(reader As TriggerReader) As Boolean
 
             Dim num As Double = ReadVariableOrNumber(reader, False)
             Dim F As String = Paths.CheckBotFolder(reader.ReadString)
@@ -108,16 +105,16 @@ Namespace Engine.Libraries
                 Dim lines() As String = File.ReadAllLines(F)
                 If lines.Count < 0 Then
                     var = Variable.NoValue
-                    Throw New IndexOutOfRangeException(var.Name + " Is less then the number of lines in file " + F)
+                    Throw New MonkeyspeakException(var.Name + " Is less then the number of lines in file " + F)
                 ElseIf num < lines.Count - 1 Then
                     var.Value = lines(CInt(num))
                     Return True
                 Else
                     var = Variable.NoValue
-                    Throw New IndexOutOfRangeException(var.Name + " Is larger then the number of lines in file " + F)
+                    Throw New MonkeyspeakException(var.Name + " Is larger then the number of lines in file " + F)
                 End If
             Else
-                Throw New FileNotFoundException("File """ + F + """ Does not exist.")
+                Throw New MonkeyspeakException("File """ + F + """ Does not exist.")
             End If
             Return True
         End Function
@@ -133,7 +130,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function AppendToFile(reader As TriggerReader) As Boolean
+        Private Shared Function AppendToFile(reader As TriggerReader) As Boolean
             Dim data As String = reader.ReadString()
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
 
@@ -151,7 +148,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function CanReadFile(reader As TriggerReader) As Boolean
+        Private Shared Function CanReadFile(reader As TriggerReader) As Boolean
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
 
             Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
@@ -167,7 +164,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function CanWriteFile(reader As TriggerReader) As Boolean
+        Private Shared Function CanWriteFile(reader As TriggerReader) As Boolean
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
 
             Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Write)
@@ -183,7 +180,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function CreateFile(reader As TriggerReader) As Boolean
+        Private Shared Function CreateFile(reader As TriggerReader) As Boolean
             If reader.PeekString() = False Then
                 Return False
             End If
@@ -199,7 +196,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function DeleteFile(reader As TriggerReader) As Boolean
+        Private Shared Function DeleteFile(reader As TriggerReader) As Boolean
 
             If reader.PeekString() = False Then
                 Return False
@@ -219,7 +216,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function FileExists(reader As TriggerReader) As Boolean
+        Private Shared Function FileExists(reader As TriggerReader) As Boolean
             Dim f As String = If((reader.PeekString()), Paths.CheckBotFolder(reader.ReadString()), "")
             Return File.Exists(f)
         End Function
@@ -231,7 +228,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function FileNotExists(reader As TriggerReader) As Boolean
+        Private Shared Function FileNotExists(reader As TriggerReader) As Boolean
             Return FileExists(reader) = False
         End Function
 
@@ -242,17 +239,18 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
+        Private Shared Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
 
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString(True))
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim OutVar = reader.ReadVariable(True)
             Dim sb As New StringBuilder()
-            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
-                Using SR As StreamReader = New StreamReader(stream)
-                    sb.AppendLine(SR.ReadToEnd)
-                End Using
+
+            Using SR As StreamReader = New StreamReader(Paths.CheckBotFolder(reader.ReadString(True)))
+                While Not SR.EndOfStream
+                    sb.AppendLine(SR.ReadLine)
+                End While
             End Using
-            var.Value = sb.ToString()
+
+            OutVar.Value = sb.ToString()
             Return True
 
         End Function

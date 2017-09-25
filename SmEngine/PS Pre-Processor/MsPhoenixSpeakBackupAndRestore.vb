@@ -591,7 +591,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
                         lastItemName = CharacterList.Item(CharacterList.Count - 1).Name
 
                         If e.PageOverFlow Then
-                            lastItemName = Utils.incrementLetter(lastItemName)
+                            lastItemName = Utils.IncrementLetter(lastItemName)
                             ServerCommand = "ps get character." + lastItemName + "*"
                             CurrentPS_Stage = PsBackupStage.GetAlphaNumericList
                         Else
@@ -610,7 +610,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
                     If PSiInfoCache.Count > 0 Then
                         CharacterList.AddRange(PSiInfoCache)
                         lastItemName = PSiInfoCache.Item(PSiInfoCache.Count - 1).Name
-                        Utils.incrementLetter(lastItemName)
+                        Utils.IncrementLetter(lastItemName)
                         CurrentPS_Stage = PsBackupStage.GetAlphaNumericList
                         ServerCommand = "ps get character." + lastItemName + "*"
                     Else

@@ -13,7 +13,7 @@ Imports MonkeyCore.Paths
 '####################################
 
 'Begin the main Form!
-Public Class wMain
+Public Class WMain
 
 #Region "Public Methods"
 
