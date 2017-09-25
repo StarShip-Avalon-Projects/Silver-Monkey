@@ -145,6 +145,7 @@
     <Compile Include="Filter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Issue.cs">
       <SubType>Code</SubType>
     </Compile>

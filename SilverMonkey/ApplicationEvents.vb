@@ -1,9 +1,7 @@
 ﻿Imports System.Diagnostics
-Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Devices
 Imports MonkeyCore
-Imports SilverMonkey.BugTraqConnect
 
 Namespace My
 

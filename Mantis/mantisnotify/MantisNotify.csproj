@@ -126,6 +126,7 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MantisNotifyApp.cs">
       <SubType>Code</SubType>
     </Compile>

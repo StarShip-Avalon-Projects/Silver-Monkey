@@ -20,7 +20,9 @@ Public Class Main
 
     Public Shared objHost As New smHost
 
+#Disable Warning BC40041 ' Type 'PluginServices.AvailablePlugin' is not CLS-compliant.
     Public Shared Plugins As List(Of PluginServices.AvailablePlugin)
+#Enable Warning BC40041 ' Type 'PluginServices.AvailablePlugin' is not CLS-compliant.
 
     Public DREAM As New DREAM
 

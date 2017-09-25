@@ -34,6 +34,7 @@ Public Class IniFile
             Return _code
         End Get
     End Property
+
     ' Gets all the sections
     Public ReadOnly Property Sections() As System.Collections.ICollection
         Get
@@ -222,6 +223,7 @@ Public Class IniFile
             oWriter.Close()
         End Using
     End Sub
+
     ' Sets a KeyValuePair in a certain section
     Public Function SetKeyValue(ByVal sSection As String, ByVal sKey As String, ByVal sValue As String) As Boolean
         Dim s As IniSection = AddSection(sSection)
@@ -249,6 +251,7 @@ Public Class IniFile
 
         '  IniFile IniFile object instance
         Private m_pIniFile As IniFile
+
         '  Name of the section
         Private m_sSection As String
 
@@ -337,6 +340,7 @@ Public Class IniFile
             End If
             Return False
         End Function
+
         ' Sets the section name, returns true on success, fails if the section
         ' name sSection already exists
         Public Function SetName(ByVal sSection As String) As Boolean
@@ -376,6 +380,7 @@ Public Class IniFile
 
             '  Name of the Key
             Private m_sKey As String
+
             '  Value associated
             Private m_sValue As String
 
@@ -466,4 +471,5 @@ Public Class IniFile
 
     ' End of IniSection class
 End Class
+
 ' End of IniFile class

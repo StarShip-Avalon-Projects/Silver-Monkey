@@ -17,20 +17,16 @@ using MonkeyCore;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
 namespace Futureware.MantisNotify
 {
-
-
     /// <summary>
     /// Application class for Mantis Notify application.
     /// </summary>
     public sealed class MantisNotifyApp
     {
-
         /// <summary>
         /// Handles the UnhandledException event of the CurrentDomain control.
         /// </summary>
@@ -53,12 +49,9 @@ namespace Futureware.MantisNotify
             // MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //Process.Start(Paths.SilverMonkeyErrorLogPath);
             // Application.Exit();
-
         }
-        #region Private Constructors
 
 
-        #endregion Private Constructors
 
         #region Private Methods
 
@@ -70,13 +63,10 @@ namespace Futureware.MantisNotify
         [STAThread]
         private static void Main()
         {
-
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Application.Run(new MantisNotifyForm());
-
         }
 
         #endregion Private Methods

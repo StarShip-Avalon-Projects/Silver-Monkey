@@ -41,7 +41,9 @@ Public Class smHost
 
     Public WriteOnly Property MsPage() As MonkeySpeakPage Implements Interfaces.ImsHost.MsPage
         Set(value As MonkeySpeakPage)
+#Disable Warning BC42026 ' Expression recursively calls the containing property 'Public WriteOnly Property MsPage As MonkeySpeakPage'.
             MsPage = value
+#Enable Warning BC42026 ' Expression recursively calls the containing property 'Public WriteOnly Property MsPage As MonkeySpeakPage'.
         End Set
     End Property
 

@@ -13,4 +13,5 @@ Module wMainMod
     Public Function IsOdd(ByRef num As Integer) As Boolean
         Return num Mod 2 <> 0
     End Function
+
 End Module

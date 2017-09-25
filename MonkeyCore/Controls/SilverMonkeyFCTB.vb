@@ -5,6 +5,10 @@ Imports Irony.Parsing
 
 Namespace Controls
 
+#Disable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'https://github.com/PavelTorgashov/FastColoredTextBox' that could not be resolved.
+#Disable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'Http://irony.codeplex.com/' that could not be resolved.
+#Disable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'Http://www.codeproject.com/articles/161871/fast-colored-textbox-for-syntax-highlighting' that could not be resolved.
+
     ''' <summary>
     ''' FastColoredTextBox with Irony parser support
     ''' </summary>
@@ -15,6 +19,9 @@ Namespace Controls
     ''' <see cref="Http://irony.codeplex.com/"/>
     '''
     Public Class SilverMonkeyFCTB
+#Enable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'Http://www.codeproject.com/articles/161871/fast-colored-textbox-for-syntax-highlighting' that could not be resolved.
+#Enable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'Http://irony.codeplex.com/' that could not be resolved.
+#Enable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'https://github.com/PavelTorgashov/FastColoredTextBox' that could not be resolved.
         Inherits FastColoredTextBox
 
 #Region "Public Fields"

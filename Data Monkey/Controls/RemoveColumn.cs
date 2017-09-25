@@ -17,7 +17,10 @@ namespace DataMonkey.Controls
 
         #region Public Constructors
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RemoveColumn.RemoveColumn()'
+
         public RemoveColumn()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RemoveColumn.RemoveColumn()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -48,7 +51,7 @@ namespace DataMonkey.Controls
             NameTextBox.Name = "NameTextBox";
             NameTextBox.Size = new System.Drawing.Size(144, 20);
             NameTextBox.TabIndex = 0;
-            NameTextBox.KeyDown += new KeyEventHandler(tb_KeyDown);
+            NameTextBox.KeyDown += new KeyEventHandler(Tb_KeyDown);
             // NameLabel
             NameLabel.Location = new System.Drawing.Point(8, 8);
             NameLabel.Name = "NameLabel";
@@ -81,7 +84,10 @@ namespace DataMonkey.Controls
 
         #region Properties
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RemoveColumn.ColumnName'
+
         public string ColumnName
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RemoveColumn.ColumnName'
         {
             get { return NameTextBox.Text; }
         }

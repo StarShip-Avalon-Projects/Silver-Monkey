@@ -1,13 +1,9 @@
-﻿Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Runtime.Serialization.Formatters.Binary
-Imports System.Runtime.InteropServices
-Imports System.Diagnostics
+﻿Imports System.Runtime.InteropServices
 
 Public Class MessageHelper
 
 #Region "Public Methods"
+
     ''' <summary>
     '''
     ''' </summary>
@@ -17,6 +13,7 @@ Public Class MessageHelper
     <DllImport("User32.dll", EntryPoint:="FindWindow")>
     Public Shared Function FindWindow(lpClassName As [String], lpWindowName As [String]) As Int32
     End Function
+
     'For use with WM_COPYDATA and COPYDATASTRUCT
 
     ''' <summary>
@@ -42,6 +39,7 @@ Public Class MessageHelper
     <DllImport("User32.dll", EntryPoint:="PostMessage")>
     Public Shared Function PostMessage(hWnd As Integer, Msg As Integer, wParam As IntPtr, lParam As Integer) As IntPtr
     End Function
+
     ''' <summary>
     '''
     ''' </summary>
@@ -53,6 +51,7 @@ Public Class MessageHelper
     <DllImport("User32.dll", EntryPoint:="SendMessage")>
     Public Shared Function SendMessage(hWnd As IntPtr, Msg As Integer, wParam As Integer, lParam As Integer) As IntPtr
     End Function
+
     ''' <summary>
     '''
     ''' </summary>
@@ -117,6 +116,7 @@ Public Class MessageHelper
 #End Region
 
 #Region "Private Methods"
+
     ''' <summary>
     '''
     ''' </summary>

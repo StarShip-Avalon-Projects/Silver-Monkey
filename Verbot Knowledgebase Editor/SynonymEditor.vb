@@ -1,5 +1,6 @@
-﻿Imports Conversive.Verbot5
-Imports System.IO
+﻿Imports System.IO
+Imports Conversive.Verbot5
+
 Public Class SynonymEditor
 
 #Region "Public Fields"
@@ -25,6 +26,7 @@ Public Class SynonymEditor
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub
+
     Public Sub New(ByRef FileName As String)
 
         ' This call is required by the designer.
@@ -53,6 +55,7 @@ Public Class SynonymEditor
         TextBox3.Text = ""
 
     End Sub
+
     Private Sub ListBox2_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ListBox2.SelectedIndexChanged
         If ListBox2.SelectedIndex = -1 Then Exit Sub
 
@@ -70,7 +73,9 @@ Public Class SynonymEditor
 
                 FilePath = .FileName
                 Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(SynonymGroup))
+#Disable Warning BC42016 ' Implicit conversion from 'Object' to 'SynonymGroup'.
                 Synonyms = xToolbox.LoadXML(.FileName)
+#Enable Warning BC42016 ' Implicit conversion from 'Object' to 'SynonymGroup'.
                 For I As Integer = 0 To Synonyms.Synonyms.Count - 1
                     ListBox2.Items.Add(Synonyms.Synonyms.Item(I).Name)
                 Next
@@ -92,7 +97,9 @@ Public Class SynonymEditor
     Private Sub SynonymEditor_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         If File.Exists(FilePath) Then
             Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(SynonymGroup))
+#Disable Warning BC42016 ' Implicit conversion from 'Object' to 'SynonymGroup'.
             Synonyms = xToolbox.LoadXML(FilePath)
+#Enable Warning BC42016 ' Implicit conversion from 'Object' to 'SynonymGroup'.
             For I As Integer = 0 To Synonyms.Synonyms.Count - 1
                 ListBox2.Items.Add(Synonyms.Synonyms.Item(I).Name)
             Next

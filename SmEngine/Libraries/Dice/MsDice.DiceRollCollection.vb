@@ -1,7 +1,5 @@
 ﻿Namespace Engine.Libraries.Dice
 
-
-
 #Region "Public Methods"
 
     ''' <summary>

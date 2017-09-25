@@ -4,18 +4,16 @@ Imports System.Text
 Imports System.Web
 Imports Monkeyspeak
 
-
 'Web Module
 '
 Namespace Engine.Libraries.Web
-
-
 
     ''' <summary>
     '''
     ''' </summary>
     Public Class WebRequests
         Private WebEncoding As Encoding = New UTF8Encoding()
+
 #Region "Private Fields"
 
         Private data As New List(Of Variable)()
@@ -285,7 +283,5 @@ Namespace Engine.Libraries.Web
 #End Region
 
     End Class
-
-
 
 End Namespace

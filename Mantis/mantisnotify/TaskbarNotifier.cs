@@ -821,14 +821,13 @@ namespace CustomUIControls
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            // 
+            //
             // TaskbarNotifier
-            // 
+            //
             this.ClientSize = new System.Drawing.Size(292, 212);
             this.ForeColor = System.Drawing.SystemColors.Info;
             this.Name = "TaskbarNotifier";
             this.ResumeLayout(false);
-
         }
     }
 }

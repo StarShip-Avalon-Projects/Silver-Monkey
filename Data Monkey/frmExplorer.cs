@@ -11,11 +11,16 @@ using System.Windows.Forms;
 
 namespace DataMonkey
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer'
+
     public class frmExplorer : Form
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer'
     {
         #region Members
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer.SqlResultsListView'
         public ListView_NoFlicker SqlResultsListView;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer.SqlResultsListView'
 
         //Database String
         private static string ActiveDatabaseLocation;
@@ -89,7 +94,10 @@ namespace DataMonkey
 
         #region Constructor / Destructor
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer.frmExplorer()'
+
         public frmExplorer()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer.frmExplorer()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -567,13 +575,14 @@ namespace DataMonkey
 
         #endregion Windows Form Designer generated code
 
-
-
         #region Private Methods
 
         #region PopulateDatabaseTreeView
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer.PopulateDatabaseTreeView()'
+
         public void PopulateDatabaseTreeView()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer.PopulateDatabaseTreeView()'
         {
             DatabaseTreeView.Nodes.Clear();
 

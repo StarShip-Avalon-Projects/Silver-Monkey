@@ -1,5 +1,4 @@
-﻿Imports MonkeyCore
-Imports Monkeyspeak
+﻿Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.SmConstants
 
@@ -232,29 +231,28 @@ Namespace Engine
         'Bot Starts
         Public Function Start() As Page
 
-
             Dim TimeStart = DateTime.Now
-                Dim VariableList As New Dictionary(Of String, Object)
+            Dim VariableList As New Dictionary(Of String, Object)
 
-                ' Console.WriteLine("Execute (0:0)")
-                MS_Stared = 1
-                MsPage.Reset()
-                LoadLibrary(False, False)
+            ' Console.WriteLine("Execute (0:0)")
+            MS_Stared = 1
+            MsPage.Reset()
+            LoadLibrary(False, False)
 
-                VariableList.Add("DREAMOWNER", Nothing)
-                VariableList.Add("DREAMNAME", Nothing)
-                VariableList.Add("BOTNAME", Nothing)
-                VariableList.Add("BOTCONTROLLER", options.BotController)
-                VariableList.Add(MS_Name, Nothing)
-                VariableList.Add("MESSAGE", Nothing)
-                VariableList.Add("BANISHNAME", Nothing)
-                VariableList.Add("BANISHLIST", Nothing)
-                PageSetVariable(VariableList)
-                '(0:0) When the bot starts,
-                MsPage.Execute(0)
-                Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
-                                                MsPage.Size, Date.Now.Subtract(TimeStart).Seconds))
-                MS_Engine_Running = True
+            VariableList.Add("DREAMOWNER", Nothing)
+            VariableList.Add("DREAMNAME", Nothing)
+            VariableList.Add("BOTNAME", Nothing)
+            VariableList.Add("BOTCONTROLLER", options.BotController)
+            VariableList.Add(MS_Name, Nothing)
+            VariableList.Add("MESSAGE", Nothing)
+            VariableList.Add("BANISHNAME", Nothing)
+            VariableList.Add("BANISHLIST", Nothing)
+            PageSetVariable(VariableList)
+            '(0:0) When the bot starts,
+            MsPage.Execute(0)
+            Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
+                                            MsPage.Size, Date.Now.Subtract(TimeStart).Seconds))
+            MS_Engine_Running = True
 
             Return MsPage
         End Function

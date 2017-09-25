@@ -47,6 +47,4 @@ Namespace Engine.Libraries
 
     End Class
 
-
-
 End Namespace

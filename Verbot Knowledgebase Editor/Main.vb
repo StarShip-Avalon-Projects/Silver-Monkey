@@ -1,5 +1,5 @@
-﻿Imports Conversive.Verbot5
-Imports System.IO
+﻿Imports System.IO
+Imports Conversive.Verbot5
 
 Public Class Main
 
@@ -357,6 +357,7 @@ Public Class Main
             End If
         End With
     End Sub
+
     Private Sub PasteRuleToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteRuleToolStripMenuItem.Click
         CurrentRule = kb.GetRuleByNameOrId(TreeView1.SelectedNode.FullPath)
         CopyRule.Id = kb.GetNewRuleId
@@ -381,6 +382,7 @@ Public Class Main
         xToolbox.SaveXML(kb, FileName)
 
     End Sub
+
     Private Sub SynonymEditorToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles SynonymEditorToolStripMenuItem.Click
 
         If Not IsNothing(SynonymEditor) Then

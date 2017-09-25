@@ -1,6 +1,4 @@
-﻿Imports System.Windows.Forms
-
-Public Class InputBoxFrm
+﻿Public Class InputBoxFrm
 
 #Region "Public Properties"
 

@@ -18,7 +18,10 @@ namespace DataMonkey.Controls
 
         #region Public Constructors
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.AddColumn()'
+
         public AddColumn()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.AddColumn()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -51,7 +54,7 @@ namespace DataMonkey.Controls
             NameTextBox.Size = new System.Drawing.Size(144, 20);
             NameTextBox.TabIndex = 0;
             NameTextBox.Text = "";
-            NameTextBox.KeyDown += new KeyEventHandler(tb_KeyDown);
+            NameTextBox.KeyDown += new KeyEventHandler(Tb_KeyDown);
             // NameLabel
             NameLabel.Location = new System.Drawing.Point(8, 8);
             NameLabel.Name = "NameLabel";
@@ -98,12 +101,18 @@ namespace DataMonkey.Controls
 
         #region Properties
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.ColumnName'
+
         public string ColumnName
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.ColumnName'
         {
             get { return NameTextBox.Text; }
         }
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.ColumnType'
+
         public string ColumnType
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.ColumnType'
         {
             //x != 0.0 ? Math.Sin(x) / x : 1.0;
             get { return TypeComboBox.SelectedItem != null ? TypeComboBox.SelectedItem.ToString() : "TEXT"; }

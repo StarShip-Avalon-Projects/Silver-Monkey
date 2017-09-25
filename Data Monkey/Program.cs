@@ -1,5 +1,4 @@
 ﻿using MonkeyCore;
-using SilverMonkey.BugTraqConnect;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -7,7 +6,10 @@ using System.Windows.Forms;
 
 namespace DataMonkey
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'Program'
+
     public class Program
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'Program'
     {
         #region Private Methods
 
@@ -33,7 +35,6 @@ namespace DataMonkey
             // MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //Process.Start(Paths.SilverMonkeyErrorLogPath);
             // Application.Exit();
-
         }
 
         /// <summary>

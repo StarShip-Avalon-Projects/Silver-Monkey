@@ -30,8 +30,6 @@ Public Class MS_Edit
 
 #End Region
 
-
-
 #Region "Private Fields"
 
     Private frm As frmSearch = New frmSearch

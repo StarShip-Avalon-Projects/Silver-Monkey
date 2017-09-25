@@ -15,7 +15,6 @@
 
 using SilverMonkey.BugTraqConnect.Libs;
 using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Futureware.MantisSubmit
@@ -41,14 +40,10 @@ namespace Futureware.MantisSubmit
         [STAThread]
         private static void Main(string[] args)
         {
-
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-                Application.Run(new SubmitIssueForm(new ProjectReport(args)));
-
-
+            Application.Run(new SubmitIssueForm(new ProjectReport(args)));
         }
 
         #endregion Private Methods

@@ -1,5 +1,4 @@
-﻿Imports System.Diagnostics
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Furcadia.Text.FurcadiaMarkup
@@ -350,7 +349,10 @@ Public Class TextDisplayManager
     Public Shared Function GetScrollInfo(hWnd As IntPtr,
             <MarshalAs(UnmanagedType.I4)> fnBar As SBOrientation,
             <MarshalAs(UnmanagedType.Struct)> ByRef lpsi As SCROLLINFO) As Integer
+#Disable Warning BC42353 ' Function 'GetScrollInfo' doesn't return a value on all code paths. Are you missing a 'Return' statement?
     End Function
+
+#Enable Warning BC42353 ' Function 'GetScrollInfo' doesn't return a value on all code paths. Are you missing a 'Return' statement?
 
     Public Declare Function GetScrollPos Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal nBar As Integer) As Integer
 

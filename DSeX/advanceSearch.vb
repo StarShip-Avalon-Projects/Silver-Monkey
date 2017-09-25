@@ -1,6 +1,5 @@
-Imports FastColoredTextBoxNS
-Imports System.Text
 Imports System.Text.RegularExpressions
+
 Public Class frmSearch
     Inherits Form
 
@@ -59,6 +58,7 @@ Public Class frmSearch
         End If
         MyBase.Dispose(disposing)
     End Sub
+
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.cmbSearch = New System.Windows.Forms.ComboBox()
         Me.btnFind = New System.Windows.Forms.Button()
@@ -267,7 +267,6 @@ Public Class frmSearch
                 MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
-
             Else
 
                 For Each r In MS_Edit.MS_Editor.Range.GetRanges("\b" + Regex.Escape(cmbSearch.Text) + "\b", RegexOptions.IgnoreCase)
@@ -298,7 +297,6 @@ Public Class frmSearch
                 MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
-
             Else
 
                 For Each r In MS_Edit.MS_Editor.Range.GetRanges(Regex.Escape(cmbSearch.Text), RegexOptions.IgnoreCase)
@@ -341,7 +339,6 @@ Public Class frmSearch
                 MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
-
             Else
 
                 For i = 0 To MS_Edit.MS_Editor.Range.GetRanges("\b" + Regex.Escape(cmbSearch.Text) + "\b", RegexOptions.IgnoreCase).Count - 1
@@ -376,7 +373,6 @@ Public Class frmSearch
                 MessageBox.Show("Finished searching the document", " Finished Searching",
                     MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
-
             Else
 
                 For i = 0 To MS_Edit.MS_Editor.Range.GetRanges(Regex.Escape(cmbSearch.Text), RegexOptions.IgnoreCase).Count - 1
@@ -445,7 +441,6 @@ Public Class frmSearch
         If chkOnTop.Checked Then
 
             Me.TopMost = True
-
         Else
 
             Me.TopMost = False
@@ -460,7 +455,6 @@ Public Class frmSearch
 
             btnReplace.Enabled = True
             btnReplaceAll.Enabled = True
-
         Else
 
             btnReplace.Enabled = False
@@ -487,7 +481,6 @@ Public Class frmSearch
         If cmbSearch.Text.Length > 0 Then
 
             btnFind.Enabled = True
-
         Else
 
             btnFind.Enabled = False

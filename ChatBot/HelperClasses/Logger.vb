@@ -1,5 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-Public Class Logger
+﻿Public Class Logger
 
 #Region "Private Fields"
 
@@ -51,7 +50,6 @@ Public Class Logger
                     ex.Message.EndsWith("because it is being used by another process.")) Then
                 Stack.Add(Message)
             End If
-
         Catch exLog As Exception
             If Not IsNothing(ioFile) Then
                 ioFile.Close()

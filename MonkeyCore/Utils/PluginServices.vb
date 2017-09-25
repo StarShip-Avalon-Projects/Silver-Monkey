@@ -98,7 +98,6 @@ Public NotInheritable Class PluginServices
 
 #Region "Public Classes"
 
-
     Public Class AvailablePlugin
 
 #Region "Public Properties"

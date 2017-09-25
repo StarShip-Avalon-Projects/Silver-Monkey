@@ -1,7 +1,6 @@
-﻿Imports System.Windows.Forms
-Imports System.Text
+﻿Imports System.Text
+Imports System.Windows.Forms
 Imports MonkeyCore.Controls
-Imports MonkeyCore
 
 Public Class DeBugWriter
     Inherits TextWriter
@@ -20,7 +19,6 @@ Public Class DeBugWriter
         AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
-
 
     Public Sub New(ByVal control As RichTextBoxEx)
         Me.control = control
@@ -67,7 +65,9 @@ Public Class DeBugWriter
     End Sub
 
     Public Overrides Sub WriteLine(ByVal s As String)
+#Disable Warning BC42104 ' Variable 'cBot' is used before it has been assigned a value. A null reference exception could result at runtime.
         If Not IsNothing(cBot) Then
+#Enable Warning BC42104 ' Variable 'cBot' is used before it has been assigned a value. A null reference exception could result at runtime.
             'If cBot.log And Not IsNothing(FurcSession.BotLogStream) Then
             '    Try
 
@@ -105,6 +105,7 @@ Public Class DeBugWriter
         Builder.Append(s)
 
     End Sub
+
     Private Sub OnHandleCreated(ByVal sender As Object,
        ByVal e As EventArgs)
         If (Builder Is Nothing = False) Then

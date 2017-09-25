@@ -149,8 +149,6 @@ Public Class BotSession : Inherits ProxySession
         MSpage.SetVariable(MS_Name, Player.Name, True)
         MSpage.SetVariable("MESSAGE", Player.Message, True)
 
-
-
         If Not String.IsNullOrEmpty(Desc) Then
 
             Dim DescName As String = Regex.Match(data, DescFilter).Groups(1).ToString()
@@ -166,7 +164,6 @@ Public Class BotSession : Inherits ProxySession
 
         ElseIf Color = "channel" Then
             'ChannelNameFilter2
-
 
             Dim r As New Regex("<img src='(.*?)' alt='(.*?)' />")
             Dim ss As RegularExpressions.Match = r.Match(Text)

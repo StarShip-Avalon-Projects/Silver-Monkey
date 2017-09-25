@@ -24,7 +24,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("StarshipAvalonProjects")]
 [assembly: AssemblyProduct("BugTraqConnect")]
-
 [assembly: AssemblyTrademark("MantisConnect")]
 [assembly: AssemblyCulture("")]
 
@@ -34,7 +33,6 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers by using the '*'
 // as shown below:
-
 
 // In order to sign your assembly you must specify a key to use. Refer to the Microsoft .NET
 // Framework documentation for more information on assembly signing.

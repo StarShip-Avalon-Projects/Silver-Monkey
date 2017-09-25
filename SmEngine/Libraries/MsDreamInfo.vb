@@ -39,8 +39,6 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 98,
                 AddressOf DreamNameIs, "(0:98) When the bot leaves the Dream named {..},")
 
-
-
             '(1:19) and the bot is the Dream owner,
             Add(New Trigger(TriggerCategory.Condition, 19), AddressOf BotIsDreamOwner,
                 "(1:19) and the bot is the Dream owner,")
@@ -189,7 +187,6 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function ShareFurreNamed(reader As TriggerReader) As Boolean
 
-
             Dim Target = Dream.FurreList.GerFurreByName(reader.ReadString)
             If InDream(Target.Name) Then sendServer("share " + Target.ShortName)
             Return True
@@ -220,7 +217,6 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function UnshareFurreNamed(reader As TriggerReader) As Boolean
-
 
             Dim Target = Dream.FurreList.GerFurreByName(reader.ReadString)
             If InDream(Target.Name) Then
@@ -312,7 +308,6 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Function TriggeringFurreIsDreamOwner(reader As TriggerReader) As Boolean
-
 
             Dim TrigFurreName = MsPage.GetVariable("DREAMOWNER").Value.ToString
             'add Machine Name parser

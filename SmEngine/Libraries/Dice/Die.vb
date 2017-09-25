@@ -1,5 +1,5 @@
-﻿
-Namespace Engine.Libraries.Dice
+﻿Namespace Engine.Libraries.Dice
+
     ''' <summary>
     ''' Single Die object for Silver Monkey generating a Dice Roll
     ''' </summary>
@@ -61,4 +61,5 @@ Namespace Engine.Libraries.Dice
 #End Region
 
     End Class
+
 End Namespace

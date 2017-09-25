@@ -1,7 +1,7 @@
 ﻿'
 Imports Monkeyspeak
-Namespace Engine.Libraries.Web
 
+Namespace Engine.Libraries.Web
 
     ''' <summary>
     ''' web response page object
@@ -9,6 +9,7 @@ Namespace Engine.Libraries.Web
     Public Class WebData
 
 #Region "Public Fields"
+
         Private _WebStack As New List(Of Variable)()
         Private _webPage As String
         Public Property ErrMsg As String
@@ -74,7 +75,7 @@ Namespace Engine.Libraries.Web
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
-        ''' 
+        '''
         ''' </remarks>
         Public Property Status As Integer
             Get
@@ -88,4 +89,5 @@ Namespace Engine.Libraries.Web
 #End Region
 
     End Class
+
 End Namespace

@@ -307,8 +307,6 @@ Namespace Engine.Libraries
 
 #End Region
 
-
-
 #Region "Private Methods"
 
         ''' <summary>

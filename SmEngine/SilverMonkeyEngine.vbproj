@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="BaseClasses\BaseSubSystem.vb" />
     <Compile Include="EngineOptoons.vb" />
+    <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="Interfaces\msPlugin.vb" />
     <Compile Include="HelperClasses\SmConstants.vb" />
     <Compile Include="Interfaces\smHost.vb" />

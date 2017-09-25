@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Forms
-Imports Conversive.Verbot5
+﻿Imports Conversive.Verbot5
 
 Public Class InputReplacements
 
@@ -19,6 +18,7 @@ Public Class InputReplacements
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub
+
     Public Sub New(ByRef IPs As InputReplacement)
         IP = IPs
         ' This call is required by the designer.

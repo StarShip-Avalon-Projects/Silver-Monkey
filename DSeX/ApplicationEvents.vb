@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports MonkeyCore
-Imports SilverMonkey.BugTraqConnect
 
 Namespace My
 

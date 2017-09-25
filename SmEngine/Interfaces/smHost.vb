@@ -1,6 +1,5 @@
 ﻿Imports Furcadia.Net
 Imports Furcadia.Net.Dream
-Imports MonkeyCore
 Imports SilverMonkeyEngine.Engine
 
 Namespace Interfaces
