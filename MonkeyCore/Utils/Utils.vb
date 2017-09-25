@@ -2,7 +2,7 @@
 ''' General Utility functions we haven't found a home for yet
 ''' </summary>
 <CLSCompliant(True)>
-Public Class Utils
+Public NotInheritable Class Utils
 
 #Region "Public Enums"
 
@@ -37,7 +37,7 @@ Public Class Utils
     ''' </summary>
     ''' <param name="Input"></param>
     ''' <returns></returns>
-    Public Shared Function incrementLetter(ByRef Input As String) As Char
+    Public Shared Function IncrementLetter(ByRef Input As String) As Char
         Input = Input.Substring(0, 1)
         Dim i As Integer = AscW(Input)
         Dim test As Char

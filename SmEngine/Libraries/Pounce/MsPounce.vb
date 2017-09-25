@@ -169,7 +169,6 @@ Namespace Engine.Libraries
             If FurreNamedIsMember(reader) = False And FurreNamedIsNotMember(reader) Then
                 Using sw As StreamWriter = New StreamWriter(_OnlineListFile, True)
                     sw.WriteLine(Furre)
-                    sw.Close()
                 End Using
             End If
             Return True
@@ -256,8 +255,6 @@ Namespace Engine.Libraries
                 line = SR.ReadLine()
                 For i As Integer = 0 To linesList.Count - 1
                     If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
-                        SR.Dispose()
-                        SR.Close()
                         linesList.RemoveAt(i)
                         File.WriteAllLines(_OnlineListFile, linesList.ToArray())
                         Return True
@@ -289,8 +286,6 @@ Namespace Engine.Libraries
                 line = SR.ReadLine()
                 For i As Integer = 0 To linesList.Count - 1
                     If FurcadiaShortName(line) = Furre Then
-                        SR.Dispose()
-                        SR.Close()
                         linesList.RemoveAt(i)
                         File.WriteAllLines(_OnlineListFile, linesList.ToArray())
                         Return True

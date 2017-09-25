@@ -329,7 +329,7 @@ Public Class wUI
     End Sub
 
     Private Sub CloseToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseToolStripMenuItem.Click
-        If wMain.OnToolStripMenuItem.Checked = True Then
+        If WMain.OnToolStripMenuItem.Checked = True Then
             Timer1.Enabled = False
             Timer.Enabled = True
         Else
@@ -339,7 +339,7 @@ Public Class wUI
 
     'Main (or second main) form loads!
     Private Sub Form2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        If wMain.OnToolStripMenuItem.Checked = True And wMain.OnToolStripMenuItem.CheckState = CheckState.Checked Then
+        If WMain.OnToolStripMenuItem.Checked = True And WMain.OnToolStripMenuItem.CheckState = CheckState.Checked Then
             MyBase.Opacity = 0.0
             Timer1.Enabled = True
         End If
@@ -352,7 +352,7 @@ Public Class wUI
     End Sub
 
     Private Sub Form2_OnExit(ByVal sender As System.Object, ByVal e As Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-        If wMain.OnToolStripMenuItem.Checked = True Then
+        If WMain.OnToolStripMenuItem.Checked = True Then
             Timer1.Enabled = False
             Timer.Enabled = False
         End If
@@ -576,7 +576,7 @@ Public Class wUI
     Private Sub ReloadToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReloadToolStripMenuItem.Click
         Solution.Text = ""
         selecter2.Items.Clear()
-        wMain.GetParams(ScriptPaths(PathIndex) & Me.Text())
+        WMain.GetParams(ScriptPaths(PathIndex) & Me.Text())
         selecter2.SelectedIndex = 0
         SetUI()
         Dim n As Integer = selecter2.SelectedIndex + 1

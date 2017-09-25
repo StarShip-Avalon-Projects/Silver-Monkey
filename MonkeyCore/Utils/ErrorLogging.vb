@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports MonkeyCore.Paths
 Imports SilverMonkey.BugTraqConnect.Libs
+
 ''' <summary>
 '''Error Logging Class
 '''<para>Author: Tim Wilson</para>
@@ -24,9 +25,10 @@ Public Class ErrorLogging
 #Region "Private Fields"
 
     Private ReadOnly strErrorFilePath As String
-    Public BugReport As ProjectReport
 
 #End Region
+
+    Public Property BugReport As ProjectReport
 
 #Region "Public Constructors"
 
@@ -54,7 +56,6 @@ Public Class ErrorLogging
     Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'Call Log Error
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-
 
         strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
         LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck.ToString)
@@ -87,8 +88,6 @@ Public Class ErrorLogging
     ''' </param>
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
         BugReport = New ProjectReport
-
-
 
         Using LogFile As System.IO.StreamWriter = New System.IO.StreamWriter(strErrorFilePath, False)
             Try
@@ -159,7 +158,6 @@ Public Class ErrorLogging
             End Try
         End Using
 
-
         Try
             BugReport.ProcuctName = My.Application.Info.ProductName
             BugReport.AttachmentFile = strErrorFilePath
@@ -180,7 +178,7 @@ Public Class ErrorLogging
     ''' </param>
     Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
         'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        BugReport = New ProjectReport
+        BugReport = New ProjectReport()
         Using LogFile As StreamWriter = New StreamWriter(strErrorFilePath, False)
             Try
 

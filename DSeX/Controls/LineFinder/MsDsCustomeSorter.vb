@@ -8,14 +8,6 @@ Namespace Controls.LineFinder
     Class MsDsCustomeSorter
         Implements IComparer
 
-#Region "Public Constructors"
-
-        Sub New()
-
-        End Sub
-
-#End Region
-
 #Region "Public Methods"
 
         ''' <summary>
@@ -26,7 +18,7 @@ Namespace Controls.LineFinder
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function Compare(ByVal x As Object, ByVal y As Object) As Integer Implements System.Collections.IComparer.Compare
+        Public Function Compare(ByVal x As Object, ByVal y As Object) As Integer Implements IComparer.Compare
 
             Dim item1 As ListViewItem = DirectCast(x, ListViewItem)
             Dim item2 As ListViewItem = DirectCast(y, ListViewItem)

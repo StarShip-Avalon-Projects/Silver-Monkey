@@ -56,10 +56,6 @@ Public Class Logger
                         ex.Message.EndsWith("because it is being used by another process.")) Then
                     Stack.Add(Message)
                 End If
-            Finally
-                If Not IsNothing(LogFile) Then
-                    LogFile.Close()
-                End If
             End Try
         End Using
     End Sub

@@ -162,7 +162,7 @@ Public Class SQLiteDatabase
                     dt.Load(reader)
                     reader.Close()
                 Catch ex As Exception
-                    dt.Dispose()
+                    dt = Nothing
                 End Try
             End Using
             cnn.Close()
@@ -275,7 +275,7 @@ Public Class SQLiteDatabase
     ''' <returns>
     ''' A boolean true or false to signify success or failure.
     ''' </returns>
-    Public Function ClearTable(table As String) As Boolean
+    Public Shared Function ClearTable(table As String) As Boolean
         Try
             Return ExecuteNonQuery(String.Format("delete from {0};", table)) > -1
         Catch
@@ -287,7 +287,7 @@ Public Class SQLiteDatabase
     '''    Create a Table with Titles
     ''' </Summary>
     ''' <param name="Table"></param><param name="Titles"></param>
-    Public Sub CreateTbl(Table As String, ByRef Titles As String)
+    Public Shared Sub CreateTbl(Table As String, ByRef Titles As String)
         Using SQLconnect As New SQLiteConnection(dbConnection)
             Using SQLcommand As SQLiteCommand = SQLconnect.CreateCommand
                 SQLconnect.Open()

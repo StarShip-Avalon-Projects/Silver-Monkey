@@ -873,8 +873,8 @@ Public Class MS_Edit
     End Sub
 
     Private Sub DSWizardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DSWizardToolStripMenuItem.Click
-        wMain.Show()
-        wMain.Activate()
+        WMain.Show()
+        WMain.Activate()
     End Sub
 
     Private Sub EditToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles EditToolStripMenuItem1.Click
@@ -1374,7 +1374,7 @@ Public Class MS_Edit
         If (e.KeyCode = Keys.O AndAlso e.Modifiers = Keys.Control) Then
             OpenMS_File()
         ElseIf (e.KeyCode = Keys.W AndAlso e.Modifiers = Keys.Control) Then
-            wMain.Show()
+            WMain.Show()
         ElseIf (e.KeyCode = Keys.S AndAlso e.Modifiers = Keys.Control) Then
             ' SaveMS_File(WorkPath(TabControl2.SelectedIndex), WorkFileName(TabControl2.SelectedIndex))
         ElseIf (e.KeyCode = Keys.F1) Then

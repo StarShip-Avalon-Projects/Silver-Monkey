@@ -103,7 +103,6 @@ Namespace Engine
                         End If
 
                     End While
-                    MonkeySpeakScriptReader.Close()
                 End Using
                 Return LoadFromString(MonkeySpeakScript.ToString())
             Catch eX As Exception
