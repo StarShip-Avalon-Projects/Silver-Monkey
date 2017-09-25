@@ -6,10 +6,11 @@ using System.Windows.Forms;
 
 namespace DataMonkey
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'Program'
-
+    /// <summary>
+    /// Data Monkey Program launcher
+    /// </summary>
     public class Program
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'Program'
+
     {
         #region Private Methods
 
@@ -29,12 +30,6 @@ namespace DataMonkey
             var args = string.Join(" ", logError.BugReport.ToArray());
             var Proc = Path.Combine(Application.StartupPath, "BugTragSubmit.exe");
             Process.Start(Proc, args);
-
-            //Exception ex = (Exception)e.ExceptionObject;
-            //ErrorLogging logError = new ErrorLogging(ref ex, sender);
-            // MessageBox.Show("An error log has been saved to" + logError.LogFile, "Unhandled Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //Process.Start(Paths.SilverMonkeyErrorLogPath);
-            // Application.Exit();
         }
 
         /// <summary>

@@ -8,7 +8,11 @@
 #End Region
 
 #Region "Public Constructors"
-
+    ''' <summary>
+    ''' Constructor
+    ''' </summary>
+    ''' <param name="Name"></param>
+    ''' <param name="message"></param>
     Public Sub New(Name As String, message As String)
         'Call Log Error
         strErrorFilePath = Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) & "\Silver Monkey\Log\" & Name & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt"
@@ -19,7 +23,11 @@
 #End Region
 
 #Region "Public Methods"
-
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    ''' <returns></returns>
     Public Function IsFileInUse(ByVal filePath As String) As Boolean
         Try
             Dim contents() As String = IO.File.ReadAllLines(filePath)
@@ -31,7 +39,10 @@
         End Try
         Return False
     End Function
-
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="Message"></param>
     Public Sub LogMessage(Message As String)
 
         Dim ioFile As System.IO.StreamWriter = Nothing
