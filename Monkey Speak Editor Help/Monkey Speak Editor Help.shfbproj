@@ -71,7 +71,7 @@
           </deploymentLocation>
         </configuration>
       </PlugInConfig>
-<PlugInConfig id="Documented Entities Only" enabled="True"><configuration /></PlugInConfig></PlugInConfigurations>
+    </PlugInConfigurations>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
