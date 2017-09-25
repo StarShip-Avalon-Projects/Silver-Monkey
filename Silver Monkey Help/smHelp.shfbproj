@@ -13,7 +13,7 @@
     <RootNamespace>Documentation</RootNamespace>
     <Name>Documentation</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>Cross-platform (.NET Core/.NET Standard)</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
     <OutputPath>..\build\help\silvermonkey\</OutputPath>
     <HtmlHelpName>Silver Monkey</HtmlHelpName>
     <Language>en-US</Language>
@@ -58,17 +58,47 @@
           <colorizer syntaxFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xml" styleFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xsl" stylesheet="{@SHFBFolder}PresentationStyles\Colorizer\highlight.css" scriptFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.js" disabled="{@DisableCodeBlockComponent}" language="cs" tabSize="0" numberLines="true" outlining="true" keepSeeTags="true" defaultTitle="true" />
         </component>
       </ComponentConfig>
-<ComponentConfig id="IntelliSense Component" enabled="True"><component id="IntelliSense Component"><!-- Output options (optional)
+      <ComponentConfig id="IntelliSense Component" enabled="True">
+        <component id="IntelliSense Component">
+          <!-- Output options (optional)
   Attributes:
     Include namespaces (false by default)
     Namespaces comments filename ("Namespaces" if not specified or empty)
-    Output folder (current folder if not specified or empty) --><output includeNamespaces="true" namespacesFile="Namespaces" folder="{@OutputFolder}" boundedCapacity="100" /></component></ComponentConfig>
-<ComponentConfig id="Syntax Component" enabled="True"><component id="Syntax Component"><syntax input="/document/reference" output="/document/syntax" renderReferenceLinks="false" /><generators>
+    Output folder (current folder if not specified or empty) -->
+          <output includeNamespaces="true" namespacesFile="Namespaces" folder="{@OutputFolder}" boundedCapacity="100" />
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="Syntax Component" enabled="True">
+        <component id="Syntax Component">
+          <syntax input="/document/reference" output="/document/syntax" renderReferenceLinks="false" />
+          <generators>
             {@SyntaxFilters}
-          </generators><containerElement name="codeSnippetGroup" addNoExampleTabs="true" includeOnSingleSnippets="false" groupingEnabled="{@CodeSnippetGrouping}" /><configurations><generator id="C#" /><generator id="Visual Basic"><includeLineContinuation value="false" /></generator><generator id="Visual Basic Usage"><includeLineContinuation value="false" /></generator><generator id="Managed C++" /><generator id="F#" /><generator id="J#" /><generator id="JScript" /><generator id="JavaScript" /><generator id="XAML Usage" /><generator id="ASP.NET" /></configurations></component></ComponentConfig>
-<ComponentConfig id="API Token Resolution" enabled="True"><component id="API Token Resolution">
+          </generators>
+          <containerElement name="codeSnippetGroup" addNoExampleTabs="true" includeOnSingleSnippets="false" groupingEnabled="{@CodeSnippetGrouping}" />
+          <configurations>
+            <generator id="C#" />
+            <generator id="Visual Basic">
+              <includeLineContinuation value="false" />
+            </generator>
+            <generator id="Visual Basic Usage">
+              <includeLineContinuation value="false" />
+            </generator>
+            <generator id="Managed C++" />
+            <generator id="F#" />
+            <generator id="J#" />
+            <generator id="JScript" />
+            <generator id="JavaScript" />
+            <generator id="XAML Usage" />
+            <generator id="ASP.NET" />
+          </configurations>
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="API Token Resolution" enabled="True">
+        <component id="API Token Resolution">
           {@TokenFiles}
-          <replace elements="/*//token" item="string(.)" /></component></ComponentConfig></ComponentConfigurations>
+          <replace elements="/*//token" item="string(.)" /></component>
+      </ComponentConfig>
+    </ComponentConfigurations>
     <FooterText>
     </FooterText>
     <HeaderText>
@@ -76,7 +106,7 @@
     <WebsiteSdkLinkType>Msdn</WebsiteSdkLinkType>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
     <IncludeFavorites>False</IncludeFavorites>
-    <BinaryTOC>False</BinaryTOC>
+    <BinaryTOC>True</BinaryTOC>
     <TransformComponentArguments>
       <Argument Key="logoFile" Value="imetal" />
       <Argument Key="logoHeight" Value="" />

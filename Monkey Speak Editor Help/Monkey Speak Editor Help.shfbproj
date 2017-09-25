@@ -39,7 +39,7 @@
     <PlugInConfigurations>
       <PlugInConfig id="Output Deployment" enabled="True">
         <configuration deleteAfterDeploy="false" verboseLogging="false">
-          <deploymentLocation id="help1x" location="..\Build\Help">
+          <deploymentLocation id="help1x" location="..\build\help">
             <userCredentials useDefault="true" userName="" password="" />
             <proxyCredentials useProxy="false" proxyServer="">
               <userCredentials useDefault="true" userName="" password="" />
@@ -51,7 +51,7 @@
               <userCredentials useDefault="true" userName="" password="" />
             </proxyCredentials>
           </deploymentLocation>
-          <deploymentLocation id="website" location="..\build\help\docs\monkeyspeakeditor">
+          <deploymentLocation id="website" location="..\build\help\docs\monkeyspeakedior">
             <userCredentials useDefault="true" userName="" password="" />
             <proxyCredentials useProxy="false" proxyServer="">
               <userCredentials useDefault="true" userName="" password="" />
@@ -71,7 +71,7 @@
           </deploymentLocation>
         </configuration>
       </PlugInConfig>
-    </PlugInConfigurations>
+<PlugInConfig id="Documented Entities Only" enabled="True"><configuration /></PlugInConfig></PlugInConfigurations>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />

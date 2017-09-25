@@ -418,19 +418,19 @@ Namespace Engine.Libraries
             Dim tPlayer As FURRE = Player
             Dim direction As Double = 0
 
-            If tPlayer.LastPosition.x <> tPlayer.Position.x Or tPlayer.LastPosition.y <> tPlayer.Position.y Then
+            If tPlayer.LastPosition.X <> tPlayer.Position.X Or tPlayer.LastPosition.Y <> tPlayer.Position.Y Then
 
-                If (tPlayer.LastPosition.y > tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x > tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x))) Then
+                If (tPlayer.LastPosition.Y > tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X > tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X))) Then
                     direction = 7
-                ElseIf (tPlayer.LastPosition.y > tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x < tPlayer.Position.x))) Then
+                ElseIf (tPlayer.LastPosition.Y > tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X < tPlayer.Position.X))) Then
                     direction = 9
-                ElseIf (tPlayer.LastPosition.y < tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x < tPlayer.Position.x))) Then
+                ElseIf (tPlayer.LastPosition.Y < tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X < tPlayer.Position.X))) Then
                     direction = 3
-                ElseIf (tPlayer.LastPosition.y < tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x > tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x))) Then
+                ElseIf (tPlayer.LastPosition.Y < tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X > tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X))) Then
                     direction = 1
                 End If
 
-            ElseIf tPlayer.LastPosition.x = tPlayer.Position.x AndAlso tPlayer.LastPosition.y = tPlayer.Position.y Then
+            ElseIf tPlayer.LastPosition.X = tPlayer.Position.X AndAlso tPlayer.LastPosition.Y = tPlayer.Position.Y Then
 
                 Select Case tPlayer.Direction
 
@@ -550,19 +550,19 @@ Namespace Engine.Libraries
             Dim tPlayer As FURRE = Dream.FurreList.GerFurreByName(name)
             Dim direction As Double = 0
 
-            If tPlayer.LastPosition.x <> tPlayer.Position.x Or tPlayer.LastPosition.y <> tPlayer.Position.y Then
+            If tPlayer.LastPosition.X <> tPlayer.Position.X Or tPlayer.LastPosition.Y <> tPlayer.Position.Y Then
 
-                If (tPlayer.LastPosition.y > tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x > tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x))) Then
+                If (tPlayer.LastPosition.Y > tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X > tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X))) Then
                     direction = 7
-                ElseIf (tPlayer.LastPosition.y > tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x < tPlayer.Position.x))) Then
+                ElseIf (tPlayer.LastPosition.Y > tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X < tPlayer.Position.X))) Then
                     direction = 9
-                ElseIf (tPlayer.LastPosition.y < tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x < tPlayer.Position.x))) Then
+                ElseIf (tPlayer.LastPosition.Y < tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X < tPlayer.Position.X))) Then
                     direction = 3
-                ElseIf (tPlayer.LastPosition.y < tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x > tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x))) Then
+                ElseIf (tPlayer.LastPosition.Y < tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X > tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X))) Then
                     direction = 1
                 End If
 
-            ElseIf tPlayer.LastPosition.x = tPlayer.Position.x AndAlso tPlayer.LastPosition.y = tPlayer.Position.y Then
+            ElseIf tPlayer.LastPosition.X = tPlayer.Position.X AndAlso tPlayer.LastPosition.Y = tPlayer.Position.Y Then
 
                 Select Case tPlayer.Direction
                     'SW
@@ -802,7 +802,7 @@ Namespace Engine.Libraries
             Dim tPlayer As FURRE = Dream.FurreList.GerFurreByName(name)
             Dim X As Double = ReadVariableOrNumber(reader, False)
             Dim Y As Double = ReadVariableOrNumber(reader, False)
-            Return tPlayer.LastPosition.x = Convert.ToUInt32(X) AndAlso tPlayer.LastPosition.y = Convert.ToUInt32(Y)
+            Return tPlayer.LastPosition.X = Convert.ToUInt32(X) AndAlso tPlayer.LastPosition.Y = Convert.ToUInt32(Y)
 
         End Function
 
@@ -821,7 +821,7 @@ Namespace Engine.Libraries
             Dim tPlayer As FURRE = Dream.FurreList.GerFurreByName(name)
             Dim X As Double = ReadVariableOrNumber(reader, False)
             Dim Y As Double = ReadVariableOrNumber(reader, False)
-            Return tPlayer.Position.x = Convert.ToUInt32(X) AndAlso tPlayer.Position.y = Convert.ToUInt32(Y)
+            Return tPlayer.Position.X = Convert.ToUInt32(X) AndAlso tPlayer.Position.Y = Convert.ToUInt32(Y)
 
         End Function
 
@@ -842,16 +842,16 @@ Namespace Engine.Libraries
             Dim tPlayer As FURRE = Dream.FurreList.GerFurreByName(name)
             Dim Dir As Double = ReadVariableOrNumber(reader, False)
             Dim Direction As Double = 0
-            If tPlayer.LastPosition.x = tPlayer.Position.x AndAlso tPlayer.LastPosition.y = tPlayer.Position.y Then
+            If tPlayer.LastPosition.X = tPlayer.Position.X AndAlso tPlayer.LastPosition.Y = tPlayer.Position.Y Then
                 Return False
             End If
-            If (tPlayer.LastPosition.y > tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x > tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x))) Then
+            If (tPlayer.LastPosition.Y > tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X > tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X))) Then
                 Direction = 7
-            ElseIf (tPlayer.LastPosition.y > tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x < tPlayer.Position.x))) Then
+            ElseIf (tPlayer.LastPosition.Y > tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X < tPlayer.Position.X))) Then
                 Direction = 9
-            ElseIf (tPlayer.LastPosition.y < tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x < tPlayer.Position.x))) Then
+            ElseIf (tPlayer.LastPosition.Y < tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X < tPlayer.Position.X))) Then
                 Direction = 3
-            ElseIf (tPlayer.LastPosition.y < tPlayer.Position.y) And ((IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x > tPlayer.Position.x)) Or (Not IsOdd(tPlayer.LastPosition.y) And (tPlayer.LastPosition.x = tPlayer.Position.x))) Then
+            ElseIf (tPlayer.LastPosition.Y < tPlayer.Position.Y) And ((IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X > tPlayer.Position.X)) Or (Not IsOdd(tPlayer.LastPosition.Y) And (tPlayer.LastPosition.X = tPlayer.Position.X))) Then
                 Direction = 1
             End If
             Return Direction = Dir
@@ -897,7 +897,7 @@ Namespace Engine.Libraries
             Dim Cord As Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
             Dim tPlayer As FURRE = Dream.FurreList.GerFurreByName(name)
-            Cord.Value = tPlayer.Position.x
+            Cord.Value = tPlayer.Position.X
             Return True
 
         End Function
@@ -917,7 +917,7 @@ Namespace Engine.Libraries
             Dim Cord As Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
             Dim tPlayer = Dream.FurreList.GerFurreByName(name)
-            Cord.Value = tPlayer.Position.y
+            Cord.Value = tPlayer.Position.Y
             Return True
 
         End Function
@@ -1037,7 +1037,7 @@ Namespace Engine.Libraries
 
             Dim name As String = reader.ReadString
             Dim tPlayer As FURRE = Dream.FurreList.GerFurreByName(name)
-            Return tPlayer.LastPosition.x = tPlayer.Position.x AndAlso tPlayer.LastPosition.y = tPlayer.Position.y
+            Return tPlayer.LastPosition.X = tPlayer.Position.X AndAlso tPlayer.LastPosition.Y = tPlayer.Position.Y
 
         End Function
 
@@ -1171,7 +1171,7 @@ Namespace Engine.Libraries
 
             Dim X As Double = ReadVariableOrNumber(reader, False)
             Dim Y As Double = ReadVariableOrNumber(reader, False)
-            Return Player.LastPosition.x = X AndAlso Player.LastPosition.y = Y
+            Return Player.LastPosition.X = X AndAlso Player.LastPosition.Y = Y
 
         End Function
 
@@ -1191,7 +1191,7 @@ Namespace Engine.Libraries
 
             Dim X As Double = ReadVariableOrNumber(reader, False)
             Dim Y As Double = ReadVariableOrNumber(reader, False)
-            Return Player.Position.x = X AndAlso Player.Position.y = Y
+            Return Player.Position.X = X AndAlso Player.Position.Y = Y
 
         End Function
 
@@ -1209,16 +1209,16 @@ Namespace Engine.Libraries
         Function MoveIntoDirection(reader As TriggerReader) As Boolean
             Dim Dir As Double = ReadVariableOrNumber(reader, False)
             Dim Direction As Double = 0
-            If Player.LastPosition.x = Player.Position.x AndAlso Player.LastPosition.y = Player.Position.y Then
+            If Player.LastPosition.X = Player.Position.X AndAlso Player.LastPosition.Y = Player.Position.Y Then
                 Return False
             End If
-            If (Player.LastPosition.y > Player.Position.y) And ((IsOdd(Player.LastPosition.y) And (Player.LastPosition.x > Player.Position.x)) Or (Not IsOdd((Player.LastPosition.y) And (Player.LastPosition.x = Player.Position.x)))) Then
+            If (Player.LastPosition.Y > Player.Position.Y) And ((IsOdd(Player.LastPosition.Y) And (Player.LastPosition.X > Player.Position.X)) Or (Not IsOdd((Player.LastPosition.Y) And (Player.LastPosition.X = Player.Position.X)))) Then
                 Direction = 7
-            ElseIf (Player.LastPosition.y > Player.Position.y) And ((IsOdd(Player.LastPosition.y) And (Player.LastPosition.x = Player.Position.x)) Or (Not IsOdd(Player.LastPosition.y) And (Player.LastPosition.x < Player.Position.x))) Then
+            ElseIf (Player.LastPosition.Y > Player.Position.Y) And ((IsOdd(Player.LastPosition.Y) And (Player.LastPosition.X = Player.Position.X)) Or (Not IsOdd(Player.LastPosition.Y) And (Player.LastPosition.X < Player.Position.X))) Then
                 Direction = 9
-            ElseIf (Player.LastPosition.y < Player.Position.y) And ((IsOdd(Player.LastPosition.y) And (Player.LastPosition.x = Player.Position.x)) Or (Not IsOdd(Player.LastPosition.y)) And (Player.LastPosition.x < Player.Position.x)) Then
+            ElseIf (Player.LastPosition.Y < Player.Position.Y) And ((IsOdd(Player.LastPosition.Y) And (Player.LastPosition.X = Player.Position.X)) Or (Not IsOdd(Player.LastPosition.Y)) And (Player.LastPosition.X < Player.Position.X)) Then
                 Direction = 3
-            ElseIf (Player.LastPosition.y < Player.Position.y) And (IsOdd((Player.LastPosition.y) And (Player.LastPosition.x > Player.Position.x)) Or (Not IsOdd(Player.LastPosition.y) And (Player.LastPosition.x = Player.Position.x))) Then
+            ElseIf (Player.LastPosition.Y < Player.Position.Y) And (IsOdd((Player.LastPosition.Y) And (Player.LastPosition.X > Player.Position.X)) Or (Not IsOdd(Player.LastPosition.Y) And (Player.LastPosition.X = Player.Position.X))) Then
                 Direction = 1
             End If
             Return Direction = Dir
@@ -1286,7 +1286,7 @@ Namespace Engine.Libraries
 
             Dim Cord As Variable = reader.ReadVariable(True)
 
-            Cord.Value = Player.Position.x
+            Cord.Value = Player.Position.X
             Return True
 
         End Function
@@ -1303,7 +1303,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function SetCordY(reader As TriggerReader) As Boolean
             Dim Cord As Variable = reader.ReadVariable(True)
-            Cord.Value = Player.Position.y
+            Cord.Value = Player.Position.Y
             Return True
 
         End Function
@@ -1319,7 +1319,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function StoodStill(reader As TriggerReader) As Boolean
 
-            Return Player.LastPosition.x = Player.Position.x AndAlso Player.LastPosition.y = Player.Position.y
+            Return Player.LastPosition.X = Player.Position.X AndAlso Player.LastPosition.Y = Player.Position.Y
 
         End Function
 

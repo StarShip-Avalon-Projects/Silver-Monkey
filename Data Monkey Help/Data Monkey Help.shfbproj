@@ -30,6 +30,8 @@
       <DocumentationSource sourceFile="..\Data Monkey\Data Monkey.csproj" />
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
+      <DocumentationSource sourceFile="..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll" />
+      <DocumentationSource sourceFile="..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.xml" />
     </DocumentationSources>
     <WarnOnMissingSourceContext>True</WarnOnMissingSourceContext>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
@@ -136,7 +138,7 @@
           </deploymentLocation>
         </configuration>
       </PlugInConfig>
-    </PlugInConfigurations>
+<PlugInConfig id="Documented Entities Only" enabled="True"><configuration /></PlugInConfig></PlugInConfigurations>
     <WebsiteSdkLinkType>Msdn</WebsiteSdkLinkType>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
     <IncludeFavorites>True</IncludeFavorites>
@@ -199,6 +201,12 @@
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FastColoredTextBox, Version=2.16.21.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b">
+      <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
