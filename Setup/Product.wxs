@@ -67,7 +67,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
                   WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]\$(var.SilverMonkey2.TargetName)" />
 
-        <RegistryValue Root="HKLM"
+        <RegistryValue Root="HKCU"
                        Key="Software\$(var.CompanyName)\SilverMonkey"
                        Name="installed"
                        Type="integer"
@@ -91,7 +91,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
                   Description="Starts $(var.MonkeySpeakEditor.TargetName)" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
 
-        <RegistryValue Root="HKLM"
+        <RegistryValue Root="HKCU"
                        Key="Software\$(var.CompanyName)\MonkeySpeakEditor"
                        Name="installed"
                        Type="integer"
