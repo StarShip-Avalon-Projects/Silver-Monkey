@@ -40,4 +40,4 @@
 Imports System.Reflection
 
 
-<Assembly: AssemblyInformationalVersion("2.19.x.PreAlpha <#= revisionNumber.ToString() #>")>
+<Assembly: AssemblyInformationalVersion("2.19.PreAlpha <#= revisionNumber.ToString() #>")>

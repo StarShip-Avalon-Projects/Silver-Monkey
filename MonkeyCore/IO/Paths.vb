@@ -155,7 +155,9 @@ Public NotInheritable Class Paths
                 If _Paths Is Nothing Then
                     _Paths = New Furcadia.IO.Paths(_FurcadiaProgramFolder)
                 End If
+#Disable Warning BC40000 ' 'Public Overloads ReadOnly Property CharacterPath As String' is obsolete: 'As of The Second Dreaming, Tis is now legacy'.
                 _FurcadiaCharactersFolder = _Paths.CharacterPath
+#Enable Warning BC40000 ' 'Public Overloads ReadOnly Property CharacterPath As String' is obsolete: 'As of The Second Dreaming, Tis is now legacy'.
             End If
             Return _FurcadiaCharactersFolder
         End Get
