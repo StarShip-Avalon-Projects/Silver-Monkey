@@ -3,9 +3,7 @@ git pull
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto fail 
 
-git submodule submodule update --init --recursive --force --merge --rebase
-set GIT_STATUS=%ERRORLEVEL% 
-if not %GIT_STATUS%==0 goto fail 
+git submodule update -f --merge
 
 git submodule foreach "git pull"
 set GIT_STATUS=%ERRORLEVEL% 
