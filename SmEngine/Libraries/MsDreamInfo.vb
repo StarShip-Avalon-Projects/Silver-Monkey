@@ -267,7 +267,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function ShareTrigFurre(reader As TriggerReader) As Boolean
-            Dim furre = Player.ShortName
+            Dim furre = FurcadiaSession.Player.ShortName
             Return sendServer("share " + furre)
 
         End Function

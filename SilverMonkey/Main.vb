@@ -12,6 +12,7 @@ Imports MonkeyCore.Controls
 Imports MonkeyCore.Paths
 Imports MonkeyCore.Settings
 Imports Monkeyspeak
+Imports SilverMonkey.HelperClasses
 Imports SilverMonkeyEngine
 
 Public Class Main
@@ -1147,15 +1148,15 @@ Public Class Main
     ''' <summary>
     ''' Parse the Server Channels
     ''' </summary>
-    ''' <param name="InstructionObject">
-    ''' Processed Channel Object with triggering furre
+    ''' <param name="sender">
+    ''' <see cref="ChannelObject"/>
     ''' </param>
     ''' <param name="Args">
-    ''' Parse server Args
+    ''' <see cref="ChannelObject"/>
     ''' </param>
-    Private Sub OnProcessServerChannelData(InstructionObject As ChannelObject, Args As ParseServerArgs) _
+    Private Sub OnProcessServerChannelData(sender As Object, Args As ParseChannelArgs) _
         Handles FurcadiaSession.ProcessServerChannelData
-
+        Dim InstructionObject = DirectCast(sender, ChannelObject)
         If Not String.IsNullOrEmpty(InstructionObject.ChannelText) Then
             SndDisplay(InstructionObject.FormattedChannelText)
         ElseIf Not String.IsNullOrEmpty(InstructionObject.Player.Message) Then
@@ -1177,11 +1178,13 @@ Public Class Main
     ''' <summary>
     ''' Update the Dreams Furre list as the list changes by spawn and remove instructions
     ''' </summary>
-    ''' <param name="InstructionObject">
+    ''' <param name="sender">InstructionObject
     ''' </param>
     ''' <param name="Args">
     ''' </param>
-    Private Sub ParseFurreList(InstructionObject As BaseServerInstruction, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
+    Private Sub ParseFurreList(sender As Object, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
+        Dim InstructionObject = DirectCast(sender, BaseServerInstruction)
+
         Select Case InstructionObject.InstructionType
             Case ServerInstructionType.SpawnAvatar
                 UpDateDreamList()

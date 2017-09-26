@@ -76,6 +76,7 @@ Namespace Engine
         ''' <param name="file">
         ''' MonkeySpeak filename
         ''' </param>
+        ''' <exception cref="FileNotFoundException"/>
         ''' <returns>
         ''' </returns>
         Public Function LoadFromScriptFile(ByVal file As String) As Monkeyspeak.Page

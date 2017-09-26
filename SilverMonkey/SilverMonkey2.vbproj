@@ -151,6 +151,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Helper Classes\DeBugWriter.vb" />
+    <Compile Include="Helper Classes\NativeMethods.vb" />
     <Compile Include="IO\TextDisplayManager.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>

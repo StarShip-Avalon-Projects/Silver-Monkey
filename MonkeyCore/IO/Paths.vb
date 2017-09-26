@@ -7,6 +7,8 @@ Imports System.Windows.Forms
 '''<para>
 '''This Class contains All the Shared paths For Furcadia Folders  And Silver Monkey Paths.
 '''</para>
+''' </summary>
+''' <remarks>
 '''<para>
 '''Furcadia Programs (Furcadia.exe)
 '''</para>
@@ -35,8 +37,8 @@ Imports System.Windows.Forms
 '''<para> Let Furcadia.IO.Paths Populate our Default settings we can Override the Settings For our use Like If
 '''we have multiple Furcadia installations Like DevClient And Live Client. Perhaps we want the Bot To
 ''' Use its own Furcadia Stash due To mangling the Furcadia Settings  With a localdir.ini installation</para>
-''' </summary>
-Public Class Paths
+'''</remarks>
+Public NotInheritable Class Paths
 
 #Region "Private Fields"
 
@@ -161,7 +163,7 @@ Public Class Paths
             If Not Directory.Exists(value) Then
                 Throw New DirectoryNotFoundException("This needs to be a valid folder")
             End If
-            _FurcadiaDocumentsFolder = value
+            _FurcadiaCharactersFolder = value
         End Set
     End Property
 
@@ -232,9 +234,6 @@ Public Class Paths
             Return _FurcadiaProgramFolder
         End Get
         Set(ByVal value As String)
-            If Not File.Exists(Path.Combine(value, "Furcadia.exe")) Then
-                'Throw New FileNotFoundException("Furcadia.exe not found in path. Is this a Furcadia folder?")
-            End If
             _FurcadiaProgramFolder = value
         End Set
 
