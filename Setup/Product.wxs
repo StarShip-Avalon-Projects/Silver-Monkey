@@ -26,7 +26,7 @@
     <!--   <WixVariable Id="WixUIBannerBmp" Value="metal.png" /> -->
     <WixVariable Id="WixUIDialogBmp" Value="metal.png" />
     <MajorUpgrade
-   Schedule="afterInstallInitialize" AllowSameVersionUpgrades="no" Disallow="no"
+   Schedule="afterInstallExecute" AllowSameVersionUpgrades="no" Disallow="no"
    DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
     
     <Media Id="1" Cabinet="SilverMonkey.cab" EmbedCab="yes" CompressionLevel="high" />
