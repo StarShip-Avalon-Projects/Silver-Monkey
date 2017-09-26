@@ -224,6 +224,9 @@
   </Target>
   <!-- rename the output msi with Version number -->
   <Target Name="AfterBuild">
+   <!-- <Exec Command="Signtool.exe sign /a &quot;%(SignCabs.FullPath)&quot;" />
+    <Exec Command="signtool.exe sign /a &quot;..\Build\Installer\$(Configuration)\$(OutputName).msi&quot;" /> -->
     <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-$(FileVersion).msi" />
   </Target>
+
 </Project>
