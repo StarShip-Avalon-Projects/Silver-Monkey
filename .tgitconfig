@@ -1,0 +1,6 @@
+[bugtraq]
+	url = http://bugtraq.tsprojects.org/view.php?id=%BUGID%
+	message = " Issue : %BUGID"
+	append = true
+	number = true
+	warnifnoissue = true
