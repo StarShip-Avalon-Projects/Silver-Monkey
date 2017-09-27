@@ -150,7 +150,7 @@ Namespace Engine
         Dim disposed As Boolean = False
 
         ' Instantiate a SafeHandle instance.
-        Dim handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
+        Private handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
 
         ' Public implementation of Dispose pattern callable by consumers.
         Public Sub Dispose() _
@@ -159,13 +159,16 @@ Namespace Engine
             GC.SuppressFinalize(Me)
         End Sub
 
+
         ' Protected implementation of Dispose pattern.
         Protected Overridable Sub Dispose(disposing As Boolean)
             If disposed Then Return
 
             If disposing Then
-                Monkeyspeak.Libraries.Timers.DestroyTimers()
                 handle.Dispose()
+                Monkeyspeak.Libraries.Timers.DestroyTimers()
+
+
 
             End If
 

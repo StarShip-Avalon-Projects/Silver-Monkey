@@ -133,7 +133,7 @@
     <Compile Include="Libraries\MS_Cookie.vb" />
     <None Include="Libraries\MS_DreamTransfer.vb" />
     <Compile Include="Libraries\MS_Quotes.vb" />
-    <Compile Include="Libraries\Pounce\MsPounce.vb" />
+    <Compile Include="Libraries\MsPounce.vb" />
     <Compile Include="Libraries\Pounce\PounceFurre.vb" />
     <Compile Include="Libraries\SayLibrary.vb" />
     <Compile Include="Libraries\StringLibrary.vb" />

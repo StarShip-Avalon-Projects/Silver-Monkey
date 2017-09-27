@@ -1,4 +1,6 @@
-﻿Imports Monkeyspeak
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.Win32.SafeHandles
+Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.SmConstants
 
@@ -12,6 +14,7 @@ Namespace Engine
     ''' </para>
     ''' </summary>
     Public Class MonkeySpeakPage : Inherits Monkeyspeak.Page
+        Implements IDisposable
 
         'Public Sub LoadPluginLibrary(Optional ByRef start As Boolean = False)
         '    'Library Loaded?.. Get the Hell out of here
@@ -256,6 +259,37 @@ Namespace Engine
 
             Return MsPage
         End Function
+
+        'need Timer Library disposal here and any other Libs that need to be disposed
+
+        Dim disposed As Boolean = False
+
+        ' Instantiate a SafeHandle instance.
+        Private handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
+
+        ' Public implementation of Dispose pattern callable by consumers.
+        Public Overloads Sub Dispose() _
+               Implements IDisposable.Dispose
+            Dispose(True)
+            GC.SuppressFinalize(Me)
+        End Sub
+
+        ' Protected implementation of Dispose pattern.
+        Protected Overridable Overloads Sub Dispose(disposing As Boolean)
+            If disposed Then Return
+
+            If disposing Then
+                Monkeyspeak.Libraries.Timers.DestroyTimers()
+                MsPage.Dispose()
+                ' MsPage.Reset(True)
+                MyBase.Finalize()
+                handle.Dispose()
+
+            End If
+
+            ' Free any unmanaged objects here.
+            disposed = True
+        End Sub
 
 #End Region
 

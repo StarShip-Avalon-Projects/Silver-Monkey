@@ -419,12 +419,12 @@ Public Class BotSession : Inherits ProxySession
 
         If Me.disposed Then Exit Sub
         If disposing Then
-
             handle.Dispose()
+            MainEngine.Dispose()
 
             ' Free your own state (unmanaged objects).
             ' Set large fields to null.
-            MainEngine.Dispose()
+
         End If
         Me.disposed = True
         Me.Finalize()

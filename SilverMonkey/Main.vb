@@ -42,6 +42,13 @@ Public Class Main
     Public Mainsettings As cMain
     Public writer As TextBoxWriter = Nothing
 
+    Private Sub OnDisconnected() Handles FurcadiaSession.ServerDisConnected
+        If FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
+            FurcadiaSession.Dispose()
+        End If
+
+    End Sub
+
 #End Region
 
 #Region "Private Fields"
