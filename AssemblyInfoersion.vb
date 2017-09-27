@@ -5,4 +5,4 @@
 ''
 Imports System.Reflection
 
-<Assembly: AssemblyInformationalVersion("2.19.x.PreAlpha 8")>
+<Assembly: AssemblyInformationalVersion("2.19.PreAlpha 8")>
