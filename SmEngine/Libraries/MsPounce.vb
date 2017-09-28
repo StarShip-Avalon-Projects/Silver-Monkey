@@ -11,10 +11,20 @@ Namespace Engine.Libraries
     ''' <summary>
     ''' Pounce Server interface with a list of furres contained in a simple text file. This system is styled after <see cref="MsMemberList"/>
     ''' </summary>
+    ''' <remarks>
+    ''' This classe is the Monkey Speak interface for using the Furcadia Pounce server. It does not read the online.ini located in the Furcadia App-Data Folder.
+    ''' Instead it uses a text file With a list Of Furcadia Names(Long Or Short formats Don't matter). Furcadia.Net.Pounce is a HTTP(S)  Async Post Method 
+    ''' class that sends the requests to the server once every 30 seconds.
+    ''' <para/>
+    ''' Why 30 seconds? Because the Furcadia pounce server runs on a 30 second cron job, Therefore it makes sense to stick with it update time.
+    ''' </remarks>
     Public Class MsPounce
         Inherits MonkeySpeakLibrary
 
-        Private Const ListFile As String = "onlineList.txt"
+        ''' <summary>
+        ''' Default File we use
+        ''' </summary>
+        Public Const ListFile As String = "onlineList.txt"
 
         Private WithEvents OnlineFurreList As IO.NameList
         Private WithEvents PFure As PounceFurre
@@ -155,7 +165,6 @@ Namespace Engine.Libraries
             MsPage.SetVariable("NAME", Furr.Name, True)
             MsPage.Execute(951, 953)
         End Sub
-
 
         ''' <summary>
         ''' MonkeySpeak Execute When a Furre Logged on

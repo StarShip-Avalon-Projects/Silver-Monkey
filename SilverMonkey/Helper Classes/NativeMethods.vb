@@ -48,5 +48,68 @@ Namespace HelperClasses
 
         End Structure
 
+#Region "WmCpyDta"
+
+        'Public Function FindProcessByName(strProcessName As String) As IntPtr
+        '    Dim HandleOfToProcess As IntPtr = IntPtr.Zero
+        '    Dim p As Process() = Process.GetProcesses()
+        '    For Each p1 As Process In p
+        '        Debug.WriteLine(p1.ProcessName.ToUpper())
+        '        If p1.ProcessName.ToUpper() = strProcessName.ToUpper() Then
+        '            HandleOfToProcess = p1.MainWindowHandle
+        '            Exit For
+        '        End If
+        '    Next
+        '    Return HandleOfToProcess
+        'End Function
+
+        'Protected Overrides Sub WndProc(ByRef m As Message)
+        '    If m.Msg = WM_COPYDATA Then
+        '        ''Dim mystr As COPYDATASTRUCT
+        '        'Dim mystr2 As COPYDATASTRUCT = CType(Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT)), COPYDATASTRUCT)
+
+        ' '' If the size matches 'If mystr2.cdData =
+        ' Marshal.SizeOf(GetType(MyData)) Then ' ' Marshal the data from the
+        ' unmanaged memory block to a ' ' MyStruct managed struct. ' Dim myStr
+        ' As MyData = DirectCast(Marshal.PtrToStructure(mystr2.lpData,
+        ' GetType(MyData)), MyData)
+
+        ' ' Dim sName As String = myStr.lpName Dim sFID As Integer = 0 Dim '
+        ' sTag As String = myStr.lpTag Dim sData As String = myStr.lpMsg
+
+        ' ' If sName = "~DSEX~" Then If sTag = "Restart" Then ' EngineRestart =
+        ' True cBot.MS_Script = ' msReader(CheckBotFolder(cBot.MS_File))
+        ' MainEngine.MSpage = ' engine.LoadFromString(cBot.MS_Script) MS_Stared
+        ' = 2 ' ' MainMSEngine.LoadLibrary() EngineRestart = False ' '
+        ' Main.ResetPrimaryVariables() sndDisplay(" '
+        ' <b>
+        ' ' <i>[SM]</i> '
+        ' </b>
+        ' ' Status: File Saved. Engine Restarted") If '
+        ' FurcadiaSession.IsClientConnected Then FurcadiaSession.SendClient(") '
+        ' <b>
+        ' ' <i>[SM]</i> '
+        ' </b>
+        ' ' Status: File Saved. Engine Restarted" + vbLf) PageExecute(0) ' End
+        ' If Else If DREAM.FurreList.Contains(sFID) Then ' Player =
+        ' DREAM.FurreList(sFID) Else Player = New ' FURRE(sName) End If
+
+        ' ' Player.Message = sData.ToString ' PageSetVariable(MS_Name, sName) '
+        ' PageSetVariable("MESSAGE", sData) ' ' Execute (0:15) When some one
+        ' whispers something ' PageExecute(75, 76, 77) '
+        ' SendClientMessage("Message from: " + sName, sData) ' End If 'End If
+        ' Else MyBase.WndProc(m) End If
+
+        'End Sub
+
+        'Private Declare Sub FindWindow Lib "user32.dll" ()
+
+        'Private Declare Function FindWindow Lib "user32.dll" (_ClassName As String, _WindowName As String) As Integer
+
+        'Public Declare Function SetFocusAPI Lib "user32.dll" Alias "SetFocus" (ByVal hWnd As Long) As Long
+        'Private Declare Function SetForegroundWindow Lib "user32" (ByVal hWnd As Long) As Long
+
+#End Region
+
     End Class
 End Namespace

@@ -2,7 +2,7 @@
 ''' General Utility functions we haven't found a home for yet
 ''' </summary>
 <CLSCompliant(True)>
-Public NotInheritable Class Utils
+Public NotInheritable Class Utilities
 
 #Region "Public Enums"
 
@@ -57,7 +57,18 @@ Public NotInheritable Class Utils
         Return test
     End Function
 
-    'DateTime functions
+    Public Shared Function CountOccurrences(ByRef StToSerach As String, ByRef StToLookFor As String) As Int32
+        Dim iPos As Integer = -1
+        Dim iFound As Integer = 0
+        Do
+            iPos = StToSerach.IndexOf(StToLookFor, iPos + 1)
+            If iPos <> -1 Then
+                iFound += 1
+            End If
+        Loop Until iPos = -1
+        Return iFound
+    End Function
+
     ''' <summary>
     ''' Converts a number representing a Unix Time stamp and converts it to a usable DateTime format
     ''' </summary>

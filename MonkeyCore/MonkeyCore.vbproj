@@ -150,12 +150,13 @@
     </Compile>
     <Compile Include="Controls\Win32.vb" />
     <Compile Include="GlobalSuppressions.vb" />
-    <Compile Include="Utils\Logger.vb" />
-    <Compile Include="Utils\LogStream.vb" />
+    <Compile Include="Utils\Logging\Logger.vb" />
+    <Compile Include="Utils\Logging\LogSteamOptions.vb" />
+    <Compile Include="Utils\Logging\LogStream.vb" />
     <Compile Include="Utils\PluginServices.vb" />
     <Compile Include="Utils\SQlite.vb" />
     <Compile Include="Utils\TextWriter.vb" />
-    <Compile Include="Utils\ErrorLogging.vb" />
+    <Compile Include="Utils\Logging\ErrorLogging.vb" />
     <Compile Include="IO\IniFile.vb" />
     <Compile Include="IO\IO.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

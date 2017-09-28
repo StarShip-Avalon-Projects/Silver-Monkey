@@ -155,8 +155,6 @@ Namespace Engine
             'Library Loaded?.. Get the Hell out of here
             If MS_Started() Then Return Me
             MS_Stared += 1
-
-            MsPage.Reset()
             MsPage.SetTriggerHandler(TriggerCategory.Cause, 0,
          Function()
              Return True
@@ -236,7 +234,7 @@ Namespace Engine
 
             ' Console.WriteLine("Execute (0:0)")
             MS_Stared = 1
-            MsPage.Reset()
+            MsPage.Reset(True)
             LoadLibrary(False, False)
 
             VariableList.Add("DREAMOWNER", Nothing)
