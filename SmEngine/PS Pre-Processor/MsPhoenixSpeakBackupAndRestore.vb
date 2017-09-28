@@ -591,7 +591,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
                         lastItemName = CharacterList.Item(CharacterList.Count - 1).Name
 
                         If e.PageOverFlow Then
-                            lastItemName = Utils.IncrementLetter(lastItemName)
+                            lastItemName = Utilities.IncrementLetter(lastItemName)
                             ServerCommand = "ps get character." + lastItemName + "*"
                             CurrentPS_Stage = PsBackupStage.GetAlphaNumericList
                         Else
@@ -610,7 +610,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
                     If PSiInfoCache.Count > 0 Then
                         CharacterList.AddRange(PSiInfoCache)
                         lastItemName = PSiInfoCache.Item(PSiInfoCache.Count - 1).Name
-                        Utils.IncrementLetter(lastItemName)
+                        Utilities.IncrementLetter(lastItemName)
                         CurrentPS_Stage = PsBackupStage.GetAlphaNumericList
                         ServerCommand = "ps get character." + lastItemName + "*"
                     Else
@@ -718,11 +718,11 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
                 Double.TryParse(dta.Item(TimeItem), fDate)
                 If fDate = 0 Then
                     If PlayerName.ToUpper <> "[DREAM]" Then
-                        dta.Item(TimeItem) = DateTimeToUnixTimestamp(FurcTime).ToString
+                        dta.Item(TimeItem) = Utilities.DateTimeToUnixTimestamp(FurcTime).ToString
                     End If
                 Else
                     'Add current Unix Time Stamp as default
-                    dta.Item(TimeItem) = UnixTimeStampToDateTime(fDate).ToString
+                    dta.Item(TimeItem) = Utilities.UnixTimeStampToDateTime(fDate).ToString
                 End If
             End If
             Return dta

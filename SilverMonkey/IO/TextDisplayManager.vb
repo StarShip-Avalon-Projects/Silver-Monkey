@@ -5,7 +5,7 @@ Imports Furcadia.Text.FurcadiaMarkup
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Settings
-
+Imports MonkeyCore.Utils.Logging
 Imports SilverMonkey.HelperClasses.NativeMethods
 
 Namespace HelperClasses

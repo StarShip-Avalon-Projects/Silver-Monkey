@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Windows.Forms
+Imports Furcadia.IO
 
 ''' <summary>
 ''' Monkey System core File Paths
@@ -522,6 +523,9 @@ Public NotInheritable Class Paths
     ''' </returns>
 
     Public Shared Function CheckBotFolder(ByRef FileToCheck As String) As String
+        If String.IsNullOrEmpty(FileToCheck) Then
+            Throw New FurcadiaIOException("FileToCheck cannot be Null or empty")
+        End If
         Dim FilePath As String = Path.GetDirectoryName(FileToCheck)
         If String.IsNullOrEmpty(FilePath) Then
             FileToCheck = Path.Combine(SilverMonkeyBotPath, FileToCheck)

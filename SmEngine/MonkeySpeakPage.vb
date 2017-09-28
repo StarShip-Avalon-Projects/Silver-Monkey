@@ -234,7 +234,7 @@ Namespace Engine
 
             ' Console.WriteLine("Execute (0:0)")
             MS_Stared = 1
-            MsPage.Reset()
+            MsPage.Reset(True)
             LoadLibrary(False, False)
 
             VariableList.Add("DREAMOWNER", Nothing)

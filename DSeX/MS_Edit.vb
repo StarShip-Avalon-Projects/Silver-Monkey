@@ -5,6 +5,7 @@ Imports FastColoredTextBoxNS
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.IniFile
+Imports MonkeyCore.Utils.Logging
 Imports MonkeySpeakEditor.Controls
 Imports MonkeySpeakEditor.Controls.LineFinder
 

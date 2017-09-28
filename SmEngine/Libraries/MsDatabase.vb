@@ -2,6 +2,7 @@
 Imports System.IO
 Imports Furcadia.Util
 Imports MonkeyCore
+Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.SmConstants
 

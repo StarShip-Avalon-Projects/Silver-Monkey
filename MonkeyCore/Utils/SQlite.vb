@@ -1,6 +1,7 @@
 ﻿Imports System.Data.Common
 Imports System.Data.SQLite
 Imports System.IO
+Imports MonkeyCore.Utils.Logging
 
 ''' <summary>
 ''' Monkey Systems generic interface to System.Data.Sqlite

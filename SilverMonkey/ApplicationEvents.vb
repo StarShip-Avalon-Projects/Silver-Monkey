@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Devices
 Imports MonkeyCore
+Imports MonkeyCore.Utils.Logging
 
 Namespace My
 
