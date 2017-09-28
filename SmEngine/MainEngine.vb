@@ -53,7 +53,7 @@ Namespace Engine
 
         Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
 
-        Private msVer As Double = 3.0
+
 
         ''' <summary>
         ''' Default Constructlor.
@@ -164,6 +164,7 @@ Namespace Engine
             If disposed Then Return
 
             If disposing Then
+
                 Monkeyspeak.Libraries.Timers.DestroyTimers()
                 handle.Dispose()
 
