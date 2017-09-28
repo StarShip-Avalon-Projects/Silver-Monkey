@@ -13,7 +13,7 @@ IF "%~1"=="" GOTO BuildAll
 IF "%~1"=="VersionBump" GOTO VersionBump
 
 :VersionBump
-set FullBackup=yes
+
 msbuild /t:IncrementVersions  Solution.build
 set BUILD_STATUS=%ERRORLEVEL% 
 if not %BUILD_STATUS%==0 goto fail 
@@ -34,7 +34,6 @@ pause
 exit /b 1
 
 :End
-if not %FullBackup% == yes Goto eof
 
 git add --all
 set GIT_STATUS=%ERRORLEVEL% 
@@ -51,11 +50,7 @@ if not %GIT_STATUS%==0 goto eof
 
 git submodule foreach "git commit -ma'Auto Update SubModules'"
 
-git push -f --all --recurse-submodules=check
-set GIT_STATUS=%ERRORLEVEL% 
-if %GIT_STATUS%==0 goto pull 
-
-git push -f --all --recurse-submodules=on-demand
+git push --all --recurse-submodules=on-demand
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof
 
