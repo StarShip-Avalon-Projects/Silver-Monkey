@@ -48,7 +48,7 @@ git submodule foreach "git add --all"
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof 
 
-git submodule foreach "git commit -ma'Auto Update SubModules'"
+git submodule foreach "git commit -m'Auto Update SubModules'"
 
 git push --all --recurse-submodules=on-demand
 set GIT_STATUS=%ERRORLEVEL% 
