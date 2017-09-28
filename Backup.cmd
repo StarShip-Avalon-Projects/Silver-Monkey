@@ -27,19 +27,17 @@ git add --all
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof 
 
-git commit -m"Auto Version Update" --all
-set GIT_STATUS=%ERRORLEVEL% 
-if not %GIT_STATUS%==0 goto eof 
-
-
 git submodule foreach "git add --all"
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof 
 
 git submodule foreach "git commit -ma'Auto Update SubModules'"
 
+git commit -m"Auto Version Update" --all
+set GIT_STATUS=%ERRORLEVEL% 
+if not %GIT_STATUS%==0 goto eof 
 
-git push --all --recurse-submodules=on-demand
+git push --recurse-submodules=on-demand
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof
 
