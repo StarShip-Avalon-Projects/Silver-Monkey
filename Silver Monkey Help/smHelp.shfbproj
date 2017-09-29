@@ -161,15 +161,35 @@
 <NamespaceSummaryItem name="SilverMonkey.My" isDocumented="False" />
 <NamespaceSummaryItem name="SilverMonkey.PhoenixSpeak" isDocumented="True" />
 <NamespaceSummaryItem name="(global)" isDocumented="False" />
-<NamespaceSummaryItem name="SilverMonkey.Engine.Libraries (Group)" isGroup="True" isDocumented="True" />
+<NamespaceSummaryItem name="SilverMonkey.Engine.Libraries (Group)" isGroup="True" isDocumented="True">&lt;h1&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/H1&gt;
+&lt;p&gt; Some of the Default Monkey Speak Libraries are used from the Monkey Speak Engine itself. They can be found here at
+&lt;codeEntityReference qualifyHint="false"&gt;T:Monkeyspeak.Libraries&lt;/codeEntityReference&gt;
+&lt;/p&gt;
+&lt;h2&gt;Monkey Speak Libraries&lt;/h2&gt;
+&lt;h3&gt;MsLib for short&lt;/h2&gt;
+&lt;p&gt;
+These Libraries are what powers Silver monkey's Features. They are the Monkey Speak lines you'll see in MonkeySpeak Editor. Each Library is seperated into a method representing the guts of the Monkey Speak line, Some methods will have Monkey Speak Exceptions, When this Occures, Execution of the Monkey Speak block of lines will hault, Displaying an Error in the Log Box. Some times Extra information with the exception will be sent to the Debug Window.
+&lt;/p&gt;</NamespaceSummaryItem>
 <NamespaceSummaryItem name="Monkeyspeak" isDocumented="True">Provides Functionality of Monkey Speak
 &lt;a href="https://starship-avalon-projects.github.io/MonkeySpeakExtendedEngine/html/8d0a663e-8095-408a-b860-f55d2fc3ccbe.htm"&gt;Monkey Speak Ex Documentation&lt;/a&gt;</NamespaceSummaryItem>
 <NamespaceSummaryItem name="SilverMonkeyEngine.My" isDocumented="False" />
-<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries (Group)" isGroup="True" isDocumented="True">The Core  Monkey Speak Libraries Silver monkey uses.
-&lt;p&gt;For MonkeySpeak Default libraries, Please see &lt;see cref="N:Monkeyspeak.Libraries" /&gt;&lt;/p&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True">The Core  Monkey Speak Libraries Silver monkey uses.
-&lt;p&gt; Please see 
+<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries (Group)" isGroup="True" isDocumented="True">&lt;p&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/p&gt;
+&lt;p&gt; Some of the Default Monkey Speak Libraries are used from the Monkey Speak Engine itself. They can be found here at
 &lt;codeEntityReference qualifyHint="false"&gt;T:Monkeyspeak.Libraries&lt;/codeEntityReference&gt;
+&lt;/p&gt;
+&lt;p&gt;&gt;Monkey Speak Libraries&lt;/p&gt;
+&lt;p&gt;MsLib for short&lt;/p&gt;
+&lt;p&gt;
+These Libraries are what powers Silver monkey's Features. They are the Monkey Speak lines you'll see in MonkeySpeak Editor. Each Library is seperated into a method representing the guts of the Monkey Speak line, Some methods will have Monkey Speak Exceptions, When this Occures, Execution of the Monkey Speak block of lines will hault, Displaying an Error in the Log Box. Some times Extra information with the exception will be sent to the Debug Window.
+&lt;/p&gt;</NamespaceSummaryItem>
+<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True">&lt;p&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/p&gt;
+&lt;p&gt; Some of the Default Monkey Speak Libraries are used from the Monkey Speak Engine itself. They can be found here at
+&lt;codeEntityReference qualifyHint="false"&gt;T:Monkeyspeak.Libraries&lt;/codeEntityReference&gt;
+&lt;/p&gt;
+&lt;p&gt;&gt;Monkey Speak Libraries&lt;/p&gt;
+&lt;p&gt;MsLib for short&lt;/p&gt;
+&lt;p&gt;
+These Libraries are what powers Silver monkey's Features. They are the Monkey Speak lines you'll see in MonkeySpeak Editor. Each Library is seperated into a method representing the guts of the Monkey Speak line, Some methods will have Monkey Speak Exceptions, When this Occures, Execution of the Monkey Speak block of lines will hault, Displaying an Error in the Log Box. Some times Extra information with the exception will be sent to the Debug Window.
 &lt;/p&gt;</NamespaceSummaryItem>
 <NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries.Pounce" isDocumented="True">Furcadia Framework does not use Furcadia's  online.ini.
 &lt;p/&gt;
