@@ -217,6 +217,9 @@
     <EmbeddedResource Include="Main.en-US.resx">
       <DependentUpon>Main.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Main.en.resx">
+      <DependentUpon>Main.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NewBot.resx">
       <DependentUpon>NewBot.vb</DependentUpon>
       <SubType>Designer</SubType>

@@ -78,6 +78,7 @@ Public Class Main
 #Region "Public Methods"
 
 #Region "Bot Connection Controls"
+
     ''' <summary>
     ''' Connection process to the Game Server
     ''' </summary>
@@ -127,10 +128,6 @@ Public Class Main
     Public Sub ConnectionControlDisEnable()
         Me.EditBotToolStripMenuItem.Enabled = False
     End Sub
-
-
-
-
 
     Public Sub FormatRichTectBox(ByRef TB As MonkeyCore.Controls.RichTextBoxEx,
          ByRef style As System.Drawing.FontStyle)
@@ -233,7 +230,6 @@ Public Class Main
         End If
 
     End Sub
-
 
     Public Sub UpDatButtonGoText(ByRef str As String)
         If Me.InvokeRequired Then
@@ -422,6 +418,7 @@ Public Class Main
         End Try
 
     End Sub
+
     ''' <summary>
     ''' New Bot Toolstrip Item
     ''' </summary>
@@ -492,8 +489,6 @@ Public Class Main
         End With
     End Sub
 
-
-
 #End Region
 
 #Region " Methods"
@@ -508,8 +503,6 @@ Public Class Main
     ' ElseIf (ch >= "1" And ch <= "3") Then file = "smileys2.fsh" shape =
     ' Asc(ch) - Asc("1") + 35 End If
     ' RTFimg.InsertImage(IMGresize(GetFrame(shape, file), log_)) Return RTFimg.ToString
-
-
 
     ''' <summary>
     ''' Send text to DebugWindow Delegate
@@ -535,7 +528,6 @@ Public Class Main
         End If
 
     End Sub
-
 
     ''' <summary>
     ''' Send formatted text to log box
@@ -1085,8 +1077,13 @@ Public Class Main
 
         ' This call is required by the designer.
         InitializeComponent()
-
         ' Add any initialization after the InitializeComponent() call.
+
+        'HACK: Resource Designer isn't saving these
+        Me.SilverMonkeyToolStripMenuItem.Text = "Silver Monkey Engine Libraries"
+        Me.MonkeySpeakLibrariesToolStripMenuItem.Text = "Monkey Speak Libraries"
+        Me.EngineStartProcessToolStripMenuItem.Text = "Engine Startup Process"
+        DefaultEngineLibrariesToolStripMenuItem.Text = "Default Engine Libraries"
 
     End Sub
 
@@ -1214,9 +1211,21 @@ Public Class Main
         toServer.Clear()
     End Sub
 
-    Private Sub StartupProcessToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub StartupProcessToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EngineStartProcessToolStripMenuItem.Click
         If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
             Help.ShowHelp(Me, HelpFile, "/html/4c192ea5-9a9c-4dae-927f-7581b05c0f65.htm")
+        End If
+    End Sub
+
+    Private Sub DefaultEngineLibrariesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DefaultEngineLibrariesToolStripMenuItem.Click
+        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            Help.ShowHelp(Me, HelpFile, "/html/N_Monkeyspeak_Libraries.htm")
+        End If
+    End Sub
+
+    Private Sub SilverMonkeyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SilverMonkeyToolStripMenuItem.Click
+        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            Help.ShowHelp(Me, HelpFile, "/html/N_SilverMonkeyEngine_Engine_Libraries.htm")
         End If
     End Sub
 

@@ -117,52 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="CheckBox1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="Btn_Bold.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BTN_Underline.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BTN_Italic.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="sendToServer.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BTN_Go.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="BTN_Go.Location" type="System.Drawing.Point, System.Drawing">
-    <value>198, 463</value>
-  </data>
-  <data name="TextBox_NoFlicker1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>231, 200</value>
-  </data>
-  <data name="DreamList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>294, 164</value>
-  </data>
-  <data name="Label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>96, 205</value>
+    <value>206, 463</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>324, 242</value>
+    <value>332, 242</value>
   </data>
-  <data name="BtnSit_stand_Lie.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="GrpAction.Location" type="System.Drawing.Point, System.Drawing">
+    <value>53, 251</value>
   </data>
-  <data name="BTN_TurnL.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="TextBox_NoFlicker1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>239, 200</value>
   </data>
-  <data name="BTN_TurnR.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="DreamList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>302, 164</value>
+  </data>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 205</value>
   </data>
   <data name="_ne.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -177,9 +149,6 @@
         b4M9krKUwj7YwF/YA15LWTznPaycf7/3Pbwe/Z+PKFFCTiz2D6ZCNm2q8kpmAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="_ne.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="_nw.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -193,15 +162,6 @@
         xH8vFzCf9IekbwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="_nw.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="use_.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="get_.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="se_.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
@@ -212,9 +172,6 @@
         m7leueG4ZDjnwLZXMZVbWbdZAPz1Skc4534cLBwzp+1l6EI06AxHjW1n4Zg5Bflyz5dcuzA+LBwzp+28
         CMUbciKT4mfOl1N8YbNMJpPJ/IsxR+JkK0gXW4xsAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="se_.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="sw_.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -227,32 +184,38 @@
         HZnuAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="sw_.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="GrpAction.Location" type="System.Drawing.Point, System.Drawing">
-    <value>45, 251</value>
-  </data>
   <data name="ContentsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>283, 30</value>
+    <value>276, 30</value>
   </data>
-  <data name="SilverMonkeyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Silver Monkey Libraries</value>
-  </data>
-  <data name="DefaultEngineLibrariesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Engine Default Libraries</value>
+  <data name="MonkeySpeakLibrariesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>276, 30</value>
   </data>
   <data name="MonkeySpeakLibrariesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Monkey Speak Libraries</value>
+    <value>Engine Libraries</value>
+  </data>
+  <data name="SilverMonkeyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>335, 30</value>
+  </data>
+  <data name="SilverMonkeyToolStripMenuItem.Text" xml:space="preserve">
+    <value>Silver Monkey Engine Libraries</value>
+  </data>
+  <data name="DefaultEngineLibrariesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>335, 30</value>
+  </data>
+  <data name="DefaultEngineLibrariesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Default Engine Libraries</value>
+  </data>
+  <data name="EngineStartProcessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>276, 30</value>
   </data>
   <data name="EngineStartProcessToolStripMenuItem.Text" xml:space="preserve">
-    <value>Engine Start Process</value>
+    <value>Engine Startup Process</value>
+  </data>
+  <data name="ToolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>273, 6</value>
   </data>
   <data name="AboutToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>283, 30</value>
-  </data>
-  <data name="$this.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
+    <value>276, 30</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

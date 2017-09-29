@@ -91,6 +91,11 @@ Partial Class Main
         Me.ReferenceLinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MonkeySpeakLibrariesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SilverMonkeyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DefaultEngineLibrariesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EngineStartProcessToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.AboutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MainMenu1 = New System.Windows.Forms.MainMenu(Me.components)
         Me.BotIniOpen = New System.Windows.Forms.OpenFileDialog()
@@ -590,13 +595,39 @@ Partial Class Main
         'HelpToolStripMenuItem
         '
         resources.ApplyResources(Me.HelpToolStripMenuItem, "HelpToolStripMenuItem")
-        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutToolStripMenuItem1})
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.MonkeySpeakLibrariesToolStripMenuItem, Me.EngineStartProcessToolStripMenuItem, Me.ToolStripSeparator6, Me.AboutToolStripMenuItem1})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
         '
         'ContentsToolStripMenuItem
         '
         resources.ApplyResources(Me.ContentsToolStripMenuItem, "ContentsToolStripMenuItem")
         Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
+        '
+        'MonkeySpeakLibrariesToolStripMenuItem
+        '
+        resources.ApplyResources(Me.MonkeySpeakLibrariesToolStripMenuItem, "MonkeySpeakLibrariesToolStripMenuItem")
+        Me.MonkeySpeakLibrariesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SilverMonkeyToolStripMenuItem, Me.DefaultEngineLibrariesToolStripMenuItem})
+        Me.MonkeySpeakLibrariesToolStripMenuItem.Name = "MonkeySpeakLibrariesToolStripMenuItem"
+        '
+        'SilverMonkeyToolStripMenuItem
+        '
+        resources.ApplyResources(Me.SilverMonkeyToolStripMenuItem, "SilverMonkeyToolStripMenuItem")
+        Me.SilverMonkeyToolStripMenuItem.Name = "SilverMonkeyToolStripMenuItem"
+        '
+        'DefaultEngineLibrariesToolStripMenuItem
+        '
+        resources.ApplyResources(Me.DefaultEngineLibrariesToolStripMenuItem, "DefaultEngineLibrariesToolStripMenuItem")
+        Me.DefaultEngineLibrariesToolStripMenuItem.Name = "DefaultEngineLibrariesToolStripMenuItem"
+        '
+        'EngineStartProcessToolStripMenuItem
+        '
+        resources.ApplyResources(Me.EngineStartProcessToolStripMenuItem, "EngineStartProcessToolStripMenuItem")
+        Me.EngineStartProcessToolStripMenuItem.Name = "EngineStartProcessToolStripMenuItem"
+        '
+        'ToolStripSeparator6
+        '
+        resources.ApplyResources(Me.ToolStripSeparator6, "ToolStripSeparator6")
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
         '
         'AboutToolStripMenuItem1
         '
@@ -731,4 +762,9 @@ Partial Class Main
     Friend WithEvents Log_ As MonkeyCore.Controls.RichTextBoxEx
     Friend WithEvents TextBox_NoFlicker1 As MonkeyCore.Controls.TextBox_NoFlicker
     Friend WithEvents DreamList As MonkeyCore.Controls.ListBox_NoFlicker
+    Friend WithEvents MonkeySpeakLibrariesToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+    Friend WithEvents SilverMonkeyToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DefaultEngineLibrariesToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+    Friend WithEvents EngineStartProcessToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator6 As Windows.Forms.ToolStripSeparator
 End Class
