@@ -29,14 +29,16 @@ exit /b 1
 :End
 
 git add --all
-set GIT_STATUS=%ERRORLEVEL% 
-if not %GIT_STATUS%==0 goto eof 
 
 git submodule foreach "git add --all"
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof 
 
 git submodule foreach "git commit -m'Auto Update SubModules'"
+
+git submodule foreach "git push"
+set GIT_STATUS=%ERRORLEVEL% 
+if not %GIT_STATUS%==0 goto eof
 
 git commit -m"Auto Version Update"
 set GIT_STATUS=%ERRORLEVEL% 
