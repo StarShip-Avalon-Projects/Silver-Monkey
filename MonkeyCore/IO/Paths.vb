@@ -424,7 +424,7 @@ Public NotInheritable Class Paths
     ''' "Documents\Silver monkey"
     ''' </para>
     ''' <para>
-    ''' Default Path: "Documents\Silver Monkey"
+    ''' Default Path: "Documents\Silver Monkey" or the Current file path the Bot.bini file is located
     ''' </para>
     ''' </summary>
     ''' <value>

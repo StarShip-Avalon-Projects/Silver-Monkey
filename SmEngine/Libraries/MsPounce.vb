@@ -27,9 +27,9 @@ Namespace Engine.Libraries
         Public Const ListFile As String = "onlineList.txt"
 
         Private WithEvents OnlineFurreList As IO.NameList
-        Private WithEvents PFure As PounceFurre
+        Private WithEvents PFure As MsPounceFurre
         Private _onlineListFile As String
-        Private PounceFurreList As List(Of PounceFurre)
+        Private PounceFurreList As List(Of MsPounceFurre)
         Private smPounce As PounceClient
 
         ''' <summary>
@@ -37,7 +37,7 @@ Namespace Engine.Libraries
         ''' </summary>
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
-            PounceFurreList = New List(Of PounceFurre)
+            PounceFurreList = New List(Of MsPounceFurre)
             'Setup our Default Objects
             _onlineListFile = Paths.CheckBotFolder(ListFile)
             OnlineFurreList = New IO.NameList(_onlineListFile)
@@ -227,7 +227,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedNotOnline(reader As TriggerReader) As Boolean
 
             Dim TmpName As String = reader.ReadString()
-            For Each Fur As PounceFurre In PounceFurreList
+            For Each Fur As MsPounceFurre In PounceFurreList
                 If Fur.ShortName = FurcadiaShortName(TmpName) Then
                     Return Not Fur.Online
                 End If
@@ -245,7 +245,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedonline(reader As TriggerReader) As Boolean
 
             Dim TmpName As String = reader.ReadString()
-            For Each Fur As PounceFurre In PounceFurreList
+            For Each Fur As MsPounceFurre In PounceFurreList
                 If Fur.ShortName = FurcadiaShortName(TmpName) Then
                     Return Fur.Online
                 End If

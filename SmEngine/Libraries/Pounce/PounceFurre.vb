@@ -5,7 +5,7 @@ Namespace Engine.Libraries.Pounce
     ''' <summary>
     '''
     ''' </summary>
-    Public Class PounceFurre
+    Public Class MsPounceFurre
         Implements IEquatable(Of String)
 
 #Region "Private Fields"
