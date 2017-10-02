@@ -84,20 +84,17 @@ Public Class Main
     ''' </summary>
     Public Sub ConnectBot()
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
-            Try
 
-                LogStream = New LogStream(BotConfig.LogOptions)
-                SndDisplay("New Session" + DateTime.Now.ToString)
+            LogStream = New LogStream(BotConfig.LogOptions)
+            SndDisplay("New Session" + DateTime.Now.ToString)
 
-                FurcadiaSession.Connect()
-                AddHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
+            FurcadiaSession.Connect()
+            AddHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
 
-                ConnectTrayIconMenuItem.Enabled = False
-                DisconnectTrayIconMenuItem.Enabled = True
-                UpDateDreamList() '
-            Catch ex As Exception
-                SndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
-            End Try
+            ConnectTrayIconMenuItem.Enabled = False
+            DisconnectTrayIconMenuItem.Enabled = True
+            UpDateDreamList() '
+        Else Throw New InvalidEnumArgumentException("Furcadia Status is not" + ConnectionPhase.Init.ToString)
         End If
     End Sub
 
@@ -662,8 +659,12 @@ Public Class Main
             Exit Sub
         End If
 
-        If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
-            ConnectBot()
+        If FurcadiaSession Is Nothing OrElse FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
+            Try
+                ConnectBot()
+            Catch ex As Exception
+                SndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
+            End Try
         Else
             DisconnectBot()
 
