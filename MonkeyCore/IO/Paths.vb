@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Windows.Forms
+Imports Furcadia.IO
 
 ''' <summary>
 ''' Monkey System core File Paths
@@ -7,6 +8,8 @@ Imports System.Windows.Forms
 '''<para>
 '''This Class contains All the Shared paths For Furcadia Folders  And Silver Monkey Paths.
 '''</para>
+''' </summary>
+''' <remarks>
 '''<para>
 '''Furcadia Programs (Furcadia.exe)
 '''</para>
@@ -35,8 +38,8 @@ Imports System.Windows.Forms
 '''<para> Let Furcadia.IO.Paths Populate our Default settings we can Override the Settings For our use Like If
 '''we have multiple Furcadia installations Like DevClient And Live Client. Perhaps we want the Bot To
 ''' Use its own Furcadia Stash due To mangling the Furcadia Settings  With a localdir.ini installation</para>
-''' </summary>
-Public Class Paths
+'''</remarks>
+Public NotInheritable Class Paths
 
 #Region "Private Fields"
 
@@ -153,7 +156,9 @@ Public Class Paths
                 If _Paths Is Nothing Then
                     _Paths = New Furcadia.IO.Paths(_FurcadiaProgramFolder)
                 End If
+#Disable Warning BC40000 ' 'Public Overloads ReadOnly Property CharacterPath As String' is obsolete: 'As of The Second Dreaming, Tis is now legacy'.
                 _FurcadiaCharactersFolder = _Paths.CharacterPath
+#Enable Warning BC40000 ' 'Public Overloads ReadOnly Property CharacterPath As String' is obsolete: 'As of The Second Dreaming, Tis is now legacy'.
             End If
             Return _FurcadiaCharactersFolder
         End Get
@@ -161,7 +166,7 @@ Public Class Paths
             If Not Directory.Exists(value) Then
                 Throw New DirectoryNotFoundException("This needs to be a valid folder")
             End If
-            _FurcadiaDocumentsFolder = value
+            _FurcadiaCharactersFolder = value
         End Set
     End Property
 
@@ -232,9 +237,6 @@ Public Class Paths
             Return _FurcadiaProgramFolder
         End Get
         Set(ByVal value As String)
-            If Not File.Exists(Path.Combine(value, "Furcadia.exe")) Then
-                'Throw New FileNotFoundException("Furcadia.exe not found in path. Is this a Furcadia folder?")
-            End If
             _FurcadiaProgramFolder = value
         End Set
 
@@ -422,7 +424,7 @@ Public Class Paths
     ''' "Documents\Silver monkey"
     ''' </para>
     ''' <para>
-    ''' Default Path: "Documents\Silver Monkey"
+    ''' Default Path: "Documents\Silver Monkey" or the Current file path the Bot.bini file is located
     ''' </para>
     ''' </summary>
     ''' <value>
@@ -521,6 +523,9 @@ Public Class Paths
     ''' </returns>
 
     Public Shared Function CheckBotFolder(ByRef FileToCheck As String) As String
+        If String.IsNullOrEmpty(FileToCheck) Then
+            Throw New FurcadiaIOException("FileToCheck cannot be Null or empty")
+        End If
         Dim FilePath As String = Path.GetDirectoryName(FileToCheck)
         If String.IsNullOrEmpty(FilePath) Then
             FileToCheck = Path.Combine(SilverMonkeyBotPath, FileToCheck)

@@ -50,8 +50,6 @@ Namespace Engine.Libraries.PhoenixSpeak
 
 #End Region
 
-
-
 #Region "Private Fields"
 
         ''' <summary>

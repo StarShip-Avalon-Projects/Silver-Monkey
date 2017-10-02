@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Forms
-Imports System.IO
+﻿Imports System.IO
 Imports Conversive.Verbot5
 
 Public Class ReplacementEditor
@@ -124,11 +123,14 @@ Public Class ReplacementEditor
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
     End Sub
+
     Private Sub ReplacementEditor_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         If File.Exists(FilePath + "\" + FileName) Then
             TextBox1.Text = FilePath + "\" + FileName
             Dim xToolbox As XMLToolbox = New XMLToolbox(GetType(ReplacementProfile))
+#Disable Warning BC42016 ' Implicit conversion from 'Object' to 'ReplacementProfile'.
             Resource = xToolbox.LoadXML(FilePath + "\" + FileName)
+#Enable Warning BC42016 ' Implicit conversion from 'Object' to 'ReplacementProfile'.
             ListView2.Items.Clear()
             ListView1.Items.Clear()
             For i As Integer = 0 To Resource.InputReplacements.Count - 1

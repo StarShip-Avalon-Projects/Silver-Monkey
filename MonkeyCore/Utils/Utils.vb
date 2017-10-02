@@ -2,7 +2,7 @@
 ''' General Utility functions we haven't found a home for yet
 ''' </summary>
 <CLSCompliant(True)>
-Public Class Utils
+Public NotInheritable Class Utilities
 
 #Region "Public Enums"
 
@@ -37,7 +37,7 @@ Public Class Utils
     ''' </summary>
     ''' <param name="Input"></param>
     ''' <returns></returns>
-    Public Shared Function incrementLetter(ByRef Input As String) As Char
+    Public Shared Function IncrementLetter(ByRef Input As String) As Char
         Input = Input.Substring(0, 1)
         Dim i As Integer = AscW(Input)
         Dim test As Char
@@ -57,7 +57,18 @@ Public Class Utils
         Return test
     End Function
 
-    'DateTime functions
+    Public Shared Function CountOccurrences(ByRef StToSerach As String, ByRef StToLookFor As String) As Int32
+        Dim iPos As Integer = -1
+        Dim iFound As Integer = 0
+        Do
+            iPos = StToSerach.IndexOf(StToLookFor, iPos + 1)
+            If iPos <> -1 Then
+                iFound += 1
+            End If
+        Loop Until iPos = -1
+        Return iFound
+    End Function
+
     ''' <summary>
     ''' Converts a number representing a Unix Time stamp and converts it to a usable DateTime format
     ''' </summary>

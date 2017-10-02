@@ -1,9 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Runtime.InteropServices
-Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
-Imports Furcadia.Text.FurcadiaMarkup
 Imports MonkeyCore.Controls.Win32
 
 Namespace Controls
@@ -283,11 +281,7 @@ Namespace Controls
 
 #End Region
 
-#Region "Protected Methods"
 
-
-
-#End Region
 
 #Region "Private Methods"
 

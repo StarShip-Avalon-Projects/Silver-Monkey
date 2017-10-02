@@ -4,9 +4,11 @@
 Imports System.Runtime.InteropServices
 
 Namespace Controls
+
     Friend Class Win32
 
 #Region "Interop-Defines"
+
         Friend Const EM_GETCHARFORMAT As Integer = WM_USER + 58
 
         Friend Const EM_GETEVENTMASK As Integer = WM_USER + 59
@@ -48,6 +50,7 @@ Namespace Controls
             Public dwEffects As Integer
             Public dwMask As Integer
             Public dwReserved As Integer
+
             ' Color.ToArgb() -> int
             Public lcid As Integer
 
@@ -64,6 +67,7 @@ Namespace Controls
         End Structure
 
 #Region "CHARFORMAT2 Flags"
+
         Friend Const CFE_AUTOCOLOR As Integer = &H40000000
         Friend Const CFE_BOLD As Integer = &H1
         Friend Const CFE_ITALIC As Integer = &H2
@@ -71,6 +75,7 @@ Namespace Controls
         Friend Const CFE_PROTECTED As Integer = &H10
         Friend Const CFE_STRIKEOUT As Integer = &H8
         Friend Const CFE_SUBSCRIPT As Integer = &H10000
+
         ' Superscript and subscript are
         Friend Const CFE_SUPERSCRIPT As Integer = &H20000
 
@@ -87,6 +92,7 @@ Namespace Controls
         Friend Const CFM_BOLD As Integer = &H1
         Friend Const CFM_CHARSET As Integer = &H8000000
         Friend Const CFM_COLOR As Integer = &H40000000
+
         ' (*)
         Friend Const CFM_DISABLED As Integer = &H2000
 
@@ -94,6 +100,7 @@ Namespace Controls
         Friend Const CFM_EMBOSS As Integer = &H800
 
         Friend Const CFM_FACE As Integer = &H20000000
+
         ' Displayed by 3.0
         Friend Const CFM_HIDDEN As Integer = &H100
 
@@ -101,20 +108,24 @@ Namespace Controls
         Friend Const CFM_IMPRINT As Integer = &H1000
 
         Friend Const CFM_ITALIC As Integer = &H2
+
         ' Displayed by 3.0
         Friend Const CFM_KERNING As Integer = &H100000
 
         Friend Const CFM_LCID As Integer = &H2000000
         Friend Const CFM_LINK As Integer = &H20
         Friend Const CFM_OFFSET As Integer = &H10000000
+
         ' Hidden by 3.0
         Friend Const CFM_OUTLINE As Integer = &H200
 
         Friend Const CFM_PROTECTED As Integer = &H10
+
         ' (*)
         Friend Const CFM_REVAUTHOR As Integer = &H8000
 
         Friend Const CFM_REVISED As Integer = &H4000
+
         ' (*)
         Friend Const CFM_SHADOW As Integer = &H400
 
@@ -122,6 +133,7 @@ Namespace Controls
         Friend Const CFM_SMALLCAPS As Integer = &H40
         Friend Const CFM_SPACING As Integer = &H200000
         Friend Const CFM_STRIKEOUT As Integer = &H8
+
         ' (*)
         Friend Const CFM_STYLE As Integer = &H80000
 
@@ -129,12 +141,15 @@ Namespace Controls
         Friend Const CFM_SUPERSCRIPT As Integer = CFM_SUBSCRIPT
         Friend Const CFM_UNDERLINE As Integer = &H4
         Friend Const CFM_UNDERLINETYPE As Integer = &H800000
+
         ' Many displayed by 3.0
         Friend Const CFM_WEIGHT As Integer = &H400000
+
         Friend Const CFU_UNDERLINE As Byte = &H1
         Friend Const CFU_UNDERLINEDASH As Byte = &H5
         Friend Const CFU_UNDERLINEDASHDOT As Byte = &H6
         Friend Const CFU_UNDERLINEDASHDOTDOT As Byte = &H7
+
         ' (*) displayed as ordinary underline
         Friend Const CFU_UNDERLINEDOTTED As Byte = &H4
 
@@ -151,6 +166,7 @@ Namespace Controls
 #End Region
 
 #Region "Scrollbar position"
+
         Friend Const SB_HORZ As Integer = &H0
 
         Friend Const SB_VERT As Integer = &H1
@@ -182,7 +198,10 @@ Namespace Controls
         Public Function GetScrollInfo(hWnd As IntPtr,
         <MarshalAs(UnmanagedType.I4)> fnBar As SBOrientation,
         <MarshalAs(UnmanagedType.Struct)> ByRef lpsi As SCROLLINFO) As Integer
+#Disable Warning BC42353 ' Function 'GetScrollInfo' doesn't return a value on all code paths. Are you missing a 'Return' statement?
         End Function
+
+#Enable Warning BC42353 ' Function 'GetScrollInfo' doesn't return a value on all code paths. Are you missing a 'Return' statement?
 
         Structure SCROLLINFO
 
@@ -199,6 +218,7 @@ Namespace Controls
 #End Region
 
         End Structure
+
 #End Region
 
 #End Region

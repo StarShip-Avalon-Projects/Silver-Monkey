@@ -1,8 +1,11 @@
-Imports System.Reflection
 Imports System.IO
+Imports System.Reflection
 Imports System.Windows.Forms
-<CLSCompliant(True)>
-Public Class PluginServices
+
+''' <summary>
+'''
+''' </summary>
+Public NotInheritable Class PluginServices
 
 #Region "Public Fields"
 
@@ -94,7 +97,7 @@ Public Class PluginServices
 #End Region
 
 #Region "Public Classes"
-    <CLSCompliant(True)>
+
     Public Class AvailablePlugin
 
 #Region "Public Properties"
@@ -104,6 +107,7 @@ Public Class PluginServices
                 Return Library.Location
             End Get
         End Property
+
         Public Property ClassName As String
         Public Property Library As [Assembly]
 
@@ -119,6 +123,7 @@ Public Class PluginServices
             Return ClassName = var.ClassName
             Return False
         End Function
+
         Public Overrides Function GetHashCode() As Integer
             Return ClassName.GetHashCode()
         End Function

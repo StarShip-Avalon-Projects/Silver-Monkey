@@ -23,7 +23,9 @@ namespace SilverMonkey.BugTraqConnect.Libs
         private bool severityIsDefault;
         //TODO: add CPU profile detection.
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectReport.ProjectReport()'
         public ProjectReport()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectReport.ProjectReport()'
         {
             //TODO: Use Application Informational Version
             projectVersion = "2.19.x PreAlpha 6";

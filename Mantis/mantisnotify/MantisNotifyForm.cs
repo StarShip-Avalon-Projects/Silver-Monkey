@@ -142,78 +142,78 @@ namespace Futureware.MantisNotify
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // checkMantisTimer
-            // 
+            //
             this.checkMantisTimer.Interval = 10000;
             this.checkMantisTimer.Tick += new System.EventHandler(this.checkMantisTimer_Tick);
-            // 
+            //
             // urlTextBox
-            // 
+            //
             this.urlTextBox.Location = new System.Drawing.Point(333, 38);
             this.urlTextBox.Name = "urlTextBox";
             this.urlTextBox.Size = new System.Drawing.Size(977, 38);
             this.urlTextBox.TabIndex = 0;
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.Location = new System.Drawing.Point(42, 38);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(260, 38);
             this.label1.TabIndex = 1;
             this.label1.Text = "Mantis Connect Url";
-            // 
+            //
             // notifyIcon
-            // 
+            //
             this.notifyIcon.ContextMenu = this.contextMenu;
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
             this.notifyIcon.Text = "Mantis Notifier";
             this.notifyIcon.Visible = true;
-            // 
+            //
             // contextMenu
-            // 
+            //
             this.contextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.ShowLastIssueMenuItem,
             this.checkNowMenuItem,
             this.exitMenuItem});
-            // 
+            //
             // ShowLastIssueMenuItem
-            // 
+            //
             this.ShowLastIssueMenuItem.Index = 0;
             this.ShowLastIssueMenuItem.Text = "Show Last Issue";
             this.ShowLastIssueMenuItem.Click += new System.EventHandler(this.menuItem1_Click);
-            // 
+            //
             // checkNowMenuItem
-            // 
+            //
             this.checkNowMenuItem.Index = 1;
             this.checkNowMenuItem.Text = "Check Now";
             this.checkNowMenuItem.Click += new System.EventHandler(this.checkNowMenuItem_Click);
-            // 
+            //
             // exitMenuItem
-            // 
+            //
             this.exitMenuItem.Index = 2;
             this.exitMenuItem.Text = "Exit";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
-            // 
+            //
             // okButton
-            // 
+            //
             this.okButton.Location = new System.Drawing.Point(458, 515);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(195, 55);
             this.okButton.TabIndex = 1;
             this.okButton.Text = "OK";
-            // 
+            //
             // cancelButton
-            // 
+            //
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Location = new System.Drawing.Point(686, 515);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(195, 55);
             this.cancelButton.TabIndex = 0;
             this.cancelButton.Text = "Cancel";
-            // 
+            //
             // groupBox1
-            // 
+            //
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.mantisPasswordTextBox);
             this.groupBox1.Controls.Add(this.mantisUsernameTextBox);
@@ -224,39 +224,39 @@ namespace Futureware.MantisNotify
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Mantis Authentication";
-            // 
+            //
             // label3
-            // 
+            //
             this.label3.Location = new System.Drawing.Point(686, 76);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(260, 55);
             this.label3.TabIndex = 3;
             this.label3.Text = "Password";
-            // 
+            //
             // mantisPasswordTextBox
-            // 
+            //
             this.mantisPasswordTextBox.Location = new System.Drawing.Point(978, 76);
             this.mantisPasswordTextBox.Name = "mantisPasswordTextBox";
             this.mantisPasswordTextBox.Size = new System.Drawing.Size(260, 38);
             this.mantisPasswordTextBox.TabIndex = 2;
-            // 
+            //
             // mantisUsernameTextBox
-            // 
+            //
             this.mantisUsernameTextBox.Location = new System.Drawing.Point(250, 76);
             this.mantisUsernameTextBox.Name = "mantisUsernameTextBox";
             this.mantisUsernameTextBox.Size = new System.Drawing.Size(260, 38);
             this.mantisUsernameTextBox.TabIndex = 1;
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.Location = new System.Drawing.Point(42, 76);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(166, 55);
             this.label2.TabIndex = 0;
             this.label2.Text = "Username";
-            // 
+            //
             // groupBox2
-            // 
+            //
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.basicPasswordTextBox);
             this.groupBox2.Controls.Add(this.basicUsernameTextBox);
@@ -267,39 +267,39 @@ namespace Futureware.MantisNotify
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Basic Authentication";
-            // 
+            //
             // label4
-            // 
+            //
             this.label4.Location = new System.Drawing.Point(686, 76);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(260, 55);
             this.label4.TabIndex = 3;
             this.label4.Text = "Password";
-            // 
+            //
             // basicPasswordTextBox
-            // 
+            //
             this.basicPasswordTextBox.Location = new System.Drawing.Point(978, 76);
             this.basicPasswordTextBox.Name = "basicPasswordTextBox";
             this.basicPasswordTextBox.Size = new System.Drawing.Size(260, 38);
             this.basicPasswordTextBox.TabIndex = 2;
-            // 
+            //
             // basicUsernameTextBox
-            // 
+            //
             this.basicUsernameTextBox.Location = new System.Drawing.Point(250, 76);
             this.basicUsernameTextBox.Name = "basicUsernameTextBox";
             this.basicUsernameTextBox.Size = new System.Drawing.Size(260, 38);
             this.basicUsernameTextBox.TabIndex = 1;
-            // 
+            //
             // label5
-            // 
+            //
             this.label5.Location = new System.Drawing.Point(42, 76);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(166, 55);
             this.label5.TabIndex = 0;
             this.label5.Text = "Username";
-            // 
+            //
             // MantisNotifyForm
-            // 
+            //
             this.AcceptButton = this.okButton;
             this.AutoScaleBaseSize = new System.Drawing.Size(13, 31);
             this.CancelButton = this.cancelButton;
@@ -326,7 +326,6 @@ namespace Futureware.MantisNotify
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion Windows Form Designer generated code

@@ -1,6 +1,5 @@
 ﻿Imports Furcadia.Net
 Imports Furcadia.Net.Dream
-Imports MonkeyCore
 Imports SilverMonkeyEngine.Engine
 
 Namespace Interfaces
@@ -64,7 +63,7 @@ Namespace Interfaces
         End Sub
 
         Sub logError(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object) Implements Interfaces.ImsHost.logError
-            Dim Err As New ErrorLogging(Ex, ObjectThrowingError)
+
         End Sub
 
         Public Sub SendClientMessage(Tag As String, data As String) Implements Interfaces.ImsHost.SendClientMessage

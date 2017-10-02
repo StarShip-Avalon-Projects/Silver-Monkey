@@ -1,6 +1,5 @@
-﻿Imports Monkeyspeak
-Imports System.Windows.Forms
-
+﻿Imports System.Windows.Forms
+Imports Monkeyspeak
 
 Public Class SetVariables
     Inherits Form
@@ -45,6 +44,7 @@ Public Class SetVariables
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
     End Sub
+
     Private Sub SetVariables_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         MsPage = Main.FurcadiaSession.MSpage

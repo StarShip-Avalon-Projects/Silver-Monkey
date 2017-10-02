@@ -10,7 +10,10 @@ namespace DataMonkey
     {
         #region Public Constructors
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.StatementParser()'
+
         public StatementParser()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.StatementParser()'
         {
             // TODO: Add constructor logic here
         }
@@ -19,14 +22,20 @@ namespace DataMonkey
 
         #region Public Methods
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.ReturnResults(string, string, out string)'
+
         public static bool ReturnResults(string SQLStatement, string DatabaseLocation, out string message)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.ReturnResults(string, string, out string)'
         {
             DataSet ds = null;
 
             return ReturnResults(SQLStatement, DatabaseLocation, ref ds, out message);
         }
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.ReturnResults(string, string, ref DataSet, out string)'
+
         public static bool ReturnResults(string SQLStatement, string DatabaseLocation, ref DataSet ds, out string message)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.ReturnResults(string, string, ref DataSet, out string)'
         {
             //Add a call here to a parser that will
             //ensure the SQLStatement is properly formed

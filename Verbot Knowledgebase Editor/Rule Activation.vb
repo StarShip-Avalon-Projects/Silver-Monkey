@@ -1,6 +1,4 @@
-﻿Imports System.Windows.Forms
-
-Public Class Rule_Activation
+﻿Public Class Rule_Activation
 
 #Region "Private Methods"
 

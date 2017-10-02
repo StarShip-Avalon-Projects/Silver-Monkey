@@ -52,21 +52,26 @@ Public Class BotSetup
         Return Opt
     End Function
 
-    Public Sub setLogOptions()
-        Select Case bFile.LogOption
-            Case 0
-                RadioOverwriteLog.Checked = True
-                ChkBxTimeStampLog.Checked = False
-                ChkBxTimeStampLog.Enabled = False
-            Case 1
-                RadioNewFile.Checked = True
-                ChkBxTimeStampLog.Checked = False
-                ChkBxTimeStampLog.Enabled = True
-            Case 2
-                RadioNewFile.Checked = True
-                ChkBxTimeStampLog.Checked = True
-                ChkBxTimeStampLog.Enabled = True
-        End Select
+    ''' <summary>
+    ''' Configure Logging options
+    ''' </summary>
+    Public Sub SetLogOptions()
+        With bFile.LogOptions
+            Select Case .LogOption
+                Case 0
+                    RadioOverwriteLog.Checked = True
+                    ChkBxTimeStampLog.Checked = False
+                    ChkBxTimeStampLog.Enabled = False
+                Case 1
+                    RadioNewFile.Checked = True
+                    ChkBxTimeStampLog.Checked = False
+                    ChkBxTimeStampLog.Enabled = True
+                Case 2
+                    RadioNewFile.Checked = True
+                    ChkBxTimeStampLog.Checked = True
+                    ChkBxTimeStampLog.Enabled = True
+            End Select
+        End With
     End Sub
 
 #End Region
@@ -85,7 +90,7 @@ Public Class BotSetup
         StandAloneChkBx.Checked = bFile.Standalone
         ChkBxAutoConnect.Checked = bFile.AutoConnect
 
-        TxtBxDreamURL.Text = bFile.DreamURL
+        TxtBxDreamURL.Text = bFile.DreamLink.ToString
         Select Case bFile.GoMapIDX
             Case 1
                 RadioButton1.Checked = True
@@ -96,10 +101,12 @@ Public Class BotSetup
             Case 4
                 RadioButton4.Checked = True
         End Select
-        ChckSaveToLog.Checked = bFile.log
-        setLogOptions()
-        TxtBxLogName.Text = bFile.LogNameBase
-        TxtBxLogPath.Text = bFile.LogPath
+        With bFile.LogOptions
+            ChckSaveToLog.Checked = .log
+            SetLogOptions()
+            TxtBxLogName.Text = .LogNameBase
+            TxtBxLogPath.Text = .LogPath
+        End With
         ' Set the open tab
         TabControl1.SelectedIndex = _TabIndex
     End Sub
@@ -164,7 +171,7 @@ Public Class BotSetup
         bFile.Standalone = Convert.ToBoolean(StandAloneChkBx.Checked)
         bFile.AutoConnect = ChkBxAutoConnect.Checked
 
-        bFile.DreamURL = TxtBxDreamURL.Text
+        bFile.DreamLink = TxtBxDreamURL.Text
         If RadioButton1.Checked = True Then
             bFile.GoMapIDX = 1
         ElseIf RadioButton2.Checked = True Then
@@ -174,11 +181,12 @@ Public Class BotSetup
         ElseIf RadioButton4.Checked = True Then
             bFile.GoMapIDX = 4
         End If
-
-        bFile.LogOption = LogOption()
-        bFile.LogNameBase = TxtBxLogName.Text
-        bFile.LogPath = TxtBxLogPath.Text
-        bFile.log = ChckSaveToLog.Checked
+        With bFile.LogOptions
+            .LogOption = LogOption()
+            .LogNameBase = TxtBxLogName.Text
+            .LogPath = TxtBxLogPath.Text
+            .log = ChckSaveToLog.Checked
+        End With
 
         bFile.SaveBotSettings()
         Main.SaveRecentFile(bFile.DestinationFile)

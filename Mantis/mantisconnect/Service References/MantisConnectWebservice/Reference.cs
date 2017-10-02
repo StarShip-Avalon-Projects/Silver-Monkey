@@ -100,11 +100,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_priorities(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_priorities(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_priorities(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_priorities", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_prioritiesAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_prioritiesAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_prioritiesAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_severities", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -118,11 +122,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_severities(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_severities(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_severities(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_severities", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_severitiesAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_severitiesAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_severitiesAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_reproducibilitie" +
             "s", ReplyAction="*")]
@@ -137,12 +145,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_reproducibilities(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_reproducibilities(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_reproducibilities(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_reproducibilitie" +
             "s", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_reproducibilitiesAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_reproducibilitiesAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_reproducibilitiesAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_projections", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -156,11 +168,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_projections(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_projections(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_projections(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_projections", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_projectionsAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_projectionsAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_projectionsAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_etas", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -174,11 +190,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_etas(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_etas(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_etas(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_etas", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_etasAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_etasAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_etasAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_resolutions", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -192,11 +212,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_resolutions(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_resolutions(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_resolutions(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_resolutions", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_resolutionsAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_resolutionsAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_resolutionsAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_access_levels", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -210,11 +234,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_access_levels(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_access_levels(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_access_levels(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_access_levels", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_access_levelsAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_access_levelsAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_access_levelsAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_status", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -228,11 +256,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_status(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_status(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_status(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_status", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_statusAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_project_statusAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_statusAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_view_sta" +
             "tes", ReplyAction="*")]
@@ -247,12 +279,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_view_states(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_view_states(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_view_states(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_view_sta" +
             "tes", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_view_statesAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_project_view_statesAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_view_statesAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_view_states", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -266,11 +302,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_view_states(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_view_states(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_view_states(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_view_states", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_view_statesAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_view_statesAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_view_statesAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_custom_field_typ" +
             "es", ReplyAction="*")]
@@ -285,12 +325,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_custom_field_types(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_custom_field_types(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_custom_field_types(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_custom_field_typ" +
             "es", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_custom_field_typesAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_custom_field_typesAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_custom_field_typesAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_get", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -304,11 +348,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_get(string, string, string)'
         string mc_enum_get(string username, string password, string enumeration);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_get(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_get", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_getAsync(string, string, string)'
         System.Threading.Tasks.Task<string> mc_enum_getAsync(string username, string password, string enumeration);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_getAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_exists", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -322,11 +370,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_exists(string, string, string)'
         bool mc_issue_exists(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_exists(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_exists", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_existsAsync(string, string, string)'
         System.Threading.Tasks.Task<bool> mc_issue_existsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_existsAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -340,11 +392,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get(string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData mc_issue_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_getAsync(string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData> mc_issue_getAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_getAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -358,11 +414,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get(string, string, string[])'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_issues_get(string username, string password, string[] issue_ids);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get(string, string, string[])'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_getAsync(string, string, string[])'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_issues_getAsync(string username, string password, string[] issue_ids);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_getAsync(string, string, string[])'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get_header", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -376,11 +436,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get_header(string, string, string[])'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_issues_get_header(string username, string password, string[] issue_ids);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get_header(string, string, string[])'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get_header", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get_headerAsync(string, string, string[])'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_issues_get_headerAsync(string username, string password, string[] issue_ids);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get_headerAsync(string, string, string[])'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_history", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -394,11 +458,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_history(string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] mc_issue_get_history(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_history(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_history", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_historyAsync(string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[]> mc_issue_get_historyAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_historyAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_biggest_id", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -413,12 +481,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_biggest_id(string, string, string)'
         string mc_issue_get_biggest_id(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_biggest_id(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_biggest_id", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_biggest_idAsync(string, string, string)'
         System.Threading.Tasks.Task<string> mc_issue_get_biggest_idAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_biggest_idAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_id_from_sum" +
             "mary", ReplyAction="*")]
@@ -434,13 +506,17 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_id_from_summary(string, string, string)'
         string mc_issue_get_id_from_summary(string username, string password, string summary);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_id_from_summary(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_id_from_sum" +
             "mary", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_id_from_summaryAsync(string, string, string)'
         System.Threading.Tasks.Task<string> mc_issue_get_id_from_summaryAsync(string username, string password, string summary);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_id_from_summaryAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_add", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -455,12 +531,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_add(string, string, IssueData)'
         string mc_issue_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_add(string, string, IssueData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_add", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_addAsync(string, string, IssueData)'
         System.Threading.Tasks.Task<string> mc_issue_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_addAsync(string, string, IssueData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_update", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -474,11 +554,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_update(string, string, string, IssueData)'
         bool mc_issue_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_update(string, string, string, IssueData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_update", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_updateAsync(string, string, string, IssueData)'
         System.Threading.Tasks.Task<bool> mc_issue_updateAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_updateAsync(string, string, string, IssueData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_set_tags", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -492,11 +576,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_set_tags(string, string, string, TagData[])'
         bool mc_issue_set_tags(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_set_tags(string, string, string, TagData[])'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_set_tags", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_set_tagsAsync(string, string, string, TagData[])'
         System.Threading.Tasks.Task<bool> mc_issue_set_tagsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_set_tagsAsync(string, string, string, TagData[])'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_delete", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -510,11 +598,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_delete(string, string, string)'
         bool mc_issue_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_delete(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_delete", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_deleteAsync(string, string, string)'
         System.Threading.Tasks.Task<bool> mc_issue_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_deleteAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_add", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -529,12 +621,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_add(string, string, string, IssueNoteData)'
         string mc_issue_note_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_add(string, string, string, IssueNoteData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_add", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_addAsync(string, string, string, IssueNoteData)'
         System.Threading.Tasks.Task<string> mc_issue_note_addAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_addAsync(string, string, string, IssueNoteData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_delete", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -548,11 +644,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_delete(string, string, string)'
         bool mc_issue_note_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_note_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_delete(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_delete", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_deleteAsync(string, string, string)'
         System.Threading.Tasks.Task<bool> mc_issue_note_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_note_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_deleteAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_update", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -566,11 +666,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_update(string, string, IssueNoteData)'
         bool mc_issue_note_update(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_update(string, string, IssueNoteData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_update", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_updateAsync(string, string, IssueNoteData)'
         System.Threading.Tasks.Task<bool> mc_issue_note_updateAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_updateAsync(string, string, IssueNoteData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_ad" +
             "d", ReplyAction="*")]
@@ -586,13 +690,17 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_add(string, string, string, RelationshipData)'
         string mc_issue_relationship_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_add(string, string, string, RelationshipData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_ad" +
             "d", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_addAsync(string, string, string, RelationshipData)'
         System.Threading.Tasks.Task<string> mc_issue_relationship_addAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_addAsync(string, string, string, RelationshipData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_de" +
             "lete", ReplyAction="*")]
@@ -607,12 +715,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_delete(string, string, string, string)'
         bool mc_issue_relationship_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string relationship_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_delete(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_de" +
             "lete", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_deleteAsync(string, string, string, string)'
         System.Threading.Tasks.Task<bool> mc_issue_relationship_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string relationship_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_deleteAsync(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_add", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -627,12 +739,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_add(string, string, string, string, string, byte[])'
         string mc_issue_attachment_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, string name, string file_type, [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")] byte[] content);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_add(string, string, string, string, string, byte[])'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_add", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_addAsync(string, string, string, string, string, byte[])'
         System.Threading.Tasks.Task<string> mc_issue_attachment_addAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, string name, string file_type, [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")] byte[] content);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_addAsync(string, string, string, string, string, byte[])'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_dele" +
             "te", ReplyAction="*")]
@@ -647,12 +763,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_delete(string, string, string)'
         bool mc_issue_attachment_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_attachment_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_delete(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_dele" +
             "te", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_deleteAsync(string, string, string)'
         System.Threading.Tasks.Task<bool> mc_issue_attachment_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_attachment_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_deleteAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_get", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -667,12 +787,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_get(string, string, string)'
         byte[] mc_issue_attachment_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_attachment_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_get(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_get", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_getAsync(string, string, string)'
         System.Threading.Tasks.Task<byte[]> mc_issue_attachment_getAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_attachment_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_getAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -687,12 +811,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add(string, string, ProjectData)'
         string mc_project_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add(string, string, ProjectData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_addAsync(string, string, ProjectData)'
         System.Threading.Tasks.Task<string> mc_project_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_addAsync(string, string, ProjectData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -706,11 +834,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete(string, string, string)'
         bool mc_project_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_deleteAsync(string, string, string)'
         System.Threading.Tasks.Task<bool> mc_project_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_deleteAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_update", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -724,11 +856,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_update(string, string, string, ProjectData)'
         bool mc_project_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_update(string, string, string, ProjectData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_update", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_updateAsync(string, string, string, ProjectData)'
         System.Threading.Tasks.Task<bool> mc_project_updateAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_updateAsync(string, string, string, ProjectData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_id_from_n" +
             "ame", ReplyAction="*")]
@@ -744,13 +880,17 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_id_from_name(string, string, string)'
         string mc_project_get_id_from_name(string username, string password, string project_name);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_id_from_name(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_id_from_n" +
             "ame", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_id_from_nameAsync(string, string, string)'
         System.Threading.Tasks.Task<string> mc_project_get_id_from_nameAsync(string username, string password, string project_name);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_id_from_nameAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues_fo" +
             "r_user", ReplyAction="*")]
@@ -765,12 +905,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues_for_user(string, string, string, string, AccountData, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues_for_user(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues_for_user(string, string, string, string, AccountData, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues_fo" +
             "r_user", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues_for_userAsync(string, string, string, string, AccountData, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_project_get_issues_for_userAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues_for_userAsync(string, string, string, string, AccountData, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -784,11 +928,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues(string, string, string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues(string, string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issuesAsync(string, string, string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_project_get_issuesAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issuesAsync(string, string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issue_hea" +
             "ders", ReplyAction="*")]
@@ -803,12 +951,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issue_headers(string, string, string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_project_get_issue_headers(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issue_headers(string, string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issue_hea" +
             "ders", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issue_headersAsync(string, string, string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_project_get_issue_headersAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issue_headersAsync(string, string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_users", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -822,11 +974,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_users(string, string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] mc_project_get_users(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string access);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_users(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_users", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_usersAsync(string, string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[]> mc_project_get_usersAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string access);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_usersAsync(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_projects_get_user_acc" +
             "essible", ReplyAction="*")]
@@ -841,12 +997,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_projects_get_user_accessible(string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] mc_projects_get_user_accessible(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_projects_get_user_accessible(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_projects_get_user_acc" +
             "essible", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_projects_get_user_accessibleAsync(string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[]> mc_projects_get_user_accessibleAsync(string username, string password);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_projects_get_user_accessibleAsync(string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_categorie" +
             "s", ReplyAction="*")]
@@ -861,12 +1021,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_categories(string, string, string)'
         string[] mc_project_get_categories(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_categories(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_categorie" +
             "s", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_categoriesAsync(string, string, string)'
         System.Threading.Tasks.Task<string[]> mc_project_get_categoriesAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_categoriesAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add_category", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -881,12 +1045,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add_category(string, string, string, string)'
         string mc_project_add_category(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add_category(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add_category", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add_categoryAsync(string, string, string, string)'
         System.Threading.Tasks.Task<string> mc_project_add_categoryAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add_categoryAsync(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete_catego" +
             "ry", ReplyAction="*")]
@@ -902,13 +1070,17 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete_category(string, string, string, string)'
         string mc_project_delete_category(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete_category(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete_catego" +
             "ry", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete_categoryAsync(string, string, string, string)'
         System.Threading.Tasks.Task<string> mc_project_delete_categoryAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete_categoryAsync(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_rename_catego" +
             "ry_by_name", ReplyAction="*")]
@@ -924,13 +1096,17 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_rename_category_by_name(string, string, string, string, string, string)'
         string mc_project_rename_category_by_name(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name, string p_category_name_new, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string p_assigned_to);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_rename_category_by_name(string, string, string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_rename_catego" +
             "ry_by_name", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_rename_category_by_nameAsync(string, string, string, string, string, string)'
         System.Threading.Tasks.Task<string> mc_project_rename_category_by_nameAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name, string p_category_name_new, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string p_assigned_to);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_rename_category_by_nameAsync(string, string, string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_versions", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -944,11 +1120,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_versions(string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_versions(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_versions", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_versionsAsync(string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_versionsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_versionsAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_add", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -963,12 +1143,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_add(string, string, ProjectVersionData)'
         string mc_project_version_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_add(string, string, ProjectVersionData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_add", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_addAsync(string, string, ProjectVersionData)'
         System.Threading.Tasks.Task<string> mc_project_version_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_addAsync(string, string, ProjectVersionData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_updat" +
             "e", ReplyAction="*")]
@@ -983,12 +1167,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_update(string, string, string, ProjectVersionData)'
         bool mc_project_version_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_update(string, string, string, ProjectVersionData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_updat" +
             "e", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_updateAsync(string, string, string, ProjectVersionData)'
         System.Threading.Tasks.Task<bool> mc_project_version_updateAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_updateAsync(string, string, string, ProjectVersionData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_delet" +
             "e", ReplyAction="*")]
@@ -1003,12 +1191,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_delete(string, string, string)'
         bool mc_project_version_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_delete(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_delet" +
             "e", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_deleteAsync(string, string, string)'
         System.Threading.Tasks.Task<bool> mc_project_version_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_deleteAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_released_" +
             "versions", ReplyAction="*")]
@@ -1023,12 +1215,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_released_versions(string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_released_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_released_versions(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_released_" +
             "versions", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_released_versionsAsync(string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_released_versionsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_released_versionsAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_unrelease" +
             "d_versions", ReplyAction="*")]
@@ -1043,12 +1239,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_unreleased_versions(string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_unreleased_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_unreleased_versions(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_unrelease" +
             "d_versions", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_unreleased_versionsAsync(string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_unreleased_versionsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_unreleased_versionsAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_attachmen" +
             "ts", ReplyAction="*")]
@@ -1063,12 +1263,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_attachments(string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] mc_project_get_attachments(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_attachments(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_attachmen" +
             "ts", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_attachmentsAsync(string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[]> mc_project_get_attachmentsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_attachmentsAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_custom_fi" +
             "elds", ReplyAction="*")]
@@ -1083,12 +1287,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_custom_fields(string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] mc_project_get_custom_fields(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_custom_fields(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_custom_fi" +
             "elds", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_custom_fieldsAsync(string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[]> mc_project_get_custom_fieldsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_custom_fieldsAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_ge" +
             "t", ReplyAction="*")]
@@ -1104,13 +1312,17 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_get(string, string, string)'
         byte[] mc_project_attachment_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_attachment_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_get(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_ge" +
             "t", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_getAsync(string, string, string)'
         System.Threading.Tasks.Task<byte[]> mc_project_attachment_getAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_attachment_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_getAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_ad" +
             "d", ReplyAction="*")]
@@ -1126,13 +1338,17 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_add(string, string, string, string, string, string, string, byte[])'
         string mc_project_attachment_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string name, string title, string description, string file_type, [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")] byte[] content);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_add(string, string, string, string, string, string, string, byte[])'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_ad" +
             "d", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_addAsync(string, string, string, string, string, string, string, byte[])'
         System.Threading.Tasks.Task<string> mc_project_attachment_addAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string name, string title, string description, string file_type, [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")] byte[] content);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_addAsync(string, string, string, string, string, string, string, byte[])'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_de" +
             "lete", ReplyAction="*")]
@@ -1147,12 +1363,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_delete(string, string, string)'
         bool mc_project_attachment_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_attachment_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_delete(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_de" +
             "lete", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_deleteAsync(string, string, string)'
         System.Threading.Tasks.Task<bool> mc_project_attachment_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_attachment_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_deleteAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_all_subpr" +
             "ojects", ReplyAction="*")]
@@ -1167,12 +1387,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_all_subprojects(string, string, string)'
         string[] mc_project_get_all_subprojects(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_all_subprojects(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_all_subpr" +
             "ojects", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_all_subprojectsAsync(string, string, string)'
         System.Threading.Tasks.Task<string[]> mc_project_get_all_subprojectsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_all_subprojectsAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1186,11 +1410,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get(string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] mc_filter_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_getAsync(string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[]> mc_filter_getAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_getAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issues", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1204,11 +1432,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issues(string, string, string, string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_filter_get_issues(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issues(string, string, string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issues", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issuesAsync(string, string, string, string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_filter_get_issuesAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issuesAsync(string, string, string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issue_head" +
             "ers", ReplyAction="*")]
@@ -1223,12 +1455,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issue_headers(string, string, string, string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_get_issue_headers(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issue_headers(string, string, string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issue_head" +
             "ers", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issue_headersAsync(string, string, string, string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_filter_get_issue_headersAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issue_headersAsync(string, string, string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_h" +
             "eaders", ReplyAction="*")]
@@ -1243,12 +1479,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_headers(string, string, FilterSearchData, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_search_issue_headers(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_headers(string, string, FilterSearchData, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_h" +
             "eaders", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_headersAsync(string, string, FilterSearchData, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_filter_search_issue_headersAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_headersAsync(string, string, FilterSearchData, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issues", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1262,11 +1502,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issues(string, string, FilterSearchData, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_filter_search_issues(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issues(string, string, FilterSearchData, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issues", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issuesAsync(string, string, FilterSearchData, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_filter_search_issuesAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issuesAsync(string, string, FilterSearchData, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_i" +
             "ds", ReplyAction="*")]
@@ -1281,12 +1525,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_ids(string, string, FilterSearchData, string, string)'
         string[] mc_filter_search_issue_ids(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_ids(string, string, FilterSearchData, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_i" +
             "ds", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_idsAsync(string, string, FilterSearchData, string, string)'
         System.Threading.Tasks.Task<string[]> mc_filter_search_issue_idsAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_idsAsync(string, string, FilterSearchData, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_config_get_string", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1300,11 +1548,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_config_get_string(string, string, string)'
         string mc_config_get_string(string username, string password, string config_var);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_config_get_string(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_config_get_string", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_config_get_stringAsync(string, string, string)'
         System.Threading.Tasks.Task<string> mc_config_get_stringAsync(string username, string password, string config_var);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_config_get_stringAsync(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_checkin", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1318,11 +1570,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_checkin(string, string, string, string, bool)'
         bool mc_issue_checkin(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, string comment, bool @fixed);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_checkin(string, string, string, string, bool)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_checkin", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_checkinAsync(string, string, string, string, bool)'
         System.Threading.Tasks.Task<bool> mc_issue_checkinAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, string comment, bool @fixed);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_checkinAsync(string, string, string, string, bool)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_pref_get_pref", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1336,11 +1592,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_pref_get_pref(string, string, string, string)'
         string mc_user_pref_get_pref(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string pref_name);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_pref_get_pref(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_pref_get_pref", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_pref_get_prefAsync(string, string, string, string)'
         System.Threading.Tasks.Task<string> mc_user_pref_get_prefAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string pref_name);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_pref_get_prefAsync(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_profiles_get_all" +
             "", ReplyAction="*")]
@@ -1355,12 +1615,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_profiles_get_all(string, string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult mc_user_profiles_get_all(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_profiles_get_all(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_profiles_get_all" +
             "", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_profiles_get_allAsync(string, string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult> mc_user_profiles_get_allAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_profiles_get_allAsync(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_get_all", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1374,11 +1638,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_get_all(string, string, string, string)'
         SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult mc_tag_get_all(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_get_all(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_get_all", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_get_allAsync(string, string, string, string)'
         System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult> mc_tag_get_allAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_get_allAsync(string, string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_add", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1393,12 +1661,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_add(string, string, TagData)'
         string mc_tag_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_add(string, string, TagData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_add", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
         [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_addAsync(string, string, TagData)'
         System.Threading.Tasks.Task<string> mc_tag_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_addAsync(string, string, TagData)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_delete", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -1412,11 +1684,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_delete(string, string, string)'
         bool mc_tag_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string tag_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_delete(string, string, string)'
         
         [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_delete", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_deleteAsync(string, string, string)'
         System.Threading.Tasks.Task<bool> mc_tag_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string tag_id);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_deleteAsync(string, string, string)'
     }
     
     /// <remarks/>
@@ -1467,9 +1743,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'UserData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'UserData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'UserData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'UserData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -1538,9 +1818,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AccountData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AccountData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AccountData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AccountData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -1583,9 +1867,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'TagDataSearchResult.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'TagDataSearchResult.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'TagDataSearchResult.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'TagDataSearchResult.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -1708,9 +1996,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'TagData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'TagData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'TagData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'TagData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -1805,9 +2097,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProfileData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProfileData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProfileData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProfileData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -1850,9 +2146,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProfileDataSearchResult.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProfileDataSearchResult.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProfileDataSearchResult.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProfileDataSearchResult.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -1894,9 +2194,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterCustomField.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterCustomField.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterCustomField.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterCustomField.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -1939,9 +2243,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ObjectRef.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ObjectRef.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ObjectRef.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ObjectRef.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -2380,9 +2688,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterSearchData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterSearchData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterSearchData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterSearchData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -2505,9 +2817,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -2888,9 +3204,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldDefinitionData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldDefinitionData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldDefinitionData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldDefinitionData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3041,9 +3361,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectAttachmentData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectAttachmentData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectAttachmentData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectAttachmentData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3194,9 +3518,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectVersionData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectVersionData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectVersionData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectVersionData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3371,9 +3699,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3483,9 +3815,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'HistoryData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'HistoryData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'HistoryData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'HistoryData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3694,9 +4030,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueHeaderData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueHeaderData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueHeaderData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueHeaderData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3738,9 +4078,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldValueForIssueData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldValueForIssueData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldValueForIssueData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldValueForIssueData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3904,9 +4248,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueNoteData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueNoteData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueNoteData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueNoteData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3963,9 +4311,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RelationshipData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RelationshipData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RelationshipData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RelationshipData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -4090,9 +4442,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AttachmentData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AttachmentData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AttachmentData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AttachmentData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -4621,9 +4977,13 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueData.PropertyChanged'
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -4977,427 +5337,639 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             return base.Channel.mc_issue_get(username, password, issue_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_getAsync(string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData> mc_issue_getAsync(string username, string password, string issue_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_getAsync(string, string, string)'
             return base.Channel.mc_issue_getAsync(username, password, issue_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get(string, string, string[])'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_issues_get(string username, string password, string[] issue_ids) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get(string, string, string[])'
             return base.Channel.mc_issues_get(username, password, issue_ids);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_getAsync(string, string, string[])'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_issues_getAsync(string username, string password, string[] issue_ids) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_getAsync(string, string, string[])'
             return base.Channel.mc_issues_getAsync(username, password, issue_ids);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get_header(string, string, string[])'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_issues_get_header(string username, string password, string[] issue_ids) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get_header(string, string, string[])'
             return base.Channel.mc_issues_get_header(username, password, issue_ids);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get_headerAsync(string, string, string[])'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_issues_get_headerAsync(string username, string password, string[] issue_ids) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get_headerAsync(string, string, string[])'
             return base.Channel.mc_issues_get_headerAsync(username, password, issue_ids);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_history(string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] mc_issue_get_history(string username, string password, string issue_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_history(string, string, string)'
             return base.Channel.mc_issue_get_history(username, password, issue_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_historyAsync(string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[]> mc_issue_get_historyAsync(string username, string password, string issue_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_historyAsync(string, string, string)'
             return base.Channel.mc_issue_get_historyAsync(username, password, issue_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_biggest_id(string, string, string)'
         public string mc_issue_get_biggest_id(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_biggest_id(string, string, string)'
             return base.Channel.mc_issue_get_biggest_id(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_biggest_idAsync(string, string, string)'
         public System.Threading.Tasks.Task<string> mc_issue_get_biggest_idAsync(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_biggest_idAsync(string, string, string)'
             return base.Channel.mc_issue_get_biggest_idAsync(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_id_from_summary(string, string, string)'
         public string mc_issue_get_id_from_summary(string username, string password, string summary) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_id_from_summary(string, string, string)'
             return base.Channel.mc_issue_get_id_from_summary(username, password, summary);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_id_from_summaryAsync(string, string, string)'
         public System.Threading.Tasks.Task<string> mc_issue_get_id_from_summaryAsync(string username, string password, string summary) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_id_from_summaryAsync(string, string, string)'
             return base.Channel.mc_issue_get_id_from_summaryAsync(username, password, summary);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_add(string, string, IssueData)'
         public string mc_issue_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_add(string, string, IssueData)'
             return base.Channel.mc_issue_add(username, password, issue);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_addAsync(string, string, IssueData)'
         public System.Threading.Tasks.Task<string> mc_issue_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_addAsync(string, string, IssueData)'
             return base.Channel.mc_issue_addAsync(username, password, issue);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_update(string, string, string, IssueData)'
         public bool mc_issue_update(string username, string password, string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_update(string, string, string, IssueData)'
             return base.Channel.mc_issue_update(username, password, issueId, issue);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_updateAsync(string, string, string, IssueData)'
         public System.Threading.Tasks.Task<bool> mc_issue_updateAsync(string username, string password, string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_updateAsync(string, string, string, IssueData)'
             return base.Channel.mc_issue_updateAsync(username, password, issueId, issue);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_set_tags(string, string, string, TagData[])'
         public bool mc_issue_set_tags(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_set_tags(string, string, string, TagData[])'
             return base.Channel.mc_issue_set_tags(username, password, issue_id, tags);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_set_tagsAsync(string, string, string, TagData[])'
         public System.Threading.Tasks.Task<bool> mc_issue_set_tagsAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_set_tagsAsync(string, string, string, TagData[])'
             return base.Channel.mc_issue_set_tagsAsync(username, password, issue_id, tags);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_delete(string, string, string)'
         public bool mc_issue_delete(string username, string password, string issue_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_delete(string, string, string)'
             return base.Channel.mc_issue_delete(username, password, issue_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_deleteAsync(string, string, string)'
         public System.Threading.Tasks.Task<bool> mc_issue_deleteAsync(string username, string password, string issue_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_deleteAsync(string, string, string)'
             return base.Channel.mc_issue_deleteAsync(username, password, issue_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_add(string, string, string, IssueNoteData)'
         public string mc_issue_note_add(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_add(string, string, string, IssueNoteData)'
             return base.Channel.mc_issue_note_add(username, password, issue_id, note);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_addAsync(string, string, string, IssueNoteData)'
         public System.Threading.Tasks.Task<string> mc_issue_note_addAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_addAsync(string, string, string, IssueNoteData)'
             return base.Channel.mc_issue_note_addAsync(username, password, issue_id, note);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_delete(string, string, string)'
         public bool mc_issue_note_delete(string username, string password, string issue_note_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_delete(string, string, string)'
             return base.Channel.mc_issue_note_delete(username, password, issue_note_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_deleteAsync(string, string, string)'
         public System.Threading.Tasks.Task<bool> mc_issue_note_deleteAsync(string username, string password, string issue_note_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_deleteAsync(string, string, string)'
             return base.Channel.mc_issue_note_deleteAsync(username, password, issue_note_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_update(string, string, IssueNoteData)'
         public bool mc_issue_note_update(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_update(string, string, IssueNoteData)'
             return base.Channel.mc_issue_note_update(username, password, note);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_updateAsync(string, string, IssueNoteData)'
         public System.Threading.Tasks.Task<bool> mc_issue_note_updateAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_updateAsync(string, string, IssueNoteData)'
             return base.Channel.mc_issue_note_updateAsync(username, password, note);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_add(string, string, string, RelationshipData)'
         public string mc_issue_relationship_add(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_add(string, string, string, RelationshipData)'
             return base.Channel.mc_issue_relationship_add(username, password, issue_id, relationship);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_addAsync(string, string, string, RelationshipData)'
         public System.Threading.Tasks.Task<string> mc_issue_relationship_addAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_addAsync(string, string, string, RelationshipData)'
             return base.Channel.mc_issue_relationship_addAsync(username, password, issue_id, relationship);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_delete(string, string, string, string)'
         public bool mc_issue_relationship_delete(string username, string password, string issue_id, string relationship_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_delete(string, string, string, string)'
             return base.Channel.mc_issue_relationship_delete(username, password, issue_id, relationship_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_deleteAsync(string, string, string, string)'
         public System.Threading.Tasks.Task<bool> mc_issue_relationship_deleteAsync(string username, string password, string issue_id, string relationship_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_deleteAsync(string, string, string, string)'
             return base.Channel.mc_issue_relationship_deleteAsync(username, password, issue_id, relationship_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_add(string, string, string, string, string, byte[])'
         public string mc_issue_attachment_add(string username, string password, string issue_id, string name, string file_type, byte[] content) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_add(string, string, string, string, string, byte[])'
             return base.Channel.mc_issue_attachment_add(username, password, issue_id, name, file_type, content);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_addAsync(string, string, string, string, string, byte[])'
         public System.Threading.Tasks.Task<string> mc_issue_attachment_addAsync(string username, string password, string issue_id, string name, string file_type, byte[] content) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_addAsync(string, string, string, string, string, byte[])'
             return base.Channel.mc_issue_attachment_addAsync(username, password, issue_id, name, file_type, content);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_delete(string, string, string)'
         public bool mc_issue_attachment_delete(string username, string password, string issue_attachment_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_delete(string, string, string)'
             return base.Channel.mc_issue_attachment_delete(username, password, issue_attachment_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_deleteAsync(string, string, string)'
         public System.Threading.Tasks.Task<bool> mc_issue_attachment_deleteAsync(string username, string password, string issue_attachment_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_deleteAsync(string, string, string)'
             return base.Channel.mc_issue_attachment_deleteAsync(username, password, issue_attachment_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_get(string, string, string)'
         public byte[] mc_issue_attachment_get(string username, string password, string issue_attachment_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_get(string, string, string)'
             return base.Channel.mc_issue_attachment_get(username, password, issue_attachment_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_getAsync(string, string, string)'
         public System.Threading.Tasks.Task<byte[]> mc_issue_attachment_getAsync(string username, string password, string issue_attachment_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_getAsync(string, string, string)'
             return base.Channel.mc_issue_attachment_getAsync(username, password, issue_attachment_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add(string, string, ProjectData)'
         public string mc_project_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add(string, string, ProjectData)'
             return base.Channel.mc_project_add(username, password, project);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_addAsync(string, string, ProjectData)'
         public System.Threading.Tasks.Task<string> mc_project_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_addAsync(string, string, ProjectData)'
             return base.Channel.mc_project_addAsync(username, password, project);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete(string, string, string)'
         public bool mc_project_delete(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete(string, string, string)'
             return base.Channel.mc_project_delete(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_deleteAsync(string, string, string)'
         public System.Threading.Tasks.Task<bool> mc_project_deleteAsync(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_deleteAsync(string, string, string)'
             return base.Channel.mc_project_deleteAsync(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_update(string, string, string, ProjectData)'
         public bool mc_project_update(string username, string password, string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_update(string, string, string, ProjectData)'
             return base.Channel.mc_project_update(username, password, project_id, project);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_updateAsync(string, string, string, ProjectData)'
         public System.Threading.Tasks.Task<bool> mc_project_updateAsync(string username, string password, string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_updateAsync(string, string, string, ProjectData)'
             return base.Channel.mc_project_updateAsync(username, password, project_id, project);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_id_from_name(string, string, string)'
         public string mc_project_get_id_from_name(string username, string password, string project_name) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_id_from_name(string, string, string)'
             return base.Channel.mc_project_get_id_from_name(username, password, project_name);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_id_from_nameAsync(string, string, string)'
         public System.Threading.Tasks.Task<string> mc_project_get_id_from_nameAsync(string username, string password, string project_name) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_id_from_nameAsync(string, string, string)'
             return base.Channel.mc_project_get_id_from_nameAsync(username, password, project_name);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues_for_user(string, string, string, string, AccountData, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues_for_user(string username, string password, string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues_for_user(string, string, string, string, AccountData, string, string)'
             return base.Channel.mc_project_get_issues_for_user(username, password, project_id, filter_type, target_user, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues_for_userAsync(string, string, string, string, AccountData, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_project_get_issues_for_userAsync(string username, string password, string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues_for_userAsync(string, string, string, string, AccountData, string, string)'
             return base.Channel.mc_project_get_issues_for_userAsync(username, password, project_id, filter_type, target_user, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues(string, string, string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues(string username, string password, string project_id, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues(string, string, string, string, string)'
             return base.Channel.mc_project_get_issues(username, password, project_id, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issuesAsync(string, string, string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_project_get_issuesAsync(string username, string password, string project_id, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issuesAsync(string, string, string, string, string)'
             return base.Channel.mc_project_get_issuesAsync(username, password, project_id, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issue_headers(string, string, string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_project_get_issue_headers(string username, string password, string project_id, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issue_headers(string, string, string, string, string)'
             return base.Channel.mc_project_get_issue_headers(username, password, project_id, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issue_headersAsync(string, string, string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_project_get_issue_headersAsync(string username, string password, string project_id, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issue_headersAsync(string, string, string, string, string)'
             return base.Channel.mc_project_get_issue_headersAsync(username, password, project_id, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_users(string, string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] mc_project_get_users(string username, string password, string project_id, string access) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_users(string, string, string, string)'
             return base.Channel.mc_project_get_users(username, password, project_id, access);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_usersAsync(string, string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[]> mc_project_get_usersAsync(string username, string password, string project_id, string access) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_usersAsync(string, string, string, string)'
             return base.Channel.mc_project_get_usersAsync(username, password, project_id, access);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_projects_get_user_accessible(string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] mc_projects_get_user_accessible(string username, string password) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_projects_get_user_accessible(string, string)'
             return base.Channel.mc_projects_get_user_accessible(username, password);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_projects_get_user_accessibleAsync(string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[]> mc_projects_get_user_accessibleAsync(string username, string password) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_projects_get_user_accessibleAsync(string, string)'
             return base.Channel.mc_projects_get_user_accessibleAsync(username, password);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_categories(string, string, string)'
         public string[] mc_project_get_categories(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_categories(string, string, string)'
             return base.Channel.mc_project_get_categories(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_categoriesAsync(string, string, string)'
         public System.Threading.Tasks.Task<string[]> mc_project_get_categoriesAsync(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_categoriesAsync(string, string, string)'
             return base.Channel.mc_project_get_categoriesAsync(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add_category(string, string, string, string)'
         public string mc_project_add_category(string username, string password, string project_id, string p_category_name) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add_category(string, string, string, string)'
             return base.Channel.mc_project_add_category(username, password, project_id, p_category_name);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add_categoryAsync(string, string, string, string)'
         public System.Threading.Tasks.Task<string> mc_project_add_categoryAsync(string username, string password, string project_id, string p_category_name) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add_categoryAsync(string, string, string, string)'
             return base.Channel.mc_project_add_categoryAsync(username, password, project_id, p_category_name);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete_category(string, string, string, string)'
         public string mc_project_delete_category(string username, string password, string project_id, string p_category_name) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete_category(string, string, string, string)'
             return base.Channel.mc_project_delete_category(username, password, project_id, p_category_name);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete_categoryAsync(string, string, string, string)'
         public System.Threading.Tasks.Task<string> mc_project_delete_categoryAsync(string username, string password, string project_id, string p_category_name) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete_categoryAsync(string, string, string, string)'
             return base.Channel.mc_project_delete_categoryAsync(username, password, project_id, p_category_name);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_rename_category_by_name(string, string, string, string, string, string)'
         public string mc_project_rename_category_by_name(string username, string password, string project_id, string p_category_name, string p_category_name_new, string p_assigned_to) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_rename_category_by_name(string, string, string, string, string, string)'
             return base.Channel.mc_project_rename_category_by_name(username, password, project_id, p_category_name, p_category_name_new, p_assigned_to);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_rename_category_by_nameAsync(string, string, string, string, string, string)'
         public System.Threading.Tasks.Task<string> mc_project_rename_category_by_nameAsync(string username, string password, string project_id, string p_category_name, string p_category_name_new, string p_assigned_to) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_rename_category_by_nameAsync(string, string, string, string, string, string)'
             return base.Channel.mc_project_rename_category_by_nameAsync(username, password, project_id, p_category_name, p_category_name_new, p_assigned_to);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_versions(string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_versions(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_versions(string, string, string)'
             return base.Channel.mc_project_get_versions(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_versionsAsync(string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_versionsAsync(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_versionsAsync(string, string, string)'
             return base.Channel.mc_project_get_versionsAsync(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_add(string, string, ProjectVersionData)'
         public string mc_project_version_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_add(string, string, ProjectVersionData)'
             return base.Channel.mc_project_version_add(username, password, version);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_addAsync(string, string, ProjectVersionData)'
         public System.Threading.Tasks.Task<string> mc_project_version_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_addAsync(string, string, ProjectVersionData)'
             return base.Channel.mc_project_version_addAsync(username, password, version);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_update(string, string, string, ProjectVersionData)'
         public bool mc_project_version_update(string username, string password, string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_update(string, string, string, ProjectVersionData)'
             return base.Channel.mc_project_version_update(username, password, version_id, version);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_updateAsync(string, string, string, ProjectVersionData)'
         public System.Threading.Tasks.Task<bool> mc_project_version_updateAsync(string username, string password, string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_updateAsync(string, string, string, ProjectVersionData)'
             return base.Channel.mc_project_version_updateAsync(username, password, version_id, version);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_delete(string, string, string)'
         public bool mc_project_version_delete(string username, string password, string version_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_delete(string, string, string)'
             return base.Channel.mc_project_version_delete(username, password, version_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_deleteAsync(string, string, string)'
         public System.Threading.Tasks.Task<bool> mc_project_version_deleteAsync(string username, string password, string version_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_deleteAsync(string, string, string)'
             return base.Channel.mc_project_version_deleteAsync(username, password, version_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_released_versions(string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_released_versions(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_released_versions(string, string, string)'
             return base.Channel.mc_project_get_released_versions(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_released_versionsAsync(string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_released_versionsAsync(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_released_versionsAsync(string, string, string)'
             return base.Channel.mc_project_get_released_versionsAsync(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_unreleased_versions(string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_unreleased_versions(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_unreleased_versions(string, string, string)'
             return base.Channel.mc_project_get_unreleased_versions(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_unreleased_versionsAsync(string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_unreleased_versionsAsync(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_unreleased_versionsAsync(string, string, string)'
             return base.Channel.mc_project_get_unreleased_versionsAsync(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_attachments(string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] mc_project_get_attachments(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_attachments(string, string, string)'
             return base.Channel.mc_project_get_attachments(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_attachmentsAsync(string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[]> mc_project_get_attachmentsAsync(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_attachmentsAsync(string, string, string)'
             return base.Channel.mc_project_get_attachmentsAsync(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_custom_fields(string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] mc_project_get_custom_fields(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_custom_fields(string, string, string)'
             return base.Channel.mc_project_get_custom_fields(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_custom_fieldsAsync(string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[]> mc_project_get_custom_fieldsAsync(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_custom_fieldsAsync(string, string, string)'
             return base.Channel.mc_project_get_custom_fieldsAsync(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_get(string, string, string)'
         public byte[] mc_project_attachment_get(string username, string password, string project_attachment_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_get(string, string, string)'
             return base.Channel.mc_project_attachment_get(username, password, project_attachment_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_getAsync(string, string, string)'
         public System.Threading.Tasks.Task<byte[]> mc_project_attachment_getAsync(string username, string password, string project_attachment_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_getAsync(string, string, string)'
             return base.Channel.mc_project_attachment_getAsync(username, password, project_attachment_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_add(string, string, string, string, string, string, string, byte[])'
         public string mc_project_attachment_add(string username, string password, string project_id, string name, string title, string description, string file_type, byte[] content) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_add(string, string, string, string, string, string, string, byte[])'
             return base.Channel.mc_project_attachment_add(username, password, project_id, name, title, description, file_type, content);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_addAsync(string, string, string, string, string, string, string, byte[])'
         public System.Threading.Tasks.Task<string> mc_project_attachment_addAsync(string username, string password, string project_id, string name, string title, string description, string file_type, byte[] content) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_addAsync(string, string, string, string, string, string, string, byte[])'
             return base.Channel.mc_project_attachment_addAsync(username, password, project_id, name, title, description, file_type, content);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_delete(string, string, string)'
         public bool mc_project_attachment_delete(string username, string password, string project_attachment_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_delete(string, string, string)'
             return base.Channel.mc_project_attachment_delete(username, password, project_attachment_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_deleteAsync(string, string, string)'
         public System.Threading.Tasks.Task<bool> mc_project_attachment_deleteAsync(string username, string password, string project_attachment_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_deleteAsync(string, string, string)'
             return base.Channel.mc_project_attachment_deleteAsync(username, password, project_attachment_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_all_subprojects(string, string, string)'
         public string[] mc_project_get_all_subprojects(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_all_subprojects(string, string, string)'
             return base.Channel.mc_project_get_all_subprojects(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_all_subprojectsAsync(string, string, string)'
         public System.Threading.Tasks.Task<string[]> mc_project_get_all_subprojectsAsync(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_all_subprojectsAsync(string, string, string)'
             return base.Channel.mc_project_get_all_subprojectsAsync(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get(string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] mc_filter_get(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get(string, string, string)'
             return base.Channel.mc_filter_get(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_getAsync(string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[]> mc_filter_getAsync(string username, string password, string project_id) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_getAsync(string, string, string)'
             return base.Channel.mc_filter_getAsync(username, password, project_id);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issues(string, string, string, string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_filter_get_issues(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issues(string, string, string, string, string, string)'
             return base.Channel.mc_filter_get_issues(username, password, project_id, filter_id, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issuesAsync(string, string, string, string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_filter_get_issuesAsync(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issuesAsync(string, string, string, string, string, string)'
             return base.Channel.mc_filter_get_issuesAsync(username, password, project_id, filter_id, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issue_headers(string, string, string, string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_get_issue_headers(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issue_headers(string, string, string, string, string, string)'
             return base.Channel.mc_filter_get_issue_headers(username, password, project_id, filter_id, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issue_headersAsync(string, string, string, string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_filter_get_issue_headersAsync(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issue_headersAsync(string, string, string, string, string, string)'
             return base.Channel.mc_filter_get_issue_headersAsync(username, password, project_id, filter_id, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_headers(string, string, FilterSearchData, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_search_issue_headers(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_headers(string, string, FilterSearchData, string, string)'
             return base.Channel.mc_filter_search_issue_headers(username, password, filter, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_headersAsync(string, string, FilterSearchData, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_filter_search_issue_headersAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_headersAsync(string, string, FilterSearchData, string, string)'
             return base.Channel.mc_filter_search_issue_headersAsync(username, password, filter, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issues(string, string, FilterSearchData, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_filter_search_issues(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issues(string, string, FilterSearchData, string, string)'
             return base.Channel.mc_filter_search_issues(username, password, filter, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issuesAsync(string, string, FilterSearchData, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_filter_search_issuesAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issuesAsync(string, string, FilterSearchData, string, string)'
             return base.Channel.mc_filter_search_issuesAsync(username, password, filter, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_ids(string, string, FilterSearchData, string, string)'
         public string[] mc_filter_search_issue_ids(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_ids(string, string, FilterSearchData, string, string)'
             return base.Channel.mc_filter_search_issue_ids(username, password, filter, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_idsAsync(string, string, FilterSearchData, string, string)'
         public System.Threading.Tasks.Task<string[]> mc_filter_search_issue_idsAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_idsAsync(string, string, FilterSearchData, string, string)'
             return base.Channel.mc_filter_search_issue_idsAsync(username, password, filter, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_config_get_string(string, string, string)'
         public string mc_config_get_string(string username, string password, string config_var) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_config_get_string(string, string, string)'
             return base.Channel.mc_config_get_string(username, password, config_var);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_config_get_stringAsync(string, string, string)'
         public System.Threading.Tasks.Task<string> mc_config_get_stringAsync(string username, string password, string config_var) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_config_get_stringAsync(string, string, string)'
             return base.Channel.mc_config_get_stringAsync(username, password, config_var);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_checkin(string, string, string, string, bool)'
         public bool mc_issue_checkin(string username, string password, string issue_id, string comment, bool @fixed) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_checkin(string, string, string, string, bool)'
             return base.Channel.mc_issue_checkin(username, password, issue_id, comment, @fixed);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_checkinAsync(string, string, string, string, bool)'
         public System.Threading.Tasks.Task<bool> mc_issue_checkinAsync(string username, string password, string issue_id, string comment, bool @fixed) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_checkinAsync(string, string, string, string, bool)'
             return base.Channel.mc_issue_checkinAsync(username, password, issue_id, comment, @fixed);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_pref_get_pref(string, string, string, string)'
         public string mc_user_pref_get_pref(string username, string password, string project_id, string pref_name) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_pref_get_pref(string, string, string, string)'
             return base.Channel.mc_user_pref_get_pref(username, password, project_id, pref_name);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_pref_get_prefAsync(string, string, string, string)'
         public System.Threading.Tasks.Task<string> mc_user_pref_get_prefAsync(string username, string password, string project_id, string pref_name) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_pref_get_prefAsync(string, string, string, string)'
             return base.Channel.mc_user_pref_get_prefAsync(username, password, project_id, pref_name);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_profiles_get_all(string, string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult mc_user_profiles_get_all(string username, string password, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_profiles_get_all(string, string, string, string)'
             return base.Channel.mc_user_profiles_get_all(username, password, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_profiles_get_allAsync(string, string, string, string)'
         public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult> mc_user_profiles_get_allAsync(string username, string password, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_profiles_get_allAsync(string, string, string, string)'
             return base.Channel.mc_user_profiles_get_allAsync(username, password, page_number, per_page);
         }
         
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_tag_get_all(string, string, string, string)'
         public SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult mc_tag_get_all(string username, string password, string page_number, string per_page) {
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_tag_get_all(string, string, string, string)'
             return base.Channel.mc_tag_get_all(username, password, page_number, per_page);
         }
         /// <summary>

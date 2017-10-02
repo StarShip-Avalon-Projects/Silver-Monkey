@@ -1,4 +1,5 @@
 ﻿Module CompilerServices
+
     <Runtime.CompilerServices.Extension()>
     Public Function IsInteger(ByVal value As Object) As Boolean
         If String.IsNullOrEmpty(value.ToString) Then
@@ -16,4 +17,5 @@
             Return 0
         End If
     End Function
+
 End Module

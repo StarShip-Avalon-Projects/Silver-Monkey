@@ -388,6 +388,9 @@ Namespace Engine.Libraries
             Player = InstructionObject.Player
             Dim Text = InstructionObject.ChannelText
             Dim NameStr As String
+
+            MsPage.SetVariable("BANISHLIST", String.Join(" ", FurcadiaSession.BanishString.ToArray), True)
+
             If Text.Contains(" has been banished from your dreams.") Then
                 'banish <name> (online)
                 'Success: (.*?) has been banished from your dreams.
@@ -396,7 +399,7 @@ Namespace Engine.Libraries
                 '(0:53) When the bot sucessfilly banishes the furre named {...},
 
                 MsPage.SetVariable("BANISHNAME", FurcadiaSession.BanishName, True)
-                MsPage.SetVariable("BANISHLIST", String.Join(" ", FurcadiaSession.BanishString.ToArray), True)
+
                 MsPage.Execute(52, 53)
 
                 ' MSPage.Execute(53)
@@ -416,15 +419,12 @@ Namespace Engine.Libraries
                 '(0:62) When the bot sucessfully temp banishes the furre named {...}
 
                 MsPage.SetVariable("BANISHNAME", FurcadiaSession.BanishName, True)
-                ' MSPage.Execute(61)
-                MsPage.SetVariable("BANISHLIST", String.Join(" ", FurcadiaSession.BanishString.ToArray()), True)
                 MsPage.Execute(61, 62)
 
             ElseIf Text.StartsWith("Players banished from your dreams: ") Then
                 'Banish-List
                 '[notify> Players banished from your dreams:
                 '`(0:54) When the bot sees the banish list
-                MsPage.SetVariable("BANISHLIST", String.Join(" ", FurcadiaSession.BanishString.ToArray), True)
                 MsPage.Execute(54)
 
             ElseIf Text.StartsWith("The banishment of player ") Then
@@ -437,7 +437,6 @@ Namespace Engine.Libraries
                 NameStr = t.Match(Text).Groups(1).Value
                 MsPage.SetVariable("BANISHNAME", NameStr, True)
                 MsPage.Execute(56, 56)
-                MsPage.SetVariable("BANISHLIST", String.Join(" ", FurcadiaSession.BanishString.ToArray), True)
 
                 '      MsPage.Execute(800)
 
@@ -451,7 +450,6 @@ Namespace Engine.Libraries
                 NameStr = t.Match(Text).Groups(1).Value
                 MsPage.SetVariable("BANISHNAME", NameStr, True)
                 MsPage.Execute(50, 51)
-                MsPage.SetVariable("BANISHLIST", String.Join(" ", FurcadiaSession.BanishString.ToArray), True)
             ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
                 'banish-off <name> (not on list)
                 'Error:>> Sorry, this player has not been banished from your dreams.
@@ -459,7 +457,6 @@ Namespace Engine.Libraries
                 '(0:55) When the Bot fails to remove a furre from the banish list,
                 '(0:56) When the bot fails to remove the furre named {...} from the banish list,
                 MsPage.SetVariable("BANISHNAME", FurcadiaSession.BanishName, True)
-                MsPage.SetVariable("BANISHLIST", String.Join(" ", FurcadiaSession.BanishString.ToArray), True)
                 MsPage.Execute(50, 51)
             ElseIf Text = "You have not banished anyone." Then
                 'banish-off-all (empty List)

@@ -90,7 +90,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function SendMessage(reader As TriggerReader) As Boolean
+        Shared Function SendMessage(reader As TriggerReader) As Boolean
             'Dim msMsg As String = ""
             'Dim Fur As String = ""
             'Try
@@ -150,8 +150,8 @@ Namespace Engine.Libraries
 
 #Region "Private Methods"
 
-        <DllImport("User32.dll")>
-        Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
+        <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Unicode)>
+        Private Shared Function FindWindow(ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
         End Function
 
 #End Region

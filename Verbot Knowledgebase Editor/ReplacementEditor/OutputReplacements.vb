@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Forms
-Imports Conversive.Verbot5
+﻿Imports Conversive.Verbot5
 
 Public Class OutputReplacements
 
@@ -19,6 +18,7 @@ Public Class OutputReplacements
         ' Add any initialization after the InitializeComponent() call.
         OP = New Replacement
     End Sub
+
     Public Sub New(ByRef OPs As Replacement)
         OP = OPs
         ' This call is required by the designer.
@@ -44,6 +44,7 @@ Public Class OutputReplacements
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
     End Sub
+
     Private Sub OutputReplacements_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         TxtBxTextToFind.Text = OP.TextToFind
         TxtBxTextForOutput.Text = OP.TextForOutput

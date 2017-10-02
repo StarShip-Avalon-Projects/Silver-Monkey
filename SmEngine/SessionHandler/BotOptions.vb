@@ -2,6 +2,7 @@
 Imports Furcadia.Net
 Imports Furcadia.Util
 Imports MonkeyCore
+Imports MonkeyCore.Utils.Logging
 
 <CLSCompliant(True)>
 Public Class BotOptions : Inherits Options.ProxySessionOptions
@@ -17,15 +18,11 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     Private Property _BotController As String
     Private Property BotIni As IniFile
 
-#Region "Log Options"
-
-    Private _log As Boolean
-    Private _logIdx As Integer
-    Private _logNamebase As String
-    Private _logOption As Short
-    Private _logPath As String
-
-#End Region
+    ''' <summary>
+    ''' Silver Monkey Logging options
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property LogOptions As LogSteamOptions
 
 #End Region
 
@@ -33,7 +30,9 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
 
     Sub New()
         _MonkeySpeakEngineOption = New Engine.EngineOptoons()
-        _logPath = Paths.SilverMonkeyLogPath
+        LogOptions = New LogSteamOptions() With {
+        .LogPath = Paths.SilverMonkeyLogPath
+        }
 
     End Sub
 
@@ -54,17 +53,12 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         End If
         _BiniFile = BFile
         Dim s As String = ""
-        s = BotIni.GetKeyValue("Main", "Log")
-        If Not String.IsNullOrEmpty(s) Then _log = Convert.ToBoolean(s)
-
-        s = BotIni.GetKeyValue("Main", "LogOption")
-        If Not String.IsNullOrEmpty(s) Then _logOption = Convert.ToInt16(s)
-
-        s = BotIni.GetKeyValue("Main", "LogNameBase")
-        If Not String.IsNullOrEmpty(s) Then _logNamebase = s
-
-        s = BotIni.GetKeyValue("Main", "LogNamePath")
-        If Not String.IsNullOrEmpty(s) Then _logPath = s
+        LogOptions = New LogSteamOptions() With {
+                 .log = BotIni.GetKeyValue("Main", "Log"),
+                 .LogOption = Convert.ToInt16(BotIni.GetKeyValue("Main", "LogOption")),
+                 .LogNameBase = BotIni.GetKeyValue("Main", "LogNameBase"),
+                 .LogPath = BotIni.GetKeyValue("Main", "LogNamePath")
+        }
 
         s = BotIni.GetKeyValue("Bot", "BotIni")
         If Not String.IsNullOrEmpty(s) Then CharacterIniFile = s
@@ -109,7 +103,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
 #Region "Public Properties"
 
     ''' <summary>
-    ''' Sets the bot to auto conect to the serer
+    ''' Sets the bot to auto connect to the serer
     ''' </summary>
     ''' <returns>
     ''' </returns>
@@ -148,7 +142,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     ''' </summary>
     ''' <returns>
     ''' </returns>
-    Public Property DreamURL As String
+    Public Property DreamLink As String
         Get
             Return _DreamURL
         End Get
@@ -157,6 +151,10 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         End Set
     End Property
 
+    ''' <summary>
+    ''' Which map are we going to?
+    ''' </summary>
+    ''' <returns></returns>
     Public Property GoMapIDX() As Integer
         Get
             Return _GoMap
@@ -183,51 +181,6 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         End Set
     End Property
 
-    Public Property log As Boolean
-        Get
-            Return _log
-        End Get
-        Set(ByVal value As Boolean)
-            _log = value
-        End Set
-    End Property
-
-    Public Property LogIdx As Integer
-        Get
-            Return _logIdx
-        End Get
-        Set(value As Integer)
-            _logIdx = value
-        End Set
-    End Property
-
-    Public Property LogNameBase As String
-        Get
-            Return _logNamebase
-        End Get
-        Set(value As String)
-            _logNamebase = value
-        End Set
-    End Property
-
-    Public Property LogOption As Short
-        Get
-            Return _logOption
-        End Get
-        Set(value As Short)
-            _logOption = value
-        End Set
-    End Property
-
-    Public Property LogPath As String
-        Get
-            Return _logPath
-        End Get
-        Set(value As String)
-            _logPath = value
-        End Set
-    End Property
-
     Public ReadOnly Property Name As String
         Get
             Return Path.GetFileName(_BiniFile)
@@ -246,10 +199,10 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         'If File.Exists(Paths.CheckBotFolder(_BiniFile)) Then
         '    BotIni.Load(Paths.CheckBotFolder(_BiniFile))
         'End If
-        BotIni.SetKeyValue("Main", "Log", _log.ToString)
-        BotIni.SetKeyValue("Main", "LogNameBase", _logNamebase)
-        BotIni.SetKeyValue("Main", "LogOption", _logOption.ToString)
-        BotIni.SetKeyValue("Main", "LogNamePath", _logPath)
+        BotIni.SetKeyValue("Main", "Log", LogOptions.log.ToString)
+        BotIni.SetKeyValue("Main", "LogNameBase", LogOptions.LogNameBase)
+        BotIni.SetKeyValue("Main", "LogOption", LogOptions.LogOption.ToString)
+        BotIni.SetKeyValue("Main", "LogNamePath", LogOptions.LogPath)
         BotIni.SetKeyValue("Bot", "BotIni", CharacterIniFile)
         BotIni.SetKeyValue("Bot", "MS_File", _MonkeySpeakEngineOption.MonkeySpeakScriptFile)
         BotIni.SetKeyValue("Bot", "LPort", LocalhostPort.ToString)
@@ -259,7 +212,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         BotIni.SetKeyValue("Bot", "AutoConnect", _AutoConnect.ToString)
 
         BotIni.SetKeyValue("GoMap", "IDX", _GoMap.ToString)
-        BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL)
+        BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL.ToString())
 
         BotIni.Save(Paths.CheckBotFolder(_BiniFile))
     End Sub

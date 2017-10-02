@@ -1,11 +1,11 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Devices
-Imports System.Windows.Forms
 Imports MonkeyCore
-Imports SilverMonkey.BugTraqConnect
-Imports System.IO
+Imports MonkeyCore.Utils.Logging
 
 Namespace My
+
     ' The following events are available for MyApplication:
     '
     ' Startup: Raised when the application starts, before the startup form is created.

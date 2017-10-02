@@ -2,10 +2,10 @@
 Imports MonkeyCore
 
 Module MainModule
+
     'Public EditIni As New IniFile
     'Public MS_KeysIni As IniFile = New IniFile
     Public BotIni As New IniFile
-
 
     Public Const MS_Name As String = "NAME"
 
@@ -25,16 +25,21 @@ Module MainModule
     <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
     Public Structure MyData
         Public fID As Integer
+
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=78)>
         Public lpName As String
+
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=78)>
         Public lpTag As String
+
         <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=2048)>
         Public lpMsg As String
+
     End Structure
 
 End Module
 Public Module MyExtensions
+
     <Runtime.CompilerServices.Extension()>
     Public Function IsInteger(ByVal value As Type) As Boolean
         If String.IsNullOrEmpty(value.ToString) Then

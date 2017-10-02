@@ -21,7 +21,9 @@ Public Class Settings
 
 #Region "Public Fields"
 
+#Disable Warning BC40041 ' Type 'PluginServices.AvailablePlugin' is not CLS-compliant.
     Public Shared Plugins As New List(Of PluginServices.AvailablePlugin)
+#Enable Warning BC40041 ' Type 'PluginServices.AvailablePlugin' is not CLS-compliant.
 
 #End Region
 
@@ -502,7 +504,10 @@ Public Class Settings
         ' 0 = off
         ' 1 = time
         ' 2 = Date Time
+#Disable Warning BC40027 ' Return type of function 'TimeStamp' is not CLS-compliant.
+
         Public Property TimeStamp() As UShort
+#Enable Warning BC40027 ' Return type of function 'TimeStamp' is not CLS-compliant.
             Get
                 Return _TimeStamp
             End Get

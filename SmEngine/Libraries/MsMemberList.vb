@@ -19,13 +19,22 @@ Namespace Engine.Libraries
     ''' <para>
     ''' Default Member-List file: <see cref="Paths.SilverMonkeyBotPath"/>\MemberList.txt
     ''' </para>
+    ''' <conceptualLink target="d1358c3d-d6d3-4063-a0ef-259e13752a0f" />
+    ''' <para/>
+    ''' Credits: Drake for assistance with designing this system
     ''' </summary>
     Public Class MsMemberList
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"
 
-        Private Shared MemberList As String
+        ''' <summary>
+        ''' Member List file path
+        ''' <para/>
+        ''' Defaults to <see cref="MonkeyCore.Paths.SilverMonkeyBotPath"/>\MemberList.txt
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property MemberList As String
 
 #End Region
 
@@ -75,17 +84,20 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function AddFurreNamed(reader As TriggerReader) As Boolean
+        Public Function AddFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String
-
-            Furre = reader.ReadString
-            If FurreNamedIsNotMember(reader) Then
-                Using sw As StreamWriter = New StreamWriter(MemberList, True)
-                    sw.WriteLine(Furre)
-                End Using
-            End If
-            Return True
-
+            Try
+                Furre = reader.ReadString
+                If FurreNamedIsNotMember(reader) Then
+                    Using sw As StreamWriter = New StreamWriter(MemberList, True)
+                        sw.WriteLine(Furre)
+                    End Using
+                End If
+                Return True
+            Catch ex As Exception
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -99,15 +111,18 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function AddTrigFurre(reader As TriggerReader) As Boolean
             Dim Furre As String = Nothing
-
-            Furre = MsPage.GetVariable(MS_Name).Value.ToString
-            If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
-                Dim sw As StreamWriter = New StreamWriter(MemberList, True)
-                sw.WriteLine(Furre)
-                sw.Close()
-            End If
-            Return True
-
+            Try
+                Furre = MsPage.GetVariable(MS_Name).Value.ToString
+                If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
+                    Dim sw As StreamWriter = New StreamWriter(MemberList, True)
+                    sw.WriteLine(Furre)
+                    sw.Close()
+                End If
+                Return True
+            Catch ex As Exception
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -116,12 +131,11 @@ Namespace Engine.Libraries
         ''' Checks default <see cref="Paths.SilverMonkeyBotPath"/>
         ''' </para>
         ''' </summary>
-        Private Sub CheckMemberList()
+        Public Sub CheckMemberList()
             MemberList = Paths.CheckBotFolder(MemberList)
             If Not File.Exists(MemberList) Then
                 Using f As New StreamWriter(MemberList)
                     f.WriteLine("")
-                    f.Close()
                 End Using
             End If
         End Sub
@@ -134,20 +148,26 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function FurreNamedIsMember(reader As TriggerReader) As Boolean
-            CheckMemberList()
+        Public Function FurreNamedIsMember(reader As TriggerReader) As Boolean
+
             Dim Furre As String = Nothing
             Dim f() As String
 
             Furre = reader.ReadString
-            f = File.ReadAllLines(MemberList)
-            For Each l As String In f
-                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then
-                    Return True
-                End If
-            Next
+            Try
+                CheckMemberList()
+                f = File.ReadAllLines(MemberList)
+                For Each l As String In f
+                    If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then
+                        Return True
+                    End If
+                Next
+                Return FurcadiaSession.IsBotController
+            Catch ex As Exception
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+            End Try
 
-            Return FurcadiaSession.IsBotController
+            Return False
         End Function
 
         ''' <summary>
@@ -158,20 +178,30 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function FurreNamedIsNotMember(reader As TriggerReader) As Boolean
+        Public Function FurreNamedIsNotMember(reader As TriggerReader) As Boolean
             Return Not FurreNamedIsMember(reader)
         End Function
 
-        Private Function ListToVariable(reader As TriggerReader) As Boolean
-            CheckMemberList()
+        ''' <summary>
+        ''' (5:905) store member list to variable %Variable.
+        ''' </summary>
+        ''' <param name="reader"></param>
+        ''' <returns></returns>
+        Public Function ListToVariable(reader As TriggerReader) As Boolean
+
             Dim Furre As Variable
-            Dim f() As String
+            Dim f As New List(Of String)
+            Try
+                CheckMemberList()
+                Furre = reader.ReadVariable(True)
+                f.AddRange(File.ReadAllLines(MemberList))
+                Furre.Value = String.Join(" ", f.ToArray)
 
-            Furre = reader.ReadVariable(True)
-            f = File.ReadAllLines(MemberList)
-            Furre.Value = String.Join(" ", f)
-
-            Return True
+                Return True
+            Catch ex As Exception
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -183,27 +213,32 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function RemoveFurreNamed(reader As TriggerReader) As Boolean
+        Public Function RemoveFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String = Nothing
-            CheckMemberList()
+            Try
+                CheckMemberList()
 
-            Furre = reader.ReadString
-            Dim line As String
-            Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
-            Using SR As New StreamReader(MemberList)
-                While SR.Peek() <> -1
-                    line = SR.ReadLine()
-                    For i As Integer = 0 To linesList.Count - 1
-                        If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
-                            linesList.RemoveAt(i)
-                            File.WriteAllLines(MemberList, linesList.ToArray())
-                            Exit For
-                        End If
-                    Next i
-                End While
-            End Using
+                Furre = reader.ReadString
+                Dim line As String
+                Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
+                Using SR As New StreamReader(MemberList)
+                    While SR.Peek() <> -1
+                        line = SR.ReadLine()
+                        For i As Integer = 0 To linesList.Count - 1
+                            If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
+                                linesList.RemoveAt(i)
+                                File.WriteAllLines(MemberList, linesList.ToArray())
+                                Exit For
+                            End If
+                        Next i
+                    End While
+                End Using
 
-            Return True
+                Return True
+            Catch ex As Exception
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -215,27 +250,32 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function RemoveTrigFurre(reader As TriggerReader) As Boolean
+        Public Function RemoveTrigFurre(reader As TriggerReader) As Boolean
             Dim Furre As String = Nothing
-            CheckMemberList()
+            Try
+                CheckMemberList()
 
-            Furre = MsPage.GetVariable(MS_Name).Value.ToString
-            Dim line As String
-            Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
-            Using SR As New StreamReader(MemberList)
-                While SR.Peek() <> -1
-                    line = SR.ReadLine()
-                    For i As Integer = 0 To linesList.Count - 1
-                        If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
-                            linesList.RemoveAt(i)
-                            File.WriteAllLines(MemberList, linesList.ToArray())
-                            Exit For
-                        End If
-                    Next i
-                End While
-            End Using
+                Furre = MsPage.GetVariable(MS_Name).Value.ToString
+                Dim line As String
+                Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
+                Using SR As New StreamReader(MemberList)
+                    While SR.Peek() <> -1
+                        line = SR.ReadLine()
+                        For i As Integer = 0 To linesList.Count - 1
+                            If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
+                                linesList.RemoveAt(i)
+                                File.WriteAllLines(MemberList, linesList.ToArray())
+                                Exit For
+                            End If
+                        Next i
+                    End While
+                End Using
 
-            Return True
+                Return True
+            Catch ex As Exception
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -246,18 +286,24 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function TrigFurreIsMember(reader As TriggerReader) As Boolean
-            CheckMemberList()
+        Public Function TrigFurreIsMember(reader As TriggerReader) As Boolean
+
             Dim Furre As String = Nothing
             Dim f As New List(Of String)
+            Try
+                CheckMemberList()
 
-            Furre = MsPage.GetVariable(MS_Name).Value.ToString
-            f.AddRange(File.ReadAllLines(MemberList))
-            For Each l As String In f
-                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
-            Next
+                Furre = MsPage.GetVariable(MS_Name).Value.ToString
+                f.AddRange(File.ReadAllLines(MemberList))
+                For Each l As String In f
+                    If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
+                Next
 
-            Return FurcadiaSession.IsBotController
+                Return FurcadiaSession.IsBotController
+            Catch ex As Exception
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -268,7 +314,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function TrigFurreIsNotMember(reader As TriggerReader) As Boolean
+        Public Function TrigFurreIsNotMember(reader As TriggerReader) As Boolean
             Return Not TrigFurreIsMember(reader)
         End Function
 
@@ -280,12 +326,15 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function UseMemberFile(reader As TriggerReader) As Boolean
-
-            MemberList = reader.ReadString
-            CheckMemberList()
-
-            Return True
+        Public Function UseMemberFile(reader As TriggerReader) As Boolean
+            Try
+                MemberList = reader.ReadString
+                CheckMemberList()
+                Return True
+            Catch ex As Exception
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Return False
+            End Try
         End Function
 
 #End Region

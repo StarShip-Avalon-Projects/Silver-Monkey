@@ -9,13 +9,17 @@ namespace DataMonkey.Controls
     {
         #region Public Fields
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.OkButton'
         public static Button OkButton;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.OkButton'
 
         #endregion Public Fields
 
         #region Protected Fields
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.CanButton'
         protected static Button CanButton;
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.CanButton'
 
         #endregion Protected Fields
 
@@ -30,7 +34,10 @@ namespace DataMonkey.Controls
 
         #region Public Constructors
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.BasePopup()'
+
         public BasePopup()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.BasePopup()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -98,7 +105,10 @@ namespace DataMonkey.Controls
 
         #region Button Events
 
-        public static void tb_KeyDown(object sender, KeyEventArgs e)
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.tb_KeyDown(object, KeyEventArgs)'
+
+        public static void Tb_KeyDown(object sender, KeyEventArgs e)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.tb_KeyDown(object, KeyEventArgs)'
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -107,7 +117,10 @@ namespace DataMonkey.Controls
             }
         }
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.OkButton_Click(object, EventArgs)'
+
         public void OkButton_Click(object sender, System.EventArgs e)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.OkButton_Click(object, EventArgs)'
         {
             Close();
         }

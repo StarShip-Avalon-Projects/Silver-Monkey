@@ -8,10 +8,12 @@
 
 'Furre Update events?
 
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Furcadia.Net.Proxy
 Imports Furcadia.Text.FurcadiaMarkup
+Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Interfaces
@@ -38,6 +40,8 @@ Imports SilverMonkeyEngine.SmConstants
 Public Class BotSession : Inherits ProxySession
     Implements IDisposable
 
+    Private handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
+
 #Region "Constructors"
 
     ''' <summary>
@@ -45,7 +49,7 @@ Public Class BotSession : Inherits ProxySession
     Sub New()
         MyBase.New()
         MainEngineOptions = New BotOptions()
-
+        Initiaize()
     End Sub
 
     ''' <summary>
@@ -56,7 +60,12 @@ Public Class BotSession : Inherits ProxySession
     Sub New(ByRef BotSessionOptions As BotOptions)
         MyBase.New(BotSessionOptions)
         MainEngineOptions = BotSessionOptions
+        Initiaize()
+    End Sub
 
+    Private Sub Initiaize()
+        MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
+        MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
     End Sub
 
 #End Region
@@ -67,14 +76,17 @@ Public Class BotSession : Inherits ProxySession
     ''' Is the Current executing Furre the Bot Controller?
     ''' </summary>
     ''' <returns>
-    ''' True on sucess
+    ''' True on success
     ''' </returns>
     Public ReadOnly Property IsBotController As Boolean
         Get
             Return Player.ShortName = MainEngineOptions.BotControllerShortName
         End Get
     End Property
-
+    ''' <summary>
+    ''' Name of the controller furre
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property BotController As String
         Get
             Return MainEngineOptions.BotController
@@ -86,7 +98,7 @@ Public Class BotSession : Inherits ProxySession
 #Region "Private Fields"
 
     Private MainSettings As Settings.cMain
-
+    Private MainEngineOptions As BotOptions
 #End Region
 
 #Region "Public Fields"
@@ -101,7 +113,7 @@ Public Class BotSession : Inherits ProxySession
     'Monkey Speak Bot specific Variables
 
     Public objHost As New smHost(Me)
-    Private MainEngineOptions As BotOptions
+
 
 #End Region
 
@@ -113,9 +125,6 @@ Public Class BotSession : Inherits ProxySession
     Public Overrides Sub Connect()
 
         Try
-
-            MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
-            MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
             Dim page = New MonkeySpeakPage(MainEngine, MSpage)
             MSpage = page.Start()
@@ -141,36 +150,15 @@ Public Class BotSession : Inherits ProxySession
         'Pass Stuff to Base Clqss before we can handle things here
         MyBase.ParseServerChannel(data, Handled)
 
-        Dim psCheck As Boolean = False
-        Dim SpecTag As String = ""
         ' Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
         Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
-        Dim User As String = ""
         Dim Desc As String = ""
         Dim Text As String = ""
 
         MSpage.SetVariable(MS_Name, Player.Name, True)
         MSpage.SetVariable("MESSAGE", Player.Message, True)
 
-        If Color = "bcast" Then
-            Dim AdRegEx As String = "<channel name='(.*)' />"
-
-            Dim chan As String = Regex.Match(data, AdRegEx).Groups(1).Value
-
-            Select Case chan
-                Case "@advertisements"
-                    ' If cMain.Advertisment Then Exit Sub
-                    AdRegEx = "\[(.*?)\] (.*?)</font>"
-                    Dim adMessage As String = Regex.Match(data, AdRegEx).Groups(2).Value
-
-                Case "@announcements"
-                    ' If cMain.Announcement Then Exit Sub
-                    Dim u As String = Regex.Match(data, "<channel name='@(.*?)' />(.*?)</font>").Groups(2).Value
-
-                Case Else
-            End Select
-
-        ElseIf Desc <> "" Then
+        If Not String.IsNullOrEmpty(Desc) Then
 
             Dim DescName As String = Regex.Match(data, DescFilter).Groups(1).ToString()
 
@@ -185,8 +173,7 @@ Public Class BotSession : Inherits ProxySession
 
         ElseIf Color = "channel" Then
             'ChannelNameFilter2
-            Dim chan As Regex = New Regex(ChannelNameFilter)
-            Dim ChanMatch As System.Text.RegularExpressions.Match = chan.Match(data)
+
             Dim r As New Regex("<img src='(.*?)' alt='(.*?)' />")
             Dim ss As RegularExpressions.Match = r.Match(Text)
             If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
@@ -424,14 +411,20 @@ Public Class BotSession : Inherits ProxySession
 
     Private disposed As Boolean
 
-    ' IDisposable
+    ''' <summary>
+    ''' Dispose components
+    ''' </summary>
+    ''' <param name="disposing"></param>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-        If Not Me.disposed Then
 
-            MainEngine.Dispose()
+        If Me.disposed Then Exit Sub
+        If disposing Then
+
+            handle.Dispose()
 
             ' Free your own state (unmanaged objects).
             ' Set large fields to null.
+            MainEngine.Dispose()
         End If
         Me.disposed = True
         Me.Finalize()
@@ -439,7 +432,11 @@ Public Class BotSession : Inherits ProxySession
 
 #Region " IDisposable Support "
 
-    Public Overrides Sub Dispose()
+    ''' <summary>
+    ''' Implement IDisposable Support
+    ''' </summary>
+    Public Overrides Sub Dispose() Implements IDisposable.Dispose
+
         Dispose(True)
         GC.SuppressFinalize(Me)
     End Sub

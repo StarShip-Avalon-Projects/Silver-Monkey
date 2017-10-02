@@ -1,8 +1,8 @@
-﻿Imports System.Windows.Forms
-Imports System.ComponentModel
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports System.Windows.Forms
 
 Namespace Controls
+
     Public Class ScrollingListBox
         Inherits ListBox
 
@@ -46,6 +46,7 @@ Namespace Controls
 #Region "Public Events"
 
         Public Event OnHorizontalScroll As ScrollEventHandler
+
         Public Event OnVerticalScroll As ScrollEventHandler
 
 #End Region
@@ -85,7 +86,10 @@ Namespace Controls
 #Region "Private Methods"
 
         Private Shared Function GetScrollInfo(hWnd As IntPtr, n As Integer, ByRef lpScrollInfo As ScrollInfoStruct) As Integer
+#Disable Warning BC42353 ' Function 'GetScrollInfo' doesn't return a value on all code paths. Are you missing a 'Return' statement?
         End Function
+
+#Enable Warning BC42353 ' Function 'GetScrollInfo' doesn't return a value on all code paths. Are you missing a 'Return' statement?
 
         Private Sub InitializeComponent()
             Me.SuspendLayout()
@@ -119,4 +123,5 @@ Namespace Controls
 #End Region
 
     End Class
+
 End Namespace

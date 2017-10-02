@@ -1,97 +1,97 @@
 ﻿Imports System.IO
 Imports MonkeyCore.Paths
 Imports SilverMonkey.BugTraqConnect.Libs
-''' <summary>
-'''Error Logging Class
-'''<para>Author: Tim Wilson</para>
-'''<para>Created: Sept 10, 2011</para>
-'''<para>Updated and maintained by Gerolkae</para>
-'''<para>To Call Class </para>
-'''<para>Example of calling Custom Error Logging Code</para>
-'''<example>
-'''   Try
-'''        Throw New Exception("This is an example exception demonstrating the Error
-'''Logging Exception Routine") 'Don't require this... this is just manually throwing an error
-''' to demo the class, actual code you'd just have the try/catch
-'''    Catch ex As Exception
-'''        Dim logError As New ErrorLogging(ex, Me) 'Passes the new constructor in the Error Logging Class the exception and 'me' (the calling object)
-'''    End Try</example>
-'''<para>To provide more details for individual object types create a new constructor by copying and pasting one below and then adjusting the argument. </para>
-''' </summary>
-'''
-Public Class ErrorLogging
+
+Namespace Utils.Logging
+
+    ''' <summary>
+    '''Error Logging Class
+    '''<para>Author: Tim Wilson</para>
+    '''<para>Created: Sept 10, 2011</para>
+    '''<para>Updated and maintained by Gerolkae</para>
+    '''<para>To Call Class </para>
+    '''<para>Example of calling Custom Error Logging Code</para>
+    '''<example>
+    '''   Try
+    '''        Throw New Exception("This is an example exception demonstrating the Error
+    '''Logging Exception Routine") 'Don't require this... this is just manually throwing an error
+    ''' to demo the class, actual code you'd just have the try/catch
+    '''    Catch ex As Exception
+    '''        Dim logError As New ErrorLogging(ex, Me) 'Passes the new constructor in the Error Logging Class the exception and 'me' (the calling object)
+    '''    End Try</example>
+    '''<para>To provide more details for individual object types create a new constructor by copying and pasting one below and then adjusting the argument. </para>
+    ''' </summary>
+    '''
+    Public Class ErrorLogging
 
 #Region "Private Fields"
 
-    Private ReadOnly strErrorFilePath As String
-    Public BugReport As ProjectReport
+        Private ReadOnly strErrorFilePath As String
 
 #End Region
 
+        Public Property BugReport As ProjectReport
+
 #Region "Public Constructors"
 
-    ''' <summary>
-    ''' </summary>
-    ''' <param name="Ex">
-    ''' </param>
-    ''' <param name="ObjectThrowingError">
-    ''' </param>
-    Public Sub New(ByRef Ex As System.Exception, ByVal ObjectThrowingError As Object)
-        'Call Log Error
-        'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
-        LogError(Ex, ObjectThrowingError.ToString())
-    End Sub
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="Ex">
+        ''' </param>
+        ''' <param name="ObjectThrowingError">
+        ''' </param>
+        Public Sub New(ByRef Ex As Exception, ByVal ObjectThrowingError As Object)
+            'Call Log Error
+            'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
+            strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
+            LogError(Ex, ObjectThrowingError.ToString())
+        End Sub
 
-    ''' <summary>
-    ''' </summary>
-    ''' <param name="Ex">
-    ''' </param>
-    ''' <param name="ObjectThrowingError">
-    ''' </param>
-    ''' <param name="ObJectCheck">
-    ''' </param>
-    Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
-        'Call Log Error
-        'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="Ex">
+        ''' </param>
+        ''' <param name="ObjectThrowingError">
+        ''' </param>
+        ''' <param name="ObJectCheck">
+        ''' </param>
+        Public Sub New(ByRef Ex As Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
+            'Call Log Error
+            'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
 
-
-        strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
-        LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck.ToString)
-    End Sub
+            strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
+            LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck)
+        End Sub
 
 #End Region
 
 #Region "Public Properties"
 
-    ''' <summary>
-    ''' Fullpath the error document was written to.
-    ''' </summary>
-    ''' <returns>
-    ''' </returns>
-    Public ReadOnly Property LogFile As String
-        Get
-            Return strErrorFilePath
-        End Get
-    End Property
+        ''' <summary>
+        ''' Fullpath the error document was written to.
+        ''' </summary>
+        ''' <returns>
+        ''' </returns>
+        Public ReadOnly Property LogFile As String
+            Get
+                Return strErrorFilePath
+            End Get
+        End Property
 
 #End Region
 
 #Region "Public Methods"
 
-    ''' <summary>
-    ''' </summary>
-    ''' <param name="ex">
-    ''' </param>
-    ''' <param name="ObjectThrowingError">
-    ''' </param>
-    Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
-        BugReport = New ProjectReport
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="ex">
+        ''' </param>
+        ''' <param name="ObjectThrowingError">
+        ''' </param>
+        Public Sub LogError(ByRef ex As Exception, ByRef ObjectThrowingError As Object)
+            BugReport = New ProjectReport
 
-
-
-        Using LogFile As System.IO.StreamWriter = New System.IO.StreamWriter(strErrorFilePath, False)
-            Try
+            Using LogFile As System.IO.StreamWriter = New System.IO.StreamWriter(strErrorFilePath, False)
 
                 '***********************************************************
                 '* Error Log Formatting
@@ -152,37 +152,29 @@ Public Class ErrorLogging
                 End If
 
                 '***********************************************************
-            Finally
-                If Not IsNothing(LogFile) Then
-                    LogFile.Close()
-                End If
-            End Try
-        End Using
 
+            End Using
 
-        Try
             BugReport.ProcuctName = My.Application.Info.ProductName
             BugReport.AttachmentFile = strErrorFilePath
             BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
             BugReport.Severity = "crash"
-        Catch
-        End Try
 
-    End Sub
+        End Sub
 
-    ''' <summary>
-    ''' </summary>
-    ''' <param name="ex">
-    ''' </param>
-    ''' <param name="ObjectThrowingError">
-    ''' </param>
-    ''' <param name="ObJectCheck">
-    ''' </param>
-    Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
-        'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-        BugReport = New ProjectReport
-        Using LogFile As StreamWriter = New StreamWriter(strErrorFilePath, False)
-            Try
+        'Disabled as it's not used
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="ex">
+        ''' </param>
+        ''' <param name="ObjectThrowingError">
+        ''' </param>
+        ''' <param name="ObJectCheck">
+        ''' </param>
+        Public Sub LogError(ByRef ex As Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
+            'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
+            BugReport = New ProjectReport()
+            Using LogFile As StreamWriter = New StreamWriter(strErrorFilePath, False)
 
                 '***********************************************************
                 '* Error Log Formatting
@@ -246,22 +238,18 @@ Public Class ErrorLogging
                 End If
 
                 '***********************************************************
-            Finally
-                If Not IsNothing(LogFile) Then
-                    LogFile.Close()
-                End If
-            End Try
-        End Using
 
-        Try
+            End Using
+
             BugReport.ProcuctName = My.Application.Info.ProductName
             BugReport.AttachmentFile = strErrorFilePath
             BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
             BugReport.Severity = "crash"
-        Catch
-        End Try
-    End Sub
+
+        End Sub
 
 #End Region
 
-End Class
+    End Class
+
+End Namespace

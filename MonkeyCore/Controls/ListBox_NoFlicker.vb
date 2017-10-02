@@ -1,5 +1,7 @@
 ﻿Imports System.Windows.Forms
+
 Namespace Controls
+
     Public Class ListBox_NoFlicker
 
         Inherits ListBox
@@ -14,4 +16,5 @@ Namespace Controls
 #End Region
 
     End Class
+
 End Namespace

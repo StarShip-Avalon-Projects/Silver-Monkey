@@ -8,7 +8,7 @@ Namespace Controls
 
 #Region "Public Fields"
 
-        Public Shared RegexSpecSymbolsPattern As String = "[ \.\(\)]"
+        Public Const RegexSpecSymbolsPattern As String = "[ \.\(\)]"
 
 #End Region
 

@@ -1,6 +1,7 @@
 Imports System.IO
 Imports MonkeyCore
 Imports MonkeyCore.Paths
+Imports MonkeyCore.Utils.Logging
 
 '######### Please Read ##############
 '
@@ -13,7 +14,7 @@ Imports MonkeyCore.Paths
 '####################################
 
 'Begin the main Form!
-Public Class wMain
+Public Class WMain
 
 #Region "Public Methods"
 

@@ -2,21 +2,27 @@
 Imports System.Windows.Forms
 
 Namespace Controls
+
     Public Class RecentFileMenu
         Inherits ToolStripMenuItem
+
 #Region "Recent File List"
+
         Public MRUlist As Queue(Of String) = New Queue(Of String)(MRUnumber)
 
         ''' <summary>
         ''' how many list will save
         ''' </summary>
         Const MRUnumber As Integer = 15
+
         Private Shared _Menu As ToolStripMenuItem
+
         Public Sub New()
             MyBase.New()
         End Sub
 
         Public Property RecentFile As String
+
         ''' <summary>
         ''' load recent file list from file
         ''' </summary>
@@ -89,11 +95,14 @@ Namespace Controls
             stringToWrite.Close()
             'close the stream and reclaim memory
         End Sub
+
         Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
             target = value
             Return value
         End Function
+
 #End Region
+
     End Class
 
 End Namespace

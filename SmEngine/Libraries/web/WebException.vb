@@ -1,9 +1,11 @@
 ﻿Imports System.Runtime.Serialization
 Imports System.Text
-Imports SilverMonkeyEngine.Engine.Libraries.WebRequests
 
-Namespace Engine.Libraries
+Namespace Engine.Libraries.Web
 
+    ''' <summary>
+    '''
+    ''' </summary>
     Public Class WebException
         Inherits Net.WebException
 
@@ -45,6 +47,13 @@ Namespace Engine.Libraries
             Return sb.ToString()
 
         End Function
+
+        Public Sub New()
+        End Sub
+
+        Public Sub New(message As String, innerException As Exception)
+            MyBase.New(message, innerException)
+        End Sub
 
     End Class
 

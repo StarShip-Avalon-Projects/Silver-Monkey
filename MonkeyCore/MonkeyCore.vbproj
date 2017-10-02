@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -26,6 +26,8 @@
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -147,12 +149,14 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Win32.vb" />
-    <Compile Include="Utils\Logger.vb" />
-    <Compile Include="Utils\LogStream.vb" />
+    <Compile Include="GlobalSuppressions.vb" />
+    <Compile Include="Utils\Logging\Logger.vb" />
+    <Compile Include="Utils\Logging\LogSteamOptions.vb" />
+    <Compile Include="Utils\Logging\LogStream.vb" />
     <Compile Include="Utils\PluginServices.vb" />
     <Compile Include="Utils\SQlite.vb" />
     <Compile Include="Utils\TextWriter.vb" />
-    <Compile Include="Utils\ErrorLogging.vb" />
+    <Compile Include="Utils\Logging\ErrorLogging.vb" />
     <Compile Include="IO\IniFile.vb" />
     <Compile Include="IO\IO.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

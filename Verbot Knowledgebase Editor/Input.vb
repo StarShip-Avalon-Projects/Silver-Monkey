@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Forms
-Imports Conversive.Verbot5
+﻿Imports Conversive.Verbot5
 
 Public Class InputWindow
 

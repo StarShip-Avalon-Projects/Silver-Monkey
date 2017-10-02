@@ -84,6 +84,8 @@ Namespace Engine.Libraries
 
 #Region "Helper Functions"
 
+#Disable Warning BC40003 ' function 'InDream' shadows an overloadable member declared in the base class 'MonkeySpeakLibrary'.  If you want to overload the base method, this method must be declared 'Overloads'.
+
         ''' <summary>
         ''' Is the player named {...} in the dream?
         ''' </summary>
@@ -94,6 +96,7 @@ Namespace Engine.Libraries
         ''' True on Success
         ''' </returns>
         Private Function InDream(ByRef Name As String) As Boolean
+#Enable Warning BC40003 ' function 'InDream' shadows an overloadable member declared in the base class 'MonkeySpeakLibrary'.  If you want to overload the base method, this method must be declared 'Overloads'.
             Dim found As Boolean = False
             For Each Fur As FURRE In FurcadiaSession.Dream.FurreList
                 If Fur.ShortName = Furcadia.Util.FurcadiaShortName(Name) Then

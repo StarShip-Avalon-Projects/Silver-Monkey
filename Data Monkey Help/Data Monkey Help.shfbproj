@@ -13,7 +13,7 @@
     <RootNamespace>Data_Monkey_Help</RootNamespace>
     <Name>Data_Monkey_Help</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
+    <FrameworkVersion>Cross-platform (.NET Core/.NET Standard)</FrameworkVersion>
     <OutputPath>..\build\help\datamonkey\</OutputPath>
     <HtmlHelpName>Data_Monkey_Help</HtmlHelpName>
     <Language>en-US</Language>
@@ -30,6 +30,8 @@
       <DocumentationSource sourceFile="..\Data Monkey\Data Monkey.csproj" />
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
+      <DocumentationSource sourceFile="..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll" />
+      <DocumentationSource sourceFile="..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.xml" />
     </DocumentationSources>
     <WarnOnMissingSourceContext>True</WarnOnMissingSourceContext>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
@@ -72,7 +74,7 @@
     Include namespaces (false by default)
     Namespaces comments filename ("Namespaces" if not specified or empty)
     Output folder (current folder if not specified or empty) -->
-          <output includeNamespaces="false" namespacesFile="Namespaces" folder="{@OutputFolder}" boundedCapacity="100" />
+          <output includeNamespaces="true" namespacesFile="Namespaces" folder="{@OutputFolder}" boundedCapacity="100" />
         </component>
       </ComponentConfig>
       <ComponentConfig id="Syntax Component" enabled="True">
@@ -98,26 +100,6 @@
             <generator id="XAML Usage" />
             <generator id="ASP.NET" />
           </configurations>
-        </component>
-      </ComponentConfig>
-      <ComponentConfig id="Reflection Index Data (ESENT Cache)" enabled="True">
-        <component id="Reflection Index Data (ESENT Cache)">
-          <index name="reflection" value="/reflection/apis/api" key="@id" cache="15" localCacheSize="2500" frameworkCachePath="{@LocalDataFolder}Cache\ReflectionIndexCache" projectCachePath="">
-            <data base="{@FrameworkReflectionDataFolder}" recurse="true" files="*.xml" duplicateWarning="false" groupId="ReflectionIndexCache">
-		{@ReferenceLinkNamespaceFiles}
-	</data>
-            <data files="reflection.xml" groupId="Project_Ref_{@UniqueID}" />
-          </index>
-          <copy name="reflection" source="*" target="/document/reference" />
-        </component>
-      </ComponentConfig>
-      <ComponentConfig id="Comments Index Data (ESENT Cache)" enabled="True">
-        <component id="Comments Index Data (ESENT Cache)">
-          <index name="comments" value="/doc/members/member" key="@name" cache="30" localCacheSize="2500" frameworkCachePath="{@LocalDataFolder}Cache\CommentsIndexCache" projectCachePath="">
-	{@FrameworkCommentList}
-	{@CommentFileList}
-</index>
-          <copy name="comments" source="*" target="/document/comments" />
         </component>
       </ComponentConfig>
     </ComponentConfigurations>
@@ -156,12 +138,13 @@
           </deploymentLocation>
         </configuration>
       </PlugInConfig>
-    </PlugInConfigurations>
+<PlugInConfig id="Documented Entities Only" enabled="True"><configuration /></PlugInConfig></PlugInConfigurations>
     <WebsiteSdkLinkType>Msdn</WebsiteSdkLinkType>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
     <IncludeFavorites>True</IncludeFavorites>
     <BinaryTOC>True</BinaryTOC>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, ProtectedInternalAsProtected, PublicCompilerGenerated</VisibleItems>
+    <BuildLogFile>..\Build\Help\DatamonkeyHelp.log</BuildLogFile>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -206,23 +189,24 @@
     <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
       <Name>Data Monkey</Name>
       <Project>{9072cd13-8b7e-4a22-bc28-6087785a5d9a}</Project>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Name>FurcadiaLib</Name>
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
-      <Name>BugTraqConnect</Name>
-      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Name>MonkeyCore</Name>
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FastColoredTextBox, Version=2.16.21.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b">
+      <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

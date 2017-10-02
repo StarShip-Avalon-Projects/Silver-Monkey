@@ -53,7 +53,7 @@ Namespace Engine
 
         Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
 
-        Private msVer As Double = 3.0
+
 
         ''' <summary>
         ''' Default Constructlor.
@@ -76,6 +76,7 @@ Namespace Engine
         ''' <param name="file">
         ''' MonkeySpeak filename
         ''' </param>
+        ''' <exception cref="FileNotFoundException"/>
         ''' <returns>
         ''' </returns>
         Public Function LoadFromScriptFile(ByVal file As String) As Monkeyspeak.Page
@@ -103,7 +104,6 @@ Namespace Engine
                         End If
 
                     End While
-                    MonkeySpeakScriptReader.Close()
                 End Using
                 Return LoadFromString(MonkeySpeakScript.ToString())
             Catch eX As Exception
@@ -164,6 +164,7 @@ Namespace Engine
             If disposed Then Return
 
             If disposing Then
+
                 Monkeyspeak.Libraries.Timers.DestroyTimers()
                 handle.Dispose()
 

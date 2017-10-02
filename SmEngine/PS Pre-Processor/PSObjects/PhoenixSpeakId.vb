@@ -1,6 +1,4 @@
-﻿Imports System.Collections.Generic
-
-Namespace Engine.Libraries.PhoenixSpeak
+﻿Namespace Engine.Libraries.PhoenixSpeak
 
     ''' <summary>
     ''' Phoenix Speak ID manager

@@ -16,7 +16,10 @@ namespace DataMonkey.Controls
 
         #region Public Constructors
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AddTable.AddTable()'
+
         public AddTable()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AddTable.AddTable()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -26,7 +29,10 @@ namespace DataMonkey.Controls
 
         #region Properties
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AddTable.TableName'
+
         public string TableName
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AddTable.TableName'
         {
             get { return AddTableTextBox.Text; }
         }
@@ -54,7 +60,7 @@ namespace DataMonkey.Controls
             AddTableTextBox.Name = "AddTableTextBox";
             AddTableTextBox.Size = new System.Drawing.Size(232, 20);
             AddTableTextBox.TabIndex = 5;
-            AddTableTextBox.KeyDown += new KeyEventHandler(tb_KeyDown);
+            AddTableTextBox.KeyDown += new KeyEventHandler(Tb_KeyDown);
             // AddTableLabel
             AddTableLabel.Location = new System.Drawing.Point(8, 8);
             AddTableLabel.Name = "AddTableLabel";

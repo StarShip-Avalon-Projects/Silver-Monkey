@@ -1,6 +1,5 @@
-﻿Imports Conversive.Verbot5
-Imports System.IO
-Imports Furcadia.Net
+﻿Imports System.IO
+Imports Conversive.Verbot5
 Imports Furcadia.Net.Dream
 
 Public Class cbMain
@@ -138,6 +137,7 @@ Public Class cbMain
             End If
         End With
     End Sub
+
     Private Sub parseEmbeddedOutputCommands(text As String)
         Dim startCommand As String = "<"
         Dim endCommand As String = ">"
@@ -156,6 +156,7 @@ Public Class cbMain
             start = text.IndexOf(startCommand, start + 1)
         End While
     End Sub
+
     'parseEmbeddedOutputCommands(string text)
     Private Sub runEmbeddedOutputCommand(command As String)
         Dim spaceIndex As Integer = command.IndexOf(" ")
@@ -186,6 +187,7 @@ Public Class cbMain
         Catch
         End Try
     End Sub
+
     'runOutputEmbeddedCommand(string command)
     Private Sub runProgram(command As String)
         Try

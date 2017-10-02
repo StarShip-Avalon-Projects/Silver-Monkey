@@ -17,7 +17,10 @@ namespace DataMonkey.Controls
 
         #region Public Constructors
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RenameTable.RenameTable()'
+
         public RenameTable()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RenameTable.RenameTable()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -27,7 +30,10 @@ namespace DataMonkey.Controls
 
         #region Properties
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RenameTable.NewTableName'
+
         public string NewTableName
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RenameTable.NewTableName'
         {
             get { return RenameTableTextBox.Text; }
         }
@@ -59,7 +65,7 @@ namespace DataMonkey.Controls
             RenameTableTextBox.Size = new System.Drawing.Size(232, 20);
             RenameTableTextBox.TabIndex = 5;
             RenameTableTextBox.Text = "";
-            RenameTableTextBox.KeyDown += new KeyEventHandler(tb_KeyDown);
+            RenameTableTextBox.KeyDown += new KeyEventHandler(Tb_KeyDown);
             // RenameTableLabel
             RenameTableLabel.Location = new System.Drawing.Point(8, 8);
             RenameTableLabel.Name = "RenameTableLabel";

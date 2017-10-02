@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Forms
-Imports Conversive.Verbot5
+﻿Imports Conversive.Verbot5
 
 Public Class OutputWindow
 
@@ -39,6 +38,7 @@ Public Class OutputWindow
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
     End Sub
+
     Private Sub OutputWindow_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         TextBox1.Text = _CurrentOutput.Text
         TextBox2.Text = _CurrentOutput.Condition

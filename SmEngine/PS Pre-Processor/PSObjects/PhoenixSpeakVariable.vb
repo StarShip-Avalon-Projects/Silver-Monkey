@@ -1,7 +1,9 @@
 ﻿Imports System.Runtime.Serialization
 
 <Assembly: CLSCompliant(True)>
+
 Namespace Engine.Libraries.PhoenixSpeak
+
     <Serializable>
     Public Class TypeNotSupportedException
         Inherits Exception
@@ -44,33 +46,7 @@ Namespace Engine.Libraries.PhoenixSpeak
 
 #End Region
 
-#Region "Public Constructors"
 
-#End Region
-
-#Region "Public Properties"
-
-#End Region
-
-#Region "Internal Constructors"
-
-#End Region
-
-#Region "Public Methods"
-
-#End Region
-
-#Region "Private Methods"
-
-#End Region
-
-#Region "Public Properties"
-
-#End Region
-
-#Region "Internal Constructors"
-
-#End Region
 
 #Region "Public Constructors"
 
@@ -115,18 +91,11 @@ Namespace Engine.Libraries.PhoenixSpeak
 
 #End Region
 
-#Region "Public Methods"
-
-#End Region
-
-#Region "Private Methods"
-
-#End Region
-
         Friend Sub New(Name As String)
             _name = Name
             _value = Nothing
         End Sub
+
         Public Overloads Shared Operator <>(varA As Variable, varB As Variable) As Boolean
             Return varA.Value IsNot varB.Value
         End Operator
@@ -181,5 +150,7 @@ Namespace Engine.Libraries.PhoenixSpeak
 
             Return TypeOf _value Is String OrElse TypeOf _value Is Short OrElse TypeOf _value Is Double
         End Function
+
     End Class
+
 End Namespace

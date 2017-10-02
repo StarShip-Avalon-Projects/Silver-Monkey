@@ -38,7 +38,6 @@ Namespace Engine.Libraries
 
         End Function
 
-
         ''' <summary>
         ''' </summary>
         ''' <param name="reader">
@@ -74,7 +73,7 @@ Namespace Engine.Libraries
             Dim msg As Variable = MsPage.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
-            Dim test2 As Boolean = msMsg.Equals(test) And safety
+
             Return msMsg.Equals(test) And safety
 
         End Function
@@ -235,7 +234,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' Markup stripped string
         ''' </returns>
-        Private Function StripHTML(ByVal Text As String) As String
+        Private Shared Function StripHTML(ByVal Text As String) As String
 
             Dim r As New Regex("<(.*?)>")
             Text = r.Replace(Text, String.Empty)
@@ -259,8 +258,6 @@ Namespace Engine.Libraries
         End Property
 
 #End Region
-
-
 
 #Region "Private Methods"
 
@@ -305,12 +302,12 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Current Dream the Bot is in
         ''' </summary>
-        Public Dream As DREAM
+        Public Property Dream As DREAM
 
         ''' <summary>
         ''' Current Triggering Furre
         ''' </summary>
-        Public Player As FURRE
+        Public Property Player As FURRE
 
 #End Region
 
@@ -401,7 +398,7 @@ Namespace Engine.Libraries
         Protected Overloads Sub Add(trigger As Trigger, handler As TriggerHandler,
                                     SkilLevel As Integer, HasHelp As Boolean,
                                     Optional description As String = Nothing)
-            MyBase.Add(trigger, handler, description)
+            Add(trigger, handler, description)
             _HasHelp = HasHelp
             _SkillLevel = _SkillLevel
         End Sub
@@ -449,7 +446,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' <see cref="Double"/>
         ''' </returns>
-        Public Function ReadVariableOrNumber(ByVal reader As TriggerReader,
+        Public Shared Function ReadVariableOrNumber(ByVal reader As TriggerReader,
                                              Optional addIfNotExist As Boolean = False) As Double
             Dim result As Double = 0
             If reader.PeekVariable Then

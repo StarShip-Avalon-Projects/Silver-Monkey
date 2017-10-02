@@ -11,7 +11,9 @@ Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Paths
 Imports MonkeyCore.Settings
+Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
+Imports SilverMonkey.HelperClasses
 Imports SilverMonkeyEngine
 
 Public Class Main
@@ -62,6 +64,8 @@ Public Class Main
 
     Dim curWord As String
 
+    Private WithEvents MsPage As Monkeyspeak.Page
+
     ''' <summary>
     ''' Bot Debug tool
     ''' </summary>
@@ -71,119 +75,32 @@ Public Class Main
 
 #End Region
 
-#Region "WmCpyDta"
-
-    'Public Function FindProcessByName(strProcessName As String) As IntPtr
-    '    Dim HandleOfToProcess As IntPtr = IntPtr.Zero
-    '    Dim p As Process() = Process.GetProcesses()
-    '    For Each p1 As Process In p
-    '        Debug.WriteLine(p1.ProcessName.ToUpper())
-    '        If p1.ProcessName.ToUpper() = strProcessName.ToUpper() Then
-    '            HandleOfToProcess = p1.MainWindowHandle
-    '            Exit For
-    '        End If
-    '    Next
-    '    Return HandleOfToProcess
-    'End Function
-
-    'Protected Overrides Sub WndProc(ByRef m As Message)
-    '    If m.Msg = WM_COPYDATA Then
-    '        ''Dim mystr As COPYDATASTRUCT
-    '        'Dim mystr2 As COPYDATASTRUCT = CType(Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT)), COPYDATASTRUCT)
-
-    ' '' If the size matches 'If mystr2.cdData =
-    ' Marshal.SizeOf(GetType(MyData)) Then ' ' Marshal the data from the
-    ' unmanaged memory block to a ' ' MyStruct managed struct. ' Dim myStr
-    ' As MyData = DirectCast(Marshal.PtrToStructure(mystr2.lpData,
-    ' GetType(MyData)), MyData)
-
-    ' ' Dim sName As String = myStr.lpName Dim sFID As Integer = 0 Dim '
-    ' sTag As String = myStr.lpTag Dim sData As String = myStr.lpMsg
-
-    ' ' If sName = "~DSEX~" Then If sTag = "Restart" Then ' EngineRestart =
-    ' True cBot.MS_Script = ' msReader(CheckBotFolder(cBot.MS_File))
-    ' MainEngine.MSpage = ' engine.LoadFromString(cBot.MS_Script) MS_Stared
-    ' = 2 ' ' MainMSEngine.LoadLibrary() EngineRestart = False ' '
-    ' Main.ResetPrimaryVariables() sndDisplay(" '
-    ' <b>
-    ' ' <i>[SM]</i> '
-    ' </b>
-    ' ' Status: File Saved. Engine Restarted") If '
-    ' FurcadiaSession.IsClientConnected Then FurcadiaSession.SendClient(") '
-    ' <b>
-    ' ' <i>[SM]</i> '
-    ' </b>
-    ' ' Status: File Saved. Engine Restarted" + vbLf) PageExecute(0) ' End
-    ' If Else If DREAM.FurreList.Contains(sFID) Then ' Player =
-    ' DREAM.FurreList(sFID) Else Player = New ' FURRE(sName) End If
-
-    ' ' Player.Message = sData.ToString ' PageSetVariable(MS_Name, sName) '
-    ' PageSetVariable("MESSAGE", sData) ' ' Execute (0:15) When some one
-    ' whispers something ' PageExecute(75, 76, 77) '
-    ' SendClientMessage("Message from: " + sName, sData) ' End If 'End If
-    ' Else MyBase.WndProc(m) End If
-
-    'End Sub
-
-    'Private Declare Sub FindWindow Lib "user32.dll" ()
-
-    'Private Declare Function FindWindow Lib "user32.dll" (_ClassName As String, _WindowName As String) As Integer
-
-    'Public Declare Function SetFocusAPI Lib "user32.dll" Alias "SetFocus" (ByVal hWnd As Long) As Long
-    'Private Declare Function SetForegroundWindow Lib "user32" (ByVal hWnd As Long) As Long
-
-#End Region
-
 #Region "Public Methods"
 
-    'Public Sub BotConnecting()
-    '    If Me.BTN_Go.InvokeRequired Then
-    '        Dim d As New UpDateBtn_GoCallback2(AddressOf BotConnecting)
-    '        Me.Invoke(d)
-    '    Else
-    '        BTN_Go.Text = "Connected."
-    '        ConnectTrayIconMenuItem.Enabled = False
-    '        DisconnectTrayIconMenuItem.Enabled = True
-    '        SetBalloonText("Connected to Furcadia.")
+#Region "Bot Connection Controls"
 
-    '        ''(0:1) When the bot logs into furcadia,
-    '        'MainMSEngine.PageExecute(1)
-    '    End If
-    'End Sub
-
+    ''' <summary>
+    ''' Connection process to the Game Server
+    ''' </summary>
     Public Sub ConnectBot()
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
-            Try
-                sndDisplay("New Session" + DateTime.Now.ToString)
 
-                FurcadiaSession.Connect()
-                AddHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
+            LogStream = New LogStream(BotConfig.LogOptions)
+            SndDisplay("New Session" + DateTime.Now.ToString)
 
-                ConnectTrayIconMenuItem.Enabled = False
-                DisconnectTrayIconMenuItem.Enabled = True
-                UpDateDreamList() '
-            Catch ex As Exception
-                sndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
-            End Try
+            FurcadiaSession.Connect()
+            AddHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
+
+            ConnectTrayIconMenuItem.Enabled = False
+            DisconnectTrayIconMenuItem.Enabled = True
+            UpDateDreamList() '
+        Else Throw New InvalidEnumArgumentException("Furcadia Status is not" + ConnectionPhase.Init.ToString)
         End If
     End Sub
 
-    Public Sub ConnectionControlDisEnable()
-        Me.EditBotToolStripMenuItem.Enabled = False
-    End Sub
-
-    Public Function CountOccurrences(ByRef StToSerach As String, ByRef StToLookFor As String) As Int32
-        Dim iPos As Integer = -1
-        Dim iFound As Integer = 0
-        Do
-            iPos = StToSerach.IndexOf(StToLookFor, iPos + 1)
-            If iPos <> -1 Then
-                iFound += 1
-            End If
-        Loop Until iPos = -1
-        Return iFound
-    End Function
-
+    ''' <summary>
+    ''' Bots Disconnection Process
+    ''' </summary>
     Public Sub DisconnectBot()
         If Me.BTN_Go.InvokeRequired Then
             Dim d As New UpDateBtn_GoCallback2(AddressOf DisconnectBot)
@@ -191,6 +108,7 @@ Public Class Main
         Else
             FurcadiaSession.Disconnect()
             RemoveHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
+            FurcadiaSession.Dispose()
             ConnectTrayIconMenuItem.Enabled = False
             DisconnectTrayIconMenuItem.Enabled = True
             NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Now disconnected from Furcadia.", ToolTipIcon.Info)
@@ -200,6 +118,12 @@ Public Class Main
             ' (0:2) When the bot logs off PageExecute(2)
 
         End If
+    End Sub
+
+#End Region
+
+    Public Sub ConnectionControlDisEnable()
+        Me.EditBotToolStripMenuItem.Enabled = False
     End Sub
 
     Public Sub FormatRichTectBox(ByRef TB As MonkeyCore.Controls.RichTextBoxEx,
@@ -288,6 +212,10 @@ Public Class Main
         Next
     End Sub
 
+    ''' <summary>
+    ''' Form Title
+    ''' </summary>
+    ''' <param name="str"></param>
     Public Sub MainText(ByRef str As String)
         If Me.InvokeRequired Then
 
@@ -298,14 +226,6 @@ Public Class Main
             Me.NotifyIcon1.Text = "Silver Monkey: " & str.ToString
         End If
 
-    End Sub
-
-    Public Sub SendClientMessage(msg As String, data As String)
-        If Not FurcadiaSession Is Nothing Then
-
-            FurcadiaSession.SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
-            sndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
-        End If
     End Sub
 
     Public Sub UpDatButtonGoText(ByRef str As String)
@@ -321,6 +241,7 @@ Public Class Main
 
     ''' <summary>
     ''' Deal with Client Statuses and update our UI indicators
+    ''' TODO: Add Invoke request due to cross threading
     ''' </summary>
     ''' <param name="Sender">
     ''' </param>
@@ -417,7 +338,8 @@ Public Class Main
     ''' <summary>
     ''' store a list to file and refresh list
     ''' </summary>
-    ''' <param name="path">
+    ''' <param name="FilePath">
+    ''' File Path, Usually appdata\TsProjects\SilverMonkey
     ''' </param>
     Public Sub SaveRecentFile(FilePath As String)
         RecentToolStripMenuItem.DropDownItems.Clear()
@@ -494,6 +416,11 @@ Public Class Main
 
     End Sub
 
+    ''' <summary>
+    ''' New Bot Toolstrip Item
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub NewBotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles NewBotToolStripMenuItem.Click
         Using NewBotWindow As New NewBott(BotConfig)
             With NewBotWindow
@@ -501,7 +428,7 @@ Public Class Main
                     BotConfig = NewBotWindow.BotConfig
 
                     SilverMonkeyBotPath = BotConfig.BotPath
-                    SilverMonkeyLogPath = BotConfig.LogPath
+                    SilverMonkeyLogPath = BotConfig.LogOptions.LogPath
 
                     EditBotToolStripMenuItem.Enabled = True
                 End If
@@ -510,6 +437,33 @@ Public Class Main
     End Sub
 
     ''' <summary>
+    ''' click menu handler
+    ''' </summary>
+    ''' <param name="sender">
+    ''' </param>
+    ''' <param name="e">
+    ''' </param>
+    Private Sub RecentFile_click(sender As Object, e As EventArgs) Handles RecentToolStripMenuItem.Click
+
+        If FurcadiaSession Is Nothing OrElse Not FurcadiaSession.IsServerConnected Then
+
+            BotConfig = New BotOptions(sender.ToString())
+
+            FurcadiaSession = New BotSession(BotConfig)
+            MsPage = FurcadiaSession.MSpage
+
+            SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
+            SilverMonkeyLogPath = BotConfig.LogOptions.LogPath
+            My.Settings.LastBotFile = sender.ToString()
+            EditBotToolStripMenuItem.Enabled = True
+            My.Settings.Save()
+        End If
+
+        'same as open menu
+    End Sub
+
+    ''' <summary>
+    ''' Open Bot ToolStrip Item
     ''' </summary>
     ''' <param name="sender">
     ''' </param>
@@ -524,40 +478,12 @@ Public Class Main
                 BotConfig = New BotOptions(.FileName)
                 SaveRecentFile(.FileName)
                 SilverMonkeyBotPath = Path.GetDirectoryName(.FileName)
-                SilverMonkeyLogPath = BotConfig.LogPath
+                SilverMonkeyLogPath = BotConfig.LogOptions.LogPath
                 ' BotSetup.BotFile = .FileName BotSetup.ShowDialog()
                 Me.EditBotToolStripMenuItem.Enabled = True
             End If
 
         End With
-    End Sub
-
-    ''' <summary>
-    ''' click menu handler
-    ''' </summary>
-    ''' <param name="sender">
-    ''' </param>
-    ''' <param name="e">
-    ''' </param>
-    Private Sub RecentFile_click(sender As Object, e As EventArgs) Handles RecentToolStripMenuItem.Click
-        'BotSetup.BotFile =
-        'BotSetup.ShowDialog()
-
-        If FurcadiaSession Is Nothing OrElse Not FurcadiaSession.IsServerConnected Then
-
-            BotConfig = New BotOptions(sender.ToString())
-
-            FurcadiaSession = New BotSession(BotConfig)
-            MsPage = FurcadiaSession.MSpage
-
-            SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
-            SilverMonkeyLogPath = BotConfig.LogPath
-            My.Settings.LastBotFile = sender.ToString()
-            EditBotToolStripMenuItem.Enabled = True
-            My.Settings.Save()
-        End If
-
-        'same as open menu
     End Sub
 
 #End Region
@@ -575,38 +501,39 @@ Public Class Main
     ' Asc(ch) - Asc("1") + 35 End If
     ' RTFimg.InsertImage(IMGresize(GetFrame(shape, file), log_)) Return RTFimg.ToString
 
-    'End Function
     ''' <summary>
-    ''' Sets the FileName for the LogFile
+    ''' Send text to DebugWindow Delegate
     ''' </summary>
-    ''' <param name="bfile">
-    ''' Silver Monkey Bot configuration file
-    ''' </param>
-    ''' <returns>
-    ''' </returns>
-    Public Function setLogName(ByRef bfile As BotOptions) As String
-        Select Case bfile.LogOption
-            Case 0
-                Return bfile.LogNameBase
-            Case 1
-                bfile.LogIdx += 1
-                bfile.SaveBotSettings()
-                Return bfile.LogNameBase & BotConfig.LogIdx.ToString
-            Case 2
-                Return bfile.LogNameBase & Date.Now().ToString("MM_dd_yyyy_H-mm-ss")
+    ''' <param name="text"></param>
+    Public Delegate Sub SendTextDelegate(text As String)
 
-        End Select
-        Return "Default"
-    End Function
+    Public Sub OnMonkeySpeakPageError(trig As Trigger, ex As Exception)
+        If Not trig Is Nothing Then
+            SndDisplay("MonkeySpeak error:" + trig.ToString() + " " + ex.Message, TextDisplayManager.fColorEnum.Error)
+        Else
+            SndDisplay("MonkeySpeak error: " + ex.Message, TextDisplayManager.fColorEnum.Error)
+        End If
+
+        If Not ex.InnerException Is Nothing Then
+            If ex.InnerException.GetType() Is GetType(Engine.Libraries.Web.WebException) Then
+                Dim InnerEx = CType(ex.InnerException, Engine.Libraries.Web.WebException)
+                SendTextToDebugWindow(InnerEx.ToString)
+            Else
+                SendTextToDebugWindow(ex.InnerException.ToString)
+            End If
+
+        End If
+
+    End Sub
 
     ''' <summary>
     ''' Send formatted text to log box
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="newColor"></param>
-    Public Sub sndDisplay(ByRef data As String, Optional ByVal newColor As TextDisplayManager.fColorEnum = TextDisplayManager.fColorEnum.DefaultColor)
+    Public Sub SndDisplay(ByRef data As String, Optional ByVal newColor As TextDisplayManager.fColorEnum = TextDisplayManager.fColorEnum.DefaultColor)
 
-        If BotConfig.log Then LogStream.WriteLine(data)
+        If BotConfig.LogOptions.log Then LogStream.WriteLine(data)
         If CBool(Mainsettings.TimeStamp) Then
             Dim Now As String = DateTime.Now.ToLongTimeString
             data = Now.ToString & ": " & data
@@ -627,7 +554,7 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub log__KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Log_.KeyDown
+    Private Sub Log__KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Log_.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
         ElseIf (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
@@ -642,28 +569,7 @@ Public Class Main
     ''' <param name="o"></param>
     ''' <param name="text"></param>
     Private Sub OnFurcadiaSessionError(e As Exception, o As Object, text As String) Handles FurcadiaSession.Error
-        sndDisplay("Furcadia Session error:" + e.Message + o.ToString, TextDisplayManager.fColorEnum.Error)
-    End Sub
-
-    Private WithEvents MsPage As Monkeyspeak.Page
-
-    Public Sub OnMonkeySpeakPageError(trig As Trigger, ex As Exception)
-        If Not trig Is Nothing Then
-            sndDisplay("MonkeySpeak error:" + trig.ToString() + " " + ex.Message, TextDisplayManager.fColorEnum.Error)
-        Else
-            sndDisplay("MonkeySpeak error: " + ex.Message, TextDisplayManager.fColorEnum.Error)
-        End If
-
-        If Not ex.InnerException Is Nothing Then
-            If ex.InnerException.GetType() Is GetType(Engine.Libraries.WebException) Then
-                Dim InnerEx = CType(ex.InnerException, Engine.Libraries.WebException)
-                SendTextToDebugWindow(InnerEx.ToString)
-            Else
-                SendTextToDebugWindow(ex.InnerException.ToString)
-            End If
-
-        End If
-
+        SndDisplay("Furcadia Session error:" + e.Message + o.ToString, TextDisplayManager.fColorEnum.Error)
     End Sub
 
     ''' <summary>
@@ -686,17 +592,13 @@ Public Class Main
         End If
     End Sub
 
-    ''' <summary>
-    ''' Send text to DebugWindow Delegate
-    ''' </summary>
-    ''' <param name="text"></param>
-    Public Delegate Sub SendTextDelegate(text As String)
-
 #End Region
 
     'Public Function TagCloser(ByRef Str As String, ByRef Tag As String) As String
     '    'Tag Counters
     '    Dim OpenCount, CloseCount As Integer
+
+    Private DebugLogs As New StringBuilder()
 
     '    Dim CloseCounter As Integer
     '    OpenCount = CountOccurrences(Str, "<" + Tag + ">")
@@ -756,42 +658,14 @@ Public Class Main
             MessageBox.Show(BotConfig.CharacterIniFile + " Not found, Aborting connection!", "Important Message")
             Exit Sub
         End If
-        If FurcadiaSession Is Nothing Then
-            FurcadiaSession = New BotSession(BotConfig)
-            MsPage = FurcadiaSession.MSpage
-        ElseIf FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
-            FurcadiaSession.Dispose()
-            FurcadiaSession = New BotSession(BotConfig)
-            MsPage = FurcadiaSession.MSpage
-        End If
 
-        If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
-
-            If BotConfig.log Then
-                Dim LogFile As String = Nothing
-                Try
-                    LogFile = setLogName(BotConfig)
-                    LogStream = New LogStream(LogFile, SilverMonkeyLogPath)
-                Catch
-                    FurcadiaSession.Dispose()
-                    sndDisplay("There's an error with log-file" + LogFile, TextDisplayManager.fColorEnum.Error)
-                    Exit Sub
-                End Try
-            End If
-
-            My.Settings.LastBotFile = CheckBotFolder(BotConfig.CharacterIniFile)
-            My.Settings.Save()
-
-            If Not IsNothing(MsExport) Then MsExport.Dispose()
+        If FurcadiaSession Is Nothing OrElse FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
             Try
                 ConnectBot()
-            Catch Ex As NetProxyException
-
-                DisconnectBot()
-                sndDisplay("Connection Aborting: " + Ex.Message)
+            Catch ex As Exception
+                SndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
             End Try
         Else
-
             DisconnectBot()
 
         End If
@@ -866,8 +740,6 @@ Public Class Main
         End If
     End Sub
 
-    Private DebugLogs As New StringBuilder()
-
     ''' <summary>
     ''' Open the MonkeySpeak Export Window
     ''' </summary>
@@ -903,8 +775,10 @@ Public Class Main
             End If
 
         End If
-        Dim processStrt As New ProcessStartInfo
-        processStrt.FileName = Path.Combine(Application.StartupPath, "MonkeySpeakEditor.EXE")
+
+        Dim processStrt As New ProcessStartInfo With {
+            .FileName = Path.Combine(Application.StartupPath, "MonkeySpeakEditor.EXE")
+        }
 
         Dim f As String = CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
         If Not FurcadiaSession Is Nothing Then
@@ -924,7 +798,41 @@ Public Class Main
         Process.Start(processStrt)
     End Sub
 
-    Private Sub log__MouseHover(sender As Object, e As System.EventArgs) Handles Log_.MouseHover
+    Private Sub Log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles Log_.LinkClicked
+        Dim Proto As String = ""
+        Dim Str As String = e.LinkText
+
+        If Str.Contains("#") Then
+            Str = Str.Substring(0, Str.IndexOf("#"))
+        End If
+        Proto = Str.Substring(0, Str.IndexOf("://"))
+        Select Case Proto.ToLower
+            Case "http"
+                Try
+                    Me.Cursor = System.Windows.Forms.Cursors.AppStarting
+
+                    Process.Start(Str)
+                Catch
+                Finally
+                    Me.Cursor = System.Windows.Forms.Cursors.Default
+                End Try
+            Case "https"
+                Try
+                    Me.Cursor = System.Windows.Forms.Cursors.AppStarting
+
+                    Process.Start(Str)
+                Catch
+                Finally
+                    Me.Cursor = System.Windows.Forms.Cursors.Default
+                End Try
+
+            Case Else
+                MsgBox("Protocol: """ & Proto & """ Not yet implemented")
+        End Select
+        'MsgBox(Proto)
+    End Sub
+
+    Private Sub Log__MouseHover(sender As Object, e As System.EventArgs) Handles Log_.MouseHover
         If Cursor.Current = Cursors.Hand Then
 
             ToolTip1.Show(curWord, Me.Log_)
@@ -933,12 +841,40 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub log__MouseMove(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Log_.MouseMove
+    Private Sub Log__MouseMove(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles Log_.MouseMove
         If Cursor.Current = Cursors.Hand Or Cursor.Current = Cursors.Default Then
 
             curWord = GetWordUnderMouse(Me.Log_, e.X, e.Y)
 
         End If
+    End Sub
+
+    Private Sub Main_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Try
+
+            Select Case Mainsettings.SysTray
+                Case CheckState.Checked
+                    Me.Visible = False
+                    e.Cancel = True
+                Case CheckState.Indeterminate
+                    If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing,
+                     MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
+                        Mainsettings.SysTray = CheckState.Checked
+                        Mainsettings.SaveMainSettings()
+                        Me.Visible = False
+                        e.Cancel = True
+                    Else
+                        e.Cancel = False
+                        FormClose()
+                    End If
+                Case CheckState.Unchecked
+                    FormClose()
+
+            End Select
+            'TimeUpdater.Abort()
+        Catch eX As Exception
+            Dim logError As New ErrorLogging(eX, Me)
+        End Try
     End Sub
 
     Private Sub Main_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -962,7 +898,7 @@ Public Class Main
                 If BSetUp.ShowDialog() = Windows.Forms.DialogResult.OK Then
                     BotConfig = BSetUp.bFile
                     SilverMonkeyBotPath = BotConfig.BotPath
-                    SilverMonkeyLogPath = BotConfig.LogPath
+                    SilverMonkeyLogPath = BotConfig.LogOptions.LogPath
                 End If
             End Using
 
@@ -976,11 +912,12 @@ Public Class Main
             NotifyIcon1.Dispose()
         End If
         If NotifyIcon1 Is Nothing Then
-            NotifyIcon1 = New NotifyIcon()
-            NotifyIcon1.ContextMenuStrip = ContextTryIcon
-            NotifyIcon1.Icon = My.Resources.metal
-            NotifyIcon1.BalloonTipTitle = My.Application.Info.ProductName
-            NotifyIcon1.Text = My.Application.Info.ProductName + ": " + My.Application.Info.Version.ToString
+            NotifyIcon1 = New NotifyIcon With {
+                .ContextMenuStrip = ContextTryIcon,
+                .Icon = My.Resources.metal,
+                .BalloonTipTitle = My.Application.Info.ProductName,
+                .Text = My.Application.Info.ProductName + ": " + My.Application.Info.Version.ToString
+            }
             AddHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
         End If
 
@@ -1071,35 +1008,35 @@ Public Class Main
 
     End Sub
 
-    Private Sub onClientReceived(data As String) Handles FurcadiaSession.ClientData2
+    Private Sub OnClientReceived(data As String) Handles FurcadiaSession.ClientData2
         FurcadiaSession.SendToServer(data)
     End Sub
 
     ''' <summary>
     ''' Parse the Server Channels
     ''' </summary>
-    ''' <param name="InstructionObject">
-    ''' Processed Channel Object with triggering furre
+    ''' <param name="sender">
+    ''' <see cref="ChannelObject"/>
     ''' </param>
     ''' <param name="Args">
-    ''' Parse server Args
+    ''' <see cref="ChannelObject"/>
     ''' </param>
-    Private Sub onProcessServerChannelData(InstructionObject As ChannelObject, Args As ParseServerArgs) _
+    Private Sub OnProcessServerChannelData(sender As Object, Args As ParseChannelArgs) _
         Handles FurcadiaSession.ProcessServerChannelData
-
+        Dim InstructionObject = DirectCast(sender, ChannelObject)
         If Not String.IsNullOrEmpty(InstructionObject.ChannelText) Then
-            sndDisplay(InstructionObject.FormattedChannelText)
+            SndDisplay(InstructionObject.FormattedChannelText)
         ElseIf Not String.IsNullOrEmpty(InstructionObject.Player.Message) Then
-            sndDisplay(InstructionObject.Player.Message)
+            SndDisplay(InstructionObject.Player.Message)
         Else
-            sndDisplay(InstructionObject.RawInstruction)
+            SndDisplay(InstructionObject.RawInstruction)
         End If
 
     End Sub
 
-    Private Sub onServerReceive(data As String) Handles FurcadiaSession.ServerData2
+    Private Sub OnServerReceive(data As String) Handles FurcadiaSession.ServerData2
         If (FurcadiaSession.ServerStatus = ConnectionPhase.MOTD) Then
-            sndDisplay(data)
+            SndDisplay(data)
         End If
         FurcadiaSession.SendToClient(data)
 
@@ -1108,11 +1045,13 @@ Public Class Main
     ''' <summary>
     ''' Update the Dreams Furre list as the list changes by spawn and remove instructions
     ''' </summary>
-    ''' <param name="InstructionObject">
+    ''' <param name="sender">InstructionObject
     ''' </param>
     ''' <param name="Args">
     ''' </param>
-    Private Sub parseFurreList(InstructionObject As BaseServerInstruction, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
+    Private Sub ParseFurreList(sender As Object, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
+        Dim InstructionObject = DirectCast(sender, BaseServerInstruction)
+
         Select Case InstructionObject.InstructionType
             Case ServerInstructionType.SpawnAvatar
                 UpDateDreamList()
@@ -1132,16 +1071,20 @@ Public Class Main
 
 #Region "Action Controls"
 
-    Private ActionCMD As String
-
     Private WithEvents DebugWindow As Variables
+    Private ActionCMD As String
 
     Public Sub New()
 
         ' This call is required by the designer.
         InitializeComponent()
-
         ' Add any initialization after the InitializeComponent() call.
+
+        'HACK: Resource Designer isn't saving these
+        Me.SilverMonkeyToolStripMenuItem.Text = "Silver Monkey Engine Libraries"
+        Me.MonkeySpeakLibrariesToolStripMenuItem.Text = "Monkey Speak Libraries"
+        Me.EngineStartProcessToolStripMenuItem.Text = "Engine Startup Process"
+        DefaultEngineLibrariesToolStripMenuItem.Text = "Default Engine Libraries"
 
     End Sub
 
@@ -1208,15 +1151,15 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub get__Click(sender As Object, e As System.EventArgs) Handles get_.Click
+    Private Sub Get__Click(sender As Object, e As System.EventArgs) Handles get_.Click
         SendCommandToServer("`get")
     End Sub
 
-    Private Sub se__Click(sender As Object, e As System.EventArgs) Handles se_.Click
+    Private Sub Se__Click(sender As Object, e As System.EventArgs) Handles se_.Click
         SendCommandToServer("`m 3")
     End Sub
 
-    Private Sub se__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseDown
+    Private Sub Se__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseDown
         If Not FurcadiaSession Is Nothing Then
             If Not FurcadiaSession.IsServerConnected Then Exit Sub
             Me.ActionTmr.Enabled = FurcadiaSession.IsServerConnected
@@ -1224,7 +1167,7 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub se__MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseUp
+    Private Sub Se__MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseUp
         Me.ActionTmr.Enabled = False
         ActionCMD = ""
     End Sub
@@ -1241,35 +1184,53 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub sw__Click(sender As Object, e As System.EventArgs) Handles sw_.Click
+    Private Sub Sw__Click(sender As Object, e As System.EventArgs) Handles sw_.Click
         SendCommandToServer("`m 1")
     End Sub
 
-    Private Sub sw__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseDown
+    Private Sub Sw__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseDown
         If FurcadiaSession Is Nothing Then Exit Sub
         Me.ActionTmr.Enabled = FurcadiaSession.IsServerConnected
         ActionCMD = "`m 1"
     End Sub
 
-    Private Sub sw__MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseUp
+    Private Sub Sw__MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseUp
 
         Me.ActionTmr.Enabled = False
         ActionCMD = ""
     End Sub
 
-    Private Sub use__Click(sender As Object, e As System.EventArgs) Handles use_.Click
+    Private Sub Use__Click(sender As Object, e As System.EventArgs) Handles use_.Click
         SendCommandToServer("`use")
     End Sub
 
 #End Region
 
-    Private Sub sendToServer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+    Private Sub SendToServer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles sendToServer.Click
         SendCommandToServer(toServer.Text.Replace(vbCrLf, ""))
         toServer.Clear()
     End Sub
 
-    Private Sub toServer_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles toServer.KeyDown
+    Private Sub StartupProcessToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EngineStartProcessToolStripMenuItem.Click
+        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            Help.ShowHelp(Me, HelpFile, "/html/4c192ea5-9a9c-4dae-927f-7581b05c0f65.htm")
+        End If
+    End Sub
+
+    Private Sub DefaultEngineLibrariesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DefaultEngineLibrariesToolStripMenuItem.Click
+        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            Help.ShowHelp(Me, HelpFile, "/html/N_Monkeyspeak_Libraries.htm")
+        End If
+    End Sub
+
+    Private Sub SilverMonkeyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SilverMonkeyToolStripMenuItem.Click
+        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
+            Help.ShowHelp(Me, HelpFile, "/html/N_SilverMonkeyEngine_Engine_Libraries.htm")
+        End If
+    End Sub
+
+    Private Sub ToServer_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles toServer.KeyDown
         'Command History
         If (e.KeyCode = Keys.I AndAlso e.Modifiers = Keys.Control) Then
 
@@ -1310,74 +1271,6 @@ Public Class Main
             e.Handled = True
         End If
 
-    End Sub
-
-    Private Sub StartupProcessToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        If File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, HelpFile)) Then
-            Help.ShowHelp(Me, HelpFile, "/html/4c192ea5-9a9c-4dae-927f-7581b05c0f65.htm")
-        End If
-    End Sub
-
-    Private Sub Main_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Try
-
-            Select Case Mainsettings.SysTray
-                Case CheckState.Checked
-                    Me.Visible = False
-                    e.Cancel = True
-                Case CheckState.Indeterminate
-                    If MessageBox.Show("Minimize to SysTray?", "", MessageBoxButtons.YesNo, Nothing,
-                     MessageBoxDefaultButton.Button1) = DialogResult.Yes Then
-                        Mainsettings.SysTray = CheckState.Checked
-                        Mainsettings.SaveMainSettings()
-                        Me.Visible = False
-                        e.Cancel = True
-                    Else
-                        e.Cancel = False
-                        FormClose()
-                    End If
-                Case CheckState.Unchecked
-                    FormClose()
-
-            End Select
-            'TimeUpdater.Abort()
-        Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me)
-        End Try
-    End Sub
-
-    Private Sub log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles Log_.LinkClicked
-        Dim Proto As String = ""
-        Dim Str As String = e.LinkText
-
-        If Str.Contains("#") Then
-            Str = Str.Substring(0, Str.IndexOf("#"))
-        End If
-        Proto = Str.Substring(0, Str.IndexOf("://"))
-        Select Case Proto.ToLower
-            Case "http"
-                Try
-                    Me.Cursor = System.Windows.Forms.Cursors.AppStarting
-
-                    Process.Start(Str)
-                Catch
-                Finally
-                    Me.Cursor = System.Windows.Forms.Cursors.Default
-                End Try
-            Case "https"
-                Try
-                    Me.Cursor = System.Windows.Forms.Cursors.AppStarting
-
-                    Process.Start(Str)
-                Catch
-                Finally
-                    Me.Cursor = System.Windows.Forms.Cursors.Default
-                End Try
-
-            Case Else
-                MsgBox("Protocol: """ & Proto & """ Not yet implemented")
-        End Select
-        'MsgBox(Proto)
     End Sub
 
 End Class
