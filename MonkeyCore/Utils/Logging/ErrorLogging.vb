@@ -60,7 +60,7 @@ Namespace Utils.Logging
             'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
 
             strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
-            LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck.ToString)
+            LogError(Ex, ObjectThrowingError.ToString(), ObJectCheck)
         End Sub
 
 #End Region
@@ -162,6 +162,7 @@ Namespace Utils.Logging
 
         End Sub
 
+        'Disabled as it's not used
         ''' <summary>
         ''' </summary>
         ''' <param name="ex">
