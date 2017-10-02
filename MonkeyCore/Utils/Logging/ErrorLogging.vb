@@ -40,7 +40,7 @@ Namespace Utils.Logging
         ''' </param>
         ''' <param name="ObjectThrowingError">
         ''' </param>
-        Public Sub New(ByRef Ex As System.Exception, ByVal ObjectThrowingError As Object)
+        Public Sub New(ByRef Ex As Exception, ByVal ObjectThrowingError As Object)
             'Call Log Error
             'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
             strErrorFilePath = Path.Combine(SilverMonkeyErrorLogPath, My.Application.Info.ProductName & "_Error_" & Date.Now().ToString("MM_dd_yyyy_H-mm-ss") & ".txt")
@@ -55,7 +55,7 @@ Namespace Utils.Logging
         ''' </param>
         ''' <param name="ObJectCheck">
         ''' </param>
-        Public Sub New(ByRef Ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
+        Public Sub New(ByRef Ex As Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
             'Call Log Error
             'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
 
@@ -88,85 +88,77 @@ Namespace Utils.Logging
         ''' </param>
         ''' <param name="ObjectThrowingError">
         ''' </param>
-        Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object)
+        Public Sub LogError(ByRef ex As Exception, ByRef ObjectThrowingError As Object)
             BugReport = New ProjectReport
 
             Using LogFile As System.IO.StreamWriter = New System.IO.StreamWriter(strErrorFilePath, False)
-                Try
 
-                    '***********************************************************
-                    '* Error Log Formatting
-                    '***********************************************************
+                '***********************************************************
+                '* Error Log Formatting
+                '***********************************************************
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("")
+                LogFile.WriteLine(My.Application.Info.ProductName & " Error Report")
+
+                LogFile.WriteLine(My.Application.Info.Version.ToString & " Product Version")
+
+                LogFile.WriteLine(FileVersionInfo.GetVersionInfo(My.Application.Info.AssemblyName + ".exe").ProductVersion & " Informational Version")
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Date: " & Date.Now().ToString("d"))
+                LogFile.WriteLine("")
+                LogFile.WriteLine("System Details")
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("Windows Version: " & My.Computer.Info.OSFullName)
+                LogFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
+                'Determine if 64-bit
+                If Environment.Is64BitOperatingSystem Then
+                    LogFile.WriteLine("64-Bit OS")
+                Else
+                    LogFile.WriteLine("32-Bit OS")
+                End If
+
+                If Environment.Is64BitProcess = True Then
+                    LogFile.WriteLine("64-Bit Process")
+                Else
+                    LogFile.WriteLine("32-Bit Process")
+                End If
+
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Program Location: " & My.Application.Info.DirectoryPath)
+
+                LogFile.WriteLine("")
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Error Details")
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("Error: " & ex.Message)
+                LogFile.WriteLine("")
+                If Not ex.InnerException Is Nothing Then
+                    LogFile.WriteLine("Inner Error: " & ex.InnerException.Message)
+                    LogFile.WriteLine("")
+                End If
+                LogFile.WriteLine("Source: " & ObjectThrowingError.ToString)
+                LogFile.WriteLine("")
+                Dim st As New StackTrace(ex, True)
+                LogFile.WriteLine("-------------------------------------------------------")
+
+                LogFile.WriteLine("Stack Trace: " & st.ToString())
+                LogFile.WriteLine("")
+                LogFile.WriteLine("-------------------------------------------------------")
+                If Not ex.InnerException Is Nothing Then
+                    Dim stInner As New StackTrace(ex.InnerException, True)
+                    LogFile.WriteLine("Inner Stack Trace: " & stInner.ToString())
+                    LogFile.WriteLine("")
                     LogFile.WriteLine("-------------------------------------------------------")
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine(My.Application.Info.ProductName & " Error Report")
+                End If
 
-                    LogFile.WriteLine(My.Application.Info.Version.ToString & " Product Version")
+                '***********************************************************
 
-                    LogFile.WriteLine(FileVersionInfo.GetVersionInfo(My.Application.Info.AssemblyName + ".exe").ProductVersion & " Informational Version")
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("Date: " & Date.Now().ToString("d"))
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("System Details")
-                    LogFile.WriteLine("-------------------------------------------------------")
-                    LogFile.WriteLine("Windows Version: " & My.Computer.Info.OSFullName)
-                    LogFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
-                    'Determine if 64-bit
-                    If Environment.Is64BitOperatingSystem Then
-                        LogFile.WriteLine("64-Bit OS")
-                    Else
-                        LogFile.WriteLine("32-Bit OS")
-                    End If
-
-                    If Environment.Is64BitProcess = True Then
-                        LogFile.WriteLine("64-Bit Process")
-                    Else
-                        LogFile.WriteLine("32-Bit Process")
-                    End If
-
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("Program Location: " & My.Application.Info.DirectoryPath)
-
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("Error Details")
-                    LogFile.WriteLine("-------------------------------------------------------")
-                    LogFile.WriteLine("Error: " & ex.Message)
-                    LogFile.WriteLine("")
-                    If Not ex.InnerException Is Nothing Then
-                        LogFile.WriteLine("Inner Error: " & ex.InnerException.Message)
-                        LogFile.WriteLine("")
-                    End If
-                    LogFile.WriteLine("Source: " & ObjectThrowingError.ToString)
-                    LogFile.WriteLine("")
-                    Dim st As New StackTrace(ex, True)
-                    LogFile.WriteLine("-------------------------------------------------------")
-
-                    LogFile.WriteLine("Stack Trace: " & st.ToString())
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("-------------------------------------------------------")
-                    If Not ex.InnerException Is Nothing Then
-                        Dim stInner As New StackTrace(ex.InnerException, True)
-                        LogFile.WriteLine("Inner Stack Trace: " & stInner.ToString())
-                        LogFile.WriteLine("")
-                        LogFile.WriteLine("-------------------------------------------------------")
-                    End If
-
-                    '***********************************************************
-                Finally
-                    If Not IsNothing(LogFile) Then
-                        LogFile.Close()
-                    End If
-                End Try
             End Using
 
-            Try
-                BugReport.ProcuctName = My.Application.Info.ProductName
-                BugReport.AttachmentFile = strErrorFilePath
-                BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
-                BugReport.Severity = "crash"
-            Catch
-            End Try
+            BugReport.ProcuctName = My.Application.Info.ProductName
+            BugReport.AttachmentFile = strErrorFilePath
+            BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
+            BugReport.Severity = "crash"
 
         End Sub
 
@@ -178,91 +170,85 @@ Namespace Utils.Logging
         ''' </param>
         ''' <param name="ObJectCheck">
         ''' </param>
-        Public Sub LogError(ByRef ex As System.Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
+        Public Sub LogError(ByRef ex As Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
             'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
             BugReport = New ProjectReport()
             Using LogFile As StreamWriter = New StreamWriter(strErrorFilePath, False)
-                Try
 
-                    '***********************************************************
-                    '* Error Log Formatting
-                    '***********************************************************
-                    LogFile.WriteLine("-------------------------------------------------------")
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine(My.Application.Info.ProductName & " Error Report")
-                    LogFile.WriteLine(My.Application.Info.Version.ToString & " Product Version")
-                    LogFile.WriteLine(FileVersionInfo.GetVersionInfo(My.Application.Info.AssemblyName + ".exe").ProductVersion & " Informational Version")
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("Date: " & Date.Now().ToString("d"))
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("System Details")
-                    LogFile.WriteLine("-------------------------------------------------------")
-                    LogFile.WriteLine("Windows Version: " & My.Computer.Info.OSFullName)
-                    LogFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
-                    'Determine if 64-bit
-                    If Environment.Is64BitOperatingSystem Then
-                        LogFile.WriteLine("64-Bit OS")
-                    Else
-                        LogFile.WriteLine("32-Bit OS")
-                    End If
-                    If Environment.Is64BitProcess = True Then
-                        LogFile.WriteLine("64-Bit Process")
-                    Else
-                        LogFile.WriteLine("32-Bit Process")
-                    End If
+                '***********************************************************
+                '* Error Log Formatting
+                '***********************************************************
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("")
+                LogFile.WriteLine(My.Application.Info.ProductName & " Error Report")
+                LogFile.WriteLine(My.Application.Info.Version.ToString & " Product Version")
+                LogFile.WriteLine(FileVersionInfo.GetVersionInfo(My.Application.Info.AssemblyName + ".exe").ProductVersion & " Informational Version")
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Date: " & Date.Now().ToString("d"))
+                LogFile.WriteLine("")
+                LogFile.WriteLine("System Details")
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("Windows Version: " & My.Computer.Info.OSFullName)
+                LogFile.WriteLine("Version Number: " & My.Computer.Info.OSVersion)
+                'Determine if 64-bit
+                If Environment.Is64BitOperatingSystem Then
+                    LogFile.WriteLine("64-Bit OS")
+                Else
+                    LogFile.WriteLine("32-Bit OS")
+                End If
+                If Environment.Is64BitProcess = True Then
+                    LogFile.WriteLine("64-Bit Process")
+                Else
+                    LogFile.WriteLine("32-Bit Process")
+                End If
 
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("Program Location: " & My.Application.Info.DirectoryPath)
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Program Location: " & My.Application.Info.DirectoryPath)
 
+                LogFile.WriteLine("")
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Error Details")
+                LogFile.WriteLine("-------------------------------------------------------")
+                LogFile.WriteLine("Error: " & ex.Message)
+                LogFile.WriteLine("")
+                If Not IsNothing(ex.InnerException) Then
+                    LogFile.WriteLine("Inner Error: " & ex.InnerException.Message)
                     LogFile.WriteLine("")
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("Error Details")
-                    LogFile.WriteLine("-------------------------------------------------------")
-                    LogFile.WriteLine("Error: " & ex.Message)
-                    LogFile.WriteLine("")
-                    If Not IsNothing(ex.InnerException) Then
-                        LogFile.WriteLine("Inner Error: " & ex.InnerException.Message)
-                        LogFile.WriteLine("")
-                    End If
-                    LogFile.WriteLine("Source: " & ObjectThrowingError.ToString)
-                    LogFile.WriteLine("")
-                    LogFile.WriteLine("Object Check: " & ObJectCheck.ToString)
-                    LogFile.WriteLine("")
-                    Dim st As New StackTrace(ex, True)
-                    LogFile.WriteLine("Stack Frames: ")
-                    For Each Frame As StackFrame In st.GetFrames()
-                        LogFile.WriteLine("Line:" + Frame.GetFileLineNumber().ToString + Frame.GetFileName().ToString, Frame.GetMethod().ToString)
-                    Next
-                    LogFile.WriteLine("-------------------------------------------------------")
+                End If
+                LogFile.WriteLine("Source: " & ObjectThrowingError.ToString)
+                LogFile.WriteLine("")
+                LogFile.WriteLine("Object Check: " & ObJectCheck.ToString)
+                LogFile.WriteLine("")
+                Dim st As New StackTrace(ex, True)
+                LogFile.WriteLine("Stack Frames: ")
+                For Each Frame As StackFrame In st.GetFrames()
+                    LogFile.WriteLine("Line:" + Frame.GetFileLineNumber().ToString + Frame.GetFileName().ToString, Frame.GetMethod().ToString)
+                Next
+                LogFile.WriteLine("-------------------------------------------------------")
 
-                    LogFile.WriteLine("Stack Trace: " & st.ToString())
+                LogFile.WriteLine("Stack Trace: " & st.ToString())
+                LogFile.WriteLine("")
+                LogFile.WriteLine("-------------------------------------------------------")
+                If Not ex.InnerException Is Nothing Then
+                    Dim stInner As New StackTrace(ex.InnerException, True)
+                    LogFile.WriteLine("Inner Stack Trace: " & stInner.ToString())
                     LogFile.WriteLine("")
                     LogFile.WriteLine("-------------------------------------------------------")
-                    If Not ex.InnerException Is Nothing Then
-                        Dim stInner As New StackTrace(ex.InnerException, True)
-                        LogFile.WriteLine("Inner Stack Trace: " & stInner.ToString())
-                        LogFile.WriteLine("")
-                        LogFile.WriteLine("-------------------------------------------------------")
-                    End If
+                End If
 
-                    '***********************************************************
-                Finally
-                    If Not IsNothing(LogFile) Then
-                        LogFile.Close()
-                    End If
-                End Try
+                '***********************************************************
+
             End Using
 
-            Try
-                BugReport.ProcuctName = My.Application.Info.ProductName
-                BugReport.AttachmentFile = strErrorFilePath
-                BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
-                BugReport.Severity = "crash"
-            Catch
-            End Try
+            BugReport.ProcuctName = My.Application.Info.ProductName
+            BugReport.AttachmentFile = strErrorFilePath
+            BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
+            BugReport.Severity = "crash"
+
         End Sub
 
 #End Region
 
     End Class
+
 End Namespace
