@@ -108,6 +108,9 @@ Public Class BotSession : Inherits ProxySession
     ''' </summary>
     Public WithEvents MainEngine As Engine.MainEngine
 
+    ''' <summary>
+    ''' Monkey Speak Page object
+    ''' </summary>
     Public WithEvents MSpage As Monkeyspeak.Page = Nothing
 
     'Monkey Speak Bot specific Variables

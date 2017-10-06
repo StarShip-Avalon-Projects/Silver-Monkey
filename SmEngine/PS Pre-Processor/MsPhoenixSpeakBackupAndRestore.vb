@@ -477,7 +477,7 @@ Namespace Engine.Libraries
             If PsProcess <> PsSystemRunning.PsNone Then Exit Sub
             PsProcess = PsSystemRunning.PsRestore
             '(0:500) When the bot starts backing up the character Phoenix Speak,
-            MsPage.Execute(502)
+            FurcadiaSession.MSpage.Execute(502)
             If days > 0 Then
                 SendClientMessage("Restoring characters newer than " + days.ToString + " days to the dream.")
             Else
@@ -573,7 +573,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
                         'Dream specific Information
                         SendClientMessage("Backing up Dream Characters Set.")
                         '(0:500) When the bot starts backing up the character Phoenix Speak,
-                        MsPage.Execute(500)
+                        FurcadiaSession.MSpage.Execute(500)
                         CharacterList.Clear()
                         Dim f As New PhoenixSpeak.Variable("[DREAM]", "'<none>'")
                         CharacterList.Add(f)

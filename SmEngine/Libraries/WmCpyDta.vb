@@ -53,7 +53,7 @@ Namespace Engine.Libraries
             'Debug.Print("msgContains Begin Execution")
             msMsg = reader.ReadString()
             'Debug.Print("msMsg = " & msMsg)
-            msg = MsPage.GetVariable("MESSAGE").Value.ToString
+            msg = reader.Page.GetVariable("MESSAGE").Value.ToString
             'Debug.Print("Msg = " & msg)
             Return msg.Equals(msMsg)
 
@@ -74,7 +74,7 @@ Namespace Engine.Libraries
             'Debug.Print("msgContains Begin Execution")
             msMsg = reader.ReadString()
             'Debug.Print("msMsg = " & msMsg)
-            msg = MsPage.GetVariable("MESSAGE").Value.ToString
+            msg = reader.Page.GetVariable("MESSAGE").Value.ToString
             'Debug.Print("Msg = " & msg)
             Return msg.Contains(msMsg)
 

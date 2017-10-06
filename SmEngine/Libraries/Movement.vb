@@ -39,9 +39,9 @@ Namespace Engine.Libraries
 #Region "Private Fields"
 
         ''' <summary>
-        ''' Regex syntax for direction movement
+        ''' Regex syntax for Fircadia isometric directions
         ''' </summary>
-        Private Const RGEX_Mov_Steps As String = "(nw|ne|sw|se|1|3|7|9)"
+        Public Const RGEX_Mov_Steps As String = "(nw|ne|sw|se|1|3|7|9)"
 
 #End Region
 

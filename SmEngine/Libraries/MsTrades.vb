@@ -27,11 +27,11 @@ Namespace Engine.Libraries
             End Function, "(0:46) When the bot sees a trade request,")
             '(0:47) When the bot sees the trade request {..},
             Add(TriggerCategory.Cause, 47,
-            AddressOf msgIs, "(0:47) When the bot sees the trade request {..},")
+            AddressOf MsgIs, "(0:47) When the bot sees the trade request {..},")
 
             '(0:48) When the bot sees a trade request with {..} in it,
             Add(TriggerCategory.Cause, 48,
-            AddressOf msgContains, "(0:48) When the bot sees a trade request with {..} in it,")
+            AddressOf MsgContains, "(0:48) When the bot sees a trade request with {..} in it,")
         End Sub
 
         ''' <summary>
@@ -39,8 +39,8 @@ Namespace Engine.Libraries
         ''' </summary>
         ''' <param name="reader"></param>
         ''' <returns></returns>
-        Protected Overrides Function msgContains(reader As TriggerReader) As Boolean
-            Return MyBase.msgContains(reader)
+        Protected Overrides Function MsgContains(reader As TriggerReader) As Boolean
+            Return MyBase.MsgContains(reader)
         End Function
 
         ''' <summary>
@@ -48,8 +48,8 @@ Namespace Engine.Libraries
         ''' </summary>
         ''' <param name="reader"></param>
         ''' <returns></returns>
-        Protected Overrides Function msgIs(reader As TriggerReader) As Boolean
-            Return MyBase.msgIs(reader)
+        Protected Overrides Function MsgIs(reader As TriggerReader) As Boolean
+            Return MyBase.MsgIs(reader)
         End Function
 
         ''' <summary>
@@ -63,7 +63,7 @@ Namespace Engine.Libraries
 
             Select Case Text
                 Case "trade"
-                    MsPage.Execute(46, 47, 48)
+                    FurcadiaSession.MSpage.Execute(46, 47, 48)
             End Select
         End Sub
 

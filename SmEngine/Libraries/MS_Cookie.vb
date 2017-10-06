@@ -107,8 +107,8 @@ Namespace Engine.Libraries
         Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerChannelData
             '   If FurcadiaSession.IsConnectedCharacter Then Exit Sub
             Player = InstructionObject.Player
-            MsPage.SetVariable("NAME", Player.Name, True)
-            MsPage.SetVariable("MESSAGE", Player.Message, True)
+            FurcadiaSession.MSpage.SetVariable("NAME", Player.Name, True)
+            FurcadiaSession.MSpage.SetVariable("MESSAGE", Player.Message, True)
 
             Dim Text = InstructionObject.ChannelText
             Select Case InstructionObject.Channel
@@ -121,33 +121,33 @@ Namespace Engine.Libraries
                     Dim CookieToMe As Regex = New Regex(String.Format("{0}", CookieToMeREGEX))
                     If CookieToMe.Match(Text).Success Then
 
-                        MsPage.Execute(42, 43)
+                        FurcadiaSession.MSpage.Execute(42, 43)
                     End If
                     Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
                     If CookieToAnyone.Match(Text).Success Then
 
                         If FurcadiaSession.IsConnectedCharacter Then
-                            MsPage.Execute(42, 43)
+                            FurcadiaSession.MSpage.Execute(42, 43)
                         Else
-                            MsPage.Execute(44)
+                            FurcadiaSession.MSpage.Execute(44)
                         End If
 
                     End If
                     Dim CookieFail As Regex = New Regex(String.Format("You do not have any (.*?) left!"))
                     If CookieFail.Match(Text).Success Then
-                        MsPage.Execute(45)
+                        FurcadiaSession.MSpage.Execute(45)
                     End If
                     Dim EatCookie As Regex = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
                     If EatCookie.Match(Text).Success Then
                         'TODO Cookie eat message can change by Dragon Speak
 
-                        MsPage.Execute(49)
+                        FurcadiaSession.MSpage.Execute(49)
 
                     End If
                     '(0:96) When the Bot sees "Your cookies are ready."
                     Dim CookiesReady As Regex = New Regex(<a>"Your cookies are ready.  http://furcadia.com/cookies/ for more info!"</a>)
                     If CookiesReady.Match(Text).Success Then
-                        MsPage.Execute(96)
+                        FurcadiaSession.MSpage.Execute(96)
                     End If
 
             End Select

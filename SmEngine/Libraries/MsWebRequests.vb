@@ -165,7 +165,7 @@ Namespace Engine.Libraries
                 page = ws.WPost(WebStack)
                 WebStack = page.WebStack
                 If page.ReceivedPage Then
-                    MsPage.Execute(70)
+                    FurcadiaSession.MSpage.Execute(70)
                 End If
             End SyncLock
             If page.Status <> 0 Then Throw New WebException(page.ErrMsg, page)

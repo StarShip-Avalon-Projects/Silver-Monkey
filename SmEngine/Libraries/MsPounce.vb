@@ -135,7 +135,7 @@ Namespace Engine.Libraries
         Public Function AddTrigFurre(reader As TriggerReader) As Boolean
             Dim Furre As String = Nothing
 
-            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            Furre = FurcadiaSession.MSpage.GetVariable(MS_Name).Value.ToString
             If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
                 Dim sw As StreamWriter = New StreamWriter(_onlineListFile, True)
                 sw.WriteLine(Furre)
@@ -162,8 +162,8 @@ Namespace Engine.Libraries
         ''' </param>
         Public Sub FurreLoggedOff(ByVal Furre As Object, e As EventArgs) Handles PFure.FurreLoggedOff
             Dim Furr As PounceFurre = CType(Furre, PounceFurre)
-            MsPage.SetVariable("NAME", Furr.Name, True)
-            MsPage.Execute(951, 953)
+            FurcadiaSession.MSpage.SetVariable("NAME", Furr.Name, True)
+            FurcadiaSession.MSpage.Execute(951, 953)
         End Sub
 
         ''' <summary>
@@ -183,8 +183,8 @@ Namespace Engine.Libraries
         ''' </param>
         Public Sub FurreLoggedOn(ByVal Furre As Object, e As EventArgs) Handles PFure.FurreLoggedOn
             Dim Furr As PounceFurre = CType(Furre, PounceFurre)
-            MsPage.SetVariable("NAME", Furr.Name, True)
-            MsPage.Execute(950, 952)
+            FurcadiaSession.MSpage.SetVariable("NAME", Furr.Name, True)
+            FurcadiaSession.MSpage.Execute(950, 952)
         End Sub
 
         ''' <summary>
@@ -295,7 +295,7 @@ Namespace Engine.Libraries
             Dim Furre As String = Nothing
             CheckonlineList()
 
-            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            Furre = reader.Page.GetVariable(MS_Name).Value.ToString
             Furre = FurcadiaShortName(Furre)
             Dim line As String = Nothing
             Dim linesList As New List(Of String)(File.ReadAllLines(_onlineListFile))
@@ -327,7 +327,7 @@ Namespace Engine.Libraries
             Dim Furre As String = Nothing
             Dim f() As String
 
-            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            Furre = FurcadiaSession.MSpage.GetVariable(MS_Name).Value.ToString
             f = File.ReadAllLines(_onlineListFile)
             For Each l As String In f
                 If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True

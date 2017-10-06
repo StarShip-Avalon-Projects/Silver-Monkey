@@ -74,7 +74,7 @@ Namespace Engine.Libraries
             '(1:27) and the bot has share control of the Dream or is the Dream owner,
             Add(TriggerCategory.Condition, 27,
                 Function(reader As TriggerReader)
-                    Dim tname As Variable = MsPage.GetVariable("DREAMOWNER")
+                    Dim tname As Variable = reader.Page.GetVariable("DREAMOWNER")
                     If FurcadiaSession.HasShare OrElse FurcadiaSession.Dream.Owner = FurcadiaSession.ConnectedFurre.ShortName Then
                         Return True
                     End If
@@ -150,7 +150,7 @@ Namespace Engine.Libraries
         Function DreamNameIs(reader As TriggerReader) As Boolean
             Dim DreamName As String = reader.ReadString
             DreamName = DreamName.ToLower.Replace("furc://", String.Empty)
-            Dim DreamNameVariable As Monkeyspeak.Variable = MsPage.GetVariable("DREAMNAME")
+            Dim DreamNameVariable As Monkeyspeak.Variable = reader.Page.GetVariable("DREAMNAME")
             'add Machine Name parser
             If DreamNameVariable.Value.ToString() <> Dream.Name Then
                 Throw New MonkeyspeakException("%DREAMNAME does not match Dream.Name")
@@ -309,7 +309,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function TriggeringFurreIsDreamOwner(reader As TriggerReader) As Boolean
 
-            Dim TrigFurreName = MsPage.GetVariable("DREAMOWNER").Value.ToString
+            Dim TrigFurreName = reader.Page.GetVariable("DREAMOWNER").Value.ToString
             'add Machine Name parser
             Return Player.ShortName = FurcadiaShortName(TrigFurreName)
 
@@ -324,18 +324,18 @@ Namespace Engine.Libraries
             Player = FurcadiaSession.Player
             Select Case InstructionObject.InstructionType
                 Case ServerInstructionType.LoadDreamEvent
-                    PageSetVariable("DREAMOWNER", FurcadiaSession.Dream.Owner)
-                    PageSetVariable("DREAMNAME", FurcadiaSession.Dream.Name)
+                    FurcadiaSession.MSpage.SetVariable("DREAMOWNER", FurcadiaSession.Dream.Owner)
+                    FurcadiaSession.MSpage.SetVariable("DREAMNAME", FurcadiaSession.Dream.Name)
                     '(0:90) When the bot enters a Dream,
                     '(0:91) When the bot enters a Dream named {..},
-                    MsPage.Execute(92, 93)
+                    FurcadiaSession.MSpage.Execute(92, 93)
 
                 Case ServerInstructionType.BookmarkDream
-                    PageSetVariable("DREAMOWNER", FurcadiaSession.Dream.Owner)
-                    PageSetVariable("DREAMNAME", FurcadiaSession.Dream.Name)
+                    FurcadiaSession.MSpage.SetVariable("DREAMOWNER", FurcadiaSession.Dream.Owner)
+                    FurcadiaSession.MSpage.SetVariable("DREAMNAME", FurcadiaSession.Dream.Name)
                     '(0:90) When the bot enters a Dream,
                     '(0:91) When the bot enters a Dream named {..},
-                    MsPage.Execute(90, 91)
+                    FurcadiaSession.MSpage.Execute(90, 91)
             End Select
         End Sub
 

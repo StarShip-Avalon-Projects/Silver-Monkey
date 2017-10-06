@@ -45,10 +45,10 @@ Namespace Engine.Libraries
                 End Function,
                  "(0:80) When the bot sees a Phoenix Speak response")
             Add(TriggerCategory.Cause, 81,
-                AddressOf msgIs, "(0:81) When the bot sees the Phoenix Speak response {...},")
+                AddressOf MsgIs, "(0:81) When the bot sees the Phoenix Speak response {...},")
 
             Add(TriggerCategory.Cause, 82,
-                AddressOf msgContains, "(0:82) When the bot sees a Phoenix Speak response with {...} in it,")
+                AddressOf MsgContains, "(0:82) When the bot sees a Phoenix Speak response with {...} in it,")
 
             '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
             Add(TriggerCategory.Effect, 60, AddressOf RemberPSInforTrigFurre,
@@ -392,8 +392,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Protected Overrides Function msgContains(reader As TriggerReader) As Boolean
-            Return MyBase.msgContains(reader)
+        Protected Overrides Function MsgContains(reader As TriggerReader) As Boolean
+            Return MyBase.MsgContains(reader)
         End Function
 
         ''' <summary>
@@ -405,9 +405,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Protected Overrides Function msgIs(reader As TriggerReader) As Boolean
+        Protected Overrides Function MsgIs(reader As TriggerReader) As Boolean
 
-            Return MyBase.msgIs(reader)
+            Return MyBase.MsgIs(reader)
 
         End Function
 

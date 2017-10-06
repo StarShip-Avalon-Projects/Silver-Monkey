@@ -32,8 +32,6 @@ Namespace Engine
 
 #Region "Public Fields"
 
-        Public Shared MS_Stared As Integer = 0
-        Public MS_Engine_Running As Boolean
 
 #End Region
 
@@ -58,22 +56,18 @@ Namespace Engine
 
 #Region "Public Constructors"
 
-        Private WithEvents MsPage As Monkeyspeak.Page
-
         Sub New()
             MyBase.New(Nothing)
             options = New EngineOptoons
             MSEngine = New MainEngine(options, New BotSession(New BotOptions()))
 
-            MsPage = MSEngine.LoadFromString("")
+            MSEngine.LoadFromString("")
 
             Initialize()
         End Sub
 
         Public Sub New(engine As MainEngine, ByRef Page As Monkeyspeak.Page)
-
             MyBase.New(engine)
-            MsPage = Page
 
             MSEngine = engine
             options = engine.Options
@@ -106,6 +100,7 @@ Namespace Engine
             LibList.Add(New MsSound(MSEngine.FurcadiaSession))
             LibList.Add(New MsTrades(MSEngine.FurcadiaSession))
             LibList.Add(New MsDreamInfo(MSEngine.FurcadiaSession))
+
             'LibList.Add(New MS_MemberList())
         End Sub
 
@@ -113,10 +108,6 @@ Namespace Engine
 
 #Region "Public Methods"
 
-        Public Shared Function MS_Started() As Boolean
-            ' 0 = main load 1 = engine start 2 = engine running
-            Return MS_Stared >= 2
-        End Function
 
         ''' <summary>
         ''' Export MonkeySpeak descriptions
@@ -124,14 +115,11 @@ Namespace Engine
         Public Function Export() As Page
 
             ' Console.WriteLine("Execute (0:0)")
-            MS_Stared = 0
 
-            MsPage = MSEngine.LoadFromString("")
+            MSEngine.LoadFromString("")
             LoadLibrary(False, True)
 
-            MS_Engine_Running = False
-
-            Return MsPage
+            Return Me
         End Function
 
         ''' <summary>
@@ -153,34 +141,32 @@ Namespace Engine
         ''' </returns>
         Public Shadows Function LoadLibrary(ByRef LoadPlugins As Boolean, ByVal silent As Boolean) As Page
             'Library Loaded?.. Get the Hell out of here
-            If MS_Started() Then Return Me
-            MS_Stared += 1
-            MsPage.SetTriggerHandler(TriggerCategory.Cause, 0,
+            SetTriggerHandler(TriggerCategory.Cause, 0,
          Function()
              Return True
          End Function, "(0:0) When the bot starts,")
 
-            MsPage.LoadSysLibrary()
+            LoadSysLibrary()
 
 #If CONFIG = "Release" Then
             '(5:110) load library from file {...}.
             MsPage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
 #ElseIf CONFIG = "Debug" Then
             '(5:105) raise an error.
-            MsPage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
-            MsPage.SetTriggerHandler(TriggerCategory.Effect, 105,
+            RemoveTriggerHandler(TriggerCategory.Effect, 105)
+            SetTriggerHandler(TriggerCategory.Effect, 105,
      Function()
          Return False
      End Function, "(5:105) raise an error.")
 #End If
 
-            MsPage.LoadTimerLibrary()
-            MsPage.LoadStringLibrary()
-            MsPage.LoadMathLibrary()
+            LoadTimerLibrary()
+            LoadStringLibrary()
+            LoadMathLibrary()
 
             For Each Library As Monkeyspeak.Libraries.AbstractBaseLibrary In LibList
                 Try
-                    MsPage.LoadLibrary(Library)
+                    LoadLibrary(Library)
                     If Not silent Then Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
                 Catch ex As Exception
                     Throw New MonkeyspeakException(Library.GetType().Name + " " + ex.Message, ex)
@@ -213,14 +199,15 @@ Namespace Engine
             '' Delegate? 'If newPlugin Then Main.MainSettings.SaveMainSettings()
 
             'End If
-            Return MsPage
+            Return Me
         End Function
+
 
         Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
             If options.MS_Engine_Enable Then
 
                 For Each kv As KeyValuePair(Of String, Object) In VariableList
-                    MsPage.SetVariable(kv.Key.ToUpper, kv.Value, True)
+                    SetVariable(kv.Key.ToUpper, kv.Value, True)
                 Next '
 
             End If
@@ -232,9 +219,7 @@ Namespace Engine
             Dim TimeStart = DateTime.Now
             Dim VariableList As New Dictionary(Of String, Object)
 
-            ' Console.WriteLine("Execute (0:0)")
-            MS_Stared = 1
-            MsPage.Reset(True)
+
             LoadLibrary(False, False)
 
             VariableList.Add("DREAMOWNER", Nothing)
@@ -247,12 +232,15 @@ Namespace Engine
             VariableList.Add("BANISHLIST", Nothing)
             PageSetVariable(VariableList)
             '(0:0) When the bot starts,
-            MsPage.Execute(0)
+            Execute(0)
             Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
-                                            MsPage.Size, Date.Now.Subtract(TimeStart).Seconds))
-            MS_Engine_Running = True
+                                            Size, Date.Now.Subtract(TimeStart).Seconds))
+            Return Me
+        End Function
 
-            Return MsPage
+        Public Function [Stop]() As Page
+            Reset(True)
+            Return Me
         End Function
 
 #End Region

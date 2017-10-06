@@ -112,7 +112,7 @@ Namespace Engine.Libraries
         Private Function AddTrigFurre(reader As TriggerReader) As Boolean
             Dim Furre As String = Nothing
             Try
-                Furre = MsPage.GetVariable(MS_Name).Value.ToString
+                Furre = reader.Page.GetVariable(MS_Name).Value.ToString
                 If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
                     Dim sw As StreamWriter = New StreamWriter(MemberList, True)
                     sw.WriteLine(Furre)
@@ -255,7 +255,7 @@ Namespace Engine.Libraries
             Try
                 CheckMemberList()
 
-                Furre = MsPage.GetVariable(MS_Name).Value.ToString
+                Furre = reader.Page.GetVariable(MS_Name).Value.ToString
                 Dim line As String
                 Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
                 Using SR As New StreamReader(MemberList)
@@ -293,7 +293,7 @@ Namespace Engine.Libraries
             Try
                 CheckMemberList()
 
-                Furre = MsPage.GetVariable(MS_Name).Value.ToString
+                Furre = reader.Page.GetVariable(MS_Name).Value.ToString
                 f.AddRange(File.ReadAllLines(MemberList))
                 For Each l As String In f
                     If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True

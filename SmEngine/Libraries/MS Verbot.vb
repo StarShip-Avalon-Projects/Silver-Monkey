@@ -110,7 +110,7 @@ Namespace Engine.Libraries
             If reply Is Nothing Then Return False
 
             ResponceText.Value = reply.Text
-            parseEmbeddedOutputCommands(reply.AgentText)
+            parseEmbeddedOutputCommands(reply.AgentText, reader)
             Return True
 
         End Function
@@ -142,12 +142,12 @@ Namespace Engine.Libraries
             If reply Is Nothing Then Return False
 
             ResponceText.Value = reply.Text
-            Me.parseEmbeddedOutputCommands(reply.AgentText)
+            Me.parseEmbeddedOutputCommands(reply.AgentText, reader)
             Return True
 
         End Function
 
-        Private Sub parseEmbeddedOutputCommands(text As String)
+        Private Sub parseEmbeddedOutputCommands(text As String, reader As TriggerReader)
             Dim startCommand As String = "<"
             Dim endCommand As String = ">"
 
@@ -159,7 +159,7 @@ Namespace Engine.Libraries
                 If [end] <> -1 Then
                     Dim command As String = text.Substring(start + 1, [end] - start - 1).Trim()
                     If String.IsNullOrEmpty(command) Then
-                        runEmbeddedOutputCommand(command)
+                        RunEmbeddedOutputCommand(command, reader)
                     End If
                 End If
                 start = text.IndexOf(startCommand, start + 1)
@@ -167,7 +167,7 @@ Namespace Engine.Libraries
         End Sub
 
         'parseEmbeddedOutputCommands(string text)
-        Private Sub runEmbeddedOutputCommand(command As String)
+        Private Sub RunEmbeddedOutputCommand(command As String, reader As TriggerReader)
             Dim spaceIndex As Integer = command.IndexOf(" ")
 
             Dim [function] As String
@@ -193,13 +193,13 @@ Namespace Engine.Libraries
                             If VarDataIndex <> -1 Then
                                 VarData = args.Substring(VarDataIndex + 1)
                             End If
-                            PageSetVariable(VarName, VarData)
+                            reader.Page.SetVariable(VarName, VarData, False)
                         End If
 
                     'ChatExecute
                     Case "executechatcmd"
                         ChatCMD = args
-                        PageExecute(1500)
+                        reader.Page.Execute(1500)
 
                     Case Else
                         Exit Select
