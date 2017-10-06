@@ -47,7 +47,6 @@ Namespace Engine
         Public EngineRestart As Boolean = False
 
         Public FurcadiaSession As BotSession
-        Public MS_Engine_Running As Boolean = False
 
         Private Const RES_MS_begin As String = "*MSPK V"
 
@@ -65,7 +64,6 @@ Namespace Engine
             MyBase.New(Options)
             SilverMonkeyEngineOptions = Options
             FurcadiaSession = FurcSession
-            'EngineStart(True)
 
         End Sub
 
@@ -156,7 +154,7 @@ Namespace Engine
         Public Sub Dispose() _
                Implements IDisposable.Dispose
             Dispose(True)
-            GC.SuppressFinalize(Me)
+
         End Sub
 
         ' Protected implementation of Dispose pattern.
@@ -165,7 +163,6 @@ Namespace Engine
 
             If disposing Then
 
-                Monkeyspeak.Libraries.Timers.DestroyTimers()
                 handle.Dispose()
 
             End If

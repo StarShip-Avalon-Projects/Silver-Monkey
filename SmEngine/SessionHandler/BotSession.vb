@@ -11,11 +11,16 @@
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Furcadia.Net
 Imports Furcadia.Net.Proxy
+Imports Furcadia.Net.Proxy.ProxySession
+Imports Furcadia.Net.Utils.ServerParser
 Imports Furcadia.Text.FurcadiaMarkup
 Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
+Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine
+Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.Interfaces
 Imports SilverMonkeyEngine.SmConstants
 
@@ -49,7 +54,7 @@ Public Class BotSession : Inherits ProxySession
     Sub New()
         MyBase.New()
         MainEngineOptions = New BotOptions()
-        Initiaize()
+
     End Sub
 
     ''' <summary>
@@ -60,13 +65,11 @@ Public Class BotSession : Inherits ProxySession
     Sub New(ByRef BotSessionOptions As BotOptions)
         MyBase.New(BotSessionOptions)
         MainEngineOptions = BotSessionOptions
-        Initiaize()
+
     End Sub
 
-    Private Sub Initiaize()
-        MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
-        MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
-    End Sub
+
+    Private Delegate Sub ServerChannelReceived()
 
 #End Region
 
@@ -129,9 +132,9 @@ Public Class BotSession : Inherits ProxySession
 
         Try
 
-            Dim page = New MonkeySpeakPage(MainEngine, MSpage)
-            MSpage = page.Start()
-
+            If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
+                Start()
+            End If
             MyBase.Connect()
         Catch ex As Exception
             Throw ex
@@ -142,229 +145,98 @@ Public Class BotSession : Inherits ProxySession
     ''' Disconnect from the Game Server and Client
     ''' </summary>
     Public Overrides Sub Disconnect()
-        MyBase.Disconnect()
         ' (0:2) When the bot logs off
         MSpage.Execute(2)
-
-        MainEngine.MS_Engine_Running = False
+        StopEngine()
+        MyBase.Disconnect()
     End Sub
 
-    Public Overrides Sub ParseServerChannel(data As String, Handled As Boolean)
-        'Pass Stuff to Base Clqss before we can handle things here
-        MyBase.ParseServerChannel(data, Handled)
-
-        ' Channel = Regex.Match(data, ChannelNameFilter).Groups(1).Value
-        Dim Color As String = Regex.Match(data, EntryFilter).Groups(1).Value
-        Dim Desc As String = ""
-        Dim Text As String = ""
-
-        MSpage.SetVariable(MS_Name, Player.Name, True)
+    Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs)
+        If IsConnectedCharacter Then Exit Sub
+        MSpage.SetVariable("NAME", Player.Name, True)
         MSpage.SetVariable("MESSAGE", Player.Message, True)
+        Dim Text As String = InstructionObject.ChannelText
 
-        If Not String.IsNullOrEmpty(Desc) Then
+        Select Case InstructionObject.Channel
+            Case "trade"
+                MSpage.Execute(46, 47, 48)
+            Case "shout"
+                '(0:8) When someone shouts something,
+                '(0:9) When someone shouts {..},
+                '(0:10) When someone shouts something with {..} in it,
+                MSpage.Execute(8, 9, 10)
+            Case "say"
+                ' (0:5) When some one says something
+                ' (0:6) When some one says {...}
+                '(0:7) When some one says something with {...} in it
+                ' (0:18) When someone says or emotes something
+                ' (0:19) When someone says or emotes {...}
+                ' (0:20) When someone says or emotes something with
+                ' {...} in it"
 
-            Dim DescName As String = Regex.Match(data, DescFilter).Groups(1).ToString()
+                MSpage.Execute(5, 6, 7, 18, 19, 20)
 
-            MSpage.SetVariable(MS_Name, DescName, True)
-            MSpage.Execute(600)
+            Case "whisper"
 
-            'NameFilter
+                ' (0:15) When some one whispers something
+                ' (0:16) When some one whispers {...}
+                ' (0:17) When some one whispers something
+                ' with {...} in it
+                MSpage.Execute(15, 16, 17)
 
-        ElseIf Color = "warning" Then
+            Case "emote"
+                ' (0:12) When someone emotes {...} Execute
+                ' (0:13) When someone emotes something with {...} in it
+                ' (0:18) When someone says or emotes something
+                ' (0:19) When someone says or emotes {...}
+                ' (0:20) When someone says or emotes something
+                ' with {...} in it
 
-            MSpage.Execute(801)
+                MSpage.Execute(11, 12, 13, 18, 19, 20)
+            Case "emit"
+                ' (0:21) When someone emits something
+                ' (0:22) When someone emits {...}
+                ' (0:23) When someone emits something with {...} in it
 
-        ElseIf Color = "channel" Then
-            'ChannelNameFilter2
+                MSpage.Execute(21, 22, 23)
+            Case "@emit"
+                ' (0:21) When someone emits something
+                ' (0:22) When someone emits {...}
+                ' (0:23) When someone emits something with {...} in it
 
-            Dim r As New Regex("<img src='(.*?)' alt='(.*?)' />")
-            Dim ss As RegularExpressions.Match = r.Match(Text)
-            If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
-            r = New Regex(NameFilter + ":")
-            ss = r.Match(Text)
-            If ss.Success Then Text = Text.Replace(ss.Groups(0).Value, "")
+                MSpage.Execute(21, 22, 23)
 
-            'ElseIf Color = "notify" Then
+            Case "query"
 
-        End If
+                Dim QueryComand As String = New Regex("<a.*?href='command://(.*?)'>").Match(Text).Groups(1).Value
+
+                Select Case QueryComand
+                    Case "summon"
+                        ''JOIN
+                        MSpage.Execute(34, 35)
+
+                    Case "join"
+                        ''SUMMON
+                        MSpage.Execute(32, 33)
+
+                    Case "follow"
+                        ''LEAD
+                        MSpage.Execute(36, 37)
+
+                    Case "lead"
+                        ''FOLLOW
+                        MSpage.Execute(38, 39)
+                    Case "cuddle"
+                        MSpage.Execute(40, 41)
+
+                End Select
+
+            Case Else
+                'TODO: plugin Dynamic(Group)  Channels here
+
+        End Select
 
     End Sub
-
-    '''' <summary>
-    '''' Parse Server Data
-    '''' <para>
-    '''' TODO: Move this functionality to <see cref="Furcadia.Net"/>
-    '''' </para>
-    '''' </summary>
-    '''' <param name="data">
-    '''' raw server instruction
-    '''' </param>
-    '''' <param name="Handled">
-    '''' has this instruction been handled elsewhere
-    '''' </param>
-    'Public Overrides Sub ParseServerData(ByVal data As String, ByVal Handled As Boolean)
-    '    MyBase.ParseServerData(data, Handled)
-    '    MSpage.SetVariable(MS_Name, Player.ShortName, True)
-    '    MSpage.SetVariable("MESSAGE", Player.Message, True)
-
-    '    If data = "&&&&&&&&&&&&&" Then
-    '        'We've connected to Furcadia
-    '        'Stop the reconnection manager
-    '        '(0:1) When the bot logs into furcadia,
-    '        MSpage.SetVariable("BOTNAME", ConnectedFurre.ShortName, True)
-    '        MSpage.Execute(1)
-
-    '        ' Species Tags
-    '    ElseIf data.StartsWith("]-") Then
-
-    '        'DS Variables
-
-    '        'Popup Dialogs!
-    '    ElseIf data.StartsWith("]#") Then
-    '        ']#<idstring> <style 0-17> <message that might have spaces in>
-    '        Dim repqq As Regex = New Regex("^\]#(.*?) (\d+) (.*?)$")
-    '        Dim m As Match = repqq.Match(data)
-    '        Dim r As Rep
-    '        r.ID = m.Groups(1).Value
-    '        Dim num As Integer = 0
-    '        Integer.TryParse(m.Groups(2).Value, r.Type)
-    '        Repq.Enqueue(r)
-    '        MSpage.SetVariable("MESSAGE", Player.Message, True)
-    '        MSpage.Execute(95, 96)
-
-    '        ']s(.+)1 (.*?) (.*?) 0
-    '        'Display Dream Info
-    '        'Portal  Names until a ]t
-    '    ElseIf data.StartsWith("]s") Then
-    '        Dim t As New Regex("\]s(.+)1 (.*?) (.*?) 0", RegexOptions.IgnoreCase)
-    '        Dim m As System.Text.RegularExpressions.Match = t.Match(data)
-    '        If Furcadia.Util.FurcadiaShortName(ConnectedCharacterName) = Furcadia.Util.FurcadiaShortName(m.Groups(2).Value) Then
-    '            MSpage.Execute()
-    '        End If
-
-    '        'Look response
-    '    ElseIf data.StartsWith("]f") And ServerConnectPhase = ConnectionPhase.Connected And InDream = True Then
-
-    '        'Spawn Avatar
-    '    ElseIf data.StartsWith("<") And ServerConnectPhase = ConnectionPhase.Connected Then
-
-    '        If IsConnectedCharacter Then
-    '            MSpage.Execute(28, 29, 24, 25)
-    '        Else
-    '            MSpage.Execute(24, 25)
-    '        End If
-
-    '        'Try
-
-    '        ' ' Add New Arrivals to Dream.FurreList ' One or the other will
-    '        ' trigger it ' IsConnectedCharacter
-
-    '        ' If Player.Flag = 4 Or Not Dream.FurreList.Contains(Player)
-    '        ' Then Dream.FurreList.Add(Player) ' If InDream Then RaiseEvent
-    '        ' UpDateDreamList(Player.Name) If Player.Flag = 2 Then End If
-    '        ' ElseIf Player.Flag = 2 Then
-
-    '        'MSpage.Execute(28, 29)
-
-    '        ' ElseIf Player.Flag = 1 Then
-
-    '        ' ElseIf Player.Flag = 0 Then
-
-    '        ' End If
-
-    '        'Catch eX As Exception
-
-    '        '    Dim logError As New ErrorLogging(eX, Me)
-    '        '    Exit Sub
-    '        'End Try
-
-    '        'Remove Furre
-    '    ElseIf data.StartsWith(")") And ServerConnectPhase = ConnectionPhase.Connected Then  'And loggingIn = False
-
-    '        'Animated Move
-    '    ElseIf data.StartsWith("/") And ServerConnectPhase = ConnectionPhase.Connected Then 'And loggingIn = False
-    '        Try
-
-    '            MSpage.SetVariable(MS_Name, Player.ShortName, True)
-    '            MSpage.Execute(28, 29, 30, 31, 601, 602)
-    '        Catch eX As Exception
-    '            Dim logError As New ErrorLogging(eX, Me)
-    '        End Try
-
-    '        ' Move Avatar
-    '    ElseIf data.StartsWith("A") And ServerConnectPhase = ConnectionPhase.Connected Then 'And loggingIn = False
-    '        Try
-
-    '            Dim VisableRectangle As ViewArea = getTargetRectFromCenterCoord(ConnectedFurre.Position.x, ConnectedFurre.Position.y)
-    '            If VisableRectangle.X <= Me.Player.Position.x And VisableRectangle.Y <= Me.Player.Position.y And VisableRectangle.height >= Me.Player.Position.y And VisableRectangle.length >= Me.Player.Position.x Then
-
-    '                Player.Visible = True
-    '            Else
-    '                Player.Visible = False
-    '            End If
-
-    '            MSpage.SetVariable(MS_Name, Player.ShortName, True)
-    '            MSpage.Execute(28, 29, 30, 31, 601, 602)
-    '        Catch eX As Exception
-    '            Dim logError As New ErrorLogging(eX, Me)
-    '        End Try
-
-    '        ' Update Color Code
-    '    ElseIf data.StartsWith("B") And ServerConnectPhase = ConnectionPhase.Connected And InDream Then
-
-    '        'Hide Avatar
-    '    ElseIf data.StartsWith("C") <> False And ServerConnectPhase = ConnectionPhase.Connected Then
-    '        Try
-
-    '            MSpage.SetVariable(MS_Name, Player.ShortName, True)
-    '            MSpage.Execute(30, 31)
-    '        Catch eX As Exception
-    '            Dim logError As New ErrorLogging(eX, Me)
-    '        End Try
-
-    '        'Display Disconnection Dialog
-    '    ElseIf data.StartsWith("[") Then
-    '        ' RaiseEvent UpDateDreamList("")
-
-    '        MsgBox(data, MsgBoxStyle.Critical, "Disconnection Error")
-
-    '        ';{mapfile}	Load a local map (one in the furcadia folder)
-    '        ']q {name} {id}	Request to download a specific patch
-    '    ElseIf data.StartsWith(";") OrElse data.StartsWith("]q") OrElse data.StartsWith("]r") Then
-    '        MSpage.SetVariable("DREAMOWNER", "", True)
-    '        MSpage.SetVariable("DREAMNAME", "", True)
-    '        'RaiseEvent UpDateDreamList("")
-
-    '    ElseIf data.StartsWith("]z") Then
-    '        '   ConnectedCharacterFurcadiaID = Integer.Parse(data.Remove(0, 2))
-    '        'Snag out UID
-    '    ElseIf data.StartsWith("]B") Then
-    '        ' ConnectedCharacterFurcadiaID = Integer.Parse(data.Substring(2,
-    '        ' data.Length - ConnectedCharacterName.Length - 3))
-
-    '    ElseIf data.StartsWith("]c") Then
-
-    '    ElseIf data.StartsWith("]C") Then
-    '        If data.StartsWith("]C0") Then
-
-    '            MSpage.SetVariable("DREAMOWNER", Dream.Owner, True)
-    '            MSpage.SetVariable("DREAMNAME", Dream.Name, True)
-    '            MSpage.Execute(90, 91)
-    '        End If
-
-    '        'Process Channels Separately
-    '    ElseIf data.StartsWith("(") Then
-    '        If ThroatTired = True And data.StartsWith("(<font color='warning'>Your throat is tired. Try again in a few seconds.</font>") Then
-
-    '            '(0:92) When the bot detects the "Your throat is tired. Please wait a few seconds" message,
-    '            MSpage.Execute(92)
-
-    '        End If
-    '    Else
-
-    '    End If
-
-    'End Sub
 
     ''' <summary>
     ''' Send a formatted string to the client and log window
@@ -380,6 +252,164 @@ Public Class BotSession : Inherits ProxySession
         'Writer.WriteLine("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
 
     End Sub
+
+#Region "MonkeySpeak.Page Functions"
+    ''' <summary>
+    ''' Library Objects to load into the Engine
+    ''' </summary>
+    Private LibList As List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
+    ''' <summary>
+    ''' Start the Monkey Speak Engine
+    ''' </summary>
+    Public Sub Start()
+        MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
+        MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+        AddHandler ProcessServerChannelData, AddressOf OnServerChannel
+
+        Dim TimeStart = DateTime.Now
+        Dim VariableList As New Dictionary(Of String, Object)
+
+        LoadLibrary(False, False)
+
+        VariableList.Add("DREAMOWNER", Nothing)
+        VariableList.Add("DREAMNAME", Nothing)
+        VariableList.Add("BOTNAME", Nothing)
+        VariableList.Add("BOTCONTROLLER", MainEngineOptions.BotController)
+        VariableList.Add(MS_Name, Nothing)
+        VariableList.Add("MESSAGE", Nothing)
+        VariableList.Add("BANISHNAME", Nothing)
+        VariableList.Add("BANISHLIST", Nothing)
+        PageSetVariable(VariableList)
+        '(0:0) When the bot starts,
+        MSpage.Execute(0)
+        Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
+                                            MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
+
+    End Sub
+
+    Public Sub StopEngine()
+        '  RemoveHandler ProcessServerChannelData, Me
+
+        If Not MSpage Is Nothing Then
+            MSpage.Reset(True)
+            MSpage.Dispose()
+            MSpage = Nothing
+        End If
+        If Not MainEngine Is Nothing Then
+            MainEngine.Dispose()
+            MainEngine = Nothing
+        End If
+
+    End Sub
+
+    Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
+
+        For Each kv As KeyValuePair(Of String, Object) In VariableList
+            MSpage.SetVariable(kv.Key.ToUpper, kv.Value, True)
+        Next '
+
+    End Sub
+
+    ''' <summary>
+    ''' Load Libraries into the engine
+    ''' </summary>
+    ''' <param name="LoadPlugins">
+    ''' </param>
+    Public Sub LoadLibrary(ByRef LoadPlugins As Boolean, ByVal silent As Boolean)
+        'Library Loaded?.. Get the Hell out of here
+        MSpage.SetTriggerHandler(TriggerCategory.Cause, 0,
+         Function()
+             Return True
+         End Function, "(0:0) When the bot starts,")
+
+        MSpage.LoadSysLibrary()
+
+#If CONFIG = "Release" Then
+            '(5:110) load library from file {...}.
+            MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
+#ElseIf CONFIG = "Debug" Then
+        '(5:105) raise an error.
+        MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
+        MSpage.SetTriggerHandler(TriggerCategory.Effect, 105,
+     Function()
+         Return False
+     End Function, "(5:105) raise an error.")
+#End If
+
+        MSpage.LoadTimerLibrary()
+        MSpage.LoadStringLibrary()
+        MSpage.LoadMathLibrary()
+        InitializeEngineLibraries()
+
+        For Each Library As Monkeyspeak.Libraries.AbstractBaseLibrary In LibList
+            Try
+                MSpage.LoadLibrary(Library)
+                If Not silent Then Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
+            Catch ex As Exception
+                Throw New MonkeyspeakException(Library.GetType().Name + " " + ex.Message, ex)
+                Exit Sub
+            End Try
+        Next
+
+        'Define our Triggers before we use them
+        'TODO Check for Duplicate and use that one instead
+        'we don't want this to cause a memory leak.. its prefered to run this one time and thats  it except for checking for new plugins
+        'Loop through available plugins, creating instances and adding them to listbox
+        'If Not Plugins Is Nothing And LoadPlugins Then
+
+        'End If
+        'Dim objPlugin As Interfaces.msPlugin
+        'Dim newPlugin As Boolean = False
+        'For intIndex As Integer = 0 To Plugins.Count - 1
+        '    Try
+        '        objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.msPlugin)
+        '        If Not PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
+        '            PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
+        '            newPlugin = True
+        '        End If
+
+        ' If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True
+        ' Then Console.WriteLine("Loading Plugin: " + objPlugin.Name)
+        ' objPlugin.Initialize(objHost) objPlugin.MonkeySpeakPage =
+        ' MonkeySpeakPage objPlugin.Start() End If Catch ex As Exception
+        ' Dim e As New ErrorLogging(ex, Me) End Try Next 'TODO: Add to
+        '' Delegate? 'If newPlugin Then Main.MainSettings.SaveMainSettings()
+
+        'End If
+
+    End Sub
+
+    Private Sub InitializeEngineLibraries()
+        ' Comment out Libs to Disable
+        LibList = New List(Of Monkeyspeak.Libraries.AbstractBaseLibrary) From {
+                New MsIO(Me),
+                New StringLibrary(Me),
+                New SayLibrary(Me),
+                New Banish(Me),
+                New MathLibrary(Me),
+                New MsTime(Me),
+                New MsDatabase(Me),
+                New MsWebRequests(Me),
+                New MS_Cookie(Me),
+                New MsPhoenixSpeak(Me),
+                New MsPhoenixSpeakBackupAndRestore(Me),
+                New MsDice(Me),
+                New MsFurreList(Me),
+                New MsWarning(Me),
+                New Movement(Me),
+                New WmCpyDta(Me),
+                New MsMemberList(Me),
+                New MsPounce(Me),
+                New MsVerbot(Me),
+                New MsSound(Me),
+                New MsTrades(Me),
+                New MsDreamInfo(Me)
+            }
+
+        'LibList.Add(New MS_MemberList())
+    End Sub
+
+#End Region
 
 #End Region
 
@@ -423,11 +453,10 @@ Public Class BotSession : Inherits ProxySession
         If Me.disposed Then Exit Sub
         If disposing Then
 
-            handle.Dispose()
-
+            If Not MainEngine Is Nothing Then MainEngine.Dispose()
             ' Free your own state (unmanaged objects).
             ' Set large fields to null.
-            MainEngine.Dispose()
+            MyBase.Dispose()
         End If
         Me.disposed = True
         Me.Finalize()
@@ -441,7 +470,6 @@ Public Class BotSession : Inherits ProxySession
     Public Overrides Sub Dispose() Implements IDisposable.Dispose
 
         Dispose(True)
-        GC.SuppressFinalize(Me)
     End Sub
 
 #End Region

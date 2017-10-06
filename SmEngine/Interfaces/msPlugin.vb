@@ -10,7 +10,7 @@ Namespace Interfaces
 
         Property enabled As Boolean
 
-        Property MsPage As MonkeySpeakPage
+        Property MsPage As Monkeyspeak.Page
         ReadOnly Property Name() As String
         ReadOnly Property Version() As String
 

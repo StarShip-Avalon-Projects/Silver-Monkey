@@ -41,8 +41,8 @@ Namespace Interfaces
 
         End Property
 
-        Public WriteOnly Property MsPage() As MonkeySpeakPage Implements Interfaces.ImsHost.MsPage
-            Set(value As MonkeySpeakPage)
+        Public WriteOnly Property MsPage() As Monkeyspeak.Page Implements Interfaces.ImsHost.MsPage
+            Set(value As Monkeyspeak.Page)
                 FurcadiaSession.MSpage = value
             End Set
         End Property
@@ -74,7 +74,7 @@ Namespace Interfaces
 
         End Sub
 
-        Sub Start(ByRef page As MonkeySpeakPage) Implements Interfaces.ImsHost.start
+        Sub Start(ByRef page As Monkeyspeak.Page) Implements Interfaces.ImsHost.start
             FurcadiaSession.MSpage = page
         End Sub
 

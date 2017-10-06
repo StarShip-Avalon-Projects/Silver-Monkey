@@ -108,7 +108,7 @@ Public Class Main
         Else
             FurcadiaSession.Disconnect()
             RemoveHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
-            FurcadiaSession.Dispose()
+
             ConnectTrayIconMenuItem.Enabled = False
             DisconnectTrayIconMenuItem.Enabled = True
             NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Now disconnected from Furcadia.", ToolTipIcon.Info)

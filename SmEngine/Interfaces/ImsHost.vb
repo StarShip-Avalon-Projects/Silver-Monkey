@@ -10,7 +10,7 @@ Namespace Interfaces
         ReadOnly Property BotName As String
         Property Data As String
         Property Dream As DREAM
-        WriteOnly Property MsPage As MonkeySpeakPage
+        WriteOnly Property MsPage As Monkeyspeak.Page
         ReadOnly Property Player As FURRE
 
 #End Region
@@ -23,7 +23,7 @@ Namespace Interfaces
 
         Sub sendServer(ByRef var As String)
 
-        Sub start(ByRef page As MonkeySpeakPage)
+        Sub start(ByRef page As Monkeyspeak.Page)
 
 #End Region
 
