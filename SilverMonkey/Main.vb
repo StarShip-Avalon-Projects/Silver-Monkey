@@ -107,7 +107,7 @@ Public Class Main
             Me.Invoke(d)
         Else
             FurcadiaSession.Disconnect()
-            RemoveHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
+            '     RemoveHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
 
             ConnectTrayIconMenuItem.Enabled = False
             DisconnectTrayIconMenuItem.Enabled = True

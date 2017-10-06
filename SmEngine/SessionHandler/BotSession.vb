@@ -9,13 +9,10 @@
 'Furre Update events?
 
 Imports System.Runtime.InteropServices
-Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Furcadia.Net
 Imports Furcadia.Net.Proxy
-Imports Furcadia.Net.Proxy.ProxySession
 Imports Furcadia.Net.Utils.ServerParser
-Imports Furcadia.Text.FurcadiaMarkup
 Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
 Imports Monkeyspeak
@@ -76,6 +73,16 @@ Public Class BotSession : Inherits ProxySession
 #Region "Public Properties"
 
     ''' <summary>
+    ''' Name of the controller furre
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property BotController As String
+        Get
+            Return MainEngineOptions.BotController
+        End Get
+    End Property
+
+    ''' <summary>
     ''' Is the Current executing Furre the Bot Controller?
     ''' </summary>
     ''' <returns>
@@ -86,22 +93,12 @@ Public Class BotSession : Inherits ProxySession
             Return Player.ShortName = MainEngineOptions.BotControllerShortName
         End Get
     End Property
-    ''' <summary>
-    ''' Name of the controller furre
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property BotController As String
-        Get
-            Return MainEngineOptions.BotController
-        End Get
-    End Property
-
 #End Region
 
 #Region "Private Fields"
 
-    Private MainSettings As Settings.cMain
     Private MainEngineOptions As BotOptions
+    Private MainSettings As Settings.cMain
 #End Region
 
 #Region "Public Fields"
@@ -149,6 +146,21 @@ Public Class BotSession : Inherits ProxySession
         MSpage.Execute(2)
         StopEngine()
         MyBase.Disconnect()
+    End Sub
+
+    ''' <summary>
+    ''' Send a formatted string to the client and log window
+    ''' </summary>
+    ''' <param name="msg">
+    ''' Channel Subsystem?
+    ''' </param>
+    ''' <param name="data">
+    ''' Message to send
+    ''' </param>
+    Public Sub SendToClientFormattedText(msg As String, data As String)
+        SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
+        'Writer.WriteLine("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
+
     End Sub
 
     Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs)
@@ -237,79 +249,11 @@ Public Class BotSession : Inherits ProxySession
         End Select
 
     End Sub
-
-    ''' <summary>
-    ''' Send a formatted string to the client and log window
-    ''' </summary>
-    ''' <param name="msg">
-    ''' Channel Subsystem?
-    ''' </param>
-    ''' <param name="data">
-    ''' Message to send
-    ''' </param>
-    Public Sub SendToClientFormattedText(msg As String, data As String)
-        SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
-        'Writer.WriteLine("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
-
-    End Sub
-
 #Region "MonkeySpeak.Page Functions"
     ''' <summary>
     ''' Library Objects to load into the Engine
     ''' </summary>
     Private LibList As List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
-    ''' <summary>
-    ''' Start the Monkey Speak Engine
-    ''' </summary>
-    Public Sub Start()
-        MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
-        MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
-        AddHandler ProcessServerChannelData, AddressOf OnServerChannel
-
-        Dim TimeStart = DateTime.Now
-        Dim VariableList As New Dictionary(Of String, Object)
-
-        LoadLibrary(False, False)
-
-        VariableList.Add("DREAMOWNER", Nothing)
-        VariableList.Add("DREAMNAME", Nothing)
-        VariableList.Add("BOTNAME", Nothing)
-        VariableList.Add("BOTCONTROLLER", MainEngineOptions.BotController)
-        VariableList.Add(MS_Name, Nothing)
-        VariableList.Add("MESSAGE", Nothing)
-        VariableList.Add("BANISHNAME", Nothing)
-        VariableList.Add("BANISHLIST", Nothing)
-        PageSetVariable(VariableList)
-        '(0:0) When the bot starts,
-        MSpage.Execute(0)
-        Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
-                                            MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
-
-    End Sub
-
-    Public Sub StopEngine()
-        '  RemoveHandler ProcessServerChannelData, Me
-
-        If Not MSpage Is Nothing Then
-            MSpage.Reset(True)
-            MSpage.Dispose()
-            MSpage = Nothing
-        End If
-        If Not MainEngine Is Nothing Then
-            MainEngine.Dispose()
-            MainEngine = Nothing
-        End If
-
-    End Sub
-
-    Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
-
-        For Each kv As KeyValuePair(Of String, Object) In VariableList
-            MSpage.SetVariable(kv.Key.ToUpper, kv.Value, True)
-        Next '
-
-    End Sub
-
     ''' <summary>
     ''' Load Libraries into the engine
     ''' </summary>
@@ -379,8 +323,60 @@ Public Class BotSession : Inherits ProxySession
 
     End Sub
 
+    Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
+
+        For Each kv As KeyValuePair(Of String, Object) In VariableList
+            MSpage.SetVariable(kv.Key.ToUpper, kv.Value, True)
+        Next '
+
+    End Sub
+
+    ''' <summary>
+    ''' Start the Monkey Speak Engine
+    ''' </summary>
+    Public Sub Start()
+        MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
+        MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+        AddHandler ProcessServerChannelData, AddressOf OnServerChannel
+
+        Dim TimeStart = DateTime.Now
+        Dim VariableList As New Dictionary(Of String, Object)
+
+        LoadLibrary(False, False)
+
+        VariableList.Add("DREAMOWNER", Nothing)
+        VariableList.Add("DREAMNAME", Nothing)
+        VariableList.Add("BOTNAME", Nothing)
+        VariableList.Add("BOTCONTROLLER", MainEngineOptions.BotController)
+        VariableList.Add(MS_Name, Nothing)
+        VariableList.Add("MESSAGE", Nothing)
+        VariableList.Add("BANISHNAME", Nothing)
+        VariableList.Add("BANISHLIST", Nothing)
+        PageSetVariable(VariableList)
+        '(0:0) When the bot starts,
+        MSpage.Execute(0)
+        Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
+                                            MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
+
+    End Sub
+
+    Public Sub StopEngine()
+        '  RemoveHandler ProcessServerChannelData, Me
+
+        If Not MSpage Is Nothing Then
+            MSpage.Reset(True)
+            MSpage.Dispose()
+            MSpage = Nothing
+        End If
+        If Not MainEngine Is Nothing Then
+            MainEngine.Dispose()
+            MainEngine = Nothing
+        End If
+
+    End Sub
     Private Sub InitializeEngineLibraries()
         ' Comment out Libs to Disable
+
         LibList = New List(Of Monkeyspeak.Libraries.AbstractBaseLibrary) From {
                 New MsIO(Me),
                 New StringLibrary(Me),
