@@ -30,10 +30,7 @@ Namespace Engine
 
         'End Sub
 
-#Region "Public Fields"
 
-
-#End Region
 
 #Region "Private Fields"
 
@@ -76,30 +73,31 @@ Namespace Engine
         End Sub
 
         Private Sub Initialize()
-            LibList = New List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
             ' Comment out Libs to Disable
-            LibList.Add(New MsIO(MSEngine.FurcadiaSession))
-            LibList.Add(New StringLibrary(MSEngine.FurcadiaSession))
-            LibList.Add(New SayLibrary(MSEngine.FurcadiaSession))
-            LibList.Add(New Banish(MSEngine.FurcadiaSession))
-            LibList.Add(New MathLibrary(MSEngine.FurcadiaSession))
-            LibList.Add(New MsTime(MSEngine.FurcadiaSession))
-            LibList.Add(New MsDatabase(MSEngine.FurcadiaSession))
-            LibList.Add(New MsWebRequests(MSEngine.FurcadiaSession))
-            LibList.Add(New MS_Cookie(MSEngine.FurcadiaSession))
-            LibList.Add(New MsPhoenixSpeak(MSEngine.FurcadiaSession))
-            LibList.Add(New MsPhoenixSpeakBackupAndRestore(MSEngine.FurcadiaSession))
-            LibList.Add(New MsDice(MSEngine.FurcadiaSession))
-            LibList.Add(New MsFurreList(MSEngine.FurcadiaSession))
-            LibList.Add(New MsWarning(MSEngine.FurcadiaSession))
-            LibList.Add(New Movement(MSEngine.FurcadiaSession))
-            LibList.Add(New WmCpyDta(MSEngine.FurcadiaSession))
-            LibList.Add(New MsMemberList(MSEngine.FurcadiaSession))
-            LibList.Add(New MsPounce(MSEngine.FurcadiaSession))
-            LibList.Add(New MsVerbot(MSEngine.FurcadiaSession))
-            LibList.Add(New MsSound(MSEngine.FurcadiaSession))
-            LibList.Add(New MsTrades(MSEngine.FurcadiaSession))
-            LibList.Add(New MsDreamInfo(MSEngine.FurcadiaSession))
+            LibList = New List(Of Monkeyspeak.Libraries.AbstractBaseLibrary) From {
+                New MsIO(MSEngine.FurcadiaSession),
+                New StringLibrary(MSEngine.FurcadiaSession),
+                New SayLibrary(MSEngine.FurcadiaSession),
+                New Banish(MSEngine.FurcadiaSession),
+                New MathLibrary(MSEngine.FurcadiaSession),
+                New MsTime(MSEngine.FurcadiaSession),
+                New MsDatabase(MSEngine.FurcadiaSession),
+                New MsWebRequests(MSEngine.FurcadiaSession),
+                New MS_Cookie(MSEngine.FurcadiaSession),
+                New MsPhoenixSpeak(MSEngine.FurcadiaSession),
+                New MsPhoenixSpeakBackupAndRestore(MSEngine.FurcadiaSession),
+                New MsDice(MSEngine.FurcadiaSession),
+                New MsFurreList(MSEngine.FurcadiaSession),
+                New MsWarning(MSEngine.FurcadiaSession),
+                New Movement(MSEngine.FurcadiaSession),
+                New WmCpyDta(MSEngine.FurcadiaSession),
+                New MsMemberList(MSEngine.FurcadiaSession),
+                New MsPounce(MSEngine.FurcadiaSession),
+                New MsVerbot(MSEngine.FurcadiaSession),
+                New MsSound(MSEngine.FurcadiaSession),
+                New MsTrades(MSEngine.FurcadiaSession),
+                New MsDreamInfo(MSEngine.FurcadiaSession)
+            }
 
             'LibList.Add(New MS_MemberList())
         End Sub
@@ -107,7 +105,6 @@ Namespace Engine
 #End Region
 
 #Region "Public Methods"
-
 
         ''' <summary>
         ''' Export MonkeySpeak descriptions
@@ -150,7 +147,7 @@ Namespace Engine
 
 #If CONFIG = "Release" Then
             '(5:110) load library from file {...}.
-            MsPage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
+            RemoveTriggerHandler(TriggerCategory.Effect, 110)
 #ElseIf CONFIG = "Debug" Then
             '(5:105) raise an error.
             RemoveTriggerHandler(TriggerCategory.Effect, 105)
@@ -202,23 +199,22 @@ Namespace Engine
             Return Me
         End Function
 
-
         Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
-            If options.MS_Engine_Enable Then
 
-                For Each kv As KeyValuePair(Of String, Object) In VariableList
-                    SetVariable(kv.Key.ToUpper, kv.Value, True)
-                Next '
+            For Each kv As KeyValuePair(Of String, Object) In VariableList
+                SetVariable(kv.Key.ToUpper, kv.Value, True)
+            Next '
 
-            End If
         End Sub
 
-        'Bot Starts
+        ''' <summary>
+        ''' Start the Monkey Speak Engine
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Start() As Page
 
             Dim TimeStart = DateTime.Now
             Dim VariableList As New Dictionary(Of String, Object)
-
 
             LoadLibrary(False, False)
 
