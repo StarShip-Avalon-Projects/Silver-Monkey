@@ -40,8 +40,8 @@ Public Class MS_Export
         Dim engine As New MainEngine(options.MonkeySpeakEngineOptions, Session)
         ' mPage = engine.LoadFromString("")
 
-        Dim MsPage = New MonkeySpeakPage(engine, mPage)
-        mPage = MsPage.Export
+        Dim MsPage = New Monkeyspeak.Page(engine)
+        'mPage = MsPage.Export
 
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.

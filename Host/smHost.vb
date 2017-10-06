@@ -40,11 +40,11 @@ Public Class smHost
         End Set
     End Property
 
-    Public WriteOnly Property MsPage() As MonkeySpeakPage Implements Interfaces.ImsHost.MsPage
-        Set(value As MonkeySpeakPage)
-#Disable Warning BC42026 ' Expression recursively calls the containing property 'Public WriteOnly Property MsPage As MonkeySpeakPage'.
+    Public WriteOnly Property MsPage() As Monkeyspeak.Page Implements Interfaces.ImsHost.MsPage
+        Set(value As Monkeyspeak.Page)
+#Disable Warning BC42026 ' Expression recursively calls the containing property 'Public WriteOnly Property MsPage As Monkeyspeak.page'.
             MsPage = value
-#Enable Warning BC42026 ' Expression recursively calls the containing property 'Public WriteOnly Property MsPage As MonkeySpeakPage'.
+#Enable Warning BC42026 ' Expression recursively calls the containing property 'Public WriteOnly Property MsPage As Monkeyspeak.page'.
         End Set
     End Property
 
@@ -73,7 +73,7 @@ Public Class smHost
         callbk.TextToServer(var)
     End Sub
 
-    Sub Start(ByRef page As MonkeySpeakPage) Implements Interfaces.ImsHost.start
+    Sub Start(ByRef page As Monkeyspeak.Page) Implements Interfaces.ImsHost.start
         MsPage = page
     End Sub
 

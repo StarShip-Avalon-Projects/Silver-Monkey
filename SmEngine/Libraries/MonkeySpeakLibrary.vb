@@ -28,10 +28,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True if the MESSAGE system variable contains the specified string
         ''' </returns>
-        Protected Overridable Function msgContains(reader As TriggerReader) As Boolean
+        Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return test.ToLower.Contains(msMsg.ToLower)
@@ -46,10 +46,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true if the System MESSAGE varible ends with the specified string
         ''' </returns>
-        Protected Overridable Function msgEndsWith(reader As TriggerReader) As Boolean
+        Protected Overridable Function MsgEndsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
@@ -66,11 +66,11 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Protected Overridable Function msgIs(reader As TriggerReader) As Boolean
+        Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
 
             Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
 
@@ -93,11 +93,11 @@ Namespace Engine.Libraries
         ''' The Bot ignores self messages
         ''' </para>
         ''' </remarks>
-        Protected Overridable Function msgIsNot(reader As TriggerReader) As Boolean
+        Protected Overridable Function MsgIsNot(reader As TriggerReader) As Boolean
 
             Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return Not msMsg.Equals(test) And safety
@@ -119,10 +119,10 @@ Namespace Engine.Libraries
         ''' The Bot ignores self messages
         ''' </para>
         ''' </remarks>
-        Protected Overridable Function msgNotContain(reader As TriggerReader) As Boolean
+        Protected Overridable Function MsgNotContain(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return test.Contains(msMsg)
@@ -137,10 +137,10 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Protected Function msgNotEndsWith(reader As TriggerReader) As Boolean
+        Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
@@ -156,10 +156,10 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Protected Function msgNotStartsWith(reader As TriggerReader) As Boolean
+        Protected Function MsgNotStartsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return Not test.StartsWith(msMsg)
@@ -177,7 +177,7 @@ Namespace Engine.Libraries
         Protected Function msgStartsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = MsPage.GetVariable("MESSAGE")
+            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return test.StartsWith(msMsg)
@@ -295,11 +295,6 @@ Namespace Engine.Libraries
         Public WithEvents MsEngine As MonkeyspeakEngine
 
         ''' <summary>
-        ''' Reference to the Main Monkey Speak Page for the bot
-        ''' </summary>
-        Public WithEvents MsPage As Page
-
-        ''' <summary>
         ''' Current Dream the Bot is in
         ''' </summary>
         Public Property Dream As DREAM
@@ -361,7 +356,6 @@ Namespace Engine.Libraries
             End If
             _SkillLevel = 0
             _HasHelp = False
-            MsPage = Session.MSpage
             Player = Session.Player
             Dream = Session.Dream
             MsEngine = Session.MainEngine
@@ -410,22 +404,11 @@ Namespace Engine.Libraries
         ''' <param name="TriggerIDs">
         ''' MonkeySpeak Triggers
         ''' </param>
+        <Obsolete("Please use reader.page instead of MsPage")>
         Protected Sub PageExecute(ParamArray TriggerIDs() As Integer)
-            MsPage.Execute(TriggerIDs)
+            FurcadiaSession.MSpage.Execute(TriggerIDs)
         End Sub
 
-        ''' <summary>
-        ''' Set Bot assigned moneky speak variables as Constant
-        ''' </summary>
-        ''' <param name="Name">
-        ''' <see cref="Monkeyspeak.Variable.Name"/>
-        ''' </param>
-        ''' <param name="Value">
-        ''' <see cref="Monkeyspeak.Variable.Value"/>
-        ''' </param>
-        Protected Sub PageSetVariable(Name As String, Value As String)
-            MsPage.SetVariable(Name.ToUpper, Value, True)
-        End Sub
 
 #End Region
 

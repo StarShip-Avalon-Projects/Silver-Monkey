@@ -72,9 +72,8 @@ Public Class Main
 
         Dim objPlugin As Interfaces.ImsPlugin
         Dim Engine As New MainEngine(New Engine.EngineOptoons, Nothing)
-        Dim page As MonkeySpeakPage
+        Dim page = Engine.LoadFromString("")
 
-        page = CType(Engine.LoadFromString(""), MonkeySpeakPage)
         objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), Interfaces.ImsPlugin)
         objPlugin.Initialize(objHost)
         objPlugin.MsPage = page
@@ -165,7 +164,7 @@ Public Class Main
         LoadPlugins()
     End Sub
 
-    Private Sub frmMain_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+    Private Sub FrmMain_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         'Plugins = PluginServices.FindPlugins(Paths.ApplicationPluginPath, "Interfaces.imsPlugin")
         'PopulatePluginList()
         'MainMSEngine = New MainEngine
@@ -177,8 +176,8 @@ Public Class Main
         If IsNothing(lv.FocusedItem) Then Exit Sub
         Dim objPlugin As Interfaces.ImsPlugin
         Dim Engine As New MainEngine(New Engine.EngineOptoons, Nothing)
-        Dim page As MonkeySpeakPage
-        page = CType(Engine.LoadFromString(""), MonkeySpeakPage)
+        Dim page As Monkeyspeak.Page
+        page = CType(Engine.LoadFromString(""), Monkeyspeak.Page)
         objPlugin = CType(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), Interfaces.ImsPlugin)
         If objPlugin Is Nothing Then Exit Sub
         objPlugin.Initialize(objHost)
@@ -241,13 +240,13 @@ Public Class Main
         Dim objPlugin As Interfaces.ImsPlugin
         Dim intIndex As Integer
         Dim Engine As New Monkeyspeak.MonkeyspeakEngine
-        Dim page As MonkeySpeakPage
+        Dim page As Monkeyspeak.Page
         Dim path As String = ".\Plugins\"
         For Each f As String In Directory.GetFiles(path, "*.zip")
             File.Delete(f)
         Next
         For intIndex = 0 To Plugins.Count - 1
-            page = CType(Engine.LoadFromString(""), MonkeySpeakPage)
+            page = CType(Engine.LoadFromString(""), Monkeyspeak.Page)
             objPlugin = CType(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.ImsPlugin)
 
             objPlugin.Initialize(objHost)

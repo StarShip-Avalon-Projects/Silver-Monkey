@@ -143,11 +143,11 @@ Namespace Engine.Libraries
                   End Function,
                "(0:5) When someone says something,")
             Add(TriggerCategory.Cause, 6,
-                 AddressOf msgIs, "(0:6) When someone says {..},")
+                 AddressOf MsgIs, "(0:6) When someone says {..},")
 
             '(0:7) When some one says something with {..} in it
             Add(TriggerCategory.Cause, 7,
-                AddressOf msgContains, "(0:7) When someone says something with {..} in it,")
+                AddressOf MsgContains, "(0:7) When someone says something with {..} in it,")
 
             'Shouts
             Add(TriggerCategory.Cause, 8,
@@ -157,11 +157,11 @@ Namespace Engine.Libraries
              "(0:8) When someone shouts something,")
 
             Add(TriggerCategory.Cause, 9,
-             AddressOf msgIs, "(0:9) When someone shouts {..},")
+             AddressOf MsgIs, "(0:9) When someone shouts {..},")
 
             '(0:10) When some one shouts something with {..} in it
             Add(TriggerCategory.Cause, 10,
-             AddressOf msgContains, "(0:10) When someone shouts something with {..} in it,")
+             AddressOf MsgContains, "(0:10) When someone shouts something with {..} in it,")
 
             'emotes
             Add(TriggerCategory.Cause, 11,
@@ -171,11 +171,11 @@ Namespace Engine.Libraries
                  End Function,
                   "(0:11) When someone emotes something,")
             Add(TriggerCategory.Cause, 12,
-                 AddressOf msgIs, "(0:12) When someone emotes {..},")
+                 AddressOf MsgIs, "(0:12) When someone emotes {..},")
 
             '(0:13) When some one emotes something with {..} in it
             Add(TriggerCategory.Cause, 13,
-                AddressOf msgContains, "(0:13) When someone emotes something with {..} in it,")
+                AddressOf MsgContains, "(0:13) When someone emotes something with {..} in it,")
 
             'Whispers
             Add(TriggerCategory.Cause, 15,
@@ -185,11 +185,11 @@ Namespace Engine.Libraries
                   "(0:15) When someone whispers something,")
 
             Add(TriggerCategory.Cause, 16,
-                AddressOf msgIs, "(0:16) When someone whispers {..},")
+                AddressOf MsgIs, "(0:16) When someone whispers {..},")
 
             '(0:13) When some one emotes something with {..} in it
             Add(TriggerCategory.Cause, 17,
-                 AddressOf msgContains, "(0:17) When someone whispers something with {..} in it,")
+                 AddressOf MsgContains, "(0:17) When someone whispers something with {..} in it,")
 
             'Says or Emotes
             Add(TriggerCategory.Cause, 18,
@@ -198,11 +198,11 @@ Namespace Engine.Libraries
                  End Function, "(0:18) When someone says or emotes something,")
 
             Add(TriggerCategory.Cause, 19,
-                AddressOf msgIs, "(0:19) When someone says or emotes {..},")
+                AddressOf MsgIs, "(0:19) When someone says or emotes {..},")
 
             '(0:13) When some one emotes something with {..} in it
             Add(TriggerCategory.Cause, 20,
-                AddressOf msgContains, "(0:20) When someone says or emotes something with {..} in it,")
+                AddressOf MsgContains, "(0:20) When someone says or emotes something with {..} in it,")
 
             'Emits
             Add(TriggerCategory.Cause, 21,
@@ -211,11 +211,11 @@ Namespace Engine.Libraries
                  End Function, "(0:21) When someone emits something,")
 
             Add(TriggerCategory.Cause, 22,
-                     AddressOf msgIs, "(0:22) When someone emits {..},")
+                     AddressOf MsgIs, "(0:22) When someone emits {..},")
 
             '(0:13) When some one emotes something with {..} in it
             Add(TriggerCategory.Cause, 23,
-                 AddressOf msgContains, "(0:23) When someone emits something with {..} in it,")
+                 AddressOf MsgContains, "(0:23) When someone emits something with {..} in it,")
 
             'Furre Enters
             '(0:4) When someone is added to the Dream manifest,
@@ -335,22 +335,22 @@ Namespace Engine.Libraries
 
             ' (1:5) and the Triggering Furre's message is {..}, (say, emote,
             ' shot, whisper, or emit Channels)
-            Add(New Trigger(TriggerCategory.Condition, 7), AddressOf msgIs,
+            Add(New Trigger(TriggerCategory.Condition, 7), AddressOf MsgIs,
                 "(1:7) and the triggering furre's message is {..},")
 
             ' (1:8) and the triggering furre's message contains {..} in it,
             ' (say, emote, shot, whisper, or emit Channels)
-            Add(New Trigger(TriggerCategory.Condition, 8), AddressOf msgContains,
+            Add(New Trigger(TriggerCategory.Condition, 8), AddressOf MsgContains,
                 "(1:8) and the triggering furre's message contains {..} in it,")
 
             '(1:9) and the triggering furre's message does not contain {..} in it,
             '(say, emote, shot, whisper, or emit Channels)
-            Add(New Trigger(TriggerCategory.Condition, 9), AddressOf msgNotContain,
+            Add(New Trigger(TriggerCategory.Condition, 9), AddressOf MsgNotContain,
                 "(1:9) and the triggering furre's message does not contain {..} in it,")
 
             '(1:10) and the triggering furre's message is not {..},
             '(say, emote, shot, whisper, or emit Channels)
-            Add(New Trigger(TriggerCategory.Condition, 10), AddressOf msgIsNot,
+            Add(New Trigger(TriggerCategory.Condition, 10), AddressOf MsgIsNot,
                 "(1:10) and the triggering furre's message is not {..},")
 
             '(1:11) and triggering furre's message starts with {..},
@@ -358,15 +358,15 @@ Namespace Engine.Libraries
                 "(1:11) and triggering furre's message starts with {..},")
 
             '(1:12) and triggering furre's message doesn't start with {..},
-            Add(New Trigger(TriggerCategory.Condition, 12), AddressOf msgNotStartsWith,
+            Add(New Trigger(TriggerCategory.Condition, 12), AddressOf MsgNotStartsWith,
                 "(1:12) and triggering furre's message doesn't start with {..},")
 
             '(1:13) and triggering furre's message  ends with {..},
-            Add(New Trigger(TriggerCategory.Condition, 13), AddressOf msgEndsWith,
+            Add(New Trigger(TriggerCategory.Condition, 13), AddressOf MsgEndsWith,
                 "(1:13) and triggering furre's message  ends with {..},")
 
             '(1:14) and triggering furre's message doesn't end with {..},
-            Add(New Trigger(TriggerCategory.Condition, 14), AddressOf msgNotEndsWith,
+            Add(New Trigger(TriggerCategory.Condition, 14), AddressOf MsgNotEndsWith,
                 "(1:14) and triggering furre's message doesn't end with {..},")
 
             '(1:904) and the triggering furre is the Bot Controller,
@@ -443,7 +443,7 @@ Namespace Engine.Libraries
                    Function(reader As TriggerReader)
 
                        Dim msg As String = reader.ReadString
-                       Dim tname As Variable = MsPage.GetVariable(MS_Name)
+                       Dim tname As Variable = reader.Page.GetVariable(MS_Name)
                        sndWhisper(tname.Value.ToString, msg)
                        Return True
 
@@ -712,8 +712,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Protected Overrides Function msgContains(reader As TriggerReader) As Boolean
-            Return MyBase.msgContains(reader)
+        Protected Overrides Function MsgContains(reader As TriggerReader) As Boolean
+            Return MyBase.MsgContains(reader)
         End Function
 
         ''' <summary>
@@ -725,8 +725,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Protected Overrides Function msgEndsWith(reader As TriggerReader) As Boolean
-            Return MyBase.msgEndsWith(reader)
+        Protected Overrides Function MsgEndsWith(reader As TriggerReader) As Boolean
+            Return MyBase.MsgEndsWith(reader)
         End Function
 
         ''' <summary>
@@ -756,8 +756,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Protected Overrides Function msgIs(reader As TriggerReader) As Boolean
-            Return MyBase.msgIs(reader)
+        Protected Overrides Function MsgIs(reader As TriggerReader) As Boolean
+            Return MyBase.MsgIs(reader)
         End Function
 
         ''' <summary>
@@ -769,8 +769,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Protected Overrides Function msgIsNot(reader As TriggerReader) As Boolean
-            Return MyBase.msgIsNot(reader)
+        Protected Overrides Function MsgIsNot(reader As TriggerReader) As Boolean
+            Return MyBase.MsgIsNot(reader)
         End Function
 
         ''' <summary>
@@ -783,8 +783,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Protected Overrides Function msgNotContain(reader As TriggerReader) As Boolean
-            Return MyBase.msgNotContain(reader)
+        Protected Overrides Function MsgNotContain(reader As TriggerReader) As Boolean
+            Return MyBase.MsgNotContain(reader)
         End Function
 
         ''' <summary>
@@ -830,97 +830,7 @@ Namespace Engine.Libraries
 
 #End Region
 
-        Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerChannelData
-            If FurcadiaSession.IsConnectedCharacter Then Exit Sub
-            Player = InstructionObject.Player
-            MsPage.SetVariable("NAME", Player.Name, True)
-            MsPage.SetVariable("MESSAGE", Player.Message, True)
-            Dim Text As String = InstructionObject.ChannelText
 
-            Select Case InstructionObject.Channel
-                Case "shout"
-                    '(0:8) When someone shouts something,
-                    '(0:9) When someone shouts {..},
-                    '(0:10) When someone shouts something with {..} in it,
-                    MsPage.Execute(8, 9, 10)
-                Case "say"
-                    ' (0:5) When some one says something
-                    ' (0:6) When some one says {...}
-                    '(0:7) When some one says something with {...} in it
-                    ' (0:18) When someone says or emotes something
-                    ' (0:19) When someone says or emotes {...}
-                    ' (0:20) When someone says or emotes something with
-                    ' {...} in it"
-
-                    MsPage.Execute(5, 6, 7, 18, 19, 20)
-
-                Case "whisper"
-
-                    ' (0:15) When some one whispers something
-                    ' (0:16) When some one whispers {...}
-                    ' (0:17) When some one whispers something
-                    ' with {...} in it
-                    MsPage.Execute(15, 16, 17)
-
-                Case "emote"
-                    ' (0:12) When someone emotes {...} Execute
-                    ' (0:13) When someone emotes something with {...} in it
-                    ' (0:18) When someone says or emotes something
-                    ' (0:19) When someone says or emotes {...}
-                    ' (0:20) When someone says or emotes something
-                    ' with {...} in it
-
-                    MsPage.Execute(11, 12, 13, 18, 19, 20)
-                Case "emit"
-                    ' (0:21) When someone emits something
-                    ' (0:22) When someone emits {...}
-                    ' (0:23) When someone emits something with {...} in it
-
-                    MsPage.Execute(21, 22, 23)
-                Case "@emit"
-                    ' (0:21) When someone emits something
-                    ' (0:22) When someone emits {...}
-                    ' (0:23) When someone emits something with {...} in it
-
-                    MsPage.Execute(21, 22, 23)
-
-                Case "query"
-
-                    Dim QueryComand As String = New Regex("<a.*?href='command://(.*?)'>").Match(Text).Groups(1).Value
-
-                    Select Case QueryComand
-                        Case "summon"
-                            ''JOIN
-
-                            MsPage.Execute(34, 35)
-
-                        Case "join"
-                            ''SUMMON
-
-                            MsPage.Execute(32, 33)
-
-                        Case "follow"
-                            ''LEAD
-
-                            MsPage.Execute(36, 37)
-
-                        Case "lead"
-                            ''FOLLOW
-
-                            MsPage.Execute(38, 39)
-
-                        Case "cuddle"
-
-                            MsPage.Execute(40, 41)
-
-                    End Select
-
-                Case Else
-                    'TODO: plugin Dynamic(Group)  Channels here
-
-            End Select
-
-        End Sub
 
     End Class
 

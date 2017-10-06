@@ -186,7 +186,7 @@ Namespace Engine.Libraries
                 "(5:500) use SQLite database file {...} or create file if it does not exist.")
 
             '(5:505 ) Add the triggering furre with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
-            Add(New Trigger(TriggerCategory.Effect, 505), AddressOf insertTriggeringFurreRecord,
+            Add(New Trigger(TriggerCategory.Effect, 505), AddressOf InsertTriggeringFurreRecord,
                 "(5:505) add the triggering furre with the default access level ""0"" to the Furre Table in the database if he, she, or it doesn't exist.")
 
             '(5:506) Add furre named {...} with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
@@ -700,7 +700,7 @@ Namespace Engine.Libraries
 
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            Furre = reader.Page.GetVariable(MS_Name).Value.ToString
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, FurcadiaShortName(Furre)).ToString, Value)
 
@@ -720,7 +720,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
-            Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
+            Dim Furre As String = FurcadiaShortName(reader.Page.GetVariable(MS_Name).Value.ToString)
             Dim str As String = reader.ReadString
 
             If str = GetValueFromTable(Info, Furre).ToString Then Return True
@@ -744,7 +744,7 @@ Namespace Engine.Libraries
 
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            Furre = reader.Page.GetVariable(MS_Name).Value.ToString
             Furre = FurcadiaShortName(Furre)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -770,7 +770,7 @@ Namespace Engine.Libraries
 
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
+            Furre = FurcadiaShortName(reader.Page.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -795,7 +795,7 @@ Namespace Engine.Libraries
 
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
+            Furre = FurcadiaShortName(reader.Page.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -821,7 +821,7 @@ Namespace Engine.Libraries
 
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
+            Furre = FurcadiaShortName(reader.Page.GetVariable(MS_Name).Value.ToString())
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
@@ -846,7 +846,7 @@ Namespace Engine.Libraries
 
             info = reader.ReadString
             number = ReadVariableOrNumber(reader, False)
-            Furre = MsPage.GetVariable(MS_Name).Value.ToString
+            Furre = reader.Page.GetVariable(MS_Name).Value.ToString
             Furre = FurcadiaShortName(Furre)
             Dim val As String = GetValueFromTable(info, Furre).ToString
             Dim Value As Double = 0
@@ -867,7 +867,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
-            Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString())
+            Dim Furre As String = FurcadiaShortName(reader.Page.GetVariable(MS_Name).Value.ToString())
             Dim str As String = reader.ReadString
 
             If str <> GetValueFromTable(Info, Furre).ToString Then Return True
@@ -991,7 +991,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
-            Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
+            Dim Furre As String = FurcadiaShortName(reader.Page.GetVariable(MS_Name).Value.ToString)
             Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
             Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
@@ -1098,8 +1098,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function insertTriggeringFurreRecord(reader As TriggerReader) As Boolean
-            Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
+        Public Function InsertTriggeringFurreRecord(reader As TriggerReader) As Boolean
+            Dim Furre As String = FurcadiaShortName(reader.Page.GetVariable(MS_Name).Value.ToString)
             Dim value As String = "0"
             If reader.PeekNumber Or reader.PeekVariable Then
                 value = ReadVariableOrNumber(reader).ToString()
@@ -1157,7 +1157,7 @@ Namespace Engine.Libraries
 
             Dim Info = reader.ReadString
             Dim Variable = reader.ReadVariable(True)
-            Dim Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
+            Dim Furre = FurcadiaShortName(reader.Page.GetVariable(MS_Name).Value.ToString)
 
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
             Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
@@ -1328,7 +1328,7 @@ Namespace Engine.Libraries
             Dim info As String = reader.ReadString
             'Dim Furre As String = reader.ReadString
             Dim Furre As String = ""
-            Furre = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
+            Furre = FurcadiaShortName(reader.Page.GetVariable(MS_Name).Value.ToString)
             Dim value As Double = ReadVariableOrNumber(reader)
             Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
             Dim data As New Dictionary(Of String, String)()
@@ -1352,7 +1352,7 @@ Namespace Engine.Libraries
         Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
             'Dim Furre As String = reader.ReadString
-            Dim Furre As String = FurcadiaShortName(MsPage.GetVariable(MS_Name).Value.ToString)
+            Dim Furre As String = FurcadiaShortName(reader.Page.GetVariable(MS_Name).Value.ToString)
             Dim value As String = reader.ReadString
             Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
             Dim data As New Dictionary(Of String, String)()

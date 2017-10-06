@@ -50,7 +50,7 @@ Public Class BaseClass
 
     Public Player As FURRE
 
-    Private _MSpage As MonkeySpeakPage
+    Private _MSpage As Monkeyspeak.Page
     Private msDream As DREAM
 
     Public ReadOnly Property Dream As DREAM
@@ -60,11 +60,11 @@ Public Class BaseClass
 
     End Property
 
-    Public Property MsPage As MonkeySpeakPage Implements Interfaces.ImsPlugin.MsPage
+    Public Property MsPage As Monkeyspeak.Page Implements Interfaces.ImsPlugin.MsPage
         Get
             Return _MSpage
         End Get
-        Set(value As MonkeySpeakPage)
+        Set(value As Monkeyspeak.Page)
 
             _MSpage = value
             msHost.MsPage = _MSpage

@@ -331,13 +331,13 @@ Namespace Engine.Libraries
                         '(0:132) When the bot rolls #d#+#,
                         '(0:134) When the bot rolls #d#-#,
                         '(0:136) When any one rolls anything,
-                        MsPage.Execute(130, 131, 132, 136)
+                        FurcadiaSession.MSpage.Execute(130, 131, 132, 136)
                     Else
                         '(0:136) When a furre rolls #d#,
                         '(0:138) When a fuure rolls #d#+#,
                         '(0:140) When a furre rolls #d#-#,
                         '(0:136) When any one rolls anything,
-                        MsPage.Execute(133, 134, 135, 136)
+                        FurcadiaSession.MSpage.Execute(133, 134, 135, 136)
                     End If
             End Select
 
