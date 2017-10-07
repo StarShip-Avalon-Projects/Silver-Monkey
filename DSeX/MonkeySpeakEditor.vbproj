@@ -140,7 +140,6 @@
     </Compile>
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="MainModule.vb" />
-    <Compile Include="Helper Classes\MessageHelper.vb" />
     <Compile Include="MS_Edit.Designer.vb">
       <DependentUpon>MS_Edit.vb</DependentUpon>
     </Compile>

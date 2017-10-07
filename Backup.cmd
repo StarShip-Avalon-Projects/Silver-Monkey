@@ -32,7 +32,7 @@ if not %GIT_STATUS%==0 goto eof
 
 git submodule foreach "git commit -m'Auto Update SubModules'"
 
-git submodule foreach "git push origin HEAD"
+git submodule foreach "git push origin master"
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof
 
@@ -45,7 +45,7 @@ set GIT_STATUS=%ERRORLEVEL%
 if not %GIT_STATUS%==0 goto eof
 
 :pull
-git request-pull v2.19.x_Elta https://github.com/StarShip-Avalon-Projects/Silver-Monkey.git v2.19.x_Elta 
+git request-pull v2.19.x_Elta https://github.com/StarShip-Avalon-Projects/Silver-Monkey.git
 
 :eof
 exit /b 0

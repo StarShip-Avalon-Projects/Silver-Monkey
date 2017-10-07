@@ -4,10 +4,13 @@ Imports System.Text.RegularExpressions
 Imports FastColoredTextBoxNS
 Imports MonkeyCore
 Imports MonkeyCore.Controls
+Imports MonkeyCore.Controls.NativeMethods
+Imports MonkeyCore.MyData
 Imports MonkeyCore.IniFile
 Imports MonkeyCore.Utils.Logging
 Imports MonkeySpeakEditor.Controls
 Imports MonkeySpeakEditor.Controls.LineFinder
+Imports MonkeyCore.Utils
 
 ''' <summary>
 ''' Silver Monkey Main Form
@@ -1796,7 +1799,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
     End Sub
 
     Private Sub RestartBotEngineToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RestartBotEngineToolStripMenuItem.Click, ToolStripButton2.Click
-        Dim msg As MessageHelper = New MessageHelper
+        Dim msg = New MessageHelper
         'save if modified
         SaveMS_File(TabControl2.SelectedIndex)
 
@@ -1813,7 +1816,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
         Dim iResult As IntPtr = IntPtr.Zero
         If WindowHandle.ToInt32() <> 0 Then
-            iResult = msg.sendWindowsStringMessage(WindowHandle, Handle, "~DSEX~", 0, strTag, msMsg)
+            iResult = msg.SendWindowsStringMessage(WindowHandle, Handle, "~DSEX~", 0, strTag, msMsg)
             lblStatus.Text = "Status: Engine restart command sent to " + BotName(TabControl2.SelectedIndex)
         End If
     End Sub
@@ -2226,7 +2229,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
             If mystr2.cdData = Marshal.SizeOf(GetType(MyData)) Then
                 ' Marshal the data from the unmanaged memory block to a
                 ' MyStruct managed struct.
-                Dim myStr As MyData = Nothing
+                Dim myStr As MyDataStructure = Nothing
                 Marshal.PtrToStructure(mystr2.lpData, [myStr])
 
                 Dim sName As String = myStr.lpName
@@ -2267,26 +2270,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
     End Sub
 
-    ''' <summary>
-    ''' </summary>
-    ''' <param name="_ClassName">
-    ''' </param>
-    ''' <param name="_WindowName">
-    ''' </param>
-    ''' <returns>
-    ''' </returns>
-    <DllImport("user32.dll", EntryPoint:="FindWindow")>
-    Private Shared Function FindWindow(_ClassName As String, _WindowName As String) As Integer
-    End Function
 
-    Public Declare Function SetFocusAPI Lib "user32.dll" Alias "SetFocus" (ByVal hWnd As Long) As Long
-    Private Declare Function SetForegroundWindow Lib "user32" (ByVal hWnd As Long) As Long
-
-    Private Declare Auto Function SendMessage Lib "user32" _
-(ByVal hWnd As IntPtr,
-ByVal Msg As Integer,
-ByVal wParam As IntPtr,
-ByRef lParam As COPYDATASTRUCT) As Boolean
 
 #End Region
 

@@ -65,8 +65,13 @@ Public Class BotSession : Inherits ProxySession
 
     End Sub
 
+    Public Shadows Event [Error] As ErrorEventHandler
 
-    Private Delegate Sub ServerChannelReceived()
+    Private Sub PageError(trigger As Trigger, e As Exception) Handles MSpage.Error
+
+        RaiseEvent [Error](e, trigger, Nothing)
+
+    End Sub
 
 #End Region
 
@@ -93,12 +98,14 @@ Public Class BotSession : Inherits ProxySession
             Return Player.ShortName = MainEngineOptions.BotControllerShortName
         End Get
     End Property
+
 #End Region
 
 #Region "Private Fields"
 
     Private MainEngineOptions As BotOptions
     Private MainSettings As Settings.cMain
+
 #End Region
 
 #Region "Public Fields"
@@ -116,7 +123,6 @@ Public Class BotSession : Inherits ProxySession
     'Monkey Speak Bot specific Variables
 
     Public objHost As New smHost(Me)
-
 
 #End Region
 
@@ -163,7 +169,30 @@ Public Class BotSession : Inherits ProxySession
 
     End Sub
 
-    Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs)
+    ''' <summary>
+    ''' Configure Bot Variables and Execute Monkey Speak Truggers for Client to Server Instructions
+    ''' </summary>
+    ''' <param name="sender"><see cref="Object"/></param>
+    ''' <param name="e"><see cref="ParseServerArgs"/></param>
+    Public Sub OnParseSererInstruction(sender As Object, e As ParseServerArgs) Handles MyBase.ProcessServerInstruction
+        If IsConnectedCharacter Then Exit Sub
+        MSpage.SetVariable("NAME", Player.Name, True)
+        MSpage.SetVariable("MESSAGE", Player.Message, True)
+
+        Select Case e.ServerInstruction
+
+            Case Else
+
+        End Select
+
+    End Sub
+
+    ''' <summary>
+    ''' Configure Bot Variables and Execute Monkey Speak Truggers for Text and dynamic channels
+    ''' </summary>
+    ''' <param name="InstructionObject"><see cref="ChannelObject"/></param>
+    ''' <param name="Args"><see cref="ParseServerArgs"/></param>
+    Public Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles MyBase.ProcessServerChannelData
         If IsConnectedCharacter Then Exit Sub
         MSpage.SetVariable("NAME", Player.Name, True)
         MSpage.SetVariable("MESSAGE", Player.Message, True)
@@ -249,11 +278,14 @@ Public Class BotSession : Inherits ProxySession
         End Select
 
     End Sub
+
 #Region "MonkeySpeak.Page Functions"
+
     ''' <summary>
     ''' Library Objects to load into the Engine
     ''' </summary>
     Private LibList As List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
+
     ''' <summary>
     ''' Load Libraries into the engine
     ''' </summary>
@@ -337,7 +369,6 @@ Public Class BotSession : Inherits ProxySession
     Public Sub Start()
         MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
         MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
-        AddHandler ProcessServerChannelData, AddressOf OnServerChannel
 
         Dim TimeStart = DateTime.Now
         Dim VariableList As New Dictionary(Of String, Object)
@@ -374,6 +405,7 @@ Public Class BotSession : Inherits ProxySession
         End If
 
     End Sub
+
     Private Sub InitializeEngineLibraries()
         ' Comment out Libs to Disable
 
@@ -382,7 +414,6 @@ Public Class BotSession : Inherits ProxySession
                 New StringLibrary(Me),
                 New SayLibrary(Me),
                 New Banish(Me),
-                New MathLibrary(Me),
                 New MsTime(Me),
                 New MsDatabase(Me),
                 New MsWebRequests(Me),
@@ -401,7 +432,7 @@ Public Class BotSession : Inherits ProxySession
                 New MsTrades(Me),
                 New MsDreamInfo(Me)
             }
-
+        ' New MathLibrary(Me),
         'LibList.Add(New MS_MemberList())
     End Sub
 

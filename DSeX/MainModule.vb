@@ -4,8 +4,7 @@ Imports MonkeyCore
 
 Public Module MainModule
 
-    Public Const WM_COPYDATA As Integer = &H4A
-    Public Const WM_USER As Integer = &H400
+
 
     Public DS_Comment_Style As TextStyle = New TextStyle(New SolidBrush(Color.Green), Nothing, FontStyle.Regular)
     Public DS_Default_Style As TextStyle = New TextStyle(New SolidBrush(Color.Green), Nothing, FontStyle.Regular)
@@ -34,27 +33,6 @@ Public Module MainModule
         ms
     End Enum
 
-    'Used for WM_COPYDATA for string messages
-    <StructLayout(LayoutKind.Sequential)>
-    Public Structure COPYDATASTRUCT
-        Public dwData As IntPtr
-        Public cdData As Integer
-        Public lpData As IntPtr
-    End Structure
 
-    <StructLayout(LayoutKind.Sequential, CharSet:=CharSet.Unicode)>
-    Public Structure MyData
-        Public fID As UInteger
-
-        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=78)>
-        Public lpName As String
-
-        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=78)>
-        Public lpTag As String
-
-        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=2048)>
-        Public lpMsg As String
-
-    End Structure
 
 End Module

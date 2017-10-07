@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports MonkeyCore.Utils
 Imports Monkeyspeak
 
 Namespace Engine.Libraries
@@ -10,7 +11,10 @@ Namespace Engine.Libraries
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
-
+        ''' <summary>
+        ''' Setup Windows messaging system
+        ''' </summary>
+        ''' <param name="session"></param>
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
             '(0:75) When the bot receives a message from another bot on the same computer,
@@ -82,52 +86,43 @@ Namespace Engine.Libraries
 
         ''' <summary>
         ''' (5:75) send message {...} to bot named {...}.
-        ''' <para>
-        ''' Currently Disabled
-        ''' </para>
         ''' </summary>
         ''' <param name="reader">
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Shared Function SendMessage(reader As TriggerReader) As Boolean
-            'Dim msMsg As String = ""
-            'Dim Fur As String = ""
-            'Try
-            '    'Debug.Print("msgContains Begin Execution")
-            '    msMsg = reader.ReadString().Trim
-            '    'Debug.Print("msMsg = " & msMsg)
-            '    Fur = reader.ReadString()
-            '    'Step 1.
-            '    'To send a message to another application the first thing we need is the
-            '    'handle of the receiving application.
-            '    'One way is to use the FindWindow API
-            '    Dim cstrReceiverWindowName As String = "Silver Monkey: " + Fur
-            '    Dim WindowHandleOfToProcess As Integer = FindWindow(Nothing, cstrReceiverWindowName)
-            '    'find by window name
-            '    Dim WindowHandle As New IntPtr(WindowHandleOfToProcess)
-            '    Dim msg As MessageHelper = New MessageHelper
-            '    'Step 2.
-            '    'Create some information to send.
-            '    Dim strTag As String = "MSG"
+        Public Function SendMessage(reader As TriggerReader) As Boolean
 
-            '    Dim iResult As IntPtr = IntPtr.Zero
-            '    If WindowHandle <> IntPtr.Zero Then
-            '        iResult = msg.sendWindowsStringMessage(WindowHandle,
-            '               IntPtr.Zero, FurcadiaSession.ConnectedCharacterName,
-            '               FurcadiaSession.ConnectedCharacterFurcadiaID, strTag, msMsg)
-            '        'SendClientMessage("SYSTEM Send Windows Message to " + Fur + ": ", msMsg)
-            '    End If
-            '    'Debug.Print("Msg = " & msg)
-            '    Return True
-            'Catch ex As Exception
-            '    Dim tID As String = reader.TriggerId.ToString
-            '    Dim tCat As String = reader.TriggerCategory.ToString
-            '    Dim ErrorString As String = "Error: (" & tCat & ":" & tID & ") " & ex.Message
-            '    Debug.Print(ErrorString)
-            '    Return False
-            'End Try
-            Return False
+
+            'Debug.Print("msgContains Begin Execution")
+            Dim msMsg = reader.ReadString().Trim
+            'Debug.Print("msMsg = " & msMsg)
+            Dim Fur = reader.ReadString()
+            'Step 1.
+            'To send a message to another application the first thing we need is the
+            'handle of the receiving application.
+            'One way is to use the FindWindow API
+            Dim cstrReceiverWindowName As String = "Silver Monkey: " + Fur
+                Dim WindowHandleOfToProcess As Integer = FindWindow(Nothing, cstrReceiverWindowName)
+                'find by window name
+                Dim WindowHandle As New IntPtr(WindowHandleOfToProcess)
+                Dim msg As MessageHelper = New MonkeyCore.Utils.MessageHelper
+                'Step 2.
+                'Create some information to send.
+                Dim strTag As String = "MSG"
+
+                Dim iResult As IntPtr = IntPtr.Zero
+                If WindowHandle <> IntPtr.Zero Then
+                iResult = msg.SendWindowsStringMessage(WindowHandle,
+                           IntPtr.Zero,
+                           FurcadiaSession.ConnectedCharacterName,
+                           FurcadiaSession.ConnectedCharacterFurcadiaID, strTag, msMsg)
+                SendClientMessage("SYSTEM Send Windows Message to " + Fur + ": " + msMsg)
+            End If
+                'Debug.Print("Msg = " & msg)
+                Return True
+
+                Return False
         End Function
 
         ''' <summary>

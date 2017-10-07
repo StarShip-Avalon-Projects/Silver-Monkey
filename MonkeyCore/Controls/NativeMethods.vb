@@ -1,11 +1,99 @@
 ﻿Imports System.Runtime.InteropServices
-
-Namespace HelperClasses
+Imports MonkeyCore.MyData
+Namespace Controls
 
     ''' <summary>
     ''' Native Win32 Methods
     ''' </summary>
     Public NotInheritable Class NativeMethods
+
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="lpString"></param>
+        ''' <returns></returns>
+        <DllImport("user32.dll", EntryPoint:="SRegisterWindowMessage")>
+        Private Shared Function RegisterWindowMessage(lpString As String) As Integer
+        End Function
+
+
+        <DllImport("user32.dll")>
+        Public Shared Function SetScrollPos(ByVal hWnd As IntPtr, ByVal nBar As Integer, ByVal nPos As Integer, ByVal bRedraw As Boolean) As Integer
+        End Function
+
+
+#Enable Warning BC42353 ' Function 'GetScrollInfo' doesn't return a value on all code paths. Are you missing a 'Return' statement?
+
+
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="hWnd"></param>
+        ''' <param name="Msg"></param>
+        ''' <param name="wParam"></param>
+        ''' <param name="lParam"></param>
+        ''' <returns></returns>
+        <DllImport("User32.dll", EntryPoint:="SendMessage")>
+        Private Shared Function SendMessage(hWnd As IntPtr, Msg As Integer, ByVal wParam As IntPtr, ByRef lParam As COPYDATASTRUCT) As IntPtr
+        End Function
+
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="lpClassName"></param>
+        ''' <param name="lpWindowName"></param>
+        ''' <returns></returns>
+        <DllImport("User32.dll", EntryPoint:="FindWindow")>
+        Public Shared Function FindWindow(lpClassName As [String], lpWindowName As [String]) As Int32
+        End Function
+
+        'For use with WM_COPYDATA and COPYDATASTRUCT
+
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="hWnd"></param>
+        ''' <param name="Msg"></param>
+        ''' <param name="wParam"></param>
+        ''' <param name="lParam"></param>
+        ''' <returns></returns>
+        <DllImport("User32.dll", EntryPoint:="PostMessage")>
+        Public Shared Function PostMessage(hWnd As IntPtr, Msg As Integer, wParam As IntPtr, ByRef lParam As COPYDATASTRUCT) As IntPtr
+        End Function
+
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="hWnd"></param>
+        ''' <param name="Msg"></param>
+        ''' <param name="wParam"></param>
+        ''' <param name="lParam"></param>
+        ''' <returns></returns>
+        <DllImport("User32.dll", EntryPoint:="PostMessage")>
+        Public Shared Function PostMessage(hWnd As Integer, Msg As Integer, wParam As IntPtr, lParam As Integer) As IntPtr
+        End Function
+
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="hWnd"></param>
+        ''' <param name="Msg"></param>
+        ''' <param name="wParam"></param>
+        ''' <param name="lParam"></param>
+        ''' <returns></returns>
+        <DllImport("User32.dll", EntryPoint:="SendMessage")>
+        Public Shared Function SendMessage(hWnd As IntPtr, Msg As Integer, wParam As IntPtr, lParam As IntPtr) As IntPtr
+        End Function
+
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="hWnd"></param>
+        ''' <returns></returns>
+        <DllImport("User32.dll", EntryPoint:="SetForegroundWindow")>
+        Public Shared Function SetForegroundWindow(hWnd As Integer) As Boolean
+        End Function
+
         Public Enum SBOrientation As Integer
             SB_HORZ = &H0
             SB_VERT = &H1
@@ -26,9 +114,11 @@ Namespace HelperClasses
                 <MarshalAs(UnmanagedType.I4)> fnBar As SBOrientation,
                 <MarshalAs(UnmanagedType.Struct)> ByRef lpsi As SCROLLINFO) As Integer
 
-        Public Declare Function GetScrollPos Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal nBar As Integer) As Integer
+        Public Declare Function GetScrollPos Lib "user32.dll" (ByVal hWnd As IntPtr,
+                ByVal nBar As Integer) As Integer
 
-        Public Declare Function GetScrollRange Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal nBar As Integer,
+        Public Declare Function GetScrollRange Lib "user32.dll" (ByVal hWnd As IntPtr,
+                ByVal nBar As Integer,
                 ByRef lpMinPos As Integer,
                 ByRef lpMaxPos As Integer) As Boolean
 
