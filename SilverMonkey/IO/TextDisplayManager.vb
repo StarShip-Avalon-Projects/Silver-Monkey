@@ -4,6 +4,7 @@ Imports System.Text.RegularExpressions
 Imports Furcadia.Text.FurcadiaMarkup
 Imports MonkeyCore
 Imports MonkeyCore.Controls
+Imports MonkeyCore.Controls.NativeMethods
 Imports MonkeyCore.Settings
 Imports MonkeyCore.Utils.Logging
 Imports SilverMonkey.HelperClasses.NativeMethods
