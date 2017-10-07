@@ -89,7 +89,7 @@ Public Class Main
             SndDisplay("New Session" + DateTime.Now.ToString)
 
             FurcadiaSession.Connect()
-            AddHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
+            ' AddHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
 
             ConnectTrayIconMenuItem.Enabled = False
             DisconnectTrayIconMenuItem.Enabled = True

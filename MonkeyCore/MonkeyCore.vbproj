@@ -124,6 +124,7 @@
     <Compile Include="Controls\ListView_NoFlicker.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\NativeMethods.vb" />
     <Compile Include="Controls\RecentFileMenu.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -153,6 +154,8 @@
     <Compile Include="Utils\Logging\Logger.vb" />
     <Compile Include="Utils\Logging\LogSteamOptions.vb" />
     <Compile Include="Utils\Logging\LogStream.vb" />
+    <Compile Include="Utils\MessageHelper.vb" />
+    <Compile Include="Utils\MyData.vb" />
     <Compile Include="Utils\PluginServices.vb" />
     <Compile Include="Utils\SQlite.vb" />
     <Compile Include="Utils\TextWriter.vb" />
