@@ -19,7 +19,7 @@ Namespace Engine.Libraries
 #Region "Private Fields"
 
         Private Webrequest As New WebRequests()
-        Private WebStack As New List(Of IVariable)()
+        Private Shared WebStack As IList(Of IVariable)()
         Private WebURL As Uri
 
 #End Region
@@ -28,6 +28,7 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
+            WebStack = IList(Of IVariable)
             'WebStack.Clear()
             '(0:70) When the bot receives a variable list by sending the Web-Cache.
             Add(New Trigger(TriggerCategory.Cause, 70),
@@ -93,7 +94,7 @@ Namespace Engine.Libraries
         ''' True Always
         ''' </returns>
         Private Function ClearWebStack(reader As TriggerReader) As Boolean
-            If Not IsNothing(WebStack) OrElse WebStack.Count > 0 Then WebStack.Clear()
+            If Not IsNothing(WebStack) AndAlso WebStack.Count > 0 Then WebStack.Clear()
             Return True
         End Function
 
