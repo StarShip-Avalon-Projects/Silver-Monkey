@@ -6,7 +6,7 @@
     ''' Currently not used
     ''' </para>
     ''' </summary>
-    Public Class MS_Quotes
+    Public NotInheritable Class MS_Quotes
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"

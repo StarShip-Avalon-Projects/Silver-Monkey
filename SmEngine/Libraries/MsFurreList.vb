@@ -15,7 +15,7 @@ Namespace Engine.Libraries
     ''' AFK vs active players
     ''' </para>
     ''' </summary>
-    Public Class MsFurreList
+    Public NotInheritable Class MsFurreList
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
@@ -120,7 +120,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' the Number of Furre in dream as a <see cref="Monkeyspeak.Variable"/>
         ''' </returns>
-        Function FurreActiveListCount(reader As TriggerReader) As Boolean
+        Public Function FurreActiveListCount(reader As TriggerReader) As Boolean
 
             Dim var As Variable = reader.ReadVariable(True)
             Dim c As Double = 0
@@ -145,7 +145,7 @@ Namespace Engine.Libraries
         ''' the number of AFK furres in the Dream as a <see cref="Monkeyspeak.Variable"/>
         ''' <para>To be counted as AFK, Thier AFK time is greater than zero</para>
         ''' </returns>
-        Function FurreAFKListCount(reader As TriggerReader) As Boolean
+        Public Function FurreAFKListCount(reader As TriggerReader) As Boolean
 
             Dim var As Variable = reader.ReadVariable(True)
             Dim c As Double = 0
@@ -168,7 +168,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' The total number of furres in a <see cref="Monkeyspeak.Variable"/>
         ''' </returns>
-        Function FurreListCount(reader As TriggerReader) As Boolean
+        Public Function FurreListCount(reader As TriggerReader) As Boolean
 
             Dim var As Variable = reader.ReadVariable(True)
             var.Value = Convert.ToDouble(FurcadiaSession.Dream.FurreList.Count.ToString)
@@ -185,7 +185,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' a comoa seperated list of Furre Names
         ''' </returns>
-        Function FurreListVar(reader As TriggerReader) As Boolean
+        Public Function FurreListVar(reader As TriggerReader) As Boolean
 
             Dim var As Variable = reader.ReadVariable(True)
             Dim str As New ArrayList
@@ -206,7 +206,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True is the furre specified has afk time of 0
         ''' </returns>
-        Function FurreNamedActive(reader As TriggerReader) As Boolean
+        Public Function FurreNamedActive(reader As TriggerReader) As Boolean
 
             Dim name As String = reader.ReadString
             Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
@@ -223,7 +223,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' returns true if the Furre has a afk time greater than zero
         ''' </returns>
-        Function FurreNamedAFK(reader As TriggerReader) As Boolean
+        Public Function FurreNamedAFK(reader As TriggerReader) As Boolean
 
             Dim name As String = reader.ReadString
             Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
@@ -240,7 +240,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True if the specified furre is visible
         ''' </returns>
-        Function FurreNamedCanSe(reader As TriggerReader) As Boolean
+        Public Function FurreNamedCanSe(reader As TriggerReader) As Boolean
 
             Dim name As String = reader.ReadString
             Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
@@ -257,7 +257,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true if the furre specified is in the dream
         ''' </returns>
-        Function FurreNamedInDream(reader As TriggerReader) As Boolean
+        Public Function FurreNamedInDream(reader As TriggerReader) As Boolean
 
             Dim name As String = reader.ReadString
             Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
@@ -274,7 +274,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' returns true if the spcified furre is not visible
         ''' </returns>
-        Function FurreNamedNotCanSe(reader As TriggerReader) As Boolean
+        Public Function FurreNamedNotCanSe(reader As TriggerReader) As Boolean
 
             Dim name As String = reader.ReadString
             Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
@@ -291,7 +291,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true if the specified furre is not in the dream
         ''' </returns>
-        Function FurreNamedNotInDream(reader As TriggerReader) As Boolean
+        Public Function FurreNamedNotInDream(reader As TriggerReader) As Boolean
 
             Dim name As String = reader.ReadString
             Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
@@ -308,7 +308,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true is the triggering furre is visible
         ''' </returns>
-        Function TriggeringCanSe(reader As TriggerReader) As Boolean
+        Public Function TriggeringCanSe(reader As TriggerReader) As Boolean
 
             Return Player.Visible
 
@@ -324,7 +324,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true if the triggering furre is in the dream
         ''' </returns>
-        Function TriggeringInDream(reader As TriggerReader) As Boolean
+        Public Function TriggeringInDream(reader As TriggerReader) As Boolean
 
             Return InDream(Player.Name)
 
@@ -339,7 +339,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' returns true if the triggering furre is not visible
         ''' </returns>
-        Function TriggeringNotCanSe(reader As TriggerReader) As Boolean
+        Public Function TriggeringNotCanSe(reader As TriggerReader) As Boolean
 
             Return Not Player.Visible
 
@@ -355,12 +355,19 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true if the triggering furre is not in the dream
         ''' </returns>
-        Function TriggeringNotInDream(reader As TriggerReader) As Boolean
+        Public Function TriggeringNotInDream(reader As TriggerReader) As Boolean
 
             Dim tPlayer As FURRE = FurcadiaSession.Player
             Return Not InDream(tPlayer.Name)
 
         End Function
+
+
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
+
 
 #End Region
 

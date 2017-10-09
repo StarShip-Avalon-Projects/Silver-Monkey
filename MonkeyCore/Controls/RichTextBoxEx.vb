@@ -3,7 +3,6 @@ Imports System.Runtime.InteropServices
 Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
 Imports MonkeyCore.Controls.Win32
-Imports MonkeyCore.Controls.NativeMethods
 
 Namespace Controls
 

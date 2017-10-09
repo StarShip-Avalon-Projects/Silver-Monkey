@@ -24,7 +24,7 @@ Namespace Engine.Libraries.PhoenixSpeak
         ''' <summary>
         ''' Phoenix Speak Flag
         ''' </summary>
-        Public Flag As PsFlag
+        '  Public Flag As PsFlag
 
         ''' <summary>
         ''' Do we have too much Phoienix-Speak Data then the Server can send
@@ -47,7 +47,7 @@ Namespace Engine.Libraries.PhoenixSpeak
         ''' </summary>
         ''' <returns>
         ''' </returns>
-        Public Property PsType As PsFlag
+        ' Public Property PsType As PsFlag
 
 #End Region
 

@@ -20,13 +20,12 @@ Namespace Utils.Logging
         ''' <summary>
         ''' Create a new instance of the log file
         ''' </summary>
-        ''' <param name="FileName">
-        ''' </param>
         ''' <param name="FilePath">
         ''' </param>
-        Public Sub New(FileName As String, FilePath As String)
+        Public Sub New(FilePath As String)
             Logoptions = New LogSteamOptions With {
-                .LogPath = FilePath
+                .LogPath = FilePath,
+                .LogNameBase = "Default"
             }
 
             strErrorFilePath = Path.Combine(FilePath, Logoptions.GetLogName())

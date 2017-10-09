@@ -2,7 +2,6 @@
 Imports System.Threading
 Imports Furcadia.Util
 Imports MonkeyCore
-Imports MonkeyCore.Utils
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.PhoenixSpeak
 
@@ -53,7 +52,7 @@ Namespace Engine.Libraries
     ''' server and will flag an 'an overflow if page 6 is detected.
     ''' </para>
     ''' </remarks>
-    Public Class MsPhoenixSpeakBackupAndRestore
+    Public NotInheritable Class MsPhoenixSpeakBackupAndRestore
         Inherits MonkeySpeakLibrary
 
 #Region "Public Fields"
@@ -296,7 +295,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function BotBackup(reader As TriggerReader) As Boolean
+        Public Function BotBackup(reader As TriggerReader)
 
             Return CurrentPS_Stage <> PsSystemRunning.PsBackup
 
@@ -455,7 +454,7 @@ Namespace Engine.Libraries
                     End If
                     If CommandToSendOk Then
                         ' PS set command is full send to PS Out Enqueue
-                        sendServer(PScmd)
+                        SendServer(PScmd)
                     End If
 
                 Next
@@ -550,10 +549,10 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
         Private Sub PsReceived(o As Object, e As PhoenixSpeakEventArgs) 'Handles SubSys.PsReceived
             'PsProcess = PsSystemRunning.PsBackup
             Dim ServerCommand = String.Empty
-            If e.PsType = SubSystem.PsFlag.PsError Then
-                Abort()
-                Exit Sub
-            End If
+            'If e.PsType = SubSystem.PsFlag.PsError Then
+            '    Abort()
+            '    Exit Sub
+            'End If
             Dim PSiInfoCache As List(Of PhoenixSpeak.Variable) = CType(o, List(Of PhoenixSpeak.Variable))
 
             Select Case CurrentPS_Stage
@@ -665,7 +664,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
             Dim Returnval As Boolean
             Dim idx As Integer = 0
             PlayerName = PlayerName.Trim
-            Dim Data As New Dictionary(Of String, String)
+            Dim Data As IDictionary(Of String, String)
             Try
                 Monitor.Enter(OjbLock)
 
@@ -763,6 +762,10 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
             SendClientMessage("Pruning completed. Removed " + Counter.ToString + "Characters. Time Elapsed: " + ts2.Minutes.ToString + " minutes")
             Return Counter
         End Function
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
 
 #End Region
 

@@ -15,7 +15,7 @@ Namespace Engine.Libraries
     ''' </para>
     ''' <pra>Bot Testers: Be aware this class needs to be tested any way possible!</pra>
     ''' </summary>
-    Public Class MsPhoenixSpeak
+    Public NotInheritable Class MsPhoenixSpeak
         Inherits MonkeySpeakLibrary
 
 #Region "Public Fields"
@@ -125,7 +125,7 @@ Namespace Engine.Libraries
         Function ForgetDreamPS(reader As TriggerReader) As Boolean
 
             Dim info As String = reader.ReadString
-            Return sendServer("ps clear dream." + info)
+            Return SendServer("ps clear dream." + info)
 
         End Function
 
@@ -142,7 +142,7 @@ Namespace Engine.Libraries
 
             Dim info As String = reader.ReadString
             Dim furre As String = reader.ReadString
-            Return sendServer("ps clear character." + furre + "." + info)
+            Return SendServer("ps clear character." + furre + "." + info)
 
         End Function
 
@@ -159,7 +159,7 @@ Namespace Engine.Libraries
 
             Dim info As String = reader.ReadString
             Dim furre As String = Player.ShortName
-            Return sendServer("ps clear character." + furre + "." + info)
+            Return SendServer("ps clear character." + furre + "." + info)
         End Function
 
         ''' <summary>
@@ -175,7 +175,7 @@ Namespace Engine.Libraries
         Public Function getPSinfo(reader As TriggerReader) As Boolean
 
             Dim Info As New PhoenixSpeak.Variable(reader.ReadString())
-            Dim var As Monkeyspeak.Variable = reader.ReadVariable(True)
+            Dim var As IVariable = reader.ReadVariable(True)
             If PSInfoCache.Contains(Info) Then
                 var = Info
             Else
@@ -196,7 +196,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function MemorizeDreamPS(reader As TriggerReader) As Boolean
             Dim info As String = reader.ReadString
-            Return sendServer("ps set dream." + info)
+            Return SendServer("ps set dream." + info)
 
         End Function
 
@@ -213,7 +213,7 @@ Namespace Engine.Libraries
 
             Dim info As String = reader.ReadString
             Dim furre As String = reader.ReadString
-            Return sendServer("ps set character." + furre + "." + info)
+            Return SendServer("ps set character." + furre + "." + info)
 
         End Function
 
@@ -232,7 +232,7 @@ Namespace Engine.Libraries
 
             Dim info As String = reader.ReadString
             Dim furre As String = FurcadiaSession.Player.ShortName
-            Return sendServer("ps set character." + furre + "." + info)
+            Return SendServer("ps set character." + furre + "." + info)
         End Function
 
         ''' <summary>
@@ -247,7 +247,7 @@ Namespace Engine.Libraries
         Function PSCommand(reader As TriggerReader) As Boolean
 
             Dim info As String = reader.ReadString
-            Return sendServer("ps " + info)
+            Return SendServer("ps " + info)
 
         End Function
 
@@ -262,7 +262,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function PSForgetDream(reader As TriggerReader) As Boolean
 
-            Return sendServer("ps clear dream ")
+            Return SendServer("ps clear dream ")
 
         End Function
 
@@ -278,7 +278,7 @@ Namespace Engine.Libraries
         Function PSForgetFurreNamed(reader As TriggerReader) As Boolean
 
             Dim Furre As String = reader.ReadString
-            Return sendServer("ps clear character. " + Furre)
+            Return SendServer("ps clear character. " + Furre)
 
         End Function
 
@@ -293,7 +293,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function PSForgetTriggeringFurre(reader As TriggerReader) As Boolean
 
-            Return sendServer("ps clear character." + Player.ShortName)
+            Return SendServer("ps clear character." + Player.ShortName)
 
         End Function
 
@@ -329,7 +329,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function RemberPSInfoAllCharacters(reader As TriggerReader) As Boolean
 
-            Return sendServer("ps get character.*")
+            Return SendServer("ps get character.*")
 
         End Function
 
@@ -345,7 +345,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function RemberPSInfoAllDream(reader As TriggerReader) As Boolean
 
-            Return sendServer("ps get dream.*")
+            Return SendServer("ps get dream.*")
 
         End Function
 
@@ -362,7 +362,7 @@ Namespace Engine.Libraries
         Function RemberPSInforFurreNamed(reader As TriggerReader) As Boolean
 
             Dim furre As String = reader.ReadString
-            Return sendServer("ps get character." + furre + ".*")
+            Return SendServer("ps get character." + furre + ".*")
 
         End Function
 
@@ -379,7 +379,7 @@ Namespace Engine.Libraries
         Function RemberPSInforTrigFurre(reader As TriggerReader) As Boolean
 
             Dim furre As String = FurcadiaSession.Player.ShortName
-            Return sendServer("ps set character." + furre + ".*")
+            Return SendServer("ps set character." + furre + ".*")
 
         End Function
 
@@ -492,6 +492,10 @@ Namespace Engine.Libraries
 
             Return PsVarList
         End Function
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
 
     End Class
 

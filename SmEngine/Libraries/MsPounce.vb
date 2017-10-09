@@ -13,12 +13,12 @@ Namespace Engine.Libraries
     ''' </summary>
     ''' <remarks>
     ''' This classe is the Monkey Speak interface for using the Furcadia Pounce server. It does not read the online.ini located in the Furcadia App-Data Folder.
-    ''' Instead it uses a text file With a list Of Furcadia Names(Long Or Short formats Don't matter). Furcadia.Net.Pounce is a HTTP(S)  Async Post Method 
+    ''' Instead it uses a text file With a list Of Furcadia Names(Long Or Short formats Don't matter). Furcadia.Net.Pounce is a HTTP(S)  Async Post Method
     ''' class that sends the requests to the server once every 30 seconds.
     ''' <para/>
     ''' Why 30 seconds? Because the Furcadia pounce server runs on a 30 second cron job, Therefore it makes sense to stick with it update time.
     ''' </remarks>
-    Public Class MsPounce
+    Public NotInheritable Class MsPounce
         Inherits MonkeySpeakLibrary
 
         ''' <summary>
@@ -44,15 +44,11 @@ Namespace Engine.Libraries
 
             ' (0:950) When a furre logs on,
             Add(TriggerCategory.Cause, 950,
-            Function()
-                Return True
-            End Function, "(0:950) When a furre logs on,")
+            Function() True, "(0:950) When a furre logs on,")
 
             '(0:951) When a furre logs off,
             Add(TriggerCategory.Cause, 951,
-            Function()
-                Return True
-            End Function, "(0:951) When a furre logs off,")
+            Function() True, "(0:951) When a furre logs off,")
             '(0:952) When the furre named {...} logs on,
             Add(TriggerCategory.Cause, 952, AddressOf NameIs, "(0:952) When the furre named {...} logs on,")
             '(0:953) When the furre named {...} logs off,
@@ -182,7 +178,7 @@ Namespace Engine.Libraries
         ''' EventSrgs.Empty
         ''' </param>
         Public Sub FurreLoggedOn(ByVal Furre As Object, e As EventArgs) Handles PFure.FurreLoggedOn
-            Dim Furr As PounceFurre = CType(Furre, PounceFurre)
+            Dim Furr As PounceFurre = DirectCast(Furre, PounceFurre)
             FurcadiaSession.MSpage.SetVariable("NAME", Furr.Name, True)
             FurcadiaSession.MSpage.Execute(950, 952)
         End Sub
@@ -327,7 +323,7 @@ Namespace Engine.Libraries
             Dim Furre As String = Nothing
             Dim f() As String
 
-            Furre = FurcadiaSession.MSpage.GetVariable(MS_Name).Value.ToString
+            Furre = reader.Page.GetVariable(MS_Name).Value.ToString
             f = File.ReadAllLines(_onlineListFile)
             For Each l As String In f
                 If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
@@ -391,6 +387,10 @@ Namespace Engine.Libraries
                 Dim sw As StreamWriter = New StreamWriter(_onlineListFile, False)
                 sw.Close()
             End If
+        End Sub
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
         End Sub
 
     End Class

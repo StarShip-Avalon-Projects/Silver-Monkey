@@ -2,12 +2,10 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Furcadia.Text.FurcadiaMarkup
-Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Controls.NativeMethods
 Imports MonkeyCore.Settings
 Imports MonkeyCore.Utils.Logging
-Imports SilverMonkey.HelperClasses.NativeMethods
 
 Namespace HelperClasses
 
@@ -281,7 +279,7 @@ Namespace HelperClasses
 
 #Region "Private Methods"
 
-        Private Sub log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles LogDisplayBox.LinkClicked
+        Private Sub Log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles LogDisplayBox.LinkClicked
             'Dim Proto As String = ""
             'Dim Str As String = e.LinkText
             'Try

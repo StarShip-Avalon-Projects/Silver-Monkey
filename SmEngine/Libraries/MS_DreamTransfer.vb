@@ -6,7 +6,7 @@
     ''' Currently not used
     ''' </para>
     ''' </summary>
-    Public Class MS_DreamTransfer
+    Public NotInheritable Class MS_DreamTransfer
         Inherits MonkeySpeakLibrary
         ' Ctrl+T and Editor.ini Dream Name+location
         'http://www.furcadia.com/download/dream.html

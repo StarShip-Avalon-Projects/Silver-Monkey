@@ -16,7 +16,7 @@ Namespace Engine.Libraries
     ''' with strings in <see cref="Monkeyspeak.Variable"/> s
     ''' </para>
     ''' </summary>
-    Class StringLibrary
+    Public NotInheritable Class StringLibrary
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
@@ -334,6 +334,14 @@ Namespace Engine.Libraries
             End If
 
         End Function
+
+
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
+
+
 
 #End Region
 

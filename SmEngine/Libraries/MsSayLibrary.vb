@@ -1,7 +1,5 @@
-﻿Imports System.Text.RegularExpressions
-Imports Furcadia.Net
+﻿Imports Furcadia.Net
 Imports Furcadia.Net.Dream
-Imports Furcadia.Net.Utils.ServerParser
 Imports Furcadia.Util
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.SmConstants
@@ -114,7 +112,7 @@ Namespace Engine.Libraries
     ''' (5:7) whisper {..} to furre named {..} even if they're off-line.
     ''' </para>
     ''' </remarks>
-    Class SayLibrary
+    Public NotInheritable Class MsSayLibrary
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
@@ -354,7 +352,7 @@ Namespace Engine.Libraries
                 "(1:10) and the triggering furre's message is not {..},")
 
             '(1:11) and triggering furre's message starts with {..},
-            Add(New Trigger(TriggerCategory.Condition, 11), AddressOf msgStartsWith,
+            Add(New Trigger(TriggerCategory.Condition, 11), AddressOf MsgStartsWith,
                 "(1:11) and triggering furre's message starts with {..},")
 
             '(1:12) and triggering furre's message doesn't start with {..},
@@ -409,7 +407,7 @@ Namespace Engine.Libraries
                  Function(reader As TriggerReader)
 
                      Dim msg As String = reader.ReadString
-                     sndShout(msg)
+                     SndShout(msg)
                      Return True
 
                  End Function,
@@ -444,7 +442,7 @@ Namespace Engine.Libraries
 
                        Dim msg As String = reader.ReadString
                        Dim tname As Variable = reader.Page.GetVariable(MS_Name)
-                       sndWhisper(tname.Value.ToString, msg)
+                       SndWhisper(tname.Value.ToString, msg)
                        Return True
 
                    End Function,
@@ -456,7 +454,7 @@ Namespace Engine.Libraries
 
                      Dim msg As String = reader.ReadString(True)
                      Dim tname As String = reader.ReadString
-                     sndWhisper(tname, msg)
+                     SndWhisper(tname, msg)
                      Return True
 
                  End Function,
@@ -593,7 +591,7 @@ Namespace Engine.Libraries
         ''' message to send
         ''' </param>
         Public Sub SendEmit(ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then sendServer("emit " & msg)
+            If Not String.IsNullOrEmpty(msg) Then SendServer("emit " & msg)
         End Sub
 
         ''' <summary>
@@ -603,7 +601,7 @@ Namespace Engine.Libraries
         ''' message to send
         ''' </param>
         Public Sub SendEmitLoud(ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then sendServer("emitloud " & msg)
+            If Not String.IsNullOrEmpty(msg) Then SendServer("emitloud " & msg)
         End Sub
 
         ''' <summary>
@@ -613,7 +611,7 @@ Namespace Engine.Libraries
         ''' message to send
         ''' </param>
         Public Sub SendEmote(ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then sendServer(":" & msg)
+            If Not String.IsNullOrEmpty(msg) Then SendServer(":" & msg)
         End Sub
 
         ''' <summary>
@@ -626,7 +624,7 @@ Namespace Engine.Libraries
         ''' Message to send
         ''' </param>
         Public Sub SendOffLineWhisper(ByRef name As String, ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then sendServer("/%%" & FurcadiaShortName(name) & " " & msg)
+            If Not String.IsNullOrEmpty(msg) Then SendServer("/%%" & FurcadiaShortName(name) & " " & msg)
         End Sub
 
         ''' <summary>
@@ -637,7 +635,7 @@ Namespace Engine.Libraries
         ''' </param>
         Public Function SendSay(ByRef msg As String) As Boolean
 
-            Return sendServer(msg)
+            Return SendServer(msg)
 
         End Function
 
@@ -647,8 +645,8 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' Message to send
         ''' </param>
-        Public Sub sndShout(ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then sendServer("-" & msg)
+        Public Sub SndShout(ByRef msg As String)
+            If Not String.IsNullOrEmpty(msg) Then SendServer("-" & msg)
         End Sub
 
         ''' <summary>
@@ -660,8 +658,8 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' Message to send
         ''' </param>
-        Public Sub sndWhisper(ByRef name As String, ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then sendServer("/%" & FurcadiaShortName(name) & " " & msg)
+        Public Sub SndWhisper(ByRef name As String, ByRef msg As String)
+            If Not String.IsNullOrEmpty(msg) Then SendServer("/%" & FurcadiaShortName(name) & " " & msg)
         End Sub
 
         ''' <summary>
@@ -828,9 +826,11 @@ Namespace Engine.Libraries
             Return MyBase.NameIsNot(reader)
         End Function
 
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
+
 #End Region
-
-
 
     End Class
 

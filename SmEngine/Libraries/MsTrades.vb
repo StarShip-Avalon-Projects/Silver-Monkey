@@ -1,6 +1,4 @@
-﻿Imports Furcadia.Net
-Imports Furcadia.Net.Utils.ServerParser
-Imports Monkeyspeak
+﻿Imports Monkeyspeak
 
 Namespace Engine.Libraries
 
@@ -10,7 +8,7 @@ Namespace Engine.Libraries
     ''' DEP recommends this system for trading digos and things
     ''' </para>
     ''' </summary>
-    Public Class MsTrades
+    Public NotInheritable Class MsTrades
         Inherits MonkeySpeakLibrary
 
         ''' <summary>
@@ -32,6 +30,10 @@ Namespace Engine.Libraries
             '(0:48) When the bot sees a trade request with {..} in it,
             Add(TriggerCategory.Cause, 48,
             AddressOf MsgContains, "(0:48) When the bot sees a trade request with {..} in it,")
+        End Sub
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
         End Sub
 
         ''' <summary>

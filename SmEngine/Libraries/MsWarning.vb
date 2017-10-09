@@ -5,7 +5,7 @@ Namespace Engine.Libraries
     ''' <summary>
     ''' General waring messages (Warning Channel?) Furcadia sends.
     ''' </summary>
-    Public Class MsWarning
+    Public NotInheritable Class MsWarning
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"
@@ -41,6 +41,10 @@ Namespace Engine.Libraries
 
         End Sub
 
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
+
 #End Region
 
 #Region "Public Methods"
@@ -53,7 +57,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function CommandNotWariningOrError(reader As TriggerReader) As Boolean
+        Public Function CommandNotWariningOrError(reader As TriggerReader) As Boolean
 
             Dim err As Double = ReadVariableOrNumber(reader, False)
             Dim errNum As Short = 0
@@ -73,7 +77,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function CommandWariningOrError(reader As TriggerReader) As Boolean
+        Public Function CommandWariningOrError(reader As TriggerReader) As Boolean
 
             Dim err As Double = ReadVariableOrNumber(reader, False)
             Dim errNum As Short = 0
@@ -95,7 +99,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function ErrorIs(reader As TriggerReader) As Boolean
+        Public Function ErrorIs(reader As TriggerReader) As Boolean
 
             Dim TmpName As String = reader.ReadString()
             Dim errstr As String = ""
@@ -115,7 +119,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function WarningVar(reader As TriggerReader) As Boolean
+        Public Function WarningVar(reader As TriggerReader) As Boolean
 
             Dim Var As Variable = reader.ReadVariable(True)
             Dim errNum As Short = 0

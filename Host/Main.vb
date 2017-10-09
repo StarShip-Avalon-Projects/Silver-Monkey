@@ -72,7 +72,7 @@ Public Class Main
 
         Dim objPlugin As Interfaces.ImsPlugin
         Dim Engine As New MainEngine(New Engine.EngineOptoons, Nothing)
-        Dim page = Engine.LoadFromString("")
+        Dim page = Engine.LoadFromScriptFile("")
 
         objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), Interfaces.ImsPlugin)
         objPlugin.Initialize(objHost)
@@ -177,8 +177,8 @@ Public Class Main
         Dim objPlugin As Interfaces.ImsPlugin
         Dim Engine As New MainEngine(New Engine.EngineOptoons, Nothing)
         Dim page As Monkeyspeak.Page
-        page = CType(Engine.LoadFromString(""), Monkeyspeak.Page)
-        objPlugin = CType(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), Interfaces.ImsPlugin)
+        page = Engine.LoadFromScriptFile("")
+        objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(lv.FocusedItem.Index)), Interfaces.ImsPlugin)
         If objPlugin Is Nothing Then Exit Sub
         objPlugin.Initialize(objHost)
         objPlugin.MsPage = page

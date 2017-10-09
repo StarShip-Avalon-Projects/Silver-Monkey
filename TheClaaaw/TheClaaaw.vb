@@ -3,11 +3,12 @@ Imports Furcadia.Net.Dream
 Imports Furcadia.Text.Base95
 Imports Monkeyspeak
 Imports SilverMonkeyEngine
-Imports SilverMonkeyEngine.Engine
+Imports SilverMonkeyEngine.Engine.Libraries.MonkeySpeakLibrary
 
 ''' <summary>
 ''' </summary>
 Public Class TheClaaaw
+    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
     Implements Interfaces.ImsPlugin
 
 #Region "Private Fields"
@@ -77,7 +78,7 @@ Public Class TheClaaaw
         End Get
     End Property
 
-    Public Property MsPage As Monkeyspeak.Page Implements Interfaces.ImsPlugin.MsPage
+    Public Property MsPage As Page Implements Interfaces.ImsPlugin.MsPage
         Get
             Return _MSpage
         End Get
@@ -159,7 +160,7 @@ Public Class TheClaaaw
     '(5:2003) set the variable %Variable to the number of the object at the bots feet.
     Function SetVariableToFloorObject(reader As TriggerReader) As Boolean
         Try
-            Dim V As Variable = reader.ReadVariable(True)
+            Dim V = reader.ReadVariable(True)
             V.Value = Player.FloorObjectCurrent
         Catch ex As Exception
             msHost.logError(ex, Me)
@@ -171,7 +172,7 @@ Public Class TheClaaaw
     '(5:2002) set %Variable to the number of the object in the bots paws.
     Function SetVariableToPawObject(reader As TriggerReader) As Boolean
         Try
-            Dim V As Variable = reader.ReadVariable(True)
+            Dim V = reader.ReadVariable(True)
             V.Value = Player.PawObjectCurrent
         Catch ex As Exception
             msHost.logError(ex, Me)
@@ -182,39 +183,39 @@ Public Class TheClaaaw
 
     Public Sub Start() Implements Interfaces.ImsPlugin.Start
         '(0:x) When the bot picks up or drops an object
-        MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 2000,
+        Add(Monkeyspeak.TriggerCategory.Cause, 2000,
             Function()
                 Return Player.FloorObjectOld = Player.PawObjectCurrent And Player.PawObjectOld = Player.FloorObjectCurrent
-            End Function, "(0:2000) When the bot picks up or drops an object")
+            End Function) ' "(0:2000) When the bot picks up or drops an object")
 
         '(0:2001) When the bot picks up or drops the object #,
-        MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Cause, 2001,
+        Add(Monkeyspeak.TriggerCategory.Cause, 2001,
             AddressOf PickUpObjectNumber, "(0:2001) When the bot picks up or drops the object #,")
 
         '(1:2000) and the bot has object # in their paws,
-        MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Condition, 2000,
+        Add(Monkeyspeak.TriggerCategory.Condition, 2000,
             AddressOf ObjectInPaws, "(1:2000) and the bot has object # in their paws,")
         '(1:2001) and the bot doesn't have object # in their paws,
-        MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Condition, 2001,
+        Add(Monkeyspeak.TriggerCategory.Condition, 2001,
             AddressOf NotObjectInPaws, "(1:2001) and the bot doesn't have object # in their paws,")
         '(1:2002) and the bot is standing on object #,
-        MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Condition, 2002,
+        Add(Monkeyspeak.TriggerCategory.Condition, 2002,
              AddressOf ObjectAtFeet, "(1:2002) and the bot is standing on object #,")
         '(1:2003) and the bot is not standing on object #,
-        MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Condition, 2003,
+        Add(Monkeyspeak.TriggerCategory.Condition, 2003,
                 AddressOf NotObjectAtFeet, "(1:2003) and the bot is not standing on object #,")
 
         '(5:2000) use the object in the bots paws.
-        MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Effect, 2000,
+        Add(Monkeyspeak.TriggerCategory.Effect, 2000,
                 AddressOf UseObject, "(5:2000) use the object in the bots paws.")
         '(5:2001) pick up the object at the bots feet.
-        MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Effect, 2001,
+        Add(Monkeyspeak.TriggerCategory.Effect, 2001,
                 AddressOf GetObject, "(5:2001) pick up the object at the bots feet.")
         '(5:2002) set %Variable to the number of the object in the bots paws.
-        MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Effect, 2002,
+        Add(Monkeyspeak.TriggerCategory.Effect, 2002,
                 AddressOf SetVariableToPawObject, "(5:2002) set %Variable to the number of the object in the bots paws.")
         '(5:2003) set the variable %Variable to the number of the object at the bots feet.
-        MsPage.SetTriggerHandler(Monkeyspeak.TriggerCategory.Effect, 2003,
+        Add(Monkeyspeak.TriggerCategory.Effect, 2003,
                 AddressOf SetVariableToFloorObject, "(5:2003) set the variable %Variable to the number of the object at the bots feet.")
     End Sub
 
@@ -228,6 +229,10 @@ Public Class TheClaaaw
         End Try
         Return True
     End Function
+
+    Public Overrides Sub OnPageDisposing(page As Page)
+
+    End Sub
 
 #Region "Helper Functions"
 

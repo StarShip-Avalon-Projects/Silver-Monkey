@@ -73,6 +73,15 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
+    <ProjectReference Include="..\MonkeyspeakR7\Monkeyspeak.csproj">
+      <Name>Monkeyspeak</Name>
+      <Project>{51b6668d-9904-4fa4-8fb8-6a1395b3104d}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
       <Name>SilverMonkeyEngine</Name>
       <Project>{3C0E1CBF-D3B9-4282-AC97-4E0216CA6C97}</Project>
@@ -121,15 +130,6 @@
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Name>FurcadiaLib</Name>
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\MonkeySpeakEx\MonkeySpeakEx.csproj">
-      <Name>MonkeySpeakEx</Name>
-      <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
@@ -224,9 +224,8 @@
   </Target>
   <!-- rename the output msi with Version number -->
   <Target Name="AfterBuild">
-   <!-- <Exec Command="Signtool.exe sign /a &quot;%(SignCabs.FullPath)&quot;" />
+    <!-- <Exec Command="Signtool.exe sign /a &quot;%(SignCabs.FullPath)&quot;" />
     <Exec Command="signtool.exe sign /a &quot;..\Build\Installer\$(Configuration)\$(OutputName).msi&quot;" /> -->
     <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-$(FileVersion).msi" />
   </Target>
-
 </Project>

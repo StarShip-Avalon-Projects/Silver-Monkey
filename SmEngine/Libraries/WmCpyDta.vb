@@ -1,4 +1,4 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports MonkeyCore.Controls.NativeMethods
 Imports MonkeyCore.Utils
 Imports Monkeyspeak
 
@@ -7,10 +7,11 @@ Namespace Engine.Libraries
     ''' <summary>
     ''' Bot to Bot Messaging using Window Calls
     ''' </summary>
-    Public Class WmCpyDta
+    Public NotInheritable Class WmCpyDta
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
+
         ''' <summary>
         ''' Setup Windows messaging system
         ''' </summary>
@@ -36,6 +37,10 @@ Namespace Engine.Libraries
             '(5:76) set Variable %Variable to the Message the bot last received.
             Add(TriggerCategory.Effect, 76,
                 AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot last received.")
+        End Sub
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
         End Sub
 
 #End Region
@@ -93,7 +98,6 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function SendMessage(reader As TriggerReader) As Boolean
 
-
             'Debug.Print("msgContains Begin Execution")
             Dim msMsg = reader.ReadString().Trim
             'Debug.Print("msMsg = " & msMsg)
@@ -103,26 +107,26 @@ Namespace Engine.Libraries
             'handle of the receiving application.
             'One way is to use the FindWindow API
             Dim cstrReceiverWindowName As String = "Silver Monkey: " + Fur
-                Dim WindowHandleOfToProcess As Integer = FindWindow(Nothing, cstrReceiverWindowName)
-                'find by window name
-                Dim WindowHandle As New IntPtr(WindowHandleOfToProcess)
-                Dim msg As MessageHelper = New MonkeyCore.Utils.MessageHelper
-                'Step 2.
-                'Create some information to send.
-                Dim strTag As String = "MSG"
+            Dim WindowHandleOfToProcess As Integer = FindWindow(Nothing, cstrReceiverWindowName)
+            'find by window name
+            Dim WindowHandle As New IntPtr(WindowHandleOfToProcess)
+            Dim msg As MessageHelper = New MonkeyCore.Utils.MessageHelper
+            'Step 2.
+            'Create some information to send.
+            Dim strTag As String = "MSG"
 
-                Dim iResult As IntPtr = IntPtr.Zero
-                If WindowHandle <> IntPtr.Zero Then
+            Dim iResult As IntPtr = IntPtr.Zero
+            If WindowHandle <> IntPtr.Zero Then
                 iResult = msg.SendWindowsStringMessage(WindowHandle,
                            IntPtr.Zero,
                            FurcadiaSession.ConnectedCharacterName,
                            FurcadiaSession.ConnectedCharacterFurcadiaID, strTag, msMsg)
                 SendClientMessage("SYSTEM Send Windows Message to " + Fur + ": " + msMsg)
             End If
-                'Debug.Print("Msg = " & msg)
-                Return True
+            'Debug.Print("Msg = " & msg)
+            Return True
 
-                Return False
+            Return False
         End Function
 
         ''' <summary>
@@ -139,14 +143,6 @@ Namespace Engine.Libraries
             Var.Value = FurcadiaSession.Player.Message
             Return True
 
-        End Function
-
-#End Region
-
-#Region "Private Methods"
-
-        <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Unicode)>
-        Private Shared Function FindWindow(ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
         End Function
 
 #End Region

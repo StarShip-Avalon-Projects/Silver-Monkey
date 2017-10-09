@@ -19,7 +19,7 @@ Namespace Engine.Libraries
     ''' (0:299) When the time is {...} hh:mm:ss am/pm FST,
     ''' </para>
     ''' </remarks>
-    Public Class MsTime
+    Public NotInheritable Class MsTime
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"
@@ -205,6 +205,10 @@ Namespace Engine.Libraries
             Throw New MonkeyspeakException("unable to parse DateTime variable and/or DateTimeString")
 
         End Function
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
 
 #End Region
 

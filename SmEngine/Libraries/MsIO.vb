@@ -14,7 +14,7 @@ Namespace Engine.Libraries
     ''' Effects (5:200) - (5:125)
     ''' </para>
     ''' </summary>
-    Public Class MsIO
+    Public NotInheritable Class MsIO
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
@@ -52,6 +52,10 @@ Namespace Engine.Libraries
             '(5:125) count the number of lines in text file {...} and put it into variable %Variable .
             Add(New Trigger(TriggerCategory.Effect, 125), AddressOf CountLines,
             "(5:125) count the number of lines in text file {...} and put it into variable %Variable.")
+
+        End Sub
+
+        Public Overrides Sub OnPageDisposing(page As Page)
 
         End Sub
 
@@ -130,7 +134,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Shared Function AppendToFile(reader As TriggerReader) As Boolean
+        Public Shared Function AppendToFile(reader As TriggerReader) As Boolean
             Dim data As String = reader.ReadString()
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
 
@@ -148,7 +152,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Shared Function CanReadFile(reader As TriggerReader) As Boolean
+        Public Shared Function CanReadFile(reader As TriggerReader) As Boolean
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
 
             Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
@@ -164,7 +168,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Shared Function CanWriteFile(reader As TriggerReader) As Boolean
+        Public Shared Function CanWriteFile(reader As TriggerReader) As Boolean
             Dim f As String = Paths.CheckBotFolder(reader.ReadString())
 
             Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Write)
@@ -180,7 +184,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Shared Function CreateFile(reader As TriggerReader) As Boolean
+        Public Shared Function CreateFile(reader As TriggerReader) As Boolean
             If reader.PeekString() = False Then
                 Return False
             End If
@@ -196,7 +200,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Shared Function DeleteFile(reader As TriggerReader) As Boolean
+        Public Shared Function DeleteFile(reader As TriggerReader) As Boolean
 
             If reader.PeekString() = False Then
                 Return False
@@ -216,8 +220,8 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Shared Function FileExists(reader As TriggerReader) As Boolean
-            Dim f As String = If((reader.PeekString()), Paths.CheckBotFolder(reader.ReadString()), "")
+        Public Shared Function FileExists(reader As TriggerReader) As Boolean
+            Dim f As String = If(reader.PeekString(), Paths.CheckBotFolder(reader.ReadString()), "")
             Return File.Exists(f)
         End Function
 
@@ -228,7 +232,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Shared Function FileNotExists(reader As TriggerReader) As Boolean
+        Public Shared Function FileNotExists(reader As TriggerReader) As Boolean
             Return FileExists(reader) = False
         End Function
 
@@ -239,7 +243,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Shared Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
+        Public Shared Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
 
             Dim OutVar = reader.ReadVariable(True)
             Dim sb As New StringBuilder()

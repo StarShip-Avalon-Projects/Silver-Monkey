@@ -16,7 +16,7 @@ Namespace Engine.Libraries
     ''' </para>
     ''' (0:93) When the bot leaves the Dream named {..},
     ''' </remarks>
-    Public Class MsDreamInfo
+    Public NotInheritable Class MsDreamInfo
         Inherits MonkeySpeakLibrary
 
         Public Sub New(ByRef Session As BotSession)
@@ -170,8 +170,8 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function FurreNamedIsDREAMOWNER(reader As TriggerReader) As Boolean
-
-            Return FurcadiaShortName(FurcadiaSession.Dream.Owner) = FurcadiaShortName(reader.ReadString)
+            Dim Name = FurcadiaShortName(reader.ReadString)
+            Return FurcadiaShortName(FurcadiaSession.Dream.Owner) = Name
 
         End Function
 
@@ -188,7 +188,7 @@ Namespace Engine.Libraries
         Public Function ShareFurreNamed(reader As TriggerReader) As Boolean
 
             Dim Target = Dream.FurreList.GerFurreByName(reader.ReadString)
-            If InDream(Target.Name) Then sendServer("share " + Target.ShortName)
+            If InDream(Target.Name) Then SendServer("share " + Target.ShortName)
             Return True
 
         End Function
@@ -220,7 +220,7 @@ Namespace Engine.Libraries
 
             Dim Target = Dream.FurreList.GerFurreByName(reader.ReadString)
             If InDream(Target.Name) Then
-                Return sendServer("unshare " + Target.ShortName)
+                Return SendServer("unshare " + Target.ShortName)
             End If
             Return False
 
@@ -253,7 +253,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function UnshareTrigFurre(reader As TriggerReader) As Boolean
             Dim furre = FurcadiaSession.Player.ShortName
-            sendServer("unshare " + furre)
+            SendServer("unshare " + furre)
             Return True
         End Function
 
@@ -268,7 +268,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function ShareTrigFurre(reader As TriggerReader) As Boolean
             Dim furre = FurcadiaSession.Player.ShortName
-            Return sendServer("share " + furre)
+            Return SendServer("share " + furre)
 
         End Function
 
@@ -315,29 +315,12 @@ Namespace Engine.Libraries
 
         End Function
 
-        ''' <summary>
-        ''' Server Instruction handler
-        ''' </summary>
-        ''' <param name="InstructionObject"></param>
-        ''' <param name="Args"></param>
-        Private Sub OnServerInstruction(InstructionObject As BaseServerInstruction, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
-            Player = FurcadiaSession.Player
-            Select Case InstructionObject.InstructionType
-                Case ServerInstructionType.LoadDreamEvent
-                    FurcadiaSession.MSpage.SetVariable("DREAMOWNER", FurcadiaSession.Dream.Owner)
-                    FurcadiaSession.MSpage.SetVariable("DREAMNAME", FurcadiaSession.Dream.Name)
-                    '(0:90) When the bot enters a Dream,
-                    '(0:91) When the bot enters a Dream named {..},
-                    FurcadiaSession.MSpage.Execute(92, 93)
 
-                Case ServerInstructionType.BookmarkDream
-                    FurcadiaSession.MSpage.SetVariable("DREAMOWNER", FurcadiaSession.Dream.Owner)
-                    FurcadiaSession.MSpage.SetVariable("DREAMNAME", FurcadiaSession.Dream.Name)
-                    '(0:90) When the bot enters a Dream,
-                    '(0:91) When the bot enters a Dream named {..},
-                    FurcadiaSession.MSpage.Execute(90, 91)
-            End Select
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
         End Sub
+
 
     End Class
 
