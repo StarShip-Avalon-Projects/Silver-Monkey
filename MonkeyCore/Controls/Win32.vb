@@ -31,7 +31,8 @@ Namespace Controls
 
         Friend Shared updating As Integer
 
-
+        Friend Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
+        End Function
 
         Friend Structure CHARFORMAT2_STRUCT
 
@@ -186,6 +187,21 @@ Namespace Controls
             SIF_ALL = (SIF_RANGE Or SIF_PAGE Or SIF_POS Or SIF_TRACKPOS)
         End Enum
 
+        <DllImport("user32.dll")>
+        Public Shared Function GetScrollPos(ByVal hWnd As IntPtr, ByVal nBar As Integer) As Integer
+        End Function
+
+        <DllImport("user32.dll")>
+        Public Shared Function SetScrollPos(ByVal hWnd As IntPtr, ByVal nBar As Integer, ByVal nPos As Integer, ByVal bRedraw As Boolean) As Integer
+        End Function
+
+        Public Function GetScrollInfo(hWnd As IntPtr,
+        <MarshalAs(UnmanagedType.I4)> fnBar As SBOrientation,
+        <MarshalAs(UnmanagedType.Struct)> ByRef lpsi As SCROLLINFO) As Integer
+#Disable Warning BC42353 ' Function 'GetScrollInfo' doesn't return a value on all code paths. Are you missing a 'Return' statement?
+        End Function
+
+#Enable Warning BC42353 ' Function 'GetScrollInfo' doesn't return a value on all code paths. Are you missing a 'Return' statement?
 
         Structure SCROLLINFO
 

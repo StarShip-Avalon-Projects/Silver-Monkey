@@ -6,7 +6,7 @@ Public Class SetVariables
 
 #Region "Public Fields"
 
-    Public Var As Monkeyspeak.Variable
+    Public Var As Monkeyspeak.IVariable
 
 #End Region
 

@@ -174,7 +174,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Protected Function msgStartsWith(reader As TriggerReader) As Boolean
+        Protected Function MsgStartsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
             Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
@@ -327,7 +327,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True is the Server is Connected
         ''' </returns>
-        Public Function sendServer(ByRef message As String) As Boolean
+        Public Function SendServer(ByRef message As String) As Boolean
             If FurcadiaSession.IsServerConnected Then
                 FurcadiaSession.SendFormattedTextToServer(message)
                 Return True
@@ -358,7 +358,6 @@ Namespace Engine.Libraries
             _HasHelp = False
             Player = Session.Player
             Dream = Session.Dream
-            MsEngine = Session.MainEngine
             FurcadiaSession = Session
             FurcTimeTimer = New Timer(AddressOf TimeUpdate, Nothing,
                                       TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500))
@@ -366,51 +365,7 @@ Namespace Engine.Libraries
 
 #End Region
 
-#Region "Protected Methods"
 
-        ''' <summary>
-        ''' Registers a Trigger to the TriggerHandler with optional description
-        ''' </summary>
-        ''' <param name="trigger">
-        ''' MonkeySpeak Trigger catagory
-        ''' </param>
-        ''' <param name="handler">
-        ''' MonkeySpeak Handler
-        ''' </param>
-        ''' <param name="description">
-        ''' Optional Description
-        ''' <para>
-        ''' Inherited from Base
-        ''' </para>
-        ''' </param>
-        ''' <param name="HasHelp">
-        ''' Is Help provided in the help file?
-        ''' </param>
-        ''' <param name="SkilLevel">
-        ''' Skill levels 1-5
-        ''' </param>
-        Protected Overloads Sub Add(trigger As Trigger, handler As TriggerHandler,
-                                    SkilLevel As Integer, HasHelp As Boolean,
-                                    Optional description As String = Nothing)
-            Add(trigger, handler, description)
-            _HasHelp = HasHelp
-            _SkillLevel = _SkillLevel
-        End Sub
-
-        ''' <summary>
-        ''' Execute array of Trigger cause integers from the Current
-        ''' monkeyspeak page
-        ''' </summary>
-        ''' <param name="TriggerIDs">
-        ''' MonkeySpeak Triggers
-        ''' </param>
-        <Obsolete("Please use reader.page instead of MsPage")>
-        Protected Sub PageExecute(ParamArray TriggerIDs() As Integer)
-            FurcadiaSession.MSpage.Execute(TriggerIDs)
-        End Sub
-
-
-#End Region
 
 #Region "Common Library Methods"
 
@@ -460,6 +415,14 @@ Namespace Engine.Libraries
             Next
             Return found
         End Function
+
+
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
+
+
 
 #End Region
 

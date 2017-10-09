@@ -202,8 +202,8 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="MonkeySpeakEditor.Content" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Symbols" />
       <ComponentRef Id="MonkeySpeakHelp" />
-      <ComponentGroupRef Id="MonkeySpeakEx.Binaries" />
-      <ComponentGroupRef Id="MonkeySpeakEx.Symbols" />
+      <ComponentGroupRef Id="Monkeyspeak.Binaries" />
+      <ComponentGroupRef Id="Monkeyspeak.Symbols" />
 
       <ComponentGroupRef Id="FurcadiaLib.Binaries" />
       <ComponentGroupRef Id="FurcadiaLib.Symbols" />

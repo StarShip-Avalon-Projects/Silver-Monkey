@@ -65,17 +65,6 @@ Public Class DeBugWriter
     End Sub
 
     Public Overrides Sub WriteLine(ByVal s As String)
-#Disable Warning BC42104 ' Variable 'cBot' is used before it has been assigned a value. A null reference exception could result at runtime.
-        If Not IsNothing(cBot) Then
-#Enable Warning BC42104 ' Variable 'cBot' is used before it has been assigned a value. A null reference exception could result at runtime.
-            'If cBot.log And Not IsNothing(FurcSession.BotLogStream) Then
-            '    Try
-
-            '        '  FurcSession.BotLogStream.WriteLine(s)
-            '    Catch
-            '    End Try
-            'End If
-        End If
         Write(s + Environment.NewLine)
     End Sub
 

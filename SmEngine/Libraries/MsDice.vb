@@ -23,7 +23,7 @@ Namespace Engine.Libraries
     ''' (0:136) When any one rolls anything,
     ''' </para>
     ''' </remarks>
-    Public Class MsDice
+    Public NotInheritable Class MsDice
         Inherits MonkeySpeakLibrary
 
         '
@@ -33,7 +33,7 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Last Dice roll object
         ''' </summary>
-        Private Shared dice As DiceObject
+        Public Shared dice As DiceObject
 
 #End Region
 
@@ -191,7 +191,7 @@ Namespace Engine.Libraries
             Dim side As Double = ReadVariableOrNumber(reader)
             Dim Message As String = reader.ReadString
 
-            Return sendServer("roll " + count.ToString + "d" + side.ToString + " " + Message)
+            Return SendServer("roll " + count.ToString + "d" + side.ToString + " " + Message)
 
         End Function
 
@@ -209,7 +209,7 @@ Namespace Engine.Libraries
             Dim modifyer As Double = ReadVariableOrNumber(reader)
             Dim Message As String = ""
 
-            Return sendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString + " " + Message)
+            Return SendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString + " " + Message)
 
         End Function
 
@@ -227,7 +227,7 @@ Namespace Engine.Libraries
             Dim modifyer As Double = ReadVariableOrNumber(reader)
             Dim Message As String = ""
 
-            Return sendServer("roll " + count.ToString + "d" + side.ToString + "+" + modifyer.ToString + " " + Message)
+            Return SendServer("roll " + count.ToString + "d" + side.ToString + "+" + modifyer.ToString + " " + Message)
 
         End Function
 
@@ -305,45 +305,15 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-#End Region
 
-#Region "Private Methods"
 
-        ''' <summary>
-        ''' Parse the dice rolls from the game server
-        ''' </summary>
-        ''' <param name="obj">
-        ''' </param>
-        ''' <param name="e">
-        ''' </param>
-        Private Sub OnServerChannel(obj As ChannelObject, e As EventArgs) Handles FurcadiaSession.ProcessServerChannelData
-            Dim DiceObject As DiceRolls = Nothing
-            If obj.GetType().Equals(GetType(DiceRolls)) Then
-                DiceObject = CType(obj, DiceRolls)
-            Else
-                Exit Sub
-            End If
-            Select Case DiceObject.Channel
-                Case "@roll"
-                    dice = DiceObject.Dice
-                    If FurcadiaSession.IsConnectedCharacter Then
-                        '(0:130) When the bot rolls #d#,
-                        '(0:132) When the bot rolls #d#+#,
-                        '(0:134) When the bot rolls #d#-#,
-                        '(0:136) When any one rolls anything,
-                        FurcadiaSession.MSpage.Execute(130, 131, 132, 136)
-                    Else
-                        '(0:136) When a furre rolls #d#,
-                        '(0:138) When a fuure rolls #d#+#,
-                        '(0:140) When a furre rolls #d#-#,
-                        '(0:136) When any one rolls anything,
-                        FurcadiaSession.MSpage.Execute(133, 134, 135, 136)
-                    End If
-            End Select
+        Public Overrides Sub OnPageDisposing(page As Page)
 
         End Sub
 
+
 #End Region
+
 
     End Class
 

@@ -36,10 +36,10 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
-      <DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
       <DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
       <DocumentationSource sourceFile="..\SilverMonkey\SilverMonkey2.vbproj" />
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
+      <DocumentationSource sourceFile="..\MonkeyspeakR7\Monkeyspeak.csproj" />
     </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>
@@ -139,29 +139,29 @@
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="DataMonkey" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Furcadia" isDocumented="False">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Furcadia.Drawing (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths&lt;p&gt;
+      <NamespaceSummaryItem name="Furcadia (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Furcadia" isDocumented="False">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Furcadia.Drawing (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths&lt;p&gt;
         the Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here&lt;/a&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Furcadia.Drawing" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.Drawing.Graphics" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.EventArgs" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.FurcMap" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.IO (Group)" isGroup="True" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.IO" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.IO.SubSystem" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.Net" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore (Group)" isGroup="True" isDocumented="False" />
-<NamespaceSummaryItem name="MonkeyCore" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore.Controls" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore.My" isDocumented="False" />
-<NamespaceSummaryItem name="SilverMonkey (Group)" isGroup="True" isDocumented="False" />
-<NamespaceSummaryItem name="SilverMonkey" isDocumented="False" />
-<NamespaceSummaryItem name="SilverMonkey.DataMonkey.Controls" isDocumented="False" />
-<NamespaceSummaryItem name="SilverMonkey.My" isDocumented="False" />
-<NamespaceSummaryItem name="SilverMonkey.PhoenixSpeak" isDocumented="True" />
-<NamespaceSummaryItem name="(global)" isDocumented="False" />
-<NamespaceSummaryItem name="SilverMonkey.Engine.Libraries (Group)" isGroup="True" isDocumented="True">&lt;h1&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/H1&gt;
+      <NamespaceSummaryItem name="Furcadia.Drawing" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.Drawing.Graphics" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.EventArgs" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.FurcMap" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.IO (Group)" isGroup="True" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.IO" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.IO.SubSystem" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.Net" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore (Group)" isGroup="True" isDocumented="False" />
+      <NamespaceSummaryItem name="MonkeyCore" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore.Controls" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore.My" isDocumented="False" />
+      <NamespaceSummaryItem name="SilverMonkey (Group)" isGroup="True" isDocumented="False" />
+      <NamespaceSummaryItem name="SilverMonkey" isDocumented="False" />
+      <NamespaceSummaryItem name="SilverMonkey.DataMonkey.Controls" isDocumented="False" />
+      <NamespaceSummaryItem name="SilverMonkey.My" isDocumented="False" />
+      <NamespaceSummaryItem name="SilverMonkey.PhoenixSpeak" isDocumented="True" />
+      <NamespaceSummaryItem name="(global)" isDocumented="False" />
+      <NamespaceSummaryItem name="SilverMonkey.Engine.Libraries (Group)" isGroup="True" isDocumented="True">&lt;h1&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/H1&gt;
 &lt;p&gt; Some of the Default Monkey Speak Libraries are used from the Monkey Speak Engine itself. They can be found here at
 &lt;codeEntityReference qualifyHint="false"&gt;T:Monkeyspeak.Libraries&lt;/codeEntityReference&gt;
 &lt;/p&gt;
@@ -170,10 +170,10 @@
 &lt;p&gt;
 These Libraries are what powers Silver monkey's Features. They are the Monkey Speak lines you'll see in MonkeySpeak Editor. Each Library is seperated into a method representing the guts of the Monkey Speak line, Some methods will have Monkey Speak Exceptions, When this Occures, Execution of the Monkey Speak block of lines will hault, Displaying an Error in the Log Box. Some times Extra information with the exception will be sent to the Debug Window.
 &lt;/p&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Monkeyspeak" isDocumented="True">Provides Functionality of Monkey Speak
+      <NamespaceSummaryItem name="Monkeyspeak" isDocumented="True">Provides Functionality of Monkey Speak
 &lt;a href="https://starship-avalon-projects.github.io/MonkeySpeakExtendedEngine/html/8d0a663e-8095-408a-b860-f55d2fc3ccbe.htm"&gt;Monkey Speak Ex Documentation&lt;/a&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SilverMonkeyEngine.My" isDocumented="False" />
-<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries (Group)" isGroup="True" isDocumented="True">&lt;p&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/p&gt;
+      <NamespaceSummaryItem name="SilverMonkeyEngine.My" isDocumented="False" />
+      <NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries (Group)" isGroup="True" isDocumented="True">&lt;p&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/p&gt;
 &lt;p&gt; Some of the Default Monkey Speak Libraries are used from the Monkey Speak Engine itself. They can be found here at
 &lt;codeEntityReference qualifyHint="false"&gt;T:Monkeyspeak.Libraries&lt;/codeEntityReference&gt;
 &lt;/p&gt;
@@ -182,7 +182,7 @@ These Libraries are what powers Silver monkey's Features. They are the Monkey Sp
 &lt;p&gt;
 These Libraries are what powers Silver monkey's Features. They are the Monkey Speak lines you'll see in MonkeySpeak Editor. Each Library is seperated into a method representing the guts of the Monkey Speak line, Some methods will have Monkey Speak Exceptions, When this Occures, Execution of the Monkey Speak block of lines will hault, Displaying an Error in the Log Box. Some times Extra information with the exception will be sent to the Debug Window.
 &lt;/p&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True">&lt;p&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/p&gt;
+      <NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True">&lt;p&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/p&gt;
 &lt;p&gt; Some of the Default Monkey Speak Libraries are used from the Monkey Speak Engine itself. They can be found here at
 &lt;codeEntityReference qualifyHint="false"&gt;T:Monkeyspeak.Libraries&lt;/codeEntityReference&gt;
 &lt;/p&gt;
@@ -191,9 +191,10 @@ These Libraries are what powers Silver monkey's Features. They are the Monkey Sp
 &lt;p&gt;
 These Libraries are what powers Silver monkey's Features. They are the Monkey Speak lines you'll see in MonkeySpeak Editor. Each Library is seperated into a method representing the guts of the Monkey Speak line, Some methods will have Monkey Speak Exceptions, When this Occures, Execution of the Monkey Speak block of lines will hault, Displaying an Error in the Log Box. Some times Extra information with the exception will be sent to the Debug Window.
 &lt;/p&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries.Pounce" isDocumented="True">Furcadia Framework does not use Furcadia's  online.ini.
+      <NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries.Pounce" isDocumented="True">Furcadia Framework does not use Furcadia's  online.ini.
 &lt;p/&gt;
-Instead Pounce uses a List of names and checks the Pounce server for furre online status.</NamespaceSummaryItem></NamespaceSummaries>
+Instead Pounce uses a List of names and checks the Pounce server for furre online status.</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <PlugInConfigurations>
       <PlugInConfig id="Output Deployment" enabled="True">
         <configuration deleteAfterDeploy="false" verboseLogging="false">

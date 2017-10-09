@@ -76,8 +76,8 @@
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
       <DocumentationSource sourceFile="..\DSeX\MonkeySpeakEditor.vbproj" />
-      <DocumentationSource sourceFile="..\MonkeySpeakEx\MonkeySpeakEx.csproj" />
       <DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
+      <DocumentationSource sourceFile="..\MonkeyspeakR7\Monkeyspeak.csproj" />
     </DocumentationSources>
     <ComponentConfigurations>
       <ComponentConfig id="API Token Resolution" enabled="True">
@@ -172,8 +172,9 @@
     <NamespaceSummaries>
       <NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries (Group)" isGroup="True" isDocumented="True" xmlns="">The Core  Monkey Speak Libraries Silver monkey uses.
 &lt;p&gt;For MonkeySpeak Default libraries, Please see &lt;see cref="N:Monkeyspeak.Libraries" /&gt;&lt;/p&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True" xmlns="">The Core  Monkey Speak Libraries Silver monkey uses.
-&lt;p&gt;For MonkeySpeak Default libraries, Please see &lt;see cref="N:Monkeyspeak.Libraries" /&gt;&lt;/p&gt;</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True" xmlns="">The Core  Monkey Speak Libraries Silver monkey uses.
+&lt;p&gt;For MonkeySpeak Default libraries, Please see &lt;see cref="N:Monkeyspeak.Libraries" /&gt;&lt;/p&gt;</NamespaceSummaryItem>
+    </NamespaceSummaries>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->

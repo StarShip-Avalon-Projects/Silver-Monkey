@@ -1,7 +1,4 @@
-﻿Imports System.Text.RegularExpressions
-Imports Furcadia.Net
-Imports Furcadia.Net.Utils.ServerParser
-Imports Furcadia.Util
+﻿Imports Furcadia.Util
 Imports Monkeyspeak
 
 Namespace Engine.Libraries
@@ -40,7 +37,7 @@ Namespace Engine.Libraries
     ''' </para>
     ''' (0:61) When the bot successfully temp banishes a furre,
     ''' </remarks>
-    Public Class Banish
+    Public NotInheritable Class MsBanish
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
@@ -49,60 +46,44 @@ Namespace Engine.Libraries
             MyBase.New(session)
             '(0: ) When the bot fails to banish a furre,
             Add(TriggerCategory.Cause, 50,
-            Function()
-                Return True
-            End Function, "(0:50) When the bot fails to banish a furre,")
+             Function() True, "(0:50) When the bot fails to banish a furre,")
             '(0: ) When the bot fails to banish the furre named {...},
             Add(TriggerCategory.Cause, 51, AddressOf AndBanishFurreNamed,
                 "(0:51) When the bot fails to banish the furre named {...}")
             '(0: ) When the bot successfully banishes a furre,
             Add(TriggerCategory.Cause, 52,
-            Function()
-                Return True
-            End Function, "(0:52) When the bot successfully banishes a furre,")
+             Function() True, "(0:52) When the bot successfully banishes a furre,")
             '(0: ) When the bot successfully banishes the furre named {...},
             Add(TriggerCategory.Cause, 53, AddressOf AndBanishFurreNamed,
                 "(0:53) When the bot successfully banishes the furre named {...},")
 
             '(0: ) When the bot sees the banish list,
             Add(TriggerCategory.Cause, 54,
-            Function()
-                Return True
-            End Function, "(0:54) When the bot sees the banish list,")
+            Function() True, "(0:54) When the bot sees the banish list,")
             '(0: ) When the bot fails to remove a furre from the banish list,
             Add(TriggerCategory.Cause, 55,
-            Function()
-                Return True
-            End Function, "(0:55) When the bot fails to remove a furre from the banish list,")
+             Function() True, "(0:55) When the bot fails to remove a furre from the banish list,")
             '(0: ) When the bot fails to remove the furre named {...} from the banish list,
             Add(TriggerCategory.Cause, 56, AddressOf AndBanishFurreNamed,
                 "(0:56) When the bot fails to remove the furre named {...} from the banish list,")
 
             '(0: ) When the bot successfully removes a furre from the banish list,
             Add(TriggerCategory.Cause, 57,
-            Function()
-                Return True
-            End Function, "(0:57) When the bot successfully removes a furre from the banish list,")
+             Function() True, "(0:57) When the bot successfully removes a furre from the banish list,")
             '(0: ) When the bot successfully removes the furre named {...} from the banish list,
             Add(TriggerCategory.Cause, 58, AddressOf AndBanishFurreNamed,
                 "(0:58) When the bot successfully removes the furre named {...} from the banish list,")
             '(0: ) When the bot fails to empty the banish list,
             Add(TriggerCategory.Cause, 59,
-            Function()
-                Return True
-            End Function, "(0:59) When the bot fails to empty the banish list,")
+           Function() True, "(0:59) When the bot fails to empty the banish list,")
 
             '(0: ) When the bot successfully clears the banish list,
             Add(TriggerCategory.Cause, 60,
-            Function()
-                Return True
-            End Function, "(0:60) When the bot successfully clears the banish list,")
+         Function() True, "(0:60) When the bot successfully clears the banish list,")
 
             '(0: ) When the bot successfully temp banishes a furee,
             Add(TriggerCategory.Cause, 61,
-            Function()
-                Return True
-            End Function, "(0:61) When the bot successfully temp banishes a furre,")
+             Function() True, "(0:61) When the bot successfully temp banishes a furre,")
 
             '(0:62) When the bot successfully temp banishes the furre named {...},
             Add(TriggerCategory.Cause, 62, AddressOf AndBanishFurreNamed,
@@ -146,6 +127,10 @@ Namespace Engine.Libraries
                 "(5:56) unbanish the furre named {...}.")
         End Sub
 
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
+
 #End Region
 
 #Region "Public Methods"
@@ -173,7 +158,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True on Name Match
         ''' </returns>
-        Function AndBanishFurreNamed(reader As TriggerReader) As Boolean
+        Public Function AndBanishFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String = reader.ReadString
             Return FurcadiaShortName(Furre) = FurcadiaShortName(FurcadiaSession.BanishName)
 
@@ -189,9 +174,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True on sending the banish command
         ''' </returns>
-        Function BanishFurreNamed(reader As TriggerReader) As Boolean
+        Public Function BanishFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String = reader.ReadString
-            Return sendServer("banish " + Furre)
+            Return SendServer("banish " + Furre)
 
         End Function
 
@@ -204,9 +189,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True on sending the Server Command
         ''' </returns>
-        Function BanishList(reader As TriggerReader) As Boolean
+        Public Function BanishList(reader As TriggerReader) As Boolean
 
-            Return sendServer("banish-list")
+            Return SendServer("banish-list")
 
         End Function
 
@@ -227,7 +212,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True
         ''' </returns>
-        Function BanishSave(reader As TriggerReader) As Boolean
+        Public Function BanishSave(reader As TriggerReader) As Boolean
             Dim NewVar As Variable
 
             NewVar = reader.ReadVariable(True)
@@ -245,8 +230,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on sending the server command
         ''' </returns>
-        Function BanishTrigFurre(reader As TriggerReader) As Boolean
-            Return sendServer("banish " + Player.Name)
+        Public Function BanishTrigFurre(reader As TriggerReader) As Boolean
+            Return SendServer("banish " + Player.Name)
 
         End Function
 
@@ -260,7 +245,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True if the furre is on the mirror banish list
         ''' </returns>
-        Function FurreNamedIsBanished(reader As TriggerReader) As Boolean
+        Public Function FurreNamedIsBanished(reader As TriggerReader) As Boolean
             Return Not FurreNamedIsNotBanished(reader)
         End Function
 
@@ -273,7 +258,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true if the furre is not on the mirror banish list
         ''' </returns>
-        Function FurreNamedIsNotBanished(reader As TriggerReader) As Boolean
+        Public Function FurreNamedIsNotBanished(reader As TriggerReader) As Boolean
             Dim banishlist As List(Of String) = FurcadiaSession.BanishString
 
             Dim f As String = reader.ReadString
@@ -293,9 +278,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on sending the server command
         ''' </returns>
-        Function TempBanishFurreNamed(reader As TriggerReader) As Boolean
+        Public Function TempBanishFurreNamed(reader As TriggerReader) As Boolean
 
-            Return sendServer("tempbanish " + Player.Name)
+            Return SendServer("tempbanish " + Player.Name)
 
         End Function
 
@@ -308,10 +293,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on sending the server command
         ''' </returns>
-        Function TempBanishTrigFurre(reader As TriggerReader) As Boolean
+        Public Function TempBanishTrigFurre(reader As TriggerReader) As Boolean
 
             Dim Furre As String = reader.ReadString
-            Return sendServer("tempbanish " + Furre)
+            Return SendServer("tempbanish " + Furre)
 
         End Function
 
@@ -324,7 +309,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true is the triggering furre is on the mirror banish list
         ''' </returns>
-        Function TrigFurreIsBanished(reader As TriggerReader) As Boolean
+        Public Function TrigFurreIsBanished(reader As TriggerReader) As Boolean
             Return Not TrigFurreIsNotBanished(reader)
         End Function
 
@@ -337,7 +322,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true if the triggering furre is not on the mirror banish list
         ''' </returns>
-        Function TrigFurreIsNotBanished(reader As TriggerReader) As Boolean
+        Public Function TrigFurreIsNotBanished(reader As TriggerReader) As Boolean
             Dim banishlist As List(Of String) = FurcadiaSession.BanishString
 
             For Each Furre As String In banishlist
@@ -356,10 +341,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True on sending the server command
         ''' </returns>
-        Function UnBanishFurreNamed(reader As TriggerReader) As Boolean
+        Public Function UnBanishFurreNamed(reader As TriggerReader) As Boolean
 
             Dim Furre As String = reader.ReadString
-            Return sendServer("banish-off " + Furre)
+            Return SendServer("banish-off " + Furre)
 
         End Function
 
@@ -372,103 +357,11 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on sending the server command
         ''' </returns>
-        Function UnBanishTrigFurre(reader As TriggerReader) As Boolean
+        Public Function UnBanishTrigFurre(reader As TriggerReader) As Boolean
 
-            Return sendServer("banish-off " + Player.Name)
+            Return SendServer("banish-off " + Player.Name)
 
         End Function
-
-        ''' <summary>
-        ''' Banish Event Parser Event Handler
-        ''' </summary>
-        ''' <param name="InstructionObject"></param>
-        ''' <param name="Args"></param>
-        Private Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerChannelData
-            '   If FurcadiaSession.IsConnectedCharacter Then Exit Sub
-            Player = InstructionObject.Player
-            Dim Text = InstructionObject.ChannelText
-            Dim NameStr As String
-
-            FurcadiaSession.MSpage.SetVariable("BANISHLIST", String.Join(" ", FurcadiaSession.BanishString.ToArray), True)
-
-            If Text.Contains(" has been banished from your dreams.") Then
-                'banish <name> (online)
-                'Success: (.*?) has been banished from your dreams.
-
-                '(0:52) When the bot sucessfilly banishes a furre,
-                '(0:53) When the bot sucessfilly banishes the furre named {...},
-
-                FurcadiaSession.MSpage.SetVariable("BANISHNAME", FurcadiaSession.BanishName, True)
-
-                FurcadiaSession.MSpage.Execute(52, 53)
-
-                ' MSPage.Execute(53)
-            ElseIf Text = "You have canceled all banishments from your dreams." Then
-                'banish-off-all (active list)
-                'Success: You have canceled all banishments from your dreams.
-
-                FurcadiaSession.MSpage.SetVariable("BANISHLIST", Nothing, True)
-                FurcadiaSession.MSpage.SetVariable("BANISHNAME", Nothing, True)
-                FurcadiaSession.MSpage.Execute(60)
-
-            ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
-                'tempbanish <name> (online)
-                'Success: (.*?) has been temporarily banished from your dreams.
-
-                '(0:61) When the bot sucessfully temp banishes a Furre
-                '(0:62) When the bot sucessfully temp banishes the furre named {...}
-
-                FurcadiaSession.MSpage.SetVariable("BANISHNAME", FurcadiaSession.BanishName, True)
-                FurcadiaSession.MSpage.Execute(61, 62)
-
-            ElseIf Text.StartsWith("Players banished from your dreams: ") Then
-                'Banish-List
-                '[notify> Players banished from your dreams:
-                '`(0:54) When the bot sees the banish list
-                FurcadiaSession.MSpage.Execute(54)
-
-            ElseIf Text.StartsWith("The banishment of player ") Then
-                'banish-off <name> (on list)
-                '[notify> The banishment of player (.*?) has ended.
-
-                '(0:56) When the bot successfully removes a furre from the banish list,
-                '(0:58) When the bot successfully removes the furre named {...} from the banish list,
-                Dim t As New Regex("The banishment of player (.*?) has ended.")
-                NameStr = t.Match(Text).Groups(1).Value
-                FurcadiaSession.MSpage.SetVariable("BANISHNAME", NameStr, True)
-                FurcadiaSession.MSpage.Execute(56, 56)
-
-                '      MsPage.Execute(800)
-
-            ElseIf Text.Contains("There are no furres around right now with a name starting with ") Then
-                'Banish <name> (Not online)
-                'Error:>>  There are no furres around right now with a name starting with (.*?) .
-
-                '(0:50) When the Bot fails to banish a furre,
-                '(0:51) When the bot fails to banish the furre named {...},
-                Dim t As New Regex("There are no furres around right now with a name starting with (.*?) .")
-                NameStr = t.Match(Text).Groups(1).Value
-                FurcadiaSession.MSpage.SetVariable("BANISHNAME", NameStr, True)
-                FurcadiaSession.MSpage.Execute(50, 51)
-            ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
-                'banish-off <name> (not on list)
-                'Error:>> Sorry, this player has not been banished from your dreams.
-
-                '(0:55) When the Bot fails to remove a furre from the banish list,
-                '(0:56) When the bot fails to remove the furre named {...} from the banish list,
-                FurcadiaSession.MSpage.SetVariable("BANISHNAME", FurcadiaSession.BanishName, True)
-                FurcadiaSession.MSpage.Execute(50, 51)
-            ElseIf Text = "You have not banished anyone." Then
-                'banish-off-all (empty List)
-                'Error:>> You have not banished anyone.
-
-                '(0:59) When the bot fails to see the banish list,
-                FurcadiaSession.MSpage.Execute(59)
-                FurcadiaSession.MSpage.SetVariable("BANISHLIST", "", True)
-            ElseIf Text = "You do not have any cookies to give away right now!" Then
-                FurcadiaSession.MSpage.Execute(95)
-            End If
-        End Sub
 
 #End Region
 

@@ -3,6 +3,7 @@ Imports System.Net
 Imports System.Text
 Imports System.Web
 Imports Monkeyspeak
+Imports SilverMonkeyEngine.Interfaces
 
 'Web Module
 '
@@ -16,7 +17,7 @@ Namespace Engine.Libraries.Web
 
 #Region "Private Fields"
 
-        Private data As New List(Of Variable)()
+        Private data As New List(Of MsVariable)()
         Private UserAgent As String = "Silver Monkey a Furcadia Bot (gerolkae@hotmail.com)"
         Private Ver As Integer = 1
         Private WebReferer As String = "http://silvermonkey.tsprojects.org"
@@ -37,6 +38,7 @@ Namespace Engine.Libraries.Web
         ''' Default constructor
         ''' </summary>
         Public Sub New()
+
             WebURL = Nothing
         End Sub
 
@@ -57,11 +59,13 @@ Namespace Engine.Libraries.Web
         ''' </summary>
         ''' <param name="VariableList"></param>
         ''' <returns></returns>
-        Public Shared Function EncodeWebVariables(VariableList As List(Of Variable)) As String
+        Public Shared Function EncodeWebVariables(VariableList As List(Of IVariable)) As String
             Dim FormattedVariables As New StringBuilder()
-            For Each item As Variable In VariableList
-                FormattedVariables.AppendFormat(String.Format("{0}={1}&",
+            For Each item As IVariable In VariableList
+                If item.Value IsNot Nothing Then
+                    FormattedVariables.AppendFormat(String.Format("{0}={1}&",
                       HttpUtility.UrlEncode(item.Name.Replace("%", String.Empty)), HttpUtility.UrlEncode(item.Value.ToString())))
+                End If
             Next
             Return FormattedVariables.ToString()
         End Function
@@ -71,7 +75,7 @@ Namespace Engine.Libraries.Web
         ''' </summary>
         ''' <param name="array"></param>
         ''' <returns></returns>
-        Public Function WGet(ByRef array As List(Of Variable)) As WebData
+        Public Function WGet(ByRef array As List(Of IVariable)) As WebData
             Dim result As New WebData
             Dim EncodedWebVariables = EncodeWebVariables(array)
 
@@ -118,7 +122,7 @@ Namespace Engine.Libraries.Web
                             Dim pos() = line.Split("=", 0, 1)
                             If pos.Length > 0 Then
                                 result.ReceivedPage = True
-                                Dim var = New Variable(pos(0), pos(1))
+                                Dim var = New MsVariable(pos(0), pos(1))
                                 'Assign Variables
                                 Try
                                     result.WebStack.Add(var)
@@ -156,7 +160,7 @@ Namespace Engine.Libraries.Web
 
         End Function
 
-        Public Function WPost(ByRef WebVariables As List(Of Variable)) As WebData
+        Public Function WPost(ByRef WebVariables As List(Of IVariable)) As WebData
             If WebVariables Is Nothing Then
                 Throw New ArgumentNullException(NameOf(WebVariables))
             End If
@@ -240,7 +244,7 @@ Namespace Engine.Libraries.Web
                             Dim pos() = line.Split("=", 0, 1)
                             If pos.Length > 0 Then
                                 Result.ReceivedPage = True
-                                Dim var = New Variable(pos(0), pos(1))
+                                Dim var = New MsVariable(pos(0), pos(1))
 
                                 'Assign Variables
                                 Try

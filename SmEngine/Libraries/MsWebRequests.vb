@@ -1,5 +1,6 @@
 ﻿Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.Web
+Imports SilverMonkeyEngine.Interfaces
 
 Namespace Engine.Libraries
 
@@ -12,13 +13,13 @@ Namespace Engine.Libraries
     ''' Effects: (5:10) - (5:60)
     ''' </para>
     ''' </summary>
-    Public Class MsWebRequests
+    Public NotInheritable Class MsWebRequests
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"
 
         Private Webrequest As New WebRequests()
-        Private WebStack As New List(Of Variable)()
+        Private WebStack As New List(Of IVariable)()
         Private WebURL As Uri
 
 #End Region
@@ -75,6 +76,10 @@ Namespace Engine.Libraries
 
         End Sub
 
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
+
 #End Region
 
 #Region "Private Methods"
@@ -102,10 +107,11 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function RememberSetting(reader As TriggerReader) As Boolean
 
-            Dim setting = New Variable(reader.ReadString, Nothing)
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim setting = reader.Page.SetVariable(reader.ReadString, Nothing, False)
+
+            Dim var = reader.ReadVariable(True)
             If WebStack.Contains(setting) Then
-                var.Value = WebStack(WebStack.IndexOf(setting))
+                var.Value = WebStack(WebStack.ToList().IndexOf(setting))
             End If
             Return True
 
@@ -119,10 +125,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Private Function RemoveWebStack(reader As TriggerReader) As Boolean
-            Dim var As Monkeyspeak.Variable = Variable.NoValue
-
-            var = reader.ReadVariable()
-
+            Dim var = reader.ReadVariable()
             WebStack.Remove(var)
             Return True
         End Function
@@ -138,15 +141,15 @@ Namespace Engine.Libraries
 
             Dim ws As New WebRequests(WebURL)
 
-            Dim page = ws.WGet(WebStack)
-            WebStack = page.WebStack
-            If page.ReceivedPage Then
+            Dim WebPage = ws.WGet(WebStack)
+            WebStack = WebPage.WebStack
+            If WebPage.ReceivedPage Then
                 FurcadiaSession.MSpage.Execute(70)
             End If
 
-            If page.Status <> 0 Then Throw New WebException(page.ErrMsg)
+            If WebPage.Status <> 0 Then Throw New WebException(WebPage.ErrMsg)
 
-            Return page.Status = 0
+            Return WebPage.Status = 0
         End Function
 
         ''' <summary>
@@ -158,19 +161,19 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function SendWebStack(reader As TriggerReader) As Boolean
 
-            Dim page As New WebData
+            Dim WebPage As New WebData
             Dim ws As New WebRequests(WebURL)
 
             SyncLock Me
-                page = ws.WPost(WebStack)
-                WebStack = page.WebStack
-                If page.ReceivedPage Then
+                WebPage = ws.WPost(WebStack)
+                WebStack = WebPage.WebStack
+                If WebPage.ReceivedPage Then
                     FurcadiaSession.MSpage.Execute(70)
                 End If
             End SyncLock
-            If page.Status <> 0 Then Throw New WebException(page.ErrMsg, page)
+            If WebPage.Status <> 0 Then Throw New WebException(WebPage.ErrMsg, WebPage)
 
-            Return page.Status = 0
+            Return WebPage.Status = 0
         End Function
 
         ''' <summary>
@@ -196,9 +199,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function StoreWebStack(reader As TriggerReader) As Boolean
 
-            Dim var As Monkeyspeak.Variable = reader.ReadVariable()
+            Dim var = reader.ReadVariable()
             If WebStack.Contains(var) Then
-                WebStack.Item(WebStack.IndexOf(var)) = var
+                WebStack(WebStack.ToList().IndexOf(var)) = var
             Else
                 WebStack.Add(var)
             End If
@@ -207,7 +210,7 @@ Namespace Engine.Libraries
         End Function
 
         Private Function WebArrayContainArrayField(reader As TriggerReader) As Boolean
-            Dim var = New Variable(reader.ReadString, Nothing)
+            Dim var = reader.Page.SetVariable(reader.ReadString, Nothing, False)
             Return WebStack.Contains(var)
 
         End Function
@@ -223,7 +226,7 @@ Namespace Engine.Libraries
 
             Dim setting As String
             Try
-                setting = WebStack.Item(WebStack.IndexOf(New Variable(reader.ReadString, Nothing))).Value
+                setting = WebStack.Item(WebStack.IndexOf(reader.ReadVariable)).Value
             Catch
                 setting = ""
             End Try
@@ -233,7 +236,7 @@ Namespace Engine.Libraries
 
         Private Function WebArrayNotContainArrayField(reader As TriggerReader) As Boolean
 
-            Return Not WebStack.Contains(New Variable(reader.ReadString, Nothing))
+            Return Not WebStack.Contains(reader.Page.SetVariable(reader.ReadString, Nothing, False))
 
         End Function
 
@@ -246,8 +249,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function WebArrayNotEqualTo(reader As TriggerReader) As Boolean
 
-            Dim setting As Variable = Nothing
-            Dim value = New Variable(reader.ReadString, Nothing)
+            Dim setting As MsVariable = Nothing
+            Dim value = reader.Page.SetVariable(reader.ReadString, Nothing, False)
             If WebStack.Contains(value) Then
                 setting = WebStack.Item(WebStack.IndexOf(value))
             End If

@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.Serialization
+Imports Monkeyspeak
 
-<Assembly: CLSCompliant(True)>
 
 Namespace Engine.Libraries.PhoenixSpeak
 
@@ -37,12 +37,13 @@ Namespace Engine.Libraries.PhoenixSpeak
     <Serializable>
     <CLSCompliant(True)>
     Public Class Variable
-        Inherits Monkeyspeak.Variable
+        Implements IVariable
 
 #Region "Private Fields"
 
         Private _name As String
         Private _value As Object
+        Private _IsConstant As Boolean
 
 #End Region
 
@@ -50,11 +51,9 @@ Namespace Engine.Libraries.PhoenixSpeak
 
 #Region "Public Constructors"
 
-        Public Sub New()
-
-        End Sub
 
         Public Sub New(Name As String, value As Object)
+
             _name = Name
             _value = value
         End Sub
@@ -68,25 +67,29 @@ Namespace Engine.Libraries.PhoenixSpeak
 
 #Region "Public Properties"
 
-        Public Overloads Property Name As String
+
+
+
+
+        Public ReadOnly Property Name As String Implements IVariable.Name
             Get
                 Return _name
             End Get
-            Set(value As String)
-                _name = value
-            End Set
         End Property
 
-        Public Overloads Property Value() As Object
+        Public Property Value As Object Implements IVariable.Value
             Get
                 Return _value
             End Get
-            Set
-                If CheckType(_value) = False Then
-                    Throw New TypeNotSupportedException(_value.[GetType]().Name + " is not a supported type. Expecting string, short, or double.")
-                End If
-
+            Set(value As Object)
+                _value -= value
             End Set
+        End Property
+
+        Public ReadOnly Property IsConstant As Boolean Implements IVariable.IsConstant
+            Get
+                Return _IsConstant
+            End Get
         End Property
 
 #End Region
@@ -112,20 +115,7 @@ Namespace Engine.Libraries.PhoenixSpeak
             Return varA.Value Is varB.Value
         End Operator
 
-        Public Overrides Function Equals(obj As Object) As Boolean
 
-            If TypeOf (obj) Is String Then
-                Dim ob As String = Nothing
-                ob = DirectCast(obj, String)
-                Return Name = ob
-            End If
-            If TypeOf (obj) Is Variable Then
-                Dim ob As Variable
-                ob = DirectCast(obj, Variable)
-                Return Me = ob
-            End If
-            Return False
-        End Function
 
         Public Overrides Function GetHashCode() As Integer
             If TypeOf _value Is Integer Then
@@ -151,6 +141,20 @@ Namespace Engine.Libraries.PhoenixSpeak
             Return TypeOf _value Is String OrElse TypeOf _value Is Short OrElse TypeOf _value Is Double
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="other"></param>
+        ''' <returns></returns>
+        Public Shadows Function Equals(other As IVariable) As Boolean Implements IEquatable(Of IVariable).Equals
+
+            If TypeOf (other) Is Variable Then
+                Dim ob As Variable
+                ob = DirectCast(other, Variable)
+                Return Me = ob
+            End If
+            Return False
+        End Function
     End Class
 
 End Namespace

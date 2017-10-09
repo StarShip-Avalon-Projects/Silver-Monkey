@@ -35,7 +35,7 @@ Public Class Variables
                     Exit Sub
                 End If
                 For i As Integer = 0 To FurcadiaSession.MSpage.Scope.Count - 1
-                    Dim Var As Monkeyspeak.Variable = FurcadiaSession.MSpage.Scope.Item(i)
+                    Dim Var = FurcadiaSession.MSpage.Scope.Item(i)
 
                     Dim Variable() As String = {"", "", ""}
                     Variable(0) = Var.Name.ToString

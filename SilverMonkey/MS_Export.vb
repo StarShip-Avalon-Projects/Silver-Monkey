@@ -40,7 +40,8 @@ Public Class MS_Export
         Dim engine As New MainEngine(options.MonkeySpeakEngineOptions, Session)
         ' mPage = engine.LoadFromString("")
 
-        Dim MsPage = New Monkeyspeak.Page(engine)
+        Dim MsPage = engine.LoadFromScriptFile(String.Empty)
+        'Monkeyspeak.Page(engine)
         'mPage = MsPage.Export
 
         InitializeComponent()

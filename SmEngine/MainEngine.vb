@@ -10,8 +10,9 @@ Namespace Engine
     ''' <summary>
     ''' Silver Monkey's MonkeySpeak Engine with our Customizations
     ''' </summary>
-    Public Class MainEngine : Inherits MonkeyspeakEngine
+    Public Class MainEngine
         Implements IDisposable
+
 
 #Region "Private Fields"
 
@@ -19,6 +20,8 @@ Namespace Engine
         ''' Custome Options for this Engine
         ''' </summary>
         Private SilverMonkeyEngineOptions As EngineOptoons
+
+        Private SmEngine As Monkeyspeak.MonkeyspeakEngine
 
         ''' <summary>
         ''' </summary>
@@ -44,8 +47,6 @@ Namespace Engine
 
 #Region "MonkeySpeakEngine"
 
-        Public EngineRestart As Boolean = False
-
         Public FurcadiaSession As BotSession
 
         Private Const RES_MS_begin As String = "*MSPK V"
@@ -61,15 +62,14 @@ Namespace Engine
         ''' </para>
         ''' </summary>
         Public Sub New(ByRef Options As EngineOptoons, ByRef FurcSession As BotSession)
-            MyBase.New(Options)
             SilverMonkeyEngineOptions = Options
             FurcadiaSession = FurcSession
-
+            SmEngine = New MonkeyspeakEngine(Options)
         End Sub
 
         ''' <summary>
         ''' Wrapper Functions to read a Monkey Speak Script File and Pass
-        ''' the result to <see cref="LoadFromString"/>
+        ''' the result to <see cref="MonkeySpeakEngine.LoadFromString"/>
         ''' </summary>
         ''' <param name="file">
         ''' MonkeySpeak filename
@@ -77,8 +77,8 @@ Namespace Engine
         ''' <exception cref="FileNotFoundException"/>
         ''' <returns>
         ''' </returns>
-        Public Function LoadFromScriptFile(ByVal file As String) As Monkeyspeak.Page
-            Dim MonkeySpeakScript As New StringBuilder()
+        Public Function LoadFromScriptFile(ByVal file As String) As Page
+            Dim MonkeySpeakScript = New StringBuilder()
             Try
 
                 If Not System.IO.File.Exists(Paths.CheckBotFolder(file)) Then
@@ -103,7 +103,7 @@ Namespace Engine
 
                     End While
                 End Using
-                Return LoadFromString(MonkeySpeakScript.ToString())
+                Return SmEngine.LoadFromString(MonkeySpeakScript.ToString())
             Catch eX As Exception
                 Throw eX
             End Try

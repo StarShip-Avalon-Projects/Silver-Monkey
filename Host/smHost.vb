@@ -1,9 +1,7 @@
 ﻿Imports Furcadia.Net
 Imports Furcadia.Net.Dream
-Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 Imports SilverMonkeyEngine
-Imports SilverMonkeyEngine.Engine
 
 Public Class smHost
     Implements Interfaces.ImsHost

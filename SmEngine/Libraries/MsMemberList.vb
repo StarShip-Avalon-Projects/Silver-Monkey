@@ -23,7 +23,7 @@ Namespace Engine.Libraries
     ''' <para/>
     ''' Credits: Drake for assistance with designing this system
     ''' </summary>
-    Public Class MsMemberList
+    Public NotInheritable Class MsMemberList
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"
@@ -336,6 +336,10 @@ Namespace Engine.Libraries
                 Return False
             End Try
         End Function
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
 
 #End Region
 

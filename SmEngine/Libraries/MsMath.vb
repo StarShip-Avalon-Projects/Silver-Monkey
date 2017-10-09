@@ -9,7 +9,7 @@
     ''' Currently not used
     ''' </para>
     ''' </summary>
-    Class MathLibrary
+    Public NotInheritable Class MathLibrary
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"

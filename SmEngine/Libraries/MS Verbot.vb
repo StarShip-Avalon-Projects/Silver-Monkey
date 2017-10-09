@@ -8,7 +8,7 @@ Namespace Engine.Libraries
     ''' <summary>
     ''' Chatter Bot interface using the Verbot SDK
     ''' </summary>
-    Public Class MsVerbot
+    Public NotInheritable Class MsVerbot
         Inherits MonkeySpeakLibrary
 
 #Region "Public Fields"
@@ -61,19 +61,19 @@ Namespace Engine.Libraries
 
             '(5:1501) send text {...} to chat engine and put the response in variable %Variable.
             Add(TriggerCategory.Effect, 1501,
-                AddressOf getReply, "(5:1501) send text {...} to chat engine and put the response in variable %Variable.")
+                AddressOf GetReply, "(5:1501) send text {...} to chat engine and put the response in variable %Variable.")
 
             '(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable
             Add(TriggerCategory.Effect, 1502,
-                 AddressOf getReplyName, "(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable.")
+                 AddressOf GetReplyName, "(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable.")
 
             '(5:1503) Set Chat Engine State Vairable {...} to {...}.
             Add(TriggerCategory.Effect, 1503,
-                AddressOf setStateVariable, "(5:1503) Set Chat Engine State Vairable {...} to {...}.")
+                AddressOf SetStateVariable, "(5:1503) Set Chat Engine State Vairable {...} to {...}.")
 
             '(5:1504) Get chat engine _state variable {...} and put it into variable %Variable.
             Add(TriggerCategory.Effect, 1504,
-                 AddressOf getStateVariable, "(5:1504) Get chat engine state variable {...} and put it into variable %Variable.")
+                 AddressOf GetStateVariable, "(5:1504) Get chat engine state variable {...} and put it into variable %Variable.")
 
         End Sub
 
@@ -89,7 +89,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function getReply(reader As TriggerReader) As Boolean
+        Public Function GetReply(reader As TriggerReader) As Boolean
             Dim SayText As String
             Dim ResponceText As Variable
 
@@ -110,7 +110,7 @@ Namespace Engine.Libraries
             If reply Is Nothing Then Return False
 
             ResponceText.Value = reply.Text
-            parseEmbeddedOutputCommands(reply.AgentText, reader)
+            ParseEmbeddedOutputCommands(reply.AgentText, reader)
             Return True
 
         End Function
@@ -123,7 +123,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function getReplyName(reader As TriggerReader) As Boolean
+        Public Function GetReplyName(reader As TriggerReader) As Boolean
 
             Dim SayText = reader.ReadString
             Dim ResponceText = reader.ReadVariable(True)
@@ -142,12 +142,12 @@ Namespace Engine.Libraries
             If reply Is Nothing Then Return False
 
             ResponceText.Value = reply.Text
-            Me.parseEmbeddedOutputCommands(reply.AgentText, reader)
+            Me.ParseEmbeddedOutputCommands(reply.AgentText, reader)
             Return True
 
         End Function
 
-        Private Sub parseEmbeddedOutputCommands(text As String, reader As TriggerReader)
+        Private Sub ParseEmbeddedOutputCommands(text As String, reader As TriggerReader)
             Dim startCommand As String = "<"
             Dim endCommand As String = ">"
 
@@ -220,7 +220,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function ChatExecute(reader As TriggerReader) As Boolean
+        Public Function ChatExecute(reader As TriggerReader) As Boolean
 
             Dim cmd As String = reader.ReadString()
             Return ChatCMD.ToLower() = cmd.ToLower()
@@ -235,7 +235,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function getStateVariable(reader As TriggerReader) As Boolean
+        Public Function GetStateVariable(reader As TriggerReader) As Boolean
 
             Dim EngineVar = reader.ReadString()
             Dim MS_Var = reader.ReadVariable(True)
@@ -252,7 +252,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function setStateVariable(reader As TriggerReader) As Boolean
+        Public Function SetStateVariable(reader As TriggerReader) As Boolean
 
             Dim EngineVar = reader.ReadString()
             Dim EngineValue = reader.ReadString()
@@ -272,7 +272,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function UseKkbFile(reader As TriggerReader) As Boolean
+        Public Function UseKkbFile(reader As TriggerReader) As Boolean
 
             Dim FileName = reader.ReadString
             FileName = Path.Combine(Paths.SilverMonkeyBotPath, FileName)
@@ -288,6 +288,14 @@ Namespace Engine.Libraries
             Return True
 
         End Function
+
+
+
+        Public Overrides Sub OnPageDisposing(page As Page)
+
+        End Sub
+
+
 
 #End Region
 
