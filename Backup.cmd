@@ -23,7 +23,6 @@ pause
 exit /b 1
 
 :End
-
 git add --all
 
 git submodule foreach "git add --all"
@@ -42,7 +41,7 @@ set GIT_STATUS=%ERRORLEVEL%
 if not %GIT_STATUS%==0 goto eof
 
 :pull
-git request-pull v2.19.x_Elta https://github.com/StarShip-Avalon-Projects/Silver-Monkey.git
+git request-pull v2.19.x_Elta https://github.com/StarShip-Avalon-Projects/Silver-Monkey.git v2.19.x_Elta 
 
 :eof
 exit /b 0
