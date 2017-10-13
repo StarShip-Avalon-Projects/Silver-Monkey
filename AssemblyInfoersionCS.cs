@@ -5,4 +5,4 @@
 //
 using System.Reflection;
 
-[assembly: AssemblyInformationalVersion("2.19.PreAlpha 8")]
+[assembly: AssemblyInformationalVersion("2.19.PreAlpha 10")]
