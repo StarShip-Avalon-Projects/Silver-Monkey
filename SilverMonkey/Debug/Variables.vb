@@ -31,7 +31,7 @@ Public Class Variables
 
             SyncLock Lock
 
-                If FurcadiaSession Is Nothing Then
+                If FurcadiaSession Is Nothing OrElse FurcadiaSession.MSpage Is Nothing Then
                     Exit Sub
                 End If
                 For i As Integer = 0 To FurcadiaSession.MSpage.Scope.Count - 1

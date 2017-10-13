@@ -285,7 +285,7 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Effect, 625), AddressOf BotMoveSequence, "(5:625) Move the bot  in this sequence {..} (one, sw, three, se, seven, nw, nine, or ne)")
         End Sub
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 
@@ -386,7 +386,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -395,7 +395,7 @@ Namespace Engine.Libraries
         Public Function DescContains(reader As TriggerReader) As Boolean
 
             Dim Pattern As String = reader.ReadString
-            If String.IsNullOrEmpty(Player.Desc) Then Throw New MonkeyspeakException("Description not found. Try looking at the furre first")
+            If String.IsNullOrEmpty(Player.Desc) Then Throw New MonkeySpeakException("Description not found. Try looking at the furre first")
             Return Player.Desc.Contains(Pattern)
 
         End Function
@@ -489,7 +489,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the specified-furre first
         ''' </exception>
@@ -500,7 +500,7 @@ Namespace Engine.Libraries
             Dim name As String = reader.ReadString()
             Dim Target As FURRE = Dream.FurreList.GerFurreByName(name)
             Dim Pattern As String = reader.ReadString
-            If String.IsNullOrEmpty(Target.Desc) Then Throw New MonkeyspeakException("Description not found. Try looking at the furre first")
+            If String.IsNullOrEmpty(Target.Desc) Then Throw New MonkeySpeakException("Description not found. Try looking at the furre first")
             Return Target.Desc.Contains(Pattern)
 
         End Function
@@ -516,7 +516,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -527,7 +527,7 @@ Namespace Engine.Libraries
             Dim Var As Variable = reader.ReadVariable(True)
             Dim name As String = reader.ReadString
             Dim Target As FURRE = Dream.FurreList.GerFurreByName(name)
-            If String.IsNullOrEmpty(Target.Desc) Then Throw New MonkeyspeakException("Description not found, Try looking at the furre first.")
+            If String.IsNullOrEmpty(Target.Desc) Then Throw New MonkeySpeakException("Description not found, Try looking at the furre first.")
             Var.Value = Target.Desc
             Return True
 
@@ -678,7 +678,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -691,7 +691,7 @@ Namespace Engine.Libraries
             Dim Target As FURRE = Dream.FurreList.GerFurreByName(name)
             Select Case Target.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
                 Case 0 Or 1
                     Return Target.Color.Gender = 0
 
@@ -707,7 +707,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -721,7 +721,7 @@ Namespace Engine.Libraries
             Dim Target As FURRE = Dream.FurreList.GerFurreByName(name)
             Select Case Target.Color.Gender
                 Case -1
-                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
                 Case 0 Or 1
                     Var.Value = Target.Color.Gender
 
@@ -758,7 +758,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -771,12 +771,12 @@ Namespace Engine.Libraries
             Dim Target As FURRE = Dream.FurreList.GerFurreByName(name)
             Select Case Target.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
                 Case 0
                     Return Target.Color.Gender = 1
                 Case 1
                     If Target.Color.Gender = -1 Then
-                        If Target.Color.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
+                        If Target.Color.Gender = -1 Then Throw New MonkeySpeakException("Gender not found, Try looking at the furre first")
                         Return Target.Color.Gender = 1
                     Else
                         Return Target.Color.Gender = 1
@@ -872,7 +872,7 @@ Namespace Engine.Libraries
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
                 Case 0 Or 1
                     Return Target.Color.Wings <> Spec
 
@@ -949,7 +949,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -963,7 +963,7 @@ Namespace Engine.Libraries
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Species not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Species not found. Try looking at the furre first")
                 Case 0 Or 1
                     Return Target.Color.Species = Spec
 
@@ -979,7 +979,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -992,7 +992,7 @@ Namespace Engine.Libraries
             Dim Target As FURRE = Dream.FurreList.GerFurreByName(name)
             Select Case Target.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Species not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Species not found. Try looking at the furre first")
                 Case 0 Or 1
                     Var.Value = Target.Color.Species
 
@@ -1046,7 +1046,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1059,7 +1059,7 @@ Namespace Engine.Libraries
             Dim Target As FURRE = Dream.FurreList.GerFurreByName(name)
             Select Case Target.Color.Gender
                 Case -1
-                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
                 Case 0 To 2
 
                     Return Target.Color.Gender = 2
@@ -1075,7 +1075,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1089,7 +1089,7 @@ Namespace Engine.Libraries
             Dim Spec As Double = reader.ReadNumber()
             Select Case Target.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
 
                 Case 1 Or 0
 
@@ -1106,7 +1106,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1120,7 +1120,7 @@ Namespace Engine.Libraries
             Dim TargetFurre = Dream.FurreList.GerFurreByName(name)
             Select Case TargetFurre.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
 
                 Case 1 Or 0
 
@@ -1138,7 +1138,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when the directions don't match the correct format
         ''' </exception>
         ''' <returns>
@@ -1151,7 +1151,7 @@ Namespace Engine.Libraries
                 Case 7 Or 9 Or 3 Or 1
                     Return SendServer("`m" + Dir.ToString)
                 Case Else
-                    Throw New MonkeyspeakException("Directions must be in the form of  7, 9, 3, or 1")
+                    Throw New MonkeySpeakException("Directions must be in the form of  7, 9, 3, or 1")
             End Select
             Return True
 
@@ -1234,7 +1234,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1244,7 +1244,7 @@ Namespace Engine.Libraries
         Public Function NotDescContains(reader As TriggerReader) As Boolean
 
             Dim Pattern As String = reader.ReadString
-            If String.IsNullOrEmpty(Player.Desc) Then Throw New MonkeyspeakException("Description not found. Try looking at the furre first")
+            If String.IsNullOrEmpty(Player.Desc) Then Throw New MonkeySpeakException("Description not found. Try looking at the furre first")
             Return Not Player.Desc.Contains(Pattern)
 
         End Function
@@ -1266,7 +1266,7 @@ Namespace Engine.Libraries
             Dim name As String = reader.ReadString()
             Dim Target As FURRE = Dream.FurreList.GerFurreByName(name)
             Dim Pattern As String = reader.ReadString
-            If String.IsNullOrEmpty(Target.Desc) Then Throw New MonkeyspeakException("Description not found. Try looking at the furre first")
+            If String.IsNullOrEmpty(Target.Desc) Then Throw New MonkeySpeakException("Description not found. Try looking at the furre first")
             Return Not Target.Desc.Contains(Pattern)
 
         End Function
@@ -1351,7 +1351,7 @@ Namespace Engine.Libraries
         Public Function TriggeringFurreDescVar(reader As TriggerReader) As Boolean
 
             Dim Var As Variable = reader.ReadVariable(True)
-            If Player.Desc = Nothing Then Throw New MonkeyspeakException("Description not found, Try looking at the furre first.")
+            If Player.Desc = Nothing Then Throw New MonkeySpeakException("Description not found, Try looking at the furre first.")
             Var.Value = Player.Desc
             Return True
 
@@ -1438,7 +1438,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1449,12 +1449,12 @@ Namespace Engine.Libraries
 
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
                 Case 0
                     Return Player.Color.Gender = 0
                 Case 1
                     If Player.Color.Gender = -1 Then
-                        If Player.Color.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
+                        If Player.Color.Gender = -1 Then Throw New MonkeySpeakException("Gender not found, Try looking at the furre first")
                         Return Player.Color.Gender = 0
                     Else
                         Return Player.Color.Gender = 0
@@ -1470,7 +1470,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1482,13 +1482,13 @@ Namespace Engine.Libraries
             Dim Var As Variable = reader.ReadVariable(True)
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
                 Case 0
-                    If Player.Color.Gender = -1 Then Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
+                    If Player.Color.Gender = -1 Then Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
                     Var.Value = Player.Color.Gender
                 Case 1
                     If Player.Color.Gender = -1 Then
-                        If Player.Color.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
+                        If Player.Color.Gender = -1 Then Throw New MonkeySpeakException("Gender not found, Try looking at the furre first")
                         Var.Value = Player.Color.Gender
                     Else
                         Var.Value = Player.Color.Gender
@@ -1523,7 +1523,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1534,12 +1534,12 @@ Namespace Engine.Libraries
 
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
                 Case 0
                     Return Player.Color.Gender = 1
                 Case 1
                     If Player.Color.Gender = -1 Then
-                        If Player.Color.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
+                        If Player.Color.Gender = -1 Then Throw New MonkeySpeakException("Gender not found, Try looking at the furre first")
                         Return Player.Color.Gender = 1
                     Else
                         Return Player.Color.Gender = 1
@@ -1554,7 +1554,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1566,12 +1566,12 @@ Namespace Engine.Libraries
             Dim Spec As Double = reader.ReadNumber()
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
                 Case 0
                     Return Player.Color.Wings <> Spec
                 Case 1
                     If Player.Color.Wings = -1 Then
-                        If Player.Color.Wings = -1 Then Throw New MonkeyspeakException("Wings type not found, Try looking at the furre first")
+                        If Player.Color.Wings = -1 Then Throw New MonkeySpeakException("Wings type not found, Try looking at the furre first")
                         Return Player.Color.Wings <> Spec
                     Else
                         Return Player.Color.Wings <> Spec
@@ -1608,7 +1608,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1620,7 +1620,7 @@ Namespace Engine.Libraries
             Dim Spec As Double = reader.ReadNumber()
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Species type not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Species type not found. Try looking at the furre first")
                 Case 0
                     Return Player.Color.Species = Spec
                 Case 1
@@ -1638,7 +1638,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1650,7 +1650,7 @@ Namespace Engine.Libraries
             Dim Var As Variable = reader.ReadVariable(True)
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Species not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Species not found. Try looking at the furre first")
                 Case 0 Or 1
                     Var.Value = Player.Color.Species
 
@@ -1683,7 +1683,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1694,12 +1694,12 @@ Namespace Engine.Libraries
 
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
                 Case 0
                     Return Player.Color.Gender = 2
                 Case 1
                     If Player.Color.Gender = -1 Then
-                        If Player.Color.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
+                        If Player.Color.Gender = -1 Then Throw New MonkeySpeakException("Gender not found, Try looking at the furre first")
                         Return Player.Color.Gender = 2
                     Else
                         Return Player.Color.Gender = 2
@@ -1715,7 +1715,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1727,12 +1727,12 @@ Namespace Engine.Libraries
             Dim Spec As Double = reader.ReadNumber()
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
                 Case 0
                     Return Player.Color.Wings = Spec
                 Case 1
                     If Player.Color.Wings = -1 Then
-                        If Player.Color.Wings = -1 Then Throw New MonkeyspeakException("Wings type not found, Try looking at the furre first")
+                        If Player.Color.Wings = -1 Then Throw New MonkeySpeakException("Wings type not found, Try looking at the furre first")
                         Return Player.Color.Wings = Spec
                     Else
                         Return Player.Color.Wings = Spec
@@ -1748,7 +1748,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when a Furre doesn't have a a description. This can be
         ''' prevented by looking at the triggering-furre first
         ''' </exception>
@@ -1760,12 +1760,12 @@ Namespace Engine.Libraries
             Dim Var As Variable = reader.ReadVariable(True)
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
                 Case 0
                     Var.Value = Player.Color.Wings
                 Case 1
                     If Player.Color.Wings = -1 Then
-                        If Player.Color.Wings = -1 Then Throw New MonkeyspeakException("Wings type not found, Try looking at the furre first")
+                        If Player.Color.Wings = -1 Then Throw New MonkeySpeakException("Wings type not found, Try looking at the furre first")
                         Var.Value = Player.Color.Wings
                     Else
                         Var.Value = Player.Color.Wings

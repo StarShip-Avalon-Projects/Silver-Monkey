@@ -1402,65 +1402,12 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-        Public Overrides Function Equals(obj As Object) As Boolean
-            Return MyBase.Equals(obj)
-        End Function
 
-        Public Overrides Function GetHashCode() As Integer
-            Return MyBase.GetHashCode()
-        End Function
 
-        Protected Overrides Sub Finalize()
-            MyBase.Finalize()
+        Public Overrides Sub Unload(page As Page)
+
         End Sub
 
-        Public Overrides Sub RaiseError(reason As String)
-            MyBase.RaiseError(reason)
-        End Sub
-
-        Public Overrides Sub Add(trigger As Trigger, handler As TriggerHandler, Optional description As String = Nothing)
-            MyBase.Add(trigger, handler, description)
-        End Sub
-
-        Public Overrides Sub Add(cat As TriggerCategory, id As Integer, handler As TriggerHandler, Optional description As String = Nothing)
-            MyBase.Add(cat, id, handler, description)
-        End Sub
-
-        Public Overrides Sub OnPageDisposing(page As Page)
-            MyBase.OnPageDisposing(page)
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return MyBase.ToString()
-        End Function
-
-        Protected Overrides Function MsgContains(reader As TriggerReader) As Boolean
-            Return MyBase.MsgContains(reader)
-        End Function
-
-        Protected Overrides Function MsgEndsWith(reader As TriggerReader) As Boolean
-            Return MyBase.MsgEndsWith(reader)
-        End Function
-
-        Protected Overrides Function MsgIs(reader As TriggerReader) As Boolean
-            Return MyBase.MsgIs(reader)
-        End Function
-
-        Protected Overrides Function MsgIsNot(reader As TriggerReader) As Boolean
-            Return MyBase.MsgIsNot(reader)
-        End Function
-
-        Protected Overrides Function MsgNotContain(reader As TriggerReader) As Boolean
-            Return MyBase.MsgNotContain(reader)
-        End Function
-
-        Protected Overrides Function NameIs(reader As TriggerReader) As Boolean
-            Return MyBase.NameIs(reader)
-        End Function
-
-        Protected Overrides Function NameIsNot(reader As TriggerReader) As Boolean
-            Return MyBase.NameIsNot(reader)
-        End Function
 
         '(5:561) remember Database Info {...} for Settings Table {...} to {...}.
         '(5:562) forget Database info {...} from Settings Table{...}.

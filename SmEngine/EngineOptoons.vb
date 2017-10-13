@@ -33,7 +33,6 @@ Namespace Engine
             TriggerLimit = 6000
             VariableCountLimit = 1000
             StringLengthLimit = Int32.MaxValue
-            TimerLimit = 100
             _MS_Engine_Enable = True
 
         End Sub

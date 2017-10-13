@@ -165,7 +165,10 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     End Property
 
 #Region "Log Options"
-
+    ''' <summary>
+    ''' Bot File (*.bini) path
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property BotPath As String
         Get
             Return Path.GetDirectoryName(_BiniFile)

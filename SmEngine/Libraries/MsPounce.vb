@@ -389,7 +389,7 @@ Namespace Engine.Libraries
             End If
         End Sub
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 

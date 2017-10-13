@@ -14,13 +14,14 @@ Namespace Engine.Libraries.Web
     ''' </summary>
     Public Class WebRequests
         Private WebEncoding As Encoding = New UTF8Encoding()
+        Private page As Monkeyspeak.Page
 
 #Region "Private Fields"
 
         Private data As New List(Of MsVariable)()
         Private UserAgent As String = "Silver Monkey a Furcadia Bot (gerolkae@hotmail.com)"
         Private Ver As Integer = 1
-        Private WebReferer As String = "http://silvermonkey.tsprojects.org"
+        Private WebReferer As String = "https://silvermonkey.tsprojects.org"
 
         '*Value may not always return from post functions
         Private WebURL As Uri
@@ -35,19 +36,12 @@ Namespace Engine.Libraries.Web
         '*Value=[Value]
 
         ''' <summary>
-        ''' Default constructor
-        ''' </summary>
-        Public Sub New()
-
-            WebURL = Nothing
-        End Sub
-
-        ''' <summary>
         ''' Constructor Specifying the Web url to connect to
         ''' </summary>
         ''' <param name="Url"></param>
-        Public Sub New(Url As Uri)
+        Public Sub New(Url As Uri, reader As TriggerReader)
             WebURL = Url
+            page = reader.Page
         End Sub
 
 #End Region
@@ -161,7 +155,7 @@ Namespace Engine.Libraries.Web
         End Function
 
         Public Function WPost(ByRef WebVariables As List(Of IVariable)) As WebData
-            If WebVariables Is Nothing Then
+            If WebVariables Is Nothing Or WebVariables.Count = 0 Then
                 Throw New ArgumentNullException(NameOf(WebVariables))
             End If
 
@@ -259,7 +253,7 @@ Namespace Engine.Libraries.Web
                 Loop
 
                 'trigger (0: )
-            Catch ex As WebException
+            Catch ex As System.Net.WebException
                 Result.ErrMsg = ex.Message.ToString
                 Result.Packet = ""
                 Dim message = New StringBuilder()
@@ -278,6 +272,8 @@ Namespace Engine.Libraries.Web
                     End If
                 End If
                 Result.WebPage = message.ToString()
+            Catch ex As Exception
+                Throw ex
             End Try
 
             Return Result

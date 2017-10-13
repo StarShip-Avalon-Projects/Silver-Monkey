@@ -136,9 +136,9 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
           Name="installed" Type="integer" Value="1"
           KeyPath="yes" />
       </Component>
-      <Component Id="MantisNotifyShortcut" Guid="{BA68555B-8B14-4890-A6CF-5CBB6CFB2529}">
+  <!--       <Component Id="MantisNotifyShortcut" Guid="{BA68555B-8B14-4890-A6CF-5CBB6CFB2529}">
 
-        <Shortcut Id="$(var.MantisNotify.TargetName)Shortcut"
+     <Shortcut Id="$(var.MantisNotify.TargetName)Shortcut"
                   Name="$(var.MantisNotify.TargetName)"
                              WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]$(var.MantisNotify.TargetName)"
@@ -149,7 +149,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
           Key="Software\$(var.CompanyName)\MantisNotify"
           Name="installed" Type="integer" Value="1"
           KeyPath="yes" />
-      </Component>
+      </Component>-->
       <!--    <Component Id="MantisNotifyShortcutStartup" Guid="{9C0C4CC8-09D1-4FE4-BC69-C1A237FB34B8}">
 
         <Shortcut Id="$(var.MantisNotify.TargetName)ShortcutStartup"
@@ -191,8 +191,10 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="MonkeyCore.Binaries" />
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
       <ComponentGroupRef Id="MonkeyCore.Content" />
+      <!--
       <ComponentGroupRef Id="BugTraqConnect.Binaries" />
       <ComponentGroupRef Id="BugTraqConnect.Symbols" />
+      -->
       <ComponentRef Id="SilverMonkeyShortcut" />
       <ComponentRef Id="MonkeySpeakEditorShortcut" />
       <ComponentGroupRef Id="TheClaaaw.Binaries" />
@@ -228,7 +230,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="DataMonkey.Symbols" />
       <ComponentRef Id="DataMonkeyShortcut" />
       <ComponentRef Id="DataMokeyHelp" />
-
+      <!--
       <ComponentGroupRef Id="MantisSubmit.Binaries" />
       <ComponentGroupRef Id="MantisSubmit.Symbols" />
       <ComponentGroupRef Id="MantisSubmit.Content" />
@@ -236,6 +238,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="MantisNotify.Binaries" />
       <ComponentGroupRef Id="MantisNotify.Symbols" />
       <ComponentRef Id="MantisNotifyShortcut" />
+      -->
       <!--   <ComponentRef Id="MantisNotifyShortcutStartup" /> -->
 
       <Feature Id="ChatBot" Title="Chatbot Application" Level="2">

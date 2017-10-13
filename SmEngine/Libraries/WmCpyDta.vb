@@ -39,7 +39,7 @@ Namespace Engine.Libraries
                 AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot last received.")
         End Sub
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 

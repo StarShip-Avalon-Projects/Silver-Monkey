@@ -4,6 +4,7 @@ Imports Furcadia.Net
 Imports Furcadia.Net.Dream
 Imports Furcadia.Util
 Imports Monkeyspeak
+Imports Monkeyspeak.Libraries
 
 Namespace Engine.Libraries
 
@@ -13,7 +14,7 @@ Namespace Engine.Libraries
     ''' all the other libraries
     ''' </summary>
     Public Class MonkeySpeakLibrary
-        Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+        Inherits BaseLibrary
 
 #Region "Protected Methods"
 
@@ -418,7 +419,7 @@ Namespace Engine.Libraries
 
 
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 

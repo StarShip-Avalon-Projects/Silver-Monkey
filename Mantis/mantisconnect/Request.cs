@@ -175,7 +175,7 @@ namespace SilverMonkey.BugTraqConnect
         {
             ValidateIssue(issue);
 
-            return Convert.ToInt32(this.mc.mc_issue_add(
+            return Convert.ToInt32(x = await this.mc.mc_issue_addAsync(
                 this.session.Username,
                 this.session.Password,
                 issue.ToWebservice()));
@@ -813,8 +813,9 @@ namespace SilverMonkey.BugTraqConnect
         {
             ValidateProjectId(projectId);
 
-            return Filter.ConvertArray(this.mc.mc_filter_get(
+            return Filter.ConvertArray(this.mc.mc_filter_get_issues(
                 this.session.Username,
+
                 this.session.Password,
                 projectId.ToString()));
         }

@@ -153,7 +153,7 @@ Namespace Engine.Libraries
             Dim DreamNameVariable As Monkeyspeak.Variable = reader.Page.GetVariable("DREAMNAME")
             'add Machine Name parser
             If DreamNameVariable.Value.ToString() <> Dream.Name Then
-                Throw New MonkeyspeakException("%DREAMNAME does not match Dream.Name")
+                Throw New MonkeySpeakException("%DREAMNAME does not match Dream.Name")
             End If
 
             Return Dream.ShortName = FurcadiaShortName(DreamName)
@@ -317,7 +317,7 @@ Namespace Engine.Libraries
 
 
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 

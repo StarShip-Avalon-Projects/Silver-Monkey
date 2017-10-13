@@ -95,7 +95,7 @@ Namespace Engine.Libraries
                 End If
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -120,7 +120,7 @@ Namespace Engine.Libraries
                 End If
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -164,7 +164,7 @@ Namespace Engine.Libraries
                 Next
                 Return FurcadiaSession.IsBotController
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
             End Try
 
             Return False
@@ -199,7 +199,7 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -236,7 +236,7 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -273,7 +273,7 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -301,7 +301,7 @@ Namespace Engine.Libraries
 
                 Return FurcadiaSession.IsBotController
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -332,12 +332,12 @@ Namespace Engine.Libraries
                 CheckMemberList()
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 

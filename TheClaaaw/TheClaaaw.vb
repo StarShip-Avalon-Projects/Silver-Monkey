@@ -8,7 +8,7 @@ Imports SilverMonkeyEngine.Engine.Libraries.MonkeySpeakLibrary
 ''' <summary>
 ''' </summary>
 Public Class TheClaaaw
-    Inherits Monkeyspeak.Libraries.AbstractBaseLibrary
+    Inherits Monkeyspeak.Libraries.BaseLibrary
     Implements Interfaces.ImsPlugin
 
 #Region "Private Fields"
@@ -230,7 +230,7 @@ Public Class TheClaaaw
         Return True
     End Function
 
-    Public Overrides Sub OnPageDisposing(page As Page)
+    Public Overrides Sub Unload(page As Page)
 
     End Sub
 

@@ -39,7 +39,7 @@
       <DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
       <DocumentationSource sourceFile="..\SilverMonkey\SilverMonkey2.vbproj" />
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
-      <DocumentationSource sourceFile="..\MonkeyspeakR7\Monkeyspeak.csproj" />
+      <DocumentationSource sourceFile="..\MonkeySpeakEx\Monkeyspeak.csproj" />
     </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>

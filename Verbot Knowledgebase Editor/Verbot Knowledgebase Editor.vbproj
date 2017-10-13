@@ -165,10 +165,6 @@
     <None Include="Verbot Knowledgebase Editor.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
-      <Project>{F4391F6F-0239-48E2-B415-C39A6D920303}</Project>
-      <Name>BugTraqConnect</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Project>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</Project>
       <Name>MonkeyCore</Name>

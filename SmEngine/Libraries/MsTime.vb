@@ -159,7 +159,7 @@ Namespace Engine.Libraries
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
-        ''' <exception cref="MonkeyspeakException">
+        ''' <exception cref="MonkeySpeakException">
         ''' Thrown when DateTimeVariable and DateTimeString are not in the
         ''' correct format
         ''' </exception>
@@ -177,7 +177,7 @@ Namespace Engine.Libraries
                 ResultVariable.Value = time.Subtract(time2).ToString
                 Return True
             End If
-            Throw New MonkeyspeakException("unable to parse DateTime variable and/or DateTimeString")
+            Throw New MonkeySpeakException("unable to parse DateTime variable and/or DateTimeString")
 
         End Function
 
@@ -186,7 +186,7 @@ Namespace Engine.Libraries
         ''' Date Time variable %Variable and put it into variable %Variable.
         ''' </summary>
         ''' <param name="reader">
-        ''' <exception cref="MonkeyspeakException">Thrown when
+        ''' <exception cref="MonkeySpeakException">Thrown when
         ''' DateTimeVariable and DateTimeString are not in the correct format</exception><see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
@@ -202,11 +202,11 @@ Namespace Engine.Libraries
             If DateTime.TryParse(DateTimeVariable.Value.ToString, time) And DateTime.TryParse(DateTimeString.Value.ToString, time2) Then
                 ResultVariable.Value = time.Subtract(time2).ToString
             End If
-            Throw New MonkeyspeakException("unable to parse DateTime variable and/or DateTimeString")
+            Throw New MonkeySpeakException("unable to parse DateTime variable and/or DateTimeString")
 
         End Function
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 

@@ -32,7 +32,7 @@ Namespace Engine.Libraries
             AddressOf MsgContains, "(0:48) When the bot sees a trade request with {..} in it,")
         End Sub
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 

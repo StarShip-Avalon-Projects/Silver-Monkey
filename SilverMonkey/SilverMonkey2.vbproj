@@ -325,15 +325,11 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
-      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
-      <Name>BugTraqConnect</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyspeakR7\Monkeyspeak.csproj">
+    <ProjectReference Include="..\MonkeySpeakEx\Monkeyspeak.csproj">
       <Project>{51b6668d-9904-4fa4-8fb8-6a1395b3104d}</Project>
       <Name>Monkeyspeak</Name>
     </ProjectReference>

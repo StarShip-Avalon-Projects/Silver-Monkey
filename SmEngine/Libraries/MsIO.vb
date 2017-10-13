@@ -55,7 +55,7 @@ Namespace Engine.Libraries
 
         End Sub
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 
@@ -109,16 +109,16 @@ Namespace Engine.Libraries
                 Dim lines() As String = File.ReadAllLines(F)
                 If lines.Count < 0 Then
                     var = Variable.NoValue
-                    Throw New MonkeyspeakException(var.Name + " Is less then the number of lines in file " + F)
+                    Throw New MonkeySpeakException(var.Name + " Is less then the number of lines in file " + F)
                 ElseIf num < lines.Count - 1 Then
                     var.Value = lines(CInt(num))
                     Return True
                 Else
                     var = Variable.NoValue
-                    Throw New MonkeyspeakException(var.Name + " Is larger then the number of lines in file " + F)
+                    Throw New MonkeySpeakException(var.Name + " Is larger then the number of lines in file " + F)
                 End If
             Else
-                Throw New MonkeyspeakException("File """ + F + """ Does not exist.")
+                Throw New MonkeySpeakException("File """ + F + """ Does not exist.")
             End If
             Return True
         End Function

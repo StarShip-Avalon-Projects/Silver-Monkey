@@ -127,7 +127,7 @@ Namespace Engine.Libraries
                 "(5:56) unbanish the furre named {...}.")
         End Sub
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 

@@ -28,8 +28,8 @@ namespace DataMonkey
         {
             var ex = (Exception)e.ExceptionObject;
             var logError = new ErrorLogging(ref ex, sender);
-            var args = string.Join(" ", logError.BugReport.ToArray());
-            var Proc = Path.Combine(Application.StartupPath, "BugTragSubmit.exe");
+            var args = logError.LogFile;
+            var Proc = "notepad.exe";
             Process.Start(Proc, args);
         }
 

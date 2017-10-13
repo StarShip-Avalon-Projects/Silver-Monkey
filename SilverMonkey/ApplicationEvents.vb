@@ -38,8 +38,9 @@ Namespace My
             Dim logError As New ErrorLogging(e.Exception, sender)
 
             Dim SendError As New ProcessStartInfo
-            SendError.Arguments = String.Join(" ", logError.BugReport.ToArray())
-            SendError.FileName = Path.Combine(Application.Info.DirectoryPath, "BugTragSubmit.exe")
+            SendError.Arguments = logError.LogFile
+            SendError.FileName = "notepad.exe"
+            ' Path.Combine(Application.Info.DirectoryPath, "BugTragSubmit.exe")
             Process.Start(SendError)
 
         End Sub

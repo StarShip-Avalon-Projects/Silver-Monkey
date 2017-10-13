@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Imports MonkeyCore.Paths
-Imports SilverMonkey.BugTraqConnect.Libs
+'Imports SilverMonkey.BugTraqConnect.Libs
 
 Namespace Utils.Logging
 
@@ -30,7 +30,7 @@ Namespace Utils.Logging
 
 #End Region
 
-        Public Property BugReport As ProjectReport
+        ' Public Property BugReport As ProjectReport
 
 #Region "Public Constructors"
 
@@ -89,7 +89,7 @@ Namespace Utils.Logging
         ''' <param name="ObjectThrowingError">
         ''' </param>
         Public Sub LogError(ByRef ex As Exception, ByRef ObjectThrowingError As Object)
-            BugReport = New ProjectReport
+            '  BugReport = New ProjectReport
 
             Using LogFile As System.IO.StreamWriter = New System.IO.StreamWriter(strErrorFilePath, False)
 
@@ -155,10 +155,10 @@ Namespace Utils.Logging
 
             End Using
 
-            BugReport.ProcuctName = My.Application.Info.ProductName
-            BugReport.AttachmentFile = strErrorFilePath
-            BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
-            BugReport.Severity = "crash"
+            '  BugReport.ProcuctName = My.Application.Info.ProductName
+            '   BugReport.AttachmentFile = strErrorFilePath
+            '   BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
+            '   BugReport.Severity = "crash"
 
         End Sub
 
@@ -173,7 +173,7 @@ Namespace Utils.Logging
         ''' </param>
         Public Sub LogError(ByRef ex As Exception, ByRef ObjectThrowingError As Object, ByRef ObJectCheck As Object)
             'CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-            BugReport = New ProjectReport()
+            '   BugReport = New ProjectReport()
             Using LogFile As StreamWriter = New StreamWriter(strErrorFilePath, False)
 
                 '***********************************************************
@@ -241,10 +241,10 @@ Namespace Utils.Logging
 
             End Using
 
-            BugReport.ProcuctName = My.Application.Info.ProductName
-            BugReport.AttachmentFile = strErrorFilePath
-            BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
-            BugReport.Severity = "crash"
+            'BugReport.ProcuctName = My.Application.Info.ProductName
+            'BugReport.AttachmentFile = strErrorFilePath
+            'BugReport.ReportSubject = ObjectThrowingError.GetType().FullName + ex.Message
+            'BugReport.Severity = "crash"
 
         End Sub
 

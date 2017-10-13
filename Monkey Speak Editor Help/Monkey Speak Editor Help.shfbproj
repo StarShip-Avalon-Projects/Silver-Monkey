@@ -77,7 +77,7 @@
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
       <DocumentationSource sourceFile="..\DSeX\MonkeySpeakEditor.vbproj" />
       <DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
-      <DocumentationSource sourceFile="..\MonkeyspeakR7\Monkeyspeak.csproj" />
+      <DocumentationSource sourceFile="..\MonkeySpeakEx\Monkeyspeak.csproj" />
     </DocumentationSources>
     <ComponentConfigurations>
       <ComponentConfig id="API Token Resolution" enabled="True">

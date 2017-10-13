@@ -31,8 +31,8 @@ Namespace My
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             Dim logError As New ErrorLogging(e.Exception, sender)
-            Dim args As String = String.Join(" ", logError.BugReport.ToArray())
-            Dim Proc As String = Path.Combine(Application.Info.DirectoryPath, "BugTragSubmit.exe")
+            Dim args As String = logError.LogFile
+            Dim Proc As String = "notepad.exe"
             Process.Start(Proc, args)
         End Sub
 

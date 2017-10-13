@@ -1,4 +1,5 @@
 ﻿Imports Monkeyspeak
+Imports Monkeyspeak.Libraries
 Imports SilverMonkeyEngine.Engine.Libraries.Web
 Imports SilverMonkeyEngine.Interfaces
 
@@ -18,8 +19,8 @@ Namespace Engine.Libraries
 
 #Region "Private Fields"
 
-        Private Webrequest As New WebRequests()
-        Private Shared WebStack As IList(Of IVariable)()
+        Private Webrequest As WebRequests()
+        Private WebStack As New List(Of IVariable)()
         Private WebURL As Uri
 
 #End Region
@@ -28,8 +29,7 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
-            WebStack = IList(Of IVariable)
-            'WebStack.Clear()
+            WebURL = Nothing
             '(0:70) When the bot receives a variable list by sending the Web-Cache.
             Add(New Trigger(TriggerCategory.Cause, 70),
             Function()
@@ -77,7 +77,7 @@ Namespace Engine.Libraries
 
         End Sub
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
 
         End Sub
 
@@ -140,7 +140,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function SendGetWebStack(reader As TriggerReader) As Boolean
 
-            Dim ws As New WebRequests(WebURL)
+            Dim ws As New WebRequests(WebURL, reader)
 
             Dim WebPage = ws.WGet(WebStack)
             WebStack = WebPage.WebStack
@@ -163,13 +163,13 @@ Namespace Engine.Libraries
         Private Function SendWebStack(reader As TriggerReader) As Boolean
 
             Dim WebPage As New WebData
-            Dim ws As New WebRequests(WebURL)
+            Dim ws As New WebRequests(WebURL, reader)
 
             SyncLock Me
                 WebPage = ws.WPost(WebStack)
                 WebStack = WebPage.WebStack
                 If WebPage.ReceivedPage Then
-                    FurcadiaSession.MSpage.Execute(70)
+                    reader.Page.ExecuteAsync(70)
                 End If
             End SyncLock
             If WebPage.Status <> 0 Then Throw New WebException(WebPage.ErrMsg, WebPage)
@@ -201,16 +201,22 @@ Namespace Engine.Libraries
         Private Function StoreWebStack(reader As TriggerReader) As Boolean
 
             Dim var = reader.ReadVariable()
-            If WebStack.Contains(var) Then
-                WebStack(WebStack.ToList().IndexOf(var)) = var
-            Else
-                WebStack.Add(var)
+            If var IsNot Variable.NoValue Then
+                If WebStack.Contains(var) Then
+                    WebStack(WebStack.ToList().IndexOf(var)) = var
+                Else
+                    WebStack.Add(var)
+                End If
             End If
             Return True
 
         End Function
-
-        Private Function WebArrayContainArrayField(reader As TriggerReader) As Boolean
+        ''' <summary>
+        ''' (1:32) and the Web-Cache contains field named {...},
+        ''' </summary>
+        ''' <param name="reader"></param>
+        ''' <returns></returns>
+        Public Function WebArrayContainArrayField(reader As TriggerReader) As Boolean
             Dim var = reader.Page.SetVariable(reader.ReadString, Nothing, False)
             Return WebStack.Contains(var)
 
@@ -235,7 +241,12 @@ Namespace Engine.Libraries
 
         End Function
 
-        Private Function WebArrayNotContainArrayField(reader As TriggerReader) As Boolean
+        ''' <summary>
+        ''' (1:33) and the Web-Cache doesn't contain field named {...},
+        ''' </summary>
+        ''' <param name="reader"><see cref="TriggerReader"/></param>
+        ''' <returns></returns>
+        Public Function WebArrayNotContainArrayField(reader As TriggerReader) As Boolean
 
             Return Not WebStack.Contains(reader.Page.SetVariable(reader.ReadString, Nothing, False))
 
@@ -250,7 +261,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Function WebArrayNotEqualTo(reader As TriggerReader) As Boolean
 
-            Dim setting As MsVariable = Nothing
+            Dim setting As Variable = Nothing
             Dim value = reader.Page.SetVariable(reader.ReadString, Nothing, False)
             If WebStack.Contains(value) Then
                 setting = WebStack.Item(WebStack.IndexOf(value))

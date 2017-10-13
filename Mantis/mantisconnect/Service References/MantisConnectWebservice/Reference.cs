@@ -10,34 +10,21 @@
 
 namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     
-    /// <summary>
-    /// 
-    /// </summary>
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://futureware.biz/mantisconnect", ConfigurationName="MantisConnectWebservice.MantisConnectPortType")]
     public interface MantisConnectPortType {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_version", ReplyAction="*")]
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_version", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        string mc_version();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_version", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        System.Threading.Tasks.Task<string> mc_versionAsync();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_login", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionResponse mc_version(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_version", ReplyAction="*")]
+        System.IAsyncResult Beginmc_version(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionResponse Endmc_version(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_login", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -48,24 +35,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData mc_login(string username, string password);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_login", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData> mc_loginAsync(string username, string password);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_status", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginResponse mc_login(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_login", ReplyAction="*")]
+        System.IAsyncResult Beginmc_login(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginResponse Endmc_login(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_status", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -76,19 +53,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_status(string username, string password);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_status", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_statusAsync(string username, string password);
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusResponse mc_enum_status(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_priorities", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_status", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_status(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusResponse Endmc_enum_status(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_priorities", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -99,18 +71,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_priorities(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_priorities(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_priorities(string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesResponse mc_enum_priorities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_priorities", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_prioritiesAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_prioritiesAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_prioritiesAsync(string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_priorities", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_priorities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_severities", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesResponse Endmc_enum_priorities(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_severities", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -121,198 +89,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_severities(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_severities(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_severities(string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesResponse mc_enum_severities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_severities", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_severitiesAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_severitiesAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_severitiesAsync(string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_severities", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_severities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_reproducibilitie" +
-            "s", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_reproducibilities(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_reproducibilities(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_reproducibilities(string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesResponse Endmc_enum_severities(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_reproducibilitie" +
-            "s", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_reproducibilitiesAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_reproducibilitiesAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_reproducibilitiesAsync(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_projections", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_projections(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_projections(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_projections(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_projections", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_projectionsAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_projectionsAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_projectionsAsync(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_etas", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_etas(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_etas(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_etas(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_etas", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_etasAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_etasAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_etasAsync(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_resolutions", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_resolutions(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_resolutions(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_resolutions(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_resolutions", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_resolutionsAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_resolutionsAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_resolutionsAsync(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_access_levels", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_access_levels(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_access_levels(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_access_levels(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_access_levels", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_access_levelsAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_access_levelsAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_access_levelsAsync(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_status", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_status(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_status(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_status(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_status", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_statusAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_project_statusAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_statusAsync(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_view_sta" +
-            "tes", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_view_states(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_view_states(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_view_states(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_view_sta" +
-            "tes", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_view_statesAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_project_view_statesAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_project_view_statesAsync(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_view_states", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_view_states(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_view_states(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_view_states(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_view_states", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_view_statesAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_view_statesAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_view_statesAsync(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_custom_field_typ" +
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_reproducibiliti" +
             "es", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
@@ -324,19 +108,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_custom_field_types(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_custom_field_types(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_custom_field_types(string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesResponse mc_enum_reproducibilities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_custom_field_typ" +
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_reproducibiliti" +
             "es", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_custom_field_typesAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_custom_field_typesAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_custom_field_typesAsync(string, string)'
+        System.IAsyncResult Beginmc_enum_reproducibilities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_get", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesResponse Endmc_enum_reproducibilities(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_projections", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -347,18 +127,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_get(string, string, string)'
-        string mc_enum_get(string username, string password, string enumeration);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_get(string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsResponse mc_enum_projections(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_get", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_getAsync(string, string, string)'
-        System.Threading.Tasks.Task<string> mc_enum_getAsync(string username, string password, string enumeration);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_enum_getAsync(string, string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_projections", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_projections(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_exists", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsResponse Endmc_enum_projections(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_etas", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -369,18 +145,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_exists(string, string, string)'
-        bool mc_issue_exists(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_exists(string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasResponse mc_enum_etas(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_exists", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_existsAsync(string, string, string)'
-        System.Threading.Tasks.Task<bool> mc_issue_existsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_existsAsync(string, string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_etas", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_etas(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasResponse Endmc_enum_etas(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_resolutions", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -391,18 +163,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get(string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData mc_issue_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get(string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsResponse mc_enum_resolutions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_getAsync(string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData> mc_issue_getAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_getAsync(string, string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_resolutions", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_resolutions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsResponse Endmc_enum_resolutions(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_access_levels", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -413,18 +181,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get(string, string, string[])'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_issues_get(string username, string password, string[] issue_ids);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get(string, string, string[])'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsResponse mc_enum_access_levels(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_getAsync(string, string, string[])'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_issues_getAsync(string username, string password, string[] issue_ids);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_getAsync(string, string, string[])'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_access_levels", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_access_levels(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get_header", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsResponse Endmc_enum_access_levels(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_status", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -435,18 +199,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get_header(string, string, string[])'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_issues_get_header(string username, string password, string[] issue_ids);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get_header(string, string, string[])'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusResponse mc_enum_project_status(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get_header", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get_headerAsync(string, string, string[])'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_issues_get_headerAsync(string username, string password, string[] issue_ids);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issues_get_headerAsync(string, string, string[])'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_status", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_project_status(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_history", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusResponse Endmc_enum_project_status(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_view_st" +
+            "ates", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -457,18 +218,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_history(string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] mc_issue_get_history(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_history(string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesResponse mc_enum_project_view_states(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_history", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_historyAsync(string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[]> mc_issue_get_historyAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_historyAsync(string, string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_project_view_st" +
+            "ates", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_project_view_states(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_biggest_id", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesResponse Endmc_enum_project_view_states(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_view_states", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -479,21 +237,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_biggest_id(string, string, string)'
-        string mc_issue_get_biggest_id(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_biggest_id(string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesResponse mc_enum_view_states(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_biggest_id", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_biggest_idAsync(string, string, string)'
-        System.Threading.Tasks.Task<string> mc_issue_get_biggest_idAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_biggest_idAsync(string, string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_view_states", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_view_states(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_id_from_sum" +
-            "mary", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesResponse Endmc_enum_view_states(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_custom_field_ty" +
+            "pes", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -504,21 +256,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_id_from_summary(string, string, string)'
-        string mc_issue_get_id_from_summary(string username, string password, string summary);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_id_from_summary(string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesResponse mc_enum_custom_field_types(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_id_from_sum" +
-            "mary", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_id_from_summaryAsync(string, string, string)'
-        System.Threading.Tasks.Task<string> mc_issue_get_id_from_summaryAsync(string username, string password, string summary);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_get_id_from_summaryAsync(string, string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_custom_field_ty" +
+            "pes", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_custom_field_types(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_add", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesResponse Endmc_enum_custom_field_types(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_get", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -529,20 +275,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_add(string, string, IssueData)'
-        string mc_issue_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_add(string, string, IssueData)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getResponse mc_enum_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_add", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_addAsync(string, string, IssueData)'
-        System.Threading.Tasks.Task<string> mc_issue_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_addAsync(string, string, IssueData)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_enum_get", ReplyAction="*")]
+        System.IAsyncResult Beginmc_enum_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_update", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getResponse Endmc_enum_get(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_exists", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -553,18 +293,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_update(string, string, string, IssueData)'
-        bool mc_issue_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_update(string, string, string, IssueData)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsResponse mc_issue_exists(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_update", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_updateAsync(string, string, string, IssueData)'
-        System.Threading.Tasks.Task<bool> mc_issue_updateAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_updateAsync(string, string, string, IssueData)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_exists", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_exists(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_set_tags", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsResponse Endmc_issue_exists(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -575,18 +311,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_set_tags(string, string, string, TagData[])'
-        bool mc_issue_set_tags(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_set_tags(string, string, string, TagData[])'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getResponse mc_issue_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_set_tags", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_set_tagsAsync(string, string, string, TagData[])'
-        System.Threading.Tasks.Task<bool> mc_issue_set_tagsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_set_tagsAsync(string, string, string, TagData[])'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_delete", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getResponse Endmc_issue_get(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -597,18 +329,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_delete(string, string, string)'
-        bool mc_issue_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_delete(string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getResponse mc_issues_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_delete", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_deleteAsync(string, string, string)'
-        System.Threading.Tasks.Task<bool> mc_issue_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_deleteAsync(string, string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issues_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_add", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getResponse Endmc_issues_get(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get_header", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -619,20 +347,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_add(string, string, string, IssueNoteData)'
-        string mc_issue_note_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_add(string, string, string, IssueNoteData)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerResponse mc_issues_get_header(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_add", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_addAsync(string, string, string, IssueNoteData)'
-        System.Threading.Tasks.Task<string> mc_issue_note_addAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_addAsync(string, string, string, IssueNoteData)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issues_get_header", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issues_get_header(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_delete", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerResponse Endmc_issues_get_header(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_history", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -643,966 +365,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_delete(string, string, string)'
-        bool mc_issue_note_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_note_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_delete(string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyResponse mc_issue_get_history(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_delete", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_deleteAsync(string, string, string)'
-        System.Threading.Tasks.Task<bool> mc_issue_note_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_note_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_deleteAsync(string, string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_history", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_get_history(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_update", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_update(string, string, IssueNoteData)'
-        bool mc_issue_note_update(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_update(string, string, IssueNoteData)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyResponse Endmc_issue_get_history(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_update", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_updateAsync(string, string, IssueNoteData)'
-        System.Threading.Tasks.Task<bool> mc_issue_note_updateAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_note_updateAsync(string, string, IssueNoteData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_ad" +
-            "d", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_add(string, string, string, RelationshipData)'
-        string mc_issue_relationship_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_add(string, string, string, RelationshipData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_ad" +
-            "d", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_addAsync(string, string, string, RelationshipData)'
-        System.Threading.Tasks.Task<string> mc_issue_relationship_addAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_addAsync(string, string, string, RelationshipData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_de" +
-            "lete", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_delete(string, string, string, string)'
-        bool mc_issue_relationship_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string relationship_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_delete(string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_de" +
-            "lete", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_deleteAsync(string, string, string, string)'
-        System.Threading.Tasks.Task<bool> mc_issue_relationship_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string relationship_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_relationship_deleteAsync(string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_add", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_add(string, string, string, string, string, byte[])'
-        string mc_issue_attachment_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, string name, string file_type, [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")] byte[] content);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_add(string, string, string, string, string, byte[])'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_add", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_addAsync(string, string, string, string, string, byte[])'
-        System.Threading.Tasks.Task<string> mc_issue_attachment_addAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, string name, string file_type, [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")] byte[] content);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_addAsync(string, string, string, string, string, byte[])'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_dele" +
-            "te", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_delete(string, string, string)'
-        bool mc_issue_attachment_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_attachment_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_delete(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_dele" +
-            "te", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_deleteAsync(string, string, string)'
-        System.Threading.Tasks.Task<bool> mc_issue_attachment_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_attachment_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_deleteAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_get", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_get(string, string, string)'
-        byte[] mc_issue_attachment_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_attachment_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_get(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_get", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_getAsync(string, string, string)'
-        System.Threading.Tasks.Task<byte[]> mc_issue_attachment_getAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_attachment_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_attachment_getAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add(string, string, ProjectData)'
-        string mc_project_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add(string, string, ProjectData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_addAsync(string, string, ProjectData)'
-        System.Threading.Tasks.Task<string> mc_project_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_addAsync(string, string, ProjectData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete(string, string, string)'
-        bool mc_project_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_deleteAsync(string, string, string)'
-        System.Threading.Tasks.Task<bool> mc_project_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_deleteAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_update", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_update(string, string, string, ProjectData)'
-        bool mc_project_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_update(string, string, string, ProjectData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_update", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_updateAsync(string, string, string, ProjectData)'
-        System.Threading.Tasks.Task<bool> mc_project_updateAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_updateAsync(string, string, string, ProjectData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_id_from_n" +
-            "ame", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_id_from_name(string, string, string)'
-        string mc_project_get_id_from_name(string username, string password, string project_name);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_id_from_name(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_id_from_n" +
-            "ame", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_id_from_nameAsync(string, string, string)'
-        System.Threading.Tasks.Task<string> mc_project_get_id_from_nameAsync(string username, string password, string project_name);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_id_from_nameAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues_fo" +
-            "r_user", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues_for_user(string, string, string, string, AccountData, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues_for_user(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues_for_user(string, string, string, string, AccountData, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues_fo" +
-            "r_user", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues_for_userAsync(string, string, string, string, AccountData, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_project_get_issues_for_userAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues_for_userAsync(string, string, string, string, AccountData, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues(string, string, string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issues(string, string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issuesAsync(string, string, string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_project_get_issuesAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issuesAsync(string, string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issue_hea" +
-            "ders", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issue_headers(string, string, string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_project_get_issue_headers(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issue_headers(string, string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issue_hea" +
-            "ders", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issue_headersAsync(string, string, string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_project_get_issue_headersAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_issue_headersAsync(string, string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_users", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_users(string, string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] mc_project_get_users(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string access);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_users(string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_users", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_usersAsync(string, string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[]> mc_project_get_usersAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string access);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_usersAsync(string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_projects_get_user_acc" +
-            "essible", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_projects_get_user_accessible(string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] mc_projects_get_user_accessible(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_projects_get_user_accessible(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_projects_get_user_acc" +
-            "essible", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_projects_get_user_accessibleAsync(string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[]> mc_projects_get_user_accessibleAsync(string username, string password);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_projects_get_user_accessibleAsync(string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_categorie" +
-            "s", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_categories(string, string, string)'
-        string[] mc_project_get_categories(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_categories(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_categorie" +
-            "s", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_categoriesAsync(string, string, string)'
-        System.Threading.Tasks.Task<string[]> mc_project_get_categoriesAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_categoriesAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add_category", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add_category(string, string, string, string)'
-        string mc_project_add_category(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add_category(string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add_category", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add_categoryAsync(string, string, string, string)'
-        System.Threading.Tasks.Task<string> mc_project_add_categoryAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_add_categoryAsync(string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete_catego" +
-            "ry", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete_category(string, string, string, string)'
-        string mc_project_delete_category(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete_category(string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete_catego" +
-            "ry", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete_categoryAsync(string, string, string, string)'
-        System.Threading.Tasks.Task<string> mc_project_delete_categoryAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_delete_categoryAsync(string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_rename_catego" +
-            "ry_by_name", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_rename_category_by_name(string, string, string, string, string, string)'
-        string mc_project_rename_category_by_name(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name, string p_category_name_new, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string p_assigned_to);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_rename_category_by_name(string, string, string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_rename_catego" +
-            "ry_by_name", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_rename_category_by_nameAsync(string, string, string, string, string, string)'
-        System.Threading.Tasks.Task<string> mc_project_rename_category_by_nameAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string p_category_name, string p_category_name_new, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string p_assigned_to);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_rename_category_by_nameAsync(string, string, string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_versions", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_versions(string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_versions(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_versions", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_versionsAsync(string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_versionsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_versionsAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_add", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_add(string, string, ProjectVersionData)'
-        string mc_project_version_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_add(string, string, ProjectVersionData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_add", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_addAsync(string, string, ProjectVersionData)'
-        System.Threading.Tasks.Task<string> mc_project_version_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_addAsync(string, string, ProjectVersionData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_updat" +
-            "e", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_update(string, string, string, ProjectVersionData)'
-        bool mc_project_version_update(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_update(string, string, string, ProjectVersionData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_updat" +
-            "e", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_updateAsync(string, string, string, ProjectVersionData)'
-        System.Threading.Tasks.Task<bool> mc_project_version_updateAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_updateAsync(string, string, string, ProjectVersionData)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_delet" +
-            "e", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_delete(string, string, string)'
-        bool mc_project_version_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_delete(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_delet" +
-            "e", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_deleteAsync(string, string, string)'
-        System.Threading.Tasks.Task<bool> mc_project_version_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string version_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_version_deleteAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_released_" +
-            "versions", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_released_versions(string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_released_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_released_versions(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_released_" +
-            "versions", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_released_versionsAsync(string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_released_versionsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_released_versionsAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_unrelease" +
-            "d_versions", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_unreleased_versions(string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_unreleased_versions(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_unreleased_versions(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_unrelease" +
-            "d_versions", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_unreleased_versionsAsync(string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_unreleased_versionsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_unreleased_versionsAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_attachmen" +
-            "ts", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_attachments(string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] mc_project_get_attachments(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_attachments(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_attachmen" +
-            "ts", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_attachmentsAsync(string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[]> mc_project_get_attachmentsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_attachmentsAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_custom_fi" +
-            "elds", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_custom_fields(string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] mc_project_get_custom_fields(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_custom_fields(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_custom_fi" +
-            "elds", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_custom_fieldsAsync(string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[]> mc_project_get_custom_fieldsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_custom_fieldsAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_ge" +
-            "t", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_get(string, string, string)'
-        byte[] mc_project_attachment_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_attachment_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_get(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_ge" +
-            "t", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_getAsync(string, string, string)'
-        System.Threading.Tasks.Task<byte[]> mc_project_attachment_getAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_attachment_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_getAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_ad" +
-            "d", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_add(string, string, string, string, string, string, string, byte[])'
-        string mc_project_attachment_add(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string name, string title, string description, string file_type, [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")] byte[] content);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_add(string, string, string, string, string, string, string, byte[])'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_ad" +
-            "d", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_addAsync(string, string, string, string, string, string, string, byte[])'
-        System.Threading.Tasks.Task<string> mc_project_attachment_addAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string name, string title, string description, string file_type, [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")] byte[] content);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_addAsync(string, string, string, string, string, string, string, byte[])'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_de" +
-            "lete", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_delete(string, string, string)'
-        bool mc_project_attachment_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_attachment_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_delete(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_de" +
-            "lete", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_deleteAsync(string, string, string)'
-        System.Threading.Tasks.Task<bool> mc_project_attachment_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_attachment_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_attachment_deleteAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_all_subpr" +
-            "ojects", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_all_subprojects(string, string, string)'
-        string[] mc_project_get_all_subprojects(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_all_subprojects(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_all_subpr" +
-            "ojects", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_all_subprojectsAsync(string, string, string)'
-        System.Threading.Tasks.Task<string[]> mc_project_get_all_subprojectsAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_project_get_all_subprojectsAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get(string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] mc_filter_get(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_getAsync(string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[]> mc_filter_getAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_getAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issues", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issues(string, string, string, string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_filter_get_issues(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issues(string, string, string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issues", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issuesAsync(string, string, string, string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_filter_get_issuesAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issuesAsync(string, string, string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issue_head" +
-            "ers", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issue_headers(string, string, string, string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_get_issue_headers(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issue_headers(string, string, string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issue_head" +
-            "ers", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issue_headersAsync(string, string, string, string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_filter_get_issue_headersAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string filter_id, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_get_issue_headersAsync(string, string, string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_h" +
-            "eaders", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_headers(string, string, FilterSearchData, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_search_issue_headers(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_headers(string, string, FilterSearchData, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_h" +
-            "eaders", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_headersAsync(string, string, FilterSearchData, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_filter_search_issue_headersAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_headersAsync(string, string, FilterSearchData, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issues", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issues(string, string, FilterSearchData, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_filter_search_issues(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issues(string, string, FilterSearchData, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issues", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issuesAsync(string, string, FilterSearchData, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_filter_search_issuesAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issuesAsync(string, string, FilterSearchData, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_i" +
-            "ds", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_ids(string, string, FilterSearchData, string, string)'
-        string[] mc_filter_search_issue_ids(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_ids(string, string, FilterSearchData, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_i" +
-            "ds", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_idsAsync(string, string, FilterSearchData, string, string)'
-        System.Threading.Tasks.Task<string[]> mc_filter_search_issue_idsAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_filter_search_issue_idsAsync(string, string, FilterSearchData, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_config_get_string", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_config_get_string(string, string, string)'
-        string mc_config_get_string(string username, string password, string config_var);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_config_get_string(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_config_get_string", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_config_get_stringAsync(string, string, string)'
-        System.Threading.Tasks.Task<string> mc_config_get_stringAsync(string username, string password, string config_var);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_config_get_stringAsync(string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_checkin", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_checkin(string, string, string, string, bool)'
-        bool mc_issue_checkin(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, string comment, bool @fixed);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_checkin(string, string, string, string, bool)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_checkin", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_checkinAsync(string, string, string, string, bool)'
-        System.Threading.Tasks.Task<bool> mc_issue_checkinAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string issue_id, string comment, bool @fixed);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_issue_checkinAsync(string, string, string, string, bool)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_pref_get_pref", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_pref_get_pref(string, string, string, string)'
-        string mc_user_pref_get_pref(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string pref_name);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_pref_get_pref(string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_pref_get_pref", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_pref_get_prefAsync(string, string, string, string)'
-        System.Threading.Tasks.Task<string> mc_user_pref_get_prefAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string project_id, string pref_name);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_pref_get_prefAsync(string, string, string, string)'
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_profiles_get_all" +
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_biggest_id" +
             "", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
@@ -1614,19 +384,16 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_profiles_get_all(string, string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult mc_user_profiles_get_all(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_profiles_get_all(string, string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idResponse mc_issue_get_biggest_id(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_profiles_get_all" +
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_biggest_id" +
             "", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_profiles_get_allAsync(string, string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult> mc_user_profiles_get_allAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_user_profiles_get_allAsync(string, string, string, string)'
+        System.IAsyncResult Beginmc_issue_get_biggest_id(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_get_all", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idResponse Endmc_issue_get_biggest_id(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_id_from_su" +
+            "mmary", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -1637,18 +404,15 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_get_all(string, string, string, string)'
-        SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult mc_tag_get_all(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_get_all(string, string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryResponse mc_issue_get_id_from_summary(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_get_all", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_get_allAsync(string, string, string, string)'
-        System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult> mc_tag_get_allAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string page_number, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string per_page);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_get_allAsync(string, string, string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_get_id_from_su" +
+            "mmary", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_get_id_from_summary(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_add", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryResponse Endmc_issue_get_id_from_summary(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_add", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -1659,20 +423,14 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_add(string, string, TagData)'
-        string mc_tag_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_add(string, string, TagData)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addResponse mc_issue_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_add", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        [return: System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_addAsync(string, string, TagData)'
-        System.Threading.Tasks.Task<string> mc_tag_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_addAsync(string, string, TagData)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_add", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addRequest request, System.AsyncCallback callback, object asyncState);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_delete", ReplyAction="*")]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addResponse Endmc_issue_add(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_update", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
@@ -1683,20 +441,963 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_delete(string, string, string)'
-        bool mc_tag_delete(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string tag_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_delete(string, string, string)'
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateResponse mc_issue_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_delete", ReplyAction="*")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_deleteAsync(string, string, string)'
-        System.Threading.Tasks.Task<bool> mc_tag_deleteAsync(string username, string password, [System.Xml.Serialization.SoapElementAttribute(DataType="integer")] string tag_id);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortType.mc_tag_deleteAsync(string, string, string)'
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_update", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateResponse Endmc_issue_update(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_set_tags", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsResponse mc_issue_set_tags(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_set_tags", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_set_tags(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsResponse Endmc_issue_set_tags(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_delete", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteResponse mc_issue_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_delete", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteResponse Endmc_issue_delete(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_add", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addResponse mc_issue_note_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_add", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_note_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addResponse Endmc_issue_note_add(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_delete", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteResponse mc_issue_note_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_delete", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_note_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteResponse Endmc_issue_note_delete(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_update", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateResponse mc_issue_note_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_note_update", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_note_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateResponse Endmc_issue_note_update(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_a" +
+            "dd", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addResponse mc_issue_relationship_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_a" +
+            "dd", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_relationship_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addResponse Endmc_issue_relationship_add(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_d" +
+            "elete", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteResponse mc_issue_relationship_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_relationship_d" +
+            "elete", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_relationship_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteResponse Endmc_issue_relationship_delete(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_add" +
+            "", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addResponse mc_issue_attachment_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_add" +
+            "", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_attachment_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addResponse Endmc_issue_attachment_add(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_del" +
+            "ete", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteResponse mc_issue_attachment_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_del" +
+            "ete", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_attachment_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteResponse Endmc_issue_attachment_delete(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_get" +
+            "", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getResponse mc_issue_attachment_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_attachment_get" +
+            "", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_attachment_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getResponse Endmc_issue_attachment_get(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addResponse mc_project_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addResponse Endmc_project_add(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteResponse mc_project_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteResponse Endmc_project_delete(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_update", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateResponse mc_project_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_update", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateResponse Endmc_project_update(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_id_from_" +
+            "name", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameResponse mc_project_get_id_from_name(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_id_from_" +
+            "name", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_id_from_name(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameResponse Endmc_project_get_id_from_name(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues_f" +
+            "or_user", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userResponse mc_project_get_issues_for_user(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues_f" +
+            "or_user", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_issues_for_user(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userResponse Endmc_project_get_issues_for_user(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesResponse mc_project_get_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issues", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesResponse Endmc_project_get_issues(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issue_he" +
+            "aders", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersResponse mc_project_get_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_issue_he" +
+            "aders", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersResponse Endmc_project_get_issue_headers(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_users", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersResponse mc_project_get_users(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_users", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_users(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersResponse Endmc_project_get_users(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_projects_get_user_ac" +
+            "cessible", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleResponse mc_projects_get_user_accessible(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_projects_get_user_ac" +
+            "cessible", ReplyAction="*")]
+        System.IAsyncResult Beginmc_projects_get_user_accessible(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleResponse Endmc_projects_get_user_accessible(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_categori" +
+            "es", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesResponse mc_project_get_categories(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_categori" +
+            "es", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_categories(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesResponse Endmc_project_get_categories(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add_category" +
+            "", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryResponse mc_project_add_category(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_add_category" +
+            "", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_add_category(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryResponse Endmc_project_add_category(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete_categ" +
+            "ory", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryResponse mc_project_delete_category(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_delete_categ" +
+            "ory", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_delete_category(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryResponse Endmc_project_delete_category(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_rename_categ" +
+            "ory_by_name", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameResponse mc_project_rename_category_by_name(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_rename_categ" +
+            "ory_by_name", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_rename_category_by_name(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameResponse Endmc_project_rename_category_by_name(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_versions" +
+            "", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsResponse mc_project_get_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_versions" +
+            "", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsResponse Endmc_project_get_versions(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_add", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addResponse mc_project_version_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_add", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_version_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addResponse Endmc_project_version_add(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_upda" +
+            "te", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateResponse mc_project_version_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_upda" +
+            "te", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_version_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateResponse Endmc_project_version_update(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_dele" +
+            "te", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteResponse mc_project_version_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_version_dele" +
+            "te", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_version_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteResponse Endmc_project_version_delete(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_released" +
+            "_versions", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsResponse mc_project_get_released_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_released" +
+            "_versions", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_released_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsResponse Endmc_project_get_released_versions(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_unreleas" +
+            "ed_versions", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsResponse mc_project_get_unreleased_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_unreleas" +
+            "ed_versions", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_unreleased_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsResponse Endmc_project_get_unreleased_versions(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_attachme" +
+            "nts", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsResponse mc_project_get_attachments(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_attachme" +
+            "nts", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_attachments(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsResponse Endmc_project_get_attachments(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_custom_f" +
+            "ields", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsResponse mc_project_get_custom_fields(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_custom_f" +
+            "ields", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_custom_fields(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsResponse Endmc_project_get_custom_fields(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_g" +
+            "et", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getResponse mc_project_attachment_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_g" +
+            "et", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_attachment_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getResponse Endmc_project_attachment_get(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_a" +
+            "dd", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addResponse mc_project_attachment_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_a" +
+            "dd", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_attachment_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addResponse Endmc_project_attachment_add(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_d" +
+            "elete", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteResponse mc_project_attachment_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_attachment_d" +
+            "elete", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_attachment_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteResponse Endmc_project_attachment_delete(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_all_subp" +
+            "rojects", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsResponse mc_project_get_all_subprojects(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_project_get_all_subp" +
+            "rojects", ReplyAction="*")]
+        System.IAsyncResult Beginmc_project_get_all_subprojects(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsResponse Endmc_project_get_all_subprojects(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getResponse mc_filter_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get", ReplyAction="*")]
+        System.IAsyncResult Beginmc_filter_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getResponse Endmc_filter_get(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issues", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesResponse mc_filter_get_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issues", ReplyAction="*")]
+        System.IAsyncResult Beginmc_filter_get_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesResponse Endmc_filter_get_issues(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issue_hea" +
+            "ders", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersResponse mc_filter_get_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_get_issue_hea" +
+            "ders", ReplyAction="*")]
+        System.IAsyncResult Beginmc_filter_get_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersResponse Endmc_filter_get_issue_headers(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_" +
+            "headers", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersResponse mc_filter_search_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_" +
+            "headers", ReplyAction="*")]
+        System.IAsyncResult Beginmc_filter_search_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersResponse Endmc_filter_search_issue_headers(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issues" +
+            "", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesResponse mc_filter_search_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issues" +
+            "", ReplyAction="*")]
+        System.IAsyncResult Beginmc_filter_search_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesResponse Endmc_filter_search_issues(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_" +
+            "ids", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsResponse mc_filter_search_issue_ids(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_filter_search_issue_" +
+            "ids", ReplyAction="*")]
+        System.IAsyncResult Beginmc_filter_search_issue_ids(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsResponse Endmc_filter_search_issue_ids(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_config_get_string", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringResponse mc_config_get_string(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_config_get_string", ReplyAction="*")]
+        System.IAsyncResult Beginmc_config_get_string(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringResponse Endmc_config_get_string(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_checkin", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinResponse mc_issue_checkin(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_issue_checkin", ReplyAction="*")]
+        System.IAsyncResult Beginmc_issue_checkin(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinResponse Endmc_issue_checkin(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_pref_get_pref", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefResponse mc_user_pref_get_pref(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_pref_get_pref", ReplyAction="*")]
+        System.IAsyncResult Beginmc_user_pref_get_pref(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefResponse Endmc_user_pref_get_pref(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_profiles_get_al" +
+            "l", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allResponse mc_user_profiles_get_all(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_user_profiles_get_al" +
+            "l", ReplyAction="*")]
+        System.IAsyncResult Beginmc_user_profiles_get_all(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allResponse Endmc_user_profiles_get_all(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_get_all", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allResponse mc_tag_get_all(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_get_all", ReplyAction="*")]
+        System.IAsyncResult Beginmc_tag_get_all(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allResponse Endmc_tag_get_all(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_add", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addResponse mc_tag_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_add", ReplyAction="*")]
+        System.IAsyncResult Beginmc_tag_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addResponse Endmc_tag_add(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_delete", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProfileData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterCustomField))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(FilterData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldDefinitionData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ProjectAttachmentData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HistoryData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(IssueHeaderData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomFieldValueForIssueData))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(AttachmentData))]
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteResponse mc_tag_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="https://bugtraq.tsprojects.org/api/soap/mantisconnect.php/mc_tag_delete", ReplyAction="*")]
+        System.IAsyncResult Beginmc_tag_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteRequest request, System.AsyncCallback callback, object asyncState);
+        
+        SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteResponse Endmc_tag_delete(System.IAsyncResult result);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_version", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_versionRequest {
+        
+        public mc_versionRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_versionResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_versionResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string @return;
+        
+        public mc_versionResponse() {
+        }
+        
+        public mc_versionResponse(string @return) {
+            this.@return = @return;
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1743,13 +1444,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'UserData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'UserData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'UserData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'UserData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -1758,7 +1455,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1818,13 +1515,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AccountData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AccountData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AccountData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AccountData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -1833,7 +1526,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1867,13 +1560,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'TagDataSearchResult.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'TagDataSearchResult.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'TagDataSearchResult.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'TagDataSearchResult.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -1882,7 +1571,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1996,13 +1685,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'TagData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'TagData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'TagData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'TagData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -2011,7 +1696,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2097,13 +1782,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProfileData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProfileData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProfileData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProfileData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -2112,7 +1793,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2146,13 +1827,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProfileDataSearchResult.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProfileDataSearchResult.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProfileDataSearchResult.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProfileDataSearchResult.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -2161,7 +1838,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2194,13 +1871,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterCustomField.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterCustomField.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterCustomField.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterCustomField.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -2209,7 +1882,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2243,13 +1916,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ObjectRef.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ObjectRef.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ObjectRef.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ObjectRef.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -2258,7 +1927,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2688,13 +2357,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterSearchData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterSearchData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterSearchData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterSearchData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -2703,7 +2368,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2817,13 +2482,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'FilterData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'FilterData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -2832,7 +2493,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3204,13 +2865,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldDefinitionData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldDefinitionData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldDefinitionData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldDefinitionData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3219,7 +2876,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3361,13 +3018,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectAttachmentData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectAttachmentData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectAttachmentData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectAttachmentData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3376,7 +3029,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3518,13 +3171,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectVersionData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectVersionData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectVersionData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectVersionData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3533,7 +3182,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3699,13 +3348,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'ProjectData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'ProjectData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3714,7 +3359,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3815,13 +3460,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'HistoryData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'HistoryData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'HistoryData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'HistoryData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -3830,7 +3471,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4030,13 +3671,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueHeaderData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueHeaderData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueHeaderData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueHeaderData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -4045,7 +3682,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4078,13 +3715,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldValueForIssueData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldValueForIssueData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldValueForIssueData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'CustomFieldValueForIssueData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -4093,7 +3726,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4248,13 +3881,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueNoteData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueNoteData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueNoteData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueNoteData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -4263,7 +3892,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4311,13 +3940,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RelationshipData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RelationshipData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RelationshipData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RelationshipData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -4326,7 +3951,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4442,13 +4067,9 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AttachmentData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AttachmentData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AttachmentData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AttachmentData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -4457,7 +4078,7 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2102.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4977,1051 +4598,8637 @@ namespace SilverMonkey.BugTraqConnect.MantisConnectWebservice {
             }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueData.PropertyChanged'
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueData.PropertyChanged'
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'IssueData.RaisePropertyChanged(string)'
         protected void RaisePropertyChanged(string propertyName) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'IssueData.RaisePropertyChanged(string)'
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_login", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_loginRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_loginRequest() {
+        }
+        
+        public mc_loginRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_loginResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_loginResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData @return;
+        
+        public mc_loginResponse() {
+        }
+        
+        public mc_loginResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_status", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_statusRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_statusRequest() {
+        }
+        
+        public mc_enum_statusRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_statusResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_statusResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_statusResponse() {
+        }
+        
+        public mc_enum_statusResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_priorities", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_prioritiesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_prioritiesRequest() {
+        }
+        
+        public mc_enum_prioritiesRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_prioritiesResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_prioritiesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_prioritiesResponse() {
+        }
+        
+        public mc_enum_prioritiesResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_severities", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_severitiesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_severitiesRequest() {
+        }
+        
+        public mc_enum_severitiesRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_severitiesResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_severitiesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_severitiesResponse() {
+        }
+        
+        public mc_enum_severitiesResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_reproducibilities", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_reproducibilitiesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_reproducibilitiesRequest() {
+        }
+        
+        public mc_enum_reproducibilitiesRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_reproducibilitiesResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_reproducibilitiesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_reproducibilitiesResponse() {
+        }
+        
+        public mc_enum_reproducibilitiesResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_projections", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_projectionsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_projectionsRequest() {
+        }
+        
+        public mc_enum_projectionsRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_projectionsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_projectionsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_projectionsResponse() {
+        }
+        
+        public mc_enum_projectionsResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_etas", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_etasRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_etasRequest() {
+        }
+        
+        public mc_enum_etasRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_etasResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_etasResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_etasResponse() {
+        }
+        
+        public mc_enum_etasResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_resolutions", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_resolutionsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_resolutionsRequest() {
+        }
+        
+        public mc_enum_resolutionsRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_resolutionsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_resolutionsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_resolutionsResponse() {
+        }
+        
+        public mc_enum_resolutionsResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_access_levels", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_access_levelsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_access_levelsRequest() {
+        }
+        
+        public mc_enum_access_levelsRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_access_levelsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_access_levelsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_access_levelsResponse() {
+        }
+        
+        public mc_enum_access_levelsResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_project_status", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_project_statusRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_project_statusRequest() {
+        }
+        
+        public mc_enum_project_statusRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_project_statusResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_project_statusResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_project_statusResponse() {
+        }
+        
+        public mc_enum_project_statusResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_project_view_states", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_project_view_statesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_project_view_statesRequest() {
+        }
+        
+        public mc_enum_project_view_statesRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_project_view_statesResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_project_view_statesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_project_view_statesResponse() {
+        }
+        
+        public mc_enum_project_view_statesResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_view_states", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_view_statesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_view_statesRequest() {
+        }
+        
+        public mc_enum_view_statesRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_view_statesResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_view_statesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_view_statesResponse() {
+        }
+        
+        public mc_enum_view_statesResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_custom_field_types", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_custom_field_typesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_enum_custom_field_typesRequest() {
+        }
+        
+        public mc_enum_custom_field_typesRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_custom_field_typesResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_custom_field_typesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return;
+        
+        public mc_enum_custom_field_typesResponse() {
+        }
+        
+        public mc_enum_custom_field_typesResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_get", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_getRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public string enumeration;
+        
+        public mc_enum_getRequest() {
+        }
+        
+        public mc_enum_getRequest(string username, string password, string enumeration) {
+            this.username = username;
+            this.password = password;
+            this.enumeration = enumeration;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_enum_getResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_enum_getResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string @return;
+        
+        public mc_enum_getResponse() {
+        }
+        
+        public mc_enum_getResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_exists", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_existsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_id;
+        
+        public mc_issue_existsRequest() {
+        }
+        
+        public mc_issue_existsRequest(string username, string password, string issue_id) {
+            this.username = username;
+            this.password = password;
+            this.issue_id = issue_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_existsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_existsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_issue_existsResponse() {
+        }
+        
+        public mc_issue_existsResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_get", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_getRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_id;
+        
+        public mc_issue_getRequest() {
+        }
+        
+        public mc_issue_getRequest(string username, string password, string issue_id) {
+            this.username = username;
+            this.password = password;
+            this.issue_id = issue_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_getResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_getResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData @return;
+        
+        public mc_issue_getResponse() {
+        }
+        
+        public mc_issue_getResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issues_get", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issues_getRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public string[] issue_ids;
+        
+        public mc_issues_getRequest() {
+        }
+        
+        public mc_issues_getRequest(string username, string password, string[] issue_ids) {
+            this.username = username;
+            this.password = password;
+            this.issue_ids = issue_ids;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issues_getResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issues_getResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] @return;
+        
+        public mc_issues_getResponse() {
+        }
+        
+        public mc_issues_getResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issues_get_header", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issues_get_headerRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public string[] issue_ids;
+        
+        public mc_issues_get_headerRequest() {
+        }
+        
+        public mc_issues_get_headerRequest(string username, string password, string[] issue_ids) {
+            this.username = username;
+            this.password = password;
+            this.issue_ids = issue_ids;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issues_get_headerResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issues_get_headerResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] @return;
+        
+        public mc_issues_get_headerResponse() {
+        }
+        
+        public mc_issues_get_headerResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_get_history", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_get_historyRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_id;
+        
+        public mc_issue_get_historyRequest() {
+        }
+        
+        public mc_issue_get_historyRequest(string username, string password, string issue_id) {
+            this.username = username;
+            this.password = password;
+            this.issue_id = issue_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_get_historyResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_get_historyResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] @return;
+        
+        public mc_issue_get_historyResponse() {
+        }
+        
+        public mc_issue_get_historyResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_get_biggest_id", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_get_biggest_idRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        public mc_issue_get_biggest_idRequest() {
+        }
+        
+        public mc_issue_get_biggest_idRequest(string username, string password, string project_id) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_get_biggest_idResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_get_biggest_idResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_issue_get_biggest_idResponse() {
+        }
+        
+        public mc_issue_get_biggest_idResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_get_id_from_summary", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_get_id_from_summaryRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public string summary;
+        
+        public mc_issue_get_id_from_summaryRequest() {
+        }
+        
+        public mc_issue_get_id_from_summaryRequest(string username, string password, string summary) {
+            this.username = username;
+            this.password = password;
+            this.summary = summary;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_get_id_from_summaryResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_get_id_from_summaryResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_issue_get_id_from_summaryResponse() {
+        }
+        
+        public mc_issue_get_id_from_summaryResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_add", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_addRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue;
+        
+        public mc_issue_addRequest() {
+        }
+        
+        public mc_issue_addRequest(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
+            this.username = username;
+            this.password = password;
+            this.issue = issue;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_addResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_addResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_issue_addResponse() {
+        }
+        
+        public mc_issue_addResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_update", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_updateRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issueId;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue;
+        
+        public mc_issue_updateRequest() {
+        }
+        
+        public mc_issue_updateRequest(string username, string password, string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
+            this.username = username;
+            this.password = password;
+            this.issueId = issueId;
+            this.issue = issue;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_updateResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_updateResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_issue_updateResponse() {
+        }
+        
+        public mc_issue_updateResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_set_tags", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_set_tagsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags;
+        
+        public mc_issue_set_tagsRequest() {
+        }
+        
+        public mc_issue_set_tagsRequest(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags) {
+            this.username = username;
+            this.password = password;
+            this.issue_id = issue_id;
+            this.tags = tags;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_set_tagsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_set_tagsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_issue_set_tagsResponse() {
+        }
+        
+        public mc_issue_set_tagsResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_delete", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_deleteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_id;
+        
+        public mc_issue_deleteRequest() {
+        }
+        
+        public mc_issue_deleteRequest(string username, string password, string issue_id) {
+            this.username = username;
+            this.password = password;
+            this.issue_id = issue_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_deleteResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_deleteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_issue_deleteResponse() {
+        }
+        
+        public mc_issue_deleteResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_note_add", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_note_addRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note;
+        
+        public mc_issue_note_addRequest() {
+        }
+        
+        public mc_issue_note_addRequest(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
+            this.username = username;
+            this.password = password;
+            this.issue_id = issue_id;
+            this.note = note;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_note_addResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_note_addResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_issue_note_addResponse() {
+        }
+        
+        public mc_issue_note_addResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_note_delete", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_note_deleteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_note_id;
+        
+        public mc_issue_note_deleteRequest() {
+        }
+        
+        public mc_issue_note_deleteRequest(string username, string password, string issue_note_id) {
+            this.username = username;
+            this.password = password;
+            this.issue_note_id = issue_note_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_note_deleteResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_note_deleteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_issue_note_deleteResponse() {
+        }
+        
+        public mc_issue_note_deleteResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_note_update", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_note_updateRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note;
+        
+        public mc_issue_note_updateRequest() {
+        }
+        
+        public mc_issue_note_updateRequest(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
+            this.username = username;
+            this.password = password;
+            this.note = note;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_note_updateResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_note_updateResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_issue_note_updateResponse() {
+        }
+        
+        public mc_issue_note_updateResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_relationship_add", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_relationship_addRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship;
+        
+        public mc_issue_relationship_addRequest() {
+        }
+        
+        public mc_issue_relationship_addRequest(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship) {
+            this.username = username;
+            this.password = password;
+            this.issue_id = issue_id;
+            this.relationship = relationship;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_relationship_addResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_relationship_addResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_issue_relationship_addResponse() {
+        }
+        
+        public mc_issue_relationship_addResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_relationship_delete", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_relationship_deleteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string relationship_id;
+        
+        public mc_issue_relationship_deleteRequest() {
+        }
+        
+        public mc_issue_relationship_deleteRequest(string username, string password, string issue_id, string relationship_id) {
+            this.username = username;
+            this.password = password;
+            this.issue_id = issue_id;
+            this.relationship_id = relationship_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_relationship_deleteResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_relationship_deleteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_issue_relationship_deleteResponse() {
+        }
+        
+        public mc_issue_relationship_deleteResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_attachment_add", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_attachment_addRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public string name;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        public string file_type;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=5)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
+        public byte[] content;
+        
+        public mc_issue_attachment_addRequest() {
+        }
+        
+        public mc_issue_attachment_addRequest(string username, string password, string issue_id, string name, string file_type, byte[] content) {
+            this.username = username;
+            this.password = password;
+            this.issue_id = issue_id;
+            this.name = name;
+            this.file_type = file_type;
+            this.content = content;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_attachment_addResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_attachment_addResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_issue_attachment_addResponse() {
+        }
+        
+        public mc_issue_attachment_addResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_attachment_delete", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_attachment_deleteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_attachment_id;
+        
+        public mc_issue_attachment_deleteRequest() {
+        }
+        
+        public mc_issue_attachment_deleteRequest(string username, string password, string issue_attachment_id) {
+            this.username = username;
+            this.password = password;
+            this.issue_attachment_id = issue_attachment_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_attachment_deleteResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_attachment_deleteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_issue_attachment_deleteResponse() {
+        }
+        
+        public mc_issue_attachment_deleteResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_attachment_get", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_attachment_getRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_attachment_id;
+        
+        public mc_issue_attachment_getRequest() {
+        }
+        
+        public mc_issue_attachment_getRequest(string username, string password, string issue_attachment_id) {
+            this.username = username;
+            this.password = password;
+            this.issue_attachment_id = issue_attachment_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_attachment_getResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_attachment_getResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
+        public byte[] @return;
+        
+        public mc_issue_attachment_getResponse() {
+        }
+        
+        public mc_issue_attachment_getResponse(byte[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_add", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_addRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project;
+        
+        public mc_project_addRequest() {
+        }
+        
+        public mc_project_addRequest(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
+            this.username = username;
+            this.password = password;
+            this.project = project;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_addResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_addResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_project_addResponse() {
+        }
+        
+        public mc_project_addResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_delete", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_deleteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        public mc_project_deleteRequest() {
+        }
+        
+        public mc_project_deleteRequest(string username, string password, string project_id) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_deleteResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_deleteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_project_deleteResponse() {
+        }
+        
+        public mc_project_deleteResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_update", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_updateRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project;
+        
+        public mc_project_updateRequest() {
+        }
+        
+        public mc_project_updateRequest(string username, string password, string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.project = project;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_updateResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_updateResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_project_updateResponse() {
+        }
+        
+        public mc_project_updateResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_id_from_name", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_id_from_nameRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public string project_name;
+        
+        public mc_project_get_id_from_nameRequest() {
+        }
+        
+        public mc_project_get_id_from_nameRequest(string username, string password, string project_name) {
+            this.username = username;
+            this.password = password;
+            this.project_name = project_name;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_id_from_nameResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_id_from_nameResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_project_get_id_from_nameResponse() {
+        }
+        
+        public mc_project_get_id_from_nameResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_issues_for_user", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_issues_for_userRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public string filter_type;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=5)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string page_number;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=6)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string per_page;
+        
+        public mc_project_get_issues_for_userRequest() {
+        }
+        
+        public mc_project_get_issues_for_userRequest(string username, string password, string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.filter_type = filter_type;
+            this.target_user = target_user;
+            this.page_number = page_number;
+            this.per_page = per_page;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_issues_for_userResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_issues_for_userResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] @return;
+        
+        public mc_project_get_issues_for_userResponse() {
+        }
+        
+        public mc_project_get_issues_for_userResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_issues", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_issuesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string page_number;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string per_page;
+        
+        public mc_project_get_issuesRequest() {
+        }
+        
+        public mc_project_get_issuesRequest(string username, string password, string project_id, string page_number, string per_page) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.page_number = page_number;
+            this.per_page = per_page;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_issuesResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_issuesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] @return;
+        
+        public mc_project_get_issuesResponse() {
+        }
+        
+        public mc_project_get_issuesResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_issue_headers", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_issue_headersRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string page_number;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string per_page;
+        
+        public mc_project_get_issue_headersRequest() {
+        }
+        
+        public mc_project_get_issue_headersRequest(string username, string password, string project_id, string page_number, string per_page) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.page_number = page_number;
+            this.per_page = per_page;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_issue_headersResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_issue_headersResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] @return;
+        
+        public mc_project_get_issue_headersResponse() {
+        }
+        
+        public mc_project_get_issue_headersResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_users", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_usersRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string access;
+        
+        public mc_project_get_usersRequest() {
+        }
+        
+        public mc_project_get_usersRequest(string username, string password, string project_id, string access) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.access = access;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_usersResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_usersResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] @return;
+        
+        public mc_project_get_usersResponse() {
+        }
+        
+        public mc_project_get_usersResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_projects_get_user_accessible", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_projects_get_user_accessibleRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        public mc_projects_get_user_accessibleRequest() {
+        }
+        
+        public mc_projects_get_user_accessibleRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_projects_get_user_accessibleResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_projects_get_user_accessibleResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] @return;
+        
+        public mc_projects_get_user_accessibleResponse() {
+        }
+        
+        public mc_projects_get_user_accessibleResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_categories", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_categoriesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        public mc_project_get_categoriesRequest() {
+        }
+        
+        public mc_project_get_categoriesRequest(string username, string password, string project_id) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_categoriesResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_categoriesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string[] @return;
+        
+        public mc_project_get_categoriesResponse() {
+        }
+        
+        public mc_project_get_categoriesResponse(string[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_add_category", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_add_categoryRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public string p_category_name;
+        
+        public mc_project_add_categoryRequest() {
+        }
+        
+        public mc_project_add_categoryRequest(string username, string password, string project_id, string p_category_name) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.p_category_name = p_category_name;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_add_categoryResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_add_categoryResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_project_add_categoryResponse() {
+        }
+        
+        public mc_project_add_categoryResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_delete_category", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_delete_categoryRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public string p_category_name;
+        
+        public mc_project_delete_categoryRequest() {
+        }
+        
+        public mc_project_delete_categoryRequest(string username, string password, string project_id, string p_category_name) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.p_category_name = p_category_name;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_delete_categoryResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_delete_categoryResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_project_delete_categoryResponse() {
+        }
+        
+        public mc_project_delete_categoryResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_rename_category_by_name", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_rename_category_by_nameRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public string p_category_name;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        public string p_category_name_new;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=5)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string p_assigned_to;
+        
+        public mc_project_rename_category_by_nameRequest() {
+        }
+        
+        public mc_project_rename_category_by_nameRequest(string username, string password, string project_id, string p_category_name, string p_category_name_new, string p_assigned_to) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.p_category_name = p_category_name;
+            this.p_category_name_new = p_category_name_new;
+            this.p_assigned_to = p_assigned_to;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_rename_category_by_nameResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_rename_category_by_nameResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_project_rename_category_by_nameResponse() {
+        }
+        
+        public mc_project_rename_category_by_nameResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_versions", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_versionsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        public mc_project_get_versionsRequest() {
+        }
+        
+        public mc_project_get_versionsRequest(string username, string password, string project_id) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_versionsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_versionsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] @return;
+        
+        public mc_project_get_versionsResponse() {
+        }
+        
+        public mc_project_get_versionsResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_version_add", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_version_addRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version;
+        
+        public mc_project_version_addRequest() {
+        }
+        
+        public mc_project_version_addRequest(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
+            this.username = username;
+            this.password = password;
+            this.version = version;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_version_addResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_version_addResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_project_version_addResponse() {
+        }
+        
+        public mc_project_version_addResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_version_update", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_version_updateRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string version_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version;
+        
+        public mc_project_version_updateRequest() {
+        }
+        
+        public mc_project_version_updateRequest(string username, string password, string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
+            this.username = username;
+            this.password = password;
+            this.version_id = version_id;
+            this.version = version;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_version_updateResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_version_updateResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_project_version_updateResponse() {
+        }
+        
+        public mc_project_version_updateResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_version_delete", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_version_deleteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string version_id;
+        
+        public mc_project_version_deleteRequest() {
+        }
+        
+        public mc_project_version_deleteRequest(string username, string password, string version_id) {
+            this.username = username;
+            this.password = password;
+            this.version_id = version_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_version_deleteResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_version_deleteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_project_version_deleteResponse() {
+        }
+        
+        public mc_project_version_deleteResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_released_versions", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_released_versionsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        public mc_project_get_released_versionsRequest() {
+        }
+        
+        public mc_project_get_released_versionsRequest(string username, string password, string project_id) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_released_versionsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_released_versionsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] @return;
+        
+        public mc_project_get_released_versionsResponse() {
+        }
+        
+        public mc_project_get_released_versionsResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_unreleased_versions", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_unreleased_versionsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        public mc_project_get_unreleased_versionsRequest() {
+        }
+        
+        public mc_project_get_unreleased_versionsRequest(string username, string password, string project_id) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_unreleased_versionsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_unreleased_versionsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] @return;
+        
+        public mc_project_get_unreleased_versionsResponse() {
+        }
+        
+        public mc_project_get_unreleased_versionsResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_attachments", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_attachmentsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        public mc_project_get_attachmentsRequest() {
+        }
+        
+        public mc_project_get_attachmentsRequest(string username, string password, string project_id) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_attachmentsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_attachmentsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] @return;
+        
+        public mc_project_get_attachmentsResponse() {
+        }
+        
+        public mc_project_get_attachmentsResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_custom_fields", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_custom_fieldsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        public mc_project_get_custom_fieldsRequest() {
+        }
+        
+        public mc_project_get_custom_fieldsRequest(string username, string password, string project_id) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_custom_fieldsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_custom_fieldsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] @return;
+        
+        public mc_project_get_custom_fieldsResponse() {
+        }
+        
+        public mc_project_get_custom_fieldsResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_attachment_get", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_attachment_getRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_attachment_id;
+        
+        public mc_project_attachment_getRequest() {
+        }
+        
+        public mc_project_attachment_getRequest(string username, string password, string project_attachment_id) {
+            this.username = username;
+            this.password = password;
+            this.project_attachment_id = project_attachment_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_attachment_getResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_attachment_getResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
+        public byte[] @return;
+        
+        public mc_project_attachment_getResponse() {
+        }
+        
+        public mc_project_attachment_getResponse(byte[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_attachment_add", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_attachment_addRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public string name;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        public string title;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=5)]
+        public string description;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=6)]
+        public string file_type;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=7)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="base64Binary")]
+        public byte[] content;
+        
+        public mc_project_attachment_addRequest() {
+        }
+        
+        public mc_project_attachment_addRequest(string username, string password, string project_id, string name, string title, string description, string file_type, byte[] content) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.name = name;
+            this.title = title;
+            this.description = description;
+            this.file_type = file_type;
+            this.content = content;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_attachment_addResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_attachment_addResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_project_attachment_addResponse() {
+        }
+        
+        public mc_project_attachment_addResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_attachment_delete", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_attachment_deleteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_attachment_id;
+        
+        public mc_project_attachment_deleteRequest() {
+        }
+        
+        public mc_project_attachment_deleteRequest(string username, string password, string project_attachment_id) {
+            this.username = username;
+            this.password = password;
+            this.project_attachment_id = project_attachment_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_attachment_deleteResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_attachment_deleteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_project_attachment_deleteResponse() {
+        }
+        
+        public mc_project_attachment_deleteResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_all_subprojects", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_all_subprojectsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        public mc_project_get_all_subprojectsRequest() {
+        }
+        
+        public mc_project_get_all_subprojectsRequest(string username, string password, string project_id) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_project_get_all_subprojectsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_project_get_all_subprojectsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string[] @return;
+        
+        public mc_project_get_all_subprojectsResponse() {
+        }
+        
+        public mc_project_get_all_subprojectsResponse(string[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_get", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_getRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        public mc_filter_getRequest() {
+        }
+        
+        public mc_filter_getRequest(string username, string password, string project_id) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_getResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_getResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] @return;
+        
+        public mc_filter_getResponse() {
+        }
+        
+        public mc_filter_getResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_get_issues", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_get_issuesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string filter_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string page_number;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=5)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string per_page;
+        
+        public mc_filter_get_issuesRequest() {
+        }
+        
+        public mc_filter_get_issuesRequest(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.filter_id = filter_id;
+            this.page_number = page_number;
+            this.per_page = per_page;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_get_issuesResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_get_issuesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] @return;
+        
+        public mc_filter_get_issuesResponse() {
+        }
+        
+        public mc_filter_get_issuesResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_get_issue_headers", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_get_issue_headersRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string filter_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string page_number;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=5)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string per_page;
+        
+        public mc_filter_get_issue_headersRequest() {
+        }
+        
+        public mc_filter_get_issue_headersRequest(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.filter_id = filter_id;
+            this.page_number = page_number;
+            this.per_page = per_page;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_get_issue_headersResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_get_issue_headersResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] @return;
+        
+        public mc_filter_get_issue_headersResponse() {
+        }
+        
+        public mc_filter_get_issue_headersResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_search_issue_headers", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_search_issue_headersRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string page_number;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string per_page;
+        
+        public mc_filter_search_issue_headersRequest() {
+        }
+        
+        public mc_filter_search_issue_headersRequest(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
+            this.username = username;
+            this.password = password;
+            this.filter = filter;
+            this.page_number = page_number;
+            this.per_page = per_page;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_search_issue_headersResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_search_issue_headersResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] @return;
+        
+        public mc_filter_search_issue_headersResponse() {
+        }
+        
+        public mc_filter_search_issue_headersResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_search_issues", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_search_issuesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string page_number;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string per_page;
+        
+        public mc_filter_search_issuesRequest() {
+        }
+        
+        public mc_filter_search_issuesRequest(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
+            this.username = username;
+            this.password = password;
+            this.filter = filter;
+            this.page_number = page_number;
+            this.per_page = per_page;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_search_issuesResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_search_issuesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] @return;
+        
+        public mc_filter_search_issuesResponse() {
+        }
+        
+        public mc_filter_search_issuesResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_search_issue_ids", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_search_issue_idsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string page_number;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string per_page;
+        
+        public mc_filter_search_issue_idsRequest() {
+        }
+        
+        public mc_filter_search_issue_idsRequest(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
+            this.username = username;
+            this.password = password;
+            this.filter = filter;
+            this.page_number = page_number;
+            this.per_page = per_page;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_filter_search_issue_idsResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_filter_search_issue_idsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string[] @return;
+        
+        public mc_filter_search_issue_idsResponse() {
+        }
+        
+        public mc_filter_search_issue_idsResponse(string[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_config_get_string", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_config_get_stringRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public string config_var;
+        
+        public mc_config_get_stringRequest() {
+        }
+        
+        public mc_config_get_stringRequest(string username, string password, string config_var) {
+            this.username = username;
+            this.password = password;
+            this.config_var = config_var;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_config_get_stringResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_config_get_stringResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string @return;
+        
+        public mc_config_get_stringResponse() {
+        }
+        
+        public mc_config_get_stringResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_checkin", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_checkinRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string issue_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public string comment;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=4)]
+        public bool @fixed;
+        
+        public mc_issue_checkinRequest() {
+        }
+        
+        public mc_issue_checkinRequest(string username, string password, string issue_id, string comment, bool @fixed) {
+            this.username = username;
+            this.password = password;
+            this.issue_id = issue_id;
+            this.comment = comment;
+            this.@fixed = @fixed;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_issue_checkinResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_issue_checkinResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_issue_checkinResponse() {
+        }
+        
+        public mc_issue_checkinResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_user_pref_get_pref", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_user_pref_get_prefRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string project_id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        public string pref_name;
+        
+        public mc_user_pref_get_prefRequest() {
+        }
+        
+        public mc_user_pref_get_prefRequest(string username, string password, string project_id, string pref_name) {
+            this.username = username;
+            this.password = password;
+            this.project_id = project_id;
+            this.pref_name = pref_name;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_user_pref_get_prefResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_user_pref_get_prefResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string @return;
+        
+        public mc_user_pref_get_prefResponse() {
+        }
+        
+        public mc_user_pref_get_prefResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_user_profiles_get_all", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_user_profiles_get_allRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string page_number;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string per_page;
+        
+        public mc_user_profiles_get_allRequest() {
+        }
+        
+        public mc_user_profiles_get_allRequest(string username, string password, string page_number, string per_page) {
+            this.username = username;
+            this.password = password;
+            this.page_number = page_number;
+            this.per_page = per_page;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_user_profiles_get_allResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_user_profiles_get_allResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult @return;
+        
+        public mc_user_profiles_get_allResponse() {
+        }
+        
+        public mc_user_profiles_get_allResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_tag_get_all", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_tag_get_allRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string page_number;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string per_page;
+        
+        public mc_tag_get_allRequest() {
+        }
+        
+        public mc_tag_get_allRequest(string username, string password, string page_number, string per_page) {
+            this.username = username;
+            this.password = password;
+            this.page_number = page_number;
+            this.per_page = per_page;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_tag_get_allResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_tag_get_allResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult @return;
+        
+        public mc_tag_get_allResponse() {
+        }
+        
+        public mc_tag_get_allResponse(SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_tag_add", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_tag_addRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag;
+        
+        public mc_tag_addRequest() {
+        }
+        
+        public mc_tag_addRequest(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag) {
+            this.username = username;
+            this.password = password;
+            this.tag = tag;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_tag_addResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_tag_addResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string @return;
+        
+        public mc_tag_addResponse() {
+        }
+        
+        public mc_tag_addResponse(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_tag_delete", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_tag_deleteRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
+        public string password;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.SoapElementAttribute(DataType="integer")]
+        public string tag_id;
+        
+        public mc_tag_deleteRequest() {
+        }
+        
+        public mc_tag_deleteRequest(string username, string password, string tag_id) {
+            this.username = username;
+            this.password = password;
+            this.tag_id = tag_id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="mc_tag_deleteResponse", WrapperNamespace="http://futureware.biz/mantisconnect", IsWrapped=true)]
+    public partial class mc_tag_deleteResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
+        public bool @return;
+        
+        public mc_tag_deleteResponse() {
+        }
+        
+        public mc_tag_deleteResponse(bool @return) {
+            this.@return = @return;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface MantisConnectPortTypeChannel : SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType, System.ServiceModel.IClientChannel {
     }
-    /// <summary>
-    /// 
-    /// </summary>
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_versionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_versionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_loginCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_loginCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_statusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_statusCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_prioritiesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_prioritiesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_severitiesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_severitiesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_reproducibilitiesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_reproducibilitiesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_projectionsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_projectionsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_etasCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_etasCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_resolutionsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_resolutionsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_access_levelsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_access_levelsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_project_statusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_project_statusCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_project_view_statesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_project_view_statesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_view_statesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_view_statesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_custom_field_typesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_custom_field_typesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_enum_getCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_enum_getCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_existsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_existsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_getCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_getCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issues_getCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issues_getCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issues_get_headerCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issues_get_headerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_get_historyCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_get_historyCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_get_biggest_idCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_get_biggest_idCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_get_id_from_summaryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_get_id_from_summaryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_addCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_addCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_updateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_updateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_set_tagsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_set_tagsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_deleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_deleteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_note_addCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_note_addCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_note_deleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_note_deleteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_note_updateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_note_updateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_relationship_addCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_relationship_addCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_relationship_deleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_relationship_deleteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_attachment_addCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_attachment_addCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_attachment_deleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_attachment_deleteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_attachment_getCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_attachment_getCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_addCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_addCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_deleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_deleteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_updateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_updateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_id_from_nameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_id_from_nameCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_issues_for_userCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_issues_for_userCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_issuesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_issuesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_issue_headersCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_issue_headersCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_usersCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_usersCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_projects_get_user_accessibleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_projects_get_user_accessibleCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_categoriesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_categoriesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_add_categoryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_add_categoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_delete_categoryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_delete_categoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_rename_category_by_nameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_rename_category_by_nameCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_versionsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_versionsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_version_addCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_version_addCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_version_updateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_version_updateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_version_deleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_version_deleteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_released_versionsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_released_versionsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_unreleased_versionsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_unreleased_versionsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_attachmentsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_attachmentsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_custom_fieldsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_custom_fieldsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_attachment_getCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_attachment_getCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_attachment_addCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_attachment_addCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_attachment_deleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_attachment_deleteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_project_get_all_subprojectsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_project_get_all_subprojectsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_filter_getCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_filter_getCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_filter_get_issuesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_filter_get_issuesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_filter_get_issue_headersCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_filter_get_issue_headersCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_filter_search_issue_headersCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_filter_search_issue_headersCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_filter_search_issuesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_filter_search_issuesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_filter_search_issue_idsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_filter_search_issue_idsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_config_get_stringCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_config_get_stringCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_issue_checkinCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_issue_checkinCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_user_pref_get_prefCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_user_pref_get_prefCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_user_profiles_get_allCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_user_profiles_get_allCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_tag_get_allCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_tag_get_allCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_tag_addCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_tag_addCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addResponse)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class mc_tag_deleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public mc_tag_deleteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteResponse Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteResponse)(this.results[0]));
+            }
+        }
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class MantisConnectPortTypeClient : System.ServiceModel.ClientBase<SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType>, SilverMonkey.BugTraqConnect.MantisConnectWebservice.MantisConnectPortType {
-        /// <summary>
-        /// 
-        /// </summary>
+        
+        private BeginOperationDelegate onBeginmc_versionDelegate;
+        
+        private EndOperationDelegate onEndmc_versionDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_versionCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_loginDelegate;
+        
+        private EndOperationDelegate onEndmc_loginDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_loginCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_statusDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_statusDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_statusCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_prioritiesDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_prioritiesDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_prioritiesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_severitiesDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_severitiesDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_severitiesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_reproducibilitiesDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_reproducibilitiesDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_reproducibilitiesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_projectionsDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_projectionsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_projectionsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_etasDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_etasDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_etasCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_resolutionsDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_resolutionsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_resolutionsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_access_levelsDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_access_levelsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_access_levelsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_project_statusDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_project_statusDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_project_statusCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_project_view_statesDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_project_view_statesDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_project_view_statesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_view_statesDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_view_statesDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_view_statesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_custom_field_typesDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_custom_field_typesDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_custom_field_typesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_enum_getDelegate;
+        
+        private EndOperationDelegate onEndmc_enum_getDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_enum_getCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_existsDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_existsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_existsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_getDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_getDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_getCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issues_getDelegate;
+        
+        private EndOperationDelegate onEndmc_issues_getDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issues_getCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issues_get_headerDelegate;
+        
+        private EndOperationDelegate onEndmc_issues_get_headerDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issues_get_headerCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_get_historyDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_get_historyDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_get_historyCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_get_biggest_idDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_get_biggest_idDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_get_biggest_idCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_get_id_from_summaryDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_get_id_from_summaryDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_get_id_from_summaryCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_addDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_addDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_addCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_updateDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_updateDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_updateCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_set_tagsDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_set_tagsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_set_tagsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_deleteDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_deleteDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_deleteCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_note_addDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_note_addDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_note_addCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_note_deleteDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_note_deleteDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_note_deleteCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_note_updateDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_note_updateDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_note_updateCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_relationship_addDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_relationship_addDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_relationship_addCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_relationship_deleteDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_relationship_deleteDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_relationship_deleteCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_attachment_addDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_attachment_addDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_attachment_addCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_attachment_deleteDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_attachment_deleteDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_attachment_deleteCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_attachment_getDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_attachment_getDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_attachment_getCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_addDelegate;
+        
+        private EndOperationDelegate onEndmc_project_addDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_addCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_deleteDelegate;
+        
+        private EndOperationDelegate onEndmc_project_deleteDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_deleteCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_updateDelegate;
+        
+        private EndOperationDelegate onEndmc_project_updateDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_updateCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_id_from_nameDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_id_from_nameDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_id_from_nameCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_issues_for_userDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_issues_for_userDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_issues_for_userCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_issuesDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_issuesDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_issuesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_issue_headersDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_issue_headersDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_issue_headersCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_usersDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_usersDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_usersCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_projects_get_user_accessibleDelegate;
+        
+        private EndOperationDelegate onEndmc_projects_get_user_accessibleDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_projects_get_user_accessibleCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_categoriesDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_categoriesDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_categoriesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_add_categoryDelegate;
+        
+        private EndOperationDelegate onEndmc_project_add_categoryDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_add_categoryCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_delete_categoryDelegate;
+        
+        private EndOperationDelegate onEndmc_project_delete_categoryDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_delete_categoryCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_rename_category_by_nameDelegate;
+        
+        private EndOperationDelegate onEndmc_project_rename_category_by_nameDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_rename_category_by_nameCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_versionsDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_versionsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_versionsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_version_addDelegate;
+        
+        private EndOperationDelegate onEndmc_project_version_addDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_version_addCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_version_updateDelegate;
+        
+        private EndOperationDelegate onEndmc_project_version_updateDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_version_updateCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_version_deleteDelegate;
+        
+        private EndOperationDelegate onEndmc_project_version_deleteDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_version_deleteCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_released_versionsDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_released_versionsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_released_versionsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_unreleased_versionsDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_unreleased_versionsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_unreleased_versionsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_attachmentsDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_attachmentsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_attachmentsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_custom_fieldsDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_custom_fieldsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_custom_fieldsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_attachment_getDelegate;
+        
+        private EndOperationDelegate onEndmc_project_attachment_getDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_attachment_getCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_attachment_addDelegate;
+        
+        private EndOperationDelegate onEndmc_project_attachment_addDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_attachment_addCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_attachment_deleteDelegate;
+        
+        private EndOperationDelegate onEndmc_project_attachment_deleteDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_attachment_deleteCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_project_get_all_subprojectsDelegate;
+        
+        private EndOperationDelegate onEndmc_project_get_all_subprojectsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_project_get_all_subprojectsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_filter_getDelegate;
+        
+        private EndOperationDelegate onEndmc_filter_getDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_filter_getCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_filter_get_issuesDelegate;
+        
+        private EndOperationDelegate onEndmc_filter_get_issuesDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_filter_get_issuesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_filter_get_issue_headersDelegate;
+        
+        private EndOperationDelegate onEndmc_filter_get_issue_headersDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_filter_get_issue_headersCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_filter_search_issue_headersDelegate;
+        
+        private EndOperationDelegate onEndmc_filter_search_issue_headersDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_filter_search_issue_headersCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_filter_search_issuesDelegate;
+        
+        private EndOperationDelegate onEndmc_filter_search_issuesDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_filter_search_issuesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_filter_search_issue_idsDelegate;
+        
+        private EndOperationDelegate onEndmc_filter_search_issue_idsDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_filter_search_issue_idsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_config_get_stringDelegate;
+        
+        private EndOperationDelegate onEndmc_config_get_stringDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_config_get_stringCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_issue_checkinDelegate;
+        
+        private EndOperationDelegate onEndmc_issue_checkinDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_issue_checkinCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_user_pref_get_prefDelegate;
+        
+        private EndOperationDelegate onEndmc_user_pref_get_prefDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_user_pref_get_prefCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_user_profiles_get_allDelegate;
+        
+        private EndOperationDelegate onEndmc_user_profiles_get_allDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_user_profiles_get_allCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_tag_get_allDelegate;
+        
+        private EndOperationDelegate onEndmc_tag_get_allDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_tag_get_allCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_tag_addDelegate;
+        
+        private EndOperationDelegate onEndmc_tag_addDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_tag_addCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginmc_tag_deleteDelegate;
+        
+        private EndOperationDelegate onEndmc_tag_deleteDelegate;
+        
+        private System.Threading.SendOrPostCallback onmc_tag_deleteCompletedDelegate;
+        
         public MantisConnectPortTypeClient() {
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="endpointConfigurationName"></param>
+        
         public MantisConnectPortTypeClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
-        }/// <summary>
-        /// 
-        /// </summary>
-        /// <param name="endpointConfigurationName"></param>
-        /// <param name="remoteAddress"></param>
+        }
         
         public MantisConnectPortTypeClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="endpointConfigurationName"></param>
-        /// <param name="remoteAddress"></param>
+        
         public MantisConnectPortTypeClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="binding"></param>
-        /// <param name="remoteAddress"></param>
+        
         public MantisConnectPortTypeClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string mc_version() {
-            return base.Channel.mc_version();
-        }/// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        
-        public System.Threading.Tasks.Task<string> mc_versionAsync() {
-            return base.Channel.mc_versionAsync();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData mc_login(string username, string password) {
-            return base.Channel.mc_login(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData> mc_loginAsync(string username, string password) {
-            return base.Channel.mc_loginAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_status(string username, string password) {
-            return base.Channel.mc_enum_status(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_statusAsync(string username, string password) {
-            return base.Channel.mc_enum_statusAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_priorities(string username, string password) {
-            return base.Channel.mc_enum_priorities(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_prioritiesAsync(string username, string password) {
-            return base.Channel.mc_enum_prioritiesAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_severities(string username, string password) {
-            return base.Channel.mc_enum_severities(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_severitiesAsync(string username, string password) {
-            return base.Channel.mc_enum_severitiesAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_reproducibilities(string username, string password) {
-            return base.Channel.mc_enum_reproducibilities(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_reproducibilitiesAsync(string username, string password) {
-            return base.Channel.mc_enum_reproducibilitiesAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_projections(string username, string password) {
-            return base.Channel.mc_enum_projections(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_projectionsAsync(string username, string password) {
-            return base.Channel.mc_enum_projectionsAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_etas(string username, string password) {
-            return base.Channel.mc_enum_etas(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_etasAsync(string username, string password) {
-            return base.Channel.mc_enum_etasAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_resolutions(string username, string password) {
-            return base.Channel.mc_enum_resolutions(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_resolutionsAsync(string username, string password) {
-            return base.Channel.mc_enum_resolutionsAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_access_levels(string username, string password) {
-            return base.Channel.mc_enum_access_levels(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_access_levelsAsync(string username, string password) {
-            return base.Channel.mc_enum_access_levelsAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_status(string username, string password) {
-            return base.Channel.mc_enum_project_status(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_project_statusAsync(string username, string password) {
-            return base.Channel.mc_enum_project_statusAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_project_view_states(string username, string password) {
-            return base.Channel.mc_enum_project_view_states(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_project_view_statesAsync(string username, string password) {
-            return base.Channel.mc_enum_project_view_statesAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_view_states(string username, string password) {
-            return base.Channel.mc_enum_view_states(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_view_statesAsync(string username, string password) {
-            return base.Channel.mc_enum_view_statesAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[] mc_enum_custom_field_types(string username, string password) {
-            return base.Channel.mc_enum_custom_field_types(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef[]> mc_enum_custom_field_typesAsync(string username, string password) {
-            return base.Channel.mc_enum_custom_field_typesAsync(username, password);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="enumeration"></param>
-        /// <returns></returns>
-        public string mc_enum_get(string username, string password, string enumeration) {
-            return base.Channel.mc_enum_get(username, password, enumeration);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="enumeration"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<string> mc_enum_getAsync(string username, string password, string enumeration) {
-            return base.Channel.mc_enum_getAsync(username, password, enumeration);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="issue_id"></param>
-        /// <returns></returns>
-        public bool mc_issue_exists(string username, string password, string issue_id) {
-            return base.Channel.mc_issue_exists(username, password, issue_id);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="issue_id"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<bool> mc_issue_existsAsync(string username, string password, string issue_id) {
-            return base.Channel.mc_issue_existsAsync(username, password, issue_id);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="issue_id"></param>
-        /// <returns></returns>
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData mc_issue_get(string username, string password, string issue_id) {
-            return base.Channel.mc_issue_get(username, password, issue_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_getAsync(string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData> mc_issue_getAsync(string username, string password, string issue_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_getAsync(string, string, string)'
-            return base.Channel.mc_issue_getAsync(username, password, issue_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get(string, string, string[])'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_issues_get(string username, string password, string[] issue_ids) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get(string, string, string[])'
-            return base.Channel.mc_issues_get(username, password, issue_ids);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_getAsync(string, string, string[])'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_issues_getAsync(string username, string password, string[] issue_ids) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_getAsync(string, string, string[])'
-            return base.Channel.mc_issues_getAsync(username, password, issue_ids);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get_header(string, string, string[])'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_issues_get_header(string username, string password, string[] issue_ids) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get_header(string, string, string[])'
-            return base.Channel.mc_issues_get_header(username, password, issue_ids);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get_headerAsync(string, string, string[])'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_issues_get_headerAsync(string username, string password, string[] issue_ids) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issues_get_headerAsync(string, string, string[])'
-            return base.Channel.mc_issues_get_headerAsync(username, password, issue_ids);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_history(string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[] mc_issue_get_history(string username, string password, string issue_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_history(string, string, string)'
-            return base.Channel.mc_issue_get_history(username, password, issue_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_historyAsync(string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData[]> mc_issue_get_historyAsync(string username, string password, string issue_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_historyAsync(string, string, string)'
-            return base.Channel.mc_issue_get_historyAsync(username, password, issue_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_biggest_id(string, string, string)'
-        public string mc_issue_get_biggest_id(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_biggest_id(string, string, string)'
-            return base.Channel.mc_issue_get_biggest_id(username, password, project_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_biggest_idAsync(string, string, string)'
-        public System.Threading.Tasks.Task<string> mc_issue_get_biggest_idAsync(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_biggest_idAsync(string, string, string)'
-            return base.Channel.mc_issue_get_biggest_idAsync(username, password, project_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_id_from_summary(string, string, string)'
-        public string mc_issue_get_id_from_summary(string username, string password, string summary) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_id_from_summary(string, string, string)'
-            return base.Channel.mc_issue_get_id_from_summary(username, password, summary);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_id_from_summaryAsync(string, string, string)'
-        public System.Threading.Tasks.Task<string> mc_issue_get_id_from_summaryAsync(string username, string password, string summary) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_get_id_from_summaryAsync(string, string, string)'
-            return base.Channel.mc_issue_get_id_from_summaryAsync(username, password, summary);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_add(string, string, IssueData)'
-        public string mc_issue_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_add(string, string, IssueData)'
-            return base.Channel.mc_issue_add(username, password, issue);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_addAsync(string, string, IssueData)'
-        public System.Threading.Tasks.Task<string> mc_issue_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_addAsync(string, string, IssueData)'
-            return base.Channel.mc_issue_addAsync(username, password, issue);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_update(string, string, string, IssueData)'
-        public bool mc_issue_update(string username, string password, string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_update(string, string, string, IssueData)'
-            return base.Channel.mc_issue_update(username, password, issueId, issue);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_updateAsync(string, string, string, IssueData)'
-        public System.Threading.Tasks.Task<bool> mc_issue_updateAsync(string username, string password, string issueId, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData issue) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_updateAsync(string, string, string, IssueData)'
-            return base.Channel.mc_issue_updateAsync(username, password, issueId, issue);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_set_tags(string, string, string, TagData[])'
-        public bool mc_issue_set_tags(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_set_tags(string, string, string, TagData[])'
-            return base.Channel.mc_issue_set_tags(username, password, issue_id, tags);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_set_tagsAsync(string, string, string, TagData[])'
-        public System.Threading.Tasks.Task<bool> mc_issue_set_tagsAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData[] tags) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_set_tagsAsync(string, string, string, TagData[])'
-            return base.Channel.mc_issue_set_tagsAsync(username, password, issue_id, tags);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_delete(string, string, string)'
-        public bool mc_issue_delete(string username, string password, string issue_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_delete(string, string, string)'
-            return base.Channel.mc_issue_delete(username, password, issue_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_deleteAsync(string, string, string)'
-        public System.Threading.Tasks.Task<bool> mc_issue_deleteAsync(string username, string password, string issue_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_deleteAsync(string, string, string)'
-            return base.Channel.mc_issue_deleteAsync(username, password, issue_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_add(string, string, string, IssueNoteData)'
-        public string mc_issue_note_add(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_add(string, string, string, IssueNoteData)'
-            return base.Channel.mc_issue_note_add(username, password, issue_id, note);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_addAsync(string, string, string, IssueNoteData)'
-        public System.Threading.Tasks.Task<string> mc_issue_note_addAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_addAsync(string, string, string, IssueNoteData)'
-            return base.Channel.mc_issue_note_addAsync(username, password, issue_id, note);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_delete(string, string, string)'
-        public bool mc_issue_note_delete(string username, string password, string issue_note_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_delete(string, string, string)'
-            return base.Channel.mc_issue_note_delete(username, password, issue_note_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_deleteAsync(string, string, string)'
-        public System.Threading.Tasks.Task<bool> mc_issue_note_deleteAsync(string username, string password, string issue_note_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_deleteAsync(string, string, string)'
-            return base.Channel.mc_issue_note_deleteAsync(username, password, issue_note_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_update(string, string, IssueNoteData)'
-        public bool mc_issue_note_update(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_update(string, string, IssueNoteData)'
-            return base.Channel.mc_issue_note_update(username, password, note);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_updateAsync(string, string, IssueNoteData)'
-        public System.Threading.Tasks.Task<bool> mc_issue_note_updateAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueNoteData note) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_note_updateAsync(string, string, IssueNoteData)'
-            return base.Channel.mc_issue_note_updateAsync(username, password, note);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_add(string, string, string, RelationshipData)'
-        public string mc_issue_relationship_add(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_add(string, string, string, RelationshipData)'
-            return base.Channel.mc_issue_relationship_add(username, password, issue_id, relationship);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_addAsync(string, string, string, RelationshipData)'
-        public System.Threading.Tasks.Task<string> mc_issue_relationship_addAsync(string username, string password, string issue_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.RelationshipData relationship) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_addAsync(string, string, string, RelationshipData)'
-            return base.Channel.mc_issue_relationship_addAsync(username, password, issue_id, relationship);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_delete(string, string, string, string)'
-        public bool mc_issue_relationship_delete(string username, string password, string issue_id, string relationship_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_delete(string, string, string, string)'
-            return base.Channel.mc_issue_relationship_delete(username, password, issue_id, relationship_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_deleteAsync(string, string, string, string)'
-        public System.Threading.Tasks.Task<bool> mc_issue_relationship_deleteAsync(string username, string password, string issue_id, string relationship_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_relationship_deleteAsync(string, string, string, string)'
-            return base.Channel.mc_issue_relationship_deleteAsync(username, password, issue_id, relationship_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_add(string, string, string, string, string, byte[])'
-        public string mc_issue_attachment_add(string username, string password, string issue_id, string name, string file_type, byte[] content) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_add(string, string, string, string, string, byte[])'
-            return base.Channel.mc_issue_attachment_add(username, password, issue_id, name, file_type, content);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_addAsync(string, string, string, string, string, byte[])'
-        public System.Threading.Tasks.Task<string> mc_issue_attachment_addAsync(string username, string password, string issue_id, string name, string file_type, byte[] content) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_addAsync(string, string, string, string, string, byte[])'
-            return base.Channel.mc_issue_attachment_addAsync(username, password, issue_id, name, file_type, content);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_delete(string, string, string)'
-        public bool mc_issue_attachment_delete(string username, string password, string issue_attachment_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_delete(string, string, string)'
-            return base.Channel.mc_issue_attachment_delete(username, password, issue_attachment_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_deleteAsync(string, string, string)'
-        public System.Threading.Tasks.Task<bool> mc_issue_attachment_deleteAsync(string username, string password, string issue_attachment_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_deleteAsync(string, string, string)'
-            return base.Channel.mc_issue_attachment_deleteAsync(username, password, issue_attachment_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_get(string, string, string)'
-        public byte[] mc_issue_attachment_get(string username, string password, string issue_attachment_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_get(string, string, string)'
-            return base.Channel.mc_issue_attachment_get(username, password, issue_attachment_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_getAsync(string, string, string)'
-        public System.Threading.Tasks.Task<byte[]> mc_issue_attachment_getAsync(string username, string password, string issue_attachment_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_attachment_getAsync(string, string, string)'
-            return base.Channel.mc_issue_attachment_getAsync(username, password, issue_attachment_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add(string, string, ProjectData)'
-        public string mc_project_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add(string, string, ProjectData)'
-            return base.Channel.mc_project_add(username, password, project);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_addAsync(string, string, ProjectData)'
-        public System.Threading.Tasks.Task<string> mc_project_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_addAsync(string, string, ProjectData)'
-            return base.Channel.mc_project_addAsync(username, password, project);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete(string, string, string)'
-        public bool mc_project_delete(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete(string, string, string)'
-            return base.Channel.mc_project_delete(username, password, project_id);
-        }
-        
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_deleteAsync(string, string, string)'
-        public System.Threading.Tasks.Task<bool> mc_project_deleteAsync(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_deleteAsync(string, string, string)'
-            return base.Channel.mc_project_deleteAsync(username, password, project_id);
+        
+        public event System.EventHandler<mc_versionCompletedEventArgs> mc_versionCompleted;
+        
+        public event System.EventHandler<mc_loginCompletedEventArgs> mc_loginCompleted;
+        
+        public event System.EventHandler<mc_enum_statusCompletedEventArgs> mc_enum_statusCompleted;
+        
+        public event System.EventHandler<mc_enum_prioritiesCompletedEventArgs> mc_enum_prioritiesCompleted;
+        
+        public event System.EventHandler<mc_enum_severitiesCompletedEventArgs> mc_enum_severitiesCompleted;
+        
+        public event System.EventHandler<mc_enum_reproducibilitiesCompletedEventArgs> mc_enum_reproducibilitiesCompleted;
+        
+        public event System.EventHandler<mc_enum_projectionsCompletedEventArgs> mc_enum_projectionsCompleted;
+        
+        public event System.EventHandler<mc_enum_etasCompletedEventArgs> mc_enum_etasCompleted;
+        
+        public event System.EventHandler<mc_enum_resolutionsCompletedEventArgs> mc_enum_resolutionsCompleted;
+        
+        public event System.EventHandler<mc_enum_access_levelsCompletedEventArgs> mc_enum_access_levelsCompleted;
+        
+        public event System.EventHandler<mc_enum_project_statusCompletedEventArgs> mc_enum_project_statusCompleted;
+        
+        public event System.EventHandler<mc_enum_project_view_statesCompletedEventArgs> mc_enum_project_view_statesCompleted;
+        
+        public event System.EventHandler<mc_enum_view_statesCompletedEventArgs> mc_enum_view_statesCompleted;
+        
+        public event System.EventHandler<mc_enum_custom_field_typesCompletedEventArgs> mc_enum_custom_field_typesCompleted;
+        
+        public event System.EventHandler<mc_enum_getCompletedEventArgs> mc_enum_getCompleted;
+        
+        public event System.EventHandler<mc_issue_existsCompletedEventArgs> mc_issue_existsCompleted;
+        
+        public event System.EventHandler<mc_issue_getCompletedEventArgs> mc_issue_getCompleted;
+        
+        public event System.EventHandler<mc_issues_getCompletedEventArgs> mc_issues_getCompleted;
+        
+        public event System.EventHandler<mc_issues_get_headerCompletedEventArgs> mc_issues_get_headerCompleted;
+        
+        public event System.EventHandler<mc_issue_get_historyCompletedEventArgs> mc_issue_get_historyCompleted;
+        
+        public event System.EventHandler<mc_issue_get_biggest_idCompletedEventArgs> mc_issue_get_biggest_idCompleted;
+        
+        public event System.EventHandler<mc_issue_get_id_from_summaryCompletedEventArgs> mc_issue_get_id_from_summaryCompleted;
+        
+        public event System.EventHandler<mc_issue_addCompletedEventArgs> mc_issue_addCompleted;
+        
+        public event System.EventHandler<mc_issue_updateCompletedEventArgs> mc_issue_updateCompleted;
+        
+        public event System.EventHandler<mc_issue_set_tagsCompletedEventArgs> mc_issue_set_tagsCompleted;
+        
+        public event System.EventHandler<mc_issue_deleteCompletedEventArgs> mc_issue_deleteCompleted;
+        
+        public event System.EventHandler<mc_issue_note_addCompletedEventArgs> mc_issue_note_addCompleted;
+        
+        public event System.EventHandler<mc_issue_note_deleteCompletedEventArgs> mc_issue_note_deleteCompleted;
+        
+        public event System.EventHandler<mc_issue_note_updateCompletedEventArgs> mc_issue_note_updateCompleted;
+        
+        public event System.EventHandler<mc_issue_relationship_addCompletedEventArgs> mc_issue_relationship_addCompleted;
+        
+        public event System.EventHandler<mc_issue_relationship_deleteCompletedEventArgs> mc_issue_relationship_deleteCompleted;
+        
+        public event System.EventHandler<mc_issue_attachment_addCompletedEventArgs> mc_issue_attachment_addCompleted;
+        
+        public event System.EventHandler<mc_issue_attachment_deleteCompletedEventArgs> mc_issue_attachment_deleteCompleted;
+        
+        public event System.EventHandler<mc_issue_attachment_getCompletedEventArgs> mc_issue_attachment_getCompleted;
+        
+        public event System.EventHandler<mc_project_addCompletedEventArgs> mc_project_addCompleted;
+        
+        public event System.EventHandler<mc_project_deleteCompletedEventArgs> mc_project_deleteCompleted;
+        
+        public event System.EventHandler<mc_project_updateCompletedEventArgs> mc_project_updateCompleted;
+        
+        public event System.EventHandler<mc_project_get_id_from_nameCompletedEventArgs> mc_project_get_id_from_nameCompleted;
+        
+        public event System.EventHandler<mc_project_get_issues_for_userCompletedEventArgs> mc_project_get_issues_for_userCompleted;
+        
+        public event System.EventHandler<mc_project_get_issuesCompletedEventArgs> mc_project_get_issuesCompleted;
+        
+        public event System.EventHandler<mc_project_get_issue_headersCompletedEventArgs> mc_project_get_issue_headersCompleted;
+        
+        public event System.EventHandler<mc_project_get_usersCompletedEventArgs> mc_project_get_usersCompleted;
+        
+        public event System.EventHandler<mc_projects_get_user_accessibleCompletedEventArgs> mc_projects_get_user_accessibleCompleted;
+        
+        public event System.EventHandler<mc_project_get_categoriesCompletedEventArgs> mc_project_get_categoriesCompleted;
+        
+        public event System.EventHandler<mc_project_add_categoryCompletedEventArgs> mc_project_add_categoryCompleted;
+        
+        public event System.EventHandler<mc_project_delete_categoryCompletedEventArgs> mc_project_delete_categoryCompleted;
+        
+        public event System.EventHandler<mc_project_rename_category_by_nameCompletedEventArgs> mc_project_rename_category_by_nameCompleted;
+        
+        public event System.EventHandler<mc_project_get_versionsCompletedEventArgs> mc_project_get_versionsCompleted;
+        
+        public event System.EventHandler<mc_project_version_addCompletedEventArgs> mc_project_version_addCompleted;
+        
+        public event System.EventHandler<mc_project_version_updateCompletedEventArgs> mc_project_version_updateCompleted;
+        
+        public event System.EventHandler<mc_project_version_deleteCompletedEventArgs> mc_project_version_deleteCompleted;
+        
+        public event System.EventHandler<mc_project_get_released_versionsCompletedEventArgs> mc_project_get_released_versionsCompleted;
+        
+        public event System.EventHandler<mc_project_get_unreleased_versionsCompletedEventArgs> mc_project_get_unreleased_versionsCompleted;
+        
+        public event System.EventHandler<mc_project_get_attachmentsCompletedEventArgs> mc_project_get_attachmentsCompleted;
+        
+        public event System.EventHandler<mc_project_get_custom_fieldsCompletedEventArgs> mc_project_get_custom_fieldsCompleted;
+        
+        public event System.EventHandler<mc_project_attachment_getCompletedEventArgs> mc_project_attachment_getCompleted;
+        
+        public event System.EventHandler<mc_project_attachment_addCompletedEventArgs> mc_project_attachment_addCompleted;
+        
+        public event System.EventHandler<mc_project_attachment_deleteCompletedEventArgs> mc_project_attachment_deleteCompleted;
+        
+        public event System.EventHandler<mc_project_get_all_subprojectsCompletedEventArgs> mc_project_get_all_subprojectsCompleted;
+        
+        public event System.EventHandler<mc_filter_getCompletedEventArgs> mc_filter_getCompleted;
+        
+        public event System.EventHandler<mc_filter_get_issuesCompletedEventArgs> mc_filter_get_issuesCompleted;
+        
+        public event System.EventHandler<mc_filter_get_issue_headersCompletedEventArgs> mc_filter_get_issue_headersCompleted;
+        
+        public event System.EventHandler<mc_filter_search_issue_headersCompletedEventArgs> mc_filter_search_issue_headersCompleted;
+        
+        public event System.EventHandler<mc_filter_search_issuesCompletedEventArgs> mc_filter_search_issuesCompleted;
+        
+        public event System.EventHandler<mc_filter_search_issue_idsCompletedEventArgs> mc_filter_search_issue_idsCompleted;
+        
+        public event System.EventHandler<mc_config_get_stringCompletedEventArgs> mc_config_get_stringCompleted;
+        
+        public event System.EventHandler<mc_issue_checkinCompletedEventArgs> mc_issue_checkinCompleted;
+        
+        public event System.EventHandler<mc_user_pref_get_prefCompletedEventArgs> mc_user_pref_get_prefCompleted;
+        
+        public event System.EventHandler<mc_user_profiles_get_allCompletedEventArgs> mc_user_profiles_get_allCompleted;
+        
+        public event System.EventHandler<mc_tag_get_allCompletedEventArgs> mc_tag_get_allCompleted;
+        
+        public event System.EventHandler<mc_tag_addCompletedEventArgs> mc_tag_addCompleted;
+        
+        public event System.EventHandler<mc_tag_deleteCompletedEventArgs> mc_tag_deleteCompleted;
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionResponse mc_version(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionRequest request) {
+            return base.Channel.mc_version(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_version(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_version(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionResponse Endmc_version(System.IAsyncResult result) {
+            return base.Channel.Endmc_version(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_version(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionRequest)(inValues[0]));
+            return this.Beginmc_version(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_version(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionResponse retVal = this.Endmc_version(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_versionCompleted(object state) {
+            if ((this.mc_versionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_versionCompleted(this, new mc_versionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_versionAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionRequest request) {
+            this.mc_versionAsync(request, null);
+        }
+        
+        public void mc_versionAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionRequest request, object userState) {
+            if ((this.onBeginmc_versionDelegate == null)) {
+                this.onBeginmc_versionDelegate = new BeginOperationDelegate(this.OnBeginmc_version);
+            }
+            if ((this.onEndmc_versionDelegate == null)) {
+                this.onEndmc_versionDelegate = new EndOperationDelegate(this.OnEndmc_version);
+            }
+            if ((this.onmc_versionCompletedDelegate == null)) {
+                this.onmc_versionCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_versionCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_versionDelegate, new object[] {
+                        request}, this.onEndmc_versionDelegate, this.onmc_versionCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginResponse mc_login(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginRequest request) {
+            return base.Channel.mc_login(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_login(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_login(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginResponse Endmc_login(System.IAsyncResult result) {
+            return base.Channel.Endmc_login(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_login(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginRequest)(inValues[0]));
+            return this.Beginmc_login(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_login(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginResponse retVal = this.Endmc_login(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_loginCompleted(object state) {
+            if ((this.mc_loginCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_loginCompleted(this, new mc_loginCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_loginAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginRequest request) {
+            this.mc_loginAsync(request, null);
+        }
+        
+        public void mc_loginAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginRequest request, object userState) {
+            if ((this.onBeginmc_loginDelegate == null)) {
+                this.onBeginmc_loginDelegate = new BeginOperationDelegate(this.OnBeginmc_login);
+            }
+            if ((this.onEndmc_loginDelegate == null)) {
+                this.onEndmc_loginDelegate = new EndOperationDelegate(this.OnEndmc_login);
+            }
+            if ((this.onmc_loginCompletedDelegate == null)) {
+                this.onmc_loginCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_loginCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_loginDelegate, new object[] {
+                        request}, this.onEndmc_loginDelegate, this.onmc_loginCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusResponse mc_enum_status(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusRequest request) {
+            return base.Channel.mc_enum_status(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_status(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_status(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusResponse Endmc_enum_status(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_status(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_status(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusRequest)(inValues[0]));
+            return this.Beginmc_enum_status(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_status(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusResponse retVal = this.Endmc_enum_status(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_statusCompleted(object state) {
+            if ((this.mc_enum_statusCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_statusCompleted(this, new mc_enum_statusCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_statusAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusRequest request) {
+            this.mc_enum_statusAsync(request, null);
+        }
+        
+        public void mc_enum_statusAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusRequest request, object userState) {
+            if ((this.onBeginmc_enum_statusDelegate == null)) {
+                this.onBeginmc_enum_statusDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_status);
+            }
+            if ((this.onEndmc_enum_statusDelegate == null)) {
+                this.onEndmc_enum_statusDelegate = new EndOperationDelegate(this.OnEndmc_enum_status);
+            }
+            if ((this.onmc_enum_statusCompletedDelegate == null)) {
+                this.onmc_enum_statusCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_statusCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_statusDelegate, new object[] {
+                        request}, this.onEndmc_enum_statusDelegate, this.onmc_enum_statusCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesResponse mc_enum_priorities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesRequest request) {
+            return base.Channel.mc_enum_priorities(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_priorities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_priorities(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesResponse Endmc_enum_priorities(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_priorities(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_priorities(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesRequest)(inValues[0]));
+            return this.Beginmc_enum_priorities(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_priorities(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesResponse retVal = this.Endmc_enum_priorities(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_prioritiesCompleted(object state) {
+            if ((this.mc_enum_prioritiesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_prioritiesCompleted(this, new mc_enum_prioritiesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_prioritiesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesRequest request) {
+            this.mc_enum_prioritiesAsync(request, null);
+        }
+        
+        public void mc_enum_prioritiesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesRequest request, object userState) {
+            if ((this.onBeginmc_enum_prioritiesDelegate == null)) {
+                this.onBeginmc_enum_prioritiesDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_priorities);
+            }
+            if ((this.onEndmc_enum_prioritiesDelegate == null)) {
+                this.onEndmc_enum_prioritiesDelegate = new EndOperationDelegate(this.OnEndmc_enum_priorities);
+            }
+            if ((this.onmc_enum_prioritiesCompletedDelegate == null)) {
+                this.onmc_enum_prioritiesCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_prioritiesCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_prioritiesDelegate, new object[] {
+                        request}, this.onEndmc_enum_prioritiesDelegate, this.onmc_enum_prioritiesCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesResponse mc_enum_severities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesRequest request) {
+            return base.Channel.mc_enum_severities(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_severities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_severities(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesResponse Endmc_enum_severities(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_severities(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_severities(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesRequest)(inValues[0]));
+            return this.Beginmc_enum_severities(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_severities(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesResponse retVal = this.Endmc_enum_severities(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_severitiesCompleted(object state) {
+            if ((this.mc_enum_severitiesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_severitiesCompleted(this, new mc_enum_severitiesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_severitiesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesRequest request) {
+            this.mc_enum_severitiesAsync(request, null);
+        }
+        
+        public void mc_enum_severitiesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesRequest request, object userState) {
+            if ((this.onBeginmc_enum_severitiesDelegate == null)) {
+                this.onBeginmc_enum_severitiesDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_severities);
+            }
+            if ((this.onEndmc_enum_severitiesDelegate == null)) {
+                this.onEndmc_enum_severitiesDelegate = new EndOperationDelegate(this.OnEndmc_enum_severities);
+            }
+            if ((this.onmc_enum_severitiesCompletedDelegate == null)) {
+                this.onmc_enum_severitiesCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_severitiesCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_severitiesDelegate, new object[] {
+                        request}, this.onEndmc_enum_severitiesDelegate, this.onmc_enum_severitiesCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesResponse mc_enum_reproducibilities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesRequest request) {
+            return base.Channel.mc_enum_reproducibilities(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_reproducibilities(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_reproducibilities(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesResponse Endmc_enum_reproducibilities(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_reproducibilities(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_reproducibilities(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesRequest)(inValues[0]));
+            return this.Beginmc_enum_reproducibilities(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_reproducibilities(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesResponse retVal = this.Endmc_enum_reproducibilities(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_reproducibilitiesCompleted(object state) {
+            if ((this.mc_enum_reproducibilitiesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_reproducibilitiesCompleted(this, new mc_enum_reproducibilitiesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_reproducibilitiesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesRequest request) {
+            this.mc_enum_reproducibilitiesAsync(request, null);
+        }
+        
+        public void mc_enum_reproducibilitiesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesRequest request, object userState) {
+            if ((this.onBeginmc_enum_reproducibilitiesDelegate == null)) {
+                this.onBeginmc_enum_reproducibilitiesDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_reproducibilities);
+            }
+            if ((this.onEndmc_enum_reproducibilitiesDelegate == null)) {
+                this.onEndmc_enum_reproducibilitiesDelegate = new EndOperationDelegate(this.OnEndmc_enum_reproducibilities);
+            }
+            if ((this.onmc_enum_reproducibilitiesCompletedDelegate == null)) {
+                this.onmc_enum_reproducibilitiesCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_reproducibilitiesCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_reproducibilitiesDelegate, new object[] {
+                        request}, this.onEndmc_enum_reproducibilitiesDelegate, this.onmc_enum_reproducibilitiesCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsResponse mc_enum_projections(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsRequest request) {
+            return base.Channel.mc_enum_projections(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_projections(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_projections(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsResponse Endmc_enum_projections(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_projections(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_projections(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsRequest)(inValues[0]));
+            return this.Beginmc_enum_projections(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_projections(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsResponse retVal = this.Endmc_enum_projections(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_projectionsCompleted(object state) {
+            if ((this.mc_enum_projectionsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_projectionsCompleted(this, new mc_enum_projectionsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_projectionsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsRequest request) {
+            this.mc_enum_projectionsAsync(request, null);
+        }
+        
+        public void mc_enum_projectionsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsRequest request, object userState) {
+            if ((this.onBeginmc_enum_projectionsDelegate == null)) {
+                this.onBeginmc_enum_projectionsDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_projections);
+            }
+            if ((this.onEndmc_enum_projectionsDelegate == null)) {
+                this.onEndmc_enum_projectionsDelegate = new EndOperationDelegate(this.OnEndmc_enum_projections);
+            }
+            if ((this.onmc_enum_projectionsCompletedDelegate == null)) {
+                this.onmc_enum_projectionsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_projectionsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_projectionsDelegate, new object[] {
+                        request}, this.onEndmc_enum_projectionsDelegate, this.onmc_enum_projectionsCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasResponse mc_enum_etas(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasRequest request) {
+            return base.Channel.mc_enum_etas(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_etas(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_etas(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasResponse Endmc_enum_etas(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_etas(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_etas(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasRequest)(inValues[0]));
+            return this.Beginmc_enum_etas(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_etas(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasResponse retVal = this.Endmc_enum_etas(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_etasCompleted(object state) {
+            if ((this.mc_enum_etasCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_etasCompleted(this, new mc_enum_etasCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_etasAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasRequest request) {
+            this.mc_enum_etasAsync(request, null);
+        }
+        
+        public void mc_enum_etasAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasRequest request, object userState) {
+            if ((this.onBeginmc_enum_etasDelegate == null)) {
+                this.onBeginmc_enum_etasDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_etas);
+            }
+            if ((this.onEndmc_enum_etasDelegate == null)) {
+                this.onEndmc_enum_etasDelegate = new EndOperationDelegate(this.OnEndmc_enum_etas);
+            }
+            if ((this.onmc_enum_etasCompletedDelegate == null)) {
+                this.onmc_enum_etasCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_etasCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_etasDelegate, new object[] {
+                        request}, this.onEndmc_enum_etasDelegate, this.onmc_enum_etasCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsResponse mc_enum_resolutions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsRequest request) {
+            return base.Channel.mc_enum_resolutions(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_resolutions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_resolutions(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsResponse Endmc_enum_resolutions(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_resolutions(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_resolutions(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsRequest)(inValues[0]));
+            return this.Beginmc_enum_resolutions(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_resolutions(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsResponse retVal = this.Endmc_enum_resolutions(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_resolutionsCompleted(object state) {
+            if ((this.mc_enum_resolutionsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_resolutionsCompleted(this, new mc_enum_resolutionsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_resolutionsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsRequest request) {
+            this.mc_enum_resolutionsAsync(request, null);
+        }
+        
+        public void mc_enum_resolutionsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsRequest request, object userState) {
+            if ((this.onBeginmc_enum_resolutionsDelegate == null)) {
+                this.onBeginmc_enum_resolutionsDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_resolutions);
+            }
+            if ((this.onEndmc_enum_resolutionsDelegate == null)) {
+                this.onEndmc_enum_resolutionsDelegate = new EndOperationDelegate(this.OnEndmc_enum_resolutions);
+            }
+            if ((this.onmc_enum_resolutionsCompletedDelegate == null)) {
+                this.onmc_enum_resolutionsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_resolutionsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_resolutionsDelegate, new object[] {
+                        request}, this.onEndmc_enum_resolutionsDelegate, this.onmc_enum_resolutionsCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsResponse mc_enum_access_levels(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsRequest request) {
+            return base.Channel.mc_enum_access_levels(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_access_levels(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_access_levels(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsResponse Endmc_enum_access_levels(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_access_levels(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_access_levels(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsRequest)(inValues[0]));
+            return this.Beginmc_enum_access_levels(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_access_levels(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsResponse retVal = this.Endmc_enum_access_levels(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_access_levelsCompleted(object state) {
+            if ((this.mc_enum_access_levelsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_access_levelsCompleted(this, new mc_enum_access_levelsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_access_levelsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsRequest request) {
+            this.mc_enum_access_levelsAsync(request, null);
+        }
+        
+        public void mc_enum_access_levelsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsRequest request, object userState) {
+            if ((this.onBeginmc_enum_access_levelsDelegate == null)) {
+                this.onBeginmc_enum_access_levelsDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_access_levels);
+            }
+            if ((this.onEndmc_enum_access_levelsDelegate == null)) {
+                this.onEndmc_enum_access_levelsDelegate = new EndOperationDelegate(this.OnEndmc_enum_access_levels);
+            }
+            if ((this.onmc_enum_access_levelsCompletedDelegate == null)) {
+                this.onmc_enum_access_levelsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_access_levelsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_access_levelsDelegate, new object[] {
+                        request}, this.onEndmc_enum_access_levelsDelegate, this.onmc_enum_access_levelsCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusResponse mc_enum_project_status(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusRequest request) {
+            return base.Channel.mc_enum_project_status(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_project_status(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_project_status(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusResponse Endmc_enum_project_status(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_project_status(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_project_status(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusRequest)(inValues[0]));
+            return this.Beginmc_enum_project_status(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_project_status(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusResponse retVal = this.Endmc_enum_project_status(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_project_statusCompleted(object state) {
+            if ((this.mc_enum_project_statusCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_project_statusCompleted(this, new mc_enum_project_statusCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_project_statusAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusRequest request) {
+            this.mc_enum_project_statusAsync(request, null);
+        }
+        
+        public void mc_enum_project_statusAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusRequest request, object userState) {
+            if ((this.onBeginmc_enum_project_statusDelegate == null)) {
+                this.onBeginmc_enum_project_statusDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_project_status);
+            }
+            if ((this.onEndmc_enum_project_statusDelegate == null)) {
+                this.onEndmc_enum_project_statusDelegate = new EndOperationDelegate(this.OnEndmc_enum_project_status);
+            }
+            if ((this.onmc_enum_project_statusCompletedDelegate == null)) {
+                this.onmc_enum_project_statusCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_project_statusCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_project_statusDelegate, new object[] {
+                        request}, this.onEndmc_enum_project_statusDelegate, this.onmc_enum_project_statusCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesResponse mc_enum_project_view_states(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesRequest request) {
+            return base.Channel.mc_enum_project_view_states(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_project_view_states(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_project_view_states(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesResponse Endmc_enum_project_view_states(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_project_view_states(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_project_view_states(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesRequest)(inValues[0]));
+            return this.Beginmc_enum_project_view_states(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_project_view_states(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesResponse retVal = this.Endmc_enum_project_view_states(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_project_view_statesCompleted(object state) {
+            if ((this.mc_enum_project_view_statesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_project_view_statesCompleted(this, new mc_enum_project_view_statesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_project_view_statesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesRequest request) {
+            this.mc_enum_project_view_statesAsync(request, null);
+        }
+        
+        public void mc_enum_project_view_statesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesRequest request, object userState) {
+            if ((this.onBeginmc_enum_project_view_statesDelegate == null)) {
+                this.onBeginmc_enum_project_view_statesDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_project_view_states);
+            }
+            if ((this.onEndmc_enum_project_view_statesDelegate == null)) {
+                this.onEndmc_enum_project_view_statesDelegate = new EndOperationDelegate(this.OnEndmc_enum_project_view_states);
+            }
+            if ((this.onmc_enum_project_view_statesCompletedDelegate == null)) {
+                this.onmc_enum_project_view_statesCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_project_view_statesCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_project_view_statesDelegate, new object[] {
+                        request}, this.onEndmc_enum_project_view_statesDelegate, this.onmc_enum_project_view_statesCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesResponse mc_enum_view_states(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesRequest request) {
+            return base.Channel.mc_enum_view_states(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_view_states(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_view_states(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesResponse Endmc_enum_view_states(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_view_states(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_view_states(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesRequest)(inValues[0]));
+            return this.Beginmc_enum_view_states(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_view_states(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesResponse retVal = this.Endmc_enum_view_states(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_view_statesCompleted(object state) {
+            if ((this.mc_enum_view_statesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_view_statesCompleted(this, new mc_enum_view_statesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_view_statesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesRequest request) {
+            this.mc_enum_view_statesAsync(request, null);
+        }
+        
+        public void mc_enum_view_statesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesRequest request, object userState) {
+            if ((this.onBeginmc_enum_view_statesDelegate == null)) {
+                this.onBeginmc_enum_view_statesDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_view_states);
+            }
+            if ((this.onEndmc_enum_view_statesDelegate == null)) {
+                this.onEndmc_enum_view_statesDelegate = new EndOperationDelegate(this.OnEndmc_enum_view_states);
+            }
+            if ((this.onmc_enum_view_statesCompletedDelegate == null)) {
+                this.onmc_enum_view_statesCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_view_statesCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_view_statesDelegate, new object[] {
+                        request}, this.onEndmc_enum_view_statesDelegate, this.onmc_enum_view_statesCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesResponse mc_enum_custom_field_types(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesRequest request) {
+            return base.Channel.mc_enum_custom_field_types(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_custom_field_types(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_custom_field_types(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesResponse Endmc_enum_custom_field_types(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_custom_field_types(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_custom_field_types(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesRequest)(inValues[0]));
+            return this.Beginmc_enum_custom_field_types(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_custom_field_types(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesResponse retVal = this.Endmc_enum_custom_field_types(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_custom_field_typesCompleted(object state) {
+            if ((this.mc_enum_custom_field_typesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_custom_field_typesCompleted(this, new mc_enum_custom_field_typesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_custom_field_typesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesRequest request) {
+            this.mc_enum_custom_field_typesAsync(request, null);
+        }
+        
+        public void mc_enum_custom_field_typesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesRequest request, object userState) {
+            if ((this.onBeginmc_enum_custom_field_typesDelegate == null)) {
+                this.onBeginmc_enum_custom_field_typesDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_custom_field_types);
+            }
+            if ((this.onEndmc_enum_custom_field_typesDelegate == null)) {
+                this.onEndmc_enum_custom_field_typesDelegate = new EndOperationDelegate(this.OnEndmc_enum_custom_field_types);
+            }
+            if ((this.onmc_enum_custom_field_typesCompletedDelegate == null)) {
+                this.onmc_enum_custom_field_typesCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_custom_field_typesCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_custom_field_typesDelegate, new object[] {
+                        request}, this.onEndmc_enum_custom_field_typesDelegate, this.onmc_enum_custom_field_typesCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getResponse mc_enum_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getRequest request) {
+            return base.Channel.mc_enum_get(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_enum_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_enum_get(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getResponse Endmc_enum_get(System.IAsyncResult result) {
+            return base.Channel.Endmc_enum_get(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_enum_get(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getRequest)(inValues[0]));
+            return this.Beginmc_enum_get(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_enum_get(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getResponse retVal = this.Endmc_enum_get(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_enum_getCompleted(object state) {
+            if ((this.mc_enum_getCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_enum_getCompleted(this, new mc_enum_getCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_enum_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getRequest request) {
+            this.mc_enum_getAsync(request, null);
+        }
+        
+        public void mc_enum_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getRequest request, object userState) {
+            if ((this.onBeginmc_enum_getDelegate == null)) {
+                this.onBeginmc_enum_getDelegate = new BeginOperationDelegate(this.OnBeginmc_enum_get);
+            }
+            if ((this.onEndmc_enum_getDelegate == null)) {
+                this.onEndmc_enum_getDelegate = new EndOperationDelegate(this.OnEndmc_enum_get);
+            }
+            if ((this.onmc_enum_getCompletedDelegate == null)) {
+                this.onmc_enum_getCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_enum_getCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_enum_getDelegate, new object[] {
+                        request}, this.onEndmc_enum_getDelegate, this.onmc_enum_getCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsResponse mc_issue_exists(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsRequest request) {
+            return base.Channel.mc_issue_exists(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_exists(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_exists(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsResponse Endmc_issue_exists(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_exists(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_exists(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsRequest)(inValues[0]));
+            return this.Beginmc_issue_exists(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_exists(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsResponse retVal = this.Endmc_issue_exists(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_existsCompleted(object state) {
+            if ((this.mc_issue_existsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_existsCompleted(this, new mc_issue_existsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_existsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsRequest request) {
+            this.mc_issue_existsAsync(request, null);
+        }
+        
+        public void mc_issue_existsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsRequest request, object userState) {
+            if ((this.onBeginmc_issue_existsDelegate == null)) {
+                this.onBeginmc_issue_existsDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_exists);
+            }
+            if ((this.onEndmc_issue_existsDelegate == null)) {
+                this.onEndmc_issue_existsDelegate = new EndOperationDelegate(this.OnEndmc_issue_exists);
+            }
+            if ((this.onmc_issue_existsCompletedDelegate == null)) {
+                this.onmc_issue_existsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_existsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_existsDelegate, new object[] {
+                        request}, this.onEndmc_issue_existsDelegate, this.onmc_issue_existsCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getResponse mc_issue_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getRequest request) {
+            return base.Channel.mc_issue_get(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_get(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getResponse Endmc_issue_get(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_get(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_get(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getRequest)(inValues[0]));
+            return this.Beginmc_issue_get(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_get(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getResponse retVal = this.Endmc_issue_get(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_getCompleted(object state) {
+            if ((this.mc_issue_getCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_getCompleted(this, new mc_issue_getCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getRequest request) {
+            this.mc_issue_getAsync(request, null);
+        }
+        
+        public void mc_issue_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getRequest request, object userState) {
+            if ((this.onBeginmc_issue_getDelegate == null)) {
+                this.onBeginmc_issue_getDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_get);
+            }
+            if ((this.onEndmc_issue_getDelegate == null)) {
+                this.onEndmc_issue_getDelegate = new EndOperationDelegate(this.OnEndmc_issue_get);
+            }
+            if ((this.onmc_issue_getCompletedDelegate == null)) {
+                this.onmc_issue_getCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_getCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_getDelegate, new object[] {
+                        request}, this.onEndmc_issue_getDelegate, this.onmc_issue_getCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getResponse mc_issues_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getRequest request) {
+            return base.Channel.mc_issues_get(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issues_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issues_get(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getResponse Endmc_issues_get(System.IAsyncResult result) {
+            return base.Channel.Endmc_issues_get(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issues_get(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getRequest)(inValues[0]));
+            return this.Beginmc_issues_get(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issues_get(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getResponse retVal = this.Endmc_issues_get(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issues_getCompleted(object state) {
+            if ((this.mc_issues_getCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issues_getCompleted(this, new mc_issues_getCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issues_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getRequest request) {
+            this.mc_issues_getAsync(request, null);
+        }
+        
+        public void mc_issues_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getRequest request, object userState) {
+            if ((this.onBeginmc_issues_getDelegate == null)) {
+                this.onBeginmc_issues_getDelegate = new BeginOperationDelegate(this.OnBeginmc_issues_get);
+            }
+            if ((this.onEndmc_issues_getDelegate == null)) {
+                this.onEndmc_issues_getDelegate = new EndOperationDelegate(this.OnEndmc_issues_get);
+            }
+            if ((this.onmc_issues_getCompletedDelegate == null)) {
+                this.onmc_issues_getCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issues_getCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issues_getDelegate, new object[] {
+                        request}, this.onEndmc_issues_getDelegate, this.onmc_issues_getCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerResponse mc_issues_get_header(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerRequest request) {
+            return base.Channel.mc_issues_get_header(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issues_get_header(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issues_get_header(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerResponse Endmc_issues_get_header(System.IAsyncResult result) {
+            return base.Channel.Endmc_issues_get_header(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issues_get_header(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerRequest)(inValues[0]));
+            return this.Beginmc_issues_get_header(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issues_get_header(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerResponse retVal = this.Endmc_issues_get_header(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issues_get_headerCompleted(object state) {
+            if ((this.mc_issues_get_headerCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issues_get_headerCompleted(this, new mc_issues_get_headerCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issues_get_headerAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerRequest request) {
+            this.mc_issues_get_headerAsync(request, null);
+        }
+        
+        public void mc_issues_get_headerAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerRequest request, object userState) {
+            if ((this.onBeginmc_issues_get_headerDelegate == null)) {
+                this.onBeginmc_issues_get_headerDelegate = new BeginOperationDelegate(this.OnBeginmc_issues_get_header);
+            }
+            if ((this.onEndmc_issues_get_headerDelegate == null)) {
+                this.onEndmc_issues_get_headerDelegate = new EndOperationDelegate(this.OnEndmc_issues_get_header);
+            }
+            if ((this.onmc_issues_get_headerCompletedDelegate == null)) {
+                this.onmc_issues_get_headerCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issues_get_headerCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issues_get_headerDelegate, new object[] {
+                        request}, this.onEndmc_issues_get_headerDelegate, this.onmc_issues_get_headerCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyResponse mc_issue_get_history(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyRequest request) {
+            return base.Channel.mc_issue_get_history(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_get_history(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_get_history(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyResponse Endmc_issue_get_history(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_get_history(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_get_history(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyRequest)(inValues[0]));
+            return this.Beginmc_issue_get_history(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_get_history(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyResponse retVal = this.Endmc_issue_get_history(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_get_historyCompleted(object state) {
+            if ((this.mc_issue_get_historyCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_get_historyCompleted(this, new mc_issue_get_historyCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_get_historyAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyRequest request) {
+            this.mc_issue_get_historyAsync(request, null);
+        }
+        
+        public void mc_issue_get_historyAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyRequest request, object userState) {
+            if ((this.onBeginmc_issue_get_historyDelegate == null)) {
+                this.onBeginmc_issue_get_historyDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_get_history);
+            }
+            if ((this.onEndmc_issue_get_historyDelegate == null)) {
+                this.onEndmc_issue_get_historyDelegate = new EndOperationDelegate(this.OnEndmc_issue_get_history);
+            }
+            if ((this.onmc_issue_get_historyCompletedDelegate == null)) {
+                this.onmc_issue_get_historyCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_get_historyCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_get_historyDelegate, new object[] {
+                        request}, this.onEndmc_issue_get_historyDelegate, this.onmc_issue_get_historyCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idResponse mc_issue_get_biggest_id(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idRequest request) {
+            return base.Channel.mc_issue_get_biggest_id(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_get_biggest_id(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_get_biggest_id(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idResponse Endmc_issue_get_biggest_id(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_get_biggest_id(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_get_biggest_id(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idRequest)(inValues[0]));
+            return this.Beginmc_issue_get_biggest_id(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_get_biggest_id(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idResponse retVal = this.Endmc_issue_get_biggest_id(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_get_biggest_idCompleted(object state) {
+            if ((this.mc_issue_get_biggest_idCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_get_biggest_idCompleted(this, new mc_issue_get_biggest_idCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_get_biggest_idAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idRequest request) {
+            this.mc_issue_get_biggest_idAsync(request, null);
+        }
+        
+        public void mc_issue_get_biggest_idAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idRequest request, object userState) {
+            if ((this.onBeginmc_issue_get_biggest_idDelegate == null)) {
+                this.onBeginmc_issue_get_biggest_idDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_get_biggest_id);
+            }
+            if ((this.onEndmc_issue_get_biggest_idDelegate == null)) {
+                this.onEndmc_issue_get_biggest_idDelegate = new EndOperationDelegate(this.OnEndmc_issue_get_biggest_id);
+            }
+            if ((this.onmc_issue_get_biggest_idCompletedDelegate == null)) {
+                this.onmc_issue_get_biggest_idCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_get_biggest_idCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_get_biggest_idDelegate, new object[] {
+                        request}, this.onEndmc_issue_get_biggest_idDelegate, this.onmc_issue_get_biggest_idCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryResponse mc_issue_get_id_from_summary(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryRequest request) {
+            return base.Channel.mc_issue_get_id_from_summary(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_get_id_from_summary(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_get_id_from_summary(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryResponse Endmc_issue_get_id_from_summary(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_get_id_from_summary(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_get_id_from_summary(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryRequest)(inValues[0]));
+            return this.Beginmc_issue_get_id_from_summary(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_get_id_from_summary(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryResponse retVal = this.Endmc_issue_get_id_from_summary(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_get_id_from_summaryCompleted(object state) {
+            if ((this.mc_issue_get_id_from_summaryCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_get_id_from_summaryCompleted(this, new mc_issue_get_id_from_summaryCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_get_id_from_summaryAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryRequest request) {
+            this.mc_issue_get_id_from_summaryAsync(request, null);
+        }
+        
+        public void mc_issue_get_id_from_summaryAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryRequest request, object userState) {
+            if ((this.onBeginmc_issue_get_id_from_summaryDelegate == null)) {
+                this.onBeginmc_issue_get_id_from_summaryDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_get_id_from_summary);
+            }
+            if ((this.onEndmc_issue_get_id_from_summaryDelegate == null)) {
+                this.onEndmc_issue_get_id_from_summaryDelegate = new EndOperationDelegate(this.OnEndmc_issue_get_id_from_summary);
+            }
+            if ((this.onmc_issue_get_id_from_summaryCompletedDelegate == null)) {
+                this.onmc_issue_get_id_from_summaryCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_get_id_from_summaryCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_get_id_from_summaryDelegate, new object[] {
+                        request}, this.onEndmc_issue_get_id_from_summaryDelegate, this.onmc_issue_get_id_from_summaryCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addResponse mc_issue_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addRequest request) {
+            return base.Channel.mc_issue_add(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_add(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addResponse Endmc_issue_add(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_add(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addRequest)(inValues[0]));
+            return this.Beginmc_issue_add(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_add(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addResponse retVal = this.Endmc_issue_add(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_addCompleted(object state) {
+            if ((this.mc_issue_addCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_addCompleted(this, new mc_issue_addCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addRequest request) {
+            this.mc_issue_addAsync(request, null);
+        }
+        
+        public void mc_issue_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addRequest request, object userState) {
+            if ((this.onBeginmc_issue_addDelegate == null)) {
+                this.onBeginmc_issue_addDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_add);
+            }
+            if ((this.onEndmc_issue_addDelegate == null)) {
+                this.onEndmc_issue_addDelegate = new EndOperationDelegate(this.OnEndmc_issue_add);
+            }
+            if ((this.onmc_issue_addCompletedDelegate == null)) {
+                this.onmc_issue_addCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_addCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_addDelegate, new object[] {
+                        request}, this.onEndmc_issue_addDelegate, this.onmc_issue_addCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateResponse mc_issue_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateRequest request) {
+            return base.Channel.mc_issue_update(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_update(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateResponse Endmc_issue_update(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_update(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_update(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateRequest)(inValues[0]));
+            return this.Beginmc_issue_update(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_update(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateResponse retVal = this.Endmc_issue_update(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_updateCompleted(object state) {
+            if ((this.mc_issue_updateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_updateCompleted(this, new mc_issue_updateCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_updateAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateRequest request) {
+            this.mc_issue_updateAsync(request, null);
+        }
+        
+        public void mc_issue_updateAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateRequest request, object userState) {
+            if ((this.onBeginmc_issue_updateDelegate == null)) {
+                this.onBeginmc_issue_updateDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_update);
+            }
+            if ((this.onEndmc_issue_updateDelegate == null)) {
+                this.onEndmc_issue_updateDelegate = new EndOperationDelegate(this.OnEndmc_issue_update);
+            }
+            if ((this.onmc_issue_updateCompletedDelegate == null)) {
+                this.onmc_issue_updateCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_updateCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_updateDelegate, new object[] {
+                        request}, this.onEndmc_issue_updateDelegate, this.onmc_issue_updateCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsResponse mc_issue_set_tags(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsRequest request) {
+            return base.Channel.mc_issue_set_tags(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_set_tags(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_set_tags(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsResponse Endmc_issue_set_tags(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_set_tags(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_set_tags(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsRequest)(inValues[0]));
+            return this.Beginmc_issue_set_tags(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_set_tags(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsResponse retVal = this.Endmc_issue_set_tags(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_set_tagsCompleted(object state) {
+            if ((this.mc_issue_set_tagsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_set_tagsCompleted(this, new mc_issue_set_tagsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_set_tagsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsRequest request) {
+            this.mc_issue_set_tagsAsync(request, null);
+        }
+        
+        public void mc_issue_set_tagsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsRequest request, object userState) {
+            if ((this.onBeginmc_issue_set_tagsDelegate == null)) {
+                this.onBeginmc_issue_set_tagsDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_set_tags);
+            }
+            if ((this.onEndmc_issue_set_tagsDelegate == null)) {
+                this.onEndmc_issue_set_tagsDelegate = new EndOperationDelegate(this.OnEndmc_issue_set_tags);
+            }
+            if ((this.onmc_issue_set_tagsCompletedDelegate == null)) {
+                this.onmc_issue_set_tagsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_set_tagsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_set_tagsDelegate, new object[] {
+                        request}, this.onEndmc_issue_set_tagsDelegate, this.onmc_issue_set_tagsCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteResponse mc_issue_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteRequest request) {
+            return base.Channel.mc_issue_delete(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_delete(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteResponse Endmc_issue_delete(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_delete(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_delete(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteRequest)(inValues[0]));
+            return this.Beginmc_issue_delete(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_delete(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteResponse retVal = this.Endmc_issue_delete(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_deleteCompleted(object state) {
+            if ((this.mc_issue_deleteCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_deleteCompleted(this, new mc_issue_deleteCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteRequest request) {
+            this.mc_issue_deleteAsync(request, null);
+        }
+        
+        public void mc_issue_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteRequest request, object userState) {
+            if ((this.onBeginmc_issue_deleteDelegate == null)) {
+                this.onBeginmc_issue_deleteDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_delete);
+            }
+            if ((this.onEndmc_issue_deleteDelegate == null)) {
+                this.onEndmc_issue_deleteDelegate = new EndOperationDelegate(this.OnEndmc_issue_delete);
+            }
+            if ((this.onmc_issue_deleteCompletedDelegate == null)) {
+                this.onmc_issue_deleteCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_deleteCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_deleteDelegate, new object[] {
+                        request}, this.onEndmc_issue_deleteDelegate, this.onmc_issue_deleteCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addResponse mc_issue_note_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addRequest request) {
+            return base.Channel.mc_issue_note_add(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_note_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_note_add(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addResponse Endmc_issue_note_add(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_note_add(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_note_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addRequest)(inValues[0]));
+            return this.Beginmc_issue_note_add(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_note_add(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addResponse retVal = this.Endmc_issue_note_add(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_note_addCompleted(object state) {
+            if ((this.mc_issue_note_addCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_note_addCompleted(this, new mc_issue_note_addCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_note_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addRequest request) {
+            this.mc_issue_note_addAsync(request, null);
+        }
+        
+        public void mc_issue_note_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addRequest request, object userState) {
+            if ((this.onBeginmc_issue_note_addDelegate == null)) {
+                this.onBeginmc_issue_note_addDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_note_add);
+            }
+            if ((this.onEndmc_issue_note_addDelegate == null)) {
+                this.onEndmc_issue_note_addDelegate = new EndOperationDelegate(this.OnEndmc_issue_note_add);
+            }
+            if ((this.onmc_issue_note_addCompletedDelegate == null)) {
+                this.onmc_issue_note_addCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_note_addCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_note_addDelegate, new object[] {
+                        request}, this.onEndmc_issue_note_addDelegate, this.onmc_issue_note_addCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteResponse mc_issue_note_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteRequest request) {
+            return base.Channel.mc_issue_note_delete(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_note_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_note_delete(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteResponse Endmc_issue_note_delete(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_note_delete(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_note_delete(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteRequest)(inValues[0]));
+            return this.Beginmc_issue_note_delete(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_note_delete(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteResponse retVal = this.Endmc_issue_note_delete(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_note_deleteCompleted(object state) {
+            if ((this.mc_issue_note_deleteCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_note_deleteCompleted(this, new mc_issue_note_deleteCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_note_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteRequest request) {
+            this.mc_issue_note_deleteAsync(request, null);
+        }
+        
+        public void mc_issue_note_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteRequest request, object userState) {
+            if ((this.onBeginmc_issue_note_deleteDelegate == null)) {
+                this.onBeginmc_issue_note_deleteDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_note_delete);
+            }
+            if ((this.onEndmc_issue_note_deleteDelegate == null)) {
+                this.onEndmc_issue_note_deleteDelegate = new EndOperationDelegate(this.OnEndmc_issue_note_delete);
+            }
+            if ((this.onmc_issue_note_deleteCompletedDelegate == null)) {
+                this.onmc_issue_note_deleteCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_note_deleteCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_note_deleteDelegate, new object[] {
+                        request}, this.onEndmc_issue_note_deleteDelegate, this.onmc_issue_note_deleteCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateResponse mc_issue_note_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateRequest request) {
+            return base.Channel.mc_issue_note_update(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_note_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_note_update(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateResponse Endmc_issue_note_update(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_note_update(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_note_update(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateRequest)(inValues[0]));
+            return this.Beginmc_issue_note_update(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_note_update(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateResponse retVal = this.Endmc_issue_note_update(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_note_updateCompleted(object state) {
+            if ((this.mc_issue_note_updateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_note_updateCompleted(this, new mc_issue_note_updateCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_note_updateAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateRequest request) {
+            this.mc_issue_note_updateAsync(request, null);
+        }
+        
+        public void mc_issue_note_updateAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateRequest request, object userState) {
+            if ((this.onBeginmc_issue_note_updateDelegate == null)) {
+                this.onBeginmc_issue_note_updateDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_note_update);
+            }
+            if ((this.onEndmc_issue_note_updateDelegate == null)) {
+                this.onEndmc_issue_note_updateDelegate = new EndOperationDelegate(this.OnEndmc_issue_note_update);
+            }
+            if ((this.onmc_issue_note_updateCompletedDelegate == null)) {
+                this.onmc_issue_note_updateCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_note_updateCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_note_updateDelegate, new object[] {
+                        request}, this.onEndmc_issue_note_updateDelegate, this.onmc_issue_note_updateCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addResponse mc_issue_relationship_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addRequest request) {
+            return base.Channel.mc_issue_relationship_add(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_relationship_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_relationship_add(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addResponse Endmc_issue_relationship_add(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_relationship_add(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_relationship_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addRequest)(inValues[0]));
+            return this.Beginmc_issue_relationship_add(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_relationship_add(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addResponse retVal = this.Endmc_issue_relationship_add(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_relationship_addCompleted(object state) {
+            if ((this.mc_issue_relationship_addCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_relationship_addCompleted(this, new mc_issue_relationship_addCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_relationship_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addRequest request) {
+            this.mc_issue_relationship_addAsync(request, null);
+        }
+        
+        public void mc_issue_relationship_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addRequest request, object userState) {
+            if ((this.onBeginmc_issue_relationship_addDelegate == null)) {
+                this.onBeginmc_issue_relationship_addDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_relationship_add);
+            }
+            if ((this.onEndmc_issue_relationship_addDelegate == null)) {
+                this.onEndmc_issue_relationship_addDelegate = new EndOperationDelegate(this.OnEndmc_issue_relationship_add);
+            }
+            if ((this.onmc_issue_relationship_addCompletedDelegate == null)) {
+                this.onmc_issue_relationship_addCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_relationship_addCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_relationship_addDelegate, new object[] {
+                        request}, this.onEndmc_issue_relationship_addDelegate, this.onmc_issue_relationship_addCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteResponse mc_issue_relationship_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteRequest request) {
+            return base.Channel.mc_issue_relationship_delete(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_relationship_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_relationship_delete(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteResponse Endmc_issue_relationship_delete(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_relationship_delete(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_relationship_delete(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteRequest)(inValues[0]));
+            return this.Beginmc_issue_relationship_delete(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_relationship_delete(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteResponse retVal = this.Endmc_issue_relationship_delete(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_relationship_deleteCompleted(object state) {
+            if ((this.mc_issue_relationship_deleteCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_relationship_deleteCompleted(this, new mc_issue_relationship_deleteCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_relationship_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteRequest request) {
+            this.mc_issue_relationship_deleteAsync(request, null);
+        }
+        
+        public void mc_issue_relationship_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteRequest request, object userState) {
+            if ((this.onBeginmc_issue_relationship_deleteDelegate == null)) {
+                this.onBeginmc_issue_relationship_deleteDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_relationship_delete);
+            }
+            if ((this.onEndmc_issue_relationship_deleteDelegate == null)) {
+                this.onEndmc_issue_relationship_deleteDelegate = new EndOperationDelegate(this.OnEndmc_issue_relationship_delete);
+            }
+            if ((this.onmc_issue_relationship_deleteCompletedDelegate == null)) {
+                this.onmc_issue_relationship_deleteCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_relationship_deleteCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_relationship_deleteDelegate, new object[] {
+                        request}, this.onEndmc_issue_relationship_deleteDelegate, this.onmc_issue_relationship_deleteCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addResponse mc_issue_attachment_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addRequest request) {
+            return base.Channel.mc_issue_attachment_add(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_attachment_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_attachment_add(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addResponse Endmc_issue_attachment_add(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_attachment_add(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_attachment_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addRequest)(inValues[0]));
+            return this.Beginmc_issue_attachment_add(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_attachment_add(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addResponse retVal = this.Endmc_issue_attachment_add(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_attachment_addCompleted(object state) {
+            if ((this.mc_issue_attachment_addCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_attachment_addCompleted(this, new mc_issue_attachment_addCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_attachment_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addRequest request) {
+            this.mc_issue_attachment_addAsync(request, null);
+        }
+        
+        public void mc_issue_attachment_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addRequest request, object userState) {
+            if ((this.onBeginmc_issue_attachment_addDelegate == null)) {
+                this.onBeginmc_issue_attachment_addDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_attachment_add);
+            }
+            if ((this.onEndmc_issue_attachment_addDelegate == null)) {
+                this.onEndmc_issue_attachment_addDelegate = new EndOperationDelegate(this.OnEndmc_issue_attachment_add);
+            }
+            if ((this.onmc_issue_attachment_addCompletedDelegate == null)) {
+                this.onmc_issue_attachment_addCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_attachment_addCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_attachment_addDelegate, new object[] {
+                        request}, this.onEndmc_issue_attachment_addDelegate, this.onmc_issue_attachment_addCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteResponse mc_issue_attachment_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteRequest request) {
+            return base.Channel.mc_issue_attachment_delete(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_attachment_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_attachment_delete(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteResponse Endmc_issue_attachment_delete(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_attachment_delete(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_attachment_delete(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteRequest)(inValues[0]));
+            return this.Beginmc_issue_attachment_delete(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_attachment_delete(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteResponse retVal = this.Endmc_issue_attachment_delete(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_attachment_deleteCompleted(object state) {
+            if ((this.mc_issue_attachment_deleteCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_attachment_deleteCompleted(this, new mc_issue_attachment_deleteCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_attachment_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteRequest request) {
+            this.mc_issue_attachment_deleteAsync(request, null);
+        }
+        
+        public void mc_issue_attachment_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteRequest request, object userState) {
+            if ((this.onBeginmc_issue_attachment_deleteDelegate == null)) {
+                this.onBeginmc_issue_attachment_deleteDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_attachment_delete);
+            }
+            if ((this.onEndmc_issue_attachment_deleteDelegate == null)) {
+                this.onEndmc_issue_attachment_deleteDelegate = new EndOperationDelegate(this.OnEndmc_issue_attachment_delete);
+            }
+            if ((this.onmc_issue_attachment_deleteCompletedDelegate == null)) {
+                this.onmc_issue_attachment_deleteCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_attachment_deleteCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_attachment_deleteDelegate, new object[] {
+                        request}, this.onEndmc_issue_attachment_deleteDelegate, this.onmc_issue_attachment_deleteCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getResponse mc_issue_attachment_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getRequest request) {
+            return base.Channel.mc_issue_attachment_get(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_attachment_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_attachment_get(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getResponse Endmc_issue_attachment_get(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_attachment_get(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_attachment_get(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getRequest)(inValues[0]));
+            return this.Beginmc_issue_attachment_get(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_attachment_get(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getResponse retVal = this.Endmc_issue_attachment_get(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_attachment_getCompleted(object state) {
+            if ((this.mc_issue_attachment_getCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_attachment_getCompleted(this, new mc_issue_attachment_getCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_attachment_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getRequest request) {
+            this.mc_issue_attachment_getAsync(request, null);
+        }
+        
+        public void mc_issue_attachment_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getRequest request, object userState) {
+            if ((this.onBeginmc_issue_attachment_getDelegate == null)) {
+                this.onBeginmc_issue_attachment_getDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_attachment_get);
+            }
+            if ((this.onEndmc_issue_attachment_getDelegate == null)) {
+                this.onEndmc_issue_attachment_getDelegate = new EndOperationDelegate(this.OnEndmc_issue_attachment_get);
+            }
+            if ((this.onmc_issue_attachment_getCompletedDelegate == null)) {
+                this.onmc_issue_attachment_getCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_attachment_getCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_attachment_getDelegate, new object[] {
+                        request}, this.onEndmc_issue_attachment_getDelegate, this.onmc_issue_attachment_getCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addResponse mc_project_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addRequest request) {
+            return base.Channel.mc_project_add(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_add(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addResponse Endmc_project_add(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_add(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addRequest)(inValues[0]));
+            return this.Beginmc_project_add(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_add(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addResponse retVal = this.Endmc_project_add(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_addCompleted(object state) {
+            if ((this.mc_project_addCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_addCompleted(this, new mc_project_addCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addRequest request) {
+            this.mc_project_addAsync(request, null);
+        }
+        
+        public void mc_project_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addRequest request, object userState) {
+            if ((this.onBeginmc_project_addDelegate == null)) {
+                this.onBeginmc_project_addDelegate = new BeginOperationDelegate(this.OnBeginmc_project_add);
+            }
+            if ((this.onEndmc_project_addDelegate == null)) {
+                this.onEndmc_project_addDelegate = new EndOperationDelegate(this.OnEndmc_project_add);
+            }
+            if ((this.onmc_project_addCompletedDelegate == null)) {
+                this.onmc_project_addCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_addCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_addDelegate, new object[] {
+                        request}, this.onEndmc_project_addDelegate, this.onmc_project_addCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteResponse mc_project_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteRequest request) {
+            return base.Channel.mc_project_delete(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_delete(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteResponse Endmc_project_delete(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_delete(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_delete(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteRequest)(inValues[0]));
+            return this.Beginmc_project_delete(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_delete(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteResponse retVal = this.Endmc_project_delete(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_deleteCompleted(object state) {
+            if ((this.mc_project_deleteCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_deleteCompleted(this, new mc_project_deleteCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteRequest request) {
+            this.mc_project_deleteAsync(request, null);
+        }
+        
+        public void mc_project_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteRequest request, object userState) {
+            if ((this.onBeginmc_project_deleteDelegate == null)) {
+                this.onBeginmc_project_deleteDelegate = new BeginOperationDelegate(this.OnBeginmc_project_delete);
+            }
+            if ((this.onEndmc_project_deleteDelegate == null)) {
+                this.onEndmc_project_deleteDelegate = new EndOperationDelegate(this.OnEndmc_project_delete);
+            }
+            if ((this.onmc_project_deleteCompletedDelegate == null)) {
+                this.onmc_project_deleteCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_deleteCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_deleteDelegate, new object[] {
+                        request}, this.onEndmc_project_deleteDelegate, this.onmc_project_deleteCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateResponse mc_project_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateRequest request) {
+            return base.Channel.mc_project_update(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_update(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateResponse Endmc_project_update(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_update(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_update(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateRequest)(inValues[0]));
+            return this.Beginmc_project_update(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_update(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateResponse retVal = this.Endmc_project_update(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_updateCompleted(object state) {
+            if ((this.mc_project_updateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_updateCompleted(this, new mc_project_updateCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_updateAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateRequest request) {
+            this.mc_project_updateAsync(request, null);
+        }
+        
+        public void mc_project_updateAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateRequest request, object userState) {
+            if ((this.onBeginmc_project_updateDelegate == null)) {
+                this.onBeginmc_project_updateDelegate = new BeginOperationDelegate(this.OnBeginmc_project_update);
+            }
+            if ((this.onEndmc_project_updateDelegate == null)) {
+                this.onEndmc_project_updateDelegate = new EndOperationDelegate(this.OnEndmc_project_update);
+            }
+            if ((this.onmc_project_updateCompletedDelegate == null)) {
+                this.onmc_project_updateCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_updateCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_updateDelegate, new object[] {
+                        request}, this.onEndmc_project_updateDelegate, this.onmc_project_updateCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameResponse mc_project_get_id_from_name(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameRequest request) {
+            return base.Channel.mc_project_get_id_from_name(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_id_from_name(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_id_from_name(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameResponse Endmc_project_get_id_from_name(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_id_from_name(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_get_id_from_name(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameRequest)(inValues[0]));
+            return this.Beginmc_project_get_id_from_name(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_get_id_from_name(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameResponse retVal = this.Endmc_project_get_id_from_name(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_get_id_from_nameCompleted(object state) {
+            if ((this.mc_project_get_id_from_nameCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_id_from_nameCompleted(this, new mc_project_get_id_from_nameCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_get_id_from_nameAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameRequest request) {
+            this.mc_project_get_id_from_nameAsync(request, null);
+        }
+        
+        public void mc_project_get_id_from_nameAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameRequest request, object userState) {
+            if ((this.onBeginmc_project_get_id_from_nameDelegate == null)) {
+                this.onBeginmc_project_get_id_from_nameDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_id_from_name);
+            }
+            if ((this.onEndmc_project_get_id_from_nameDelegate == null)) {
+                this.onEndmc_project_get_id_from_nameDelegate = new EndOperationDelegate(this.OnEndmc_project_get_id_from_name);
+            }
+            if ((this.onmc_project_get_id_from_nameCompletedDelegate == null)) {
+                this.onmc_project_get_id_from_nameCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_id_from_nameCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_id_from_nameDelegate, new object[] {
+                        request}, this.onEndmc_project_get_id_from_nameDelegate, this.onmc_project_get_id_from_nameCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userResponse mc_project_get_issues_for_user(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userRequest request) {
+            return base.Channel.mc_project_get_issues_for_user(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_issues_for_user(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_issues_for_user(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userResponse Endmc_project_get_issues_for_user(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_issues_for_user(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_get_issues_for_user(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userRequest)(inValues[0]));
+            return this.Beginmc_project_get_issues_for_user(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_get_issues_for_user(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userResponse retVal = this.Endmc_project_get_issues_for_user(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_get_issues_for_userCompleted(object state) {
+            if ((this.mc_project_get_issues_for_userCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_issues_for_userCompleted(this, new mc_project_get_issues_for_userCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_get_issues_for_userAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userRequest request) {
+            this.mc_project_get_issues_for_userAsync(request, null);
+        }
+        
+        public void mc_project_get_issues_for_userAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userRequest request, object userState) {
+            if ((this.onBeginmc_project_get_issues_for_userDelegate == null)) {
+                this.onBeginmc_project_get_issues_for_userDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_issues_for_user);
+            }
+            if ((this.onEndmc_project_get_issues_for_userDelegate == null)) {
+                this.onEndmc_project_get_issues_for_userDelegate = new EndOperationDelegate(this.OnEndmc_project_get_issues_for_user);
+            }
+            if ((this.onmc_project_get_issues_for_userCompletedDelegate == null)) {
+                this.onmc_project_get_issues_for_userCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_issues_for_userCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_issues_for_userDelegate, new object[] {
+                        request}, this.onEndmc_project_get_issues_for_userDelegate, this.onmc_project_get_issues_for_userCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesResponse mc_project_get_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesRequest request) {
+            return base.Channel.mc_project_get_issues(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_issues(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesResponse Endmc_project_get_issues(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_issues(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_get_issues(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesRequest)(inValues[0]));
+            return this.Beginmc_project_get_issues(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_get_issues(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesResponse retVal = this.Endmc_project_get_issues(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_get_issuesCompleted(object state) {
+            if ((this.mc_project_get_issuesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_issuesCompleted(this, new mc_project_get_issuesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_get_issuesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesRequest request) {
+            this.mc_project_get_issuesAsync(request, null);
+        }
+        
+        public void mc_project_get_issuesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesRequest request, object userState) {
+            if ((this.onBeginmc_project_get_issuesDelegate == null)) {
+                this.onBeginmc_project_get_issuesDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_issues);
+            }
+            if ((this.onEndmc_project_get_issuesDelegate == null)) {
+                this.onEndmc_project_get_issuesDelegate = new EndOperationDelegate(this.OnEndmc_project_get_issues);
+            }
+            if ((this.onmc_project_get_issuesCompletedDelegate == null)) {
+                this.onmc_project_get_issuesCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_issuesCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_issuesDelegate, new object[] {
+                        request}, this.onEndmc_project_get_issuesDelegate, this.onmc_project_get_issuesCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersResponse mc_project_get_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersRequest request) {
+            return base.Channel.mc_project_get_issue_headers(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_issue_headers(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersResponse Endmc_project_get_issue_headers(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_issue_headers(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_get_issue_headers(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersRequest)(inValues[0]));
+            return this.Beginmc_project_get_issue_headers(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_get_issue_headers(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersResponse retVal = this.Endmc_project_get_issue_headers(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_get_issue_headersCompleted(object state) {
+            if ((this.mc_project_get_issue_headersCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_issue_headersCompleted(this, new mc_project_get_issue_headersCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_get_issue_headersAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersRequest request) {
+            this.mc_project_get_issue_headersAsync(request, null);
+        }
+        
+        public void mc_project_get_issue_headersAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersRequest request, object userState) {
+            if ((this.onBeginmc_project_get_issue_headersDelegate == null)) {
+                this.onBeginmc_project_get_issue_headersDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_issue_headers);
+            }
+            if ((this.onEndmc_project_get_issue_headersDelegate == null)) {
+                this.onEndmc_project_get_issue_headersDelegate = new EndOperationDelegate(this.OnEndmc_project_get_issue_headers);
+            }
+            if ((this.onmc_project_get_issue_headersCompletedDelegate == null)) {
+                this.onmc_project_get_issue_headersCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_issue_headersCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_issue_headersDelegate, new object[] {
+                        request}, this.onEndmc_project_get_issue_headersDelegate, this.onmc_project_get_issue_headersCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersResponse mc_project_get_users(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersRequest request) {
+            return base.Channel.mc_project_get_users(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_users(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_users(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersResponse Endmc_project_get_users(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_users(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_get_users(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersRequest)(inValues[0]));
+            return this.Beginmc_project_get_users(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_get_users(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersResponse retVal = this.Endmc_project_get_users(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_get_usersCompleted(object state) {
+            if ((this.mc_project_get_usersCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_usersCompleted(this, new mc_project_get_usersCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_get_usersAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersRequest request) {
+            this.mc_project_get_usersAsync(request, null);
+        }
+        
+        public void mc_project_get_usersAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersRequest request, object userState) {
+            if ((this.onBeginmc_project_get_usersDelegate == null)) {
+                this.onBeginmc_project_get_usersDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_users);
+            }
+            if ((this.onEndmc_project_get_usersDelegate == null)) {
+                this.onEndmc_project_get_usersDelegate = new EndOperationDelegate(this.OnEndmc_project_get_users);
+            }
+            if ((this.onmc_project_get_usersCompletedDelegate == null)) {
+                this.onmc_project_get_usersCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_usersCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_usersDelegate, new object[] {
+                        request}, this.onEndmc_project_get_usersDelegate, this.onmc_project_get_usersCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleResponse mc_projects_get_user_accessible(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleRequest request) {
+            return base.Channel.mc_projects_get_user_accessible(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_projects_get_user_accessible(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_projects_get_user_accessible(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleResponse Endmc_projects_get_user_accessible(System.IAsyncResult result) {
+            return base.Channel.Endmc_projects_get_user_accessible(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_projects_get_user_accessible(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleRequest)(inValues[0]));
+            return this.Beginmc_projects_get_user_accessible(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_projects_get_user_accessible(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleResponse retVal = this.Endmc_projects_get_user_accessible(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_projects_get_user_accessibleCompleted(object state) {
+            if ((this.mc_projects_get_user_accessibleCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_projects_get_user_accessibleCompleted(this, new mc_projects_get_user_accessibleCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_projects_get_user_accessibleAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleRequest request) {
+            this.mc_projects_get_user_accessibleAsync(request, null);
+        }
+        
+        public void mc_projects_get_user_accessibleAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleRequest request, object userState) {
+            if ((this.onBeginmc_projects_get_user_accessibleDelegate == null)) {
+                this.onBeginmc_projects_get_user_accessibleDelegate = new BeginOperationDelegate(this.OnBeginmc_projects_get_user_accessible);
+            }
+            if ((this.onEndmc_projects_get_user_accessibleDelegate == null)) {
+                this.onEndmc_projects_get_user_accessibleDelegate = new EndOperationDelegate(this.OnEndmc_projects_get_user_accessible);
+            }
+            if ((this.onmc_projects_get_user_accessibleCompletedDelegate == null)) {
+                this.onmc_projects_get_user_accessibleCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_projects_get_user_accessibleCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_projects_get_user_accessibleDelegate, new object[] {
+                        request}, this.onEndmc_projects_get_user_accessibleDelegate, this.onmc_projects_get_user_accessibleCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesResponse mc_project_get_categories(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesRequest request) {
+            return base.Channel.mc_project_get_categories(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_categories(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_categories(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesResponse Endmc_project_get_categories(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_categories(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_get_categories(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesRequest)(inValues[0]));
+            return this.Beginmc_project_get_categories(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_get_categories(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesResponse retVal = this.Endmc_project_get_categories(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_get_categoriesCompleted(object state) {
+            if ((this.mc_project_get_categoriesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_categoriesCompleted(this, new mc_project_get_categoriesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_get_categoriesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesRequest request) {
+            this.mc_project_get_categoriesAsync(request, null);
+        }
+        
+        public void mc_project_get_categoriesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesRequest request, object userState) {
+            if ((this.onBeginmc_project_get_categoriesDelegate == null)) {
+                this.onBeginmc_project_get_categoriesDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_categories);
+            }
+            if ((this.onEndmc_project_get_categoriesDelegate == null)) {
+                this.onEndmc_project_get_categoriesDelegate = new EndOperationDelegate(this.OnEndmc_project_get_categories);
+            }
+            if ((this.onmc_project_get_categoriesCompletedDelegate == null)) {
+                this.onmc_project_get_categoriesCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_categoriesCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_categoriesDelegate, new object[] {
+                        request}, this.onEndmc_project_get_categoriesDelegate, this.onmc_project_get_categoriesCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryResponse mc_project_add_category(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryRequest request) {
+            return base.Channel.mc_project_add_category(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_add_category(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_add_category(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryResponse Endmc_project_add_category(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_add_category(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_add_category(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryRequest)(inValues[0]));
+            return this.Beginmc_project_add_category(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_add_category(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryResponse retVal = this.Endmc_project_add_category(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_add_categoryCompleted(object state) {
+            if ((this.mc_project_add_categoryCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_add_categoryCompleted(this, new mc_project_add_categoryCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_add_categoryAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryRequest request) {
+            this.mc_project_add_categoryAsync(request, null);
+        }
+        
+        public void mc_project_add_categoryAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryRequest request, object userState) {
+            if ((this.onBeginmc_project_add_categoryDelegate == null)) {
+                this.onBeginmc_project_add_categoryDelegate = new BeginOperationDelegate(this.OnBeginmc_project_add_category);
+            }
+            if ((this.onEndmc_project_add_categoryDelegate == null)) {
+                this.onEndmc_project_add_categoryDelegate = new EndOperationDelegate(this.OnEndmc_project_add_category);
+            }
+            if ((this.onmc_project_add_categoryCompletedDelegate == null)) {
+                this.onmc_project_add_categoryCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_add_categoryCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_add_categoryDelegate, new object[] {
+                        request}, this.onEndmc_project_add_categoryDelegate, this.onmc_project_add_categoryCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryResponse mc_project_delete_category(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryRequest request) {
+            return base.Channel.mc_project_delete_category(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_delete_category(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_delete_category(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryResponse Endmc_project_delete_category(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_delete_category(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_delete_category(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryRequest)(inValues[0]));
+            return this.Beginmc_project_delete_category(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_delete_category(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryResponse retVal = this.Endmc_project_delete_category(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_delete_categoryCompleted(object state) {
+            if ((this.mc_project_delete_categoryCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_delete_categoryCompleted(this, new mc_project_delete_categoryCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_delete_categoryAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryRequest request) {
+            this.mc_project_delete_categoryAsync(request, null);
+        }
+        
+        public void mc_project_delete_categoryAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryRequest request, object userState) {
+            if ((this.onBeginmc_project_delete_categoryDelegate == null)) {
+                this.onBeginmc_project_delete_categoryDelegate = new BeginOperationDelegate(this.OnBeginmc_project_delete_category);
+            }
+            if ((this.onEndmc_project_delete_categoryDelegate == null)) {
+                this.onEndmc_project_delete_categoryDelegate = new EndOperationDelegate(this.OnEndmc_project_delete_category);
+            }
+            if ((this.onmc_project_delete_categoryCompletedDelegate == null)) {
+                this.onmc_project_delete_categoryCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_delete_categoryCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_delete_categoryDelegate, new object[] {
+                        request}, this.onEndmc_project_delete_categoryDelegate, this.onmc_project_delete_categoryCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameResponse mc_project_rename_category_by_name(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameRequest request) {
+            return base.Channel.mc_project_rename_category_by_name(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_rename_category_by_name(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_rename_category_by_name(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameResponse Endmc_project_rename_category_by_name(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_rename_category_by_name(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_rename_category_by_name(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameRequest)(inValues[0]));
+            return this.Beginmc_project_rename_category_by_name(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_rename_category_by_name(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameResponse retVal = this.Endmc_project_rename_category_by_name(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_rename_category_by_nameCompleted(object state) {
+            if ((this.mc_project_rename_category_by_nameCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_rename_category_by_nameCompleted(this, new mc_project_rename_category_by_nameCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_rename_category_by_nameAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameRequest request) {
+            this.mc_project_rename_category_by_nameAsync(request, null);
+        }
+        
+        public void mc_project_rename_category_by_nameAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameRequest request, object userState) {
+            if ((this.onBeginmc_project_rename_category_by_nameDelegate == null)) {
+                this.onBeginmc_project_rename_category_by_nameDelegate = new BeginOperationDelegate(this.OnBeginmc_project_rename_category_by_name);
+            }
+            if ((this.onEndmc_project_rename_category_by_nameDelegate == null)) {
+                this.onEndmc_project_rename_category_by_nameDelegate = new EndOperationDelegate(this.OnEndmc_project_rename_category_by_name);
+            }
+            if ((this.onmc_project_rename_category_by_nameCompletedDelegate == null)) {
+                this.onmc_project_rename_category_by_nameCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_rename_category_by_nameCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_rename_category_by_nameDelegate, new object[] {
+                        request}, this.onEndmc_project_rename_category_by_nameDelegate, this.onmc_project_rename_category_by_nameCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsResponse mc_project_get_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsRequest request) {
+            return base.Channel.mc_project_get_versions(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_versions(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_update(string, string, string, ProjectData)'
-        public bool mc_project_update(string username, string password, string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_update(string, string, string, ProjectData)'
-            return base.Channel.mc_project_update(username, password, project_id, project);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsResponse Endmc_project_get_versions(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_versions(result);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_updateAsync(string, string, string, ProjectData)'
-        public System.Threading.Tasks.Task<bool> mc_project_updateAsync(string username, string password, string project_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData project) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_updateAsync(string, string, string, ProjectData)'
-            return base.Channel.mc_project_updateAsync(username, password, project_id, project);
+        private System.IAsyncResult OnBeginmc_project_get_versions(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsRequest)(inValues[0]));
+            return this.Beginmc_project_get_versions(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_id_from_name(string, string, string)'
-        public string mc_project_get_id_from_name(string username, string password, string project_name) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_id_from_name(string, string, string)'
-            return base.Channel.mc_project_get_id_from_name(username, password, project_name);
+        private object[] OnEndmc_project_get_versions(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsResponse retVal = this.Endmc_project_get_versions(result);
+            return new object[] {
+                    retVal};
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_id_from_nameAsync(string, string, string)'
-        public System.Threading.Tasks.Task<string> mc_project_get_id_from_nameAsync(string username, string password, string project_name) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_id_from_nameAsync(string, string, string)'
-            return base.Channel.mc_project_get_id_from_nameAsync(username, password, project_name);
+        private void Onmc_project_get_versionsCompleted(object state) {
+            if ((this.mc_project_get_versionsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_versionsCompleted(this, new mc_project_get_versionsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues_for_user(string, string, string, string, AccountData, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues_for_user(string username, string password, string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues_for_user(string, string, string, string, AccountData, string, string)'
-            return base.Channel.mc_project_get_issues_for_user(username, password, project_id, filter_type, target_user, page_number, per_page);
+        public void mc_project_get_versionsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsRequest request) {
+            this.mc_project_get_versionsAsync(request, null);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues_for_userAsync(string, string, string, string, AccountData, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_project_get_issues_for_userAsync(string username, string password, string project_id, string filter_type, SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData target_user, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues_for_userAsync(string, string, string, string, AccountData, string, string)'
-            return base.Channel.mc_project_get_issues_for_userAsync(username, password, project_id, filter_type, target_user, page_number, per_page);
+        public void mc_project_get_versionsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsRequest request, object userState) {
+            if ((this.onBeginmc_project_get_versionsDelegate == null)) {
+                this.onBeginmc_project_get_versionsDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_versions);
+            }
+            if ((this.onEndmc_project_get_versionsDelegate == null)) {
+                this.onEndmc_project_get_versionsDelegate = new EndOperationDelegate(this.OnEndmc_project_get_versions);
+            }
+            if ((this.onmc_project_get_versionsCompletedDelegate == null)) {
+                this.onmc_project_get_versionsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_versionsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_versionsDelegate, new object[] {
+                        request}, this.onEndmc_project_get_versionsDelegate, this.onmc_project_get_versionsCompletedDelegate, userState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues(string, string, string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_project_get_issues(string username, string password, string project_id, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issues(string, string, string, string, string)'
-            return base.Channel.mc_project_get_issues(username, password, project_id, page_number, per_page);
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addResponse mc_project_version_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addRequest request) {
+            return base.Channel.mc_project_version_add(request);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issuesAsync(string, string, string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_project_get_issuesAsync(string username, string password, string project_id, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issuesAsync(string, string, string, string, string)'
-            return base.Channel.mc_project_get_issuesAsync(username, password, project_id, page_number, per_page);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_version_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_version_add(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issue_headers(string, string, string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_project_get_issue_headers(string username, string password, string project_id, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issue_headers(string, string, string, string, string)'
-            return base.Channel.mc_project_get_issue_headers(username, password, project_id, page_number, per_page);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addResponse Endmc_project_version_add(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_version_add(result);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issue_headersAsync(string, string, string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_project_get_issue_headersAsync(string username, string password, string project_id, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_issue_headersAsync(string, string, string, string, string)'
-            return base.Channel.mc_project_get_issue_headersAsync(username, password, project_id, page_number, per_page);
+        private System.IAsyncResult OnBeginmc_project_version_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addRequest)(inValues[0]));
+            return this.Beginmc_project_version_add(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_users(string, string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[] mc_project_get_users(string username, string password, string project_id, string access) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_users(string, string, string, string)'
-            return base.Channel.mc_project_get_users(username, password, project_id, access);
+        private object[] OnEndmc_project_version_add(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addResponse retVal = this.Endmc_project_version_add(result);
+            return new object[] {
+                    retVal};
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_usersAsync(string, string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData[]> mc_project_get_usersAsync(string username, string password, string project_id, string access) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_usersAsync(string, string, string, string)'
-            return base.Channel.mc_project_get_usersAsync(username, password, project_id, access);
+        private void Onmc_project_version_addCompleted(object state) {
+            if ((this.mc_project_version_addCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_version_addCompleted(this, new mc_project_version_addCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_projects_get_user_accessible(string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[] mc_projects_get_user_accessible(string username, string password) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_projects_get_user_accessible(string, string)'
-            return base.Channel.mc_projects_get_user_accessible(username, password);
+        public void mc_project_version_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addRequest request) {
+            this.mc_project_version_addAsync(request, null);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_projects_get_user_accessibleAsync(string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData[]> mc_projects_get_user_accessibleAsync(string username, string password) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_projects_get_user_accessibleAsync(string, string)'
-            return base.Channel.mc_projects_get_user_accessibleAsync(username, password);
+        public void mc_project_version_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addRequest request, object userState) {
+            if ((this.onBeginmc_project_version_addDelegate == null)) {
+                this.onBeginmc_project_version_addDelegate = new BeginOperationDelegate(this.OnBeginmc_project_version_add);
+            }
+            if ((this.onEndmc_project_version_addDelegate == null)) {
+                this.onEndmc_project_version_addDelegate = new EndOperationDelegate(this.OnEndmc_project_version_add);
+            }
+            if ((this.onmc_project_version_addCompletedDelegate == null)) {
+                this.onmc_project_version_addCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_version_addCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_version_addDelegate, new object[] {
+                        request}, this.onEndmc_project_version_addDelegate, this.onmc_project_version_addCompletedDelegate, userState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_categories(string, string, string)'
-        public string[] mc_project_get_categories(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_categories(string, string, string)'
-            return base.Channel.mc_project_get_categories(username, password, project_id);
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateResponse mc_project_version_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateRequest request) {
+            return base.Channel.mc_project_version_update(request);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_categoriesAsync(string, string, string)'
-        public System.Threading.Tasks.Task<string[]> mc_project_get_categoriesAsync(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_categoriesAsync(string, string, string)'
-            return base.Channel.mc_project_get_categoriesAsync(username, password, project_id);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_version_update(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_version_update(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add_category(string, string, string, string)'
-        public string mc_project_add_category(string username, string password, string project_id, string p_category_name) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add_category(string, string, string, string)'
-            return base.Channel.mc_project_add_category(username, password, project_id, p_category_name);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateResponse Endmc_project_version_update(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_version_update(result);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add_categoryAsync(string, string, string, string)'
-        public System.Threading.Tasks.Task<string> mc_project_add_categoryAsync(string username, string password, string project_id, string p_category_name) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_add_categoryAsync(string, string, string, string)'
-            return base.Channel.mc_project_add_categoryAsync(username, password, project_id, p_category_name);
+        private System.IAsyncResult OnBeginmc_project_version_update(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateRequest)(inValues[0]));
+            return this.Beginmc_project_version_update(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete_category(string, string, string, string)'
-        public string mc_project_delete_category(string username, string password, string project_id, string p_category_name) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete_category(string, string, string, string)'
-            return base.Channel.mc_project_delete_category(username, password, project_id, p_category_name);
+        private object[] OnEndmc_project_version_update(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateResponse retVal = this.Endmc_project_version_update(result);
+            return new object[] {
+                    retVal};
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete_categoryAsync(string, string, string, string)'
-        public System.Threading.Tasks.Task<string> mc_project_delete_categoryAsync(string username, string password, string project_id, string p_category_name) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_delete_categoryAsync(string, string, string, string)'
-            return base.Channel.mc_project_delete_categoryAsync(username, password, project_id, p_category_name);
+        private void Onmc_project_version_updateCompleted(object state) {
+            if ((this.mc_project_version_updateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_version_updateCompleted(this, new mc_project_version_updateCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_rename_category_by_name(string, string, string, string, string, string)'
-        public string mc_project_rename_category_by_name(string username, string password, string project_id, string p_category_name, string p_category_name_new, string p_assigned_to) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_rename_category_by_name(string, string, string, string, string, string)'
-            return base.Channel.mc_project_rename_category_by_name(username, password, project_id, p_category_name, p_category_name_new, p_assigned_to);
+        public void mc_project_version_updateAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateRequest request) {
+            this.mc_project_version_updateAsync(request, null);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_rename_category_by_nameAsync(string, string, string, string, string, string)'
-        public System.Threading.Tasks.Task<string> mc_project_rename_category_by_nameAsync(string username, string password, string project_id, string p_category_name, string p_category_name_new, string p_assigned_to) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_rename_category_by_nameAsync(string, string, string, string, string, string)'
-            return base.Channel.mc_project_rename_category_by_nameAsync(username, password, project_id, p_category_name, p_category_name_new, p_assigned_to);
+        public void mc_project_version_updateAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateRequest request, object userState) {
+            if ((this.onBeginmc_project_version_updateDelegate == null)) {
+                this.onBeginmc_project_version_updateDelegate = new BeginOperationDelegate(this.OnBeginmc_project_version_update);
+            }
+            if ((this.onEndmc_project_version_updateDelegate == null)) {
+                this.onEndmc_project_version_updateDelegate = new EndOperationDelegate(this.OnEndmc_project_version_update);
+            }
+            if ((this.onmc_project_version_updateCompletedDelegate == null)) {
+                this.onmc_project_version_updateCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_version_updateCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_version_updateDelegate, new object[] {
+                        request}, this.onEndmc_project_version_updateDelegate, this.onmc_project_version_updateCompletedDelegate, userState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_versions(string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_versions(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_versions(string, string, string)'
-            return base.Channel.mc_project_get_versions(username, password, project_id);
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteResponse mc_project_version_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteRequest request) {
+            return base.Channel.mc_project_version_delete(request);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_versionsAsync(string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_versionsAsync(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_versionsAsync(string, string, string)'
-            return base.Channel.mc_project_get_versionsAsync(username, password, project_id);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_version_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_version_delete(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_add(string, string, ProjectVersionData)'
-        public string mc_project_version_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_add(string, string, ProjectVersionData)'
-            return base.Channel.mc_project_version_add(username, password, version);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteResponse Endmc_project_version_delete(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_version_delete(result);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_addAsync(string, string, ProjectVersionData)'
-        public System.Threading.Tasks.Task<string> mc_project_version_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_addAsync(string, string, ProjectVersionData)'
-            return base.Channel.mc_project_version_addAsync(username, password, version);
+        private System.IAsyncResult OnBeginmc_project_version_delete(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteRequest)(inValues[0]));
+            return this.Beginmc_project_version_delete(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_update(string, string, string, ProjectVersionData)'
-        public bool mc_project_version_update(string username, string password, string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_update(string, string, string, ProjectVersionData)'
-            return base.Channel.mc_project_version_update(username, password, version_id, version);
+        private object[] OnEndmc_project_version_delete(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteResponse retVal = this.Endmc_project_version_delete(result);
+            return new object[] {
+                    retVal};
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_updateAsync(string, string, string, ProjectVersionData)'
-        public System.Threading.Tasks.Task<bool> mc_project_version_updateAsync(string username, string password, string version_id, SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData version) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_updateAsync(string, string, string, ProjectVersionData)'
-            return base.Channel.mc_project_version_updateAsync(username, password, version_id, version);
+        private void Onmc_project_version_deleteCompleted(object state) {
+            if ((this.mc_project_version_deleteCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_version_deleteCompleted(this, new mc_project_version_deleteCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_delete(string, string, string)'
-        public bool mc_project_version_delete(string username, string password, string version_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_delete(string, string, string)'
-            return base.Channel.mc_project_version_delete(username, password, version_id);
+        public void mc_project_version_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteRequest request) {
+            this.mc_project_version_deleteAsync(request, null);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_deleteAsync(string, string, string)'
-        public System.Threading.Tasks.Task<bool> mc_project_version_deleteAsync(string username, string password, string version_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_version_deleteAsync(string, string, string)'
-            return base.Channel.mc_project_version_deleteAsync(username, password, version_id);
+        public void mc_project_version_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteRequest request, object userState) {
+            if ((this.onBeginmc_project_version_deleteDelegate == null)) {
+                this.onBeginmc_project_version_deleteDelegate = new BeginOperationDelegate(this.OnBeginmc_project_version_delete);
+            }
+            if ((this.onEndmc_project_version_deleteDelegate == null)) {
+                this.onEndmc_project_version_deleteDelegate = new EndOperationDelegate(this.OnEndmc_project_version_delete);
+            }
+            if ((this.onmc_project_version_deleteCompletedDelegate == null)) {
+                this.onmc_project_version_deleteCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_version_deleteCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_version_deleteDelegate, new object[] {
+                        request}, this.onEndmc_project_version_deleteDelegate, this.onmc_project_version_deleteCompletedDelegate, userState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_released_versions(string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_released_versions(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_released_versions(string, string, string)'
-            return base.Channel.mc_project_get_released_versions(username, password, project_id);
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsResponse mc_project_get_released_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsRequest request) {
+            return base.Channel.mc_project_get_released_versions(request);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_released_versionsAsync(string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_released_versionsAsync(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_released_versionsAsync(string, string, string)'
-            return base.Channel.mc_project_get_released_versionsAsync(username, password, project_id);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_released_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_released_versions(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_unreleased_versions(string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[] mc_project_get_unreleased_versions(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_unreleased_versions(string, string, string)'
-            return base.Channel.mc_project_get_unreleased_versions(username, password, project_id);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsResponse Endmc_project_get_released_versions(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_released_versions(result);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_unreleased_versionsAsync(string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData[]> mc_project_get_unreleased_versionsAsync(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_unreleased_versionsAsync(string, string, string)'
-            return base.Channel.mc_project_get_unreleased_versionsAsync(username, password, project_id);
+        private System.IAsyncResult OnBeginmc_project_get_released_versions(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsRequest)(inValues[0]));
+            return this.Beginmc_project_get_released_versions(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_attachments(string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[] mc_project_get_attachments(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_attachments(string, string, string)'
-            return base.Channel.mc_project_get_attachments(username, password, project_id);
+        private object[] OnEndmc_project_get_released_versions(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsResponse retVal = this.Endmc_project_get_released_versions(result);
+            return new object[] {
+                    retVal};
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_attachmentsAsync(string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData[]> mc_project_get_attachmentsAsync(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_attachmentsAsync(string, string, string)'
-            return base.Channel.mc_project_get_attachmentsAsync(username, password, project_id);
+        private void Onmc_project_get_released_versionsCompleted(object state) {
+            if ((this.mc_project_get_released_versionsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_released_versionsCompleted(this, new mc_project_get_released_versionsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_custom_fields(string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[] mc_project_get_custom_fields(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_custom_fields(string, string, string)'
-            return base.Channel.mc_project_get_custom_fields(username, password, project_id);
+        public void mc_project_get_released_versionsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsRequest request) {
+            this.mc_project_get_released_versionsAsync(request, null);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_custom_fieldsAsync(string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData[]> mc_project_get_custom_fieldsAsync(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_custom_fieldsAsync(string, string, string)'
-            return base.Channel.mc_project_get_custom_fieldsAsync(username, password, project_id);
+        public void mc_project_get_released_versionsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsRequest request, object userState) {
+            if ((this.onBeginmc_project_get_released_versionsDelegate == null)) {
+                this.onBeginmc_project_get_released_versionsDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_released_versions);
+            }
+            if ((this.onEndmc_project_get_released_versionsDelegate == null)) {
+                this.onEndmc_project_get_released_versionsDelegate = new EndOperationDelegate(this.OnEndmc_project_get_released_versions);
+            }
+            if ((this.onmc_project_get_released_versionsCompletedDelegate == null)) {
+                this.onmc_project_get_released_versionsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_released_versionsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_released_versionsDelegate, new object[] {
+                        request}, this.onEndmc_project_get_released_versionsDelegate, this.onmc_project_get_released_versionsCompletedDelegate, userState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_get(string, string, string)'
-        public byte[] mc_project_attachment_get(string username, string password, string project_attachment_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_get(string, string, string)'
-            return base.Channel.mc_project_attachment_get(username, password, project_attachment_id);
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsResponse mc_project_get_unreleased_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsRequest request) {
+            return base.Channel.mc_project_get_unreleased_versions(request);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_getAsync(string, string, string)'
-        public System.Threading.Tasks.Task<byte[]> mc_project_attachment_getAsync(string username, string password, string project_attachment_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_getAsync(string, string, string)'
-            return base.Channel.mc_project_attachment_getAsync(username, password, project_attachment_id);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_unreleased_versions(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_unreleased_versions(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_add(string, string, string, string, string, string, string, byte[])'
-        public string mc_project_attachment_add(string username, string password, string project_id, string name, string title, string description, string file_type, byte[] content) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_add(string, string, string, string, string, string, string, byte[])'
-            return base.Channel.mc_project_attachment_add(username, password, project_id, name, title, description, file_type, content);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsResponse Endmc_project_get_unreleased_versions(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_unreleased_versions(result);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_addAsync(string, string, string, string, string, string, string, byte[])'
-        public System.Threading.Tasks.Task<string> mc_project_attachment_addAsync(string username, string password, string project_id, string name, string title, string description, string file_type, byte[] content) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_addAsync(string, string, string, string, string, string, string, byte[])'
-            return base.Channel.mc_project_attachment_addAsync(username, password, project_id, name, title, description, file_type, content);
+        private System.IAsyncResult OnBeginmc_project_get_unreleased_versions(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsRequest)(inValues[0]));
+            return this.Beginmc_project_get_unreleased_versions(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_delete(string, string, string)'
-        public bool mc_project_attachment_delete(string username, string password, string project_attachment_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_delete(string, string, string)'
-            return base.Channel.mc_project_attachment_delete(username, password, project_attachment_id);
+        private object[] OnEndmc_project_get_unreleased_versions(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsResponse retVal = this.Endmc_project_get_unreleased_versions(result);
+            return new object[] {
+                    retVal};
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_deleteAsync(string, string, string)'
-        public System.Threading.Tasks.Task<bool> mc_project_attachment_deleteAsync(string username, string password, string project_attachment_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_attachment_deleteAsync(string, string, string)'
-            return base.Channel.mc_project_attachment_deleteAsync(username, password, project_attachment_id);
+        private void Onmc_project_get_unreleased_versionsCompleted(object state) {
+            if ((this.mc_project_get_unreleased_versionsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_unreleased_versionsCompleted(this, new mc_project_get_unreleased_versionsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_all_subprojects(string, string, string)'
-        public string[] mc_project_get_all_subprojects(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_all_subprojects(string, string, string)'
-            return base.Channel.mc_project_get_all_subprojects(username, password, project_id);
+        public void mc_project_get_unreleased_versionsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsRequest request) {
+            this.mc_project_get_unreleased_versionsAsync(request, null);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_all_subprojectsAsync(string, string, string)'
-        public System.Threading.Tasks.Task<string[]> mc_project_get_all_subprojectsAsync(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_project_get_all_subprojectsAsync(string, string, string)'
-            return base.Channel.mc_project_get_all_subprojectsAsync(username, password, project_id);
+        public void mc_project_get_unreleased_versionsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsRequest request, object userState) {
+            if ((this.onBeginmc_project_get_unreleased_versionsDelegate == null)) {
+                this.onBeginmc_project_get_unreleased_versionsDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_unreleased_versions);
+            }
+            if ((this.onEndmc_project_get_unreleased_versionsDelegate == null)) {
+                this.onEndmc_project_get_unreleased_versionsDelegate = new EndOperationDelegate(this.OnEndmc_project_get_unreleased_versions);
+            }
+            if ((this.onmc_project_get_unreleased_versionsCompletedDelegate == null)) {
+                this.onmc_project_get_unreleased_versionsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_unreleased_versionsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_unreleased_versionsDelegate, new object[] {
+                        request}, this.onEndmc_project_get_unreleased_versionsDelegate, this.onmc_project_get_unreleased_versionsCompletedDelegate, userState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get(string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[] mc_filter_get(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get(string, string, string)'
-            return base.Channel.mc_filter_get(username, password, project_id);
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsResponse mc_project_get_attachments(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsRequest request) {
+            return base.Channel.mc_project_get_attachments(request);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_getAsync(string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData[]> mc_filter_getAsync(string username, string password, string project_id) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_getAsync(string, string, string)'
-            return base.Channel.mc_filter_getAsync(username, password, project_id);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_attachments(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_attachments(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issues(string, string, string, string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_filter_get_issues(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issues(string, string, string, string, string, string)'
-            return base.Channel.mc_filter_get_issues(username, password, project_id, filter_id, page_number, per_page);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsResponse Endmc_project_get_attachments(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_attachments(result);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issuesAsync(string, string, string, string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_filter_get_issuesAsync(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issuesAsync(string, string, string, string, string, string)'
-            return base.Channel.mc_filter_get_issuesAsync(username, password, project_id, filter_id, page_number, per_page);
+        private System.IAsyncResult OnBeginmc_project_get_attachments(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsRequest)(inValues[0]));
+            return this.Beginmc_project_get_attachments(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issue_headers(string, string, string, string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_get_issue_headers(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issue_headers(string, string, string, string, string, string)'
-            return base.Channel.mc_filter_get_issue_headers(username, password, project_id, filter_id, page_number, per_page);
+        private object[] OnEndmc_project_get_attachments(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsResponse retVal = this.Endmc_project_get_attachments(result);
+            return new object[] {
+                    retVal};
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issue_headersAsync(string, string, string, string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_filter_get_issue_headersAsync(string username, string password, string project_id, string filter_id, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_get_issue_headersAsync(string, string, string, string, string, string)'
-            return base.Channel.mc_filter_get_issue_headersAsync(username, password, project_id, filter_id, page_number, per_page);
+        private void Onmc_project_get_attachmentsCompleted(object state) {
+            if ((this.mc_project_get_attachmentsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_attachmentsCompleted(this, new mc_project_get_attachmentsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_headers(string, string, FilterSearchData, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[] mc_filter_search_issue_headers(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_headers(string, string, FilterSearchData, string, string)'
-            return base.Channel.mc_filter_search_issue_headers(username, password, filter, page_number, per_page);
+        public void mc_project_get_attachmentsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsRequest request) {
+            this.mc_project_get_attachmentsAsync(request, null);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_headersAsync(string, string, FilterSearchData, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData[]> mc_filter_search_issue_headersAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_headersAsync(string, string, FilterSearchData, string, string)'
-            return base.Channel.mc_filter_search_issue_headersAsync(username, password, filter, page_number, per_page);
+        public void mc_project_get_attachmentsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsRequest request, object userState) {
+            if ((this.onBeginmc_project_get_attachmentsDelegate == null)) {
+                this.onBeginmc_project_get_attachmentsDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_attachments);
+            }
+            if ((this.onEndmc_project_get_attachmentsDelegate == null)) {
+                this.onEndmc_project_get_attachmentsDelegate = new EndOperationDelegate(this.OnEndmc_project_get_attachments);
+            }
+            if ((this.onmc_project_get_attachmentsCompletedDelegate == null)) {
+                this.onmc_project_get_attachmentsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_attachmentsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_attachmentsDelegate, new object[] {
+                        request}, this.onEndmc_project_get_attachmentsDelegate, this.onmc_project_get_attachmentsCompletedDelegate, userState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issues(string, string, FilterSearchData, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[] mc_filter_search_issues(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issues(string, string, FilterSearchData, string, string)'
-            return base.Channel.mc_filter_search_issues(username, password, filter, page_number, per_page);
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsResponse mc_project_get_custom_fields(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsRequest request) {
+            return base.Channel.mc_project_get_custom_fields(request);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issuesAsync(string, string, FilterSearchData, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData[]> mc_filter_search_issuesAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issuesAsync(string, string, FilterSearchData, string, string)'
-            return base.Channel.mc_filter_search_issuesAsync(username, password, filter, page_number, per_page);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_custom_fields(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_custom_fields(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_ids(string, string, FilterSearchData, string, string)'
-        public string[] mc_filter_search_issue_ids(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_ids(string, string, FilterSearchData, string, string)'
-            return base.Channel.mc_filter_search_issue_ids(username, password, filter, page_number, per_page);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsResponse Endmc_project_get_custom_fields(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_custom_fields(result);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_idsAsync(string, string, FilterSearchData, string, string)'
-        public System.Threading.Tasks.Task<string[]> mc_filter_search_issue_idsAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterSearchData filter, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_filter_search_issue_idsAsync(string, string, FilterSearchData, string, string)'
-            return base.Channel.mc_filter_search_issue_idsAsync(username, password, filter, page_number, per_page);
+        private System.IAsyncResult OnBeginmc_project_get_custom_fields(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsRequest)(inValues[0]));
+            return this.Beginmc_project_get_custom_fields(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_config_get_string(string, string, string)'
-        public string mc_config_get_string(string username, string password, string config_var) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_config_get_string(string, string, string)'
-            return base.Channel.mc_config_get_string(username, password, config_var);
+        private object[] OnEndmc_project_get_custom_fields(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsResponse retVal = this.Endmc_project_get_custom_fields(result);
+            return new object[] {
+                    retVal};
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_config_get_stringAsync(string, string, string)'
-        public System.Threading.Tasks.Task<string> mc_config_get_stringAsync(string username, string password, string config_var) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_config_get_stringAsync(string, string, string)'
-            return base.Channel.mc_config_get_stringAsync(username, password, config_var);
+        private void Onmc_project_get_custom_fieldsCompleted(object state) {
+            if ((this.mc_project_get_custom_fieldsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_custom_fieldsCompleted(this, new mc_project_get_custom_fieldsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_checkin(string, string, string, string, bool)'
-        public bool mc_issue_checkin(string username, string password, string issue_id, string comment, bool @fixed) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_checkin(string, string, string, string, bool)'
-            return base.Channel.mc_issue_checkin(username, password, issue_id, comment, @fixed);
+        public void mc_project_get_custom_fieldsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsRequest request) {
+            this.mc_project_get_custom_fieldsAsync(request, null);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_checkinAsync(string, string, string, string, bool)'
-        public System.Threading.Tasks.Task<bool> mc_issue_checkinAsync(string username, string password, string issue_id, string comment, bool @fixed) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_issue_checkinAsync(string, string, string, string, bool)'
-            return base.Channel.mc_issue_checkinAsync(username, password, issue_id, comment, @fixed);
+        public void mc_project_get_custom_fieldsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsRequest request, object userState) {
+            if ((this.onBeginmc_project_get_custom_fieldsDelegate == null)) {
+                this.onBeginmc_project_get_custom_fieldsDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_custom_fields);
+            }
+            if ((this.onEndmc_project_get_custom_fieldsDelegate == null)) {
+                this.onEndmc_project_get_custom_fieldsDelegate = new EndOperationDelegate(this.OnEndmc_project_get_custom_fields);
+            }
+            if ((this.onmc_project_get_custom_fieldsCompletedDelegate == null)) {
+                this.onmc_project_get_custom_fieldsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_custom_fieldsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_custom_fieldsDelegate, new object[] {
+                        request}, this.onEndmc_project_get_custom_fieldsDelegate, this.onmc_project_get_custom_fieldsCompletedDelegate, userState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_pref_get_pref(string, string, string, string)'
-        public string mc_user_pref_get_pref(string username, string password, string project_id, string pref_name) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_pref_get_pref(string, string, string, string)'
-            return base.Channel.mc_user_pref_get_pref(username, password, project_id, pref_name);
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getResponse mc_project_attachment_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getRequest request) {
+            return base.Channel.mc_project_attachment_get(request);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_pref_get_prefAsync(string, string, string, string)'
-        public System.Threading.Tasks.Task<string> mc_user_pref_get_prefAsync(string username, string password, string project_id, string pref_name) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_pref_get_prefAsync(string, string, string, string)'
-            return base.Channel.mc_user_pref_get_prefAsync(username, password, project_id, pref_name);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_attachment_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_attachment_get(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_profiles_get_all(string, string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult mc_user_profiles_get_all(string username, string password, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_profiles_get_all(string, string, string, string)'
-            return base.Channel.mc_user_profiles_get_all(username, password, page_number, per_page);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getResponse Endmc_project_attachment_get(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_attachment_get(result);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_profiles_get_allAsync(string, string, string, string)'
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult> mc_user_profiles_get_allAsync(string username, string password, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_user_profiles_get_allAsync(string, string, string, string)'
-            return base.Channel.mc_user_profiles_get_allAsync(username, password, page_number, per_page);
+        private System.IAsyncResult OnBeginmc_project_attachment_get(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getRequest)(inValues[0]));
+            return this.Beginmc_project_attachment_get(request, callback, asyncState);
         }
         
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_tag_get_all(string, string, string, string)'
-        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult mc_tag_get_all(string username, string password, string page_number, string per_page) {
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'MantisConnectPortTypeClient.mc_tag_get_all(string, string, string, string)'
-            return base.Channel.mc_tag_get_all(username, password, page_number, per_page);
+        private object[] OnEndmc_project_attachment_get(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getResponse retVal = this.Endmc_project_attachment_get(result);
+            return new object[] {
+                    retVal};
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="page_number"></param>
-        /// <param name="per_page"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult> mc_tag_get_allAsync(string username, string password, string page_number, string per_page) {
-            return base.Channel.mc_tag_get_allAsync(username, password, page_number, per_page);
+        
+        private void Onmc_project_attachment_getCompleted(object state) {
+            if ((this.mc_project_attachment_getCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_attachment_getCompleted(this, new mc_project_attachment_getCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_attachment_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getRequest request) {
+            this.mc_project_attachment_getAsync(request, null);
+        }
+        
+        public void mc_project_attachment_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getRequest request, object userState) {
+            if ((this.onBeginmc_project_attachment_getDelegate == null)) {
+                this.onBeginmc_project_attachment_getDelegate = new BeginOperationDelegate(this.OnBeginmc_project_attachment_get);
+            }
+            if ((this.onEndmc_project_attachment_getDelegate == null)) {
+                this.onEndmc_project_attachment_getDelegate = new EndOperationDelegate(this.OnEndmc_project_attachment_get);
+            }
+            if ((this.onmc_project_attachment_getCompletedDelegate == null)) {
+                this.onmc_project_attachment_getCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_attachment_getCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_attachment_getDelegate, new object[] {
+                        request}, this.onEndmc_project_attachment_getDelegate, this.onmc_project_attachment_getCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addResponse mc_project_attachment_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addRequest request) {
+            return base.Channel.mc_project_attachment_add(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_attachment_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_attachment_add(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addResponse Endmc_project_attachment_add(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_attachment_add(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_attachment_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addRequest)(inValues[0]));
+            return this.Beginmc_project_attachment_add(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_attachment_add(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addResponse retVal = this.Endmc_project_attachment_add(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_attachment_addCompleted(object state) {
+            if ((this.mc_project_attachment_addCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_attachment_addCompleted(this, new mc_project_attachment_addCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_attachment_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addRequest request) {
+            this.mc_project_attachment_addAsync(request, null);
+        }
+        
+        public void mc_project_attachment_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addRequest request, object userState) {
+            if ((this.onBeginmc_project_attachment_addDelegate == null)) {
+                this.onBeginmc_project_attachment_addDelegate = new BeginOperationDelegate(this.OnBeginmc_project_attachment_add);
+            }
+            if ((this.onEndmc_project_attachment_addDelegate == null)) {
+                this.onEndmc_project_attachment_addDelegate = new EndOperationDelegate(this.OnEndmc_project_attachment_add);
+            }
+            if ((this.onmc_project_attachment_addCompletedDelegate == null)) {
+                this.onmc_project_attachment_addCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_attachment_addCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_attachment_addDelegate, new object[] {
+                        request}, this.onEndmc_project_attachment_addDelegate, this.onmc_project_attachment_addCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteResponse mc_project_attachment_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteRequest request) {
+            return base.Channel.mc_project_attachment_delete(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_attachment_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_attachment_delete(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteResponse Endmc_project_attachment_delete(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_attachment_delete(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_attachment_delete(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteRequest)(inValues[0]));
+            return this.Beginmc_project_attachment_delete(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_attachment_delete(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteResponse retVal = this.Endmc_project_attachment_delete(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_attachment_deleteCompleted(object state) {
+            if ((this.mc_project_attachment_deleteCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_attachment_deleteCompleted(this, new mc_project_attachment_deleteCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_attachment_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteRequest request) {
+            this.mc_project_attachment_deleteAsync(request, null);
+        }
+        
+        public void mc_project_attachment_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteRequest request, object userState) {
+            if ((this.onBeginmc_project_attachment_deleteDelegate == null)) {
+                this.onBeginmc_project_attachment_deleteDelegate = new BeginOperationDelegate(this.OnBeginmc_project_attachment_delete);
+            }
+            if ((this.onEndmc_project_attachment_deleteDelegate == null)) {
+                this.onEndmc_project_attachment_deleteDelegate = new EndOperationDelegate(this.OnEndmc_project_attachment_delete);
+            }
+            if ((this.onmc_project_attachment_deleteCompletedDelegate == null)) {
+                this.onmc_project_attachment_deleteCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_attachment_deleteCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_attachment_deleteDelegate, new object[] {
+                        request}, this.onEndmc_project_attachment_deleteDelegate, this.onmc_project_attachment_deleteCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsResponse mc_project_get_all_subprojects(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsRequest request) {
+            return base.Channel.mc_project_get_all_subprojects(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_project_get_all_subprojects(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_project_get_all_subprojects(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsResponse Endmc_project_get_all_subprojects(System.IAsyncResult result) {
+            return base.Channel.Endmc_project_get_all_subprojects(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_project_get_all_subprojects(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsRequest)(inValues[0]));
+            return this.Beginmc_project_get_all_subprojects(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_project_get_all_subprojects(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsResponse retVal = this.Endmc_project_get_all_subprojects(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_project_get_all_subprojectsCompleted(object state) {
+            if ((this.mc_project_get_all_subprojectsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_project_get_all_subprojectsCompleted(this, new mc_project_get_all_subprojectsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_project_get_all_subprojectsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsRequest request) {
+            this.mc_project_get_all_subprojectsAsync(request, null);
+        }
+        
+        public void mc_project_get_all_subprojectsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsRequest request, object userState) {
+            if ((this.onBeginmc_project_get_all_subprojectsDelegate == null)) {
+                this.onBeginmc_project_get_all_subprojectsDelegate = new BeginOperationDelegate(this.OnBeginmc_project_get_all_subprojects);
+            }
+            if ((this.onEndmc_project_get_all_subprojectsDelegate == null)) {
+                this.onEndmc_project_get_all_subprojectsDelegate = new EndOperationDelegate(this.OnEndmc_project_get_all_subprojects);
+            }
+            if ((this.onmc_project_get_all_subprojectsCompletedDelegate == null)) {
+                this.onmc_project_get_all_subprojectsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_project_get_all_subprojectsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_project_get_all_subprojectsDelegate, new object[] {
+                        request}, this.onEndmc_project_get_all_subprojectsDelegate, this.onmc_project_get_all_subprojectsCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getResponse mc_filter_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getRequest request) {
+            return base.Channel.mc_filter_get(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_filter_get(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_filter_get(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getResponse Endmc_filter_get(System.IAsyncResult result) {
+            return base.Channel.Endmc_filter_get(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_filter_get(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getRequest)(inValues[0]));
+            return this.Beginmc_filter_get(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_filter_get(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getResponse retVal = this.Endmc_filter_get(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_filter_getCompleted(object state) {
+            if ((this.mc_filter_getCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_filter_getCompleted(this, new mc_filter_getCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_filter_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getRequest request) {
+            this.mc_filter_getAsync(request, null);
+        }
+        
+        public void mc_filter_getAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getRequest request, object userState) {
+            if ((this.onBeginmc_filter_getDelegate == null)) {
+                this.onBeginmc_filter_getDelegate = new BeginOperationDelegate(this.OnBeginmc_filter_get);
+            }
+            if ((this.onEndmc_filter_getDelegate == null)) {
+                this.onEndmc_filter_getDelegate = new EndOperationDelegate(this.OnEndmc_filter_get);
+            }
+            if ((this.onmc_filter_getCompletedDelegate == null)) {
+                this.onmc_filter_getCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_filter_getCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_filter_getDelegate, new object[] {
+                        request}, this.onEndmc_filter_getDelegate, this.onmc_filter_getCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesResponse mc_filter_get_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesRequest request) {
+            return base.Channel.mc_filter_get_issues(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_filter_get_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_filter_get_issues(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesResponse Endmc_filter_get_issues(System.IAsyncResult result) {
+            return base.Channel.Endmc_filter_get_issues(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_filter_get_issues(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesRequest)(inValues[0]));
+            return this.Beginmc_filter_get_issues(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_filter_get_issues(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesResponse retVal = this.Endmc_filter_get_issues(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_filter_get_issuesCompleted(object state) {
+            if ((this.mc_filter_get_issuesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_filter_get_issuesCompleted(this, new mc_filter_get_issuesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_filter_get_issuesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesRequest request) {
+            this.mc_filter_get_issuesAsync(request, null);
+        }
+        
+        public void mc_filter_get_issuesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesRequest request, object userState) {
+            if ((this.onBeginmc_filter_get_issuesDelegate == null)) {
+                this.onBeginmc_filter_get_issuesDelegate = new BeginOperationDelegate(this.OnBeginmc_filter_get_issues);
+            }
+            if ((this.onEndmc_filter_get_issuesDelegate == null)) {
+                this.onEndmc_filter_get_issuesDelegate = new EndOperationDelegate(this.OnEndmc_filter_get_issues);
+            }
+            if ((this.onmc_filter_get_issuesCompletedDelegate == null)) {
+                this.onmc_filter_get_issuesCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_filter_get_issuesCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_filter_get_issuesDelegate, new object[] {
+                        request}, this.onEndmc_filter_get_issuesDelegate, this.onmc_filter_get_issuesCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersResponse mc_filter_get_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersRequest request) {
+            return base.Channel.mc_filter_get_issue_headers(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_filter_get_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_filter_get_issue_headers(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersResponse Endmc_filter_get_issue_headers(System.IAsyncResult result) {
+            return base.Channel.Endmc_filter_get_issue_headers(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_filter_get_issue_headers(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersRequest)(inValues[0]));
+            return this.Beginmc_filter_get_issue_headers(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_filter_get_issue_headers(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersResponse retVal = this.Endmc_filter_get_issue_headers(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_filter_get_issue_headersCompleted(object state) {
+            if ((this.mc_filter_get_issue_headersCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_filter_get_issue_headersCompleted(this, new mc_filter_get_issue_headersCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_filter_get_issue_headersAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersRequest request) {
+            this.mc_filter_get_issue_headersAsync(request, null);
+        }
+        
+        public void mc_filter_get_issue_headersAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersRequest request, object userState) {
+            if ((this.onBeginmc_filter_get_issue_headersDelegate == null)) {
+                this.onBeginmc_filter_get_issue_headersDelegate = new BeginOperationDelegate(this.OnBeginmc_filter_get_issue_headers);
+            }
+            if ((this.onEndmc_filter_get_issue_headersDelegate == null)) {
+                this.onEndmc_filter_get_issue_headersDelegate = new EndOperationDelegate(this.OnEndmc_filter_get_issue_headers);
+            }
+            if ((this.onmc_filter_get_issue_headersCompletedDelegate == null)) {
+                this.onmc_filter_get_issue_headersCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_filter_get_issue_headersCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_filter_get_issue_headersDelegate, new object[] {
+                        request}, this.onEndmc_filter_get_issue_headersDelegate, this.onmc_filter_get_issue_headersCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersResponse mc_filter_search_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersRequest request) {
+            return base.Channel.mc_filter_search_issue_headers(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_filter_search_issue_headers(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_filter_search_issue_headers(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersResponse Endmc_filter_search_issue_headers(System.IAsyncResult result) {
+            return base.Channel.Endmc_filter_search_issue_headers(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_filter_search_issue_headers(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersRequest)(inValues[0]));
+            return this.Beginmc_filter_search_issue_headers(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_filter_search_issue_headers(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersResponse retVal = this.Endmc_filter_search_issue_headers(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_filter_search_issue_headersCompleted(object state) {
+            if ((this.mc_filter_search_issue_headersCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_filter_search_issue_headersCompleted(this, new mc_filter_search_issue_headersCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_filter_search_issue_headersAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersRequest request) {
+            this.mc_filter_search_issue_headersAsync(request, null);
+        }
+        
+        public void mc_filter_search_issue_headersAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersRequest request, object userState) {
+            if ((this.onBeginmc_filter_search_issue_headersDelegate == null)) {
+                this.onBeginmc_filter_search_issue_headersDelegate = new BeginOperationDelegate(this.OnBeginmc_filter_search_issue_headers);
+            }
+            if ((this.onEndmc_filter_search_issue_headersDelegate == null)) {
+                this.onEndmc_filter_search_issue_headersDelegate = new EndOperationDelegate(this.OnEndmc_filter_search_issue_headers);
+            }
+            if ((this.onmc_filter_search_issue_headersCompletedDelegate == null)) {
+                this.onmc_filter_search_issue_headersCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_filter_search_issue_headersCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_filter_search_issue_headersDelegate, new object[] {
+                        request}, this.onEndmc_filter_search_issue_headersDelegate, this.onmc_filter_search_issue_headersCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesResponse mc_filter_search_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesRequest request) {
+            return base.Channel.mc_filter_search_issues(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_filter_search_issues(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_filter_search_issues(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesResponse Endmc_filter_search_issues(System.IAsyncResult result) {
+            return base.Channel.Endmc_filter_search_issues(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_filter_search_issues(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesRequest)(inValues[0]));
+            return this.Beginmc_filter_search_issues(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_filter_search_issues(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesResponse retVal = this.Endmc_filter_search_issues(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_filter_search_issuesCompleted(object state) {
+            if ((this.mc_filter_search_issuesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_filter_search_issuesCompleted(this, new mc_filter_search_issuesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_filter_search_issuesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesRequest request) {
+            this.mc_filter_search_issuesAsync(request, null);
+        }
+        
+        public void mc_filter_search_issuesAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesRequest request, object userState) {
+            if ((this.onBeginmc_filter_search_issuesDelegate == null)) {
+                this.onBeginmc_filter_search_issuesDelegate = new BeginOperationDelegate(this.OnBeginmc_filter_search_issues);
+            }
+            if ((this.onEndmc_filter_search_issuesDelegate == null)) {
+                this.onEndmc_filter_search_issuesDelegate = new EndOperationDelegate(this.OnEndmc_filter_search_issues);
+            }
+            if ((this.onmc_filter_search_issuesCompletedDelegate == null)) {
+                this.onmc_filter_search_issuesCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_filter_search_issuesCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_filter_search_issuesDelegate, new object[] {
+                        request}, this.onEndmc_filter_search_issuesDelegate, this.onmc_filter_search_issuesCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsResponse mc_filter_search_issue_ids(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsRequest request) {
+            return base.Channel.mc_filter_search_issue_ids(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_filter_search_issue_ids(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_filter_search_issue_ids(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsResponse Endmc_filter_search_issue_ids(System.IAsyncResult result) {
+            return base.Channel.Endmc_filter_search_issue_ids(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_filter_search_issue_ids(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsRequest)(inValues[0]));
+            return this.Beginmc_filter_search_issue_ids(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_filter_search_issue_ids(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsResponse retVal = this.Endmc_filter_search_issue_ids(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_filter_search_issue_idsCompleted(object state) {
+            if ((this.mc_filter_search_issue_idsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_filter_search_issue_idsCompleted(this, new mc_filter_search_issue_idsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_filter_search_issue_idsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsRequest request) {
+            this.mc_filter_search_issue_idsAsync(request, null);
+        }
+        
+        public void mc_filter_search_issue_idsAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsRequest request, object userState) {
+            if ((this.onBeginmc_filter_search_issue_idsDelegate == null)) {
+                this.onBeginmc_filter_search_issue_idsDelegate = new BeginOperationDelegate(this.OnBeginmc_filter_search_issue_ids);
+            }
+            if ((this.onEndmc_filter_search_issue_idsDelegate == null)) {
+                this.onEndmc_filter_search_issue_idsDelegate = new EndOperationDelegate(this.OnEndmc_filter_search_issue_ids);
+            }
+            if ((this.onmc_filter_search_issue_idsCompletedDelegate == null)) {
+                this.onmc_filter_search_issue_idsCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_filter_search_issue_idsCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_filter_search_issue_idsDelegate, new object[] {
+                        request}, this.onEndmc_filter_search_issue_idsDelegate, this.onmc_filter_search_issue_idsCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringResponse mc_config_get_string(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringRequest request) {
+            return base.Channel.mc_config_get_string(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_config_get_string(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_config_get_string(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringResponse Endmc_config_get_string(System.IAsyncResult result) {
+            return base.Channel.Endmc_config_get_string(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_config_get_string(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringRequest)(inValues[0]));
+            return this.Beginmc_config_get_string(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_config_get_string(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringResponse retVal = this.Endmc_config_get_string(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_config_get_stringCompleted(object state) {
+            if ((this.mc_config_get_stringCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_config_get_stringCompleted(this, new mc_config_get_stringCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_config_get_stringAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringRequest request) {
+            this.mc_config_get_stringAsync(request, null);
+        }
+        
+        public void mc_config_get_stringAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringRequest request, object userState) {
+            if ((this.onBeginmc_config_get_stringDelegate == null)) {
+                this.onBeginmc_config_get_stringDelegate = new BeginOperationDelegate(this.OnBeginmc_config_get_string);
+            }
+            if ((this.onEndmc_config_get_stringDelegate == null)) {
+                this.onEndmc_config_get_stringDelegate = new EndOperationDelegate(this.OnEndmc_config_get_string);
+            }
+            if ((this.onmc_config_get_stringCompletedDelegate == null)) {
+                this.onmc_config_get_stringCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_config_get_stringCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_config_get_stringDelegate, new object[] {
+                        request}, this.onEndmc_config_get_stringDelegate, this.onmc_config_get_stringCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinResponse mc_issue_checkin(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinRequest request) {
+            return base.Channel.mc_issue_checkin(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_issue_checkin(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_issue_checkin(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinResponse Endmc_issue_checkin(System.IAsyncResult result) {
+            return base.Channel.Endmc_issue_checkin(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_issue_checkin(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinRequest)(inValues[0]));
+            return this.Beginmc_issue_checkin(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_issue_checkin(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinResponse retVal = this.Endmc_issue_checkin(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_issue_checkinCompleted(object state) {
+            if ((this.mc_issue_checkinCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_issue_checkinCompleted(this, new mc_issue_checkinCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_issue_checkinAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinRequest request) {
+            this.mc_issue_checkinAsync(request, null);
+        }
+        
+        public void mc_issue_checkinAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinRequest request, object userState) {
+            if ((this.onBeginmc_issue_checkinDelegate == null)) {
+                this.onBeginmc_issue_checkinDelegate = new BeginOperationDelegate(this.OnBeginmc_issue_checkin);
+            }
+            if ((this.onEndmc_issue_checkinDelegate == null)) {
+                this.onEndmc_issue_checkinDelegate = new EndOperationDelegate(this.OnEndmc_issue_checkin);
+            }
+            if ((this.onmc_issue_checkinCompletedDelegate == null)) {
+                this.onmc_issue_checkinCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_issue_checkinCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_issue_checkinDelegate, new object[] {
+                        request}, this.onEndmc_issue_checkinDelegate, this.onmc_issue_checkinCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefResponse mc_user_pref_get_pref(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefRequest request) {
+            return base.Channel.mc_user_pref_get_pref(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_user_pref_get_pref(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_user_pref_get_pref(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefResponse Endmc_user_pref_get_pref(System.IAsyncResult result) {
+            return base.Channel.Endmc_user_pref_get_pref(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_user_pref_get_pref(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefRequest)(inValues[0]));
+            return this.Beginmc_user_pref_get_pref(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_user_pref_get_pref(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefResponse retVal = this.Endmc_user_pref_get_pref(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_user_pref_get_prefCompleted(object state) {
+            if ((this.mc_user_pref_get_prefCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_user_pref_get_prefCompleted(this, new mc_user_pref_get_prefCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_user_pref_get_prefAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefRequest request) {
+            this.mc_user_pref_get_prefAsync(request, null);
+        }
+        
+        public void mc_user_pref_get_prefAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefRequest request, object userState) {
+            if ((this.onBeginmc_user_pref_get_prefDelegate == null)) {
+                this.onBeginmc_user_pref_get_prefDelegate = new BeginOperationDelegate(this.OnBeginmc_user_pref_get_pref);
+            }
+            if ((this.onEndmc_user_pref_get_prefDelegate == null)) {
+                this.onEndmc_user_pref_get_prefDelegate = new EndOperationDelegate(this.OnEndmc_user_pref_get_pref);
+            }
+            if ((this.onmc_user_pref_get_prefCompletedDelegate == null)) {
+                this.onmc_user_pref_get_prefCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_user_pref_get_prefCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_user_pref_get_prefDelegate, new object[] {
+                        request}, this.onEndmc_user_pref_get_prefDelegate, this.onmc_user_pref_get_prefCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allResponse mc_user_profiles_get_all(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allRequest request) {
+            return base.Channel.mc_user_profiles_get_all(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_user_profiles_get_all(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_user_profiles_get_all(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allResponse Endmc_user_profiles_get_all(System.IAsyncResult result) {
+            return base.Channel.Endmc_user_profiles_get_all(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_user_profiles_get_all(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allRequest)(inValues[0]));
+            return this.Beginmc_user_profiles_get_all(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_user_profiles_get_all(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allResponse retVal = this.Endmc_user_profiles_get_all(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_user_profiles_get_allCompleted(object state) {
+            if ((this.mc_user_profiles_get_allCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_user_profiles_get_allCompleted(this, new mc_user_profiles_get_allCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_user_profiles_get_allAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allRequest request) {
+            this.mc_user_profiles_get_allAsync(request, null);
+        }
+        
+        public void mc_user_profiles_get_allAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allRequest request, object userState) {
+            if ((this.onBeginmc_user_profiles_get_allDelegate == null)) {
+                this.onBeginmc_user_profiles_get_allDelegate = new BeginOperationDelegate(this.OnBeginmc_user_profiles_get_all);
+            }
+            if ((this.onEndmc_user_profiles_get_allDelegate == null)) {
+                this.onEndmc_user_profiles_get_allDelegate = new EndOperationDelegate(this.OnEndmc_user_profiles_get_all);
+            }
+            if ((this.onmc_user_profiles_get_allCompletedDelegate == null)) {
+                this.onmc_user_profiles_get_allCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_user_profiles_get_allCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_user_profiles_get_allDelegate, new object[] {
+                        request}, this.onEndmc_user_profiles_get_allDelegate, this.onmc_user_profiles_get_allCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allResponse mc_tag_get_all(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allRequest request) {
+            return base.Channel.mc_tag_get_all(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_tag_get_all(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_tag_get_all(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allResponse Endmc_tag_get_all(System.IAsyncResult result) {
+            return base.Channel.Endmc_tag_get_all(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_tag_get_all(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allRequest)(inValues[0]));
+            return this.Beginmc_tag_get_all(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_tag_get_all(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allResponse retVal = this.Endmc_tag_get_all(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_tag_get_allCompleted(object state) {
+            if ((this.mc_tag_get_allCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_tag_get_allCompleted(this, new mc_tag_get_allCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_tag_get_allAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allRequest request) {
+            this.mc_tag_get_allAsync(request, null);
+        }
+        
+        public void mc_tag_get_allAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allRequest request, object userState) {
+            if ((this.onBeginmc_tag_get_allDelegate == null)) {
+                this.onBeginmc_tag_get_allDelegate = new BeginOperationDelegate(this.OnBeginmc_tag_get_all);
+            }
+            if ((this.onEndmc_tag_get_allDelegate == null)) {
+                this.onEndmc_tag_get_allDelegate = new EndOperationDelegate(this.OnEndmc_tag_get_all);
+            }
+            if ((this.onmc_tag_get_allCompletedDelegate == null)) {
+                this.onmc_tag_get_allCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_tag_get_allCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_tag_get_allDelegate, new object[] {
+                        request}, this.onEndmc_tag_get_allDelegate, this.onmc_tag_get_allCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addResponse mc_tag_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addRequest request) {
+            return base.Channel.mc_tag_add(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_tag_add(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_tag_add(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addResponse Endmc_tag_add(System.IAsyncResult result) {
+            return base.Channel.Endmc_tag_add(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_tag_add(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addRequest)(inValues[0]));
+            return this.Beginmc_tag_add(request, callback, asyncState);
+        }
+        
+        private object[] OnEndmc_tag_add(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addResponse retVal = this.Endmc_tag_add(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void Onmc_tag_addCompleted(object state) {
+            if ((this.mc_tag_addCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_tag_addCompleted(this, new mc_tag_addCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void mc_tag_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addRequest request) {
+            this.mc_tag_addAsync(request, null);
+        }
+        
+        public void mc_tag_addAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addRequest request, object userState) {
+            if ((this.onBeginmc_tag_addDelegate == null)) {
+                this.onBeginmc_tag_addDelegate = new BeginOperationDelegate(this.OnBeginmc_tag_add);
+            }
+            if ((this.onEndmc_tag_addDelegate == null)) {
+                this.onEndmc_tag_addDelegate = new EndOperationDelegate(this.OnEndmc_tag_add);
+            }
+            if ((this.onmc_tag_addCompletedDelegate == null)) {
+                this.onmc_tag_addCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_tag_addCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_tag_addDelegate, new object[] {
+                        request}, this.onEndmc_tag_addDelegate, this.onmc_tag_addCompletedDelegate, userState);
+        }
+        
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteResponse mc_tag_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteRequest request) {
+            return base.Channel.mc_tag_delete(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult Beginmc_tag_delete(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Beginmc_tag_delete(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteResponse Endmc_tag_delete(System.IAsyncResult result) {
+            return base.Channel.Endmc_tag_delete(result);
+        }
+        
+        private System.IAsyncResult OnBeginmc_tag_delete(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteRequest request = ((SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteRequest)(inValues[0]));
+            return this.Beginmc_tag_delete(request, callback, asyncState);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        public string mc_tag_add(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag) {
-            return base.Channel.mc_tag_add(username, password, tag);
+        
+        private object[] OnEndmc_tag_delete(System.IAsyncResult result) {
+            SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteResponse retVal = this.Endmc_tag_delete(result);
+            return new object[] {
+                    retVal};
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<string> mc_tag_addAsync(string username, string password, SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagData tag) {
-            return base.Channel.mc_tag_addAsync(username, password, tag);
+        
+        private void Onmc_tag_deleteCompleted(object state) {
+            if ((this.mc_tag_deleteCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.mc_tag_deleteCompleted(this, new mc_tag_deleteCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="tag_id"></param>
-        /// <returns></returns>
-        public bool mc_tag_delete(string username, string password, string tag_id) {
-            return base.Channel.mc_tag_delete(username, password, tag_id);
+        
+        public void mc_tag_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteRequest request) {
+            this.mc_tag_deleteAsync(request, null);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="tag_id"></param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<bool> mc_tag_deleteAsync(string username, string password, string tag_id) {
-            return base.Channel.mc_tag_deleteAsync(username, password, tag_id);
+        
+        public void mc_tag_deleteAsync(SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteRequest request, object userState) {
+            if ((this.onBeginmc_tag_deleteDelegate == null)) {
+                this.onBeginmc_tag_deleteDelegate = new BeginOperationDelegate(this.OnBeginmc_tag_delete);
+            }
+            if ((this.onEndmc_tag_deleteDelegate == null)) {
+                this.onEndmc_tag_deleteDelegate = new EndOperationDelegate(this.OnEndmc_tag_delete);
+            }
+            if ((this.onmc_tag_deleteCompletedDelegate == null)) {
+                this.onmc_tag_deleteCompletedDelegate = new System.Threading.SendOrPostCallback(this.Onmc_tag_deleteCompleted);
+            }
+            base.InvokeAsync(this.onBeginmc_tag_deleteDelegate, new object[] {
+                        request}, this.onEndmc_tag_deleteDelegate, this.onmc_tag_deleteCompletedDelegate, userState);
         }
     }
 }

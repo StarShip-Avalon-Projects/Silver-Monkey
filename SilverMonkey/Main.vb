@@ -138,28 +138,12 @@ Public Class Main
 
 #Region "Public Methods"
 
-    'Public Sub BotConnecting()
-    '    If Me.BTN_Go.InvokeRequired Then
-    '        Dim d As New UpDateBtn_GoCallback2(AddressOf BotConnecting)
-    '        Me.Invoke(d)
-    '    Else
-    '        BTN_Go.Text = "Connected."
-    '        ConnectTrayIconMenuItem.Enabled = False
-    '        DisconnectTrayIconMenuItem.Enabled = True
-    '        SetBalloonText("Connected to Furcadia.")
-
-    '        ''(0:1) When the bot logs into furcadia,
-    '        'MainMSEngine.PageExecute(1)
-    '    End If
-    'End Sub
-
     Public Sub ConnectBot()
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
             Try
                 SndDisplay("New Session" + DateTime.Now.ToString)
 
                 FurcadiaSession.Connect()
-                AddHandler FurcadiaSession.MSpage.Error, AddressOf OnMonkeySpeakPageError
 
                 ConnectTrayIconMenuItem.Enabled = False
                 DisconnectTrayIconMenuItem.Enabled = True
@@ -554,7 +538,6 @@ Public Class Main
             BotConfig = New BotOptions(sender.ToString())
 
             FurcadiaSession = New BotSession(BotConfig)
-            MsPage = FurcadiaSession.MSpage
 
             SilverMonkeyBotPath = Path.GetDirectoryName(sender.ToString())
             SilverMonkeyLogPath = BotConfig.LogOptions.LogPath
@@ -581,7 +564,7 @@ Public Class Main
     ' Asc(ch) - Asc("1") + 35 End If
     ' RTFimg.InsertImage(IMGresize(GetFrame(shape, file), log_)) Return RTFimg.ToString
 
-    Private WithEvents MsPage As Monkeyspeak.Page
+    'Private WithEvents MsPage As Monkeyspeak.Page
 
     ''' <summary>
     ''' Send text to DebugWindow Delegate
@@ -589,19 +572,39 @@ Public Class Main
     ''' <param name="text"></param>
     Public Delegate Sub SendTextDelegate(text As String)
 
-    Public Sub OnMonkeySpeakPageError(handler As TriggerHandler, trig As Trigger, ex As Exception)
+    Private Sub OnFurcadiaSessionClose() Handles FurcadiaSession.CloseSession
+        FurcadiaSession.Dispose()
+        FurcadiaSession = Nothing
+        GC.Collect()
+        GC.WaitForFullGCComplete()
+        GC.Collect()
+    End Sub
 
-        SndDisplay("MonkeySpeak error:" + trig.ToString() + " " + ex.Message, TextDisplayManager.fColorEnum.Error)
 
-        If Not ex.InnerException Is Nothing Then
-            If ex.InnerException.GetType() Is GetType(Engine.Libraries.Web.WebException) Then
-                Dim InnerEx = CType(ex.InnerException, Engine.Libraries.Web.WebException)
-                SendTextToDebugWindow(InnerEx.ToString)
-            Else
-                SendTextToDebugWindow(ex.InnerException.ToString)
+
+    Public Sub OnFurcadiaSessionError(ex As Exception, o As Object, n As String) Handles FurcadiaSession.[Error]
+
+
+        ' SndDisplay("MonkeySpeak error:" + trig.ToString() + " " + ex.Message, TextDisplayManager.fColorEnum.Error)
+        If ex.GetType() Is GetType(MonkeySpeakException) Then
+            If o.GetType Is GetType(TriggerHandler) Then
+                SendTextToDebugWindow(DirectCast(o, TriggerHandler).Target.ToString)
             End If
+            SndDisplay("MonkeySpeak Error:" + ex.Message + Environment.NewLine + o.ToString, TextDisplayManager.fColorEnum.Error)
+            If ex.InnerException IsNot Nothing Then
+                If ex.InnerException.GetType() Is GetType(Engine.Libraries.Web.WebException) Then
+                    Dim InnerEx = CType(ex.InnerException, Engine.Libraries.Web.WebException)
+                    SendTextToDebugWindow(InnerEx.ToString)
+                Else
+                    SendTextToDebugWindow(ex.InnerException.ToString)
+                End If
 
+            End If
+        Else
+            SndDisplay("Furcadia Session error:" + ex.Message + Environment.NewLine + o.ToString, TextDisplayManager.fColorEnum.Error)
         End If
+
+
 
     End Sub
 
@@ -641,15 +644,7 @@ Public Class Main
         End If
     End Sub
 
-    ''' <summary>
-    ''' Furcadia Session error handler
-    ''' </summary>
-    ''' <param name="e"></param>
-    ''' <param name="o"></param>
-    ''' <param name="text"></param>
-    Private Sub OnFurcadiaSessionError(e As Exception, o As Object, text As String) Handles FurcadiaSession.Error
-        SndDisplay("Furcadia Session error:" + e.Message + o.ToString, TextDisplayManager.fColorEnum.Error)
-    End Sub
+
 
     ''' <summary>
     ''' Send text like MonkeySpeak inner exception errors to the Debug Window
@@ -739,11 +734,9 @@ Public Class Main
         End If
         If FurcadiaSession Is Nothing Then
             FurcadiaSession = New BotSession(BotConfig)
-            MsPage = FurcadiaSession.MSpage
         ElseIf FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
-            FurcadiaSession.Dispose()
-            FurcadiaSession = New BotSession(BotConfig)
-            MsPage = FurcadiaSession.MSpage
+            Throw New MonkeySpeakException("Furcadia was not previously reset")
+            Exit Sub
         End If
 
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
@@ -766,8 +759,7 @@ Public Class Main
             If Not IsNothing(MsExport) Then MsExport.Dispose()
             Try
                 ConnectBot()
-            Catch Ex As NetProxyException
-
+            Catch Ex As Exception
                 DisconnectBot()
                 SndDisplay("Connection Aborting: " + Ex.Message)
             End Try

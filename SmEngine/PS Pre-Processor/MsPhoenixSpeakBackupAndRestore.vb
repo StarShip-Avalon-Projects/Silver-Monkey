@@ -763,7 +763,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
             Return Counter
         End Function
 
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub unload(page As Page)
 
         End Sub
 

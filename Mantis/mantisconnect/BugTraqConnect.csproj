@@ -145,7 +145,6 @@
     <Compile Include="Filter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Issue.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -194,44 +193,221 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Service References\MantisConnectWebservice\mantisconnect.wsdl" />
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.AccountData.datasource">
+    <None Include="Service References\MantisConnectWebservice\mantisconnect1.wsdl" />
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_config_get_stringResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.CustomFieldDefinitionData.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_access_levelsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.FilterData.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_custom_field_typesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.HistoryData.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_etasResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueData.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_getResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.IssueHeaderData.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_prioritiesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.ObjectRef.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_projectionsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProfileDataSearchResult.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_statusResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectAttachmentData.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_project_view_statesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectData.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_reproducibilitiesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.ProjectVersionData.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_resolutionsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.TagDataSearchResult.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_severitiesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.UserData.datasource">
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_statusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_enum_view_statesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_getResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issuesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_get_issue_headersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issuesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_headersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_filter_search_issue_idsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_getResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issues_get_headerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_addResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_addResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_deleteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_attachment_getResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_checkinResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_deleteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_existsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_getResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_biggest_idResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_historyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_get_id_from_summaryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_addResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_deleteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_note_updateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_addResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_relationship_deleteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_set_tagsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_issue_updateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_loginResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_projects_get_user_accessibleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_addResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_add_categoryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_addResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_deleteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_attachment_getResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_deleteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_delete_categoryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_all_subprojectsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_attachmentsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_categoriesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_custom_fieldsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_id_from_nameResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issuesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issues_for_userResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_issue_headersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_released_versionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_unreleased_versionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_usersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_get_versionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_rename_category_by_nameResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_updateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_addResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_deleteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_project_version_updateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_addResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_deleteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_tag_get_allResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_pref_get_prefResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_user_profiles_get_allResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MantisConnectWebservice\SilverMonkey.BugTraqConnect.MantisConnectWebservice.mc_versionResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
   </ItemGroup>

@@ -123,7 +123,7 @@
     <Compile Include="Libraries\MsDice.vb" />
     <Compile Include="Libraries\MsDreamInfo.vb" />
     <Compile Include="Libraries\MsFurreList.vb" />
-    <Compile Include="Libraries\MsIO.vb" />
+    <None Include="Libraries\MsIO.vb" />
     <None Include="Libraries\MsMath.vb" />
     <Compile Include="Libraries\MsMemberList.vb" />
     <Compile Include="Libraries\MsMovement.vb" />
@@ -179,7 +179,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -201,7 +203,7 @@
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyspeakR7\Monkeyspeak.csproj">
+    <ProjectReference Include="..\MonkeySpeakEx\Monkeyspeak.csproj">
       <Project>{51b6668d-9904-4fa4-8fb8-6a1395b3104d}</Project>
       <Name>Monkeyspeak</Name>
     </ProjectReference>

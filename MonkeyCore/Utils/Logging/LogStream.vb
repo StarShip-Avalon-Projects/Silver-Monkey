@@ -150,18 +150,23 @@ Namespace Utils.Logging
 
             Dim Now As String = Date.Now().ToString("MM/dd/yyyy H:mm:ss")
             Message = Now & ": " & Message
+            Try
+                Using ioFile As New StreamWriter(strErrorFilePath, True)
 
-            Using ioFile As New StreamWriter(strErrorFilePath, True)
+                    ' Try
 
-                ' Try
-
-                For Each line In Stack.ToArray
-                    ioFile.WriteLine(line)
-                Next
-                Stack.Clear()
-                ioFile.WriteLine(Message)
-            End Using
-
+                    For Each line In Stack.ToArray
+                        ioFile.WriteLine(line)
+                    Next
+                    Stack.Clear()
+                    ioFile.WriteLine(Message)
+                End Using
+            Catch ex As IOException
+                If (ex.Message.StartsWith("The process cannot access the file") AndAlso
+                        ex.Message.EndsWith("because it is being used by another process.")) Then
+                    Stack.Add(Message)
+                End If
+            End Try
 
         End Sub
 

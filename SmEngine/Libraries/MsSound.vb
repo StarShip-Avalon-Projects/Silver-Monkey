@@ -83,7 +83,7 @@ Namespace Engine.Libraries
         ''' Override Dispose method
         ''' </summary>
         ''' <param name="page"></param>
-        Public Overrides Sub OnPageDisposing(page As Page)
+        Public Overrides Sub Unload(page As Page)
             Dispose(True)
         End Sub
 
@@ -92,11 +92,14 @@ Namespace Engine.Libraries
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    simpleSound.Dispose()
-                End If
+                    If simpleSound IsNot Nothing Then
+                        simpleSound.Dispose()
+                        simpleSound = Nothing
+                    End If
 
-                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
-                ' TODO: set large fields to null.
+                    ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                    ' TODO: set large fields to null.
+                End If
             End If
             disposedValue = True
         End Sub

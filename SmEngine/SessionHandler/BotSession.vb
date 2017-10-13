@@ -43,9 +43,30 @@ Imports SilverMonkeyEngine.SmConstants
 Public Class BotSession : Inherits ProxySession
     Implements IDisposable
 
+    Public Event CloseSession As Action
+
+    ''' <summary>
+    ''' Main MonkeySpeak Engine
+    ''' </summary>
+    Public WithEvents MainEngine As Engine.MainEngine
+
+    ''' <summary>
+    ''' Monkey Speak Page object
+    ''' </summary>
+    Public WithEvents MSpage As Monkeyspeak.Page
+
+    Public objHost As New smHost(Me)
+    Private disposed As Boolean
     Private handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
 
-#Region "Constructors"
+    ''' <summary>
+    ''' Library Objects to load into the Engine
+    ''' </summary>
+    Private LibList As List(Of Monkeyspeak.Libraries.BaseLibrary)
+
+    Private MainEngineOptions As BotOptions
+
+    Private MainSettings As Settings.cMain
 
     ''' <summary>
     ''' </summary>
@@ -63,18 +84,12 @@ Public Class BotSession : Inherits ProxySession
     Sub New(ByRef BotSessionOptions As BotOptions)
         MyBase.New(BotSessionOptions)
         MainEngineOptions = BotSessionOptions
-
     End Sub
 
-    'Private Sub PageError(trigger As Trigger, e As Exception) Handles MSpage.Error
-
-    '    RaiseEvent [Error](e, trigger, Nothing)
-
-    'End Sub
-
-#End Region
-
-#Region "Public Properties"
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Public Shadows Event [Error] As ErrorEventHandler
 
     ''' <summary>
     ''' Name of the controller furre
@@ -98,35 +113,7 @@ Public Class BotSession : Inherits ProxySession
         End Get
     End Property
 
-#End Region
-
-#Region "Private Fields"
-
-    Private MainEngineOptions As BotOptions
-    Private MainSettings As Settings.cMain
-
-#End Region
-
-#Region "Public Fields"
-
-    ''' <summary>
-    ''' Main MonkeySpeak Engine
-    ''' </summary>
-    Public WithEvents MainEngine As Engine.MainEngine
-
-    ''' <summary>
-    ''' Monkey Speak Page object
-    ''' </summary>
-    Public WithEvents MSpage As Monkeyspeak.Page = Nothing
-
     'Monkey Speak Bot specific Variables
-
-    Public objHost As New smHost(Me)
-
-#End Region
-
-#Region "Public Methods"
-
     ''' <summary>
     ''' Starts the Furcadia Connection Process
     ''' </summary>
@@ -135,7 +122,7 @@ Public Class BotSession : Inherits ProxySession
         Try
 
             If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
-                Start()
+                StartEngine()
             End If
             MyBase.Connect()
         Catch ex As Exception
@@ -150,39 +137,96 @@ Public Class BotSession : Inherits ProxySession
         ' (0:2) When the bot logs off
         If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
             MSpage.ExecuteAsync(2)
-            StopEngine()
+
         End If
 
         MyBase.Disconnect()
+        StopEngine()
     End Sub
 
     ''' <summary>
-    ''' Send a formatted string to the client and log window
+    ''' Implement IDisposable Support
     ''' </summary>
-    ''' <param name="msg">
-    ''' Channel Subsystem?
+    Public Overrides Sub Dispose() Implements IDisposable.Dispose
+
+        Dispose(True)
+    End Sub
+
+    ''' <summary>
+    ''' Load Libraries into the engine
+    ''' </summary>
+    ''' <param name="LoadPlugins">
     ''' </param>
-    ''' <param name="data">
-    ''' Message to send
-    ''' </param>
-    Public Sub SendToClientFormattedText(msg As String, data As String)
-        SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
-        'Writer.WriteLine("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
+    Public Sub LoadLibrary(ByRef LoadPlugins As Boolean, ByVal silent As Boolean)
+        'Library Loaded?.. Get the Hell out of here
+        MSpage.SetTriggerHandler(TriggerCategory.Cause, 0, Function(reader) True,
+        "(0:0) When the bot starts,")
+
+        MSpage.LoadSysLibrary()
+
+#If CONFIG = "Release" Then
+            '(5:110) load library from file {...}.
+            MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
+#ElseIf CONFIG = "Debug" Then
+        '
+        MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
+        MSpage.SetTriggerHandler(TriggerCategory.Effect, 105,
+     Function() False, "(5:105) raise an error.")
+        ',
+#End If
+
+        MSpage.LoadTimerLibrary(100)
+        MSpage.LoadIOLibrary(MainEngineOptions.BotPath)
+        MSpage.LoadStringLibrary()
+        MSpage.LoadMathLibrary()
+        InitializeEngineLibraries()
+
+        For Each Library As Monkeyspeak.Libraries.BaseLibrary In LibList
+            Try
+                MSpage.LoadLibrary(Library)
+                If Not silent Then Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
+            Catch ex As Exception
+                Throw New MonkeyspeakException(Library.GetType().Name + " " + ex.Message, ex)
+                Exit Sub
+            End Try
+        Next
+
+        'Define our Triggers before we use them
+        'TODO Check for Duplicate and use that one instead
+        'we don't want this to cause a memory leak.. its prefered to run this one time and thats  it except for checking for new plugins
+        'Loop through available plugins, creating instances and adding them to listbox
+        'If Not Plugins Is Nothing And LoadPlugins Then
+
+        'End If
+        'Dim objPlugin As Interfaces.msPlugin
+        'Dim newPlugin As Boolean = False
+        'For intIndex As Integer = 0 To Plugins.Count - 1
+        '    Try
+        '        objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.msPlugin)
+        '        If Not PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
+        '            PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
+        '            newPlugin = True
+        '        End If
+
+        ' If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True
+        ' Then Console.WriteLine("Loading Plugin: " + objPlugin.Name)
+        ' objPlugin.Initialize(objHost) objPlugin.MonkeySpeakPage =
+        ' MonkeySpeakPage objPlugin.Start() End If Catch ex As Exception
+        ' Dim e As New ErrorLogging(ex, Me) End Try Next 'TODO: Add to
+        '' Delegate? 'If newPlugin Then Main.MainSettings.SaveMainSettings()
+
+        'End If
 
     End Sub
 
-
     ''' <summary>
-    ''' 
+    ''' Configure Bot Variables and Execute Monkey Speak Truggers for Client to Server Instructions
     ''' </summary>
-    Public Shadows Event [Error] As ErrorEventHandler
+    ''' <param name="sender"><see cref="Object"/></param>
+    ''' <param name="e"><see cref="ParseServerArgs"/></param>
+    Public Sub OnParseSererInstruction(sender As Object, e As ParseServerArgs) Handles MyBase.ProcessServerInstruction
 
-    ''' <summary>
-    ''' Configure Bot Variables and Execute Monkey Speak Truggers for Text and dynamic channels
-    ''' </summary>
-    ''' <param name="InstructionObject"><see cref="ChannelObject"/></param>
-    ''' <param name="Args"><see cref="ParseServerArgs"/></param>
-    Public Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles MyBase.ProcessServerChannelData
+        If MSpage Is Nothing Then Exit Sub
         If IsConnectedCharacter Then Exit Sub
         Try
             MSpage.RemoveVariable("NAME")
@@ -191,7 +235,61 @@ Public Class BotSession : Inherits ProxySession
             MSpage.SetVariable("MESSAGE", Player.Message, True)
 
         Catch ex As Exception
-            RaiseEvent [Error](ex, Me, Nothing)
+            RaiseEvent [Error](ex, Me, "Failure to set Triggering Furre and Triggering Furres message variables")
+        End Try
+
+        Select Case e.ServerInstruction
+
+            Case ServerInstructionType.LoadDreamEvent
+                Try
+                    MSpage.RemoveVariable("DREAMOWNER")
+                    MSpage.SetVariable("DREAMOWNER", Dream.Owner, True)
+                    MSpage.RemoveVariable("DREAMNAME")
+                    MSpage.SetVariable("DREAMNAME", Dream.Name, True)
+                Catch ex As Exception
+                    RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
+                End Try
+                '(0:90) When the bot enters a Dream,
+                '(0:91) When the bot enters a Dream named {..},
+                MSpage.ExecuteAsync(92, 93)
+
+            Case ServerInstructionType.BookmarkDream
+                Try
+                    MSpage.RemoveVariable("DREAMOWNER")
+                    MSpage.SetVariable("DREAMOWNER", Dream.Owner, True)
+                    MSpage.RemoveVariable("DREAMNAME")
+                    MSpage.SetVariable("DREAMNAME", Dream.Name, True)
+                Catch ex As Exception
+                    RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
+                End Try
+                '(0:90) When the bot enters a Dream,
+                '(0:91) When the bot enters a Dream named {..},
+                MSpage.ExecuteAsync(90, 91)
+
+        End Select
+
+    End Sub
+
+    Public Sub OnDisconnected() Handles MyBase.ServerDisConnected
+        RaiseEvent CloseSession()
+    End Sub
+
+    ''' <summary>
+    ''' Configure Bot Variables and Execute Monkey Speak Truggers for Text and dynamic channels
+    ''' </summary>
+    ''' <param name="InstructionObject"><see cref="ChannelObject"/></param>
+    ''' <param name="Args"><see cref="ParseServerArgs"/></param>
+    Public Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles MyBase.ProcessServerChannelData
+        If MSpage Is Nothing Then Exit Sub
+        If IsConnectedCharacter Then Exit Sub
+        Try
+            MSpage.RemoveVariable("NAME")
+            MSpage.RemoveVariable("MESSAGE")
+            MSpage.SetVariable("NAME", Player.Name, True)
+            MSpage.SetVariable("MESSAGE", Player.Message, True)
+
+        Catch ex As Exception
+            RaiseEvent [Error](ex, Me, "Failed to set Triggering Furre Monkeyspeak Variables")
         End Try
         Dim Text As String = InstructionObject.ChannelText
 
@@ -422,130 +520,11 @@ Public Class BotSession : Inherits ProxySession
         End Select
 
     End Sub
-    ''' <summary>
-    ''' Configure Bot Variables and Execute Monkey Speak Truggers for Client to Server Instructions
-    ''' </summary>
-    ''' <param name="sender"><see cref="Object"/></param>
-    ''' <param name="e"><see cref="ParseServerArgs"/></param>
-    Public Sub OnParseSererInstruction(sender As Object, e As ParseServerArgs) Handles MyBase.ProcessServerInstruction
-        If IsConnectedCharacter Then Exit Sub
-        Try
-            MSpage.RemoveVariable("NAME")
-            MSpage.RemoveVariable("MESSAGE")
-            MSpage.SetVariable("NAME", Player.Name, True)
-            MSpage.SetVariable("MESSAGE", Player.Message, True)
-
-        Catch ex As Exception
-            RaiseEvent [Error](ex, Me, Nothing)
-        End Try
-
-        Select Case e.ServerInstruction
-
-            Case ServerInstructionType.LoadDreamEvent
-                Try
-                    MSpage.RemoveVariable("DREAMOWNER")
-                    MSpage.SetVariable("DREAMOWNER", Dream.Owner, True)
-                    MSpage.RemoveVariable("DREAMNAME")
-                    MSpage.SetVariable("DREAMNAME", Dream.Name, True)
-                Catch ex As Exception
-                    RaiseEvent [Error](ex, Me, Nothing)
-                End Try
-                '(0:90) When the bot enters a Dream,
-                '(0:91) When the bot enters a Dream named {..},
-                MSpage.ExecuteAsync(92, 93)
-
-            Case ServerInstructionType.BookmarkDream
-                Try
-                    MSpage.RemoveVariable("DREAMOWNER")
-                    MSpage.SetVariable("DREAMOWNER", Dream.Owner, True)
-                    MSpage.RemoveVariable("DREAMNAME")
-                    MSpage.SetVariable("DREAMNAME", Dream.Name, True)
-                Catch ex As Exception
-                    RaiseEvent [Error](ex, Me, Nothing)
-                End Try
-                '(0:90) When the bot enters a Dream,
-                '(0:91) When the bot enters a Dream named {..},
-                MSpage.ExecuteAsync(90, 91)
-
-        End Select
-
-    End Sub
-
-#Region "MonkeySpeak.Page Functions"
 
     ''' <summary>
-    ''' Library Objects to load into the Engine
+    ''' Set a list of Variables for the <see cref="Monkeyspeak.Page"/>
     ''' </summary>
-    Private LibList As List(Of Monkeyspeak.Libraries.AbstractBaseLibrary)
-
-
-
-    ''' <summary>
-    ''' Load Libraries into the engine
-    ''' </summary>
-    ''' <param name="LoadPlugins">
-    ''' </param>
-    Public Sub LoadLibrary(ByRef LoadPlugins As Boolean, ByVal silent As Boolean)
-        'Library Loaded?.. Get the Hell out of here
-        MSpage.SetTriggerHandler(TriggerCategory.Cause, 0, Function(reader) True)
-        '"(0:0) When the bot starts,")
-
-        MSpage.LoadSysLibrary()
-
-#If CONFIG = "Release" Then
-            '(5:110) load library from file {...}.
-            MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
-#ElseIf CONFIG = "Debug" Then
-        '(5:105) raise an error.
-        MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
-        MSpage.SetTriggerHandler(TriggerCategory.Effect, 105,
-     Function() False)
-        ', "(5:105) raise an error.")
-#End If
-
-        MSpage.LoadTimerLibrary()
-        MSpage.LoadStringLibrary()
-        MSpage.LoadMathLibrary()
-        InitializeEngineLibraries()
-
-        For Each Library As Monkeyspeak.Libraries.AbstractBaseLibrary In LibList
-            Try
-                MSpage.LoadLibrary(Library)
-                If Not silent Then Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
-            Catch ex As Exception
-                Throw New MonkeyspeakException(Library.GetType().Name + " " + ex.Message, ex)
-                Exit Sub
-            End Try
-        Next
-
-        'Define our Triggers before we use them
-        'TODO Check for Duplicate and use that one instead
-        'we don't want this to cause a memory leak.. its prefered to run this one time and thats  it except for checking for new plugins
-        'Loop through available plugins, creating instances and adding them to listbox
-        'If Not Plugins Is Nothing And LoadPlugins Then
-
-        'End If
-        'Dim objPlugin As Interfaces.msPlugin
-        'Dim newPlugin As Boolean = False
-        'For intIndex As Integer = 0 To Plugins.Count - 1
-        '    Try
-        '        objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.msPlugin)
-        '        If Not PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
-        '            PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
-        '            newPlugin = True
-        '        End If
-
-        ' If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True
-        ' Then Console.WriteLine("Loading Plugin: " + objPlugin.Name)
-        ' objPlugin.Initialize(objHost) objPlugin.MonkeySpeakPage =
-        ' MonkeySpeakPage objPlugin.Start() End If Catch ex As Exception
-        ' Dim e As New ErrorLogging(ex, Me) End Try Next 'TODO: Add to
-        '' Delegate? 'If newPlugin Then Main.MainSettings.SaveMainSettings()
-
-        'End If
-
-    End Sub
-
+    ''' <param name="VariableList"></param>
     Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
 
         For Each kv As KeyValuePair(Of String, Object) In VariableList
@@ -555,9 +534,24 @@ Public Class BotSession : Inherits ProxySession
     End Sub
 
     ''' <summary>
+    ''' Send a formatted string to the client and log window
+    ''' </summary>
+    ''' <param name="msg">
+    ''' Channel Subsystem?
+    ''' </param>
+    ''' <param name="data">
+    ''' Message to send
+    ''' </param>
+    Public Sub SendToClientFormattedText(msg As String, data As String)
+        SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
+        'Writer.WriteLine("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
+
+    End Sub
+
+    ''' <summary>
     ''' Start the Monkey Speak Engine
     ''' </summary>
-    Public Sub Start()
+    Public Sub StartEngine()
         MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
         MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
@@ -587,6 +581,7 @@ Public Class BotSession : Inherits ProxySession
 
         If Not MSpage Is Nothing Then
             MSpage.Reset(True)
+            MSpage.Dispose()
             MSpage = Nothing
         End If
         If Not MainEngine Is Nothing Then
@@ -596,12 +591,39 @@ Public Class BotSession : Inherits ProxySession
 
     End Sub
 
+    ''' <summary>
+    ''' Dispose components
+    ''' </summary>
+    ''' <param name="disposing"></param>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+
+        If Me.disposed Then Exit Sub
+        If disposing Then
+
+            If Not MainEngine Is Nothing Then MainEngine.Dispose()
+            ' Free your own state (unmanaged objects).
+            ' Set large fields to null.
+            ' MyBase.Dispose()
+        End If
+        Me.disposed = True
+        Me.Finalize()
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="e"></param>
+    ''' <param name="o"></param>
+    ''' <param name="n"></param>
+    Protected Overrides Sub SendError(e As Exception, o As Object, n As String) Handles MyBase.[Error]
+        RaiseEvent [Error](e, o, n)
+    End Sub
+
     Private Sub InitializeEngineLibraries()
         ' Comment out Libs to Disable
 
-        LibList = New List(Of Monkeyspeak.Libraries.AbstractBaseLibrary) From {
-                New MsIO(Me),
-                New StringLibrary(Me),
+        LibList = New List(Of Monkeyspeak.Libraries.BaseLibrary) From {
+                            New StringLibrary(Me),
                 New MsSayLibrary(Me),
                 New MsBanish(Me),
                 New MsTime(Me),
@@ -623,74 +645,25 @@ Public Class BotSession : Inherits ProxySession
                 New MsDreamInfo(Me)
             }
         ' New MathLibrary(Me),
+        'New MsIO(Me),
         'LibList.Add(New MS_MemberList())
     End Sub
 
-#End Region
-
-#End Region
-
-#Region "Private Methods"
-
     ''' <summary>
+    ''' Pump MonkeySpeak Exceptions to the error handler
     ''' </summary>
-    ''' <param name="Server_Instruction">
-    ''' </param>
-    ''' <returns>
-    ''' </returns>
-    Private Function MessagePump(ByRef Server_Instruction As String) As Boolean
-        Dim objPlugin As Interfaces.msPlugin
-        Dim intIndex As Integer
-        Dim Handled As Boolean = False
-        If Not Settings.Plugins Is Nothing Then
-            For intIndex = 0 To Settings.Plugins.Count - 1
-                objPlugin = DirectCast(PluginServices.CreateInstance(Settings.Plugins(intIndex)), Interfaces.msPlugin)
-                If Settings.PluginList.Item(objPlugin.Name.Replace(" ", "")) Then
-                    objPlugin.Initialize(objHost)
-                    objPlugin.MsPage = MSpage
-                    If objPlugin.MessagePump(Server_Instruction) Then Handled = True
-                End If
-            Next
+    ''' <param name="handler"></param>
+    ''' <param name="Trigger"></param>
+    ''' <param name="ex"></param>
+    Private Sub OnMonkeySpeakError(handler As TriggerHandler, Trigger As Trigger, ex As Exception) Handles MSpage.Error
+        If ex.GetType IsNot GetType(MonkeySpeakException) Then
+            Dim PageError As New MonkeySpeakException(String.Format("Trigger Error: {0}", Trigger.ToString), ex)
+            SendError(PageError, handler, Trigger.ToString)
+        Else
+            SendError(ex, handler, Trigger.ToString)
         End If
-        Return Handled
-    End Function
 
-#End Region
-
-#Region "Dispose"
-
-    Private disposed As Boolean
-
-    ''' <summary>
-    ''' Dispose components
-    ''' </summary>
-    ''' <param name="disposing"></param>
-    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-
-        If Me.disposed Then Exit Sub
-        If disposing Then
-
-            If Not MainEngine Is Nothing Then MainEngine.Dispose()
-            ' Free your own state (unmanaged objects).
-            ' Set large fields to null.
-            ' MyBase.Dispose()
-        End If
-        Me.disposed = True
-        Me.Finalize()
     End Sub
 
-#Region " IDisposable Support "
-
-    ''' <summary>
-    ''' Implement IDisposable Support
-    ''' </summary>
-    Public Overrides Sub Dispose() Implements IDisposable.Dispose
-
-        Dispose(True)
-    End Sub
-
-#End Region
-
-#End Region
 
 End Class

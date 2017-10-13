@@ -46,24 +46,6 @@
     </HeatProject>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mantis\mantisconnect\BugTraqConnect.csproj">
-      <Name>BugTraqConnect</Name>
-      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\Mantis\MantisSubmit\MantisSubmit.csproj">
-      <Name>MantisSubmit</Name>
-      <Project>{580c279d-3855-45f7-8ee2-bb036a1ca4a4}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Name>MonkeyCore</Name>
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
@@ -73,13 +55,13 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyspeakR7\Monkeyspeak.csproj">
+    <ProjectReference Include="..\MonkeySpeakEx\Monkeyspeak.csproj">
       <Name>Monkeyspeak</Name>
       <Project>{51b6668d-9904-4fa4-8fb8-6a1395b3104d}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
@@ -89,15 +71,6 @@
       <DoNotHarvest>
       </DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Symbols;</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\Mantis\mantisnotify\MantisNotify.csproj">
-      <Name>MantisNotify</Name>
-      <Project>{2A8447AC-E15C-4A8F-BDED-8E4373D574D4}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\ChatBot\ChatBot.vbproj">
