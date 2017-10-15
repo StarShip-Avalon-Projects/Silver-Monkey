@@ -112,32 +112,15 @@ Namespace Engine
 
         End Function
 
-        'Public Sub LogError(reader As TriggerReader, ex As Exception)
+        ''' <summary>
+        ''' Loads a Monkeyspeak script from a string into a <see cref="Monkeyspeak.Page"/>.
+        ''' </summary>
+        ''' <param name="MonkeySpeakScript">MonkeySpeak as string</param>
+        ''' <returns></returns>
+        Public Function LoadFromString(MonkeySpeakScript As String) As Page
+            Return SmEngine.LoadFromString(MonkeySpeakScript)
+        End Function
 
-        ' Console.WriteLine(MS_ErrWarning) Dim ErrorString As String =
-        ' "Error: (" & reader.TriggerCategory.ToString & ":" &
-        ' reader.TriggerId.ToString & ") " & ex.Message
-
-        '    If Not IsNothing(cBot) Then
-        '        If cBot.log Then
-        '            LogStream.WriteLine(ErrorString, ex)
-        '        End If
-        '    End If
-        '    Writer.WriteLine(ErrorString)
-        'End Sub
-        'Public Sub LogError(trigger As Trigger, ex As Exception) Handles MonkeySpeakPage.Error
-
-        ' Console.WriteLine(MS_ErrWarning) Dim ErrorString As String =
-        ' "Error: (" & trigger.Category.ToString & ":" & trigger.Id.ToString
-        ' & ") " & ex.Message
-
-        '    If Not IsNothing(cBot) Then
-        '        If cBot.log Then
-        '            '  BotLogStream.WriteLine(ErrorString, ex)
-        '        End If
-        '    End If
-        '    Writer.WriteLine(ErrorString)
-        'End Sub
 
 #End Region
 

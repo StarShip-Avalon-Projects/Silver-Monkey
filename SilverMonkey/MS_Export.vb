@@ -26,7 +26,7 @@ Public Class MS_Export
 
 #End Region
 
-    Private mPage As Monkeyspeak.Page
+    Private MsPage As Monkeyspeak.Page
 
     Private Session As BotSession
 
@@ -38,11 +38,10 @@ Public Class MS_Export
         Dim options As New BotOptions()
         Session = New BotSession(options)
         Dim engine As New MainEngine(options.MonkeySpeakEngineOptions, Session)
-        ' mPage = engine.LoadFromString("")
+        Session.MSpage = engine.LoadFromString(String.Empty)
 
-        Dim MsPage = engine.LoadFromScriptFile(String.Empty)
-        'Monkeyspeak.Page(engine)
-        'mPage = MsPage.Export
+        'Load the Monkeyspeak lins into the page
+        MsPage = LibraryUtils.LoadLibrary(Session, True)
 
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
@@ -54,12 +53,13 @@ Public Class MS_Export
     End Sub
 
     Private Sub ExportKeysIni(ByRef oFile As String)
-        'MS_Stared = 0
-        'MainMSEngine.EngineStart(False)
         Dim Test As New List(Of String)
-        For Each item As String In mPage.GetTriggerDescriptions()
-            Test.Add(item)
-        Next
+        Dim TriggerDescs = MsPage.GetTriggerDescriptions(True)
+        Dim InputList As IEnumerator(Of String) = TriggerDescs.GetEnumerator()
+        While InputList.MoveNext
+            Test.AddRange(InputList.Current.Replace(vbCr, String.Empty).Split(CType(vbLf, Char())))
+        End While
+
         EffectList.Clear()
         CauseList.Clear()
         ConditionList.Clear()
@@ -68,17 +68,20 @@ Public Class MS_Export
         For Each desc As String In Test
             ' print it or write it to file
 
-            Dim Catagory As TriggerTypes = CType(cat.Match(desc).Groups(1).ToString, TriggerTypes)
-            Select Case Catagory
-                Case TriggerTypes.Cause
-                    CauseList.Add(desc)
-                Case TriggerTypes.Condition
-                    ConditionList.Add(desc)
-                Case TriggerTypes.Effect
-                    EffectList.Add(desc)
-                Case Else
-                    Console.Write("Catagory error " & Catagory.ToString)
-            End Select
+            Dim Catagory As TriggerTypes
+            If cat.Match(desc).Success Then
+                Catagory = CType(cat.Match(desc).Groups(1).Value, TriggerTypes)
+                Select Case Catagory
+                    Case TriggerTypes.Cause
+                        CauseList.Add(desc)
+                    Case TriggerTypes.Condition
+                        ConditionList.Add(desc)
+                    Case TriggerTypes.Effect
+                        EffectList.Add(desc)
+                    Case Else
+                        Console.Write("Catagory error " & Catagory.ToString)
+                End Select
+            End If
         Next
         CauseList.Sort((New CatSorter))
         ConditionList.Sort((New CatSorter))
@@ -121,7 +124,7 @@ Public Class MS_Export
     Private Sub MS_Export_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
         Dim Test As New List(Of String)
-        For Each item As String In mPage.GetTriggerDescriptions()
+        For Each item As String In MsPage.GetTriggerDescriptions()
             Test.Add(item)
         Next
         Dim cat As New Regex("\((.[0-9]*)\:(.[0-9]*)\)")

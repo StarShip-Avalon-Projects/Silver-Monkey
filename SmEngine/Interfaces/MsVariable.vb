@@ -30,7 +30,7 @@ Namespace Interfaces
 
 #Region "Public Properties"
 
-        Public ReadOnly Property Name As String Implements IVariable.Name
+        Public Property Name As String Implements IVariable.Name
         Public Property Value As Object Implements IVariable.Value
         Public ReadOnly Property IsConstant As Boolean Implements IVariable.IsConstant
 

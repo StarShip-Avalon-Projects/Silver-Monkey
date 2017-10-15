@@ -1,10 +1,9 @@
 ﻿Imports System.Text
 
-'TODO rename this to something meaningful
 ''' <summary>
-'''
+''' Generic scripts for preloading into Monkey Speak Editor and Silver Monkey
 ''' </summary>
-Public Class IO
+Public NotInheritable Class NewEditorScripts
 
 #Region "Internal Fields"
 
@@ -16,14 +15,6 @@ Public Class IO
 
     Private _KeysIni As IniFile
     Private _MS_KeysIni As IniFile
-
-#End Region
-
-#Region "Public Constructors"
-
-    Public Sub New()
-
-    End Sub
 
 #End Region
 

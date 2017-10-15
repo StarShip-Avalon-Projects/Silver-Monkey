@@ -62,9 +62,9 @@ Public Class BotSession : Inherits ProxySession
     ''' <summary>
     ''' Library Objects to load into the Engine
     ''' </summary>
-    Private LibList As List(Of Monkeyspeak.Libraries.BaseLibrary)
 
-    Private MainEngineOptions As BotOptions
+
+    Public Property MainEngineOptions As BotOptions
 
     Private MainSettings As Settings.cMain
 
@@ -87,7 +87,7 @@ Public Class BotSession : Inherits ProxySession
     End Sub
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     Public Shadows Event [Error] As ErrorEventHandler
 
@@ -152,72 +152,7 @@ Public Class BotSession : Inherits ProxySession
         Dispose(True)
     End Sub
 
-    ''' <summary>
-    ''' Load Libraries into the engine
-    ''' </summary>
-    ''' <param name="LoadPlugins">
-    ''' </param>
-    Public Sub LoadLibrary(ByRef LoadPlugins As Boolean, ByVal silent As Boolean)
-        'Library Loaded?.. Get the Hell out of here
-        MSpage.SetTriggerHandler(TriggerCategory.Cause, 0, Function(reader) True,
-        "(0:0) When the bot starts,")
 
-        MSpage.LoadSysLibrary()
-
-#If CONFIG = "Release" Then
-            '(5:110) load library from file {...}.
-            MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
-#ElseIf CONFIG = "Debug" Then
-        '
-        MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
-        MSpage.SetTriggerHandler(TriggerCategory.Effect, 105,
-     Function() False, "(5:105) raise an error.")
-        ',
-#End If
-
-        MSpage.LoadTimerLibrary(100)
-        MSpage.LoadIOLibrary(MainEngineOptions.BotPath)
-        MSpage.LoadStringLibrary()
-        MSpage.LoadMathLibrary()
-        InitializeEngineLibraries()
-
-        For Each Library As Monkeyspeak.Libraries.BaseLibrary In LibList
-            Try
-                MSpage.LoadLibrary(Library)
-                If Not silent Then Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
-            Catch ex As Exception
-                Throw New MonkeyspeakException(Library.GetType().Name + " " + ex.Message, ex)
-                Exit Sub
-            End Try
-        Next
-
-        'Define our Triggers before we use them
-        'TODO Check for Duplicate and use that one instead
-        'we don't want this to cause a memory leak.. its prefered to run this one time and thats  it except for checking for new plugins
-        'Loop through available plugins, creating instances and adding them to listbox
-        'If Not Plugins Is Nothing And LoadPlugins Then
-
-        'End If
-        'Dim objPlugin As Interfaces.msPlugin
-        'Dim newPlugin As Boolean = False
-        'For intIndex As Integer = 0 To Plugins.Count - 1
-        '    Try
-        '        objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), Interfaces.msPlugin)
-        '        If Not PluginList.ContainsKey(objPlugin.Name.Replace(" ", "")) Then
-        '            PluginList.Add(objPlugin.Name.Replace(" ", ""), True)
-        '            newPlugin = True
-        '        End If
-
-        ' If PluginList.Item(objPlugin.Name.Replace(" ", "")) = True
-        ' Then Console.WriteLine("Loading Plugin: " + objPlugin.Name)
-        ' objPlugin.Initialize(objHost) objPlugin.MonkeySpeakPage =
-        ' MonkeySpeakPage objPlugin.Start() End If Catch ex As Exception
-        ' Dim e As New ErrorLogging(ex, Me) End Try Next 'TODO: Add to
-        '' Delegate? 'If newPlugin Then Main.MainSettings.SaveMainSettings()
-
-        'End If
-
-    End Sub
 
     ''' <summary>
     ''' Configure Bot Variables and Execute Monkey Speak Truggers for Client to Server Instructions
@@ -226,26 +161,21 @@ Public Class BotSession : Inherits ProxySession
     ''' <param name="e"><see cref="ParseServerArgs"/></param>
     Public Sub OnParseSererInstruction(sender As Object, e As ParseServerArgs) Handles MyBase.ProcessServerInstruction
 
-        If MSpage Is Nothing Then Exit Sub
-        If IsConnectedCharacter Then Exit Sub
         Try
-            MSpage.RemoveVariable("NAME")
-            MSpage.RemoveVariable("MESSAGE")
-            MSpage.SetVariable("NAME", Player.Name, True)
-            MSpage.SetVariable("MESSAGE", Player.Message, True)
 
+            DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).ForceAssignValue(Player.Message)
+
+            DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).ForceAssignValue(Player.Name)
         Catch ex As Exception
-            RaiseEvent [Error](ex, Me, "Failure to set Triggering Furre and Triggering Furres message variables")
+            RaiseEvent [Error](ex, Me, "Failure to set Triggering Furre and Triggering Furres %MESSAGE variables")
         End Try
 
         Select Case e.ServerInstruction
 
             Case ServerInstructionType.LoadDreamEvent
                 Try
-                    MSpage.RemoveVariable("DREAMOWNER")
-                    MSpage.SetVariable("DREAMOWNER", Dream.Owner, True)
-                    MSpage.RemoveVariable("DREAMNAME")
-                    MSpage.SetVariable("DREAMNAME", Dream.Name, True)
+                    CType(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).ForceAssignValue(Dream.Owner)
+                    CType(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).ForceAssignValue(Dream.Name)
                 Catch ex As Exception
                     RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
                 End Try
@@ -255,10 +185,8 @@ Public Class BotSession : Inherits ProxySession
 
             Case ServerInstructionType.BookmarkDream
                 Try
-                    MSpage.RemoveVariable("DREAMOWNER")
-                    MSpage.SetVariable("DREAMOWNER", Dream.Owner, True)
-                    MSpage.RemoveVariable("DREAMNAME")
-                    MSpage.SetVariable("DREAMNAME", Dream.Name, True)
+                    CType(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).ForceAssignValue(Dream.Owner)
+                    CType(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).ForceAssignValue(Dream.Name)
                 Catch ex As Exception
                     RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
                 End Try
@@ -283,10 +211,8 @@ Public Class BotSession : Inherits ProxySession
         If MSpage Is Nothing Then Exit Sub
         If IsConnectedCharacter Then Exit Sub
         Try
-            MSpage.RemoveVariable("NAME")
-            MSpage.RemoveVariable("MESSAGE")
-            MSpage.SetVariable("NAME", Player.Name, True)
-            MSpage.SetVariable("MESSAGE", Player.Message, True)
+            CType(MSpage.GetVariable("%MESSAGE"), ConstantVariable).ForceAssignValue(Player.Message)
+            CType(MSpage.GetVariable("%NAME"), ConstantVariable).ForceAssignValue(Player.Name)
 
         Catch ex As Exception
             RaiseEvent [Error](ex, Me, "Failed to set Triggering Furre Monkeyspeak Variables")
@@ -389,8 +315,8 @@ Public Class BotSession : Inherits ProxySession
                 End Select
             Case "banish"
                 Dim NameStr As String
-
-                MSpage.SetVariable("BANISHLIST", String.Join(" ", BanishString.ToArray), True)
+                MSpage.RemoveVariable("%BANISHLIST")
+                MSpage.SetVariable("%BANISHLIST", String.Join(" ", BanishString.ToArray), True)
 
                 If Text.Contains(" has been banished from your dreams.") Then
                     'banish <name> (online)
@@ -399,8 +325,8 @@ Public Class BotSession : Inherits ProxySession
                     '(0:52) When the bot sucessfilly banishes a furre,
                     '(0:53) When the bot sucessfilly banishes the furre named {...},
                     'Success: You have canceled all banishments from your dreams.
-                    MSpage.RemoveVariable("BANISHNAME")
-                    MSpage.SetVariable("BANISHNAME", BanishName, True)
+                    MSpage.RemoveVariable("%BANISHNAME")
+                    MSpage.SetVariable("%BANISHNAME", BanishName, True)
 
                     MSpage.ExecuteAsync(52, 53)
 
@@ -408,10 +334,8 @@ Public Class BotSession : Inherits ProxySession
                 ElseIf Text = "You have canceled all banishments from your dreams." Then
                     'banish-off-all (active list)
                     'Success: You have canceled all banishments from your dreams.
-                    MSpage.RemoveVariable("BANISHNAME")
-                    MSpage.RemoveVariable("BANISHLIST")
-                    MSpage.SetVariable("BANISHLIST", Nothing, True)
-                    MSpage.SetVariable("BANISHNAME", Nothing, True)
+                    CType(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).ForceAssignValue(Nothing)
+                    CType(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(Nothing)
                     MSpage.ExecuteAsync(60)
 
                 ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
@@ -420,8 +344,8 @@ Public Class BotSession : Inherits ProxySession
 
                     '(0:61) When the bot sucessfully temp banishes a Furre
                     '(0:62) When the bot sucessfully temp banishes the furre named {...}
-                    MSpage.RemoveVariable("BANISHNAME")
-                    MSpage.SetVariable("BANISHNAME", BanishName, True)
+                    CType(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
+
                     MSpage.ExecuteAsync(61, 62)
 
                 ElseIf Text.StartsWith("Players banished from your dreams: ") Then
@@ -438,8 +362,7 @@ Public Class BotSession : Inherits ProxySession
                     '(0:58) When the bot successfully removes the furre named {...} from the banish list,
                     Dim t As New Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled)
                     NameStr = t.Match(Text).Groups(1).Value
-                    MSpage.RemoveVariable("BANISHNAME")
-                    MSpage.SetVariable("BANISHNAME", NameStr, True)
+                    CType(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
                     MSpage.ExecuteAsync(56, 56)
 
                     '      MSpage.ExecuteAsync(800)
@@ -452,8 +375,7 @@ Public Class BotSession : Inherits ProxySession
                     '(0:51) When the bot fails to banish the furre named {...},
                     Dim t As New Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled)
                     NameStr = t.Match(Text).Groups(1).Value
-                    MSpage.RemoveVariable("BANISHNAME")
-                    MSpage.SetVariable("BANISHNAME", NameStr, True)
+                    CType(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(NameStr)
                     MSpage.ExecuteAsync(50, 51)
                 ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
                     'banish-off <name> (not on list)
@@ -461,16 +383,14 @@ Public Class BotSession : Inherits ProxySession
 
                     '(0:55) When the Bot fails to remove a furre from the banish list,
                     '(0:56) When the bot fails to remove the furre named {...} from the banish list,
-                    MSpage.RemoveVariable("BANISHNAME")
-                    MSpage.SetVariable("BANISHNAME", BanishName, True)
+                    CType(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
                     MSpage.ExecuteAsync(50, 51)
                 ElseIf Text = "You have not banished anyone." Then
                     'banish-off-all (empty List)
                     'Error:>> You have not banished anyone.
 
                     '(0:59) When the bot fails to see the banish list,
-                    MSpage.RemoveVariable("BANISHLIST")
-                    MSpage.SetVariable("BANISHLIST", "", True)
+                    CType(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).ForceAssignValue(Nothing)
                     MSpage.ExecuteAsync(59)
 
                 ElseIf Text = "You do not have any cookies to give away right now!" Then
@@ -504,7 +424,7 @@ Public Class BotSession : Inherits ProxySession
                 End If
                 Dim EatCookie As Regex = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
                 If EatCookie.Match(Text).Success Then
-                    'TODO Cookie eat message can change by Dragon Speak
+                    'TODO Cookie eat %MESSAGE can change by Dragon Speak
 
                     MSpage.ExecuteAsync(49)
 
@@ -522,13 +442,13 @@ Public Class BotSession : Inherits ProxySession
     End Sub
 
     ''' <summary>
-    ''' Set a list of Variables for the <see cref="Monkeyspeak.Page"/>
+    ''' Set the Bot System Variables for the <see cref="Monkeyspeak.Page"/>
     ''' </summary>
     ''' <param name="VariableList"></param>
-    Public Sub PageSetVariable(ByVal VariableList As Dictionary(Of String, Object))
+    Public Sub PageSetVariable(ByVal VariableList As List(Of ConstantVariable))
 
-        For Each kv As KeyValuePair(Of String, Object) In VariableList
-            MSpage.SetVariable(kv.Key.ToUpper, kv.Value, True)
+        For Each var In VariableList
+            MSpage.SetVariable(var)
         Next '
 
     End Sub
@@ -540,7 +460,7 @@ Public Class BotSession : Inherits ProxySession
     ''' Channel Subsystem?
     ''' </param>
     ''' <param name="data">
-    ''' Message to send
+    ''' %MESSAGE to send
     ''' </param>
     Public Sub SendToClientFormattedText(msg As String, data As String)
         SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
@@ -556,18 +476,18 @@ Public Class BotSession : Inherits ProxySession
         MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
         Dim TimeStart = DateTime.Now
-        Dim VariableList As New Dictionary(Of String, Object)
+        Dim VariableList As New List(Of ConstantVariable)
 
-        LoadLibrary(False, False)
+        MSpage = LibraryUtils.LoadLibrary(Me, False)
 
-        VariableList.Add("DREAMOWNER", Nothing)
-        VariableList.Add("DREAMNAME", Nothing)
-        VariableList.Add("BOTNAME", Nothing)
-        VariableList.Add("BOTCONTROLLER", MainEngineOptions.BotController)
-        VariableList.Add(MS_Name, Nothing)
-        VariableList.Add("MESSAGE", Nothing)
-        VariableList.Add("BANISHNAME", Nothing)
-        VariableList.Add("BANISHLIST", Nothing)
+        VariableList.Add(New ConstantVariable("%DREAMOWNER"))
+        VariableList.Add(New ConstantVariable("%DREAMNAME"))
+        VariableList.Add(New ConstantVariable("%BOTNAME"))
+        VariableList.Add(New ConstantVariable("%BOTCONTROLLER", MainEngineOptions.BotController))
+        VariableList.Add(New ConstantVariable("%NAME"))
+        VariableList.Add(New ConstantVariable("%MESSAGE"))
+        VariableList.Add(New ConstantVariable("%BANISHNAME"))
+        VariableList.Add(New ConstantVariable("%BANISHLIST"))
         PageSetVariable(VariableList)
         '(0:0) When the bot starts,
         MSpage.ExecuteAsync(0)
@@ -610,7 +530,7 @@ Public Class BotSession : Inherits ProxySession
     End Sub
 
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="e"></param>
     ''' <param name="o"></param>
@@ -619,35 +539,7 @@ Public Class BotSession : Inherits ProxySession
         RaiseEvent [Error](e, o, n)
     End Sub
 
-    Private Sub InitializeEngineLibraries()
-        ' Comment out Libs to Disable
 
-        LibList = New List(Of Monkeyspeak.Libraries.BaseLibrary) From {
-                            New StringLibrary(Me),
-                New MsSayLibrary(Me),
-                New MsBanish(Me),
-                New MsTime(Me),
-                New MsDatabase(Me),
-                New MsWebRequests(Me),
-                New MS_Cookie(Me),
-                New MsPhoenixSpeak(Me),
-                New MsPhoenixSpeakBackupAndRestore(Me),
-                New MsDice(Me),
-                New MsFurreList(Me),
-                New MsWarning(Me),
-                New MsMovement(Me),
-                New WmCpyDta(Me),
-                New MsMemberList(Me),
-                New MsPounce(Me),
-                New MsVerbot(Me),
-                New MsSound(Me),
-                New MsTrades(Me),
-                New MsDreamInfo(Me)
-            }
-        ' New MathLibrary(Me),
-        'New MsIO(Me),
-        'LibList.Add(New MS_MemberList())
-    End Sub
 
     ''' <summary>
     ''' Pump MonkeySpeak Exceptions to the error handler
@@ -656,14 +548,13 @@ Public Class BotSession : Inherits ProxySession
     ''' <param name="Trigger"></param>
     ''' <param name="ex"></param>
     Private Sub OnMonkeySpeakError(handler As TriggerHandler, Trigger As Trigger, ex As Exception) Handles MSpage.Error
-        If ex.GetType IsNot GetType(MonkeySpeakException) Then
-            Dim PageError As New MonkeySpeakException(String.Format("Trigger Error: {0}", Trigger.ToString), ex)
+        If ex.GetType IsNot GetType(MonkeyspeakException) Then
+            Dim PageError As New MonkeyspeakException(String.Format("Trigger Error: {0}", Trigger.ToString), ex)
             SendError(PageError, handler, Trigger.ToString)
         Else
             SendError(ex, handler, Trigger.ToString)
         End If
 
     End Sub
-
 
 End Class

@@ -6,20 +6,8 @@ namespace DataMonkey
     /// <summary>
     /// Summary description for StatementParser.
     /// </summary>
-    public class StatementParser
+    public static class StatementParser
     {
-        #region Public Constructors
-
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.StatementParser()'
-
-        public StatementParser()
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.StatementParser()'
-        {
-            // TODO: Add constructor logic here
-        }
-
-        #endregion Public Constructors
-
         #region Public Methods
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.ReturnResults(string, string, out string)'

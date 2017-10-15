@@ -41,7 +41,6 @@ Namespace Engine.Libraries.PhoenixSpeak
 
 #Region "Private Fields"
 
-        Private _name As String
         Private _value As Object
         Private _IsConstant As Boolean
 
@@ -71,11 +70,7 @@ Namespace Engine.Libraries.PhoenixSpeak
 
 
 
-        Public ReadOnly Property Name As String Implements IVariable.Name
-            Get
-                Return _name
-            End Get
-        End Property
+        Public Property Name As String Implements IVariable.Name
 
         Public Property Value As Object Implements IVariable.Value
             Get

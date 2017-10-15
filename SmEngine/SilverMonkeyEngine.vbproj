@@ -24,8 +24,8 @@
     <DocumentationFile>SilverMonkeyEngine.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -103,7 +103,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="BaseClasses\BaseSubSystem.vb" />
-    <Compile Include="EngineOptoons.vb" />
+    <Compile Include="SessionHandler\ConstantVariable.vb" />
+    <Compile Include="SessionHandler\EngineOptoons.vb" />
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="Interfaces\msPlugin.vb" />
     <Compile Include="HelperClasses\SmConstants.vb" />
@@ -140,7 +141,8 @@
     <Compile Include="Libraries\StringLibrary.vb" />
     <Compile Include="Libraries\web\WenData.vb" />
     <Compile Include="Libraries\WmCpyDta.vb" />
-    <Compile Include="MainEngine.vb" />
+    <Compile Include="SessionHandler\LibraryLoader.vb" />
+    <Compile Include="SessionHandler\MainEngine.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

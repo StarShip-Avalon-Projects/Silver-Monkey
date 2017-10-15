@@ -119,7 +119,10 @@ Public Class BaseClass
                 Exit For
             End If
         Next
-        If UbdateMSVariableName Then MsPage.SetVariable(VarPrefix & "NAME", sname, True)
+        If UbdateMSVariableName Then
+            MsPage.RemoveVariable("NAME")
+            MsPage.SetVariable("NAME", sname, True)
+        End If
         Return p
     End Function
 

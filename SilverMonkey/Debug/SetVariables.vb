@@ -40,6 +40,7 @@ Public Class SetVariables
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Var.Value = TxtBxValue.Text
+        MsPage.RemoveVariable(VarName)
         MsPage.SetVariable(VarName, Var.Value, Var.IsConstant)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()

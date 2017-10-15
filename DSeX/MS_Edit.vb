@@ -195,7 +195,7 @@ Public Class MS_Edit
         TabEditStyles(TabControl2.SelectedIndex) = style
 
         If style = EditStyles.ms Then
-            MS_Editor.Text = MonkeyCore.IO.NewMSFile()
+            MS_Editor.Text = NewEditorScripts.NewMSFile()
             lblStatus.Text = "Status: Opened New MonkeySpeak  File "
             popupMenu = New AutocompleteMenu(MS_Editor)
             popupMenu.Enabled = True
@@ -205,7 +205,7 @@ Public Class MS_Edit
             popupMenu.Items.Width = 600
             popupMenu.Items.SetAutocompleteItems(MS_autoCompleteList)
         ElseIf style = EditStyles.ds Then
-            MS_Editor.Text = MonkeyCore.IO.NewDSFile()
+            MS_Editor.Text = NewEditorScripts.NewDSFile()
             lblStatus.Text = "Status: Opened New DragonSpeak  File "
             popupMenu = New AutocompleteMenu(MS_Editor)
             popupMenu.Enabled = True
@@ -215,7 +215,7 @@ Public Class MS_Edit
             popupMenu.Items.Width = 600
             popupMenu.Items.SetAutocompleteItems(DS_autoCompleteList)
         ElseIf style = EditStyles.ini Then
-            MS_Editor.Text = IO.NewDMScript()
+            MS_Editor.Text = NewEditorScripts.NewDMScript()
             lblStatus.Text = "Status: Opened new Wizard Script"
         Else
             MS_Editor.Text = ""
@@ -291,9 +291,9 @@ Public Class MS_Edit
         Catch ex As Exception
             Select Case ext.ToLower
                 Case ".ds"
-                    MS_Editor.Text = MonkeyCore.IO.NewDSFile()
+                    MS_Editor.Text = NewEditorScripts.NewDSFile()
                 Case ".ms"
-                    MS_Editor.Text = MonkeyCore.IO.NewMSFile()
+                    MS_Editor.Text = NewEditorScripts.NewMSFile()
                 Case Else
                     MS_Editor.Text = ""
             End Select
