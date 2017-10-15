@@ -51,7 +51,7 @@
               <userCredentials useDefault="true" userName="" password="" />
             </proxyCredentials>
           </deploymentLocation>
-          <deploymentLocation id="website" location="..\build\help\docs\monkeyspeakedior">
+          <deploymentLocation id="website" location="..\build\help\docs\monkeyspeakeditor\">
             <userCredentials useDefault="true" userName="" password="" />
             <proxyCredentials useProxy="false" proxyServer="">
               <userCredentials useDefault="true" userName="" password="" />
