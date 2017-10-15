@@ -441,7 +441,7 @@ Namespace Engine.Libraries
                    Function(reader As TriggerReader)
 
                        Dim msg As String = reader.ReadString
-                       Dim tname As Variable = reader.Page.GetVariable(MS_Name)
+                       Dim tname = reader.Page.GetVariable(MS_Name)
                        SndWhisper(tname.Value.ToString, msg)
                        Return True
 
@@ -624,7 +624,7 @@ Namespace Engine.Libraries
         ''' Message to send
         ''' </param>
         Public Sub SendOffLineWhisper(ByRef name As String, ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then SendServer("/%%" & FurcadiaShortName(name) & " " & msg)
+            If Not String.IsNullOrEmpty(msg) Then SendServer("/%" & FurcadiaShortName(name) & " " & msg)
         End Sub
 
         ''' <summary>

@@ -189,7 +189,7 @@ Namespace Engine.Libraries
         ''' <returns></returns>
         Public Function ListToVariable(reader As TriggerReader) As Boolean
 
-            Dim Furre As Variable
+            Dim Furre
             Dim f As New List(Of String)
             Try
                 CheckMemberList()

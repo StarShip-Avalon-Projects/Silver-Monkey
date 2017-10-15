@@ -88,7 +88,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Shared Function CurrentTime(reader As TriggerReader) As Boolean
 
-            Dim Var As Variable = reader.ReadVariable(True)
+            Dim Var = reader.ReadVariable(True)
             Dim Str As String = DateTime.Now.ToLongTimeString.ToLower
             Var.Value = Str
             Return True
@@ -106,7 +106,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurcDateTimeVar(reader As TriggerReader) As Boolean
 
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim var = reader.ReadVariable(True)
             SyncLock lock
                 var.Value = FurcTime.ToString("yyyy-MM-dd HH:mm:ss tt")
             End SyncLock
@@ -125,7 +125,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function LocalDateTimeVar(reader As TriggerReader) As Boolean
 
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim var = reader.ReadVariable(True)
             var.Value = Date.Now.ToString("yyyy-MM-dd HH:mm:ss tt")
             Return True
 
@@ -168,16 +168,16 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function SubsractDateTimeStr(reader As TriggerReader) As Boolean
 
-            Dim DateTimeVariable As Variable = reader.ReadVariable(True)
+            Dim DateTimeVariable = reader.ReadVariable(True)
             Dim DateTimeString As String = reader.ReadString
-            Dim ResultVariable As Variable = reader.ReadVariable(True)
+            Dim ResultVariable = reader.ReadVariable(True)
             Dim time As DateTime
             Dim time2 As DateTime
             If DateTime.TryParse(DateTimeVariable.Value.ToString, time) And DateTime.TryParse(DateTimeString, time2) Then
                 ResultVariable.Value = time.Subtract(time2).ToString
                 Return True
             End If
-            Throw New MonkeySpeakException("unable to parse DateTime variable and/or DateTimeString")
+            Throw New MonkeyspeakException("unable to parse DateTime variable and/or DateTimeString")
 
         End Function
 
@@ -194,15 +194,15 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function SubsractDateTimeVar(reader As TriggerReader) As Boolean
 
-            Dim DateTimeVariable As Variable = reader.ReadVariable(True)
-            Dim DateTimeString As Variable = reader.ReadVariable
-            Dim ResultVariable As Variable = reader.ReadVariable(True)
+            Dim DateTimeVariable = reader.ReadVariable(True)
+            Dim DateTimeString = reader.ReadVariable
+            Dim ResultVariable = reader.ReadVariable(True)
             Dim time As DateTime
             Dim time2 As DateTime
             If DateTime.TryParse(DateTimeVariable.Value.ToString, time) And DateTime.TryParse(DateTimeString.Value.ToString, time2) Then
                 ResultVariable.Value = time.Subtract(time2).ToString
             End If
-            Throw New MonkeySpeakException("unable to parse DateTime variable and/or DateTimeString")
+            Throw New MonkeyspeakException("unable to parse DateTime variable and/or DateTimeString")
 
         End Function
 
@@ -217,9 +217,9 @@ Namespace Engine.Libraries
         '(5: ) use variable %Variable as a DateTime string and add Date Time variable %Variable and put it into variable %Variable
         'Public Function AddDateTimeVar(reader As TriggerReader) As Boolean
         '    Try
-        '        Dim var As Variable = reader.ReadVariable(True)
-        '        Dim str As Variable = reader.ReadVariable
-        '        Dim optVar As Variable = reader.ReadVariable(True)
+        '        Dim var  = reader.ReadVariable(True)
+        '        Dim str  = reader.ReadVariable
+        '        Dim optVar  = reader.ReadVariable(True)
         '        Dim time As DateTime
         '        Dim time2 As DateTime
         '        If DateTime.TryParse(var.Value.ToString, time) And DateTime.TryParse(str.Value.ToString, time2) Then

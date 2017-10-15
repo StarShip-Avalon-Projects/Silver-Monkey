@@ -158,8 +158,8 @@ Namespace Engine.Libraries
         ''' </param>
         Public Sub FurreLoggedOff(ByVal Furre As Object, e As EventArgs) Handles PFure.FurreLoggedOff
             Dim Furr As PounceFurre = CType(Furre, PounceFurre)
-            FurcadiaSession.MSpage.RemoveVariable("NAME")
-            FurcadiaSession.MSpage.SetVariable("NAME", Furr.Name, True)
+            FurcadiaSession.MSpage.RemoveVariable("%NAME")
+            FurcadiaSession.MSpage.SetVariable("%NAME", Furr.Name, True)
             FurcadiaSession.MSpage.Execute(951, 953)
         End Sub
 
@@ -180,8 +180,8 @@ Namespace Engine.Libraries
         ''' </param>
         Public Sub FurreLoggedOn(ByVal Furre As Object, e As EventArgs) Handles PFure.FurreLoggedOn
             Dim Furr As PounceFurre = DirectCast(Furre, PounceFurre)
-            FurcadiaSession.MSpage.RemoveVariable("NAME")
-            FurcadiaSession.MSpage.SetVariable("NAME", Furr.Name, True)
+            FurcadiaSession.MSpage.RemoveVariable("%NAME")
+            FurcadiaSession.MSpage.SetVariable("%NAME", Furr.Name, True)
             FurcadiaSession.MSpage.Execute(950, 952)
         End Sub
 

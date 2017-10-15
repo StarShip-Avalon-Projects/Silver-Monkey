@@ -32,7 +32,7 @@ Namespace Engine.Libraries
         Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return test.ToLower.Contains(msMsg.ToLower)
@@ -50,7 +50,7 @@ Namespace Engine.Libraries
         Protected Overridable Function MsgEndsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
@@ -71,7 +71,7 @@ Namespace Engine.Libraries
 
             Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
 
@@ -98,7 +98,7 @@ Namespace Engine.Libraries
 
             Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return Not msMsg.Equals(test) And safety
@@ -123,7 +123,7 @@ Namespace Engine.Libraries
         Protected Overridable Function MsgNotContain(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return test.Contains(msMsg)
@@ -141,7 +141,7 @@ Namespace Engine.Libraries
         Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
@@ -160,7 +160,7 @@ Namespace Engine.Libraries
         Protected Function MsgNotStartsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return Not test.StartsWith(msMsg)
@@ -178,7 +178,7 @@ Namespace Engine.Libraries
         Protected Function MsgStartsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return test.StartsWith(msMsg)
@@ -371,13 +371,13 @@ Namespace Engine.Libraries
 #Region "Common Library Methods"
 
         ''' <summary>
-        ''' Reads a Double or a MonkeySpeak Variable
+        ''' Reads a Double or a MonkeySpeak IVariable
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <param name="addIfNotExist">
-        ''' Add Variable to Variable Scope is it Does not exist,
+        ''' Add IVariable to IVariable Scope is it Does not exist,
         ''' <para>
         ''' Default Value is False
         ''' </para>

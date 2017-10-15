@@ -121,7 +121,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function WarningVar(reader As TriggerReader) As Boolean
 
-            Dim Var As Variable = reader.ReadVariable(True)
+            Dim Var = reader.ReadVariable(True)
             Dim errNum As Short = 0
             SyncLock Lock
                 errNum = FurcadiaSession.ErrorNum

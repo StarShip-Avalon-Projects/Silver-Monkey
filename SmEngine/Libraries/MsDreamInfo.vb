@@ -74,7 +74,7 @@ Namespace Engine.Libraries
             '(1:27) and the bot has share control of the Dream or is the Dream owner,
             Add(TriggerCategory.Condition, 27,
                 Function(reader As TriggerReader)
-                    Dim tname As Variable = reader.Page.GetVariable("DREAMOWNER")
+                    Dim tname = reader.Page.GetVariable("DREAMOWNER")
                     If FurcadiaSession.HasShare OrElse FurcadiaSession.Dream.Owner = FurcadiaSession.ConnectedFurre.ShortName Then
                         Return True
                     End If

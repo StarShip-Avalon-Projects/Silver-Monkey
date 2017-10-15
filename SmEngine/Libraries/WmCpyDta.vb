@@ -137,9 +137,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function SetVariable(reader As TriggerReader) As Boolean
-            Dim Var As Variable
 
-            Var = reader.ReadVariable(True)
+
+            Dim Var = reader.ReadVariable(True)
             Var.Value = FurcadiaSession.Player.Message
             Return True
 

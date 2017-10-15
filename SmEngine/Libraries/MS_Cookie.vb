@@ -90,8 +90,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Function EatCookie(reader As TriggerReader) As Boolean
 
-            Dim tPlayer As FURRE = Player
-            Dim CookieVar As Variable = reader.ReadVariable(True)
+            Dim tPlayer = Player
+            Dim CookieVar = reader.ReadVariable(True)
             CookieVar.Value = tPlayer.Message
             'add Machine Name parser
             Return True

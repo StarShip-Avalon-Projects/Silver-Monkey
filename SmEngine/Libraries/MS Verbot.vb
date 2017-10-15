@@ -91,10 +91,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function GetReply(reader As TriggerReader) As Boolean
             Dim SayText As String
-            Dim ResponceText As Variable
+
 
             SayText = reader.ReadString
-            ResponceText = reader.ReadVariable(True)
+            Dim ResponceText = reader.ReadVariable(True)
             If _state.Vars.ContainsKey("botname") Then
                 _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
             Else

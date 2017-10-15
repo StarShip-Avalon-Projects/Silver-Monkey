@@ -104,7 +104,7 @@ Namespace Engine.Libraries
 
             Dim num As Double = ReadVariableOrNumber(reader, False)
             Dim F As String = Paths.CheckBotFolder(reader.ReadString)
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim var = reader.ReadVariable(True)
             If File.Exists(F) Then
                 Dim lines() As String = File.ReadAllLines(F)
                 If lines.Count < 0 Then

@@ -174,8 +174,8 @@ Public Class BotSession : Inherits ProxySession
 
             Case ServerInstructionType.LoadDreamEvent
                 Try
-                    CType(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).ForceAssignValue(Dream.Owner)
-                    CType(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).ForceAssignValue(Dream.Name)
+                    DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).ForceAssignValue(Dream.Owner)
+                    DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).ForceAssignValue(Dream.Name)
                 Catch ex As Exception
                     RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
                 End Try
@@ -185,8 +185,8 @@ Public Class BotSession : Inherits ProxySession
 
             Case ServerInstructionType.BookmarkDream
                 Try
-                    CType(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).ForceAssignValue(Dream.Owner)
-                    CType(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).ForceAssignValue(Dream.Name)
+                    DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).ForceAssignValue(Dream.Owner)
+                    DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).ForceAssignValue(Dream.Name)
                 Catch ex As Exception
                     RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
                 End Try
@@ -211,8 +211,8 @@ Public Class BotSession : Inherits ProxySession
         If MSpage Is Nothing Then Exit Sub
         If IsConnectedCharacter Then Exit Sub
         Try
-            CType(MSpage.GetVariable("%MESSAGE"), ConstantVariable).ForceAssignValue(Player.Message)
-            CType(MSpage.GetVariable("%NAME"), ConstantVariable).ForceAssignValue(Player.Name)
+            DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).ForceAssignValue(Player.Message)
+            DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).ForceAssignValue(Player.Name)
 
         Catch ex As Exception
             RaiseEvent [Error](ex, Me, "Failed to set Triggering Furre Monkeyspeak Variables")
@@ -334,8 +334,8 @@ Public Class BotSession : Inherits ProxySession
                 ElseIf Text = "You have canceled all banishments from your dreams." Then
                     'banish-off-all (active list)
                     'Success: You have canceled all banishments from your dreams.
-                    CType(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).ForceAssignValue(Nothing)
-                    CType(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(Nothing)
+                    DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).ForceAssignValue(Nothing)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(Nothing)
                     MSpage.ExecuteAsync(60)
 
                 ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
@@ -344,7 +344,7 @@ Public Class BotSession : Inherits ProxySession
 
                     '(0:61) When the bot sucessfully temp banishes a Furre
                     '(0:62) When the bot sucessfully temp banishes the furre named {...}
-                    CType(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
 
                     MSpage.ExecuteAsync(61, 62)
 
@@ -362,7 +362,7 @@ Public Class BotSession : Inherits ProxySession
                     '(0:58) When the bot successfully removes the furre named {...} from the banish list,
                     Dim t As New Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled)
                     NameStr = t.Match(Text).Groups(1).Value
-                    CType(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
                     MSpage.ExecuteAsync(56, 56)
 
                     '      MSpage.ExecuteAsync(800)
@@ -375,7 +375,7 @@ Public Class BotSession : Inherits ProxySession
                     '(0:51) When the bot fails to banish the furre named {...},
                     Dim t As New Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled)
                     NameStr = t.Match(Text).Groups(1).Value
-                    CType(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(NameStr)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(NameStr)
                     MSpage.ExecuteAsync(50, 51)
                 ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
                     'banish-off <name> (not on list)
@@ -383,14 +383,14 @@ Public Class BotSession : Inherits ProxySession
 
                     '(0:55) When the Bot fails to remove a furre from the banish list,
                     '(0:56) When the bot fails to remove the furre named {...} from the banish list,
-                    CType(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
                     MSpage.ExecuteAsync(50, 51)
                 ElseIf Text = "You have not banished anyone." Then
                     'banish-off-all (empty List)
                     'Error:>> You have not banished anyone.
 
                     '(0:59) When the bot fails to see the banish list,
-                    CType(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).ForceAssignValue(Nothing)
+                    DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).ForceAssignValue(Nothing)
                     MSpage.ExecuteAsync(59)
 
                 ElseIf Text = "You do not have any cookies to give away right now!" Then

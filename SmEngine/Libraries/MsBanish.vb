@@ -213,9 +213,8 @@ Namespace Engine.Libraries
         ''' True
         ''' </returns>
         Public Function BanishSave(reader As TriggerReader) As Boolean
-            Dim NewVar As Variable
 
-            NewVar = reader.ReadVariable(True)
+            Dim NewVar = reader.ReadVariable(True)
 
             NewVar.Value = String.Join(" ", FurcadiaSession.BanishString.ToArray)
             Return True
@@ -235,7 +234,6 @@ Namespace Engine.Libraries
 
         End Function
 
-        '
         ''' <summary>
         ''' (1:53) and the furre named {...} is on the banish list,
         ''' </summary>

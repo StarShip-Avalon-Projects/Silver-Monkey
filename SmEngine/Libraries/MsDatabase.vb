@@ -946,11 +946,11 @@ Namespace Engine.Libraries
         Public Shared Function ColumnSum(reader As TriggerReader) As Boolean
             Dim Table As String = ""
             Dim Column As String = ""
-            Dim Total As Variable
+
 
             Column = reader.ReadString
             Table = reader.ReadString
-            Total = reader.ReadVariable(True)
+            Dim Total = reader.ReadVariable(True)
 
             Dim sql As String = "SELECT " & Column & " FROM " & Table & " ;"
             Dim dt As DataTable = SQLiteDatabase.GetDataTable(sql)
@@ -1048,11 +1048,11 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function GetTotalRecords(reader As TriggerReader) As Boolean
             Dim Table As String = ""
-            Dim Total As Variable
 
-            Dim db As New SQLiteDatabase(MsDatabase.SQLitefile)
+
+            Dim db As New SQLiteDatabase(SQLitefile)
             Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
-            Total = reader.ReadVariable(True)
+            Dim Total = reader.ReadVariable(True)
             Dim count As String = SQLiteDatabase.ExecuteScalar("select count(*) from [" & Table & "]")
             Total.Value = count
             Return True
@@ -1133,11 +1133,11 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Shared Function PrepQuery(reader As TriggerReader) As Boolean
-            Dim var1 As Variable
-            Dim var2 As Variable
 
-            var1 = reader.ReadVariable(True)
-            var2 = reader.ReadVariable(True)
+
+
+            Dim var1 = reader.ReadVariable(True)
+            Dim var2 = reader.ReadVariable(True)
             Dim str As String = var1.Value.ToString
             str = str.Replace("'", "''")
             var2.Value = str
@@ -1182,7 +1182,7 @@ Namespace Engine.Libraries
             Dim db As New SQLiteDatabase(SQLitefile)
             Dim Info As String = reader.ReadString
             Dim Furre As String = FurcadiaShortName(reader.ReadString)
-            Dim Variable As Variable = reader.ReadVariable(True)
+            Dim Variable = reader.ReadVariable(True)
             ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
             Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
@@ -1202,14 +1202,14 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function RecordIndex(reader As TriggerReader) As Boolean
             Dim info As String = ""
-            Dim Idx As Variable
-            Dim OutVar As Variable
+
+
             Dim Table As String = ""
 
             Table = reader.ReadString(True).Replace("[", "").Replace("]", "").Replace("'", "''")
             info = reader.ReadString(True)
-            Idx = reader.ReadVariable(True)
-            OutVar = reader.ReadVariable(True)
+            Dim Idx = reader.ReadVariable(True)
+            Dim OutVar = reader.ReadVariable(True)
 
             Dim sql As String = "SELECT " & info & " FROM [" & Table & "] ;"
             Dim dt As DataTable = SQLiteDatabase.GetDataTable(sql)
@@ -1242,10 +1242,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function RetrieveQuery(reader As TriggerReader) As Boolean
             Dim Field As String
-            Dim Var As Variable
+
 
             Field = reader.ReadString
-            Var = reader.ReadVariable(True)
+            Dim Var = reader.ReadVariable(True)
 
             If QueryRun Then
                 SyncLock (lock)
