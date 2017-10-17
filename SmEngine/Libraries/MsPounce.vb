@@ -168,7 +168,7 @@ Namespace Engine.Libraries
         ''' </param>
         Public Sub FurreLoggedOff(ByVal Furre As Object, e As EventArgs)
             Dim Furr = DirectCast(Furre, PounceFurre)
-            DirectCast(FurcadiaSession.MSpage.GetVariable("%NAME"), ConstantVariable).ForceAssignValue(Furr.Name)
+            DirectCast(FurcadiaSession.MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
             FurcadiaSession.MSpage.Execute(951, 953)
         End Sub
 
@@ -189,7 +189,7 @@ Namespace Engine.Libraries
         ''' </param>
         Public Sub FurreLoggedOn(ByVal Furre As Object, e As EventArgs)
             Dim Furr = DirectCast(Furre, PounceFurre)
-            DirectCast(FurcadiaSession.MSpage.GetVariable("%NAME"), ConstantVariable).ForceAssignValue(Furr.Name)
+            DirectCast(FurcadiaSession.MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
             FurcadiaSession.MSpage.Execute(950, 952)
         End Sub
 

@@ -115,7 +115,7 @@
     <Compile Include="Libraries\HelperModule.vb" />
     <Compile Include="Libraries\MonkeySpeakLibrary.vb" />
     <Compile Include="Libraries\MsBanish.vb" />
-    <Compile Include="SessionHandler\ConstantVariable.vb" />
+    <None Include="SessionHandler\ConstantVariable.vb" />
     <Compile Include="SessionHandler\EngineOptoons.vb" />
     <Compile Include="SessionHandler\LibraryLoader.vb" />
     <Compile Include="SessionHandler\MainEngine.vb" />

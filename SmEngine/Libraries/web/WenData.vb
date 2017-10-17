@@ -10,7 +10,7 @@ Namespace Engine.Libraries.Web
 
 #Region "Public Fields"
 
-        Private _WebStack As IList(Of IVariable)()
+        Private _WebStack As List(Of IVariable)()
         Private _webPage As String
         Public Property ErrMsg As String
         Public Property Packet As String
