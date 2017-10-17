@@ -25,12 +25,23 @@ Namespace Engine.Libraries
         ''' Default File we use
         ''' </summary>
         Public Const ListFile As String = "onlineList.txt"
-
+        ''' <summary>
+        ''' Pounce list
+        ''' </summary>
         Private WithEvents OnlineFurreList As IO.NameList
-        Private WithEvents PFure As MsPounceFurre
+        ''' <summary>
+        ''' Pounce List File Name
+        ''' </summary>
         Private _onlineListFile As String
+        ''' <summary>
+        ''' Pounce Furre List
+        ''' </summary>
         Private PounceFurreList As List(Of MsPounceFurre)
-        Private smPounce As PounceClient
+
+        ''' <summary>
+        ''' Furcadia Pounce Server
+        ''' </summary>
+        Private WithEvents SmPounce As PounceClient
 
         ''' <summary>
         ''' Default Constructor
@@ -155,10 +166,9 @@ Namespace Engine.Libraries
         ''' <param name="e">
         ''' <see cref="Eventargs.Empty"/>
         ''' </param>
-        Public Sub FurreLoggedOff(ByVal Furre As Object, e As EventArgs) Handles PFure.FurreLoggedOff
+        Public Sub FurreLoggedOff(ByVal Furre As Object, e As EventArgs)
             Dim Furr = DirectCast(Furre, PounceFurre)
-            FurcadiaSession.MSpage.RemoveVariable("%NAME")
-            FurcadiaSession.MSpage.SetVariable("%NAME", Furr.Name, True)
+            DirectCast(FurcadiaSession.MSpage.GetVariable("%NAME"), ConstantVariable).ForceAssignValue(Furr.Name)
             FurcadiaSession.MSpage.Execute(951, 953)
         End Sub
 
@@ -177,10 +187,9 @@ Namespace Engine.Libraries
         ''' <param name="e">
         ''' EventSrgs.Empty
         ''' </param>
-        Public Sub FurreLoggedOn(ByVal Furre As Object, e As EventArgs) Handles PFure.FurreLoggedOn
+        Public Sub FurreLoggedOn(ByVal Furre As Object, e As EventArgs)
             Dim Furr = DirectCast(Furre, PounceFurre)
-            FurcadiaSession.MSpage.RemoveVariable("%NAME")
-            FurcadiaSession.MSpage.SetVariable("%NAME", Furr.Name, True)
+            DirectCast(FurcadiaSession.MSpage.GetVariable("%NAME"), ConstantVariable).ForceAssignValue(Furr.Name)
             FurcadiaSession.MSpage.Execute(950, 952)
         End Sub
 
@@ -193,11 +202,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
             CheckonlineList()
-            Dim Furre As String = Nothing
-            Dim f() As String
 
-            Furre = reader.ReadString
-            f = File.ReadAllLines(_onlineListFile)
+            Dim Furre = reader.ReadString
+            Dim f = File.ReadAllLines(_onlineListFile)
             For Each l As String In f
                 If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
             Next
@@ -292,10 +299,10 @@ Namespace Engine.Libraries
 
             CheckonlineList()
 
-            Dim Furre As String = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
             Furre = FurcadiaShortName(Furre)
             Dim line As String = Nothing
-            Dim linesList As New List(Of String)(File.ReadAllLines(_onlineListFile))
+            Dim linesList = New List(Of String)(File.ReadAllLines(_onlineListFile))
             Using SR As New StreamReader(_onlineListFile)
                 line = SR.ReadLine()
                 For i As Integer = 0 To linesList.Count - 1
@@ -356,7 +363,7 @@ Namespace Engine.Libraries
 
             Dim FileList = reader.ReadString
             CheckonlineList()
-            smPounce = New PounceClient(OnlineFurreList.ToArray, Nothing)
+            SmPounce = New PounceClient(OnlineFurreList.ToArray, Nothing)
 
             Return True
         End Function
@@ -390,7 +397,7 @@ Namespace Engine.Libraries
         End Sub
 
         Public Overrides Sub Unload(page As Page)
-            smPounce.Dispose()
+            SmPounce.Dispose()
         End Sub
 
     End Class
