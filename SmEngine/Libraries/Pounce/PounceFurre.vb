@@ -3,9 +3,7 @@
 Namespace Engine.Libraries.Pounce
 
     ''' <summary>
-    ''' Monkey Speak Pounce furre object
-    ''' <para/>
-    ''' Allows Silver Monkey to Connect to the Furcadia Pounce Server
+    '''
     ''' </summary>
     Public Class MsPounceFurre
         Implements IEquatable(Of String)
@@ -20,10 +18,10 @@ Namespace Engine.Libraries.Pounce
 
 #Region "Public Constructors"
 
-        ''' <summary>
-        ''' Construct the Ms Pounce Furre object with a Name
-        ''' </summary>
-        ''' <param name="Furre"></param>
+        Public Sub New()
+
+        End Sub
+
         Public Sub New(Furre As String)
             _FurrName = Furre
         End Sub
@@ -57,10 +55,7 @@ Namespace Engine.Libraries.Pounce
 #End Region
 
 #Region "Public Properties"
-        ''' <summary>
-        ''' Name of the Furre
-        ''' </summary>
-        ''' <returns></returns>
+
         Public Property Name As String
             Get
                 Return _FurrName
@@ -70,10 +65,6 @@ Namespace Engine.Libraries.Pounce
             End Set
         End Property
 
-        ''' <summary>
-        ''' Furre Online Status
-        ''' </summary>
-        ''' <returns>True if the Furre is online</returns>
         Public Property Online As Boolean
             Get
                 Return _IsOnline
@@ -88,10 +79,7 @@ Namespace Engine.Libraries.Pounce
                 End If
             End Set
         End Property
-        ''' <summary>
-        ''' Furcadia shortname format of <see cref="Name"/>
-        ''' </summary>
-        ''' <returns>stripped format of the Furre name</returns>
+
         Public ReadOnly Property ShortName As String
             Get
                 Return FurcadiaShortName(_FurrName)
@@ -103,16 +91,15 @@ Namespace Engine.Libraries.Pounce
 #Region "Public Methods"
 
         ''' <summary>
-        ''' Implements !Equatable
         ''' </summary>
         ''' <param name="other">
         ''' </param>
         ''' <returns>
         ''' </returns>
         Public Shadows Function Equals(other As String) As Boolean Implements IEquatable(Of String).Equals
-            Return FurcadiaShortName(_FurrName) = FurcadiaShortName(other)
+            Return FurcadiaShortName(Me._FurrName) = FurcadiaShortName(other)
         End Function
-        'TODO add = and <> operators
+
 #End Region
 
     End Class

@@ -1,6 +1,6 @@
 ﻿Namespace Engine.Libraries.Dice
 
-
+#Region "Public Methods"
 
     ''' <summary>
     ''' Grab your dice and shake them till you're ready to roll
@@ -30,6 +30,6 @@
 
     End Class
 
-
+#End Region
 
 End Namespace

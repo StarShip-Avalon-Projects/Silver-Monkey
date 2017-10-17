@@ -27,9 +27,6 @@ Namespace Engine.Libraries
         Public Const ListFile As String = "onlineList.txt"
 
         Private WithEvents OnlineFurreList As IO.NameList
-        ''' <summary>
-        ''' Monkey Speak Pounce Furre object
-        ''' </summary>
         Private WithEvents PFure As MsPounceFurre
         Private _onlineListFile As String
         Private PounceFurreList As List(Of MsPounceFurre)
@@ -109,11 +106,11 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function AddFurreNamed(reader As TriggerReader) As Boolean
+            Dim Furre As String = Nothing
 
-
-            Dim Furre = reader.ReadString
+            Furre = reader.ReadString
             If FurreNamedIsMember(reader) = False And FurreNamedIsNotMember(reader) Then
-                Using sw = New StreamWriter(_onlineListFile, True)
+                Using sw As StreamWriter = New StreamWriter(_onlineListFile, True)
                     sw.WriteLine(Furre)
                 End Using
             End If
@@ -133,12 +130,11 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function AddTrigFurre(reader As TriggerReader) As Boolean
 
-            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim Furre = FurcadiaSession.MSpage.GetVariable(MS_Name).Value.ToString
             If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
-                Using sw = New StreamWriter(_onlineListFile, True)
-                    sw.WriteLine(Furre)
-                    sw.Close()
-                End Using
+                Dim sw As StreamWriter = New StreamWriter(_onlineListFile, True)
+                sw.WriteLine(Furre)
+                sw.Close()
             End If
             Return True
 
@@ -160,7 +156,7 @@ Namespace Engine.Libraries
         ''' <see cref="Eventargs.Empty"/>
         ''' </param>
         Public Sub FurreLoggedOff(ByVal Furre As Object, e As EventArgs) Handles PFure.FurreLoggedOff
-            Dim Furr As PounceFurre = CType(Furre, PounceFurre)
+            Dim Furr = DirectCast(Furre, PounceFurre)
             FurcadiaSession.MSpage.RemoveVariable("%NAME")
             FurcadiaSession.MSpage.SetVariable("%NAME", Furr.Name, True)
             FurcadiaSession.MSpage.Execute(951, 953)
@@ -197,9 +193,11 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
             CheckonlineList()
+            Dim Furre As String = Nothing
+            Dim f() As String
 
-            Dim Furre = reader.ReadString
-            Dim f = File.ReadAllLines(_onlineListFile)
+            Furre = reader.ReadString
+            f = File.ReadAllLines(_onlineListFile)
             For Each l As String In f
                 If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
             Next
@@ -266,9 +264,10 @@ Namespace Engine.Libraries
             CheckonlineList()
 
             Dim Furre = reader.ReadString
+            Dim line As String = Nothing
             Dim linesList = New List(Of String)(File.ReadAllLines(_onlineListFile))
             Using SR = New StreamReader(_onlineListFile)
-                Dim line = SR.ReadLine()
+                line = SR.ReadLine()
                 For i As Integer = 0 To linesList.Count - 1
                     If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
                         linesList.RemoveAt(i)
@@ -293,11 +292,11 @@ Namespace Engine.Libraries
 
             CheckonlineList()
 
-            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim Furre As String = reader.Page.GetVariable(MS_Name).Value.ToString
             Furre = FurcadiaShortName(Furre)
             Dim line As String = Nothing
-            Dim linesList = New List(Of String)(File.ReadAllLines(_onlineListFile))
-            Using SR = New StreamReader(_onlineListFile)
+            Dim linesList As New List(Of String)(File.ReadAllLines(_onlineListFile))
+            Using SR As New StreamReader(_onlineListFile)
                 line = SR.ReadLine()
                 For i As Integer = 0 To linesList.Count - 1
                     If FurcadiaShortName(line) = Furre Then
@@ -391,7 +390,7 @@ Namespace Engine.Libraries
         End Sub
 
         Public Overrides Sub Unload(page As Page)
-
+            smPounce.Dispose()
         End Sub
 
     End Class
