@@ -197,8 +197,8 @@ Namespace Engine.Libraries
             Dim ch = CChar(reader.ReadString)
             Dim NewVar = reader.ReadVariable()
 
-            Dim varStr As String = Var.Value.ToString
-            Dim NewStr As String = varStr.Replace(ch, String.Empty)
+            Dim varStr = Var.Value.ToString
+            Dim NewStr = varStr.Replace(ch, String.Empty)
             NewVar.Value = NewStr
             Return True
         End Function
@@ -236,7 +236,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function AndVariableContains(reader As TriggerReader) As Boolean
 
-            Dim VariableToCheck As Monkeyspeak.Variable = reader.ReadVariable()
+            Dim VariableToCheck = reader.ReadVariable()
             Dim Argument As String
             If reader.PeekVariable Then
                 Argument = reader.ReadVariable.Value
@@ -261,7 +261,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function AndVariableNotContains(reader As TriggerReader) As Boolean
 
-            Dim VariableToCheck As Monkeyspeak.Variable = reader.ReadVariable()
+            Dim VariableToCheck = reader.ReadVariable()
             Dim Argument As String
             If reader.PeekVariable Then
                 Argument = reader.ReadVariable.Value
@@ -320,7 +320,7 @@ Namespace Engine.Libraries
         Private Shared Function ToShortName(reader As TriggerReader) As Boolean
 
             If reader.PeekVariable Then
-                Dim var As Variable = reader.ReadVariable
+                Dim var = reader.ReadVariable
                 If String.IsNullOrEmpty(var.Value.ToString) Then
                     Return True
                 End If

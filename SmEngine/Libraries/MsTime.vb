@@ -86,7 +86,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True
         ''' </returns>
-        Shared Function CurrentTime(reader As TriggerReader) As Boolean
+        Public Shared Function CurrentTime(reader As TriggerReader) As Boolean
 
             Dim Var = reader.ReadVariable(True)
             Dim Str = DateTime.Now.ToLongTimeString.ToLower
@@ -140,7 +140,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True
         ''' </returns>
-        Function MsFurcTime(reader As TriggerReader) As Boolean
+        Public Function MsFurcTime(reader As TriggerReader) As Boolean
 
             Dim Var = reader.ReadVariable(True)
             Dim Str As String = ""
@@ -217,9 +217,9 @@ Namespace Engine.Libraries
         '(5: ) use variable %Variable as a DateTime string and add Date Time variable %Variable and put it into variable %Variable
         'Public Function AddDateTimeVar(reader As TriggerReader) As Boolean
         '    Try
-        '        Dim var As Variable = reader.ReadVariable(True)
-        '        Dim str As Variable = reader.ReadVariable
-        '        Dim optVar As Variable = reader.ReadVariable(True)
+        '        Dim var  = reader.ReadVariable(True)
+        '        Dim str  = reader.ReadVariable
+        '        Dim optVar  = reader.ReadVariable(True)
         '        Dim time As DateTime
         '        Dim time2 As DateTime
         '        If DateTime.TryParse(var.Value.ToString, time) And DateTime.TryParse(str.Value.ToString, time2) Then

@@ -799,8 +799,8 @@ Namespace Engine.Libraries
 
             Dim name = reader.ReadString
             Dim tPlayer = Dream.FurreList.GerFurreByName(name)
-            Dim X As Double = ReadVariableOrNumber(reader, False)
-            Dim Y As Double = ReadVariableOrNumber(reader, False)
+            Dim X = ReadVariableOrNumber(reader, False)
+            Dim Y = ReadVariableOrNumber(reader, False)
             Return tPlayer.LastPosition.X = Convert.ToUInt32(X) AndAlso tPlayer.LastPosition.Y = Convert.ToUInt32(Y)
 
         End Function

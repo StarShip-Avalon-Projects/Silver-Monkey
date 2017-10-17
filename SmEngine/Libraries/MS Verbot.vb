@@ -91,7 +91,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function GetReply(reader As TriggerReader) As Boolean
             Dim SayText As String
-            Dim ResponceText As Variable
+            Dim ResponceText
 
             SayText = reader.ReadString
             ResponceText = reader.ReadVariable(True)
@@ -105,7 +105,7 @@ Namespace Engine.Libraries
             Else
                 _state.Vars.Add("channel", FurcadiaSession.Channel)
             End If
-            Dim reply As Reply = verbot.GetReply(FurcadiaSession.Player, SayText, _state)
+            Dim reply As Reply = verbot.GetReply(Player, SayText, _state)
 
             If reply Is Nothing Then Return False
 

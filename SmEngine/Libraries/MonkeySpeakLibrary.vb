@@ -27,14 +27,14 @@ Namespace Engine.Libraries
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' True if the MESSAGE system variable contains the specified string
+        ''' True if the %MESSAGE system variable contains the specified string
         ''' </returns>
         Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
 
-            Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test As String = StripHTML(msg.Value.ToString)
+            Dim test = StripHTML(msg.Value.ToString)
             Return test.ToLower.Contains(msMsg.ToLower)
 
         End Function
@@ -45,12 +45,12 @@ Namespace Engine.Libraries
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
-        ''' true if the System MESSAGE varible ends with the specified string
+        ''' true if the System %MESSAGE varible ends with the specified string
         ''' </returns>
         Protected Overridable Function MsgEndsWith(reader As TriggerReader) As Boolean
 
-            Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msg = reader.Page.GetVariable("%MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
@@ -69,11 +69,11 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
 
-            Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
-            Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("MESSAGE")
+            Dim safety = Not FurcadiaSession.IsConnectedCharacter
+            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test As String = StripHTML(msg.Value.ToString)
+            Dim test = StripHTML(msg.Value.ToString)
 
             Return msMsg.Equals(test) And safety
 
@@ -96,11 +96,11 @@ Namespace Engine.Libraries
         ''' </remarks>
         Protected Overridable Function MsgIsNot(reader As TriggerReader) As Boolean
 
-            Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
-            Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("MESSAGE")
+            Dim safety = Not FurcadiaSession.IsConnectedCharacter
+            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test As String = StripHTML(msg.Value.ToString)
+            Dim test = StripHTML(msg.Value.ToString)
             Return Not msMsg.Equals(test) And safety
 
         End Function
@@ -122,10 +122,10 @@ Namespace Engine.Libraries
         ''' </remarks>
         Protected Overridable Function MsgNotContain(reader As TriggerReader) As Boolean
 
-            Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("MESSAGE")
+            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test As String = StripHTML(msg.Value.ToString)
+            Dim test = StripHTML(msg.Value.ToString)
             Return test.Contains(msMsg)
 
         End Function
@@ -140,10 +140,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
 
-            Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("MESSAGE")
+            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test As String = StripHTML(msg.Value.ToString)
+            Dim test = StripHTML(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
             Return Not test.EndsWith(msMsg)
 
@@ -159,10 +159,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Function MsgNotStartsWith(reader As TriggerReader) As Boolean
 
-            Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("MESSAGE")
+            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test As String = StripHTML(msg.Value.ToString)
+            Dim test = StripHTML(msg.Value.ToString)
             Return Not test.StartsWith(msMsg)
 
         End Function
@@ -177,10 +177,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Function MsgStartsWith(reader As TriggerReader) As Boolean
 
-            Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("MESSAGE")
+            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test As String = StripHTML(msg.Value.ToString)
+            Dim test = StripHTML(msg.Value.ToString)
             Return test.StartsWith(msMsg)
         End Function
 
@@ -199,7 +199,7 @@ Namespace Engine.Libraries
         ''' </remarks>
         Protected Overridable Function NameIs(reader As TriggerReader) As Boolean
 
-            Dim TmpName As String = reader.ReadString()
+            Dim TmpName = reader.ReadString()
             Return FurcadiaShortName(TmpName) = Player.ShortName
 
         End Function
@@ -219,7 +219,7 @@ Namespace Engine.Libraries
         ''' </remarks>
         Protected Overridable Function NameIsNot(reader As TriggerReader) As Boolean
 
-            Dim TmpName As String = reader.ReadString()
+            Dim TmpName = reader.ReadString()
             Return FurcadiaShortName(TmpName) <> Player.ShortName
         End Function
 
@@ -303,7 +303,7 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Current Triggering Furre
         ''' </summary>
-        Public Property Player As Furre
+        Public Property Player
 
 #End Region
 

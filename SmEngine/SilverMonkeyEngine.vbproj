@@ -24,8 +24,8 @@
     <DocumentationFile>SilverMonkeyEngine.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -103,8 +103,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="BaseClasses\BaseSubSystem.vb" />
-    <Compile Include="SessionHandler\ConstantVariable.vb" />
-    <Compile Include="SessionHandler\EngineOptoons.vb" />
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="Interfaces\msPlugin.vb" />
     <Compile Include="HelperClasses\SmConstants.vb" />
@@ -117,6 +115,10 @@
     <Compile Include="Libraries\HelperModule.vb" />
     <Compile Include="Libraries\MonkeySpeakLibrary.vb" />
     <Compile Include="Libraries\MsBanish.vb" />
+    <Compile Include="SessionHandler\ConstantVariable.vb" />
+    <Compile Include="SessionHandler\EngineOptoons.vb" />
+    <Compile Include="SessionHandler\LibraryLoader.vb" />
+    <Compile Include="SessionHandler\MainEngine.vb" />
     <None Include="Libraries\MS Repq.vb" />
     <Compile Include="Libraries\MS Verbot.vb" />
     <Compile Include="Libraries\MsDatabase.vb" />
@@ -141,8 +143,6 @@
     <Compile Include="Libraries\StringLibrary.vb" />
     <Compile Include="Libraries\web\WenData.vb" />
     <Compile Include="Libraries\WmCpyDta.vb" />
-    <Compile Include="SessionHandler\LibraryLoader.vb" />
-    <Compile Include="SessionHandler\MainEngine.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

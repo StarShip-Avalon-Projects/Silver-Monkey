@@ -84,7 +84,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Function EatCookie(reader As TriggerReader) As Boolean
+        Public Function EatCookie(reader As TriggerReader) As Boolean
 
             Dim tPlayer = Player
             Dim CookieVar = reader.ReadVariable(True)

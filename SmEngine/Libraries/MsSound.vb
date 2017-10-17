@@ -35,8 +35,8 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Effect, 2010),
                 Function(reader As TriggerReader) As Boolean
                     Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
-                    Using simpleSound = New SoundPlayer(SoundFile)
-                        simpleSound.Play()
+                    Using PlaySound = New SoundPlayer(SoundFile)
+                        PlaySound.Play()
 
                     End Using
                     Return True
@@ -65,7 +65,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True on Success
         ''' </returns>
-        Function StopSound(reader As TriggerReader) As Boolean
+        Public Function StopSound(reader As TriggerReader) As Boolean
             If Not simpleSound Is Nothing Then
                 Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
                 ' simpleSound = New SoundPlayer(SoundFile)

@@ -58,7 +58,7 @@ Namespace Engine.Libraries
         Function ReceiveMessage(reader As TriggerReader) As Boolean
 
             Dim msMsg = reader.ReadString()
-            Dim msg = reader.Page.GetVariable("MESSAGE").Value.ToString
+            Dim msg = reader.Page.GetVariable("%MESSAGE").Value.ToString
             Return msg.Equals(msMsg)
 
         End Function
@@ -74,7 +74,7 @@ Namespace Engine.Libraries
         Function ReceiveMessageContaining(reader As TriggerReader) As Boolean
             Dim msMsg = reader.ReadString()
 
-            Dim msg = reader.Page.GetVariable("MESSAGE").Value.ToString
+            Dim msg = reader.Page.GetVariable("%MESSAGE").Value.ToString
 
             Return msg.Contains(msMsg)
 

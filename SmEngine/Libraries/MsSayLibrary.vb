@@ -406,7 +406,7 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Effect, 2),
                  Function(reader As TriggerReader)
 
-                     Dim msg As String = reader.ReadString
+                     Dim msg = reader.ReadString
                      SndShout(msg)
                      Return True
 
@@ -418,7 +418,7 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Effect, 3),
                 Function(reader As TriggerReader)
 
-                    Dim msg As String = reader.ReadString
+                    Dim msg = reader.ReadString
                     SendEmit(msg)
                     Return True
 
@@ -428,7 +428,7 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Effect, 4),
                  Function(reader As TriggerReader)
 
-                     Dim msg As String = reader.ReadString
+                     Dim msg = reader.ReadString
                      SendEmitLoud(msg)
                      Return True
 
@@ -440,7 +440,7 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Effect, 5),
                    Function(reader As TriggerReader)
 
-                       Dim msg As String = reader.ReadString
+                       Dim msg = reader.ReadString
                        Dim tname = reader.Page.GetVariable(MS_Name)
                        SndWhisper(tname.Value.ToString, msg)
                        Return True
@@ -452,8 +452,8 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Effect, 6),
                  Function(reader As TriggerReader)
 
-                     Dim msg As String = reader.ReadString(True)
-                     Dim tname As String = reader.ReadString
+                     Dim msg = reader.ReadString(True)
+                     Dim tname = reader.ReadString
                      SndWhisper(tname, msg)
                      Return True
 
@@ -464,8 +464,8 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Effect, 7),
                   Function(reader As TriggerReader)
 
-                      Dim msg As String = reader.ReadString
-                      Dim tname As String = reader.ReadString
+                      Dim msg = reader.ReadString
+                      Dim tname = reader.ReadString
 
                       SendOffLineWhisper(tname, msg)
                       Return True
@@ -502,7 +502,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function EnterView(reader As TriggerReader) As Boolean
 
-            Dim tPlayer = FurcadiaSession.Player
+            Dim tPlayer = Player
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -537,7 +537,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedEnterView(reader As TriggerReader) As Boolean
 
-            Dim name As String = reader.ReadString
+            Dim name = reader.ReadString
             Dim tPlayer = Dream.FurreList.GerFurreByName(name)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
@@ -557,7 +557,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedLeaveView(reader As TriggerReader) As Boolean
 
-            Dim name As String = reader.ReadString
+            Dim name = reader.ReadString
             Dim tPlayer = Dream.FurreList.GerFurreByName(name)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
@@ -577,7 +577,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function LeaveView(reader As TriggerReader) As Boolean
 
-            Dim tPlayer = FurcadiaSession.Player
+            Dim tPlayer = Player
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -691,7 +691,7 @@ Namespace Engine.Libraries
         Public Shared Function StartNewBot(reader As TriggerReader) As Boolean
 
             'Dim ps As Process = New Process()
-            Dim File As String = reader.ReadString
+            Dim File = reader.ReadString
             Dim p As New ProcessStartInfo With {
                 .Arguments = File,
                 .FileName = "SilverMonkey.exe",

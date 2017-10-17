@@ -106,9 +106,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function AddFurreNamed(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
 
-            Furre = reader.ReadString
+
+            Dim Furre = reader.ReadString
             If FurreNamedIsMember(reader) = False And FurreNamedIsNotMember(reader) Then
                 Using sw = New StreamWriter(_onlineListFile, True)
                     sw.WriteLine(Furre)

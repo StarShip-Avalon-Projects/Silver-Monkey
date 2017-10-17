@@ -445,7 +445,7 @@ Public Class BotSession : Inherits ProxySession
     ''' Set the Bot System Variables for the <see cref="Monkeyspeak.Page"/>
     ''' </summary>
     ''' <param name="VariableList"></param>
-    Public Sub PageSetVariable(ByVal VariableList As List(Of ConstantVariable))
+    Public Sub PageSetVariable(ByVal VariableList As List(Of IVariable))
 
         For Each var In VariableList
             MSpage.SetVariable(var)
@@ -476,7 +476,7 @@ Public Class BotSession : Inherits ProxySession
         MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
         Dim TimeStart = DateTime.Now
-        Dim VariableList As New List(Of ConstantVariable)
+        Dim VariableList As New List(Of IVariable)
 
         MSpage = LibraryUtils.LoadLibrary(Me, False)
 

@@ -95,7 +95,7 @@ Namespace Engine.Libraries
                 End If
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -120,7 +120,7 @@ Namespace Engine.Libraries
                 End If
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -150,8 +150,6 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedIsMember(reader As TriggerReader) As Boolean
 
-
-
             Dim Furre = reader.ReadString
             Try
                 CheckMemberList()
@@ -163,7 +161,7 @@ Namespace Engine.Libraries
                 Next
                 Return FurcadiaSession.IsBotController
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
             End Try
 
             Return False
@@ -188,8 +186,6 @@ Namespace Engine.Libraries
         ''' <returns></returns>
         Public Function ListToVariable(reader As TriggerReader) As Boolean
 
-
-
             Try
                 CheckMemberList()
                 Dim Furre = reader.ReadVariable(True)
@@ -200,7 +196,7 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -237,7 +233,7 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -274,7 +270,7 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -289,7 +285,6 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TrigFurreIsMember(reader As TriggerReader) As Boolean
 
-
             Try
                 CheckMemberList()
 
@@ -303,7 +298,7 @@ Namespace Engine.Libraries
 
                 Return FurcadiaSession.IsBotController
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -334,7 +329,7 @@ Namespace Engine.Libraries
                 CheckMemberList()
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function

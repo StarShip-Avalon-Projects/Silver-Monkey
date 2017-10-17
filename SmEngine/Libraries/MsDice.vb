@@ -294,7 +294,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Shared Function TrigFurreRolledVariable(reader As TriggerReader) As Boolean
-            Dim v As Variable = reader.ReadVariable(True)
+            Dim v = reader.ReadVariable(True)
             v.Value = dice.DiceResult
             Return True
         End Function

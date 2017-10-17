@@ -74,7 +74,7 @@ Namespace Engine.Libraries
             '(1:27) and the bot has share control of the Dream or is the Dream owner,
             Add(TriggerCategory.Condition, 27,
                 Function(reader As TriggerReader)
-                    Dim tname As Variable = reader.Page.GetVariable("DREAMOWNER")
+                    Dim tname = reader.Page.GetVariable("%DREAMOWNER")
                     If FurcadiaSession.HasShare OrElse FurcadiaSession.Dream.Owner = FurcadiaSession.ConnectedFurre.ShortName Then
                         Return True
                     End If
@@ -150,10 +150,10 @@ Namespace Engine.Libraries
         Function DreamNameIs(reader As TriggerReader) As Boolean
             Dim DreamName As String = reader.ReadString
             DreamName = DreamName.ToLower.Replace("furc://", String.Empty)
-            Dim DreamNameVariable = reader.Page.GetVariable("DREAMNAME")
+            Dim DreamNameVariable = reader.Page.GetVariable("%DREAMNAME")
             'add Machine Name parser
             If DreamNameVariable.Value.ToString() <> Dream.Name Then
-                Throw New MonkeySpeakException("%DREAMNAME does not match Dream.Name")
+                Throw New MonkeyspeakException("%%DREAMNAME does not match Dream.Name")
             End If
 
             Return Dream.ShortName = FurcadiaShortName(DreamName)
@@ -252,7 +252,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function UnshareTrigFurre(reader As TriggerReader) As Boolean
-            Dim furre = FurcadiaSession.Player.ShortName
+            Dim furre = Player.ShortName
             SendServer("unshare " + furre)
             Return True
         End Function
@@ -267,7 +267,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function ShareTrigFurre(reader As TriggerReader) As Boolean
-            Dim furre = FurcadiaSession.Player.ShortName
+            Dim furre = Player.ShortName
             Return SendServer("share " + furre)
 
         End Function
@@ -309,7 +309,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function TriggeringFurreIsDreamOwner(reader As TriggerReader) As Boolean
 
-            Dim TrigFurreName = reader.Page.GetVariable("DREAMOWNER").Value.ToString
+            Dim TrigFurreName = reader.Page.GetVariable("%DREAMOWNER").Value.ToString
             'add Machine Name parser
             Return Player.ShortName = FurcadiaShortName(TrigFurreName)
 

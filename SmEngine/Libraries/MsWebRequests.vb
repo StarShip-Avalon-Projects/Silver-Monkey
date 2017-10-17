@@ -93,7 +93,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True Always
         ''' </returns>
-        Private Function ClearWebStack(reader As TriggerReader) As Boolean
+        Public Function ClearWebStack(reader As TriggerReader) As Boolean
             If Not IsNothing(WebStack) AndAlso WebStack.Count > 0 Then WebStack.Clear()
             Return True
         End Function
@@ -106,7 +106,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function RememberSetting(reader As TriggerReader) As Boolean
+        Public Function RememberSetting(reader As TriggerReader) As Boolean
 
             Dim setting = reader.Page.SetVariable(reader.ReadString, Nothing, False)
 
@@ -125,7 +125,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function RemoveWebStack(reader As TriggerReader) As Boolean
+        Public Function RemoveWebStack(reader As TriggerReader) As Boolean
             Dim var = reader.ReadVariable()
             WebStack.Remove(var)
             Return True
@@ -138,7 +138,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function SendGetWebStack(reader As TriggerReader) As Boolean
+        Public Function SendGetWebStack(reader As TriggerReader) As Boolean
 
             Dim ws As New WebRequests(WebURL, reader)
 
@@ -160,7 +160,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function SendWebStack(reader As TriggerReader) As Boolean
+        Public Function SendWebStack(reader As TriggerReader) As Boolean
 
             Dim WebPage As New WebData
             Dim ws As New WebRequests(WebURL, reader)
@@ -185,7 +185,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True Always
         ''' </returns>
-        Private Function SetURL(reader As TriggerReader) As Boolean
+        Public Function SetURL(reader As TriggerReader) As Boolean
 
             WebURL = New Uri(reader.ReadString)
             Return True
@@ -198,7 +198,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function StoreWebStack(reader As TriggerReader) As Boolean
+        Public Function StoreWebStack(reader As TriggerReader) As Boolean
 
             Dim var = reader.ReadVariable()
             If var IsNot Variable.NoValue Then
@@ -229,7 +229,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function WebArrayEqualTo(reader As TriggerReader) As Boolean
+        Public Function WebArrayEqualTo(reader As TriggerReader) As Boolean
 
             Dim setting As String
             Try
@@ -259,9 +259,9 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function WebArrayNotEqualTo(reader As TriggerReader) As Boolean
+        Public Function WebArrayNotEqualTo(reader As TriggerReader) As Boolean
 
-            Dim setting  = Nothing
+            Dim setting = Nothing
             Dim value = reader.Page.SetVariable(reader.ReadString, Nothing, False)
             If WebStack.Contains(value) Then
                 setting = WebStack.Item(WebStack.IndexOf(value))
