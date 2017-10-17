@@ -7,4 +7,5 @@ Imports System.Reflection
 
 <Assembly: AssemblyVersion("1.5.029.1017")> 
 <Assembly: AssemblyFileVersion("1.5.029.1017")> 
+
 <Assembly: AssemblyCopyright("Copyright © 2012 - 2017")>
