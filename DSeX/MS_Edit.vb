@@ -19,7 +19,7 @@ Public Class MS_Edit
 
 #Region "Private Fields"
 
-    Private Const HelpFile As String = "Monkey_Speak_Editor_Help.chm"
+    Private Const HelpFile As String = "Silver Monkey.chm"
     'Private Const MonkeySpeakLineHelp As String = "Silver Monkey.chm"
 
 #End Region

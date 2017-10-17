@@ -203,7 +203,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="MonkeySpeakEditor.Binaries" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Content" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Symbols" />
-      <ComponentRef Id="MonkeySpeakHelp" />
+  <!--    <ComponentRef Id="MonkeySpeakHelp" /> -->
       <ComponentGroupRef Id="Monkeyspeak.Binaries" />
       <ComponentGroupRef Id="Monkeyspeak.Symbols" />
 
@@ -260,9 +260,9 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <Component Id="smHelp" Guid="{7FEB427A-07AB-4083-8792-2005152C64F3}">
         <File Id="smHelp" Source="$(var.SolutionDir)Build/Help/Silver Monkey.chm" KeyPath="no" Checksum="yes" />
       </Component>
-      <Component Id="MonkeySpeakHelp" Guid="{34c5d490-ae16-43ea-95b9-84276ad16370}">
+   <!--   <Component Id="MonkeySpeakHelp" Guid="{34c5d490-ae16-43ea-95b9-84276ad16370}">
         <File Id="MonkeySpeakEditorHelp" Source="$(var.SolutionDir)Build/Help/Monkey_Speak_Editor_Help.chm" KeyPath="no" Checksum="yes" />
-      </Component>
+      </Component> -->
       <Component Id="DataMokeyHelp" Guid="{0219f1a1-d0d4-4c1b-817b-a6fa3f6e95fd}">
         <File Id="DataMonkeyHelp" Source="$(var.SolutionDir)Build/Help/Data_Monkey_Help.chm" KeyPath="no" Checksum="yes" />
       </Component>
