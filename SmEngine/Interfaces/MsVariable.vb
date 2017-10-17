@@ -1,29 +1,28 @@
 ﻿Imports Monkeyspeak
 
 Namespace Interfaces
-
+    ''' <summary>
+    ''' Silver Monkey's Custom MonkeySpeak Variable
+    ''' </summary>
     Public Class MsVariable
         Implements IVariable
 
-#Region "Private Fields"
-
-
-#End Region
-
 #Region "Public Constructors"
-
+        ''' <summary>
+        ''' Construct the Variable with Name and Value
+        ''' </summary>
+        ''' <param name="Name"><see cref="Monkeyspeak.Variable.Name"/></param>
+        ''' <param name="value"><see cref="Monkeyspeak.Variable.Value"/></param>
         Public Sub New(Name As String, value As Object)
 
             Me.Name = Name
             Me.Value = value
         End Sub
-
-        Public Sub New(Var As IVariable)
-            Me.Name = Var.Name
-            Me.Value = Var.Value
-            Me.IsConstant = Var.IsConstant
-        End Sub
-        Friend Sub New(Name As String)
+        ''' <summary>
+        ''' Construct the Variable with Name only
+        ''' </summary>
+        ''' <param name="Name"><see cref="Monkeyspeak.Variable.Name"/></param>
+        Public Sub New(Name As String)
             Me.Name = Name
         End Sub
 #End Region
@@ -33,6 +32,10 @@ Namespace Interfaces
         Public Property Name As String Implements IVariable.Name
         Public Property Value As Object Implements IVariable.Value
         Public ReadOnly Property IsConstant As Boolean Implements IVariable.IsConstant
+            Get
+                Return False
+            End Get
+        End Property
 
 
 #End Region
@@ -60,15 +63,6 @@ Namespace Interfaces
                 Return CInt(Me.Value) Xor Me.Name.GetHashCode()
             End If
             Return Me.Name.GetHashCode()
-        End Function
-
-        ''' <summary>
-        ''' Returns a const identifier if the variable is constant followed by name,
-        ''' <para>otherwise just the name is returned.</para>
-        ''' </summary>
-        ''' <returns></returns>))
-        Public Overrides Function ToString() As String
-            Return (Convert.ToString(Name + " = " + (If((Value Is Nothing), Nothing.ToString(), Value.ToString()))))
         End Function
 
         Private Function CheckType(_value As Object) As Boolean

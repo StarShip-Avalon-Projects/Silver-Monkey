@@ -27,6 +27,9 @@ Namespace Engine.Libraries
         Public Const ListFile As String = "onlineList.txt"
 
         Private WithEvents OnlineFurreList As IO.NameList
+        ''' <summary>
+        ''' Monkey Speak Pounce Furre object
+        ''' </summary>
         Private WithEvents PFure As MsPounceFurre
         Private _onlineListFile As String
         Private PounceFurreList As List(Of MsPounceFurre)
