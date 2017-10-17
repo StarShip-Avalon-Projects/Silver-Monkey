@@ -56,14 +56,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function ReceiveMessage(reader As TriggerReader) As Boolean
-            Dim msMsg As String = ""
-            Dim msg As String = ""
 
-            'Debug.Print("msgContains Begin Execution")
-            msMsg = reader.ReadString()
-            'Debug.Print("msMsg = " & msMsg)
-            msg = reader.Page.GetVariable("MESSAGE").Value.ToString
-            'Debug.Print("Msg = " & msg)
+            Dim msMsg = reader.ReadString()
+            Dim msg = reader.Page.GetVariable("MESSAGE").Value.ToString
             Return msg.Equals(msMsg)
 
         End Function
@@ -77,14 +72,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function ReceiveMessageContaining(reader As TriggerReader) As Boolean
-            Dim msMsg As String = ""
-            Dim msg As String = ""
+            Dim msMsg = reader.ReadString()
 
-            'Debug.Print("msgContains Begin Execution")
-            msMsg = reader.ReadString()
-            'Debug.Print("msMsg = " & msMsg)
-            msg = reader.Page.GetVariable("MESSAGE").Value.ToString
-            'Debug.Print("Msg = " & msg)
+            Dim msg = reader.Page.GetVariable("MESSAGE").Value.ToString
+
             Return msg.Contains(msMsg)
 
         End Function
@@ -107,10 +98,10 @@ Namespace Engine.Libraries
             'handle of the receiving application.
             'One way is to use the FindWindow API
             Dim cstrReceiverWindowName As String = "Silver Monkey: " + Fur
-            Dim WindowHandleOfToProcess As Integer = FindWindow(Nothing, cstrReceiverWindowName)
+            Dim WindowHandleOfToProcess = FindWindow(Nothing, cstrReceiverWindowName)
             'find by window name
-            Dim WindowHandle As New IntPtr(WindowHandleOfToProcess)
-            Dim msg As MessageHelper = New MonkeyCore.Utils.MessageHelper
+            Dim WindowHandle = New IntPtr(WindowHandleOfToProcess)
+            Dim msg = New MessageHelper
             'Step 2.
             'Create some information to send.
             Dim strTag As String = "MSG"
@@ -137,10 +128,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function SetVariable(reader As TriggerReader) As Boolean
-            Dim Var As Variable
-
-            Var = reader.ReadVariable(True)
-            Var.Value = FurcadiaSession.Player.Message
+            'TODO: Add markup filtering
+            Dim Var = reader.ReadVariable(True)
+            Var.Value = Player.Message
             Return True
 
         End Function

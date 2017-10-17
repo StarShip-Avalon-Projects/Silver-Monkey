@@ -34,7 +34,7 @@ Namespace Engine.Libraries
             MyBase.New(Session)
             Add(New Trigger(TriggerCategory.Effect, 2010),
                 Function(reader As TriggerReader) As Boolean
-                    Dim SoundFile As String = Paths.CheckBotFolder(reader.ReadString(True))
+                    Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
                     Using simpleSound = New SoundPlayer(SoundFile)
                         simpleSound.Play()
 
@@ -45,7 +45,7 @@ Namespace Engine.Libraries
             Add(New Trigger(TriggerCategory.Effect, 2011),
                 Function(reader As TriggerReader) As Boolean
                     If Not simpleSound Is Nothing Then
-                        Dim SoundFile As String = Paths.CheckBotFolder(reader.ReadString(True))
+                        Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
                         simpleSound = New SoundPlayer(SoundFile)
                         simpleSound.PlayLooping()
                     End If
@@ -67,8 +67,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Function StopSound(reader As TriggerReader) As Boolean
             If Not simpleSound Is Nothing Then
-                Dim SoundFile As String = Paths.CheckBotFolder(reader.ReadString(True))
-                simpleSound = New SoundPlayer(SoundFile)
+                Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
+                ' simpleSound = New SoundPlayer(SoundFile)
                 simpleSound.[Stop]()
                 simpleSound.Dispose()
             End If

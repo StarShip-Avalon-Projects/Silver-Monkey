@@ -107,14 +107,14 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function DiceMinusNumber(reader As TriggerReader) As Boolean
 
-            Dim dice As New DiceRollCollection
 
-            Dim Var As Variable = reader.ReadVariable(True)
-            Dim Number As Double = ReadVariableOrNumber(reader)
-            Dim sides As Double = ReadVariableOrNumber(reader)
-            Dim NumberPlus As Double = ReadVariableOrNumber(reader)
+            Dim Var = reader.ReadVariable(True)
+            Dim Number = ReadVariableOrNumber(reader)
+            Dim sides = ReadVariableOrNumber(reader)
+            Dim NumberPlus = ReadVariableOrNumber(reader)
 
-            dice.Clear()
+
+            Dim dice = New DiceRollCollection
             For I As Double = 0 To Number - 1
                 dice.Add(New Die(sides))
             Next
@@ -133,17 +133,11 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Shared Function DicePlusNumber(reader As TriggerReader) As Boolean
-            Dim Var As Variable
-            Dim Number As Double
-            Dim sides As Double = 0
-            Dim NumberPlus As Double = 0
-            Dim dice As New DiceRollCollection
-
-            Var = reader.ReadVariable(True)
-            Number = ReadVariableOrNumber(reader)
-            sides = ReadVariableOrNumber(reader)
-            NumberPlus = ReadVariableOrNumber(reader)
-            ' dice.Clear()
+            Dim Var = reader.ReadVariable(True)
+            Dim Number = ReadVariableOrNumber(reader)
+            Dim sides = ReadVariableOrNumber(reader)
+            Dim NumberPlus = ReadVariableOrNumber(reader)
+            Dim dice = New DiceRollCollection
             For I As Double = 0 To Number - 1
                 dice.Add(New Die(CInt(sides)))
             Next
@@ -187,9 +181,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function RollDice(reader As TriggerReader) As Boolean
-            Dim count As Double = ReadVariableOrNumber(reader)
-            Dim side As Double = ReadVariableOrNumber(reader)
-            Dim Message As String = reader.ReadString
+            Dim count = ReadVariableOrNumber(reader)
+            Dim side = ReadVariableOrNumber(reader)
+            Dim Message = reader.ReadString
 
             Return SendServer("roll " + count.ToString + "d" + side.ToString + " " + Message)
 
@@ -204,9 +198,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function RollDiceMinus(reader As TriggerReader) As Boolean
-            Dim count As Double = ReadVariableOrNumber(reader)
-            Dim side As Double = ReadVariableOrNumber(reader)
-            Dim modifyer As Double = ReadVariableOrNumber(reader)
+            Dim count = ReadVariableOrNumber(reader)
+            Dim side = ReadVariableOrNumber(reader)
+            Dim modifyer = ReadVariableOrNumber(reader)
             Dim Message As String = ""
 
             Return SendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString + " " + Message)
@@ -222,9 +216,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function RollDicePlus(reader As TriggerReader) As Boolean
-            Dim count As Double = ReadVariableOrNumber(reader)
-            Dim side As Double = ReadVariableOrNumber(reader)
-            Dim modifyer As Double = ReadVariableOrNumber(reader)
+            Dim count = ReadVariableOrNumber(reader)
+            Dim side = ReadVariableOrNumber(reader)
+            Dim modifyer = ReadVariableOrNumber(reader)
             Dim Message As String = ""
 
             Return SendServer("roll " + count.ToString + "d" + side.ToString + "+" + modifyer.ToString + " " + Message)
@@ -242,8 +236,8 @@ Namespace Engine.Libraries
         Shared Function RollNumber(reader As TriggerReader) As Boolean
 
             If String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
-            Dim DiceCount As Double = ReadVariableOrNumber(reader)
-            Dim sides As Double = ReadVariableOrNumber(reader)
+            Dim DiceCount = ReadVariableOrNumber(reader)
+            Dim sides = ReadVariableOrNumber(reader)
             If sides <> dice.DiceSides Then Return False
             If DiceCount <> DiceCount Then Return False
 
@@ -261,9 +255,9 @@ Namespace Engine.Libraries
         Shared Function RollNumberMinusModifyer(reader As TriggerReader) As Boolean
 
             If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
-            Dim DiceCount As Double = ReadVariableOrNumber(reader)
-            Dim sides As Double = ReadVariableOrNumber(reader)
-            Dim DiceModifyer As Double = ReadVariableOrNumber(reader)
+            Dim DiceCount = ReadVariableOrNumber(reader)
+            Dim sides = ReadVariableOrNumber(reader)
+            Dim DiceModifyer = ReadVariableOrNumber(reader)
             If dice.DiceModifyer <> DiceModifyer Then Return False
             If sides <> dice.DiceSides Then Return False
             If dice.DiceCount <> DiceCount Then Return False
@@ -282,9 +276,9 @@ Namespace Engine.Libraries
         Shared Function RollNumberPlusModifyer(reader As TriggerReader) As Boolean
 
             If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
-            Dim DiceCount As Double = ReadVariableOrNumber(reader)
-            Dim sides As Double = ReadVariableOrNumber(reader)
-            Dim DiceModifyer As Double = ReadVariableOrNumber(reader)
+            Dim DiceCount = ReadVariableOrNumber(reader)
+            Dim sides = ReadVariableOrNumber(reader)
+            Dim DiceModifyer = ReadVariableOrNumber(reader)
             If dice.DiceModifyer <> DiceModifyer Then Return False
             If sides <> dice.DiceSides Then Return False
             If dice.DiceCount <> DiceCount Then Return False

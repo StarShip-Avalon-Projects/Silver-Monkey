@@ -441,7 +441,7 @@ Namespace Engine.Libraries
                    Function(reader As TriggerReader)
 
                        Dim msg As String = reader.ReadString
-                       Dim tname As Variable = reader.Page.GetVariable(MS_Name)
+                       Dim tname = reader.Page.GetVariable(MS_Name)
                        SndWhisper(tname.Value.ToString, msg)
                        Return True
 
@@ -502,7 +502,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function EnterView(reader As TriggerReader) As Boolean
 
-            Dim tPlayer As FURRE = FurcadiaSession.Player
+            Dim tPlayer = FurcadiaSession.Player
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -538,7 +538,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedEnterView(reader As TriggerReader) As Boolean
 
             Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = Dream.FurreList.GerFurreByName(name)
+            Dim tPlayer = Dream.FurreList.GerFurreByName(name)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -558,7 +558,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedLeaveView(reader As TriggerReader) As Boolean
 
             Dim name As String = reader.ReadString
-            Dim tPlayer As FURRE = Dream.FurreList.GerFurreByName(name)
+            Dim tPlayer = Dream.FurreList.GerFurreByName(name)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -577,7 +577,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function LeaveView(reader As TriggerReader) As Boolean
 
-            Dim tPlayer As FURRE = FurcadiaSession.Player
+            Dim tPlayer = FurcadiaSession.Player
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -692,10 +692,11 @@ Namespace Engine.Libraries
 
             'Dim ps As Process = New Process()
             Dim File As String = reader.ReadString
-            Dim p As New ProcessStartInfo
-            p.Arguments = File
-            p.FileName = "SilverMonkey.exe"
-            p.WorkingDirectory = MonkeyCore.Paths.ApplicationPath
+            Dim p As New ProcessStartInfo With {
+                .Arguments = File,
+                .FileName = "SilverMonkey.exe",
+                .WorkingDirectory = MonkeyCore.Paths.ApplicationPath
+            }
             Process.Start(p)
             Return True
         End Function

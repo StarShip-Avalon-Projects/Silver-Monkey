@@ -98,7 +98,7 @@ Namespace Engine.Libraries
         Private Function InDream(ByRef Name As String) As Boolean
 #Enable Warning BC40003 ' function 'InDream' shadows an overloadable member declared in the base class 'MonkeySpeakLibrary'.  If you want to overload the base method, this method must be declared 'Overloads'.
             Dim found As Boolean = False
-            For Each Fur As FURRE In FurcadiaSession.Dream.FurreList
+            For Each Fur In FurcadiaSession.Dream.FurreList
                 If Fur.ShortName = Furcadia.Util.FurcadiaShortName(Name) Then
                     Return True
                 End If
@@ -122,10 +122,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreActiveListCount(reader As TriggerReader) As Boolean
 
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim var = reader.ReadVariable(True)
             Dim c As Double = 0
-            For Each fur As FURRE In MyBase.FurcadiaSession.Dream.FurreList
-                If fur.AFK = 0 Then
+            For Each fur In FurcadiaSession.Dream.FurreList
+                If fur.AfkTime = 0 Then
                     c += 1
                 End If
             Next
@@ -147,10 +147,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreAFKListCount(reader As TriggerReader) As Boolean
 
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim var = reader.ReadVariable(True)
             Dim c As Double = 0
-            For Each fs As FURRE In FurcadiaSession.Dream.FurreList
-                If fs.AFK > 0 Then
+            For Each fs In FurcadiaSession.Dream.FurreList
+                If fs.AfkTime > 0 Then
                     c += 1
                 End If
             Next
@@ -170,7 +170,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreListCount(reader As TriggerReader) As Boolean
 
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim var = reader.ReadVariable(True)
             var.Value = Convert.ToDouble(FurcadiaSession.Dream.FurreList.Count.ToString)
             Return True
 
@@ -187,9 +187,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreListVar(reader As TriggerReader) As Boolean
 
-            Dim var As Variable = reader.ReadVariable(True)
-            Dim str As New ArrayList
-            For Each fur As FURRE In FurcadiaSession.Dream.FurreList
+            Dim var = reader.ReadVariable(True)
+            Dim str As New List(Of String)
+            For Each fur In FurcadiaSession.Dream.FurreList
                 str.Add(fur.Name)
             Next
             var.Value = String.Join(", ", str.ToArray)
@@ -208,9 +208,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedActive(reader As TriggerReader) As Boolean
 
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
-            Return Target.AFK = 0
+            Dim name = reader.ReadString
+            Dim Target = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Return Target.AfkTime = 0
 
         End Function
 
@@ -225,9 +225,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedAFK(reader As TriggerReader) As Boolean
 
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
-            Return Target.AFK > 0
+            Dim name = reader.ReadString
+            Dim Target = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Return Target.AfkTime > 0
 
         End Function
 
@@ -242,8 +242,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedCanSe(reader As TriggerReader) As Boolean
 
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Dim name = reader.ReadString
+            Dim Target = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
             Return Target.Visible
 
         End Function
@@ -259,8 +259,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedInDream(reader As TriggerReader) As Boolean
 
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Dim name = reader.ReadString
+            Dim Target = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
             Return InDream(Target.Name)
 
         End Function
@@ -276,8 +276,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedNotCanSe(reader As TriggerReader) As Boolean
 
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Dim name = reader.ReadString
+            Dim Target = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
             Return Not Target.Visible
 
         End Function
@@ -293,8 +293,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedNotInDream(reader As TriggerReader) As Boolean
 
-            Dim name As String = reader.ReadString
-            Dim Target As FURRE = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
+            Dim name = reader.ReadString
+            Dim Target = FurcadiaSession.Dream.FurreList.GerFurreByName(name)
             Return Not InDream(Target.Name)
 
         End Function
@@ -357,7 +357,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TriggeringNotInDream(reader As TriggerReader) As Boolean
 
-            Dim tPlayer As FURRE = FurcadiaSession.Player
+            Dim tPlayer = FurcadiaSession.Player
             Return Not InDream(tPlayer.Name)
 
         End Function

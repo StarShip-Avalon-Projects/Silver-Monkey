@@ -85,11 +85,11 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function AddFurreNamed(reader As TriggerReader) As Boolean
-            Dim Furre As String
+
             Try
-                Furre = reader.ReadString
+                Dim Furre = reader.ReadString
                 If FurreNamedIsNotMember(reader) Then
-                    Using sw As StreamWriter = New StreamWriter(MemberList, True)
+                    Using sw = New StreamWriter(MemberList, True)
                         sw.WriteLine(Furre)
                     End Using
                 End If
@@ -110,11 +110,11 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Private Function AddTrigFurre(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
+
             Try
-                Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+                Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
                 If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
-                    Dim sw As StreamWriter = New StreamWriter(MemberList, True)
+                    Dim sw = New StreamWriter(MemberList, True)
                     sw.WriteLine(Furre)
                     sw.Close()
                 End If
@@ -150,13 +150,12 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedIsMember(reader As TriggerReader) As Boolean
 
-            Dim Furre As String = Nothing
-            Dim f() As String
 
-            Furre = reader.ReadString
+
+            Dim Furre = reader.ReadString
             Try
                 CheckMemberList()
-                f = File.ReadAllLines(MemberList)
+                Dim f = File.ReadAllLines(MemberList)
                 For Each l As String In f
                     If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then
                         Return True
@@ -189,11 +188,13 @@ Namespace Engine.Libraries
         ''' <returns></returns>
         Public Function ListToVariable(reader As TriggerReader) As Boolean
 
-            Dim Furre As Variable
-            Dim f As New List(Of String)
+
+
             Try
                 CheckMemberList()
-                Furre = reader.ReadVariable(True)
+                Dim Furre = reader.ReadVariable(True)
+
+                Dim f = New List(Of String)
                 f.AddRange(File.ReadAllLines(MemberList))
                 Furre.Value = String.Join(" ", f.ToArray)
 
@@ -214,14 +215,14 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RemoveFurreNamed(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
+
             Try
                 CheckMemberList()
 
-                Furre = reader.ReadString
+                Dim Furre = reader.ReadString
                 Dim line As String
-                Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
-                Using SR As New StreamReader(MemberList)
+                Dim linesList = New List(Of String)(File.ReadAllLines(MemberList))
+                Using SR = New StreamReader(MemberList)
                     While SR.Peek() <> -1
                         line = SR.ReadLine()
                         For i As Integer = 0 To linesList.Count - 1
@@ -251,16 +252,16 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RemoveTrigFurre(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
+
             Try
                 CheckMemberList()
 
-                Furre = reader.Page.GetVariable(MS_Name).Value.ToString
-                Dim line As String
+                Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+
                 Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
                 Using SR As New StreamReader(MemberList)
                     While SR.Peek() <> -1
-                        line = SR.ReadLine()
+                        Dim line = SR.ReadLine()
                         For i As Integer = 0 To linesList.Count - 1
                             If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
                                 linesList.RemoveAt(i)
@@ -288,12 +289,13 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TrigFurreIsMember(reader As TriggerReader) As Boolean
 
-            Dim Furre As String = Nothing
-            Dim f As New List(Of String)
+
             Try
                 CheckMemberList()
 
-                Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+                Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+
+                Dim f = New List(Of String)
                 f.AddRange(File.ReadAllLines(MemberList))
                 For Each l As String In f
                     If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True

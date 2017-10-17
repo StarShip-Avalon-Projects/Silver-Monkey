@@ -150,7 +150,7 @@ Namespace Engine.Libraries
         Function DreamNameIs(reader As TriggerReader) As Boolean
             Dim DreamName As String = reader.ReadString
             DreamName = DreamName.ToLower.Replace("furc://", String.Empty)
-            Dim DreamNameVariable As Monkeyspeak.Variable = reader.Page.GetVariable("DREAMNAME")
+            Dim DreamNameVariable = reader.Page.GetVariable("DREAMNAME")
             'add Machine Name parser
             If DreamNameVariable.Value.ToString() <> Dream.Name Then
                 Throw New MonkeySpeakException("%DREAMNAME does not match Dream.Name")

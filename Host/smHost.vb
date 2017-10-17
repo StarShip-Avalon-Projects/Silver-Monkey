@@ -46,11 +46,11 @@ Public Class smHost
         End Set
     End Property
 
-    Public Property Player() As FURRE Implements Interfaces.ImsHost.Player
+    Public Property Player() As Furre Implements Interfaces.ImsHost.Player
         Get
             Return callbk.Player
         End Get
-        Set(value As FURRE)
+        Set(value As Furre)
             callbk.Player = value
         End Set
     End Property

@@ -71,7 +71,7 @@ Namespace Engine.Libraries
 
             Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
 
@@ -98,7 +98,7 @@ Namespace Engine.Libraries
 
             Dim safety As Boolean = Not FurcadiaSession.IsConnectedCharacter
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return Not msMsg.Equals(test) And safety
@@ -123,7 +123,7 @@ Namespace Engine.Libraries
         Protected Overridable Function MsgNotContain(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return test.Contains(msMsg)
@@ -141,7 +141,7 @@ Namespace Engine.Libraries
         Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
@@ -160,7 +160,7 @@ Namespace Engine.Libraries
         Protected Function MsgNotStartsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return Not test.StartsWith(msMsg)
@@ -178,7 +178,7 @@ Namespace Engine.Libraries
         Protected Function MsgStartsWith(reader As TriggerReader) As Boolean
 
             Dim msMsg As String = StripHTML(reader.ReadString())
-            Dim msg As Variable = reader.Page.GetVariable("MESSAGE")
+            Dim msg = reader.Page.GetVariable("MESSAGE")
 
             Dim test As String = StripHTML(msg.Value.ToString)
             Return test.StartsWith(msMsg)
@@ -237,7 +237,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Private Shared Function StripHTML(ByVal Text As String) As String
 
-            Dim r As New Regex("<(.*?)>")
+            Dim r = New Regex("<(.*?)>")
             Text = r.Replace(Text, String.Empty)
             Return Text.Replace("|", " ").ToLower
         End Function
@@ -303,7 +303,7 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Current Triggering Furre
         ''' </summary>
-        Public Property Player As FURRE
+        Public Property Player As Furre
 
 #End Region
 
@@ -408,7 +408,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function InDream(ByRef Name As String) As Boolean
             Dim found As Boolean = False
-            For Each Fur As FURRE In Dream.FurreList
+            For Each Fur In Dream.FurreList
                 If Fur.ShortName = FurcadiaShortName(Name) Then
                     found = True
                     Exit For

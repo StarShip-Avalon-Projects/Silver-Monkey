@@ -384,7 +384,7 @@ Public Class Main
 
     Private Delegate Sub UpDateBtn_GoCallback3(ByVal Obj As Object)
 
-    Private Delegate Sub UpDateBtn_StandCallback(ByRef [furre] As FURRE)
+    Private Delegate Sub UpDateBtn_StandCallback(ByRef [furre] As Furre)
 
     Private Delegate Sub UpDateDreamListCaller() 'ByVal [dummy] As String
 
@@ -631,7 +631,7 @@ Public Class Main
         If Not FurcadiaSession Is Nothing Then
             If Not DreamList.SelectedItem Is Nothing Then
                 If Not FurcadiaSession.IsServerConnected Then Exit Sub
-                FurcadiaSession.SendFormattedTextToServer("l " + CType(DreamList.SelectedItem, FURRE).ShortName)
+                FurcadiaSession.SendFormattedTextToServer("l " + CType(DreamList.SelectedItem, Furre).ShortName)
             End If
         End If
     End Sub

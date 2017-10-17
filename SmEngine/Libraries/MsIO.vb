@@ -102,9 +102,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Shared Function ReadTextLine(reader As TriggerReader) As Boolean
 
-            Dim num As Double = ReadVariableOrNumber(reader, False)
-            Dim F As String = Paths.CheckBotFolder(reader.ReadString)
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim num = ReadVariableOrNumber(reader, False)
+            Dim F = Paths.CheckBotFolder(reader.ReadString)
+            Dim var = reader.ReadVariable(True)
             If File.Exists(F) Then
                 Dim lines() As String = File.ReadAllLines(F)
                 If lines.Count < 0 Then
@@ -135,10 +135,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Shared Function AppendToFile(reader As TriggerReader) As Boolean
-            Dim data As String = reader.ReadString()
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+            Dim data = reader.ReadString()
+            Dim f = Paths.CheckBotFolder(reader.ReadString())
 
-            Using SW As StreamWriter = New StreamWriter(f, True)
+            Using SW As New StreamWriter(f, True)
                 SW.WriteLine(data)
             End Using
 
@@ -153,10 +153,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Shared Function CanReadFile(reader As TriggerReader) As Boolean
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+            Dim f = Paths.CheckBotFolder(reader.ReadString())
 
-            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
-                Return stream.CanRead
+            Using Stream As New File.Open(f, FileMode.Open, FileAccess.Read)
+                Return Stream.CanRead
             End Using
 
         End Function
@@ -169,9 +169,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Shared Function CanWriteFile(reader As TriggerReader) As Boolean
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+            Dim f = Paths.CheckBotFolder(reader.ReadString())
 
-            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Write)
+            Using stream As New File.Open(f, FileMode.Open, FileAccess.Write)
                 Return stream.CanWrite
             End Using
 
@@ -205,7 +205,7 @@ Namespace Engine.Libraries
             If reader.PeekString() = False Then
                 Return False
             End If
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+            Dim f = Paths.CheckBotFolder(reader.ReadString())
             If File.Exists(f) Then
                 File.Delete(f)
                 Return True
@@ -246,9 +246,9 @@ Namespace Engine.Libraries
         Public Shared Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
 
             Dim OutVar = reader.ReadVariable(True)
-            Dim sb As New StringBuilder()
+            Dim sb = New StringBuilder()
 
-            Using SR As StreamReader = New StreamReader(Paths.CheckBotFolder(reader.ReadString(True)))
+            Using SR = New StreamReader(Paths.CheckBotFolder(reader.ReadString(True)))
                 While Not SR.EndOfStream
                     sb.AppendLine(SR.ReadLine)
                 End While

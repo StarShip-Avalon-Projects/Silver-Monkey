@@ -59,7 +59,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function CommandNotWariningOrError(reader As TriggerReader) As Boolean
 
-            Dim err As Double = ReadVariableOrNumber(reader, False)
+            Dim err = ReadVariableOrNumber(reader, False)
             Dim errNum As Short = 0
             SyncLock Lock
                 errNum = FurcadiaSession.ErrorNum
@@ -101,7 +101,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function ErrorIs(reader As TriggerReader) As Boolean
 
-            Dim TmpName As String = reader.ReadString()
+            Dim TmpName = reader.ReadString()
             Dim errstr As String = ""
             SyncLock Lock
                 errstr = FurcadiaSession.ErrorMsg
@@ -121,7 +121,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function WarningVar(reader As TriggerReader) As Boolean
 
-            Dim Var As Variable = reader.ReadVariable(True)
+            Dim Var = reader.ReadVariable(True)
             Dim errNum As Short = 0
             SyncLock Lock
                 errNum = FurcadiaSession.ErrorNum

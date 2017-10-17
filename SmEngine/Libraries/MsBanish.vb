@@ -213,9 +213,7 @@ Namespace Engine.Libraries
         ''' True
         ''' </returns>
         Public Function BanishSave(reader As TriggerReader) As Boolean
-            Dim NewVar As Variable
-
-            NewVar = reader.ReadVariable(True)
+            Dim NewVar = reader.ReadVariable(True)
 
             NewVar.Value = String.Join(" ", FurcadiaSession.BanishString.ToArray)
             Return True
@@ -259,7 +257,7 @@ Namespace Engine.Libraries
         ''' true if the furre is not on the mirror banish list
         ''' </returns>
         Public Function FurreNamedIsNotBanished(reader As TriggerReader) As Boolean
-            Dim banishlist As List(Of String) = FurcadiaSession.BanishString
+            Dim banishlist = FurcadiaSession.BanishString
 
             Dim f As String = reader.ReadString
             For Each Furre As String In banishlist

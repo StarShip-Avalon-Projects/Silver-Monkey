@@ -7,7 +7,7 @@ Public Class cbMain
 
 #Region "Public Fields"
 
-    Public Player As FURRE
+    Public Player As Furre
 
 #End Region
 
@@ -88,7 +88,7 @@ Public Class cbMain
 #Region "Private Methods"
 
     Private Sub cbMain_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Player = New FURRE
+        Player = New Furre
     End Sub
 
     Private Sub exitMenuItem_Click(sender As Object, e As System.EventArgs) Handles exitMenuItem.Click

@@ -36,7 +36,7 @@ Namespace Engine.Libraries
             '(0:299) When the time is {...} hh:mm:ss am/pm FST,
             Add(TriggerCategory.Cause, 299,
                 Function(reader As TriggerReader)
-                    Dim Time As String = reader.ReadString
+                    Dim Time = reader.ReadString
                     Dim str As String = ""
                     SyncLock lock
                         str = FurcTime.ToLongTimeString
@@ -88,8 +88,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Shared Function CurrentTime(reader As TriggerReader) As Boolean
 
-            Dim Var As Variable = reader.ReadVariable(True)
-            Dim Str As String = DateTime.Now.ToLongTimeString.ToLower
+            Dim Var = reader.ReadVariable(True)
+            Dim Str = DateTime.Now.ToLongTimeString.ToLower
             Var.Value = Str
             Return True
 
@@ -106,7 +106,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurcDateTimeVar(reader As TriggerReader) As Boolean
 
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim var = reader.ReadVariable(True)
             SyncLock lock
                 var.Value = FurcTime.ToString("yyyy-MM-dd HH:mm:ss tt")
             End SyncLock
@@ -125,7 +125,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function LocalDateTimeVar(reader As TriggerReader) As Boolean
 
-            Dim var As Variable = reader.ReadVariable(True)
+            Dim var = reader.ReadVariable(True)
             var.Value = Date.Now.ToString("yyyy-MM-dd HH:mm:ss tt")
             Return True
 
@@ -168,9 +168,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function SubsractDateTimeStr(reader As TriggerReader) As Boolean
 
-            Dim DateTimeVariable As Variable = reader.ReadVariable(True)
-            Dim DateTimeString As String = reader.ReadString
-            Dim ResultVariable As Variable = reader.ReadVariable(True)
+            Dim DateTimeVariable = reader.ReadVariable(True)
+            Dim DateTimeString = reader.ReadString
+            Dim ResultVariable = reader.ReadVariable(True)
             Dim time As DateTime
             Dim time2 As DateTime
             If DateTime.TryParse(DateTimeVariable.Value.ToString, time) And DateTime.TryParse(DateTimeString, time2) Then
@@ -194,9 +194,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function SubsractDateTimeVar(reader As TriggerReader) As Boolean
 
-            Dim DateTimeVariable As Variable = reader.ReadVariable(True)
-            Dim DateTimeString As Variable = reader.ReadVariable
-            Dim ResultVariable As Variable = reader.ReadVariable(True)
+            Dim DateTimeVariable = reader.ReadVariable(True)
+            Dim DateTimeString = reader.ReadVariable
+            Dim ResultVariable = reader.ReadVariable(True)
             Dim time As DateTime
             Dim time2 As DateTime
             If DateTime.TryParse(DateTimeVariable.Value.ToString, time) And DateTime.TryParse(DateTimeString.Value.ToString, time2) Then

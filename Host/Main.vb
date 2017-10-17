@@ -26,7 +26,7 @@ Public Class Main
 
     Public DREAM As New DREAM
 
-    Public Player As FURRE = New FURRE
+    Public Player As Furre = New Furre
 
 #End Region
 

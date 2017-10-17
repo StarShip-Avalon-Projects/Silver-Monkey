@@ -132,13 +132,12 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function DicePlusNumber(reader As TriggerReader) As Boolean
-            Dim Var As Variable
             Dim Number As Double
             Dim sides As Double = 0
             Dim NumberPlus As Double = 0
             Dim dice As New DiceRollCollection
 
-            Var = reader.ReadVariable(True)
+            Dim Var = reader.ReadVariable(True)
             Number = ReadVariableOrNumber(reader)
             sides = ReadVariableOrNumber(reader)
             NumberPlus = ReadVariableOrNumber(reader)

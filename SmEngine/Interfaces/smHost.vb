@@ -47,7 +47,7 @@ Namespace Interfaces
             End Set
         End Property
 
-        Public ReadOnly Property Player() As FURRE Implements Interfaces.ImsHost.Player
+        Public ReadOnly Property Player() As Furre Implements Interfaces.ImsHost.Player
             Get
                 Return FurcadiaSession.Player
             End Get

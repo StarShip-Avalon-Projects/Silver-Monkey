@@ -78,12 +78,12 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function ChopEndString(reader As TriggerReader) As Boolean
-            Dim Var As Variable
+
             Dim Count As Integer = 0
 
-            Var = reader.ReadVariable(True)
-            Dim test As Boolean = Integer.TryParse(ReadVariableOrNumber(reader).ToString, Count)
-            Dim str As String = Var.Value.ToString()
+            Dim Var = reader.ReadVariable(True)
+            Dim test = Integer.TryParse(ReadVariableOrNumber(reader).ToString, Count)
+            Dim str = Var.Value.ToString()
 
             If str.Length < Count Then
                 Var.Value = str
@@ -106,12 +106,11 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function ChopStartString(reader As TriggerReader) As Boolean
-            Dim Var As Variable
             Dim Count As Integer = 0
 
-            Var = reader.ReadVariable(True)
-            Dim test As Boolean = Integer.TryParse(ReadVariableOrNumber(reader).ToString, Count)
-            Dim str As String = Var.Value.ToString()
+            Dim Var = reader.ReadVariable(True)
+            Dim test = Integer.TryParse(ReadVariableOrNumber(reader).ToString, Count)
+            Dim str = Var.Value.ToString()
             If str.Length < Count Then
                 Var.Value = Nothing
             Else
@@ -133,9 +132,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function CountChars(reader As TriggerReader) As Boolean
 
-            Dim var1 As Variable = reader.ReadVariable()
-            Dim var2 As Variable = reader.ReadVariable(True)
-            Dim Count As Double = Convert.ToDouble(var1.Value.ToString.Length)
+            Dim var1 = reader.ReadVariable()
+            Dim var2 = reader.ReadVariable(True)
+            Dim Count = Convert.ToDouble(var1.Value.ToString.Length)
             var2.Value = Count
             Return True
 
@@ -153,8 +152,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Function NotWildCard(reader As TriggerReader) As Boolean
 
-            Dim var As Variable = reader.ReadVariable
-            Dim Pattern As String = reader.ReadString
+            Dim var = reader.ReadVariable
+            Dim Pattern = reader.ReadString
             Return Not MatchWildcardString(Pattern, var.Value.ToString)
 
         End Function
@@ -170,10 +169,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Function StringSplit(reader As TriggerReader) As Boolean
 
-            Dim Var As Variable = reader.ReadVariable()
-            Dim i As Double = ReadVariableOrNumber(reader)
-            Dim NewVar As Variable = reader.ReadVariable(True)
-            Dim fields() As String = Split(Var.Value.ToString, " ")
+            Dim Var = reader.ReadVariable()
+            Dim i = ReadVariableOrNumber(reader)
+            Dim NewVar = reader.ReadVariable(True)
+            Dim fields() = Split(Var.Value.ToString, " ")
             If i < fields.Length Then
                 NewVar.Value = fields(i)
             End If
@@ -192,13 +191,11 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function StripCharacters(reader As TriggerReader) As Boolean
-            Dim ch As Char = Nothing
-            Dim NewVar As Variable
-            Dim Var As Variable
 
-            Var = reader.ReadVariable()
-            ch = CChar(reader.ReadString)
-            NewVar = reader.ReadVariable()
+
+            Dim Var = reader.ReadVariable()
+            Dim ch = CChar(reader.ReadString)
+            Dim NewVar = reader.ReadVariable()
 
             Dim varStr As String = Var.Value.ToString
             Dim NewStr As String = varStr.Replace(ch, String.Empty)
@@ -218,8 +215,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Function WildCard(reader As TriggerReader) As Boolean
 
-            Dim var As Variable = reader.ReadVariable
-            Dim Pattern As String = reader.ReadString
+            Dim var = reader.ReadVariable
+            Dim Pattern = reader.ReadString
             Return MatchWildcardString(Pattern, var.Value.ToString)
 
         End Function
