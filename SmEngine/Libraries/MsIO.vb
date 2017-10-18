@@ -22,36 +22,36 @@ Namespace Engine.Libraries
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
             ' (1:200) and the file {...} exists,
-            Add(New Trigger(TriggerCategory.Condition, 200), AddressOf FileExists, "(1:200) and the file {...} exists,")
+            Add(New Trigger(TriggerCategory.Condition, 200), AddressOf FileExists, " and the file {...} exists,")
 
             ' (1:201) and the file {...} does not exist,
-            Add(New Trigger(TriggerCategory.Condition, 201), AddressOf FileNotExists, "(1:201) and the file {...} does not exist,")
+            Add(New Trigger(TriggerCategory.Condition, 201), AddressOf FileNotExists, " and the file {...} does not exist,")
 
             ' (1:202) and the file {...} can be read from,
-            Add(New Trigger(TriggerCategory.Condition, 202), AddressOf CanReadFile, "(1:202) and the file {...} can be read from,")
+            Add(New Trigger(TriggerCategory.Condition, 202), AddressOf CanReadFile, " and the file {...} can be read from,")
 
             ' (1:203) and the file {...} can be written to,
-            Add(New Trigger(TriggerCategory.Condition, 203), AddressOf CanWriteFile, "(1:203) and the file {...} can be written to,")
+            Add(New Trigger(TriggerCategory.Condition, 203), AddressOf CanWriteFile, " and the file {...} can be written to,")
 
             ' (5:200) append {...} to file {...}.
-            Add(New Trigger(TriggerCategory.Effect, 200), AddressOf AppendToFile, "(5:200) append {...} to file {...}.")
+            Add(New Trigger(TriggerCategory.Effect, 200), AddressOf AppendToFile, " append {...} to file {...}.")
 
             ' (5:201) read from file {...} and put it into variable %Variable.
-            Add(New Trigger(TriggerCategory.Effect, 201), AddressOf ReadFileIntoVariable, "(5:201) read from file {...} and put it into variable %Variable.")
+            Add(New Trigger(TriggerCategory.Effect, 201), AddressOf ReadFileIntoVariable, " read from file {...} and put it into variable %Variable.")
 
             ' (5:202) delete file {...}.
-            Add(New Trigger(TriggerCategory.Effect, 202), AddressOf DeleteFile, "(5:202) delete file {...}.")
+            Add(New Trigger(TriggerCategory.Effect, 202), AddressOf DeleteFile, " delete file {...}.")
 
             '(5:203) create file {...}.
-            Add(New Trigger(TriggerCategory.Effect, 203), AddressOf CreateFile, "(5:203) create file {...}.")
+            Add(New Trigger(TriggerCategory.Effect, 203), AddressOf CreateFile, " create file {...}.")
 
             '(5:124) read line number # from text file {...} and put it into variable %Variable.
             Add(New Trigger(TriggerCategory.Effect, 124), AddressOf ReadTextLine,
-            "(5:124) read line number # from text file {...} and put it into variable %Variable.")
+            " read line number # from text file {...} and put it into variable %Variable.")
 
             '(5:125) count the number of lines in text file {...} and put it into variable %Variable .
             Add(New Trigger(TriggerCategory.Effect, 125), AddressOf CountLines,
-            "(5:125) count the number of lines in text file {...} and put it into variable %Variable.")
+            " count the number of lines in text file {...} and put it into variable %Variable.")
 
         End Sub
 

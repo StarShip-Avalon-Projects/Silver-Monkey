@@ -45,29 +45,29 @@ Namespace Engine.Libraries
             MemberList = Paths.CheckBotFolder("MemberList.txt")
 
             '(1:900) and the triggering furre is on my Dream Member List,
-            Add(New Trigger(TriggerCategory.Condition, 900), AddressOf TrigFurreIsMember, "(1:900) and the triggering furre is on my dream Member List,")
+            Add(New Trigger(TriggerCategory.Condition, 900), AddressOf TrigFurreIsMember, " and the triggering furre is on my dream Member List,")
             '(1:901) and the furre named {...} is on my Dream Member list.
-            Add(New Trigger(TriggerCategory.Condition, 901), AddressOf FurreNamedIsMember, "(1:901) and the furre named {...} is on my Dream Member list,")
+            Add(New Trigger(TriggerCategory.Condition, 901), AddressOf FurreNamedIsMember, " and the furre named {...} is on my Dream Member list,")
 
             '(1:902) and the triggering furre is not on my Dream Member list.
-            Add(New Trigger(TriggerCategory.Condition, 902), AddressOf TrigFurreIsNotMember, "(1:902) and the triggering furre is not on my Dream Member list,")
+            Add(New Trigger(TriggerCategory.Condition, 902), AddressOf TrigFurreIsNotMember, " and the triggering furre is not on my Dream Member list,")
             '(1:903) and the furre named {...} is not on my Dream Member list.
-            Add(New Trigger(TriggerCategory.Condition, 903), AddressOf FurreNamedIsNotMember, "(1:903) and the furre named {...} is not on my Dream Member list,")
+            Add(New Trigger(TriggerCategory.Condition, 903), AddressOf FurreNamedIsNotMember, " and the furre named {...} is not on my Dream Member list,")
 
             '(1:900) add the triggering furre to my Dream Member list if they aren't already on it.
-            Add(New Trigger(TriggerCategory.Effect, 900), AddressOf AddTrigFurre, "(5:900) add the triggering furre to my Dream Member list if they aren't already on it.")
+            Add(New Trigger(TriggerCategory.Effect, 900), AddressOf AddTrigFurre, " add the triggering furre to my Dream Member list if they aren't already on it.")
             '(5:901) add the furre named {...} to my Dream Member list if they aren't already on it.
-            Add(New Trigger(TriggerCategory.Effect, 901), AddressOf AddFurreNamed, "(5:901) add the furre named {...} to my Dream Member list if they aren't already on it.")
+            Add(New Trigger(TriggerCategory.Effect, 901), AddressOf AddFurreNamed, " add the furre named {...} to my Dream Member list if they aren't already on it.")
 
             '(5:902) remove the triggering furre to my Dream Member list if they are on it.
-            Add(New Trigger(TriggerCategory.Effect, 902), AddressOf RemoveTrigFurre, "(5:902) remove the triggering furre to my Dream Member list if they are on it.")
+            Add(New Trigger(TriggerCategory.Effect, 902), AddressOf RemoveTrigFurre, " remove the triggering furre to my Dream Member list if they are on it.")
             '(5:903) remove the furre named {...} from my Dream Member list if they are on it.
-            Add(New Trigger(TriggerCategory.Effect, 903), AddressOf RemoveFurreNamed, "(5:903) remove the furre named {...} from my Dream Member list if they are on it.")
+            Add(New Trigger(TriggerCategory.Effect, 903), AddressOf RemoveFurreNamed, " remove the furre named {...} from my Dream Member list if they are on it.")
 
             '(5:904) Use file {...} as the dream member list.
-            Add(New Trigger(TriggerCategory.Effect, 904), AddressOf UseMemberFile, "(5:904) Use file {...} as the dream member list.")
+            Add(New Trigger(TriggerCategory.Effect, 904), AddressOf UseMemberFile, " Use file {...} as the dream member list.")
             '(5:905) store member list to variable %Variable.
-            Add(New Trigger(TriggerCategory.Effect, 905), AddressOf ListToVariable, "(5:905) store member list to variable %Variable.")
+            Add(New Trigger(TriggerCategory.Effect, 905), AddressOf ListToVariable, " store member list to variable %Variable.")
 
         End Sub
 

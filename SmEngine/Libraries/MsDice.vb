@@ -43,52 +43,52 @@ Namespace Engine.Libraries
             MyBase.New(session)
             dice = New DiceObject()
             '(0:130) When the bot rolls #d#,
-            Add(New Trigger(TriggerCategory.Cause, 130), AddressOf RollNumber, "(0:130) When the bot rolls #d#,")
+            Add(New Trigger(TriggerCategory.Cause, 130), AddressOf RollNumber, " When the bot rolls #d#,")
             '(0:131) When the bot rolls #d#+#,
-            Add(New Trigger(TriggerCategory.Cause, 131), AddressOf RollNumberPlusModifyer, "(0:131) When the bot rolls #d#+#,")
+            Add(New Trigger(TriggerCategory.Cause, 131), AddressOf RollNumberPlusModifyer, " When the bot rolls #d#+#,")
             '(0:132) When the bot rolls #d#-#,
-            Add(New Trigger(TriggerCategory.Cause, 132), AddressOf RollNumberMinusModifyer, "(0:132) When the bot rolls #d#-#,")
+            Add(New Trigger(TriggerCategory.Cause, 132), AddressOf RollNumberMinusModifyer, " When the bot rolls #d#-#,")
 
             '(0:133) When a furre rolls #d#,
-            Add(New Trigger(TriggerCategory.Cause, 133), AddressOf RollNumber, "(0:133) When a furre rolls #d#,")
+            Add(New Trigger(TriggerCategory.Cause, 133), AddressOf RollNumber, " When a furre rolls #d#,")
             '(0:138) When a fuure rolls #d#+#,
-            Add(New Trigger(TriggerCategory.Cause, 134), AddressOf RollNumberPlusModifyer, "(0:134) When a furre rolls #d#+#,")
+            Add(New Trigger(TriggerCategory.Cause, 134), AddressOf RollNumberPlusModifyer, " When a furre rolls #d#+#,")
             '(0:140) When a furre rolls #d#-#,
-            Add(New Trigger(TriggerCategory.Cause, 135), AddressOf RollNumberMinusModifyer, "(0:135) When a furre rolls #d#-#,")
+            Add(New Trigger(TriggerCategory.Cause, 135), AddressOf RollNumberMinusModifyer, " When a furre rolls #d#-#,")
 
             '(0:136) When any one rolls anything,
             Add(New Trigger(TriggerCategory.Cause, 136),
             Function()
                 Return True
-            End Function, "(0:136) When any one rolls anything,")
+            End Function, " When any one rolls anything,")
 
             '(1:130) and the result is # or higher,
-            Add(New Trigger(TriggerCategory.Condition, 130), AddressOf DiceResultNumberOrHigher, "(1:130) and the dice roll result is # or higher,")
+            Add(New Trigger(TriggerCategory.Condition, 130), AddressOf DiceResultNumberOrHigher, " and the dice roll result is # or higher,")
             '(1:131) and the result is # or Lower,
-            Add(New Trigger(TriggerCategory.Condition, 131), AddressOf DiceResultNumberOrlower, "(1:131) and the dice roll result is # or lower,")
+            Add(New Trigger(TriggerCategory.Condition, 131), AddressOf DiceResultNumberOrlower, " and the dice roll result is # or lower,")
 
             ' (5:130) set variable % to the total of rolling # dice with #
             ' sides plus #.
-            Add(New Trigger(TriggerCategory.Effect, 130), AddressOf DicePlusNumber, "(5:130) set variable % to the total of rolling # dice with # sides plus #.")
+            Add(New Trigger(TriggerCategory.Effect, 130), AddressOf DicePlusNumber, " set variable % to the total of rolling # dice with # sides plus #.")
 
             ' (5:131) set variable % to the total of rolling # dice with #
             ' sides minus #.
-            Add(New Trigger(TriggerCategory.Effect, 131), AddressOf DiceMinusNumber, "(5:131) set variable % to the total of rolling # dice with # sides minus #.")
+            Add(New Trigger(TriggerCategory.Effect, 131), AddressOf DiceMinusNumber, " set variable % to the total of rolling # dice with # sides minus #.")
 
             ' (5:132) set variable %Variable to the number of the dice reult
             ' that the triggering furre rolled.
-            Add(New Trigger(TriggerCategory.Effect, 132), AddressOf TrigFurreRolledVariable, "(5:132) set variable %Variable to the number of the dice result that the triggering furre rolled.")
+            Add(New Trigger(TriggerCategory.Effect, 132), AddressOf TrigFurreRolledVariable, " set variable %Variable to the number of the dice result that the triggering furre rolled.")
 
             ' (5:133) roll # furcadia dice with # sides. (optional Message {...})
-            Add(New Trigger(TriggerCategory.Effect, 133), AddressOf RollDice, "(5:133) roll # furcadia dice with # sides. (optional Message {...})")
+            Add(New Trigger(TriggerCategory.Effect, 133), AddressOf RollDice, " roll # furcadia dice with # sides. (optional Message {...})")
 
             ' (5:134) roll # furcadia dice with # sides plus #. (optional
             ' Message {...})
-            Add(New Trigger(TriggerCategory.Effect, 134), AddressOf RollDicePlus, "(5:134) roll # furcadia dice with # sides plus #. (optional Message {...})")
+            Add(New Trigger(TriggerCategory.Effect, 134), AddressOf RollDicePlus, " roll # furcadia dice with # sides plus #. (optional Message {...})")
 
             ' (5:135) roll # furcadia dice with # sides minus #. (optional
             ' Message {...})
-            Add(New Trigger(TriggerCategory.Effect, 135), AddressOf RollDiceMinus, "(5:135) roll # furcadia dice with # sides minus #. (optional Message {...})")
+            Add(New Trigger(TriggerCategory.Effect, 135), AddressOf RollDiceMinus, " roll # furcadia dice with # sides minus #. (optional Message {...})")
 
         End Sub
 

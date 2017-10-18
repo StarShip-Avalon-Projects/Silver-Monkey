@@ -22,21 +22,21 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 75,
                  Function()
                      Return True
-                 End Function, "(0:75) When the bot receives a message from another bot on the same computer,")
+                 End Function, " When the bot receives a message from another bot on the same computer,")
             '(0:76) When the bot receives message {...} from another bot on the same computer,
             Add(TriggerCategory.Cause, 76,
-                AddressOf ReceiveMessage, "(0:76) When the bot receives message {...} from another bot on the same computer,")
+                AddressOf ReceiveMessage, " When the bot receives message {...} from another bot on the same computer,")
             '(0:77) When the bot receives a message containing {...} from another bot on the same computer,
             Add(TriggerCategory.Cause, 77,
-               AddressOf ReceiveMessageContaining, "(0:77) When the bot receives a message containing {...} from another bot on the same computer,")
+               AddressOf ReceiveMessageContaining, " When the bot receives a message containing {...} from another bot on the same computer,")
 
             '(5:75) send message {...} to bot named {...}.
             Add(TriggerCategory.Effect, 75,
-                AddressOf SendMessage, "(5:75) send message {...} to bot named {...}.")
+                AddressOf SendMessage, " send message {...} to bot named {...}.")
 
             '(5:76) set Variable %Variable to the Message the bot last received.
             Add(TriggerCategory.Effect, 76,
-                AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot last received.")
+                AddressOf SetVariable, " set Variable %Variable to the Message the bot last received.")
         End Sub
 
         Public Overrides Sub Unload(page As Page)

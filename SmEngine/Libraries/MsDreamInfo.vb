@@ -26,50 +26,50 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 90,
                 Function()
                     Return True
-                End Function, "(0:90) When the bot enters a Dream,")
+                End Function, " When the bot enters a Dream,")
             '(0:91) When the bot enters a Dream named {..},
             Add(TriggerCategory.Cause, 91,
-                AddressOf DreamNameIs, "(0:91) When the bot enters the Dream named {..},")
+                AddressOf DreamNameIs, " When the bot enters the Dream named {..},")
             '(0:92) When the bot leaves a Dream,
             Add(TriggerCategory.Cause, 97,
                 Function()
                     Return True
-                End Function, "(0:97) When the bot leaves a Dream,")
+                End Function, " When the bot leaves a Dream,")
             '(0:93) When the bot leaves the Dream named {..},
             Add(TriggerCategory.Cause, 98,
-                AddressOf DreamNameIs, "(0:98) When the bot leaves the Dream named {..},")
+                AddressOf DreamNameIs, " When the bot leaves the Dream named {..},")
 
             '(1:19) and the bot is the Dream owner,
             Add(New Trigger(TriggerCategory.Condition, 19), AddressOf BotIsDreamOwner,
-                "(1:19) and the bot is the Dream owner,")
+                " and the bot is the Dream owner,")
 
             '(1:20) and the bot is not the Dream-Owner,
             Add(New Trigger(TriggerCategory.Condition, 20), AddressOf BotIsNotDreamOwner,
-                "(1:20) and the bot is not the Dream-Owner,")
+                " and the bot is not the Dream-Owner,")
 
             '(1:21) and the furre named {..} is the Dream owner,
             Add(New Trigger(TriggerCategory.Condition, 21), AddressOf FurreNamedIsDREAMOWNER,
-                "(1:21) and the furre named {..} is the Dream owner,")
+                " and the furre named {..} is the Dream owner,")
 
             '(1:22) and the furre named {..} is not the Dream owner,
             Add(New Trigger(TriggerCategory.Condition, 22), AddressOf FurreNamedIsNotDREAMOWNER,
-                "(1:22) and the furre named {..} is not the Dream owner,")
+                " and the furre named {..} is not the Dream owner,")
             '(1:23) and the Dream Name is {..},
 
             Add(New Trigger(TriggerCategory.Condition, 23), AddressOf DreamNameIs,
-                "(1:23) and the Dream Name is {..},")
+                " and the Dream Name is {..},")
             '(1:24) and the Dream Name is not {..},
 
             Add(New Trigger(TriggerCategory.Condition, 24), AddressOf DreamNameIsNot,
-                "(1:24) and the Dream Name is not {..},")
+                " and the Dream Name is not {..},")
 
             '(1:25) and the triggering furre is the FurcadiaSession.Dream owner
             Add(New Trigger(TriggerCategory.Condition, 25), AddressOf TriggeringFurreIsDreamOwner,
-                "(1:25) and the triggering furre is the Dream owner,")
+                " and the triggering furre is the Dream owner,")
 
             '(1:26) and the triggering furre is not the FurcadiaSession.Dream owner
             Add(New Trigger(TriggerCategory.Condition, 26), AddressOf TriggeringFurreIsNotDreamOwner,
-                "(1:26) and the triggering furre is not the Dream owner,")
+                " and the triggering furre is not the Dream owner,")
 
             '(1:27) and the bot has share control of the Dream or is the Dream owner,
             Add(TriggerCategory.Condition, 27,
@@ -79,33 +79,33 @@ Namespace Engine.Libraries
                         Return True
                     End If
                     Return False
-                End Function, "(1:27) and the bot has share control of the Dream or is the Dream owner,")
+                End Function, " and the bot has share control of the Dream or is the Dream owner,")
 
             '(1:28) and the bot has share control of the Dream,
             Add(New Trigger(TriggerCategory.Condition, 28),
                  Function()
                      Return FurcadiaSession.HasShare
-                 End Function, "(1:28) and the bot has share control of the Dream,")
+                 End Function, " and the bot has share control of the Dream,")
 
             '(1:29) and the bot doesn't have share control in the Dream,
             Add(New Trigger(TriggerCategory.Condition, 29),
                  Function()
                      Return Not FurcadiaSession.HasShare
-                 End Function, "(1:29) and the bot doesn't have share control in the Dream,")
+                 End Function, " and the bot doesn't have share control in the Dream,")
 
             '(5:20) give share control to the triggering furre.
             Add(New Trigger(TriggerCategory.Effect, 20), AddressOf ShareTrigFurre,
-                "(5:20) give share control to the triggering furre.")
+                " give share control to the triggering furre.")
             '(5:21) remove share control from the triggering furre.
             Add(New Trigger(TriggerCategory.Effect, 21), AddressOf UnshareTrigFurre,
-                "(5:21) remove share control from the triggering furre.")
+                " remove share control from the triggering furre.")
             '(5:22) remove share from the furre named {..} if they're in the Dream right now.
             Add(New Trigger(TriggerCategory.Effect, 22), AddressOf ShareFurreNamed,
-                "(5:22) remove share from the furre named {..} if they're in the Dream right now.")
+                " remove share from the furre named {..} if they're in the Dream right now.")
 
             '(5:23) give share to the furre named {..} if they're in the Dream right now.
             Add(New Trigger(TriggerCategory.Effect, 23), AddressOf UnshareFurreNamed,
-                "(5:23) give share to the furre named {..} if they're in the Dream right now.")
+                " give share to the furre named {..} if they're in the Dream right now.")
 
         End Sub
 

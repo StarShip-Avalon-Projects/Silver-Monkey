@@ -43,33 +43,33 @@ Namespace Engine.Libraries
                     End SyncLock
                     Return str.ToUpper = Time.ToUpper
                 End Function,
-            "(0:299) When the time is {...} hh:mm:ss am/pm FST,")
+            " When the time is {...} hh:mm:ss am/pm FST,")
 
             '(5:30) set variable %Variable to the current local time.
             Add(TriggerCategory.Effect, 30,
-                AddressOf CurrentTime, "(5:30) set variable %Variable to the current local time.")
+                AddressOf CurrentTime, " set variable %Variable to the current local time.")
 
             '(5:31) set variable %Variable to the current Furcadia Standard time
             Add(TriggerCategory.Effect, 31,
-                AddressOf MsFurcTime, "(5:31) set variable %Variable to the current Furcadia Standard time.")
+                AddressOf MsFurcTime, " set variable %Variable to the current Furcadia Standard time.")
             '(5:32) set variable %Variable to current DateTime
             Add(TriggerCategory.Effect, 32,
-                AddressOf LocalDateTimeVar, "(5:32) set variable %Variable to current local DateTime.")
+                AddressOf LocalDateTimeVar, " set variable %Variable to current local DateTime.")
             '(5:33) set variable %Variable to current Furcadia DateTime
             Add(TriggerCategory.Effect, 33,
-                AddressOf FurcDateTimeVar, "(5:33) set variable %Variable to current Furcadia DateTime.")
+                AddressOf FurcDateTimeVar, " set variable %Variable to current Furcadia DateTime.")
             '(5:34) use variable %Variable as a DateTime string and subtract Date Time string {...} and put it into variable %Variable
             Add(TriggerCategory.Effect, 34,
-                AddressOf SubsractDateTimeStr, "(5:34) use variable %Variable as a DateTime string and subtract Date Time string {...} and put it into variable %Variable.")
+                AddressOf SubsractDateTimeStr, " use variable %Variable as a DateTime string and subtract Date Time string {...} and put it into variable %Variable.")
             '(5:35) use variable %Variable as a DateTime string and subtract Date Time variable %Variable and put it into variable %Variable
             Add(TriggerCategory.Effect, 35,
-                AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime string and subtract Date Time variable %Variable and put it into variable %Variable.")
+                AddressOf SubsractDateTimeVar, " use variable %Variable as a DateTime string and subtract Date Time variable %Variable and put it into variable %Variable.")
             '(5:36) use variable %Variable as a DateTime string and add Date Time string {...} and put it into variable %Variable
             '        Add(TriggerCategory.Effect, 36,
-            'AddressOf AddDateTimeStr, "(5:36) use variable %Variable as a DateTime string and add Date Time string {...} and put it into variable %Variable")
+            'AddressOf AddDateTimeStr, " use variable %Variable as a DateTime string and add Date Time string {...} and put it into variable %Variable")
             '        '(5:37) use variable %Variable as a DateTime string and add Date Time variable %Variable and put it into variable %Variable
             '        Add(TriggerCategory.Effect, 37,
-            'AddressOf AddDateTimeVar, "(5:37) use variable %Variable as a DateTime string and add Date Time variable %Variable and put it into variable %Variable")
+            'AddressOf AddDateTimeVar, " use variable %Variable as a DateTime string and add Date Time variable %Variable and put it into variable %Variable")
             '
         End Sub
 

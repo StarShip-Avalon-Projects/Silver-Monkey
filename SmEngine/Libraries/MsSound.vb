@@ -40,7 +40,7 @@ Namespace Engine.Libraries
 
                     End Using
                     Return True
-                End Function, "(5:2010) play the wave file {...}.")
+                End Function, " play the wave file {...}.")
 
             Add(New Trigger(TriggerCategory.Effect, 2011),
                 Function(reader As TriggerReader) As Boolean
@@ -51,9 +51,9 @@ Namespace Engine.Libraries
                     End If
                     Return simpleSound Is Nothing
 
-                End Function, "(5:2011) play the wave file {...} in a loop. if theres not one playing")
+                End Function, " play the wave file {...} in a loop. if theres not one playing")
             Add(New Trigger(TriggerCategory.Effect, 2012),
-                 AddressOf StopSound, "(5:2012) stop playing the sound file.")
+                 AddressOf StopSound, " stop playing the sound file.")
         End Sub
 
         ''' <summary>

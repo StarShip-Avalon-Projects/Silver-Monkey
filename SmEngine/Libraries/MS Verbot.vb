@@ -44,7 +44,7 @@ Namespace Engine.Libraries
 
             '(0:1500) When the chat engine executes command {...},
             Add(TriggerCategory.Cause, 1500,
-                 AddressOf ChatExecute, "(0:1500) When the chat engine executes command {...},")
+                 AddressOf ChatExecute, " When the chat engine executes command {...},")
 
             '(1:1500) and the Chat Engine State variable {...} is equal to {..},
             '(1:1501) and the Chat Engine State variable {...} is not equal to {..},
@@ -57,23 +57,23 @@ Namespace Engine.Libraries
 
             '(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.
             Add(TriggerCategory.Effect, 1500,
-                AddressOf UseKkbFile, "(5:1500) use knowledge base file {...} (*.vkb) and start the chat engine.")
+                AddressOf UseKkbFile, " use knowledge base file {...} (*.vkb) and start the chat engine.")
 
             '(5:1501) send text {...} to chat engine and put the response in variable %Variable.
             Add(TriggerCategory.Effect, 1501,
-                AddressOf GetReply, "(5:1501) send text {...} to chat engine and put the response in variable %Variable.")
+                AddressOf GetReply, " send text {...} to chat engine and put the response in variable %Variable.")
 
             '(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable
             Add(TriggerCategory.Effect, 1502,
-                 AddressOf GetReplyName, "(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable.")
+                 AddressOf GetReplyName, " send text {...} and Name {...} to chat engine and put the response in variable %Variable.")
 
             '(5:1503) Set Chat Engine State Vairable {...} to {...}.
             Add(TriggerCategory.Effect, 1503,
-                AddressOf SetStateVariable, "(5:1503) Set Chat Engine State Vairable {...} to {...}.")
+                AddressOf SetStateVariable, " Set Chat Engine State Vairable {...} to {...}.")
 
             '(5:1504) Get chat engine _state variable {...} and put it into variable %Variable.
             Add(TriggerCategory.Effect, 1504,
-                 AddressOf GetStateVariable, "(5:1504) Get chat engine state variable {...} and put it into variable %Variable.")
+                 AddressOf GetStateVariable, " Get chat engine state variable {...} and put it into variable %Variable.")
 
         End Sub
 
