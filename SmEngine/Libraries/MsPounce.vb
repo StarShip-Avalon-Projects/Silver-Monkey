@@ -20,19 +20,23 @@ Namespace Engine.Libraries
     ''' </remarks>
     Public NotInheritable Class MsPounce
         Inherits MonkeySpeakLibrary
+        Implements IDisposable
 
         ''' <summary>
         ''' Default File we use
         ''' </summary>
         Public Const ListFile As String = "onlineList.txt"
+
         ''' <summary>
         ''' Pounce list
         ''' </summary>
         Private WithEvents OnlineFurreList As IO.NameList
+
         ''' <summary>
         ''' Pounce List File Name
         ''' </summary>
         Private _onlineListFile As String
+
         ''' <summary>
         ''' Pounce Furre List
         ''' </summary>
@@ -413,6 +417,40 @@ Namespace Engine.Libraries
         Public Overrides Sub Unload(page As Page)
             If SmPounce IsNot Nothing Then SmPounce.Dispose()
         End Sub
+
+#Region "IDisposable Support"
+
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+
+#End Region
 
     End Class
 

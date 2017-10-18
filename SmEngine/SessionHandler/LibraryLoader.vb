@@ -5,7 +5,7 @@ Namespace Engine
 
     ''' <summary>
     ''' Functions for linking components between windows forms
-    ''' 
+    '''
     ''' </summary>
     Public NotInheritable Class LibraryUtils
 

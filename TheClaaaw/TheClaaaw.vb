@@ -3,7 +3,6 @@ Imports Furcadia.Net.Dream
 Imports Furcadia.Text.Base95
 Imports Monkeyspeak
 Imports SilverMonkeyEngine
-Imports SilverMonkeyEngine.Engine.Libraries.MonkeySpeakLibrary
 
 ''' <summary>
 ''' </summary>

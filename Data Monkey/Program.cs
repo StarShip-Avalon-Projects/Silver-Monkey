@@ -1,8 +1,6 @@
-﻿using MonkeyCore;
-using MonkeyCore.Utils.Logging;
+﻿using MonkeyCore.Utils.Logging;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Windows.Forms;
 
 namespace DataMonkey

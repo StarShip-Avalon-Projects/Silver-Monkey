@@ -75,7 +75,7 @@ Namespace Engine.Libraries
 
             Dim test = StripHTML(msg.Value.ToString)
 
-            Return msMsg.Equals(test) And safety
+            Return msMsg.ToLower.Equals(test.ToLower) And safety
 
         End Function
 
@@ -366,8 +366,6 @@ Namespace Engine.Libraries
 
 #End Region
 
-
-
 #Region "Common Library Methods"
 
         ''' <summary>
@@ -417,13 +415,9 @@ Namespace Engine.Libraries
             Return found
         End Function
 
-
-
         Public Overrides Sub Unload(page As Page)
 
         End Sub
-
-
 
 #End Region
 

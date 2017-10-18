@@ -38,8 +38,6 @@ Namespace Engine.Libraries
         ''' </summary>
         Public Shared SQLreader As SQLiteDataReader = Nothing
 
-
-
 #End Region
 
 #Region "Private Fields"
@@ -676,7 +674,6 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TriggeringFurreinfoEqualToNumber(reader As TriggerReader) As Boolean
 
-
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
             Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
@@ -718,7 +715,6 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TriggeringFurreinfoGreaterThanNumber(reader As TriggerReader) As Boolean
 
-
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
             Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
@@ -726,7 +722,7 @@ Namespace Engine.Libraries
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
             Double.TryParse(check.ToString, Value)
-            Return Value > number
+            Return Value > Number
 
         End Function
 
@@ -748,7 +744,7 @@ Namespace Engine.Libraries
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
-            Return Num >= number
+            Return Num >= Number
 
         End Function
 
@@ -771,7 +767,7 @@ Namespace Engine.Libraries
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
 
-            Return Num < number
+            Return Num < Number
 
         End Function
 
@@ -793,7 +789,7 @@ Namespace Engine.Libraries
             Dim Num As Double = 0
             Dim check As Object = GetValueFromTable(info, Furre)
             Double.TryParse(check.ToString, Num)
-            Return Num <= number
+            Return Num <= Number
 
         End Function
 
@@ -816,7 +812,7 @@ Namespace Engine.Libraries
             Dim val As String = GetValueFromTable(info, Furre).ToString
             Dim Value As Double = 0
             Double.TryParse(val, Value)
-            Return Value <> number
+            Return Value <> Number
 
         End Function
 
@@ -908,7 +904,6 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function ColumnSum(reader As TriggerReader) As Boolean
 
-
             Dim Column = reader.ReadString
             Dim Table = reader.ReadString
             Dim Total = reader.ReadVariable(True)
@@ -977,21 +972,20 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function ExecuteQuery(reader As TriggerReader) As Boolean
 
-
             Dim Str = reader.ReadString
-            Str = str.Trim
+            Str = Str.Trim
             SyncLock (lock)
                 cache.Clear()
                 QueryRun = False
-                If str.ToUpper.StartsWith("SELECT") Then
+                If Str.ToUpper.StartsWith("SELECT") Then
                     Dim db = New SQLiteDatabase(SQLitefile)
 
-                    cache = db.GetValueFromTable(str)
+                    cache = db.GetValueFromTable(Str)
                     QueryRun = True
 
                     Return cache.Count > 0
                 End If
-                SQLiteDatabase.ExecuteNonQuery(str)
+                SQLiteDatabase.ExecuteNonQuery(Str)
                 Return True
             End SyncLock
 
@@ -1008,7 +1002,6 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Shared Function GetTotalRecords(reader As TriggerReader) As Boolean
-
 
             Dim db = New SQLiteDatabase(SQLitefile)
             Dim Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''")
@@ -1356,12 +1349,9 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-
-
         Public Overrides Sub Unload(page As Page)
 
         End Sub
-
 
         '(5:561) remember Database Info {...} for Settings Table {...} to {...}.
         '(5:562) forget Database info {...} from Settings Table{...}.

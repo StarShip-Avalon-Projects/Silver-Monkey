@@ -54,8 +54,6 @@ Namespace Engine.Libraries
             Return MyBase.MsgIs(reader)
         End Function
 
-
-
     End Class
 
 End Namespace

@@ -395,7 +395,7 @@ Namespace Engine.Libraries
         Public Function DescContains(reader As TriggerReader) As Boolean
 
             Dim Pattern As String = reader.ReadString
-            If String.IsNullOrEmpty(Player.FurreDescription) Then Throw New MonkeySpeakException("Description not found. Try looking at the furre first")
+            If String.IsNullOrEmpty(Player.FurreDescription) Then Throw New MonkeyspeakException("Description not found. Try looking at the furre first")
             Return Player.FurreDescription.Contains(Pattern)
 
         End Function
@@ -500,7 +500,7 @@ Namespace Engine.Libraries
             Dim name = reader.ReadString()
             Dim Target = Dream.FurreList.GerFurreByName(name)
             Dim Pattern = reader.ReadString
-            If String.IsNullOrEmpty(Target.FurreDescription) Then Throw New MonkeySpeakException("Description not found. Try looking at the furre first")
+            If String.IsNullOrEmpty(Target.FurreDescription) Then Throw New MonkeyspeakException("Description not found. Try looking at the furre first")
             Return Target.FurreDescription.Contains(Pattern)
 
         End Function
@@ -527,7 +527,7 @@ Namespace Engine.Libraries
             Dim Var = reader.ReadVariable(True)
             Dim name = reader.ReadString
             Dim Target = Dream.FurreList.GerFurreByName(name)
-            If String.IsNullOrEmpty(Target.FurreDescription) Then Throw New MonkeySpeakException("Description not found, Try looking at the furre first.")
+            If String.IsNullOrEmpty(Target.FurreDescription) Then Throw New MonkeyspeakException("Description not found, Try looking at the furre first.")
             Var.Value = Target.FurreDescription
             Return True
 
@@ -691,7 +691,7 @@ Namespace Engine.Libraries
             Dim Target = Dream.FurreList.GerFurreByName(name)
             Select Case Target.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
                 Case 0 Or 1
                     Return Target.FurreColors.Gender = 0
 
@@ -721,7 +721,7 @@ Namespace Engine.Libraries
             Dim Target = Dream.FurreList.GerFurreByName(name)
             Select Case Target.FurreColors.Gender
                 Case -1
-                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
                 Case 0 Or 1
                     Var.Value = Target.FurreColors.Gender
 
@@ -771,12 +771,12 @@ Namespace Engine.Libraries
             Dim Target = Dream.FurreList.GerFurreByName(name)
             Select Case Target.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
                 Case 0
                     Return Target.FurreColors.Gender = 1
                 Case 1
                     If Target.FurreColors.Gender = -1 Then
-                        If Target.FurreColors.Gender = -1 Then Throw New MonkeySpeakException("Gender not found, Try looking at the furre first")
+                        If Target.FurreColors.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
                         Return Target.FurreColors.Gender = 1
                     Else
                         Return Target.FurreColors.Gender = 1
@@ -872,7 +872,7 @@ Namespace Engine.Libraries
             Dim Spec = reader.ReadNumber()
             Select Case Target.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
                 Case 0 Or 1
                     Return Target.FurreColors.Wings <> Spec
 
@@ -1059,7 +1059,7 @@ Namespace Engine.Libraries
             Dim Target = Dream.FurreList.GerFurreByName(name)
             Select Case Target.FurreColors.Gender
                 Case -1
-                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
                 Case 0 To 2
 
                     Return Target.FurreColors.Gender = 2
@@ -1089,7 +1089,7 @@ Namespace Engine.Libraries
             Dim Spec = reader.ReadNumber()
             Select Case Target.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
 
                 Case 1 Or 0
 
@@ -1120,7 +1120,7 @@ Namespace Engine.Libraries
             Dim TargetFurre = Dream.FurreList.GerFurreByName(name)
             Select Case TargetFurre.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
 
                 Case 1 Or 0
 
@@ -1244,7 +1244,7 @@ Namespace Engine.Libraries
         Public Function NotDescContains(reader As TriggerReader) As Boolean
 
             Dim Pattern = reader.ReadString
-            If String.IsNullOrEmpty(Player.FurreDescription) Then Throw New MonkeySpeakException("Description not found. Try looking at the furre first")
+            If String.IsNullOrEmpty(Player.FurreDescription) Then Throw New MonkeyspeakException("Description not found. Try looking at the furre first")
             Return Not Player.FurreDescription.Contains(Pattern)
 
         End Function
@@ -1266,7 +1266,7 @@ Namespace Engine.Libraries
             Dim name = reader.ReadString()
             Dim Target = Dream.FurreList.GerFurreByName(name)
             Dim Pattern = reader.ReadString
-            If String.IsNullOrEmpty(Target.FurreDescription) Then Throw New MonkeySpeakException("Description not found. Try looking at the furre first")
+            If String.IsNullOrEmpty(Target.FurreDescription) Then Throw New MonkeyspeakException("Description not found. Try looking at the furre first")
             Return Not Target.FurreDescription.Contains(Pattern)
 
         End Function
@@ -1351,7 +1351,7 @@ Namespace Engine.Libraries
         Public Function TriggeringFurreDescVar(reader As TriggerReader) As Boolean
 
             Dim Var = reader.ReadVariable(True)
-            If Player.FurreDescription = Nothing Then Throw New MonkeySpeakException("Description not found, Try looking at the furre first.")
+            If Player.FurreDescription = Nothing Then Throw New MonkeyspeakException("Description not found, Try looking at the furre first.")
             Var.Value = Player.FurreDescription
             Return True
 
@@ -1449,12 +1449,12 @@ Namespace Engine.Libraries
 
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
                 Case 0
                     Return Player.FurreColors.Gender = 0
                 Case 1
                     If Player.FurreColors.Gender = -1 Then
-                        If Player.FurreColors.Gender = -1 Then Throw New MonkeySpeakException("Gender not found, Try looking at the furre first")
+                        If Player.FurreColors.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
                         Return Player.FurreColors.Gender = 0
                     Else
                         Return Player.FurreColors.Gender = 0
@@ -1482,13 +1482,13 @@ Namespace Engine.Libraries
             Dim Var = reader.ReadVariable(True)
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
                 Case 0
-                    If Player.FurreColors.Gender = -1 Then Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
+                    If Player.FurreColors.Gender = -1 Then Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
                     Var.Value = Player.FurreColors.Gender
                 Case 1
                     If Player.FurreColors.Gender = -1 Then
-                        If Player.FurreColors.Gender = -1 Then Throw New MonkeySpeakException("Gender not found, Try looking at the furre first")
+                        If Player.FurreColors.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
                         Var.Value = Player.FurreColors.Gender
                     Else
                         Var.Value = Player.FurreColors.Gender
@@ -1534,12 +1534,12 @@ Namespace Engine.Libraries
 
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
                 Case 0
                     Return Player.FurreColors.Gender = 1
                 Case 1
                     If Player.FurreColors.Gender = -1 Then
-                        If Player.FurreColors.Gender = -1 Then Throw New MonkeySpeakException("Gender not found, Try looking at the furre first")
+                        If Player.FurreColors.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
                         Return Player.FurreColors.Gender = 1
                     Else
                         Return Player.FurreColors.Gender = 1
@@ -1566,12 +1566,12 @@ Namespace Engine.Libraries
             Dim Spec = reader.ReadNumber()
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
                 Case 0
                     Return Player.FurreColors.Wings <> Spec
                 Case 1
                     If Player.FurreColors.Wings = -1 Then
-                        If Player.FurreColors.Wings = -1 Then Throw New MonkeySpeakException("Wings type not found, Try looking at the furre first")
+                        If Player.FurreColors.Wings = -1 Then Throw New MonkeyspeakException("Wings type not found, Try looking at the furre first")
                         Return Player.FurreColors.Wings <> Spec
                     Else
                         Return Player.FurreColors.Wings <> Spec
@@ -1620,7 +1620,7 @@ Namespace Engine.Libraries
             Dim Spec = reader.ReadNumber()
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Species type not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Species type not found. Try looking at the furre first")
                 Case 0
                     Return Player.FurreColors.Species = Spec
                 Case 1
@@ -1650,7 +1650,7 @@ Namespace Engine.Libraries
             Dim Var = reader.ReadVariable(True)
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Species not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Species not found. Try looking at the furre first")
                 Case 0 Or 1
                     Var.Value = Player.FurreColors.Species
 
@@ -1694,12 +1694,12 @@ Namespace Engine.Libraries
 
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Gender not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
                 Case 0
                     Return Player.FurreColors.Gender = 2
                 Case 1
                     If Player.FurreColors.Gender = -1 Then
-                        If Player.FurreColors.Gender = -1 Then Throw New MonkeySpeakException("Gender not found, Try looking at the furre first")
+                        If Player.FurreColors.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
                         Return Player.FurreColors.Gender = 2
                     Else
                         Return Player.FurreColors.Gender = 2
@@ -1727,12 +1727,12 @@ Namespace Engine.Libraries
             Dim Spec As Double = reader.ReadNumber()
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
                 Case 0
                     Return Player.FurreColors.Wings = Spec
                 Case 1
                     If Player.FurreColors.Wings = -1 Then
-                        If Player.FurreColors.Wings = -1 Then Throw New MonkeySpeakException("Wings type not found, Try looking at the furre first")
+                        If Player.FurreColors.Wings = -1 Then Throw New MonkeyspeakException("Wings type not found, Try looking at the furre first")
                         Return Player.FurreColors.Wings = Spec
                     Else
                         Return Player.FurreColors.Wings = Spec
@@ -1760,12 +1760,12 @@ Namespace Engine.Libraries
             Dim Var = reader.ReadVariable(True)
             Select Case Player.LastStat
                 Case -1
-                    Throw New MonkeySpeakException("Wings type not found. Try looking at the furre first")
+                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
                 Case 0
                     Var.Value = Player.FurreColors.Wings
                 Case 1
                     If Player.FurreColors.Wings = -1 Then
-                        If Player.FurreColors.Wings = -1 Then Throw New MonkeySpeakException("Wings type not found, Try looking at the furre first")
+                        If Player.FurreColors.Wings = -1 Then Throw New MonkeyspeakException("Wings type not found, Try looking at the furre first")
                         Var.Value = Player.FurreColors.Wings
                     Else
                         Var.Value = Player.FurreColors.Wings

@@ -278,7 +278,7 @@ Namespace Engine.Libraries
             FileName = Path.Combine(Paths.SilverMonkeyBotPath, FileName)
 
             Dim xToolbox = New XMLToolbox(GetType(KnowledgeBase))
-            kb = CType(xToolbox.LoadXML(FileName), KnowledgeBase)
+            kb = DirectCast(xToolbox.LoadXML(FileName), KnowledgeBase)
             kbi.Filename = Path.GetFileName(FileName)
             kbi.Fullpath = Path.GetDirectoryName(FileName) + "\"
             verbot.AddKnowledgeBase(kb, kbi)
@@ -289,13 +289,9 @@ Namespace Engine.Libraries
 
         End Function
 
-
-
         Public Overrides Sub Unload(page As Page)
 
         End Sub
-
-
 
 #End Region
 

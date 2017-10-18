@@ -5,12 +5,12 @@ Imports FastColoredTextBoxNS
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Controls.NativeMethods
-Imports MonkeyCore.MyData
 Imports MonkeyCore.IniFile
+Imports MonkeyCore.MyData
+Imports MonkeyCore.Utils
 Imports MonkeyCore.Utils.Logging
 Imports MonkeySpeakEditor.Controls
 Imports MonkeySpeakEditor.Controls.LineFinder
-Imports MonkeyCore.Utils
 
 ''' <summary>
 ''' Silver Monkey Main Form
@@ -2269,8 +2269,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         End If
 
     End Sub
-
-
 
 #End Region
 

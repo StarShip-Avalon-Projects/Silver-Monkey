@@ -2,7 +2,6 @@
 Imports Furcadia.Net.Dream
 Imports Furcadia.Text.Base95
 Imports SilverMonkeyEngine
-Imports SilverMonkeyEngine.Engine
 
 Public Class BaseClass
     Implements Interfaces.ImsPlugin

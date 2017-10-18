@@ -165,6 +165,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     End Property
 
 #Region "Log Options"
+
     ''' <summary>
     ''' Bot File (*.bini) path
     ''' </summary>

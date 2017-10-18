@@ -1,6 +1,7 @@
 ﻿Imports Monkeyspeak
 
 Namespace Interfaces
+
     ''' <summary>
     ''' Silver Monkey's Custom MonkeySpeak Variable
     ''' </summary>
@@ -8,6 +9,7 @@ Namespace Interfaces
         Implements IVariable
 
 #Region "Public Constructors"
+
         ''' <summary>
         ''' Construct the Variable with Name and Value
         ''' </summary>
@@ -18,6 +20,7 @@ Namespace Interfaces
             Me.Name = Name
             Me.Value = value
         End Sub
+
         ''' <summary>
         ''' Construct the Variable with Name only
         ''' </summary>
@@ -25,22 +28,21 @@ Namespace Interfaces
         Public Sub New(Name As String)
             Me.Name = Name
         End Sub
+
 #End Region
 
 #Region "Public Properties"
 
         Public Property Name As String Implements IVariable.Name
         Public Property Value As Object Implements IVariable.Value
+
         Public ReadOnly Property IsConstant As Boolean Implements IVariable.IsConstant
             Get
                 Return False
             End Get
         End Property
 
-
 #End Region
-
-
 
         Public Overloads Shared Operator <>(varA As MsVariable, varB As IVariable) As Boolean
             Return varA.Value IsNot varB.Value

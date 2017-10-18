@@ -8,6 +8,7 @@
 #End Region
 
 #Region "Public Constructors"
+
     ''' <summary>
     ''' Constructor
     ''' </summary>
@@ -23,8 +24,9 @@
 #End Region
 
 #Region "Public Methods"
+
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="filePath"></param>
     ''' <returns></returns>
@@ -39,8 +41,9 @@
         End Try
         Return False
     End Function
+
     ''' <summary>
-    ''' 
+    '''
     ''' </summary>
     ''' <param name="Message"></param>
     Public Sub LogMessage(Message As String)

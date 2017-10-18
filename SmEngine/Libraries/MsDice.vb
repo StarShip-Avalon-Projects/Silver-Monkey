@@ -1,5 +1,4 @@
 ﻿Imports Furcadia.Net.Utils.ServerObjects
-Imports Furcadia.Net.Utils.ServerParser
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.Dice
 
@@ -107,12 +106,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function DiceMinusNumber(reader As TriggerReader) As Boolean
 
-
             Dim Var = reader.ReadVariable(True)
             Dim Number = ReadVariableOrNumber(reader)
             Dim sides = ReadVariableOrNumber(reader)
             Dim NumberPlus = ReadVariableOrNumber(reader)
-
 
             Dim dice = New DiceRollCollection
             For I As Double = 0 To Number - 1
@@ -299,15 +296,11 @@ Namespace Engine.Libraries
             Return True
         End Function
 
-
-
         Public Overrides Sub Unload(page As Page)
 
         End Sub
 
-
 #End Region
-
 
     End Class
 

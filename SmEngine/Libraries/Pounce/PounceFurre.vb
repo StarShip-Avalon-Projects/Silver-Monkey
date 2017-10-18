@@ -55,6 +55,7 @@ Namespace Engine.Libraries.Pounce
 #End Region
 
 #Region "Public Properties"
+
         ''' <summary>
         ''' Furre Name
         ''' </summary>
@@ -67,6 +68,7 @@ Namespace Engine.Libraries.Pounce
                 _FurrName = value
             End Set
         End Property
+
         ''' <summary>
         ''' Furre Online Status
         ''' </summary>
@@ -85,6 +87,7 @@ Namespace Engine.Libraries.Pounce
                 End If
             End Set
         End Property
+
         ''' <summary>
         ''' Furre Name in short fomat
         ''' </summary>

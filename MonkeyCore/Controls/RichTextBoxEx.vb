@@ -281,8 +281,6 @@ Namespace Controls
 
 #End Region
 
-
-
 #Region "Private Methods"
 
         Private Function GetSelectionStyle(ByVal mask As Integer, ByVal effect As Integer) As Integer

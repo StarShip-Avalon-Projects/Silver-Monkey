@@ -1,6 +1,4 @@
-﻿Imports Furcadia.Net.Dream
-
-Imports Monkeyspeak
+﻿Imports Monkeyspeak
 
 Namespace Engine.Libraries
 
@@ -64,8 +62,6 @@ Namespace Engine.Libraries
                  AddressOf EatCookie,
                 " set variable %Variable to the cookie message the bot received.")
         End Sub
-
-
 
         Public Overrides Sub Unload(page As Page)
 
@@ -142,8 +138,6 @@ Namespace Engine.Libraries
         End Function
 
 #End Region
-
-
 
     End Class
 

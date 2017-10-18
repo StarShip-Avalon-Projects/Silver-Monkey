@@ -79,49 +79,49 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 500,
                 Function()
                     Return True
-                End Function, "(0:500) When the bot starts backing up the character phoenix speak,")
+                End Function, " When the bot starts backing up the character phoenix speak,")
             '(0:501) When the bot completes backing up the characters phoenix speak,
             Add(TriggerCategory.Cause, 501,
                 Function()
                     Return True
-                End Function, "(0:501) When the bot completes backing up the characters phoenix speak,")
+                End Function, " When the bot completes backing up the characters phoenix speak,")
             '(0:502) When the bot starts restoring the Dreams Character phoenix speak,
             Add(TriggerCategory.Cause, 502,
                 Function()
                     Return True
-                End Function, "(0:502) When the bot starts restoring the Dreams Character phoenix speak,")
+                End Function, " When the bot starts restoring the Dreams Character phoenix speak,")
             '(0:503) When the bot finishes restoring the dreams character phoenix speak,
             Add(TriggerCategory.Cause, 503,
                 Function()
                     Return True
-                End Function, "(0:503) When the bot finishes restoring the dreams character phoenix speak,")
+                End Function, " When the bot finishes restoring the dreams character phoenix speak,")
             Add(TriggerCategory.Cause, 504,
                 Function()
                     Return True
-                End Function, "(0:504) When the bot backs up phoenix speak for any Furre.")
+                End Function, " When the bot backs up phoenix speak for any Furre.")
             Add(TriggerCategory.Cause, 505,
-                AddressOf BackUpCharacterNamed, "(0:505) When the bot backs up phoenix speak for the furre named {...}.")
+                AddressOf BackUpCharacterNamed, " When the bot backs up phoenix speak for the furre named {...}.")
             Add(TriggerCategory.Cause, 506,
                 Function()
                     Return True
-                End Function, "(0:506) When the bot restores any furre's phoenix speak.")
+                End Function, " When the bot restores any furre's phoenix speak.")
             Add(TriggerCategory.Cause, 507,
-                AddressOf BackUpCharacterNamed, "(0:507) When the bot restores the  phoenix speak for the furre named {...}.")
+                AddressOf BackUpCharacterNamed, " When the bot restores the  phoenix speak for the furre named {...}.")
 
             '(1:520) and the bot is not in the middle of a PS Backup Process
             Add(New Trigger(TriggerCategory.Condition, 520),
-                  AddressOf BotBackup, "(1:520) and the bot is not in the middle of a PS Backup Process,")
+                  AddressOf BotBackup, " and the bot is not in the middle of a PS Backup Process,")
 
             '(1:521) and the bot is in the middle of a PS Backup Process.
             Add(New Trigger(TriggerCategory.Condition, 521),
-                     AddressOf NotBotBackup, "(1:521) and the bot is in the middle of a PS Backup Process,")
+                     AddressOf NotBotBackup, " and the bot is in the middle of a PS Backup Process,")
 
             '(1:522) and the bot is not in the middle of a PS Restore Process,
             Add(New Trigger(TriggerCategory.Condition, 522),
-                 AddressOf BotRestore, "(1:522) and the bot is not in the middle of a PS Restore Process,")
+                 AddressOf BotRestore, " and the bot is not in the middle of a PS Restore Process,")
             '(1:523) and the bot is in the middle of a PS Restore Process,
             Add(New Trigger(TriggerCategory.Condition, 523),
-                 AddressOf NotBotRestore, "(1:523) and the bot is in the middle of a PS Restore Process,")
+                 AddressOf NotBotRestore, " and the bot is in the middle of a PS Restore Process,")
 
             'TODO: Add missing PS lines
             '(1:) and the backed up phoenix speak database info {...} for the triggering furre exists,
@@ -136,21 +136,21 @@ Namespace Engine.Libraries
 
             '(5:553) Backup All Character phoenixspeak for the dream
             Add(New Trigger(TriggerCategory.Effect, 553), AddressOf BackupAllPS,
-               "(5:553) backup All phoenix speak for the dream")
+               " backup All phoenix speak for the dream")
             '(5:554) backup Character named {...} phoenix speak
             Add(New Trigger(TriggerCategory.Effect, 554), AddressOf BackupSingleCharacterPS,
-                   "(5:554) backup character named {...} phoenix speak. (use ""[DREAM]"" to restore information specific to the dream)")
+                   " backup character named {...} phoenix speak. (use ""[DREAM]"" to restore information specific to the dream)")
             '(5:555) restore phoenix speak for character {...}
             Add(New Trigger(TriggerCategory.Effect, 555), AddressOf RestoreCharacterPS,
-                   "(5:555) restore phoenix speak for character {...}. (use ""[DREAM]"" to restore information specific to the dream)")
+                   " restore phoenix speak for character {...}. (use ""[DREAM]"" to restore information specific to the dream)")
             '(5:557) remove Entries older then # days from phoenix speak Character backup.
             Add(New Trigger(TriggerCategory.Effect, 557), AddressOf PruneCharacterBackup,
-                "(5:557) remove Entries older than # days from phoenix speak backup.")
+                " remove Entries older than # days from phoenix speak backup.")
             Add(New Trigger(TriggerCategory.Effect, 558), AddressOf restorePS_DataOldrThanDays,
-                "(5:558) restore phoenix speak character records newer then # days. (zero equals all character records)")
+                " restore phoenix speak character records newer then # days. (zero equals all character records)")
 
             Add(New Trigger(TriggerCategory.Effect, 560), AddressOf AbortPS,
-                "(5:560) abort phoenix speak backup or restore process")
+                " abort phoenix speak backup or restore process")
 
             '(5:x) Add Settings Info {...} to Database Settings Table {...}.
             '(5:x) update Database Info {...} for Settings Table {...} to {...}.
@@ -229,7 +229,7 @@ Namespace Engine.Libraries
         ''' </summary>
         ''' <returns>
         ''' </returns>
-        Public Property CharacterList As New List(Of PhoenixSpeak.Variable)(20)
+        Public Property CharacterList As New List(Of IVariable)(20)
 
         Public Property CurrentPS_Stage As PsBackupStage
 
@@ -268,7 +268,7 @@ Namespace Engine.Libraries
 
         Public Function BackUpCharacterNamed(reader As TriggerReader) As Boolean
             Dim furre As String = reader.ReadString
-            Return FurcadiaSession.Player.ShortName = FurcadiaShortName(furre)
+            Return Player.ShortName = FurcadiaShortName(furre)
         End Function
 
         ''' <summary>
@@ -361,7 +361,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function RestoreCharacterPS(reader As TriggerReader) As Boolean
 
-            Dim furre As String = reader.ReadString()
+            Dim furre = reader.ReadString()
             Return 0 < Build_PS_CMD(furre)
 
         End Function
@@ -379,7 +379,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function restorePS_DataOldrThanDays(reader As TriggerReader) As Boolean
 
-            Dim days As Double = ReadVariableOrNumber(reader)
+            Dim days = ReadVariableOrNumber(reader)
             If CurrentPS_Stage = PsSystemRunning.PsNone Then
                 CurrentPS_Stage = PsBackupStage.RestoreAllCharacterPS
                 RestorePS(days)
@@ -415,13 +415,13 @@ Namespace Engine.Libraries
                 str = FurcadiaShortName(str)
             End If
 
-            Dim db As SQLiteDatabase = New SQLiteDatabase(MsDatabase.SQLitefile)
-            Dim dt As Data.DataTable = SQLiteDatabase.GetDataTable(TableJoinSet("BACKUP", str))
+            Dim db = New SQLiteDatabase(MsDatabase.SQLitefile)
+            Dim dt = SQLiteDatabase.GetDataTable(TableJoinSet("BACKUP", str))
             Dim PsVariableList As New List(Of String)
             Dim NameID As Integer = 0
 
             'Build the PS Variable List
-            For Each row As System.Data.DataRow In dt.Rows
+            For Each row In dt.Rows
                 'Table BACKUP ([NameID] [Key] [Value]
                 PsVariableList.Add(String.Format("{0}=""{1}""", row.Item("Key").ToString, row.Item("Value").ToString))
                 Integer.TryParse(row.Item("NameID").ToString, NameID)
@@ -483,14 +483,14 @@ Namespace Engine.Libraries
                 SendClientMessage("Restoring all characters for the dream")
             End If
             Dim cmd As String = "select * FROM BACKUPMASTER"
-            Dim db As SQLiteDatabase = New SQLiteDatabase(MsDatabase.SQLitefile)
-            Dim dt As System.Data.DataTable = SQLiteDatabase.GetDataTable(cmd)
+            Dim db = New SQLiteDatabase(MsDatabase.SQLitefile)
+            Dim dt = SQLiteDatabase.GetDataTable(cmd)
             Dim i As Integer = 0
             'Build Commands for each character
             For Each row As System.Data.DataRow In dt.Rows
                 i += 1
                 Dim ft As String = row.Item("date modified").ToString
-                Dim Time As TimeSpan = FurcTime.Subtract(DateTime.Parse(ft))
+                Dim Time = FurcTime.Subtract(DateTime.Parse(ft))
 
                 Dim CharacternName As String = row.Item("Name").ToString()
                 Dim CharId As Integer = 0
@@ -553,7 +553,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
             '    Abort()
             '    Exit Sub
             'End If
-            Dim PSiInfoCache As List(Of PhoenixSpeak.Variable) = CType(o, List(Of PhoenixSpeak.Variable))
+            Dim PSiInfoCache = DirectCast(o, List(Of IVariable))
 
             Select Case CurrentPS_Stage
                 Case PsBackupStage.off
@@ -660,7 +660,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function SendPStoDatabase(PsInfo As List(Of PhoenixSpeak.Variable), TableSet As String, PlayerName As String) As Boolean
+        Private Function SendPStoDatabase(PsInfo As List(Of IVariable), TableSet As String, PlayerName As String) As Boolean
             Dim Returnval As Boolean
             Dim idx As Integer = 0
             PlayerName = PlayerName.Trim
@@ -707,7 +707,13 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
             Return Returnval
         End Function
 
-        '
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="Table"></param>
+        ''' <param name="PlayerName"></param>
+        ''' <param name="dta"></param>
+        ''' <returns></returns>
         Private Function SystemDateFixer(ByVal Table As String, ByVal PlayerName As String, ByRef dta As Dictionary(Of String, String)) As Dictionary(Of String, String)
             If Table <> "BACKUP" Then Return dta
             'retrieve characters Last Used date from PS for Use in our " + TableSet  + " tables
@@ -744,13 +750,13 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
             Dim Table As String = "BACKUP"
             SendClientMessage("Pruning Backup Database")
             Dim cmd2 As String = "SELECT * FROM " + Table + "MASTER"
-            Dim db As SQLiteDatabase = New SQLiteDatabase(MsDatabase.SQLitefile)
-            Dim dt As System.Data.DataTable = SQLiteDatabase.GetDataTable(cmd2)
-            Dim result As String = String.Empty
+            Dim db = New SQLiteDatabase(MsDatabase.SQLitefile)
+            Dim dt = SQLiteDatabase.GetDataTable(cmd2)
+            Dim result = String.Empty
             Dim Counter As Integer = 0
             For Each row As System.Data.DataRow In dt.Rows
-                Dim idx As Integer = Integer.Parse(row.Item("ID").ToString)
-                Dim ts As TimeSpan = FurcTime.Subtract(DateTime.Parse(row.Item("date modified").ToString))
+                Dim idx = Integer.Parse(row.Item("ID").ToString)
+                Dim ts = FurcTime.Subtract(DateTime.Parse(row.Item("date modified").ToString))
                 If ts.Days >= NumDays Or NumDays = 0 Then
                     SQLiteDatabase.ExecuteNonQuery("DELETE FROM '" + Table + "' WHERE [NameID]=" + idx.ToString)
                     SQLiteDatabase.ExecuteNonQuery("DELETE FROM '" + Table + "MASTER' WHERE [ID]=" + idx.ToString)
@@ -758,7 +764,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
                 End If
             Next
             SQLiteDatabase.ExecuteNonQuery("VACUUM")
-            Dim ts2 As TimeSpan = Date.Now.Subtract(start)
+            Dim ts2 = Date.Now.Subtract(start)
             SendClientMessage("Pruning completed. Removed " + Counter.ToString + "Characters. Time Elapsed: " + ts2.Minutes.ToString + " minutes")
             Return Counter
         End Function

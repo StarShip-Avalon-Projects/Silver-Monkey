@@ -580,13 +580,10 @@ Public Class Main
         GC.Collect()
     End Sub
 
-
-
     Public Sub OnFurcadiaSessionError(ex As Exception, o As Object, n As String) Handles FurcadiaSession.[Error]
 
-
         ' SndDisplay("MonkeySpeak error:" + trig.ToString() + " " + ex.Message, TextDisplayManager.fColorEnum.Error)
-        If ex.GetType() Is GetType(MonkeySpeakException) Then
+        If ex.GetType() Is GetType(MonkeyspeakException) Then
             If o.GetType Is GetType(TriggerHandler) Then
                 SendTextToDebugWindow(DirectCast(o, TriggerHandler).Target.ToString)
             End If
@@ -603,8 +600,6 @@ Public Class Main
         Else
             SndDisplay("Furcadia Session error:" + ex.Message + Environment.NewLine + o.ToString, TextDisplayManager.fColorEnum.Error)
         End If
-
-
 
     End Sub
 
@@ -643,8 +638,6 @@ Public Class Main
             e.SuppressKeyPress = True
         End If
     End Sub
-
-
 
     ''' <summary>
     ''' Send text like MonkeySpeak inner exception errors to the Debug Window
@@ -735,7 +728,7 @@ Public Class Main
         If FurcadiaSession Is Nothing Then
             FurcadiaSession = New BotSession(BotConfig)
         ElseIf FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
-            Throw New MonkeySpeakException("Furcadia was not previously reset")
+            Throw New MonkeyspeakException("Furcadia was not previously reset")
             Exit Sub
         End If
 

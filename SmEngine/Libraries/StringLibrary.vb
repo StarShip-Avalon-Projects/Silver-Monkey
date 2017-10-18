@@ -192,7 +192,6 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function StripCharacters(reader As TriggerReader) As Boolean
 
-
             Dim Var = reader.ReadVariable()
             Dim ch = CChar(reader.ReadString)
             Dim NewVar = reader.ReadVariable()
@@ -332,13 +331,9 @@ Namespace Engine.Libraries
 
         End Function
 
-
-
         Public Overrides Sub Unload(page As Page)
 
         End Sub
-
-
 
 #End Region
 

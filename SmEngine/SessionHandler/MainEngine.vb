@@ -13,7 +13,6 @@ Namespace Engine
     Public Class MainEngine
         Implements IDisposable
 
-
 #Region "Private Fields"
 
         ''' <summary>
@@ -52,8 +51,6 @@ Namespace Engine
         Private Const RES_MS_begin As String = "*MSPK V"
 
         Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
-
-
 
         ''' <summary>
         ''' Default Constructlor.
@@ -120,7 +117,6 @@ Namespace Engine
         Public Function LoadFromString(MonkeySpeakScript As String) As Page
             Return SmEngine.LoadFromString(MonkeySpeakScript)
         End Function
-
 
 #End Region
 

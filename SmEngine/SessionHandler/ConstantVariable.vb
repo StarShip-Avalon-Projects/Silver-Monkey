@@ -3,7 +3,7 @@
 Public Class ConstantVariable
     Implements IVariable
 
-    Sub New(ByVal var As Variable)
+    Sub New(ByVal var As IVariable)
         Name = var.Name
         _value = var.Value
     End Sub

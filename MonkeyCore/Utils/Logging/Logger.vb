@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 
 Namespace Utils.Logging
+
     ''' <summary>
     ''' trouble shooting Class for tracing what functions do
     ''' </summary>
@@ -64,4 +65,5 @@ Namespace Utils.Logging
 #End Region
 
     End Class
+
 End Namespace

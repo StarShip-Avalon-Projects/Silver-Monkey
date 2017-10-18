@@ -77,6 +77,7 @@ Namespace Engine.Libraries
         End Function
 
 #Region "IDisposable Support"
+
         Private disposedValue As Boolean ' To detect redundant calls
 
         ''' <summary>
@@ -102,7 +103,6 @@ Namespace Engine.Libraries
             disposedValue = True
         End Sub
 
-
         ''' <summary>
         ''' This code added by Visual Basic to correctly implement the disposable pattern.
         ''' </summary>
@@ -110,6 +110,7 @@ Namespace Engine.Libraries
             ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
             Dispose(True)
         End Sub
+
 #End Region
 
 #End Region

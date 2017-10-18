@@ -177,7 +177,7 @@ Namespace Engine.Libraries
                 ResultVariable.Value = time.Subtract(time2).ToString
                 Return True
             End If
-            Throw New MonkeySpeakException("unable to parse DateTime variable and/or DateTimeString")
+            Throw New MonkeyspeakException("unable to parse DateTime variable and/or DateTimeString")
 
         End Function
 
@@ -202,7 +202,7 @@ Namespace Engine.Libraries
             If DateTime.TryParse(DateTimeVariable.Value.ToString, time) And DateTime.TryParse(DateTimeString.Value.ToString, time2) Then
                 ResultVariable.Value = time.Subtract(time2).ToString
             End If
-            Throw New MonkeySpeakException("unable to parse DateTime variable and/or DateTimeString")
+            Throw New MonkeyspeakException("unable to parse DateTime variable and/or DateTimeString")
 
         End Function
 

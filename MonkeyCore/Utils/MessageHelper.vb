@@ -5,7 +5,7 @@ Imports MonkeyCore.MyData
 Namespace Utils
 
     ''' <summary>
-    ''' Managed Windows Messaging 
+    ''' Managed Windows Messaging
     ''' </summary>
     Public Class MessageHelper
 
