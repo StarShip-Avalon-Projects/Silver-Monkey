@@ -31,9 +31,7 @@ Namespace Engine.Libraries
                 AddressOf DreamNameIs, " When the bot enters the Dream named {..},")
             '(0:92) When the bot leaves a Dream,
             Add(TriggerCategory.Cause, 97,
-                Function()
-                    Return True
-                End Function, " When the bot leaves a Dream,")
+                Function() True, " When the bot leaves a Dream,")
             '(0:93) When the bot leaves the Dream named {..},
             Add(TriggerCategory.Cause, 98,
                 AddressOf DreamNameIs, " When the bot leaves the Dream named {..},")
@@ -47,11 +45,15 @@ Namespace Engine.Libraries
                 " and the bot is not the Dream-Owner,")
 
             '(1:21) and the furre named {..} is the Dream owner,
-            Add(New Trigger(TriggerCategory.Condition, 21), AddressOf FurreNamedIsDREAMOWNER,
+            Add(New Trigger(TriggerCategory.Condition, 21),
+                Function(reader) FurcadiaShortName(FurcadiaSession.Dream.Owner) =
+                FurcadiaShortName(reader.ReadString),
                 " and the furre named {..} is the Dream owner,")
 
             '(1:22) and the furre named {..} is not the Dream owner,
-            Add(New Trigger(TriggerCategory.Condition, 22), AddressOf FurreNamedIsNotDREAMOWNER,
+            Add(New Trigger(TriggerCategory.Condition, 22),
+               Function(reader) FurcadiaShortName(FurcadiaSession.Dream.Owner) <>
+               FurcadiaShortName(reader.ReadString),
                 " and the furre named {..} is not the Dream owner,")
             '(1:23) and the Dream Name is {..},
 
@@ -160,21 +162,6 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:21) and the furre named {..} is the Dream owner,
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Public Function FurreNamedIsDREAMOWNER(reader As TriggerReader) As Boolean
-            Dim Name = FurcadiaShortName(reader.ReadString)
-            Return FurcadiaShortName(FurcadiaSession.Dream.Owner) = Name
-
-        End Function
-
-        ''' <summary>
         ''' (5:22) remove share from the furre named {..} if they're in the
         ''' Dream right now.
         ''' </summary>
@@ -269,19 +256,6 @@ Namespace Engine.Libraries
             Dim furre = Player.ShortName
             Return SendServer("share " + furre)
 
-        End Function
-
-        ''' <summary>
-        ''' (1:22) and the furre named {..} is not the Dream owner,
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Function FurreNamedIsNotDREAMOWNER(reader As TriggerReader) As Boolean
-            Return Not FurreNamedIsDREAMOWNER(reader)
         End Function
 
         ''' <summary>
