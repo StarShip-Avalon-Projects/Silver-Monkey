@@ -16,7 +16,7 @@ Namespace Interfaces
 
         Public ReadOnly Property BotName As String Implements Interfaces.ImsHost.BotName
             Get
-                Return FurcadiaSession.ConnectedCharacterName
+                Return FurcadiaSession.ConnectedFurre.Name
             End Get
         End Property
 

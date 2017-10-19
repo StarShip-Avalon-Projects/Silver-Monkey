@@ -110,8 +110,8 @@ Namespace Engine.Libraries
             If WindowHandle <> IntPtr.Zero Then
                 iResult = msg.SendWindowsStringMessage(WindowHandle,
                            IntPtr.Zero,
-                           FurcadiaSession.ConnectedCharacterName,
-                           FurcadiaSession.ConnectedCharacterFurcadiaID, strTag, msMsg)
+                           FurcadiaSession.ConnectedFurre.ShortName,
+                           FurcadiaSession.ConnectedFurre.FurreID, strTag, msMsg)
                 SendClientMessage("SYSTEM Send Windows Message to " + Fur + ": " + msMsg)
             End If
             'Debug.Print("Msg = " & msg)

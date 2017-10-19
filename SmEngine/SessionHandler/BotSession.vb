@@ -82,6 +82,7 @@ Public Class BotSession : Inherits ProxySession
     ''' </param>
     Sub New(ByRef BotSessionOptions As BotOptions)
         MyBase.New(BotSessionOptions)
+
         MainEngineOptions = BotSessionOptions
     End Sub
 
@@ -494,7 +495,7 @@ Public Class BotSession : Inherits ProxySession
         Dim fur = New Furre
         VariableList.Add(New ConstantVariable("%DREAMOWNER", Nothing))
         VariableList.Add(New ConstantVariable("%DREAMNAME", Nothing))
-        VariableList.Add(New ConstantVariable("%BOTNAME", fur.Name))
+        VariableList.Add(New ConstantVariable("%BOTNAME", ConnectedFurre.Name))
         VariableList.Add(New ConstantVariable("%BOTCONTROLLER", MainEngineOptions.BotController))
         VariableList.Add(New ConstantVariable("%NAME", fur.Name))
         VariableList.Add(New ConstantVariable("%MESSAGE", fur.Message))
@@ -568,6 +569,16 @@ Public Class BotSession : Inherits ProxySession
         Else
             SendError(ex, handler, Trigger.ToString)
         End If
+
+    End Sub
+
+    Private Sub BotSession_ClientStatusChanged(Sender As Object, e As NetClientEventArgs) Handles Me.ClientStatusChanged
+
+        Select Case e.ConnectPhase
+            Case ConnectionPhase.Connected
+                DirectCast(MSpage.GetVariable("%BOTNAME"), ConstantVariable).SetValue(ConnectedFurre.Name)
+
+        End Select
 
     End Sub
 

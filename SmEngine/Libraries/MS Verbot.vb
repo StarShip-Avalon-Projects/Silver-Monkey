@@ -96,9 +96,9 @@ Namespace Engine.Libraries
             SayText = reader.ReadString
             ResponceText = reader.ReadVariable(True)
             If _state.Vars.ContainsKey("botname") Then
-                _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
+                _state.Vars.Item("botname") = FurcadiaSession.ConnectedFurre.Name
             Else
-                _state.Vars.Add("botname", FurcadiaSession.ConnectedCharacterName)
+                _state.Vars.Add("botname", FurcadiaSession.ConnectedFurre.Name)
             End If
             If _state.Vars.ContainsKey("channel") Then
                 _state.Vars.Item("channel") = FurcadiaSession.Channel
@@ -128,9 +128,9 @@ Namespace Engine.Libraries
             Dim SayText = reader.ReadString
             Dim ResponceText = reader.ReadVariable(True)
             If _state.Vars.ContainsKey("botname") Then
-                _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
+                _state.Vars.Item("botname") = FurcadiaSession.ConnectedFurre.Name
             Else
-                _state.Vars.Add("botname", FurcadiaSession.ConnectedCharacterName)
+                _state.Vars.Add("botname", FurcadiaSession.ConnectedFurre.Name)
             End If
             If _state.Vars.ContainsKey("channel") Then
                 _state.Vars.Item("channel") = FurcadiaSession.Channel
