@@ -109,11 +109,11 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function AddTrigFurre(reader As TriggerReader) As Boolean
+        Public Function AddTrigFurre(reader As TriggerReader) As Boolean
 
             Try
                 Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
-                If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
+                If TrigFurreIsMember(reader) = False AndAlso TrigFurreIsNotMember(reader) Then
                     Dim sw = New StreamWriter(MemberList, True)
                     sw.WriteLine(Furre)
                     sw.Close()

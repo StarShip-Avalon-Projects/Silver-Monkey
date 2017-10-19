@@ -134,12 +134,11 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function AddFurreNamed(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
+            'TODO: Fix to Pounce Reader
 
-            Furre = reader.ReadString
-            If FurreNamedIsMember(reader) = False And FurreNamedIsNotMember(reader) Then
+            If FurreNamedIsMember(reader) = False AndAlso FurreNamedIsNotMember(reader) Then
                 Using sw As StreamWriter = New StreamWriter(_onlineListFile, True)
-                    sw.WriteLine(Furre)
+                    sw.WriteLine(reader.ReadString)
                 End Using
             End If
             Return True
@@ -158,8 +157,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function AddTrigFurre(reader As TriggerReader) As Boolean
 
-            Dim Furre = FurcadiaSession.MSpage.GetVariable(MS_Name).Value.ToString
-            If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
+            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            If TrigFurreIsMember(reader) = False AndAlso TrigFurreIsNotMember(reader) Then
                 Dim sw As StreamWriter = New StreamWriter(_onlineListFile, True)
                 sw.WriteLine(Furre)
                 sw.Close()
@@ -399,9 +398,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overrides Function NameIs(reader As TriggerReader) As Boolean
-
             Return MyBase.NameIs(reader)
-
         End Function
 
         Private Sub CheckonlineList()
@@ -415,7 +412,7 @@ Namespace Engine.Libraries
         End Sub
 
         Public Overrides Sub Unload(page As Page)
-            If SmPounce IsNot Nothing Then SmPounce.Dispose()
+            Dispose(True)
         End Sub
 
 #Region "IDisposable Support"
@@ -426,28 +423,18 @@ Namespace Engine.Libraries
         Protected Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
-                    ' TODO: dispose managed state (managed objects).
+                    If SmPounce IsNot Nothing Then SmPounce.Dispose()
                 End If
 
-                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
-                ' TODO: set large fields to null.
             End If
             disposedValue = True
         End Sub
-
-        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
-        'Protected Overrides Sub Finalize()
-        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
-        '    Dispose(False)
-        '    MyBase.Finalize()
-        'End Sub
 
         ' This code added by Visual Basic to correctly implement the disposable pattern.
         Public Sub Dispose() Implements IDisposable.Dispose
             ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
             Dispose(True)
-            ' TODO: uncomment the following line if Finalize() is overridden above.
-            ' GC.SuppressFinalize(Me)
+
         End Sub
 
 #End Region

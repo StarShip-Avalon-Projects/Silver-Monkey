@@ -82,32 +82,6 @@ Namespace Engine.Libraries
 
 #End Region
 
-#Region "Helper Functions"
-
-#Disable Warning BC40003 ' function 'InDream' shadows an overloadable member declared in the base class 'MonkeySpeakLibrary'.  If you want to overload the base method, this method must be declared 'Overloads'.
-
-        ''' <summary>
-        ''' Is the player named {...} in the dream?
-        ''' </summary>
-        ''' <param name="Name">
-        ''' Furre Name
-        ''' </param>
-        ''' <returns>
-        ''' True on Success
-        ''' </returns>
-        Private Function InDream(ByRef Name As String) As Boolean
-#Enable Warning BC40003 ' function 'InDream' shadows an overloadable member declared in the base class 'MonkeySpeakLibrary'.  If you want to overload the base method, this method must be declared 'Overloads'.
-            Dim found As Boolean = False
-            For Each Fur In Dream.FurreList
-                If Fur.ShortName = Furcadia.Util.FurcadiaShortName(Name) Then
-                    Return True
-                End If
-            Next
-            Return False
-        End Function
-
-#End Region
-
 #Region "Public Methods"
 
         ''' <summary>
@@ -124,7 +98,7 @@ Namespace Engine.Libraries
 
             Dim var = reader.ReadVariable(True)
             Dim c As Double = 0
-            For Each fur In Dream.FurreList
+            For Each fur As Furre In Dream.FurreList
                 If fur.AfkTime = 0 Then
                     c += 1
                 End If
@@ -149,7 +123,7 @@ Namespace Engine.Libraries
 
             Dim var = reader.ReadVariable(True)
             Dim c As Double = 0
-            For Each fs In Dream.FurreList
+            For Each fs As Furre In Dream.FurreList
                 If fs.AfkTime > 0 Then
                     c += 1
                 End If
@@ -171,7 +145,7 @@ Namespace Engine.Libraries
         Public Function FurreListCount(reader As TriggerReader) As Boolean
 
             Dim var = reader.ReadVariable(True)
-            var.Value = Convert.ToDouble(Dream.FurreList.Count.ToString)
+            var.Value = Convert.ToDouble(Dream.FurreList.Count)
             Return True
 
         End Function
@@ -189,7 +163,7 @@ Namespace Engine.Libraries
 
             Dim var = reader.ReadVariable(True)
             Dim str As New List(Of String)
-            For Each fur In Dream.FurreList
+            For Each fur As Furre In Dream.FurreList
                 str.Add(fur.Name)
             Next
             var.Value = String.Join(", ", str.ToArray)
@@ -356,10 +330,7 @@ Namespace Engine.Libraries
         ''' true if the triggering furre is not in the dream
         ''' </returns>
         Public Function TriggeringNotInDream(reader As TriggerReader) As Boolean
-
-            Dim tPlayer = Player
-            Return Not InDream(tPlayer.Name)
-
+            Return Not InDream(Player.Name)
         End Function
 
         Public Overrides Sub Unload(page As Page)

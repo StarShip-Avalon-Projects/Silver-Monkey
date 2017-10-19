@@ -121,25 +121,15 @@ Namespace Engine.Libraries
             MyBase.New(Session)
 
             Add(TriggerCategory.Cause, 1,
-                 Function()
-                     Return True
-                 End Function, " When the bot logs into furcadia,")
+                 Function() True, " When the bot logs into furcadia,")
             Add(TriggerCategory.Cause, 2,
-                   Function()
-                       Return True
-                   End Function, " When the bot logs out of furcadia,")
+                   Function() True, " When the bot logs out of furcadia,")
             Add(TriggerCategory.Cause, 3,
-                    Function()
-                        Return True
-                    End Function, " When the Furcadia client disconnects or closes,")
+                    Function() True, " When the Furcadia client disconnects or closes,")
 
             'says
             Add(TriggerCategory.Cause, 5,
-                  Function()
-                      ' Console.WriteLine("Cause (0:5):")
-                      Return Not FurcadiaSession.IsConnectedCharacter
-                  End Function,
-               " When someone says something,")
+                  Function() Not FurcadiaSession.IsConnectedCharacter, " When someone says something,")
             Add(TriggerCategory.Cause, 6,
                  AddressOf MsgIs, " When someone says {..},")
 
@@ -149,10 +139,7 @@ Namespace Engine.Libraries
 
             'Shouts
             Add(TriggerCategory.Cause, 8,
-                 Function()
-                     Return Not FurcadiaSession.IsConnectedCharacter
-                 End Function,
-             " When someone shouts something,")
+                 Function() Not FurcadiaSession.IsConnectedCharacter, " When someone shouts something,")
 
             Add(TriggerCategory.Cause, 9,
              AddressOf MsgIs, " When someone shouts {..},")
@@ -163,11 +150,7 @@ Namespace Engine.Libraries
 
             'emotes
             Add(TriggerCategory.Cause, 11,
-                 Function()
-                     Return Not FurcadiaSession.IsConnectedCharacter
-
-                 End Function,
-                  " When someone emotes something,")
+                 Function() Not FurcadiaSession.IsConnectedCharacter, " When someone emotes something,")
             Add(TriggerCategory.Cause, 12,
                  AddressOf MsgIs, " When someone emotes {..},")
 
@@ -177,10 +160,7 @@ Namespace Engine.Libraries
 
             'Whispers
             Add(TriggerCategory.Cause, 15,
-                 Function()
-                     Return Not FurcadiaSession.IsConnectedCharacter
-                 End Function,
-                  " When someone whispers something,")
+                Function() Not FurcadiaSession.IsConnectedCharacter, " When someone whispers something,")
 
             Add(TriggerCategory.Cause, 16,
                 AddressOf MsgIs, " When someone whispers {..},")
@@ -191,9 +171,8 @@ Namespace Engine.Libraries
 
             'Says or Emotes
             Add(TriggerCategory.Cause, 18,
-                 Function()
-                     Return Not FurcadiaSession.IsConnectedCharacter
-                 End Function, " When someone says or emotes something,")
+                Function() Not FurcadiaSession.IsConnectedCharacter,
+                " When someone says or emotes something,")
 
             Add(TriggerCategory.Cause, 19,
                 AddressOf MsgIs, " When someone says or emotes {..},")
@@ -204,9 +183,7 @@ Namespace Engine.Libraries
 
             'Emits
             Add(TriggerCategory.Cause, 21,
-                 Function()
-                     Return Not FurcadiaSession.IsConnectedCharacter
-                 End Function, " When someone emits something,")
+                 Function() Not FurcadiaSession.IsConnectedCharacter, " When someone emits something,")
 
             Add(TriggerCategory.Cause, 22,
                      AddressOf MsgIs, " When someone emits {..},")
@@ -218,9 +195,7 @@ Namespace Engine.Libraries
             'Furre Enters
             '(0:4) When someone is added to the Dream manifest,
             Add(TriggerCategory.Cause, 24,
-                Function()
-                    Return True
-                End Function, " When someone enters the Dream,")
+                Function() True, " When someone enters the Dream,")
 
             '(0:25) When a furre Named {..} enters the Dream,
             Add(TriggerCategory.Cause, 25,
@@ -229,9 +204,7 @@ Namespace Engine.Libraries
             'Furre Leaves
             '(0:25) When someone leaves the FurcadiaSession.Dream,
             Add(TriggerCategory.Cause, 26,
-                Function()
-                    Return True
-                End Function, " When someone leaves the Dream,")
+                Function() True, " When someone leaves the Dream,")
 
             '(0:27) When a furre named {..} leaves the FurcadiaSession.Dream,
             Add(TriggerCategory.Cause, 27,
@@ -259,9 +232,8 @@ Namespace Engine.Libraries
             'Summon
             '(0:32) When someone requests to summon the bot,
             Add(TriggerCategory.Cause, 32,
-                Function()
-                    Return Not FurcadiaSession.IsConnectedCharacter
-                End Function, " When someone requests to summon the bot,")
+                Function() Not FurcadiaSession.IsConnectedCharacter,
+                " When someone requests to summon the bot,")
 
             '(0:33) When a furre named {..} requests to summon the bot,
             Add(TriggerCategory.Cause, 33,
@@ -270,9 +242,7 @@ Namespace Engine.Libraries
             'Join
             '(0:34) When someone requests to join the bot,
             Add(TriggerCategory.Cause, 34,
-                Function()
-                    Return Not FurcadiaSession.IsConnectedCharacter
-                End Function, " When someone requests to join the bot,")
+                Function() Not FurcadiaSession.IsConnectedCharacter, " When someone requests to join the bot,")
 
             '(0:35) When a furre named {..} requests to join the bot,
             Add(TriggerCategory.Cause, 35,
@@ -281,9 +251,8 @@ Namespace Engine.Libraries
             'Follow
             '(0:36) When someone requests to follow the bot,
             Add(TriggerCategory.Cause, 36,
-                Function()
-                    Return Not FurcadiaSession.IsConnectedCharacter
-                End Function, " When someone requests to follow the bot,")
+                Function() Not FurcadiaSession.IsConnectedCharacter,
+                " When someone requests to follow the bot,")
 
             '(0:37) When a furre named {..} requests to follow the bot,
             Add(TriggerCategory.Cause, 37,
@@ -292,9 +261,7 @@ Namespace Engine.Libraries
             'Lead
             '(0:38) When someone requests to lead the bot,
             Add(TriggerCategory.Cause, 38,
-                Function()
-                    Return Not FurcadiaSession.IsConnectedCharacter
-                End Function, " When someone requests to lead the bot,")
+                Function() Not FurcadiaSession.IsConnectedCharacter, " When someone requests to lead the bot,")
 
             '(0:39) When a furre named {..} requests to lead the bot,
             Add(TriggerCategory.Cause, 39,
@@ -303,9 +270,8 @@ Namespace Engine.Libraries
             'Cuddle
             '(0:40) When someone requests to cuddle with the bot.
             Add(TriggerCategory.Cause, 40,
-                Function()
-                    Return Not FurcadiaSession.IsConnectedCharacter
-                End Function, " When someone requests to cuddle with the bot,")
+                Function() Not FurcadiaSession.IsConnectedCharacter,
+                " When someone requests to cuddle with the bot,")
 
             '(0:41) When a furre named {..} requests to cuddle with the bot,
             Add(TriggerCategory.Cause, 41,
@@ -313,15 +279,12 @@ Namespace Engine.Libraries
 
             '(0:92) When the bot detects the "Your throat is tired. Please wait a few seconds" message,
             Add(TriggerCategory.Cause, 92,
-                   Function()
-                       Return True
-                   End Function, " When the bot detects the ""Your throat is tired. Please wait a few seconds"" message,")
+                   Function() True,
+                " When the bot detects the ""Your throat is tired. Please wait a few seconds"" message,")
 
             '(0:93) When the bot resumes processing after seeing "Your throat is tired" message,
             Add(TriggerCategory.Cause, 93,
-                Function()
-                    Return True
-                End Function, " When the bot resumes processing after seeing ""Your throat is tired"" message,")
+                Function() True, " When the bot resumes processing after seeing ""Your throat is tired"" message,")
 
             ' (1:3) and the triggering furre's name is {..},
             Add(New Trigger(TriggerCategory.Condition, 5), AddressOf NameIs,
@@ -369,106 +332,67 @@ Namespace Engine.Libraries
 
             '(1:904) and the triggering furre is the Bot Controller,
             Add(TriggerCategory.Condition, 15,
-                 Function()
-                     Return FurcadiaSession.IsBotController
-                 End Function, " and the triggering furre is the Bot Controller,")
+                 Function() FurcadiaSession.IsBotController, " and the triggering furre is the Bot Controller,")
 
             '(1:905) and the triggering furre is not the Bot Controller,
             Add(New Trigger(TriggerCategory.Condition, 16),
-                Function()
-                    Return Not FurcadiaSession.IsBotController
-                End Function, " and the triggering furre is not the Bot Controller,")
+            Function() Not FurcadiaSession.IsBotController, " and the triggering furre is not the Bot Controller,")
 
             'Says
             ' (5:0) say {..}.
             Add(New Trigger(TriggerCategory.Effect, 0),
-                Function(reader As TriggerReader)
-
-                    Dim msg As String = reader.ReadString(True)
-                    Return SendSay(msg)
-
-                End Function,
+                Function(reader As TriggerReader) SendSay(reader.ReadString()),
          " say {..}.")
             'emotes
             ' (5:1) emote {..}.
             Add(New Trigger(TriggerCategory.Effect, 1),
-                Function(reader As TriggerReader)
-
-                    Dim msg As String = reader.ReadString
-                    SendEmote(msg)
-                    Return True
-
-                End Function,
+                Function(reader As TriggerReader) SendEmote(reader.ReadString),
                  " emote {..}.")
 
             'Shouts
             ' (5:2) shout {..}.
             Add(New Trigger(TriggerCategory.Effect, 2),
-                 Function(reader As TriggerReader)
-
-                     Dim msg = reader.ReadString
-                     SndShout(msg)
-                     Return True
-
-                 End Function,
+                 Function(reader As TriggerReader) SndShout(reader.ReadString),
                 " shout {..}.")
 
             'Emits
             ' (5:3) emit {..}.
             Add(New Trigger(TriggerCategory.Effect, 3),
-                Function(reader As TriggerReader)
-
-                    Dim msg = reader.ReadString
-                    SendEmit(msg)
-                    Return True
-
-                End Function,
+                Function(reader As TriggerReader) SendEmit(reader.ReadString),
                  " Emit {..}.")
             ' (5:4) emitloud {..}.
             Add(New Trigger(TriggerCategory.Effect, 4),
-                 Function(reader As TriggerReader)
-
-                     Dim msg = reader.ReadString
-                     SendEmitLoud(msg)
-                     Return True
-
-                 End Function,
+                 Function(reader As TriggerReader) SendEmitLoud(reader.ReadString),
                   " Emitloud {..}.")
 
             'Whispers
             ' (5:5) whisper {..} to the triggering furre.
             Add(New Trigger(TriggerCategory.Effect, 5),
-                   Function(reader As TriggerReader)
+                   Function(reader As TriggerReader) As Boolean
 
                        Dim msg = reader.ReadString
                        Dim tname = reader.Page.GetVariable(MS_Name)
-                       SndWhisper(tname.Value.ToString, msg)
-                       Return True
+                       Return SndWhisper(tname.Value.ToString, msg)
 
                    End Function,
                   " whisper {..} to the triggering furre.")
 
             ' (5:6) whisper {..} to {..}.
             Add(New Trigger(TriggerCategory.Effect, 6),
-                 Function(reader As TriggerReader)
-
-                     Dim msg = reader.ReadString(True)
-                     Dim tname = reader.ReadString
-                     SndWhisper(tname, msg)
-                     Return True
-
-                 End Function,
-                         " whisper {..} to furre named {..}.")
+               Function(reader As TriggerReader) As Boolean
+                   Dim msg = reader.ReadString(True)
+                   Dim tname = reader.ReadString
+                   Return SndWhisper(tname, msg)
+               End Function, " whisper {..} to furre named {..}.")
 
             ' (5:7) whisper {..} to {..} even if they're off-line.
             Add(New Trigger(TriggerCategory.Effect, 7),
-                  Function(reader As TriggerReader)
+                  Function(reader As TriggerReader) As Boolean
 
                       Dim msg = reader.ReadString
                       Dim tname = reader.ReadString
 
-                      SendOffLineWhisper(tname, msg)
-                      Return True
+                      Return SendOffLineWhisper(tname, msg)
 
                   End Function,
                       " whisper {..} to furre named {..} even if they're off-line.")
@@ -502,11 +426,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function EnterView(reader As TriggerReader) As Boolean
 
-            Dim tPlayer = Player
-            If tPlayer.Visible = tPlayer.WasVisible Then
+            If Player.Visible = Player.WasVisible Then
                 Return False
             End If
-            Return tPlayer.Visible = True
+            Return Player.Visible = True
 
         End Function
 
@@ -537,8 +460,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedEnterView(reader As TriggerReader) As Boolean
 
-            Dim name = reader.ReadString
-            Dim tPlayer = Dream.FurreList.GerFurreByName(name)
+            Dim tPlayer = Dream.FurreList.GerFurreByName(reader.ReadString)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -577,11 +499,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function LeaveView(reader As TriggerReader) As Boolean
 
-            Dim tPlayer = Player
-            If tPlayer.Visible = tPlayer.WasVisible Then
+            If Player.Visible = Player.WasVisible Then
                 Return False
             End If
-            Return tPlayer.Visible = False
+            Return Player.Visible = False
         End Function
 
         ''' <summary>
@@ -590,9 +511,10 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' message to send
         ''' </param>
-        Public Sub SendEmit(ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then SendServer("emit " & msg)
-        End Sub
+        Public Function SendEmit(ByRef msg As String) As Boolean
+            If Not String.IsNullOrEmpty(msg) Then Return SendServer("emit " & msg)
+            Return False
+        End Function
 
         ''' <summary>
         ''' send an emitloud command to the server queue
@@ -600,9 +522,10 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' message to send
         ''' </param>
-        Public Sub SendEmitLoud(ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then SendServer("emitloud " & msg)
-        End Sub
+        Public Function SendEmitLoud(ByRef msg As String) As Boolean
+            If Not String.IsNullOrEmpty(msg) Then Return SendServer("emitloud " & msg)
+            Return False
+        End Function
 
         ''' <summary>
         ''' Send an emote to the server queue
@@ -610,9 +533,10 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' message to send
         ''' </param>
-        Public Sub SendEmote(ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then SendServer(":" & msg)
-        End Sub
+        Public Function SendEmote(ByRef msg As String) As Boolean
+            If Not String.IsNullOrEmpty(msg) Then Return SendServer(":" & msg)
+            Return False
+        End Function
 
         ''' <summary>
         ''' Send an off line whisper to the server queue
@@ -623,9 +547,12 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' Message to send
         ''' </param>
-        Public Sub SendOffLineWhisper(ByRef name As String, ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then SendServer("/%%" & FurcadiaShortName(name) & " " & msg)
-        End Sub
+        Public Function SendOffLineWhisper(ByRef name As String, ByRef msg As String) As Boolean
+            If Not String.IsNullOrEmpty(msg) Then
+                Return SendServer("/%%" & FurcadiaShortName(name) & " " & msg)
+            End If
+            Return False
+        End Function
 
         ''' <summary>
         ''' send a speech command to the server queue
@@ -635,8 +562,8 @@ Namespace Engine.Libraries
         ''' </param>
         Public Function SendSay(ByRef msg As String) As Boolean
 
-            Return SendServer(msg)
-
+            If Not String.IsNullOrEmpty(msg) Then Return SendServer(msg)
+            Return False
         End Function
 
         ''' <summary>
@@ -645,9 +572,10 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' Message to send
         ''' </param>
-        Public Sub SndShout(ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then SendServer("-" & msg)
-        End Sub
+        Public Function SndShout(ByRef msg As String) As Boolean
+            If Not String.IsNullOrEmpty(msg) Then Return SendServer("-" & msg)
+            Return False
+        End Function
 
         ''' <summary>
         ''' Send a whisper to the server queue
@@ -658,9 +586,10 @@ Namespace Engine.Libraries
         ''' <param name="msg">
         ''' Message to send
         ''' </param>
-        Public Sub SndWhisper(ByRef name As String, ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then SendServer("/%" & FurcadiaShortName(name) & " " & msg)
-        End Sub
+        Public Function SndWhisper(ByRef name As String, ByRef msg As String)
+            If Not String.IsNullOrEmpty(msg) Then Return SendServer("/%" & FurcadiaShortName(name) & " " & msg)
+            Return False
+        End Function
 
         ''' <summary>
         ''' (5:40) Switch the bot to stand alone mode and close the Furcadia client.
