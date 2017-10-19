@@ -10,7 +10,8 @@
 	
 	<!--	<CallTarget Targets="GetVersion"/> -->
 		<CallTarget Targets="Build"/>
-		<CallTarget Targets="BackupSource;CopyFiles"/>
+		<CallTarget Targets="BackupSource"/>
+		<CallTarget Targets="CopyFiles"/>
   </Target>
   
   <Target Name="GetVersion" >
@@ -70,7 +71,7 @@
     <Target Name="CopyFiles">  
         <Copy  
             SourceFiles="@(MySourceFiles)"  
-            DestinationFiles="@(MySourceFiles->'c:\MyDestinationTree\%(RecursiveDir)%(Filename)%(Extension)')"  
+            DestinationFiles="@(MySourceFiles->'Build\Installer\%(Filename)%(Extension)')"  
         />  
     </Target>
 
