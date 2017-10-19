@@ -874,12 +874,12 @@ Public Class Main
 
         Dim f As String = CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
         If Not FurcadiaSession Is Nothing Then
-            If Not String.IsNullOrEmpty(FurcadiaSession.ConnectedCharacterName) _
+            If Not String.IsNullOrEmpty(FurcadiaSession.ConnectedFurre.Name) _
             And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
 
-                processStrt.Arguments = "-B=""" + FurcadiaSession.ConnectedCharacterName + """ """ + f + """"
+                processStrt.Arguments = "-B=""" + FurcadiaSession.ConnectedFurre.Name + """ """ + f + """"
 
-            ElseIf String.IsNullOrEmpty(FurcadiaSession.ConnectedCharacterName) _
+            ElseIf String.IsNullOrEmpty(FurcadiaSession.ConnectedFurre.Name) _
             And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
 
                 processStrt.Arguments = """" + f + """"

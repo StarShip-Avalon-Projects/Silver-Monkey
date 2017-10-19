@@ -68,14 +68,8 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
-
-            Dim safety = Not FurcadiaSession.IsConnectedCharacter
-            Dim msMsg = StripHTML(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("%MESSAGE")
-
-            Dim test = StripHTML(msg.Value.ToString)
-
-            Return msMsg.ToLower.Equals(test.ToLower) And safety
+            Return Not FurcadiaSession.IsConnectedCharacter AndAlso
+                 StripHTML(reader.ReadString()).ToLower.Equals(StripHTML(reader.Page.GetVariable("%MESSAGE").Value.ToString).ToLower)
 
         End Function
 
@@ -96,12 +90,8 @@ Namespace Engine.Libraries
         ''' </remarks>
         Protected Overridable Function MsgIsNot(reader As TriggerReader) As Boolean
 
-            Dim safety = Not FurcadiaSession.IsConnectedCharacter
-            Dim msMsg = StripHTML(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("%MESSAGE")
-
-            Dim test = StripHTML(msg.Value.ToString)
-            Return Not msMsg.Equals(test) And safety
+            Return Not FurcadiaSession.IsConnectedCharacter AndAlso
+                Not StripHTML(reader.ReadString()).Equals(StripHTML(reader.Page.GetVariable("%MESSAGE").Value.ToString))
 
         End Function
 
@@ -121,13 +111,8 @@ Namespace Engine.Libraries
         ''' </para>
         ''' </remarks>
         Protected Overridable Function MsgNotContain(reader As TriggerReader) As Boolean
-
-            Dim msMsg = StripHTML(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("%MESSAGE")
-
-            Dim test = StripHTML(msg.Value.ToString)
-            Return test.Contains(msMsg)
-
+            Return StripHTML(reader.Page.GetVariable("%MESSAGE").Value.ToString).
+                Contains(StripHTML(reader.ReadString()))
         End Function
 
         ''' <summary>

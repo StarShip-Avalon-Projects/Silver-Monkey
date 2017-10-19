@@ -1,5 +1,6 @@
 ﻿Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.Web
+Imports SilverMonkeyEngine.Interfaces
 
 Namespace Engine.Libraries
 
@@ -260,10 +261,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function WebArrayNotEqualTo(reader As TriggerReader) As Boolean
 
-            Dim setting = Nothing
-            Dim value = reader.Page.SetVariable(reader.ReadString, Nothing, False)
-            If WebStack.Contains(value) Then
-                setting = WebStack.Item(WebStack.IndexOf(value))
+            Dim setting As New MsVariable(reader.ReadString)
+            If WebStack.Contains(setting) Then
+                setting = WebStack.Item(WebStack.IndexOf(setting))
             End If
             Return setting.Value <> reader.ReadString
         End Function

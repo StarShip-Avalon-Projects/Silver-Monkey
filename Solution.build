@@ -11,6 +11,7 @@
 	<!--	<CallTarget Targets="GetVersion"/> -->
 		<CallTarget Targets="Build"/>
 		<CallTarget Targets="BackupSource"/>
+		<CallTarget Targets="CopyFiles"/>
   </Target>
   
   <Target Name="GetVersion" >
@@ -61,6 +62,18 @@
 	</ItemGroup>
     <Delete Files="@(FilesToDelete)" />
   </Target>
+
+      <ItemGroup>  
+        <MySourceFiles Include="MonkeySpeakEx\bin\Release\*.rar"/>
+		 <MySourceFiles Include="MonkeySpeakEx\bin\Debug\*.rar"/>
+    </ItemGroup>  
+  
+    <Target Name="CopyFiles">  
+        <Copy  
+            SourceFiles="@(MySourceFiles)"  
+            DestinationFiles="@(MySourceFiles->'Build\Installer\%(Filename)%(Extension)')"  
+        />  
+    </Target>
 
   <Target Name="IncrementVersions" Condition=" '$(Configuration)' == 'Debug' ">
       <!-- Compile whole solution in release mode -->
