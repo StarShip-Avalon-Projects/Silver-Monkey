@@ -18,25 +18,8 @@ Namespace Engine
             Dim MSpage = Session.MSpage
             'Library Loaded?.. Get the Hell out of here
             MSpage.SetTriggerHandler(TriggerCategory.Cause, 0, Function(reader) True,
-            "(0:0) When the bot starts,")
+            "(0:0) When the Monkey Speak Engine starts,")
 
-            MSpage.LoadSysLibrary()
-
-#If CONFIG = "Release" Then
-            '(5:110) load library from file {...}.
-            MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 110)
-#ElseIf CONFIG = "Debug" Then
-            '
-            MSpage.RemoveTriggerHandler(TriggerCategory.Effect, 105)
-            MSpage.SetTriggerHandler(TriggerCategory.Effect, 105,
-         Function() False, "(5:105) raise an error.")
-            ',
-#End If
-
-            MSpage.LoadTimerLibrary(100)
-            MSpage.LoadIOLibrary(Session.MainEngineOptions.BotPath)
-            MSpage.LoadStringLibrary()
-            MSpage.LoadMathLibrary()
             Dim LibList = InitializeEngineLibraries(Session)
 
             For Each Library As Monkeyspeak.Libraries.BaseLibrary In LibList
@@ -76,7 +59,15 @@ Namespace Engine
                     New MsVerbot(Session),
                     New MsSound(Session),
                     New MsTrades(Session),
-                    New MsDreamInfo(Session)
+                    New MsDreamInfo(Session),
+                    New Monkeyspeak.Libraries.Debug(),
+                    New Monkeyspeak.Libraries.IO(Session.MainEngineOptions.BotPath),
+                    New Monkeyspeak.Libraries.Loops(),
+                    New Monkeyspeak.Libraries.Math(),
+                    New Monkeyspeak.Libraries.StringOperations(),
+                    New Monkeyspeak.Libraries.Sys(),
+                    New Monkeyspeak.Libraries.Tables(),
+                    New Monkeyspeak.Libraries.Timers(100)
                 }
             ' New MathLibrary(Me),
             'New MsIO(Me),
