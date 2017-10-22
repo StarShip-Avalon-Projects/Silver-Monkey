@@ -1,4 +1,4 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports Furcadia.Text.FurcadiaMarkup
 Imports System.Threading
 Imports Furcadia.Net
 Imports Furcadia.Net.Dream
@@ -31,10 +31,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
 
-            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
             Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test = StripHTML(msg.Value.ToString)
+            Dim test = StripFurcadiaMarkup(msg.Value.ToString)
             Return test.ToLower.Contains(msMsg.ToLower)
 
         End Function
@@ -49,10 +49,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Overridable Function MsgEndsWith(reader As TriggerReader) As Boolean
 
-            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
             Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test As String = StripHTML(msg.Value.ToString)
+            Dim test As String = StripFurcadiaMarkup(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
             Return test.EndsWith(msMsg)
 
@@ -69,7 +69,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
             Return Not FurcadiaSession.IsConnectedCharacter AndAlso
-                 StripHTML(reader.ReadString()).ToLower.Equals(StripHTML(reader.Page.GetVariable("%MESSAGE").Value.ToString).ToLower)
+                 StripFurcadiaMarkup(reader.ReadString()).ToLower.Equals(StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString).ToLower)
 
         End Function
 
@@ -91,7 +91,7 @@ Namespace Engine.Libraries
         Protected Overridable Function MsgIsNot(reader As TriggerReader) As Boolean
 
             Return Not FurcadiaSession.IsConnectedCharacter AndAlso
-                Not StripHTML(reader.ReadString()).Equals(StripHTML(reader.Page.GetVariable("%MESSAGE").Value.ToString))
+                Not StripFurcadiaMarkup(reader.ReadString()).Equals(StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString))
 
         End Function
 
@@ -111,8 +111,8 @@ Namespace Engine.Libraries
         ''' </para>
         ''' </remarks>
         Protected Overridable Function MsgNotContain(reader As TriggerReader) As Boolean
-            Return StripHTML(reader.Page.GetVariable("%MESSAGE").Value.ToString).
-                Contains(StripHTML(reader.ReadString()))
+            Return StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString).
+                Contains(StripFurcadiaMarkup(reader.ReadString()))
         End Function
 
         ''' <summary>
@@ -125,10 +125,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
 
-            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
             Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test = StripHTML(msg.Value.ToString)
+            Dim test = StripFurcadiaMarkup(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
             Return Not test.EndsWith(msMsg)
 
@@ -144,10 +144,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Function MsgNotStartsWith(reader As TriggerReader) As Boolean
 
-            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
             Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test = StripHTML(msg.Value.ToString)
+            Dim test = StripFurcadiaMarkup(msg.Value.ToString)
             Return Not test.StartsWith(msMsg)
 
         End Function
@@ -162,10 +162,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Function MsgStartsWith(reader As TriggerReader) As Boolean
 
-            Dim msMsg = StripHTML(reader.ReadString())
+            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
             Dim msg = reader.Page.GetVariable("%MESSAGE")
 
-            Dim test = StripHTML(msg.Value.ToString)
+            Dim test = StripFurcadiaMarkup(msg.Value.ToString)
             Return test.StartsWith(msMsg)
         End Function
 
@@ -206,25 +206,6 @@ Namespace Engine.Libraries
 
             Dim TmpName = reader.ReadString()
             Return FurcadiaShortName(TmpName) <> Player.ShortName
-        End Function
-
-#End Region
-
-#Region "Private Methods"
-
-        ''' <summary>
-        ''' Strip Markup
-        ''' </summary>
-        ''' <param name="Text">
-        ''' </param>
-        ''' <returns>
-        ''' Markup stripped string
-        ''' </returns>
-        Private Shared Function StripHTML(ByVal Text As String) As String
-
-            Dim r = New Regex("<(.*?)>")
-            Text = r.Replace(Text, String.Empty)
-            Return Text.Replace("|", " ").ToLower
         End Function
 
 #End Region
@@ -401,6 +382,10 @@ Namespace Engine.Libraries
         End Function
 
         Public Overrides Sub Unload(page As Page)
+
+        End Sub
+
+        Public Overrides Sub Initialize()
 
         End Sub
 

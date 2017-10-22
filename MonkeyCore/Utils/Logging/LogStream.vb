@@ -51,31 +51,11 @@ Namespace Utils.Logging
         ''' </param>
         Public Shared Sub WriteLine(Message As String, ByRef ObjectException As Exception)
             Dim build As New Text.StringBuilder(Message)
-            Dim Names As MatchCollection = Regex.Matches(Message, NameFilter)
-            For Each Name As Match In Names
-                build = build.Replace(Name.ToString, Name.Groups(3).Value)
-            Next
-            '<name shortname='acuara' forced>
-            Dim MyIcon As MatchCollection = Regex.Matches(Message, Iconfilter)
+            'Dim Names As MatchCollection = NameRegex.Matches(Message)
+            'For Each Name As Match In Names
+            '    build = build.Replace(Name.Value, Name.Groups(3).Value)
+            'Next
 
-            For Each Icon As Match In MyIcon
-                Select Case Icon.Groups(1).Value
-                    Case "91"
-                        build = build.Replace(Icon.ToString, "[#]")
-                    Case Else
-                        build = build.Replace(Icon.ToString, "[" + Icon.Groups(1).Value + "]")
-                End Select
-
-            Next
-
-            Dim URLS As MatchCollection = Regex.Matches(Message, UrlFilter)
-            For Each URL As Match In URLS
-                build = build.Replace(URL.ToString, "URL:" + URL.Groups(2).Value + "(" + URL.Groups(1).Value + ")")
-            Next
-            Dim IMGS As MatchCollection = Regex.Matches(Message, ImgTagFilter)
-            For Each IMG As Match In IMGS
-                build = build.Replace(IMG.ToString, "img")
-            Next
             Message = build.ToString
 
             Dim Now As String = Date.Now().ToString("MM/dd/yyyy H:mm:ss")
@@ -88,24 +68,12 @@ Namespace Utils.Logging
                     Next
                     Stack.Clear()
                     ioFile.WriteLine(Message)
-                    ioFile.WriteLine("Error: " & ObjectException.Message)
-                    ioFile.WriteLine("")
-                    If Not ObjectException.InnerException Is Nothing Then
-                        ioFile.WriteLine("Inner Error: " & ObjectException.InnerException.Message)
-                        ioFile.WriteLine("")
-                    End If
-                    ioFile.WriteLine(ObjectException.Source)
-                    ioFile.WriteLine(ObjectException.StackTrace)
+                    ioFile.Write(PrintStackTrace(ObjectException, Nothing))
                 Catch ex As IOException
                     If (ex.Message.StartsWith("The process cannot access the file") AndAlso
                             ex.Message.EndsWith("because it is being used by another process.")) Then
                         Stack.Add(Message)
-                        Stack.Add("Error: " & ObjectException.Message)
-                        Stack.Add("")
-                        If Not ObjectException.InnerException Is Nothing Then
-                            Stack.Add("Inner Error: " & ObjectException.InnerException.Message)
-                            Stack.Add("")
-                        End If
+                        Stack.AddRange(PrintStackTrace(ObjectException, Nothing).Split(CChar(Environment.NewLine)))
                         Stack.Add(ObjectException.Source)
                         Stack.Add(ObjectException.StackTrace)
                     End If
@@ -115,6 +83,29 @@ Namespace Utils.Logging
             End Using
         End Sub
 
+        Shared Function PrintStackTrace(ex As Exception, ObjectThrowingError As Object) As String
+            Dim LogFile = New StringBuilder()
+            If Not ex.InnerException Is Nothing Then
+                LogFile.AppendLine("Inner Error: " & ex.InnerException.Message)
+                LogFile.AppendLine("")
+            End If
+            LogFile.AppendLine("Source: " & ObjectThrowingError.ToString)
+            LogFile.AppendLine("")
+            Dim st As New StackTrace(ex, True)
+            LogFile.AppendLine("-------------------------------------------------------")
+
+            LogFile.AppendLine("Stack Trace: " & st.ToString())
+            LogFile.AppendLine("")
+            LogFile.AppendLine("-------------------------------------------------------")
+            If Not ex.InnerException Is Nothing Then
+                Dim stInner As New StackTrace(ex.InnerException, True)
+                LogFile.AppendLine("Inner Stack Trace: " & stInner.ToString())
+                LogFile.AppendLine("")
+                LogFile.AppendLine("-------------------------------------------------------")
+            End If
+            Return LogFile.ToString
+        End Function
+
         ''' <summary>
         ''' Write a line to the log file
         ''' </summary>
@@ -122,30 +113,20 @@ Namespace Utils.Logging
         ''' </param>
         Public Shared Sub WriteLine(Message As String)
             Dim build As New StringBuilder(Message)
-            Dim Names As MatchCollection = Regex.Matches(Message, NameFilter)
-            For Each Name As Match In Names
-                build = build.Replace(Name.ToString, Name.Groups(3).Value)
-            Next
+            'Dim Names As MatchCollection = NameRegex.Matches(Message)
+            'For Each Name As Match In Names
+            '    build = build.Replace(Name.Value, Name.Groups(3).Value)
+            'Next
             '<name shortname='acuara' forced>
             Dim MyIcon As MatchCollection = Regex.Matches(Message, Iconfilter)
 
             For Each Icon As Match In MyIcon
-                Select Case Icon.Groups(1).Value
-                    Case "91"
-                        build = build.Replace(Icon.ToString, "[#]")
-                    Case Else
-                        build = build.Replace(Icon.ToString, "[" + Icon.Groups(1).Value + "]")
-                End Select
-
+                build = build.Replace(Icon.ToString, "[" + Icon.Groups(1).Value + "]")
             Next
 
             Dim URLS As MatchCollection = Regex.Matches(Message, UrlFilter)
             For Each URL As Match In URLS
                 build = build.Replace(URL.ToString, "URL:" + URL.Groups(2).Value + "(" + URL.Groups(1).Value + ")")
-            Next
-            Dim IMGS As MatchCollection = Regex.Matches(Message, ImgTagFilter)
-            For Each IMG As Match In IMGS
-                build = build.Replace(IMG.ToString, "img")
             Next
             Message = build.ToString
 

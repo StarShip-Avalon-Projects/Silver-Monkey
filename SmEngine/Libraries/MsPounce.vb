@@ -56,7 +56,9 @@ Namespace Engine.Libraries
             'Setup our Default Objects
             _onlineListFile = Paths.CheckBotFolder(ListFile)
             OnlineFurreList = New IO.NameList(_onlineListFile)
+        End Sub
 
+        Public Overrides Sub Initialize()
             ' (0:950) When a furre logs on,
             Add(TriggerCategory.Cause, 950,
             Function() True, " When a furre logs on,")

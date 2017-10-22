@@ -18,6 +18,9 @@ Namespace Engine.Libraries
         ''' <param name="session"></param>
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
+        End Sub
+
+        Public Overrides Sub Initialize()
             '(0:75) When the bot receives a message from another bot on the same computer,
             Add(TriggerCategory.Cause, 75,
                  Function()

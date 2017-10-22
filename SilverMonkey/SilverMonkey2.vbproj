@@ -284,7 +284,6 @@
     <None Include="SilverMonkey.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="dll\RTFLib.dll" />
     <Content Include="Format Notes.txt" />
     <None Include="resources\CutHS.png" />
     <None Include="resources\Edit_UndoHS.png" />

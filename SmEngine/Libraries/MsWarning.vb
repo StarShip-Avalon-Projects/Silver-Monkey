@@ -18,7 +18,9 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
+        End Sub
 
+        Public Overrides Sub Initialize()
             '(0:800) When the bot sees error message {...},
             Add(TriggerCategory.Cause, 800,
                 AddressOf ErrorIs, " When the bot sees error message {...},")

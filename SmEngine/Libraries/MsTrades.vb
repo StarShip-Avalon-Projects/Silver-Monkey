@@ -17,7 +17,9 @@ Namespace Engine.Libraries
         ''' <param name="session"></param>
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
+        End Sub
 
+        Public Overrides Sub Initialize()
             '(0:46) When the bot sees a trade request,
             Add(TriggerCategory.Cause, 46,
             Function()

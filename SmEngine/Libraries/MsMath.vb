@@ -16,7 +16,9 @@
 
         Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
+        End Sub
 
+        Public Overrides Sub Initialize()
         End Sub
 
 #End Region

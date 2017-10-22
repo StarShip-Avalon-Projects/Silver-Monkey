@@ -32,7 +32,9 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
+        End Sub
 
+        Public Overrides Sub Initialize()
             '(0:299) When the time is {...} hh:mm:ss am/pm FST,
             Add(TriggerCategory.Cause, 299,
                 Function(reader As TriggerReader)

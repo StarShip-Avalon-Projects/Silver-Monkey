@@ -21,6 +21,10 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
+        End Sub
+
+        Public Overrides Sub Initialize()
+
             ' (1:200) and the file {...} exists,
             Add(New Trigger(TriggerCategory.Condition, 200), AddressOf FileExists, " and the file {...} exists,")
 

@@ -32,6 +32,9 @@ Namespace Engine.Libraries
 
         Public Sub New(Session As BotSession)
             MyBase.New(Session)
+        End Sub
+
+        Public Overrides Sub Initialize()
             Add(New Trigger(TriggerCategory.Effect, 2010),
                 Function(reader As TriggerReader) As Boolean
                     Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))

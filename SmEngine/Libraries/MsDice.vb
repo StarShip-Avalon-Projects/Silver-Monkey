@@ -41,6 +41,9 @@ Namespace Engine.Libraries
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
             dice = New DiceObject()
+        End Sub
+
+        Public Overrides Sub Initialize()
             '(0:130) When the bot rolls #d#,
             Add(New Trigger(TriggerCategory.Cause, 130), AddressOf RollNumber, " When the bot rolls #d#,")
             '(0:131) When the bot rolls #d#+#,

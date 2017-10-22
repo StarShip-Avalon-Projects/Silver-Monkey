@@ -13,7 +13,9 @@
 
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
+        End Sub
 
+        Public Overrides Sub Initialize()
             '(5: ) Use file {...} as quote list and put line # into Variable %.
             '(5: ) Use File {...} as quote list and put the total of lines into variable %
         End Sub

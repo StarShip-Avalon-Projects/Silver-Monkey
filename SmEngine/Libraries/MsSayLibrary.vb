@@ -119,7 +119,9 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
+        End Sub
 
+        Public Overrides Sub Initialize()
             Add(TriggerCategory.Cause, 1,
                  Function() True, " When the bot logs into furcadia,")
             Add(TriggerCategory.Cause, 2,
@@ -618,7 +620,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Shared Function StartNewBot(reader As TriggerReader) As Boolean
-
+            'TODO: Move to a Sys Lib
             'Dim ps As Process = New Process()
             Dim File = reader.ReadString
             Dim p As New ProcessStartInfo With {

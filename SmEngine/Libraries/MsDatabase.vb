@@ -64,6 +64,9 @@ Namespace Engine.Libraries
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
             SQLitefile = Paths.CheckBotFolder("SilverMonkey.db")
+        End Sub
+
+        Public Overrides Sub Initialize()
             '(1:500) and the Database info {...} about the triggering furre is equal to #,
             Add(New Trigger(TriggerCategory.Condition, 500),
                 AddressOf TriggeringFurreinfoEqualToNumber,

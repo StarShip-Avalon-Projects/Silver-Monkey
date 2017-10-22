@@ -20,7 +20,9 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
+        End Sub
 
+        Public Overrides Sub Initialize()
             '(0:90) When the bot enters a Dream,
             Add(TriggerCategory.Cause, 90,
                 Function()

@@ -23,7 +23,9 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
+        End Sub
 
+        Public Overrides Sub Initialize()
             '(1:60) and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),
             Add(New Trigger(TriggerCategory.Condition, 60), AddressOf WildCard,
               " and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),")

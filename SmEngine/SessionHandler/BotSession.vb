@@ -126,7 +126,9 @@ Public Class BotSession : Inherits ProxySession
             End If
             MyBase.Connect()
         Catch ex As Exception
-            Throw ex
+            StopEngine()
+            Dim e As New MonkeyCore.Utils.Logging.ErrorLogging(ex, Me)
+            Process.Start("notepade.exe", e.LogFile)
         End Try
     End Sub
 
@@ -134,11 +136,6 @@ Public Class BotSession : Inherits ProxySession
     ''' Disconnect from the Game Server and Client
     ''' </summary>
     Public Overrides Sub Disconnect()
-        ' (0:2) When the bot logs off
-        If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
-            MSpage.ExecuteAsync(2)
-
-        End If
 
         MyBase.Disconnect()
         StopEngine()
@@ -415,7 +412,7 @@ Public Class BotSession : Inherits ProxySession
                 ' <font color='success'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Your cookies are ready.  http://furcadia.com/cookies/ for more info!</font>
                 '<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.
 
-                Dim CookieToMe As Regex = New Regex(String.Format("{0}", CookieToMeREGEX))
+                Dim CookieToMe = New Regex(String.Format("{0}", CookieToMeREGEX))
                 If CookieToMe.Match(Text).Success Then
                     Dim ids() = {42, 43}
                     Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
@@ -431,11 +428,11 @@ Public Class BotSession : Inherits ProxySession
                     End If
 
                 End If
-                Dim CookieFail As Regex = New Regex(String.Format("You do not have any (.*?) left!"))
+                Dim CookieFail = New Regex(String.Format("You do not have any (.*?) left!"))
                 If CookieFail.Match(Text).Success Then
                     Await Task.Run(Sub() MSpage.ExecuteAsync(45))
                 End If
-                Dim EatCookie As Regex = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
+                Dim EatCookie = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
                 If EatCookie.Match(Text).Success Then
                     'TODO Cookie eat %MESSAGE can change by Dragon Speak
 

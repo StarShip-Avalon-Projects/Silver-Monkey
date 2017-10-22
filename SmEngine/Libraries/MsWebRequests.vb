@@ -29,6 +29,9 @@ Namespace Engine.Libraries
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
             WebURL = Nothing
+        End Sub
+
+        Public Overrides Sub Initialize()
             '(0:70) When the bot receives a variable list by sending the Web-Cache.
             Add(New Trigger(TriggerCategory.Cause, 70),
             Function()

@@ -600,7 +600,7 @@ Public Class Main
         Else
             SndDisplay("Furcadia Session error:" + ex.Message + Environment.NewLine + o.ToString, TextDisplayManager.fColorEnum.Error)
         End If
-
+        LogStream.WriteLine("meep", ex)
     End Sub
 
     ''' <summary>

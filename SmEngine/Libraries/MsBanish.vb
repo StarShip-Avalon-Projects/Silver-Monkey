@@ -44,6 +44,9 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
+        End Sub
+
+        Public Overrides Sub Initialize()
             '(0: ) When the bot fails to banish a furre,
             Add(TriggerCategory.Cause, 50,
              Function() True, " When the bot fails to banish a furre,")

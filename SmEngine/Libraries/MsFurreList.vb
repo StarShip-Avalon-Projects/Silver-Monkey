@@ -22,6 +22,9 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
+        End Sub
+
+        Public Overrides Sub Initialize()
             '(1:700) and the triggering furre in the dream.
             Add(New Trigger(TriggerCategory.Condition, 700), AddressOf TriggeringInDream,
             " and the triggering furre in the dream.")

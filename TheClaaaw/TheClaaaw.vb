@@ -58,7 +58,7 @@ Public Class TheClaaaw
     ''' </summary>
     ''' <param name="Host">
     ''' </param>
-    Public Sub Initialize(ByVal Host As Interfaces.ImsHost) Implements Interfaces.ImsPlugin.Initialize
+    Public Overloads Sub Initialize(ByVal Host As Interfaces.ImsHost) Implements Interfaces.ImsPlugin.Initialize
         msHost = Host
     End Sub
 
@@ -283,6 +283,10 @@ Public Class TheClaaaw
         Next
 #Disable Warning BC42105 ' Function 'fIDtoFurre' doesn't return a value on all code paths. A null reference exception could occur at run time when the result is used.
     End Function
+
+    Public Overrides Sub Initialize()
+        Throw New NotImplementedException()
+    End Sub
 
 #Enable Warning BC42105 ' Function 'fIDtoFurre' doesn't return a value on all code paths. A null reference exception could occur at run time when the result is used.
 

@@ -42,6 +42,9 @@ Namespace Engine.Libraries
             verbot = New Verbot5Engine()
             _state = New State()
 
+        End Sub
+
+        Public Overrides Sub Initialize()
             '(0:1500) When the chat engine executes command {...},
             Add(TriggerCategory.Cause, 1500,
                  AddressOf ChatExecute, " When the chat engine executes command {...},")

@@ -19,6 +19,10 @@ Namespace Engine.Libraries
 
         End Sub
 
+        Public Overrides Sub Initialize()
+
+        End Sub
+
 #End Region
 
     End Class
