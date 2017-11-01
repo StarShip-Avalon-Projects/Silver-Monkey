@@ -138,7 +138,7 @@ Public Class BotSession : Inherits ProxySession
     Public Overrides Sub Disconnect()
 
         MyBase.Disconnect()
-        StopEngine()
+        ' StopEngine()
     End Sub
 
     ''' <summary>
@@ -159,7 +159,7 @@ Public Class BotSession : Inherits ProxySession
         Try
 
             DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Player.Message)
-
+            DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Player.ShortName)
             DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Player.Name)
         Catch ex As Exception
             RaiseEvent [Error](ex, Me, "Failure to set Triggering Furre and Triggering Furres %MESSAGE variables")
@@ -195,9 +195,9 @@ Public Class BotSession : Inherits ProxySession
 
     End Sub
 
-    Public Sub OnDisconnected() Handles MyBase.ServerDisConnected
-        RaiseEvent CloseSession()
-    End Sub
+    'Public Sub OnDisconnected() Handles MyBase.ServerDisConnected
+    '    RaiseEvent CloseSession()
+    'End Sub
 
     ''' <summary>
     ''' Configure Bot Variables and Execute Monkey Speak Truggers for Text and dynamic channels
@@ -206,9 +206,10 @@ Public Class BotSession : Inherits ProxySession
     ''' <param name="Args"><see cref="ParseServerArgs"/></param>
     Public Async Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles MyBase.ProcessServerChannelData
         If MSpage Is Nothing Then Exit Sub
-        If IsConnectedCharacter Then Exit Sub
+
         Try
             DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Player.Message)
+            DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Player.ShortName)
             DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Player.Name)
         Catch ex As Exception
             RaiseEvent [Error](ex, Me, "Failed to set Triggering Furre Monkeyspeak Variables")
@@ -331,7 +332,7 @@ Public Class BotSession : Inherits ProxySession
                     '(0:52) When the bot sucessfilly banishes a furre,
                     '(0:53) When the bot sucessfilly banishes the furre named {...},
                     'Success: You have canceled all banishments from your dreams.
-                    MSpage.RemoveVariable("%BANISHNAME")
+
                     DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
                     Dim ids() = {52, 53}
                     Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
@@ -495,13 +496,14 @@ Public Class BotSession : Inherits ProxySession
         VariableList.Add(New ConstantVariable("%BOTNAME", ConnectedFurre.Name))
         VariableList.Add(New ConstantVariable("%BOTCONTROLLER", MainEngineOptions.BotController))
         VariableList.Add(New ConstantVariable("%NAME", fur.Name))
+        VariableList.Add(New ConstantVariable("%SHORTNAME", fur.ShortName))
         VariableList.Add(New ConstantVariable("%MESSAGE", fur.Message))
         VariableList.Add(New ConstantVariable("%BANISHNAME", Nothing))
         VariableList.Add(New ConstantVariable("%BANISHLIST", Nothing))
 
         PageSetVariable(VariableList)
         '(0:0) When the bot starts,
-        Await Task.Run(Sub() MSpage.ExecuteAsync(0))
+        Await MSpage.ExecuteAsync(0)
         Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                             MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
 

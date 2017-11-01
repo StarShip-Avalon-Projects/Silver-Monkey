@@ -139,19 +139,28 @@ Public Class Main
 #Region "Public Methods"
 
     Public Sub ConnectBot()
-        If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
+        If BotConfig.LogOptions.log Then
+            Dim LogFile As String = Nothing
             Try
-                SndDisplay("New Session" + DateTime.Now.ToString)
 
-                FurcadiaSession.Connect()
-
-                ConnectTrayIconMenuItem.Enabled = False
-                DisconnectTrayIconMenuItem.Enabled = True
-                UpDateDreamList() '
-            Catch ex As Exception
-                SndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
+                LogStream = New LogStream(BotConfig.LogOptions)
+            Catch
+                SndDisplay("There's an error with log-file" + LogFile, TextDisplayManager.fColorEnum.Error)
+                Exit Sub
             End Try
         End If
+        Try
+            SndDisplay("New Session" + DateTime.Now.ToString)
+
+            FurcadiaSession.Connect()
+
+            ConnectTrayIconMenuItem.Enabled = False
+            DisconnectTrayIconMenuItem.Enabled = True
+            UpDateDreamList() '
+        Catch ex As Exception
+            SndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
+        End Try
+
     End Sub
 
     Public Sub ConnectionControlDisEnable()
@@ -725,37 +734,19 @@ Public Class Main
             MessageBox.Show(BotConfig.CharacterIniFile + " Not found, Aborting connection!", "Important Message")
             Exit Sub
         End If
-        If FurcadiaSession Is Nothing Then
+        If FurcadiaSession Is Nothing OrElse FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
             FurcadiaSession = New BotSession(BotConfig)
-        ElseIf FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
+        Else
             Throw New MonkeyspeakException("Furcadia was not previously reset")
             Exit Sub
         End If
 
-        If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
-
-            If BotConfig.LogOptions.log Then
-                Dim LogFile As String = Nothing
-                Try
-
-                    LogStream = New LogStream(BotConfig.LogOptions)
-                Catch
-                    FurcadiaSession.Dispose()
-                    SndDisplay("There's an error with log-file" + LogFile, TextDisplayManager.fColorEnum.Error)
-                    Exit Sub
-                End Try
-            End If
+        If FurcadiaSession.ServerStatus = ConnectionPhase.Init OrElse FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
 
             My.Settings.LastBotFile = CheckBotFolder(BotConfig.CharacterIniFile)
             My.Settings.Save()
 
-            If Not IsNothing(MsExport) Then MsExport.Dispose()
-            Try
-                ConnectBot()
-            Catch Ex As Exception
-                DisconnectBot()
-                SndDisplay("Connection Aborting: " + Ex.Message)
-            End Try
+            ConnectBot()
         Else
 
             DisconnectBot()
