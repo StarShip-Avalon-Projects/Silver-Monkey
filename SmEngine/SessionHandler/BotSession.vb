@@ -40,7 +40,8 @@ Imports SilverMonkeyEngine.Interfaces
 ''' </para>
 ''' </summary>
 <CLSCompliant(True)>
-Public Class BotSession : Inherits ProxySession
+Public Class BotSession
+    Inherits ProxySession
     Implements IDisposable
 
     Public Event CloseSession As Action
@@ -49,6 +50,8 @@ Public Class BotSession : Inherits ProxySession
     ''' Main MonkeySpeak Engine
     ''' </summary>
     Public WithEvents MainEngine As Engine.MainEngine
+
+    Private WithEvents FurcadiaProxySession As ProxySession
 
     ''' <summary>
     ''' Monkey Speak Page object
@@ -117,14 +120,14 @@ Public Class BotSession : Inherits ProxySession
     ''' <summary>
     ''' Starts the Furcadia Connection Process
     ''' </summary>
-    Public Overrides Sub Connect()
+    Public Sub Connect()
 
         Try
 
             If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
                 StartEngine()
             End If
-            MyBase.Connect()
+            FurcadiaProxySession.Connect()
         Catch ex As Exception
             StopEngine()
             Dim e As New MonkeyCore.Utils.Logging.ErrorLogging(ex, Me)
@@ -135,16 +138,16 @@ Public Class BotSession : Inherits ProxySession
     ''' <summary>
     ''' Disconnect from the Game Server and Client
     ''' </summary>
-    Public Overrides Sub Disconnect()
+    Public Sub Disconnect()
 
-        MyBase.Disconnect()
-        ' StopEngine()
+        FurcadiaProxySession.Disconnect()
+        StopEngine()
     End Sub
 
     ''' <summary>
     ''' Implement IDisposable Support
     ''' </summary>
-    Public Overrides Sub Dispose() Implements IDisposable.Dispose
+    Public Overloads Sub Dispose() Implements IDisposable.Dispose
 
         Dispose(True)
     End Sub
@@ -154,7 +157,8 @@ Public Class BotSession : Inherits ProxySession
     ''' </summary>
     ''' <param name="sender"><see cref="Object"/></param>
     ''' <param name="e"><see cref="ParseServerArgs"/></param>
-    Public Async Sub OnParseSererInstructionAsync(sender As Object, e As ParseServerArgs) Handles MyBase.ProcessServerInstruction
+    Public Async Sub OnParseSererInstructionAsync(sender As Object, e As ParseServerArgs) _
+          Handles FurcadiaProxySession.ProcessServerInstruction
 
         Try
 
@@ -174,9 +178,9 @@ Public Class BotSession : Inherits ProxySession
                 Catch ex As Exception
                     RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
                 End Try
-                '(0:90) When the bot enters a Dream,
-                '(0:91) When the bot enters a Dream named {..},
-                Dim ids() = {92, 93}
+                '(0:97) When the bot leaves a Dream,
+                '(0:98) When the bot leaves the Dream named {..},
+                Dim ids() = {97, 98}
                 Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
             Case ServerInstructionType.BookmarkDream
@@ -204,8 +208,10 @@ Public Class BotSession : Inherits ProxySession
     ''' </summary>
     ''' <param name="InstructionObject"><see cref="ChannelObject"/></param>
     ''' <param name="Args"><see cref="ParseServerArgs"/></param>
-    Public Async Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles MyBase.ProcessServerChannelData
+    Public Async Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) _
+        Handles FurcadiaProxySession.ProcessServerChannelData
         If MSpage Is Nothing Then Exit Sub
+        Dim Player As Furre = InstructionObject.Player
 
         Try
             DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Player.Message)
@@ -222,7 +228,6 @@ Public Class BotSession : Inherits ProxySession
                 Dim DiceObject As DiceRolls = Nothing
                 If InstructionObject.GetType().Equals(GetType(DiceRolls)) Then
                     DiceObject = DirectCast(InstructionObject, DiceRolls)
-                    MsDice.dice = DiceObject.Dice
                 End If
 
                 If IsConnectedCharacter Then
@@ -231,14 +236,14 @@ Public Class BotSession : Inherits ProxySession
                     '(0:134) When the bot rolls #d#-#,
                     '(0:136) When any one rolls anything,
                     Dim ids() = {130, 131, 132, 136}
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids, DiceObject))
                 Else
                     '(0:136) When a furre rolls #d#,
                     '(0:138) When a fuure rolls #d#+#,
                     '(0:140) When a furre rolls #d#-#,
                     '(0:136) When any one rolls anything,
                     Dim ids() = {133, 134, 135, 136}
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids, DiceObject))
                 End If
             Case "trade"
                 Dim ids() = {46, 47, 48}
@@ -531,7 +536,7 @@ Public Class BotSession : Inherits ProxySession
     ''' Dispose components
     ''' </summary>
     ''' <param name="disposing"></param>
-    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+    Protected Overloads Sub Dispose(ByVal disposing As Boolean)
 
         If Me.disposed Then Exit Sub
         If disposing Then

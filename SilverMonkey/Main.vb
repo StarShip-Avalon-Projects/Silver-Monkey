@@ -322,7 +322,8 @@ Public Class Main
     ''' </param>
     ''' <param name="e">
     ''' </param>
-    Private Sub ClientStatusUpdate(Sender As Object, e As NetClientEventArgs) Handles FurcadiaSession.ClientStatusChanged
+    Private Sub ClientStatusUpdate(Sender As Object, e As NetClientEventArgs) _
+        Handles FurcadiaSession.ClientStatusChanged
 
         Select Case e.ConnectPhase
 
@@ -589,7 +590,8 @@ Public Class Main
         GC.Collect()
     End Sub
 
-    Public Sub OnFurcadiaSessionError(ex As Exception, o As Object, n As String) Handles FurcadiaSession.[Error]
+    Public Sub OnFurcadiaSessionError(ex As Exception, o As Object, n As String) _
+        Handles FurcadiaSession.[Error]
 
         ' SndDisplay("MonkeySpeak error:" + trig.ToString() + " " + ex.Message, TextDisplayManager.fColorEnum.Error)
         If ex.GetType() Is GetType(MonkeyspeakException) Then
