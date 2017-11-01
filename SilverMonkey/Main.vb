@@ -734,11 +734,8 @@ Public Class Main
             MessageBox.Show(BotConfig.CharacterIniFile + " Not found, Aborting connection!", "Important Message")
             Exit Sub
         End If
-        If FurcadiaSession Is Nothing OrElse FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
+        If FurcadiaSession Is Nothing Then
             FurcadiaSession = New BotSession(BotConfig)
-        Else
-            Throw New MonkeyspeakException("Furcadia was not previously reset")
-            Exit Sub
         End If
 
         If FurcadiaSession.ServerStatus = ConnectionPhase.Init OrElse FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
