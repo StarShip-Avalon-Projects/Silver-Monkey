@@ -20,6 +20,7 @@ Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine
+Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.Interfaces
 
 ''' <summary>
@@ -495,7 +496,7 @@ Public Class BotSession
             Dim TimeStart = DateTime.Now
             Dim VariableList As New List(Of IVariable)
 
-            MSpage = LibraryUtils.LoadLibrary(Me, False)
+            MSpage = LoadLibrary(False)
             Dim fur = New Furre
             VariableList.Add(New ConstantVariable("%DREAMOWNER", lastDream.Owner))
             VariableList.Add(New ConstantVariable("%DREAMNAME", lastDream.Name))
@@ -590,5 +591,71 @@ Public Class BotSession
         End Select
 
     End Sub
+
+    ''' <summary>
+    ''' Load Libraries into the engine
+    ''' </summary>
+    ''' <param name="silent"> Announce Loaded Libraries</param>
+    Public Function LoadLibrary(silent As Boolean) As Page
+
+        'Library Loaded?.. Get the Hell out of here
+        MSpage.SetTriggerHandler(TriggerCategory.Cause, 0, Function() True,
+        " When the Monkey Speak Engine starts,")
+
+        Dim LibList = InitializeEngineLibraries()
+
+        For Each Library As Monkeyspeak.Libraries.BaseLibrary In LibList
+            Try
+                MSpage.LoadLibrary(Library)
+                If Not silent Then Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
+            Catch ex As Exception
+                Throw New MonkeyspeakException(Library.GetType().Name + " " + ex.Message, ex)
+
+            End Try
+        Next
+
+        Return MSpage
+
+    End Function
+
+    Private Function InitializeEngineLibraries() As List(Of Monkeyspeak.Libraries.BaseLibrary)
+        ' Comment out Libs to Disable
+
+        Dim LibList = New List(Of Monkeyspeak.Libraries.BaseLibrary) From {
+                New Libraries.Debug(),
+                New Libraries.IO(MainEngineOptions.BotPath),
+                New Libraries.Math(),
+                New Libraries.StringOperations(),
+                New Libraries.Sys(),
+                New Libraries.Timers(100),
+                New Libraries.Loops(),
+                New Libraries.Tables(),
+                New StringLibrary(Me),
+                New MsSayLibrary(Me),
+                New MsBanish(Me),
+                New MsTime(Me),
+                New MsDatabase(Me),
+                New MsWebRequests(Me),
+                New MS_Cookie(Me),
+                New MsPhoenixSpeak(Me),
+                New MsPhoenixSpeakBackupAndRestore(Me),
+                New MsDice(Me),
+                New MsFurreList(Me),
+                New MsWarning(Me),
+                New MsMovement(Me),
+                New WmCpyDta(Me),
+                New MsMemberList(Me),
+                New MsPounce(Me),
+                New MsSound(Me),
+                New MsTrades(Me),
+                New MsDreamInfo(Me)
+                                }
+        'New MsVerbot(Session),
+        ' New MathLibrary(Me),
+        'New MsIO(Me),
+        'LibList.Add(New MS_MemberList())
+
+        Return LibList
+    End Function
 
 End Class

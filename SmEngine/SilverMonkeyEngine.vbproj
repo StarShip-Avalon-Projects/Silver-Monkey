@@ -117,7 +117,6 @@
     <Compile Include="Libraries\MsBanish.vb" />
     <None Include="SessionHandler\ConstantVariable.vb" />
     <Compile Include="SessionHandler\EngineOptoons.vb" />
-    <Compile Include="SessionHandler\LibraryLoader.vb" />
     <Compile Include="SessionHandler\MainEngine.vb" />
     <None Include="Libraries\MS Repq.vb" />
     <Compile Include="Libraries\MS Verbot.vb" />

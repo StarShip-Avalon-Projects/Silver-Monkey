@@ -43,7 +43,7 @@ Public Class MS_Export
         Session.MSpage = engine.LoadFromString(String.Empty)
 
         'Load the Monkeyspeak lins into the page
-        MsPage = LibraryUtils.LoadLibrary(Session, True)
+        MsPage = Session.LoadLibrary(True)
 
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
