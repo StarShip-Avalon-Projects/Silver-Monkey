@@ -148,7 +148,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
     </Compile>
-    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AssemblyInfo.cs">
+      <LastGenOutput>AssemblyInfo1.cs</LastGenOutput>
+    </Compile>
     <Compile Include="Controls\RemoveColumn.cs">
       <SubType>Form</SubType>
     </Compile>
