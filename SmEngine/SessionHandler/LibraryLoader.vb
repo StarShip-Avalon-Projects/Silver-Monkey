@@ -18,7 +18,7 @@ Namespace Engine
             Dim MSpage = Session.MSpage
             'Library Loaded?.. Get the Hell out of here
             MSpage.SetTriggerHandler(TriggerCategory.Cause, 0, Function() True,
-            "(0:0) When the Monkey Speak Engine starts,")
+            " When the Monkey Speak Engine starts,")
 
             Dim LibList = InitializeEngineLibraries(Session)
 
@@ -40,7 +40,15 @@ Namespace Engine
             ' Comment out Libs to Disable
 
             Dim LibList = New List(Of Monkeyspeak.Libraries.BaseLibrary) From {
-                                New StringLibrary(Session),
+                    New Monkeyspeak.Libraries.Debug(),
+                    New Monkeyspeak.Libraries.IO(Session.MainEngineOptions.BotPath),
+                    New Monkeyspeak.Libraries.Math(),
+                    New Monkeyspeak.Libraries.StringOperations(),
+                    New Monkeyspeak.Libraries.Sys(),
+                    New Monkeyspeak.Libraries.Timers(100),
+                    New Monkeyspeak.Libraries.Loops(),
+                    New Monkeyspeak.Libraries.Tables(),
+                    New StringLibrary(Session),
                     New MsSayLibrary(Session),
                     New MsBanish(Session),
                     New MsTime(Session),
@@ -56,22 +64,15 @@ Namespace Engine
                     New WmCpyDta(Session),
                     New MsMemberList(Session),
                     New MsPounce(Session),
-                   New MsSound(Session),
+                    New MsSound(Session),
                     New MsTrades(Session),
-                    New MsDreamInfo(Session),
-                    New Monkeyspeak.Libraries.Debug(),
-                    New Monkeyspeak.Libraries.IO(Session.MainEngineOptions.BotPath),
-                    New Monkeyspeak.Libraries.Loops(),
-                    New Monkeyspeak.Libraries.Math(),
-                    New Monkeyspeak.Libraries.StringOperations(),
-                    New Monkeyspeak.Libraries.Sys(),
-                    New Monkeyspeak.Libraries.Tables(),
-                    New Monkeyspeak.Libraries.Timers(100)
-                }
+                    New MsDreamInfo(Session)
+                                    }
             'New MsVerbot(Session),
             ' New MathLibrary(Me),
             'New MsIO(Me),
             'LibList.Add(New MS_MemberList())
+
             Return LibList
         End Function
 

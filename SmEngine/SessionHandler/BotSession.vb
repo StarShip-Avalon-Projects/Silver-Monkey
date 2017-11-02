@@ -17,6 +17,7 @@ Imports Furcadia.Net.Utils.ServerParser
 Imports Furcadia.Text.FurcadiaMarkup
 Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
+Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Interfaces
@@ -487,31 +488,35 @@ Public Class BotSession
     ''' Start the Monkey Speak Engine
     ''' </summary>
     Public Async Sub StartEngine()
-        MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
-        MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+        Try
+            MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
+            MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
-        Dim TimeStart = DateTime.Now
-        Dim VariableList As New List(Of IVariable)
+            Dim TimeStart = DateTime.Now
+            Dim VariableList As New List(Of IVariable)
 
-        MSpage = LibraryUtils.LoadLibrary(Me, False)
-        Dim fur = New Furre
-        VariableList.Add(New ConstantVariable("%DREAMOWNER", lastDream.Owner))
-        VariableList.Add(New ConstantVariable("%DREAMNAME", lastDream.Name))
-        VariableList.Add(New ConstantVariable("%BOTNAME", ConnectedFurre.Name))
-        VariableList.Add(New ConstantVariable("%BOTCONTROLLER", MainEngineOptions.BotController))
-        VariableList.Add(New ConstantVariable("%NAME", fur.Name))
-        VariableList.Add(New ConstantVariable("%SHORTNAME", fur.ShortName))
-        VariableList.Add(New ConstantVariable("%MESSAGE", fur.Message))
-        VariableList.Add(New ConstantVariable("%BANISHNAME", Nothing))
-        VariableList.Add(New ConstantVariable("%BANISHLIST", Nothing))
+            MSpage = LibraryUtils.LoadLibrary(Me, False)
+            Dim fur = New Furre
+            VariableList.Add(New ConstantVariable("%DREAMOWNER", lastDream.Owner))
+            VariableList.Add(New ConstantVariable("%DREAMNAME", lastDream.Name))
+            VariableList.Add(New ConstantVariable("%BOTNAME", ConnectedFurre.Name))
+            VariableList.Add(New ConstantVariable("%BOTCONTROLLER", MainEngineOptions.BotController))
+            VariableList.Add(New ConstantVariable("%NAME", fur.Name))
+            VariableList.Add(New ConstantVariable("%SHORTNAME", fur.ShortName))
+            VariableList.Add(New ConstantVariable("%MESSAGE", fur.Message))
+            VariableList.Add(New ConstantVariable("%BANISHNAME", Nothing))
+            VariableList.Add(New ConstantVariable("%BANISHLIST", Nothing))
 
-        PageSetVariable(VariableList)
-        '(0:0) When the bot starts,
-        Await Task.Run(Sub() MSpage.ExecuteAsync(0))
+            PageSetVariable(VariableList)
+            '(0:0) When the bot starts,
+            Await Task.Run(Sub() MSpage.ExecuteAsync(0))
 
-        Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
+            Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                             MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
-
+        Catch ex As Exception
+            Dim Err As New ErrorLogging(ex, Me)
+            Process.Start("notepad.exe", Err.LogFile)
+        End Try
     End Sub
 
     ''' <summary>
