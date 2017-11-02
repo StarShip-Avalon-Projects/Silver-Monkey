@@ -19,7 +19,6 @@ Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine
-Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.Interfaces
 
 ''' <summary>
@@ -51,8 +50,6 @@ Public Class BotSession
     ''' </summary>
     Public WithEvents MainEngine As Engine.MainEngine
 
-    Private WithEvents FurcadiaProxySession As ProxySession
-
     ''' <summary>
     ''' Monkey Speak Page object
     ''' </summary>
@@ -61,7 +58,7 @@ Public Class BotSession
     Public objHost As New smHost(Me)
     Private disposed As Boolean
     Private handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
-
+    Private lastDream As DREAM
     ''' <summary>
     ''' Library Objects to load into the Engine
     ''' </summary>
@@ -75,7 +72,7 @@ Public Class BotSession
     Sub New()
         MyBase.New()
         MainEngineOptions = New BotOptions()
-
+        lastDream = New DREAM
     End Sub
 
     ''' <summary>
@@ -85,7 +82,7 @@ Public Class BotSession
     ''' </param>
     Sub New(ByRef BotSessionOptions As BotOptions)
         MyBase.New(BotSessionOptions)
-
+        lastDream = New DREAM
         MainEngineOptions = BotSessionOptions
     End Sub
 
@@ -120,14 +117,14 @@ Public Class BotSession
     ''' <summary>
     ''' Starts the Furcadia Connection Process
     ''' </summary>
-    Public Sub Connect()
+    Public Overrides Sub Connect()
 
         Try
 
             If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
                 StartEngine()
             End If
-            FurcadiaProxySession.Connect()
+            MyBase.Connect()
         Catch ex As Exception
             StopEngine()
             Dim e As New MonkeyCore.Utils.Logging.ErrorLogging(ex, Me)
@@ -138,16 +135,16 @@ Public Class BotSession
     ''' <summary>
     ''' Disconnect from the Game Server and Client
     ''' </summary>
-    Public Sub Disconnect()
+    Public Overrides Sub Disconnect()
 
-        FurcadiaProxySession.Disconnect()
+        MyBase.Disconnect()
         StopEngine()
     End Sub
 
     ''' <summary>
     ''' Implement IDisposable Support
     ''' </summary>
-    Public Overloads Sub Dispose() Implements IDisposable.Dispose
+    Public Overrides Sub Dispose() Implements IDisposable.Dispose
 
         Dispose(True)
     End Sub
@@ -158,7 +155,7 @@ Public Class BotSession
     ''' <param name="sender"><see cref="Object"/></param>
     ''' <param name="e"><see cref="ParseServerArgs"/></param>
     Public Async Sub OnParseSererInstructionAsync(sender As Object, e As ParseServerArgs) _
-          Handles FurcadiaProxySession.ProcessServerInstruction
+          Handles MyBase.ProcessServerInstruction
 
         Try
 
@@ -173,8 +170,8 @@ Public Class BotSession
 
             Case ServerInstructionType.LoadDreamEvent
                 Try
-                    DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(Dream.Owner)
-                    DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).SetValue(Dream.Name)
+                    DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(lastDream.Owner)
+                    DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).SetValue(lastDream.Name)
                 Catch ex As Exception
                     RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
                 End Try
@@ -194,7 +191,7 @@ Public Class BotSession
                 '(0:91) When the bot enters a Dream named {..},
                 Dim ids() = {90, 91}
                 Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
-
+                lastDream = Dream
         End Select
 
     End Sub
@@ -209,7 +206,7 @@ Public Class BotSession
     ''' <param name="InstructionObject"><see cref="ChannelObject"/></param>
     ''' <param name="Args"><see cref="ParseServerArgs"/></param>
     Public Async Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) _
-        Handles FurcadiaProxySession.ProcessServerChannelData
+        Handles MyBase.ProcessServerChannelData
         If MSpage Is Nothing Then Exit Sub
         Dim Player As Furre = InstructionObject.Player
 
@@ -228,6 +225,8 @@ Public Class BotSession
                 Dim DiceObject As DiceRolls = Nothing
                 If InstructionObject.GetType().Equals(GetType(DiceRolls)) Then
                     DiceObject = DirectCast(InstructionObject, DiceRolls)
+                Else
+                    Throw New NetProxyException("Saw channel " + InstructionObject.Channel + "But there is no DiceRolls object")
                 End If
 
                 If IsConnectedCharacter Then
@@ -496,8 +495,8 @@ Public Class BotSession
 
         MSpage = LibraryUtils.LoadLibrary(Me, False)
         Dim fur = New Furre
-        VariableList.Add(New ConstantVariable("%DREAMOWNER", Nothing))
-        VariableList.Add(New ConstantVariable("%DREAMNAME", Nothing))
+        VariableList.Add(New ConstantVariable("%DREAMOWNER", lastDream.Owner))
+        VariableList.Add(New ConstantVariable("%DREAMNAME", lastDream.Name))
         VariableList.Add(New ConstantVariable("%BOTNAME", ConnectedFurre.Name))
         VariableList.Add(New ConstantVariable("%BOTCONTROLLER", MainEngineOptions.BotController))
         VariableList.Add(New ConstantVariable("%NAME", fur.Name))
@@ -508,7 +507,8 @@ Public Class BotSession
 
         PageSetVariable(VariableList)
         '(0:0) When the bot starts,
-        Await MSpage.ExecuteAsync(0)
+        Await Task.Run(Sub() MSpage.ExecuteAsync(0))
+
         Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                             MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
 

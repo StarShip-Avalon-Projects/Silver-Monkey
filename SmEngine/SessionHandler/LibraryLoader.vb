@@ -17,7 +17,7 @@ Namespace Engine
         Public Shared Function LoadLibrary(Session As BotSession, silent As Boolean) As Page
             Dim MSpage = Session.MSpage
             'Library Loaded?.. Get the Hell out of here
-            MSpage.SetTriggerHandler(TriggerCategory.Cause, 0, Function(reader) True,
+            MSpage.SetTriggerHandler(TriggerCategory.Cause, 0, Function() True,
             "(0:0) When the Monkey Speak Engine starts,")
 
             Dim LibList = InitializeEngineLibraries(Session)
@@ -56,8 +56,7 @@ Namespace Engine
                     New WmCpyDta(Session),
                     New MsMemberList(Session),
                     New MsPounce(Session),
-                    New MsVerbot(Session),
-                    New MsSound(Session),
+                   New MsSound(Session),
                     New MsTrades(Session),
                     New MsDreamInfo(Session),
                     New Monkeyspeak.Libraries.Debug(),
@@ -69,6 +68,7 @@ Namespace Engine
                     New Monkeyspeak.Libraries.Tables(),
                     New Monkeyspeak.Libraries.Timers(100)
                 }
+            'New MsVerbot(Session),
             ' New MathLibrary(Me),
             'New MsIO(Me),
             'LibList.Add(New MS_MemberList())
