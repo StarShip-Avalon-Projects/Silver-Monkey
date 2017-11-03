@@ -152,7 +152,9 @@ Namespace Engine.Libraries
 
             'emotes
             Add(TriggerCategory.Cause, 11,
-                 Function() Not FurcadiaSession.IsConnectedCharacter, " When someone emotes something,")
+                 Function(reader)
+                     Return Not FurcadiaSession.IsConnectedCharacter
+                 End Function, " When someone emotes something,")
             Add(TriggerCategory.Cause, 12,
                  AddressOf MsgIs, " When someone emotes {..},")
 
@@ -162,7 +164,9 @@ Namespace Engine.Libraries
 
             'Whispers
             Add(TriggerCategory.Cause, 15,
-                Function() Not FurcadiaSession.IsConnectedCharacter, " When someone whispers something,")
+                Function()
+                    Return Not FurcadiaSession.IsConnectedCharacter
+                End Function, " When someone whispers something,")
 
             Add(TriggerCategory.Cause, 16,
                 AddressOf MsgIs, " When someone whispers {..},")
@@ -643,7 +647,8 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overrides Function MsgContains(reader As TriggerReader) As Boolean
-            Return MyBase.MsgContains(reader)
+            Dim var = MyBase.MsgContains(reader)
+            Return var
         End Function
 
         ''' <summary>

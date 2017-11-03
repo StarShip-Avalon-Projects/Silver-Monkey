@@ -69,6 +69,8 @@ Public Class BotSession
 
     Private MainSettings As Settings.cMain
 
+    ' Public SendTextToDisplay As EventHandler(Of
+
     ''' <summary>
     ''' </summary>
     Sub New()
@@ -253,6 +255,8 @@ Public Class BotSession
                 '(0:8) When someone shouts something,
                 '(0:9) When someone shouts {..},
                 '(0:10) When someone shouts something with {..} in it,
+                If IsConnectedCharacter Then Exit Sub
+                If InstructionObject.RawInstruction.StartsWith("<font color='shout'>You shout,") Then Exit Sub
                 Dim ids() = {8, 9, 10}
                 Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
             Case "say"
@@ -276,6 +280,7 @@ Public Class BotSession
                 Await Task.Run(Sub() MSpage.ExecuteAsync(Ids))
 
             Case "emote"
+                If IsConnectedCharacter Then Exit Sub
                 ' (0:12) When someone emotes {...} Execute
                 ' (0:13) When someone emotes something with {...} in it
                 ' (0:18) When someone says or emotes something
@@ -283,12 +288,6 @@ Public Class BotSession
                 ' (0:20) When someone says or emotes something
                 ' with {...} in it
                 Dim ids() = {11, 12, 13, 18, 19, 20}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
-            Case "emit"
-                ' (0:21) When someone emits something
-                ' (0:22) When someone emits {...}
-                ' (0:23) When someone emits something with {...} in it
-                Dim ids() = {21, 22, 23}
                 Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
             Case "@emit"
                 ' (0:21) When someone emits something

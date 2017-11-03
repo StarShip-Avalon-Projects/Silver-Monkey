@@ -31,11 +31,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
 
-            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("%MESSAGE")
+            Dim msMsg = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
 
-            Dim test = StripFurcadiaMarkup(msg.Value.ToString)
-            Return test.ToLower.Contains(msMsg.ToLower)
+            Dim test = StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString.ToLower.Trim)
+            Return test.Contains(msMsg.ToLower)
 
         End Function
 
@@ -68,8 +67,10 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
-            Return Not FurcadiaSession.IsConnectedCharacter AndAlso
-                 StripFurcadiaMarkup(reader.ReadString()).ToLower.Equals(StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString).ToLower)
+
+            Dim var = StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString).ToLower.Trim
+            Dim test = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
+            Return Not FurcadiaSession.IsConnectedCharacter AndAlso var = test
 
         End Function
 
