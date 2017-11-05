@@ -4,6 +4,7 @@ Imports System.Text
 Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
 Imports Monkeyspeak
+Imports Monkeyspeak.Logging
 
 Namespace Engine
 
@@ -52,6 +53,8 @@ Namespace Engine
 
         Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
 
+        Private Shared EngineLogger As MsLogger
+
         ''' <summary>
         ''' Default Constructlor.
         ''' <para>
@@ -62,6 +65,7 @@ Namespace Engine
             SilverMonkeyEngineOptions = Options
             FurcadiaSession = FurcSession
             SmEngine = New MonkeyspeakEngine(Options)
+            Logger.LogOutput = New MsLogger()
         End Sub
 
         ''' <summary>
