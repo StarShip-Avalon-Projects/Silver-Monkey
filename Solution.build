@@ -41,7 +41,7 @@
   </Target>
 
   <Target Name="BackupSource" Condition=" '$(Configuration)' == 'Debug' ">
-  <CallTarget Targets="GetVersion"/>
+
 		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x\.svn\* -x*\Net40\* -x*\Build\* -x*\.vs\* -x*\.git\* -x*\.svn\* -x*Plugins\*  -x*bin\*  -x*\src\ -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config Build/Installer/MonkeySystem2_Src.rar *.*" />
  <!--   <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.pdb ..\Installer\MonkeySystem2_Debug_Symbols.rar *.*"
 			WorkingDirectory="Build/Debug" /> -->
@@ -51,17 +51,12 @@
 			WorkingDirectory="Build/Debug/" />
 		 <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x*bin\*  -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config ../Build/Installer/BaseModule_Src.rar *.*"
 			WorkingDirectory="BaseModule"/>
-
-			
-			
-		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x*bin\*  -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config ..\../Build/Installer/SilverMonkey_Debug_(AnyCPU)-$(FileVersion).rar *.*"
-			WorkingDirectory="Build\Debug"/>
-
   </Target>
-    <Target Name="BackupSource" Condition=" '$(Configuration)' == 'Release' ">
+
+   <Target Name="BackupSource" >
   <CallTarget Targets="GetVersion"/>
-  					<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x*bin\*  -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config ..\../Build/Installer/SilverMonkey_Release_AnyCPU)-$(FileVersion).rar *.*"
-			WorkingDirectory="Build\Release"/>
+  		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x*bin\*  -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config ..\../Build/Installer/SilverMonkey_'$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
+			WorkingDirectory="Build\$(Configuration)"/>
   </Target>
 
 
