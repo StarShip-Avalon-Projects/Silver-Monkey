@@ -7,8 +7,6 @@
 
   <Target Name="BuildAll">
 		<CallTarget Targets="Clean"/>
-	
-	<!--	<CallTarget Targets="GetVersion"/> -->
 		<CallTarget Targets="Build"/>
 		<CallTarget Targets="BackupSource"/>
 		<CallTarget Targets="CopyFiles"/>
@@ -22,12 +20,12 @@
     <CreateProperty Value="%(AsmInfo.Version)">
       <Output TaskParameter="Value" PropertyName="FileVersion" />
     </CreateProperty>
-    <CreateProperty Value="$(DefineConstants)">
+   <!--  <CreateProperty Value="$(DefineConstants)">
       <Output TaskParameter="Value" PropertyName="DefineConstantsOriginal" />
     </CreateProperty>
-    <CreateProperty Value="$(DefineConstants);FileVersion=$(FileVersion)">
-      <Output TaskParameter="Value" PropertyName="DefineConstants" />
-    </CreateProperty>
+   <CreateProperty Value="$(DefineConstants);FileVersion=$(FileVersion)">
+      <Output TaskParameter="Value" PropertyName="DefineConstants" /> 
+    </CreateProperty>-->
 
   </Target>
 
@@ -41,22 +39,24 @@
   </Target>
 
   <Target Name="BackupSource" Condition=" '$(Configuration)' == 'Debug' ">
-
+		<!-- Monkey System-->
 		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x\.svn\* -x*\Net40\* -x*\Build\* -x*\.vs\* -x*\.git\* -x*\.svn\* -x*Plugins\*  -x*bin\*  -x*\src\ -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config Build/Installer/MonkeySystem2_Src.rar *.*" />
- <!--   <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.pdb ..\Installer\MonkeySystem2_Debug_Symbols.rar *.*"
-			WorkingDirectory="Build/Debug" /> -->
+			 <!--   <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.pdb ..\Installer\MonkeySystem2_Debug_Symbols.rar *.*"
+				WorkingDirectory="Build/Debug" /> -->
+		<!-- Support files -->
 		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.bat ..\Build\Installer\MonkeySystem2_Support_Files.rar *.*"
 			WorkingDirectory="Bin" />
-		 <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -nBaseModule.* -nSystem.Data.SQLite.* -nSQLite.Interop.* -nInterfaces.* -nFastColoredTextBox.* -nSQLite.Interop.* -nFurcadiaLib.* -nMonkeyCore.* -nIrony.dll ..\..\Build\Installer\Plugins_API.rar *.*"
-			WorkingDirectory="Build/Debug/" />
-		 <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x*bin\*  -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config ../Build/Installer/BaseModule_Src.rar *.*"
+		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x*bin\*  -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config ../Build/Installer/BaseModule_Src.rar *.*"
 			WorkingDirectory="BaseModule"/>
   </Target>
 
    <Target Name="BackupSource" >
-  <CallTarget Targets="GetVersion"/>
+		<CallTarget Targets="GetVersion"/>
   		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x*bin\*  -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config ../../Build/Installer/SilverMonkey_Binaties_$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
 			WorkingDirectory="Build\$(Configuration)\"/>
+		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -nBaseModule.* -nSystem.Data.SQLite.* -nSQLite.Interop.* -nInterfaces.* -nFastColoredTextBox.* -nSQLite.Interop.* -nFurcadiaLib.* -nMonkeyCore.* -nIrony.dll ..\..\Build\Installer\Plugins_API_$(Configuration).rar *.*"
+			WorkingDirectory="Build/$(Configuration)/" />
+					 
   </Target>
 
 
@@ -70,7 +70,7 @@
     <Delete Files="@(FilesToDelete)" />
   </Target>
 
-      <ItemGroup>  
+     <ItemGroup>  
         <MySourceFiles Include="MonkeySpeakEx\bin\Release\*.rar"/>
 		 <MySourceFiles Include="MonkeySpeakEx\bin\Debug\*.rar"/>
     </ItemGroup>  
