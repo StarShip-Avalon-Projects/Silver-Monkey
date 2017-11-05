@@ -280,9 +280,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="SilverMonkey.nsi">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="SilverMonkey.nsi" />
     <None Include="SilverMonkey.pfx" />
     <None Include="SilverMonkey.snk" />
   </ItemGroup>

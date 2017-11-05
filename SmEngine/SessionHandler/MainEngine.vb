@@ -65,7 +65,7 @@ Namespace Engine
             SilverMonkeyEngineOptions = Options
             FurcadiaSession = FurcSession
             SmEngine = New MonkeyspeakEngine(Options)
-            Logger.LogOutput = New MsLogger()
+            ' Logger.LogOutput = New MsLogger()
         End Sub
 
         ''' <summary>
