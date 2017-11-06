@@ -337,10 +337,6 @@
       <Project>{3c0e1cbf-d3b9-4282-ac97-4e0216ca6c97}</Project>
       <Name>SilverMonkeyEngine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VerbotSDK\Verbot5Library.csproj">
-      <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>
-      <Name>Verbot5Library</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
