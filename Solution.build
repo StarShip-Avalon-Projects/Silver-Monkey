@@ -93,7 +93,6 @@
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
 			WorkingDirectory="Data Monkey/"/>
 
-
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
 			WorkingDirectory="MonkeyCore/"/>
 
