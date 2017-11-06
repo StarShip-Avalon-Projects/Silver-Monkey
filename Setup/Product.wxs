@@ -184,7 +184,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
     </DirectoryRef>
     <PropertyRef Id="NETFRAMEWORK45" />
     <Condition Message="This application requires .NET Framework 4.6.1 Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR NETFRAMEWORK461]]>
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED]]>
     </Condition>
     <Feature Id="SilverMonkey2" Title="Main Application" Level="1">
 
