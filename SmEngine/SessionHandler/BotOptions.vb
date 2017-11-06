@@ -37,8 +37,8 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     End Sub
 
     Public Sub New(ByRef BFile As String)
-        _MonkeySpeakEngineOption = New Engine.EngineOptoons()
-        BotIni = New IniFile()
+        Me.New()
+
         Dim dir As String = Path.GetDirectoryName(BFile)
         If String.IsNullOrEmpty(dir) Then
             BFile = Path.Combine(Paths.SilverMonkeyBotPath, BFile)
