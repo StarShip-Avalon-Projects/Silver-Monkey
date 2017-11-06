@@ -8,7 +8,7 @@
   <Target Name="BuildAll">
 		<CallTarget Targets="Clean"/>
 		<CallTarget Targets="Build"/>
-		<CallTarget Targets="BackupSource"/>
+		<CallTarget Targets="BackupAllSources"/>
 		<CallTarget Targets="CopyFiles"/>
   </Target>
   
@@ -36,9 +36,10 @@
         Projects="MonkeySystem VS2015.sln"
         Targets="Restore;Build"
         Properties="Configuration=$(Configuration);Platform=Any CPU" />
+				<CallTarget Targets="BackupSource"/>
   </Target>
 
-  <Target Name="BackupSource" Condition=" '$(Configuration)' == 'Debug' ">
+  <Target Name="BackupAllSources" Condition=" '$(Configuration)' == 'Debug' ">
 		<!-- Monkey System-->
 		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x\.svn\* -x*\Net40\* -x*\Build\* -x*\.vs\* -x*\.git\* -x*\.svn\* -x*Plugins\*  -x*bin\*  -x*\src\ -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config Build/Installer/MonkeySystem2_Src.rar *.*" />
 			 <!--   <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.pdb ..\Installer\MonkeySystem2_Debug_Symbols.rar *.*"
@@ -48,12 +49,13 @@
 			WorkingDirectory="Bin" />
 		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x*bin\*  -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config ../Build/Installer/BaseModule_Src.rar *.*"
 			WorkingDirectory="BaseModule"/>
+
   </Target>
 
    <Target Name="BackupSource" >
 		<CallTarget Targets="GetVersion"/>
-  		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x*bin\*  -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config ../../Build/Installer/SilverMonkey_Binaties_$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
-			WorkingDirectory="Build\$(Configuration)\"/>
+  		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.txt -n*.config ../../Build/Installer/SilverMonkey_Binaties_$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
+			WorkingDirectory="Build/$(Configuration)\"/>
 		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -nBaseModule.* -nSystem.Data.SQLite.* -nSQLite.Interop.* -nInterfaces.* -nFastColoredTextBox.* -nSQLite.Interop.* -nFurcadiaLib.* -nMonkeyCore.* -nIrony.dll ..\..\Build\Installer\Plugins_API_$(Configuration).rar *.*"
 			WorkingDirectory="Build/$(Configuration)/" />
 					 
