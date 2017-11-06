@@ -6,9 +6,9 @@
 
   <PropertyGroup>  
     <BuildDependsOn>  
-        BeforeBuild;  
-        CoreBuild;  
-        AfterBuild  
+   <!--     BeforeBuild;  
+       CoreBuild;  -->
+        AfterBuild;  
     </BuildDependsOn>  
 </PropertyGroup>  
 
@@ -37,7 +37,7 @@
   </Target>
 
     <!-- Define default target with name 'Build' -->
-  <Target Name="Build">
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)">
     <!-- Compile whole solution in release mode -->
     <MSBuild
         Projects="MonkeySystem VS2015.sln"
