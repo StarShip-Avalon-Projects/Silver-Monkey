@@ -10,7 +10,7 @@
     <AssemblyName>SilverMonkeyEngine</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -205,7 +205,7 @@
       <Name>MonkeyCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeySpeakEx\Monkeyspeak.csproj">
-      <Project>{51b6668d-9904-4fa4-8fb8-6a1395b3104d}</Project>
+      <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
       <Name>Monkeyspeak</Name>
     </ProjectReference>
     <ProjectReference Include="..\VerbotSDK\Verbot5Library.csproj">

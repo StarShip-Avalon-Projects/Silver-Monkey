@@ -76,7 +76,7 @@ Namespace Engine.Libraries
             MyBase.New(session)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:500) When the bot starts backing up the character phoenix speak,
             Add(TriggerCategory.Cause, 500,
                 Function()

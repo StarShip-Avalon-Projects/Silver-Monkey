@@ -20,7 +20,7 @@ Namespace Engine.Libraries
             MyBase.New(session)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:75) When the bot receives a message from another bot on the same computer,
             Add(TriggerCategory.Cause, 75,
                  Function()

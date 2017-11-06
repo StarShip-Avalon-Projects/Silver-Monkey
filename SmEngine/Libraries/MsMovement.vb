@@ -51,7 +51,7 @@ Namespace Engine.Libraries
             MyBase.New(session)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:600) When the bot reads a description.
             Add(TriggerCategory.Cause, 600, Function() True, " When the bot sees a furre description,")
 

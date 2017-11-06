@@ -25,7 +25,7 @@ Namespace Engine.Libraries
             MyBase.New(session)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(1:60) and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),
             Add(New Trigger(TriggerCategory.Condition, 60), AddressOf WildCard,
               " and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),")

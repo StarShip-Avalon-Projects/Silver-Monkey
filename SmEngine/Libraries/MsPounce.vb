@@ -58,7 +58,7 @@ Namespace Engine.Libraries
             OnlineFurreList = New IO.NameList(_onlineListFile)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             ' (0:950) When a furre logs on,
             Add(TriggerCategory.Cause, 950,
             Function() True, " When a furre logs on,")

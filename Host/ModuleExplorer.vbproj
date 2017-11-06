@@ -24,7 +24,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>0.0</OldToolsVersion>
@@ -190,10 +190,6 @@
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Project>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</Project>
       <Name>MonkeyCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MonkeySpeakEx\Monkeyspeak.csproj">
-      <Project>{51b6668d-9904-4fa4-8fb8-6a1395b3104d}</Project>
-      <Name>Monkeyspeak</Name>
     </ProjectReference>
     <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
       <Project>{3c0e1cbf-d3b9-4282-ac97-4e0216ca6c97}</Project>

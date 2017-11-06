@@ -183,8 +183,8 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       </Component>
     </DirectoryRef>
     <PropertyRef Id="NETFRAMEWORK45" />
-    <Condition Message="This application requires .NET Framework 4.5. Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR NETFRAMEWORK45]]>
+    <Condition Message="This application requires .NET Framework 4.6.1 Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK461]]>
     </Condition>
     <Feature Id="SilverMonkey2" Title="Main Application" Level="1">
 

@@ -31,7 +31,7 @@ Namespace Engine.Libraries
             WebURL = Nothing
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:70) When the bot receives a variable list by sending the Web-Cache.
             Add(New Trigger(TriggerCategory.Cause, 70),
             Function()

@@ -386,7 +386,7 @@ Namespace Engine.Libraries
 
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
 
         End Sub
 

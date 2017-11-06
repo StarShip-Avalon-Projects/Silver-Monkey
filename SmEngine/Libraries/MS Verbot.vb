@@ -44,7 +44,7 @@ Namespace Engine.Libraries
 
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:1500) When the chat engine executes command {...},
             Add(TriggerCategory.Cause, 1500,
                  AddressOf ChatExecute, " When the chat engine executes command {...},")

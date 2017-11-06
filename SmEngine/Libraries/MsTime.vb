@@ -34,7 +34,7 @@ Namespace Engine.Libraries
             MyBase.New(Session)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:299) When the time is {...} hh:mm:ss am/pm FST,
             Add(TriggerCategory.Cause, 299,
                 Function(reader As TriggerReader)

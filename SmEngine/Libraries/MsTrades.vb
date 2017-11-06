@@ -19,7 +19,7 @@ Namespace Engine.Libraries
             MyBase.New(session)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:46) When the bot sees a trade request,
             Add(TriggerCategory.Cause, 46,
             Function()

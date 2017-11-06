@@ -43,7 +43,7 @@ Namespace Engine.Libraries
             dice = New DiceObject()
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:130) When the bot rolls #d#,
             Add(New Trigger(TriggerCategory.Cause, 130), AddressOf RollNumber, " When the bot rolls #d#,")
             '(0:131) When the bot rolls #d#+#,

@@ -121,7 +121,7 @@ Namespace Engine.Libraries
             MyBase.New(Session)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             Add(TriggerCategory.Cause, 1,
                  Function() True, " When the bot logs into furcadia,")
             Add(TriggerCategory.Cause, 2,

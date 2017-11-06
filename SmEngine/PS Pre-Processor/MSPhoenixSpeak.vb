@@ -41,7 +41,7 @@ Namespace Engine.Libraries
             PSInfoCache = New List(Of IVariable)(10)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             Add(TriggerCategory.Cause, 80,
                 Function() True, " When the bot sees a Phoenix Speak response")
             Add(TriggerCategory.Cause, 81,

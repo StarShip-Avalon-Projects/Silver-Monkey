@@ -55,15 +55,6 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeySpeakEx\Monkeyspeak.csproj">
-      <Name>Monkeyspeak</Name>
-      <Project>{51b6668d-9904-4fa4-8fb8-6a1395b3104d}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
     <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
       <Name>SilverMonkeyEngine</Name>
       <Project>{3C0E1CBF-D3B9-4282-AC97-4E0216CA6C97}</Project>

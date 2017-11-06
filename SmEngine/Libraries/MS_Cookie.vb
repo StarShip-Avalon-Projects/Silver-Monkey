@@ -20,7 +20,7 @@ Namespace Engine.Libraries
             MyBase.New(Session)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:42) When some one gives a cookie to the bot,
             Add(TriggerCategory.Cause, 42,
                  Function()

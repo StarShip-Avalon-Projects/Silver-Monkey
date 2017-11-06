@@ -284,7 +284,7 @@ Public Class TheClaaaw
 #Disable Warning BC42105 ' Function 'fIDtoFurre' doesn't return a value on all code paths. A null reference exception could occur at run time when the result is used.
     End Function
 
-    Public Overrides Sub Initialize()
+    Public Overrides Sub Initialize(ParamArray args() As Object)
         Throw New NotImplementedException()
     End Sub
 

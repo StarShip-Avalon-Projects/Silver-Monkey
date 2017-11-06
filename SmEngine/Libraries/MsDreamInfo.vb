@@ -22,7 +22,7 @@ Namespace Engine.Libraries
             MyBase.New(Session)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:90) When the bot enters a Dream,
             Add(TriggerCategory.Cause, 90,
                 Function()

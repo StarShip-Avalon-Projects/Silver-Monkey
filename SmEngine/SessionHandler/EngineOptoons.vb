@@ -34,7 +34,7 @@ Namespace Engine
             VariableCountLimit = 1000
             StringLengthLimit = Int32.MaxValue
             _MS_Engine_Enable = True
-            Debug = True
+            Debug = False
         End Sub
 
 #End Region

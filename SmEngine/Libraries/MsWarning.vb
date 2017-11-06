@@ -20,7 +20,7 @@ Namespace Engine.Libraries
             MyBase.New(session)
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:800) When the bot sees error message {...},
             Add(TriggerCategory.Cause, 800,
                 AddressOf ErrorIs, " When the bot sees error message {...},")
