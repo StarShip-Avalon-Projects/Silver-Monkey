@@ -4,6 +4,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
   </PropertyGroup>
 
+  <PropertyGroup>  
+    <BuildDependsOn>  
+        BeforeBuild;  
+        CoreBuild;  
+        AfterBuild  
+    </BuildDependsOn>  
+</PropertyGroup>  
 
   <Target Name="BuildAll">
 		<CallTarget Targets="Clean"/>
