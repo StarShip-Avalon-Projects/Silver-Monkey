@@ -12,8 +12,8 @@
 		<CallTarget Targets="CopyFiles"/>
   </Target>
   
-  <Target Name="GetVersion" >
-  
+  <!-- <Target Name="GetVersion" >-->
+  <Target Name="AfterBuild" > 
     <GetAssemblyIdentity AssemblyFiles="Build\$(Configuration)\SilverMonkey.exe">
       <Output TaskParameter="Assemblies" ItemName="AsmInfo" />
     </GetAssemblyIdentity>
@@ -49,11 +49,10 @@
 			WorkingDirectory="Bin" />
 		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x*bin\*  -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config ../Build/Installer/BaseModule_Src.rar *.*"
 			WorkingDirectory="BaseModule"/>
-
-  </Target>
+			  </Target>
 
    <Target Name="BackupSource" >
-		<CallTarget Targets="GetVersion"/>
+	<!-- <CallTarget Targets="GetVersion"/> -->
   		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.txt -n*.config ../../Build/Installer/SilverMonkey_Binaties_$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
 			WorkingDirectory="Build/$(Configuration)\"/>
 		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -nBaseModule.* -nSystem.Data.SQLite.* -nSQLite.Interop.* -nInterfaces.* -nFastColoredTextBox.* -nSQLite.Interop.* -nFurcadiaLib.* -nMonkeyCore.* -nIrony.dll ..\..\Build\Installer\Plugins_API_$(Configuration).rar *.*"
