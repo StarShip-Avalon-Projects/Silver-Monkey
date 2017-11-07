@@ -807,7 +807,7 @@ Partial Class MS_Edit
         Me.TabPage2.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabPage2.Size = New System.Drawing.Size(599, 438)
+        Me.TabPage2.Size = New System.Drawing.Size(598, 504)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Templates"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -832,7 +832,7 @@ Partial Class MS_Edit
         Me.SplitContainer5.Panel2.Controls.Add(Me.BtnTemplateDelete)
         Me.SplitContainer5.Panel2.Controls.Add(Me.ListBox2)
         Me.SplitContainer5.Panel2Collapsed = True
-        Me.SplitContainer5.Size = New System.Drawing.Size(583, 424)
+        Me.SplitContainer5.Size = New System.Drawing.Size(582, 490)
         Me.SplitContainer5.SplitterDistance = 25
         Me.SplitContainer5.SplitterWidth = 10
         Me.SplitContainer5.TabIndex = 0
@@ -840,7 +840,7 @@ Partial Class MS_Edit
         'BtnTemplateDeleteMS
         '
         Me.BtnTemplateDeleteMS.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.BtnTemplateDeleteMS.Location = New System.Drawing.Point(141, 355)
+        Me.BtnTemplateDeleteMS.Location = New System.Drawing.Point(141, 421)
         Me.BtnTemplateDeleteMS.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnTemplateDeleteMS.Name = "BtnTemplateDeleteMS"
         Me.BtnTemplateDeleteMS.Size = New System.Drawing.Size(136, 55)
@@ -851,7 +851,7 @@ Partial Class MS_Edit
         'BtnTemplateAddMS
         '
         Me.BtnTemplateAddMS.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.BtnTemplateAddMS.Location = New System.Drawing.Point(8, 355)
+        Me.BtnTemplateAddMS.Location = New System.Drawing.Point(8, 421)
         Me.BtnTemplateAddMS.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnTemplateAddMS.Name = "BtnTemplateAddMS"
         Me.BtnTemplateAddMS.Size = New System.Drawing.Size(136, 55)
@@ -870,7 +870,7 @@ Partial Class MS_Edit
         Me.ListBox3.Location = New System.Drawing.Point(8, 7)
         Me.ListBox3.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.ListBox3.Name = "ListBox3"
-        Me.ListBox3.Size = New System.Drawing.Size(539, 283)
+        Me.ListBox3.Size = New System.Drawing.Size(538, 345)
         Me.ListBox3.TabIndex = 6
         '
         'TemplateMenuMS
@@ -1034,7 +1034,7 @@ Partial Class MS_Edit
         Me.TabPage4.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabPage4.Size = New System.Drawing.Size(599, 438)
+        Me.TabPage4.Size = New System.Drawing.Size(598, 504)
         Me.TabPage4.TabIndex = 2
         Me.TabPage4.Text = "Help Notes"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -1049,7 +1049,7 @@ Partial Class MS_Edit
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.ReadOnly = True
         Me.TextBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox2.Size = New System.Drawing.Size(500, 128)
+        Me.TextBox2.Size = New System.Drawing.Size(499, 128)
         Me.TextBox2.TabIndex = 18
         '
         'TextBox1
@@ -1063,7 +1063,7 @@ Partial Class MS_Edit
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox1.Size = New System.Drawing.Size(500, 204)
+        Me.TextBox1.Size = New System.Drawing.Size(499, 270)
         Me.TextBox1.TabIndex = 17
         '
         'Label1
@@ -1345,7 +1345,7 @@ Partial Class MS_Edit
         Me.Causes.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.Causes.Name = "Causes"
         Me.Causes.SelectedIndex = 0
-        Me.Causes.Size = New System.Drawing.Size(400, 143)
+        Me.Causes.Size = New System.Drawing.Size(150, 60)
         Me.Causes.TabIndex = 10
         '
         'TabControl3

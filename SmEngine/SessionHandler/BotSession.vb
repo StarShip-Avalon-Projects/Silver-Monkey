@@ -19,6 +19,7 @@ Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
+Imports Monkeyspeak.Logging
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.Interfaces
@@ -212,12 +213,12 @@ Public Class BotSession
     Public Async Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) _
         Handles MyBase.ProcessServerChannelData
         If MSpage Is Nothing Then Exit Sub
-        Dim Player As Furre = InstructionObject.Player
+        Dim Furr As Furre = InstructionObject.Player
 
         Try
-            DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Player.Message)
-            DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Player.ShortName)
-            DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Player.Name)
+            DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Furr.Message)
+            DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Furr.ShortName)
+            DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
         Catch ex As Exception
             RaiseEvent [Error](ex, Me, "Failed to set Triggering Furre Monkeyspeak Variables")
         End Try
@@ -258,7 +259,7 @@ Public Class BotSession
                 If IsConnectedCharacter Then Exit Sub
                 If InstructionObject.RawInstruction.StartsWith("<font color='shout'>You shout,") Then Exit Sub
                 Dim ids() = {8, 9, 10}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                Await Task.Run(Sub() MSpage.ExecuteAsync(ids, Furr))
             Case "say"
                 ' (0:5) When some one says something
                 ' (0:6) When some one says {...}
@@ -490,6 +491,7 @@ Public Class BotSession
     Public Async Sub StartEngine()
         Try
             MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
+
             MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
             Dim TimeStart = DateTime.Now
@@ -511,7 +513,7 @@ Public Class BotSession
             '(0:0) When the bot starts,
             Await Task.Run(Sub() MSpage.ExecuteAsync(0))
 
-            Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
+            Logging.Logger.Info(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                             MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
         Catch ex As Exception
             Dim Err As New ErrorLogging(ex, Me)
@@ -591,6 +593,27 @@ Public Class BotSession
 
     End Sub
 
+    Private Async Sub BotSession_ServerStatusChanged(Sender As Object, e As NetServerEventArgs) Handles Me.ServerStatusChanged
+
+        Select Case e.ConnectPhase
+
+            Case ConnectionPhase.Auth
+                Dim Id() As Integer = {1}
+                Await Task.Run(Sub() MSpage.ExecuteAsync(1))
+            Case ConnectionPhase.Disconnected
+                Await Task.Run(Sub() MSpage.ExecuteAsync(2))
+            Case ConnectionPhase.Connecting
+            Case ConnectionPhase.error
+            Case ConnectionPhase.Init
+            Case ConnectionPhase.MOTD
+            Case ConnectionPhase.Connected
+
+            Case Else
+
+        End Select
+
+    End Sub
+
     ''' <summary>
     ''' Load Libraries into the engine
     ''' </summary>
@@ -606,7 +629,7 @@ Public Class BotSession
         For Each Library As Monkeyspeak.Libraries.BaseLibrary In LibList
             Try
                 MSpage.LoadLibrary(Library)
-                If Not silent Then Console.WriteLine(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
+                If Not silent Then Logging.Logger.Info(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
             Catch ex As Exception
                 Throw New MonkeyspeakException(Library.GetType().Name + " " + ex.Message, ex)
 

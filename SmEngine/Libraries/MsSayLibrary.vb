@@ -123,9 +123,9 @@ Namespace Engine.Libraries
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
             Add(TriggerCategory.Cause, 1,
-                 Function() True, " When the bot logs into furcadia,")
+                 Function(reader) True, " When the bot logs into furcadia,")
             Add(TriggerCategory.Cause, 2,
-                   Function() True, " When the bot logs out of furcadia,")
+                   Function(reader) True, " When the bot logs out of furcadia,")
             Add(TriggerCategory.Cause, 3,
                     Function() True, " When the Furcadia client disconnects or closes,")
 

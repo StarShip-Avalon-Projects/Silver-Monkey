@@ -12,6 +12,7 @@ Namespace Engine
     ''' Silver Monkey's MonkeySpeak Engine with our Customizations
     ''' </summary>
     Public Class MainEngine
+
         Implements IDisposable
 
 #Region "Private Fields"
@@ -64,8 +65,13 @@ Namespace Engine
         Public Sub New(ByRef Options As EngineOptoons, ByRef FurcSession As BotSession)
             SilverMonkeyEngineOptions = Options
             FurcadiaSession = FurcSession
+
             SmEngine = New MonkeyspeakEngine(Options)
-            ' Logger.LogOutput = New MsLogger()
+
+            Logger.LogOutput = New DebuggerLogOutput()
+            Logger.InfoEnabled = True
+            Logger.DebugEnabled = False
+            Logger.SuppressSpam = True
         End Sub
 
         ''' <summary>

@@ -217,14 +217,14 @@ Public Class Config
         Dim intIndex As Integer
 
         'Loop through available plugins, creating instances and adding them to listbox
-
-        For Each F In Directory.GetFiles(Application.StartupPath + "/Plugins/", "*.ini")
-            Dim fname As String = Path.GetFileNameWithoutExtension(F)
-            Dim item As ListViewItem = ListView1.Items.Add(intIndex.ToString)
-            item.SubItems.Add(fname)
-            item.Checked = MS_Edit.EditSettings.PluginList.Item(fname.Replace(" ", ""))
-        Next
-
+        If Directory.Exists(MonkeyCore.Paths.ApplicationPluginPath) Then
+            For Each F In Directory.GetFiles(MonkeyCore.Paths.ApplicationPluginPath, "*.ini")
+                Dim fname As String = Path.GetFileNameWithoutExtension(F)
+                Dim item As ListViewItem = ListView1.Items.Add(intIndex.ToString)
+                item.SubItems.Add(fname)
+                item.Checked = MS_Edit.EditSettings.PluginList.Item(fname.Replace(" ", ""))
+            Next
+        End If
     End Sub
 
 #End Region

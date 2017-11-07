@@ -67,7 +67,6 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
-
             Dim var = StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString).ToLower.Trim
             Dim test = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
             Return Not FurcadiaSession.IsConnectedCharacter AndAlso var = test
