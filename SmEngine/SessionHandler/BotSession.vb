@@ -143,7 +143,7 @@ Public Class BotSession
     Public Overrides Sub Disconnect()
 
         MyBase.Disconnect()
-        StopEngine()
+
     End Sub
 
     ''' <summary>
@@ -174,17 +174,18 @@ Public Class BotSession
         Select Case e.ServerInstruction
 
             Case ServerInstructionType.LoadDreamEvent
-                Try
-                    DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(lastDream.Owner)
-                    DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).SetValue(lastDream.Name)
-                Catch ex As Exception
-                    RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
-                End Try
-                '(0:97) When the bot leaves a Dream,
-                '(0:98) When the bot leaves the Dream named {..},
-                Dim ids() = {97, 98}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
-
+                If InDream Then
+                    Try
+                        DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(lastDream.Owner)
+                        DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).SetValue(lastDream.Name)
+                    Catch ex As Exception
+                        RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
+                    End Try
+                    '(0:97) When the bot leaves a Dream,
+                    '(0:98) When the bot leaves the Dream named {..},
+                    Dim ids() = {97, 98}
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                End If
             Case ServerInstructionType.BookmarkDream
                 Try
                     DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(Dream.Owner)
@@ -602,6 +603,7 @@ Public Class BotSession
                 Await Task.Run(Sub() MSpage.ExecuteAsync(1))
             Case ConnectionPhase.Disconnected
                 Await Task.Run(Sub() MSpage.ExecuteAsync(2))
+                StopEngine()
             Case ConnectionPhase.Connecting
             Case ConnectionPhase.error
             Case ConnectionPhase.Init

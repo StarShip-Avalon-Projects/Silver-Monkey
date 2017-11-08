@@ -68,10 +68,6 @@ Namespace Engine
 
             SmEngine = New MonkeyspeakEngine(Options)
 
-            Logger.LogOutput = New DebuggerLogOutput()
-            Logger.InfoEnabled = True
-            Logger.DebugEnabled = False
-            Logger.SuppressSpam = True
         End Sub
 
         ''' <summary>

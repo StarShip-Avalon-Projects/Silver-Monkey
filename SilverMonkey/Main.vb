@@ -13,6 +13,8 @@ Imports MonkeyCore.Paths
 Imports MonkeyCore.Settings
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
+Imports Monkeyspeak.Logging
+
 Imports SilverMonkey.HelperClasses
 Imports SilverMonkeyEngine
 
@@ -989,6 +991,12 @@ Public Class Main
     End Sub
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        Logging.Logger.LogOutput = New ConsoleLogOutput()
+        Logging.Logger.InfoEnabled = True
+        Logging.Logger.DebugEnabled = True
+        Logging.Logger.SuppressSpam = True
+
         If Not NotifyIcon1 Is Nothing Then
             RemoveHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
             NotifyIcon1.Dispose()
