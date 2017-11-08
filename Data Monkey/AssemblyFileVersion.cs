@@ -11,6 +11,6 @@ using System.Reflection;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: AssemblyVersion("1.1.917.1107")]
-[assembly: AssemblyFileVersion("1.1.917.1107")]
+[assembly: AssemblyVersion("1.1.917.1108")]
+[assembly: AssemblyFileVersion("1.1.917.1108")]
 

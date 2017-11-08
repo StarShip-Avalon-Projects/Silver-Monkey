@@ -514,8 +514,8 @@ Public Class BotSession
             '(0:0) When the bot starts,
             Await Task.Run(Sub() MSpage.ExecuteAsync(0))
 
-            Logging.Logger.Info(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
-                                            MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
+            '    'Logging.Logger.Info(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
+            '    MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
         Catch ex As Exception
             Dim Err As New ErrorLogging(ex, Me)
             Process.Start("notepad.exe", Err.LogFile)
