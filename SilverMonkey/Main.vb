@@ -1160,7 +1160,9 @@ Public Class Main
 
         ' This call is required by the designer.
         InitializeComponent()
-
+        Logging.Logger.LogOutput = New Logging.ConsoleLogOutput()
+        Logging.Logger.InfoEnabled = True
+        Logging.Logger.DebugEnabled = True
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub
