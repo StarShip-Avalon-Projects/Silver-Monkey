@@ -2,6 +2,7 @@ Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.Text
+Imports System.Threading.Tasks
 Imports System.Windows.Forms
 Imports Furcadia.Net
 Imports Furcadia.Net.Dream
@@ -151,10 +152,8 @@ Public Class Main
         End If
         Try
             SndDisplay("New Session" + DateTime.Now.ToString)
-            If BotConfig.MonkeySpeakEngineOptions.MS_Engine_Enable Then
-                FurcadiaSession.StartEngine()
-            End If
-            FurcadiaSession.Connect()
+
+            Task.Run(Sub() FurcadiaSession.ConnetAsync())
 
             ConnectTrayIconMenuItem.Enabled = False
             DisconnectTrayIconMenuItem.Enabled = True
@@ -994,7 +993,7 @@ Public Class Main
         Logging.Logger.LogOutput = New Logging.ConsoleLogOutput()
         Logging.Logger.InfoEnabled = True
         Logging.Logger.DebugEnabled = True
-        Logging.Logger.SingleThreaded = False
+        Logging.Logger.SingleThreaded = True
 
         If Not NotifyIcon1 Is Nothing Then
             RemoveHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick

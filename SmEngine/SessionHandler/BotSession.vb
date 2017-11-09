@@ -23,6 +23,7 @@ Imports Monkeyspeak.Logging
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.Interfaces
+Imports SilverMonkeyEngine.Engine.MainEngine
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
@@ -51,7 +52,7 @@ Public Class BotSession
     ''' <summary>
     ''' Main MonkeySpeak Engine
     ''' </summary>
-    Public WithEvents MainEngine As Engine.MainEngine
+    Public WithEvents MainEngine As MainEngine
 
     ''' <summary>
     ''' Monkey Speak Page object
@@ -122,16 +123,12 @@ Public Class BotSession
     ''' <summary>
     ''' Starts the Furcadia Connection Process
     ''' </summary>
-    Public Overrides Sub Connect()
 
-        Try
-
-            MyBase.Connect()
-        Catch ex As Exception
-            StopEngine()
-            Dim e As New MonkeyCore.Utils.Logging.ErrorLogging(ex, Me)
-            Process.Start("notepade.exe", e.LogFile)
-        End Try
+    Public Async Sub ConnetAsync()
+        If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
+            Await Task.Run(Sub() StartEngine())
+        End If
+        Await Task.Run(Sub() Connect())
     End Sub
 
     ''' <summary>
@@ -248,7 +245,7 @@ Public Class BotSession
                 End If
             Case "trade"
                 Dim ids() = {46, 47, 48}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                Await MSpage.ExecuteAsync(ids)
             Case "shout"
                 '(0:8) When someone shouts something,
                 '(0:9) When someone shouts {..},
@@ -256,7 +253,7 @@ Public Class BotSession
                 If IsConnectedCharacter Then Exit Sub
                 If InstructionObject.RawInstruction.StartsWith("<font color='shout'>You shout,") Then Exit Sub
                 Dim ids() = {8, 9, 10}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(ids, Furr))
+                Await MSpage.ExecuteAsync(ids, Furr)
             Case "say"
                 ' (0:5) When some one says something
                 ' (0:6) When some one says {...}
@@ -266,7 +263,7 @@ Public Class BotSession
                 ' (0:20) When someone says or emotes something with
                 ' {...} in it"
                 Dim ids() = {5, 6, 7, 18, 19, 20}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                Await MSpage.ExecuteAsync(ids)
 
             Case "whisper"
 
@@ -485,16 +482,15 @@ Public Class BotSession
     ''' <summary>
     ''' Start the Monkey Speak Engine
     ''' </summary>
-    Public Sub StartEngine()
+    Public Async Sub StartEngine()
         Try
             MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
-
-            MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+            MSpage = Await MainEngine.LoadFromScriptFileSAsyvnc(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
             Dim TimeStart = DateTime.Now
             Dim VariableList As New List(Of IVariable)
 
-            MSpage = LoadLibrary(False)
+            MSpage = Await LoadLibraryAsync(False)
             Dim fur = New Furre
             VariableList.Add(New ConstantVariable("%DREAMOWNER", lastDream.Owner))
             VariableList.Add(New ConstantVariable("%DREAMNAME", lastDream.Name))
@@ -508,7 +504,7 @@ Public Class BotSession
 
             PageSetVariable(VariableList)
             '(0:0) When the bot starts,
-            MSpage.Execute(0)
+            Await Task.Run(Sub() MSpage.ExecuteAsync(0))
 
             Logging.Logger.Info(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                             MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
@@ -529,10 +525,6 @@ Public Class BotSession
             MSpage.Dispose()
             MSpage = Nothing
         End If
-        If Not MainEngine Is Nothing Then
-            MainEngine.Dispose()
-            MainEngine = Nothing
-        End If
 
     End Sub
 
@@ -545,7 +537,6 @@ Public Class BotSession
         If Me.disposed Then Exit Sub
         If disposing Then
 
-            If Not MainEngine Is Nothing Then MainEngine.Dispose()
             ' Free your own state (unmanaged objects).
             ' Set large fields to null.
             ' MyBase.Dispose()
@@ -596,9 +587,9 @@ Public Class BotSession
 
             Case ConnectionPhase.Auth
                 Dim Id() As Integer = {1}
-                If MSpage IsNot Nothing Then Await Task.Run(Sub() MSpage.ExecuteAsync(1))
+                If MSpage IsNot Nothing Then Await MSpage.ExecuteAsync(1)
             Case ConnectionPhase.Disconnected
-                If MSpage IsNot Nothing Then Await Task.Run(Sub() MSpage.ExecuteAsync(2))
+                If MSpage IsNot Nothing Then Await MSpage.ExecuteAsync(2)
             Case ConnectionPhase.Connecting
             Case ConnectionPhase.error
             Case ConnectionPhase.Init
@@ -610,6 +601,10 @@ Public Class BotSession
         End Select
 
     End Sub
+
+    Public Async Function LoadLibraryAsync(silent As Boolean) As Task(Of Page)
+        Return Await Task.Run(Function() LoadLibrary(silent))
+    End Function
 
     ''' <summary>
     ''' Load Libraries into the engine
@@ -626,7 +621,7 @@ Public Class BotSession
         For Each Library As Monkeyspeak.Libraries.BaseLibrary In LibList
             Try
                 MSpage.LoadLibrary(Library)
-                If Not silent Then Logging.Logger.Info(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
+                If Not silent Then Logging.Logger.Info($"{Library.GetType().Name}")
             Catch ex As Exception
                 Throw New MonkeyspeakException(Library.GetType().Name + " " + ex.Message, ex)
 

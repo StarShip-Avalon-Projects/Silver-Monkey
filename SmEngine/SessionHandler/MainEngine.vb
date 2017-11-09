@@ -23,6 +23,7 @@ Namespace Engine
         Private SilverMonkeyEngineOptions As EngineOptoons
 
         Private SmEngine As Monkeyspeak.MonkeyspeakEngine
+        Public MsPage As Page
 
         ''' <summary>
         ''' </summary>
@@ -106,13 +107,17 @@ Namespace Engine
 
                     End While
                 End Using
-                Return SmEngine.LoadFromString(MonkeySpeakScript.ToString())
+                Return SmEngine.LoadFromString(MonkeySpeakScript.ToString)
             Catch eX As Exception
                 Throw eX
             End Try
 
             Return Nothing
 
+        End Function
+
+        Public Async Function LoadFromScriptFileSAsyvnc(ByVal file As String) As Task(Of Page)
+            Await Task.Run(Function() LoadFromScriptFile(file))
         End Function
 
         ''' <summary>

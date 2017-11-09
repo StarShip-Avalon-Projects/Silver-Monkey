@@ -28,7 +28,7 @@ Public Class MS_Export
 
 #End Region
 
-    Private MsPage As Monkeyspeak.Page
+    Private Shared MsPage As Monkeyspeak.Page
 
     Private Session As BotSession
 
