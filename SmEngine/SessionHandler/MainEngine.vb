@@ -4,6 +4,7 @@ Imports System.Text
 Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
 Imports Monkeyspeak
+Imports Monkeyspeak.Logging
 
 Namespace Engine
 
@@ -11,8 +12,8 @@ Namespace Engine
     ''' Silver Monkey's MonkeySpeak Engine with our Customizations
     ''' </summary>
     Public Class MainEngine
-        Implements IDisposable
 
+        Implements IDisposable
 
 #Region "Private Fields"
 
@@ -53,7 +54,7 @@ Namespace Engine
 
         Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
 
-
+        Private Shared EngineLogger As MsLogger
 
         ''' <summary>
         ''' Default Constructlor.
@@ -64,7 +65,9 @@ Namespace Engine
         Public Sub New(ByRef Options As EngineOptoons, ByRef FurcSession As BotSession)
             SilverMonkeyEngineOptions = Options
             FurcadiaSession = FurcSession
+
             SmEngine = New MonkeyspeakEngine(Options)
+
         End Sub
 
         ''' <summary>
@@ -120,7 +123,6 @@ Namespace Engine
         Public Function LoadFromString(MonkeySpeakScript As String) As Page
             Return SmEngine.LoadFromString(MonkeySpeakScript)
         End Function
-
 
 #End Region
 

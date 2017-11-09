@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports MonkeyCore.MyData
+
 Namespace Controls
 
     ''' <summary>
@@ -16,14 +17,11 @@ Namespace Controls
         Private Shared Function RegisterWindowMessage(lpString As String) As Integer
         End Function
 
-
         <DllImport("user32.dll")>
         Public Shared Function SetScrollPos(ByVal hWnd As IntPtr, ByVal nBar As Integer, ByVal nPos As Integer, ByVal bRedraw As Boolean) As Integer
         End Function
 
-
 #Enable Warning BC42353 ' Function 'GetScrollInfo' doesn't return a value on all code paths. Are you missing a 'Return' statement?
-
 
         ''' <summary>
         '''
@@ -202,4 +200,5 @@ Namespace Controls
 #End Region
 
     End Class
+
 End Namespace

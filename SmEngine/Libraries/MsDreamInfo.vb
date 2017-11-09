@@ -1,6 +1,5 @@
 ﻿Imports Furcadia.Net
 Imports Furcadia.Net.Dream
-Imports Furcadia.Net.Utils.ServerParser
 Imports Furcadia.Util
 Imports Monkeyspeak
 
@@ -21,91 +20,95 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
+        End Sub
 
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:90) When the bot enters a Dream,
             Add(TriggerCategory.Cause, 90,
                 Function()
                     Return True
-                End Function, "(0:90) When the bot enters a Dream,")
+                End Function, " When the bot enters a Dream,")
             '(0:91) When the bot enters a Dream named {..},
             Add(TriggerCategory.Cause, 91,
-                AddressOf DreamNameIs, "(0:91) When the bot enters the Dream named {..},")
+                AddressOf DreamNameIs, " When the bot enters the Dream named {..},")
             '(0:92) When the bot leaves a Dream,
             Add(TriggerCategory.Cause, 97,
-                Function()
-                    Return True
-                End Function, "(0:97) When the bot leaves a Dream,")
+                Function() True, " When the bot leaves a Dream,")
             '(0:93) When the bot leaves the Dream named {..},
             Add(TriggerCategory.Cause, 98,
-                AddressOf DreamNameIs, "(0:98) When the bot leaves the Dream named {..},")
+                AddressOf DreamNameIs, " When the bot leaves the Dream named {..},")
 
             '(1:19) and the bot is the Dream owner,
             Add(New Trigger(TriggerCategory.Condition, 19), AddressOf BotIsDreamOwner,
-                "(1:19) and the bot is the Dream owner,")
+                " and the bot is the Dream owner,")
 
             '(1:20) and the bot is not the Dream-Owner,
             Add(New Trigger(TriggerCategory.Condition, 20), AddressOf BotIsNotDreamOwner,
-                "(1:20) and the bot is not the Dream-Owner,")
+                " and the bot is not the Dream-Owner,")
 
             '(1:21) and the furre named {..} is the Dream owner,
-            Add(New Trigger(TriggerCategory.Condition, 21), AddressOf FurreNamedIsDREAMOWNER,
-                "(1:21) and the furre named {..} is the Dream owner,")
+            Add(New Trigger(TriggerCategory.Condition, 21),
+                Function(reader) FurcadiaShortName(FurcadiaSession.Dream.Owner) =
+                FurcadiaShortName(reader.ReadString),
+                " and the furre named {..} is the Dream owner,")
 
             '(1:22) and the furre named {..} is not the Dream owner,
-            Add(New Trigger(TriggerCategory.Condition, 22), AddressOf FurreNamedIsNotDREAMOWNER,
-                "(1:22) and the furre named {..} is not the Dream owner,")
+            Add(New Trigger(TriggerCategory.Condition, 22),
+               Function(reader) FurcadiaShortName(FurcadiaSession.Dream.Owner) <>
+               FurcadiaShortName(reader.ReadString),
+                " and the furre named {..} is not the Dream owner,")
             '(1:23) and the Dream Name is {..},
 
             Add(New Trigger(TriggerCategory.Condition, 23), AddressOf DreamNameIs,
-                "(1:23) and the Dream Name is {..},")
+                " and the Dream Name is {..},")
             '(1:24) and the Dream Name is not {..},
 
             Add(New Trigger(TriggerCategory.Condition, 24), AddressOf DreamNameIsNot,
-                "(1:24) and the Dream Name is not {..},")
+                " and the Dream Name is not {..},")
 
             '(1:25) and the triggering furre is the FurcadiaSession.Dream owner
             Add(New Trigger(TriggerCategory.Condition, 25), AddressOf TriggeringFurreIsDreamOwner,
-                "(1:25) and the triggering furre is the Dream owner,")
+                " and the triggering furre is the Dream owner,")
 
             '(1:26) and the triggering furre is not the FurcadiaSession.Dream owner
             Add(New Trigger(TriggerCategory.Condition, 26), AddressOf TriggeringFurreIsNotDreamOwner,
-                "(1:26) and the triggering furre is not the Dream owner,")
+                " and the triggering furre is not the Dream owner,")
 
             '(1:27) and the bot has share control of the Dream or is the Dream owner,
             Add(TriggerCategory.Condition, 27,
                 Function(reader As TriggerReader)
-                    Dim tname = reader.Page.GetVariable("DREAMOWNER")
+                    Dim tname = reader.Page.GetVariable("%DREAMOWNER")
                     If FurcadiaSession.HasShare OrElse FurcadiaSession.Dream.Owner = FurcadiaSession.ConnectedFurre.ShortName Then
                         Return True
                     End If
                     Return False
-                End Function, "(1:27) and the bot has share control of the Dream or is the Dream owner,")
+                End Function, " and the bot has share control of the Dream or is the Dream owner,")
 
             '(1:28) and the bot has share control of the Dream,
             Add(New Trigger(TriggerCategory.Condition, 28),
                  Function()
                      Return FurcadiaSession.HasShare
-                 End Function, "(1:28) and the bot has share control of the Dream,")
+                 End Function, " and the bot has share control of the Dream,")
 
             '(1:29) and the bot doesn't have share control in the Dream,
             Add(New Trigger(TriggerCategory.Condition, 29),
                  Function()
                      Return Not FurcadiaSession.HasShare
-                 End Function, "(1:29) and the bot doesn't have share control in the Dream,")
+                 End Function, " and the bot doesn't have share control in the Dream,")
 
             '(5:20) give share control to the triggering furre.
             Add(New Trigger(TriggerCategory.Effect, 20), AddressOf ShareTrigFurre,
-                "(5:20) give share control to the triggering furre.")
+                " give share control to the triggering furre.")
             '(5:21) remove share control from the triggering furre.
             Add(New Trigger(TriggerCategory.Effect, 21), AddressOf UnshareTrigFurre,
-                "(5:21) remove share control from the triggering furre.")
+                " remove share control from the triggering furre.")
             '(5:22) remove share from the furre named {..} if they're in the Dream right now.
             Add(New Trigger(TriggerCategory.Effect, 22), AddressOf ShareFurreNamed,
-                "(5:22) remove share from the furre named {..} if they're in the Dream right now.")
+                " remove share from the furre named {..} if they're in the Dream right now.")
 
             '(5:23) give share to the furre named {..} if they're in the Dream right now.
             Add(New Trigger(TriggerCategory.Effect, 23), AddressOf UnshareFurreNamed,
-                "(5:23) give share to the furre named {..} if they're in the Dream right now.")
+                " give share to the furre named {..} if they're in the Dream right now.")
 
         End Sub
 
@@ -150,28 +153,13 @@ Namespace Engine.Libraries
         Function DreamNameIs(reader As TriggerReader) As Boolean
             Dim DreamName As String = reader.ReadString
             DreamName = DreamName.ToLower.Replace("furc://", String.Empty)
-            Dim DreamNameVariable As Monkeyspeak.Variable = reader.Page.GetVariable("DREAMNAME")
+            Dim DreamNameVariable = reader.Page.GetVariable("%DREAMNAME")
             'add Machine Name parser
             If DreamNameVariable.Value.ToString() <> Dream.Name Then
-                Throw New MonkeySpeakException("%DREAMNAME does not match Dream.Name")
+                Throw New MonkeyspeakException("%%DREAMNAME does not match Dream.Name")
             End If
 
             Return Dream.ShortName = FurcadiaShortName(DreamName)
-
-        End Function
-
-        ''' <summary>
-        ''' (1:21) and the furre named {..} is the Dream owner,
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Public Function FurreNamedIsDREAMOWNER(reader As TriggerReader) As Boolean
-            Dim Name = FurcadiaShortName(reader.ReadString)
-            Return FurcadiaShortName(FurcadiaSession.Dream.Owner) = Name
 
         End Function
 
@@ -252,7 +240,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function UnshareTrigFurre(reader As TriggerReader) As Boolean
-            Dim furre = FurcadiaSession.Player.ShortName
+            Dim furre = Player.ShortName
             SendServer("unshare " + furre)
             Return True
         End Function
@@ -267,22 +255,9 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function ShareTrigFurre(reader As TriggerReader) As Boolean
-            Dim furre = FurcadiaSession.Player.ShortName
+            Dim furre = Player.ShortName
             Return SendServer("share " + furre)
 
-        End Function
-
-        ''' <summary>
-        ''' (1:22) and the furre named {..} is not the Dream owner,
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Function FurreNamedIsNotDREAMOWNER(reader As TriggerReader) As Boolean
-            Return Not FurreNamedIsDREAMOWNER(reader)
         End Function
 
         ''' <summary>
@@ -309,18 +284,15 @@ Namespace Engine.Libraries
         ''' </returns>
         Function TriggeringFurreIsDreamOwner(reader As TriggerReader) As Boolean
 
-            Dim TrigFurreName = reader.Page.GetVariable("DREAMOWNER").Value.ToString
+            Dim TrigFurreName = reader.Page.GetVariable("%DREAMOWNER").Value.ToString
             'add Machine Name parser
             Return Player.ShortName = FurcadiaShortName(TrigFurreName)
 
         End Function
 
-
-
         Public Overrides Sub Unload(page As Page)
 
         End Sub
-
 
     End Class
 

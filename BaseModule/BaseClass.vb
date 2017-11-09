@@ -2,7 +2,6 @@
 Imports Furcadia.Net.Dream
 Imports Furcadia.Text.Base95
 Imports SilverMonkeyEngine
-Imports SilverMonkeyEngine.Engine
 
 Public Class BaseClass
     Implements Interfaces.ImsPlugin
@@ -48,7 +47,7 @@ Public Class BaseClass
 
 #Region "Global Properties"
 
-    Public Player As FURRE
+    Public Player As Furre
 
     Private _MSpage As Monkeyspeak.Page
     Private msDream As DREAM
@@ -106,14 +105,14 @@ Public Class BaseClass
 
 #Region "Helper Functions"
 
-    Public Function IsBot(ByRef p As FURRE) As Boolean
+    Public Function IsBot(ByRef p As Furre) As Boolean
         Return p.ShortName = msHost.BotName.ToFurcShortName
     End Function
 
-    Public Function NameToFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
-        Dim p As New FURRE
+    Public Function NameToFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As Furre
+        Dim p As New Furre
         p.Name = sname
-        For Each Character As FURRE In Dream.FurreList
+        For Each Character As Furre In Dream.FurreList
             If Character.ShortName = sname.ToFurcShortName Then
                 p = Character
                 Exit For
@@ -137,10 +136,10 @@ Public Class BaseClass
         Return result
     End Function
 
-    Private Function fIDtoFurre(ByRef ID As UInteger) As FURRE
+    Private Function fIDtoFurre(ByRef ID As UInteger) As Furre
 
-        For Each Character As FURRE In Dream.FurreList
-            If Character.ID = ID Then
+        For Each Character As Furre In Dream.FurreList
+            If Character.FurreID = ID Then
                 Return Character
             End If
         Next

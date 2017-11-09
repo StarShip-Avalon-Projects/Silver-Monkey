@@ -21,37 +21,41 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
+        End Sub
+
+        Public Overrides Sub Initialize()
+
             ' (1:200) and the file {...} exists,
-            Add(New Trigger(TriggerCategory.Condition, 200), AddressOf FileExists, "(1:200) and the file {...} exists,")
+            Add(New Trigger(TriggerCategory.Condition, 200), AddressOf FileExists, " and the file {...} exists,")
 
             ' (1:201) and the file {...} does not exist,
-            Add(New Trigger(TriggerCategory.Condition, 201), AddressOf FileNotExists, "(1:201) and the file {...} does not exist,")
+            Add(New Trigger(TriggerCategory.Condition, 201), AddressOf FileNotExists, " and the file {...} does not exist,")
 
             ' (1:202) and the file {...} can be read from,
-            Add(New Trigger(TriggerCategory.Condition, 202), AddressOf CanReadFile, "(1:202) and the file {...} can be read from,")
+            Add(New Trigger(TriggerCategory.Condition, 202), AddressOf CanReadFile, " and the file {...} can be read from,")
 
             ' (1:203) and the file {...} can be written to,
-            Add(New Trigger(TriggerCategory.Condition, 203), AddressOf CanWriteFile, "(1:203) and the file {...} can be written to,")
+            Add(New Trigger(TriggerCategory.Condition, 203), AddressOf CanWriteFile, " and the file {...} can be written to,")
 
             ' (5:200) append {...} to file {...}.
-            Add(New Trigger(TriggerCategory.Effect, 200), AddressOf AppendToFile, "(5:200) append {...} to file {...}.")
+            Add(New Trigger(TriggerCategory.Effect, 200), AddressOf AppendToFile, " append {...} to file {...}.")
 
             ' (5:201) read from file {...} and put it into variable %Variable.
-            Add(New Trigger(TriggerCategory.Effect, 201), AddressOf ReadFileIntoVariable, "(5:201) read from file {...} and put it into variable %Variable.")
+            Add(New Trigger(TriggerCategory.Effect, 201), AddressOf ReadFileIntoVariable, " read from file {...} and put it into variable %Variable.")
 
             ' (5:202) delete file {...}.
-            Add(New Trigger(TriggerCategory.Effect, 202), AddressOf DeleteFile, "(5:202) delete file {...}.")
+            Add(New Trigger(TriggerCategory.Effect, 202), AddressOf DeleteFile, " delete file {...}.")
 
             '(5:203) create file {...}.
-            Add(New Trigger(TriggerCategory.Effect, 203), AddressOf CreateFile, "(5:203) create file {...}.")
+            Add(New Trigger(TriggerCategory.Effect, 203), AddressOf CreateFile, " create file {...}.")
 
             '(5:124) read line number # from text file {...} and put it into variable %Variable.
             Add(New Trigger(TriggerCategory.Effect, 124), AddressOf ReadTextLine,
-            "(5:124) read line number # from text file {...} and put it into variable %Variable.")
+            " read line number # from text file {...} and put it into variable %Variable.")
 
             '(5:125) count the number of lines in text file {...} and put it into variable %Variable .
             Add(New Trigger(TriggerCategory.Effect, 125), AddressOf CountLines,
-            "(5:125) count the number of lines in text file {...} and put it into variable %Variable.")
+            " count the number of lines in text file {...} and put it into variable %Variable.")
 
         End Sub
 
@@ -102,8 +106,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Shared Function ReadTextLine(reader As TriggerReader) As Boolean
 
-            Dim num As Double = ReadVariableOrNumber(reader, False)
-            Dim F As String = Paths.CheckBotFolder(reader.ReadString)
+            Dim num = ReadVariableOrNumber(reader, False)
+            Dim F = Paths.CheckBotFolder(reader.ReadString)
             Dim var = reader.ReadVariable(True)
             If File.Exists(F) Then
                 Dim lines() As String = File.ReadAllLines(F)
@@ -135,10 +139,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Shared Function AppendToFile(reader As TriggerReader) As Boolean
-            Dim data As String = reader.ReadString()
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+            Dim data = reader.ReadString()
+            Dim f = Paths.CheckBotFolder(reader.ReadString())
 
-            Using SW As StreamWriter = New StreamWriter(f, True)
+            Using SW As New StreamWriter(f, True)
                 SW.WriteLine(data)
             End Using
 
@@ -153,10 +157,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Shared Function CanReadFile(reader As TriggerReader) As Boolean
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+            Dim f = Paths.CheckBotFolder(reader.ReadString())
 
-            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Read)
-                Return stream.CanRead
+            Using Stream As New File.Open(f, FileMode.Open, FileAccess.Read)
+                Return Stream.CanRead
             End Using
 
         End Function
@@ -169,9 +173,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Shared Function CanWriteFile(reader As TriggerReader) As Boolean
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+            Dim f = Paths.CheckBotFolder(reader.ReadString())
 
-            Using stream As FileStream = File.Open(f, FileMode.Open, FileAccess.Write)
+            Using stream As New File.Open(f, FileMode.Open, FileAccess.Write)
                 Return stream.CanWrite
             End Using
 
@@ -205,7 +209,7 @@ Namespace Engine.Libraries
             If reader.PeekString() = False Then
                 Return False
             End If
-            Dim f As String = Paths.CheckBotFolder(reader.ReadString())
+            Dim f = Paths.CheckBotFolder(reader.ReadString())
             If File.Exists(f) Then
                 File.Delete(f)
                 Return True
@@ -246,9 +250,9 @@ Namespace Engine.Libraries
         Public Shared Function ReadFileIntoVariable(reader As TriggerReader) As Boolean
 
             Dim OutVar = reader.ReadVariable(True)
-            Dim sb As New StringBuilder()
+            Dim sb = New StringBuilder()
 
-            Using SR As StreamReader = New StreamReader(Paths.CheckBotFolder(reader.ReadString(True)))
+            Using SR = New StreamReader(Paths.CheckBotFolder(reader.ReadString(True)))
                 While Not SR.EndOfStream
                     sb.AppendLine(SR.ReadLine)
                 End While

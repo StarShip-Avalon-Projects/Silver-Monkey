@@ -109,6 +109,8 @@ Public NotInheritable Class Paths
 
     ''' <summary>
     ''' Gets the application plugin path.
+    ''' <para/>
+    ''' Default: Program Files (x86)?\Silver Monkey\Plugins
     ''' </summary>
     ''' <value>
     ''' The application plugin path.

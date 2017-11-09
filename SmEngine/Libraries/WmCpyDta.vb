@@ -18,25 +18,28 @@ Namespace Engine.Libraries
         ''' <param name="session"></param>
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
+        End Sub
+
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:75) When the bot receives a message from another bot on the same computer,
             Add(TriggerCategory.Cause, 75,
                  Function()
                      Return True
-                 End Function, "(0:75) When the bot receives a message from another bot on the same computer,")
+                 End Function, " When the bot receives a message from another bot on the same computer,")
             '(0:76) When the bot receives message {...} from another bot on the same computer,
             Add(TriggerCategory.Cause, 76,
-                AddressOf ReceiveMessage, "(0:76) When the bot receives message {...} from another bot on the same computer,")
+                AddressOf ReceiveMessage, " When the bot receives message {...} from another bot on the same computer,")
             '(0:77) When the bot receives a message containing {...} from another bot on the same computer,
             Add(TriggerCategory.Cause, 77,
-               AddressOf ReceiveMessageContaining, "(0:77) When the bot receives a message containing {...} from another bot on the same computer,")
+               AddressOf ReceiveMessageContaining, " When the bot receives a message containing {...} from another bot on the same computer,")
 
             '(5:75) send message {...} to bot named {...}.
             Add(TriggerCategory.Effect, 75,
-                AddressOf SendMessage, "(5:75) send message {...} to bot named {...}.")
+                AddressOf SendMessage, " send message {...} to bot named {...}.")
 
             '(5:76) set Variable %Variable to the Message the bot last received.
             Add(TriggerCategory.Effect, 76,
-                AddressOf SetVariable, "(5:76) set Variable %Variable to the Message the bot last received.")
+                AddressOf SetVariable, " set Variable %Variable to the Message the bot last received.")
         End Sub
 
         Public Overrides Sub Unload(page As Page)
@@ -56,14 +59,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function ReceiveMessage(reader As TriggerReader) As Boolean
-            Dim msMsg As String = ""
-            Dim msg As String = ""
 
-            'Debug.Print("msgContains Begin Execution")
-            msMsg = reader.ReadString()
-            'Debug.Print("msMsg = " & msMsg)
-            msg = reader.Page.GetVariable("MESSAGE").Value.ToString
-            'Debug.Print("Msg = " & msg)
+            Dim msMsg = reader.ReadString()
+            Dim msg = reader.Page.GetVariable("%MESSAGE").Value.ToString
             Return msg.Equals(msMsg)
 
         End Function
@@ -77,14 +75,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function ReceiveMessageContaining(reader As TriggerReader) As Boolean
-            Dim msMsg As String = ""
-            Dim msg As String = ""
+            Dim msMsg = reader.ReadString()
 
-            'Debug.Print("msgContains Begin Execution")
-            msMsg = reader.ReadString()
-            'Debug.Print("msMsg = " & msMsg)
-            msg = reader.Page.GetVariable("MESSAGE").Value.ToString
-            'Debug.Print("Msg = " & msg)
+            Dim msg = reader.Page.GetVariable("%MESSAGE").Value.ToString
+
             Return msg.Contains(msMsg)
 
         End Function
@@ -107,10 +101,10 @@ Namespace Engine.Libraries
             'handle of the receiving application.
             'One way is to use the FindWindow API
             Dim cstrReceiverWindowName As String = "Silver Monkey: " + Fur
-            Dim WindowHandleOfToProcess As Integer = FindWindow(Nothing, cstrReceiverWindowName)
+            Dim WindowHandleOfToProcess = FindWindow(Nothing, cstrReceiverWindowName)
             'find by window name
-            Dim WindowHandle As New IntPtr(WindowHandleOfToProcess)
-            Dim msg As MessageHelper = New MonkeyCore.Utils.MessageHelper
+            Dim WindowHandle = New IntPtr(WindowHandleOfToProcess)
+            Dim msg = New MessageHelper
             'Step 2.
             'Create some information to send.
             Dim strTag As String = "MSG"
@@ -119,8 +113,8 @@ Namespace Engine.Libraries
             If WindowHandle <> IntPtr.Zero Then
                 iResult = msg.SendWindowsStringMessage(WindowHandle,
                            IntPtr.Zero,
-                           FurcadiaSession.ConnectedCharacterName,
-                           FurcadiaSession.ConnectedCharacterFurcadiaID, strTag, msMsg)
+                           FurcadiaSession.ConnectedFurre.ShortName,
+                           FurcadiaSession.ConnectedFurre.FurreID, strTag, msMsg)
                 SendClientMessage("SYSTEM Send Windows Message to " + Fur + ": " + msMsg)
             End If
             'Debug.Print("Msg = " & msg)
@@ -137,10 +131,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Function SetVariable(reader As TriggerReader) As Boolean
-
-
+            'TODO: Add markup filtering
             Dim Var = reader.ReadVariable(True)
-            Var.Value = FurcadiaSession.Player.Message
+            Var.Value = Player.Message
             Return True
 
         End Function

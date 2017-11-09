@@ -13,7 +13,7 @@
     <RootNamespace>Data_Monkey_Help</RootNamespace>
     <Name>Data_Monkey_Help</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>Cross-platform (.NET Core/.NET Standard)</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.6.1</FrameworkVersion>
     <OutputPath>..\build\help\datamonkey\</OutputPath>
     <HtmlHelpName>Data_Monkey_Help</HtmlHelpName>
     <Language>en-US</Language>
@@ -138,7 +138,10 @@
           </deploymentLocation>
         </configuration>
       </PlugInConfig>
-<PlugInConfig id="Documented Entities Only" enabled="True"><configuration /></PlugInConfig></PlugInConfigurations>
+      <PlugInConfig id="Documented Entities Only" enabled="True">
+        <configuration />
+      </PlugInConfig>
+    </PlugInConfigurations>
     <WebsiteSdkLinkType>Msdn</WebsiteSdkLinkType>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
     <IncludeFavorites>True</IncludeFavorites>

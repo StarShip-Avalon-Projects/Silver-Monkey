@@ -3,7 +3,6 @@ Imports Furcadia.Net.Dream
 Imports Furcadia.Text.Base95
 Imports Monkeyspeak
 Imports SilverMonkeyEngine
-Imports SilverMonkeyEngine.Engine.Libraries.MonkeySpeakLibrary
 
 ''' <summary>
 ''' </summary>
@@ -59,7 +58,7 @@ Public Class TheClaaaw
     ''' </summary>
     ''' <param name="Host">
     ''' </param>
-    Public Sub Initialize(ByVal Host As Interfaces.ImsHost) Implements Interfaces.ImsPlugin.Initialize
+    Public Overloads Sub Initialize(ByVal Host As Interfaces.ImsHost) Implements Interfaces.ImsPlugin.Initialize
         msHost = Host
     End Sub
 
@@ -67,7 +66,7 @@ Public Class TheClaaaw
 
 #Region "Global Properties"
 
-    Public Player As FURRE
+    Public Player As Furre
 
     Private _MSpage As Monkeyspeak.Page
     Private msDream As DREAM
@@ -236,7 +235,7 @@ Public Class TheClaaaw
 
 #Region "Helper Functions"
 
-    Public Function IsBot(ByRef p As FURRE) As Boolean
+    Public Function IsBot(ByRef p As Furre) As Boolean
         Return p.ShortName = msHost.BotName.ToFurcShortName
     End Function
 
@@ -248,10 +247,10 @@ Public Class TheClaaaw
     ''' </param>
     ''' <returns>
     ''' </returns>
-    Public Function NameToFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As FURRE
-        Dim p As New FURRE
+    Public Function NameToFurre(ByRef sname As String, ByRef UbdateMSVariableName As Boolean) As Furre
+        Dim p As New Furre
         p.Name = sname
-        For Each Character As FURRE In Dream.FurreList
+        For Each Character As Furre In Dream.FurreList
             If Character.ShortName = sname.ToFurcShortName Then
                 p = Character
                 Exit For
@@ -275,15 +274,19 @@ Public Class TheClaaaw
         Return result
     End Function
 
-    Private Function fIDtoFurre(ByRef ID As Integer) As FURRE
+    Private Function fIDtoFurre(ByRef ID As Integer) As Furre
 
-        For Each Character As FURRE In Dream.FurreList
-            If Character.ID = ID Then
+        For Each Character As Furre In Dream.FurreList
+            If Character.FurreID = ID Then
                 Return Character
             End If
         Next
 #Disable Warning BC42105 ' Function 'fIDtoFurre' doesn't return a value on all code paths. A null reference exception could occur at run time when the result is used.
     End Function
+
+    Public Overrides Sub Initialize(ParamArray args() As Object)
+        Throw New NotImplementedException()
+    End Sub
 
 #Enable Warning BC42105 ' Function 'fIDtoFurre' doesn't return a value on all code paths. A null reference exception could occur at run time when the result is used.
 

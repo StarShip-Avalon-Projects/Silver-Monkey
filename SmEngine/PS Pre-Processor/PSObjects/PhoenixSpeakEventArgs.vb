@@ -1,6 +1,4 @@
-﻿Imports SilverMonkeyEngine.Engine.Libraries.PhoenixSpeak.SubSystem
-
-Namespace Engine.Libraries.PhoenixSpeak
+﻿Namespace Engine.Libraries.PhoenixSpeak
 
     ''' <summary>
     ''' Phoenix mSpeak Even Arguments

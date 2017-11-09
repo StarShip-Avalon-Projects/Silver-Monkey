@@ -20,17 +20,32 @@ Namespace Engine.Libraries
     ''' </remarks>
     Public NotInheritable Class MsPounce
         Inherits MonkeySpeakLibrary
+        Implements IDisposable
 
         ''' <summary>
         ''' Default File we use
         ''' </summary>
         Public Const ListFile As String = "onlineList.txt"
 
+        ''' <summary>
+        ''' Pounce list
+        ''' </summary>
         Private WithEvents OnlineFurreList As IO.NameList
-        Private WithEvents PFure As MsPounceFurre
+
+        ''' <summary>
+        ''' Pounce List File Name
+        ''' </summary>
         Private _onlineListFile As String
+
+        ''' <summary>
+        ''' Pounce Furre List
+        ''' </summary>
         Private PounceFurreList As List(Of MsPounceFurre)
-        Private smPounce As PounceClient
+
+        ''' <summary>
+        ''' Furcadia Pounce Server
+        ''' </summary>
+        Private WithEvents SmPounce As PounceClient
 
         ''' <summary>
         ''' Default Constructor
@@ -41,46 +56,61 @@ Namespace Engine.Libraries
             'Setup our Default Objects
             _onlineListFile = Paths.CheckBotFolder(ListFile)
             OnlineFurreList = New IO.NameList(_onlineListFile)
+        End Sub
 
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             ' (0:950) When a furre logs on,
             Add(TriggerCategory.Cause, 950,
-            Function() True, "(0:950) When a furre logs on,")
+            Function() True, " When a furre logs on,")
 
             '(0:951) When a furre logs off,
             Add(TriggerCategory.Cause, 951,
-            Function() True, "(0:951) When a furre logs off,")
+            Function() True, " When a furre logs off,")
             '(0:952) When the furre named {...} logs on,
-            Add(TriggerCategory.Cause, 952, AddressOf NameIs, "(0:952) When the furre named {...} logs on,")
+            Add(TriggerCategory.Cause, 952,
+                AddressOf NameIs, " When the furre named {...} logs on,")
             '(0:953) When the furre named {...} logs off,
-            Add(TriggerCategory.Cause, 953, AddressOf NameIs, "(0:953) When the furre named {...} logs off,")
+            Add(TriggerCategory.Cause, 953,
+                AddressOf NameIs, " When the furre named {...} logs off,")
 
             '(1;950) and the furre named {...} is on-line,
-            Add(New Trigger(TriggerCategory.Condition, 950), AddressOf FurreNamedonline, "(1:950) and the furre named {...} is on-line,")
+            Add(New Trigger(TriggerCategory.Condition, 950),
+                AddressOf FurreNamedonline, " and the furre named {...} is on-line,")
 
             '(1:951) and the furre named {...} is off-line,
-            Add(New Trigger(TriggerCategory.Condition, 951), AddressOf FurreNamedNotOnline, "(1:951) and the furre named {...} is off-line,")
+            Add(New Trigger(TriggerCategory.Condition, 951),
+                AddressOf FurreNamedNotOnline, " and the furre named {...} is off-line,")
 
             '(1:952) and triggering furre is on the smPounce List,
-            Add(New Trigger(TriggerCategory.Condition, 952), AddressOf TrigFurreIsMember, "(1:952) and triggering furre is on the smPounce List,")
+            Add(New Trigger(TriggerCategory.Condition, 952),
+                AddressOf TrigFurreIsMember, " and triggering furre is on the smPounce List,")
             '(1:953) and the triggering furre is not on the smPounce List,
-            Add(New Trigger(TriggerCategory.Condition, 953), AddressOf TrigFurreIsNotMember, "(1:953) and the triggering furre is not on the smPounce List,")
+            Add(New Trigger(TriggerCategory.Condition, 953),
+                AddressOf TrigFurreIsNotMember, " and the triggering furre is not on the smPounce List,")
 
             '(1:954) and the furre named {...} is on the smPounce list,
-            Add(New Trigger(TriggerCategory.Condition, 954), AddressOf FurreNamedIsMember, "(1:954) and the furre named {...} is on the smPounce list,")
+            Add(New Trigger(TriggerCategory.Condition, 954),
+                AddressOf FurreNamedIsMember, " and the furre named {...} is on the smPounce list,")
 
             '(1:955) and the furre named {...} is not on the smPounce list,
-            Add(New Trigger(TriggerCategory.Condition, 955), AddressOf FurreNamedIsNotMember, "(1:955) and the furre named {...} is not on the smPounce list,")
+            Add(New Trigger(TriggerCategory.Condition, 955),
+                AddressOf FurreNamedIsNotMember, " and the furre named {...} is not on the smPounce list,")
 
             '(5:950) add the triggering furre to the smPounce List.
-            Add(New Trigger(TriggerCategory.Effect, 950), AddressOf AddTrigFurre, "(5:950) add the triggering furre to the smPounce List.")
+            Add(New Trigger(TriggerCategory.Effect, 950),
+                AddressOf AddTrigFurre, " add the triggering furre to the smPounce List.")
             '(5:951) add the furre named {...} to the smPounce list.
-            Add(New Trigger(TriggerCategory.Effect, 951), AddressOf AddFurreNamed, "(5:951) add the furre named {...} to the smPounce list.")
+            Add(New Trigger(TriggerCategory.Effect, 951),
+                AddressOf AddFurreNamed, " add the furre named {...} to the smPounce list.")
             '(5:952) remove the triggering furre from the smPounce list.
-            Add(New Trigger(TriggerCategory.Effect, 952), AddressOf RemoveTrigFurre, "(5:952) remove the triggering furre from the smPounce list.")
+            Add(New Trigger(TriggerCategory.Effect, 952),
+                AddressOf RemoveTrigFurre, " remove the triggering furre from the smPounce list.")
             '(5:953) remove the furre named {...} from the smPounce list.
-            Add(New Trigger(TriggerCategory.Effect, 953), AddressOf RemoveFurreNamed, "(5:953) remove the furre named {...} from the smPounce list.")
+            Add(New Trigger(TriggerCategory.Effect, 953),
+                AddressOf RemoveFurreNamed, " remove the furre named {...} from the smPounce list.")
             '(5:954) use the file named {...} as the smPounce list.
-            Add(New Trigger(TriggerCategory.Effect, 954), AddressOf UseMemberFile, "(5:954) use the file named {...} as the smPounce list.")
+            Add(New Trigger(TriggerCategory.Effect, 954),
+                AddressOf UseMemberFile, " use the file named {...} as the smPounce list and start the Pounce Clinet Interface.")
         End Sub
 
         ''' <summary>
@@ -106,12 +136,11 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function AddFurreNamed(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
+            'TODO: Fix to Pounce Reader
 
-            Furre = reader.ReadString
-            If FurreNamedIsMember(reader) = False And FurreNamedIsNotMember(reader) Then
+            If FurreNamedIsMember(reader) = False AndAlso FurreNamedIsNotMember(reader) Then
                 Using sw As StreamWriter = New StreamWriter(_onlineListFile, True)
-                    sw.WriteLine(Furre)
+                    sw.WriteLine(reader.ReadString)
                 End Using
             End If
             Return True
@@ -129,10 +158,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function AddTrigFurre(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
 
-            Furre = FurcadiaSession.MSpage.GetVariable(MS_Name).Value.ToString
-            If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
+            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            If TrigFurreIsMember(reader) = False AndAlso TrigFurreIsNotMember(reader) Then
                 Dim sw As StreamWriter = New StreamWriter(_onlineListFile, True)
                 sw.WriteLine(Furre)
                 sw.Close()
@@ -156,10 +184,9 @@ Namespace Engine.Libraries
         ''' <param name="e">
         ''' <see cref="Eventargs.Empty"/>
         ''' </param>
-        Public Sub FurreLoggedOff(ByVal Furre As Object, e As EventArgs) Handles PFure.FurreLoggedOff
-            Dim Furr As PounceFurre = CType(Furre, PounceFurre)
-            FurcadiaSession.MSpage.RemoveVariable("%NAME")
-            FurcadiaSession.MSpage.SetVariable("%NAME", Furr.Name, True)
+        Public Sub FurreLoggedOff(ByVal Furre As Object, e As EventArgs)
+            Dim Furr = DirectCast(Furre, PounceFurre)
+            DirectCast(FurcadiaSession.MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
             FurcadiaSession.MSpage.Execute(951, 953)
         End Sub
 
@@ -178,10 +205,9 @@ Namespace Engine.Libraries
         ''' <param name="e">
         ''' EventSrgs.Empty
         ''' </param>
-        Public Sub FurreLoggedOn(ByVal Furre As Object, e As EventArgs) Handles PFure.FurreLoggedOn
-            Dim Furr As PounceFurre = DirectCast(Furre, PounceFurre)
-            FurcadiaSession.MSpage.RemoveVariable("%NAME")
-            FurcadiaSession.MSpage.SetVariable("%NAME", Furr.Name, True)
+        Public Sub FurreLoggedOn(ByVal Furre As Object, e As EventArgs)
+            Dim Furr = DirectCast(Furre, PounceFurre)
+            DirectCast(FurcadiaSession.MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
             FurcadiaSession.MSpage.Execute(950, 952)
         End Sub
 
@@ -194,11 +220,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
             CheckonlineList()
-            Dim Furre As String = Nothing
-            Dim f() As String
 
-            Furre = reader.ReadString
-            f = File.ReadAllLines(_onlineListFile)
+            Dim Furre = reader.ReadString
+            Dim f = File.ReadAllLines(_onlineListFile)
             For Each l As String In f
                 If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
             Next
@@ -224,8 +248,8 @@ Namespace Engine.Libraries
         ''' <returns></returns>
         Public Function FurreNamedNotOnline(reader As TriggerReader) As Boolean
 
-            Dim TmpName As String = reader.ReadString()
-            For Each Fur As MsPounceFurre In PounceFurreList
+            Dim TmpName = reader.ReadString()
+            For Each Fur In PounceFurreList
                 If Fur.ShortName = FurcadiaShortName(TmpName) Then
                     Return Not Fur.Online
                 End If
@@ -242,8 +266,8 @@ Namespace Engine.Libraries
         ''' <returns></returns>
         Public Function FurreNamedonline(reader As TriggerReader) As Boolean
 
-            Dim TmpName As String = reader.ReadString()
-            For Each Fur As MsPounceFurre In PounceFurreList
+            Dim TmpName = reader.ReadString()
+            For Each Fur In PounceFurreList
                 If Fur.ShortName = FurcadiaShortName(TmpName) Then
                     Return Fur.Online
                 End If
@@ -261,13 +285,13 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RemoveFurreNamed(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
+
             CheckonlineList()
 
-            Furre = reader.ReadString
+            Dim Furre = reader.ReadString
             Dim line As String = Nothing
-            Dim linesList As New List(Of String)(File.ReadAllLines(_onlineListFile))
-            Using SR As New StreamReader(_onlineListFile)
+            Dim linesList = New List(Of String)(File.ReadAllLines(_onlineListFile))
+            Using SR = New StreamReader(_onlineListFile)
                 line = SR.ReadLine()
                 For i As Integer = 0 To linesList.Count - 1
                     If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
@@ -290,13 +314,13 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RemoveTrigFurre(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
+
             CheckonlineList()
 
-            Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
             Furre = FurcadiaShortName(Furre)
             Dim line As String = Nothing
-            Dim linesList As New List(Of String)(File.ReadAllLines(_onlineListFile))
+            Dim linesList = New List(Of String)(File.ReadAllLines(_onlineListFile))
             Using SR As New StreamReader(_onlineListFile)
                 line = SR.ReadLine()
                 For i As Integer = 0 To linesList.Count - 1
@@ -322,11 +346,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TrigFurreIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
             CheckonlineList()
-            Dim Furre As String = Nothing
-            Dim f() As String
 
-            Furre = reader.Page.GetVariable(MS_Name).Value.ToString
-            f = File.ReadAllLines(_onlineListFile)
+            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim f = File.ReadAllLines(_onlineListFile)
             For Each l As String In f
                 If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
             Next
@@ -357,9 +379,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function UseMemberFile(reader As TriggerReader) As Boolean
 
-            Dim FileList As String = reader.ReadString
+            Dim FileList = reader.ReadString
             CheckonlineList()
-            smPounce = New PounceClient(OnlineFurreList.ToArray, Nothing)
+            If SmPounce IsNot Nothing Then SmPounce.Dispose()
+            SmPounce = New PounceClient(OnlineFurreList.ToArray, Nothing)
 
             Return True
         End Function
@@ -377,23 +400,46 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overrides Function NameIs(reader As TriggerReader) As Boolean
-
             Return MyBase.NameIs(reader)
-
         End Function
 
         Private Sub CheckonlineList()
             _onlineListFile = Paths.CheckBotFolder(_onlineListFile)
             If File.Exists(_onlineListFile) = False Then
                 Console.WriteLine("On-line List File: " + _onlineListFile + " Doesn't Exist, Creating new file")
-                Dim sw As StreamWriter = New StreamWriter(_onlineListFile, False)
-                sw.Close()
+                Using sw = New StreamWriter(_onlineListFile, False)
+                    sw.Close()
+                End Using
             End If
         End Sub
 
         Public Overrides Sub Unload(page As Page)
+            Dispose(True)
+        End Sub
+
+#Region "IDisposable Support"
+
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    If SmPounce IsNot Nothing Then SmPounce.Dispose()
+                End If
+
+            End If
+            disposedValue = True
+        End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
 
         End Sub
+
+#End Region
 
     End Class
 

@@ -17,19 +17,21 @@ Namespace Engine.Libraries
         ''' <param name="session"></param>
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
+        End Sub
 
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:46) When the bot sees a trade request,
             Add(TriggerCategory.Cause, 46,
             Function()
                 Return Not FurcadiaSession.IsConnectedCharacter
-            End Function, "(0:46) When the bot sees a trade request,")
+            End Function, " When the bot sees a trade request,")
             '(0:47) When the bot sees the trade request {..},
             Add(TriggerCategory.Cause, 47,
-            AddressOf MsgIs, "(0:47) When the bot sees the trade request {..},")
+            AddressOf MsgIs, " When the bot sees the trade request {..},")
 
             '(0:48) When the bot sees a trade request with {..} in it,
             Add(TriggerCategory.Cause, 48,
-            AddressOf MsgContains, "(0:48) When the bot sees a trade request with {..} in it,")
+            AddressOf MsgContains, " When the bot sees a trade request with {..} in it,")
         End Sub
 
         Public Overrides Sub Unload(page As Page)
@@ -53,8 +55,6 @@ Namespace Engine.Libraries
         Protected Overrides Function MsgIs(reader As TriggerReader) As Boolean
             Return MyBase.MsgIs(reader)
         End Function
-
-
 
     End Class
 

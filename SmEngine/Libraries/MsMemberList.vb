@@ -43,31 +43,33 @@ Namespace Engine.Libraries
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
             MemberList = Paths.CheckBotFolder("MemberList.txt")
+        End Sub
 
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(1:900) and the triggering furre is on my Dream Member List,
-            Add(New Trigger(TriggerCategory.Condition, 900), AddressOf TrigFurreIsMember, "(1:900) and the triggering furre is on my dream Member List,")
+            Add(New Trigger(TriggerCategory.Condition, 900), AddressOf TrigFurreIsMember, " and the triggering furre is on my dream Member List,")
             '(1:901) and the furre named {...} is on my Dream Member list.
-            Add(New Trigger(TriggerCategory.Condition, 901), AddressOf FurreNamedIsMember, "(1:901) and the furre named {...} is on my Dream Member list,")
+            Add(New Trigger(TriggerCategory.Condition, 901), AddressOf FurreNamedIsMember, " and the furre named {...} is on my Dream Member list,")
 
             '(1:902) and the triggering furre is not on my Dream Member list.
-            Add(New Trigger(TriggerCategory.Condition, 902), AddressOf TrigFurreIsNotMember, "(1:902) and the triggering furre is not on my Dream Member list,")
+            Add(New Trigger(TriggerCategory.Condition, 902), AddressOf TrigFurreIsNotMember, " and the triggering furre is not on my Dream Member list,")
             '(1:903) and the furre named {...} is not on my Dream Member list.
-            Add(New Trigger(TriggerCategory.Condition, 903), AddressOf FurreNamedIsNotMember, "(1:903) and the furre named {...} is not on my Dream Member list,")
+            Add(New Trigger(TriggerCategory.Condition, 903), AddressOf FurreNamedIsNotMember, " and the furre named {...} is not on my Dream Member list,")
 
             '(1:900) add the triggering furre to my Dream Member list if they aren't already on it.
-            Add(New Trigger(TriggerCategory.Effect, 900), AddressOf AddTrigFurre, "(5:900) add the triggering furre to my Dream Member list if they aren't already on it.")
+            Add(New Trigger(TriggerCategory.Effect, 900), AddressOf AddTrigFurre, " add the triggering furre to my Dream Member list if they aren't already on it.")
             '(5:901) add the furre named {...} to my Dream Member list if they aren't already on it.
-            Add(New Trigger(TriggerCategory.Effect, 901), AddressOf AddFurreNamed, "(5:901) add the furre named {...} to my Dream Member list if they aren't already on it.")
+            Add(New Trigger(TriggerCategory.Effect, 901), AddressOf AddFurreNamed, " add the furre named {...} to my Dream Member list if they aren't already on it.")
 
             '(5:902) remove the triggering furre to my Dream Member list if they are on it.
-            Add(New Trigger(TriggerCategory.Effect, 902), AddressOf RemoveTrigFurre, "(5:902) remove the triggering furre to my Dream Member list if they are on it.")
+            Add(New Trigger(TriggerCategory.Effect, 902), AddressOf RemoveTrigFurre, " remove the triggering furre to my Dream Member list if they are on it.")
             '(5:903) remove the furre named {...} from my Dream Member list if they are on it.
-            Add(New Trigger(TriggerCategory.Effect, 903), AddressOf RemoveFurreNamed, "(5:903) remove the furre named {...} from my Dream Member list if they are on it.")
+            Add(New Trigger(TriggerCategory.Effect, 903), AddressOf RemoveFurreNamed, " remove the furre named {...} from my Dream Member list if they are on it.")
 
             '(5:904) Use file {...} as the dream member list.
-            Add(New Trigger(TriggerCategory.Effect, 904), AddressOf UseMemberFile, "(5:904) Use file {...} as the dream member list.")
+            Add(New Trigger(TriggerCategory.Effect, 904), AddressOf UseMemberFile, " Use file {...} as the dream member list.")
             '(5:905) store member list to variable %Variable.
-            Add(New Trigger(TriggerCategory.Effect, 905), AddressOf ListToVariable, "(5:905) store member list to variable %Variable.")
+            Add(New Trigger(TriggerCategory.Effect, 905), AddressOf ListToVariable, " store member list to variable %Variable.")
 
         End Sub
 
@@ -85,17 +87,17 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function AddFurreNamed(reader As TriggerReader) As Boolean
-            Dim Furre As String
+
             Try
-                Furre = reader.ReadString
+                Dim Furre = reader.ReadString
                 If FurreNamedIsNotMember(reader) Then
-                    Using sw As StreamWriter = New StreamWriter(MemberList, True)
+                    Using sw = New StreamWriter(MemberList, True)
                         sw.WriteLine(Furre)
                     End Using
                 End If
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -109,18 +111,18 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Private Function AddTrigFurre(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
+        Public Function AddTrigFurre(reader As TriggerReader) As Boolean
+
             Try
-                Furre = reader.Page.GetVariable(MS_Name).Value.ToString
-                If TrigFurreIsMember(reader) = False And TrigFurreIsNotMember(reader) Then
-                    Dim sw As StreamWriter = New StreamWriter(MemberList, True)
+                Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+                If TrigFurreIsMember(reader) = False AndAlso TrigFurreIsNotMember(reader) Then
+                    Dim sw = New StreamWriter(MemberList, True)
                     sw.WriteLine(Furre)
                     sw.Close()
                 End If
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -150,13 +152,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedIsMember(reader As TriggerReader) As Boolean
 
-            Dim Furre As String = Nothing
-            Dim f() As String
-
-            Furre = reader.ReadString
+            Dim Furre = reader.ReadString
             Try
                 CheckMemberList()
-                f = File.ReadAllLines(MemberList)
+                Dim f = File.ReadAllLines(MemberList)
                 For Each l As String In f
                     If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then
                         Return True
@@ -164,7 +163,7 @@ Namespace Engine.Libraries
                 Next
                 Return FurcadiaSession.IsBotController
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
             End Try
 
             Return False
@@ -189,17 +188,17 @@ Namespace Engine.Libraries
         ''' <returns></returns>
         Public Function ListToVariable(reader As TriggerReader) As Boolean
 
-            Dim Furre
-            Dim f As New List(Of String)
             Try
                 CheckMemberList()
-                Furre = reader.ReadVariable(True)
+                Dim Furre = reader.ReadVariable(True)
+
+                Dim f = New List(Of String)
                 f.AddRange(File.ReadAllLines(MemberList))
                 Furre.Value = String.Join(" ", f.ToArray)
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -214,14 +213,14 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RemoveFurreNamed(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
+
             Try
                 CheckMemberList()
 
-                Furre = reader.ReadString
+                Dim Furre = reader.ReadString
                 Dim line As String
-                Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
-                Using SR As New StreamReader(MemberList)
+                Dim linesList = New List(Of String)(File.ReadAllLines(MemberList))
+                Using SR = New StreamReader(MemberList)
                     While SR.Peek() <> -1
                         line = SR.ReadLine()
                         For i As Integer = 0 To linesList.Count - 1
@@ -236,7 +235,7 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -251,16 +250,16 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RemoveTrigFurre(reader As TriggerReader) As Boolean
-            Dim Furre As String = Nothing
+
             Try
                 CheckMemberList()
 
-                Furre = reader.Page.GetVariable(MS_Name).Value.ToString
-                Dim line As String
+                Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+
                 Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
                 Using SR As New StreamReader(MemberList)
                     While SR.Peek() <> -1
-                        line = SR.ReadLine()
+                        Dim line = SR.ReadLine()
                         For i As Integer = 0 To linesList.Count - 1
                             If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
                                 linesList.RemoveAt(i)
@@ -273,7 +272,7 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -288,12 +287,12 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TrigFurreIsMember(reader As TriggerReader) As Boolean
 
-            Dim Furre As String = Nothing
-            Dim f As New List(Of String)
             Try
                 CheckMemberList()
 
-                Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+                Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+
+                Dim f = New List(Of String)
                 f.AddRange(File.ReadAllLines(MemberList))
                 For Each l As String In f
                     If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
@@ -301,7 +300,7 @@ Namespace Engine.Libraries
 
                 Return FurcadiaSession.IsBotController
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function
@@ -332,7 +331,7 @@ Namespace Engine.Libraries
                 CheckMemberList()
                 Return True
             Catch ex As Exception
-                Throw New MonkeySpeakException("A problem occurred checking the member-list", ex)
+                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
                 Return False
             End Try
         End Function

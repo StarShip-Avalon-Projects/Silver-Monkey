@@ -10,7 +10,7 @@ Namespace Engine.Libraries.Web
 
 #Region "Public Fields"
 
-        Private _WebStack As IList(Of IVariable)()
+        Private _WebStack As List(Of IVariable)
         Private _webPage As String
         Public Property ErrMsg As String
         Public Property Packet As String
@@ -19,7 +19,7 @@ Namespace Engine.Libraries.Web
         ''' Web Cache to process
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property WebStack As IList(Of IVariable)
+        Public ReadOnly Property WebStack As List(Of IVariable)
             Get
                 Return _WebStack
             End Get
@@ -37,18 +37,16 @@ Namespace Engine.Libraries.Web
 #Region "Public Constructors"
 
         Public Sub New()
+            _WebStack = New List(Of IVariable)
             _Status = -1
             ReceivedPage = False
             ErrMsg = String.Empty
             Packet = String.Empty
         End Sub
 
-        Sub New(WebCache As IList(Of IVariable))
+        Sub New(WebCache As List(Of IVariable))
+            Me.New()
             _WebStack = WebCache
-            _Status = -1
-            ReceivedPage = False
-            ErrMsg = String.Empty
-            Packet = String.Empty
         End Sub
 
 #End Region

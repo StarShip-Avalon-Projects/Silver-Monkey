@@ -1,19 +1,20 @@
+cd
 
 IF "%~1"=="" GOTO BuildAll
 IF "%~1"=="VersionBump" GOTO VersionBump
 
 :VersionBump
-msbuild /t:IncrementVersions  Solution.build
+msbuild /t:IncrementVersions /property:Configuration=Debug Solution.build 
 set BUILD_STATUS=%ERRORLEVEL% 
 if not %BUILD_STATUS%==0 goto fail 
  
 :BuildAll
-msbuild /t:BuildAll  Solution.build
+msbuild /t:BuildAll  Solution.build /flp:logfile=MonkeySystemDebug.log;verbosity=diagnostic
 set BUILD_STATUS=%ERRORLEVEL% 
 if not %BUILD_STATUS%==0 goto fail 
 
 :BuildRelease
-msbuild /t:Build /property:Configuration=Release Solution.build
+msbuild /t:Build /property:Configuration=Release Solution.build  /flp:logfile=MonkeySystemRelease.log;verbosity=diagnostic
  set BUILD_STATUS=%ERRORLEVEL% 
 if %BUILD_STATUS%==0 goto end 
 if not %BUILD_STATUS%==0 goto fail  

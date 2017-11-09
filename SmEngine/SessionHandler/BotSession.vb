@@ -11,16 +11,18 @@
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports Furcadia.Net
+Imports Furcadia.Net.Dream
 Imports Furcadia.Net.Proxy
 Imports Furcadia.Net.Utils.ServerParser
 Imports Furcadia.Text.FurcadiaMarkup
 Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
+Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
+Imports Monkeyspeak.Logging
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.Interfaces
-Imports SilverMonkeyEngine.SmConstants
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
@@ -40,7 +42,8 @@ Imports SilverMonkeyEngine.SmConstants
 ''' </para>
 ''' </summary>
 <CLSCompliant(True)>
-Public Class BotSession : Inherits ProxySession
+Public Class BotSession
+    Inherits ProxySession
     Implements IDisposable
 
     Public Event CloseSession As Action
@@ -58,22 +61,23 @@ Public Class BotSession : Inherits ProxySession
     Public objHost As New smHost(Me)
     Private disposed As Boolean
     Private handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
-
+    Private lastDream As DREAM
     ''' <summary>
     ''' Library Objects to load into the Engine
     ''' </summary>
 
-
     Public Property MainEngineOptions As BotOptions
 
     Private MainSettings As Settings.cMain
+
+    ' Public SendTextToDisplay As EventHandler(Of
 
     ''' <summary>
     ''' </summary>
     Sub New()
         MyBase.New()
         MainEngineOptions = New BotOptions()
-
+        lastDream = New DREAM
     End Sub
 
     ''' <summary>
@@ -83,6 +87,7 @@ Public Class BotSession : Inherits ProxySession
     ''' </param>
     Sub New(ByRef BotSessionOptions As BotOptions)
         MyBase.New(BotSessionOptions)
+        lastDream = New DREAM
         MainEngineOptions = BotSessionOptions
     End Sub
 
@@ -126,7 +131,9 @@ Public Class BotSession : Inherits ProxySession
             End If
             MyBase.Connect()
         Catch ex As Exception
-            Throw ex
+            StopEngine()
+            Dim e As New MonkeyCore.Utils.Logging.ErrorLogging(ex, Me)
+            Process.Start("notepade.exe", e.LogFile)
         End Try
     End Sub
 
@@ -134,11 +141,6 @@ Public Class BotSession : Inherits ProxySession
     ''' Disconnect from the Game Server and Client
     ''' </summary>
     Public Overrides Sub Disconnect()
-        ' (0:2) When the bot logs off
-        If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
-            MSpage.ExecuteAsync(2)
-
-        End If
 
         MyBase.Disconnect()
         StopEngine()
@@ -152,20 +154,19 @@ Public Class BotSession : Inherits ProxySession
         Dispose(True)
     End Sub
 
-
-
     ''' <summary>
     ''' Configure Bot Variables and Execute Monkey Speak Truggers for Client to Server Instructions
     ''' </summary>
     ''' <param name="sender"><see cref="Object"/></param>
     ''' <param name="e"><see cref="ParseServerArgs"/></param>
-    Public Sub OnParseSererInstruction(sender As Object, e As ParseServerArgs) Handles MyBase.ProcessServerInstruction
+    Public Async Sub OnParseSererInstructionAsync(sender As Object, e As ParseServerArgs) _
+          Handles MyBase.ProcessServerInstruction
 
         Try
 
-            DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).ForceAssignValue(Player.Message)
-
-            DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).ForceAssignValue(Player.Name)
+            DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Player.Message)
+            DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Player.ShortName)
+            DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Player.Name)
         Catch ex As Exception
             RaiseEvent [Error](ex, Me, "Failure to set Triggering Furre and Triggering Furres %MESSAGE variables")
         End Try
@@ -174,46 +175,50 @@ Public Class BotSession : Inherits ProxySession
 
             Case ServerInstructionType.LoadDreamEvent
                 Try
-                    DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).ForceAssignValue(Dream.Owner)
-                    DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).ForceAssignValue(Dream.Name)
+                    DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(lastDream.Owner)
+                    DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).SetValue(lastDream.Name)
                 Catch ex As Exception
                     RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
                 End Try
-                '(0:90) When the bot enters a Dream,
-                '(0:91) When the bot enters a Dream named {..},
-                MSpage.ExecuteAsync(92, 93)
+                '(0:97) When the bot leaves a Dream,
+                '(0:98) When the bot leaves the Dream named {..},
+                Dim ids() = {97, 98}
+                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
             Case ServerInstructionType.BookmarkDream
                 Try
-                    DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).ForceAssignValue(Dream.Owner)
-                    DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).ForceAssignValue(Dream.Name)
+                    DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(Dream.Owner)
+                    DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).SetValue(Dream.Name)
                 Catch ex As Exception
                     RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
                 End Try
                 '(0:90) When the bot enters a Dream,
                 '(0:91) When the bot enters a Dream named {..},
-                MSpage.ExecuteAsync(90, 91)
-
+                Dim ids() = {90, 91}
+                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                lastDream = Dream
         End Select
 
     End Sub
 
-    Public Sub OnDisconnected() Handles MyBase.ServerDisConnected
-        RaiseEvent CloseSession()
-    End Sub
+    'Public Sub OnDisconnected() Handles MyBase.ServerDisConnected
+    '    RaiseEvent CloseSession()
+    'End Sub
 
     ''' <summary>
     ''' Configure Bot Variables and Execute Monkey Speak Truggers for Text and dynamic channels
     ''' </summary>
     ''' <param name="InstructionObject"><see cref="ChannelObject"/></param>
     ''' <param name="Args"><see cref="ParseServerArgs"/></param>
-    Public Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) Handles MyBase.ProcessServerChannelData
+    Public Async Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) _
+        Handles MyBase.ProcessServerChannelData
         If MSpage Is Nothing Then Exit Sub
-        If IsConnectedCharacter Then Exit Sub
-        Try
-            DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).ForceAssignValue(Player.Message)
-            DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).ForceAssignValue(Player.Name)
+        Dim Furr As Furre = InstructionObject.Player
 
+        Try
+            DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Furr.Message)
+            DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Furr.ShortName)
+            DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
         Catch ex As Exception
             RaiseEvent [Error](ex, Me, "Failed to set Triggering Furre Monkeyspeak Variables")
         End Try
@@ -225,7 +230,8 @@ Public Class BotSession : Inherits ProxySession
                 Dim DiceObject As DiceRolls = Nothing
                 If InstructionObject.GetType().Equals(GetType(DiceRolls)) Then
                     DiceObject = DirectCast(InstructionObject, DiceRolls)
-                    MsDice.dice = DiceObject.Dice
+                Else
+                    Throw New NetProxyException("Saw channel " + InstructionObject.Channel + "But there is no DiceRolls object")
                 End If
 
                 If IsConnectedCharacter Then
@@ -233,21 +239,27 @@ Public Class BotSession : Inherits ProxySession
                     '(0:132) When the bot rolls #d#+#,
                     '(0:134) When the bot rolls #d#-#,
                     '(0:136) When any one rolls anything,
-                    MSpage.ExecuteAsync(130, 131, 132, 136)
+                    Dim ids() = {130, 131, 132, 136}
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids, DiceObject))
                 Else
                     '(0:136) When a furre rolls #d#,
                     '(0:138) When a fuure rolls #d#+#,
                     '(0:140) When a furre rolls #d#-#,
                     '(0:136) When any one rolls anything,
-                    MSpage.ExecuteAsync(133, 134, 135, 136)
+                    Dim ids() = {133, 134, 135, 136}
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids, DiceObject))
                 End If
             Case "trade"
-                MSpage.ExecuteAsync(46, 47, 48)
+                Dim ids() = {46, 47, 48}
+                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
             Case "shout"
                 '(0:8) When someone shouts something,
                 '(0:9) When someone shouts {..},
                 '(0:10) When someone shouts something with {..} in it,
-                MSpage.ExecuteAsync(8, 9, 10)
+                If IsConnectedCharacter Then Exit Sub
+                If InstructionObject.RawInstruction.StartsWith("<font color='shout'>You shout,") Then Exit Sub
+                Dim ids() = {8, 9, 10}
+                Await Task.Run(Sub() MSpage.ExecuteAsync(ids, Furr))
             Case "say"
                 ' (0:5) When some one says something
                 ' (0:6) When some one says {...}
@@ -256,8 +268,8 @@ Public Class BotSession : Inherits ProxySession
                 ' (0:19) When someone says or emotes {...}
                 ' (0:20) When someone says or emotes something with
                 ' {...} in it"
-
-                MSpage.ExecuteAsync(5, 6, 7, 18, 19, 20)
+                Dim ids() = {5, 6, 7, 18, 19, 20}
+                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
             Case "whisper"
 
@@ -265,29 +277,25 @@ Public Class BotSession : Inherits ProxySession
                 ' (0:16) When some one whispers {...}
                 ' (0:17) When some one whispers something
                 ' with {...} in it
-                MSpage.ExecuteAsync(15, 16, 17)
+                Dim Ids() = {15, 16, 17}
+                Await Task.Run(Sub() MSpage.ExecuteAsync(Ids))
 
             Case "emote"
+                If IsConnectedCharacter Then Exit Sub
                 ' (0:12) When someone emotes {...} Execute
                 ' (0:13) When someone emotes something with {...} in it
                 ' (0:18) When someone says or emotes something
                 ' (0:19) When someone says or emotes {...}
                 ' (0:20) When someone says or emotes something
                 ' with {...} in it
-
-                MSpage.ExecuteAsync(11, 12, 13, 18, 19, 20)
-            Case "emit"
-                ' (0:21) When someone emits something
-                ' (0:22) When someone emits {...}
-                ' (0:23) When someone emits something with {...} in it
-
-                MSpage.ExecuteAsync(21, 22, 23)
+                Dim ids() = {11, 12, 13, 18, 19, 20}
+                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
             Case "@emit"
                 ' (0:21) When someone emits something
                 ' (0:22) When someone emits {...}
                 ' (0:23) When someone emits something with {...} in it
-
-                MSpage.ExecuteAsync(21, 22, 23)
+                Dim ids() = {21, 22, 23}
+                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
             Case "query"
 
@@ -296,27 +304,32 @@ Public Class BotSession : Inherits ProxySession
                 Select Case QueryComand
                     Case "summon"
                         ''JOIN
-                        MSpage.ExecuteAsync(34, 35)
+                        Dim ids() = {34, 35}
+                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
                     Case "join"
                         ''SUMMON
-                        MSpage.ExecuteAsync(32, 33)
+                        Dim ids() = {32, 33}
+                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
                     Case "follow"
                         ''LEAD
-                        MSpage.ExecuteAsync(36, 37)
+                        Dim ids() = {36, 37}
+                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
                     Case "lead"
                         ''FOLLOW
-                        MSpage.ExecuteAsync(38, 39)
+                        Dim ids() = {38, 39}
+                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
                     Case "cuddle"
-                        MSpage.ExecuteAsync(40, 41)
+                        Dim ids() = {40, 41}
+                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
                 End Select
             Case "banish"
                 Dim NameStr As String
-                MSpage.RemoveVariable("%BANISHLIST")
-                MSpage.SetVariable("%BANISHLIST", String.Join(" ", BanishString.ToArray), True)
+
+                DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).SetValue(String.Join(" ", BanishString.ToArray))
 
                 If Text.Contains(" has been banished from your dreams.") Then
                     'banish <name> (online)
@@ -325,35 +338,35 @@ Public Class BotSession : Inherits ProxySession
                     '(0:52) When the bot sucessfilly banishes a furre,
                     '(0:53) When the bot sucessfilly banishes the furre named {...},
                     'Success: You have canceled all banishments from your dreams.
-                    MSpage.RemoveVariable("%BANISHNAME")
-                    MSpage.SetVariable("%BANISHNAME", BanishName, True)
 
-                    MSpage.ExecuteAsync(52, 53)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
+                    Dim ids() = {52, 53}
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
                     ' MSpage.ExecuteAsync(53)
                 ElseIf Text = "You have canceled all banishments from your dreams." Then
                     'banish-off-all (active list)
                     'Success: You have canceled all banishments from your dreams.
-                    DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).ForceAssignValue(Nothing)
-                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(Nothing)
-                    MSpage.ExecuteAsync(60)
+                    DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).SetValue(Nothing)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(Nothing)
 
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(60))
                 ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
                     'tempbanish <name> (online)
                     'Success: (.*?) has been temporarily banished from your dreams.
 
                     '(0:61) When the bot sucessfully temp banishes a Furre
                     '(0:62) When the bot sucessfully temp banishes the furre named {...}
-                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
-
-                    MSpage.ExecuteAsync(61, 62)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
+                    Dim ids() = {61, 62}
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
                 ElseIf Text.StartsWith("Players banished from your dreams: ") Then
                     'Banish-List
                     '[notify> Players banished from your dreams:
                     '`(0:54) When the bot sees the banish list
-                    MSpage.ExecuteAsync(54)
 
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(54))
                 ElseIf Text.StartsWith("The banishment of player ") Then
                     'banish-off <name> (on list)
                     '[notify> The banishment of player (.*?) has ended.
@@ -362,8 +375,9 @@ Public Class BotSession : Inherits ProxySession
                     '(0:58) When the bot successfully removes the furre named {...} from the banish list,
                     Dim t As New Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled)
                     NameStr = t.Match(Text).Groups(1).Value
-                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
-                    MSpage.ExecuteAsync(56, 56)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
+                    Dim ids() = {56, 56}
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
 
                     '      MSpage.ExecuteAsync(800)
 
@@ -375,26 +389,28 @@ Public Class BotSession : Inherits ProxySession
                     '(0:51) When the bot fails to banish the furre named {...},
                     Dim t As New Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled)
                     NameStr = t.Match(Text).Groups(1).Value
-                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(NameStr)
-                    MSpage.ExecuteAsync(50, 51)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(NameStr)
+                    Dim ids() = {50, 51}
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
                 ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
                     'banish-off <name> (not on list)
                     'Error:>> Sorry, this player has not been banished from your dreams.
 
                     '(0:55) When the Bot fails to remove a furre from the banish list,
                     '(0:56) When the bot fails to remove the furre named {...} from the banish list,
-                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).ForceAssignValue(BanishName)
-                    MSpage.ExecuteAsync(50, 51)
+                    DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
+                    Dim ids() = {50, 51}
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
                 ElseIf Text = "You have not banished anyone." Then
                     'banish-off-all (empty List)
                     'Error:>> You have not banished anyone.
 
                     '(0:59) When the bot fails to see the banish list,
-                    DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).ForceAssignValue(Nothing)
-                    MSpage.ExecuteAsync(59)
+                    DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).SetValue(Nothing)
 
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(59))
                 ElseIf Text = "You do not have any cookies to give away right now!" Then
-                    MSpage.ExecuteAsync(95)
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(95))
                 End If
 
             Case "@cookie"
@@ -403,36 +419,37 @@ Public Class BotSession : Inherits ProxySession
                 ' <font color='success'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Your cookies are ready.  http://furcadia.com/cookies/ for more info!</font>
                 '<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.
 
-                Dim CookieToMe As Regex = New Regex(String.Format("{0}", CookieToMeREGEX))
+                Dim CookieToMe = New Regex(String.Format("{0}", CookieToMeREGEX))
                 If CookieToMe.Match(Text).Success Then
-
-                    MSpage.ExecuteAsync(42, 43)
+                    Dim ids() = {42, 43}
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
                 End If
                 Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
                 If CookieToAnyone.Match(Text).Success Then
 
                     If IsConnectedCharacter Then
-                        MSpage.ExecuteAsync(42, 43)
+                        Dim ids() = {42, 43}
+                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
                     Else
-                        MSpage.ExecuteAsync(44)
+                        Await Task.Run(Sub() MSpage.ExecuteAsync(44))
                     End If
 
                 End If
-                Dim CookieFail As Regex = New Regex(String.Format("You do not have any (.*?) left!"))
+                Dim CookieFail = New Regex(String.Format("You do not have any (.*?) left!"))
                 If CookieFail.Match(Text).Success Then
-                    MSpage.ExecuteAsync(45)
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(45))
                 End If
-                Dim EatCookie As Regex = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
+                Dim EatCookie = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
                 If EatCookie.Match(Text).Success Then
                     'TODO Cookie eat %MESSAGE can change by Dragon Speak
 
-                    MSpage.ExecuteAsync(49)
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(49))
 
                 End If
                 '(0:96) When the Bot sees "Your cookies are ready."
                 Dim CookiesReady As Regex = New Regex(<a>"Your cookies are ready.  http://furcadia.com/cookies/ for more info!"</a>)
                 If CookiesReady.Match(Text).Success Then
-                    MSpage.ExecuteAsync(96)
+                    Await Task.Run(Sub() MSpage.ExecuteAsync(96))
                 End If
             Case Else
                 'TODO: plugin Dynamic(Group)  Channels here
@@ -445,7 +462,7 @@ Public Class BotSession : Inherits ProxySession
     ''' Set the Bot System Variables for the <see cref="Monkeyspeak.Page"/>
     ''' </summary>
     ''' <param name="VariableList"></param>
-    Public Sub PageSetVariable(ByVal VariableList As List(Of ConstantVariable))
+    Public Sub PageSetVariable(ByVal VariableList As List(Of IVariable))
 
         For Each var In VariableList
             MSpage.SetVariable(var)
@@ -471,31 +488,42 @@ Public Class BotSession : Inherits ProxySession
     ''' <summary>
     ''' Start the Monkey Speak Engine
     ''' </summary>
-    Public Sub StartEngine()
-        MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
-        MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+    Public Async Sub StartEngine()
+        Try
+            MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
 
-        Dim TimeStart = DateTime.Now
-        Dim VariableList As New List(Of ConstantVariable)
+            MSpage = MainEngine.LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
-        MSpage = LibraryUtils.LoadLibrary(Me, False)
+            Dim TimeStart = DateTime.Now
+            Dim VariableList As New List(Of IVariable)
 
-        VariableList.Add(New ConstantVariable("%DREAMOWNER"))
-        VariableList.Add(New ConstantVariable("%DREAMNAME"))
-        VariableList.Add(New ConstantVariable("%BOTNAME"))
-        VariableList.Add(New ConstantVariable("%BOTCONTROLLER", MainEngineOptions.BotController))
-        VariableList.Add(New ConstantVariable("%NAME"))
-        VariableList.Add(New ConstantVariable("%MESSAGE"))
-        VariableList.Add(New ConstantVariable("%BANISHNAME"))
-        VariableList.Add(New ConstantVariable("%BANISHLIST"))
-        PageSetVariable(VariableList)
-        '(0:0) When the bot starts,
-        MSpage.ExecuteAsync(0)
-        Console.WriteLine(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
+            MSpage = LoadLibrary(False)
+            Dim fur = New Furre
+            VariableList.Add(New ConstantVariable("%DREAMOWNER", lastDream.Owner))
+            VariableList.Add(New ConstantVariable("%DREAMNAME", lastDream.Name))
+            VariableList.Add(New ConstantVariable("%BOTNAME", ConnectedFurre.Name))
+            VariableList.Add(New ConstantVariable("%BOTCONTROLLER", MainEngineOptions.BotController))
+            VariableList.Add(New ConstantVariable("%NAME", fur.Name))
+            VariableList.Add(New ConstantVariable("%SHORTNAME", fur.ShortName))
+            VariableList.Add(New ConstantVariable("%MESSAGE", fur.Message))
+            VariableList.Add(New ConstantVariable("%BANISHNAME", Nothing))
+            VariableList.Add(New ConstantVariable("%BANISHLIST", Nothing))
+
+            PageSetVariable(VariableList)
+            '(0:0) When the bot starts,
+            Await Task.Run(Sub() MSpage.ExecuteAsync(0))
+
+            Logging.Logger.Info(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                             MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
-
+        Catch ex As Exception
+            Dim Err As New ErrorLogging(ex, Me)
+            Process.Start("notepad.exe", Err.LogFile)
+        End Try
     End Sub
 
+    ''' <summary>
+    ''' Stop the Monkey Speak Engine
+    ''' </summary>
     Public Sub StopEngine()
         '  RemoveHandler ProcessServerChannelData, Me
 
@@ -515,7 +543,7 @@ Public Class BotSession : Inherits ProxySession
     ''' Dispose components
     ''' </summary>
     ''' <param name="disposing"></param>
-    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+    Protected Overloads Sub Dispose(ByVal disposing As Boolean)
 
         If Me.disposed Then Exit Sub
         If disposing Then
@@ -539,8 +567,6 @@ Public Class BotSession : Inherits ProxySession
         RaiseEvent [Error](e, o, n)
     End Sub
 
-
-
     ''' <summary>
     ''' Pump MonkeySpeak Exceptions to the error handler
     ''' </summary>
@@ -556,5 +582,102 @@ Public Class BotSession : Inherits ProxySession
         End If
 
     End Sub
+
+    Private Sub BotSession_ClientStatusChanged(Sender As Object, e As NetClientEventArgs) Handles Me.ClientStatusChanged
+
+        Select Case e.ConnectPhase
+            Case ConnectionPhase.Connected
+                DirectCast(MSpage.GetVariable("%BOTNAME"), ConstantVariable).SetValue(ConnectedFurre.Name)
+
+        End Select
+
+    End Sub
+
+    Private Async Sub BotSession_ServerStatusChanged(Sender As Object, e As NetServerEventArgs) Handles Me.ServerStatusChanged
+
+        Select Case e.ConnectPhase
+
+            Case ConnectionPhase.Auth
+                Dim Id() As Integer = {1}
+                Await Task.Run(Sub() MSpage.ExecuteAsync(1))
+            Case ConnectionPhase.Disconnected
+                Await Task.Run(Sub() MSpage.ExecuteAsync(2))
+            Case ConnectionPhase.Connecting
+            Case ConnectionPhase.error
+            Case ConnectionPhase.Init
+            Case ConnectionPhase.MOTD
+            Case ConnectionPhase.Connected
+
+            Case Else
+
+        End Select
+
+    End Sub
+
+    ''' <summary>
+    ''' Load Libraries into the engine
+    ''' </summary>
+    ''' <param name="silent"> Announce Loaded Libraries</param>
+    Public Function LoadLibrary(silent As Boolean) As Page
+
+        'Library Loaded?.. Get the Hell out of here
+        MSpage.SetTriggerHandler(TriggerCategory.Cause, 0, Function() True,
+        " When the Monkey Speak Engine starts,")
+
+        Dim LibList = InitializeEngineLibraries()
+
+        For Each Library As Monkeyspeak.Libraries.BaseLibrary In LibList
+            Try
+                MSpage.LoadLibrary(Library)
+                If Not silent Then Logging.Logger.Info(String.Format("Loaded Monkey Speak Library: {0}", Library.GetType().Name))
+            Catch ex As Exception
+                Throw New MonkeyspeakException(Library.GetType().Name + " " + ex.Message, ex)
+
+            End Try
+        Next
+
+        Return MSpage
+
+    End Function
+
+    Private Function InitializeEngineLibraries() As List(Of Monkeyspeak.Libraries.BaseLibrary)
+        ' Comment out Libs to Disable
+
+        Dim LibList = New List(Of Monkeyspeak.Libraries.BaseLibrary) From {
+                New Libraries.Debug(),
+                New Libraries.IO(MainEngineOptions.BotPath),
+                New Libraries.Math(),
+                New Libraries.StringOperations(),
+                New Libraries.Sys(),
+                New Libraries.Timers(100),
+                New Libraries.Loops(),
+                New Libraries.Tables(),
+                New StringLibrary(Me),
+                New MsSayLibrary(Me),
+                New MsBanish(Me),
+                New MsTime(Me),
+                New MsDatabase(Me),
+                New MsWebRequests(Me),
+                New MS_Cookie(Me),
+                New MsPhoenixSpeak(Me),
+                New MsPhoenixSpeakBackupAndRestore(Me),
+                New MsDice(Me),
+                New MsFurreList(Me),
+                New MsWarning(Me),
+                New MsMovement(Me),
+                New WmCpyDta(Me),
+                New MsMemberList(Me),
+                New MsPounce(Me),
+                New MsSound(Me),
+                New MsTrades(Me),
+                New MsDreamInfo(Me)
+                                }
+        'New MsVerbot(Session),
+        ' New MathLibrary(Me),
+        'New MsIO(Me),
+        'LibList.Add(New MS_MemberList())
+
+        Return LibList
+    End Function
 
 End Class

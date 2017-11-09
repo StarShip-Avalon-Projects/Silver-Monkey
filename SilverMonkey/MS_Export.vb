@@ -13,6 +13,7 @@ Public Class MS_Export
     Private ConditionList As List(Of String) = New List(Of String)
 
     Private EffectList As List(Of String) = New List(Of String)
+    Private LoopsList As List(Of String) = New List(Of String)
 
 #End Region
 
@@ -22,6 +23,7 @@ Public Class MS_Export
         Cause = 0
         Condition = 1
         Effect = 5
+        Loops = 6
     End Enum
 
 #End Region
@@ -41,7 +43,7 @@ Public Class MS_Export
         Session.MSpage = engine.LoadFromString(String.Empty)
 
         'Load the Monkeyspeak lins into the page
-        MsPage = LibraryUtils.LoadLibrary(Session, True)
+        MsPage = Session.LoadLibrary(True)
 
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
@@ -63,6 +65,7 @@ Public Class MS_Export
         EffectList.Clear()
         CauseList.Clear()
         ConditionList.Clear()
+        LoopsList.Clear()
         Test.Sort((New CatSorter))
         Dim cat As New Regex("\((.[0-9]*)\:(.[0-9]*)\)")
         For Each desc As String In Test
@@ -78,6 +81,8 @@ Public Class MS_Export
                         ConditionList.Add(desc)
                     Case TriggerTypes.Effect
                         EffectList.Add(desc)
+                    Case TriggerTypes.Loops
+                        LoopsList.Add(desc)
                     Case Else
                         Console.Write("Catagory error " & Catagory.ToString)
                 End Select
@@ -86,6 +91,7 @@ Public Class MS_Export
         CauseList.Sort((New CatSorter))
         ConditionList.Sort((New CatSorter))
         EffectList.Sort((New CatSorter))
+        LoopsList.Sort((New CatSorter))
         Dim w As New StreamWriter(oFile, False)
         If CauseList.Count > 0 Then
             w.WriteLine("[Causes]")
@@ -110,6 +116,15 @@ Public Class MS_Export
             For i As Integer = 0 To EffectList.Count - 1
                 Dim Catagory As String = cat.Match(EffectList(i)).Groups(0).Value.ToString
                 w.WriteLine(Catagory + "=0,0,""" + EffectList(i).Replace("""", """""") + """")
+            Next
+        End If
+        w.WriteLine("")
+        w.WriteLine("")
+        If EffectList.Count > 0 Then
+            w.WriteLine("[Loops]")
+            For i As Integer = 0 To LoopsList.Count - 1
+                Dim Catagory As String = cat.Match(LoopsList(i)).Groups(0).Value.ToString
+                w.WriteLine(Catagory + "=0,0,""" + LoopsList(i).Replace("""", """""") + """")
             Next
         End If
         w.WriteLine("")
@@ -172,6 +187,14 @@ Public Class MS_Export
             TextBox1.AppendText("[Effects]" + Environment.NewLine)
             For i As Integer = 0 To EffectList.Count - 1
                 TextBox1.AppendText(EffectList(i) + Environment.NewLine)
+            Next
+            TextBox1.AppendText(Environment.NewLine)
+            TextBox1.AppendText(Environment.NewLine)
+        End If
+        If LoopsList.Count > 0 Then
+            TextBox1.AppendText("[Loops]" + Environment.NewLine)
+            For i As Integer = 0 To LoopsList.Count - 1
+                TextBox1.AppendText(LoopsList(i) + Environment.NewLine)
             Next
             TextBox1.AppendText(Environment.NewLine)
             TextBox1.AppendText(Environment.NewLine)

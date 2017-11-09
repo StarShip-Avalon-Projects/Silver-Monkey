@@ -1,5 +1,4 @@
 ﻿Imports Furcadia.Net.Utils.ServerObjects
-Imports Furcadia.Net.Utils.ServerParser
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.Dice
 
@@ -33,7 +32,7 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Last Dice roll object
         ''' </summary>
-        Public Shared dice As DiceObject
+        Private dice As DiceObject
 
 #End Region
 
@@ -42,53 +41,56 @@ Namespace Engine.Libraries
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
             dice = New DiceObject()
+        End Sub
+
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:130) When the bot rolls #d#,
-            Add(New Trigger(TriggerCategory.Cause, 130), AddressOf RollNumber, "(0:130) When the bot rolls #d#,")
+            Add(New Trigger(TriggerCategory.Cause, 130), AddressOf RollNumber, " When the bot rolls #d#,")
             '(0:131) When the bot rolls #d#+#,
-            Add(New Trigger(TriggerCategory.Cause, 131), AddressOf RollNumberPlusModifyer, "(0:131) When the bot rolls #d#+#,")
+            Add(New Trigger(TriggerCategory.Cause, 131), AddressOf RollNumberPlusModifyer, " When the bot rolls #d#+#,")
             '(0:132) When the bot rolls #d#-#,
-            Add(New Trigger(TriggerCategory.Cause, 132), AddressOf RollNumberMinusModifyer, "(0:132) When the bot rolls #d#-#,")
+            Add(New Trigger(TriggerCategory.Cause, 132), AddressOf RollNumberMinusModifyer, " When the bot rolls #d#-#,")
 
             '(0:133) When a furre rolls #d#,
-            Add(New Trigger(TriggerCategory.Cause, 133), AddressOf RollNumber, "(0:133) When a furre rolls #d#,")
+            Add(New Trigger(TriggerCategory.Cause, 133), AddressOf RollNumber, " When a furre rolls #d#,")
             '(0:138) When a fuure rolls #d#+#,
-            Add(New Trigger(TriggerCategory.Cause, 134), AddressOf RollNumberPlusModifyer, "(0:134) When a furre rolls #d#+#,")
+            Add(New Trigger(TriggerCategory.Cause, 134), AddressOf RollNumberPlusModifyer, " When a furre rolls #d#+#,")
             '(0:140) When a furre rolls #d#-#,
-            Add(New Trigger(TriggerCategory.Cause, 135), AddressOf RollNumberMinusModifyer, "(0:135) When a furre rolls #d#-#,")
+            Add(New Trigger(TriggerCategory.Cause, 135), AddressOf RollNumberMinusModifyer, " When a furre rolls #d#-#,")
 
             '(0:136) When any one rolls anything,
             Add(New Trigger(TriggerCategory.Cause, 136),
             Function()
                 Return True
-            End Function, "(0:136) When any one rolls anything,")
+            End Function, " When any one rolls anything,")
 
             '(1:130) and the result is # or higher,
-            Add(New Trigger(TriggerCategory.Condition, 130), AddressOf DiceResultNumberOrHigher, "(1:130) and the dice roll result is # or higher,")
+            Add(New Trigger(TriggerCategory.Condition, 130), AddressOf DiceResultNumberOrHigher, " and the dice roll result is # or higher,")
             '(1:131) and the result is # or Lower,
-            Add(New Trigger(TriggerCategory.Condition, 131), AddressOf DiceResultNumberOrlower, "(1:131) and the dice roll result is # or lower,")
+            Add(New Trigger(TriggerCategory.Condition, 131), AddressOf DiceResultNumberOrlower, " and the dice roll result is # or lower,")
 
             ' (5:130) set variable % to the total of rolling # dice with #
             ' sides plus #.
-            Add(New Trigger(TriggerCategory.Effect, 130), AddressOf DicePlusNumber, "(5:130) set variable % to the total of rolling # dice with # sides plus #.")
+            Add(New Trigger(TriggerCategory.Effect, 130), AddressOf DicePlusNumber, " set variable % to the total of rolling # dice with # sides plus #.")
 
             ' (5:131) set variable % to the total of rolling # dice with #
             ' sides minus #.
-            Add(New Trigger(TriggerCategory.Effect, 131), AddressOf DiceMinusNumber, "(5:131) set variable % to the total of rolling # dice with # sides minus #.")
+            Add(New Trigger(TriggerCategory.Effect, 131), AddressOf DiceMinusNumber, " set variable % to the total of rolling # dice with # sides minus #.")
 
             ' (5:132) set variable %Variable to the number of the dice reult
             ' that the triggering furre rolled.
-            Add(New Trigger(TriggerCategory.Effect, 132), AddressOf TrigFurreRolledVariable, "(5:132) set variable %Variable to the number of the dice result that the triggering furre rolled.")
+            Add(New Trigger(TriggerCategory.Effect, 132), AddressOf TrigFurreRolledVariable, " set variable %Variable to the number of the dice result that the triggering furre rolled.")
 
             ' (5:133) roll # furcadia dice with # sides. (optional Message {...})
-            Add(New Trigger(TriggerCategory.Effect, 133), AddressOf RollDice, "(5:133) roll # furcadia dice with # sides. (optional Message {...})")
+            Add(New Trigger(TriggerCategory.Effect, 133), AddressOf RollDice, " roll # furcadia dice with # sides. (optional Message {...})")
 
             ' (5:134) roll # furcadia dice with # sides plus #. (optional
             ' Message {...})
-            Add(New Trigger(TriggerCategory.Effect, 134), AddressOf RollDicePlus, "(5:134) roll # furcadia dice with # sides plus #. (optional Message {...})")
+            Add(New Trigger(TriggerCategory.Effect, 134), AddressOf RollDicePlus, " roll # furcadia dice with # sides plus #. (optional Message {...})")
 
             ' (5:135) roll # furcadia dice with # sides minus #. (optional
             ' Message {...})
-            Add(New Trigger(TriggerCategory.Effect, 135), AddressOf RollDiceMinus, "(5:135) roll # furcadia dice with # sides minus #. (optional Message {...})")
+            Add(New Trigger(TriggerCategory.Effect, 135), AddressOf RollDiceMinus, " roll # furcadia dice with # sides minus #. (optional Message {...})")
 
         End Sub
 
@@ -107,14 +109,12 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function DiceMinusNumber(reader As TriggerReader) As Boolean
 
-            Dim dice As New DiceRollCollection
-
             Dim Var = reader.ReadVariable(True)
-            Dim Number As Double = ReadVariableOrNumber(reader)
-            Dim sides As Double = ReadVariableOrNumber(reader)
-            Dim NumberPlus As Double = ReadVariableOrNumber(reader)
+            Dim Number = ReadVariableOrNumber(reader)
+            Dim sides = ReadVariableOrNumber(reader)
+            Dim NumberPlus = ReadVariableOrNumber(reader)
 
-            dice.Clear()
+            Dim dice = New DiceRollCollection
             For I As Double = 0 To Number - 1
                 dice.Add(New Die(sides))
             Next
@@ -133,17 +133,11 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Shared Function DicePlusNumber(reader As TriggerReader) As Boolean
-
-            Dim Number As Double
-            Dim sides As Double = 0
-            Dim NumberPlus As Double = 0
-            Dim dice As New DiceRollCollection
-
             Dim Var = reader.ReadVariable(True)
-            Number = ReadVariableOrNumber(reader)
-            sides = ReadVariableOrNumber(reader)
-            NumberPlus = ReadVariableOrNumber(reader)
-            ' dice.Clear()
+            Dim Number = ReadVariableOrNumber(reader)
+            Dim sides = ReadVariableOrNumber(reader)
+            Dim NumberPlus = ReadVariableOrNumber(reader)
+            Dim dice = New DiceRollCollection
             For I As Double = 0 To Number - 1
                 dice.Add(New Die(CInt(sides)))
             Next
@@ -160,7 +154,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Shared Function DiceResultNumberOrHigher(reader As TriggerReader) As Boolean
+        Public Function DiceResultNumberOrHigher(reader As TriggerReader) As Boolean
             Dim result As Double = ReadVariableOrNumber(reader)
             Return result <= dice.DiceResult
         End Function
@@ -173,7 +167,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Shared Function DiceResultNumberOrlower(reader As TriggerReader) As Boolean
+        Public Function DiceResultNumberOrlower(reader As TriggerReader) As Boolean
             Dim result As Double = ReadVariableOrNumber(reader)
             Return result >= dice.DiceResult
         End Function
@@ -186,10 +180,10 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function RollDice(reader As TriggerReader) As Boolean
-            Dim count As Double = ReadVariableOrNumber(reader)
-            Dim side As Double = ReadVariableOrNumber(reader)
-            Dim Message As String = reader.ReadString
+        Public Function RollDice(reader As TriggerReader) As Boolean
+            Dim count = ReadVariableOrNumber(reader)
+            Dim side = ReadVariableOrNumber(reader)
+            Dim Message = reader.ReadString
 
             Return SendServer("roll " + count.ToString + "d" + side.ToString + " " + Message)
 
@@ -203,10 +197,10 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function RollDiceMinus(reader As TriggerReader) As Boolean
-            Dim count As Double = ReadVariableOrNumber(reader)
-            Dim side As Double = ReadVariableOrNumber(reader)
-            Dim modifyer As Double = ReadVariableOrNumber(reader)
+        Public Function RollDiceMinus(reader As TriggerReader) As Boolean
+            Dim count = ReadVariableOrNumber(reader)
+            Dim side = ReadVariableOrNumber(reader)
+            Dim modifyer = ReadVariableOrNumber(reader)
             Dim Message As String = ""
 
             Return SendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString + " " + Message)
@@ -221,10 +215,10 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Function RollDicePlus(reader As TriggerReader) As Boolean
-            Dim count As Double = ReadVariableOrNumber(reader)
-            Dim side As Double = ReadVariableOrNumber(reader)
-            Dim modifyer As Double = ReadVariableOrNumber(reader)
+        Public Function RollDicePlus(reader As TriggerReader) As Boolean
+            Dim count = ReadVariableOrNumber(reader)
+            Dim side = ReadVariableOrNumber(reader)
+            Dim modifyer = ReadVariableOrNumber(reader)
             Dim Message As String = ""
 
             Return SendServer("roll " + count.ToString + "d" + side.ToString + "+" + modifyer.ToString + " " + Message)
@@ -239,11 +233,13 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Shared Function RollNumber(reader As TriggerReader) As Boolean
+        Public Function RollNumber(reader As TriggerReader) As Boolean
+            dice = DirectCast(reader.Parameters(0), DiceObject)
 
             If String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
-            Dim DiceCount As Double = ReadVariableOrNumber(reader)
-            Dim sides As Double = ReadVariableOrNumber(reader)
+
+            Dim DiceCount = ReadVariableOrNumber(reader)
+            Dim sides = ReadVariableOrNumber(reader)
             If sides <> dice.DiceSides Then Return False
             If DiceCount <> DiceCount Then Return False
 
@@ -258,12 +254,13 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Shared Function RollNumberMinusModifyer(reader As TriggerReader) As Boolean
+        Public Function RollNumberMinusModifyer(reader As TriggerReader) As Boolean
+            dice = DirectCast(reader.Parameters(0), DiceObject)
 
             If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
-            Dim DiceCount As Double = ReadVariableOrNumber(reader)
-            Dim sides As Double = ReadVariableOrNumber(reader)
-            Dim DiceModifyer As Double = ReadVariableOrNumber(reader)
+            Dim DiceCount = ReadVariableOrNumber(reader)
+            Dim sides = ReadVariableOrNumber(reader)
+            Dim DiceModifyer = ReadVariableOrNumber(reader)
             If dice.DiceModifyer <> DiceModifyer Then Return False
             If sides <> dice.DiceSides Then Return False
             If dice.DiceCount <> DiceCount Then Return False
@@ -279,12 +276,13 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Shared Function RollNumberPlusModifyer(reader As TriggerReader) As Boolean
+        Public Function RollNumberPlusModifyer(reader As TriggerReader) As Boolean
+            dice = DirectCast(reader.Parameters(0), DiceObject)
 
             If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
-            Dim DiceCount As Double = ReadVariableOrNumber(reader)
-            Dim sides As Double = ReadVariableOrNumber(reader)
-            Dim DiceModifyer As Double = ReadVariableOrNumber(reader)
+            Dim DiceCount = ReadVariableOrNumber(reader)
+            Dim sides = ReadVariableOrNumber(reader)
+            Dim DiceModifyer = ReadVariableOrNumber(reader)
             If dice.DiceModifyer <> DiceModifyer Then Return False
             If sides <> dice.DiceSides Then Return False
             If dice.DiceCount <> DiceCount Then Return False
@@ -293,27 +291,24 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
+        ''' (5:132) set variable %Variable to the number of the dice result that the triggering furre rolled.
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Shared Function TrigFurreRolledVariable(reader As TriggerReader) As Boolean
+        Public Function TrigFurreRolledVariable(reader As TriggerReader) As Boolean
             Dim v = reader.ReadVariable(True)
             v.Value = dice.DiceResult
             Return True
         End Function
 
-
-
         Public Overrides Sub Unload(page As Page)
 
         End Sub
 
-
 #End Region
-
 
     End Class
 

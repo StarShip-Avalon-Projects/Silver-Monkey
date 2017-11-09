@@ -57,11 +57,11 @@
     </ProjectReference>
     <ProjectReference Include="..\MonkeySpeakEx\Monkeyspeak.csproj">
       <Name>Monkeyspeak</Name>
-      <Project>{51b6668d-9904-4fa4-8fb8-6a1395b3104d}</Project>
+      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
@@ -116,15 +116,6 @@
       </DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\TheClaaaw\TheClaaaw.vbproj">
-      <Name>TheClaaaw</Name>
-      <Project>{f7221c50-ed60-4cff-8374-47cc9e53429b}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
-      <RefTargetDir>PLUGINS</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Verbot Knowledgebase Editor\Verbot Knowledgebase Editor.vbproj">
       <Name>VerbotKnowledgebaseEditor</Name>

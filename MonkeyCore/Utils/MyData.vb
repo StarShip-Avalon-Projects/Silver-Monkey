@@ -26,4 +26,5 @@ Public Class MyData
         Public lpMsg As String
 
     End Structure
+
 End Class

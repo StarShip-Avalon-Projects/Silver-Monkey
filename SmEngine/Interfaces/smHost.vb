@@ -1,6 +1,5 @@
 ﻿Imports Furcadia.Net
 Imports Furcadia.Net.Dream
-Imports SilverMonkeyEngine.Engine
 
 Namespace Interfaces
 
@@ -17,7 +16,7 @@ Namespace Interfaces
 
         Public ReadOnly Property BotName As String Implements Interfaces.ImsHost.BotName
             Get
-                Return FurcadiaSession.ConnectedCharacterName
+                Return FurcadiaSession.ConnectedFurre.Name
             End Get
         End Property
 
@@ -47,7 +46,7 @@ Namespace Interfaces
             End Set
         End Property
 
-        Public ReadOnly Property Player() As FURRE Implements Interfaces.ImsHost.Player
+        Public ReadOnly Property Player() As Furre Implements Interfaces.ImsHost.Player
             Get
                 Return FurcadiaSession.Player
             End Get

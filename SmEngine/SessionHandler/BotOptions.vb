@@ -33,11 +33,11 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         LogOptions = New LogSteamOptions() With {
         .LogPath = Paths.SilverMonkeyLogPath
         }
-
+        BotIni = New IniFile()
     End Sub
 
     Public Sub New(ByRef BFile As String)
-        _MonkeySpeakEngineOption = New Engine.EngineOptoons()
+        Me.New()
 
         Dim dir As String = Path.GetDirectoryName(BFile)
         If String.IsNullOrEmpty(dir) Then
@@ -165,6 +165,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     End Property
 
 #Region "Log Options"
+
     ''' <summary>
     ''' Bot File (*.bini) path
     ''' </summary>

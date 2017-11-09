@@ -3,7 +3,7 @@
 Namespace Engine.Libraries.Pounce
 
     ''' <summary>
-    '''
+    ''' Pounce Furre object
     ''' </summary>
     Public Class MsPounceFurre
         Implements IEquatable(Of String)
@@ -18,10 +18,10 @@ Namespace Engine.Libraries.Pounce
 
 #Region "Public Constructors"
 
-        Public Sub New()
-
-        End Sub
-
+        ''' <summary>
+        ''' Constructs the Furre with Furre Name
+        ''' </summary>
+        ''' <param name="Furre"></param>
         Public Sub New(Furre As String)
             _FurrName = Furre
         End Sub
@@ -56,6 +56,10 @@ Namespace Engine.Libraries.Pounce
 
 #Region "Public Properties"
 
+        ''' <summary>
+        ''' Furre Name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
             Get
                 Return _FurrName
@@ -65,6 +69,10 @@ Namespace Engine.Libraries.Pounce
             End Set
         End Property
 
+        ''' <summary>
+        ''' Furre Online Status
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Online As Boolean
             Get
                 Return _IsOnline
@@ -80,6 +88,10 @@ Namespace Engine.Libraries.Pounce
             End Set
         End Property
 
+        ''' <summary>
+        ''' Furre Name in short fomat
+        ''' </summary>
+        ''' <returns>character stripped name</returns>
         Public ReadOnly Property ShortName As String
             Get
                 Return FurcadiaShortName(_FurrName)
@@ -91,6 +103,7 @@ Namespace Engine.Libraries.Pounce
 #Region "Public Methods"
 
         ''' <summary>
+        ''' Implement Equals
         ''' </summary>
         ''' <param name="other">
         ''' </param>

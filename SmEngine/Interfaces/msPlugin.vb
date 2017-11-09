@@ -1,6 +1,4 @@
-﻿Imports SilverMonkeyEngine.Engine
-
-Namespace Interfaces
+﻿Namespace Interfaces
 
     Public Interface msPlugin
 

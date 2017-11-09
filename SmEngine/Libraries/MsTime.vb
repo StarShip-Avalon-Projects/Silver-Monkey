@@ -32,44 +32,46 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
+        End Sub
 
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:299) When the time is {...} hh:mm:ss am/pm FST,
             Add(TriggerCategory.Cause, 299,
                 Function(reader As TriggerReader)
-                    Dim Time As String = reader.ReadString
+                    Dim Time = reader.ReadString
                     Dim str As String = ""
                     SyncLock lock
                         str = FurcTime.ToLongTimeString
                     End SyncLock
                     Return str.ToUpper = Time.ToUpper
                 End Function,
-            "(0:299) When the time is {...} hh:mm:ss am/pm FST,")
+            " When the time is {...} hh:mm:ss am/pm FST,")
 
             '(5:30) set variable %Variable to the current local time.
             Add(TriggerCategory.Effect, 30,
-                AddressOf CurrentTime, "(5:30) set variable %Variable to the current local time.")
+                AddressOf CurrentTime, " set variable %Variable to the current local time.")
 
             '(5:31) set variable %Variable to the current Furcadia Standard time
             Add(TriggerCategory.Effect, 31,
-                AddressOf MsFurcTime, "(5:31) set variable %Variable to the current Furcadia Standard time.")
+                AddressOf MsFurcTime, " set variable %Variable to the current Furcadia Standard time.")
             '(5:32) set variable %Variable to current DateTime
             Add(TriggerCategory.Effect, 32,
-                AddressOf LocalDateTimeVar, "(5:32) set variable %Variable to current local DateTime.")
+                AddressOf LocalDateTimeVar, " set variable %Variable to current local DateTime.")
             '(5:33) set variable %Variable to current Furcadia DateTime
             Add(TriggerCategory.Effect, 33,
-                AddressOf FurcDateTimeVar, "(5:33) set variable %Variable to current Furcadia DateTime.")
+                AddressOf FurcDateTimeVar, " set variable %Variable to current Furcadia DateTime.")
             '(5:34) use variable %Variable as a DateTime string and subtract Date Time string {...} and put it into variable %Variable
             Add(TriggerCategory.Effect, 34,
-                AddressOf SubsractDateTimeStr, "(5:34) use variable %Variable as a DateTime string and subtract Date Time string {...} and put it into variable %Variable.")
+                AddressOf SubsractDateTimeStr, " use variable %Variable as a DateTime string and subtract Date Time string {...} and put it into variable %Variable.")
             '(5:35) use variable %Variable as a DateTime string and subtract Date Time variable %Variable and put it into variable %Variable
             Add(TriggerCategory.Effect, 35,
-                AddressOf SubsractDateTimeVar, "(5:35) use variable %Variable as a DateTime string and subtract Date Time variable %Variable and put it into variable %Variable.")
+                AddressOf SubsractDateTimeVar, " use variable %Variable as a DateTime string and subtract Date Time variable %Variable and put it into variable %Variable.")
             '(5:36) use variable %Variable as a DateTime string and add Date Time string {...} and put it into variable %Variable
             '        Add(TriggerCategory.Effect, 36,
-            'AddressOf AddDateTimeStr, "(5:36) use variable %Variable as a DateTime string and add Date Time string {...} and put it into variable %Variable")
+            'AddressOf AddDateTimeStr, " use variable %Variable as a DateTime string and add Date Time string {...} and put it into variable %Variable")
             '        '(5:37) use variable %Variable as a DateTime string and add Date Time variable %Variable and put it into variable %Variable
             '        Add(TriggerCategory.Effect, 37,
-            'AddressOf AddDateTimeVar, "(5:37) use variable %Variable as a DateTime string and add Date Time variable %Variable and put it into variable %Variable")
+            'AddressOf AddDateTimeVar, " use variable %Variable as a DateTime string and add Date Time variable %Variable and put it into variable %Variable")
             '
         End Sub
 
@@ -86,10 +88,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True
         ''' </returns>
-        Shared Function CurrentTime(reader As TriggerReader) As Boolean
+        Public Shared Function CurrentTime(reader As TriggerReader) As Boolean
 
             Dim Var = reader.ReadVariable(True)
-            Dim Str As String = DateTime.Now.ToLongTimeString.ToLower
+            Dim Str = DateTime.Now.ToLongTimeString.ToLower
             Var.Value = Str
             Return True
 
@@ -140,7 +142,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True
         ''' </returns>
-        Function MsFurcTime(reader As TriggerReader) As Boolean
+        Public Function MsFurcTime(reader As TriggerReader) As Boolean
 
             Dim Var = reader.ReadVariable(True)
             Dim Str As String = ""
@@ -169,7 +171,7 @@ Namespace Engine.Libraries
         Public Shared Function SubsractDateTimeStr(reader As TriggerReader) As Boolean
 
             Dim DateTimeVariable = reader.ReadVariable(True)
-            Dim DateTimeString As String = reader.ReadString
+            Dim DateTimeString = reader.ReadString
             Dim ResultVariable = reader.ReadVariable(True)
             Dim time As DateTime
             Dim time2 As DateTime

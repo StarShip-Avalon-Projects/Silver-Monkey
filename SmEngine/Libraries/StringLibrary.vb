@@ -23,43 +23,45 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
+        End Sub
 
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(1:60) and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),
             Add(New Trigger(TriggerCategory.Condition, 60), AddressOf WildCard,
-              "(1:60) and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),")
+              " and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),")
 
             Add(New Trigger(TriggerCategory.Condition, 61), AddressOf NotWildCard,
-             "(1:61) and variable %Variable doesn't match wild-card expression {.} ( ""*"" or ""?""),")
+             " and variable %Variable doesn't match wild-card expression {.} ( ""*"" or ""?""),")
 
             Add(New Trigger(TriggerCategory.Condition, 62), AddressOf AndVariableContains,
-             "(1:62) and variable %variable contains text {...},")
+             " and variable %variable contains text {...},")
 
             Add(New Trigger(TriggerCategory.Condition, 63), AddressOf AndVariableNotContains,
-             "(1:63) and variable %variable does not contain text {...},")
+             " and variable %variable does not contain text {...},")
 
             '(5:110) use variable % and take word # and put it into variable %
             Add(New Trigger(TriggerCategory.Effect, 120), AddressOf StringSplit,
-                 "(5:120) use variable %Variable and take word position # and put it into variable %Variable.")
+                 " use variable %Variable and take word position # and put it into variable %Variable.")
 
             '(5:111) use variable % then remove character {.} and put it into variable %.
             Add(New Trigger(TriggerCategory.Effect, 121), AddressOf StripCharacters,
-                 "(5:121) use variable %Variable then remove all occurrences of character {.} and put it into variable %Variable.")
+                 " use variable %Variable then remove all occurrences of character {.} and put it into variable %Variable.")
 
             '(5:122) chop off the beginning of variable %variable, removing the first # characters of it.
             Add(New Trigger(TriggerCategory.Effect, 122), AddressOf ChopStartString,
-                 "(5:122) chop off the beginning of variable %variable, removing the first # characters of it.")
+                 " chop off the beginning of variable %variable, removing the first # characters of it.")
 
             '(5:123) chop off the end of variable %Variable, removing the last # characters of it.
             Add(New Trigger(TriggerCategory.Effect, 123), AddressOf ChopEndString,
-                "(5:123) chop off the end of variable %Variable, removing the last # characters of it.")
+                " chop off the end of variable %Variable, removing the last # characters of it.")
 
             '(5:126) count the number of characters in string variable %variable and put them into variable %Variable .
             Add(New Trigger(TriggerCategory.Effect, 126), AddressOf CountChars,
-             "(5:126) count the number of characters in string variable %variable and put them into variable %Variable.")
+             " count the number of characters in string variable %variable and put them into variable %Variable.")
 
             '(5:127) take variable %Variable and Convert it to Furcadia short name. (with out special Characters or spaces)
             Add(New Trigger(TriggerCategory.Effect, 127), AddressOf ToShortName,
-            "(5:127) take variable %Variable and convert it to Furcadia short name. (without special characters or spaces or pipe ""|"").")
+            " take variable %Variable and convert it to Furcadia short name. (without special characters or spaces or pipe ""|"").")
 
         End Sub
 
@@ -82,8 +84,8 @@ Namespace Engine.Libraries
             Dim Count As Integer = 0
 
             Dim Var = reader.ReadVariable(True)
-            Dim test As Boolean = Integer.TryParse(ReadVariableOrNumber(reader).ToString, Count)
-            Dim str As String = Var.Value.ToString()
+            Dim test = Integer.TryParse(ReadVariableOrNumber(reader).ToString, Count)
+            Dim str = Var.Value.ToString()
 
             If str.Length < Count Then
                 Var.Value = str
@@ -106,12 +108,11 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function ChopStartString(reader As TriggerReader) As Boolean
-
             Dim Count As Integer = 0
 
             Dim Var = reader.ReadVariable(True)
-            Dim test As Boolean = Integer.TryParse(ReadVariableOrNumber(reader).ToString, Count)
-            Dim str As String = Var.Value.ToString()
+            Dim test = Integer.TryParse(ReadVariableOrNumber(reader).ToString, Count)
+            Dim str = Var.Value.ToString()
             If str.Length < Count Then
                 Var.Value = Nothing
             Else
@@ -135,7 +136,7 @@ Namespace Engine.Libraries
 
             Dim var1 = reader.ReadVariable()
             Dim var2 = reader.ReadVariable(True)
-            Dim Count As Double = Convert.ToDouble(var1.Value.ToString.Length)
+            Dim Count = Convert.ToDouble(var1.Value.ToString.Length)
             var2.Value = Count
             Return True
 
@@ -154,7 +155,7 @@ Namespace Engine.Libraries
         Function NotWildCard(reader As TriggerReader) As Boolean
 
             Dim var = reader.ReadVariable
-            Dim Pattern As String = reader.ReadString
+            Dim Pattern = reader.ReadString
             Return Not MatchWildcardString(Pattern, var.Value.ToString)
 
         End Function
@@ -171,9 +172,9 @@ Namespace Engine.Libraries
         Function StringSplit(reader As TriggerReader) As Boolean
 
             Dim Var = reader.ReadVariable()
-            Dim i As Double = ReadVariableOrNumber(reader)
+            Dim i = ReadVariableOrNumber(reader)
             Dim NewVar = reader.ReadVariable(True)
-            Dim fields() As String = Split(Var.Value.ToString, " ")
+            Dim fields() = Split(Var.Value.ToString, " ")
             If i < fields.Length Then
                 NewVar.Value = fields(i)
             End If
@@ -192,16 +193,13 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function StripCharacters(reader As TriggerReader) As Boolean
-            Dim ch As Char = Nothing
-            Dim NewVar
-
 
             Dim Var = reader.ReadVariable()
-            ch = CChar(reader.ReadString)
-            NewVar = reader.ReadVariable()
+            Dim ch = CChar(reader.ReadString)
+            Dim NewVar = reader.ReadVariable()
 
-            Dim varStr As String = Var.Value.ToString
-            Dim NewStr As String = varStr.Replace(ch, String.Empty)
+            Dim varStr = Var.Value.ToString
+            Dim NewStr = varStr.Replace(ch, String.Empty)
             NewVar.Value = NewStr
             Return True
         End Function
@@ -219,7 +217,7 @@ Namespace Engine.Libraries
         Function WildCard(reader As TriggerReader) As Boolean
 
             Dim var = reader.ReadVariable
-            Dim Pattern As String = reader.ReadString
+            Dim Pattern = reader.ReadString
             Return MatchWildcardString(Pattern, var.Value.ToString)
 
         End Function
@@ -335,13 +333,9 @@ Namespace Engine.Libraries
 
         End Function
 
-
-
         Public Overrides Sub Unload(page As Page)
 
         End Sub
-
-
 
 #End Region
 

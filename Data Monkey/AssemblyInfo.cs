@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 // information associated with an assembly.
 [assembly: AssemblyTitle("Data Monkey")]
 [assembly: AssemblyDescription("Silver Monkey Database Manager")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("TSProjects")]
 [assembly: AssemblyProduct("Data Monkey")]
 [assembly: AssemblyCopyright("TSProjects ©  2017")]

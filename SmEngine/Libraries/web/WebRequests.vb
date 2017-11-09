@@ -10,7 +10,7 @@ Imports SilverMonkeyEngine.Interfaces
 Namespace Engine.Libraries.Web
 
     ''' <summary>
-    '''
+    '''Silver Monkeys web site interface
     ''' </summary>
     Public Class WebRequests
         Private WebEncoding As Encoding = New UTF8Encoding()
@@ -38,7 +38,7 @@ Namespace Engine.Libraries.Web
         ''' <summary>
         ''' Constructor Specifying the Web url to connect to
         ''' </summary>
-        ''' <param name="Url"></param>
+        ''' <param name="Url"> </param>
         Public Sub New(Url As Uri, reader As TriggerReader)
             WebURL = Url
             page = reader.Page
@@ -154,6 +154,11 @@ Namespace Engine.Libraries.Web
 
         End Function
 
+        ''' <summary>
+        ''' send data to the website via the POST method
+        ''' </summary>
+        ''' <param name="WebVariables"></param>
+        ''' <returns></returns>
         Public Function WPost(ByRef WebVariables As List(Of IVariable)) As WebData
             If WebVariables Is Nothing Or WebVariables.Count = 0 Then
                 Throw New ArgumentNullException(NameOf(WebVariables))

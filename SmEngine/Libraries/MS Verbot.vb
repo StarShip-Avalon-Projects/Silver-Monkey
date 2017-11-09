@@ -42,9 +42,12 @@ Namespace Engine.Libraries
             verbot = New Verbot5Engine()
             _state = New State()
 
+        End Sub
+
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:1500) When the chat engine executes command {...},
             Add(TriggerCategory.Cause, 1500,
-                 AddressOf ChatExecute, "(0:1500) When the chat engine executes command {...},")
+                 AddressOf ChatExecute, " When the chat engine executes command {...},")
 
             '(1:1500) and the Chat Engine State variable {...} is equal to {..},
             '(1:1501) and the Chat Engine State variable {...} is not equal to {..},
@@ -57,23 +60,23 @@ Namespace Engine.Libraries
 
             '(5:1500) use knowledgbase file {...} (*.vkb) and start the chat engine.
             Add(TriggerCategory.Effect, 1500,
-                AddressOf UseKkbFile, "(5:1500) use knowledge base file {...} (*.vkb) and start the chat engine.")
+                AddressOf UseKkbFile, " use knowledge base file {...} (*.vkb) and start the chat engine.")
 
             '(5:1501) send text {...} to chat engine and put the response in variable %Variable.
             Add(TriggerCategory.Effect, 1501,
-                AddressOf GetReply, "(5:1501) send text {...} to chat engine and put the response in variable %Variable.")
+                AddressOf GetReply, " send text {...} to chat engine and put the response in variable %Variable.")
 
             '(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable
             Add(TriggerCategory.Effect, 1502,
-                 AddressOf GetReplyName, "(5:1502) send text {...} and Name {...} to chat engine and put the response in variable %Variable.")
+                 AddressOf GetReplyName, " send text {...} and Name {...} to chat engine and put the response in variable %Variable.")
 
             '(5:1503) Set Chat Engine State Vairable {...} to {...}.
             Add(TriggerCategory.Effect, 1503,
-                AddressOf SetStateVariable, "(5:1503) Set Chat Engine State Vairable {...} to {...}.")
+                AddressOf SetStateVariable, " Set Chat Engine State Vairable {...} to {...}.")
 
             '(5:1504) Get chat engine _state variable {...} and put it into variable %Variable.
             Add(TriggerCategory.Effect, 1504,
-                 AddressOf GetStateVariable, "(5:1504) Get chat engine state variable {...} and put it into variable %Variable.")
+                 AddressOf GetStateVariable, " Get chat engine state variable {...} and put it into variable %Variable.")
 
         End Sub
 
@@ -91,21 +94,21 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function GetReply(reader As TriggerReader) As Boolean
             Dim SayText As String
-
+            Dim ResponceText
 
             SayText = reader.ReadString
-            Dim ResponceText = reader.ReadVariable(True)
+            ResponceText = reader.ReadVariable(True)
             If _state.Vars.ContainsKey("botname") Then
-                _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
+                _state.Vars.Item("botname") = FurcadiaSession.ConnectedFurre.Name
             Else
-                _state.Vars.Add("botname", FurcadiaSession.ConnectedCharacterName)
+                _state.Vars.Add("botname", FurcadiaSession.ConnectedFurre.Name)
             End If
             If _state.Vars.ContainsKey("channel") Then
                 _state.Vars.Item("channel") = FurcadiaSession.Channel
             Else
                 _state.Vars.Add("channel", FurcadiaSession.Channel)
             End If
-            Dim reply As Reply = verbot.GetReply(FurcadiaSession.Player, SayText, _state)
+            Dim reply As Reply = verbot.GetReply(Player, SayText, _state)
 
             If reply Is Nothing Then Return False
 
@@ -128,9 +131,9 @@ Namespace Engine.Libraries
             Dim SayText = reader.ReadString
             Dim ResponceText = reader.ReadVariable(True)
             If _state.Vars.ContainsKey("botname") Then
-                _state.Vars.Item("botname") = FurcadiaSession.ConnectedCharacterName
+                _state.Vars.Item("botname") = FurcadiaSession.ConnectedFurre.Name
             Else
-                _state.Vars.Add("botname", FurcadiaSession.ConnectedCharacterName)
+                _state.Vars.Add("botname", FurcadiaSession.ConnectedFurre.Name)
             End If
             If _state.Vars.ContainsKey("channel") Then
                 _state.Vars.Item("channel") = FurcadiaSession.Channel
@@ -278,7 +281,7 @@ Namespace Engine.Libraries
             FileName = Path.Combine(Paths.SilverMonkeyBotPath, FileName)
 
             Dim xToolbox = New XMLToolbox(GetType(KnowledgeBase))
-            kb = CType(xToolbox.LoadXML(FileName), KnowledgeBase)
+            kb = DirectCast(xToolbox.LoadXML(FileName), KnowledgeBase)
             kbi.Filename = Path.GetFileName(FileName)
             kbi.Fullpath = Path.GetDirectoryName(FileName) + "\"
             verbot.AddKnowledgeBase(kb, kbi)
@@ -289,13 +292,9 @@ Namespace Engine.Libraries
 
         End Function
 
-
-
         Public Overrides Sub Unload(page As Page)
 
         End Sub
-
-
 
 #End Region
 

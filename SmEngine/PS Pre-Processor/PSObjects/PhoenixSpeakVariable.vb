@@ -1,7 +1,6 @@
 ﻿Imports System.Runtime.Serialization
 Imports Monkeyspeak
 
-
 Namespace Engine.Libraries.PhoenixSpeak
 
     <Serializable>
@@ -46,29 +45,22 @@ Namespace Engine.Libraries.PhoenixSpeak
 
 #End Region
 
-
-
 #Region "Public Constructors"
-
 
         Public Sub New(Name As String, value As Object)
 
-            _name = Name
+            _Name = Name
             _value = value
         End Sub
 
         Public Sub New(Var As PhoenixSpeak.Variable)
-            _name = Var.Name
+            _Name = Var.Name
             _value = Var.Value
         End Sub
 
 #End Region
 
 #Region "Public Properties"
-
-
-
-
 
         Public Property Name As String Implements IVariable.Name
 
@@ -90,7 +82,7 @@ Namespace Engine.Libraries.PhoenixSpeak
 #End Region
 
         Friend Sub New(Name As String)
-            _name = Name
+            _Name = Name
             _value = Nothing
         End Sub
 
@@ -110,13 +102,11 @@ Namespace Engine.Libraries.PhoenixSpeak
             Return varA.Value Is varB.Value
         End Operator
 
-
-
         Public Overrides Function GetHashCode() As Integer
             If TypeOf _value Is Integer Then
-                Return CInt(_value) Xor _name.GetHashCode()
+                Return CInt(_value) Xor _Name.GetHashCode()
             End If
-            Return _name.GetHashCode()
+            Return _Name.GetHashCode()
         End Function
 
         ''' <summary>
@@ -137,7 +127,7 @@ Namespace Engine.Libraries.PhoenixSpeak
         End Function
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="other"></param>
         ''' <returns></returns>
@@ -150,6 +140,7 @@ Namespace Engine.Libraries.PhoenixSpeak
             End If
             Return False
         End Function
+
     End Class
 
 End Namespace

@@ -8,7 +8,7 @@
     <MyType>WindowsForms</MyType>
     <RootNamespace>Verbot_Knowledgebase_Editor</RootNamespace>
     <AssemblyName>Verbot Knowledgebase Editor</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OptionInfer>On</OptionInfer>
     <OptionStrict>Off</OptionStrict>

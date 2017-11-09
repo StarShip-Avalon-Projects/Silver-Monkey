@@ -5,12 +5,12 @@ Imports FastColoredTextBoxNS
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Controls.NativeMethods
-Imports MonkeyCore.MyData
 Imports MonkeyCore.IniFile
+Imports MonkeyCore.MyData
+Imports MonkeyCore.Utils
 Imports MonkeyCore.Utils.Logging
 Imports MonkeySpeakEditor.Controls
 Imports MonkeySpeakEditor.Controls.LineFinder
-Imports MonkeyCore.Utils
 
 ''' <summary>
 ''' Silver Monkey Main Form
@@ -19,7 +19,7 @@ Public Class MS_Edit
 
 #Region "Private Fields"
 
-    Private Const HelpFile As String = "Monkey_Speak_Editor_Help.chm"
+    Private Const HelpFile As String = "Silver Monkey.chm"
     'Private Const MonkeySpeakLineHelp As String = "Silver Monkey.chm"
 
 #End Region
@@ -1418,19 +1418,20 @@ Public Class MS_Edit
         End If
 
         DoubleBuffered = True
-
         Dim PluginFound As Boolean = False
-        For Each s As String In FileIO.FileSystem.GetFiles(Paths.ApplicationPluginPath, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
-            Dim FName As String = Path.GetFileNameWithoutExtension(s)
-            If IsNothing(EditSettings.PluginList) Then EditSettings.PluginList = New Dictionary(Of String, Boolean)
-            If Not EditSettings.PluginList.ContainsKey(FName) Then
-                EditSettings.PluginList.Add(FName, True)
-                PluginFound = True
-            End If
-            If EditSettings.PluginList.Item(FName) = True Then
-                MS_KeysIni.Load(s, True)
-            End If
-        Next
+        If Directory.Exists(Paths.ApplicationPluginPath) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(Paths.ApplicationPluginPath, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
+                Dim FName As String = Path.GetFileNameWithoutExtension(s)
+                If IsNothing(EditSettings.PluginList) Then EditSettings.PluginList = New Dictionary(Of String, Boolean)
+                If Not EditSettings.PluginList.ContainsKey(FName) Then
+                    EditSettings.PluginList.Add(FName, True)
+                    PluginFound = True
+                End If
+                If EditSettings.PluginList.Item(FName) = True Then
+                    MS_KeysIni.Load(s, True)
+                End If
+            Next
+        End If
         If PluginFound Then EditSettings.SaveEditorSettings()
 
         Location = My.Settings.EditFormLocation
@@ -2269,8 +2270,6 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         End If
 
     End Sub
-
-
 
 #End Region
 

@@ -1,10 +1,7 @@
-﻿Imports System.Runtime.InteropServices
-Imports FastColoredTextBoxNS
+﻿Imports FastColoredTextBoxNS
 Imports MonkeyCore
 
 Public Module MainModule
-
-
 
     Public DS_Comment_Style As TextStyle = New TextStyle(New SolidBrush(Color.Green), Nothing, FontStyle.Regular)
     Public DS_Default_Style As TextStyle = New TextStyle(New SolidBrush(Color.Green), Nothing, FontStyle.Regular)
@@ -32,7 +29,5 @@ Public Module MainModule
         ds
         ms
     End Enum
-
-
 
 End Module

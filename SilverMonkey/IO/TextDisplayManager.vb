@@ -191,15 +191,14 @@ Namespace HelperClasses
         ''' </returns>
         Public Function FormatText(ByVal data As String, ByVal newColor As fColorEnum) As String
 
-            SystemFshIcon(data, "")
             ChannelTag(data, "[$1]")
             Dim RftData As New StringBuilder(System.Web.HttpUtility.HtmlDecode(data))
-            Dim Names As MatchCollection = Regex.Matches(data, NameFilter)
-            For Each Name As System.Text.RegularExpressions.Match In Names
-                RftData.Replace(Name.Value, Name.Groups(2).Value)
-            Next
-            '<name shortname='acuara' forced>
-            Dim MyIcon As MatchCollection = Regex.Matches(data, Iconfilter)
+            'Dim Names As MatchCollection = NameRegex.Matches(data)
+            'For Each Name As Match In Names
+            '    buiRftDatald = RftData.Replace(Name.Value, Name.Groups(3).Value)
+            'Next
+            ''<name shortname='acuara' forced>
+            'Dim MyIcon As MatchCollection = Regex.Matches(data, Iconfilter)
 
             RftData.Replace("|", " ")
             RftData.Replace("\", "\\")

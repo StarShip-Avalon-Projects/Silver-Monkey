@@ -139,19 +139,28 @@ Public Class Main
 #Region "Public Methods"
 
     Public Sub ConnectBot()
-        If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
+        If BotConfig.LogOptions.log Then
+            Dim LogFile As String = Nothing
             Try
-                SndDisplay("New Session" + DateTime.Now.ToString)
 
-                FurcadiaSession.Connect()
-
-                ConnectTrayIconMenuItem.Enabled = False
-                DisconnectTrayIconMenuItem.Enabled = True
-                UpDateDreamList() '
-            Catch ex As Exception
-                SndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
+                LogStream = New LogStream(BotConfig.LogOptions)
+            Catch
+                SndDisplay("There's an error with log-file" + LogFile, TextDisplayManager.fColorEnum.Error)
+                Exit Sub
             End Try
         End If
+        Try
+            SndDisplay("New Session" + DateTime.Now.ToString)
+
+            FurcadiaSession.Connect()
+
+            ConnectTrayIconMenuItem.Enabled = False
+            DisconnectTrayIconMenuItem.Enabled = True
+            UpDateDreamList() '
+        Catch ex As Exception
+            SndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
+        End Try
+
     End Sub
 
     Public Sub ConnectionControlDisEnable()
@@ -313,7 +322,8 @@ Public Class Main
     ''' </param>
     ''' <param name="e">
     ''' </param>
-    Private Sub ClientStatusUpdate(Sender As Object, e As NetClientEventArgs) Handles FurcadiaSession.ClientStatusChanged
+    Private Sub ClientStatusUpdate(Sender As Object, e As NetClientEventArgs) _
+        Handles FurcadiaSession.ClientStatusChanged
 
         Select Case e.ConnectPhase
 
@@ -384,7 +394,7 @@ Public Class Main
 
     Private Delegate Sub UpDateBtn_GoCallback3(ByVal Obj As Object)
 
-    Private Delegate Sub UpDateBtn_StandCallback(ByRef [furre] As FURRE)
+    Private Delegate Sub UpDateBtn_StandCallback(ByRef [furre] As Furre)
 
     Private Delegate Sub UpDateDreamListCaller() 'ByVal [dummy] As String
 
@@ -580,13 +590,11 @@ Public Class Main
         GC.Collect()
     End Sub
 
-
-
-    Public Sub OnFurcadiaSessionError(ex As Exception, o As Object, n As String) Handles FurcadiaSession.[Error]
-
+    Public Sub OnFurcadiaSessionError(ex As Exception, o As Object, n As String) _
+        Handles FurcadiaSession.[Error]
 
         ' SndDisplay("MonkeySpeak error:" + trig.ToString() + " " + ex.Message, TextDisplayManager.fColorEnum.Error)
-        If ex.GetType() Is GetType(MonkeySpeakException) Then
+        If ex.GetType() Is GetType(MonkeyspeakException) Then
             If o.GetType Is GetType(TriggerHandler) Then
                 SendTextToDebugWindow(DirectCast(o, TriggerHandler).Target.ToString)
             End If
@@ -603,9 +611,7 @@ Public Class Main
         Else
             SndDisplay("Furcadia Session error:" + ex.Message + Environment.NewLine + o.ToString, TextDisplayManager.fColorEnum.Error)
         End If
-
-
-
+        LogStream.WriteLine("meep", ex)
     End Sub
 
     ''' <summary>
@@ -631,7 +637,7 @@ Public Class Main
         If Not FurcadiaSession Is Nothing Then
             If Not DreamList.SelectedItem Is Nothing Then
                 If Not FurcadiaSession.IsServerConnected Then Exit Sub
-                FurcadiaSession.SendFormattedTextToServer("l " + CType(DreamList.SelectedItem, FURRE).ShortName)
+                FurcadiaSession.SendFormattedTextToServer("l " + CType(DreamList.SelectedItem, Furre).ShortName)
             End If
         End If
     End Sub
@@ -643,8 +649,6 @@ Public Class Main
             e.SuppressKeyPress = True
         End If
     End Sub
-
-
 
     ''' <summary>
     ''' Send text like MonkeySpeak inner exception errors to the Debug Window
@@ -734,35 +738,14 @@ Public Class Main
         End If
         If FurcadiaSession Is Nothing Then
             FurcadiaSession = New BotSession(BotConfig)
-        ElseIf FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
-            Throw New MonkeySpeakException("Furcadia was not previously reset")
-            Exit Sub
         End If
 
-        If FurcadiaSession.ServerStatus = ConnectionPhase.Init Then
-
-            If BotConfig.LogOptions.log Then
-                Dim LogFile As String = Nothing
-                Try
-
-                    LogStream = New LogStream(BotConfig.LogOptions)
-                Catch
-                    FurcadiaSession.Dispose()
-                    SndDisplay("There's an error with log-file" + LogFile, TextDisplayManager.fColorEnum.Error)
-                    Exit Sub
-                End Try
-            End If
+        If FurcadiaSession.ServerStatus = ConnectionPhase.Init OrElse FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
 
             My.Settings.LastBotFile = CheckBotFolder(BotConfig.CharacterIniFile)
             My.Settings.Save()
 
-            If Not IsNothing(MsExport) Then MsExport.Dispose()
-            Try
-                ConnectBot()
-            Catch Ex As Exception
-                DisconnectBot()
-                SndDisplay("Connection Aborting: " + Ex.Message)
-            End Try
+            ConnectBot()
         Else
 
             DisconnectBot()
@@ -881,12 +864,12 @@ Public Class Main
 
         Dim f As String = CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
         If Not FurcadiaSession Is Nothing Then
-            If Not String.IsNullOrEmpty(FurcadiaSession.ConnectedCharacterName) _
+            If Not String.IsNullOrEmpty(FurcadiaSession.ConnectedFurre.Name) _
             And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
 
-                processStrt.Arguments = "-B=""" + FurcadiaSession.ConnectedCharacterName + """ """ + f + """"
+                processStrt.Arguments = "-B=""" + FurcadiaSession.ConnectedFurre.Name + """ """ + f + """"
 
-            ElseIf String.IsNullOrEmpty(FurcadiaSession.ConnectedCharacterName) _
+            ElseIf String.IsNullOrEmpty(FurcadiaSession.ConnectedFurre.Name) _
             And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
 
                 processStrt.Arguments = """" + f + """"

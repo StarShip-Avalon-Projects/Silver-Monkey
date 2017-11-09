@@ -32,28 +32,31 @@ Namespace Engine.Libraries
 
         Public Sub New(Session As BotSession)
             MyBase.New(Session)
+        End Sub
+
+        Public Overrides Sub Initialize(ParamArray args() As Object)
             Add(New Trigger(TriggerCategory.Effect, 2010),
                 Function(reader As TriggerReader) As Boolean
-                    Dim SoundFile As String = Paths.CheckBotFolder(reader.ReadString(True))
-                    Using simpleSound = New SoundPlayer(SoundFile)
-                        simpleSound.Play()
+                    Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
+                    Using PlaySound = New SoundPlayer(SoundFile)
+                        PlaySound.Play()
 
                     End Using
                     Return True
-                End Function, "(5:2010) play the wave file {...}.")
+                End Function, " play the wave file {...}.")
 
             Add(New Trigger(TriggerCategory.Effect, 2011),
                 Function(reader As TriggerReader) As Boolean
                     If Not simpleSound Is Nothing Then
-                        Dim SoundFile As String = Paths.CheckBotFolder(reader.ReadString(True))
+                        Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
                         simpleSound = New SoundPlayer(SoundFile)
                         simpleSound.PlayLooping()
                     End If
                     Return simpleSound Is Nothing
 
-                End Function, "(5:2011) play the wave file {...} in a loop. if theres not one playing")
+                End Function, " play the wave file {...} in a loop. if theres not one playing")
             Add(New Trigger(TriggerCategory.Effect, 2012),
-                 AddressOf StopSound, "(5:2012) stop playing the sound file.")
+                 AddressOf StopSound, " stop playing the sound file.")
         End Sub
 
         ''' <summary>
@@ -65,10 +68,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True on Success
         ''' </returns>
-        Function StopSound(reader As TriggerReader) As Boolean
+        Public Function StopSound(reader As TriggerReader) As Boolean
             If Not simpleSound Is Nothing Then
-                Dim SoundFile As String = Paths.CheckBotFolder(reader.ReadString(True))
-                simpleSound = New SoundPlayer(SoundFile)
+                Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
+                ' simpleSound = New SoundPlayer(SoundFile)
                 simpleSound.[Stop]()
                 simpleSound.Dispose()
             End If
@@ -77,6 +80,7 @@ Namespace Engine.Libraries
         End Function
 
 #Region "IDisposable Support"
+
         Private disposedValue As Boolean ' To detect redundant calls
 
         ''' <summary>
@@ -102,7 +106,6 @@ Namespace Engine.Libraries
             disposedValue = True
         End Sub
 
-
         ''' <summary>
         ''' This code added by Visual Basic to correctly implement the disposable pattern.
         ''' </summary>
@@ -110,6 +113,7 @@ Namespace Engine.Libraries
             ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
             Dispose(True)
         End Sub
+
 #End Region
 
 #End Region
