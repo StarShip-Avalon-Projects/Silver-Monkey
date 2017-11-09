@@ -126,9 +126,6 @@ Public Class BotSession
 
         Try
 
-            If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
-                StartEngine()
-            End If
             MyBase.Connect()
         Catch ex As Exception
             StopEngine()
@@ -161,7 +158,7 @@ Public Class BotSession
     ''' <param name="e"><see cref="ParseServerArgs"/></param>
     Public Async Sub OnParseSererInstructionAsync(sender As Object, e As ParseServerArgs) _
           Handles MyBase.ProcessServerInstruction
-
+        If MSpage Is Nothing Then Exit Sub
         Try
 
             DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Player.Message)
@@ -488,7 +485,7 @@ Public Class BotSession
     ''' <summary>
     ''' Start the Monkey Speak Engine
     ''' </summary>
-    Public Async Sub StartEngine()
+    Public Sub StartEngine()
         Try
             MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
 
@@ -511,7 +508,7 @@ Public Class BotSession
 
             PageSetVariable(VariableList)
             '(0:0) When the bot starts,
-            Await Task.Run(Sub() MSpage.ExecuteAsync(0))
+            MSpage.Execute(0)
 
             Logging.Logger.Info(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                             MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
@@ -584,7 +581,7 @@ Public Class BotSession
     End Sub
 
     Private Sub BotSession_ClientStatusChanged(Sender As Object, e As NetClientEventArgs) Handles Me.ClientStatusChanged
-
+        If MSpage Is Nothing Then Exit Sub
         Select Case e.ConnectPhase
             Case ConnectionPhase.Connected
                 DirectCast(MSpage.GetVariable("%BOTNAME"), ConstantVariable).SetValue(ConnectedFurre.Name)
@@ -599,9 +596,9 @@ Public Class BotSession
 
             Case ConnectionPhase.Auth
                 Dim Id() As Integer = {1}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(1))
+                If MSpage IsNot Nothing Then Await Task.Run(Sub() MSpage.ExecuteAsync(1))
             Case ConnectionPhase.Disconnected
-                Await Task.Run(Sub() MSpage.ExecuteAsync(2))
+                If MSpage IsNot Nothing Then Await Task.Run(Sub() MSpage.ExecuteAsync(2))
             Case ConnectionPhase.Connecting
             Case ConnectionPhase.error
             Case ConnectionPhase.Init
