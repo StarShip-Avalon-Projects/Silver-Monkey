@@ -679,19 +679,6 @@ Public Class Main
 
     Private DebugLogs As New StringBuilder()
 
-    '    Dim CloseCounter As Integer
-    '    OpenCount = CountOccurrences(Str, "<" + Tag + ">")
-    '    CloseCount = CountOccurrences(Str, "</" + Tag + ">")
-    '    If OpenCount > CloseCount Then
-    '        CloseCounter = OpenCount - CloseCount
-    '        Dim CloseTags As String = ""
-    '        For I As Integer = 0 To CloseCounter - 1
-    '            CloseTags = CloseTags & "</" + Tag + ">"
-    '        Next I
-    '        Str = Str & CloseTags
-    '    End If
-    '    Return Str
-    'End Function
     ''' <summary>
     ''' Update Dream Furre list
     ''' </summary>
@@ -993,7 +980,7 @@ Public Class Main
         Logging.Logger.LogOutput = New Logging.ConsoleLogOutput()
         Logging.Logger.InfoEnabled = True
         Logging.Logger.DebugEnabled = True
-        Logging.Logger.SingleThreaded = True
+        Logging.Logger.SingleThreaded = False
 
         If Not NotifyIcon1 Is Nothing Then
             RemoveHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
@@ -1051,11 +1038,11 @@ Public Class Main
             If String.IsNullOrEmpty(directoryName) Then File = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Silver Monkey", File)
             BotConfig = New BotOptions(File)
             EditBotToolStripMenuItem.Enabled = True
-            Console.WriteLine("Loaded: """ + File + """")
+            Logging.Logger.Info($"Loaded: ""{ File }""")
         ElseIf Mainsettings.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) And My.Application.CommandLineArgs.Count = 0 Then
             BotConfig = New BotOptions(My.Settings.LastBotFile)
             EditBotToolStripMenuItem.Enabled = True
-            Console.WriteLine("Loaded: """ + My.Settings.LastBotFile + """")
+            Logging.Logger.Info($"Loaded: ""{My.Settings.LastBotFile}""")
         End If
         Dim ts As TimeSpan = TimeSpan.FromSeconds(30)
 
