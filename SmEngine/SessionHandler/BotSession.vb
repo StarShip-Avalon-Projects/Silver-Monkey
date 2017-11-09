@@ -23,7 +23,7 @@ Imports Monkeyspeak.Logging
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.Interfaces
-Imports SilverMonkeyEngine.Engine.MainEngine
+Imports SilverMonkeyEngine.Engine.MsEngineExtentionFunctions
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
@@ -52,7 +52,7 @@ Public Class BotSession
     ''' <summary>
     ''' Main MonkeySpeak Engine
     ''' </summary>
-    Public WithEvents MainEngine As MainEngine
+    Public WithEvents MsEngine As MonkeyspeakEngine
 
     ''' <summary>
     ''' Monkey Speak Page object
@@ -484,8 +484,10 @@ Public Class BotSession
     ''' </summary>
     Public Async Sub StartEngine()
         Try
-            MainEngine = New MainEngine(MainEngineOptions.MonkeySpeakEngineOptions, Me)
-            MSpage = Await MainEngine.LoadFromScriptFileSAsyvnc(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+
+            MsEngine = New MonkeyspeakEngine(MainEngineOptions.MonkeySpeakEngineOptions)
+            Dim SriptFile As String = LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+            MSpage = Await MsEngine.LoadFromStringAsync(SriptFile)
 
             Dim TimeStart = DateTime.Now
             Dim VariableList As New List(Of IVariable)
@@ -508,7 +510,7 @@ Public Class BotSession
 
             Logging.Logger.Info(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                             MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
-        Catch ex As Exception
+        Catch ex As AggregateException
             Dim Err As New ErrorLogging(ex, Me)
             Process.Start("notepad.exe", Err.LogFile)
         End Try

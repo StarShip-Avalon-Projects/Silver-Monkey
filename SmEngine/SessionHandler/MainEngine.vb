@@ -4,41 +4,13 @@ Imports System.Text
 Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
 Imports Monkeyspeak
-Imports Monkeyspeak.Logging
 
 Namespace Engine
 
     ''' <summary>
     ''' Silver Monkey's MonkeySpeak Engine with our Customizations
     ''' </summary>
-    Public Class MainEngine
-
-        Implements IDisposable
-
-#Region "Private Fields"
-
-        ''' <summary>
-        ''' Custome Options for this Engine
-        ''' </summary>
-        Private SilverMonkeyEngineOptions As EngineOptoons
-
-        Private SmEngine As Monkeyspeak.MonkeyspeakEngine
-        Public MsPage As Page
-
-        ''' <summary>
-        ''' </summary>
-        ''' <returns>
-        ''' </returns>
-        Public Shadows Property Options() As EngineOptoons
-            Get
-                Return SilverMonkeyEngineOptions
-            End Get
-            Set(ByVal value As EngineOptoons)
-                SilverMonkeyEngineOptions = value
-            End Set
-        End Property
-
-#End Region
+    Public NotInheritable Class MsEngineExtentionFunctions
 
 #Region "Const"
 
@@ -55,22 +27,6 @@ Namespace Engine
 
         Private Const RES_MS_end As String = "*Endtriggers* 8888 *Endtriggers*"
 
-        Private Shared EngineLogger As MsLogger
-
-        ''' <summary>
-        ''' Default Constructlor.
-        ''' <para>
-        ''' This Loads our MonkeyBeak Libraries
-        ''' </para>
-        ''' </summary>
-        Public Sub New(ByRef Options As EngineOptoons, ByRef FurcSession As BotSession)
-            SilverMonkeyEngineOptions = Options
-            FurcadiaSession = FurcSession
-
-            SmEngine = New MonkeyspeakEngine(Options)
-
-        End Sub
-
         ''' <summary>
         ''' Wrapper Functions to read a Monkey Speak Script File and Pass
         ''' the result to <see cref="MonkeySpeakEngine.LoadFromString"/>
@@ -81,7 +37,7 @@ Namespace Engine
         ''' <exception cref="FileNotFoundException"/>
         ''' <returns>
         ''' </returns>
-        Public Function LoadFromScriptFile(ByVal file As String) As Page
+        Public Shared Function LoadFromScriptFile(ByVal file As String) As String
             Dim MonkeySpeakScript = New StringBuilder()
             Try
 
@@ -107,7 +63,7 @@ Namespace Engine
 
                     End While
                 End Using
-                Return SmEngine.LoadFromString(MonkeySpeakScript.ToString)
+                Return MonkeySpeakScript.ToString
             Catch eX As Exception
                 Throw eX
             End Try
@@ -115,51 +71,6 @@ Namespace Engine
             Return Nothing
 
         End Function
-
-        Public Async Function LoadFromScriptFileSAsyvnc(ByVal file As String) As Task(Of Page)
-            Await Task.Run(Function() LoadFromScriptFile(file))
-        End Function
-
-        ''' <summary>
-        ''' Loads a Monkeyspeak script from a string into a <see cref="Monkeyspeak.Page"/>.
-        ''' </summary>
-        ''' <param name="MonkeySpeakScript">MonkeySpeak as string</param>
-        ''' <returns></returns>
-        Public Function LoadFromString(MonkeySpeakScript As String) As Page
-            Return SmEngine.LoadFromString(MonkeySpeakScript)
-        End Function
-
-#End Region
-
-#Region "Dispose"
-
-        'need Timer Library disposal here and any other Libs that need to be disposed
-
-        Dim disposed As Boolean = False
-
-        ' Instantiate a SafeHandle instance.
-        Dim handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
-
-        ' Public implementation of Dispose pattern callable by consumers.
-        Public Sub Dispose() _
-               Implements IDisposable.Dispose
-            Dispose(True)
-
-        End Sub
-
-        ' Protected implementation of Dispose pattern.
-        Protected Overridable Sub Dispose(disposing As Boolean)
-            If disposed Then Return
-
-            If disposing Then
-
-                handle.Dispose()
-
-            End If
-
-            ' Free any unmanaged objects here.
-            disposed = True
-        End Sub
 
 #End Region
 

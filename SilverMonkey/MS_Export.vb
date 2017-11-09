@@ -1,6 +1,7 @@
 ﻿Imports System.Collections.Generic
 Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
+Imports Monkeyspeak
 Imports SilverMonkeyEngine
 Imports SilverMonkeyEngine.Engine
 
@@ -39,7 +40,7 @@ Public Class MS_Export
 
         Dim options As New BotOptions()
         Session = New BotSession(options)
-        Dim engine As New MainEngine(options.MonkeySpeakEngineOptions, Session)
+        Dim engine As New MonkeyspeakEngine(options.MonkeySpeakEngineOptions)
         Session.MSpage = engine.LoadFromString(String.Empty)
 
         'Load the Monkeyspeak lins into the page
