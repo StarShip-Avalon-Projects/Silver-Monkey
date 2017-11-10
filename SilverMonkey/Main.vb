@@ -151,7 +151,7 @@ Public Class Main
             End Try
         End If
         Try
-            SndDisplay("New Session" + DateTime.Now.ToString)
+            Logging.Logger.Info("New Session Started")
 
             Task.Run(Sub() FurcadiaSession.ConnetAsync())
 

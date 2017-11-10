@@ -37,7 +37,7 @@ git commit -m"Auto Version Update"
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof 
 
-git push --recurse-submodules=on-demand
+git push --recurse-submodules=check
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof
 
