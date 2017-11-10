@@ -72,6 +72,10 @@ Namespace Engine
 
         End Function
 
+        Public Shared Async Function LoadFromScriptFileAsync(FilePath As String) As Task(Of String)
+            Return Await Task.Run(Function() LoadFromScriptFile(FilePath))
+        End Function
+
 #End Region
 
     End Class

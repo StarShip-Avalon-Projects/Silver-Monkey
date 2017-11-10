@@ -228,7 +228,7 @@ Public Class BotSession
                     Throw New NetProxyException("Saw channel " + InstructionObject.Channel + "But there is no DiceRolls object")
                 End If
 
-                If IsConnectedCharacter Then
+                If IsConnectedCharacter() Then
                     '(0:130) When the bot rolls #d#,
                     '(0:132) When the bot rolls #d#+#,
                     '(0:134) When the bot rolls #d#-#,
@@ -250,7 +250,7 @@ Public Class BotSession
                 '(0:8) When someone shouts something,
                 '(0:9) When someone shouts {..},
                 '(0:10) When someone shouts something with {..} in it,
-                If IsConnectedCharacter Then Exit Sub
+                If IsConnectedCharacter() Then Exit Sub
                 If InstructionObject.RawInstruction.StartsWith("<font color='shout'>You shout,") Then Exit Sub
                 Dim ids() = {8, 9, 10}
                 Await MSpage.ExecuteAsync(ids, Furr)
@@ -275,7 +275,7 @@ Public Class BotSession
                 Await Task.Run(Sub() MSpage.ExecuteAsync(Ids))
 
             Case "emote"
-                If IsConnectedCharacter Then Exit Sub
+                If IsConnectedCharacter() Then Exit Sub
                 ' (0:12) When someone emotes {...} Execute
                 ' (0:13) When someone emotes something with {...} in it
                 ' (0:18) When someone says or emotes something
@@ -421,7 +421,7 @@ Public Class BotSession
                 Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
                 If CookieToAnyone.Match(Text).Success Then
 
-                    If IsConnectedCharacter Then
+                    If IsConnectedCharacter() Then
                         Dim ids() = {42, 43}
                         Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
                     Else
@@ -486,8 +486,9 @@ Public Class BotSession
         Try
 
             MsEngine = New MonkeyspeakEngine(MainEngineOptions.MonkeySpeakEngineOptions)
-            Dim SriptFile As String = LoadFromScriptFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
-            MSpage = Await MsEngine.LoadFromStringAsync(SriptFile)
+            '  Dim SriptFile As String = Await LoadFromScriptFileAsync(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+            '  If String.IsNullOrWhiteSpace(SriptFile) Then Throw New NullReferenceException("SriptFile")
+            MSpage = MsEngine.LoadFromFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
             Dim TimeStart = DateTime.Now
             Dim VariableList As New List(Of IVariable)
