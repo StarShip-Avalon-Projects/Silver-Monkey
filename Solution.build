@@ -60,8 +60,8 @@
 
    <Target Name="BackupSource" >
 		<!-- SilverMonkey_Binaties -->
-  		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.txt -n*.config ../../Build/SilverMonkey_Binaties_$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
-			WorkingDirectory="Build/$(Configuration)\"/>
+  		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.txt -n*.config \$(Configuration)SilverMonkey_Binaties_$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
+			WorkingDirectory="Build\$(Configuration)\"/>
 			<!-- Plugins_API -->
 		<!-- <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -nBaseModule.* -nSystem.Data.SQLite.* -nSQLite.Interop.* -nInterfaces.* -nFastColoredTextBox.* -nSQLite.Interop.* -nFurcadiaLib.* -nMonkeyCore.* -nIrony.dll ..\..\Build\Installer\Plugins_API_$(Configuration)-$(FileVersion).rar *.*"
 			WorkingDirectory="Build/$(Configuration)/" /> -->
@@ -80,8 +80,8 @@
   </Target>
 
      <ItemGroup>  
-        <MonkeySpeakSourceFiles Include="Build\Installer\$Configuration)Release\*.msi"/>
-		 <MonkeySpeakSourceFiles Include="Build\$Configuration)Release\*.rar"/>
+        <MonkeySpeakSourceFiles Include="Build\Installer\$Configuration)\*.msi"/>
+		 <MonkeySpeakSourceFiles Include="Build\$Configuration)\*.rar"/>
     </ItemGroup>  
   
     <Target Name="CopyFiles">  
