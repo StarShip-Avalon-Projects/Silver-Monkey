@@ -52,7 +52,7 @@ Public Class BotSession
     ''' <summary>
     ''' Main MonkeySpeak Engine
     ''' </summary>
-    Public WithEvents MsEngine As MonkeyspeakEngine
+    Private MsEngine As MonkeyspeakEngine
 
     ''' <summary>
     ''' Monkey Speak Page object
@@ -126,9 +126,9 @@ Public Class BotSession
 
     Public Async Sub ConnetAsync()
         If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
-            Await Task.Run(Sub() StartEngine())
+            Await StartEngine()
         End If
-        Await Task.Run(Sub() Connect())
+        Connect()
     End Sub
 
     ''' <summary>
@@ -177,7 +177,7 @@ Public Class BotSession
                 '(0:97) When the bot leaves a Dream,
                 '(0:98) When the bot leaves the Dream named {..},
                 Dim ids() = {97, 98}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                Await MSpage.ExecuteAsync(ids)
 
             Case ServerInstructionType.BookmarkDream
                 Try
@@ -189,7 +189,7 @@ Public Class BotSession
                 '(0:90) When the bot enters a Dream,
                 '(0:91) When the bot enters a Dream named {..},
                 Dim ids() = {90, 91}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                Await MSpage.ExecuteAsync(ids)
                 lastDream = Dream
         End Select
 
@@ -482,13 +482,13 @@ Public Class BotSession
     ''' <summary>
     ''' Start the Monkey Speak Engine
     ''' </summary>
-    Public Async Sub StartEngine()
+    Public Async Function StartEngine() As Task
         Try
 
             MsEngine = New MonkeyspeakEngine(MainEngineOptions.MonkeySpeakEngineOptions)
-            '  Dim SriptFile As String = Await LoadFromScriptFileAsync(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
-            '  If String.IsNullOrWhiteSpace(SriptFile) Then Throw New NullReferenceException("SriptFile")
-            MSpage = MsEngine.LoadFromFile(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+            Dim SriptFile As String = Await LoadFromScriptFileAsync(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+            If String.IsNullOrWhiteSpace(SriptFile) Then Throw New NullReferenceException("SriptFile")
+            MSpage = Await MsEngine.LoadFromStringAsync(SriptFile)
 
             Dim TimeStart = DateTime.Now
             Dim VariableList As New List(Of IVariable)
@@ -507,7 +507,7 @@ Public Class BotSession
 
             PageSetVariable(VariableList)
             '(0:0) When the bot starts,
-            Await Task.Run(Sub() MSpage.ExecuteAsync(0))
+            Await MSpage.ExecuteAsync(0)
 
             Logging.Logger.Info(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                             MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
@@ -515,7 +515,7 @@ Public Class BotSession
             Dim Err As New ErrorLogging(ex, Me)
             Process.Start("notepad.exe", Err.LogFile)
         End Try
-    End Sub
+    End Function
 
     ''' <summary>
     ''' Stop the Monkey Speak Engine

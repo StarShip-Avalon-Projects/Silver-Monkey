@@ -38,11 +38,10 @@ Namespace Engine
         ''' <returns>
         ''' </returns>
         Public Shared Function LoadFromScriptFile(ByVal file As String) As String
-            Dim MonkeySpeakScript = New StringBuilder()
             Try
-
+                Dim ScriptContents As New StringBuilder()
                 If Not System.IO.File.Exists(Paths.CheckBotFolder(file)) Then
-                    Throw New FileNotFoundException("MonkeySpeak file (" + file + ") not found. Did you forget to define on or check the file path?")
+                    Throw New FileNotFoundException($"MonkeySpeak file ({file}) not found. Did you forget to define on or check the file path?")
                 End If
 
                 Using MonkeySpeakScriptReader As New StreamReader(file)
@@ -51,7 +50,7 @@ Namespace Engine
                     While MonkeySpeakScriptReader.Peek <> -1
                         line = MonkeySpeakScriptReader.ReadLine()
                         If Not line.StartsWith(RES_MS_begin) Then
-                            MonkeySpeakScript.AppendLine(line)
+                            ScriptContents.AppendLine(line)
                         ElseIf line.StartsWith(RES_MS_begin) Then
                             'MonkeySpeak Script Version Check
 
@@ -63,7 +62,7 @@ Namespace Engine
 
                     End While
                 End Using
-                Return MonkeySpeakScript.ToString
+                Return ScriptContents.ToString()
             Catch eX As Exception
                 Throw eX
             End Try
