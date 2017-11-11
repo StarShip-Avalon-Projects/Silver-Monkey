@@ -10,6 +10,14 @@
         AfterBuild;  
     </BuildDependsOn>  
 	</PropertyGroup>
+
+	  <PropertyGroup>  
+    <BackupDependsOn>  
+   <!--     BeforeBuild;  
+       Build;  -->
+        BackupSource;  
+    </BackupDependsOn>  
+	</PropertyGroup>
   <Target Name="BuildAll">
   		<CallTarget Targets="Build"/>
 		<CallTarget Targets="Clean"/>
@@ -42,7 +50,7 @@
         Projects="MonkeySystem VS2015.sln"
         Targets="Restore;Build"
         Properties="Configuration=$(Configuration);Platform=Any CPU" />
-	<CallTarget Targets="BackupSource"/>
+
 	<CallTarget Targets="CopyFiles"/>
 
   </Target>
@@ -85,7 +93,7 @@
 		 <MonkeySpeakSourceFiles Include="Build\$Configuration)\*.rar"/>
     </ItemGroup>  
   
-    <Target Name="CopyFiles">  
+    <Target Name="CopyFiles" DependsOnTargets="$(BackupDependsOn)">  
    <Copy  
             SourceFiles="@(MonkeySpeakSourceFiles)"  
             DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)V-$(FileVersion)%(Extension)')"  />
