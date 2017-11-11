@@ -3,25 +3,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
   </PropertyGroup>
 
-  <PropertyGroup>  
-    <BuildDependsOn>  
-   <!--     BeforeBuild;  
-       Build;  -->
-        AfterBuild;  
-    </BuildDependsOn>  
-	</PropertyGroup>
-
-	  <PropertyGroup>  
-    <BackupDependsOn>  
-   <!--     BeforeBuild;  
-       Build;  -->
-        BackupSource;  
-    </BackupDependsOn>  
-	</PropertyGroup>
+ 
   <Target Name="BuildAll">
-  		<CallTarget Targets="Build"/>
+
 		<CallTarget Targets="Clean"/>
-		<CallTarget Targets="BackupAllSources"/>
+				<CallTarget Targets="BackupAllSources"/>
+			<CallTarget Targets="BackupSource"/>
+
 
   </Target>
   
@@ -44,14 +32,12 @@
   </Target>
 
     <!-- Define default target with name 'Build' -->
-  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)">
+  <Target Name="Build" AfterTargets="AfterBuild"> 
     <!-- Compile whole solution in release mode -->
     <MSBuild
         Projects="MonkeySystem VS2015.sln"
         Targets="Restore;Build"
         Properties="Configuration=$(Configuration);Platform=Any CPU" />
-
-	<CallTarget Targets="CopyFiles"/>
 
   </Target>
 
@@ -67,7 +53,7 @@
 			WorkingDirectory="BaseModule"/> -->
 			  </Target>
 
-   <Target Name="BackupSource" >
+   <Target Name="BackupSource"  AfterTargets="CopyFiles" BeforeTargets="Build"> 
 		<!-- SilverMonkey_Binaties -->
   		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.txt -n*.config SilverMonkey_Binaties_$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
 			WorkingDirectory="Build\$(Configuration)\"/>
