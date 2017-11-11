@@ -8,18 +8,19 @@
     Dim YearFormat as string = "yyyy"
     Dim CurrentYear as string = time.ToString(YearFormat)
     dim CurrentDate as string = time.ToString(format)
+		Dim AssembleyInFoFile as string = Host.ResolvePath("AssemblyFileVersion.txt")
     try
     
         'If we cannot find the file, the revision number is set to zero,
         'so even if the file doesn't exists the generation will run anyway.
         'NOTE: we suppose we're not messing with the generated file
          
-        using f as new StreamReader (Host.ResolvePath("AssemblyFileVersion.vb"))
+        using f as new StreamReader (AssembleyInFoFile)
        
             'We're reading the previous revision number; in order to make the
             'code as simple as we can, we're just going to rewrite it on the first row, commented.
             'This is not elegant, but it's simple enough and quite effective.
-            dim s as string  = f.ReadLine().Replace("'","")
+            dim s as string  = f.ReadLine()
            integer.tryParse(s, revisionNumber) 
 #IF DEBUG THEN
 
@@ -31,6 +32,9 @@
          
         revisionNumber = 0 
     end try
+				using Sw as new StreamWriter(AssembleyInFoFile)
+					Sw.WriteLine(revisionNumber.ToString())
+				end using
 #>
 '<#=revisionNumber#>
 '' 

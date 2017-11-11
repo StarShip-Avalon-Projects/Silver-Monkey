@@ -94,11 +94,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AssemblyInfoersion.vb">
-      <Link>AssemblyInfoersion.vb</Link>
-    </Compile>
     <Compile Include="AssemblyFileVersion.vb">
       <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="AssemblyInfoersion.vb">
+      <DependentUpon>AssemblyInfoersion.t4</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -116,6 +118,10 @@
     <Compile Include="Libraries\MonkeySpeakLibrary.vb" />
     <Compile Include="Libraries\MsBanish.vb" />
     <Compile Include="SessionHandler\MsLogger.vb" />
+    <None Include="AssemblyInfoersion.t4">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
+    </None>
     <None Include="packages.config" />
     <None Include="SessionHandler\ConstantVariable.vb" />
     <Compile Include="SessionHandler\EngineOptoons.vb" />

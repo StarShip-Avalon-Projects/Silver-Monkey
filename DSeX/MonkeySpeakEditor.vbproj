@@ -107,17 +107,19 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AssemblyInfoersion.vb">
-      <Link>AssemblyInfoersion.vb</Link>
-    </Compile>
     <Compile Include="advanceSearch.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="AssemblyFileVersion.vb">
+      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblyInfoersion.vb">
+      <DependentUpon>AssemblyInfoersion.t4</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Config.designer.vb">
       <DependentUpon>Config.vb</DependentUpon>
@@ -239,6 +241,10 @@
     <Content Include="keyshelp.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="AssemblyInfoersion.t4">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
+    </None>
     <None Include="MonkeySpeakEditor.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

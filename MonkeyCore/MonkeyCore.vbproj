@@ -108,6 +108,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="AssemblyInfoersion.vb">
+      <DependentUpon>AssemblyInfoersion.t4</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="CompilerServices.vb" />
     <Compile Include="Controls\HelpLinkMenu.vb">
       <SubType>Component</SubType>
@@ -191,9 +196,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="AssemblyFileVersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
+    </None>
     <Content Include="HelpLink.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="AssemblyInfoersion.t4">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
+    </None>
     <None Include="MonkeyCore.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -215,12 +228,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="AssemblyFileVersion.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Code Notes and links.txt" />

@@ -143,12 +143,9 @@
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
     <Compile Include="AssemblyFileVersion1.cs">
+      <DependentUpon>AssemblyFileVersion.t4</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AssemblyInfo.cs">
-      <LastGenOutput>AssemblyInfo1.cs</LastGenOutput>
     </Compile>
     <Compile Include="AssemblyInfoersionCS1.cs">
       <AutoGen>True</AutoGen>
@@ -197,14 +194,14 @@
     <EmbeddedResource Include="Controls\RenameTable.resx">
       <DependentUpon>RenameTable.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="AssemblyFileVersion.tt">
+    <None Include="AssemblyFileVersion.t4">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion1.cs</LastGenOutput>
     </None>
-    <Content Include="AssemblyInfoersionCS.tt">
+    <None Include="AssemblyInfoersionCS.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfoersionCS1.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Icons\Add.ico" />
     <Content Include="Icons\App.ico" />
   </ItemGroup>
