@@ -9,7 +9,7 @@ set BUILD_STATUS=%ERRORLEVEL%
 if not %BUILD_STATUS%==0 goto fail 
  
 :BuildAll
-msbuild /t:BuildAll  Solution.build /flp:logfile=MonkeySystemDebug.log;verbosity=diagnostic
+msbuild /t:BuildAll  /property:Configuration=Debug Solution.build /flp:logfile=MonkeySystemDebug.log;verbosity=diagnostic
 set BUILD_STATUS=%ERRORLEVEL% 
 if not %BUILD_STATUS%==0 goto fail 
 
