@@ -13,9 +13,8 @@
   <Target Name="BuildAll">
   		<CallTarget Targets="Build"/>
 		<CallTarget Targets="Clean"/>
-		<CallTarget Targets="BackupSource"/>
 		<CallTarget Targets="BackupAllSources"/>
-		<CallTarget Targets="CopyFiles"/>
+
   </Target>
   
   <!-- <Target Name="GetVersion" >-->
@@ -43,6 +42,8 @@
         Projects="MonkeySystem VS2015.sln"
         Targets="Restore;Build"
         Properties="Configuration=$(Configuration);Platform=Any CPU" />
+	<CallTarget Targets="BackupSource"/>
+	<CallTarget Targets="CopyFiles"/>
 
   </Target>
 
@@ -60,7 +61,7 @@
 
    <Target Name="BackupSource" >
 		<!-- SilverMonkey_Binaties -->
-  		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.txt -n*.config \$(Configuration)SilverMonkey_Binaties_$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
+  		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.txt -n*.config SilverMonkey_Binaties_$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
 			WorkingDirectory="Build\$(Configuration)\"/>
 			<!-- Plugins_API -->
 		<!-- <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -nBaseModule.* -nSystem.Data.SQLite.* -nSQLite.Interop.* -nInterfaces.* -nFastColoredTextBox.* -nSQLite.Interop.* -nFurcadiaLib.* -nMonkeyCore.* -nIrony.dll ..\..\Build\Installer\Plugins_API_$(Configuration)-$(FileVersion).rar *.*"
