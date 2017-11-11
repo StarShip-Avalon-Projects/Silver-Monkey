@@ -12,8 +12,8 @@
 </PropertyGroup>  
 
   <Target Name="BuildAll">
+  		<CallTarget Targets="Build"/>
 		<CallTarget Targets="Clean"/>
-		<CallTarget Targets="Build"/>
 		<CallTarget Targets="BackupAllSources"/>
 		<CallTarget Targets="CopyFiles"/>
   </Target>
@@ -47,7 +47,7 @@
 
   <Target Name="BackupAllSources" Condition=" '$(Configuration)' == 'Debug' ">
 		<!-- Monkey System-->
-		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x\.svn\* -x*\Net40\* -x*\Build\* -x*\.vs\* -x*\.git\* -x*\.svn\* -x*Plugins\*  -x*bin\*  -x*\src\ -x*\obj\* -n*.*proj -nbin\*.exe -nbin\*.dll -nbin\*.bat -n*.sln -n*.nsi -n*.wxs -n*.build -n*.snk -n*.xslt -n*.rtf -n*.vb -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config Build/Installer/MonkeySystem2_Src.rar *.*" />
+		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -x\.svn\* -x*\Net40\* -x*\Build\* -x*\.vs\* -x*\.git\* -x*\.svn\* -x*Plugins\*  -x*bin\*  -x*\src\ -x*\obj\* -n*.*proj -n*.cmd -nbin\*.dll -nbin\*.bat -n*.sln -n*.wxs -n*.build -n*.snk -n*.pfx -n*.xslt -n*.rtf -n*.vb -n*.t4 -n*.tt -n*.png -n*.jpg -n*.jpeg -n*.bmp -n*,exe -n*.datasource -n*.md -n*.ico -n*.manifest -n*.wix -n*.cs -n*.ds -n*.ms -n*.ini -nlicense*.*-n*.sln -n*.resx -n*.txt -n*.dll  -n*.config Build/Installer/MonkeySystem2_Src.rar *.*" />
 			 <!--   <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.pdb ..\Installer\MonkeySystem2_Debug_Symbols.rar *.*"
 				WorkingDirectory="Build/Debug" /> -->
 		<!-- Support files -->
