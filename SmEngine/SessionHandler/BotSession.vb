@@ -128,7 +128,7 @@ Public Class BotSession
         If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
             Await StartEngine()
         End If
-        Connect()
+        Await Task.Run(Sub() Connect())
     End Sub
 
     ''' <summary>
@@ -137,7 +137,7 @@ Public Class BotSession
     Public Overrides Sub Disconnect()
 
         MyBase.Disconnect()
-        StopEngine()
+
     End Sub
 
     ''' <summary>
@@ -234,14 +234,14 @@ Public Class BotSession
                     '(0:134) When the bot rolls #d#-#,
                     '(0:136) When any one rolls anything,
                     Dim ids() = {130, 131, 132, 136}
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids, DiceObject))
+                    Await MSpage.ExecuteAsync(ids, DiceObject)
                 Else
                     '(0:136) When a furre rolls #d#,
                     '(0:138) When a fuure rolls #d#+#,
                     '(0:140) When a furre rolls #d#-#,
                     '(0:136) When any one rolls anything,
                     Dim ids() = {133, 134, 135, 136}
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids, DiceObject))
+                    Await MSpage.ExecuteAsync(ids, DiceObject)
                 End If
             Case "trade"
                 Dim ids() = {46, 47, 48}
@@ -272,7 +272,7 @@ Public Class BotSession
                 ' (0:17) When some one whispers something
                 ' with {...} in it
                 Dim Ids() = {15, 16, 17}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(Ids))
+                Await MSpage.ExecuteAsync(Ids)
 
             Case "emote"
                 If IsConnectedCharacter() Then Exit Sub
@@ -283,13 +283,13 @@ Public Class BotSession
                 ' (0:20) When someone says or emotes something
                 ' with {...} in it
                 Dim ids() = {11, 12, 13, 18, 19, 20}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                Await MSpage.ExecuteAsync(ids)
             Case "@emit"
                 ' (0:21) When someone emits something
                 ' (0:22) When someone emits {...}
                 ' (0:23) When someone emits something with {...} in it
                 Dim ids() = {21, 22, 23}
-                Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                Await MSpage.ExecuteAsync(ids)
 
             Case "query"
 
@@ -299,25 +299,25 @@ Public Class BotSession
                     Case "summon"
                         ''JOIN
                         Dim ids() = {34, 35}
-                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                        Await MSpage.ExecuteAsync(ids)
 
                     Case "join"
                         ''SUMMON
                         Dim ids() = {32, 33}
-                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                        Await MSpage.ExecuteAsync(ids)
 
                     Case "follow"
                         ''LEAD
                         Dim ids() = {36, 37}
-                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                        Await MSpage.ExecuteAsync(ids)
 
                     Case "lead"
                         ''FOLLOW
                         Dim ids() = {38, 39}
-                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                        Await MSpage.ExecuteAsync(ids)
                     Case "cuddle"
                         Dim ids() = {40, 41}
-                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                        Await MSpage.ExecuteAsync(ids)
 
                 End Select
             Case "banish"
@@ -335,7 +335,7 @@ Public Class BotSession
 
                     DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
                     Dim ids() = {52, 53}
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                    Await MSpage.ExecuteAsync(ids)
 
                     ' MSpage.ExecuteAsync(53)
                 ElseIf Text = "You have canceled all banishments from your dreams." Then
@@ -344,7 +344,7 @@ Public Class BotSession
                     DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).SetValue(Nothing)
                     DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(Nothing)
 
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(60))
+                    Await MSpage.ExecuteAsync(60)
                 ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
                     'tempbanish <name> (online)
                     'Success: (.*?) has been temporarily banished from your dreams.
@@ -353,14 +353,14 @@ Public Class BotSession
                     '(0:62) When the bot sucessfully temp banishes the furre named {...}
                     DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
                     Dim ids() = {61, 62}
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                    Await MSpage.ExecuteAsync(ids)
 
                 ElseIf Text.StartsWith("Players banished from your dreams: ") Then
                     'Banish-List
                     '[notify> Players banished from your dreams:
                     '`(0:54) When the bot sees the banish list
 
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(54))
+                    Await MSpage.ExecuteAsync(54)
                 ElseIf Text.StartsWith("The banishment of player ") Then
                     'banish-off <name> (on list)
                     '[notify> The banishment of player (.*?) has ended.
@@ -371,7 +371,7 @@ Public Class BotSession
                     NameStr = t.Match(Text).Groups(1).Value
                     DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
                     Dim ids() = {56, 56}
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                    Await MSpage.ExecuteAsync(ids)
 
                     '      MSpage.ExecuteAsync(800)
 
@@ -385,7 +385,7 @@ Public Class BotSession
                     NameStr = t.Match(Text).Groups(1).Value
                     DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(NameStr)
                     Dim ids() = {50, 51}
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                    Await MSpage.ExecuteAsync(ids)
                 ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
                     'banish-off <name> (not on list)
                     'Error:>> Sorry, this player has not been banished from your dreams.
@@ -394,7 +394,7 @@ Public Class BotSession
                     '(0:56) When the bot fails to remove the furre named {...} from the banish list,
                     DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
                     Dim ids() = {50, 51}
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                    Await MSpage.ExecuteAsync(ids)
                 ElseIf Text = "You have not banished anyone." Then
                     'banish-off-all (empty List)
                     'Error:>> You have not banished anyone.
@@ -402,9 +402,9 @@ Public Class BotSession
                     '(0:59) When the bot fails to see the banish list,
                     DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).SetValue(Nothing)
 
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(59))
+                    Await MSpage.ExecuteAsync(59)
                 ElseIf Text = "You do not have any cookies to give away right now!" Then
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(95))
+                    Await MSpage.ExecuteAsync(95)
                 End If
 
             Case "@cookie"
@@ -416,34 +416,34 @@ Public Class BotSession
                 Dim CookieToMe = New Regex(String.Format("{0}", CookieToMeREGEX))
                 If CookieToMe.Match(Text).Success Then
                     Dim ids() = {42, 43}
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                    Await MSpage.ExecuteAsync(ids)
                 End If
                 Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
                 If CookieToAnyone.Match(Text).Success Then
 
                     If IsConnectedCharacter() Then
                         Dim ids() = {42, 43}
-                        Await Task.Run(Sub() MSpage.ExecuteAsync(ids))
+                        Await MSpage.ExecuteAsync(ids)
                     Else
-                        Await Task.Run(Sub() MSpage.ExecuteAsync(44))
+                        Await MSpage.ExecuteAsync(44)
                     End If
 
                 End If
                 Dim CookieFail = New Regex(String.Format("You do not have any (.*?) left!"))
                 If CookieFail.Match(Text).Success Then
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(45))
+                    Await MSpage.ExecuteAsync(45)
                 End If
                 Dim EatCookie = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
                 If EatCookie.Match(Text).Success Then
                     'TODO Cookie eat %MESSAGE can change by Dragon Speak
 
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(49))
+                    Await MSpage.ExecuteAsync(49)
 
                 End If
                 '(0:96) When the Bot sees "Your cookies are ready."
                 Dim CookiesReady As Regex = New Regex(<a>"Your cookies are ready.  http://furcadia.com/cookies/ for more info!"</a>)
                 If CookiesReady.Match(Text).Success Then
-                    Await Task.Run(Sub() MSpage.ExecuteAsync(96))
+                    Await MSpage.ExecuteAsync(96)
                 End If
             Case Else
                 'TODO: plugin Dynamic(Group)  Channels here
@@ -593,6 +593,7 @@ Public Class BotSession
                 If MSpage IsNot Nothing Then Await MSpage.ExecuteAsync(1)
             Case ConnectionPhase.Disconnected
                 If MSpage IsNot Nothing Then Await MSpage.ExecuteAsync(2)
+                If MSpage IsNot Nothing Then Await Task.Run(Sub() StopEngine())
             Case ConnectionPhase.Connecting
             Case ConnectionPhase.error
             Case ConnectionPhase.Init
@@ -605,6 +606,11 @@ Public Class BotSession
 
     End Sub
 
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="silent"></param>
+    ''' <returns></returns>
     Public Async Function LoadLibraryAsync(silent As Boolean) As Task(Of Page)
         Return Await Task.Run(Function() LoadLibrary(silent))
     End Function
