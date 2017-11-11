@@ -29,15 +29,11 @@ Namespace Engine.Libraries
                   " When some one gives a cookie to the bot,")
 
             '(0:43) When a furre named {...} gives a cookie to the bot,
-            Add(New Trigger(TriggerCategory.Cause, 43),
+            Add(TriggerCategory.Cause, 43,
                 AddressOf NameIs, " When a furre named {...} gives a cookie to the bot,")
 
             '(0:44) When anyone gives a cookie to someone the bot can see,
-            Add(TriggerCategory.Cause, 44,
-            Function()
-                Return True
-            End Function,
-                 " When anyone gives a cookie to someone the bot can see,")
+            Add(TriggerCategory.Cause, 44, Function() True, " When anyone gives a cookie to someone the bot can see,")
 
             '(0:49) When bot eats a cookie,
             Add(TriggerCategory.Cause, 49,

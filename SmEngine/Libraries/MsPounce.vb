@@ -74,42 +74,42 @@ Namespace Engine.Libraries
                 AddressOf NameIs, " When the furre named {...} logs off,")
 
             '(1;950) and the furre named {...} is on-line,
-            Add(New Trigger(TriggerCategory.Condition, 950),
+            Add(TriggerCategory.Condition, 950,
                 AddressOf FurreNamedonline, " and the furre named {...} is on-line,")
 
             '(1:951) and the furre named {...} is off-line,
-            Add(New Trigger(TriggerCategory.Condition, 951),
+            Add(TriggerCategory.Condition, 951,
                 AddressOf FurreNamedNotOnline, " and the furre named {...} is off-line,")
 
             '(1:952) and triggering furre is on the smPounce List,
-            Add(New Trigger(TriggerCategory.Condition, 952),
+            Add(TriggerCategory.Condition, 952,
                 AddressOf TrigFurreIsMember, " and triggering furre is on the smPounce List,")
             '(1:953) and the triggering furre is not on the smPounce List,
-            Add(New Trigger(TriggerCategory.Condition, 953),
+            Add(TriggerCategory.Condition, 953,
                 AddressOf TrigFurreIsNotMember, " and the triggering furre is not on the smPounce List,")
 
             '(1:954) and the furre named {...} is on the smPounce list,
-            Add(New Trigger(TriggerCategory.Condition, 954),
+            Add(TriggerCategory.Condition, 954,
                 AddressOf FurreNamedIsMember, " and the furre named {...} is on the smPounce list,")
 
             '(1:955) and the furre named {...} is not on the smPounce list,
-            Add(New Trigger(TriggerCategory.Condition, 955),
+            Add(TriggerCategory.Condition, 955,
                 AddressOf FurreNamedIsNotMember, " and the furre named {...} is not on the smPounce list,")
 
             '(5:950) add the triggering furre to the smPounce List.
-            Add(New Trigger(TriggerCategory.Effect, 950),
+            Add(TriggerCategory.Effect, 950,
                 AddressOf AddTrigFurre, " add the triggering furre to the smPounce List.")
             '(5:951) add the furre named {...} to the smPounce list.
-            Add(New Trigger(TriggerCategory.Effect, 951),
+            Add(TriggerCategory.Effect, 951,
                 AddressOf AddFurreNamed, " add the furre named {...} to the smPounce list.")
             '(5:952) remove the triggering furre from the smPounce list.
-            Add(New Trigger(TriggerCategory.Effect, 952),
+            Add(TriggerCategory.Effect, 952,
                 AddressOf RemoveTrigFurre, " remove the triggering furre from the smPounce list.")
             '(5:953) remove the furre named {...} from the smPounce list.
-            Add(New Trigger(TriggerCategory.Effect, 953),
+            Add(TriggerCategory.Effect, 953,
                 AddressOf RemoveFurreNamed, " remove the furre named {...} from the smPounce list.")
             '(5:954) use the file named {...} as the smPounce list.
-            Add(New Trigger(TriggerCategory.Effect, 954),
+            Add(TriggerCategory.Effect, 954,
                 AddressOf UseMemberFile, " use the file named {...} as the smPounce list and start the Pounce Clinet Interface.")
         End Sub
 

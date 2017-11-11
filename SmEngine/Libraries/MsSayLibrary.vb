@@ -293,47 +293,47 @@ Namespace Engine.Libraries
                 Function() True, " When the bot resumes processing after seeing ""Your throat is tired"" message,")
 
             ' (1:3) and the triggering furre's name is {..},
-            Add(New Trigger(TriggerCategory.Condition, 5), AddressOf NameIs,
+            Add(TriggerCategory.Condition, 5, AddressOf NameIs,
                 " and the triggering furre's name is {..},")
 
             ' (1:4) and the triggering furre's name is not {..},
-            Add(New Trigger(TriggerCategory.Condition, 6), AddressOf NameIsNot,
+            Add(TriggerCategory.Condition, 6, AddressOf NameIsNot,
                 " and the triggering furre's name is not {..},")
 
             ' (1:5) and the Triggering Furre's message is {..}, (say, emote,
             ' shot, whisper, or emit Channels)
-            Add(New Trigger(TriggerCategory.Condition, 7), AddressOf MsgIs,
+            Add(TriggerCategory.Condition, 7, AddressOf MsgIs,
                 " and the triggering furre's message is {..},")
 
             ' (1:8) and the triggering furre's message contains {..} in it,
             ' (say, emote, shot, whisper, or emit Channels)
-            Add(New Trigger(TriggerCategory.Condition, 8), AddressOf MsgContains,
+            Add(TriggerCategory.Condition, 8, AddressOf MsgContains,
                 " and the triggering furre's message contains {..} in it,")
 
             '(1:9) and the triggering furre's message does not contain {..} in it,
             '(say, emote, shot, whisper, or emit Channels)
-            Add(New Trigger(TriggerCategory.Condition, 9), AddressOf MsgNotContain,
+            Add(TriggerCategory.Condition, 9, AddressOf MsgNotContain,
                 " and the triggering furre's message does not contain {..} in it,")
 
             '(1:10) and the triggering furre's message is not {..},
             '(say, emote, shot, whisper, or emit Channels)
-            Add(New Trigger(TriggerCategory.Condition, 10), AddressOf MsgIsNot,
+            Add(TriggerCategory.Condition, 10, AddressOf MsgIsNot,
                 " and the triggering furre's message is not {..},")
 
             '(1:11) and triggering furre's message starts with {..},
-            Add(New Trigger(TriggerCategory.Condition, 11), AddressOf MsgStartsWith,
+            Add(TriggerCategory.Condition, 11, AddressOf MsgStartsWith,
                 " and triggering furre's message starts with {..},")
 
             '(1:12) and triggering furre's message doesn't start with {..},
-            Add(New Trigger(TriggerCategory.Condition, 12), AddressOf MsgNotStartsWith,
+            Add(TriggerCategory.Condition, 12, AddressOf MsgNotStartsWith,
                 " and triggering furre's message doesn't start with {..},")
 
             '(1:13) and triggering furre's message  ends with {..},
-            Add(New Trigger(TriggerCategory.Condition, 13), AddressOf MsgEndsWith,
+            Add(TriggerCategory.Condition, 13, AddressOf MsgEndsWith,
                 " and triggering furre's message  ends with {..},")
 
             '(1:14) and triggering furre's message doesn't end with {..},
-            Add(New Trigger(TriggerCategory.Condition, 14), AddressOf MsgNotEndsWith,
+            Add(TriggerCategory.Condition, 14, AddressOf MsgNotEndsWith,
                 " and triggering furre's message doesn't end with {..},")
 
             '(1:904) and the triggering furre is the Bot Controller,
@@ -341,39 +341,39 @@ Namespace Engine.Libraries
                  Function() FurcadiaSession.IsBotController, " and the triggering furre is the Bot Controller,")
 
             '(1:905) and the triggering furre is not the Bot Controller,
-            Add(New Trigger(TriggerCategory.Condition, 16),
+            Add(TriggerCategory.Condition, 16,
             Function() Not FurcadiaSession.IsBotController, " and the triggering furre is not the Bot Controller,")
 
             'Says
             ' (5:0) say {..}.
-            Add(New Trigger(TriggerCategory.Effect, 0),
+            Add(TriggerCategory.Effect, 0,
                 Function(reader As TriggerReader) SendSay(reader.ReadString()),
          " say {..}.")
             'emotes
             ' (5:1) emote {..}.
-            Add(New Trigger(TriggerCategory.Effect, 1),
+            Add(TriggerCategory.Effect, 1,
                 Function(reader As TriggerReader) SendEmote(reader.ReadString),
                  " emote {..}.")
 
             'Shouts
             ' (5:2) shout {..}.
-            Add(New Trigger(TriggerCategory.Effect, 2),
+            Add(TriggerCategory.Effect, 2,
                  Function(reader As TriggerReader) SndShout(reader.ReadString),
                 " shout {..}.")
 
             'Emits
             ' (5:3) emit {..}.
-            Add(New Trigger(TriggerCategory.Effect, 3),
+            Add(TriggerCategory.Effect, 3,
                 Function(reader As TriggerReader) SendEmit(reader.ReadString),
                  " Emit {..}.")
             ' (5:4) emitloud {..}.
-            Add(New Trigger(TriggerCategory.Effect, 4),
+            Add(TriggerCategory.Effect, 4,
                  Function(reader As TriggerReader) SendEmitLoud(reader.ReadString),
                   " Emitloud {..}.")
 
             'Whispers
             ' (5:5) whisper {..} to the triggering furre.
-            Add(New Trigger(TriggerCategory.Effect, 5),
+            Add(TriggerCategory.Effect, 5,
                    Function(reader As TriggerReader) As Boolean
 
                        Dim msg = reader.ReadString
@@ -384,7 +384,7 @@ Namespace Engine.Libraries
                   " whisper {..} to the triggering furre.")
 
             ' (5:6) whisper {..} to {..}.
-            Add(New Trigger(TriggerCategory.Effect, 6),
+            Add(TriggerCategory.Effect, 6,
                Function(reader As TriggerReader) As Boolean
                    Dim msg = reader.ReadString(True)
                    Dim tname = reader.ReadString
@@ -392,7 +392,7 @@ Namespace Engine.Libraries
                End Function, " whisper {..} to furre named {..}.")
 
             ' (5:7) whisper {..} to {..} even if they're off-line.
-            Add(New Trigger(TriggerCategory.Effect, 7),
+            Add(TriggerCategory.Effect, 7,
                   Function(reader As TriggerReader) As Boolean
 
                       Dim msg = reader.ReadString
@@ -404,15 +404,15 @@ Namespace Engine.Libraries
                       " whisper {..} to furre named {..} even if they're off-line.")
 
             '(5:40) Switch the bot to stand alone mode and close the Furcadia client.
-            Add(New Trigger(TriggerCategory.Effect, 40), AddressOf StandAloneMode,
+            Add(TriggerCategory.Effect, 40, AddressOf StandAloneMode,
                 " Switch the bot to stand alone mode and close the Furcadia client.")
 
             '(5:41) Disconnect the bot from the Furcadia game server.
-            Add(New Trigger(TriggerCategory.Effect, 41), AddressOf FurcadiaDisconnect,
+            Add(TriggerCategory.Effect, 41, AddressOf FurcadiaDisconnect,
                 " Disconnect the bot from the Furcadia game server.")
 
             '(5:42) start a new instance to Silver Monkey with botfile {..}.
-            Add(New Trigger(TriggerCategory.Effect, 42), AddressOf StartNewBot,
+            Add(TriggerCategory.Effect, 42, AddressOf StartNewBot,
             " start a new instance to Silver Monkey with bot-file {..}.")
 
         End Sub

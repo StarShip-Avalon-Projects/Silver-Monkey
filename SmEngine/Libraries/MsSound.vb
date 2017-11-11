@@ -35,7 +35,7 @@ Namespace Engine.Libraries
         End Sub
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
-            Add(New Trigger(TriggerCategory.Effect, 2010),
+            Add(TriggerCategory.Effect, 2010,
                 Function(reader As TriggerReader) As Boolean
                     Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
                     Using PlaySound = New SoundPlayer(SoundFile)
@@ -45,7 +45,7 @@ Namespace Engine.Libraries
                     Return True
                 End Function, " play the wave file {...}.")
 
-            Add(New Trigger(TriggerCategory.Effect, 2011),
+            Add(TriggerCategory.Effect, 2011,
                 Function(reader As TriggerReader) As Boolean
                     If Not simpleSound Is Nothing Then
                         Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
@@ -55,7 +55,7 @@ Namespace Engine.Libraries
                     Return simpleSound Is Nothing
 
                 End Function, " play the wave file {...} in a loop. if theres not one playing")
-            Add(New Trigger(TriggerCategory.Effect, 2012),
+            Add(TriggerCategory.Effect, 2012,
                  AddressOf StopSound, " stop playing the sound file.")
         End Sub
 

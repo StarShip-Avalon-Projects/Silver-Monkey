@@ -33,31 +33,31 @@ Namespace Engine.Libraries
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:70) When the bot receives a variable list by sending the Web-Cache.
-            Add(New Trigger(TriggerCategory.Cause, 70),
+            Add(TriggerCategory.Cause, 70,
             Function()
                 Return True
             End Function, " When the bot receives a variable list by sending the Web-Cache.")
 
             '(1:30) and Web-Cache setting {...} is equal to {...},
-            Add(New Trigger(TriggerCategory.Condition, 30), AddressOf WebArrayEqualTo, " and Web-Cache setting {...} is equal to {...},")
+            Add(TriggerCategory.Condition, 30, AddressOf WebArrayEqualTo, " and Web-Cache setting {...} is equal to {...},")
 
             '(1:31) and Web-Cache setting {...} is not equal to {...},
-            Add(New Trigger(TriggerCategory.Condition, 31), AddressOf WebArrayNotEqualTo, " and Web-Cache setting {...} is not equal to {...},")
+            Add(TriggerCategory.Condition, 31, AddressOf WebArrayNotEqualTo, " and Web-Cache setting {...} is not equal to {...},")
 
             '(1:32) and the Web-Cache contains field named {...},
-            Add(New Trigger(TriggerCategory.Condition, 32), AddressOf WebArrayContainArrayField, " and the Web-Cache contains field named {...},")
+            Add(TriggerCategory.Condition, 32, AddressOf WebArrayContainArrayField, " and the Web-Cache contains field named {...},")
 
             '(1:33) and the Web-Cache doesn't contain field named {...},
-            Add(New Trigger(TriggerCategory.Condition, 33), AddressOf WebArrayNotContainArrayField, " and the Web-Cache doesn't contain field named {...},")
+            Add(TriggerCategory.Condition, 33, AddressOf WebArrayNotContainArrayField, " and the Web-Cache doesn't contain field named {...},")
 
             '(5:9) remove variable %Variable from the Web-Cache
-            Add(New Trigger(TriggerCategory.Effect, 9), AddressOf RemoveWebStack, " remove variable %Variable from the Web-Cache.")
+            Add(TriggerCategory.Effect, 9, AddressOf RemoveWebStack, " remove variable %Variable from the Web-Cache.")
 
             '(5:10)  Set the web URL to {...}
-            Add(New Trigger(TriggerCategory.Effect, 10), AddressOf SetURL, "  Set the web URL to {...},")
+            Add(TriggerCategory.Effect, 10, AddressOf SetURL, "  Set the web URL to {...},")
 
             '(5:11)  remember setting {...} from Web-Cache and store it into variable %Variable.
-            Add(New Trigger(TriggerCategory.Effect, 11), AddressOf RememberSetting, "  remember setting {...} from Web-Cache and store it into variable %Variable.")
+            Add(TriggerCategory.Effect, 11, AddressOf RememberSetting, "  remember setting {...} from Web-Cache and store it into variable %Variable.")
 
             '(5:12)
 
@@ -68,14 +68,14 @@ Namespace Engine.Libraries
             '(5:15)
 
             '(5:16) send GET request to send the Web-Cache to URL.
-            Add(New Trigger(TriggerCategory.Effect, 16), AddressOf SendGetWebStack, " send GET request to send the Web-Cache to URL.")
+            Add(TriggerCategory.Effect, 16, AddressOf SendGetWebStack, " send GET request to send the Web-Cache to URL.")
 
             '(5:17) store variable %Variable to the Web-Cache
-            Add(New Trigger(TriggerCategory.Effect, 17), AddressOf StoreWebStack, " store variable %Variable to the Web-Cache.")
+            Add(TriggerCategory.Effect, 17, AddressOf StoreWebStack, " store variable %Variable to the Web-Cache.")
             '(5:18) send post request to send the Web-Cache to the web host.
-            Add(New Trigger(TriggerCategory.Effect, 18), AddressOf SendWebStack, " send POST request to send the Web-Cache to URL.")
+            Add(TriggerCategory.Effect, 18, AddressOf SendWebStack, " send POST request to send the Web-Cache to URL.")
             '(5:19) clear the Web-Cache.
-            Add(New Trigger(TriggerCategory.Effect, 19), AddressOf ClearWebStack, " clear the Web-Cache.")
+            Add(TriggerCategory.Effect, 19, AddressOf ClearWebStack, " clear the Web-Cache.")
 
         End Sub
 

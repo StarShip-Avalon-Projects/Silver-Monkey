@@ -26,59 +26,59 @@ Namespace Engine.Libraries
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
             '(1:700) and the triggering furre in the dream.
-            Add(New Trigger(TriggerCategory.Condition, 700), AddressOf TriggeringInDream,
+            Add(TriggerCategory.Condition, 700, AddressOf TriggeringInDream,
             " and the triggering furre in the dream.")
 
             '(1:701) and the triggering furre is not in the dream.
-            Add(New Trigger(TriggerCategory.Condition, 701), AddressOf TriggeringNotInDream,
+            Add(TriggerCategory.Condition, 701, AddressOf TriggeringNotInDream,
             " and the triggering furre is not in the dream.")
 
             '(1:702) and the furre named {...} is in the dream.
-            Add(New Trigger(TriggerCategory.Condition, 702), AddressOf FurreNamedInDream,
+            Add(TriggerCategory.Condition, 702, AddressOf FurreNamedInDream,
             " and the furre named {...} is in the dream.")
 
             '(1:703) and the furre named {...} is not in the dream
-            Add(New Trigger(TriggerCategory.Condition, 703), AddressOf FurreNamedNotInDream,
+            Add(TriggerCategory.Condition, 703, AddressOf FurreNamedNotInDream,
             " and the furre named {...} is not in the dream")
 
             '(1:704) and the triggering furre is visible.
-            Add(New Trigger(TriggerCategory.Condition, 704), AddressOf TriggeringCanSe,
+            Add(TriggerCategory.Condition, 704, AddressOf TriggeringCanSe,
             " and the triggering furre is visible.")
 
             '(1:705) and the triggering furre is not visible
-            Add(New Trigger(TriggerCategory.Condition, 705), AddressOf TriggeringNotCanSe,
+            Add(TriggerCategory.Condition, 705, AddressOf TriggeringNotCanSe,
             " and the triggering furre is not visible")
 
             '(1:706) and the furre named {...} is visible.
-            Add(New Trigger(TriggerCategory.Condition, 706), AddressOf FurreNamedCanSe,
+            Add(TriggerCategory.Condition, 706, AddressOf FurreNamedCanSe,
             " and the furre named {...} is visible.")
 
             '(1:707) and the furre named {...} is not visible
-            Add(New Trigger(TriggerCategory.Condition, 707), AddressOf FurreNamedNotCanSe,
+            Add(TriggerCategory.Condition, 707, AddressOf FurreNamedNotCanSe,
             " and the furre named {...} is not visible")
 
             '(1:708) and the furre named {...} is a.f.k.,
-            Add(New Trigger(TriggerCategory.Condition, 708), AddressOf FurreNamedAFK,
+            Add(TriggerCategory.Condition, 708, AddressOf FurreNamedAFK,
             " and the furre named {...} is a.f.k.,")
 
             '(1:709) and the furre named {...} is active in the dream,
-            Add(New Trigger(TriggerCategory.Condition, 709), AddressOf FurreNamedActive,
+            Add(TriggerCategory.Condition, 709, AddressOf FurreNamedActive,
             " and the furre named {...} is active in the dream,")
 
             '(5:700) Copy the dreams's furre-list to array %Variable
-            Add(New Trigger(TriggerCategory.Effect, 700), AddressOf FurreListVar,
+            Add(TriggerCategory.Effect, 700, AddressOf FurreListVar,
             " copy the dreams's furre-list to variable %Variable")
 
             '(5:701) save the dream list count to variable %Variable.
-            Add(New Trigger(TriggerCategory.Effect, 701), AddressOf FurreListCount,
+            Add(TriggerCategory.Effect, 701, AddressOf FurreListCount,
             " save the dream furre list count to variable %Variable.")
 
             '(5:702) count the number of active furres in the drean and put it in the variable %Variable.
-            Add(New Trigger(TriggerCategory.Effect, 702), AddressOf FurreActiveListCount,
+            Add(TriggerCategory.Effect, 702, AddressOf FurreActiveListCount,
                  " count the number of active furres in the dream and put it in the variable %Variable.")
 
             '(5:703) count the number of A.F.K furres in the drean and put it in the variable %Variable.
-            Add(New Trigger(TriggerCategory.Effect, 703), AddressOf FurreAFKListCount,
+            Add(TriggerCategory.Effect, 703, AddressOf FurreAFKListCount,
              " count the number of A.F.K furres in the dream and put it in the variable %Variable.")
 
         End Sub

@@ -30,15 +30,15 @@ Namespace Engine.Libraries
               AddressOf ErrorIs, " when the bot sees warning message{...},")
 
             '(1:800) and the last command sent returned an error or warning # (zero = none, one = warning, two = error)
-            Add(New Trigger(TriggerCategory.Condition, 800), AddressOf CommandWariningOrError,
+            Add(TriggerCategory.Condition, 800, AddressOf CommandWariningOrError,
                 " and the last command sent returned an error or warning # (zero = none, one = warning, two = error)")
 
             '(1:801) and the last command sent didn't return an error or warning # (zero = none, one = warning, two = error)
-            Add(New Trigger(TriggerCategory.Condition, 801), AddressOf CommandNotWariningOrError,
+            Add(TriggerCategory.Condition, 801, AddressOf CommandNotWariningOrError,
                 " and the last command sent didn't return an error or warning # (zero = none, one = warning, two = error)")
 
             '(5:800) set %Variable to the value of the message returned by the last command line. (zero = none, one = warning, two = error)
-            Add(New Trigger(TriggerCategory.Effect, 800), AddressOf CommandNotWariningOrError,
+            Add(TriggerCategory.Effect, 800, AddressOf CommandNotWariningOrError,
                 " set %Variable to the value of the message returned by the last command line. (zero = none, one = warning, two = error)")
 
         End Sub

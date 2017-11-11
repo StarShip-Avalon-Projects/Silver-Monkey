@@ -93,40 +93,40 @@ Namespace Engine.Libraries
                 " When the bot successfully temp banishes the furre named {...},")
 
             '(1:50) and the triggering furre is not on the banish list,
-            Add(New Trigger(TriggerCategory.Condition, 50), AddressOf TrigFurreIsNotBanished, " and the triggering furre is not on the banish list,")
+            Add(TriggerCategory.Condition, 50, AddressOf TrigFurreIsNotBanished, " and the triggering furre is not on the banish list,")
 
             '(1:51) and the triggering furre is on the banish list,
-            Add(New Trigger(TriggerCategory.Condition, 51), AddressOf TrigFurreIsBanished, " and the triggering furre is on the banish list,")
+            Add(TriggerCategory.Condition, 51, AddressOf TrigFurreIsBanished, " and the triggering furre is on the banish list,")
             '(1:52) and the furre named {...} is not on the banish list,
-            Add(New Trigger(TriggerCategory.Condition, 52), AddressOf FurreNamedIsNotBanished, " and the furre named {...} is not on the banish list,")
+            Add(TriggerCategory.Condition, 52, AddressOf FurreNamedIsNotBanished, " and the furre named {...} is not on the banish list,")
             '(1:53) and the furre named {...} is on the banish list,
-            Add(New Trigger(TriggerCategory.Condition, 53), AddressOf FurreNamedIsBanished, " and the furre named {...} is on the banish list,")
+            Add(TriggerCategory.Condition, 53, AddressOf FurreNamedIsBanished, " and the furre named {...} is on the banish list,")
 
             ' (5: ) save the banish list to the variable % .
-            Add(New Trigger(TriggerCategory.Effect, 49), AddressOf BanishSave,
+            Add(TriggerCategory.Effect, 49, AddressOf BanishSave,
                 " save the banish list to the variable % .")
 
             '(5:x) as the server for the banish-list.
-            Add(New Trigger(TriggerCategory.Effect, 50), AddressOf BanishList,
+            Add(TriggerCategory.Effect, 50, AddressOf BanishList,
             " ask the server for the banish-list.")
             '(5:x) banish the triggering furre.
-            Add(New Trigger(TriggerCategory.Effect, 51), AddressOf BanishTrigFurre,
+            Add(TriggerCategory.Effect, 51, AddressOf BanishTrigFurre,
             " banish the triggering furre.")
             '(5:x) banish the furre named {...}.
-            Add(New Trigger(TriggerCategory.Effect, 52), AddressOf BanishFurreNamed,
+            Add(TriggerCategory.Effect, 52, AddressOf BanishFurreNamed,
             " banish the furre named {...}.")
             '(5:x) temporarily  banish the triggering furre for three days.
-            Add(New Trigger(TriggerCategory.Effect, 53), AddressOf TempBanishTrigFurre,
+            Add(TriggerCategory.Effect, 53, AddressOf TempBanishTrigFurre,
                 " temporarily  banish the triggering furre for three days.")
 
             '(5:x) temporarily banish the furre named {...} for three days.
-            Add(New Trigger(TriggerCategory.Effect, 54), AddressOf TempBanishFurreNamed,
+            Add(TriggerCategory.Effect, 54, AddressOf TempBanishFurreNamed,
                 " temporarily banish the furre named {...} for three days.")
             '(5:x) unbanish the triggering furre.
-            Add(New Trigger(TriggerCategory.Effect, 55), AddressOf UnBanishTrigFurre,
+            Add(TriggerCategory.Effect, 55, AddressOf UnBanishTrigFurre,
                 " unbanish the triggering furre.")
             '(5:x) unbanish the furre named {...}.
-            Add(New Trigger(TriggerCategory.Effect, 56), AddressOf UnBanishFurreNamed,
+            Add(TriggerCategory.Effect, 56, AddressOf UnBanishFurreNamed,
                 " unbanish the furre named {...}.")
         End Sub
 
