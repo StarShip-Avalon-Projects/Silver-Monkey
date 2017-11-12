@@ -9,7 +9,7 @@
     <ProductVersion>3.9</ProductVersion>
     <ProjectGuid>{c47e57dc-6454-4798-a802-8d0bac07e580}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>Setup</OutputName>
+    <OutputName>SilverMonkey_Setup</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\WiX Toolset\v4\wix.targets</WixTargetsPath>
     <WixToolPath>C:\Program Files (x86)\WiX Toolset v4.0\bin\</WixToolPath>
@@ -190,6 +190,6 @@
   <Target Name="AfterBuild">
     <!-- <Exec Command="Signtool.exe sign /a &quot;%(SignCabs.FullPath)&quot;" />
     <Exec Command="signtool.exe sign /a &quot;..\Build\Installer\$(Configuration)\$(OutputName).msi&quot;" /> -->
-    <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-$(FileVersion).msi" />
+  <!--  <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-$(FileVersion).msi" />-->
   </Target>
 </Project>

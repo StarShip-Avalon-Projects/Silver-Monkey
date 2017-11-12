@@ -14,7 +14,7 @@
   </Target>
   
   <!-- <Target Name="GetVersion" >-->
-  <Target Name="AfterBuild" > 
+  <Target Name="AfterBuild" DependsOnTargets="Build"> 
     <GetAssemblyIdentity AssemblyFiles="Build\$(Configuration)\SilverMonkey.exe">
       <Output TaskParameter="Assemblies" ItemName="AsmInfo" />
     </GetAssemblyIdentity>
@@ -53,9 +53,9 @@
 			WorkingDirectory="BaseModule"/> -->
 			  </Target>
 
-   <Target Name="BackupSource"  AfterTargets="CopyFiles" BeforeTargets="Build"> 
+   <Target Name="BackupSource"  DependsOnTargets="AfterBuild"> <!-- BeforeTargets="CopyFiles"> -->
 		<!-- SilverMonkey_Binaties -->
-  		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.txt -n*.config SilverMonkey_Binaties_$(Configuration)_(AnyCPU)-$(FileVersion).rar *.*"
+  		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.txt -n*.config SilverMonkey_Binaties_.rar *.*"
 			WorkingDirectory="Build\$(Configuration)\"/>
 			<!-- Plugins_API -->
 		<!-- <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -nBaseModule.* -nSystem.Data.SQLite.* -nSQLite.Interop.* -nInterfaces.* -nFastColoredTextBox.* -nSQLite.Interop.* -nFurcadiaLib.* -nMonkeyCore.* -nIrony.dll ..\..\Build\Installer\Plugins_API_$(Configuration)-$(FileVersion).rar *.*"
@@ -66,6 +66,8 @@
 
   <Target Name="Clean" Condition=" '$(Configuration)' == 'Debug' ">
      <ItemGroup>
+		<FilesToDelete Include="Build\Debug\*.rar"/>
+		<FilesToDelete Include="Build\elease\*.rar"/>
 		<FilesToDelete Include="Build\Installer\*.msi"/>
 		<FilesToDelete Include="Build\Installer\*.rar"/>
 		<FilesToDelete Include="Build\Installer\*.zip"/>
@@ -74,15 +76,16 @@
     <Delete Files="@(FilesToDelete)" />
   </Target>
 
-     <ItemGroup>  
-        <MonkeySpeakSourceFiles Include="Build\Installer\$Configuration)\*.msi"/>
-		 <MonkeySpeakSourceFiles Include="Build\$Configuration)\*.rar"/>
-    </ItemGroup>  
+
   
-    <Target Name="CopyFiles" >  
-   <Copy  
+    <Target Name="CopyFiles" DependsOnTargets="AfterBuild;BackupSource"> 
+	     <ItemGroup>  
+			<MonkeySpeakSourceFiles Include="Build\Installer\$(Configuration)\*.msi"/>
+			<MonkeySpeakSourceFiles Include="Build\$(Configuration)\*.rar"/>
+		</ItemGroup>  
+		<Copy  
             SourceFiles="@(MonkeySpeakSourceFiles)"  
-            DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)V-$(FileVersion)%(Extension)')"  />
+            DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(FileVersion)%(Extension)')"  />
 
     </Target>
 
