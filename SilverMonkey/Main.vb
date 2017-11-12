@@ -296,13 +296,13 @@ Public Class Main
 
     End Sub
 
-    Public Sub SendClientMessage(msg As String, data As String)
-        If Not FurcadiaSession Is Nothing Then
+    'Public Sub SendClientMessage(msg As String, data As String)
+    '    If Not FurcadiaSession Is Nothing Then
 
-            FurcadiaSession.SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
-            SndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
-        End If
-    End Sub
+    '        FurcadiaSession.SendToClient("(" + "<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
+    '        SndDisplay("<b><i>[SM]</i> - " + msg + ":</b> """ + data + """")
+    '    End If
+    'End Sub
 
     Public Sub UpDatButtonGoText(ByRef str As String)
         If Me.InvokeRequired Then
@@ -851,7 +851,7 @@ Public Class Main
         End If
 
         Dim processStrt As New ProcessStartInfo With {
-            .FileName = Path.Combine(Application.StartupPath, "MonkeySpeakEditor.EXE")
+            .FileName = Path.Combine(ApplicationPath, "MonkeySpeakEditor.EXE")
         }
 
         Dim f As String = CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
@@ -984,6 +984,8 @@ Public Class Main
         Logging.Logger.LogOutput = New Logging.ConsoleLogOutput()
         Logging.Logger.InfoEnabled = True
         Logging.Logger.DebugEnabled = True
+        Logging.Logger.ErrorEnabled = True
+        Logging.Logger.SuppressSpam = True
         Logging.Logger.SingleThreaded = False
 
         If Not NotifyIcon1 Is Nothing Then
@@ -1006,13 +1008,7 @@ Public Class Main
 
         Mainsettings = New cMain()
 
-        ' Plugins =
-        ' PluginServices.FindPlugins(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-        ' "Plugins"), "SilverMonkey.Interfaces.msPlugin")
-
-        ' Try to get Furcadia's path from the registry
-
-        MS_KeysIni.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Keys-MS.ini"))
+        MS_KeysIni.Load(Path.Combine(ApplicationPath, "Keys-MS.ini"))
         InitializeTextControls()
         TextDisplayer = New TextDisplayManager(Mainsettings, Log_)
 
@@ -1337,7 +1333,6 @@ Public Class Main
 
     Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
         If MsExport Is Nothing Then
-
             MsExport = New MS_Export()
         End If
         MsExport.Show()
