@@ -79,7 +79,7 @@
 		 <MonkeySpeakSourceFiles Include="Build\$Configuration)\*.rar"/>
     </ItemGroup>  
   
-    <Target Name="CopyFiles" DependsOnTargets="$(BackupDependsOn)">  
+    <Target Name="CopyFiles" >  
    <Copy  
             SourceFiles="@(MonkeySpeakSourceFiles)"  
             DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)V-$(FileVersion)%(Extension)')"  />
