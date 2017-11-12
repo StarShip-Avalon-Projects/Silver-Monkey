@@ -68,7 +68,7 @@ Public Class Main
     ''' <summary>
     ''' Bot Debug tool
     ''' </summary>
-    Private MsExport As MS_Export
+    Private WithEvents MsExport As MS_Export = Nothing
 
     ' Private ImageList As New Dictionary(Of String, Image)
 
@@ -810,18 +810,22 @@ Public Class Main
         End If
     End Sub
 
-    ''' <summary>
-    ''' Open the MonkeySpeak Export Window
-    ''' </summary>
-    ''' <param name="sender">
-    ''' </param>
-    ''' <param name="e">
-    ''' </param>
-    Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
-        MsExport = New MS_Export()
-        MsExport.Show()
-        MsExport.Activate()
-    End Sub
+    '''' <summary>
+    '''' Open the MonkeySpeak Export Window
+    '''' </summary>
+    '''' <param name="sender">
+    '''' </param>
+    '''' <param name="e">
+    '''' </param>
+    'Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As System.Object, e As ToolStripItemClickedEventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
+    '    'If MsExport Is Nothing Then
+
+    '    '    MsExport = New MS_Export(FurcadiaSession)
+    '    'End If
+    '    'MsExport.Show()
+    '    'MsExport.Activate()
+
+    'End Sub
 
     Private Sub FormClose()
         _FormClose = True
@@ -1329,6 +1333,15 @@ Public Class Main
             e.Handled = True
         End If
 
+    End Sub
+
+    Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
+        If MsExport Is Nothing Then
+
+            MsExport = New MS_Export()
+        End If
+        MsExport.Show()
+        MsExport.Activate()
     End Sub
 
 End Class

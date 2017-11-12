@@ -37,17 +37,16 @@ Public Class MS_Export
 
     Public Sub New()
         ' This call is required by the designer.
+        InitializeComponent()
+        ' Add any initialization after the InitializeComponent() call.
 
         Dim options As New BotOptions()
         Session = New BotSession(options)
         Dim engine As New MonkeyspeakEngine(options.MonkeySpeakEngineOptions)
-        Session.MSpage = engine.LoadFromString(String.Empty)
+        Session.MSpage = engine.LoadFromString("* dummy")
 
         'Load the Monkeyspeak lins into the page
         MsPage = Session.LoadLibrary(True)
-
-        InitializeComponent()
-        ' Add any initialization after the InitializeComponent() call.
 
     End Sub
 
