@@ -1,6 +1,6 @@
-git.exe add --all
+git.exe add -A
 
-git.exe submodule foreach "git.exe add --all"
+git.exe submodule foreach "git.exe add -A"
 set git.exe_STATUS=%ERRORLEVEL% 
 if not %git.exe_STATUS%==0 goto eof 
 
@@ -18,5 +18,7 @@ if not %git.exe_STATUS%==0 goto eof
 :pull
 git.exe request-pull v2.19.x_Elta https://git.hub.com/StarShip-Avalon-Projects/Silver-Monkey.git v2.19.x_Elta 
 
+exit /b 0
 :eof
 exit /b 0
+pause
