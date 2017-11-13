@@ -3,6 +3,7 @@ Imports Furcadia.Net.Dream
 Imports Furcadia.Util
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.SmConstants
+Imports System.Threading
 
 Namespace Engine.Libraries
 
@@ -358,7 +359,9 @@ Namespace Engine.Libraries
             'Shouts
             ' (5:2) shout {..}.
             Add(TriggerCategory.Effect, 2,
-                 Function(reader As TriggerReader) SndShout(reader.ReadString),
+                 Function(reader As TriggerReader)
+                     Return SndShout(reader.ReadString)
+                 End Function,
                 " shout {..}.")
 
             'Emits
@@ -579,6 +582,7 @@ Namespace Engine.Libraries
         ''' Message to send
         ''' </param>
         Public Function SndShout(ByRef msg As String) As Boolean
+            Thread.Sleep(100)
             If Not String.IsNullOrEmpty(msg) Then Return SendServer("-" & msg)
             Return False
         End Function

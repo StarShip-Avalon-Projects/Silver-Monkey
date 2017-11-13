@@ -74,11 +74,10 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
-            Dim logError As New ErrorLogging(e.Exception, sender)
-            Dim args As String = String.Join(" ", logError.LogFile)
+            Dim LogError As New ErrorLogging(e.Exception, e)
             Dim Proc As String = "NOTEPAD.EXE"
             'Path.Combine(Application.Info.DirectoryPath, "BugTragSubmit.exe")
-            Process.Start(Proc, args)
+            Process.Start(Proc, LogError.LogFile)
         End Sub
 
 #End Region
