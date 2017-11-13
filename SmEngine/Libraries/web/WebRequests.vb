@@ -13,7 +13,7 @@ Namespace Engine.Libraries.Web
     '''Silver Monkeys web site interface
     ''' </summary>
     Public Class WebRequests
-        Private WebEncoding As Encoding = New UTF8Encoding()
+        Private WebEncoding As Encoding = Encoding.GetEncoding(1252)
         Private page As Monkeyspeak.Page
 
 #Region "Private Fields"
@@ -98,7 +98,7 @@ Namespace Engine.Libraries.Web
                     ElseIf line <> "SM" And Not MS Then
                         line += postreqreader.ReadToEnd
                         Debug.Print(line)
-                        line = line.Replace("<br />", vbCrLf)
+                        line = line.Replace("<br />", Environment.NewLine)
                         result.ErrMsg = "Invalid Format- Not Monkey Speak Response" & line
                         result.Packet = ""
                         result.Status = 2
