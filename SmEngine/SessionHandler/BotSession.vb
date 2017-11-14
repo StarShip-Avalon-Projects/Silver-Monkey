@@ -595,13 +595,12 @@ Public Class BotSession
         End Try
     End Sub
 
-    Private Async Sub BotSession_ServerStatusChanged(Sender As Object, e As NetServerEventArgs) Handles Me.ServerStatusChanged
+    Private Async Sub OnServerStatusChanged(Sender As Object, e As NetServerEventArgs) Handles Me.ServerStatusChanged
         Try
             Select Case e.ConnectPhase
 
                 Case ConnectionPhase.Auth
-                    Dim Id() As Integer = {1}
-                    If MSpage IsNot Nothing Then Await MSpage.ExecuteAsync(1)
+
                 Case ConnectionPhase.Disconnected
                     If MSpage IsNot Nothing Then Await MSpage.ExecuteAsync(2)
                     If MSpage IsNot Nothing Then Await Task.Run(Sub() StopEngine())
@@ -610,8 +609,9 @@ Public Class BotSession
                 Case ConnectionPhase.Init
                 Case ConnectionPhase.MOTD
                 Case ConnectionPhase.Connected
-
-                Case Else
+                    Dim Id() As Integer = {1}
+                    '(0:1) When the bot logs into furcadia,
+                    If MSpage IsNot Nothing Then Await MSpage.ExecuteAsync(1)
 
             End Select
         Catch ex As Exception
