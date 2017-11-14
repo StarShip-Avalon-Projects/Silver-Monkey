@@ -24,16 +24,12 @@ Namespace Engine.Libraries
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:90) When the bot enters a Dream,
-            Add(TriggerCategory.Cause, 90,
-                Function()
-                    Return True
-                End Function, " When the bot enters a Dream,")
+            Add(TriggerCategory.Cause, 90, AddressOf SetDreamInfo, " When the bot enters a Dream,")
             '(0:91) When the bot enters a Dream named {..},
             Add(TriggerCategory.Cause, 91,
                 AddressOf DreamNameIs, " When the bot enters the Dream named {..},")
             '(0:92) When the bot leaves a Dream,
-            Add(TriggerCategory.Cause, 97,
-                Function() True, " When the bot leaves a Dream,")
+            Add(TriggerCategory.Cause, 97, AddressOf SetDreamInfo, " When the bot leaves a Dream,")
             '(0:93) When the bot leaves the Dream named {..},
             Add(TriggerCategory.Cause, 98,
                 AddressOf DreamNameIs, " When the bot leaves the Dream named {..},")
@@ -112,6 +108,19 @@ Namespace Engine.Libraries
 
         End Sub
 
+        Private Function SetDreamInfo(reader As TriggerReader) As Boolean
+
+            Dim DreamInfo As Furcadia.Net.Dream.DREAM
+            Dim Info = reader.Parameters(0)
+            If Info.GetType() Is FurcadiaSession.Dream.GetType() Then
+                DreamInfo = DirectCast(Info, DREAM)
+                DirectCast(reader.Page.GetVariable("%DREAMNAME"), ConstantVariable).SetValue(DreamInfo.Name)
+                DirectCast(reader.Page.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(DreamInfo.Owner)
+            End If
+            Return True
+
+        End Function
+
         ''' <summary>
         ''' (1:19) and the bot is the Dream owner,
         ''' </summary>
@@ -151,16 +160,17 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Function DreamNameIs(reader As TriggerReader) As Boolean
+            Dim Info = reader.Parameters(0)
             Dim DreamName As String = reader.ReadString
-            DreamName = DreamName.ToLower.Replace("furc://", String.Empty)
-            Dim DreamNameVariable = reader.Page.GetVariable("%DREAMNAME")
-            'add Machine Name parser
-            If DreamNameVariable.Value.ToString() <> Dream.Name Then
-                Throw New MonkeyspeakException("%%DREAMNAME does not match Dream.Name")
+            Dim DreamInfo As Furcadia.Net.Dream.DREAM
+
+            If Info.GetType() Is FurcadiaSession.Dream.GetType() Then
+                DreamInfo = DirectCast(Info, DREAM)
+                DirectCast(reader.Page.GetVariable("%DREAMNAME"), ConstantVariable).SetValue(DreamInfo.Name)
+                DirectCast(reader.Page.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(DreamInfo.Owner)
+                Return DreamInfo.ShortName = FurcadiaShortName(DreamName)
             End If
-
-            Return Dream.ShortName = FurcadiaShortName(DreamName)
-
+            Return False
         End Function
 
         ''' <summary>

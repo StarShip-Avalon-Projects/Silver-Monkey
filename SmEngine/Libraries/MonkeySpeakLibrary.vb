@@ -96,26 +96,6 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' Generic Message does not contain text function
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true if the last message seen does not contain the specified text
-        ''' </returns>
-        ''' <remarks>
-        ''' Message Comparason is done with Markup stripped
-        ''' <para>
-        ''' The Bot ignores self messages
-        ''' </para>
-        ''' </remarks>
-        Protected Overridable Function MsgNotContain(reader As TriggerReader) As Boolean
-            Return StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString).
-                Contains(StripFurcadiaMarkup(reader.ReadString()))
-        End Function
-
-        ''' <summary>
         ''' (1:14) and triggering furre's message doesn't end with {.},
         ''' </summary>
         ''' <param name="reader">

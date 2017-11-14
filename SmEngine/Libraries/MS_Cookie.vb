@@ -127,8 +127,8 @@ Namespace Engine.Libraries
             Return MyBase.MsgIsNot(reader)
         End Function
 
-        Protected Overrides Function MsgNotContain(reader As TriggerReader) As Boolean
-            Return MyBase.MsgNotContain(reader)
+        Protected Function MsgNotContain(reader As TriggerReader) As Boolean
+            Return MyBase.MsgContains(reader)
         End Function
 
         Protected Overrides Function NameIsNot(reader As TriggerReader) As Boolean

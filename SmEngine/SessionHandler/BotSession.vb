@@ -177,7 +177,7 @@ Public Class BotSession
                     '(0:97) When the bot leaves a Dream,
                     '(0:98) When the bot leaves the Dream named {..},
                     Dim ids() = {97, 98}
-                    Await MSpage.ExecuteAsync(ids)
+                    Await MSpage.ExecuteAsync(ids, lastDream)
 
                 Case ServerInstructionType.BookmarkDream
                     Try
@@ -189,7 +189,7 @@ Public Class BotSession
                     '(0:90) When the bot enters a Dream,
                     '(0:91) When the bot enters a Dream named {..},
                     Dim ids() = {90, 91}
-                    Await MSpage.ExecuteAsync(ids)
+                    Await MSpage.ExecuteAsync(ids, Dream)
                     lastDream = Dream
             End Select
         Catch ex As Exception
