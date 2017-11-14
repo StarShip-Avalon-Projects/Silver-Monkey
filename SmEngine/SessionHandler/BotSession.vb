@@ -19,11 +19,10 @@ Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
-Imports Monkeyspeak.Logging
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Engine.Libraries
-Imports SilverMonkeyEngine.Interfaces
 Imports SilverMonkeyEngine.Engine.MsEngineExtentionFunctions
+Imports SilverMonkeyEngine.Interfaces
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
@@ -156,36 +155,21 @@ Public Class BotSession
     Public Async Sub OnParseSererInstructionAsync(sender As Object, e As ParseServerArgs) _
           Handles MyBase.ProcessServerInstruction
         If MSpage Is Nothing Then Exit Sub
-        Try
 
-            DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Player.Message)
-            DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Player.ShortName)
-            DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Player.Name)
-        Catch ex As Exception
-            RaiseEvent [Error](ex, Me, "Failure to set Triggering Furre and Triggering Furres %MESSAGE variables")
-        End Try
+        DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Player.Message)
+        DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Player.ShortName)
+        DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Player.Name)
+
         Try
             Select Case e.ServerInstruction
 
                 Case ServerInstructionType.LoadDreamEvent
-                    Try
-                        DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(lastDream.Owner)
-                        DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).SetValue(lastDream.Name)
-                    Catch ex As Exception
-                        RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
-                    End Try
                     '(0:97) When the bot leaves a Dream,
                     '(0:98) When the bot leaves the Dream named {..},
                     Dim ids() = {97, 98}
                     Await MSpage.ExecuteAsync(ids, lastDream)
 
                 Case ServerInstructionType.BookmarkDream
-                    Try
-                        DirectCast(MSpage.GetVariable("%DREAMOWNER"), ConstantVariable).SetValue(Dream.Owner)
-                        DirectCast(MSpage.GetVariable("%DREAMNAME"), ConstantVariable).SetValue(Dream.Name)
-                    Catch ex As Exception
-                        RaiseEvent [Error](ex, Me, "Failure to set Dream Variables")
-                    End Try
                     '(0:90) When the bot enters a Dream,
                     '(0:91) When the bot enters a Dream named {..},
                     Dim ids() = {90, 91}
@@ -213,24 +197,15 @@ Public Class BotSession
         If MSpage Is Nothing Then Exit Sub
         Dim Furr As Furre = InstructionObject.Player
 
-        Try
-            DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Furr.Message)
-            DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Furr.ShortName)
-            DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
-        Catch ex As Exception
-            RaiseEvent [Error](ex, Me, "Failed to set Triggering Furre Monkeyspeak Variables")
-        End Try
+        DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Furr.Message)
+        DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Furr.ShortName)
+        DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
+
         Dim Text As String = InstructionObject.ChannelText
         Try
             Select Case InstructionObject.Channel
 
                 Case "@roll"
-                    Dim DiceObject As DiceRolls = Nothing
-                    If InstructionObject.GetType().Equals(GetType(DiceRolls)) Then
-                        DiceObject = DirectCast(InstructionObject, DiceRolls)
-                    Else
-                        Throw New NetProxyException("Saw channel " + InstructionObject.Channel + "But there is no DiceRolls object")
-                    End If
 
                     If IsConnectedCharacter() Then
                         '(0:130) When the bot rolls #d#,
@@ -238,14 +213,14 @@ Public Class BotSession
                         '(0:134) When the bot rolls #d#-#,
                         '(0:136) When any one rolls anything,
                         Dim ids() = {130, 131, 132, 136}
-                        Await MSpage.ExecuteAsync(ids, DiceObject)
+                        Await MSpage.ExecuteAsync(ids, InstructionObject)
                     Else
                         '(0:136) When a furre rolls #d#,
                         '(0:138) When a fuure rolls #d#+#,
                         '(0:140) When a furre rolls #d#-#,
                         '(0:136) When any one rolls anything,
                         Dim ids() = {133, 134, 135, 136}
-                        Await MSpage.ExecuteAsync(ids, DiceObject)
+                        Await MSpage.ExecuteAsync(ids, InstructionObject)
                     End If
                 Case "trade"
                     Dim ids() = {46, 47, 48}

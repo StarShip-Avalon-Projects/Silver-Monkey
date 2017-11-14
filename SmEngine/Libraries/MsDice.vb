@@ -40,7 +40,7 @@ Namespace Engine.Libraries
 
         Public Sub New(ByRef session As BotSession)
             MyBase.New(session)
-            dice = New DiceObject()
+            ' dice = New DiceObject()
         End Sub
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
@@ -59,7 +59,13 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 135, AddressOf RollNumberMinusModifyer, " When a furre rolls #d#-#,")
 
             '(0:136) When any one rolls anything,
-            Add(TriggerCategory.Cause, 136, Function() True, " When any one rolls anything,")
+            Add(TriggerCategory.Cause, 136,
+                Function(reader)
+                    If reader.Parameters.GetType() Is GetType(DiceObject) Then
+                        dice = DirectCast(reader.Parameters(0), DiceObject)
+                    End If
+                    Return True
+                End Function, " When any one rolls anything,")
 
             '(1:130) and the result is # or higher,
             Add(TriggerCategory.Condition, 130, AddressOf DiceResultNumberOrHigher, " and the dice roll result is # or higher,")
@@ -231,8 +237,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RollNumber(reader As TriggerReader) As Boolean
-            dice = DirectCast(reader.Parameters(0), DiceObject)
-
+            If reader.Parameters.GetType() Is GetType(DiceObject) Then
+                dice = DirectCast(reader.Parameters(0), DiceObject)
+            End If
             If String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
 
             Dim DiceCount = ReadVariableOrNumber(reader)
@@ -252,7 +259,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RollNumberMinusModifyer(reader As TriggerReader) As Boolean
-            dice = DirectCast(reader.Parameters(0), DiceObject)
+            If reader.Parameters.GetType() Is GetType(DiceObject) Then
+                dice = DirectCast(reader.Parameters(0), DiceObject)
+            End If
 
             If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
             Dim DiceCount = ReadVariableOrNumber(reader)
@@ -274,7 +283,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RollNumberPlusModifyer(reader As TriggerReader) As Boolean
-            dice = DirectCast(reader.Parameters(0), DiceObject)
+            If reader.Parameters.GetType() Is GetType(DiceObject) Then
+                dice = DirectCast(reader.Parameters(0), DiceObject)
+            End If
 
             If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
             Dim DiceCount = ReadVariableOrNumber(reader)
