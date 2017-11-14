@@ -14,6 +14,7 @@ Imports MonkeyCore.Paths
 Imports MonkeyCore.Settings
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
+Imports SilverMonkey.Engine
 Imports SilverMonkey.HelperClasses
 Imports SilverMonkeyEngine
 
@@ -21,6 +22,8 @@ Public Class Main
     Inherits Form
 
 #Region "Public Fields"
+
+    Private Shared WithEvents TextDisplayer As TextDisplayManager
 
     ''' <summary>
     ''' Decouple Our Bot Stuff from the GUI
@@ -37,23 +40,23 @@ Public Class Main
     Public WithEvents FurcadiaSession As BotSession
 
     Public WithEvents NotifyIcon1 As NotifyIcon
-    Private WithEvents TextDisplayer As TextDisplayManager
-
+    Public Shared Mainsettings As cMain
     Public LogStream As LogStream
-
-    Public Mainsettings As cMain
     Public writer As TextBoxWriter = Nothing
 
 #End Region
 
 #Region "Private Fields"
 
+    ''' <summary>
+    ''' Bot Debug tool
+    ''' </summary>
+    Private WithEvents MsExport As MS_Export = Nothing
+
     Private Const HelpFile As String = "Silver Monkey.chm"
 
+    Private Shared BotConfig As BotOptions
     Private _FormClose As Boolean = False
-
-    Private BotConfig As BotOptions
-
     Dim CMD_Idx, CMD_Idx2 As Integer
 
     Dim CMD_Lck As Boolean = False
@@ -64,12 +67,6 @@ Public Class Main
     Dim CMDList(CMD_Max) As String
 
     Dim curWord As String
-
-    ''' <summary>
-    ''' Bot Debug tool
-    ''' </summary>
-    Private WithEvents MsExport As MS_Export = Nothing
-
     ' Private ImageList As New Dictionary(Of String, Image)
 
 #End Region
@@ -583,12 +580,21 @@ Public Class Main
     ''' <param name="text"></param>
     Public Delegate Sub SendTextDelegate(text As String)
 
-    Private Sub OnFurcadiaSessionClose() Handles FurcadiaSession.CloseSession
-        FurcadiaSession.Dispose()
-        FurcadiaSession = Nothing
-        GC.Collect()
-        GC.WaitForFullGCComplete()
-        GC.Collect()
+    ''' <summary>
+    ''' Send formatted text to log box
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="newColor"></param>
+    Public Shared Sub SndDisplay(ByRef data As String, Optional ByVal newColor As TextDisplayManager.fColorEnum = TextDisplayManager.fColorEnum.DefaultColor)
+
+        If BotConfig.LogOptions.log Then LogStream.WriteLine(data)
+        If CBool(Mainsettings.TimeStamp) Then
+            Dim Now As String = DateTime.Now.ToLongTimeString
+            data = Now.ToString & ": " & data
+        End If
+        Dim textObject As New TextDisplayManager.TextDisplayObject(data, newColor)
+        TextDisplayer.AddDataToList(textObject)
+
     End Sub
 
     Public Sub OnFurcadiaSessionError(ex As Exception, o As Object, n As String) _
@@ -601,8 +607,8 @@ Public Class Main
             End If
             SndDisplay("MonkeySpeak Error:" + ex.Message + Environment.NewLine + o.ToString, TextDisplayManager.fColorEnum.Error)
             If ex.InnerException IsNot Nothing Then
-                If ex.InnerException.GetType() Is GetType(Engine.Libraries.Web.WebException) Then
-                    Dim InnerEx = CType(ex.InnerException, Engine.Libraries.Web.WebException)
+                If ex.InnerException.GetType() Is GetType(SilverMonkeyEngine.Engine.Libraries.Web.WebException) Then
+                    Dim InnerEx = CType(ex.InnerException, SilverMonkeyEngine.Engine.Libraries.Web.WebException)
                     SendTextToDebugWindow(InnerEx.ToString)
                 Else
                     SendTextToDebugWindow(ex.InnerException.ToString)
@@ -616,23 +622,24 @@ Public Class Main
     End Sub
 
     ''' <summary>
-    ''' Send formatted text to log box
+    ''' Send text like MonkeySpeak inner exception errors to the Debug Window
+    ''' <para>
+    ''' Some Monkey Speak lines expect errors under certain conditions. These are what we want to send to the DebugWindow
+    ''' so the Bot User can handle then accordingly
+    ''' </para>
     ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="newColor"></param>
-    Public Sub SndDisplay(ByRef data As String, Optional ByVal newColor As TextDisplayManager.fColorEnum = TextDisplayManager.fColorEnum.DefaultColor)
-
-        If BotConfig.LogOptions.log Then LogStream.WriteLine(data)
-        If CBool(Mainsettings.TimeStamp) Then
-            Dim Now As String = DateTime.Now.ToLongTimeString
-            data = Now.ToString & ": " & data
+    ''' <param name="text"></param>
+    Public Sub SendTextToDebugWindow(ByVal text As String)
+        If DebugWindow Is Nothing OrElse DebugWindow.IsDisposed() Then
+            DebugLogs.AppendLine(text)
+            Exit Sub
         End If
-        Dim textObject As New TextDisplayManager.TextDisplayObject(data, newColor)
-        TextDisplayer.AddDataToList(textObject)
-
+        If DebugWindow.ErrorLogTxtBx.InvokeRequired Then
+            DebugWindow.ErrorLogTxtBx.Invoke(New SendTextDelegate(AddressOf SendTextToDebugWindow), text)
+        Else
+            DebugWindow.ErrorLogTxtBx.AppendText(text)
+        End If
     End Sub
-
-    '
 
     Private Sub DreamList_DoubleClick(sender As Object, e As System.EventArgs) Handles DreamList.DoubleClick
         If Not FurcadiaSession Is Nothing Then
@@ -643,6 +650,7 @@ Public Class Main
         End If
     End Sub
 
+    '
     Private Sub Log__KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Log_.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
@@ -651,24 +659,12 @@ Public Class Main
         End If
     End Sub
 
-    ''' <summary>
-    ''' Send text like MonkeySpeak inner exception errors to the Debug Window
-    ''' <para>
-    ''' Some Monkey Speak lines expect errors under certain conditions. These are what we want to send to the DebugWindow
-    ''' so the Bot User can handle then accordingly
-    ''' </para>
-    ''' </summary>
-    ''' <param name="text"></param>
-    Private Sub SendTextToDebugWindow(ByVal text As String)
-        If DebugWindow Is Nothing OrElse DebugWindow.IsDisposed() Then
-            DebugLogs.AppendLine(text)
-            Exit Sub
-        End If
-        If DebugWindow.ErrorLogTxtBx.InvokeRequired Then
-            DebugWindow.ErrorLogTxtBx.Invoke(New SendTextDelegate(AddressOf SendTextToDebugWindow), text)
-        Else
-            DebugWindow.ErrorLogTxtBx.AppendText(text)
-        End If
+    Private Sub OnFurcadiaSessionClose() Handles FurcadiaSession.CloseSession
+        FurcadiaSession.Dispose()
+        FurcadiaSession = Nothing
+        GC.Collect()
+        GC.WaitForFullGCComplete()
+        GC.Collect()
     End Sub
 
 #End Region
@@ -827,6 +823,14 @@ Public Class Main
 
     'End Sub
 
+    Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
+        If MsExport Is Nothing Then
+            MsExport = New MS_Export()
+        End If
+        MsExport.Show()
+        MsExport.Activate()
+    End Sub
+
     Private Sub FormClose()
         _FormClose = True
         My.Settings.MainFormLocation = Me.Location
@@ -980,8 +984,12 @@ Public Class Main
 
     End Sub
 
+    Private Sub Main_Leave(sender As Object, e As EventArgs) Handles Me.Leave
+
+    End Sub
+
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Logging.Logger.LogOutput = New Logging.ConsoleLogOutput()
+        Logging.Logger.LogOutput = New MsLogger
         Logging.Logger.InfoEnabled = True
         Logging.Logger.DebugEnabled = True
         Logging.Logger.ErrorEnabled = True
@@ -1146,7 +1154,7 @@ Public Class Main
 
 #Region "Action Controls"
 
-    Private WithEvents DebugWindow As Variables
+    Public Shared WithEvents DebugWindow As Variables
     Private ActionCMD As String
 
     Public Sub New()
@@ -1329,14 +1337,6 @@ Public Class Main
             e.Handled = True
         End If
 
-    End Sub
-
-    Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
-        If MsExport Is Nothing Then
-            MsExport = New MS_Export()
-        End If
-        MsExport.Show()
-        MsExport.Activate()
     End Sub
 
 End Class

@@ -156,10 +156,6 @@ Public Class BotSession
           Handles MyBase.ProcessServerInstruction
         If MSpage Is Nothing Then Exit Sub
 
-        DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Player.Message)
-        DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Player.ShortName)
-        DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Player.Name)
-
         Try
             Select Case e.ServerInstruction
 
@@ -186,6 +182,12 @@ Public Class BotSession
     'Public Sub OnDisconnected() Handles MyBase.ServerDisConnected
     '    RaiseEvent CloseSession()
     'End Sub
+
+    Public Shared Sub UpdateTriggerigFurreFariabled(ActivePlayer As Furre, MonkeySpeakPage As Page)
+        DirectCast(MonkeySpeakPage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(ActivePlayer.Message)
+        DirectCast(MonkeySpeakPage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(ActivePlayer.ShortName)
+        DirectCast(MonkeySpeakPage.GetVariable("%NAME"), ConstantVariable).SetValue(ActivePlayer.Name)
+    End Sub
 
     ''' <summary>
     ''' Configure Bot Variables and Execute Monkey Speak Truggers for Text and dynamic channels

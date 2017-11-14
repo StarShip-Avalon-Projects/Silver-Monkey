@@ -117,7 +117,6 @@
     <Compile Include="Libraries\HelperModule.vb" />
     <Compile Include="Libraries\MonkeySpeakLibrary.vb" />
     <Compile Include="Libraries\MsBanish.vb" />
-    <Compile Include="SessionHandler\MsLogger.vb" />
     <None Include="AssemblyInfoersion.t4">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
