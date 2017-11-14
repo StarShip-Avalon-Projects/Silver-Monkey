@@ -22,12 +22,9 @@
             'This is not elegant, but it's simple enough and quite effective.
             dim s as string  = f.ReadLine().Replace("'","")
            integer.tryParse(s, revisionNumber) 
-#IF DEBUG THEN
-
-#ELSE
+		end using
             revisionNumber += 1
-#END IF
-        end using
+
     catch e as exception
          
         revisionNumber = 0 

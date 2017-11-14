@@ -116,8 +116,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="AssemblyInfoersion.vb">
-      <DependentUpon>AssemblyInfoersion.t4</DependentUpon>
+    <Compile Include="AssemblyInfoersion1.vb">
+      <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -229,6 +229,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
+    <Content Include="AssemblyInfoersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfoersion1.vb</LastGenOutput>
+    </Content>
     <Content Include="Keys-MS.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -241,10 +245,6 @@
     <Content Include="keyshelp.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="AssemblyInfoersion.t4">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
-    </None>
     <None Include="MonkeySpeakEditor.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

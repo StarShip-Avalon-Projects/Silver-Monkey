@@ -16,7 +16,7 @@
         'so even if the file doesn't exists the generation will run anyway.
         'NOTE: we suppose we're not messing with the generated file
           dim s as string
-		  If File.Exists(AssembleyInFoFile) Then
+
         using f as new StreamReader(AssembleyInFoFile)
 			while not f.EndOfStream()
 			s  = f.ReadLine()
@@ -26,20 +26,18 @@
 			if integer.tryParse(s , revisionNumber) then Exit While
           
 		  End While  
-#IF DEBUG THEN
- revisionNumber += 1
-#ELSE
-           
-#END IF
+
+	revisionNumber += 1
+
         end using
-		End If
+
     catch e as exception
          
         revisionNumber = 0 
     end try
 				using Sw as new StreamWriter(AssembleyInFoFile)
-	Sw.WriteLine(revisionNumber.ToString())
-	end using
+					Sw.WriteLine(revisionNumber.ToString())
+				end using
 #>
 '<#=revisionNumber#>
 '' 

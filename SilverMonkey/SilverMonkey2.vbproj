@@ -133,10 +133,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
     </Compile>
-    <Compile Include="AssemblyInfoersion.vb">
+    <Compile Include="AssemblyInfoersion1.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyInfoersion.t4</DependentUpon>
+      <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
     </Compile>
     <Compile Include="BotSetup.Designer.vb">
       <DependentUpon>BotSetup.vb</DependentUpon>
@@ -252,17 +252,17 @@
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="AssemblyInfoersion.t4">
+    <Content Include="AssemblyInfoersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
-    </None>
+      <LastGenOutput>AssemblyInfoersion1.vb</LastGenOutput>
+    </Content>
     <None Include="DotNetChecker.nsh">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Include="AssemblyFileVersion.tt">
+    <Content Include="AssemblyFileVersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
-    </None>
+    </Content>
     <Content Include="metal.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

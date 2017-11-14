@@ -26,11 +26,9 @@
 			if integer.tryParse(s , revisionNumber) then Exit While
           
 		  End While  
-#IF DEBUG THEN
- revisionNumber += 1
-#ELSE
-           
-#END IF
+
+	revisionNumber += 1
+
         end using
 
     catch e as exception
