@@ -994,7 +994,7 @@ namespace DataMonkey
                     // StatementParser.ReturnResults(StatementBuilder.BuildAddColumnSQL(DatabaseTreeView.SelectedNode.Text,
                     // pRemoveColumn.ColumnName, pRemoveColumn.ColumnType), ActiveDatabaseLocation);
                     SQLiteDatabase db = new SQLiteDatabase(ActiveDatabaseLocation);
-                    int Records = db.removeColumn(DatabaseTreeView.SelectedNode.Text, pRemoveColumn.ColumnName);
+                    int Records = db.RemoveColumn(DatabaseTreeView.SelectedNode.Text, pRemoveColumn.ColumnName);
 
                     //Add new column to the tree if it is expanded
                     if (DatabaseTreeView.SelectedNode.IsExpanded & Records > -1)

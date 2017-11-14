@@ -152,7 +152,7 @@ Public Class SQLiteDatabase
     ''' A DataTable containing the result set.
     ''' </returns>
     Public Shared Function GetDataTable(sql As String) As DataTable
-        Dim dt As New DataTable()
+        Dim dt = New DataTable()
         Using cnn As New SQLiteConnection(dbConnection)
             cnn.Open()
             Using mycommand As New SQLiteCommand(cnn)
@@ -456,7 +456,7 @@ Public Class SQLiteDatabase
     ''' </param>
     ''' <returns>
     ''' </returns>
-    Public Function removeColumn(ByVal tableName As String, ByVal columnName As String) As Integer
+    Public Function RemoveColumn(ByVal tableName As String, ByVal columnName As String) As Integer
         Dim columnNames As String = getAllColumnName(tableName)
         If Not columnNames.Contains(columnName) Then
             Return -1
