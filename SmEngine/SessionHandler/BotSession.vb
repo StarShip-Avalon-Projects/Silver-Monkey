@@ -187,7 +187,7 @@ Public Class BotSession
         If MSpage Is Nothing Then Exit Sub
         Dim Furr As Furre = InstructionObject.Player
 
-        UpdateTriggerigFurreFariabled(Furr, MSpage)
+        UpdateTriggerigFurreVariables(Furr, MSpage)
 
         Dim Text As String = InstructionObject.ChannelText
         Try

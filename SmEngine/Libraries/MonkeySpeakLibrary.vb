@@ -1,7 +1,7 @@
-﻿Imports Furcadia.Text.FurcadiaMarkup
-Imports System.Threading
+﻿Imports System.Threading
 Imports Furcadia.Net
 Imports Furcadia.Net.Dream
+Imports Furcadia.Text.FurcadiaMarkup
 Imports Furcadia.Util
 Imports Monkeyspeak
 Imports Monkeyspeak.Libraries
@@ -19,8 +19,6 @@ Namespace Engine.Libraries
 
 #Region "Protected Methods"
 
-        Private Const MessageVariable As String = "%MESSAGE"
-
         ''' <summary>
         ''' <para>
         ''' Comparisons are done with Fucadia Markup Stripped
@@ -35,7 +33,7 @@ Namespace Engine.Libraries
         Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
             Dim fur = reader.Parameters(0)
             If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                 Player = DirectCast(fur, Furre)
             End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
@@ -56,7 +54,7 @@ Namespace Engine.Libraries
         Protected Overridable Function MsgEndsWith(reader As TriggerReader) As Boolean
             Dim fur = reader.Parameters(0)
             If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                 Player = DirectCast(fur, Furre)
             End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
@@ -80,7 +78,7 @@ Namespace Engine.Libraries
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
             Dim fur = reader.Parameters(0)
             If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                 Player = DirectCast(fur, Furre)
             End If
             Dim var = StripFurcadiaMarkup(reader.Page.GetVariable(MessageVariable).Value.ToString).ToLower.Trim
@@ -100,7 +98,7 @@ Namespace Engine.Libraries
         Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
             Dim fur = reader.Parameters(0)
             If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                 Player = DirectCast(fur, Furre)
             End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
@@ -123,7 +121,7 @@ Namespace Engine.Libraries
         Protected Function MsgStartsWith(reader As TriggerReader) As Boolean
             Dim fur = reader.Parameters(0)
             If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                 Player = DirectCast(fur, Furre)
             End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
@@ -149,11 +147,11 @@ Namespace Engine.Libraries
         Protected Overridable Function NameIs(reader As TriggerReader) As Boolean
             Dim fur = reader.Parameters(0)
             If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                 Player = DirectCast(fur, Furre)
             End If
             Dim TmpName = reader.ReadString()
-            Return FurcadiaShortName(TmpName) = reader.ReadVariable("%SHORTNAME").Value.ToString()
+            Return FurcadiaShortName(TmpName) = Player.ShortName
 
         End Function
 
@@ -218,7 +216,7 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Current Triggering Furre
         ''' </summary>
-        Public Property Player
+        Public Property Player As Furre
 
 #End Region
 

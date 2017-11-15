@@ -136,7 +136,7 @@ Namespace Engine.Libraries
                   Function(reader)
                       Dim fur = reader.Parameters(0)
                       If fur.GetType() Is GetType(Furre) Then
-                          UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                          UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                           Player = DirectCast(fur, Furre)
                       End If
                       Return Not FurcadiaSession.IsConnectedCharacter
@@ -153,7 +153,7 @@ Namespace Engine.Libraries
                  Function(reader)
                      Dim fur = reader.Parameters(0)
                      If fur.GetType() Is GetType(Furre) Then
-                         UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                         UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                          Player = DirectCast(fur, Furre)
                      End If
                      Return Not FurcadiaSession.IsConnectedCharacter
@@ -171,7 +171,7 @@ Namespace Engine.Libraries
                  Function(reader)
                      Dim fur = reader.Parameters(0)
                      If fur.GetType() Is GetType(Furre) Then
-                         UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                         UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                          Player = DirectCast(fur, Furre)
                      End If
                      Return Not FurcadiaSession.IsConnectedCharacter
@@ -188,7 +188,7 @@ Namespace Engine.Libraries
                 Function(reader)
                     Dim fur = reader.Parameters(0)
                     If fur.GetType() Is GetType(Furre) Then
-                        UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                        UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                         Player = DirectCast(fur, Furre)
                     End If
                     Return Not FurcadiaSession.IsConnectedCharacter
@@ -206,7 +206,7 @@ Namespace Engine.Libraries
                 Function(reader)
                     Dim fur = reader.Parameters(0)
                     If fur.GetType() Is GetType(Furre) Then
-                        UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                        UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                         Player = DirectCast(fur, Furre)
                     End If
                     Return Not FurcadiaSession.IsConnectedCharacter
@@ -225,7 +225,7 @@ Namespace Engine.Libraries
                  Function(reader)
                      Dim fur = reader.Parameters(0)
                      If fur.GetType() Is GetType(Furre) Then
-                         UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                         UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                          Player = DirectCast(fur, Furre)
                      End If
                      Return Not FurcadiaSession.IsConnectedCharacter
@@ -244,7 +244,7 @@ Namespace Engine.Libraries
                 Function(reader)
                     Dim fur = reader.Parameters(0)
                     If fur.GetType() Is GetType(Furre) Then
-                        UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                        UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                         Player = DirectCast(fur, Furre)
                     End If
                     Return True
@@ -260,7 +260,7 @@ Namespace Engine.Libraries
                 Function(reader)
                     Dim fur = reader.Parameters(0)
                     If fur.GetType() Is GetType(Furre) Then
-                        UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                        UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
                         Player = DirectCast(fur, Furre)
                     End If
                     Return True

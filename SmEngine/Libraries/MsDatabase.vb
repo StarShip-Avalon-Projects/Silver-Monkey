@@ -5,6 +5,7 @@ Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.SmConstants
+Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries
 
@@ -33,8 +34,6 @@ Namespace Engine.Libraries
         Inherits MonkeySpeakLibrary
 
 #Region "Public Fields"
-
-        Private Const ShortNameVariable = "%SHORTNAME"
 
         ''' <summary>
         ''' </summary>
