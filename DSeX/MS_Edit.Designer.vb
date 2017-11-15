@@ -135,7 +135,6 @@ Partial Class MS_Edit
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.TabControl2 = New MonkeyCore.Controls.TabControlEx()
         Me.ToolBox = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ToolBoxNew = New System.Windows.Forms.ToolStripButton()
@@ -171,6 +170,7 @@ Partial Class MS_Edit
         Me.panelTotalCharacters = New System.Windows.Forms.StatusBarPanel()
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.TabControl2 = New MonkeyCore.Controls.TabControlEx()
         Me.EditMenu.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -464,7 +464,7 @@ Partial Class MS_Edit
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(16, 5, 0, 5)
-        Me.MenuStrip1.Size = New System.Drawing.Size(2403, 55)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1563, 55)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -626,16 +626,14 @@ Partial Class MS_Edit
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.SplitContainer3)
         Me.SplitContainer1.Panel2.Controls.Add(Me.sb)
-        Me.SplitContainer1.Size = New System.Drawing.Size(2403, 1032)
-        Me.SplitContainer1.SplitterDistance = 608
+        Me.SplitContainer1.Size = New System.Drawing.Size(1563, 851)
+        Me.SplitContainer1.SplitterDistance = 501
         Me.SplitContainer1.SplitterWidth = 10
         Me.SplitContainer1.TabIndex = 5
         '
         'SplitContainer2
         '
-        Me.SplitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
         Me.SplitContainer2.Location = New System.Drawing.Point(0, 47)
         Me.SplitContainer2.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.SplitContainer2.Name = "SplitContainer2"
@@ -647,8 +645,8 @@ Partial Class MS_Edit
         'SplitContainer2.Panel2
         '
         Me.SplitContainer2.Panel2.Controls.Add(Me.TabControl2)
-        Me.SplitContainer2.Size = New System.Drawing.Size(2403, 561)
-        Me.SplitContainer2.SplitterDistance = 495
+        Me.SplitContainer2.Size = New System.Drawing.Size(1563, 454)
+        Me.SplitContainer2.SplitterDistance = 130
         Me.SplitContainer2.SplitterWidth = 11
         Me.SplitContainer2.TabIndex = 6
         '
@@ -662,7 +660,7 @@ Partial Class MS_Edit
         Me.TabControl1.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(493, 559)
+        Me.TabControl1.Size = New System.Drawing.Size(130, 454)
         Me.TabControl1.TabIndex = 9
         '
         'TabPage1
@@ -676,7 +674,7 @@ Partial Class MS_Edit
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabPage1.Size = New System.Drawing.Size(473, 501)
+        Me.TabPage1.Size = New System.Drawing.Size(502, 396)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Sections     "
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -685,10 +683,10 @@ Partial Class MS_Edit
         '
         Me.BtnSectionDelete.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.BtnSectionDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnSectionDelete.Location = New System.Drawing.Point(309, 404)
+        Me.BtnSectionDelete.Location = New System.Drawing.Point(259, 337)
         Me.BtnSectionDelete.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnSectionDelete.Name = "BtnSectionDelete"
-        Me.BtnSectionDelete.Size = New System.Drawing.Size(83, 83)
+        Me.BtnSectionDelete.Size = New System.Drawing.Size(65, 45)
         Me.BtnSectionDelete.TabIndex = 9
         Me.BtnSectionDelete.Text = "-"
         Me.BtnSectionDelete.UseVisualStyleBackColor = True
@@ -697,10 +695,10 @@ Partial Class MS_Edit
         '
         Me.BtnSectionDown.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.BtnSectionDown.Font = New System.Drawing.Font("Wingdings", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.BtnSectionDown.Location = New System.Drawing.Point(117, 404)
+        Me.BtnSectionDown.Location = New System.Drawing.Point(97, 337)
         Me.BtnSectionDown.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnSectionDown.Name = "BtnSectionDown"
-        Me.BtnSectionDown.Size = New System.Drawing.Size(80, 83)
+        Me.BtnSectionDown.Size = New System.Drawing.Size(65, 45)
         Me.BtnSectionDown.TabIndex = 9
         Me.BtnSectionDown.Text = "â"
         Me.BtnSectionDown.UseVisualStyleBackColor = True
@@ -709,10 +707,10 @@ Partial Class MS_Edit
         '
         Me.BtnSectionUp.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.BtnSectionUp.Font = New System.Drawing.Font("Wingdings", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.BtnSectionUp.Location = New System.Drawing.Point(16, 404)
+        Me.BtnSectionUp.Location = New System.Drawing.Point(16, 337)
         Me.BtnSectionUp.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnSectionUp.Name = "BtnSectionUp"
-        Me.BtnSectionUp.Size = New System.Drawing.Size(85, 83)
+        Me.BtnSectionUp.Size = New System.Drawing.Size(65, 45)
         Me.BtnSectionUp.TabIndex = 9
         Me.BtnSectionUp.Text = "á"
         Me.BtnSectionUp.UseVisualStyleBackColor = True
@@ -721,10 +719,10 @@ Partial Class MS_Edit
         '
         Me.BtnSectionAdd.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.BtnSectionAdd.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnSectionAdd.Location = New System.Drawing.Point(213, 404)
+        Me.BtnSectionAdd.Location = New System.Drawing.Point(178, 335)
         Me.BtnSectionAdd.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnSectionAdd.Name = "BtnSectionAdd"
-        Me.BtnSectionAdd.Size = New System.Drawing.Size(80, 83)
+        Me.BtnSectionAdd.Size = New System.Drawing.Size(65, 45)
         Me.BtnSectionAdd.TabIndex = 9
         Me.BtnSectionAdd.Text = "+"
         Me.BtnSectionAdd.UseVisualStyleBackColor = True
@@ -741,7 +739,7 @@ Partial Class MS_Edit
         Me.ListBox1.Location = New System.Drawing.Point(0, 0)
         Me.ListBox1.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(465, 345)
+        Me.ListBox1.Size = New System.Drawing.Size(494, 345)
         Me.ListBox1.TabIndex = 0
         '
         'SectionMenu
@@ -809,7 +807,7 @@ Partial Class MS_Edit
         Me.TabPage2.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabPage2.Size = New System.Drawing.Size(598, 502)
+        Me.TabPage2.Size = New System.Drawing.Size(110, 396)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Templates"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -834,7 +832,7 @@ Partial Class MS_Edit
         Me.SplitContainer5.Panel2.Controls.Add(Me.BtnTemplateDelete)
         Me.SplitContainer5.Panel2.Controls.Add(Me.ListBox2)
         Me.SplitContainer5.Panel2Collapsed = True
-        Me.SplitContainer5.Size = New System.Drawing.Size(582, 488)
+        Me.SplitContainer5.Size = New System.Drawing.Size(94, 382)
         Me.SplitContainer5.SplitterDistance = 25
         Me.SplitContainer5.SplitterWidth = 10
         Me.SplitContainer5.TabIndex = 0
@@ -842,7 +840,7 @@ Partial Class MS_Edit
         'BtnTemplateDeleteMS
         '
         Me.BtnTemplateDeleteMS.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.BtnTemplateDeleteMS.Location = New System.Drawing.Point(141, 419)
+        Me.BtnTemplateDeleteMS.Location = New System.Drawing.Point(141, 313)
         Me.BtnTemplateDeleteMS.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnTemplateDeleteMS.Name = "BtnTemplateDeleteMS"
         Me.BtnTemplateDeleteMS.Size = New System.Drawing.Size(136, 55)
@@ -853,7 +851,7 @@ Partial Class MS_Edit
         'BtnTemplateAddMS
         '
         Me.BtnTemplateAddMS.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.BtnTemplateAddMS.Location = New System.Drawing.Point(8, 419)
+        Me.BtnTemplateAddMS.Location = New System.Drawing.Point(8, 313)
         Me.BtnTemplateAddMS.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnTemplateAddMS.Name = "BtnTemplateAddMS"
         Me.BtnTemplateAddMS.Size = New System.Drawing.Size(136, 55)
@@ -872,7 +870,7 @@ Partial Class MS_Edit
         Me.ListBox3.Location = New System.Drawing.Point(8, 7)
         Me.ListBox3.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.ListBox3.Name = "ListBox3"
-        Me.ListBox3.Size = New System.Drawing.Size(538, 283)
+        Me.ListBox3.Size = New System.Drawing.Size(50, 314)
         Me.ListBox3.TabIndex = 6
         '
         'TemplateMenuMS
@@ -1036,14 +1034,15 @@ Partial Class MS_Edit
         Me.TabPage4.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabPage4.Size = New System.Drawing.Size(598, 502)
+        Me.TabPage4.Size = New System.Drawing.Size(502, 396)
         Me.TabPage4.TabIndex = 2
         Me.TabPage4.Text = "Help Notes"
         Me.TabPage4.UseVisualStyleBackColor = True
         '
         'TextBox2
         '
-        Me.TextBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.TextBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox2.Location = New System.Drawing.Point(16, 45)
         Me.TextBox2.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
@@ -1051,7 +1050,7 @@ Partial Class MS_Edit
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.ReadOnly = True
         Me.TextBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox2.Size = New System.Drawing.Size(499, 128)
+        Me.TextBox2.Size = New System.Drawing.Size(470, 128)
         Me.TextBox2.TabIndex = 18
         '
         'TextBox1
@@ -1065,7 +1064,7 @@ Partial Class MS_Edit
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox1.Size = New System.Drawing.Size(499, 267)
+        Me.TextBox1.Size = New System.Drawing.Size(473, 161)
         Me.TextBox1.TabIndex = 17
         '
         'Label1
@@ -1079,17 +1078,6 @@ Partial Class MS_Edit
         Me.Label1.TabIndex = 6
         Me.Label1.Text = "MonkeySpeak Line Help"
         '
-        'TabControl2
-        '
-        Me.TabControl2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControl2.Location = New System.Drawing.Point(0, 0)
-        Me.TabControl2.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabControl2.Name = "TabControl2"
-        Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.ShowCloseButtonOnTabs = True
-        Me.TabControl2.Size = New System.Drawing.Size(1895, 559)
-        Me.TabControl2.TabIndex = 0
-        '
         'ToolBox
         '
         Me.ToolBox.ImageScalingSize = New System.Drawing.Size(40, 40)
@@ -1097,7 +1085,7 @@ Partial Class MS_Edit
         Me.ToolBox.Location = New System.Drawing.Point(0, 0)
         Me.ToolBox.Name = "ToolBox"
         Me.ToolBox.Padding = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.ToolBox.Size = New System.Drawing.Size(2403, 47)
+        Me.ToolBox.Size = New System.Drawing.Size(1563, 47)
         Me.ToolBox.TabIndex = 5
         '
         'ToolStripButton2
@@ -1285,15 +1273,15 @@ Partial Class MS_Edit
         'SplitContainer3.Panel2
         '
         Me.SplitContainer3.Panel2.Controls.Add(Me.SplitContainer4)
-        Me.SplitContainer3.Size = New System.Drawing.Size(2403, 357)
+        Me.SplitContainer3.Size = New System.Drawing.Size(1563, 283)
         Me.SplitContainer3.SplitterDistance = 38
-        Me.SplitContainer3.SplitterWidth = 10
+        Me.SplitContainer3.SplitterWidth = 20
         Me.SplitContainer3.TabIndex = 7
         '
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(2328, 12)
+        Me.Button1.Location = New System.Drawing.Point(1488, 12)
         Me.Button1.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(43, 48)
@@ -1335,7 +1323,7 @@ Partial Class MS_Edit
         'SplitContainer4.Panel2
         '
         Me.SplitContainer4.Panel2.Controls.Add(Me.TabControl3)
-        Me.SplitContainer4.Size = New System.Drawing.Size(2403, 309)
+        Me.SplitContainer4.Size = New System.Drawing.Size(1563, 225)
         Me.SplitContainer4.SplitterDistance = 60
         Me.SplitContainer4.SplitterWidth = 10
         Me.SplitContainer4.TabIndex = 0
@@ -1357,18 +1345,18 @@ Partial Class MS_Edit
         Me.TabControl3.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabControl3.Name = "TabControl3"
         Me.TabControl3.SelectedIndex = 0
-        Me.TabControl3.Size = New System.Drawing.Size(2403, 309)
+        Me.TabControl3.Size = New System.Drawing.Size(1563, 225)
         Me.TabControl3.TabIndex = 11
         '
         'sb
         '
         Me.sb.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.sb.Location = New System.Drawing.Point(0, 357)
+        Me.sb.Location = New System.Drawing.Point(0, 283)
         Me.sb.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.sb.Name = "sb"
         Me.sb.Panels.AddRange(New System.Windows.Forms.StatusBarPanel() {Me.panelCurrentPosition, Me.panelCurrentLine, Me.panelTotalLines, Me.panelTotalCharacters})
         Me.sb.ShowPanels = True
-        Me.sb.Size = New System.Drawing.Size(2403, 57)
+        Me.sb.Size = New System.Drawing.Size(1563, 57)
         Me.sb.SizingGrip = False
         Me.sb.TabIndex = 6
         '
@@ -1404,17 +1392,31 @@ Partial Class MS_Edit
         Me.ColumnHeader3.Text = ""
         Me.ColumnHeader3.Width = 640
         '
+        'TabControl2
+        '
+        Me.TabControl2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl2.Location = New System.Drawing.Point(0, 0)
+        Me.TabControl2.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.TabControl2.Name = "TabControl2"
+        Me.TabControl2.SelectedIndex = 0
+        Me.TabControl2.ShowCloseButtonOnTabs = True
+        Me.TabControl2.Size = New System.Drawing.Size(1422, 454)
+        Me.TabControl2.TabIndex = 0
+        '
         'MS_Edit
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(16.0!, 31.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(2403, 1087)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(240.0!, 240.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
+        Me.AutoSize = True
+        Me.ClientSize = New System.Drawing.Size(1563, 906)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.HelpButton = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.Name = "MS_Edit"
+        Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
         Me.Text = "Monkey Speak Editor"
         Me.EditMenu.ResumeLayout(False)
         Me.MenuStrip1.ResumeLayout(False)
