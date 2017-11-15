@@ -5,6 +5,7 @@ Imports Furcadia.Net.Dream
 Imports Furcadia.Util
 Imports Monkeyspeak
 Imports Monkeyspeak.Libraries
+Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries
 
@@ -18,6 +19,8 @@ Namespace Engine.Libraries
 
 #Region "Protected Methods"
 
+        Private Const MessageVariable As String = "%MESSAGE"
+
         ''' <summary>
         ''' <para>
         ''' Comparisons are done with Fucadia Markup Stripped
@@ -30,10 +33,14 @@ Namespace Engine.Libraries
         ''' True if the %MESSAGE system variable contains the specified string
         ''' </returns>
         Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
-
+            Dim fur = reader.Parameters(0)
+            If fur.GetType() Is GetType(Furre) Then
+                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                Player = DirectCast(fur, Furre)
+            End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
 
-            Dim test = StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString.ToLower.Trim)
+            Dim test = StripFurcadiaMarkup(reader.Page.GetVariable(MessageVariable).Value.ToString.ToLower.Trim)
             Return test.Contains(msMsg.ToLower)
 
         End Function
@@ -47,9 +54,13 @@ Namespace Engine.Libraries
         ''' true if the System %MESSAGE varible ends with the specified string
         ''' </returns>
         Protected Overridable Function MsgEndsWith(reader As TriggerReader) As Boolean
-
+            Dim fur = reader.Parameters(0)
+            If fur.GetType() Is GetType(Furre) Then
+                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                Player = DirectCast(fur, Furre)
+            End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("%MESSAGE")
+            Dim msg = reader.Page.GetVariable(MessageVariable)
 
             Dim test As String = StripFurcadiaMarkup(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
@@ -67,31 +78,14 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
-            Dim var = StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString).ToLower.Trim
+            Dim fur = reader.Parameters(0)
+            If fur.GetType() Is GetType(Furre) Then
+                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                Player = DirectCast(fur, Furre)
+            End If
+            Dim var = StripFurcadiaMarkup(reader.Page.GetVariable(MessageVariable).Value.ToString).ToLower.Trim
             Dim test = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
             Return Not FurcadiaSession.IsConnectedCharacter AndAlso var = test
-
-        End Function
-
-        ''' <summary>
-        ''' Generic Message is Not Functions
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true if the last message seen is not the specified message
-        ''' </returns>
-        ''' <remarks>
-        ''' Message Comparason is done with Markup stripped
-        ''' <para>
-        ''' The Bot ignores self messages
-        ''' </para>
-        ''' </remarks>
-        Protected Overridable Function MsgIsNot(reader As TriggerReader) As Boolean
-
-            Return Not FurcadiaSession.IsConnectedCharacter AndAlso
-                Not StripFurcadiaMarkup(reader.ReadString()).Equals(StripFurcadiaMarkup(reader.Page.GetVariable("%MESSAGE").Value.ToString))
 
         End Function
 
@@ -104,31 +98,17 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
-
+            Dim fur = reader.Parameters(0)
+            If fur.GetType() Is GetType(Furre) Then
+                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                Player = DirectCast(fur, Furre)
+            End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("%MESSAGE")
+            Dim msg = reader.Page.GetVariable(MessageVariable)
 
             Dim test = StripFurcadiaMarkup(msg.Value.ToString)
             'Debug.Print("Msg = " & msg)
             Return Not test.EndsWith(msMsg)
-
-        End Function
-
-        ''' <summary>
-        ''' (1:12) and triggering furre's message doesn't start with {.},
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' </returns>
-        Protected Function MsgNotStartsWith(reader As TriggerReader) As Boolean
-
-            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("%MESSAGE")
-
-            Dim test = StripFurcadiaMarkup(msg.Value.ToString)
-            Return Not test.StartsWith(msMsg)
 
         End Function
 
@@ -141,9 +121,13 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Protected Function MsgStartsWith(reader As TriggerReader) As Boolean
-
+            Dim fur = reader.Parameters(0)
+            If fur.GetType() Is GetType(Furre) Then
+                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                Player = DirectCast(fur, Furre)
+            End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-            Dim msg = reader.Page.GetVariable("%MESSAGE")
+            Dim msg = reader.Page.GetVariable(MessageVariable)
 
             Dim test = StripFurcadiaMarkup(msg.Value.ToString)
             Return test.StartsWith(msMsg)
@@ -163,29 +147,14 @@ Namespace Engine.Libraries
         ''' (ShortName version, lowercase with special characters stripped)
         ''' </remarks>
         Protected Overridable Function NameIs(reader As TriggerReader) As Boolean
-
+            Dim fur = reader.Parameters(0)
+            If fur.GetType() Is GetType(Furre) Then
+                UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                Player = DirectCast(fur, Furre)
+            End If
             Dim TmpName = reader.ReadString()
-            Return FurcadiaShortName(TmpName) = Player.ShortName
+            Return FurcadiaShortName(TmpName) = reader.ReadVariable("%SHORTNAME").Value.ToString()
 
-        End Function
-
-        ''' <summary>
-        ''' Generic base Furre named {...} is not the Triggering Furre
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' True on Name match
-        ''' </returns>
-        ''' <remarks>
-        ''' any name is acepted and converted to Furcadia Machine name
-        ''' (ShortName version, lowercase with special characters stripped)
-        ''' </remarks>
-        Protected Overridable Function NameIsNot(reader As TriggerReader) As Boolean
-
-            Dim TmpName = reader.ReadString()
-            Return FurcadiaShortName(TmpName) <> Player.ShortName
         End Function
 
 #End Region

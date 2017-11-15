@@ -123,6 +123,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="SessionHandler\ConstantVariable.vb" />
+    <Compile Include="Libraries\MsHelper.vb" />
     <Compile Include="SessionHandler\EngineOptoons.vb" />
     <Compile Include="SessionHandler\MainEngine.vb" />
     <None Include="Libraries\MS Repq.vb" />

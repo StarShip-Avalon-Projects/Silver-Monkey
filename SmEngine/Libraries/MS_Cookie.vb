@@ -123,16 +123,16 @@ Namespace Engine.Libraries
             Return MyBase.MsgIs(reader)
         End Function
 
-        Protected Overrides Function MsgIsNot(reader As TriggerReader) As Boolean
-            Return MyBase.MsgIsNot(reader)
+        Protected Function MsgIsNot(reader As TriggerReader) As Boolean
+            Return Not MyBase.MsgIs(reader)
         End Function
 
         Protected Function MsgNotContain(reader As TriggerReader) As Boolean
-            Return MyBase.MsgContains(reader)
+            Return Not MyBase.MsgContains(reader)
         End Function
 
-        Protected Overrides Function NameIsNot(reader As TriggerReader) As Boolean
-            Return MyBase.NameIsNot(reader)
+        Protected Function NameIsNot(reader As TriggerReader) As Boolean
+            Return Not MyBase.NameIs(reader)
         End Function
 
 #End Region

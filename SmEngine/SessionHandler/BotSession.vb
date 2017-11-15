@@ -22,7 +22,7 @@ Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.Engine.MsEngineExtentionFunctions
-Imports SilverMonkeyEngine.Interfaces
+Imports SilverMonkeyEngine.MsLibHelper
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
@@ -177,16 +177,6 @@ Public Class BotSession
 
     End Sub
 
-    'Public Sub OnDisconnected() Handles MyBase.ServerDisConnected
-    '    RaiseEvent CloseSession()
-    'End Sub
-
-    Public Shared Sub UpdateTriggerigFurreFariabled(ActivePlayer As Furre, MonkeySpeakPage As Page)
-        DirectCast(MonkeySpeakPage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(ActivePlayer.Message)
-        DirectCast(MonkeySpeakPage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(ActivePlayer.ShortName)
-        DirectCast(MonkeySpeakPage.GetVariable("%NAME"), ConstantVariable).SetValue(ActivePlayer.Name)
-    End Sub
-
     ''' <summary>
     ''' Configure Bot Variables and Execute Monkey Speak Truggers for Text and dynamic channels
     ''' </summary>
@@ -197,9 +187,7 @@ Public Class BotSession
         If MSpage Is Nothing Then Exit Sub
         Dim Furr As Furre = InstructionObject.Player
 
-        DirectCast(MSpage.GetVariable("%MESSAGE"), ConstantVariable).SetValue(Furr.Message)
-        DirectCast(MSpage.GetVariable("%SHORTNAME"), ConstantVariable).SetValue(Furr.ShortName)
-        DirectCast(MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
+        UpdateTriggerigFurreFariabled(Furr, MSpage)
 
         Dim Text As String = InstructionObject.ChannelText
         Try
@@ -242,7 +230,7 @@ Public Class BotSession
                     ' (0:20) When someone says or emotes something with
                     ' {...} in it"
                     Dim ids() = {5, 6, 7, 18, 19, 20}
-                    Await MSpage.ExecuteAsync(ids)
+                    Await MSpage.ExecuteAsync(ids, Furr)
 
                 Case "whisper"
 
@@ -251,7 +239,7 @@ Public Class BotSession
                     ' (0:17) When some one whispers something
                     ' with {...} in it
                     Dim Ids() = {15, 16, 17}
-                    Await MSpage.ExecuteAsync(Ids)
+                    Await MSpage.ExecuteAsync(Ids, Furr)
 
                 Case "emote"
                     If IsConnectedCharacter() Then Exit Sub
@@ -262,13 +250,13 @@ Public Class BotSession
                     ' (0:20) When someone says or emotes something
                     ' with {...} in it
                     Dim ids() = {11, 12, 13, 18, 19, 20}
-                    Await MSpage.ExecuteAsync(ids)
+                    Await MSpage.ExecuteAsync(ids, Furr)
                 Case "@emit"
                     ' (0:21) When someone emits something
                     ' (0:22) When someone emits {...}
                     ' (0:23) When someone emits something with {...} in it
                     Dim ids() = {21, 22, 23}
-                    Await MSpage.ExecuteAsync(ids)
+                    Await MSpage.ExecuteAsync(ids, Furr)
 
                 Case "query"
 
@@ -574,15 +562,10 @@ Public Class BotSession
         Try
             Select Case e.ConnectPhase
 
-                Case ConnectionPhase.Auth
-
                 Case ConnectionPhase.Disconnected
+                    '(0:2) When the bot logs out of furcadia,
                     If MSpage IsNot Nothing Then Await MSpage.ExecuteAsync(2)
                     If MSpage IsNot Nothing Then Await Task.Run(Sub() StopEngine())
-                Case ConnectionPhase.Connecting
-                Case ConnectionPhase.error
-                Case ConnectionPhase.Init
-                Case ConnectionPhase.MOTD
                 Case ConnectionPhase.Connected
                     Dim Id() As Integer = {1}
                     '(0:1) When the bot logs into furcadia,

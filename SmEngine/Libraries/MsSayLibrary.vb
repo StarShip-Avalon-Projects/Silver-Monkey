@@ -4,6 +4,7 @@ Imports Furcadia.Util
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.SmConstants
 Imports System.Threading
+Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries
 
@@ -132,7 +133,14 @@ Namespace Engine.Libraries
 
             'says
             Add(TriggerCategory.Cause, 5,
-                  Function() Not FurcadiaSession.IsConnectedCharacter, " When someone says something,")
+                  Function(reader)
+                      Dim fur = reader.Parameters(0)
+                      If fur.GetType() Is GetType(Furre) Then
+                          UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                          Player = DirectCast(fur, Furre)
+                      End If
+                      Return Not FurcadiaSession.IsConnectedCharacter
+                  End Function, " When someone says something,")
             Add(TriggerCategory.Cause, 6,
                  AddressOf MsgIs, " When someone says {..},")
 
@@ -142,7 +150,14 @@ Namespace Engine.Libraries
 
             'Shouts
             Add(TriggerCategory.Cause, 8,
-                 Function() Not FurcadiaSession.IsConnectedCharacter, " When someone shouts something,")
+                 Function(reader)
+                     Dim fur = reader.Parameters(0)
+                     If fur.GetType() Is GetType(Furre) Then
+                         UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                         Player = DirectCast(fur, Furre)
+                     End If
+                     Return Not FurcadiaSession.IsConnectedCharacter
+                 End Function, " When someone shouts something,")
 
             Add(TriggerCategory.Cause, 9,
              AddressOf MsgIs, " When someone shouts {..},")
@@ -154,6 +169,11 @@ Namespace Engine.Libraries
             'emotes
             Add(TriggerCategory.Cause, 11,
                  Function(reader)
+                     Dim fur = reader.Parameters(0)
+                     If fur.GetType() Is GetType(Furre) Then
+                         UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                         Player = DirectCast(fur, Furre)
+                     End If
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function, " When someone emotes something,")
             Add(TriggerCategory.Cause, 12,
@@ -165,7 +185,12 @@ Namespace Engine.Libraries
 
             'Whispers
             Add(TriggerCategory.Cause, 15,
-                Function()
+                Function(reader)
+                    Dim fur = reader.Parameters(0)
+                    If fur.GetType() Is GetType(Furre) Then
+                        UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                        Player = DirectCast(fur, Furre)
+                    End If
                     Return Not FurcadiaSession.IsConnectedCharacter
                 End Function, " When someone whispers something,")
 
@@ -178,7 +203,14 @@ Namespace Engine.Libraries
 
             'Says or Emotes
             Add(TriggerCategory.Cause, 18,
-                Function() Not FurcadiaSession.IsConnectedCharacter,
+                Function(reader)
+                    Dim fur = reader.Parameters(0)
+                    If fur.GetType() Is GetType(Furre) Then
+                        UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                        Player = DirectCast(fur, Furre)
+                    End If
+                    Return Not FurcadiaSession.IsConnectedCharacter
+                End Function,
                 " When someone says or emotes something,")
 
             Add(TriggerCategory.Cause, 19,
@@ -190,7 +222,14 @@ Namespace Engine.Libraries
 
             'Emits
             Add(TriggerCategory.Cause, 21,
-                 Function() Not FurcadiaSession.IsConnectedCharacter, " When someone emits something,")
+                 Function(reader)
+                     Dim fur = reader.Parameters(0)
+                     If fur.GetType() Is GetType(Furre) Then
+                         UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                         Player = DirectCast(fur, Furre)
+                     End If
+                     Return Not FurcadiaSession.IsConnectedCharacter
+                 End Function, " When someone emits something,")
 
             Add(TriggerCategory.Cause, 22,
                      AddressOf MsgIs, " When someone emits {..},")
@@ -202,7 +241,14 @@ Namespace Engine.Libraries
             'Furre Enters
             '(0:4) When someone is added to the Dream manifest,
             Add(TriggerCategory.Cause, 24,
-                Function() True, " When someone enters the Dream,")
+                Function(reader)
+                    Dim fur = reader.Parameters(0)
+                    If fur.GetType() Is GetType(Furre) Then
+                        UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                        Player = DirectCast(fur, Furre)
+                    End If
+                    Return True
+                End Function, " When someone enters the Dream,")
 
             '(0:25) When a furre Named {..} enters the Dream,
             Add(TriggerCategory.Cause, 25,
@@ -211,7 +257,14 @@ Namespace Engine.Libraries
             'Furre Leaves
             '(0:25) When someone leaves the FurcadiaSession.Dream,
             Add(TriggerCategory.Cause, 26,
-                Function() True, " When someone leaves the Dream,")
+                Function(reader)
+                    Dim fur = reader.Parameters(0)
+                    If fur.GetType() Is GetType(Furre) Then
+                        UpdateTriggerigFurreFariabled(DirectCast(fur, Furre), reader.Page)
+                        Player = DirectCast(fur, Furre)
+                    End If
+                    Return True
+                End Function, " When someone leaves the Dream,")
 
             '(0:27) When a furre named {..} leaves the FurcadiaSession.Dream,
             Add(TriggerCategory.Cause, 27,
@@ -440,6 +493,10 @@ Namespace Engine.Libraries
             End If
             Return Player.Visible = True
 
+        End Function
+
+        Public Function MsgNotStartsWith(reader As TriggerReader) As Boolean
+            Return Not MsgStartsWith(reader)
         End Function
 
         ''' <summary>
@@ -708,8 +765,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Protected Overrides Function MsgIsNot(reader As TriggerReader) As Boolean
-            Return MyBase.MsgIsNot(reader)
+        Protected Function MsgIsNot(reader As TriggerReader) As Boolean
+            Return Not MyBase.MsgIs(reader)
         End Function
 
         ''' <summary>
@@ -763,8 +820,8 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Protected Overrides Function NameIsNot(reader As TriggerReader) As Boolean
-            Return MyBase.NameIsNot(reader)
+        Protected Function NameIsNot(reader As TriggerReader) As Boolean
+            Return Not MyBase.NameIs(reader)
         End Function
 
         Public Overrides Sub Unload(page As Page)
