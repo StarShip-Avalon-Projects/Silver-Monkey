@@ -40,7 +40,7 @@ Public Class TextBoxWriter
 
 #Region "Public Delegates"
 
-    Delegate Sub UpDateBtn_GoCallback(ByRef s As String)
+    Delegate Sub AppendTextDelegate(ByRef Text As String)
 
 #End Region
 
@@ -76,15 +76,15 @@ Public Class TextBoxWriter
 
 #Region "Private Methods"
 
-    Private Sub AppendText(ByRef s As String)
+    Private Sub AppendText(ByRef Text As String)
         If control.InvokeRequired Then
-            control.Invoke(New UpDateBtn_GoCallback(AddressOf AppendText), s)
+            control.Invoke(New AppendTextDelegate(AddressOf AppendText), Text)
         Else
             If Builder.Length > 0 Then
                 control.AppendText(Builder.ToString())
                 Builder.Clear()
             End If
-            control.AppendText(s)
+            control.AppendText(Text)
             ' (ByRef lb As Object, ByRef obj As Object, ByRef newColor As fColorEnum)
             'Main.AddDataToList(Main.log_, s, 0)
 

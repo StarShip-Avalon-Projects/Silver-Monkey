@@ -264,7 +264,7 @@ Partial Class Variables
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents ErrorLogTxtBx As System.Windows.Forms.TextBox
+    Friend Shared WithEvents ErrorLogTxtBx As System.Windows.Forms.TextBox
     Friend WithEvents ChkBxRefresh As System.Windows.Forms.CheckBox
     Friend WithEvents ListView1 As ListView_NoFlicker
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader

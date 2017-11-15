@@ -58,8 +58,9 @@ Public Class BotSession
     ''' </summary>
     Public WithEvents MSpage As Monkeyspeak.Page
 
-    Public objHost As New smHost(Me)
+    '  Public objHost As New smHost(Me)
     Private disposed As Boolean
+
     Private handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
     Private lastDream As DREAM
     ''' <summary>
@@ -69,8 +70,6 @@ Public Class BotSession
     Public Property MainEngineOptions As BotOptions
 
     Private MainSettings As Settings.cMain
-
-    ' Public SendTextToDisplay As EventHandler(Of
 
     ''' <summary>
     ''' </summary>
@@ -118,7 +117,6 @@ Public Class BotSession
         End Get
     End Property
 
-    'Monkey Speak Bot specific Variables
     ''' <summary>
     ''' Starts the Furcadia Connection Process
     ''' </summary>

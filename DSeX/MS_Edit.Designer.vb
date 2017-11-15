@@ -320,7 +320,7 @@ Partial Class MS_Edit
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewMonkeySpeakToolStripMenuItem, Me.OpenToolStripMenuItem, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.RestartBotEngineToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem, Me.CloseToolStripMenuItem, Me.CloseAllToolStripMenuItem, Me.ExportToHTMLToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(75, 48)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(75, 45)
         Me.FileToolStripMenuItem.Text = "File"
         '
         'NewMonkeySpeakToolStripMenuItem
@@ -403,7 +403,7 @@ Partial Class MS_Edit
         '
         Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditDropCopy, Me.EditDropCut, Me.EditDropPaste, Me.ToolStripSeparator8, Me.FindReplaceToolStripMenuItem, Me.ToolStripSeparator6, Me.UndoToolStripMenuItem, Me.RedoToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(80, 48)
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(80, 45)
         Me.EditToolStripMenuItem.Text = "Edit"
         '
         'EditDropCopy
@@ -464,7 +464,7 @@ Partial Class MS_Edit
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(16, 5, 0, 5)
-        Me.MenuStrip1.Size = New System.Drawing.Size(2403, 58)
+        Me.MenuStrip1.Size = New System.Drawing.Size(2403, 55)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -472,7 +472,7 @@ Partial Class MS_Edit
         '
         Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FixIndentsToolStripMenuItem, Me.GotoToolStripMenuItem, Me.ApplyCommentToolStripMenuItem, Me.RemoveCommentToolStripMenuItem, Me.ShowLineFinderToolStripMenuItem})
         Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
-        Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(99, 48)
+        Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(99, 45)
         Me.ToolsToolStripMenuItem.Text = "Tools"
         '
         'FixIndentsToolStripMenuItem
@@ -509,7 +509,7 @@ Partial Class MS_Edit
         '
         Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfigToolStripMenuItem})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(136, 48)
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(136, 45)
         Me.OptionsToolStripMenuItem.Text = "Options"
         '
         'ConfigToolStripMenuItem
@@ -522,7 +522,7 @@ Partial Class MS_Edit
         '
         Me.BookmakrsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RemoveAllToolStripMenuItem, Me.GotoNextToolStripMenuItem, Me.GotoPreviousToolStripMenuItem})
         Me.BookmakrsToolStripMenuItem.Name = "BookmakrsToolStripMenuItem"
-        Me.BookmakrsToolStripMenuItem.Size = New System.Drawing.Size(177, 48)
+        Me.BookmakrsToolStripMenuItem.Size = New System.Drawing.Size(177, 45)
         Me.BookmakrsToolStripMenuItem.Text = "Bookmarks"
         '
         'RemoveAllToolStripMenuItem
@@ -549,7 +549,7 @@ Partial Class MS_Edit
         '
         Me.LanguageToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DragonSpeakToolStripMenuItem, Me.MonkeySpeakToolStripMenuItem})
         Me.LanguageToolStripMenuItem.Name = "LanguageToolStripMenuItem"
-        Me.LanguageToolStripMenuItem.Size = New System.Drawing.Size(160, 48)
+        Me.LanguageToolStripMenuItem.Size = New System.Drawing.Size(160, 45)
         Me.LanguageToolStripMenuItem.Text = "Language"
         '
         'DragonSpeakToolStripMenuItem
@@ -568,7 +568,7 @@ Partial Class MS_Edit
         '
         Me.WindowsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DSWizardToolStripMenuItem})
         Me.WindowsToolStripMenuItem.Name = "WindowsToolStripMenuItem"
-        Me.WindowsToolStripMenuItem.Size = New System.Drawing.Size(153, 48)
+        Me.WindowsToolStripMenuItem.Size = New System.Drawing.Size(153, 45)
         Me.WindowsToolStripMenuItem.Text = "Windows"
         '
         'DSWizardToolStripMenuItem
@@ -580,14 +580,14 @@ Partial Class MS_Edit
         'ReferenceLinksToolStripMenuItem
         '
         Me.ReferenceLinksToolStripMenuItem.Name = "ReferenceLinksToolStripMenuItem"
-        Me.ReferenceLinksToolStripMenuItem.Size = New System.Drawing.Size(227, 48)
+        Me.ReferenceLinksToolStripMenuItem.Size = New System.Drawing.Size(227, 45)
         Me.ReferenceLinksToolStripMenuItem.Text = "ReferenceLinks"
         '
         'HelpToolStripMenuItem
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentToolStripMenuItem, Me.MokeySpeakLinesToolStripMenuItem, Me.AbutToolStripMenuItem})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(92, 48)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(92, 45)
         Me.HelpToolStripMenuItem.Text = "Help"
         '
         'ContentToolStripMenuItem
@@ -611,7 +611,7 @@ Partial Class MS_Edit
         'SplitContainer1
         '
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer1.Location = New System.Drawing.Point(0, 58)
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 55)
         Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
@@ -626,14 +626,16 @@ Partial Class MS_Edit
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.SplitContainer3)
         Me.SplitContainer1.Panel2.Controls.Add(Me.sb)
-        Me.SplitContainer1.Size = New System.Drawing.Size(2403, 1029)
-        Me.SplitContainer1.SplitterDistance = 607
+        Me.SplitContainer1.Size = New System.Drawing.Size(2403, 1032)
+        Me.SplitContainer1.SplitterDistance = 608
         Me.SplitContainer1.SplitterWidth = 10
         Me.SplitContainer1.TabIndex = 5
         '
         'SplitContainer2
         '
+        Me.SplitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
         Me.SplitContainer2.Location = New System.Drawing.Point(0, 47)
         Me.SplitContainer2.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.SplitContainer2.Name = "SplitContainer2"
@@ -645,8 +647,8 @@ Partial Class MS_Edit
         'SplitContainer2.Panel2
         '
         Me.SplitContainer2.Panel2.Controls.Add(Me.TabControl2)
-        Me.SplitContainer2.Size = New System.Drawing.Size(2403, 560)
-        Me.SplitContainer2.SplitterDistance = 618
+        Me.SplitContainer2.Size = New System.Drawing.Size(2403, 561)
+        Me.SplitContainer2.SplitterDistance = 495
         Me.SplitContainer2.SplitterWidth = 11
         Me.SplitContainer2.TabIndex = 6
         '
@@ -660,7 +662,7 @@ Partial Class MS_Edit
         Me.TabControl1.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(618, 560)
+        Me.TabControl1.Size = New System.Drawing.Size(493, 559)
         Me.TabControl1.TabIndex = 9
         '
         'TabPage1
@@ -674,7 +676,7 @@ Partial Class MS_Edit
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabPage1.Size = New System.Drawing.Size(598, 502)
+        Me.TabPage1.Size = New System.Drawing.Size(473, 501)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Sections     "
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -683,7 +685,7 @@ Partial Class MS_Edit
         '
         Me.BtnSectionDelete.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.BtnSectionDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnSectionDelete.Location = New System.Drawing.Point(315, 331)
+        Me.BtnSectionDelete.Location = New System.Drawing.Point(309, 404)
         Me.BtnSectionDelete.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnSectionDelete.Name = "BtnSectionDelete"
         Me.BtnSectionDelete.Size = New System.Drawing.Size(83, 83)
@@ -695,7 +697,7 @@ Partial Class MS_Edit
         '
         Me.BtnSectionDown.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.BtnSectionDown.Font = New System.Drawing.Font("Wingdings", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.BtnSectionDown.Location = New System.Drawing.Point(123, 331)
+        Me.BtnSectionDown.Location = New System.Drawing.Point(117, 404)
         Me.BtnSectionDown.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnSectionDown.Name = "BtnSectionDown"
         Me.BtnSectionDown.Size = New System.Drawing.Size(80, 83)
@@ -707,7 +709,7 @@ Partial Class MS_Edit
         '
         Me.BtnSectionUp.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.BtnSectionUp.Font = New System.Drawing.Font("Wingdings", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.BtnSectionUp.Location = New System.Drawing.Point(21, 331)
+        Me.BtnSectionUp.Location = New System.Drawing.Point(16, 404)
         Me.BtnSectionUp.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnSectionUp.Name = "BtnSectionUp"
         Me.BtnSectionUp.Size = New System.Drawing.Size(85, 83)
@@ -719,7 +721,7 @@ Partial Class MS_Edit
         '
         Me.BtnSectionAdd.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.BtnSectionAdd.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnSectionAdd.Location = New System.Drawing.Point(219, 331)
+        Me.BtnSectionAdd.Location = New System.Drawing.Point(213, 404)
         Me.BtnSectionAdd.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnSectionAdd.Name = "BtnSectionAdd"
         Me.BtnSectionAdd.Size = New System.Drawing.Size(80, 83)
@@ -739,7 +741,7 @@ Partial Class MS_Edit
         Me.ListBox1.Location = New System.Drawing.Point(0, 0)
         Me.ListBox1.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(542, 221)
+        Me.ListBox1.Size = New System.Drawing.Size(465, 345)
         Me.ListBox1.TabIndex = 0
         '
         'SectionMenu
@@ -807,7 +809,7 @@ Partial Class MS_Edit
         Me.TabPage2.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabPage2.Size = New System.Drawing.Size(598, 504)
+        Me.TabPage2.Size = New System.Drawing.Size(598, 502)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Templates"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -832,7 +834,7 @@ Partial Class MS_Edit
         Me.SplitContainer5.Panel2.Controls.Add(Me.BtnTemplateDelete)
         Me.SplitContainer5.Panel2.Controls.Add(Me.ListBox2)
         Me.SplitContainer5.Panel2Collapsed = True
-        Me.SplitContainer5.Size = New System.Drawing.Size(582, 490)
+        Me.SplitContainer5.Size = New System.Drawing.Size(582, 488)
         Me.SplitContainer5.SplitterDistance = 25
         Me.SplitContainer5.SplitterWidth = 10
         Me.SplitContainer5.TabIndex = 0
@@ -840,7 +842,7 @@ Partial Class MS_Edit
         'BtnTemplateDeleteMS
         '
         Me.BtnTemplateDeleteMS.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.BtnTemplateDeleteMS.Location = New System.Drawing.Point(141, 421)
+        Me.BtnTemplateDeleteMS.Location = New System.Drawing.Point(141, 419)
         Me.BtnTemplateDeleteMS.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnTemplateDeleteMS.Name = "BtnTemplateDeleteMS"
         Me.BtnTemplateDeleteMS.Size = New System.Drawing.Size(136, 55)
@@ -851,7 +853,7 @@ Partial Class MS_Edit
         'BtnTemplateAddMS
         '
         Me.BtnTemplateAddMS.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.BtnTemplateAddMS.Location = New System.Drawing.Point(8, 421)
+        Me.BtnTemplateAddMS.Location = New System.Drawing.Point(8, 419)
         Me.BtnTemplateAddMS.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.BtnTemplateAddMS.Name = "BtnTemplateAddMS"
         Me.BtnTemplateAddMS.Size = New System.Drawing.Size(136, 55)
@@ -870,7 +872,7 @@ Partial Class MS_Edit
         Me.ListBox3.Location = New System.Drawing.Point(8, 7)
         Me.ListBox3.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.ListBox3.Name = "ListBox3"
-        Me.ListBox3.Size = New System.Drawing.Size(538, 314)
+        Me.ListBox3.Size = New System.Drawing.Size(538, 283)
         Me.ListBox3.TabIndex = 6
         '
         'TemplateMenuMS
@@ -1034,7 +1036,7 @@ Partial Class MS_Edit
         Me.TabPage4.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabPage4.Size = New System.Drawing.Size(598, 504)
+        Me.TabPage4.Size = New System.Drawing.Size(598, 502)
         Me.TabPage4.TabIndex = 2
         Me.TabPage4.Text = "Help Notes"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -1063,7 +1065,7 @@ Partial Class MS_Edit
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox1.Size = New System.Drawing.Size(499, 269)
+        Me.TextBox1.Size = New System.Drawing.Size(499, 267)
         Me.TextBox1.TabIndex = 17
         '
         'Label1
@@ -1085,7 +1087,7 @@ Partial Class MS_Edit
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
         Me.TabControl2.ShowCloseButtonOnTabs = True
-        Me.TabControl2.Size = New System.Drawing.Size(1774, 560)
+        Me.TabControl2.Size = New System.Drawing.Size(1895, 559)
         Me.TabControl2.TabIndex = 0
         '
         'ToolBox
@@ -1283,7 +1285,7 @@ Partial Class MS_Edit
         'SplitContainer3.Panel2
         '
         Me.SplitContainer3.Panel2.Controls.Add(Me.SplitContainer4)
-        Me.SplitContainer3.Size = New System.Drawing.Size(2403, 355)
+        Me.SplitContainer3.Size = New System.Drawing.Size(2403, 357)
         Me.SplitContainer3.SplitterDistance = 38
         Me.SplitContainer3.SplitterWidth = 10
         Me.SplitContainer3.TabIndex = 7
@@ -1333,7 +1335,7 @@ Partial Class MS_Edit
         'SplitContainer4.Panel2
         '
         Me.SplitContainer4.Panel2.Controls.Add(Me.TabControl3)
-        Me.SplitContainer4.Size = New System.Drawing.Size(2403, 307)
+        Me.SplitContainer4.Size = New System.Drawing.Size(2403, 309)
         Me.SplitContainer4.SplitterDistance = 60
         Me.SplitContainer4.SplitterWidth = 10
         Me.SplitContainer4.TabIndex = 0
@@ -1355,13 +1357,13 @@ Partial Class MS_Edit
         Me.TabControl3.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabControl3.Name = "TabControl3"
         Me.TabControl3.SelectedIndex = 0
-        Me.TabControl3.Size = New System.Drawing.Size(2403, 307)
+        Me.TabControl3.Size = New System.Drawing.Size(2403, 309)
         Me.TabControl3.TabIndex = 11
         '
         'sb
         '
         Me.sb.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.sb.Location = New System.Drawing.Point(0, 355)
+        Me.sb.Location = New System.Drawing.Point(0, 357)
         Me.sb.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.sb.Name = "sb"
         Me.sb.Panels.AddRange(New System.Windows.Forms.StatusBarPanel() {Me.panelCurrentPosition, Me.panelCurrentLine, Me.panelTotalLines, Me.panelTotalCharacters})

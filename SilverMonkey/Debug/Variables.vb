@@ -1,5 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports SilverMonkeyEngine
+Imports Monkeyspeak.Logging
+Imports System.ComponentModel
 
 Public Class Variables
     Inherits Form
@@ -18,14 +20,26 @@ Public Class Variables
 
     Private Delegate Sub dlgUpdateUI()
 
+    ''' <summary>
+    ''' Send text to DebugWindow Delegate
+    ''' </summary>
+    ''' <param name="text"></param>
+    Private Delegate Sub SendTextDelegate(text As String)
+
+    ''' <summary>
+    ''' Send text to DebugWindow Delegate
+    ''' </summary>
+    ''' <param name="text"></param>
+    Private Delegate Sub LogMessageDelegate(text As LogMessage)
+
 #End Region
 
 #Region "Public Methods"
 
-    Public Sub updateVariables()
+    Public Sub UpdateVariables()
 
         If ListView1.InvokeRequired Then
-            Dim d As New dlgUpdateUI(AddressOf updateVariables)
+            Dim d As New dlgUpdateUI(AddressOf UpdateVariables)
             ListView1?.Invoke(d)
         Else
 
@@ -65,7 +79,7 @@ Public Class Variables
 #Region "Private Methods"
 
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-        updateVariables()
+        UpdateVariables()
 
     End Sub
 
@@ -91,14 +105,35 @@ Public Class Variables
     End Sub
 
     Private Sub Tick(ByVal state As Object)
-        updateVariables()
+        UpdateVariables()
     End Sub
 
     Private Sub Variables_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         If Not IsNothing(Me.alarm) Then Me.alarm.Dispose()
     End Sub
 
-    Private Sub Variables_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+    Public Shared Sub SendLogsToDemugWindow(Log As LogMessage)
+        If ErrorLogTxtBx.InvokeRequired Then
+            ErrorLogTxtBx.Invoke(New LogMessageDelegate(AddressOf SendLogsToDemugWindow), Log)
+        Else
+            ErrorLogTxtBx.AppendText(Log.message + Environment.NewLine)
+        End If
+    End Sub
+
+    Public Shared Sub SendLogsToDemugWindow(Log As String)
+        If ErrorLogTxtBx.InvokeRequired Then
+            ErrorLogTxtBx.Invoke(New SendTextDelegate(AddressOf SendLogsToDemugWindow), Log)
+        Else
+            ErrorLogTxtBx.AppendText(Log + Environment.NewLine)
+        End If
+    End Sub
+
+    Private Sub Variables_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Logger.DebugEnabled = True
+    End Sub
+
+    Private Sub Variables_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Logger.DebugEnabled = False
 
     End Sub
 

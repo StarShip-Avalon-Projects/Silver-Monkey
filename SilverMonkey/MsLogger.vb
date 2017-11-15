@@ -6,7 +6,7 @@ Namespace Engine
 
     Public Class MsLogger
         Implements ILogOutput
-        Private Shared ReadOnly startTime As New DateTime()
+        '    Private Shared ReadOnly startTime As New DateTime()
 
         Public Sub New()
         End Sub
@@ -36,53 +36,16 @@ Namespace Engine
             End If
 
             logMsg = BuildMessage(logMsg)
-            Dim msg = logMsg.message
-            Try
-                Dim original As ConsoleColor = Console.ForegroundColor
-                Dim color As ConsoleColor = ConsoleColor.White
-                Select Case logMsg.Level
-                    Case Level.Debug, Level.Warning
-                        color = ConsoleColor.Yellow
-                        Exit Select
-
-                    Case Level.[Error]
-                        color = ConsoleColor.Red
-                        Exit Select
-
-                    Case Level.Info
-                        color = ConsoleColor.White
-                        Exit Select
-                End Select
-                Console.ForegroundColor = color
-            Catch
-            End Try
             If Debugger.IsAttached Then
-                Debug.WriteLine(msg)
+                Debug.WriteLine(logMsg.message)
             End If
             If Main.DebugWindow IsNot Nothing Then
-                SendLogsToDemugWindow(msg)
+                Variables.SendLogsToDemugWindow(logMsg)
             End If
-            If logMsg.Level = Level.Info Then
-                Main.SndDisplay(msg)
+            If logMsg.Level = Level.Info Or logMsg.Level = Level.Error Then
+                Main.SndDisplay(logMsg)
             End If
-            Try
-                Console.ResetColor()
-            Catch
-            End Try
-        End Sub
 
-        ''' <summary>
-        ''' Send text to DebugWindow Delegate
-        ''' </summary>
-        ''' <param name="text"></param>
-        Public Delegate Sub SendTextDelegate(text As String)
-
-        Public Sub SendLogsToDemugWindow(Log As String)
-            If Main.DebugWindow.ErrorLogTxtBx.InvokeRequired Then
-                Main.DebugWindow.ErrorLogTxtBx.Invoke(New SendTextDelegate(AddressOf SendLogsToDemugWindow), Log)
-            Else
-                Main.DebugWindow.ErrorLogTxtBx.AppendText(Log + Environment.NewLine)
-            End If
         End Sub
 
     End Class

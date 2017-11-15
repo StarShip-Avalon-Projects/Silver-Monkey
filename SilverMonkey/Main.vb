@@ -14,8 +14,10 @@ Imports MonkeyCore.Paths
 Imports MonkeyCore.Settings
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
+Imports Monkeyspeak.Logging
 Imports SilverMonkey.Engine
 Imports SilverMonkey.HelperClasses
+Imports SilverMonkey.HelperClasses.TextDisplayManager
 Imports SilverMonkeyEngine
 
 Public Class Main
@@ -53,6 +55,11 @@ Public Class Main
     ''' </summary>
     Private WithEvents MsExport As MS_Export = Nothing
 
+    ''' <summary>
+    ''' Debug Window cache
+    ''' </summary>
+    Private DebugLogs As New StringBuilder()
+
     Private Const HelpFile As String = "Silver Monkey.chm"
 
     Private Shared BotConfig As BotOptions
@@ -67,7 +74,6 @@ Public Class Main
     Dim CMDList(CMD_Max) As String
 
     Dim curWord As String
-    ' Private ImageList As New Dictionary(Of String, Image)
 
 #End Region
 
@@ -143,7 +149,7 @@ Public Class Main
 
                 LogStream = New LogStream(BotConfig.LogOptions)
             Catch
-                SndDisplay("There's an error with log-file" + LogFile, TextDisplayManager.fColorEnum.Error)
+                SndDisplay("There's an error with log-file" + LogFile, TextDisplayManager.DisplayColors.Error)
                 Exit Sub
             End Try
         End If
@@ -156,7 +162,7 @@ Public Class Main
             DisconnectTrayIconMenuItem.Enabled = True
             UpDateDreamList() '
         Catch ex As Exception
-            SndDisplay("ERROR: " + ex.Message, TextDisplayManager.fColorEnum.Error)
+            SndDisplay("ERROR: " + ex.Message, TextDisplayManager.DisplayColors.Error)
         End Try
 
     End Sub
@@ -382,8 +388,6 @@ Public Class Main
 
 #Region "Events"
 
-    Private Delegate Sub DelTimeupdate()
-
     Private Delegate Sub LogSave(ByRef path As String, ByRef filename As String)
 
     Private Delegate Sub UpDateBtn_GoCallback(ByRef [text] As String)
@@ -561,38 +565,41 @@ Public Class Main
 
 #Region " Methods"
 
-    'Public Function GetSmily(ByRef ch As Char) As String
-
-    ' Dim RTFimg As New RTFBuilder Dim file As String = "" Dim shape As
-    ' Integer = 0 If (ch >= "A") And (ch <= "P") Then file = "smileys.fsh"
-    ' shape = Asc(ch) - Asc("A") ElseIf (ch >= "Q" And ch <= "Z") Then file
-    ' = "smileys2.fsh" shape = Asc(ch) - Asc("Q") ElseIf (ch >= "a" And ch
-    ' <= "z") Then file = "smileys2.fsh" shape = Asc(ch) - Asc("a") + 10
-    ' ElseIf (ch >= "1" And ch <= "3") Then file = "smileys2.fsh" shape =
-    ' Asc(ch) - Asc("1") + 35 End If
-    ' RTFimg.InsertImage(IMGresize(GetFrame(shape, file), log_)) Return RTFimg.ToString
-
-    'Private WithEvents MsPage As Monkeyspeak.Page
-
-    ''' <summary>
-    ''' Send text to DebugWindow Delegate
-    ''' </summary>
-    ''' <param name="text"></param>
-    Public Delegate Sub SendTextDelegate(text As String)
-
     ''' <summary>
     ''' Send formatted text to log box
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="newColor"></param>
-    Public Shared Sub SndDisplay(ByRef data As String, Optional ByVal newColor As TextDisplayManager.fColorEnum = TextDisplayManager.fColorEnum.DefaultColor)
+    Public Shared Sub SndDisplay(data As String, Optional newColor As DisplayColors = DisplayColors.DefaultColor)
 
         If BotConfig.LogOptions.log Then LogStream.WriteLine(data)
         If CBool(Mainsettings.TimeStamp) Then
             Dim Now As String = DateTime.Now.ToLongTimeString
             data = Now.ToString & ": " & data
         End If
-        Dim textObject As New TextDisplayManager.TextDisplayObject(data, newColor)
+        Dim textObject As New TextDisplayObject(data, newColor)
+        TextDisplayer.AddDataToList(textObject)
+
+    End Sub
+
+    ''' <summary>
+    ''' Send formatted text to log box
+    ''' </summary>
+    ''' <param name="Message"></param>
+    Public Shared Sub SndDisplay(Message As LogMessage)
+
+        If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
+        Dim newColor = DisplayColors.DefaultColor
+        Select Case Message.Level
+            Case Level.Warning
+                newColor = DisplayColors.Error
+            Case Level.Debug Or Level.Error
+                newColor = DisplayColors.Warning
+            Case Else
+                newColor = DisplayColors.DefaultColor
+        End Select
+
+        Dim textObject As New TextDisplayObject(Message.message, newColor)
         TextDisplayer.AddDataToList(textObject)
 
     End Sub
@@ -600,15 +607,14 @@ Public Class Main
     Public Sub OnFurcadiaSessionError(ex As Exception, o As Object, n As String) _
         Handles FurcadiaSession.[Error]
 
-        ' SndDisplay("MonkeySpeak error:" + trig.ToString() + " " + ex.Message, TextDisplayManager.fColorEnum.Error)
         If ex.GetType() Is GetType(MonkeyspeakException) Then
             If o.GetType Is GetType(TriggerHandler) Then
                 SendTextToDebugWindow(DirectCast(o, TriggerHandler).Target.ToString)
             End If
-            SndDisplay("MonkeySpeak Error:" + ex.Message + Environment.NewLine + o.ToString, TextDisplayManager.fColorEnum.Error)
+            SndDisplay("MonkeySpeak Error:" + ex.Message + Environment.NewLine + o.ToString, DisplayColors.Error)
             If ex.InnerException IsNot Nothing Then
                 If ex.InnerException.GetType() Is GetType(SilverMonkeyEngine.Engine.Libraries.Web.WebException) Then
-                    Dim InnerEx = CType(ex.InnerException, SilverMonkeyEngine.Engine.Libraries.Web.WebException)
+                    Dim InnerEx = DirectCast(ex.InnerException, SilverMonkeyEngine.Engine.Libraries.Web.WebException)
                     SendTextToDebugWindow(InnerEx.ToString)
                 Else
                     SendTextToDebugWindow(ex.InnerException.ToString)
@@ -616,9 +622,9 @@ Public Class Main
 
             End If
         Else
-            SndDisplay("Furcadia Session error:" + ex.Message + Environment.NewLine + o.ToString, TextDisplayManager.fColorEnum.Error)
+            SndDisplay("Furcadia Session error:" + ex.Message + Environment.NewLine + o.ToString, DisplayColors.Error)
         End If
-        ' LogStream.WriteLine("meep", ex)
+
     End Sub
 
     ''' <summary>
@@ -632,13 +638,10 @@ Public Class Main
     Public Sub SendTextToDebugWindow(ByVal text As String)
         If DebugWindow Is Nothing OrElse DebugWindow.IsDisposed() Then
             DebugLogs.AppendLine(text)
-            Exit Sub
-        End If
-        If DebugWindow.ErrorLogTxtBx.InvokeRequired Then
-            DebugWindow.ErrorLogTxtBx.Invoke(New SendTextDelegate(AddressOf SendTextToDebugWindow), text)
         Else
-            DebugWindow.ErrorLogTxtBx.AppendText(text)
+            Variables.SendLogsToDemugWindow(text)
         End If
+
     End Sub
 
     Private Sub DreamList_DoubleClick(sender As Object, e As System.EventArgs) Handles DreamList.DoubleClick
@@ -659,21 +662,7 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub OnFurcadiaSessionClose() Handles FurcadiaSession.CloseSession
-        FurcadiaSession.Dispose()
-        FurcadiaSession = Nothing
-        GC.Collect()
-        GC.WaitForFullGCComplete()
-        GC.Collect()
-    End Sub
-
 #End Region
-
-    'Public Function TagCloser(ByRef Str As String, ByRef Tag As String) As String
-    '    'Tag Counters
-    '    Dim OpenCount, CloseCount As Integer
-
-    Private DebugLogs As New StringBuilder()
 
     ''' <summary>
     ''' Update Dream Furre list
@@ -765,18 +754,14 @@ Public Class Main
 
     End Sub
 
-    Private Sub ContextTryIcon_Opened(sender As Object, e As System.EventArgs) Handles ContextTryIcon.Opened
+    Private Async Sub ContextTryIcon_Opened(sender As Object, e As System.EventArgs) Handles ContextTryIcon.Opened
 
         If Not FurcadiaSession Is Nothing Then
             Select Case FurcadiaSession.ServerStatus
 
                 Case ConnectionPhase.Init
-                    DisconnectTrayIconMenuItem.Enabled = False
-                    ConnectTrayIconMenuItem.Enabled = True
-
-                Case ConnectionPhase.Connecting
-                    DisconnectTrayIconMenuItem.Enabled = True
-                    ConnectTrayIconMenuItem.Enabled = False
+                    Await Meep(DisconnectTrayIconMenuItem, False)
+                    Await Meep(ConnectTrayIconMenuItem, True)
 
                 Case ConnectionPhase.MOTD Or ConnectionPhase.Connecting
                     DisconnectTrayIconMenuItem.Enabled = True
@@ -785,6 +770,10 @@ Public Class Main
             End Select
         End If
     End Sub
+
+    Private Function Meep(disconnectTrayIconMenuItem As ToolStripMenuItem, v As Boolean) As Task
+        disconnectTrayIconMenuItem.Enabled = v
+    End Function
 
     ''' <summary>
     ''' Open the Bot Debugging window
@@ -801,7 +790,7 @@ Public Class Main
         DebugWindow.Show()
         DebugWindow.Activate()
         If DebugLogs.Length > 0 Then
-            DebugWindow.ErrorLogTxtBx.AppendText(DebugLogs.ToString)
+            Variables.SendLogsToDemugWindow(DebugLogs.ToString)
             DebugLogs.Clear()
         End If
     End Sub
@@ -991,9 +980,8 @@ Public Class Main
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Logging.Logger.LogOutput = New MsLogger
         Logging.Logger.InfoEnabled = True
-        Logging.Logger.DebugEnabled = True
-        Logging.Logger.ErrorEnabled = True
         Logging.Logger.SuppressSpam = True
+        Logging.Logger.WarningEnabled = True
         Logging.Logger.SingleThreaded = False
 
         If Not NotifyIcon1 Is Nothing Then

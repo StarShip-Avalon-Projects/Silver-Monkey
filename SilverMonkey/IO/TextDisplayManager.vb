@@ -1,11 +1,11 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Drawing
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Furcadia.Text.FurcadiaMarkup
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Controls.NativeMethods
 Imports MonkeyCore.Settings
-Imports MonkeyCore.Utils.Logging
 
 Namespace HelperClasses
 
@@ -46,12 +46,17 @@ Namespace HelperClasses
         ''' <summary>
         ''' Color enums for rtf display
         ''' </summary>
-        Public Enum fColorEnum
+        Public Enum DisplayColors
 
             ''' <summary>
             ''' Errors
             ''' </summary>
             [Error] = -1
+
+            ''' <summary>
+            ''' Generic Warning
+            ''' </summary>
+            Warning
 
             ''' <summary>
             ''' Deneral Default color for everything
@@ -119,17 +124,17 @@ Namespace HelperClasses
                     ''since we Put the Data in the RTB now we Finish Setting the Links
 
                     Dim links As New Regex(UrlFilter, RegexOptions.IgnoreCase)
-                    ' links = links & Regex.Matches(lb.Text,
-                    ' "<a.*?href='(.*?)'.*?>(.*?)</a>", RegexOptions.IgnoreCase)
-                    For Each mmatch As System.Text.RegularExpressions.Match In links.Matches(LogDisplayBox.Text)
+                    'links = links & Regex.Matches(lb.Text,
+                    '"<a.*?href='(.*?)'.*?>(.*?)</a>", RegexOptions.IgnoreCase)
+                    For Each mmatch As System.Text.RegularExpressions.Match In links.Matches(LogDisplayBox.SelectedText)
                         Dim matchUrl As String = mmatch.Groups(1).Value
                         Dim matchText As String = mmatch.Groups(2).Value
                         If mmatch.Success Then
                             With LogDisplayBox
 
-                                Dim Idx = .Text.IndexOf(mmatch.Groups(0).Value)
+                                Dim Idx = .SelectedText.IndexOf(mmatch.Groups(0).Value)
                                 Dim link As New Regex(UrlFilter, RegexOptions.IgnoreCase)
-                                .Text = link.Replace(.Text, "", 1)
+                                .SelectedText = link.Replace(.SelectedText, "", 1)
 
                                 '  .Text.Replace(mmatch.Groups(0).Value, "")
 
@@ -140,7 +145,7 @@ Namespace HelperClasses
                         End If
                     Next
 
-                    ' lb.EndUpdate()
+                    'lb.EndUpdate()
                     LogDisplayBox.ReadOnly = RtfReadonly
                     LogDisplayBox.EndUpdate()
                 End If
@@ -154,29 +159,27 @@ Namespace HelperClasses
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function FColor(Optional ByVal MyColor As fColorEnum = fColorEnum.DefaultColor) As System.Drawing.Color
-            Try
-                Select Case MyColor
-                    Case fColorEnum.DefaultColor
-                        Return Mainsettings.DefaultColor
-                    Case fColorEnum.Emit
-                        Return Mainsettings.EmitColor
-                    Case fColorEnum.Say
-                        Return Mainsettings.SayColor
-                    Case fColorEnum.Shout
-                        Return Mainsettings.ShoutColor
-                    Case fColorEnum.Whisper
-                        Return Mainsettings.WhColor
-                    Case fColorEnum.Emote
-                        Return Mainsettings.EmoteColor
-                    Case fColorEnum.Error
-                        Return Mainsettings.ErrorColor
-                    Case Else
-                        Return Mainsettings.DefaultColor
-                End Select
-            Catch Ex As Exception
-                Dim logError As New ErrorLogging(Ex, Me)
-            End Try
+        Public Function FColor(Optional ByVal MyColor As DisplayColors = DisplayColors.DefaultColor) As System.Drawing.Color
+
+            Select Case MyColor
+                Case DisplayColors.Emit
+                    Return Mainsettings.EmitColor
+                Case DisplayColors.Say
+                    Return Mainsettings.SayColor
+                Case DisplayColors.Shout
+                    Return Mainsettings.ShoutColor
+                Case DisplayColors.Whisper
+                    Return Mainsettings.WhColor
+                Case DisplayColors.Emote
+                    Return Mainsettings.EmoteColor
+                Case DisplayColors.Error
+                    Return Mainsettings.ErrorColor
+                Case DisplayColors.Warning
+                    Return Color.DarkOrange
+                Case Else
+                    Return Mainsettings.DefaultColor
+            End Select
+
             ' Return
         End Function
 
@@ -189,7 +192,7 @@ Namespace HelperClasses
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function FormatText(ByVal data As String, ByVal newColor As fColorEnum) As String
+        Public Function FormatText(ByVal data As String, ByVal newColor As DisplayColors) As String
 
             ChannelTag(data, "[$1]")
             Dim RftData As New StringBuilder(System.Web.HttpUtility.HtmlDecode(data))
@@ -237,13 +240,13 @@ Namespace HelperClasses
 #Region "Private Fields"
 
             Private _data As String
-            Private _TextColor As fColorEnum
+            Private _TextColor As DisplayColors
 
 #End Region
 
 #Region "Public Constructors"
 
-            Sub New(ByRef TextToDisplay As String, ByRef NewColor As fColorEnum)
+            Sub New(ByRef TextToDisplay As String, ByRef NewColor As DisplayColors)
                 _data = TextToDisplay
                 _TextColor = NewColor
             End Sub
@@ -261,11 +264,11 @@ Namespace HelperClasses
                 End Set
             End Property
 
-            Public Property TextColor() As fColorEnum
+            Public Property TextColor() As DisplayColors
                 Get
                     Return _TextColor
                 End Get
-                Set(ByVal value As fColorEnum)
+                Set(ByVal value As DisplayColors)
                     _TextColor = value
                 End Set
             End Property
