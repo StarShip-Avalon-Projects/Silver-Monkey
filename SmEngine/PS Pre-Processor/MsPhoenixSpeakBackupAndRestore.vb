@@ -4,6 +4,7 @@ Imports Furcadia.Util
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.PhoenixSpeak
+Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries
 
@@ -319,11 +320,9 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' (1:521) and the bot is in the middle of a PS Backup Process
         ''' </summary>
-        ''' <param name="reader">
-        ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function NotBotBackup(reader As TriggerReader) As Boolean
+        Public Function NotBotBackup() As Boolean
 
             Return CurrentPS_Stage = PsSystemRunning.PsBackup
 

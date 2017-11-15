@@ -1,6 +1,7 @@
 ﻿Imports Furcadia.Net.Utils.ServerObjects
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.Dice
+Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries
 
@@ -61,8 +62,9 @@ Namespace Engine.Libraries
             '(0:136) When any one rolls anything,
             Add(TriggerCategory.Cause, 136,
                 Function(reader)
-                    If reader.Parameters.GetType() Is GetType(DiceObject) Then
-                        dice = DirectCast(reader.Parameters(0), DiceObject)
+                    Dim DiceParam = reader.GetParameter(Of DiceObject)
+                    If DiceParam IsNot Nothing Then
+                        dice = DiceParam
                     End If
                     Return True
                 End Function, " When any one rolls anything,")
@@ -237,8 +239,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RollNumber(reader As TriggerReader) As Boolean
-            If reader.Parameters.GetType() Is GetType(DiceObject) Then
-                dice = DirectCast(reader.Parameters(0), DiceObject)
+            Dim DiceParam = reader.GetParameter(Of DiceObject)
+            If DiceParam IsNot Nothing Then
+                dice = DiceParam
             End If
             If String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
 
@@ -259,8 +262,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RollNumberMinusModifyer(reader As TriggerReader) As Boolean
-            If reader.Parameters.GetType() Is GetType(DiceObject) Then
-                dice = DirectCast(reader.Parameters(0), DiceObject)
+            Dim DiceParam = reader.GetParameter(Of DiceObject)
+            If DiceParam IsNot Nothing Then
+                dice = DiceParam
             End If
 
             If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False
@@ -283,8 +287,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function RollNumberPlusModifyer(reader As TriggerReader) As Boolean
-            If reader.Parameters.GetType() Is GetType(DiceObject) Then
-                dice = DirectCast(reader.Parameters(0), DiceObject)
+            Dim DiceParam = reader.GetParameter(Of DiceObject)
+            If DiceParam IsNot Nothing Then
+                dice = DiceParam
             End If
 
             If Not String.IsNullOrEmpty(dice.DiceCompnentMatch) Then Return False

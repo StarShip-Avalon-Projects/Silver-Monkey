@@ -120,8 +120,8 @@ Public Class Main
     ' ' <i>[SM]</i> '
     ' </b>
     ' ' Status: File Saved. Engine Restarted" + vbLf) PageExecute(0) ' End
-    ' If Else If DREAM.FurreList.Contains(sFID) Then ' Player =
-    ' DREAM.FurreList(sFID) Else Player = New ' FURRE(sName) End If
+    ' If Else If DREAM.Furres.Contains(sFID) Then ' Player =
+    ' DREAM.Furres(sFID) Else Player = New ' FURRE(sName) End If
 
     ' ' Player.Message = sData.ToString ' PageSetVariable(MS_Name, sName) '
     ' PageSetVariable("MESSAGE", sData) ' ' Execute (0:15) When some one
@@ -678,15 +678,15 @@ Public Class Main
                     DreamList.DataSource = Nothing
                     DreamList.Refresh()
                 End If
-                DreamList.DataSource = FurcadiaSession.Dream.FurreList.ToIList()
+                DreamList.DataSource = FurcadiaSession.Dream.Furres.ToIList()
                 DreamList.DisplayMember = "Name"
                 DreamList.ValueMember = "ShortName"
                 DreamList.EndUpdate()
-                TextBox_NoFlicker1.Text = FurcadiaSession.Dream.FurreList.Count.ToString
+                TextBox_NoFlicker1.Text = FurcadiaSession.Dream.Furres.Count.ToString
 
             End If
         Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me, FurcadiaSession.Dream.FurreList.ToString)
+            Dim logError As New ErrorLogging(eX, Me, FurcadiaSession.Dream.Furres.ToString)
         End Try
     End Sub
 
@@ -1120,7 +1120,7 @@ Public Class Main
     ''' </param>
     ''' <param name="Args">
     ''' </param>
-    Private Sub ParseFurreList(sender As Object, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
+    Private Sub ParseFurres(sender As Object, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
         Dim InstructionObject = DirectCast(sender, BaseServerInstruction)
 
         Select Case InstructionObject.InstructionType

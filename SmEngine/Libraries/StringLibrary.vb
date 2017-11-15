@@ -1,5 +1,6 @@
 ﻿Imports Furcadia.Util
 Imports Monkeyspeak
+Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries
 

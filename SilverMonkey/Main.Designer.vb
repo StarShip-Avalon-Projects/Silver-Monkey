@@ -62,8 +62,8 @@ Partial Class Main
         Me.TS_Filler = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripServerStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripClientStatus = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.FURREListBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
-        Me.FURREListBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.FurresBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
+        Me.FurresBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.EditMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.MenuCopy = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuCut = New System.Windows.Forms.ToolStripMenuItem()
@@ -113,8 +113,8 @@ Partial Class Main
         CType(Me.sw_, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextTryIcon.SuspendLayout()
         Me.TS_Main.SuspendLayout()
-        CType(Me.FURREListBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.FurresBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.FurresBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.EditMenu.SuspendLayout()
         Me.CopyMenu.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
@@ -647,8 +647,8 @@ Partial Class Main
         Me.ContextTryIcon.ResumeLayout(False)
         Me.TS_Main.ResumeLayout(False)
         Me.TS_Main.PerformLayout()
-        CType(Me.FURREListBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FURREListBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.FurresBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.FurresBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.EditMenu.ResumeLayout(False)
         Me.CopyMenu.ResumeLayout(False)
         Me.MenuStrip1.ResumeLayout(False)
@@ -702,8 +702,8 @@ Partial Class Main
     Friend WithEvents ContentsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
     Friend WithEvents ExportMonkeySpeakToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents FURREListBindingSource As Windows.Forms.BindingSource
-    Friend WithEvents FURREListBindingSource1 As Windows.Forms.BindingSource
+    Friend WithEvents FurresBindingSource As Windows.Forms.BindingSource
+    Friend WithEvents FurresBindingSource1 As Windows.Forms.BindingSource
     Friend WithEvents SplitContainer1 As Windows.Forms.SplitContainer
     Friend WithEvents SplitContainer2 As Windows.Forms.SplitContainer
     Friend WithEvents GroupBox3 As Windows.Forms.GroupBox

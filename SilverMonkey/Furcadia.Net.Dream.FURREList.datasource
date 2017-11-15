@@ -5,6 +5,6 @@
     Renaming the file extension or editing the content of this file may   
     cause the file to be unrecognizable by the program.
 -->
-<GenericObjectDataSource DisplayName="FURREList" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>Furcadia.Net.Dream.FURREList, FurcadiaLib, Version=2.0.623.606, Culture=neutral, PublicKeyToken=ee51e10a068cb0e3</TypeInfo>
+<GenericObjectDataSource DisplayName="Furres" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+   <TypeInfo>Furcadia.Net.Dream.Furres, FurcadiaLib, Version=2.0.623.606, Culture=neutral, PublicKeyToken=ee51e10a068cb0e3</TypeInfo>
 </GenericObjectDataSource>

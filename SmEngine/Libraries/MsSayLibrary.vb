@@ -135,9 +135,9 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 5,
                   Function(reader)
                       Dim fur = reader.Parameters(0)
-                      If fur.GetType() Is GetType(Furre) Then
-                          UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                          Player = DirectCast(fur, Furre)
+                      If fur IsNot Nothing Then
+                          Player = fur
+                          UpdateTriggerigFurreVariables(Player, reader.Page)
                       End If
                       Return Not FurcadiaSession.IsConnectedCharacter
                   End Function, " When someone says something,")
@@ -152,9 +152,9 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 8,
                  Function(reader)
                      Dim fur = reader.Parameters(0)
-                     If fur.GetType() Is GetType(Furre) Then
-                         UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                         Player = DirectCast(fur, Furre)
+                     If fur IsNot Nothing Then
+                         Player = fur
+                         UpdateTriggerigFurreVariables(Player, reader.Page)
                      End If
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function, " When someone shouts something,")
@@ -205,9 +205,9 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 18,
                 Function(reader)
                     Dim fur = reader.Parameters(0)
-                    If fur.GetType() Is GetType(Furre) Then
-                        UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                        Player = DirectCast(fur, Furre)
+                    If fur IsNot Nothing Then
+                        Player = fur
+                        UpdateTriggerigFurreVariables(Player, reader.Page)
                     End If
                     Return Not FurcadiaSession.IsConnectedCharacter
                 End Function,
@@ -224,9 +224,9 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 21,
                  Function(reader)
                      Dim fur = reader.Parameters(0)
-                     If fur.GetType() Is GetType(Furre) Then
-                         UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                         Player = DirectCast(fur, Furre)
+                     If fur IsNot Nothing Then
+                         Player = fur
+                         UpdateTriggerigFurreVariables(Player, reader.Page)
                      End If
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function, " When someone emits something,")
@@ -243,9 +243,9 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 24,
                 Function(reader)
                     Dim fur = reader.Parameters(0)
-                    If fur.GetType() Is GetType(Furre) Then
-                        UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                        Player = DirectCast(fur, Furre)
+                    If fur IsNot Nothing Then
+                        Player = fur
+                        UpdateTriggerigFurreVariables(Player, reader.Page)
                     End If
                     Return True
                 End Function, " When someone enters the Dream,")
@@ -259,9 +259,9 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 26,
                 Function(reader)
                     Dim fur = reader.Parameters(0)
-                    If fur.GetType() Is GetType(Furre) Then
-                        UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                        Player = DirectCast(fur, Furre)
+                    If fur IsNot Nothing Then
+                        Player = fur
+                        UpdateTriggerigFurreVariables(Player, reader.Page)
                     End If
                     Return True
                 End Function, " When someone leaves the Dream,")
@@ -526,7 +526,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedEnterView(reader As TriggerReader) As Boolean
 
-            Dim tPlayer = Dream.FurreList.GerFurreByName(reader.ReadString)
+            Dim tPlayer = Dream.Furres.GerFurreByName(reader.ReadString)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -546,7 +546,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedLeaveView(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim tPlayer = Dream.FurreList.GerFurreByName(name)
+            Dim tPlayer = Dream.Furres.GerFurreByName(name)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If

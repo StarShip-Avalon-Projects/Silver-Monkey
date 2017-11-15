@@ -31,15 +31,16 @@ Namespace Engine.Libraries
         ''' True if the %MESSAGE system variable contains the specified string
         ''' </returns>
         Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
-            Dim fur = reader.Parameters(0)
-            If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                Player = DirectCast(fur, Furre)
+            Dim fur = reader.GetParameter(Of Furre)
+            If fur IsNot Nothing Then
+                Player = fur
+                UpdateTriggerigFurreVariables(Player, reader.Page)
             End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
 
-            Dim test = StripFurcadiaMarkup(reader.Page.GetVariable(MessageVariable).Value.ToString.ToLower.Trim)
-            Return test.Contains(msMsg.ToLower)
+            Dim msg = Player.Message
+            msg = StripFurcadiaMarkup(msg)
+            Return msg.Contains(msMsg.ToLower)
 
         End Function
 
@@ -52,17 +53,16 @@ Namespace Engine.Libraries
         ''' true if the System %MESSAGE varible ends with the specified string
         ''' </returns>
         Protected Overridable Function MsgEndsWith(reader As TriggerReader) As Boolean
-            Dim fur = reader.Parameters(0)
-            If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                Player = DirectCast(fur, Furre)
+            Dim fur = reader.GetParameter(Of Furre)
+            If fur IsNot Nothing Then
+                Player = fur
+                UpdateTriggerigFurreVariables(Player, reader.Page)
             End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-            Dim msg = reader.Page.GetVariable(MessageVariable)
-
-            Dim test As String = StripFurcadiaMarkup(msg.Value.ToString)
+            Dim msg = Player.Message
+            msg = StripFurcadiaMarkup(msg)
             'Debug.Print("Msg = " & msg)
-            Return test.EndsWith(msMsg)
+            Return msg.EndsWith(msMsg)
 
         End Function
 
@@ -76,14 +76,14 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
-            Dim fur = reader.Parameters(0)
-            If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                Player = DirectCast(fur, Furre)
+            Dim fur = reader.GetParameter(Of Furre)
+            If fur IsNot Nothing Then
+                Player = fur
+                UpdateTriggerigFurreVariables(Player, reader.Page)
             End If
-            Dim var = StripFurcadiaMarkup(reader.Page.GetVariable(MessageVariable).Value.ToString).ToLower.Trim
+            Dim msg = StripFurcadiaMarkup(Player.Message).ToLower.Trim
             Dim test = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
-            Return Not FurcadiaSession.IsConnectedCharacter AndAlso var = test
+            Return Not FurcadiaSession.IsConnectedCharacter AndAlso msg = test
 
         End Function
 
@@ -96,17 +96,18 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
-            Dim fur = reader.Parameters(0)
-            If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                Player = DirectCast(fur, Furre)
+            Dim fur = reader.GetParameter(Of Furre)
+            If fur IsNot Nothing Then
+                Player = fur
+                UpdateTriggerigFurreVariables(Player, reader.Page)
             End If
-            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-            Dim msg = reader.Page.GetVariable(MessageVariable)
 
-            Dim test = StripFurcadiaMarkup(msg.Value.ToString)
-            'Debug.Print("Msg = " & msg)
-            Return Not test.EndsWith(msMsg)
+            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
+
+            Dim msg = Player.Message
+            msg = StripFurcadiaMarkup(msg)
+
+            Return Not msg.EndsWith(msMsg)
 
         End Function
 
@@ -119,16 +120,16 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Protected Function MsgStartsWith(reader As TriggerReader) As Boolean
-            Dim fur = reader.Parameters(0)
-            If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                Player = DirectCast(fur, Furre)
+            Dim fur = reader.GetParameter(Of Furre)
+            If fur IsNot Nothing Then
+                Player = fur
+                UpdateTriggerigFurreVariables(Player, reader.Page)
             End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-            Dim msg = reader.Page.GetVariable(MessageVariable)
+            Dim msg = Player.Message
+            msg = StripFurcadiaMarkup(msg)
 
-            Dim test = StripFurcadiaMarkup(msg.Value.ToString)
-            Return test.StartsWith(msMsg)
+            Return msg.StartsWith(msMsg)
         End Function
 
         ''' <summary>
@@ -145,10 +146,10 @@ Namespace Engine.Libraries
         ''' (ShortName version, lowercase with special characters stripped)
         ''' </remarks>
         Protected Overridable Function NameIs(reader As TriggerReader) As Boolean
-            Dim fur = reader.Parameters(0)
-            If fur.GetType() Is GetType(Furre) Then
-                UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                Player = DirectCast(fur, Furre)
+            Dim fur = reader.GetParameter(Of Furre)
+            If fur IsNot Nothing Then
+                Player = fur
+                UpdateTriggerigFurreVariables(Player, reader.Page)
             End If
             Dim TmpName = reader.ReadString()
             Return FurcadiaShortName(TmpName) = Player.ShortName
@@ -270,8 +271,6 @@ Namespace Engine.Libraries
             End If
             _SkillLevel = 0
             _HasHelp = False
-            Player = Session.Player
-            Dream = Session.Dream
             FurcadiaSession = Session
             FurcTimeTimer = New Timer(AddressOf TimeUpdate, Nothing,
                                       TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500))
@@ -280,33 +279,6 @@ Namespace Engine.Libraries
 #End Region
 
 #Region "Common Library Methods"
-
-        ''' <summary>
-        ''' Reads a Double or a MonkeySpeak Variable
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <param name="addIfNotExist">
-        ''' Add Variable to Variable Scope is it Does not exist,
-        ''' <para>
-        ''' Default Value is False
-        ''' </para>
-        ''' </param>
-        ''' <returns>
-        ''' <see cref="Double"/>
-        ''' </returns>
-        Public Shared Function ReadVariableOrNumber(ByVal reader As TriggerReader,
-                                             Optional addIfNotExist As Boolean = False) As Double
-            Dim result As Double = 0
-            If reader.PeekVariable Then
-                Dim value As String = reader.ReadVariable(addIfNotExist).Value.ToString
-                Double.TryParse(value, result)
-            ElseIf reader.PeekNumber Then
-                result = reader.ReadNumber
-            End If
-            Return result
-        End Function
 
         ''' <summary>
         ''' Is the specified furre in the dream?
@@ -319,7 +291,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function InDream(ByRef Name As String) As Boolean
             Dim found As Boolean = False
-            For Each Fur In Dream.FurreList
+            For Each Fur In Dream.Furres
                 If Fur.ShortName = FurcadiaShortName(Name) Then
                     found = True
                     Exit For

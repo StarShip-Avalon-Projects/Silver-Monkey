@@ -635,7 +635,7 @@ Public Class BotSession
                 New MsPhoenixSpeak(Me),
                 New MsPhoenixSpeakBackupAndRestore(Me),
                 New MsDice(Me),
-                New MsFurreList(Me),
+                New MsFurres(Me),
                 New MsWarning(Me),
                 New MsMovement(Me),
                 New WmCpyDta(Me),

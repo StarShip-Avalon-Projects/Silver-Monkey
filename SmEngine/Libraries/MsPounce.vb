@@ -30,7 +30,7 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Pounce list
         ''' </summary>
-        Private WithEvents OnlineFurreList As IO.NameList
+        Private WithEvents OnlineFurres As IO.NameList
 
         ''' <summary>
         ''' Pounce List File Name
@@ -40,7 +40,7 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Pounce Furre List
         ''' </summary>
-        Private PounceFurreList As List(Of MsPounceFurre)
+        Private PounceFurres As List(Of MsPounceFurre)
 
         ''' <summary>
         ''' Furcadia Pounce Server
@@ -52,10 +52,10 @@ Namespace Engine.Libraries
         ''' </summary>
         Public Sub New(ByRef Session As BotSession)
             MyBase.New(Session)
-            PounceFurreList = New List(Of MsPounceFurre)
+            PounceFurres = New List(Of MsPounceFurre)
             'Setup our Default Objects
             _onlineListFile = Paths.CheckBotFolder(ListFile)
-            OnlineFurreList = New IO.NameList(_onlineListFile)
+            OnlineFurres = New IO.NameList(_onlineListFile)
         End Sub
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
@@ -249,7 +249,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedNotOnline(reader As TriggerReader) As Boolean
 
             Dim TmpName = reader.ReadString()
-            For Each Fur In PounceFurreList
+            For Each Fur In PounceFurres
                 If Fur.ShortName = FurcadiaShortName(TmpName) Then
                     Return Not Fur.Online
                 End If
@@ -267,7 +267,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedonline(reader As TriggerReader) As Boolean
 
             Dim TmpName = reader.ReadString()
-            For Each Fur In PounceFurreList
+            For Each Fur In PounceFurres
                 If Fur.ShortName = FurcadiaShortName(TmpName) Then
                     Return Fur.Online
                 End If
@@ -382,7 +382,7 @@ Namespace Engine.Libraries
             Dim FileList = reader.ReadString
             CheckonlineList()
             If SmPounce IsNot Nothing Then SmPounce.Dispose()
-            SmPounce = New PounceClient(OnlineFurreList.ToArray, Nothing)
+            SmPounce = New PounceClient(OnlineFurres.ToArray, Nothing)
 
             Return True
         End Function

@@ -15,7 +15,7 @@ Namespace Engine.Libraries
     ''' AFK vs active players
     ''' </para>
     ''' </summary>
-    Public NotInheritable Class MsFurreList
+    Public NotInheritable Class MsFurres
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
@@ -66,11 +66,11 @@ Namespace Engine.Libraries
             " and the furre named {...} is active in the dream,")
 
             '(5:700) Copy the dreams's furre-list to array %Variable
-            Add(TriggerCategory.Effect, 700, AddressOf FurreListVar,
+            Add(TriggerCategory.Effect, 700, AddressOf FurresVar,
             " copy the dreams's furre-list to variable %Variable")
 
             '(5:701) save the dream list count to variable %Variable.
-            Add(TriggerCategory.Effect, 701, AddressOf FurreListCount,
+            Add(TriggerCategory.Effect, 701, AddressOf FurresCount,
             " save the dream furre list count to variable %Variable.")
 
             '(5:702) count the number of active furres in the drean and put it in the variable %Variable.
@@ -101,7 +101,7 @@ Namespace Engine.Libraries
 
             Dim var = reader.ReadVariable(True)
             Dim c As Double = 0
-            For Each fur As Furre In Dream.FurreList
+            For Each fur As Furre In Dream.Furres
                 If fur.AfkTime = 0 Then
                     c += 1
                 End If
@@ -126,7 +126,7 @@ Namespace Engine.Libraries
 
             Dim var = reader.ReadVariable(True)
             Dim c As Double = 0
-            For Each fs As Furre In Dream.FurreList
+            For Each fs As Furre In Dream.Furres
                 If fs.AfkTime > 0 Then
                     c += 1
                 End If
@@ -145,10 +145,10 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' The total number of furres in a <see cref="Monkeyspeak.Variable"/>
         ''' </returns>
-        Public Function FurreListCount(reader As TriggerReader) As Boolean
+        Public Function FurresCount(reader As TriggerReader) As Boolean
 
             Dim var = reader.ReadVariable(True)
-            var.Value = Convert.ToDouble(Dream.FurreList.Count)
+            var.Value = Convert.ToDouble(Dream.Furres.Count)
             Return True
 
         End Function
@@ -162,11 +162,11 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' a comoa seperated list of Furre Names
         ''' </returns>
-        Public Function FurreListVar(reader As TriggerReader) As Boolean
+        Public Function FurresVar(reader As TriggerReader) As Boolean
 
             Dim var = reader.ReadVariable(True)
             Dim str As New List(Of String)
-            For Each fur As Furre In Dream.FurreList
+            For Each fur As Furre In Dream.Furres
                 str.Add(fur.Name)
             Next
             var.Value = String.Join(", ", str.ToArray)
@@ -186,7 +186,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedActive(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.FurreList.GerFurreByName(name)
+            Dim Target = Dream.Furres.GerFurreByName(name)
             Return Target.AfkTime = 0
 
         End Function
@@ -203,7 +203,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedAFK(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.FurreList.GerFurreByName(name)
+            Dim Target = Dream.Furres.GerFurreByName(name)
             Return Target.AfkTime > 0
 
         End Function
@@ -220,7 +220,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedCanSe(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.FurreList.GerFurreByName(name)
+            Dim Target = Dream.Furres.GerFurreByName(name)
             Return Target.Visible
 
         End Function
@@ -237,7 +237,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedInDream(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.FurreList.GerFurreByName(name)
+            Dim Target = Dream.Furres.GerFurreByName(name)
             Return InDream(Target.Name)
 
         End Function
@@ -254,7 +254,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedNotCanSe(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.FurreList.GerFurreByName(name)
+            Dim Target = Dream.Furres.GerFurreByName(name)
             Return Not Target.Visible
 
         End Function
@@ -271,7 +271,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedNotInDream(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.FurreList.GerFurreByName(name)
+            Dim Target = Dream.Furres.GerFurreByName(name)
             Return Not InDream(Target.Name)
 
         End Function

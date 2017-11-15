@@ -1725,13 +1725,13 @@
   <data name="GroupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
   </data>
-  <data name="&gt;&gt;FURREListBindingSource.Name" xml:space="preserve">
-    <value>FURREListBindingSource</value>
+  <data name="&gt;&gt;FurresBindingSource.Name" xml:space="preserve">
+    <value>FurresBindingSource</value>
   </data>
   <data name="ReferenceLinksToolStripMenuItem.Text" xml:space="preserve">
     <value>Reference Links</value>
   </data>
-  <data name="&gt;&gt;FURREListBindingSource1.Type" xml:space="preserve">
+  <data name="&gt;&gt;FurresBindingSource1.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;sw_.Type" xml:space="preserve">
@@ -2189,11 +2189,11 @@
   <data name="&gt;&gt;GrpAction.Name" xml:space="preserve">
     <value>GrpAction</value>
   </data>
-  <data name="&gt;&gt;FURREListBindingSource.Type" xml:space="preserve">
+  <data name="&gt;&gt;FurresBindingSource.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;FURREListBindingSource1.Name" xml:space="preserve">
-    <value>FURREListBindingSource1</value>
+  <data name="&gt;&gt;FurresBindingSource1.Name" xml:space="preserve">
+    <value>FurresBindingSource1</value>
   </data>
   <data name="BTN_Go.Location" type="System.Drawing.Point, System.Drawing">
     <value>210, 463</value>
@@ -2243,10 +2243,10 @@
   <metadata name="TS_Main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>619, 17</value>
   </metadata>
-  <metadata name="FURREListBindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="FurresBindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="FURREListBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="FurresBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>304, 65</value>
   </metadata>
   <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

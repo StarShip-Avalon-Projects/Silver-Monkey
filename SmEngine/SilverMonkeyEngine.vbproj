@@ -133,8 +133,6 @@
     <Compile Include="Libraries\MsDice.vb" />
     <Compile Include="Libraries\MsDreamInfo.vb" />
     <Compile Include="Libraries\MsFurreList.vb" />
-    <None Include="Libraries\MsIO.vb" />
-    <None Include="Libraries\MsMath.vb" />
     <Compile Include="Libraries\MsMemberList.vb" />
     <Compile Include="Libraries\MsMovement.vb" />
     <Compile Include="Libraries\MsPounce.vb" />
