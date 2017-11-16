@@ -12,6 +12,7 @@
     Language="1033"
     UpgradeCode="A709F3A0-BEE3-403E-AC47-1FE1AD189C77">
     <Package InstallerVersion="400" InstallPrivileges="elevated"  Compressed="yes" />
+    <Media Id="1" Cabinet="SilverMonkey.cab" EmbedCab="yes" CompressionLevel="high" />
 
     <UI>
       <UIRef Id="WixUI_Advanced" />
@@ -28,8 +29,6 @@
     <MajorUpgrade
    Schedule="afterInstallExecute" AllowSameVersionUpgrades="no" Disallow="no"
    DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
-
-    <Media Id="1" Cabinet="SilverMonkey.cab" EmbedCab="yes" CompressionLevel="high" />
 
     <Property Id="ApplicationFolderName" Value="$(var.ProductName)" />
 
@@ -86,7 +85,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <Shortcut Id="$(var.MonkeySpeakEditor.TargetName)Shortcut"
                   Name="$(var.MonkeySpeakEditor.TargetName)"
-                               WorkingDirectory='APPLICATIONFOLDER'
+                  WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]$(var.MonkeySpeakEditor.TargetName)"
 
                   Description="Starts $(var.MonkeySpeakEditor.TargetName)" />
@@ -110,11 +109,10 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <Shortcut Id="$(var.DataMonkey.TargetName)Shortcut"
                   Name="$(var.DataMonkey.TargetName)"
-                               WorkingDirectory='APPLICATIONFOLDER'
+                  WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]$(var.DataMonkey.TargetName)"
-                  Description="Starts $(var.DataMonkey.TargetName)"
+                  Description="Starts $(var.DataMonkey.TargetName)" />
 
- />
         <RegistryValue
           Root="HKCU"
           Key="Software\$(var.CompanyName)\DataMonkey"
@@ -126,7 +124,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
         <Shortcut Id="$(var.VerbotKnowledgebaseEditor.TargetName)Shortcut"
                   Name="$(var.VerbotKnowledgebaseEditor.TargetName)"
-                               WorkingDirectory='APPLICATIONFOLDER'
+                  WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]$(var.VerbotKnowledgebaseEditor.TargetName)"
                   Description="Starts $(var.VerbotKnowledgebaseEditor.TargetName)"
  />
@@ -136,50 +134,20 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
           Name="installed" Type="integer" Value="1"
           KeyPath="yes" />
       </Component>
-      <!--       <Component Id="MantisNotifyShortcut" Guid="{BA68555B-8B14-4890-A6CF-5CBB6CFB2529}">
-
-     <Shortcut Id="$(var.MantisNotify.TargetName)Shortcut"
-                  Name="$(var.MantisNotify.TargetName)"
-                             WorkingDirectory='APPLICATIONFOLDER'
-                  Target="[APPLICATIONFOLDER]$(var.MantisNotify.TargetName)"
-                  Description="Starts $(var.MantisNotify.TargetName)"
- />
-        <RegistryValue
-          Root="HKCU"
-          Key="Software\$(var.CompanyName)\MantisNotify"
-          Name="installed" Type="integer" Value="1"
-          KeyPath="yes" />
-      </Component>-->
-      <!--    <Component Id="MantisNotifyShortcutStartup" Guid="{9C0C4CC8-09D1-4FE4-BC69-C1A237FB34B8}">
-
-        <Shortcut Id="$(var.MantisNotify.TargetName)ShortcutStartup"
-                  Directory="StartupFolder"
-                  Name="$(var.MantisNotify.TargetName)"
-                  WorkingDirectory='APPLICATIONFOLDER'
-                  Target="[INSTALLFOLDER]$(var.MantisNotify.TargetName)"
-                  Description="Starts $(var.MantisNotify.TargetName)"
- />
-        <RegistryValue
-          Root="HKCU"
-          Key="Software\$(var.CompanyName)\MantisNotifyStartup"
-          Name="installed" Type="integer" Value="1"
-          KeyPath="yes" />
-      </Component> -->
 
       <Component Id="ChatBotShortcut" Guid="{F9E10352-4CD5-4000-B334-0000FAEF4FCD}">
 
         <Shortcut Id="$(var.ChatBot.TargetName)Shortcut"
                   Name="$(var.ChatBot.TargetName)"
-                               WorkingDirectory='APPLICATIONFOLDER'
+                  WorkingDirectory='APPLICATIONFOLDER'
                   Target="[APPLICATIONFOLDER]$(var.ChatBot.TargetName)"
-                  Description="Starts $(var.ChatBot.TargetName)"
+                  Description="Starts $(var.ChatBot.TargetName)" />
 
- />
         <RegistryValue
-          Root="HKCU"
-          Key="Software\$(var.CompanyName)\ChatBot"
-          Name="installed" Type="integer" Value="1"
-          KeyPath="yes" />
+            Root="HKCU"
+            Key="Software\$(var.CompanyName)\ChatBot"
+            Name="installed" Type="integer" Value="1"
+            KeyPath="yes" />
       </Component>
     </DirectoryRef>
     <PropertyRef Id="NETFRAMEWORK45" />
@@ -195,10 +163,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="MonkeyCore.Binaries" />
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
       <ComponentGroupRef Id="MonkeyCore.Content" />
-      <!--
-      <ComponentGroupRef Id="BugTraqConnect.Binaries" />
-      <ComponentGroupRef Id="BugTraqConnect.Symbols" />
-      -->
+
       <ComponentRef Id="SilverMonkeyShortcut" />
       <ComponentRef Id="MonkeySpeakEditorShortcut" />
       <!--     <ComponentGroupRef Id="TheClaaaw.Binaries" />
@@ -207,7 +172,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="MonkeySpeakEditor.Binaries" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Content" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Symbols" />
-      <!--    <ComponentRef Id="MonkeySpeakHelp" /> -->
+
       <ComponentGroupRef Id="Monkeyspeak.Binaries" />
       <ComponentGroupRef Id="Monkeyspeak.Symbols" />
 
@@ -234,16 +199,6 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="DataMonkey.Symbols" />
       <ComponentRef Id="DataMonkeyShortcut" />
       <ComponentRef Id="DataMokeyHelp" />
-      <!--
-      <ComponentGroupRef Id="MantisSubmit.Binaries" />
-      <ComponentGroupRef Id="MantisSubmit.Symbols" />
-      <ComponentGroupRef Id="MantisSubmit.Content" />
-
-      <ComponentGroupRef Id="MantisNotify.Binaries" />
-      <ComponentGroupRef Id="MantisNotify.Symbols" />
-      <ComponentRef Id="MantisNotifyShortcut" />
-      -->
-      <!--   <ComponentRef Id="MantisNotifyShortcutStartup" /> -->
 
       <Feature Id="ChatBot" Title="Chatbot Application" Level="2">
         <ComponentGroupRef Id="ChatBot.Binaries" />
@@ -255,8 +210,6 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
         <ComponentGroupRef Id="VerbotKnowledgebaseEditor.Symbols" />
         <ComponentRef Id="VerbotKnowledgebaseEditorShortcut" />
       </Feature>
-      <!--   <Feature Id="MantisNotify" Title="BugTraq Notifyer" Level="2">
-      </Feature>-->
     </Feature>
 
     <!-- Help file-->
@@ -264,9 +217,6 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <Component Id="smHelp" Guid="{7FEB427A-07AB-4083-8792-2005152C64F3}">
         <File Id="smHelp" Source="$(var.SolutionDir)Build/Help/Silver Monkey.chm" KeyPath="no" Checksum="yes" />
       </Component>
-      <!--   <Component Id="MonkeySpeakHelp" Guid="{34c5d490-ae16-43ea-95b9-84276ad16370}">
-        <File Id="MonkeySpeakEditorHelp" Source="$(var.SolutionDir)Build/Help/Monkey_Speak_Editor_Help.chm" KeyPath="no" Checksum="yes" />
-      </Component> -->
       <Component Id="DataMokeyHelp" Guid="{0219f1a1-d0d4-4c1b-817b-a6fa3f6e95fd}">
         <File Id="DataMonkeyHelp" Source="$(var.SolutionDir)Build/Help/Data_Monkey_Help.chm" KeyPath="no" Checksum="yes" />
       </Component>
@@ -311,12 +261,5 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
         <File Id="SQLite.Interop.X64" Source="$(var.SilverMonkey2.TargetDir)x64\SQLite.Interop.dll" KeyPath="no" />
       </Component>
     </DirectoryRef>
-
-    <!-- Plugin FilesS-->
-    <!--   <DirectoryRef Id="PLUGINS">
-      <Component Id="TheClaaawIni" Guid="{0865D700-279F-4369-A1D5-AD4E89CAB1CA}">
-        <File Id="TheClaaawIni" Source="$(var.TheClaaaw.TargetDir)TheClaaaw.ini" KeyPath="no" Checksum="yes" />
-      </Component>
-    </DirectoryRef> -->
   </Product>
 </Wix>
