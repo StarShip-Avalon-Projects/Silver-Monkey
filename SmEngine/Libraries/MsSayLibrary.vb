@@ -134,7 +134,7 @@ Namespace Engine.Libraries
             'says
             Add(TriggerCategory.Cause, 5,
                   Function(reader)
-                      Dim fur = reader.Parameters(0)
+                      Dim fur = reader.GetParameter(Of Furre)
                       If fur IsNot Nothing Then
                           Player = fur
                           UpdateTriggerigFurreVariables(Player, reader.Page)
@@ -151,7 +151,7 @@ Namespace Engine.Libraries
             'Shouts
             Add(TriggerCategory.Cause, 8,
                  Function(reader)
-                     Dim fur = reader.Parameters(0)
+                     Dim fur = reader.GetParameter(Of Furre)
                      If fur IsNot Nothing Then
                          Player = fur
                          UpdateTriggerigFurreVariables(Player, reader.Page)
@@ -169,10 +169,10 @@ Namespace Engine.Libraries
             'emotes
             Add(TriggerCategory.Cause, 11,
                  Function(reader)
-                     Dim fur = reader.Parameters(0)
-                     If fur.GetType() Is GetType(Furre) Then
-                         UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                         Player = DirectCast(fur, Furre)
+                     Dim fur = reader.GetParameter(Of Furre)
+                     If fur IsNot Nothing Then
+                         Player = fur
+                         UpdateTriggerigFurreVariables(Player, reader.Page)
                      End If
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function, " When someone emotes something,")
@@ -186,10 +186,10 @@ Namespace Engine.Libraries
             'Whispers
             Add(TriggerCategory.Cause, 15,
                 Function(reader)
-                    Dim fur = reader.Parameters(0)
-                    If fur.GetType() Is GetType(Furre) Then
-                        UpdateTriggerigFurreVariables(DirectCast(fur, Furre), reader.Page)
-                        Player = DirectCast(fur, Furre)
+                    Dim fur = reader.GetParameter(Of Furre)
+                    If fur IsNot Nothing Then
+                        Player = fur
+                        UpdateTriggerigFurreVariables(Player, reader.Page)
                     End If
                     Return Not FurcadiaSession.IsConnectedCharacter
                 End Function, " When someone whispers something,")
@@ -204,7 +204,7 @@ Namespace Engine.Libraries
             'Says or Emotes
             Add(TriggerCategory.Cause, 18,
                 Function(reader)
-                    Dim fur = reader.Parameters(0)
+                    Dim fur = reader.GetParameter(Of Furre)
                     If fur IsNot Nothing Then
                         Player = fur
                         UpdateTriggerigFurreVariables(Player, reader.Page)
@@ -220,29 +220,11 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 20,
                 AddressOf MsgContains, " When someone says or emotes something with {..} in it,")
 
-            'Emits
-            Add(TriggerCategory.Cause, 21,
-                 Function(reader)
-                     Dim fur = reader.Parameters(0)
-                     If fur IsNot Nothing Then
-                         Player = fur
-                         UpdateTriggerigFurreVariables(Player, reader.Page)
-                     End If
-                     Return Not FurcadiaSession.IsConnectedCharacter
-                 End Function, " When someone emits something,")
-
-            Add(TriggerCategory.Cause, 22,
-                     AddressOf MsgIs, " When someone emits {..},")
-
-            '(0:13) When some one emotes something with {..} in it
-            Add(TriggerCategory.Cause, 23,
-                 AddressOf MsgContains, " When someone emits something with {..} in it,")
-
             'Furre Enters
             '(0:4) When someone is added to the Dream manifest,
             Add(TriggerCategory.Cause, 24,
                 Function(reader)
-                    Dim fur = reader.Parameters(0)
+                    Dim fur = reader.GetParameter(Of Furre)
                     If fur IsNot Nothing Then
                         Player = fur
                         UpdateTriggerigFurreVariables(Player, reader.Page)
@@ -258,7 +240,7 @@ Namespace Engine.Libraries
             '(0:25) When someone leaves the FurcadiaSession.Dream,
             Add(TriggerCategory.Cause, 26,
                 Function(reader)
-                    Dim fur = reader.Parameters(0)
+                    Dim fur = reader.GetParameter(Of Furre)
                     If fur IsNot Nothing Then
                         Player = fur
                         UpdateTriggerigFurreVariables(Player, reader.Page)
@@ -431,11 +413,7 @@ Namespace Engine.Libraries
             ' (5:5) whisper {..} to the triggering furre.
             Add(TriggerCategory.Effect, 5,
                    Function(reader As TriggerReader) As Boolean
-
-                       Dim msg = reader.ReadString
-                       Dim tname = reader.Page.GetVariable(MS_Name)
-                       Return SndWhisper(tname.Value.ToString, msg)
-
+                       Return SndWhisper(Player.ShortName, reader.ReadString)
                    End Function,
                   " whisper {..} to the triggering furre.")
 
@@ -738,9 +716,6 @@ Namespace Engine.Libraries
         ''' </para>
         ''' <para>
         ''' (0:19) When someone says or emotes {..},
-        ''' </para>
-        ''' <para>
-        ''' (0:22) When someone emits {..},
         ''' </para>
         ''' <para>
         ''' (1:7) and the triggering furre's message is {..},

@@ -11,10 +11,12 @@ Namespace Engine.Libraries
     ''' </summary>
     ''' <remarks>
     ''' This Lib contains the following unnamed delegates:
-    ''' <para>
+    ''' <para/>
     ''' (0:90) When the bot enters a Dream,
-    ''' </para>
+    ''' <para/>
     ''' (0:93) When the bot leaves the Dream named {..},
+    ''' <para/>
+    ''' (0:22) When someone emits {..},
     ''' </remarks>
     Public NotInheritable Class MsDreamInfo
         Inherits MonkeySpeakLibrary
@@ -24,6 +26,24 @@ Namespace Engine.Libraries
         End Sub
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
+            'Emits
+            Add(TriggerCategory.Cause, 21,
+                 Function(reader)
+                     Dim dream = reader.GetParameter(Of DREAM)
+                     If dream IsNot Nothing Then
+                         dream = dream
+                         UpdateCurrentDreamVariables(dream, reader.Page)
+                     End If
+                     Return Not FurcadiaSession.IsConnectedCharacter
+                 End Function, " When someone emits something,")
+
+            Add(TriggerCategory.Cause, 22,
+                     AddressOf MsgIs, " When someone emits {..},")
+
+            '(0:13) When some one emotes something with {..} in it
+            Add(TriggerCategory.Cause, 23,
+                 AddressOf MsgContains, " When someone emits something with {..} in it,")
+
             '(0:90) When the bot enters a Dream,
             Add(TriggerCategory.Cause, 90, AddressOf SetDreamInfo, " When the bot enters a Dream,")
             '(0:91) When the bot enters a Dream named {..},
@@ -51,7 +71,7 @@ Namespace Engine.Libraries
 
             '(1:22) and the furre named {..} is not the Dream owner,
             Add(TriggerCategory.Condition, 22,
-               Function(reader) FurcadiaShortName(Dream.Owner) <>
+               Function(reader) Dream.OwnerShortName <>
                FurcadiaShortName(reader.ReadString),
                 " and the furre named {..} is not the Dream owner,")
             '(1:23) and the Dream Name is {..},
@@ -75,7 +95,7 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Condition, 27,
                 Function(reader As TriggerReader)
                     Dim tname = reader.Page.GetVariable(DreamOwnerVariable)
-                    If FurcadiaSession.HasShare OrElse Dream.Owner = FurcadiaSession.ConnectedFurre.ShortName Then
+                    If FurcadiaSession.HasShare OrElse Dream.OwnerShortName = FurcadiaSession.ConnectedFurre.ShortName Then
                         Return True
                     End If
                     Return False
@@ -160,11 +180,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Function DreamNameIs(reader As TriggerReader) As Boolean
             Dim Info = reader.GetParameter(Of DREAM)
-            Dim DreamName As String = reader.ReadString
             If Info IsNot Nothing Then
                 Dream = Info
                 UpdateCurrentDreamVariables(Dream, reader.Page)
-                Return Dream.ShortName = FurcadiaShortName(DreamName)
+                Return Dream.ShortName = FurcadiaShortName(reader.ReadString)
             End If
             Return False
         End Function
@@ -290,9 +309,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function TriggeringFurreIsDreamOwner(reader As TriggerReader) As Boolean
 
-            Dim TrigFurreName = reader.Page.GetVariable(DreamOwnerVariable).Value.ToString
-            'add Machine Name parser
-            Return Player.ShortName = FurcadiaShortName(TrigFurreName)
+            Return Player.ShortName = Dream.OwnerShortName
 
         End Function
 

@@ -256,7 +256,7 @@ Public Class BotSession
                     ' (0:22) When someone emits {...}
                     ' (0:23) When someone emits something with {...} in it
                     Dim ids() = {21, 22, 23}
-                    Await MSpage.ExecuteAsync(ids, Furr)
+                    Await MSpage.ExecuteAsync(ids, Furr, Dream)
 
                 Case "query"
 

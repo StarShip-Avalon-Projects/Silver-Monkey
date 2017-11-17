@@ -14,6 +14,8 @@ Public Class Variables
     'Dim RefreshList As New Thread(AddressOf RefreshMe)
     Dim Lock As New Object
 
+    Private Shared Shadows IsDisposed As Boolean
+
 #End Region
 
 #Region "Private Delegates"
@@ -113,6 +115,7 @@ Public Class Variables
     End Sub
 
     Public Shared Sub SendLogsToDemugWindow(Log As LogMessage)
+        If Variables.IsDisposed Then Exit Sub
         If ErrorLogTxtBx.InvokeRequired Then
             ErrorLogTxtBx.Invoke(New LogMessageDelegate(AddressOf SendLogsToDemugWindow), Log)
         Else
@@ -129,12 +132,17 @@ Public Class Variables
     End Sub
 
     Private Sub Variables_Load(sender As Object, e As EventArgs) Handles Me.Load
+        IsDisposed = False
         Logger.DebugEnabled = True
     End Sub
 
     Private Sub Variables_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         Logger.DebugEnabled = False
 
+    End Sub
+
+    Private Sub Variables_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+        IsDisposed = True
     End Sub
 
 #End Region

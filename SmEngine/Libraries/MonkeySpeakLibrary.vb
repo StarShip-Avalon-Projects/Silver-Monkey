@@ -36,6 +36,11 @@ Namespace Engine.Libraries
                 Player = fur
                 UpdateTriggerigFurreVariables(Player, reader.Page)
             End If
+            Dim dreamInfo = reader.GetParameter(Of DREAM)
+            If dreamInfo IsNot Nothing Then
+                Dream = dreamInfo
+                UpdateCurrentDreamVariables(Dream, reader.Page)
+            End If
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
 
             Dim msg = Player.Message
@@ -80,6 +85,11 @@ Namespace Engine.Libraries
             If fur IsNot Nothing Then
                 Player = fur
                 UpdateTriggerigFurreVariables(Player, reader.Page)
+            End If
+            Dim dreamInfo = reader.GetParameter(Of DREAM)
+            If dreamInfo IsNot Nothing Then
+                Dream = dreamInfo
+                UpdateCurrentDreamVariables(Dream, reader.Page)
             End If
             Dim msg = StripFurcadiaMarkup(Player.Message).ToLower.Trim
             Dim test = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
