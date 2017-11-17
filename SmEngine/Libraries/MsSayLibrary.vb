@@ -2,7 +2,6 @@
 Imports Furcadia.Net.Dream
 Imports Furcadia.Util
 Imports Monkeyspeak
-Imports SilverMonkeyEngine.SmConstants
 Imports System.Threading
 Imports SilverMonkeyEngine.MsLibHelper
 

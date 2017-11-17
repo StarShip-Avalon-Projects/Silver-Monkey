@@ -2,7 +2,7 @@
 Imports Furcadia.Util
 Imports MonkeyCore
 Imports Monkeyspeak
-Imports SilverMonkeyEngine.SmConstants
+Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries
 
@@ -114,7 +114,7 @@ Namespace Engine.Libraries
         Public Function AddTrigFurre(reader As TriggerReader) As Boolean
 
             Try
-                Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+                Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
                 If TrigFurreIsMember(reader) = False AndAlso TrigFurreIsNotMember(reader) Then
                     Dim sw = New StreamWriter(MemberList, True)
                     sw.WriteLine(Furre)
@@ -254,7 +254,7 @@ Namespace Engine.Libraries
             Try
                 CheckMemberList()
 
-                Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+                Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
 
                 Dim linesList As New List(Of String)(File.ReadAllLines(MemberList))
                 Using SR As New StreamReader(MemberList)
@@ -290,7 +290,7 @@ Namespace Engine.Libraries
             Try
                 CheckMemberList()
 
-                Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+                Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
 
                 Dim f = New List(Of String)
                 f.AddRange(File.ReadAllLines(MemberList))

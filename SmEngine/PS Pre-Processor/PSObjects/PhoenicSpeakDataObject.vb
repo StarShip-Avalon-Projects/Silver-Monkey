@@ -1,6 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Furcadia.Net.Utils.ServerObjects
-Imports SilverMonkeyEngine.SmConstants
+Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries.PhoenixSpeak
 

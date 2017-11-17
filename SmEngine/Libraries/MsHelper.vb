@@ -1,4 +1,5 @@
-﻿Imports Furcadia.Net.Dream
+﻿Imports System.Text.RegularExpressions
+Imports Furcadia.Net.Dream
 Imports Monkeyspeak
 
 Public NotInheritable Class MsLibHelper
@@ -18,6 +19,8 @@ Public NotInheritable Class MsLibHelper
     Public Const DreamOwnerVariable = "%DREAMOWNER"
 
     Public Const DreamNameVariable = "%DREAMNAME"
+
+    Public Const SmRegExOptions As RegexOptions = ReaderOptions.None
 
     ''' <summary>
     ''' updates Bot Constant Variables for the Current Triggering  Furre

@@ -680,7 +680,7 @@ Namespace Engine.Libraries
 
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
-            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, FurcadiaShortName(Furre)).ToString, Value)
 
@@ -721,7 +721,7 @@ Namespace Engine.Libraries
 
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
-            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
             Furre = FurcadiaShortName(Furre)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -811,7 +811,7 @@ Namespace Engine.Libraries
 
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
-            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
             Furre = FurcadiaShortName(Furre)
             Dim val As String = GetValueFromTable(info, Furre).ToString
             Dim Value As Double = 0

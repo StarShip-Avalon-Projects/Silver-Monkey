@@ -4,7 +4,7 @@ Imports Furcadia.Util
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.Pounce
-Imports SilverMonkeyEngine.SmConstants
+Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries
 
@@ -159,7 +159,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function AddTrigFurre(reader As TriggerReader) As Boolean
 
-            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
             If TrigFurreIsMember(reader) = False AndAlso TrigFurreIsNotMember(reader) Then
                 Dim sw As StreamWriter = New StreamWriter(_onlineListFile, True)
                 sw.WriteLine(Furre)
@@ -317,7 +317,7 @@ Namespace Engine.Libraries
 
             CheckonlineList()
 
-            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
             Furre = FurcadiaShortName(Furre)
             Dim line As String = Nothing
             Dim linesList = New List(Of String)(File.ReadAllLines(_onlineListFile))
@@ -347,7 +347,7 @@ Namespace Engine.Libraries
         Public Function TrigFurreIsMember(reader As Monkeyspeak.TriggerReader) As Boolean
             CheckonlineList()
 
-            Dim Furre = reader.Page.GetVariable(MS_Name).Value.ToString
+            Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
             Dim f = File.ReadAllLines(_onlineListFile)
             For Each l As String In f
                 If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
