@@ -27,7 +27,7 @@ Public NotInheritable Class MsLibHelper
     ''' </summary>
     ''' <param name="ActivePlayer"></param>
     ''' <param name="MonkeySpeakPage"></param>
-    Public Shared Sub UpdateTriggerigFurreVariables(ActivePlayer As Furre, MonkeySpeakPage As Page)
+    Public Shared Sub UpdateTriggerigFurreVariables(ActivePlayer As IFurre, MonkeySpeakPage As Page)
         DirectCast(MonkeySpeakPage.GetVariable(MessageVariable), ConstantVariable).SetValue(ActivePlayer.Message)
         DirectCast(MonkeySpeakPage.GetVariable(ShortNameVariable), ConstantVariable).SetValue(ActivePlayer.ShortName)
         DirectCast(MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable), ConstantVariable).SetValue(ActivePlayer.Name)

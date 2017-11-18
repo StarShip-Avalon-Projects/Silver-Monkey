@@ -31,22 +31,44 @@ Namespace Engine.Libraries
         ''' True if the %MESSAGE system variable contains the specified string
         ''' </returns>
         Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
-            Dim fur = reader.GetParameter(Of Furre)
-            If fur IsNot Nothing Then
-                Player = fur
-                UpdateTriggerigFurreVariables(Player, reader.Page)
-            End If
-            Dim dreamInfo = reader.GetParameter(Of DREAM)
-            If dreamInfo IsNot Nothing Then
-                Dream = dreamInfo
-                UpdateCurrentDreamVariables(Dream, reader.Page)
-            End If
+            ReadParams(reader)
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
 
             Dim msg = Player.Message
             msg = StripFurcadiaMarkup(msg)
             Return msg.Contains(msMsg.ToLower)
 
+        End Function
+
+        ''' <summary>
+        ''' Set <see cref="Player"/> and <see cref="Dream"/> from
+        ''' GetParametersOfType&lt;T&gt;
+        ''' </summary>
+        ''' <param name="reader"></param>
+        ''' <returns>true if any parameter was set; false otherwise</returns>
+        Public Function ReadParams(reader As TriggerReader) As Boolean
+            Dim ParamSet = False
+            Dim dreamInfo As DREAM() = reader.GetParametersOfType(Of DREAM)
+            Dim ActiveFurre As IFurre() = reader.GetParametersOfType(Of IFurre)
+            If dreamInfo IsNot Nothing Then
+                If String.IsNullOrWhiteSpace(dreamInfo(0).Name) Then
+                    Throw New ArgumentException("DreamInfo not set")
+                End If
+                Dream = dreamInfo(0)
+
+                UpdateCurrentDreamVariables(Dream, reader.Page)
+                ParamSet = True
+            End If
+            If ActiveFurre IsNot Nothing Then
+                Player = ActiveFurre(0)
+                If ActiveFurre(0).FurreID = -1 Then
+                    Throw New ArgumentException("Invalid ActivePlayer")
+                End If
+                UpdateTriggerigFurreVariables(Player, reader.Page)
+                ParamSet = True
+
+            End If
+            Return ParamSet
         End Function
 
         ''' <summary>
@@ -58,11 +80,7 @@ Namespace Engine.Libraries
         ''' true if the System %MESSAGE varible ends with the specified string
         ''' </returns>
         Protected Overridable Function MsgEndsWith(reader As TriggerReader) As Boolean
-            Dim fur = reader.GetParameter(Of Furre)
-            If fur IsNot Nothing Then
-                Player = fur
-                UpdateTriggerigFurreVariables(Player, reader.Page)
-            End If
+            ReadParams(reader)
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
             Dim msg = Player.Message
             msg = StripFurcadiaMarkup(msg)
@@ -81,16 +99,8 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
-            Dim fur = reader.GetParameter(Of Furre)
-            If fur IsNot Nothing Then
-                Player = fur
-                UpdateTriggerigFurreVariables(Player, reader.Page)
-            End If
-            Dim dreamInfo = reader.GetParameter(Of DREAM)
-            If dreamInfo IsNot Nothing Then
-                Dream = dreamInfo
-                UpdateCurrentDreamVariables(Dream, reader.Page)
-            End If
+            ReadParams(reader)
+
             Dim msg = StripFurcadiaMarkup(Player.Message).ToLower.Trim
             Dim test = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
             Return Not FurcadiaSession.IsConnectedCharacter AndAlso msg = test
@@ -106,11 +116,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
-            Dim fur = reader.GetParameter(Of Furre)
-            If fur IsNot Nothing Then
-                Player = fur
-                UpdateTriggerigFurreVariables(Player, reader.Page)
-            End If
+            ReadParams(reader)
 
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
 
@@ -130,11 +136,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Protected Function MsgStartsWith(reader As TriggerReader) As Boolean
-            Dim fur = reader.GetParameter(Of Furre)
-            If fur IsNot Nothing Then
-                Player = fur
-                UpdateTriggerigFurreVariables(Player, reader.Page)
-            End If
+
+            ReadParams(reader)
+
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
             Dim msg = Player.Message
             msg = StripFurcadiaMarkup(msg)
@@ -156,11 +160,7 @@ Namespace Engine.Libraries
         ''' (ShortName version, lowercase with special characters stripped)
         ''' </remarks>
         Protected Overridable Function NameIs(reader As TriggerReader) As Boolean
-            Dim fur = reader.GetParameter(Of Furre)
-            If fur IsNot Nothing Then
-                Player = fur
-                UpdateTriggerigFurreVariables(Player, reader.Page)
-            End If
+            ReadParams(reader)
             Dim TmpName = reader.ReadString()
             Return FurcadiaShortName(TmpName) = Player.ShortName
 

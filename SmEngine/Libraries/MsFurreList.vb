@@ -186,7 +186,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedActive(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Return Target.AfkTime = 0
 
         End Function
@@ -203,7 +203,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedAFK(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Return Target.AfkTime > 0
 
         End Function
@@ -220,7 +220,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedCanSe(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Return Target.Visible
 
         End Function
@@ -254,7 +254,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedNotCanSe(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Return Not Target.Visible
 
         End Function

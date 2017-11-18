@@ -185,7 +185,7 @@ Public Class BotSession
     Public Async Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) _
         Handles MyBase.ProcessServerChannelData
         If MSpage Is Nothing Then Exit Sub
-        Dim Furr As Furre = InstructionObject.Player
+        Dim Furr As IFurre = InstructionObject.Player
 
         UpdateTriggerigFurreVariables(Furr, MSpage)
 
@@ -266,25 +266,25 @@ Public Class BotSession
                         Case "summon"
                             ''JOIN
                             Dim ids() = {34, 35}
-                            Await MSpage.ExecuteAsync(ids)
+                            Await MSpage.ExecuteAsync(ids, Furr)
 
                         Case "join"
                             ''SUMMON
                             Dim ids() = {32, 33}
-                            Await MSpage.ExecuteAsync(ids)
+                            Await MSpage.ExecuteAsync(ids, Furr)
 
                         Case "follow"
                             ''LEAD
                             Dim ids() = {36, 37}
-                            Await MSpage.ExecuteAsync(ids)
+                            Await MSpage.ExecuteAsync(ids, Furr)
 
                         Case "lead"
                             ''FOLLOW
                             Dim ids() = {38, 39}
-                            Await MSpage.ExecuteAsync(ids)
+                            Await MSpage.ExecuteAsync(ids, Furr)
                         Case "cuddle"
                             Dim ids() = {40, 41}
-                            Await MSpage.ExecuteAsync(ids)
+                            Await MSpage.ExecuteAsync(ids, Furr)
 
                     End Select
                 Case "banish"
@@ -383,34 +383,34 @@ Public Class BotSession
                     Dim CookieToMe = New Regex(String.Format("{0}", CookieToMeREGEX))
                     If CookieToMe.Match(Text).Success Then
                         Dim ids() = {42, 43}
-                        Await MSpage.ExecuteAsync(ids)
+                        Await MSpage.ExecuteAsync(ids, Furr)
                     End If
                     Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
                     If CookieToAnyone.Match(Text).Success Then
 
                         If IsConnectedCharacter() Then
                             Dim ids() = {42, 43}
-                            Await MSpage.ExecuteAsync(ids)
+                            Await MSpage.ExecuteAsync(ids, Furr)
                         Else
-                            Await MSpage.ExecuteAsync(44)
+                            Await MSpage.ExecuteAsync(44, Furr)
                         End If
 
                     End If
                     Dim CookieFail = New Regex(String.Format("You do not have any (.*?) left!"))
                     If CookieFail.Match(Text).Success Then
-                        Await MSpage.ExecuteAsync(45)
+                        Await MSpage.ExecuteAsync(45, Furr)
                     End If
                     Dim EatCookie = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
                     If EatCookie.Match(Text).Success Then
                         'TODO Cookie eat %MESSAGE can change by Dragon Speak
 
-                        Await MSpage.ExecuteAsync(49)
+                        Await MSpage.ExecuteAsync(49, Furr)
 
                     End If
                     '(0:96) When the Bot sees "Your cookies are ready."
                     Dim CookiesReady As Regex = New Regex(<a>"Your cookies are ready.  http://furcadia.com/cookies/ for more info!"</a>)
                     If CookiesReady.Match(Text).Success Then
-                        Await MSpage.ExecuteAsync(96)
+                        Await MSpage.ExecuteAsync(96, Furr)
                     End If
                 Case Else
                     'TODO: plugin Dynamic(Group)  Channels here
@@ -464,7 +464,7 @@ Public Class BotSession
             Dim VariableList As New List(Of IVariable)
 
             MSpage = Await LoadLibraryAsync(False)
-            Dim fur = New Furre
+            Dim fur As IFurre = New Furre
             VariableList.Add(New ConstantVariable("%DREAMOWNER", lastDream.Owner))
             VariableList.Add(New ConstantVariable("%DREAMNAME", lastDream.Name))
             VariableList.Add(New ConstantVariable("%BOTNAME", ConnectedFurre.Name))

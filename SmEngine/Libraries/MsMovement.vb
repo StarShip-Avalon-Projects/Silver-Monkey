@@ -476,7 +476,7 @@ Namespace Engine.Libraries
 
             Dim Var = reader.ReadVariable(True)
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Var.Value = Target.FurreColors.ToString
             Return Target.FurreID > 0
 
@@ -501,7 +501,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedDescContains(reader As TriggerReader) As Boolean
             Dim name = reader.ReadString()
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Dim Pattern = reader.ReadString
             If String.IsNullOrEmpty(Target.FurreDescription) Then Throw New MonkeyspeakException("Description not found. Try looking at the furre first")
             Return Target.FurreDescription.Contains(Pattern)
@@ -529,7 +529,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedDescVar(reader As TriggerReader) As Boolean
             Dim Var = reader.ReadVariable(True)
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             If String.IsNullOrEmpty(Target.FurreDescription) Then Throw New MonkeyspeakException("Description not found, Try looking at the furre first.")
             Var.Value = Target.FurreDescription
             Return True
@@ -549,7 +549,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedFaceDirectionNumber(reader As TriggerReader) As Boolean
             Dim Dir = reader.ReadVariable(True)
             Dim name = reader.ReadString
-            Dim tPlayer = Dream.Furres.GerFurreByName(name)
+            Dim tPlayer As Furre = Dream.Furres.GerFurreByName(name)
             Dim direction As Double = 0
 
             If tPlayer.LastPosition.X <> tPlayer.Position.X Or tPlayer.LastPosition.Y <> tPlayer.Position.Y Then
@@ -601,7 +601,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedFacingNE(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Dim Spec = reader.ReadNumber()
             Select Case Target.Direction
                 Case 3
@@ -622,7 +622,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedFacingNW(reader As TriggerReader) As Boolean
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Dim Spec = reader.ReadNumber()
             Select Case Target.Direction
                 Case 2
@@ -642,7 +642,7 @@ Namespace Engine.Libraries
         ''' True on success
         ''' </returns>
         Public Function FurreNamedFacingSE(reader As TriggerReader) As Boolean
-            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Return Target.Direction = 1
         End Function
 
@@ -656,7 +656,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function FurreNamedFacingSW(reader As TriggerReader) As Boolean
-            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Return Target.Direction = 0
         End Function
 
@@ -676,7 +676,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedFemale(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Select Case Target.LastStat
                 Case -1
                     Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
@@ -706,7 +706,7 @@ Namespace Engine.Libraries
 
             Dim Var = reader.ReadVariable(True)
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Select Case Target.FurreColors.Gender
                 Case -1
                     Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
@@ -728,7 +728,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function FurreNamedLaying(reader As TriggerReader) As Boolean
-            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Return Target.Direction = 4
 
         End Function
@@ -749,7 +749,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedMale(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = Dream.Furres.GerFurreByName(name)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(name)
             Select Case Target.LastStat
                 Case -1
                     Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
@@ -781,7 +781,7 @@ Namespace Engine.Libraries
             Dim tPlayer = Dream.Furres.GerFurreByName(reader.ReadString)
             Dim X = ReadVariableOrNumber(reader)
             Dim Y = ReadVariableOrNumber(reader)
-            Return tPlayer.LastPosition.X = X AndAlso tPlayer.LastPosition.Y = Y
+            Return DirectCast(tPlayer, Furre).LastPosition.X = X AndAlso DirectCast(tPlayer, Furre).LastPosition.Y = Y
 
         End Function
 
@@ -796,7 +796,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedMoveInto(reader As TriggerReader) As Boolean
 
-            Dim tPlayer = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim tPlayer As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Dim X = ReadVariableOrNumber(reader)
             Dim Y = ReadVariableOrNumber(reader)
             Return tPlayer.Position.X = X AndAlso tPlayer.Position.Y = Y
@@ -817,7 +817,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedMoveIntoDirection(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim tPlayer = Dream.Furres.GerFurreByName(name)
+            Dim tPlayer As Furre = Dream.Furres.GerFurreByName(name)
             Dim Dir = ReadVariableOrNumber(reader, False)
             Dim Direction As Double = 0
             If tPlayer.LastPosition.X = tPlayer.Position.X AndAlso tPlayer.LastPosition.Y = tPlayer.Position.Y Then
@@ -846,7 +846,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function FurreNamedNoWings(reader As TriggerReader) As Boolean
-            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Select Case Target.LastStat
                 Case -1
                     Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
@@ -870,7 +870,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedSetCordX(reader As TriggerReader) As Boolean
 
             Dim Cord = reader.ReadVariable(True)
-            Dim tPlayer = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim tPlayer As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Cord.Value = tPlayer.Position.X
             Return True
 
@@ -889,7 +889,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedSetCordY(reader As TriggerReader) As Boolean
 
             Dim Cord = reader.ReadVariable(True)
-            Dim tPlayer = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim tPlayer As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Cord.Value = tPlayer.Position.Y
             Return True
 
@@ -905,7 +905,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function FurreNamedSitting(reader As TriggerReader) As Boolean
-            Return 0 = Dream.Furres.GerFurreByName(reader.ReadString).Pose
+            Return 0 = DirectCast(Dream.Furres.GerFurreByName(reader.ReadString), Furre).Pose
         End Function
 
         ''' <summary>
@@ -926,7 +926,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedSpecies(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim TargetFurre = Dream.Furres.GerFurreByName(name)
+            Dim TargetFurre As Furre = Dream.Furres.GerFurreByName(name)
             Dim Spec As Double = reader.ReadNumber()
             Select Case TargetFurre.LastStat
                 Case -1
@@ -956,7 +956,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedSpeciesVar(reader As TriggerReader) As Boolean
             Dim Var = reader.ReadVariable(True)
             Dim name = reader.ReadString
-            Dim TargetFurre = Dream.Furres.GerFurreByName(name)
+            Dim TargetFurre As Furre = Dream.Furres.GerFurreByName(name)
             Select Case TargetFurre.LastStat
                 Case -1
                     Throw New MonkeyspeakException("Species not found. Try looking at the furre first")
@@ -979,7 +979,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedStanding(reader As TriggerReader) As Boolean
 
-            Dim TargetFurre = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim TargetFurre As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
 
             Select Case TargetFurre.Pose
                 Case 1 To 3
@@ -1000,7 +1000,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedStoodStill(reader As TriggerReader) As Boolean
 
-            Dim tPlayer = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim tPlayer As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Return tPlayer.LastPosition.X = tPlayer.Position.X AndAlso tPlayer.LastPosition.Y = tPlayer.Position.Y
 
         End Function
@@ -1020,7 +1020,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedUnSpecified(reader As TriggerReader) As Boolean
 
-            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Select Case Target.FurreColors.Gender
                 Case -1
                     Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
@@ -1048,7 +1048,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedWings(reader As TriggerReader) As Boolean
 
-            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim Target As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Select Case Target.LastStat
                 Case -1
                     Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
@@ -1077,7 +1077,7 @@ Namespace Engine.Libraries
 
             Dim Var = reader.ReadVariable(True)
 
-            Dim TargetFurre = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim TargetFurre As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             Select Case TargetFurre.LastStat
                 Case -1
                     Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
@@ -1221,7 +1221,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function NotDescContainsFurreNamed(reader As TriggerReader) As Boolean
 
-            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString())
+            Dim Target As Furre = Dream.Furres.GerFurreByName(reader.ReadString())
             If String.IsNullOrEmpty(Target.FurreDescription) Then Throw New MonkeyspeakException("Description not found. Try looking at the furre first")
             Return Not Target.FurreDescription.Contains(reader.ReadString)
 

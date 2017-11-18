@@ -115,7 +115,7 @@ Public Class Variables
     End Sub
 
     Public Shared Sub SendLogsToDemugWindow(Log As LogMessage)
-        If Variables.IsDisposed Then Exit Sub
+        If IsDisposed Then Exit Sub
         If ErrorLogTxtBx.InvokeRequired Then
             ErrorLogTxtBx.Invoke(New LogMessageDelegate(AddressOf SendLogsToDemugWindow), Log)
         Else
@@ -134,6 +134,7 @@ Public Class Variables
     Private Sub Variables_Load(sender As Object, e As EventArgs) Handles Me.Load
         IsDisposed = False
         Logger.DebugEnabled = True
+        Logger.ErrorEnabled = True
     End Sub
 
     Private Sub Variables_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing

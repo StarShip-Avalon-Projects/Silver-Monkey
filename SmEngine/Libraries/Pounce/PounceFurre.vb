@@ -39,18 +39,7 @@ Namespace Engine.Libraries.Pounce
         ''' <param name="e">
         ''' Event Arguments.Empty
         ''' </param>
-        Public Event FurreLoggedOff(ByVal Furre As Object, e As EventArgs)
-
-        ''' <summary>
-        ''' Furre Logged onto the Gameserver
-        ''' </summary>
-        ''' <param name="Furre">
-        ''' PounceFurre Object
-        ''' </param>
-        ''' <param name="e">
-        ''' Event Arguments.Empty
-        ''' </param>
-        Public Event FurreLoggedOn(ByVal Furre As Object, e As EventArgs)
+        Public Event FurreLoggedOnOrOff(ByVal Furre As Object, e As EventArgs)
 
 #End Region
 
@@ -81,9 +70,9 @@ Namespace Engine.Libraries.Pounce
                 _WasOnline = _IsOnline
                 _IsOnline = value
                 If _WasOnline = False And _WasOnline <> _IsOnline Then
-                    RaiseEvent FurreLoggedOff(Me, EventArgs.Empty)
+                    RaiseEvent FurreLoggedOnOrOff(Me, EventArgs.Empty)
                 ElseIf _IsOnline = False And _WasOnline <> _IsOnline Then
-                    RaiseEvent FurreLoggedOn(Me, EventArgs.Empty)
+                    RaiseEvent FurreLoggedOnOrOff(Me, EventArgs.Empty)
                 End If
             End Set
         End Property

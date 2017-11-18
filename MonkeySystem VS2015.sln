@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2008
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{F3A6B9B4-94FA-488C-BFA2-7618820265AC}"
 EndProject
@@ -48,6 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Release Notes.txt = Release Notes.txt
 		Solution.build = Solution.build
 		TODO.txt = TODO.txt
+		UpDateSrc.cmd = UpDateSrc.cmd
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MonkeyCore", "MonkeyCore\MonkeyCore.vbproj", "{7E3780F5-8434-4978-82ED-8C05D1F07D8B}"

@@ -29,11 +29,7 @@ Namespace Engine.Libraries
             'Emits
             Add(TriggerCategory.Cause, 21,
                  Function(reader)
-                     Dim dream = reader.GetParameter(Of DREAM)
-                     If dream IsNot Nothing Then
-                         dream = dream
-                         UpdateCurrentDreamVariables(dream, reader.Page)
-                     End If
+                     ReadParams(reader)
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function, " When someone emits something,")
 
@@ -65,7 +61,7 @@ Namespace Engine.Libraries
 
             '(1:21) and the furre named {..} is the Dream owner,
             Add(TriggerCategory.Condition, 21,
-                Function(reader) FurcadiaShortName(Dream.Owner) =
+                Function(reader) Dream.ShortName =
                 FurcadiaShortName(reader.ReadString),
                 " and the furre named {..} is the Dream owner,")
 

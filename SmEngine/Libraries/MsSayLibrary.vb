@@ -133,11 +133,8 @@ Namespace Engine.Libraries
             'says
             Add(TriggerCategory.Cause, 5,
                   Function(reader)
-                      Dim fur = reader.GetParameter(Of Furre)
-                      If fur IsNot Nothing Then
-                          Player = fur
-                          UpdateTriggerigFurreVariables(Player, reader.Page)
-                      End If
+                      ReadParams(reader)
+
                       Return Not FurcadiaSession.IsConnectedCharacter
                   End Function, " When someone says something,")
             Add(TriggerCategory.Cause, 6,
@@ -150,11 +147,8 @@ Namespace Engine.Libraries
             'Shouts
             Add(TriggerCategory.Cause, 8,
                  Function(reader)
-                     Dim fur = reader.GetParameter(Of Furre)
-                     If fur IsNot Nothing Then
-                         Player = fur
-                         UpdateTriggerigFurreVariables(Player, reader.Page)
-                     End If
+                     ReadParams(reader)
+
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function, " When someone shouts something,")
 
@@ -168,11 +162,8 @@ Namespace Engine.Libraries
             'emotes
             Add(TriggerCategory.Cause, 11,
                  Function(reader)
-                     Dim fur = reader.GetParameter(Of Furre)
-                     If fur IsNot Nothing Then
-                         Player = fur
-                         UpdateTriggerigFurreVariables(Player, reader.Page)
-                     End If
+                     ReadParams(reader)
+
                      Return Not FurcadiaSession.IsConnectedCharacter
                  End Function, " When someone emotes something,")
             Add(TriggerCategory.Cause, 12,
@@ -185,11 +176,7 @@ Namespace Engine.Libraries
             'Whispers
             Add(TriggerCategory.Cause, 15,
                 Function(reader)
-                    Dim fur = reader.GetParameter(Of Furre)
-                    If fur IsNot Nothing Then
-                        Player = fur
-                        UpdateTriggerigFurreVariables(Player, reader.Page)
-                    End If
+                    ReadParams(reader)
                     Return Not FurcadiaSession.IsConnectedCharacter
                 End Function, " When someone whispers something,")
 
@@ -203,11 +190,7 @@ Namespace Engine.Libraries
             'Says or Emotes
             Add(TriggerCategory.Cause, 18,
                 Function(reader)
-                    Dim fur = reader.GetParameter(Of Furre)
-                    If fur IsNot Nothing Then
-                        Player = fur
-                        UpdateTriggerigFurreVariables(Player, reader.Page)
-                    End If
+                    ReadParams(reader)
                     Return Not FurcadiaSession.IsConnectedCharacter
                 End Function,
                 " When someone says or emotes something,")
@@ -220,14 +203,10 @@ Namespace Engine.Libraries
                 AddressOf MsgContains, " When someone says or emotes something with {..} in it,")
 
             'Furre Enters
-            '(0:4) When someone is added to the Dream manifest,
+            '(0:24) When someone is added to the Dream manifest,
             Add(TriggerCategory.Cause, 24,
                 Function(reader)
-                    Dim fur = reader.GetParameter(Of Furre)
-                    If fur IsNot Nothing Then
-                        Player = fur
-                        UpdateTriggerigFurreVariables(Player, reader.Page)
-                    End If
+                    ReadParams(reader)
                     Return True
                 End Function, " When someone enters the Dream,")
 
@@ -239,11 +218,7 @@ Namespace Engine.Libraries
             '(0:25) When someone leaves the FurcadiaSession.Dream,
             Add(TriggerCategory.Cause, 26,
                 Function(reader)
-                    Dim fur = reader.GetParameter(Of Furre)
-                    If fur IsNot Nothing Then
-                        Player = fur
-                        UpdateTriggerigFurreVariables(Player, reader.Page)
-                    End If
+                    ReadParams(reader)
                     Return True
                 End Function, " When someone leaves the Dream,")
 
@@ -273,7 +248,10 @@ Namespace Engine.Libraries
             'Summon
             '(0:32) When someone requests to summon the bot,
             Add(TriggerCategory.Cause, 32,
-                Function() Not FurcadiaSession.IsConnectedCharacter,
+                Function(reader)
+                    ReadParams(reader)
+                    Return Not FurcadiaSession.IsConnectedCharacter
+                End Function,
                 " When someone requests to summon the bot,")
 
             '(0:33) When a furre named {..} requests to summon the bot,
@@ -292,7 +270,10 @@ Namespace Engine.Libraries
             'Follow
             '(0:36) When someone requests to follow the bot,
             Add(TriggerCategory.Cause, 36,
-                Function() Not FurcadiaSession.IsConnectedCharacter,
+                Function(reader)
+                    ReadParams(reader)
+                    Return Not FurcadiaSession.IsConnectedCharacter
+                End Function,
                 " When someone requests to follow the bot,")
 
             '(0:37) When a furre named {..} requests to follow the bot,
@@ -302,7 +283,10 @@ Namespace Engine.Libraries
             'Lead
             '(0:38) When someone requests to lead the bot,
             Add(TriggerCategory.Cause, 38,
-                Function() Not FurcadiaSession.IsConnectedCharacter, " When someone requests to lead the bot,")
+                Function(reader)
+                    ReadParams(reader)
+                    Return Not FurcadiaSession.IsConnectedCharacter
+                End Function, " When someone requests to lead the bot,")
 
             '(0:39) When a furre named {..} requests to lead the bot,
             Add(TriggerCategory.Cause, 39,
@@ -311,7 +295,10 @@ Namespace Engine.Libraries
             'Cuddle
             '(0:40) When someone requests to cuddle with the bot.
             Add(TriggerCategory.Cause, 40,
-                Function() Not FurcadiaSession.IsConnectedCharacter,
+                Function(reader)
+                    ReadParams(reader)
+                    Return Not FurcadiaSession.IsConnectedCharacter
+                End Function,
                 " When someone requests to cuddle with the bot,")
 
             '(0:41) When a furre named {..} requests to cuddle with the bot,
@@ -503,7 +490,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedEnterView(reader As TriggerReader) As Boolean
 
-            Dim tPlayer = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim tPlayer As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -523,7 +510,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedLeaveView(reader As TriggerReader) As Boolean
 
             Dim name = reader.ReadString
-            Dim tPlayer = Dream.Furres.GerFurreByName(name)
+            Dim tPlayer As Furre = Dream.Furres.GerFurreByName(name)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -727,6 +714,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overrides Function MsgIs(reader As TriggerReader) As Boolean
+
             Return MyBase.MsgIs(reader)
         End Function
 
