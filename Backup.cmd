@@ -25,7 +25,6 @@ exit /b 1
 
 :End
 git.exe add --all
-
 git.exe submodule foreach "git.exe add --all"
 set git.exe_STATUS=%ERRORLEVEL% 
 if not %git.exe_STATUS%==0 goto eof 
