@@ -179,18 +179,23 @@ Public Class BotSession
                     Await MSpage.ExecuteAsync(600, DirectCast(sender, Furre))
 
                 Case ServerInstructionType.RemoveAvatar
-                    Dim furId = DirectCast(sender, RemoveAvatar).FurreId
-                    Dim fur = Dream.Furres.GetFurreByID(furId)
+                    '(0:27) When a furre named {..} leaves the Dream,
+                    '(0:26) When someone leaves the Dream,
+                    Dim ids() = {27, 26}
+                    Await MSpage.ExecuteAsync(ids, DirectCast(sender, RemoveAvatar).Player)
 
                 Case ServerInstructionType.SpawnAvatar
-                    Dim fur = DirectCast(sender, SpawnAvatar).player
+                    '(0:24) When someone enters the Dream,
+                    '(0:25) When a furre Named {..} enters the Dream,
+                    Dim ids() = {24, 25}
+                    Await MSpage.ExecuteAsync(ids, DirectCast(sender, SpawnAvatar).player)
 
                 Case ServerInstructionType.UpdateColorString
                     Dim fur = ConnectedFurre
 
                 Case ServerInstructionType.LookResponse
-                    Dim fur = DirectCast(sender, SpawnAvatar).player
-
+                    '(0:600) When the bot reads a description.
+                  '  Await MSpage.ExecuteAsync(600, DirectCast(sender, SpawnAvatar).player)
                 Case ServerInstructionType.Unknown
                     Exit Select
                 Case Else

@@ -203,7 +203,7 @@ Namespace Engine.Libraries
                 AddressOf MsgContains, " When someone says or emotes something with {..} in it,")
 
             'Furre Enters
-            '(0:24) When someone is added to the Dream manifest,
+            '(0:24) When someone enters the Dream,
             Add(TriggerCategory.Cause, 24,
                 Function(reader)
                     ReadParams(reader)
@@ -215,14 +215,14 @@ Namespace Engine.Libraries
                 AddressOf NameIs, " When a furre Named {..} enters the Dream,")
 
             'Furre Leaves
-            '(0:25) When someone leaves the FurcadiaSession.Dream,
+            '(0:26) When someone leaves the Dream,
             Add(TriggerCategory.Cause, 26,
                 Function(reader)
                     ReadParams(reader)
                     Return True
                 End Function, " When someone leaves the Dream,")
 
-            '(0:27) When a furre named {..} leaves the FurcadiaSession.Dream,
+            '(0:27) When a furre named {..} leaves the Dream,
             Add(TriggerCategory.Cause, 27,
                 AddressOf NameIs, " When a furre named {..} leaves the Dream,")
 
