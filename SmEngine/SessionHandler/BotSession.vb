@@ -171,6 +171,30 @@ Public Class BotSession
                     Dim ids() = {90, 91}
                     Await MSpage.ExecuteAsync(ids, Dream)
                     lastDream = Dream
+
+                Case ServerInstructionType.AnimatedMoveAvatar
+                    Await MSpage.ExecuteAsync(600, DirectCast(sender, Furre))
+
+                Case ServerInstructionType.MoveAvatar
+                    Await MSpage.ExecuteAsync(600, DirectCast(sender, Furre))
+
+                Case ServerInstructionType.RemoveAvatar
+                    Dim furId = DirectCast(sender, RemoveAvatar).FurreId
+                    Dim fur = Dream.Furres.GetFurreByID(furId)
+
+                Case ServerInstructionType.SpawnAvatar
+                    Dim fur = DirectCast(sender, SpawnAvatar).player
+
+                Case ServerInstructionType.UpdateColorString
+                    Dim fur = ConnectedFurre
+
+                Case ServerInstructionType.LookResponse
+                    Dim fur = DirectCast(sender, SpawnAvatar).player
+
+                Case ServerInstructionType.Unknown
+                    Exit Select
+                Case Else
+                    Exit Select
             End Select
         Catch ex As Exception
             Dim Err As New ErrorLogging(ex, Me)

@@ -37,6 +37,7 @@ Namespace Engine.Libraries
     ''' </remarks>
     Public NotInheritable Class MsMovement
         Inherits MonkeySpeakLibrary
+        Private Const FileNotFound = "Wings type not found, Try looking at the furre first"
 
 #Region "Private Fields"
 
@@ -1410,22 +1411,13 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function TriggeringFurreGenderVar(reader As TriggerReader) As Boolean
-
+            If Player.FurreColors.Gender = -1 Or Player.LastStat - 1 Then
+                Throw New MonkeyspeakException("Wings type not found, Try looking at the furre first")
+            End If
             Dim Var = reader.ReadVariable(True)
-            Select Case Player.LastStat
-                Case -1
-                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
-                Case 0
-                    If Player.FurreColors.Gender = -1 Then Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
-                    Var.Value = Player.FurreColors.Gender
-                Case 1
-                    If Player.FurreColors.Gender = -1 Then
-                        If Player.FurreColors.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
-                        Var.Value = Player.FurreColors.Gender
-                    Else
-                        Var.Value = Player.FurreColors.Gender
-                    End If
-            End Select
+            If Player.LastStat = 0 Or 1 Then
+                Var.Value = Player.FurreColors.Gender
+            End If
             Return True
 
         End Function
@@ -1457,20 +1449,13 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function TriggeringFurreMale(reader As TriggerReader) As Boolean
-
-            Select Case Player.LastStat
-                Case -1
-                    Throw New MonkeyspeakException("Gender not found. Try looking at the furre first")
-                Case 0
-                    Return Player.FurreColors.Gender = 1
-                Case 1
-                    If Player.FurreColors.Gender = -1 Then
-                        If Player.FurreColors.Gender = -1 Then Throw New MonkeyspeakException("Gender not found, Try looking at the furre first")
-                        Return Player.FurreColors.Gender = 1
-                    Else
-                        Return Player.FurreColors.Gender = 1
-                    End If
-            End Select
+            If Player.FurreColors.Gender = -1 Or Player.LastStat - 1 Then
+                Throw New MonkeyspeakException("Wings type not found, Try looking at the furre first")
+            End If
+            Dim Spec = reader.ReadNumber()
+            If Player.LastStat = 0 Or 1 Then
+                Return Player.FurreColors.Wings = Spec
+            End If
             Return False
         End Function
 
@@ -1488,23 +1473,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function TriggeringFurreNoWings(reader As TriggerReader) As Boolean
-
-            Dim Spec = reader.ReadNumber()
-            Select Case Player.LastStat
-                Case -1
-                    Throw New MonkeyspeakException("Wings type not found. Try looking at the furre first")
-                Case 0
-                    Return Player.FurreColors.Wings <> Spec
-                Case 1
-                    If Player.FurreColors.Wings = -1 Then
-                        If Player.FurreColors.Wings = -1 Then Throw New MonkeyspeakException("Wings type not found, Try looking at the furre first")
-                        Return Player.FurreColors.Wings <> Spec
-                    Else
-                        Return Player.FurreColors.Wings <> Spec
-                    End If
-            End Select
-            Return False
-
+            Return TriggeringFurreMale(reader)
         End Function
 
         ''' <summary>
@@ -1537,15 +1506,13 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TriggeringFurreSpecies(reader As TriggerReader) As Boolean
 
+            If Player.FurreColors.Gender = -1 Or Player.LastStat - 1 Then
+                Throw New MonkeyspeakException("Wings type not found, Try looking at the furre first")
+            End If
             Dim Spec = reader.ReadNumber()
-            Select Case Player.LastStat
-                Case -1
-                    Throw New MonkeyspeakException("Species type not found. Try looking at the furre first")
-                Case 0
-                    Return Player.FurreColors.Species = Spec
-                Case 1
-                    Return Player.FurreColors.Species = Spec
-            End Select
+            If Player.LastStat = 0 Or 1 Then
+                Return Player.FurreColors.Species = Spec
+            End If
             Return False
 
         End Function
