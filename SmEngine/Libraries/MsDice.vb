@@ -157,7 +157,7 @@ Namespace Engine.Libraries
             Dim sides = ReadVariableOrNumber(reader)
             Dim NumberPlus = ReadVariableOrNumber(reader)
             Dim dice = New DiceRollCollection
-            For I As Double = 0 To Number - 1
+            For I = 0 To Number - 1
                 dice.Add(New Die(CInt(sides)))
             Next
             Var.Value = dice.RollAll() + NumberPlus
@@ -174,7 +174,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function DiceResultNumberOrHigher(reader As TriggerReader) As Boolean
-            Dim result As Double = ReadVariableOrNumber(reader)
+            Dim result = ReadVariableOrNumber(reader)
             Return result <= dice.DiceResult
         End Function
 
@@ -187,7 +187,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function DiceResultNumberOrlower(reader As TriggerReader) As Boolean
-            Dim result As Double = ReadVariableOrNumber(reader)
+            Dim result = ReadVariableOrNumber(reader)
             Return result >= dice.DiceResult
         End Function
 
@@ -220,9 +220,8 @@ Namespace Engine.Libraries
             Dim count = ReadVariableOrNumber(reader)
             Dim side = ReadVariableOrNumber(reader)
             Dim modifyer = ReadVariableOrNumber(reader)
-            Dim Message As String = ""
 
-            Return SendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString + " " + Message)
+            Return SendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString)
 
         End Function
 
@@ -238,9 +237,8 @@ Namespace Engine.Libraries
             Dim count = ReadVariableOrNumber(reader)
             Dim side = ReadVariableOrNumber(reader)
             Dim modifyer = ReadVariableOrNumber(reader)
-            Dim Message As String = ""
 
-            Return SendServer("roll " + count.ToString + "d" + side.ToString + "+" + modifyer.ToString + " " + Message)
+            Return SendServer("roll " + count.ToString + "d" + side.ToString + "+" + modifyer.ToString)
 
         End Function
 
@@ -264,7 +262,7 @@ Namespace Engine.Libraries
             If sides <> dice.DiceSides Then Return False
             If DiceCount <> DiceCount Then Return False
 
-            Return True
+            Return dice.DiceResult >= ReadVariableOrNumber(reader)
         End Function
 
         ''' <summary>
@@ -289,7 +287,7 @@ Namespace Engine.Libraries
             If sides <> dice.DiceSides Then Return False
             If dice.DiceCount <> DiceCount Then Return False
 
-            Return dice.DiceCompnentMatch = "-"
+            Return dice.DiceCompnentMatch = "-" AndAlso dice.DiceResult >= ReadVariableOrNumber(reader)
         End Function
 
         ''' <summary>
@@ -314,7 +312,7 @@ Namespace Engine.Libraries
             If sides <> dice.DiceSides Then Return False
             If dice.DiceCount <> DiceCount Then Return False
 
-            Return dice.DiceCompnentMatch = "+"
+            Return dice.DiceCompnentMatch = "+" And dice.DiceResult >= ReadVariableOrNumber(reader)
         End Function
 
         ''' <summary>
@@ -326,8 +324,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function TrigFurreRolledVariable(reader As TriggerReader) As Boolean
-            Dim v = reader.ReadVariable(True)
-            v.Value = dice.DiceResult
+            Dim v = reader.ReadVariable(True).Value = dice.DiceResult
             Return True
         End Function
 

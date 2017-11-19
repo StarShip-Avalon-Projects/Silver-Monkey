@@ -23,9 +23,7 @@ Namespace Engine.Libraries
         Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:42) When some one gives a cookie to the bot,
             Add(TriggerCategory.Cause, 42,
-                 Function()
-                     Return True
-                 End Function,
+                 Function(reader) ReadParams(reader),
                   " When some one gives a cookie to the bot,")
 
             '(0:43) When a furre named {...} gives a cookie to the bot,
@@ -33,13 +31,12 @@ Namespace Engine.Libraries
                 AddressOf NameIs, " When a furre named {...} gives a cookie to the bot,")
 
             '(0:44) When anyone gives a cookie to someone the bot can see,
-            Add(TriggerCategory.Cause, 44, Function() True, " When anyone gives a cookie to someone the bot can see,")
+            Add(TriggerCategory.Cause, 44, Function(reader) ReadParams(reader),
+                " When anyone gives a cookie to someone the bot can see,")
 
             '(0:49) When bot eats a cookie,
             Add(TriggerCategory.Cause, 49,
-                Function()
-                    Return True
-                End Function,
+              Function(reader) ReadParams(reader),
                 " When bot eats a cookie,")
 
             '(0:95) When the Bot sees ""You do not have any cookies to give away right now!",
@@ -78,26 +75,13 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' true on success
         ''' </returns>
-        Public Function EatCookie(reader As TriggerReader) As Boolean
+        Public Function EatCookie(reader) As Boolean
 
-            Dim tPlayer = Player
             Dim CookieVar = reader.ReadVariable(True)
-            CookieVar.Value = tPlayer.Message
+            CookieVar.Value = Player.Message
             'add Machine Name parser
             Return True
 
-        End Function
-
-        Public Overrides Function Equals(obj As Object) As Boolean
-            Return MyBase.Equals(obj)
-        End Function
-
-        Public Overrides Function GetHashCode() As Integer
-            Return MyBase.GetHashCode()
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return MyBase.ToString()
         End Function
 
         ''' <summary>
@@ -119,19 +103,24 @@ Namespace Engine.Libraries
             Return MyBase.MsgEndsWith(reader)
         End Function
 
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <param name="reader"></param>
+        ''' <returns></returns>
         Protected Overrides Function MsgIs(reader As TriggerReader) As Boolean
             Return MyBase.MsgIs(reader)
         End Function
 
-        Protected Function MsgIsNot(reader As TriggerReader) As Boolean
+        Protected Function MsgIsNot(reader) As Boolean
             Return Not MyBase.MsgIs(reader)
         End Function
 
-        Protected Function MsgNotContain(reader As TriggerReader) As Boolean
+        Protected Function MsgNotContain(reader) As Boolean
             Return Not MyBase.MsgContains(reader)
         End Function
 
-        Protected Function NameIsNot(reader As TriggerReader) As Boolean
+        Protected Function NameIsNot(reader) As Boolean
             Return Not MyBase.NameIs(reader)
         End Function
 

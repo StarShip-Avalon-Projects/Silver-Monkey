@@ -293,16 +293,16 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Is the specified furre in the dream?
         ''' </summary>
-        ''' <param name="Name">
-        ''' Furre Name
+        ''' <param name="TargetFurre">
+        ''' Target Furre
         ''' </param>
         ''' <returns>
         ''' True if the furre is in the dream
         ''' </returns>
-        Public Function InDream(ByRef Name As String) As Boolean
-            Dim found As Boolean = False
+        Public Function InDream(TargetFurre As Furre) As Boolean
+            Dim found = False
             For Each Fur In Dream.Furres
-                If Fur.ShortName = FurcadiaShortName(Name) Then
+                If Fur = TargetFurre Then
                     found = True
                     Exit For
                 End If

@@ -92,7 +92,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function GetReply(reader As TriggerReader) As Boolean
+        Public Function GetReply(reader) As Boolean
             Dim SayText As String
             Dim ResponceText
 
@@ -126,7 +126,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function GetReplyName(reader As TriggerReader) As Boolean
+        Public Function GetReplyName(reader) As Boolean
 
             Dim SayText = reader.ReadString
             Dim ResponceText = reader.ReadVariable(True)
@@ -223,7 +223,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function ChatExecute(reader As TriggerReader) As Boolean
+        Public Function ChatExecute(reader) As Boolean
 
             Dim cmd As String = reader.ReadString()
             Return ChatCMD.ToLower() = cmd.ToLower()
@@ -238,7 +238,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function GetStateVariable(reader As TriggerReader) As Boolean
+        Public Function GetStateVariable(reader) As Boolean
 
             Dim EngineVar = reader.ReadString()
             Dim MS_Var = reader.ReadVariable(True)
@@ -255,7 +255,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function SetStateVariable(reader As TriggerReader) As Boolean
+        Public Function SetStateVariable(reader) As Boolean
 
             Dim EngineVar = reader.ReadString()
             Dim EngineValue = reader.ReadString()
@@ -275,7 +275,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function UseKkbFile(reader As TriggerReader) As Boolean
+        Public Function UseKkbFile(reader) As Boolean
 
             Dim FileName = reader.ReadString
             FileName = Path.Combine(Paths.SilverMonkeyBotPath, FileName)

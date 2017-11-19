@@ -2,6 +2,7 @@
 Imports Furcadia.Util
 Imports MonkeyCore
 Imports Monkeyspeak
+Imports Monkeyspeak.Logging
 Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries
@@ -97,9 +98,10 @@ Namespace Engine.Libraries
                 End If
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
-                Return False
+                Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
+                Logger.Error(Of MsMemberList)($"{ex.Message}")
             End Try
+            Return False
         End Function
 
         ''' <summary>
@@ -122,9 +124,10 @@ Namespace Engine.Libraries
                 End If
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
-                Return False
+                Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
+                Logger.Error(Of MsMemberList)($"{ex.Message}")
             End Try
+            Return False
         End Function
 
         ''' <summary>
@@ -163,9 +166,9 @@ Namespace Engine.Libraries
                 Next
                 Return FurcadiaSession.IsBotController
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
+                Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
+                Logger.Error(Of MsMemberList)($"{ex.Message}")
             End Try
-
             Return False
         End Function
 
@@ -198,9 +201,10 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
-                Return False
+                Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
+                Logger.Error(Of MsMemberList)($"{ex.Message}")
             End Try
+            Return False
         End Function
 
         ''' <summary>
@@ -235,9 +239,10 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
-                Return False
+                Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
+                Logger.Error(Of MsMemberList)($"{ex.Message}")
             End Try
+            Return False
         End Function
 
         ''' <summary>
@@ -272,9 +277,10 @@ Namespace Engine.Libraries
 
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
-                Return False
+                Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
+                Logger.Error(Of MsMemberList)($"{ex.Message}")
             End Try
+            Return False
         End Function
 
         ''' <summary>
@@ -300,9 +306,10 @@ Namespace Engine.Libraries
 
                 Return FurcadiaSession.IsBotController
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
-                Return False
+                Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
+                Logger.Error(Of MsMemberList)($"{ex.Message}")
             End Try
+            Return False
         End Function
 
         ''' <summary>
@@ -331,9 +338,10 @@ Namespace Engine.Libraries
                 CheckMemberList()
                 Return True
             Catch ex As Exception
-                Throw New MonkeyspeakException("A problem occurred checking the member-list", ex)
-                Return False
+                Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
+                Logger.Error(Of MsMemberList)($"{ex.Message}")
             End Try
+            Return False
         End Function
 
         Public Overrides Sub Unload(page As Page)

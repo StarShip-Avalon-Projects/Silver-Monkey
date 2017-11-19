@@ -9,7 +9,7 @@ Namespace Engine.Libraries
     ''' TODO: Complete Class
     ''' </para>
     ''' </summary>
-    Public NotInheritable Class MsRepQ
+    Public NotInheritable Class MsPopUpDialogs
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
@@ -19,7 +19,7 @@ Namespace Engine.Libraries
 
         End Sub
 
-        Public Overrides Sub Initialize()
+        Public Overrides Sub Initialize(ParamArray args() As Object)
 
         End Sub
 

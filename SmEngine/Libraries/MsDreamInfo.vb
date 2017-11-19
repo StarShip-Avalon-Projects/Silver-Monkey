@@ -1,6 +1,7 @@
 ﻿Imports Furcadia.Net
 Imports Furcadia.Net.Dream
 Imports Furcadia.Util
+Imports Monkeyspeak.Logging
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.MsLibHelper
 
@@ -30,7 +31,7 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 21,
                  Function(reader)
                      ReadParams(reader)
-                     Return Not FurcadiaSession.IsConnectedCharacter
+                     Return Not FurcadiaSession.IsConnectedCharacter(Player)
                  End Function, " When someone emits something,")
 
             Add(TriggerCategory.Cause, 22,
@@ -56,7 +57,8 @@ Namespace Engine.Libraries
                 " and the bot is the Dream owner,")
 
             '(1:20) and the bot is not the Dream-Owner,
-            Add(TriggerCategory.Condition, 20, AddressOf BotIsNotDreamOwner,
+            Add(TriggerCategory.Condition, 20,
+                Function(reader) Not BotIsDreamOwner(reader),
                 " and the bot is not the Dream-Owner,")
 
             '(1:21) and the furre named {..} is the Dream owner,
@@ -89,7 +91,7 @@ Namespace Engine.Libraries
 
             '(1:27) and the bot has share control of the Dream or is the Dream owner,
             Add(TriggerCategory.Condition, 27,
-                Function(reader As TriggerReader)
+                Function(reader)
                     If FurcadiaSession.HasShare OrElse Dream.OwnerShortName = FurcadiaSession.ConnectedFurre.ShortName Then
                         Return True
                     End If
@@ -138,19 +140,6 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
-        ''' (1:20) and the bot is not the Dream-Owner,
-        ''' </summary>
-        ''' <param name="reader">
-        ''' <see cref="TriggerReader"/>
-        ''' </param>
-        ''' <returns>
-        ''' true on success
-        ''' </returns>
-        Function BotIsNotDreamOwner(reader As TriggerReader) As Boolean
-            Return Not BotIsDreamOwner(reader)
-        End Function
-
-        ''' <summary>
         ''' (1:23) and the Dream Name is {..},
         ''' <para>
         ''' (0:91) When the bot enters a Dream named {..},
@@ -163,13 +152,9 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Function DreamNameIs(reader As TriggerReader) As Boolean
-            Dim Info = reader.GetParameter(Of DREAM)
-            If Info IsNot Nothing Then
-                Dream = Info
-                UpdateCurrentDreamVariables(Dream, reader.Page)
-                Return Dream.ShortName = FurcadiaShortName(reader.ReadString)
-            End If
-            Return False
+            ReadParams(reader)
+            Return Dream.ShortName = FurcadiaShortName(reader.ReadString)
+
         End Function
 
         ''' <summary>
@@ -185,10 +170,11 @@ Namespace Engine.Libraries
         Public Function ShareFurreNamed(reader As TriggerReader) As Boolean
 
             Dim Target = Dream.Furres.GerFurreByName(reader.ReadString())
-            If InDream(Target.Name) Then
-                If InDream(Target.Name) Then SendServer("share " + Target.ShortName)
+            If InDream(Target) Then
+                If InDream(Target) Then SendServer("share " + Target.ShortName)
             Else
-                Throw New MonkeyspeakException($"{Target.Name} is not in the dream")
+                Logger.Info(Of MsDreamInfo)($"{Target.Name} Is Not in the dream")
+
             End If
             Return True
 
@@ -220,10 +206,10 @@ Namespace Engine.Libraries
         Public Function UnshareFurreNamed(reader As TriggerReader) As Boolean
 
             Dim Target = Dream.Furres.GerFurreByName(reader.ReadString())
-            If InDream(Target.Name) Then
+            If InDream(Target) Then
                 Return SendServer("unshare " + Target.ShortName)
             Else
-                Throw New MonkeyspeakException($"{Target.Name} is not in the dream")
+                Logger.Info(Of MsDreamInfo)($"{Target.Name} Is Not in the dream")
             End If
             Return False
 

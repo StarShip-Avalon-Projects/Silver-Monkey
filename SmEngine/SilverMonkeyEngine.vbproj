@@ -121,7 +121,6 @@
       <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="SessionHandler\ConstantVariable.vb" />
     <Compile Include="Libraries\MsHelper.vb" />
     <Compile Include="SessionHandler\EngineOptoons.vb" />
     <Compile Include="SessionHandler\MainEngine.vb" />
@@ -141,7 +140,6 @@
     <Compile Include="Libraries\MsTrades.vb" />
     <Compile Include="Libraries\MsWarning.vb" />
     <Compile Include="Libraries\MS_Cookie.vb" />
-    <None Include="Libraries\MS_Quotes.vb" />
     <Compile Include="Libraries\Pounce\PounceFurre.vb" />
     <Compile Include="Libraries\StringLibrary.vb" />
     <Compile Include="Libraries\web\WenData.vb" />
