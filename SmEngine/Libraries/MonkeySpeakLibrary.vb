@@ -48,9 +48,9 @@ Namespace Engine.Libraries
         ''' <returns>true if any parameter was set; false otherwise</returns>
         Public Function ReadParams(reader As TriggerReader) As Boolean
             Dim ParamSet = False
-            Dim dreamInfo As DREAM() = reader.GetParametersOfType(Of DREAM)
-            Dim ActiveFurre As IFurre() = reader.GetParametersOfType(Of IFurre)
-            If dreamInfo IsNot Nothing Then
+            Dim dreamInfo = reader.GetParametersOfType(Of DREAM)
+            Dim ActiveFurre = reader.GetParametersOfType(Of IFurre)
+            If dreamInfo IsNot Nothing AndAlso dreamInfo.Count > 0 Then
                 If String.IsNullOrWhiteSpace(dreamInfo(0).Name) Then
                     Throw New ArgumentException("DreamInfo not set")
                 End If
@@ -59,11 +59,12 @@ Namespace Engine.Libraries
                 UpdateCurrentDreamVariables(Dream, reader.Page)
                 ParamSet = True
             End If
-            If ActiveFurre IsNot Nothing Then
-                Player = ActiveFurre(0)
-                If ActiveFurre(0).FurreID = -1 Then
+            If ActiveFurre IsNot Nothing AndAlso ActiveFurre.Count > 0 Then
+                If ActiveFurre(0).ShortName = "unknown" Then
                     Throw New ArgumentException("Invalid ActivePlayer")
                 End If
+
+                Player = ActiveFurre(0)
                 UpdateTriggerigFurreVariables(Player, reader.Page)
                 ParamSet = True
 
@@ -101,9 +102,10 @@ Namespace Engine.Libraries
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
             ReadParams(reader)
 
-            Dim msg = StripFurcadiaMarkup(Player.Message).ToLower.Trim
-            Dim test = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
-            Return Not FurcadiaSession.IsConnectedCharacter AndAlso msg = test
+            Dim msg = StripFurcadiaMarkup(Player.Message)
+            Dim test = StripFurcadiaMarkup(reader.ReadString())
+            Return Not FurcadiaSession.IsConnectedCharacter(Player) AndAlso
+                msg = test
 
         End Function
 
@@ -120,8 +122,7 @@ Namespace Engine.Libraries
 
             Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
 
-            Dim msg = Player.Message
-            msg = StripFurcadiaMarkup(msg)
+            Dim msg = StripFurcadiaMarkup(Player.Message)
 
             Return Not msg.EndsWith(msMsg)
 
@@ -160,9 +161,8 @@ Namespace Engine.Libraries
         ''' (ShortName version, lowercase with special characters stripped)
         ''' </remarks>
         Protected Overridable Function NameIs(reader As TriggerReader) As Boolean
-            ReadParams(reader)
-            Dim TmpName = reader.ReadString()
-            Return FurcadiaShortName(TmpName) = Player.ShortName
+
+            Return FurcadiaShortName(reader.ReadString()) = Player.ShortName
 
         End Function
 

@@ -905,7 +905,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function FurreNamedSitting(reader As TriggerReader) As Boolean
-            Return 0 = DirectCast(Dream.Furres.GerFurreByName(reader.ReadString), Furre).Pose
+            Return 0 = Dream.Furres.GerFurreByName(reader.ReadString).Pose
         End Function
 
         ''' <summary>

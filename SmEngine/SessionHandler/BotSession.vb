@@ -160,8 +160,10 @@ Public Class BotSession
                 Case ServerInstructionType.LoadDreamEvent
                     '(0:97) When the bot leaves a Dream,
                     '(0:98) When the bot leaves the Dream named {..},
-                    Dim ids() = {97, 98}
-                    Await MSpage.ExecuteAsync(ids, lastDream)
+                    If InDream Then
+                        Dim ids() = {97, 98}
+                        Await MSpage.ExecuteAsync(ids, lastDream)
+                    End If
 
                 Case ServerInstructionType.BookmarkDream
                     '(0:90) When the bot enters a Dream,
@@ -185,7 +187,7 @@ Public Class BotSession
     Public Async Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) _
         Handles MyBase.ProcessServerChannelData
         If MSpage Is Nothing Then Exit Sub
-        Dim Furr As IFurre = InstructionObject.Player
+        Dim Furr = InstructionObject.Player
 
         UpdateTriggerigFurreVariables(Furr, MSpage)
 
@@ -232,7 +234,7 @@ Public Class BotSession
                     Dim ids() = {5, 6, 7, 18, 19, 20}
                     Await MSpage.ExecuteAsync(ids, Furr)
 
-                Case "whisper"
+                Case "@whisper"
 
                     ' (0:15) When some one whispers something
                     ' (0:16) When some one whispers {...}

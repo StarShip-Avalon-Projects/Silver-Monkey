@@ -41,12 +41,12 @@ Namespace Engine.Libraries
                  AddressOf MsgContains, " When someone emits something with {..} in it,")
 
             '(0:90) When the bot enters a Dream,
-            Add(TriggerCategory.Cause, 90, AddressOf SetDreamInfo, " When the bot enters a Dream,")
+            Add(TriggerCategory.Cause, 90, AddressOf ReadParams, " When the bot enters a Dream,")
             '(0:91) When the bot enters a Dream named {..},
             Add(TriggerCategory.Cause, 91,
                 AddressOf DreamNameIs, " When the bot enters the Dream named {..},")
             '(0:92) When the bot leaves a Dream,
-            Add(TriggerCategory.Cause, 97, AddressOf SetDreamInfo, " When the bot leaves a Dream,")
+            Add(TriggerCategory.Cause, 97, AddressOf ReadParams, " When the bot leaves a Dream,")
             '(0:93) When the bot leaves the Dream named {..},
             Add(TriggerCategory.Cause, 98,
                 AddressOf DreamNameIs, " When the bot leaves the Dream named {..},")
@@ -61,7 +61,7 @@ Namespace Engine.Libraries
 
             '(1:21) and the furre named {..} is the Dream owner,
             Add(TriggerCategory.Condition, 21,
-                Function(reader) Dream.ShortName =
+                Function(reader) Dream.OwnerShortName =
                 FurcadiaShortName(reader.ReadString),
                 " and the furre named {..} is the Dream owner,")
 
@@ -90,7 +90,6 @@ Namespace Engine.Libraries
             '(1:27) and the bot has share control of the Dream or is the Dream owner,
             Add(TriggerCategory.Condition, 27,
                 Function(reader As TriggerReader)
-                    Dim tname = reader.Page.GetVariable(DreamOwnerVariable)
                     If FurcadiaSession.HasShare OrElse Dream.OwnerShortName = FurcadiaSession.ConnectedFurre.ShortName Then
                         Return True
                     End If
@@ -116,25 +115,14 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Effect, 21, AddressOf UnshareTrigFurre,
                 " remove share control from the triggering furre.")
             '(5:22) remove share from the furre named {..} if they're in the Dream right now.
-            Add(TriggerCategory.Effect, 22, AddressOf ShareFurreNamed,
+            Add(TriggerCategory.Effect, 22, AddressOf UnshareFurreNamed,
                 " remove share from the furre named {..} if they're in the Dream right now.")
 
             '(5:23) give share to the furre named {..} if they're in the Dream right now.
-            Add(TriggerCategory.Effect, 23, AddressOf UnshareFurreNamed,
+            Add(TriggerCategory.Effect, 23, AddressOf ShareFurreNamed,
                 " give share to the furre named {..} if they're in the Dream right now.")
 
         End Sub
-
-        Private Function SetDreamInfo(reader As TriggerReader) As Boolean
-
-            Dim Info As DREAM = reader.GetParameter(Of DREAM)(0)
-            If Info IsNot Nothing Then
-                Dream = Info
-                UpdateCurrentDreamVariables(Dream, reader.Page)
-            End If
-            Return True
-
-        End Function
 
         ''' <summary>
         ''' (1:19) and the bot is the Dream owner,
@@ -196,7 +184,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function ShareFurreNamed(reader As TriggerReader) As Boolean
 
-            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString())
             If InDream(Target.Name) Then SendServer("share " + Target.ShortName)
             Return True
 
@@ -261,8 +249,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function UnshareTrigFurre(reader As TriggerReader) As Boolean
-            Dim furre = Player.ShortName
-            SendServer("unshare " + furre)
+            SendServer("unshare " + Player.ShortName)
             Return True
         End Function
 
@@ -276,8 +263,8 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function ShareTrigFurre(reader As TriggerReader) As Boolean
-            Dim furre = Player.ShortName
-            Return SendServer("share " + furre)
+
+            Return SendServer("share " + Player.ShortName)
 
         End Function
 

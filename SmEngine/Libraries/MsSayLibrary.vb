@@ -618,7 +618,9 @@ Namespace Engine.Libraries
         ''' Message to send
         ''' </param>
         Public Function SndWhisper(ByRef name As String, ByRef msg As String)
-            If Not String.IsNullOrEmpty(msg) Then Return SendServer("/%" & FurcadiaShortName(name) & " " & msg)
+            If Not String.IsNullOrEmpty(msg) Then
+                Return SendServer("/%" & FurcadiaShortName(name) & " " & msg)
+            End If
             Return False
         End Function
 
