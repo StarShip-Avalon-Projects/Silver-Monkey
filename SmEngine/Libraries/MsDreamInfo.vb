@@ -185,7 +185,11 @@ Namespace Engine.Libraries
         Public Function ShareFurreNamed(reader As TriggerReader) As Boolean
 
             Dim Target = Dream.Furres.GerFurreByName(reader.ReadString())
-            If InDream(Target.Name) Then SendServer("share " + Target.ShortName)
+            If InDream(Target.Name) Then
+                If InDream(Target.Name) Then SendServer("share " + Target.ShortName)
+            Else
+                Throw New MonkeyspeakException($"{Target.Name} is not in the dream")
+            End If
             Return True
 
         End Function
@@ -215,9 +219,11 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function UnshareFurreNamed(reader As TriggerReader) As Boolean
 
-            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString)
+            Dim Target = Dream.Furres.GerFurreByName(reader.ReadString())
             If InDream(Target.Name) Then
                 Return SendServer("unshare " + Target.ShortName)
+            Else
+                Throw New MonkeyspeakException($"{Target.Name} is not in the dream")
             End If
             Return False
 
