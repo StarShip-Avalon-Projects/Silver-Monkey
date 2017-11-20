@@ -369,20 +369,18 @@ Namespace Engine.Libraries
             'Says
             ' (5:0) say {..}.
             Add(TriggerCategory.Effect, 0,
-                Function(reader As TriggerReader) SendSay(reader.ReadString()),
+                Function(reader) SendSay(reader.ReadString()),
          " say {..}.")
             'emotes
             ' (5:1) emote {..}.
             Add(TriggerCategory.Effect, 1,
-                Function(reader As TriggerReader) SendEmote(reader.ReadString),
+                Function(reader) SendEmote(reader.ReadString),
                  " emote {..}.")
 
             'Shouts
             ' (5:2) shout {..}.
             Add(TriggerCategory.Effect, 2,
-                 Function(reader As TriggerReader)
-                     Return SndShout(reader.ReadString)
-                 End Function,
+                 Function(reader) SndShout(reader.ReadString),
                 " shout {..}.")
 
             'Emits
@@ -451,7 +449,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function EnterView(reader As TriggerReader) As Boolean
-
+            ReadParams(reader)
             If Player.Visible = Player.WasVisible Then
                 Return False
             End If
@@ -489,8 +487,8 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function FurreNamedEnterView(reader As TriggerReader) As Boolean
-
-            Dim tPlayer As Furre = Dream.Furres.GerFurreByName(reader.ReadString)
+            ReadParams(reader)
+            Dim tPlayer = Dream.Furres.GerFurreByName(reader.ReadString)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -508,9 +506,9 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function FurreNamedLeaveView(reader As TriggerReader) As Boolean
-
+            ReadParams(reader)
             Dim name = reader.ReadString
-            Dim tPlayer As Furre = Dream.Furres.GerFurreByName(name)
+            Dim tPlayer = Dream.Furres.GerFurreByName(name)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
             End If
@@ -528,7 +526,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function LeaveView(reader As TriggerReader) As Boolean
-
+            ReadParams(reader)
             If Player.Visible = Player.WasVisible Then
                 Return False
             End If
@@ -603,7 +601,7 @@ Namespace Engine.Libraries
         ''' Message to send
         ''' </param>
         Public Function SndShout(ByRef msg As String) As Boolean
-            Thread.Sleep(100)
+            Thread.Sleep(300)
             If Not String.IsNullOrEmpty(msg) Then Return SendServer("-" & msg)
             Return False
         End Function

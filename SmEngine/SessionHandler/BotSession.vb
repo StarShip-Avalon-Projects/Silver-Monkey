@@ -172,11 +172,14 @@ Public Class BotSession
                     Await MSpage.ExecuteAsync(ids, Dream)
                     lastDream = Dream
 
-                Case ServerInstructionType.AnimatedMoveAvatar
-                    Await MSpage.ExecuteAsync(600, DirectCast(sender, Furre))
-
-                Case ServerInstructionType.MoveAvatar
-                    Await MSpage.ExecuteAsync(600, DirectCast(sender, Furre))
+                Case ServerInstructionType.AnimatedMoveAvatar Or
+                    ServerInstructionType.MoveAvatar
+                    '(0:28) When someone enters the bots view,
+                    '(0:30) When someone leaves the bots view,
+                    '(0:31) When a furre named {..} leaves the bots view,
+                    '(0:29) When a furre named {..} enters the bots view,
+                    Dim ids() = {28, 30, 31, 29}
+                    Await MSpage.ExecuteAsync(ids, DirectCast(sender, Furre))
 
                 Case ServerInstructionType.RemoveAvatar
                     '(0:27) When a furre named {..} leaves the Dream,
