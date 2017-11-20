@@ -1,6 +1,4 @@
-﻿Imports Furcadia.Util
-
-Namespace Engine.Libraries.Pounce
+﻿Namespace Engine.Libraries.Pounce
 
     ''' <summary>
     ''' Pounce Furre object

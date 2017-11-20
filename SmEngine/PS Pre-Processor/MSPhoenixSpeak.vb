@@ -1,6 +1,5 @@
 ﻿Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Furcadia.Net.Utils.ServerParser
 Imports Monkeyspeak
 
 Namespace Engine.Libraries

@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports Furcadia.Util
 
 Namespace IO
 

@@ -1,7 +1,7 @@
-﻿Imports System.Windows.Forms
-Imports SilverMonkeyEngine
+﻿Imports System.ComponentModel
+Imports System.Windows.Forms
 Imports Monkeyspeak.Logging
-Imports System.ComponentModel
+Imports SilverMonkeyEngine
 
 Public Class Variables
     Inherits Form

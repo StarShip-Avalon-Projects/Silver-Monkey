@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports Furcadia.Net
-Imports Furcadia.Util
 Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 

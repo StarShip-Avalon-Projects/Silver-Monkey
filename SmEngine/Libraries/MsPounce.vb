@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports Furcadia.Net.Pounce
-Imports Furcadia.Util
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.Pounce

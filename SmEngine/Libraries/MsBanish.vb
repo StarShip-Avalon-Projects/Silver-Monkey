@@ -1,5 +1,4 @@
-﻿Imports Furcadia.Util
-Imports Monkeyspeak
+﻿Imports Monkeyspeak
 
 Namespace Engine.Libraries
 

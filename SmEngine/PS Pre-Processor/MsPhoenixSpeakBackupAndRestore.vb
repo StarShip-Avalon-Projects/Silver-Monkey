@@ -1,6 +1,5 @@
 ﻿Imports System.Data.SQLite
 Imports System.Threading
-Imports Furcadia.Util
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.PhoenixSpeak

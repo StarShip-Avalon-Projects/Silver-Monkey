@@ -1,7 +1,5 @@
 ﻿Imports System.IO
-Imports System.Runtime.InteropServices
 Imports System.Text
-Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
 Imports Monkeyspeak
 

@@ -1,9 +1,5 @@
-﻿Imports Furcadia.Net
-Imports Furcadia.Net.Dream
-Imports Furcadia.Util
+﻿Imports Monkeyspeak
 Imports Monkeyspeak.Logging
-Imports Monkeyspeak
-Imports SilverMonkeyEngine.MsLibHelper
 
 Namespace Engine.Libraries
 

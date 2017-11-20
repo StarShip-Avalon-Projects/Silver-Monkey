@@ -22,7 +22,6 @@ Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.Engine.MsEngineExtentionFunctions
-Imports SilverMonkeyEngine.MsLibHelper
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
