@@ -119,8 +119,8 @@ Namespace IO
         ''' </returns>
         Public Function Contains(Furre As String) As Boolean
 
-            For Each ListName As String In _PounceList
-                If FurcadiaShortName(ListName.ToString) = FurcadiaShortName(Furre.ToString) Then Return True
+            For Each ListName In _PounceList
+                If ListName.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then Return True
             Next
             Return False
         End Function
@@ -159,8 +159,8 @@ Namespace IO
         ''' </param>
         Public Sub Remove(Furre As String)
             _HasChanged = True
-            For Each ListName As String In _PounceList
-                If FurcadiaShortName(ListName.ToString) = FurcadiaShortName(Furre) Then
+            For Each ListName In _PounceList
+                If ListName.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then
                     _PounceList.Remove(ListName)
                 End If
             Next
@@ -221,8 +221,8 @@ Namespace IO
         Public Function ToShortNamedArray() As String()
             Dim ThisList() As String = Nothing
             _PounceList.CopyTo(ThisList)
-            For I As Integer = 0 To ThisList.Length() - 1
-                ThisList(I) = FurcadiaShortName(ThisList(I))
+            For I = 0 To ThisList.Length() - 1
+                ThisList(I) = ThisList(I).ToFurcadiaShortName()
             Next
             Return ThisList
         End Function

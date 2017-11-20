@@ -223,8 +223,8 @@ Namespace Engine.Libraries
 
             Dim Furre = reader.ReadString
             Dim f = File.ReadAllLines(_onlineListFile)
-            For Each l As String In f
-                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
+            For Each l In f
+                If l.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then Return True
             Next
             Return False
 
@@ -250,7 +250,7 @@ Namespace Engine.Libraries
 
             Dim TmpName = reader.ReadString()
             For Each Fur In PounceFurres
-                If Fur.ShortName = FurcadiaShortName(TmpName) Then
+                If Fur.ShortName = TmpName.ToFurcadiaShortName() Then
                     Return Not Fur.Online
                 End If
             Next
@@ -268,7 +268,7 @@ Namespace Engine.Libraries
 
             Dim TmpName = reader.ReadString()
             For Each Fur In PounceFurres
-                If Fur.ShortName = FurcadiaShortName(TmpName) Then
+                If Fur.ShortName = TmpName.ToFurcadiaShortName() Then
                     Return Fur.Online
                 End If
             Next
@@ -293,8 +293,8 @@ Namespace Engine.Libraries
             Dim linesList = New List(Of String)(File.ReadAllLines(_onlineListFile))
             Using SR = New StreamReader(_onlineListFile)
                 line = SR.ReadLine()
-                For i As Integer = 0 To linesList.Count - 1
-                    If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
+                For i = 0 To linesList.Count - 1
+                    If line.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then
                         linesList.RemoveAt(i)
                         File.WriteAllLines(_onlineListFile, linesList.ToArray())
                         Return True
@@ -318,13 +318,13 @@ Namespace Engine.Libraries
             CheckonlineList()
 
             Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
-            Furre = FurcadiaShortName(Furre)
+            Furre = Furre.ToFurcadiaShortName()
             Dim line As String = Nothing
             Dim linesList = New List(Of String)(File.ReadAllLines(_onlineListFile))
             Using SR As New StreamReader(_onlineListFile)
                 line = SR.ReadLine()
                 For i As Integer = 0 To linesList.Count - 1
-                    If FurcadiaShortName(line) = Furre Then
+                    If line.ToFurcadiaShortName() = Furre Then
                         linesList.RemoveAt(i)
                         File.WriteAllLines(_onlineListFile, linesList.ToArray())
                         Return True
@@ -349,8 +349,8 @@ Namespace Engine.Libraries
 
             Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
             Dim f = File.ReadAllLines(_onlineListFile)
-            For Each l As String In f
-                If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
+            For Each line In f
+                If line.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then Return True
             Next
             Return False
 

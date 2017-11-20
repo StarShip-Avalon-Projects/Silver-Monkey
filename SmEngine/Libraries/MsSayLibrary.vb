@@ -577,7 +577,7 @@ Namespace Engine.Libraries
         ''' </param>
         Public Function SendOffLineWhisper(ByRef name As String, ByRef msg As String) As Boolean
             If Not String.IsNullOrEmpty(msg) Then
-                Return SendServer("/%%" & FurcadiaShortName(name) & " " & msg)
+                Return SendServer("/%%" & name.ToFurcadiaShortName() & " " & msg)
             End If
             Return False
         End Function
@@ -617,7 +617,7 @@ Namespace Engine.Libraries
         ''' </param>
         Public Function SndWhisper(ByRef name As String, ByRef msg As String)
             If Not String.IsNullOrEmpty(msg) Then
-                Return SendServer("/%" & FurcadiaShortName(name) & " " & msg)
+                Return SendServer("/%" & name.ToFurcadiaShortName() & " " & msg)
             End If
             Return False
         End Function

@@ -326,7 +326,7 @@ Namespace Engine.Libraries
                 If String.IsNullOrEmpty(var.Value.ToString) Then
                     Return True
                 End If
-                var.Value = FurcadiaShortName(var.Value.ToString)
+                var.Value = var.Value.ToString.ToFurcadiaShortName()
                 Return True
             Else
                 Return False

@@ -32,11 +32,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
             ReadParams(reader)
-            Dim msMsg = StripFurcadiaMarkup(reader.ReadString()).ToLower.Trim
+            Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower
 
             Dim msg = Player.Message
-            msg = StripFurcadiaMarkup(msg)
-            Return msg.Contains(msMsg.ToLower)
+            Return msg.Contains(msMsg.ToStrippedFurcadiaMarkupString().ToLower)
 
         End Function
 
@@ -82,9 +81,8 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Overridable Function MsgEndsWith(reader As TriggerReader) As Boolean
             ReadParams(reader)
-            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-            Dim msg = Player.Message
-            msg = StripFurcadiaMarkup(msg)
+            Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString()
+            Dim msg = Player.Message.ToStrippedFurcadiaMarkupString()
             'Debug.Print("Msg = " & msg)
             Return msg.EndsWith(msMsg)
 
@@ -102,8 +100,8 @@ Namespace Engine.Libraries
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
             ReadParams(reader)
 
-            Dim msg = StripFurcadiaMarkup(Player.Message)
-            Dim test = StripFurcadiaMarkup(reader.ReadString())
+            Dim msg = Player.Message.ToStrippedFurcadiaMarkupString()
+            Dim test = reader.ReadString().ToStrippedFurcadiaMarkupString()
             Return Not FurcadiaSession.IsConnectedCharacter(Player) AndAlso
                 msg = test
 
@@ -120,9 +118,8 @@ Namespace Engine.Libraries
         Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
             ReadParams(reader)
 
-            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-
-            Dim msg = StripFurcadiaMarkup(Player.Message)
+            Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower()
+            Dim msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower
 
             Return Not msg.EndsWith(msMsg)
 
@@ -140,10 +137,8 @@ Namespace Engine.Libraries
 
             ReadParams(reader)
 
-            Dim msMsg = StripFurcadiaMarkup(reader.ReadString())
-            Dim msg = Player.Message
-            msg = StripFurcadiaMarkup(msg)
-
+            Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower()
+            Dim msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower
             Return msg.StartsWith(msMsg)
         End Function
 
@@ -162,7 +157,7 @@ Namespace Engine.Libraries
         ''' </remarks>
         Protected Overridable Function NameIs(reader As TriggerReader) As Boolean
 
-            Return FurcadiaShortName(reader.ReadString()) = Player.ShortName
+            Return reader.ReadString.ToFurcadiaShortName() = Player.ShortName
 
         End Function
 

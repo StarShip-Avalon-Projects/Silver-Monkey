@@ -271,7 +271,7 @@ Namespace Engine.Libraries
 
         Public Function BackUpCharacterNamed(reader As TriggerReader) As Boolean
             Dim furre As String = reader.ReadString
-            Return Player.ShortName = FurcadiaShortName(furre)
+            Return Player.ShortName = furre.ToFurcadiaShortName()
         End Function
 
         ''' <summary>
@@ -413,7 +413,7 @@ Namespace Engine.Libraries
             If str.ToUpper = "[DREAM]" Then
                 str = str.ToUpper
             Else
-                str = FurcadiaShortName(str)
+                str = str.ToFurcadiaShortName()
             End If
 
             Dim db = New SQLiteDatabase(MsDatabase.SQLitefile)
@@ -673,7 +673,7 @@ String.Empty + TableSet + "MASTER.ID = " + TableSet + ".NameID " +
                 If PlayerName.ToUpper = "[DREAM]" Then
                     PlayerName = "[DREAM]"
                 Else
-                    PlayerName = FurcadiaShortName(PlayerName)
+                    PlayerName = PlayerName.ToFurcadiaShortName()
                 End If
 
                 For Each var As PhoenixSpeak.Variable In PsInfo

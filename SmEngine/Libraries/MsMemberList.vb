@@ -159,8 +159,8 @@ Namespace Engine.Libraries
             Try
                 CheckMemberList()
                 Dim f = File.ReadAllLines(MemberList)
-                For Each l As String In f
-                    If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then
+                For Each line In f
+                    If line.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then
                         Return True
                     End If
                 Next
@@ -228,7 +228,7 @@ Namespace Engine.Libraries
                     While SR.Peek() <> -1
                         line = SR.ReadLine()
                         For i As Integer = 0 To linesList.Count - 1
-                            If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
+                            If line.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then
                                 linesList.RemoveAt(i)
                                 File.WriteAllLines(MemberList, linesList.ToArray())
                                 Exit For
@@ -266,7 +266,7 @@ Namespace Engine.Libraries
                     While SR.Peek() <> -1
                         Dim line = SR.ReadLine()
                         For i As Integer = 0 To linesList.Count - 1
-                            If FurcadiaShortName(line) = FurcadiaShortName(Furre) Then
+                            If line.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then
                                 linesList.RemoveAt(i)
                                 File.WriteAllLines(MemberList, linesList.ToArray())
                                 Exit For
@@ -300,8 +300,8 @@ Namespace Engine.Libraries
 
                 Dim f = New List(Of String)
                 f.AddRange(File.ReadAllLines(MemberList))
-                For Each l As String In f
-                    If FurcadiaShortName(l) = FurcadiaShortName(Furre) Then Return True
+                For Each line In f
+                    If line.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then Return True
                 Next
 
                 Return FurcadiaSession.IsBotController

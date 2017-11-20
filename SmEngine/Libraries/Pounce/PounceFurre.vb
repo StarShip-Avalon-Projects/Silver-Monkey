@@ -83,7 +83,7 @@ Namespace Engine.Libraries.Pounce
         ''' <returns>character stripped name</returns>
         Public ReadOnly Property ShortName As String
             Get
-                Return FurcadiaShortName(_FurrName)
+                Return _FurrName.ToFurcadiaShortName()
             End Get
         End Property
 
@@ -99,7 +99,7 @@ Namespace Engine.Libraries.Pounce
         ''' <returns>
         ''' </returns>
         Public Shadows Function Equals(other As String) As Boolean Implements IEquatable(Of String).Equals
-            Return FurcadiaShortName(Me._FurrName) = FurcadiaShortName(other)
+            Return Me._FurrName.ToFurcadiaShortName() = other.ToFurcadiaShortName()
         End Function
 
 #End Region

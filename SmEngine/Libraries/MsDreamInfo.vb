@@ -64,13 +64,13 @@ Namespace Engine.Libraries
             '(1:21) and the furre named {..} is the Dream owner,
             Add(TriggerCategory.Condition, 21,
                 Function(reader) Dream.OwnerShortName =
-                FurcadiaShortName(reader.ReadString),
+                reader.ReadString.ToFurcadiaShortName(),
                 " and the furre named {..} is the Dream owner,")
 
             '(1:22) and the furre named {..} is not the Dream owner,
             Add(TriggerCategory.Condition, 22,
                Function(reader) Dream.OwnerShortName <>
-               FurcadiaShortName(reader.ReadString),
+              reader.ReadString.ToFurcadiaShortName(),
                 " and the furre named {..} is not the Dream owner,")
             '(1:23) and the Dream Name is {..},
 
@@ -153,7 +153,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Function DreamNameIs(reader As TriggerReader) As Boolean
             ReadParams(reader)
-            Return Dream.ShortName = FurcadiaShortName(reader.ReadString)
+            Return Dream.ShortName = reader.ReadString.ToFurcadiaShortName()
 
         End Function
 

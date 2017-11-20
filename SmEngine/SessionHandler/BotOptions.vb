@@ -133,7 +133,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
 
     Public ReadOnly Property BotControllerShortName() As String
         Get
-            Return FurcadiaShortName(_MonkeySpeakEngineOption.BotController)
+            Return _MonkeySpeakEngineOption.BotController.ToFurcadiaShortName()
         End Get
     End Property
 

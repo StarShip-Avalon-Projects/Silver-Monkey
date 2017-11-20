@@ -163,7 +163,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function AndBanishFurreNamed(reader As TriggerReader) As Boolean
             Dim Furre As String = reader.ReadString
-            Return FurcadiaShortName(Furre) = FurcadiaShortName(FurcadiaSession.BanishName)
+            Return Furre.ToFurcadiaShortName() = FurcadiaSession.BanishName.ToFurcadiaShortName()
 
         End Function
 
@@ -263,7 +263,7 @@ Namespace Engine.Libraries
 
             Dim f As String = reader.ReadString
             For Each Furre In banishlist
-                If FurcadiaShortName(Furre) = FurcadiaShortName(f) Then Return False
+                If Furre.ToFurcadiaShortName() = f.ToFurcadiaShortName() Then Return False
             Next
             Return True
 
@@ -326,7 +326,7 @@ Namespace Engine.Libraries
             Dim banishlist As List(Of String) = FurcadiaSession.BanishString
 
             For Each Furre In banishlist
-                If FurcadiaShortName(Furre) = Player.ShortName Then Return False
+                If Furre.ToFurcadiaShortName() = Player.ShortName Then Return False
             Next
 
             Return True

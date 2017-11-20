@@ -288,7 +288,7 @@ Namespace Engine.Libraries
         ''' </remarks>
         Public Function FurreNamedinfoEqualToNumber(reader As TriggerReader) As Boolean
             Dim info = reader.ReadString
-            Dim Furre = FurcadiaShortName(reader.ReadString)
+            Dim Furre = reader.ReadString().ToFurcadiaShortName()
             Dim Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
@@ -308,7 +308,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedinfoEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info As String = reader.ReadString
-            Dim Furre As String = FurcadiaShortName(reader.ReadString())
+            Dim Furre As String = reader.ReadString().ToFurcadiaShortName()
             Dim str As String = reader.ReadString
 
             Return str = GetValueFromTable(Info, Furre).ToString
@@ -328,7 +328,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedinfoGreaterThanNumber(reader As TriggerReader) As Boolean
 
             Dim info = reader.ReadString
-            Dim Furre = FurcadiaShortName(reader.ReadString)
+            Dim Furre = reader.ReadString().ToFurcadiaShortName()
             Dim Variable = ReadVariableOrNumber(reader, False)
             Dim check = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -350,7 +350,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedinfoGreaterThanOrEqualToNumber(reader As TriggerReader) As Boolean
 
             Dim info = reader.ReadString
-            Dim Furre = FurcadiaShortName(reader.ReadString)
+            Dim Furre = reader.ReadString().ToFurcadiaShortName()
             Dim Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
             Double.TryParse(GetValueFromTable(info, Furre).ToString, Value)
@@ -370,7 +370,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedinfoLessThanNumber(reader As TriggerReader) As Boolean
             Dim info = reader.ReadString
-            Dim FurreName = FurcadiaShortName(reader.ReadString)
+            Dim FurreName = reader.ReadString().ToFurcadiaShortName()
 
             Dim Variable = ReadVariableOrNumber(reader, False)
             Dim Value As Double = 0
@@ -392,7 +392,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedinfoLessThanOrEqualToNumber(reader As TriggerReader) As Boolean
 
             Dim info = reader.ReadString
-            Dim Furre = FurcadiaShortName(reader.ReadString)
+            Dim Furre = reader.ReadString().ToFurcadiaShortName()
             Dim Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
             Dim Value As Double = 0
@@ -414,7 +414,7 @@ Namespace Engine.Libraries
         Public Function FurreNamedinfoNotEqualToNumber(reader As TriggerReader) As Boolean
 
             Dim info = reader.ReadString
-            Dim Furre = FurcadiaShortName(reader.ReadString)
+            Dim Furre = reader.ReadString().ToFurcadiaShortName()
 
             Dim Variable = ReadVariableOrNumber(reader, False)
             Dim check As Object = GetValueFromTable(info, Furre)
@@ -436,7 +436,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function FurreNamedinfoNotEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info = reader.ReadString
-            Dim Furre = FurcadiaShortName(reader.ReadString)
+            Dim Furre = reader.ReadString().ToFurcadiaShortName()
 
             Dim str = reader.ReadString
 
@@ -680,9 +680,8 @@ Namespace Engine.Libraries
 
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
-            Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
             Dim Value As Double = 0
-            Double.TryParse(GetValueFromTable(info, FurcadiaShortName(Furre)).ToString, Value)
+            Double.TryParse(GetValueFromTable(info, Player.ShortName).ToString, Value)
 
             Return Number = Value
 
@@ -700,10 +699,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TriggeringFurreinfoEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info = reader.ReadString
-            Dim Furre = reader.Page.GetVariable(ShortNameVariable).Value.ToString()
             Dim str = reader.ReadString
 
-            If str = GetValueFromTable(Info, Furre).ToString Then Return True
+            If str = GetValueFromTable(Info, Player.ShortName).ToString Then Return True
             Return False
         End Function
 
@@ -721,9 +719,7 @@ Namespace Engine.Libraries
 
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
-            Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
-            Furre = FurcadiaShortName(Furre)
-            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim check As Object = GetValueFromTable(info, Player.ShortName)
             Dim Value As Double = 0
             Double.TryParse(check.ToString, Value)
             Return Value > Number
@@ -744,9 +740,8 @@ Namespace Engine.Libraries
 
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
-            Dim Furre = reader.Page.GetVariable(ShortNameVariable).Value.ToString()
             Dim Num As Double = 0
-            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim check As Object = GetValueFromTable(info, Player.ShortName)
             Double.TryParse(check.ToString, Num)
             Return Num >= Number
 
@@ -766,9 +761,9 @@ Namespace Engine.Libraries
 
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
-            Dim Furre = reader.Page.GetVariable(ShortNameVariable).Value.ToString()
+
             Dim Num As Double = 0
-            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim check As Object = GetValueFromTable(info, Player.ShortName)
             Double.TryParse(check.ToString, Num)
 
             Return Num < Number
@@ -789,9 +784,8 @@ Namespace Engine.Libraries
 
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
-            Dim Furre = reader.Page.GetVariable(ShortNameVariable).Value.ToString()
             Dim Num As Double = 0
-            Dim check As Object = GetValueFromTable(info, Furre)
+            Dim check As Object = GetValueFromTable(info, Player.ShortName)
             Double.TryParse(check.ToString, Num)
             Return Num <= Number
 
@@ -811,9 +805,7 @@ Namespace Engine.Libraries
 
             Dim info = reader.ReadString
             Dim Number = ReadVariableOrNumber(reader, False)
-            Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
-            Furre = FurcadiaShortName(Furre)
-            Dim val As String = GetValueFromTable(info, Furre).ToString
+            Dim val As String = GetValueFromTable(info, Player.ShortName).ToString
             Dim Value As Double = 0
             Double.TryParse(val, Value)
             Return Value <> Number
@@ -832,10 +824,10 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function TriggeringFurreinfoNotEqualToSTR(reader As TriggerReader) As Boolean
             Dim Info = reader.ReadString
-            Dim Furre = reader.Page.GetVariable(ShortNameVariable).Value.ToString()
+
             Dim str = reader.ReadString
 
-            If str <> GetValueFromTable(Info, Furre).ToString Then Return True
+            If str <> GetValueFromTable(Info, Player.ShortName).ToString Then Return True
 
             Return False
         End Function
@@ -937,7 +929,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Shared Function DeleteFurreNamed(reader As TriggerReader) As Boolean
-            Dim Furre = FurcadiaShortName(reader.ReadString)
+            Dim Furre = reader.ReadString().ToFurcadiaShortName()
             Dim db = New SQLiteDatabase(SQLitefile)
             Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
 
@@ -953,9 +945,9 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function DeleteTriggeringFurre(reader As TriggerReader) As Boolean
-            Dim Furre = reader.Page.GetVariable(ShortNameVariable).Value.ToString()
+
             Dim db = New SQLiteDatabase(SQLitefile)
-            Return 0 < SQLiteDatabase.ExecuteNonQuery("Delete from FURRE where Name='" & Furre & "'")
+            Return 0 < SQLiteDatabase.ExecuteNonQuery($"Delete from FURRE where Name='{Player.ShortName}'")
 
         End Function
 
@@ -1028,7 +1020,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function InsertFurreNamed(reader As TriggerReader) As Boolean
-            Dim Furre As String = FurcadiaShortName(reader.ReadString)
+            Dim Furre As String = reader.ReadString().ToFurcadiaShortName()
             Dim info As String
             If reader.PeekString Then
                 info = reader.ReadString
@@ -1059,7 +1051,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function InsertTriggeringFurreRecord(reader As TriggerReader) As Boolean
-            Dim Furre = reader.Page.GetVariable(ShortNameVariable).Value.ToString()
+
             Dim value As String = "0"
             If reader.PeekNumber Or reader.PeekVariable Then
                 value = ReadVariableOrNumber(reader).ToString()
@@ -1069,7 +1061,7 @@ Namespace Engine.Libraries
             End If
             Dim db As SQLiteDatabase = New SQLiteDatabase(SQLitefile)
             Dim data As New Dictionary(Of String, String) From {
-                {"Name", Furre},
+                {"Name", Player.ShortName},
                 {"date added", Date.Now.ToString},
                 {"date modified", Date.Now.ToString},
                 {"Access Level", value}
@@ -1137,7 +1129,7 @@ Namespace Engine.Libraries
 
             Dim db = New SQLiteDatabase(SQLitefile)
             Dim Info = reader.ReadString
-            Dim Furre = FurcadiaShortName(reader.ReadString)
+            Dim Furre = reader.ReadString().ToFurcadiaShortName()
             Dim Variable = reader.ReadVariable(True)
             ' Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
@@ -1230,7 +1222,7 @@ Namespace Engine.Libraries
             Dim value = ReadVariableOrNumber(reader, False).ToString
             Dim db = New SQLiteDatabase(SQLitefile)
             Dim data As New Dictionary(Of String, String) From {
-                {"Name", FurcadiaShortName(Furre)},
+                {"Name", Furre.ToFurcadiaShortName()},
                 {info, value},
                 {"date modified", Date.Now.ToString}
             }
@@ -1251,7 +1243,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function UpdateFurreNamed_FieldSTR(reader As TriggerReader) As Boolean
             Dim info = reader.ReadString
-            Dim Furre = FurcadiaShortName(reader.ReadString)
+            Dim Furre = reader.ReadString().ToFurcadiaShortName()
             'Dim Furre As String = MSpage.GetVariable("~Name").Value.ToString
             Dim value = reader.ReadString
             Dim db = New SQLiteDatabase(SQLitefile)
