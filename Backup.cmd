@@ -32,8 +32,8 @@ git push --recurse-submodules=check
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof
 
-:PullRest
-call PullReques.cmd
+:PullRequest
+call PullRequest.cmd
 
 :eof
 exit /b 0

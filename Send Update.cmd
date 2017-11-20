@@ -6,8 +6,6 @@ set git.exe_STATUS=%ERRORLEVEL%
 if not %git.exe_STATUS%==0 goto eof 
 
 git.exe submodule foreach "git.exe commit -m'Auto Update SubModules'"
-
-
 git.exe commit -m"Auto Version Update"
 set git.exe_STATUS=%ERRORLEVEL% 
 if not %git.exe_STATUS%==0 goto eof 
