@@ -4,44 +4,36 @@ IF "%~1"=="" GOTO BuildAll
 IF "%~1"=="VersionBump" GOTO VersionBump
 
 :VersionBump
-msbuild /t:IncrementVersions /property:Configuration=Debug Solution.build 
-set BUILD_STATUS=%ERRORLEVEL% 
-if not %BUILD_STATUS%==0 goto fail 
- 
-:BuildAll
-msbuild /t:Clean;BackupAllSources;CopyFiles  /property:Configuration=Debug Solution.build /flp:logfile=MonkeySystemDebug.log;verbosity=diagnostic
-set BUILD_STATUS=%ERRORLEVEL% 
-if not %BUILD_STATUS%==0 goto fail 
+call MsBuildSolution.cmd "VersionBump"
+goto End
 
-:BuildRelease
-msbuild /t:CopyFiles /property:Configuration=Release Solution.build  /flp:logfile=MonkeySystemRelease.log;verbosity=diagnostic
- set BUILD_STATUS=%ERRORLEVEL% 
-if %BUILD_STATUS%==0 goto end 
-if not %BUILD_STATUS%==0 goto fail  
- 
-:fail 
-pause 
-exit /b 1
+:BuildAll
+call MsBuildSolution.cmd
 
 :End
-git.exe add --all
-git.exe submodule foreach "git.exe add --all"
-set git.exe_STATUS=%ERRORLEVEL% 
-if not %git.exe_STATUS%==0 goto eof 
+git add --all
 
-git.exe submodule foreach "git.exe commit -m'Auto Update SubModules'"
+git submodule foreach "git add --all"
+set GIT_STATUS=%ERRORLEVEL% 
+if not %GIT_STATUS%==0 goto eof 
+
+git submodule foreach "git commit -m'Auto Update SubModules'"
 
 
-git.exe commit -m"Auto Version Update"
-set git.exe_STATUS=%ERRORLEVEL% 
-if not %git.exe_STATUS%==0 goto eof 
+git commit -m"Auto Version Update"
+set GIT_STATUS=%ERRORLEVEL% 
+if not %GIT_STATUS%==0 goto eof 
 
-git.exe push --recurse-submodules=check
-set git.exe_STATUS=%ERRORLEVEL% 
-if not %git.exe_STATUS%==0 goto eof
+git push --recurse-submodules=check
+set GIT_STATUS=%ERRORLEVEL% 
+if not %GIT_STATUS%==0 goto eof
 
-:pull
-git.exe request-pull v2.19.x_Elta https://git.exehub.com/StarShip-Avalon-Projects/Silver-Monkey.git.exe v2.19.x_Elta 
+:PullRest
+call PullReques.cmd
 
 :eof
 exit /b 0
+
+:fail 
+pause 
+exit /b 1
