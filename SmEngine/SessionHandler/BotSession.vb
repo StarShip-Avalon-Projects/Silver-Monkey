@@ -179,7 +179,7 @@ Public Class BotSession
                     '(0:31) When a furre named {..} leaves the bots view,
                     '(0:29) When a furre named {..} enters the bots view,
                     Dim ids() = {28, 30, 31, 29}
-                    Await MSpage.ExecuteAsync(ids, DirectCast(sender, Furre))
+                    Await MSpage.ExecuteAsync(ids, DirectCast(sender, MoveFurre).Player)
 
                 Case ServerInstructionType.RemoveAvatar
                     '(0:27) When a furre named {..} leaves the Dream,
@@ -221,8 +221,6 @@ Public Class BotSession
         If MSpage Is Nothing Then Exit Sub
         Dim Furr = InstructionObject.Player
 
-        UpdateTriggerigFurreVariables(Furr, MSpage)
-
         Dim Text As String = InstructionObject.ChannelText
         Try
             Select Case InstructionObject.Channel
@@ -245,8 +243,11 @@ Public Class BotSession
                         Await MSpage.ExecuteAsync(ids, InstructionObject)
                     End If
                 Case "trade"
+                    '(0:46) When the bot sees a trade request,
+                    '(0:47) When the bot sees the trade request {..},
+                    '(0:48) When the bot sees a trade request with {..} in it,
                     Dim ids() = {46, 47, 48}
-                    Await MSpage.ExecuteAsync(ids)
+                    Await MSpage.ExecuteAsync(ids, Furr)
                 Case "shout"
                     '(0:8) When someone shouts something,
                     '(0:9) When someone shouts {..},
@@ -414,7 +415,7 @@ Public Class BotSession
                     ' <font color='success'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Your cookies are ready.  http://furcadia.com/cookies/ for more info!</font>
                     '<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.
 
-                    Dim CookieToMe = New Regex(String.Format("{0}", CookieToMeREGEX))
+                    Dim CookieToMe = New Regex($"{CookieToMeREGEX}")
                     If CookieToMe.Match(Text).Success Then
                         Dim ids() = {42, 43}
                         Await MSpage.ExecuteAsync(ids, Furr)
@@ -422,7 +423,7 @@ Public Class BotSession
                     Dim CookieToAnyone As Regex = New Regex(String.Format("<name shortname='(.*?)'>(.*?)</name> just gave <name shortname='(.*?)'>(.*?)</name> a (.*?)"))
                     If CookieToAnyone.Match(Text).Success Then
 
-                        If IsConnectedCharacter() Then
+                        If IsConnectedCharacter(Furr) Then
                             Dim ids() = {42, 43}
                             Await MSpage.ExecuteAsync(ids, Furr)
                         Else

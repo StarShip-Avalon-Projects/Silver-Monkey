@@ -22,7 +22,8 @@ Namespace Engine.Libraries
         Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:46) When the bot sees a trade request,
             Add(TriggerCategory.Cause, 46,
-            Function()
+            Function(reader)
+                ReadParams(reader)
                 Return Not FurcadiaSession.IsConnectedCharacter
             End Function, " When the bot sees a trade request,")
             '(0:47) When the bot sees the trade request {..},

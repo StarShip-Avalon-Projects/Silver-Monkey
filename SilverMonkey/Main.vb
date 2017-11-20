@@ -622,6 +622,7 @@ Public Class Main
 
             End If
         Else
+            If o Is Nothing Then o = "null"
             SndDisplay("Furcadia Session error:" + ex.Message + Environment.NewLine + o.ToString, DisplayColors.Error)
         End If
 
