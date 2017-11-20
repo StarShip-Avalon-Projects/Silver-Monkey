@@ -5,7 +5,7 @@
     '''<see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha">Phoenix Speak</see>
     ''' </summary>
     <CLSCompliant(True)>
-    Public Class PsId
+    Public Class PhoenxSpeakIdManager
 
 #Region "Private Fields"
 
@@ -19,7 +19,7 @@
         'Use same ID with counter for Multiple Commands sent
         'IE Restoring multi-page character data
 
-        Private Shared List As New Dictionary(Of Short, PsId)
+        Private Shared List As New Dictionary(Of Short, PhoenxSpeakIdManager)
 
         Private _Count As Integer
         Private _id As Short
@@ -96,7 +96,7 @@
         ''' <param name="id">
         ''' </param>
         Public Sub remove(id As Short)
-            Dim PS As PsId
+            Dim PS As PhoenxSpeakIdManager
             If List.ContainsKey(id) Then
                 PS = List.Item(id)
                 PS.Count -= 1

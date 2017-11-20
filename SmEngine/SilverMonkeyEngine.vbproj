@@ -159,11 +159,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="PS Pre-Processor\MsPhoenixSpeak.vb" />
-    <Compile Include="PS Pre-Processor\MsPhoenixSpeakBackupAndRestore.vb" />
+    <Compile Include="Libraries\MsPhoenixSpeak.vb" />
+    <Compile Include="Libraries\MsPhoenixSpeakBackupAndRestore.vb" />
     <Compile Include="PS Pre-Processor\PSObjects\PhoenicSpeakDataObject.vb" />
     <Compile Include="PS Pre-Processor\PSObjects\PhoenixSpeakEventArgs.vb" />
-    <Compile Include="PS Pre-Processor\PSObjects\PhoenixSpeakId.vb" />
+    <Compile Include="PS Pre-Processor\PSObjects\PhoenixSpeakIdManager.vb" />
     <Compile Include="PS Pre-Processor\PSObjects\PhoenixSpeakVariable.vb" />
     <Compile Include="PS Pre-Processor\PSObjects\PxResponseObject.vb" />
     <None Include="PS Pre-Processor\SubSystem.vb" />

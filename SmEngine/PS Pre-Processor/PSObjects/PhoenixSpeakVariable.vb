@@ -41,7 +41,6 @@ Namespace Engine.Libraries.PhoenixSpeak
 #Region "Private Fields"
 
         Private _value As Object
-        Private _IsConstant As Boolean
 
 #End Region
 
@@ -53,7 +52,7 @@ Namespace Engine.Libraries.PhoenixSpeak
             _value = value
         End Sub
 
-        Public Sub New(Var As PhoenixSpeak.Variable)
+        Public Sub New(Var As IVariable)
             _Name = Var.Name
             _value = Var.Value
         End Sub
@@ -69,13 +68,17 @@ Namespace Engine.Libraries.PhoenixSpeak
                 Return _value
             End Get
             Set(value As Object)
-                _value -= value
+                _value = value
             End Set
         End Property
 
+        ''' <summary>
+        ''' These Variables dom't need Constant Protextion
+        ''' </summary>
+        ''' <returns>False</returns>
         Public ReadOnly Property IsConstant As Boolean Implements IVariable.IsConstant
             Get
-                Return _IsConstant
+                Return False
             End Get
         End Property
 
@@ -86,11 +89,11 @@ Namespace Engine.Libraries.PhoenixSpeak
             _value = Nothing
         End Sub
 
-        Public Overloads Shared Operator <>(varA As Variable, varB As Variable) As Boolean
+        Public Overloads Shared Operator <>(varA As Variable, varB As IVariable) As Boolean
             Return varA.Value IsNot varB.Value
         End Operator
 
-        Public Overloads Shared Operator =(varA As Variable, varB As Variable) As Boolean
+        Public Overloads Shared Operator =(varA As Variable, varB As IVariable) As Boolean
             If varA Is Nothing OrElse varB Is Nothing Then
                 If varA IsNot Nothing Then
                     Return varA.Value Is Nothing

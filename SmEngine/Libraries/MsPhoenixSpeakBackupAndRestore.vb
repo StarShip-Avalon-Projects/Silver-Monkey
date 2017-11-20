@@ -17,7 +17,7 @@ Namespace Engine.Libraries
     ''' NOTE: PhoenixSpeak Database is not SQL based like SQLite. Phoenix
     '''       Speak resembles an XML style system
     ''' </para>
-    ''' ''' <pra>Bot Testers: Be aware this class needs to be tested any way possible!</pra>
+    ''' <pra>Bot Testers: Be aware this class needs to be tested any way possible!</pra>
     ''' </summary>
     ''' <remarks>
     ''' Character List Looping.
@@ -79,9 +79,8 @@ Namespace Engine.Libraries
         Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:500) When the bot starts backing up the character phoenix speak,
             Add(TriggerCategory.Cause, 500,
-                Function()
-                    Return True
-                End Function, " When the bot starts backing up the character phoenix speak,")
+                Function() True,
+                " When the bot starts backing up the character phoenix speak,")
             '(0:501) When the bot completes backing up the characters phoenix speak,
             Add(TriggerCategory.Cause, 501,
                 Function()
@@ -148,7 +147,7 @@ Namespace Engine.Libraries
             '(5:557) remove Entries older then # days from phoenix speak Character backup.
             Add(TriggerCategory.Effect, 557, AddressOf PruneCharacterBackup,
                 " remove Entries older than # days from phoenix speak backup.")
-            Add(TriggerCategory.Effect, 558, AddressOf restorePS_DataOldrThanDays,
+            Add(TriggerCategory.Effect, 558, AddressOf RestorePS_DataOldrThanDays,
                 " restore phoenix speak character records newer then # days. (zero equals all character records)")
 
             Add(TriggerCategory.Effect, 560, AddressOf AbortPS,
@@ -377,7 +376,7 @@ Namespace Engine.Libraries
         ''' </param>
         ''' <returns>
         ''' </returns>
-        Public Function restorePS_DataOldrThanDays(reader As TriggerReader) As Boolean
+        Public Function RestorePS_DataOldrThanDays(reader As TriggerReader) As Boolean
 
             Dim days = ReadVariableOrNumber(reader)
             If CurrentPS_Stage = PsSystemRunning.PsNone Then
@@ -429,7 +428,7 @@ Namespace Engine.Libraries
             Dim _id As Short = 0
             If PsVariableList.Count > 0 Then
 
-                Dim Ps_ID As New PsId(_id)
+                Dim Ps_ID As New PhoenxSpeakIdManager(_id)
                 Dim PScmd As String = String.Empty
                 Dim Var As New List(Of String)
                 Dim str2 As String = String.Empty

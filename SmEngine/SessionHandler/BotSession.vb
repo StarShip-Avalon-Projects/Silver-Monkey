@@ -241,12 +241,14 @@ Public Class BotSession
                         Dim ids() = {133, 134, 135, 136}
                         Await MSpage.ExecuteAsync(ids, InstructionObject)
                     End If
+                    Exit Sub
                 Case "trade"
                     '(0:46) When the bot sees a trade request,
                     '(0:47) When the bot sees the trade request {..},
                     '(0:48) When the bot sees a trade request with {..} in it,
                     Dim ids() = {46, 47, 48}
                     Await MSpage.ExecuteAsync(ids, Furr)
+                    Exit Sub
                 Case "shout"
                     '(0:8) When someone shouts something,
                     '(0:9) When someone shouts {..},
@@ -255,6 +257,7 @@ Public Class BotSession
                     If InstructionObject.RawInstruction.StartsWith("<font color='shout'>You shout,") Then Exit Sub
                     Dim ids() = {8, 9, 10}
                     Await MSpage.ExecuteAsync(ids, Furr)
+                    Exit Sub
                 Case "say"
                     ' (0:5) When some one says something
                     ' (0:6) When some one says {...}
@@ -265,7 +268,7 @@ Public Class BotSession
                     ' {...} in it"
                     Dim ids() = {5, 6, 7, 18, 19, 20}
                     Await MSpage.ExecuteAsync(ids, Furr)
-
+                    Exit Sub
                 Case "@whisper"
 
                     ' (0:15) When some one whispers something
@@ -274,7 +277,7 @@ Public Class BotSession
                     ' with {...} in it
                     Dim Ids() = {15, 16, 17}
                     Await MSpage.ExecuteAsync(Ids, Furr)
-
+                    Exit Sub
                 Case "emote"
                     If IsConnectedCharacter() Then Exit Sub
                     ' (0:12) When someone emotes {...} Execute
@@ -285,13 +288,14 @@ Public Class BotSession
                     ' with {...} in it
                     Dim ids() = {11, 12, 13, 18, 19, 20}
                     Await MSpage.ExecuteAsync(ids, Furr)
+                    Exit Sub
                 Case "@emit"
                     ' (0:21) When someone emits something
                     ' (0:22) When someone emits {...}
                     ' (0:23) When someone emits something with {...} in it
                     Dim ids() = {21, 22, 23}
                     Await MSpage.ExecuteAsync(ids, Furr, Dream)
-
+                    Exit Sub
                 Case "query"
 
                     Dim QueryComand As String = New Regex("<a.*?href='command://(.*?)'>").Match(Text).Groups(1).Value
@@ -321,6 +325,7 @@ Public Class BotSession
                             Await MSpage.ExecuteAsync(ids, Furr)
 
                     End Select
+                    Exit Sub
                 Case "banish"
                     Dim NameStr As String
 
@@ -374,8 +379,6 @@ Public Class BotSession
                         Dim ids() = {56, 56}
                         Await MSpage.ExecuteAsync(ids)
 
-                        '      MSpage.ExecuteAsync(800)
-
                     ElseIf Text.Contains("There are no furres around right now with a name starting with ") Then
                         'Banish <name> (Not online)
                         'Error:>>  There are no furres around right now with a name starting with (.*?) .
@@ -407,7 +410,7 @@ Public Class BotSession
                     ElseIf Text = "You do not have any cookies to give away right now!" Then
                         Await MSpage.ExecuteAsync(95)
                     End If
-
+                    Exit Sub
                 Case "@cookie"
                     ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Cookie <a href='http://www.furcadia.com/cookies/Cookie%20Economy.html'>bank</a> has currently collected: 0</font>
                     ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> All-time Cookie total: 0</font>
@@ -446,10 +449,20 @@ Public Class BotSession
                     If CookiesReady.Match(Text).Success Then
                         Await MSpage.ExecuteAsync(96, Furr)
                     End If
-                Case Else
-                    'TODO: plugin Dynamic(Group)  Channels here
+                    Exit Sub
+                Case ""
+                Case Nothing
+                    'Do nothing
+                    'Allow Processing to continue with the RawInstruction
 
+                Case Else
+                    'Anything else would in theory be Dynamic Channel
+                    'TODO: plugin Dynamic(Group)  Channels here
+                    Exit Sub
             End Select
+            If InstructionObject.RawInstruction.StartsWith("PS") Then
+
+            End If
         Catch ex As Exception
             Dim Err As New ErrorLogging(ex, Me)
             Process.Start("notepad.exe", Err.LogFile)
