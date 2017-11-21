@@ -194,8 +194,6 @@ Namespace Engine.Libraries
 #Region "Private Fields"
 
         Private _FurcTime As DateTime
-        Private _HasHelp As Boolean
-        Private _SkillLevel As Integer
         Private FurcTimeTimer As Timer
 
 #End Region
@@ -208,17 +206,20 @@ Namespace Engine.Libraries
         Public WithEvents FurcadiaSession As BotSession
 
         ''' <summary>
-        ''' Reference to the Main Engine in the bot
-        ''' </summary>
-        Public WithEvents MsEngine As MonkeyspeakEngine
-
-        ''' <summary>
         ''' Current Dream the Bot is in
+        ''' <para/>
+        ''' Referenced as a Monkeyspeak Parameter.
+        ''' <para/>
+        ''' Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), Object())"/>
         ''' </summary>
         Public Property Dream As DREAM
 
         ''' <summary>
         ''' Current Triggering Furre
+        ''' <para/>
+        ''' Referenced as a Monkeyspeak Parameter.
+        ''' <para/>
+        ''' Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), Object())"/>
         ''' </summary>
         Public Property Player As Furre
 
@@ -272,8 +273,6 @@ Namespace Engine.Libraries
             If Session Is Nothing Then
                 Throw New ArgumentException("Session cannot be null")
             End If
-            _SkillLevel = 0
-            _HasHelp = False
             FurcadiaSession = Session
             FurcTimeTimer = New Timer(AddressOf TimeUpdate, Nothing,
                                       TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500))
@@ -284,13 +283,15 @@ Namespace Engine.Libraries
 #Region "Common Library Methods"
 
         ''' <summary>
-        ''' Is the specified furre in the dream?
+        ''' checks the <see cref="Furcadia.Net.Dream.FurreList"/>
+        ''' in the <see cref="MonkeySpeakLibrary.Dream">Dream Parameter</see>
+        ''' for the Target Furre.
         ''' </summary>
         ''' <param name="TargetFurre">
         ''' Target Furre
         ''' </param>
         ''' <returns>
-        ''' True if the furre is in the dream
+        ''' True if the furre is in the dream <see cref="Furcadia.Net.Dream.FurreList"/>
         ''' </returns>
         Public Function InDream(TargetFurre As Furre) As Boolean
             Dim found = False
