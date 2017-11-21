@@ -85,14 +85,15 @@
 		</ItemGroup>  
 		<Copy  
             SourceFiles="@(MonkeySpeakSourceFiles)"  
-            DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(FileVersion)%(Extension)')"  />
+            DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(FileVersion)-PhoenixSpeakAlpha%(Extension)')"  />
 
     </Target>
 
   <Target Name="IncrementVersions" Condition=" '$(Configuration)' == 'Debug' ">
       <!-- Compile whole solution in release mode -->
+		<!-- Allow Elta Branch to Manage FurcLib Versioning
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
-			WorkingDirectory="FurcLib/"/>
+			WorkingDirectory="FurcLib/"/> -->
 
 	    <Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
 			WorkingDirectory="DSeX/"/>
