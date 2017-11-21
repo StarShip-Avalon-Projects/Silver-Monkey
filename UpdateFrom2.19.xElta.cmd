@@ -1,6 +1,6 @@
 
-:GitPullCurrent
-git.exe pull --recurse-submodules=on-demand
+:GitPullActive
+git.exe pull --recurse-submodules=yes origin v2.19.x.Elta
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto fail 
 
