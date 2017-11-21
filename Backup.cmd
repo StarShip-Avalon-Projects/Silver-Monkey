@@ -23,7 +23,6 @@ if not %GIT_STATUS%==0 goto eof
 
 git submodule foreach "git commit -m'Auto Update SubModules'"
 
-
 git commit -m"Auto Version Update"
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof 

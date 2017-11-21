@@ -47,4 +47,4 @@
 Imports System.Reflection
 
 
-<Assembly: AssemblyInformationalVersion("2.19.PreAlpha <#= revisionNumber.ToString() #>")>
+<Assembly: AssemblyInformationalVersion("2.19.PhoenixSpeakAlpha <#= revisionNumber.ToString() #>")>

@@ -49,6 +49,12 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 82,
                 AddressOf MsgContains, " When the bot sees a Phoenix Speak response with {...} in it,")
 
+            'TODO: Add Monkeu Speak
+            '(1xxx) And the Database info {...} about the triggerig furre exists.
+            '(1:xxx) And the Database info {...} about the triggerig furre does Not exist.
+            '(1:xxx) And the Database info {...} about the furre named {...} exists.
+            '(1:xxx) And the Database info {...} about the furre named {...} does Not exist.
+
             '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
             Add(TriggerCategory.Effect, 60, AddressOf RemberPSInforTrigFurre,
                 " get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.")
