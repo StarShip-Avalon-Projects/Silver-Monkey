@@ -7,7 +7,9 @@
 'Bot info
 
 'Furre Update events?
-
+Imports SilverMonkeyEngine.Engine
+Imports SilverMonkeyEngine.Engine.Libraries
+Imports SilverMonkeyEngine.Engine.MsEngineExtentionFunctions
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports Furcadia.Net
@@ -19,9 +21,6 @@ Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
-Imports SilverMonkeyEngine.Engine
-Imports SilverMonkeyEngine.Engine.Libraries
-Imports SilverMonkeyEngine.Engine.MsEngineExtentionFunctions
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
@@ -226,7 +225,7 @@ Public Class BotSession
 
                 Case "@roll"
 
-                    If IsConnectedCharacter() Then
+                    If IsConnectedCharacter(Furr) Then
                         '(0:130) When the bot rolls #d#,
                         '(0:132) When the bot rolls #d#+#,
                         '(0:134) When the bot rolls #d#-#,
@@ -253,12 +252,22 @@ Public Class BotSession
                     '(0:8) When someone shouts something,
                     '(0:9) When someone shouts {..},
                     '(0:10) When someone shouts something with {..} in it,
-                    If IsConnectedCharacter() Then Exit Sub
-                    If InstructionObject.RawInstruction.StartsWith("<font color='shout'>You shout,") Then Exit Sub
+                    If IsConnectedCharacter(Furr) Then Exit Sub
                     Dim ids() = {8, 9, 10}
                     Await MSpage.ExecuteAsync(ids, Furr)
                     Exit Sub
                 Case "say"
+                    ' (0:5) When some one says something
+                    ' (0:6) When some one says {...}
+                    '(0:7) When some one says something with {...} in it
+                    ' (0:18) When someone says or emotes something
+                    ' (0:19) When someone says or emotes {...}
+                    ' (0:20) When someone says or emotes something with
+                    ' {...} in it"
+                    Dim ids() = {5, 6, 7, 18, 19, 20}
+                    Await MSpage.ExecuteAsync(ids, Furr)
+                    Exit Sub
+                Case "myspeech"
                     ' (0:5) When some one says something
                     ' (0:6) When some one says {...}
                     '(0:7) When some one says something with {...} in it
@@ -433,7 +442,7 @@ Public Class BotSession
                         End If
 
                     End If
-                    Dim CookieFail = New Regex(String.Format("You do not have any (.*?) left!"))
+                    Dim CookieFail = New Regex($"You do not have any (.*?) left!")
                     If CookieFail.Match(Text).Success Then
                         Await MSpage.ExecuteAsync(45, Furr)
                     End If
@@ -460,9 +469,6 @@ Public Class BotSession
                     'TODO: plugin Dynamic(Group)  Channels here
                     Exit Sub
             End Select
-            If InstructionObject.RawInstruction.StartsWith("PS") Then
-
-            End If
         Catch ex As Exception
             Dim Err As New ErrorLogging(ex, Me)
             Process.Start("notepad.exe", Err.LogFile)

@@ -52,22 +52,23 @@ Namespace Engine.Libraries
                     Throw New ArgumentException("DreamInfo not set")
                 End If
                 Dream = dreamInfo(0)
-
-                UpdateCurrentDreamVariables(Dream, reader.Page)
                 ParamSet = True
+                UpdateCurrentDreamVariables(Dream, reader.Page)
             End If
+
             If ActiveFurre IsNot Nothing AndAlso ActiveFurre.Count > 0 Then
                 If ActiveFurre(0).ShortName = "unknown" Then
                     Throw New ArgumentException("Invalid ActivePlayer")
                 End If
-
                 Player = ActiveFurre(0)
-                UpdateTriggerigFurreVariables(Player, reader.Page)
-                ParamSet = True
+                ParamSet = Not IsConnectedCharacter(Player)
 
             End If
+            If Player IsNot Nothing Then UpdateTriggerigFurreVariables(Player, reader.Page)
             Return ParamSet
         End Function
+
+        Public ConnectedFurre As Furre
 
         ''' <summary>
         ''' </summary>
@@ -212,7 +213,7 @@ Namespace Engine.Libraries
         ''' <para/>
         ''' Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), Object())"/>
         ''' </summary>
-        Public Property Dream As DREAM
+        Public Dream As DREAM
 
         ''' <summary>
         ''' Current Triggering Furre
@@ -221,7 +222,7 @@ Namespace Engine.Libraries
         ''' <para/>
         ''' Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), Object())"/>
         ''' </summary>
-        Public Property Player As Furre
+        Public Player As Furre
 
 #End Region
 
@@ -259,6 +260,24 @@ Namespace Engine.Libraries
 
 #Region "Public Constructors"
 
+        Sub New()
+            MyBase.New()
+            FurcTimeTimer = New Timer(AddressOf TimeUpdate, Nothing,
+               TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500))
+        End Sub
+
+        ''' <summary>
+        ''' Constructor for Unit Testing prposes
+        ''' </summary>
+        ''' <param name="BotFurre"></param>
+        Sub New(ByRef BotFurre As IFurre)
+            Me.New()
+            If BotFurre Is Nothing Then
+                Throw New ArgumentException("Session cannot be null")
+            End If
+            ConnectedFurre = BotFurre
+        End Sub
+
         ''' <summary>
         ''' Default Constructor
         ''' <para>
@@ -269,13 +288,9 @@ Namespace Engine.Libraries
         ''' Thrown when Session is not provided
         ''' </exception>
         Sub New(ByRef Session As BotSession)
-            MyBase.New()
-            If Session Is Nothing Then
-                Throw New ArgumentException("Session cannot be null")
-            End If
+            Me.New(Session.ConnectedFurre)
             FurcadiaSession = Session
-            FurcTimeTimer = New Timer(AddressOf TimeUpdate, Nothing,
-                                      TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500))
+
         End Sub
 
 #End Region
@@ -304,8 +319,20 @@ Namespace Engine.Libraries
             Return found
         End Function
 
-        Public Overrides Sub Unload(page As Page)
+        ''' <summary>
+        ''' Seperate function for unit testing
+        ''' </summary>
+        ''' <param name="Furr"></param>
+        ''' <returns></returns>
+        Public Function IsConnectedCharacter(Furr As Furre) As Boolean
+            If FurcadiaSession IsNot Nothing Then
+                Return FurcadiaSession.IsConnectedCharacter(Furr)
+            End If
+            Return ConnectedFurre = Furr
+        End Function
 
+        Public Overrides Sub Unload(page As Page)
+            FurcTimeTimer.Dispose()
         End Sub
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
@@ -315,6 +342,5 @@ Namespace Engine.Libraries
 #End Region
 
     End Class
-
 
 End Namespace

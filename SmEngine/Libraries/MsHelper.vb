@@ -27,7 +27,7 @@ Public NotInheritable Class MsLibHelper
     ''' </summary>
     ''' <param name="ActivePlayer"></param>
     ''' <param name="MonkeySpeakPage"></param>
-    Public Shared Sub UpdateTriggerigFurreVariables(ActivePlayer As IFurre, MonkeySpeakPage As Page)
+    Public Shared Sub UpdateTriggerigFurreVariables(ByRef ActivePlayer As IFurre, ByRef MonkeySpeakPage As Page)
         DirectCast(MonkeySpeakPage.GetVariable(MessageVariable), ConstantVariable).SetValue(ActivePlayer.Message)
         DirectCast(MonkeySpeakPage.GetVariable(ShortNameVariable), ConstantVariable).SetValue(ActivePlayer.ShortName)
         DirectCast(MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable), ConstantVariable).SetValue(ActivePlayer.Name)
@@ -38,7 +38,7 @@ Public NotInheritable Class MsLibHelper
     ''' </summary>
     ''' <param name="ActiveDream"></param>
     ''' <param name="MonkeySpeakPage"></param>
-    Public Shared Sub UpdateCurrentDreamVariables(ActiveDream As DREAM, MonkeySpeakPage As Page)
+    Public Shared Sub UpdateCurrentDreamVariables(ByRef ActiveDream As DREAM, ByRef MonkeySpeakPage As Page)
         DirectCast(MonkeySpeakPage.GetVariable(DreamOwnerVariable), ConstantVariable).SetValue(ActiveDream.Owner)
         DirectCast(MonkeySpeakPage.GetVariable(DreamNameVariable), ConstantVariable).SetValue(ActiveDream.Name)
     End Sub
