@@ -83,7 +83,7 @@ Namespace Engine.Libraries
             Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString()
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString()
             'Debug.Print("Msg = " & msg)
-            Return msg.EndsWith(msMsg)
+            Return msg.EndsWith(msMsg) And Not IsConnectedCharacter(Player)
 
         End Function
 
@@ -101,7 +101,7 @@ Namespace Engine.Libraries
 
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString()
             Dim test = reader.ReadString().ToStrippedFurcadiaMarkupString()
-            Return Not FurcadiaSession.IsConnectedCharacter(Player) AndAlso
+            Return Not IsConnectedCharacter(Player) AndAlso
                 msg = test
 
         End Function
@@ -120,7 +120,7 @@ Namespace Engine.Libraries
             Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower()
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower
 
-            Return Not msg.EndsWith(msMsg)
+            Return Not msg.EndsWith(msMsg) And Not IsConnectedCharacter(Player)
 
         End Function
 
@@ -138,7 +138,7 @@ Namespace Engine.Libraries
 
             Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower()
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower
-            Return msg.StartsWith(msMsg)
+            Return msg.StartsWith(msMsg) And Not IsConnectedCharacter(Player)
         End Function
 
         ''' <summary>
@@ -156,7 +156,7 @@ Namespace Engine.Libraries
         ''' </remarks>
         Protected Overridable Function NameIs(reader As TriggerReader) As Boolean
 
-            Return reader.ReadString.ToFurcadiaShortName() = Player.ShortName
+            Return reader.ReadString.ToFurcadiaShortName() = Player.ShortName And Not IsConnectedCharacter(Player)
 
         End Function
 

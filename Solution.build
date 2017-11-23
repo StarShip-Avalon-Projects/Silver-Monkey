@@ -85,7 +85,7 @@
 		</ItemGroup>  
 		<Copy  
             SourceFiles="@(MonkeySpeakSourceFiles)"  
-            DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(FileVersion)-PhoenixSpeakAlpha%(Extension)')"  />
+            DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(FileVersion)-PreAlpa%(Extension)')"  />
 
     </Target>
 

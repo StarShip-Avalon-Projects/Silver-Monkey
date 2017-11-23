@@ -247,6 +247,8 @@ Namespace HelperClasses
 #Region "Public Constructors"
 
             Sub New(ByRef TextToDisplay As String, ByRef NewColor As DisplayColors)
+
+                If Not TextToDisplay.EndsWith(Environment.NewLine) Then TextToDisplay += Environment.NewLine
                 _data = TextToDisplay
                 _TextColor = NewColor
             End Sub
@@ -257,6 +259,7 @@ Namespace HelperClasses
 
             Public Property Data() As String
                 Get
+
                     Return _data
                 End Get
                 Set(ByVal value As String)

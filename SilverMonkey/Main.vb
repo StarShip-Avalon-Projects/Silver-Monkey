@@ -13,8 +13,7 @@ Imports MonkeyCore.Controls
 Imports MonkeyCore.Paths
 Imports MonkeyCore.Settings
 Imports MonkeyCore.Utils.Logging
-Imports Monkeyspeak
-Imports Monkeyspeak.Logging
+
 Imports SilverMonkey.Engine
 Imports SilverMonkey.HelperClasses
 Imports SilverMonkey.HelperClasses.TextDisplayManager
@@ -154,7 +153,7 @@ Public Class Main
             End Try
         End If
         Try
-            Logging.Logger.Info("New Session Started")
+            Monkeyspeak.Logging.Logger.Info("New Session Started")
 
             Task.Run(Sub() FurcadiaSession.ConnetAsync())
 
@@ -586,14 +585,36 @@ Public Class Main
     ''' Send formatted text to log box
     ''' </summary>
     ''' <param name="Message"></param>
-    Public Shared Sub SndDisplay(Message As LogMessage)
+    Public Shared Sub SndDisplay(Message As Monkeyspeak.Logging.LogMessage)
 
         If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor
         Select Case Message.Level
-            Case Level.Warning
+            Case Monkeyspeak.Logging.Level.Warning
                 newColor = DisplayColors.Error
-            Case Level.Debug Or Level.Error
+            Case Monkeyspeak.Logging.Level.Debug Or Monkeyspeak.Logging.Level.Error
+                newColor = DisplayColors.Warning
+            Case Else
+                newColor = DisplayColors.DefaultColor
+        End Select
+
+        Dim textObject As New TextDisplayObject(Message.message, newColor)
+        TextDisplayer.AddDataToList(textObject)
+
+    End Sub
+
+    ''' <summary>
+    ''' Send formatted text to log box
+    ''' </summary>
+    ''' <param name="Message"></param>
+    Public Shared Sub SndDisplay(Message As Furcadia.Logging.LogMessage)
+
+        If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
+        Dim newColor = DisplayColors.DefaultColor
+        Select Case Message.Level
+            Case Furcadia.Logging.Level.Warning
+                newColor = DisplayColors.Error
+            Case Furcadia.Logging.Level.Debug Or Furcadia.Logging.Level.Error
                 newColor = DisplayColors.Warning
             Case Else
                 newColor = DisplayColors.DefaultColor
@@ -607,9 +628,9 @@ Public Class Main
     Public Sub OnFurcadiaSessionError(ex As Exception, o As Object, n As String) _
         Handles FurcadiaSession.[Error]
 
-        If ex.GetType() Is GetType(MonkeyspeakException) Then
-            If o.GetType Is GetType(TriggerHandler) Then
-                SendTextToDebugWindow(DirectCast(o, TriggerHandler).Target.ToString)
+        If ex.GetType() Is GetType(Monkeyspeak.MonkeyspeakException) Then
+            If o.GetType Is GetType(Monkeyspeak.TriggerHandler) Then
+                SendTextToDebugWindow(DirectCast(o, Monkeyspeak.TriggerHandler).Target.ToString)
             End If
             SndDisplay("MonkeySpeak Error:" + ex.Message + Environment.NewLine + o.ToString, DisplayColors.Error)
             If ex.InnerException IsNot Nothing Then
@@ -979,11 +1000,17 @@ Public Class Main
     End Sub
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Logging.Logger.LogOutput = New MsLogger
-        Logging.Logger.InfoEnabled = True
-        Logging.Logger.SuppressSpam = True
-        Logging.Logger.WarningEnabled = True
-        Logging.Logger.SingleThreaded = False
+        Monkeyspeak.Logging.Logger.LogOutput = New MsLogger
+        Monkeyspeak.Logging.Logger.InfoEnabled = True
+        Monkeyspeak.Logging.Logger.SuppressSpam = True
+        Monkeyspeak.Logging.Logger.WarningEnabled = True
+        Monkeyspeak.Logging.Logger.SingleThreaded = False
+
+        Furcadia.Logging.Logger.LogOutput = New FurcadiaLogger
+        Furcadia.Logging.Logger.InfoEnabled = True
+        Furcadia.Logging.Logger.SuppressSpam = True
+        Furcadia.Logging.Logger.WarningEnabled = True
+        Furcadia.Logging.Logger.SingleThreaded = False
 
         If Not NotifyIcon1 Is Nothing Then
             RemoveHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
@@ -1035,11 +1062,11 @@ Public Class Main
             If String.IsNullOrEmpty(directoryName) Then File = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Silver Monkey", File)
             BotConfig = New BotOptions(File)
             EditBotToolStripMenuItem.Enabled = True
-            Logging.Logger.Info($"Loaded: ""{ File }""")
+            Monkeyspeak.Logging.Logger.Info($"Loaded: ""{ File }""")
         ElseIf Mainsettings.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) And My.Application.CommandLineArgs.Count = 0 Then
             BotConfig = New BotOptions(My.Settings.LastBotFile)
             EditBotToolStripMenuItem.Enabled = True
-            Logging.Logger.Info($"Loaded: ""{My.Settings.LastBotFile}""")
+            Monkeyspeak.Logging.Logger.Info($"Loaded: ""{My.Settings.LastBotFile}""")
         End If
         Dim ts As TimeSpan = TimeSpan.FromSeconds(30)
 
@@ -1096,10 +1123,10 @@ Public Class Main
     Private Sub OnProcessServerChannelData(sender As Object, Args As ParseChannelArgs) _
         Handles FurcadiaSession.ProcessServerChannelData
         Dim InstructionObject = DirectCast(sender, ChannelObject)
-        If Not String.IsNullOrEmpty(InstructionObject.ChannelText) Then
+        If Not String.IsNullOrEmpty(InstructionObject.FormattedChannelText) Then
             SndDisplay(InstructionObject.FormattedChannelText)
         ElseIf Not String.IsNullOrEmpty(InstructionObject.Player.Message) Then
-            SndDisplay(InstructionObject.Player.Message)
+            SndDisplay(InstructionObject.Player.Message.ToStrippedFurcadiaMarkupString)
         Else
             SndDisplay(InstructionObject.RawInstruction)
         End If

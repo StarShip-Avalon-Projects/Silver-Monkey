@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.Windows.Forms
-Imports Monkeyspeak.Logging
 Imports SilverMonkeyEngine
 
 Public Class Variables
@@ -32,7 +31,7 @@ Public Class Variables
     ''' Send text to DebugWindow Delegate
     ''' </summary>
     ''' <param name="text"></param>
-    Private Delegate Sub LogMessageDelegate(text As LogMessage)
+    Private Delegate Sub LogMessageDelegate(text As Object)
 
 #End Region
 
@@ -114,12 +113,14 @@ Public Class Variables
         If Not IsNothing(Me.alarm) Then Me.alarm.Dispose()
     End Sub
 
-    Public Shared Sub SendLogsToDemugWindow(Log As LogMessage)
+    Public Shared Sub SendLogsToDemugWindow(Log As Object)
         If IsDisposed Then Exit Sub
         If ErrorLogTxtBx.InvokeRequired Then
             ErrorLogTxtBx.Invoke(New LogMessageDelegate(AddressOf SendLogsToDemugWindow), Log)
-        Else
-            ErrorLogTxtBx.AppendText(Log.message + Environment.NewLine)
+        ElseIf Log.GetType() Is GetType(Monkeyspeak.Logging.LogMessage) Then
+            ErrorLogTxtBx.AppendText(DirectCast(Log, Monkeyspeak.Logging.LogMessage).message + Environment.NewLine)
+        ElseIf Log.GetType() Is GetType(Furcadia.Logging.LogMessage) Then
+            ErrorLogTxtBx.AppendText(DirectCast(Log, Furcadia.Logging.LogMessage).message + Environment.NewLine)
         End If
     End Sub
 
@@ -133,13 +134,15 @@ Public Class Variables
 
     Private Sub Variables_Load(sender As Object, e As EventArgs) Handles Me.Load
         IsDisposed = False
-        Logger.DebugEnabled = True
-        Logger.ErrorEnabled = True
+        Monkeyspeak.Logging.Logger.DebugEnabled = True
+        Monkeyspeak.Logging.Logger.ErrorEnabled = True
+        Furcadia.Logging.Logger.DebugEnabled = True
+        Furcadia.Logging.Logger.ErrorEnabled = True
     End Sub
 
     Private Sub Variables_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Logger.DebugEnabled = False
-
+        Monkeyspeak.Logging.Logger.DebugEnabled = False
+        Furcadia.Logging.Logger.DebugEnabled = False
     End Sub
 
     Private Sub Variables_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed

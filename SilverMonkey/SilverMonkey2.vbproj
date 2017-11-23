@@ -158,6 +158,7 @@
     </Compile>
     <Compile Include="Helper Classes\DeBugWriter.vb" />
     <Compile Include="IO\TextDisplayManager.vb" />
+    <Compile Include="FurcadiaLogger.vb" />
     <Compile Include="MsLogger.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>

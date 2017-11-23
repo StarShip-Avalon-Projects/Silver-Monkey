@@ -278,7 +278,7 @@ Public Class BotSession
                     'Dim ids() = {5, 6, 7, 18, 19, 20}
                     'Await MSpage.ExecuteAsync(ids, Furr)
                     'Exit Sub
-                Case "@whisper"
+                Case "whisper"
 
                     ' (0:15) When some one whispers something
                     ' (0:16) When some one whispers {...}
@@ -288,7 +288,7 @@ Public Class BotSession
                     Await MSpage.ExecuteAsync(Ids, Furr)
                     Exit Sub
                 Case "emote"
-                    If IsConnectedCharacter() Then Exit Sub
+                    If IsConnectedCharacter(Furr) Then Exit Sub
                     ' (0:12) When someone emotes {...} Execute
                     ' (0:13) When someone emotes something with {...} in it
                     ' (0:18) When someone says or emotes something
@@ -684,7 +684,6 @@ Public Class BotSession
                 New MsPhoenixSpeakBackupAndRestore(Me),
                 New MsDice(Me),
                 New MsFurres(Me),
-                New MsWarning(Me),
                 New MsMovement(Me),
                 New WmCpyDta(Me),
                 New MsMemberList(Me),
