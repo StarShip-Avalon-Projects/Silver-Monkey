@@ -7,9 +7,6 @@
 'Bot info
 
 'Furre Update events?
-Imports SilverMonkeyEngine.Engine
-Imports SilverMonkeyEngine.Engine.Libraries
-Imports SilverMonkeyEngine.Engine.MsEngineExtentionFunctions
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports Furcadia.Net
@@ -19,8 +16,11 @@ Imports Furcadia.Net.Utils.ServerParser
 Imports Furcadia.Text.FurcadiaMarkup
 Imports Microsoft.Win32.SafeHandles
 Imports MonkeyCore
-Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
+Imports Monkeyspeak.Logging
+Imports SilverMonkeyEngine.Engine
+Imports SilverMonkeyEngine.Engine.Libraries
+Imports SilverMonkeyEngine.Engine.MsEngineExtentionFunctions
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
@@ -203,8 +203,7 @@ Public Class BotSession
                     Exit Select
             End Select
         Catch ex As Exception
-            Dim Err As New ErrorLogging(ex, Me)
-            Process.Start("notepad.exe", Err.LogFile)
+            Logger.Error(Of BotSession)(ex.Message)
         End Try
 
     End Sub
@@ -275,9 +274,10 @@ Public Class BotSession
                     ' (0:19) When someone says or emotes {...}
                     ' (0:20) When someone says or emotes something with
                     ' {...} in it"
-                    Dim ids() = {5, 6, 7, 18, 19, 20}
-                    Await MSpage.ExecuteAsync(ids, Furr)
-                    Exit Sub
+
+                    'Dim ids() = {5, 6, 7, 18, 19, 20}
+                    'Await MSpage.ExecuteAsync(ids, Furr)
+                    'Exit Sub
                 Case "@whisper"
 
                     ' (0:15) When some one whispers something
@@ -470,8 +470,7 @@ Public Class BotSession
                     Exit Sub
             End Select
         Catch ex As Exception
-            Dim Err As New ErrorLogging(ex, Me)
-            Process.Start("notepad.exe", Err.LogFile)
+            Logger.Error(Of BotSession)(ex.Message)
         End Try
     End Sub
 
@@ -531,12 +530,10 @@ Public Class BotSession
             PageSetVariable(VariableList)
             '(0:0) When the bot starts,
             Await MSpage.ExecuteAsync(0)
-
             Logging.Logger.Info(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
                                             MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
         Catch ex As Exception
-            Dim Err As New ErrorLogging(ex, Me)
-            Process.Start("notepad.exe", Err.LogFile)
+            Logger.Error(Of BotSession)(ex.Message)
         End Try
     End Function
 
@@ -606,8 +603,7 @@ Public Class BotSession
 
             End Select
         Catch ex As Exception
-            Dim Err As New ErrorLogging(ex, Me)
-            Process.Start("notepad.exe", Err.LogFile)
+            Logger.Error(Of BotSession)(ex.Message)
         End Try
     End Sub
 
@@ -626,8 +622,7 @@ Public Class BotSession
 
             End Select
         Catch ex As Exception
-            Dim Err As New ErrorLogging(ex, Me)
-            Process.Start("notepad.exe", Err.LogFile)
+            Logger.Error(Of BotSession)(ex.Message)
         End Try
     End Sub
 
