@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SmEngineTests</RootNamespace>
     <AssemblyName>SmEngineTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,8 +44,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Bugreport 165 From Jake.ms" />
+    <Content Include="DreamStats.ms" />
+    <Content Include="Laughing.ms" />
+    <Content Include="Turrret Bug Report.ms" />
+    <Content Include="VitoScript1.ms" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
-      <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
+      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
@@ -53,11 +61,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Bugreport 165 From Jake.ms" />
-    <Content Include="DreamStats.ms" />
-    <Content Include="Laughing.ms" />
-    <Content Include="Turrret Bug Report.ms" />
-    <Content Include="VitoScript1.ms" />
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

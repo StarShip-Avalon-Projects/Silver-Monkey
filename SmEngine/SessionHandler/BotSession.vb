@@ -642,8 +642,8 @@ Public Class BotSession
     Public Function LoadLibrary(silent As Boolean) As Page
 
         'Library Loaded?.. Get the Hell out of here
-        MSpage.SetTriggerHandler(TriggerCategory.Cause, 0, Function() True,
-        " When the Monkey Speak Engine starts,")
+        MSpage.AddTriggerHandler(TriggerCategory.Cause, 0, Function() True)
+        '" When the Monkey Speak Engine starts,"
 
         Dim LibList = InitializeEngineLibraries()
 

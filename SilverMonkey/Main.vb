@@ -1004,7 +1004,7 @@ Public Class Main
         Monkeyspeak.Logging.Logger.InfoEnabled = True
         Monkeyspeak.Logging.Logger.SuppressSpam = True
         Monkeyspeak.Logging.Logger.WarningEnabled = True
-        Monkeyspeak.Logging.Logger.SingleThreaded = False
+        Monkeyspeak.Logging.Logger.SingleThreaded = True
 
         Furcadia.Logging.Logger.LogOutput = New FurcadiaLogger
         Furcadia.Logging.Logger.InfoEnabled = True
@@ -1122,9 +1122,25 @@ Public Class Main
     ''' </param>
     Private Sub OnProcessServerChannelData(sender As Object, Args As ParseChannelArgs) _
         Handles FurcadiaSession.ProcessServerChannelData
+
         Dim InstructionObject = DirectCast(sender, ChannelObject)
+        Dim color = DisplayColors.DefaultColor
+        Select Case InstructionObject.Channel
+            Case "@emit"
+                color = DisplayColors.Emit
+            Case "say"
+                color = DisplayColors.Say
+            Case "myspeech"
+                color = DisplayColors.Say
+            Case "emote"
+                color = DisplayColors.Emote
+            Case "whisper"
+                color = DisplayColors.Whisper
+            Case "shour"
+                color = DisplayColors.Shout
+        End Select
         If Not String.IsNullOrEmpty(InstructionObject.FormattedChannelText) Then
-            SndDisplay(InstructionObject.FormattedChannelText)
+            SndDisplay(InstructionObject.FormattedChannelText, color)
         ElseIf Not String.IsNullOrEmpty(InstructionObject.Player.Message) Then
             SndDisplay(InstructionObject.Player.Message.ToStrippedFurcadiaMarkupString)
         Else
@@ -1149,19 +1165,21 @@ Public Class Main
     ''' <param name="Args">
     ''' </param>
     Private Sub ParseFurres(sender As Object, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
-        Dim InstructionObject = DirectCast(sender, BaseServerInstruction)
+        Try
 
-        Select Case InstructionObject.InstructionType
-            Case ServerInstructionType.SpawnAvatar
-                UpDateDreamList()
-            Case ServerInstructionType.RemoveAvatar
-                UpDateDreamList()
-            Case ServerInstructionType.BookmarkDream
-                UpDateDreamList()
-            Case ServerInstructionType.LoadDreamEvent
-                UpDateDreamList()
-        End Select
+            Select Case Args.ServerInstruction
+                Case ServerInstructionType.SpawnAvatar
+                    UpDateDreamList()
+                Case ServerInstructionType.RemoveAvatar
+                    UpDateDreamList()
+                Case ServerInstructionType.BookmarkDream
+                    UpDateDreamList()
+                Case ServerInstructionType.LoadDreamEvent
+                    UpDateDreamList()
+            End Select
+        Catch
 
+        End Try
     End Sub
 
     Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click
