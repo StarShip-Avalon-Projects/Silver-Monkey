@@ -1010,7 +1010,7 @@ Public Class Main
         Furcadia.Logging.Logger.InfoEnabled = True
         Furcadia.Logging.Logger.SuppressSpam = True
         Furcadia.Logging.Logger.WarningEnabled = True
-        Furcadia.Logging.Logger.SingleThreaded = False
+        Furcadia.Logging.Logger.SingleThreaded = True
 
         If Not NotifyIcon1 Is Nothing Then
             RemoveHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
