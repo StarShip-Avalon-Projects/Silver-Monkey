@@ -18,4 +18,5 @@ if not %git.exe_STATUS%==0 goto eof
 call PullRequest.cmd
 
 :eof
+pause
 exit /b 0
