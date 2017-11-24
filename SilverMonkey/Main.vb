@@ -1142,9 +1142,9 @@ Public Class Main
         If Not String.IsNullOrEmpty(InstructionObject.FormattedChannelText) Then
             SndDisplay(InstructionObject.FormattedChannelText, color)
         ElseIf Not String.IsNullOrEmpty(InstructionObject.Player.Message) Then
-            SndDisplay(InstructionObject.Player.Message.ToStrippedFurcadiaMarkupString)
+            SndDisplay(InstructionObject.Player.Message.ToStrippedFurcadiaMarkupString, color)
         Else
-            SndDisplay(InstructionObject.RawInstruction)
+            SndDisplay(InstructionObject.RawInstruction, color)
         End If
 
     End Sub
