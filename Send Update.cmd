@@ -10,7 +10,7 @@ git.exe commit -m"Auto Version Update"
 set git.exe_STATUS=%ERRORLEVEL% 
 if not %git.exe_STATUS%==0 goto eof 
 
-git.exe push --recurse-submodules=on-demand
+git.exe push --recurse-submodules=yes
 set git.exe_STATUS=%ERRORLEVEL% 
 if not %git.exe_STATUS%==0 goto eof
 
