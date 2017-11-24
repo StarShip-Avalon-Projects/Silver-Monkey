@@ -1125,7 +1125,7 @@ Public Class Main
 
         Dim InstructionObject = DirectCast(sender, ChannelObject)
         Dim color = DisplayColors.DefaultColor
-        Select Case InstructionObject.Channel
+        Select Case Args.Channel
             Case "@emit"
                 color = DisplayColors.Emit
             Case "say"
@@ -1136,7 +1136,7 @@ Public Class Main
                 color = DisplayColors.Emote
             Case "whisper"
                 color = DisplayColors.Whisper
-            Case "shour"
+            Case "shout"
                 color = DisplayColors.Shout
         End Select
         If Not String.IsNullOrEmpty(InstructionObject.FormattedChannelText) Then
