@@ -23,8 +23,10 @@ namespace SmEngineTests
         private const string WhisperTest = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"hi\" to you. ]</font>";
         private const string PingTest2 = @"<name shortname='gerolkae'>Gerolkae</name>: Ping";
         private const string WhisperTest2 = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"Hi\" to you. ]</font>";
-        private const string YouWhisper = "<font color='whisper'>[You whisper \"Logged on\" to<name shortname='gerolkae' forced src='whisper-to'>Gerolkae</name>. ]</font>";
+
+        //  private const string YouWhisper = "<font color='whisper'>[You whisper \"Logged on\" to<name shortname='gerolkae' forced src='whisper-to'>Gerolkae</name>. ]</font>";
         private const string YouWhisper2 = "<font color='whisper'>[ You whisper \"Logged on\" to <name shortname='gerolkae' forced src='whisper-to'>Gerolkae</name>. ]</font>";
+
         private const string YouShouYo = "<font color='shout'>You shout, \"Yo Its Me\"</font>";
         private const string GeroShout = "<font color='shout'>{S} <name shortname='gerolkae'>Gerolkae</name> shouts: ping</font>";
         private const string Emote = "<font color='emote'><name shortname='silvermonkey'>Silver|Monkey</name> Emoe</font>";
@@ -74,7 +76,7 @@ namespace SmEngineTests
         [TestCase(PingTest, "ping")]
         [TestCase(WhisperTest2, "Hi")]
         [TestCase(PingTest2, "Ping")]
-        [TestCase(YouWhisper, "Logged on")]
+        //    [TestCase(YouWhisper, "Logged on")]
         [TestCase(YouShouYo, "Yo Its Me")]
         [TestCase(GeroShout, "ping")]
         [TestCase(EmitWarning, "(<name shortname='silvermonkey'>Silver|Monkey</name> just emitted.)")]
@@ -103,7 +105,7 @@ namespace SmEngineTests
 
         [TestCase(WhisperTest, "Gerolkae")]
         [TestCase(PingTest, "Gerolkae")]
-        [TestCase(YouWhisper, "Silver Monkey")]
+        //   [TestCase(YouWhisper, "Silver Monkey")]
         [TestCase(YouWhisper2, "Silver Monkey")]
         [TestCase(GeroShout, "Gerolkae")]
         [TestCase(YouShouYo, "Silver Monkey")]
@@ -131,7 +133,7 @@ namespace SmEngineTests
             Proxy.ParseServerChannel(testc, false);
         }
 
-        [TestCase(YouWhisper, "whisper")]
+        //   [TestCase(YouWhisper, "whisper")]
         [TestCase(YouWhisper2, "whisper")]
         [TestCase(WhisperTest, "whisper")]
         [TestCase(PingTest, "say")]
