@@ -30,7 +30,7 @@ Namespace Engine
             Return msg
         End Function
 
-        Public Overridable Sub Log(logMsg As LogMessage) Implements ILogOutput.Log
+        Public Sub Log(logMsg As LogMessage) Implements ILogOutput.Log
             If logMsg.message Is Nothing Then
                 Return
             End If

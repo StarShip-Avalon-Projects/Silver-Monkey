@@ -43,10 +43,10 @@ Namespace Engine
             If Main.DebugWindow IsNot Nothing Then
                 Variables.SendLogsToDemugWindow(logMsg)
             End If
-            Select Case logMsg.Level
-                Case Level.Info Or Level.Error
-                    Main.SndDisplay(logMsg)
-            End Select
+            If logMsg.Level = Level.Info Or logMsg.Level = Level.Error Then
+
+                Main.SndDisplay(logMsg)
+            End If
 
         End Sub
 

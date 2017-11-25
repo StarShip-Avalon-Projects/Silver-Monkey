@@ -33,6 +33,8 @@ namespace SmEngineTests
         private const string SpokenEmit = "<font color='emit'><img src='fsh://system.fsh:91' alt='@emit' /><channel name='@emit' /> Blah</font>";
         private const string EmitWarning = "<font color='warning'><img src='fsh://system.fsh:91' alt='@emit' /><channel name='@emit' /> (<name shortname='silvermonkey'>Silver|Monkey</name> just emitted.)</font>";
 
+        private const string CookieBank = "<font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Cookie <a href='http://www.furcadia.com/cookies/Cookie%20Economy.html'>bank</a> has currently collected: 0</font>";
+
         [SetUp]
         public void Initialize()
         {
@@ -61,7 +63,7 @@ namespace SmEngineTests
             options.MonkeySpeakEngineOptions.MS_Engine_Enable = true;
             options.SaveBotSettings();
 
-            Proxy = new BotSession(ref options);
+            Proxy = new BotSession(options);
             Proxy.Error += OnErrorException;
             Proxy.ServerData2 += OnServerData;
             Proxy.ClientData2 += OnClientData;
@@ -195,7 +197,7 @@ namespace SmEngineTests
 
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
             Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
-            Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected && !Proxy.IsClientSocketConnected);
+            Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected && Proxy.IsClientSocketConnected == false);
         }
 
         private void OnErrorException(Exception e, object o, string text)

@@ -82,7 +82,7 @@ Public Class BotSession
     ''' </summary>
     ''' <param name="BotSessionOptions">
     ''' </param>
-    Sub New(ByRef BotSessionOptions As BotOptions)
+    Sub New(BotSessionOptions As BotOptions)
         MyBase.New(BotSessionOptions)
         lastDream = New DREAM
         MainEngineOptions = BotSessionOptions
@@ -212,16 +212,19 @@ Public Class BotSession
     ''' <summary>
     ''' Configure Bot Variables and Execute Monkey Speak Truggers for Text and dynamic channels
     ''' </summary>
-    ''' <param name="InstructionObject"><see cref="ChannelObject"/></param>
+    ''' <param name="sender"/>
     ''' <param name="Args"><see cref="ParseServerArgs"/></param>
-    Public Async Sub OnServerChannel(InstructionObject As ChannelObject, Args As ParseServerArgs) _
+    Public Async Sub OnServerChannel(sender As Object, Args As ParseChannelArgs) _
         Handles MyBase.ProcessServerChannelData
         If MSpage Is Nothing Then Exit Sub
-        Dim Furr = InstructionObject.Player
 
+        If sender IsNot GetType(ChannelObject) Then Exit Sub
+
+        Dim InstructionObject = DirectCast(sender, ChannelObject)
+        Dim Furr = InstructionObject.Player
         Dim Text As String = InstructionObject.ChannelText
         Try
-            Select Case InstructionObject.Channel
+            Select Case Args.Channel
 
                 Case "@roll"
 
@@ -531,8 +534,7 @@ Public Class BotSession
             PageSetVariable(VariableList)
             '(0:0) When the bot starts,
             Await MSpage.ExecuteAsync(0)
-            Logging.Logger.Info(String.Format("Done!!! Executed {0} triggers in {1} seconds.",
-                                            MSpage.Size, Date.Now.Subtract(TimeStart).Seconds))
+            Logger.Info($"Done!!! Executed {MSpage.Size} triggers in {Date.Now.Subtract(TimeStart).Seconds} seconds.")
         Catch ex As Exception
             Logger.Error(Of BotSession)(ex.Message)
         End Try

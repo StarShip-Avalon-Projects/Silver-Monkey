@@ -591,9 +591,11 @@ Public Class Main
         Dim newColor = DisplayColors.DefaultColor
         Select Case Message.Level
             Case Monkeyspeak.Logging.Level.Warning
-                newColor = DisplayColors.Error
-            Case Monkeyspeak.Logging.Level.Debug Or Monkeyspeak.Logging.Level.Error
                 newColor = DisplayColors.Warning
+            Case Monkeyspeak.Logging.Level.Debug
+                newColor = DisplayColors.Warning
+            Case Monkeyspeak.Logging.Level.Error
+                newColor = DisplayColors.Error
             Case Else
                 newColor = DisplayColors.DefaultColor
         End Select
@@ -1000,15 +1002,15 @@ Public Class Main
     End Sub
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Monkeyspeak.Logging.Logger.LogOutput = New MsLogger
+        Monkeyspeak.Logging.Logger.LogOutput = New MsLogger()
         Monkeyspeak.Logging.Logger.InfoEnabled = True
-        Monkeyspeak.Logging.Logger.SuppressSpam = True
+        Monkeyspeak.Logging.Logger.SuppressSpam = False
         Monkeyspeak.Logging.Logger.WarningEnabled = True
         Monkeyspeak.Logging.Logger.SingleThreaded = True
 
-        Furcadia.Logging.Logger.LogOutput = New FurcadiaLogger
+        Furcadia.Logging.Logger.LogOutput = New FurcadiaLogger()
         Furcadia.Logging.Logger.InfoEnabled = True
-        Furcadia.Logging.Logger.SuppressSpam = True
+        Furcadia.Logging.Logger.SuppressSpam = False
         Furcadia.Logging.Logger.WarningEnabled = True
         Furcadia.Logging.Logger.SingleThreaded = True
 
