@@ -544,7 +544,7 @@ Public Class Main
         'BotSetup.BotFile =
         'BotSetup.ShowDialog()
 
-        If FurcadiaSession Is Nothing OrElse Not FurcadiaSession.IsServerConnected Then
+        If FurcadiaSession Is Nothing OrElse Not FurcadiaSession.IsServerSocketConnected Then
 
             BotConfig = New BotOptions(sender.ToString())
 
@@ -669,7 +669,7 @@ Public Class Main
     Private Sub DreamList_DoubleClick(sender As Object, e As System.EventArgs) Handles DreamList.DoubleClick
         If Not FurcadiaSession Is Nothing Then
             If Not DreamList.SelectedItem Is Nothing Then
-                If Not FurcadiaSession.IsServerConnected Then Exit Sub
+                If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
                 FurcadiaSession.SendFormattedTextToServer("l " + CType(DreamList.SelectedItem, Furre).ShortName)
             End If
         End If
@@ -1206,8 +1206,8 @@ Public Class Main
 
     Private Sub _ne_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _ne.MouseDown
         If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            Me.ActionTmr.Enabled = FurcadiaSession.IsServerConnected
+            If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
+            Me.ActionTmr.Enabled = FurcadiaSession.IsServerSocketConnected
             ActionCMD = "`m 9"
         End If
     End Sub
@@ -1223,7 +1223,7 @@ Public Class Main
 
     Private Sub _nw_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _nw.MouseDown
         If Not FurcadiaSession Is Nothing Then
-            Me.ActionTmr.Enabled = FurcadiaSession.IsServerConnected
+            Me.ActionTmr.Enabled = FurcadiaSession.IsServerSocketConnected
             ActionCMD = "`m 7"
         End If
 
@@ -1250,7 +1250,7 @@ Public Class Main
 
     Private Sub BtnSit_stand_Lie_Click(sender As System.Object, e As System.EventArgs) Handles BtnSit_stand_Lie.Click
         If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
+            If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
 
             If BtnSit_stand_Lie.Text = "Stand" Then
                 BtnSit_stand_Lie.Text = "Lay"
@@ -1273,8 +1273,8 @@ Public Class Main
 
     Private Sub Se__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseDown
         If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
-            Me.ActionTmr.Enabled = FurcadiaSession.IsServerConnected
+            If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
+            Me.ActionTmr.Enabled = FurcadiaSession.IsServerSocketConnected
             ActionCMD = "`m 3"
         End If
     End Sub
@@ -1291,7 +1291,7 @@ Public Class Main
     ''' </param>
     Private Sub SendCommandToServer(ByVal command As String)
         If Not FurcadiaSession Is Nothing Then
-            If Not FurcadiaSession.IsServerConnected Then Exit Sub
+            If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
             FurcadiaSession.TextToServer(command)
         End If
     End Sub
@@ -1302,7 +1302,7 @@ Public Class Main
 
     Private Sub Sw__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseDown
         If FurcadiaSession Is Nothing Then Exit Sub
-        Me.ActionTmr.Enabled = FurcadiaSession.IsServerConnected
+        Me.ActionTmr.Enabled = FurcadiaSession.IsServerSocketConnected
         ActionCMD = "`m 1"
     End Sub
 

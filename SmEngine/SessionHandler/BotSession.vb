@@ -150,6 +150,7 @@ Public Class BotSession
     ''' <param name="e"><see cref="ParseServerArgs"/></param>
     Public Async Sub OnParseSererInstructionAsync(sender As Object, e As ParseServerArgs) _
           Handles MyBase.ProcessServerInstruction
+
         If MSpage Is Nothing Then Exit Sub
 
         Try

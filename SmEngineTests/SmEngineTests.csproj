@@ -42,18 +42,38 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="silvermonkey.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Bugreport 165 From Jake.ms" />
-    <Content Include="DreamStats.ms" />
-    <Content Include="Laughing.ms" />
-    <Content Include="Turrret Bug Report.ms" />
-    <Content Include="VitoScript1.ms" />
+    <Content Include="Bugreport 165 From Jake.ms">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DreamStats.ms">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Laughing.ms">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Silver Monkey.bini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Turrret Bug Report.ms">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VitoScript1.ms">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeySpeakEx\Monkeyspeak.csproj">
+      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
+      <Name>Monkeyspeak</Name>
     </ProjectReference>
     <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
       <Project>{3c0e1cbf-d3b9-4282-ac97-4e0216ca6c97}</Project>

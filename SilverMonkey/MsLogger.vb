@@ -1,6 +1,7 @@
 ﻿Imports System.Diagnostics
 Imports System.Text
 Imports Monkeyspeak.Logging
+Imports SilverMonkey.HelperClasses.TextDisplayManager
 
 Namespace Engine
 
@@ -42,9 +43,10 @@ Namespace Engine
             If Main.DebugWindow IsNot Nothing Then
                 Variables.SendLogsToDemugWindow(logMsg)
             End If
-            If logMsg.Level = Level.Info Or logMsg.Level = Level.Error Then
-                Main.SndDisplay(logMsg)
-            End If
+            Select Case logMsg.Level
+                Case Level.Info Or Level.Error
+                    Main.SndDisplay(logMsg)
+            End Select
 
         End Sub
 

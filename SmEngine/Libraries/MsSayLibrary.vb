@@ -131,7 +131,7 @@ Namespace Engine.Libraries
                   Function(reader)
                       ReadParams(reader)
 
-                      Return Not FurcadiaSession.IsConnectedCharacter
+                      Return Not IsConnectedCharacter(Player)
                   End Function, " When someone says something,")
             Add(TriggerCategory.Cause, 6,
                  AddressOf MsgIs, " When someone says {..},")
@@ -145,7 +145,7 @@ Namespace Engine.Libraries
                  Function(reader)
                      ReadParams(reader)
 
-                     Return Not FurcadiaSession.IsConnectedCharacter
+                     Return Not IsConnectedCharacter(Player)
                  End Function, " When someone shouts something,")
 
             Add(TriggerCategory.Cause, 9,
@@ -160,7 +160,7 @@ Namespace Engine.Libraries
                  Function(reader)
                      ReadParams(reader)
 
-                     Return Not FurcadiaSession.IsConnectedCharacter
+                     Return Not IsConnectedCharacter(Player)
                  End Function, " When someone emotes something,")
             Add(TriggerCategory.Cause, 12,
                  AddressOf MsgIs, " When someone emotes {..},")
@@ -173,7 +173,7 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 15,
                 Function(reader)
                     ReadParams(reader)
-                    Return Not FurcadiaSession.IsConnectedCharacter
+                    Return Not IsConnectedCharacter(Player)
                 End Function, " When someone whispers something,")
 
             Add(TriggerCategory.Cause, 16,
@@ -187,7 +187,7 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 18,
                 Function(reader)
                     ReadParams(reader)
-                    Return Not FurcadiaSession.IsConnectedCharacter
+                    Return Not IsConnectedCharacter(Player)
                 End Function,
                 " When someone says or emotes something,")
 
@@ -246,7 +246,7 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 32,
                 Function(reader)
                     ReadParams(reader)
-                    Return Not FurcadiaSession.IsConnectedCharacter
+                    Return Not IsConnectedCharacter(Player)
                 End Function,
                 " When someone requests to summon the bot,")
 
@@ -257,7 +257,7 @@ Namespace Engine.Libraries
             'Join
             '(0:34) When someone requests to join the bot,
             Add(TriggerCategory.Cause, 34,
-                Function() Not FurcadiaSession.IsConnectedCharacter, " When someone requests to join the bot,")
+                Function() Not IsConnectedCharacter(Player), " When someone requests to join the bot,")
 
             '(0:35) When a furre named {..} requests to join the bot,
             Add(TriggerCategory.Cause, 35,
@@ -268,7 +268,7 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 36,
                 Function(reader)
                     ReadParams(reader)
-                    Return Not FurcadiaSession.IsConnectedCharacter
+                    Return Not IsConnectedCharacter(Player)
                 End Function,
                 " When someone requests to follow the bot,")
 
@@ -281,7 +281,7 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 38,
                 Function(reader)
                     ReadParams(reader)
-                    Return Not FurcadiaSession.IsConnectedCharacter
+                    Return Not IsConnectedCharacter(Player)
                 End Function, " When someone requests to lead the bot,")
 
             '(0:39) When a furre named {..} requests to lead the bot,
@@ -293,7 +293,7 @@ Namespace Engine.Libraries
             Add(TriggerCategory.Cause, 40,
                 Function(reader)
                     ReadParams(reader)
-                    Return Not FurcadiaSession.IsConnectedCharacter
+                    Return Not IsConnectedCharacter(Player)
                 End Function,
                 " When someone requests to cuddle with the bot,")
 
@@ -470,7 +470,7 @@ Namespace Engine.Libraries
 
             FurcadiaSession.Disconnect()
 
-            Return Not FurcadiaSession.IsServerConnected
+            Return Not FurcadiaSession.IsServerSocketConnected
         End Function
 
         ''' <summary>

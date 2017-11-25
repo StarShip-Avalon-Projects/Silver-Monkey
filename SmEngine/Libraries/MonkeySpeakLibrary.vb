@@ -61,7 +61,7 @@ Namespace Engine.Libraries
                     Throw New ArgumentException("Invalid ActivePlayer")
                 End If
                 Player = ActiveFurre(0)
-                ParamSet = Not IsConnectedCharacter(Player)
+                ParamSet = True
 
             End If
             If Player IsNot Nothing Then UpdateTriggerigFurreVariables(Player, reader.Page)
@@ -83,7 +83,7 @@ Namespace Engine.Libraries
             Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString()
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString()
             'Debug.Print("Msg = " & msg)
-            Return msg.EndsWith(msMsg) And Not IsConnectedCharacter(Player)
+            Return msg.ToLower().EndsWith(msMsg.ToLower()) And Not IsConnectedCharacter(Player)
 
         End Function
 
@@ -102,7 +102,7 @@ Namespace Engine.Libraries
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString()
             Dim test = reader.ReadString().ToStrippedFurcadiaMarkupString()
             Return Not IsConnectedCharacter(Player) AndAlso
-                msg = test
+                msg.ToLower() = test.ToLower()
 
         End Function
 
@@ -120,7 +120,7 @@ Namespace Engine.Libraries
             Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower()
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower
 
-            Return Not msg.EndsWith(msMsg) And Not IsConnectedCharacter(Player)
+            Return Not msg.ToLower().EndsWith(msMsg.ToLower()) And Not IsConnectedCharacter(Player)
 
         End Function
 
@@ -138,7 +138,7 @@ Namespace Engine.Libraries
 
             Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower()
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower
-            Return msg.StartsWith(msMsg) And Not IsConnectedCharacter(Player)
+            Return msg.ToLower().StartsWith(msMsg.ToLower()) And Not IsConnectedCharacter(Player)
         End Function
 
         ''' <summary>
@@ -248,7 +248,7 @@ Namespace Engine.Libraries
         ''' True is the Server is Connected
         ''' </returns>
         Public Function SendServer(ByRef message As String) As Boolean
-            If FurcadiaSession.IsServerConnected Then
+            If FurcadiaSession.IsServerSocketConnected Then
                 FurcadiaSession.SendFormattedTextToServer(message)
                 Return True
             Else
