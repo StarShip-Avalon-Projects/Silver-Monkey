@@ -249,11 +249,15 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function SendServer(message As String) As Boolean
             If FurcadiaSession.IsServerSocketConnected Then
-                Task.Run(Sub() FurcadiaSession.SendFormattedTextToServer(message))
+                FurcadiaSession.SendFormattedTextToServer(message)
                 Return True
             Else
                 Return False
             End If
+        End Function
+
+        Private Async Function SendServerAsync(message As String) As Task(Of Boolean)
+            Return Await Task.Run(Function() SendServer(message))
         End Function
 
 #End Region

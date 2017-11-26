@@ -98,7 +98,7 @@ namespace SmEngineTests
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
              {
                  var ServeObject = (ChannelObject)sender;
-                 Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected && ExpectedValue == ServeObject.Player.Message);
+                 Assert.That(ServeObject.Player.Message, Is.EqualTo(ExpectedValue));
              };
 
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
