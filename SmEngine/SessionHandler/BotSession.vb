@@ -214,11 +214,9 @@ Public Class BotSession
     ''' </summary>
     ''' <param name="sender"/>
     ''' <param name="Args"><see cref="ParseServerArgs"/></param>
-    Public Async Sub OnServerChannel(sender As Object, Args As ParseChannelArgs) _
+    Public Async Sub OnServerChannel(ByVal sender As Object, Args As ParseChannelArgs) _
         Handles MyBase.ProcessServerChannelData
         If MSpage Is Nothing Then Exit Sub
-
-        If sender IsNot GetType(ChannelObject) Then Exit Sub
 
         Dim InstructionObject = DirectCast(sender, ChannelObject)
         Dim Furr = InstructionObject.Player
@@ -255,7 +253,6 @@ Public Class BotSession
                     '(0:8) When someone shouts something,
                     '(0:9) When someone shouts {..},
                     '(0:10) When someone shouts something with {..} in it,
-                    If IsConnectedCharacter(Furr) Then Exit Sub
                     Dim ids() = {8, 9, 10}
                     Await MSpage.ExecuteAsync(ids, Furr)
                     Exit Sub

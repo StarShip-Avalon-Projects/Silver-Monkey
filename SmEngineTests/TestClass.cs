@@ -17,12 +17,15 @@ namespace SmEngineTests
     [TestFixture]
     public class SilerMonkeyEngineTests
     {
-        private static BotSession Proxy;
+        private BotSession Proxy;
 
+        private const string GeroSayPing = "<name shortname='gerolkae'>Gerolkae</name>: ping";
+        private const string GeroWhisperCunchatize = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"crunchatize\" to you. ]</font>";
+        private const string GeroWhisperRollOut = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"roll out\" to you. ]</font>";
         private const string PingTest = @"<name shortname='gerolkae'>Gerolkae</name>: ping";
         private const string WhisperTest = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"hi\" to you. ]</font>";
         private const string PingTest2 = @"<name shortname='gerolkae'>Gerolkae</name>: Ping";
-        private const string WhisperTest2 = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"Hi\" to you. ]</font>";
+        private const string GeroWhisperHi = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"Hi\" to you. ]</font>";
 
         //  private const string YouWhisper = "<font color='whisper'>[You whisper \"Logged on\" to<name shortname='gerolkae' forced src='whisper-to'>Gerolkae</name>. ]</font>";
         private const string YouWhisper2 = "<font color='whisper'>[ You whisper \"Logged on\" to <name shortname='gerolkae' forced src='whisper-to'>Gerolkae</name>. ]</font>";
@@ -43,11 +46,11 @@ namespace SmEngineTests
             Monkeyspeak.Logging.Logger.ErrorEnabled = true;
             Monkeyspeak.Logging.Logger.DebugEnabled = true;
             Monkeyspeak.Logging.Logger.InfoEnabled = true;
-            Monkeyspeak.Logging.Logger.SingleThreaded = true;
+            Monkeyspeak.Logging.Logger.SingleThreaded = false;
             Furcadia.Logging.Logger.ErrorEnabled = true;
             Furcadia.Logging.Logger.DebugEnabled = true;
             Furcadia.Logging.Logger.InfoEnabled = true;
-            Furcadia.Logging.Logger.SingleThreaded = true;
+            Furcadia.Logging.Logger.SingleThreaded = false;
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
             var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -74,7 +77,7 @@ namespace SmEngineTests
 
         [TestCase(WhisperTest, "hi")]
         [TestCase(PingTest, "ping")]
-        [TestCase(WhisperTest2, "Hi")]
+        [TestCase(GeroWhisperHi, "Hi")]
         [TestCase(PingTest2, "Ping")]
         //    [TestCase(YouWhisper, "Logged on")]
         [TestCase(YouShouYo, "Yo Its Me")]
@@ -110,9 +113,10 @@ namespace SmEngineTests
         [TestCase(GeroShout, "Gerolkae")]
         [TestCase(YouShouYo, "Silver Monkey")]
         [TestCase(EmitWarning, "Silver Monkey")]
-        [TestCase(Emit, "Unknown")]
-        [TestCase(SpokenEmit, "Unknown")]
+        [TestCase(Emit, "Furcadia Game Server")]
+        [TestCase(SpokenEmit, "Furcadia Game Server")]
         [TestCase(Emote, "Silver monkey")]
+        [TestCase(GeroWhisperHi, "Gerolkae")]
         public void ExpectedCharachter(string testc, string ExpectedValue)
         {
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
@@ -125,7 +129,7 @@ namespace SmEngineTests
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
             {
                 var ServeObject = (ChannelObject)sender;
-                Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected && ExpectedValue.ToFurcadiaShortName() == ServeObject.Player.ShortName);
+                Assert.That(ServeObject.Player.ShortName, Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
             };
 
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
@@ -136,6 +140,7 @@ namespace SmEngineTests
         //   [TestCase(YouWhisper, "whisper")]
         [TestCase(YouWhisper2, "whisper")]
         [TestCase(WhisperTest, "whisper")]
+        [TestCase(GeroWhisperHi, "whisper")]
         [TestCase(PingTest, "say")]
         [TestCase(YouShouYo, "shout")]
         [TestCase(GeroShout, "shout")]
@@ -155,7 +160,7 @@ namespace SmEngineTests
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
             {
                 var ServeObject = (ChannelObject)sender;
-                Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected && ExpectedValue == ServeObject.Channel);
+                Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected && ExpectedValue == Args.Channel);
             };
 
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
@@ -202,6 +207,38 @@ namespace SmEngineTests
             Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected && Proxy.IsClientSocketConnected == false);
         }
 
+        [TestCase(GeroShout, "ping")]
+        public void ProxySession_InstructionObjectPlayerIs(string testc, string ExpectedValue)
+        {
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+
+            Proxy.Error += OnErrorException;
+            Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
+            {
+                ChannelObject InstructionObject = (ChannelObject)sender;
+                Assert.That(InstructionObject.Player.Message, Is.EqualTo(ExpectedValue));
+            };
+            Proxy.SendFormattedTextToServer("- Shout");
+            end = DateTime.Now + TimeSpan.FromSeconds(4);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Proxy.ParseServerChannel(testc, false);
+            end = DateTime.Now + TimeSpan.FromSeconds(5);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+        }
+
         private void OnErrorException(Exception e, object o, string text)
         {
             Console.WriteLine($"{e} {text}");
@@ -220,6 +257,12 @@ namespace SmEngineTests
         [TearDown]
         public void Cleanup()
         {
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
             Proxy.Disconnect();
             Proxy.Dispose();
         }

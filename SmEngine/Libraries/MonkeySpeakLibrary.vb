@@ -247,9 +247,9 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' True is the Server is Connected
         ''' </returns>
-        Public Function SendServer(ByRef message As String) As Boolean
+        Public Function SendServer(message As String) As Boolean
             If FurcadiaSession.IsServerSocketConnected Then
-                FurcadiaSession.SendFormattedTextToServer(message)
+                Task.Run(Sub() FurcadiaSession.SendFormattedTextToServer(message))
                 Return True
             Else
                 Return False

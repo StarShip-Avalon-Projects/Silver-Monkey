@@ -597,8 +597,9 @@ Namespace Engine.Libraries
         ''' Message to send
         ''' </param>
         Public Function SndShout(ByRef msg As String) As Boolean
-            Thread.Sleep(300)
-            If Not String.IsNullOrEmpty(msg) Then Return SendServer("-" & msg)
+            If Not String.IsNullOrEmpty(msg) Then
+                Return SendServer("-" & msg)
+            End If
             Return False
         End Function
 
