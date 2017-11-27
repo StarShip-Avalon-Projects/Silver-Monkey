@@ -160,7 +160,7 @@ namespace SmEngineTests
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
             {
                 var ServeObject = (ChannelObject)sender;
-                Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected && ExpectedValue == Args.Channel);
+                Assert.That(Args.Channel, Is.EqualTo(ExpectedValue));
             };
 
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
@@ -195,7 +195,7 @@ namespace SmEngineTests
         [Test]
         public void BotTestClientIsNotConnected()
         {
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(5);
             while (true)
             {
                 Thread.Sleep(100);
