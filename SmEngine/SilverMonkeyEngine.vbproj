@@ -123,7 +123,7 @@
     <None Include="packages.config" />
     <Compile Include="Libraries\MsHelper.vb" />
     <Compile Include="Libraries\PhoenixSpeak\PhoenxSpeakVariable.vb" />
-    <Compile Include="Libraries\web\DatabaseVariable.vb" />
+    <Compile Include="Libraries\web\MsWebVariable.vb" />
     <Compile Include="SessionHandler\EngineOptoons.vb" />
     <Compile Include="SessionHandler\MainEngine.vb" />
     <None Include="Libraries\MS Repq.vb" />
