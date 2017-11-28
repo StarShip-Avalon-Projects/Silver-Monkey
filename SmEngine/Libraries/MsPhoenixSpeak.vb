@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Monkeyspeak
+Imports SilverMonkeyEngine.Engine.Libraries.PhoenixSpeak
 
 Namespace Engine.Libraries
 
@@ -17,27 +18,10 @@ Namespace Engine.Libraries
     Public NotInheritable Class MsPhoenixSpeak
         Inherits MonkeySpeakLibrary
 
-#Region "Public Fields"
-
-        Public Const SmRegExOptions As RegexOptions = RegexOptions.CultureInvariant _
-            Or RegexOptions.IgnoreCase
-
-#End Region
-
-#Region "Private Fields"
-
-        Private PSInfoCache As List(Of IVariable)
-
-        Private PSPage As StringBuilder
-
-#End Region
-
 #Region "Public Constructors"
 
         Public Sub New(session As BotSession)
             MyBase.New(session)
-            PSPage = New StringBuilder()
-            PSInfoCache = New List(Of IVariable)(10)
         End Sub
 
         Public Overrides Sub Initialize(ParamArray args() As Object)

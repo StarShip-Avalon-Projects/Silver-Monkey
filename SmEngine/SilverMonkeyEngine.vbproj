@@ -112,6 +112,7 @@
     <Compile Include="Interfaces\ImsHost.vb" />
     <Compile Include="Interfaces\ImsPlugin.vb" />
     <Compile Include="IO\NameList.vb" />
+    <Compile Include="Libraries\Database\DatabaseVariable.vb" />
     <Compile Include="Libraries\Dice\Die.vb" />
     <Compile Include="Libraries\HelperModule.vb" />
     <Compile Include="Libraries\MonkeySpeakLibrary.vb" />
@@ -122,7 +123,7 @@
     </None>
     <None Include="packages.config" />
     <Compile Include="Libraries\MsHelper.vb" />
-    <Compile Include="PS Pre-Processor\PSObjects\PhoenxSpeakVariable.vb" />
+    <Compile Include="Libraries\PhoenixSpeak\PhoenxSpeakVariable.vb" />
     <Compile Include="SessionHandler\EngineOptoons.vb" />
     <Compile Include="SessionHandler\MainEngine.vb" />
     <None Include="Libraries\MS Repq.vb" />
@@ -161,8 +162,8 @@
     </Compile>
     <Compile Include="Libraries\MsPhoenixSpeak.vb" />
     <Compile Include="Libraries\MsPhoenixSpeakBackupAndRestore.vb" />
-    <Compile Include="PS Pre-Processor\PSObjects\PhoenicSpeakDataObject.vb" />
-    <Compile Include="PS Pre-Processor\PSObjects\PhoenixSpeakEventArgs.vb" />
+    <Compile Include="Libraries\PhoenixSpeak\PhoenicSpeakDataObject.vb" />
+    <Compile Include="Libraries\PhoenixSpeak\PhoenixSpeakEventArgs.vb" />
     <Compile Include="SessionHandler\BotOptions.vb" />
     <Compile Include="SessionHandler\BotSession.vb" />
     <Compile Include="Libraries\MsWebRequests.vb" />

@@ -20,7 +20,7 @@ Public NotInheritable Class MsLibHelper
 
     Public Const DreamNameVariable = "%DREAMNAME"
 
-    Public Const SmRegExOptions As RegexOptions = ReaderOptions.None
+    Public Const SmRegExOptions As RegexOptions = RegexOptions.Compiled
 
     ''' <summary>
     ''' updates Bot Constant Variables for the Current Triggering  Furre

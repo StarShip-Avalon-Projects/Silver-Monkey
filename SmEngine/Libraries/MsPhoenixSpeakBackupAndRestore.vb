@@ -55,21 +55,6 @@ Namespace Engine.Libraries
     Public NotInheritable Class MsPhoenixSpeakBackupAndRestore
         Inherits MonkeySpeakLibrary
 
-#Region "Public Fields"
-
-        Public Shared SQLreader As SQLiteDataReader = Nothing
-
-#End Region
-
-#Region "Private Fields"
-
-        Private _SQLitefile As String = MsDatabase.SQLitefile
-        Private lastItemName As String = String.Empty
-
-        Private QueryRun As Boolean = False
-
-#End Region
-
 #Region "Public Constructors"
 
         Public Sub New(ByRef session As BotSession)
@@ -203,83 +188,6 @@ Namespace Engine.Libraries
         Private Function BackUpCharacterNamed(reader As TriggerReader) As Boolean
             Throw New NotImplementedException()
         End Function
-
-#End Region
-
-#Region "Public Enums"
-
-        Public Enum PsBackupStage As Byte
-            [error] = 0
-            off = 1
-
-            GetDream
-
-            ''' <summary>
-            ''' Read Multi Page responses for character list
-            ''' </summary>
-            GetList
-
-            ''' <summary>
-            ''' Read Character list one letter at a time
-            ''' <para>
-            ''' Picks up where Get List left Off
-            ''' </para>
-            ''' </summary>
-            GetAlphaNumericList
-
-            ''' <summary>
-            ''' </summary>
-            GetTargets
-
-            ''' <summary>
-            ''' </summary>
-            GetSingle
-
-            ''' <summary>
-            ''' </summary>
-            RestoreSibgleCharacterPs
-
-            ''' <summary>
-            ''' </summary>
-            RestoreAllCharacterPS
-
-            ''' <summary>
-            ''' Pruning Database
-            ''' </summary>
-            PruneDatabase
-
-        End Enum
-
-        ''' <summary>
-        ''' PS systems running
-        ''' </summary>
-        <CLSCompliant(False)>
-        Public Enum PsSystemRunning As SByte
-            [Error] = 0
-            PsNone
-            PsBackup
-            PsRestore
-            PsPrune
-        End Enum
-
-#End Region
-
-#Region "Public Properties"
-
-        ''' <summary>
-        ''' List of characters to back up
-        ''' <para>
-        ''' special character [DREAM] for information to host dream
-        ''' </para>
-        ''' </summary>
-        ''' <returns>
-        ''' </returns>
-        Public Property CharacterList As New List(Of IVariable)(20)
-
-        Public Property CurrentPS_Stage As PsBackupStage
-
-        <CLSCompliant(False)>
-        Public Property PsProcess As PsSystemRunning
 
 #End Region
 
