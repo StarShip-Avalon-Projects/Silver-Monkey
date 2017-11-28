@@ -1,32 +1,26 @@
 ﻿Imports Monkeyspeak
 
-Namespace Interfaces
+Namespace Engine.Libraries.Web
 
     ''' <summary>
-    ''' Silver Monkey's Custom MonkeySpeak Variable
+    ''' Silver  Monkey implementation of <see cref="IVariable"/> for databases
     ''' </summary>
-    Public Class MsVariable
+    <Serializable>
+    <CLSCompliant(True)>
+    Public Class MsWebVariable
         Implements IVariable
 
 #Region "Public Constructors"
 
-        ''' <summary>
-        ''' Construct the Variable with Name and Value
-        ''' </summary>
-        ''' <param name="Name"><see cref="Monkeyspeak.Variable.Name"/></param>
-        ''' <param name="value"><see cref="Monkeyspeak.Variable.Value"/></param>
-        Public Sub New(Name As String, value As Object)
+        Public Sub New(Name As String, Optional value As Object = Nothing)
 
-            Me.Name = Name
-            Me.Value = value
+            _Name = Name
+            _Value = value
         End Sub
 
-        ''' <summary>
-        ''' Construct the Variable with Name only
-        ''' </summary>
-        ''' <param name="Name"><see cref="Monkeyspeak.Variable.Name"/></param>
-        Public Sub New(Name As String)
-            Me.Name = Name
+        Public Sub New(Var As IVariable)
+            _Name = Var.Name
+            _Value = Var.Value
         End Sub
 
 #End Region
@@ -44,11 +38,11 @@ Namespace Interfaces
 
 #End Region
 
-        Public Overloads Shared Operator <>(varA As MsVariable, varB As IVariable) As Boolean
+        Public Overloads Shared Operator <>(varA As MsWebVariable, varB As IVariable) As Boolean
             Return varA.Value IsNot varB.Value
         End Operator
 
-        Public Overloads Shared Operator =(varA As MsVariable, varB As IVariable) As Boolean
+        Public Overloads Shared Operator =(varA As MsWebVariable, varB As IVariable) As Boolean
             If varA Is Nothing OrElse varB Is Nothing Then
                 If varA IsNot Nothing Then
                     Return varA.Value Is Nothing
@@ -86,6 +80,37 @@ Namespace Interfaces
                 Return Me = other
             End If
             Return False
+        End Function
+
+    End Class
+
+    ''' <summary>
+    '''
+    ''' </summary>
+    Public Class MsWebVariableTable
+        Inherits VariableTable
+        Implements IVariable, IDictionary(Of String, Object)
+
+        Public Sub New(name As String, Optional limit As Integer = 100)
+            MyBase.New(name, False, limit)
+
+        End Sub
+
+        Public Property Name As String Implements IVariable.Name
+        Public Property Value As Object Implements IVariable.Value
+
+        Public ReadOnly Property IsConstant As Boolean Implements IVariable.IsConstant
+            Get
+                Return False
+            End Get
+        End Property
+
+        ''' <summary>
+        '''
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function ToString() As String
+            Return $"{Name} = {(If((Values Is Nothing), Nothing.ToString(), Values.ToString()))}"
         End Function
 
     End Class

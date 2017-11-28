@@ -10,23 +10,17 @@ Namespace Engine.Libraries.Database
     Public Class DatabaseVariable
         Implements IVariable
 
-#Region "Private Fields"
-
-        Private _value As Object
-
-#End Region
-
 #Region "Public Constructors"
 
-        Public Sub New(Name As String, value As Object)
+        Public Sub New(Name As String, Optional value As Object = Nothing)
 
             _Name = Name
-            _value = value
+            _Value = value
         End Sub
 
         Public Sub New(Var As IVariable)
             _Name = Var.Name
-            _value = Var.Value
+            _Value = Var.Value
         End Sub
 
 #End Region
@@ -34,20 +28,8 @@ Namespace Engine.Libraries.Database
 #Region "Public Properties"
 
         Public Property Name As String Implements IVariable.Name
-
         Public Property Value As Object Implements IVariable.Value
-            Get
-                Return _value
-            End Get
-            Set(value As Object)
-                _value = value
-            End Set
-        End Property
 
-        ''' <summary>
-        ''' These Variables dom't need Constant Protextion
-        ''' </summary>
-        ''' <returns>False</returns>
         Public ReadOnly Property IsConstant As Boolean Implements IVariable.IsConstant
             Get
                 Return False
@@ -55,11 +37,6 @@ Namespace Engine.Libraries.Database
         End Property
 
 #End Region
-
-        Friend Sub New(Name As String)
-            _Name = Name
-            _value = Nothing
-        End Sub
 
         Public Overloads Shared Operator <>(varA As DatabaseVariable, varB As IVariable) As Boolean
             Return varA.Value IsNot varB.Value
@@ -78,19 +55,10 @@ Namespace Engine.Libraries.Database
         End Operator
 
         Public Overrides Function GetHashCode() As Integer
-            If TypeOf _value Is Integer Then
-                Return CInt(_value) Xor _Name.GetHashCode()
+            If TypeOf Me.Value Is Integer Then
+                Return CInt(Me.Value) Xor Me.Name.GetHashCode()
             End If
-            Return _Name.GetHashCode()
-        End Function
-
-        ''' <summary>
-        ''' Returns a const identifier if the DatabaseVariable is constant followed by name,
-        ''' <para>otherwise just the name is returned.</para>
-        ''' </summary>
-        ''' <returns></returns>))
-        Public Overrides Function ToString() As String
-            Return $"{Name} = {(If((Value Is Nothing), Nothing.ToString(), Value.ToString()))}"
+            Return Me.Name.GetHashCode()
         End Function
 
         Private Function CheckType(_value As Object) As Boolean
@@ -108,16 +76,18 @@ Namespace Engine.Libraries.Database
         ''' <returns></returns>
         Public Shadows Function Equals(other As IVariable) As Boolean Implements IEquatable(Of IVariable).Equals
 
-            If TypeOf (other) Is DataBaseVariableTable Then
-                Dim ob = DirectCast(other, DataBaseVariableTable)
-                Return Me = ob
+            If TypeOf (other) Is IVariable Then
+                Return Me = other
             End If
             Return False
         End Function
 
     End Class
 
-    Public Class DataBaseVariableTable
+    ''' <summary>
+    '''
+    ''' </summary>
+    Public Class DatabaseVariableTable
         Inherits VariableTable
         Implements IVariable, IDictionary(Of String, Object)
 
@@ -125,6 +95,15 @@ Namespace Engine.Libraries.Database
             MyBase.New(name, False, limit)
 
         End Sub
+
+        Public Property Name As String Implements IVariable.Name
+        Public Property Value As Object Implements IVariable.Value
+
+        Public ReadOnly Property IsConstant As Boolean Implements IVariable.IsConstant
+            Get
+                Return False
+            End Get
+        End Property
 
         ''' <summary>
         '''

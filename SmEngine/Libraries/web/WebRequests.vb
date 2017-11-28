@@ -18,7 +18,6 @@ Namespace Engine.Libraries.Web
 
 #Region "Private Fields"
 
-        Private data As New List(Of MsVariable)()
         Private UserAgent As String = "Silver Monkey a Furcadia Bot (gerolkae@hotmail.com)"
         Private Ver As Integer = 1
         Private WebReferer As String = "https://silvermonkey.tsprojects.org"
@@ -116,7 +115,7 @@ Namespace Engine.Libraries.Web
                             Dim pos() = line.Split("=", 0, 1)
                             If pos.Length > 0 Then
                                 result.ReceivedPage = True
-                                Dim var = New MsVariable(pos(0), pos(1))
+                                Dim var = New MsWebVariable(pos(0), pos(1))
                                 'Assign Variables
                                 Try
                                     result.WebStack.Add(var)
@@ -243,7 +242,7 @@ Namespace Engine.Libraries.Web
                             Dim pos() = line.Split("=", 0, 1)
                             If pos.Length > 0 Then
                                 Result.ReceivedPage = True
-                                Dim var = New MsVariable(pos(0), pos(1))
+                                Dim var = New MsWebVariable(pos(0), pos(1))
 
                                 'Assign Variables
                                 Try

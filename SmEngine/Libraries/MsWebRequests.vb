@@ -264,7 +264,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function WebArrayNotEqualTo(reader As TriggerReader) As Boolean
 
-            Dim setting As New MsVariable(reader.ReadString)
+            Dim setting As New MsWebVariable(reader.ReadString)
             If WebStack.Contains(setting) Then
                 setting = WebStack.Item(WebStack.IndexOf(setting))
             End If
