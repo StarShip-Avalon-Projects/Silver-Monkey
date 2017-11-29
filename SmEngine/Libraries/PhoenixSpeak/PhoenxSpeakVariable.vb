@@ -2,6 +2,9 @@
 
 Namespace Engine.Libraries.PhoenixSpeak
 
+    ''' <summary>
+    ''' Silver  Monkey implementation of <see cref="IVariable"/> for Phoenix Speak databases
+    ''' </summary>
     <Serializable>
     <CLSCompliant(True)>
     Public Class PhoenxSpeakVariable

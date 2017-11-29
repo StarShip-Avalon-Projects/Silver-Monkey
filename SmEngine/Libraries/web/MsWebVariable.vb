@@ -3,7 +3,7 @@
 Namespace Engine.Libraries.Web
 
     ''' <summary>
-    ''' Silver  Monkey implementation of <see cref="IVariable"/> for databases
+    ''' Silver  Monkey implementation of <see cref="IVariable"/> for web requests
     ''' </summary>
     <Serializable>
     <CLSCompliant(True)>

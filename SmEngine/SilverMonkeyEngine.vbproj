@@ -126,8 +126,8 @@
     <Compile Include="Libraries\web\MsWebVariable.vb" />
     <Compile Include="SessionHandler\EngineOptoons.vb" />
     <Compile Include="SessionHandler\MainEngine.vb" />
-    <None Include="Libraries\MS Repq.vb" />
-    <Compile Include="Libraries\MS Verbot.vb" />
+    <None Include="Libraries\MsPopUpDialogs.vb" />
+    <Compile Include="Libraries\MsVerbot.vb" />
     <Compile Include="Libraries\MsDatabase.vb" />
     <Compile Include="Libraries\Dice\MsDice.DiceRollCollection.vb" />
     <Compile Include="Libraries\MsDice.vb" />
@@ -138,9 +138,8 @@
     <Compile Include="Libraries\MsPounce.vb" />
     <Compile Include="Libraries\MsSayLibrary.vb" />
     <Compile Include="Libraries\MsSound.vb" />
-    <Compile Include="Libraries\MsTime.vb" />
     <Compile Include="Libraries\MsTrades.vb" />
-    <Compile Include="Libraries\MS_Cookie.vb" />
+    <Compile Include="Libraries\MsCookie.vb" />
     <Compile Include="Libraries\Pounce\PounceFurre.vb" />
     <Compile Include="Libraries\StringLibrary.vb" />
     <Compile Include="Libraries\web\WenData.vb" />

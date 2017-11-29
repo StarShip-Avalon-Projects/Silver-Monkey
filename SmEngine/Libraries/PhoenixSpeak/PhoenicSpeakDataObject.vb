@@ -15,7 +15,8 @@ Namespace Engine.Libraries.PhoenixSpeak
     ''' <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha">Phoenix Speak</see>
     ''' </para>
     ''' </summary>
-    Public Class PhoenicSpeakDataObject : Inherits DataObject
+    Public Class PhoenicSpeakDataObject
+        Inherits DataObject
 
 #Region "Private Fields"
 
@@ -68,7 +69,7 @@ Namespace Engine.Libraries.PhoenixSpeak
         End Sub
 
         Public Sub New(ByRef data As String)
-            Dim PsPage As New Regex(String.Format("{0}", "multi_result?(\ d +)?/(\d+)?"), SmRegExOptions)
+            Dim PsPage As New Regex($"multi_result?(\ d +)?/(\d+)?", SmRegExOptions)
             Integer.TryParse(PsPage.Match(data, 0).Groups(1).Value(), _CurrentPage)
             Integer.TryParse(PsPage.Match(data, 0).Groups(2).Value(), _PageCount)
             _PS_Page = PsPage.Replace(data, "", 1)

@@ -57,12 +57,10 @@ Namespace Engine.Libraries
             End If
 
             If ActiveFurre IsNot Nothing AndAlso ActiveFurre.Count > 0 Then
-                If ActiveFurre(0).ShortName = "unknown" Then
-                    Throw New ArgumentException("Invalid ActivePlayer")
-                End If
                 Player = ActiveFurre(0)
-                ParamSet = True
-
+                If ActiveFurre(0).FurreID <> -1 Then
+                    ParamSet = True
+                End If
             End If
             If Player IsNot Nothing Then UpdateTriggerigFurreVariables(Player, reader.Page)
             Return ParamSet
@@ -222,7 +220,7 @@ Namespace Engine.Libraries
         ''' <para/>
         ''' Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), Object())"/>
         ''' </summary>
-        Public Player As Furre
+        Public Shared Player As Furre
 
 #End Region
 

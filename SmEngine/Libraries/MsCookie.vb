@@ -11,7 +11,7 @@ Namespace Engine.Libraries
     ''' <see href="http://www.furcadia.com/cookies/"/>
     ''' </para>
     ''' </summary>
-    Public NotInheritable Class MS_Cookie
+    Public NotInheritable Class MsCookie
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"

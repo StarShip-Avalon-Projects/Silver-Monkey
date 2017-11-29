@@ -154,6 +154,7 @@ Public Class BotSession
         If MSpage Is Nothing Then Exit Sub
 
         Try
+            Logger.Debug(Of BotSession)(DirectCast(sender, BaseServerInstruction).RawInstruction)
             Select Case e.ServerInstruction
 
                 Case ServerInstructionType.LoadDreamEvent
@@ -676,10 +677,9 @@ Public Class BotSession
                 New StringLibrary(Me),
                 New MsSayLibrary(Me),
                 New MsBanish(Me),
-                New MsTime(Me),
                 New MsDatabase(Me),
                 New MsWebRequests(Me),
-                New MS_Cookie(Me),
+                New MsCookie(Me),
                 New MsPhoenixSpeak(Me),
                 New MsPhoenixSpeakBackupAndRestore(Me),
                 New MsDice(Me),
