@@ -242,6 +242,8 @@ Namespace Engine.Libraries
             '(5:562) forget Database info {...} from Settings Table{...}.
             '(5:563) forget all Settings Table Database info.
 
+            Add(TriggerCategory.Effect, 560, AddressOf InsertVariableTableToFurreTable, "store variable table %VariableTable to database table name {...}.")
+
         End Sub
 
 #End Region
@@ -1039,6 +1041,18 @@ Namespace Engine.Libraries
         End Function
 
         ''' <summary>
+        ''' store variable table %VariableTable to database table name {...}.
+        ''' </summary>
+        ''' <param name="reader"></param>
+        ''' <returns></returns>
+        Public Function InsertVariableTableToFurreTable(reader As TriggerReader) As Boolean
+            Dim VarTable = reader.ReadVariableTable(True)
+            Dim db = New SQLiteDatabase(SQLitefile)
+            Dim TableName = reader.ReadString()
+            db.Insert(TableName, VarTable.Values)
+        End Function
+
+        ''' <summary>
         ''' (5:405) Add the triggering furre with default access level to
         ''' the Furre Table in the database if he, she or it don't already exist.
         ''' </summary>
@@ -1320,7 +1334,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function UseOrCreateSQLiteFileIfNotExist(reader As TriggerReader) As Boolean
             SQLitefile = Paths.CheckBotFolder(reader.ReadString())
-            Console.WriteLine("NOTICE: SQLite Database file has changed to" + SQLitefile)
+            Monkeyspeak.Logging.Logger.Info(Of MsDatabase)($"NOTICE: SQLite Database file has changed to {SQLitefile}")
             Return True
         End Function
 
@@ -1338,7 +1352,7 @@ Namespace Engine.Libraries
             Dim startDate = Date.Now
             SQLiteDatabase.ExecuteNonQuery("VACUUM")
             Dim ts As TimeSpan = Date.Now.Subtract(startDate)
-            'SendClientMessage("SYSTEM:", "Executed Vacum in " + ts.Seconds.ToString + " seconds")
+            Monkeyspeak.Logging.Logger.Debug(Of MsDatabase)($"Executed Vacum in {ts.Seconds.ToString} seconds")
             'TODO: Provide Database Stats for feedback
             Return True
         End Function
