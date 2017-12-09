@@ -1330,7 +1330,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function UseOrCreateSQLiteFileIfNotExist(reader As TriggerReader) As Boolean
             SQLitefile = Paths.CheckBotFolder(reader.ReadString())
-            Monkeyspeak.Logging.Logger.Info(Of MsDatabase)($"NOTICE: SQLite Database file has changed to {SQLitefile}")
+            Logging.Logger.Warn(Of MsDatabase)($"NOTICE: SQLite Database file has changed to {SQLitefile}")
             Return True
         End Function
 
@@ -1346,9 +1346,9 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Shared Function VACUUM(reader As TriggerReader) As Boolean
             Dim startDate = Date.Now
-            SQLiteDatabase.ExecuteNonQuery("VACUUM")
+            Dim rows = SQLiteDatabase.ExecuteNonQuery("VACUUM")
             Dim ts As TimeSpan = Date.Now.Subtract(startDate)
-            Monkeyspeak.Logging.Logger.Debug(Of MsDatabase)($"Executed Vacum in {ts.Seconds.ToString} seconds")
+            Logging.Logger.Debug(Of MsDatabase)($"Executed ""VACUUM"" in {ts.Seconds.ToString} seconds, {rows} are affected")
             'TODO: Provide Database Stats for feedback
             Return True
         End Function

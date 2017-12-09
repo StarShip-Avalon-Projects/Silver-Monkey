@@ -668,7 +668,7 @@ Public Class BotSession
         ' Comment out Libs to Disable
 
         Dim LibList = New List(Of Monkeyspeak.Libraries.BaseLibrary) From {
-                       New Libraries.IO(MainEngineOptions.BotPath),
+                New Libraries.IO(MainEngineOptions.BotPath),
                 New Libraries.Math(),
                 New Libraries.StringOperations(),
                 New Libraries.Sys(),
@@ -682,7 +682,6 @@ Public Class BotSession
                 New MsWebRequests(Me),
                 New MsCookie(Me),
                 New MsPhoenixSpeak(Me),
-                New MsPhoenixSpeakBackupAndRestore(Me),
                 New MsDice(Me),
                 New MsFurres(Me),
                 New MsMovement(Me),
@@ -693,7 +692,9 @@ Public Class BotSession
                 New MsTrades(Me),
                 New MsDreamInfo(Me)
                                 }
+        ' New MsPhoenixSpeakBackupAndRestore(Me),
         Return LibList
     End Function
 
+    '
 End Class

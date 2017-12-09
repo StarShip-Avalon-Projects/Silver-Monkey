@@ -1,22 +1,22 @@
-﻿using NUnit.Framework;
-using SilverMonkeyEngine;
-using Furcadia;
-using Monkeyspeak;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using Furcadia.Net;
+﻿using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
+using NUnit.Framework;
+using SilverMonkeyEngine;
+using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+using MonkeyCore;
 
 namespace SmEngineTests
 {
     [TestFixture]
     public class SilerMonkeyEngineTests
     {
+        private BotOptions options;
         private BotSession Proxy;
 
         private const string GeroSayPing = "<name shortname='gerolkae'>Gerolkae</name>: ping";
@@ -58,7 +58,7 @@ namespace SmEngineTests
             var CharacterFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "silvermonkey.ini");
 
-            BotOptions options = new BotOptions(ref BotFile)
+            options = new BotOptions(ref BotFile)
             {
                 Standalone = true,
                 CharacterIniFile = CharacterFile
@@ -72,7 +72,6 @@ namespace SmEngineTests
             Proxy.Error += OnErrorException;
             Proxy.ServerData2 += OnServerData;
             Proxy.ClientData2 += OnClientData;
-            Task.Run(() => Proxy.ConnetAsync());
         }
 
         [TestCase(WhisperTest, "hi")]
@@ -88,6 +87,7 @@ namespace SmEngineTests
         [TestCase(Emote, "Emoe")]
         public void ChannelTextIs(string testc, string ExpectedValue)
         {
+            Task.Run(() => Proxy.ConnetAsync());
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
             while (true)
             {
@@ -119,6 +119,7 @@ namespace SmEngineTests
         [TestCase(GeroWhisperHi, "Gerolkae")]
         public void ExpectedCharachter(string testc, string ExpectedValue)
         {
+            Task.Run(() => Proxy.ConnetAsync());
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
             while (true)
             {
@@ -150,6 +151,7 @@ namespace SmEngineTests
         [TestCase(Emote, "emote")]
         public void ExpectedChannelNameIs(string testc, string ExpectedValue)
         {
+            Task.Run(() => Proxy.ConnetAsync());
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
             while (true)
             {
@@ -171,6 +173,7 @@ namespace SmEngineTests
         [Test]
         public void BotHasConnectedTest()
         {
+            Task.Run(() => Proxy.ConnetAsync());
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
             while (true)
             {
@@ -183,6 +186,7 @@ namespace SmEngineTests
         [Test]
         public void BotServerSocketTest()
         {
+            Task.Run(() => Proxy.ConnetAsync());
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
             while (true)
             {
@@ -193,9 +197,10 @@ namespace SmEngineTests
         }
 
         [Test]
-        public void BotTestClientIsNotConnected()
+        public void FurcadiaClientIsNotConnected()
         {
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(5);
+            Task.Run(() => Proxy.ConnetAsync());
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(15);
             while (true)
             {
                 Thread.Sleep(100);
@@ -204,12 +209,31 @@ namespace SmEngineTests
 
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
             Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
+            Console.WriteLine($"Proxy.IsClientSocketConnected: {Proxy.IsClientSocketConnected}");
             Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected && Proxy.IsClientSocketConnected == false);
+        }
+
+        [Test]
+        public void ClientStatusIsDisconnected()
+        {
+            Task.Run(() => Proxy.ConnetAsync());
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(15);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+
+            Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
+            Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
+            Console.WriteLine($"Proxy.IsClientSocketConnected: {Proxy.IsClientSocketConnected}");
+            Assert.That(Proxy.ClientStatus == ConnectionPhase.Disconnected && Proxy.IsClientSocketConnected == false);
         }
 
         [TestCase(GeroShout, "ping")]
         public void ProxySession_InstructionObjectPlayerIs(string testc, string ExpectedValue)
         {
+            Task.Run(() => Proxy.ConnetAsync());
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
             while (true)
             {
@@ -254,6 +278,63 @@ namespace SmEngineTests
             Proxy.SendToServer(data);
         }
 
+        public string GetFileHash(string filename)
+        {
+            var hash = new SHA1Managed();
+            var clearBytes = File.ReadAllBytes(filename);
+            var hashedBytes = hash.ComputeHash(clearBytes);
+            return ConvertBytesToHex(hashedBytes);
+        }
+
+        public string ConvertBytesToHex(byte[] bytes)
+        {
+            var sb = new StringBuilder();
+
+            for (var i = 0; i < bytes.Length; i++)
+            {
+                sb.Append(bytes[i].ToString("x"));
+            }
+            return sb.ToString();
+        }
+
+        [Test]
+        public void FurcadiaSettingsIsResetWithClientClose()
+        {
+            string SettingsFile = Path.Combine(Paths.ApplicationSettingsPath, @"settings.ini");
+
+            var originalHash = GetFileHash(SettingsFile);
+            Task.Run(() => Proxy.ConnetAsync());
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            var ResetHash = GetFileHash(SettingsFile);
+
+            Assert.AreEqual(ResetHash, originalHash);
+        }
+
+        [Test]
+        public void FurcadiaSettingsIsResetWithOutClientClose()
+        {
+            string SettingsFile = Path.Combine(Paths.ApplicationSettingsPath, @"settings.ini");
+            options.Standalone = false;
+
+            var originalHash = GetFileHash(SettingsFile);
+
+            Task.Run(() => Proxy.ConnetAsync());
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            var ResetHash = GetFileHash(SettingsFile);
+
+            Assert.AreEqual(ResetHash, originalHash);
+        }
+
         [TearDown]
         public void Cleanup()
         {
@@ -263,6 +344,8 @@ namespace SmEngineTests
                 Thread.Sleep(100);
                 if (end < DateTime.Now) break;
             }
+            if (Proxy.IsClientSocketConnected)
+                Proxy.CloseClient();
             Proxy.Disconnect();
             Proxy.Dispose();
         }
