@@ -324,7 +324,7 @@ namespace SmEngineTests
             var originalHash = GetFileHash(SettingsFile);
 
             Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(5);
             while (true)
             {
                 Thread.Sleep(100);
