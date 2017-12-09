@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Furcadia.IO
 Imports Furcadia.Net
 Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
@@ -30,7 +31,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     Sub New()
         _MonkeySpeakEngineOption = New Engine.EngineOptoons()
         LogOptions = New LogSteamOptions() With {
-        .LogPath = Paths.SilverMonkeyLogPath
+        .LogPath = MonkeyCore.Paths.SilverMonkeyLogPath
         }
         BotIni = New IniFile()
     End Sub
@@ -40,25 +41,24 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
 
         Dim dir As String = Path.GetDirectoryName(BFile)
         If String.IsNullOrEmpty(dir) Then
-            BFile = Path.Combine(Paths.SilverMonkeyBotPath, BFile)
+            BFile = Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, BFile)
         End If
         If BotIni Is Nothing Then BotIni = New IniFile
-        If File.Exists(Paths.CheckBotFolder(BFile)) Then
+        If File.Exists(MonkeyCore.Paths.CheckBotFolder(BFile)) Then
             Dim p As String = Path.GetDirectoryName(BFile)
             If Not String.IsNullOrEmpty(p) Then
-                Paths.SilverMonkeyBotPath = p
+                MonkeyCore.Paths.SilverMonkeyBotPath = p
             End If
             BotIni.Load(BFile)
         End If
         _BiniFile = BFile
         Dim s As String = ""
         LogOptions = New LogSteamOptions() With {
-                 .log = BotIni.GetKeyValue("Main", "Log"),
-                 .LogOption = Convert.ToInt16(BotIni.GetKeyValue("Main", "LogOption")),
                  .LogNameBase = BotIni.GetKeyValue("Main", "LogNameBase"),
                  .LogPath = BotIni.GetKeyValue("Main", "LogNamePath")
         }
-
+        LogOptions.LogOption = Integer.Parse(BotIni.GetKeyValue("Main", "LogOption"))
+        Boolean.TryParse(BotIni.GetKeyValue("Main", "Log"), LogOptions.log)
         s = BotIni.GetKeyValue("Bot", "BotIni")
         If Not String.IsNullOrEmpty(s) Then CharacterIniFile = s
 
@@ -217,7 +217,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         BotIni.SetKeyValue("GoMap", "IDX", _GoMap.ToString)
         BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL.ToString())
 
-        BotIni.Save(Paths.CheckBotFolder(_BiniFile))
+        BotIni.Save(MonkeyCore.Paths.CheckBotFolder(_BiniFile))
     End Sub
 
 #End Region

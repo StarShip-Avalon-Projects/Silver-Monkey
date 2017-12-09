@@ -1,7 +1,8 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports System.Windows.Forms
-Imports MonkeyCore.IniFile
+Imports Furcadia.IO
+Imports Furcadia.IO.IniFile
 
 'Structure Data (Main Settings, Individual Program Groups)
 'Read Master settings.ini

@@ -1,4 +1,5 @@
 ﻿Imports FastColoredTextBoxNS
+Imports Furcadia.IO
 Imports MonkeyCore
 
 Public Module MainModule

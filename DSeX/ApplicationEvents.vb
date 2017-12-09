@@ -1,4 +1,5 @@
-﻿Imports MonkeyCore
+﻿Imports Furcadia.IO
+Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 
 Namespace My

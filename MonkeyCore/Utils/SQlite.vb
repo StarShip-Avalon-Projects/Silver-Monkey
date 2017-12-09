@@ -236,14 +236,10 @@ Public Class SQLiteDatabase
     ''' <summary>
     ''' Adds a column to the specified table
     ''' </summary>
-    ''' <param name="tableName">
-    ''' </param>
-    ''' <param name="columnName">
-    ''' </param>
-    ''' <param name="columnType">
-    ''' </param>
-    ''' <param name="DefaultValue">
-    ''' </param>
+    ''' <param name="tableName">Name of the table.</param>
+    ''' <param name="columnName">Name of the column.</param>
+    ''' <param name="columnType">Type of the column.</param>
+    ''' <param name="DefaultValue">The default value.</param>
     Public Sub addColumn(ByVal tableName As String, ByVal columnName As String, ByVal columnType As String, ByVal DefaultValue As String)
         If isColumnExist(columnName, tableName) = True Then Exit Sub
         ExecuteNonQuery("ALTER TABLE( " + tableName + " ADD COLUMN " + columnName + " " + columnType + " DEFAULT" + DefaultValue + ");")
@@ -532,34 +528,6 @@ Public Class SQLiteDatabase
 
         Return String.Join(",", columnNames.ToArray)
     End Function
-
-#End Region
-
-End Class
-
-Public Class SQLiteSyntaxException
-    Inherits Exception
-
-#Region "Public Constructors"
-
-    Public Sub New()
-    End Sub
-
-    Public Sub New(message As String)
-        MyBase.New(message)
-    End Sub
-
-    Public Sub New(message As String, inner As Exception)
-        MyBase.New(message, inner)
-    End Sub
-
-#End Region
-
-#Region "Protected Constructors"
-
-    Protected Sub New(info As System.Runtime.Serialization.SerializationInfo, context As System.Runtime.Serialization.StreamingContext)
-        MyBase.New(info, context)
-    End Sub
 
 #End Region
 

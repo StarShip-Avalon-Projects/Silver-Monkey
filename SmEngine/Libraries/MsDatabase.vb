@@ -1035,8 +1035,7 @@ Namespace Engine.Libraries
                 {"date modified", Date.Now.ToString},
                 {"Access Level", info}
             }
-            db.Insert("FURRE", data)
-            Return True
+            Return db.Insert("FURRE", data)
 
         End Function
 
@@ -1049,7 +1048,7 @@ Namespace Engine.Libraries
             Dim VarTable = reader.ReadVariableTable(True)
             Dim db = New SQLiteDatabase(SQLitefile)
             Dim TableName = reader.ReadString()
-            db.Insert(TableName, VarTable.Values)
+            Return db.Insert(TableName, VarTable.Values)
         End Function
 
         ''' <summary>
@@ -1079,8 +1078,7 @@ Namespace Engine.Libraries
                 {"Access Level", value}
             }
 
-            db.Insert("FURRE", data)
-            Return True
+            Return db.Insert("FURRE", data)
 
         End Function
 
@@ -1265,8 +1263,7 @@ Namespace Engine.Libraries
                 {"date modified", Date.Now.ToString}
             }
 
-            db.Update("FURRE", data, "[Name]='" & Furre & "'")
-            Return True
+            Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
 
         End Function
 
@@ -1317,8 +1314,7 @@ Namespace Engine.Libraries
                 {"date modified", Date.Now.ToString}
             }
 
-            db.Update("FURRE", data, "[Name]='" & Furre & "'")
-            Return True
+            Return db.Update("FURRE", data, "[Name]='" & Furre & "'")
 
         End Function
 

@@ -1,4 +1,4 @@
-﻿Imports MonkeyCore
+﻿Imports Furcadia.IO
 
 Module wMainMod
     Public ScriptIni As IniFile = New IniFile

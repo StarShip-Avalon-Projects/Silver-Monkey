@@ -2,6 +2,8 @@
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports FastColoredTextBoxNS
+Imports Furcadia.IO
+Imports Furcadia.IO.IniFile
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Controls.NativeMethods
@@ -740,7 +742,7 @@ Public Class MS_Edit
     End Sub
 
     Private Sub BtnTemplateAdd_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click, BtnTemplateAdd.Click
-        Dim TemplatePath As String = (Path.Combine(Paths.SilverMonkeyDocumentsPath, "Templates"))
+        Dim TemplatePath As String = (Path.Combine(MonkeyCore.Paths.SilverMonkeyDocumentsPath, "Templates"))
         Dim message, title As String
         Dim myValue As String
         message = "Name of file?"
@@ -760,9 +762,9 @@ Public Class MS_Edit
         title = "Template Name"
         myValue = InputBox(message, title, "")
         If String.IsNullOrEmpty(myValue) Then Exit Sub
-        TemplatePathsMS.Add(Paths.MonkeySpeakEditorDocumentsTemplatesPath)
+        TemplatePathsMS.Add(MonkeyCore.Paths.MonkeySpeakEditorDocumentsTemplatesPath)
         ListBox3.Items.Add(myValue)
-        File.WriteAllText(Path.Combine(Paths.MonkeySpeakEditorDocumentsTemplatesPath, myValue.ToString + ".ms"), MS_Editor.Selection.Text)
+        File.WriteAllText(Path.Combine(MonkeyCore.Paths.MonkeySpeakEditorDocumentsTemplatesPath, myValue.ToString + ".ms"), MS_Editor.Selection.Text)
     End Sub
 
     Private Sub BtnTemplateDelete_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
@@ -855,7 +857,7 @@ Public Class MS_Edit
     End Sub
 
     Private Sub DragonSpeakFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DragonSpeakFileToolStripMenuItem.Click
-        AddNewEditorTab("", Paths.FurcadiaDocumentsFolder, TabControl2.TabCount)
+        AddNewEditorTab("", MonkeyCore.Paths.FurcadiaDocumentsFolder, TabControl2.TabCount)
         NewFile(EditStyles.ds)
     End Sub
 
@@ -1015,7 +1017,7 @@ Public Class MS_Edit
 
     Private Sub FNewTab_Click(sender As Object, e As EventArgs)
         Dim c As Integer = TabControl2.TabCount
-        AddNewEditorTab("", Paths.SilverMonkeyBotPath, c)
+        AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, c)
         NewFile(EditStyles.ms)
     End Sub
 
@@ -1025,7 +1027,7 @@ Public Class MS_Edit
 
     Private Sub GetTemplates()
         Try
-            Dim p As String = Path.Combine(Paths.ApplicationPath, "Templates")
+            Dim p As String = Path.Combine(MonkeyCore.Paths.ApplicationPath, "Templates")
 
             ListBox3.BeginUpdate()
             TemplatePaths.Clear()
@@ -1042,7 +1044,7 @@ Public Class MS_Edit
                     ListBox2.EndUpdate()
                 Next
             End If
-            p = Path.Combine(Paths.FurcadiaDocumentsFolder, "Templates")
+            p = Path.Combine(MonkeyCore.Paths.FurcadiaDocumentsFolder, "Templates")
             If Directory.Exists(p) Then
                 fileEntries = Directory.GetFiles(p, "*.ds", SearchOption.TopDirectoryOnly)
                 For Each s As String In fileEntries
@@ -1052,7 +1054,7 @@ Public Class MS_Edit
 
                 Next
             End If
-            p = Path.Combine(Paths.SilverMonkeyDocumentsPath, "Templates")
+            p = Path.Combine(MonkeyCore.Paths.SilverMonkeyDocumentsPath, "Templates")
             If Directory.Exists(p) Then
                 fileEntries = Directory.GetFiles(p, "*.ds", SearchOption.TopDirectoryOnly)
                 For Each s As String In fileEntries
@@ -1068,7 +1070,7 @@ Public Class MS_Edit
             TemplatePathsMS.Clear()
             ListBox3.Items.Clear()
 
-            p = Paths.MonkeySpeakEditorDocumentsTemplatesPath
+            p = MonkeyCore.Paths.MonkeySpeakEditorDocumentsTemplatesPath
             If Directory.Exists(p) Then
                 fileEntries = Directory.GetFiles(p, "*.ms", SearchOption.TopDirectoryOnly)
                 For Each s As String In fileEntries
@@ -1079,7 +1081,7 @@ Public Class MS_Edit
                     ListBox3.EndUpdate()
                 Next
             End If
-            p = Paths.MonKeySpeakEditorTemplatesPath
+            p = MonkeyCore.Paths.MonKeySpeakEditorTemplatesPath
             If Directory.Exists(p) Then
 
                 fileEntries = Directory.GetFiles(p, "*.ms", SearchOption.TopDirectoryOnly)
@@ -1286,7 +1288,7 @@ Public Class MS_Edit
     End Sub
 
     Private Sub MonkeySpeakFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MonkeySpeakFileToolStripMenuItem.Click, ToolBoxNew.Click
-        AddNewEditorTab("", Paths.SilverMonkeyBotPath, TabControl2.TabCount)
+        AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, TabControl2.TabCount)
         NewFile(EditStyles.ms)
     End Sub
 
@@ -1395,10 +1397,10 @@ Public Class MS_Edit
 
     Private Sub MS_Edit_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys.ini"))
-        MS_KeysIni.Load(Path.Combine(Paths.ApplicationPath, "Keys-MS.ini"))
-        KeysHelpMSIni.Load(Path.Combine(Paths.ApplicationPath, "KeysHelp-MS.ini"))
-        KeysHelpIni.Load(Path.Combine(Paths.ApplicationPath, "KeysHelp.ini"))
+        KeysIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "Keys.ini"))
+        MS_KeysIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "Keys-MS.ini"))
+        KeysHelpMSIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "KeysHelp-MS.ini"))
+        KeysHelpIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "KeysHelp.ini"))
 
         EditSettings = New MonkeyCore.Settings.EditSettings
 
@@ -1419,8 +1421,8 @@ Public Class MS_Edit
 
         DoubleBuffered = True
         Dim PluginFound As Boolean = False
-        If Directory.Exists(Paths.ApplicationPluginPath) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(Paths.ApplicationPluginPath, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
+        If Directory.Exists(MonkeyCore.Paths.ApplicationPluginPath) Then
+            For Each s As String In FileIO.FileSystem.GetFiles(MonkeyCore.Paths.ApplicationPluginPath, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
                 Dim FName As String = Path.GetFileNameWithoutExtension(s)
                 If IsNothing(EditSettings.PluginList) Then EditSettings.PluginList = New Dictionary(Of String, Boolean)
                 If Not EditSettings.PluginList.ContainsKey(FName) Then
@@ -1496,7 +1498,7 @@ Public Class MS_Edit
             'AddNewEditorTab(filename, mPath, 0)
             OpenMS_File(filename)
         Else
-            AddNewEditorTab("", Paths.SilverMonkeyDocumentsPath, 0)
+            AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyDocumentsPath, 0)
             NewFile(EditStyles.ms)
         End If
 
@@ -1641,7 +1643,7 @@ Public Class MS_Edit
     Private Sub OpenMS_File()
         With MS_BrosweDialog
             ' Select Character ini file
-            .InitialDirectory = Paths.SilverMonkeyBotPath
+            .InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
 
             If .ShowDialog = DialogResult.OK Then
                 Dim f As String = Path.GetFileName(.FileName)

@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Furcadia.IO
 
 ''' <summary>
 ''' Generic scripts for preloading into Monkey Speak Editor and Silver Monkey

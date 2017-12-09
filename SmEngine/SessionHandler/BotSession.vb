@@ -26,19 +26,18 @@ Imports SilverMonkeyEngine.Engine.MsEngineExtentionFunctions
 ''' This Instance handles the current Furcadia Session.
 ''' <para>
 ''' Part1: Manage MonkeySpeak Engine Start,Stop,Restart. System Variables,
-'''        MonkeySpeak Execution Triggers
-''' </para>
-''' <para>
+''' MonkeySpeak Execution Triggers
+''' </para><para>
 ''' Part2: Furcadia Proxy Controls, In/Out Ports, Host, Character Ini file.
-'''        Connect, Disconnect, Reconnect
-''' </para>
-''' <para>
+''' Connect, Disconnect, Reconnect
+''' </para><para>
 ''' Part2a: Proxy Functions do link to Monkey Speak trigger execution
-''' </para>
-''' <para>
+''' </para><para>
 ''' Part3: This Class Links loosley to the GUI
 ''' </para>
 ''' </summary>
+''' <seealso cref="Furcadia.Net.Proxy.ProxySession" />
+''' <seealso cref="System.IDisposable" />
 <CLSCompliant(True)>
 Public Class BotSession
     Inherits ProxySession
@@ -118,7 +117,6 @@ Public Class BotSession
     ''' <summary>
     ''' Starts the Furcadia Connection Process
     ''' </summary>
-
     Public Async Sub ConnetAsync()
         If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
             Await StartEngine()
@@ -570,11 +568,11 @@ Public Class BotSession
     End Sub
 
     ''' <summary>
-    '''
+    ''' Sends the error.
     ''' </summary>
-    ''' <param name="e"></param>
-    ''' <param name="o"></param>
-    ''' <param name="n"></param>
+    ''' <param name="e">The e.</param>
+    ''' <param name="o">The o.</param>
+    ''' <param name="n">The n.</param>
     Protected Overrides Sub SendError(e As Exception, o As Object, n As String) Handles MyBase.[Error]
         RaiseEvent [Error](e, o, n)
     End Sub
@@ -662,12 +660,15 @@ Public Class BotSession
 
     End Function
 
+    ''' <summary>
+    ''' Initializes the engine libraries.
+    ''' </summary>
+    ''' <returns></returns>
     Private Function InitializeEngineLibraries() As List(Of Monkeyspeak.Libraries.BaseLibrary)
         ' Comment out Libs to Disable
 
         Dim LibList = New List(Of Monkeyspeak.Libraries.BaseLibrary) From {
-                New Libraries.Debug(),
-                New Libraries.IO(MainEngineOptions.BotPath),
+                       New Libraries.IO(MainEngineOptions.BotPath),
                 New Libraries.Math(),
                 New Libraries.StringOperations(),
                 New Libraries.Sys(),
@@ -692,11 +693,6 @@ Public Class BotSession
                 New MsTrades(Me),
                 New MsDreamInfo(Me)
                                 }
-        'New MsVerbot(Session),
-        ' New MathLibrary(Me),
-        'New MsIO(Me),
-        'LibList.Add(New MS_MemberList())
-
         Return LibList
     End Function
 

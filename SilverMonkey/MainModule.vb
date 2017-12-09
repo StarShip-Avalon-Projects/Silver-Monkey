@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports Furcadia.IO
 Imports MonkeyCore
 
 Module MainModule
