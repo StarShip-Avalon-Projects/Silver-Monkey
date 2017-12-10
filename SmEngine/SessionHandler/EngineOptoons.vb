@@ -11,7 +11,7 @@ Namespace Engine
 
         Private _BotController As String
         Private _MS_Engine_Enable As Boolean
-        Private _MsFileName As String
+        Private _MonkeySpeakScriptFile As String
 
 #End Region
 
@@ -40,10 +40,6 @@ Namespace Engine
 
 #Region "Public Properties"
 
-        Private _MonkeySpeakScriptFile As String
-
-        Private _MonkeySpeakScriptVersion As Double
-
         ''' <summary>
         ''' Monkey Speak Script File Name
         ''' </summary>
@@ -54,21 +50,10 @@ Namespace Engine
                 Return _MonkeySpeakScriptFile
             End Get
             Set(ByVal value As String)
+                If Not Path.GetExtension(value).ToLower = ".ms" Then
+                    Throw New ArgumentException("Invalid File type, Not a ""*.ms"" file.")
+                End If
                 _MonkeySpeakScriptFile = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Current Monkey Speak Script Version the Bot Supports
-        ''' </summary>
-        ''' <returns>
-        ''' </returns>
-        Public Property MonkeySpeakScriptVersion() As Double
-            Get
-                Return _MonkeySpeakScriptVersion
-            End Get
-            Set(ByVal value As Double)
-                _MonkeySpeakScriptVersion = value
             End Set
         End Property
 
@@ -94,24 +79,6 @@ Namespace Engine
             End Get
             Set(ByVal value As Boolean)
                 _MS_Engine_Enable = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets or sets the m s_ file.
-        ''' </summary>
-        ''' <value>
-        ''' The ms file name.
-        ''' </value>
-        Public Property MS_File As String
-            Get
-                Return _MsFileName
-            End Get
-            Set(value As String)
-                If Not Path.GetExtension(value).ToLower = ".ms" Then
-                    Throw New ArgumentException("Invalid File type, Not a ""*.ms"" file.")
-                End If
-                _MsFileName = value
             End Set
         End Property
 

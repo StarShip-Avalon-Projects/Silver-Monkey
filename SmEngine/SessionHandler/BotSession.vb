@@ -60,11 +60,16 @@ Public Class BotSession
 
     Private handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
     Private lastDream As DREAM
-    ''' <summary>
-    ''' Library Objects to load into the Engine
-    ''' </summary>
 
-    Public Property MainEngineOptions As BotOptions
+    ''' <summary>
+    ''' Gets the session options.
+    ''' </summary>
+    ''' <value>
+    ''' The session options.
+    ''' </value>
+    Public Property SessionOptions As BotOptions
+
+    Private MsEngineOptions As Engine.EngineOptoons
 
     Private MainSettings As Settings.cMain
 
@@ -72,7 +77,7 @@ Public Class BotSession
     ''' </summary>
     Sub New()
         MyBase.New()
-        MainEngineOptions = New BotOptions()
+        SessionOptions = New BotOptions()
         lastDream = New DREAM
     End Sub
 
@@ -84,7 +89,8 @@ Public Class BotSession
     Sub New(BotSessionOptions As BotOptions)
         MyBase.New(BotSessionOptions)
         lastDream = New DREAM
-        MainEngineOptions = BotSessionOptions
+        SessionOptions = BotSessionOptions
+        MsEngineOptions = BotSessionOptions.MonkeySpeakEngineOptions
     End Sub
 
     ''' <summary>
@@ -98,7 +104,7 @@ Public Class BotSession
     ''' <returns></returns>
     Public ReadOnly Property BotController As String
         Get
-            Return MainEngineOptions.BotController
+            Return SessionOptions.BotController
         End Get
     End Property
 
@@ -110,7 +116,7 @@ Public Class BotSession
     ''' </returns>
     Public ReadOnly Property IsBotController As Boolean
         Get
-            Return Player.ShortName = MainEngineOptions.BotControllerShortName
+            Return Player.ShortName = SessionOptions.BotControllerShortName
         End Get
     End Property
 
@@ -118,7 +124,7 @@ Public Class BotSession
     ''' Starts the Furcadia Connection Process
     ''' </summary>
     Public Async Sub ConnetAsync()
-        If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
+        If MsEngineOptions.MS_Engine_Enable Then
             Await StartEngine()
         End If
         Task.Run(Sub() Connect()).Wait()
@@ -505,35 +511,32 @@ Public Class BotSession
     ''' Start the Monkey Speak Engine
     ''' </summary>
     Public Async Function StartEngine() As Task
-        Try
 
-            MsEngine = New MonkeyspeakEngine(MainEngineOptions.MonkeySpeakEngineOptions)
-            Dim SriptFile As String = Await LoadFromScriptFileAsync(MainEngineOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
-            If String.IsNullOrWhiteSpace(SriptFile) Then Throw New NullReferenceException("SriptFile")
-            MSpage = Await MsEngine.LoadFromStringAsync(SriptFile)
+        MsEngine = New MonkeyspeakEngine(MsEngineOptions)
+        Dim MonkeySpeakScript As String = Await LoadFromScriptFileAsync(MsEngineOptions.MonkeySpeakScriptFile)
 
-            Dim TimeStart = DateTime.Now
-            Dim VariableList As New List(Of IVariable)
+        MSpage = Await MsEngine.LoadFromStringAsync(MonkeySpeakScript)
 
-            MSpage = Await LoadLibraryAsync(False)
-            Dim fur As IFurre = New Furre
-            VariableList.Add(New ConstantVariable("%DREAMOWNER", lastDream.Owner))
-            VariableList.Add(New ConstantVariable("%DREAMNAME", lastDream.Name))
-            VariableList.Add(New ConstantVariable("%BOTNAME", ConnectedFurre.Name))
-            VariableList.Add(New ConstantVariable("%BOTCONTROLLER", MainEngineOptions.BotController))
-            VariableList.Add(New ConstantVariable("%NAME", fur.Name))
-            VariableList.Add(New ConstantVariable("%SHORTNAME", fur.ShortName))
-            VariableList.Add(New ConstantVariable("%MESSAGE", fur.Message))
-            VariableList.Add(New ConstantVariable("%BANISHNAME", Nothing))
-            VariableList.Add(New ConstantVariable("%BANISHLIST", Nothing))
+        Dim TimeStart = DateTime.Now
+        Dim VariableList As New List(Of IVariable)
 
-            PageSetVariable(VariableList)
-            '(0:0) When the bot starts,
-            Await MSpage.ExecuteAsync(0)
-            Logger.Info($"Done!!! Executed {MSpage.Size} triggers in {Date.Now.Subtract(TimeStart).Seconds} seconds.")
-        Catch ex As Exception
-            Logger.Error(Of BotSession)(ex.Message)
-        End Try
+        MSpage = Await LoadLibraryAsync(False)
+        Dim fur As IFurre = New Furre
+        VariableList.Add(New ConstantVariable("%DREAMOWNER", lastDream.Owner))
+        VariableList.Add(New ConstantVariable("%DREAMNAME", lastDream.Name))
+        VariableList.Add(New ConstantVariable("%BOTNAME", ConnectedFurre.Name))
+        VariableList.Add(New ConstantVariable("%BOTCONTROLLER", SessionOptions.BotController))
+        VariableList.Add(New ConstantVariable("%NAME", fur.Name))
+        VariableList.Add(New ConstantVariable("%SHORTNAME", fur.ShortName))
+        VariableList.Add(New ConstantVariable("%MESSAGE", fur.Message))
+        VariableList.Add(New ConstantVariable("%BANISHNAME", Nothing))
+        VariableList.Add(New ConstantVariable("%BANISHLIST", Nothing))
+
+        PageSetVariable(VariableList)
+        '(0:0) When the bot starts,
+        Await MSpage.ExecuteAsync(0)
+        Logger.Info($"Done!!! Executed {MSpage.Size} triggers in {Date.Now.Subtract(TimeStart).Seconds} seconds.")
+
     End Function
 
     ''' <summary>
@@ -660,6 +663,10 @@ Public Class BotSession
 
     End Function
 
+    Public Overrides Sub SendFormattedTextToServer(message As String)
+        Task.Run(Sub() MyBase.SendFormattedTextToServer(message)).Wait()
+    End Sub
+
     ''' <summary>
     ''' Initializes the engine libraries.
     ''' </summary>
@@ -668,7 +675,7 @@ Public Class BotSession
         ' Comment out Libs to Disable
 
         Dim LibList = New List(Of Monkeyspeak.Libraries.BaseLibrary) From {
-                New Libraries.IO(MainEngineOptions.BotPath),
+                New Libraries.IO(SessionOptions.BotPath),
                 New Libraries.Math(),
                 New Libraries.StringOperations(),
                 New Libraries.Sys(),

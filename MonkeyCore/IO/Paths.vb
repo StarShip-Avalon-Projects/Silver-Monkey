@@ -66,6 +66,7 @@ Public NotInheritable Class Paths
     Private Shared _FurcadiaCharactersFolder As String = Nothing
     Private Shared _FurcadiaDocumentsFolder As String = Nothing
     Private Shared _FurcadiaProgramFolder As String = Nothing
+    Private Shared _FurcadiaSettingsFilder As String = Nothing
 
     Private Shared _MonKeySpeakEditorDocumentsDsScriptsPath As String
     Private Shared _MonKeySpeakEditorDocumentsDsTemplatesPath As String
@@ -140,6 +141,19 @@ Public NotInheritable Class Paths
                 End If
             End If
             Return _ApplicationSettingsPath
+        End Get
+    End Property
+
+    Public Shared ReadOnly Property FurcadiaSettingsPath() As String
+        Get
+            If Not String.IsNullOrEmpty(_FurcadiaSettingsFilder) Then
+                Return _FurcadiaSettingsFilder
+            End If
+            If _Paths Is Nothing Then
+                _Paths = New Furcadia.IO.Paths(_FurcadiaSettingsFilder)
+            End If
+            _FurcadiaSettingsFilder = _Paths.SettingsPath
+            Return _FurcadiaSettingsFilder
         End Get
     End Property
 
@@ -517,16 +531,12 @@ Public NotInheritable Class Paths
     ''' current path and then check the Silver Monkey folder in my documents
     ''' </para>
     ''' </summary>
-    ''' <param name="FileToCheck">
-    ''' file path to check
-    ''' </param>
-    ''' <returns>
-    ''' the correct file path
-    ''' </returns>
-
+    ''' <param name="FileToCheck">The file to check.</param>
+    ''' <returns></returns>
+    ''' <exception cref="System.IO.FileNotFoundException"></exception>
     Public Shared Function CheckBotFolder(ByRef FileToCheck As String) As String
-        If String.IsNullOrEmpty(FileToCheck) Then
-            Throw New FurcadiaIOException("FileToCheck cannot be Null or empty")
+        If String.IsNullOrWhiteSpace(FileToCheck) Then
+            Throw New FileNotFoundException(FileToCheck)
         End If
         Dim FilePath As String = Path.GetDirectoryName(FileToCheck)
         If String.IsNullOrEmpty(FilePath) Then
@@ -539,9 +549,13 @@ Public NotInheritable Class Paths
     ''' <summary>
     ''' Check the Furcadia character folder for a character
     ''' </summary>
-    ''' <param name="FileToCheck"></param>
+    ''' <param name="FileToCheck">The file to check.</param>
     ''' <returns></returns>
+    ''' <exception cref="System.IO.FileNotFoundException"></exception>
     Public Shared Function CheckCharacterFolder(ByRef FileToCheck As String) As String
+        If String.IsNullOrWhiteSpace(FileToCheck) Then
+            Throw New FileNotFoundException(FileToCheck)
+        End If
         Dim FilePath As String = Path.GetDirectoryName(FileToCheck)
         If String.IsNullOrEmpty(FilePath) Then
             FileToCheck = Path.Combine(FurcadiaCharactersFolder, FileToCheck)

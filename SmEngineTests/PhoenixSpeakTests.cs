@@ -48,7 +48,7 @@ namespace SmEngineTests
                 CharacterIniFile = CharacterFile
             };
 
-            options.MonkeySpeakEngineOptions.MS_File = MsFile;
+            options.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = MsFile;
             options.MonkeySpeakEngineOptions.MS_Engine_Enable = true;
             options.SaveBotSettings();
 

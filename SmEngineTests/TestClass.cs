@@ -1,15 +1,13 @@
 ﻿using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
+using MonkeyCore;
 using NUnit.Framework;
 using SilverMonkeyEngine;
 using System;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
-using MonkeyCore;
+using static SmEngineTests.Utilities;
 
 namespace SmEngineTests
 {
@@ -18,11 +16,11 @@ namespace SmEngineTests
     {
         private BotOptions options;
         private BotSession Proxy;
-        private const int ConnectWaitTime = 15;
+        private const int ConnectWaitTime = 10;
+        private const int CleanupDelayTime = 10;
         private readonly string originalHash;
         private readonly string SettingsFile;
-
-        private const string BaseHash = "8f785f3c2c76a1039338cbd269e27c15861d3";
+        private readonly string BackupSettingsFile;
 
         private const string GeroSayPing = "<name shortname='gerolkae'>Gerolkae</name>: ping";
         private const string GeroWhisperCunchatize = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"crunchatize\" to you. ]</font>";
@@ -47,33 +45,34 @@ namespace SmEngineTests
 
         public SilerMonkeyEngineTests()
         {
-            SettingsFile = Path.Combine(Paths.ApplicationSettingsPath, @"settings.ini");
-            originalHash = GetFileHash(SettingsFile);
+            SettingsFile = Path.Combine(Paths.FurcadiaSettingsPath, @"settings.ini");
+            BackupSettingsFile = Path.Combine(Paths.FurcadiaSettingsPath, @"BackupSettings.ini");
+            File.Copy(SettingsFile, BackupSettingsFile, true);
         }
 
         [SetUp]
         public void Initialize()
         {
-            if (originalHash != BaseHash)
-                throw new NUnit.Framework.AssertionException("Unexpected Hash Difference");
-            if (Proxy != null)
-                Furcadia.Logging.Logger.Error<BotSession>(Proxy);
-
+            if (!File.Exists(BackupSettingsFile))
+                throw new Exception("BackupSettingsFile Doesn't Exists");
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
             var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Bugreport 165 From Jake.ms");
             var CharacterFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "silvermonkey.ini");
-
+            var MsEngineOption = new SilverMonkeyEngine.Engine.EngineOptoons()
+            {
+                MonkeySpeakScriptFile = MsFile,
+                MS_Engine_Enable = true
+            };
             options = new BotOptions(ref BotFile)
             {
                 Standalone = true,
-                CharacterIniFile = CharacterFile
+                CharacterIniFile = CharacterFile,
+                MonkeySpeakEngineOptions = MsEngineOption
             };
 
-            options.MonkeySpeakEngineOptions.MS_File = MsFile;
-            options.MonkeySpeakEngineOptions.MS_Engine_Enable = true;
             options.SaveBotSettings();
 
             Proxy = new BotSession(options);
@@ -189,7 +188,20 @@ namespace SmEngineTests
                 if (end < DateTime.Now) break;
             }
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
-            Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected);
+            Assert.That(Proxy.ServerStatus, Is.EqualTo(ConnectionPhase.Connected));
+        }
+
+        [Test]
+        public void SmHasJoinedAnyDream()
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Assert.That(Proxy.InDream, Is.EqualTo(true));
         }
 
         [Test]
@@ -287,29 +299,13 @@ namespace SmEngineTests
             Proxy.SendToServer(data);
         }
 
-        public string GetFileHash(string filename)
-        {
-            var hash = new SHA1Managed();
-            var clearBytes = File.ReadAllBytes(filename);
-            var hashedBytes = hash.ComputeHash(clearBytes);
-            return ConvertBytesToHex(hashedBytes);
-        }
-
-        public string ConvertBytesToHex(byte[] bytes)
-        {
-            var sb = new StringBuilder();
-
-            for (var i = 0; i < bytes.Length; i++)
-            {
-                sb.Append(bytes[i].ToString("x"));
-            }
-            return sb.ToString();
-        }
-
         [TearDown]
         public void Cleanup()
         {
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            //if (!AreFilesIdenticalFast(BackupSettingsFile, SettingsFile))
+            //    throw new NUnit.Framework.AssertionException("Sttings Did not reset");
+
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(CleanupDelayTime);
             while (true)
             {
                 Thread.Sleep(100);
@@ -321,9 +317,6 @@ namespace SmEngineTests
             Proxy.Disconnect();
             Proxy.Dispose();
             options = null;
-            var ResetHash = GetFileHash(SettingsFile);
-            if (ResetHash != originalHash)
-                throw new NUnit.Framework.AssertionException("Faulty settings.ini");
         }
     }
 }
