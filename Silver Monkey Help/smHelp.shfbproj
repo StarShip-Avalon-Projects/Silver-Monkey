@@ -231,8 +231,8 @@ Instead Pounce uses a List of names and checks the Pounce server for furre onlin
         </configuration>
       </PlugInConfig>
     </PlugInConfigurations>
-    <CopyrightText>Silver Monkey is Released under GNU Lesser Public Lisen e v3</CopyrightText>
-    <CopyrightHref>http://silvermonkey.tsprojects.org/download/GPLv3.htm</CopyrightHref>
+    <CopyrightText>Silver Monkey is Released under Apache 2.0</CopyrightText>
+    <CopyrightHref>https://www.apache.org/licenses/LICENSE-2.0</CopyrightHref>
     <PostBuildEvent>xcopy /y "$(OutputPath)Silver Monkey.chm" "$(SolutionDir)build\$(Configuration)"</PostBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>

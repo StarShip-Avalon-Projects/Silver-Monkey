@@ -59,26 +59,26 @@ namespace SmEngineTests
             Task.Run(() => Proxy.ConnetAsync());
         }
 
-        [Test]
-        public void TestPsCharacterList()
-        {
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
+        //[Test]
+        //public void TestPsCharacterList()
+        //{
+        //    DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+        //    while (true)
+        //    {
+        //        Thread.Sleep(100);
+        //        if (end < DateTime.Now) break;
+        //    }
 
-            Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
-            {
-                var ServeObject = (ChannelObject)sender;
-                Assert.That(ServeObject.Player.Message, Is.EqualTo(""));
-            };
+        //    Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
+        //    {
+        //        var ServeObject = (ChannelObject)sender;
+        //        Assert.That(ServeObject.Player.Message, Is.EqualTo(""));
+        //    };
 
-            Logger.Debug($"ServerStatus: {Proxy.ServerStatus}");
-            Logger.Debug($"ClientStatus: {Proxy.ClientStatus}");
-            Proxy.ParseServerChannel(PsGetCharacters, false);
-        }
+        //    Logger.Debug($"ServerStatus: {Proxy.ServerStatus}");
+        //    Logger.Debug($"ClientStatus: {Proxy.ClientStatus}");
+        //    Proxy.ParseServerChannel(PsGetCharacters, false);
+        //}
 
         private void OnErrorException(Exception e, object o, string text)
         {

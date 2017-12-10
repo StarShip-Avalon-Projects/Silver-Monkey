@@ -121,7 +121,7 @@ Public Class BotSession
         If MainEngineOptions.MonkeySpeakEngineOptions.MS_Engine_Enable Then
             Await StartEngine()
         End If
-        Await Task.Run(Sub() Connect())
+        Task.Run(Sub() Connect()).Wait()
     End Sub
 
     ''' <summary>
@@ -129,7 +129,7 @@ Public Class BotSession
     ''' </summary>
     Public Overrides Sub Disconnect()
 
-        MyBase.Disconnect()
+        Task.Run(Sub() MyBase.Disconnect()).Wait()
 
     End Sub
 
@@ -561,7 +561,7 @@ Public Class BotSession
 
             ' Free your own state (unmanaged objects).
             ' Set large fields to null.
-            MyBase.Dispose()
+            Task.Run(Sub() MyBase.Dispose()).Wait()
         End If
         Me.disposed = True
         Me.Finalize()

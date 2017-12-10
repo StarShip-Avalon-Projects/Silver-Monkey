@@ -18,6 +18,11 @@ namespace SmEngineTests
     {
         private BotOptions options;
         private BotSession Proxy;
+        private const int ConnectWaitTime = 15;
+        private readonly string originalHash;
+        private readonly string SettingsFile;
+
+        private const string BaseHash = "8f785f3c2c76a1039338cbd269e27c15861d3";
 
         private const string GeroSayPing = "<name shortname='gerolkae'>Gerolkae</name>: ping";
         private const string GeroWhisperCunchatize = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"crunchatize\" to you. ]</font>";
@@ -40,17 +45,20 @@ namespace SmEngineTests
 
         private const string CookieBank = "<font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Cookie <a href='http://www.furcadia.com/cookies/Cookie%20Economy.html'>bank</a> has currently collected: 0</font>";
 
+        public SilerMonkeyEngineTests()
+        {
+            SettingsFile = Path.Combine(Paths.ApplicationSettingsPath, @"settings.ini");
+            originalHash = GetFileHash(SettingsFile);
+        }
+
         [SetUp]
         public void Initialize()
         {
-            Monkeyspeak.Logging.Logger.ErrorEnabled = true;
-            Monkeyspeak.Logging.Logger.DebugEnabled = true;
-            Monkeyspeak.Logging.Logger.InfoEnabled = true;
-            Monkeyspeak.Logging.Logger.SingleThreaded = false;
-            Furcadia.Logging.Logger.ErrorEnabled = true;
-            Furcadia.Logging.Logger.DebugEnabled = true;
-            Furcadia.Logging.Logger.InfoEnabled = true;
-            Furcadia.Logging.Logger.SingleThreaded = false;
+            if (originalHash != BaseHash)
+                throw new NUnit.Framework.AssertionException("Unexpected Hash Difference");
+            if (Proxy != null)
+                Furcadia.Logging.Logger.Error<BotSession>(Proxy);
+
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
             var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -69,7 +77,7 @@ namespace SmEngineTests
             options.SaveBotSettings();
 
             Proxy = new BotSession(options);
-            Proxy.Error += OnErrorException;
+            // Proxy.Error += OnErrorException;
             Proxy.ServerData2 += OnServerData;
             Proxy.ClientData2 += OnClientData;
         }
@@ -87,8 +95,8 @@ namespace SmEngineTests
         [TestCase(Emote, "Emoe")]
         public void ChannelTextIs(string testc, string ExpectedValue)
         {
-            Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
             while (true)
             {
                 Thread.Sleep(100);
@@ -119,8 +127,8 @@ namespace SmEngineTests
         [TestCase(GeroWhisperHi, "Gerolkae")]
         public void ExpectedCharachter(string testc, string ExpectedValue)
         {
-            Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
             while (true)
             {
                 Thread.Sleep(100);
@@ -151,8 +159,8 @@ namespace SmEngineTests
         [TestCase(Emote, "emote")]
         public void ExpectedChannelNameIs(string testc, string ExpectedValue)
         {
-            Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
             while (true)
             {
                 Thread.Sleep(100);
@@ -173,21 +181,22 @@ namespace SmEngineTests
         [Test]
         public void BotHasConnectedTest()
         {
-            Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
             while (true)
             {
                 Thread.Sleep(100);
                 if (end < DateTime.Now) break;
             }
+            Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
             Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected);
         }
 
         [Test]
-        public void BotServerSocketTest()
+        public void ServerSocketIsConneted()
         {
-            Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
             while (true)
             {
                 Thread.Sleep(100);
@@ -199,8 +208,8 @@ namespace SmEngineTests
         [Test]
         public void FurcadiaClientIsNotConnected()
         {
-            Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(15);
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
             while (true)
             {
                 Thread.Sleep(100);
@@ -216,8 +225,8 @@ namespace SmEngineTests
         [Test]
         public void ClientStatusIsDisconnected()
         {
-            Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(15);
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
             while (true)
             {
                 Thread.Sleep(100);
@@ -233,15 +242,15 @@ namespace SmEngineTests
         [TestCase(GeroShout, "ping")]
         public void ProxySession_InstructionObjectPlayerIs(string testc, string ExpectedValue)
         {
-            Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
             while (true)
             {
                 Thread.Sleep(100);
                 if (end < DateTime.Now) break;
             }
 
-            Proxy.Error += OnErrorException;
+            //  Proxy.Error += OnErrorException;
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
             {
                 ChannelObject InstructionObject = (ChannelObject)sender;
@@ -297,57 +306,24 @@ namespace SmEngineTests
             return sb.ToString();
         }
 
-        [Test]
-        public void FurcadiaSettingsIsResetWithClientClose()
-        {
-            string SettingsFile = Path.Combine(Paths.ApplicationSettingsPath, @"settings.ini");
-
-            var originalHash = GetFileHash(SettingsFile);
-            Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            var ResetHash = GetFileHash(SettingsFile);
-
-            Assert.AreEqual(ResetHash, originalHash);
-        }
-
-        [Test]
-        public void FurcadiaSettingsIsResetWithOutClientClose()
-        {
-            string SettingsFile = Path.Combine(Paths.ApplicationSettingsPath, @"settings.ini");
-            options.Standalone = false;
-
-            var originalHash = GetFileHash(SettingsFile);
-
-            Task.Run(() => Proxy.ConnetAsync());
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(5);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            var ResetHash = GetFileHash(SettingsFile);
-
-            Assert.AreEqual(ResetHash, originalHash);
-        }
-
         [TearDown]
         public void Cleanup()
         {
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
             while (true)
             {
                 Thread.Sleep(100);
                 if (end < DateTime.Now) break;
             }
-            if (Proxy.IsClientSocketConnected)
-                Proxy.CloseClient();
+            // Incase We're not standalone, Kill the left over Client;
+            if (Proxy.FurcadiaClientIsRunning)
+                Task.Run(() => Proxy.CloseClient()).Wait();
             Proxy.Disconnect();
             Proxy.Dispose();
+            options = null;
+            var ResetHash = GetFileHash(SettingsFile);
+            if (ResetHash != originalHash)
+                throw new NUnit.Framework.AssertionException("Faulty settings.ini");
         }
     }
 }

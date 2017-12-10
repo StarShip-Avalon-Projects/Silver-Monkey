@@ -631,7 +631,7 @@ Namespace Engine.Libraries
         Public Function StandAloneMode(reader As TriggerReader) As Boolean
 
             FurcadiaSession.StandAlone = True
-            FurcadiaSession.CloseClient()
+            Task.Run(Sub() FurcadiaSession.CloseClient()).Wait()
 
             Return True
         End Function
