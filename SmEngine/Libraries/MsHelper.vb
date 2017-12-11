@@ -1,73 +1,116 @@
 ﻿Imports System.Text.RegularExpressions
-Imports Furcadia.Net.Dream
+Imports Furcadia.Net.DreamInfo
 Imports Monkeyspeak
 
-Public NotInheritable Class MsLibHelper
+Namespace Engine.Libraries
 
-    ''' <summary>
-    ''' %MESSAGE
-    ''' </summary>
-    Public Const MessageVariable As String = "%MESSAGE"
+    Public NotInheritable Class MsLibHelper
 
-    ''' <summary>
-    ''' %SHORTNAME
-    ''' </summary>
-    Public Const ShortNameVariable = "%SHORTNAME"
+        ''' <summary>
+        ''' the last text the bot has seen, Usually the Triggering furre's message
+        ''' </summary>
+        Public Const MessageVariable As String = "%MESSAGE"
 
-    Public Const TriggeringFurreNameVariable = "%NAME"
+        ''' <summary>
+        ''' the triggering furres shortname
+        ''' </summary>
+        Public Const ShortNameVariable = "%SHORTNAME"
 
-    Public Const DreamOwnerVariable = "%DREAMOWNER"
+        ''' <summary>
+        ''' the triggering furres full name
+        ''' </summary>
+        Public Const TriggeringFurreNameVariable = "%NAME"
 
-    Public Const DreamNameVariable = "%DREAMNAME"
+        ''' <summary>
+        ''' the Uploaders name
+        ''' </summary>
+        Public Const DreamOwnerVariable = "%DREAMOWNER"
 
-    Public Const SmRegExOptions As RegexOptions = RegexOptions.Compiled
+        ''' <summary>
+        ''' the name of the dream we're in
+        ''' </summary>
+        Public Const DreamNameVariable = "%DREAMNAME"
 
-    ''' <summary>
-    ''' updates Bot Constant Variables for the Current Triggering  Furre
-    ''' </summary>
-    ''' <param name="ActivePlayer"></param>
-    ''' <param name="MonkeySpeakPage"></param>
-    Public Shared Sub UpdateTriggerigFurreVariables(ByRef ActivePlayer As IFurre, ByRef MonkeySpeakPage As Page)
-        DirectCast(MonkeySpeakPage.GetVariable(MessageVariable), ConstantVariable).SetValue(ActivePlayer.Message)
-        DirectCast(MonkeySpeakPage.GetVariable(ShortNameVariable), ConstantVariable).SetValue(ActivePlayer.ShortName)
-        DirectCast(MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable), ConstantVariable).SetValue(ActivePlayer.Name)
-    End Sub
+        Public Const SmRegExOptions As RegexOptions = RegexOptions.Compiled
 
-    ''' <summary>
-    ''' updates Bot Constant Variables for the Current Triggering  Furre
-    ''' </summary>
-    ''' <param name="ActiveDream"></param>
-    ''' <param name="MonkeySpeakPage"></param>
-    Public Shared Sub UpdateCurrentDreamVariables(ByRef ActiveDream As DREAM, ByRef MonkeySpeakPage As Page)
-        DirectCast(MonkeySpeakPage.GetVariable(DreamOwnerVariable), ConstantVariable).SetValue(ActiveDream.Owner)
-        DirectCast(MonkeySpeakPage.GetVariable(DreamNameVariable), ConstantVariable).SetValue(ActiveDream.Name)
-    End Sub
+        ''' <summary>
+        ''' Name of the connected furre, IE: the Bots name
+        ''' </summary>
+        Public Const BotNameVariable As String = "%BOTNAME"
 
-    ''' <summary>
-    ''' Reads a Double or a MonkeySpeak Variable
-    ''' </summary>
-    ''' <param name="reader">
-    ''' <see cref="TriggerReader"/>
-    ''' </param>
-    ''' <param name="addIfNotExist">
-    ''' Add Variable to Variable Scope is it Does not exist,
-    ''' <para>
-    ''' Default Value is False
-    ''' </para>
-    ''' </param>
-    ''' <returns>
-    ''' <see cref="Double"/>
-    ''' </returns>
-    Public Shared Function ReadVariableOrNumber(ByVal reader As TriggerReader,
+        ''' <summary>
+        ''' designated furre the bot recognizes as its controller
+        ''' </summary>
+        Public Const BotControllerVariable As String = "%BOTCONTROLLER"
+
+        ''' <summary>
+        ''' name of the furre getting banished ot unbanished
+        ''' </summary>
+        Public Const BanishNameVariable As String = "%BANISHNAME"
+
+        ''' <summary>
+        ''' comma seperated list of the furres on the banisl list
+        ''' </summary>
+        Public Const BanishListVariable As String = "%BANISHLIST"
+
+        ''' <summary>
+        ''' update Bot Constant Variables for the Current Triggering  Furre
+        ''' <para/>
+        ''' <see cref="TriggeringFurreNameVariable"/>
+        ''' <para/>
+        ''' <see cref="ShortNameVariable"/>
+        ''' <para/>
+        ''' <see cref="MessageVariable"/>
+        ''' </summary>
+        ''' <param name="ActivePlayer"></param>
+        ''' <param name="MonkeySpeakPage"></param>
+        Public Shared Sub UpdateTriggerigFurreVariables(ByRef ActivePlayer As IFurre, ByRef MonkeySpeakPage As Page)
+            DirectCast(MonkeySpeakPage.GetVariable(MessageVariable), ConstantVariable).SetValue(ActivePlayer.Message)
+            DirectCast(MonkeySpeakPage.GetVariable(ShortNameVariable), ConstantVariable).SetValue(ActivePlayer.ShortName)
+            DirectCast(MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable), ConstantVariable).SetValue(ActivePlayer.Name)
+        End Sub
+
+        ''' <summary>
+        ''' update Bot Constant Variables for the Current Dream
+        ''' <para/>
+        ''' <see cref="DreamOwnerVariable"/>
+        ''' <para/>
+        ''' <see cref="DreamNameVariable"/>
+        ''' </summary>
+        ''' <param name="ActiveDream"></param>
+        ''' <param name="MonkeySpeakPage"></param>
+        Public Shared Sub UpdateCurrentDreamVariables(ByRef ActiveDream As Dream, ByRef MonkeySpeakPage As Page)
+            DirectCast(MonkeySpeakPage.GetVariable(DreamOwnerVariable), ConstantVariable).SetValue(ActiveDream.Owner)
+            DirectCast(MonkeySpeakPage.GetVariable(DreamNameVariable), ConstantVariable).SetValue(ActiveDream.Name)
+        End Sub
+
+        ''' <summary>
+        ''' Reads a Double or a MonkeySpeak Variable
+        ''' </summary>
+        ''' <param name="reader">
+        ''' <see cref="TriggerReader"/>
+        ''' </param>
+        ''' <param name="addIfNotExist">
+        ''' Add Variable to Variable Scope is it Does not exist,
+        ''' <para>
+        ''' Default Value is False
+        ''' </para>
+        ''' </param>
+        ''' <returns>
+        ''' <see cref="Double"/>
+        ''' </returns>
+        Public Shared Function ReadVariableOrNumber(ByVal reader As TriggerReader,
                                          Optional addIfNotExist As Boolean = False) As Double
-        Dim result As Double = 0
-        If reader.PeekVariable Then
-            Dim value As String = reader.ReadVariable(addIfNotExist).Value.ToString
-            Double.TryParse(value, result)
-        ElseIf reader.PeekNumber Then
-            result = reader.ReadNumber
-        End If
-        Return result
-    End Function
+            Dim result = 0
+            If reader.PeekVariable Then
+                Dim value = reader.ReadVariable(addIfNotExist).Value.ToString
+                Double.TryParse(value, result)
+            ElseIf reader.PeekNumber Then
+                result = reader.ReadNumber
+            End If
+            Return result
+        End Function
 
-End Class
+    End Class
+
+End Namespace

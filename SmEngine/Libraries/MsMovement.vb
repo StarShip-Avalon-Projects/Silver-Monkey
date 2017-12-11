@@ -1,8 +1,8 @@
 ﻿Imports System.Text.RegularExpressions
-Imports Furcadia.Net.Dream
+Imports Furcadia.Net.DreamInfo
 Imports Monkeyspeak
 Imports Monkeyspeak.Logging
-Imports SilverMonkeyEngine.MsLibHelper
+Imports SilverMonkeyEngine.Engine.Libraries.MsLibHelper
 
 Namespace Engine.Libraries
 

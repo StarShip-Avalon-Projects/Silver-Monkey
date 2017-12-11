@@ -1,5 +1,5 @@
 ﻿Imports Monkeyspeak
-Imports SilverMonkeyEngine.MsLibHelper
+Imports SilverMonkeyEngine.Engine.Libraries.MsLibHelper
 
 Namespace Engine.Libraries
 

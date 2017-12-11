@@ -1,5 +1,5 @@
 ﻿Imports Furcadia.Net
-Imports Furcadia.Net.Dream
+Imports Furcadia.Net.DreamInfo
 
 Namespace Interfaces
 
@@ -30,11 +30,11 @@ Namespace Interfaces
             End Set
         End Property
 
-        Public Property Dream As DREAM Implements Interfaces.ImsHost.Dream
+        Public Property Dream As Dream Implements Interfaces.ImsHost.Dream
             Get
                 Return FurcadiaSession.Dream
             End Get
-            Set(value As DREAM)
+            Set(value As Dream)
                 FurcadiaSession.Dream = value
             End Set
 

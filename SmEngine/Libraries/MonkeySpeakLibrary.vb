@@ -1,9 +1,9 @@
 ﻿Imports System.Threading
 Imports Furcadia.Net
-Imports Furcadia.Net.Dream
+Imports Furcadia.Net.DreamInfo
 Imports Monkeyspeak
 Imports Monkeyspeak.Libraries
-Imports SilverMonkeyEngine.MsLibHelper
+Imports SilverMonkeyEngine.Engine.Libraries.MsLibHelper
 
 Namespace Engine.Libraries
 
@@ -45,7 +45,7 @@ Namespace Engine.Libraries
         ''' <returns>true if any parameter was set; false otherwise</returns>
         Public Function ReadParams(reader As TriggerReader) As Boolean
             Dim ParamSet = False
-            Dim dreamInfo = reader.GetParametersOfType(Of DREAM)
+            Dim dreamInfo = reader.GetParametersOfType(Of Dream)
             Dim ActiveFurre = reader.GetParametersOfType(Of IFurre)
             If dreamInfo IsNot Nothing AndAlso dreamInfo.Count > 0 Then
                 If String.IsNullOrWhiteSpace(dreamInfo(0).Name) Then
@@ -211,7 +211,7 @@ Namespace Engine.Libraries
         ''' <para/>
         ''' Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), Object())"/>
         ''' </summary>
-        Public Dream As DREAM
+        Public Dream As Dream
 
         ''' <summary>
         ''' Current Triggering Furre
@@ -300,7 +300,7 @@ Namespace Engine.Libraries
 #Region "Common Library Methods"
 
         ''' <summary>
-        ''' checks the <see cref="Furcadia.Net.Dream.FurreList"/>
+        ''' checks the <see cref="Furcadia.Net.DreamInfo.FurreList"/>
         ''' in the <see cref="MonkeySpeakLibrary.Dream">Dream Parameter</see>
         ''' for the Target Furre.
         ''' </summary>
@@ -308,7 +308,7 @@ Namespace Engine.Libraries
         ''' Target Furre
         ''' </param>
         ''' <returns>
-        ''' True if the furre is in the dream <see cref="Furcadia.Net.Dream.FurreList"/>
+        ''' True if the furre is in the dream <see cref="Furcadia.Net.DreamInfo.FurreList"/>
         ''' </returns>
         Public Function InDream(TargetFurre As Furre) As Boolean
             Dim found = False

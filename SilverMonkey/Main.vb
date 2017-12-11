@@ -5,7 +5,7 @@ Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Windows.Forms
 Imports Furcadia.Net
-Imports Furcadia.Net.Dream
+Imports Furcadia.Net.DreamInfo
 Imports Furcadia.Net.Utils.ServerParser
 
 Imports MonkeyCore

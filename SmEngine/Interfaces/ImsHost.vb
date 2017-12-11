@@ -1,4 +1,4 @@
-﻿Imports Furcadia.Net.Dream
+﻿Imports Furcadia.Net.DreamInfo
 
 Namespace Interfaces
 
@@ -8,7 +8,7 @@ Namespace Interfaces
 
         ReadOnly Property BotName As String
         Property Data As String
-        Property Dream As DREAM
+        Property Dream As Dream
         WriteOnly Property MsPage As Monkeyspeak.Page
         ReadOnly Property Player As Furre
 

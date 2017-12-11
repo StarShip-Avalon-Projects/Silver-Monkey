@@ -3,7 +3,7 @@ Imports System.IO
 Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
-Imports SilverMonkeyEngine.MsLibHelper
+Imports SilverMonkeyEngine.Engine.Libraries.MsLibHelper
 
 Namespace Engine.Libraries
 

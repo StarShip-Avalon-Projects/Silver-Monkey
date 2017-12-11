@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using static SmEngineTests.Utilities;
+using static SilverMonkeyEngine.Engine.Libraries.MsLibHelper;
 
 namespace SmEngineTests
 {
@@ -18,7 +18,6 @@ namespace SmEngineTests
         private BotSession Proxy;
         private const int ConnectWaitTime = 10;
         private const int CleanupDelayTime = 10;
-        private readonly string originalHash;
         private readonly string SettingsFile;
         private readonly string BackupSettingsFile;
 
@@ -177,6 +176,25 @@ namespace SmEngineTests
             Proxy.ParseServerChannel(testc, false);
         }
 
+        [TestCase(BotControllerVariable, null)]
+        [TestCase(DreamNameVariable, null)]
+        [TestCase(BotNameVariable, null)]
+        [TestCase(DreamOwnerVariable, null)]
+        public void ConstantVariableIsNotNull(string VariableName, object VariableValue)
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            var Var = Proxy.MSpage.GetVariable(VariableName);
+            Console.WriteLine($"VarName {VariableName} value {Var} ");
+            object NoVal = "null";
+            Assert.IsTrue(Var.Value != null);
+        }
+
         [Test]
         public void BotHasConnectedTest()
         {
@@ -282,11 +300,6 @@ namespace SmEngineTests
                 Thread.Sleep(100);
                 if (end < DateTime.Now) break;
             }
-        }
-
-        private void OnErrorException(Exception e, object o, string text)
-        {
-            Console.WriteLine($"{e} {text}");
         }
 
         private void OnServerData(string data)

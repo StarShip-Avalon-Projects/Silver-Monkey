@@ -10,7 +10,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports Furcadia.Net
-Imports Furcadia.Net.Dream
+Imports Furcadia.Net.DreamInfo
 Imports Furcadia.Net.Proxy
 Imports Furcadia.Net.Utils.ServerParser
 Imports Furcadia.Text.FurcadiaMarkup
@@ -21,6 +21,7 @@ Imports Monkeyspeak.Logging
 Imports SilverMonkeyEngine.Engine
 Imports SilverMonkeyEngine.Engine.Libraries
 Imports SilverMonkeyEngine.Engine.MsEngineExtentionFunctions
+Imports SilverMonkeyEngine.Engine.Libraries.MsLibHelper
 
 ''' <summary>
 ''' This Instance handles the current Furcadia Session.
@@ -59,7 +60,7 @@ Public Class BotSession
     Private disposed As Boolean
 
     Private handle As SafeHandle = New SafeFileHandle(IntPtr.Zero, True)
-    Private lastDream As DREAM
+    Private lastDream As Dream
 
     ''' <summary>
     ''' Gets the session options.
@@ -78,7 +79,9 @@ Public Class BotSession
     Sub New()
         MyBase.New()
         SessionOptions = New BotOptions()
-        lastDream = New DREAM
+        MsEngineOptions = SessionOptions.MonkeySpeakEngineOptions
+
+        Initialize()
     End Sub
 
     ''' <summary>
@@ -88,9 +91,14 @@ Public Class BotSession
     ''' </param>
     Sub New(BotSessionOptions As BotOptions)
         MyBase.New(BotSessionOptions)
-        lastDream = New DREAM
         SessionOptions = BotSessionOptions
         MsEngineOptions = BotSessionOptions.MonkeySpeakEngineOptions
+
+        Initialize()
+    End Sub
+
+    Private Sub Initialize()
+        lastDream = New Dream
     End Sub
 
     ''' <summary>
@@ -344,7 +352,7 @@ Public Class BotSession
                 Case "banish"
                     Dim NameStr As String
 
-                    DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).SetValue(String.Join(" ", BanishString.ToArray))
+                    DirectCast(MSpage.GetVariable(BanishListVariable), ConstantVariable).SetValue(String.Join(" ", BanishString.ToArray))
 
                     If Text.Contains(" has been banished from your dreams.") Then
                         'banish <name> (online)
@@ -354,7 +362,7 @@ Public Class BotSession
                         '(0:53) When the bot sucessfilly banishes the furre named {...},
                         'Success: You have canceled all banishments from your dreams.
 
-                        DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
+                        DirectCast(MSpage.GetVariable(BanishNameVariable), ConstantVariable).SetValue(BanishName)
                         Dim ids() = {52, 53}
                         Await MSpage.ExecuteAsync(ids)
 
@@ -362,8 +370,8 @@ Public Class BotSession
                     ElseIf Text = "You have canceled all banishments from your dreams." Then
                         'banish-off-all (active list)
                         'Success: You have canceled all banishments from your dreams.
-                        DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).SetValue(Nothing)
-                        DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(Nothing)
+                        DirectCast(MSpage.GetVariable(BanishListVariable), ConstantVariable).SetValue(Nothing)
+                        DirectCast(MSpage.GetVariable(BanishNameVariable), ConstantVariable).SetValue(Nothing)
 
                         Await MSpage.ExecuteAsync(60)
                     ElseIf Text.EndsWith(" has been temporarily banished from your dreams.") Then
@@ -372,7 +380,7 @@ Public Class BotSession
 
                         '(0:61) When the bot sucessfully temp banishes a Furre
                         '(0:62) When the bot sucessfully temp banishes the furre named {...}
-                        DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
+                        DirectCast(MSpage.GetVariable(BanishNameVariable), ConstantVariable).SetValue(BanishName)
                         Dim ids() = {61, 62}
                         Await MSpage.ExecuteAsync(ids)
 
@@ -390,7 +398,7 @@ Public Class BotSession
                         '(0:58) When the bot successfully removes the furre named {...} from the banish list,
                         Dim t As New Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled)
                         NameStr = t.Match(Text).Groups(1).Value
-                        DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
+                        DirectCast(MSpage.GetVariable(BanishNameVariable), ConstantVariable).SetValue(BanishName)
                         Dim ids() = {56, 56}
                         Await MSpage.ExecuteAsync(ids)
 
@@ -402,7 +410,7 @@ Public Class BotSession
                         '(0:51) When the bot fails to banish the furre named {...},
                         Dim t As New Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled)
                         NameStr = t.Match(Text).Groups(1).Value
-                        DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(NameStr)
+                        DirectCast(MSpage.GetVariable(BanishNameVariable), ConstantVariable).SetValue(NameStr)
                         Dim ids() = {50, 51}
                         Await MSpage.ExecuteAsync(ids)
                     ElseIf Text = "Sorry, this player has not been banished from your dreams." Then
@@ -411,7 +419,7 @@ Public Class BotSession
 
                         '(0:55) When the Bot fails to remove a furre from the banish list,
                         '(0:56) When the bot fails to remove the furre named {...} from the banish list,
-                        DirectCast(MSpage.GetVariable("%BANISHNAME"), ConstantVariable).SetValue(BanishName)
+                        DirectCast(MSpage.GetVariable(BanishNameVariable), ConstantVariable).SetValue(BanishName)
                         Dim ids() = {50, 51}
                         Await MSpage.ExecuteAsync(ids)
                     ElseIf Text = "You have not banished anyone." Then
@@ -419,7 +427,7 @@ Public Class BotSession
                         'Error:>> You have not banished anyone.
 
                         '(0:59) When the bot fails to see the banish list,
-                        DirectCast(MSpage.GetVariable("%BANISHLIST"), ConstantVariable).SetValue(Nothing)
+                        DirectCast(MSpage.GetVariable(BanishListVariable), ConstantVariable).SetValue(Nothing)
 
                         Await MSpage.ExecuteAsync(59)
                     ElseIf Text = "You do not have any cookies to give away right now!" Then
@@ -522,15 +530,15 @@ Public Class BotSession
 
         MSpage = Await LoadLibraryAsync(False)
         Dim fur As IFurre = New Furre
-        VariableList.Add(New ConstantVariable("%DREAMOWNER", lastDream.Owner))
-        VariableList.Add(New ConstantVariable("%DREAMNAME", lastDream.Name))
-        VariableList.Add(New ConstantVariable("%BOTNAME", ConnectedFurre.Name))
-        VariableList.Add(New ConstantVariable("%BOTCONTROLLER", SessionOptions.BotController))
-        VariableList.Add(New ConstantVariable("%NAME", fur.Name))
-        VariableList.Add(New ConstantVariable("%SHORTNAME", fur.ShortName))
-        VariableList.Add(New ConstantVariable("%MESSAGE", fur.Message))
-        VariableList.Add(New ConstantVariable("%BANISHNAME", Nothing))
-        VariableList.Add(New ConstantVariable("%BANISHLIST", Nothing))
+        VariableList.Add(New ConstantVariable(DreamOwnerVariable, lastDream.Owner))
+        VariableList.Add(New ConstantVariable(DreamNameVariable, lastDream.Name))
+        VariableList.Add(New ConstantVariable(BotNameVariable, ConnectedFurre.Name))
+        VariableList.Add(New ConstantVariable(BotControllerVariable, SessionOptions.BotController))
+        VariableList.Add(New ConstantVariable(TriggeringFurreNameVariable, fur.Name))
+        VariableList.Add(New ConstantVariable(ShortNameVariable, fur.ShortName))
+        VariableList.Add(New ConstantVariable(MessageVariable, fur.Message))
+        VariableList.Add(New ConstantVariable(BanishNameVariable, Nothing))
+        VariableList.Add(New ConstantVariable(BanishListVariable, Nothing))
 
         PageSetVariable(VariableList)
         '(0:0) When the bot starts,
@@ -586,12 +594,12 @@ Public Class BotSession
     ''' <param name="handler"></param>
     ''' <param name="Trigger"></param>
     ''' <param name="ex"></param>
-    Private Sub OnMonkeySpeakError(handler As TriggerHandler, Trigger As Trigger, ex As Exception) Handles MSpage.Error
+    Private Sub OnMonkeySpeakError(page As Page, handler As TriggerHandler, trigger As Trigger, ex As Exception) Handles MSpage.Error
         If ex.GetType IsNot GetType(MonkeyspeakException) Then
-            Dim PageError As New MonkeyspeakException(String.Format("Trigger Error: {0}", Trigger.ToString), ex)
-            SendError(PageError, handler, Trigger.ToString)
+            Dim PageError As New MonkeyspeakException(String.Format("Trigger Error: {0}", trigger.ToString), ex)
+            SendError(PageError, handler, trigger.ToString)
         Else
-            SendError(ex, handler, Trigger.ToString)
+            SendError(ex, handler, trigger.ToString)
         End If
 
     End Sub
@@ -601,7 +609,7 @@ Public Class BotSession
         Try
             Select Case e.ConnectPhase
                 Case ConnectionPhase.Connected
-                    DirectCast(MSpage.GetVariable("%BOTNAME"), ConstantVariable).SetValue(ConnectedFurre.Name)
+                    DirectCast(MSpage.GetVariable(BotNameVariable), ConstantVariable).SetValue(ConnectedFurre.Name)
 
             End Select
         Catch ex As Exception
@@ -684,7 +692,7 @@ Public Class BotSession
                 New Libraries.Tables(),
                 New StringLibrary(Me),
                 New MsSayLibrary(Me),
-                New MsBanish(Me),
+                New MsBanish(),
                 New MsDatabase(Me),
                 New MsWebRequests(Me),
                 New MsCookie(Me),

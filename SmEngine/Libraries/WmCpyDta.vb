@@ -1,7 +1,7 @@
 ﻿Imports MonkeyCore.Controls.NativeMethods
 Imports MonkeyCore.Utils
 Imports Monkeyspeak
-Imports SilverMonkeyEngine.MsLibHelper
+Imports SilverMonkeyEngine.Engine.Libraries.MsLibHelper
 
 Namespace Engine.Libraries
 

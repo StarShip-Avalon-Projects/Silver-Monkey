@@ -2,7 +2,7 @@
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports Monkeyspeak.Logging
-Imports SilverMonkeyEngine.MsLibHelper
+Imports SilverMonkeyEngine.Engine.Libraries.MsLibHelper
 
 Namespace Engine.Libraries
 

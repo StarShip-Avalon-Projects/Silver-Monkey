@@ -41,10 +41,6 @@ Namespace Engine.Libraries
 
 #Region "Public Constructors"
 
-        Public Sub New(ByRef session As BotSession)
-            MyBase.New(session)
-        End Sub
-
         Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0: ) When the bot fails to banish a furre,
             Add(TriggerCategory.Cause, 50,

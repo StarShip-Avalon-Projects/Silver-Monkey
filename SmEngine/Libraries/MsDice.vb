@@ -1,7 +1,7 @@
 ﻿Imports Furcadia.Net.Utils.ServerObjects
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.Dice
-Imports SilverMonkeyEngine.MsLibHelper
+Imports SilverMonkeyEngine.Engine.Libraries.MsLibHelper
 
 Namespace Engine.Libraries
 

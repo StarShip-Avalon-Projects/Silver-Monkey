@@ -3,7 +3,7 @@ Imports Furcadia.Net.Pounce
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports SilverMonkeyEngine.Engine.Libraries.Pounce
-Imports SilverMonkeyEngine.MsLibHelper
+Imports SilverMonkeyEngine.Engine.Libraries.MsLibHelper
 
 Namespace Engine.Libraries
 

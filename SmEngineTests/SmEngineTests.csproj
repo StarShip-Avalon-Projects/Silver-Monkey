@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PhoenixSpeakTests.cs" />
-    <Compile Include="TestClass.cs" />
+    <Compile Include="SilerMonkeyEngineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
