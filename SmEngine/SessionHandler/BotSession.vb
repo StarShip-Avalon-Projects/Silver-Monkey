@@ -112,7 +112,7 @@ Public Class BotSession
     ''' <returns></returns>
     Public ReadOnly Property BotController As String
         Get
-            Return SessionOptions.BotController
+            Return MsEngineOptions.BotController
         End Get
     End Property
 
@@ -124,7 +124,7 @@ Public Class BotSession
     ''' </returns>
     Public ReadOnly Property IsBotController As Boolean
         Get
-            Return Player.ShortName = SessionOptions.BotControllerShortName
+            Return Player.ShortName = MsEngineOptions.BotControllerShortName
         End Get
     End Property
 
@@ -352,7 +352,7 @@ Public Class BotSession
                 Case "banish"
                     Dim NameStr As String
 
-                    DirectCast(MSpage.GetVariable(BanishListVariable), ConstantVariable).SetValue(String.Join(" ", BanishString.ToArray))
+                    DirectCast(MSpage.GetVariable(BanishListVariable), ConstantVariable).SetValue(String.Join(" ", BanishList.ToArray))
 
                     If Text.Contains(" has been banished from your dreams.") Then
                         'banish <name> (online)
@@ -530,12 +530,12 @@ Public Class BotSession
 
         MSpage = Await LoadLibraryAsync(False)
         Dim fur As IFurre = New Furre
-        VariableList.Add(New ConstantVariable(DreamOwnerVariable, lastDream.Owner))
-        VariableList.Add(New ConstantVariable(DreamNameVariable, lastDream.Name))
+        VariableList.Add(New ConstantVariable(DreamOwnerVariable, Dream.Owner))
+        VariableList.Add(New ConstantVariable(DreamNameVariable, Dream.Name))
         VariableList.Add(New ConstantVariable(BotNameVariable, ConnectedFurre.Name))
-        VariableList.Add(New ConstantVariable(BotControllerVariable, SessionOptions.BotController))
+        VariableList.Add(New ConstantVariable(BotControllerVariable, MsEngineOptions.BotController))
         VariableList.Add(New ConstantVariable(TriggeringFurreNameVariable, fur.Name))
-        VariableList.Add(New ConstantVariable(ShortNameVariable, fur.ShortName))
+        VariableList.Add(New ConstantVariable(TriggeringFurreShortNameVariable, fur.ShortName))
         VariableList.Add(New ConstantVariable(MessageVariable, fur.Message))
         VariableList.Add(New ConstantVariable(BanishNameVariable, Nothing))
         VariableList.Add(New ConstantVariable(BanishListVariable, Nothing))

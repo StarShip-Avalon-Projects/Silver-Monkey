@@ -1117,7 +1117,7 @@ Namespace Engine.Libraries
 
             Dim Info = reader.ReadString
             Dim Variable = reader.ReadVariable(True)
-            Dim Furre = reader.Page.GetVariable(ShortNameVariable).Value.ToString()
+            Dim Furre = reader.Page.GetVariable(TriggeringFurreShortNameVariable).Value.ToString()
 
             Dim cmd As String = "SELECT [" & Info & "] FROM FURRE Where [Name]='" & Furre & "'"
             Variable.Value = SQLiteDatabase.ExecuteScalar(cmd)
@@ -1280,7 +1280,7 @@ Namespace Engine.Libraries
         Public Function UpdateTriggeringFurreField(reader As TriggerReader) As Boolean
             Dim info = reader.ReadString
 
-            Dim Furre = reader.Page.GetVariable(ShortNameVariable).Value.ToString()
+            Dim Furre = reader.Page.GetVariable(TriggeringFurreShortNameVariable).Value.ToString()
             Dim value = ReadVariableOrNumber(reader)
             Dim db = New SQLiteDatabase(SQLitefile)
             Dim data = New Dictionary(Of String, String) From {
@@ -1305,7 +1305,7 @@ Namespace Engine.Libraries
         Public Function UpdateTriggeringFurreFieldSTR(reader As TriggerReader) As Boolean
             Dim info = reader.ReadString
             'Dim Furre As String = reader.ReadString
-            Dim Furre = reader.Page.GetVariable(ShortNameVariable).Value.ToString
+            Dim Furre = reader.Page.GetVariable(TriggeringFurreShortNameVariable).Value.ToString
             Dim value = reader.ReadString
             Dim db = New SQLiteDatabase(SQLitefile)
             Dim data = New Dictionary(Of String, String) From {

@@ -41,10 +41,12 @@ Namespace Engine
 #Region "Public Properties"
 
         ''' <summary>
-        ''' Monkey Speak Script File Name
+        ''' Gets or sets the monkey speak script file.
         ''' </summary>
-        ''' <returns>
-        ''' </returns>
+        ''' <value>
+        ''' The monkey speak script file.
+        ''' </value>
+        ''' <exception cref="ArgumentException">Invalid File type, Not a ""*.ms"" file.</exception>
         Public Property MonkeySpeakScriptFile() As String
             Get
                 Return _MonkeySpeakScriptFile
@@ -57,8 +59,12 @@ Namespace Engine
             End Set
         End Property
 
-#End Region
-
+        ''' <summary>
+        ''' Gets or sets the bot controller.
+        ''' </summary>
+        ''' <value>
+        ''' The bot controller.
+        ''' </value>
         Public Property BotController() As String
             Get
                 Return _BotController
@@ -66,6 +72,18 @@ Namespace Engine
             Set(ByVal value As String)
                 _BotController = value
             End Set
+        End Property
+
+        ''' <summary>
+        ''' Gets the short name of the bot controller.
+        ''' </summary>
+        ''' <value>
+        ''' The short name of the bot controller.
+        ''' </value>
+        Public ReadOnly Property BotControllerShortName As String
+            Get
+                Return _BotController.ToFurcadiaShortName
+            End Get
         End Property
 
         ''' <summary>
@@ -81,6 +99,8 @@ Namespace Engine
                 _MS_Engine_Enable = value
             End Set
         End Property
+
+#End Region
 
     End Class
 

@@ -16,8 +16,8 @@ namespace SmEngineTests
     {
         private BotOptions options;
         private BotSession Proxy;
-        private const int ConnectWaitTime = 10;
-        private const int CleanupDelayTime = 10;
+        private const int ConnectWaitTime = 45;
+        private const int CleanupDelayTime = 5;
         private readonly string SettingsFile;
         private readonly string BackupSettingsFile;
 
@@ -63,7 +63,8 @@ namespace SmEngineTests
             var MsEngineOption = new SilverMonkeyEngine.Engine.EngineOptoons()
             {
                 MonkeySpeakScriptFile = MsFile,
-                MS_Engine_Enable = true
+                MS_Engine_Enable = true,
+                BotController = @"Gerolkae"
             };
             options = new BotOptions(ref BotFile)
             {
@@ -155,7 +156,7 @@ namespace SmEngineTests
         [TestCase(Emit, "@emit")]
         [TestCase(SpokenEmit, "@emit")]
         [TestCase(Emote, "emote")]
-        public void ExpectedChannelNameIs(string testc, string ExpectedValue)
+        public void ExpectedChannelNameIs(string ChannelCode, string ExpectedValue)
         {
             Task.Run(() => Proxy.ConnetAsync()).Wait();
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
@@ -173,14 +174,36 @@ namespace SmEngineTests
 
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
             Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
-            Proxy.ParseServerChannel(testc, false);
+            Proxy.ParseServerChannel(ChannelCode, false);
         }
 
-        [TestCase(BotControllerVariable, null)]
-        [TestCase(DreamNameVariable, null)]
-        [TestCase(BotNameVariable, null)]
-        [TestCase(DreamOwnerVariable, null)]
-        public void ConstantVariableIsNotNull(string VariableName, object VariableValue)
+        [TestCase(TriggeringFurreNameVariable)]
+        [TestCase(TriggeringFurreShortNameVariable)]
+        [TestCase(BotControllerVariable)]
+        [TestCase(DreamNameVariable)]
+        [TestCase(BotNameVariable)]
+        [TestCase(DreamOwnerVariable)]
+        public void ConstantVariableIsNotNull(string VariableName)
+        {
+            options.Standalone = false;
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            var Var = Proxy.MSpage.GetVariable(VariableName);
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
+                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+            });
+        }
+
+        [TestCase(BanishListVariable)]
+        [TestCase(BanishNameVariable)]
+        public void ConstantVariableIsNull(string VariableName)
         {
             Task.Run(() => Proxy.ConnetAsync()).Wait();
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
@@ -190,9 +213,131 @@ namespace SmEngineTests
                 if (end < DateTime.Now) break;
             }
             var Var = Proxy.MSpage.GetVariable(VariableName);
-            Console.WriteLine($"VarName {VariableName} value {Var} ");
-            object NoVal = "null";
-            Assert.IsTrue(Var.Value != null);
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(Var.Value == null, $"Constant Variable: '{Var}' ");
+                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+            });
+        }
+
+        [Test]
+        public void DreamInfoRatingIsSet()
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Assert.IsTrue(Proxy.Dream.Rating != null, $"Dream Rating: {Proxy.Dream.Rating}");
+        }
+
+        [Test]
+        public void DreamInfoNameIsSet()
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Assert.IsTrue(Proxy.Dream.Name != null, $"Dream Name is '{Proxy.Dream.Name}'");
+        }
+
+        [Test]
+        public void BanishNameIsNotSet()
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Assert.IsTrue(string.IsNullOrWhiteSpace(Proxy.BanishName), $"BanishName is '{Proxy.BanishName}'");
+        }
+
+        [Test]
+        public void BanishListIsEmpty()
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(Proxy.BanishList != null, $"BanishList is '{Proxy.BanishList}'");
+                Assert.IsTrue(Proxy.BanishList.Count == 0, $"BanishList is '{Proxy.BanishList.Count}'");
+            });
+        }
+
+        [Test]
+        public void DreamInfoOwnerIsSet()
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Assert.IsTrue(Proxy.Dream.Owner != null, $"Dream Owner is '{Proxy.Dream.Owner}'");
+        }
+
+        [Test]
+        public void DreamInfoBotControllerIsSet()
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Assert.IsTrue(Proxy.BotController != null, $"BotController is '{Proxy.BotController}'");
+        }
+
+        [Test]
+        public void DreamInfoIsOwnerShortNameIsSet()
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Assert.IsTrue(Proxy.Dream.ShortName != null, $"Dream ShortName is '{Proxy.Dream.ShortName}'");
+        }
+
+        [Test]
+        public void DreamInfoURLIsSet()
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Assert.IsTrue(Proxy.Dream.URL != null, $"Dream URL is '{Proxy.Dream.URL}'");
+        }
+
+        public void DreamInfoDragonSpeakLinesSet()
+        {
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+            Assert.IsTrue(Proxy.Dream.Lines > 0, $"DragonSpeak Lines {Proxy.Dream.Lines}");
         }
 
         [Test]

@@ -86,7 +86,7 @@ Public Class BotSetup
 
         TxtBxBotIni.Text = Path.GetFileName(bFile.Name)
         MSEnableChkBx.Checked = bFile.MonkeySpeakEngineOptions.MS_Engine_Enable
-        TxtBxBotConroller.Text = bFile.BotController
+        TxtBxBotConroller.Text = bFile.MonkeySpeakEngineOptions.BotController
         StandAloneChkBx.Checked = bFile.Standalone
         ChkBxAutoConnect.Checked = bFile.AutoConnect
 
@@ -167,7 +167,7 @@ Public Class BotSetup
         bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = TxtBxMS_File.Text
         bFile.MonkeySpeakEngineOptions.MS_Engine_Enable = MSEnableChkBx.Checked
 
-        bFile.BotController = TxtBxBotConroller.Text
+        bFile.MonkeySpeakEngineOptions.BotController = TxtBxBotConroller.Text
         bFile.Standalone = Convert.ToBoolean(StandAloneChkBx.Checked)
         bFile.AutoConnect = ChkBxAutoConnect.Checked
 

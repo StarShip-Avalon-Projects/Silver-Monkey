@@ -14,7 +14,7 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' the triggering furres shortname
         ''' </summary>
-        Public Const ShortNameVariable = "%SHORTNAME"
+        Public Const TriggeringFurreShortNameVariable = "%SHORTNAME"
 
         ''' <summary>
         ''' the triggering furres full name
@@ -58,7 +58,7 @@ Namespace Engine.Libraries
         ''' <para/>
         ''' <see cref="TriggeringFurreNameVariable"/>
         ''' <para/>
-        ''' <see cref="ShortNameVariable"/>
+        ''' <see cref="TriggeringFurreShortNameVariable"/>
         ''' <para/>
         ''' <see cref="MessageVariable"/>
         ''' </summary>
@@ -66,7 +66,7 @@ Namespace Engine.Libraries
         ''' <param name="MonkeySpeakPage"></param>
         Public Shared Sub UpdateTriggerigFurreVariables(ByRef ActivePlayer As IFurre, ByRef MonkeySpeakPage As Page)
             DirectCast(MonkeySpeakPage.GetVariable(MessageVariable), ConstantVariable).SetValue(ActivePlayer.Message)
-            DirectCast(MonkeySpeakPage.GetVariable(ShortNameVariable), ConstantVariable).SetValue(ActivePlayer.ShortName)
+            DirectCast(MonkeySpeakPage.GetVariable(TriggeringFurreShortNameVariable), ConstantVariable).SetValue(ActivePlayer.ShortName)
             DirectCast(MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable), ConstantVariable).SetValue(ActivePlayer.Name)
         End Sub
 

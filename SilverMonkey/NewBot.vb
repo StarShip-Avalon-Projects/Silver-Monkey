@@ -373,7 +373,7 @@ Public Class NewBott
         bFile.LogOptions.LogNameBase = TxtbxBotName.Text
         bFile.LogOptions.log = True
 
-        bFile.BotController = TxtbxBotController.Text
+        bFile.MonkeySpeakEngineOptions.BotController = TxtbxBotController.Text
 
         bFile.DreamLink = TxtbxDreamURL.Text
 

@@ -15,7 +15,6 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
     Private _GoMap As Integer
     Private _MonkeySpeakEngineOption As Engine.EngineOptoons
 
-    Private Property _BotController As String
     Private Property BotIni As IniFile
 
     ''' <summary>
@@ -113,27 +112,6 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         Set(value As Boolean)
             _AutoConnect = value
         End Set
-    End Property
-
-    ''' <summary>
-    ''' Furre controlling the Bot aka Bot Admin
-    ''' </summary>
-    ''' <returns>
-    ''' Furcadia String
-    ''' </returns>
-    Public Property BotController() As String
-        Get
-            Return _MonkeySpeakEngineOption.BotController
-        End Get
-        Set(ByVal value As String)
-            _MonkeySpeakEngineOption.BotController = value
-        End Set
-    End Property
-
-    Public ReadOnly Property BotControllerShortName() As String
-        Get
-            Return _MonkeySpeakEngineOption.BotController.ToFurcadiaShortName()
-        End Get
     End Property
 
     ''' <summary>
