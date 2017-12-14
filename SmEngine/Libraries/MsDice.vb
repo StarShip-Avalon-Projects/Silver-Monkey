@@ -324,7 +324,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Public Function TrigFurreRolledVariable(reader As TriggerReader) As Boolean
-            Dim v = reader.ReadVariable(True).Value = dice.DiceResult
+            reader.ReadVariable(True).Value = dice.DiceResult
             Return True
         End Function
 

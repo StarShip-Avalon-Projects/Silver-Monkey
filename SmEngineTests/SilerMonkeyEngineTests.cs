@@ -5,9 +5,10 @@ using NUnit.Framework;
 using SilverMonkeyEngine;
 using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using static SilverMonkeyEngine.Engine.Libraries.MsLibHelper;
+
+using static SmEngineTests.Utilities;
 
 namespace SmEngineTests
 {
@@ -16,8 +17,10 @@ namespace SmEngineTests
     {
         private BotOptions options;
         private BotSession Proxy;
-        private const int ConnectWaitTime = 45;
-        private const int CleanupDelayTime = 5;
+        private const int ConnectWaitTime = 10;
+        private const int DreamEntranceDelay = 10;
+        private const int CleanupDelayTime = 10;
+
         private readonly string SettingsFile;
         private readonly string BackupSettingsFile;
 
@@ -52,6 +55,7 @@ namespace SmEngineTests
         [SetUp]
         public void Initialize()
         {
+            Furcadia.Logging.Logger.SingleThreaded = false;
             if (!File.Exists(BackupSettingsFile))
                 throw new Exception("BackupSettingsFile Doesn't Exists");
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -76,9 +80,8 @@ namespace SmEngineTests
             options.SaveBotSettings();
 
             Proxy = new BotSession(options);
-            // Proxy.Error += OnErrorException;
-            Proxy.ServerData2 += OnServerData;
-            Proxy.ClientData2 += OnClientData;
+            Proxy.ClientData2 += (ClintData) => Proxy.SendToServer(ClintData);
+            Proxy.ServerData2 += (ServerData) => Proxy.SendToClient(ServerData);
         }
 
         [TestCase(WhisperTest, "hi")]
@@ -95,12 +98,8 @@ namespace SmEngineTests
         public void ChannelTextIs(string testc, string ExpectedValue)
         {
             Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
+
+            HaltFor(ConnectWaitTime);
 
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
              {
@@ -126,23 +125,23 @@ namespace SmEngineTests
         [TestCase(GeroWhisperHi, "Gerolkae")]
         public void ExpectedCharachter(string testc, string ExpectedValue)
         {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
+            BotHasConnectedStandAlone();
 
-            Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
-            {
-                var ServeObject = (ChannelObject)sender;
-                Assert.That(ServeObject.Player.ShortName, Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
-            };
+            Proxy.ProcessServerChannelData += (sender, Args) =>
+           {
+               var ServeObject = (ChannelObject)sender;
+               Assert.That(ServeObject.Player.ShortName, Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+           };
 
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
             Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
             Proxy.ParseServerChannel(testc, false);
+            Proxy.ProcessServerChannelData -= (sender, Args) =>
+            {
+                var ServeObject = (ChannelObject)sender;
+                Assert.That(ServeObject.Player.ShortName, Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+            };
+            DisconnectTests();
         }
 
         //   [TestCase(YouWhisper, "whisper")]
@@ -158,13 +157,8 @@ namespace SmEngineTests
         [TestCase(Emote, "emote")]
         public void ExpectedChannelNameIs(string ChannelCode, string ExpectedValue)
         {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
+            BotHasConnectedStandAlone();
+            HaltFor(DreamEntranceDelay);
 
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
             {
@@ -175,255 +169,84 @@ namespace SmEngineTests
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
             Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
             Proxy.ParseServerChannel(ChannelCode, false);
+            DisconnectTests();
         }
 
-        [TestCase(TriggeringFurreNameVariable)]
-        [TestCase(TriggeringFurreShortNameVariable)]
-        [TestCase(BotControllerVariable)]
-        [TestCase(DreamNameVariable)]
-        [TestCase(BotNameVariable)]
-        [TestCase(DreamOwnerVariable)]
-        public void ConstantVariableIsNotNull(string VariableName)
+        [Test]
+        public void ConstanVariablesAreSet()
         {
-            options.Standalone = false;
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            var Var = Proxy.MSpage.GetVariable(VariableName);
+            BotHasConnectedStandAlone();
+            HaltFor(DreamEntranceDelay);
+
             Assert.Multiple(() =>
             {
+                var Var = Proxy.MSpage.GetVariable(TriggeringFurreNameVariable);
                 Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
                 Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
-            });
-        }
 
-        [TestCase(BanishListVariable)]
-        [TestCase(BanishNameVariable)]
-        public void ConstantVariableIsNull(string VariableName)
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            var Var = Proxy.MSpage.GetVariable(VariableName);
-            Assert.Multiple(() =>
-            {
+                Var = Proxy.MSpage.GetVariable(TriggeringFurreShortNameVariable);
+                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
+                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+
+                Var = Proxy.MSpage.GetVariable(BotControllerVariable);
+                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
+                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+
+                Var = Proxy.MSpage.GetVariable(BotNameVariable);
+                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
+                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+
+                Var = Proxy.MSpage.GetVariable(DreamNameVariable);
+                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
+                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+
+                Var = Proxy.MSpage.GetVariable(DreamOwnerVariable);
+                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
+                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+
+                Var = Proxy.MSpage.GetVariable(BanishListVariable);
+                Assert.IsTrue(Var.Value == null, $"Constant Variable: '{Var}' ");
+                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+
+                Var = Proxy.MSpage.GetVariable(BanishNameVariable);
                 Assert.IsTrue(Var.Value == null, $"Constant Variable: '{Var}' ");
                 Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
             });
+            DisconnectTests();
         }
 
-        [Test]
-        public void DreamInfoRatingIsSet()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void DreamInfoIsSet_StandAlone(bool StandAlone)
         {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Assert.IsTrue(Proxy.Dream.Rating != null, $"Dream Rating: {Proxy.Dream.Rating}");
-        }
+            BotHasConnectedStandAlone(StandAlone);
+            HaltFor(DreamEntranceDelay);
 
-        [Test]
-        public void DreamInfoNameIsSet()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Assert.IsTrue(Proxy.Dream.Name != null, $"Dream Name is '{Proxy.Dream.Name}'");
-        }
-
-        [Test]
-        public void BanishNameIsNotSet()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Assert.IsTrue(string.IsNullOrWhiteSpace(Proxy.BanishName), $"BanishName is '{Proxy.BanishName}'");
-        }
-
-        [Test]
-        public void BanishListIsEmpty()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(Proxy.BanishList != null, $"BanishList is '{Proxy.BanishList}'");
-                Assert.IsTrue(Proxy.BanishList.Count == 0, $"BanishList is '{Proxy.BanishList.Count}'");
+                Assert.That(Proxy.InDream, Is.EqualTo(true), "Bot has not joined a dream");
+                Assert.IsTrue(Proxy.Dream.Rating != null, $"Dream Rating is '{Proxy.Dream.Rating}'");
+                Assert.IsTrue(Proxy.Dream.Name != null, $"Dream Name is '{Proxy.Dream.Name}'");
+                Assert.IsTrue(Proxy.Dream.Owner != null, $"Dream Owner is '{Proxy.Dream.Owner}'");
+                Assert.IsTrue(Proxy.BotController != null, $"BotController is '{Proxy.BotController}'");
+                Assert.IsTrue(Proxy.Dream.ShortName != null, $"Dream ShortName is '{Proxy.Dream.ShortName}'");
+                Assert.IsTrue(Proxy.Dream.URL != null, $"Dream URL is '{Proxy.Dream.URL}'");
+                //  Assert.IsTrue(Proxy.Dream.Lines > 0, $"DragonSpeak Lines {Proxy.Dream.Lines}");
+
+                Assert.IsTrue(string.IsNullOrWhiteSpace(Proxy.BanishName),
+                    $"BanishName is '{Proxy.BanishName}'");
+                Assert.IsTrue(Proxy.BanishList != null,
+                    $"BanishList is '{Proxy.BanishList}'");
+                Assert.IsTrue(Proxy.BanishList.Count == 0,
+                    $"BanishList is '{Proxy.BanishList.Count}'");
             });
-        }
-
-        [Test]
-        public void DreamInfoOwnerIsSet()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Assert.IsTrue(Proxy.Dream.Owner != null, $"Dream Owner is '{Proxy.Dream.Owner}'");
-        }
-
-        [Test]
-        public void DreamInfoBotControllerIsSet()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Assert.IsTrue(Proxy.BotController != null, $"BotController is '{Proxy.BotController}'");
-        }
-
-        [Test]
-        public void DreamInfoIsOwnerShortNameIsSet()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Assert.IsTrue(Proxy.Dream.ShortName != null, $"Dream ShortName is '{Proxy.Dream.ShortName}'");
-        }
-
-        [Test]
-        public void DreamInfoURLIsSet()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Assert.IsTrue(Proxy.Dream.URL != null, $"Dream URL is '{Proxy.Dream.URL}'");
-        }
-
-        public void DreamInfoDragonSpeakLinesSet()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Assert.IsTrue(Proxy.Dream.Lines > 0, $"DragonSpeak Lines {Proxy.Dream.Lines}");
-        }
-
-        [Test]
-        public void BotHasConnectedTest()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
-            Assert.That(Proxy.ServerStatus, Is.EqualTo(ConnectionPhase.Connected));
-        }
-
-        [Test]
-        public void SmHasJoinedAnyDream()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Assert.That(Proxy.InDream, Is.EqualTo(true));
-        }
-
-        [Test]
-        public void ServerSocketIsConneted()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Assert.That(Proxy.IsServerSocketConnected);
-        }
-
-        [Test]
-        public void FurcadiaClientIsNotConnected()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-
-            Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
-            Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
-            Console.WriteLine($"Proxy.IsClientSocketConnected: {Proxy.IsClientSocketConnected}");
-            Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected && Proxy.IsClientSocketConnected == false);
-        }
-
-        [Test]
-        public void ClientStatusIsDisconnected()
-        {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-
-            Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
-            Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
-            Console.WriteLine($"Proxy.IsClientSocketConnected: {Proxy.IsClientSocketConnected}");
-            Assert.That(Proxy.ClientStatus == ConnectionPhase.Disconnected && Proxy.IsClientSocketConnected == false);
+            DisconnectTests(StandAlone);
         }
 
         [TestCase(GeroShout, "ping")]
         public void ProxySession_InstructionObjectPlayerIs(string testc, string ExpectedValue)
         {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(ConnectWaitTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
+            BotHasConnectedStandAlone();
 
             //  Proxy.Error += OnErrorException;
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
@@ -431,48 +254,85 @@ namespace SmEngineTests
                 ChannelObject InstructionObject = (ChannelObject)sender;
                 Assert.That(InstructionObject.Player.Message, Is.EqualTo(ExpectedValue));
             };
-            Proxy.SendFormattedTextToServer("- Shout");
-            end = DateTime.Now + TimeSpan.FromSeconds(4);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
+            Task.Run(() => Proxy.SendFormattedTextToServer("- Shout")).Wait();
+
             Proxy.ParseServerChannel(testc, false);
-            end = DateTime.Now + TimeSpan.FromSeconds(5);
-            while (true)
+            DisconnectTests();
+        }
+
+        public void BotHasConnectedStandAlone(bool StandAlone = true)
+        {
+            Proxy.StandAlone = StandAlone;
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+
+            HaltFor(ConnectWaitTime);
+
+            Assert.Multiple(() =>
             {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
+                Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected,
+                    $"Proxy.ServerStatus {Proxy.ServerStatus}");
+                Assert.That(Proxy.IsServerSocketConnected == true,
+                    $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
+                if (StandAlone)
+                {
+                    Assert.That(Proxy.ClientStatus == ConnectionPhase.Disconnected,
+                         $"Proxy.ClientStatus {Proxy.ClientStatus}");
+                    Assert.That(Proxy.IsClientSocketConnected == false,
+                         $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
+                    Assert.That(Proxy.FurcadiaClientIsRunning == false,
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+                }
+                else
+                {
+                    Assert.That(Proxy.ClientStatus == ConnectionPhase.Connected,
+                        $"Proxy.ClientStatus {Proxy.ClientStatus}");
+                    Assert.That(Proxy.IsClientSocketConnected == true,
+                        $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
+                    Assert.That(Proxy.FurcadiaClientIsRunning == false,
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+                }
+            });
         }
 
-        private void OnServerData(string data)
+        public void DisconnectTests(bool StandAlone = false)
         {
-            Proxy.SendToClient(data);
-        }
+            // Incase We're not standalone, Kill the left over Client;
+            if (!StandAlone)
+                if (Proxy.FurcadiaClientIsRunning)
+                    Task.Run(() => Proxy.CloseClient()).Wait();
+            HaltFor(CleanupDelayTime);
+            Task.Run(() => Proxy.Disconnect()).Wait();
 
-        private void OnClientData(string data)
-        {
-            Proxy.SendToServer(data);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Proxy.ServerStatus == ConnectionPhase.Disconnected,
+                    $"Proxy.ServerStatus {Proxy.ServerStatus}");
+                Assert.That(Proxy.IsServerSocketConnected == false,
+                    $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
+                Assert.That(Proxy.ClientStatus == ConnectionPhase.Disconnected,
+                     $"Proxy.ClientStatus {Proxy.ClientStatus}");
+                Assert.That(Proxy.IsClientSocketConnected == false,
+                     $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
+                Assert.That(Proxy.FurcadiaClientIsRunning == false,
+                    $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+            });
         }
 
         [TearDown]
         public void Cleanup()
         {
-            //if (!AreFilesIdenticalFast(BackupSettingsFile, SettingsFile))
-            //    throw new NUnit.Framework.AssertionException("Sttings Did not reset");
+            //if (Proxy.IsServerSocketConnected)
+            //{
+            //    if (Proxy.FurcadiaClientIsRunning)
+            //        Task.Run(() => Proxy.CloseClient()).Wait();
+            //    HaltFor(CleanupDelayTime);
+            //    Task.Run(() => Proxy.Disconnect()).Wait();
+            //}
 
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(CleanupDelayTime);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            // Incase We're not standalone, Kill the left over Client;
-            if (Proxy.FurcadiaClientIsRunning)
-                Task.Run(() => Proxy.CloseClient()).Wait();
-            Proxy.Disconnect();
+            //  HaltFor(5);
+            Proxy.ClientData2 -= (data) => Proxy.SendToServer(data);
+            Proxy.ServerData2 -= (data) => Proxy.SendToClient(data);
+
             Proxy.Dispose();
             options = null;
         }

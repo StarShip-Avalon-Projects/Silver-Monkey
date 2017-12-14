@@ -29,7 +29,7 @@ Namespace Engine.Libraries
         ''' True if the %MESSAGE system variable contains the specified string
         ''' </returns>
         Protected Overridable Function MsgContains(reader As TriggerReader) As Boolean
-            ReadParams(reader)
+            ReadTriggeringFurreParams(reader)
             Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower
 
             Dim msg = Player.Message
@@ -43,10 +43,9 @@ Namespace Engine.Libraries
         ''' </summary>
         ''' <param name="reader"></param>
         ''' <returns>true if any parameter was set; false otherwise</returns>
-        Public Function ReadParams(reader As TriggerReader) As Boolean
+        Public Function ReadDreamParams(reader As TriggerReader) As Boolean
             Dim ParamSet = False
             Dim dreamInfo = reader.GetParametersOfType(Of Dream)
-            Dim ActiveFurre = reader.GetParametersOfType(Of IFurre)
             If dreamInfo IsNot Nothing AndAlso dreamInfo.Count > 0 Then
                 If String.IsNullOrWhiteSpace(dreamInfo(0).Name) Then
                     Throw New ArgumentException("DreamInfo not set")
@@ -56,13 +55,27 @@ Namespace Engine.Libraries
                 UpdateCurrentDreamVariables(Dream, reader.Page)
             End If
 
+            Return ParamSet
+        End Function
+
+        ''' <summary>
+        ''' Set <see cref="Player"/> and <see cref="Dream"/> from
+        ''' GetParametersOfType&lt;T&gt;
+        ''' </summary>
+        ''' <param name="reader"></param>
+        ''' <returns>true if any parameter was set; false otherwise</returns>
+        Public Function ReadTriggeringFurreParams(reader As TriggerReader) As Boolean
+            Dim ParamSet = False
+            Dim ActiveFurre = reader.GetParametersOfType(Of Furre)
+
             If ActiveFurre IsNot Nothing AndAlso ActiveFurre.Count > 0 Then
                 Player = ActiveFurre(0)
                 If ActiveFurre(0).FurreID <> -1 Then
                     ParamSet = True
                 End If
+                UpdateTriggerigFurreVariables(Player, reader.Page)
             End If
-            If Player IsNot Nothing Then UpdateTriggerigFurreVariables(Player, reader.Page)
+
             Return ParamSet
         End Function
 
@@ -77,7 +90,7 @@ Namespace Engine.Libraries
         ''' true if the System %MESSAGE varible ends with the specified string
         ''' </returns>
         Protected Overridable Function MsgEndsWith(reader As TriggerReader) As Boolean
-            ReadParams(reader)
+            ReadTriggeringFurreParams(reader)
             Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString()
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString()
             'Debug.Print("Msg = " & msg)
@@ -95,7 +108,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Protected Overridable Function MsgIs(reader As TriggerReader) As Boolean
-            ReadParams(reader)
+            ReadTriggeringFurreParams(reader)
 
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString()
             Dim test = reader.ReadString().ToStrippedFurcadiaMarkupString()
@@ -113,7 +126,7 @@ Namespace Engine.Libraries
         ''' <returns>
         ''' </returns>
         Protected Function MsgNotEndsWith(reader As TriggerReader) As Boolean
-            ReadParams(reader)
+            ReadTriggeringFurreParams(reader)
 
             Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower()
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower
@@ -132,7 +145,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Protected Function MsgStartsWith(reader As TriggerReader) As Boolean
 
-            ReadParams(reader)
+            ReadTriggeringFurreParams(reader)
 
             Dim msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower()
             Dim msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower
@@ -272,7 +285,7 @@ Namespace Engine.Libraries
         ''' Constructor for Unit Testing prposes
         ''' </summary>
         ''' <param name="BotFurre"></param>
-        Sub New(ByRef BotFurre As IFurre)
+        Sub New(ByRef BotFurre As Furre)
             Me.New()
             If BotFurre Is Nothing Then
                 Throw New ArgumentException("Session cannot be null")
@@ -312,7 +325,7 @@ Namespace Engine.Libraries
         ''' </returns>
         Public Function InDream(TargetFurre As Furre) As Boolean
             Dim found = False
-            For Each Fur In Dream.Furres
+            For Each Fur As Furre In Dream.Furres
                 If Fur = TargetFurre Then
                     found = True
                     Exit For

@@ -131,12 +131,12 @@ Public Class BotSession
     ''' <summary>
     ''' Starts the Furcadia Connection Process
     ''' </summary>
-    Public Async Sub ConnetAsync()
+    Public Async Function ConnetAsync() As Task
         If MsEngineOptions.MS_Engine_Enable Then
             Await StartEngine()
         End If
-        Task.Run(Sub() Connect()).Wait()
-    End Sub
+        Await ConnectAsync()
+    End Function
 
     ''' <summary>
     ''' Disconnect from the Game Server and Client
@@ -153,6 +153,9 @@ Public Class BotSession
     Public Overrides Sub Dispose() Implements IDisposable.Dispose
 
         Dispose(True)
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
+        GC.Collect()
     End Sub
 
     ''' <summary>
@@ -172,10 +175,9 @@ Public Class BotSession
                 Case ServerInstructionType.LoadDreamEvent
                     '(0:97) When the bot leaves a Dream,
                     '(0:98) When the bot leaves the Dream named {..},
-                    If InDream Then
-                        Dim ids() = {97, 98}
-                        Await MSpage.ExecuteAsync(ids, lastDream)
-                    End If
+
+                    Dim ids() = {97, 98}
+                    Await MSpage.ExecuteAsync(ids, lastDream)
 
                 Case ServerInstructionType.BookmarkDream
                     '(0:90) When the bot enters a Dream,
@@ -572,10 +574,11 @@ Public Class BotSession
 
             ' Free your own state (unmanaged objects).
             ' Set large fields to null.
-            Task.Run(Sub() MyBase.Dispose()).Wait()
+            MyBase.Dispose()
+
         End If
         Me.disposed = True
-        Me.Finalize()
+        '  Me.Finalize()
     End Sub
 
     ''' <summary>

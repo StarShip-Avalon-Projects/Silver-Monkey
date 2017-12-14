@@ -23,7 +23,7 @@ Namespace Engine.Libraries
         Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:42) When some one gives a cookie to the bot,
             Add(TriggerCategory.Cause, 42,
-                 Function(reader) ReadParams(reader),
+                 Function(reader) ReadTriggeringFurreParams(reader),
                   " When some one gives a cookie to the bot,")
 
             '(0:43) When a furre named {...} gives a cookie to the bot,
@@ -31,12 +31,12 @@ Namespace Engine.Libraries
                 AddressOf NameIs, " When a furre named {...} gives a cookie to the bot,")
 
             '(0:44) When anyone gives a cookie to someone the bot can see,
-            Add(TriggerCategory.Cause, 44, Function(reader) ReadParams(reader),
+            Add(TriggerCategory.Cause, 44, Function(reader) ReadTriggeringFurreParams(reader),
                 " When anyone gives a cookie to someone the bot can see,")
 
             '(0:49) When bot eats a cookie,
             Add(TriggerCategory.Cause, 49,
-              Function(reader) ReadParams(reader),
+              Function(reader) ReadTriggeringFurreParams(reader),
                 " When bot eats a cookie,")
 
             '(0:95) When the Bot sees ""You do not have any cookies to give away right now!",

@@ -129,7 +129,7 @@ Namespace Engine.Libraries
             'says
             Add(TriggerCategory.Cause, 5,
                   Function(reader)
-                      ReadParams(reader)
+                      ReadTriggeringFurreParams(reader)
 
                       Return Not IsConnectedCharacter(Player)
                   End Function, " When someone says something,")
@@ -143,7 +143,7 @@ Namespace Engine.Libraries
             'Shouts
             Add(TriggerCategory.Cause, 8,
                  Function(reader)
-                     ReadParams(reader)
+                     ReadTriggeringFurreParams(reader)
 
                      Return Not IsConnectedCharacter(Player)
                  End Function, " When someone shouts something,")
@@ -158,7 +158,7 @@ Namespace Engine.Libraries
             'emotes
             Add(TriggerCategory.Cause, 11,
                  Function(reader)
-                     ReadParams(reader)
+                     ReadTriggeringFurreParams(reader)
 
                      Return Not IsConnectedCharacter(Player)
                  End Function, " When someone emotes something,")
@@ -172,7 +172,7 @@ Namespace Engine.Libraries
             'Whispers
             Add(TriggerCategory.Cause, 15,
                 Function(reader)
-                    ReadParams(reader)
+                    ReadTriggeringFurreParams(reader)
                     Return Not IsConnectedCharacter(Player)
                 End Function, " When someone whispers something,")
 
@@ -186,7 +186,7 @@ Namespace Engine.Libraries
             'Says or Emotes
             Add(TriggerCategory.Cause, 18,
                 Function(reader)
-                    ReadParams(reader)
+                    ReadTriggeringFurreParams(reader)
                     Return Not IsConnectedCharacter(Player)
                 End Function,
                 " When someone says or emotes something,")
@@ -202,7 +202,8 @@ Namespace Engine.Libraries
             '(0:24) When someone enters the Dream,
             Add(TriggerCategory.Cause, 24,
                 Function(reader)
-                    ReadParams(reader)
+                    ReadDreamParams(reader)
+                    ReadTriggeringFurreParams(reader)
                     Return True
                 End Function, " When someone enters the Dream,")
 
@@ -214,7 +215,7 @@ Namespace Engine.Libraries
             '(0:26) When someone leaves the Dream,
             Add(TriggerCategory.Cause, 26,
                 Function(reader)
-                    ReadParams(reader)
+                    ReadDreamParams(reader)
                     Return True
                 End Function, " When someone leaves the Dream,")
 
@@ -245,7 +246,7 @@ Namespace Engine.Libraries
             '(0:32) When someone requests to summon the bot,
             Add(TriggerCategory.Cause, 32,
                 Function(reader)
-                    ReadParams(reader)
+                    ReadTriggeringFurreParams(reader)
                     Return Not IsConnectedCharacter(Player)
                 End Function,
                 " When someone requests to summon the bot,")
@@ -267,7 +268,7 @@ Namespace Engine.Libraries
             '(0:36) When someone requests to follow the bot,
             Add(TriggerCategory.Cause, 36,
                 Function(reader)
-                    ReadParams(reader)
+                    ReadTriggeringFurreParams(reader)
                     Return Not IsConnectedCharacter(Player)
                 End Function,
                 " When someone requests to follow the bot,")
@@ -280,7 +281,7 @@ Namespace Engine.Libraries
             '(0:38) When someone requests to lead the bot,
             Add(TriggerCategory.Cause, 38,
                 Function(reader)
-                    ReadParams(reader)
+                    ReadTriggeringFurreParams(reader)
                     Return Not IsConnectedCharacter(Player)
                 End Function, " When someone requests to lead the bot,")
 
@@ -292,7 +293,7 @@ Namespace Engine.Libraries
             '(0:40) When someone requests to cuddle with the bot.
             Add(TriggerCategory.Cause, 40,
                 Function(reader)
-                    ReadParams(reader)
+                    ReadTriggeringFurreParams(reader)
                     Return Not IsConnectedCharacter(Player)
                 End Function,
                 " When someone requests to cuddle with the bot,")
@@ -445,7 +446,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function EnterView(reader As TriggerReader) As Boolean
-            ReadParams(reader)
+            ReadTriggeringFurreParams(reader)
             If Player.Visible = Player.WasVisible Then
                 Return False
             End If
@@ -483,7 +484,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function FurreNamedEnterView(reader As TriggerReader) As Boolean
-            ReadParams(reader)
+            ReadTriggeringFurreParams(reader)
             Dim tPlayer = Dream.Furres.GerFurreByName(reader.ReadString)
             If tPlayer.Visible = tPlayer.WasVisible Then
                 Return False
@@ -502,7 +503,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function FurreNamedLeaveView(reader As TriggerReader) As Boolean
-            ReadParams(reader)
+            ReadTriggeringFurreParams(reader)
             Dim name = reader.ReadString
             Dim tPlayer = Dream.Furres.GerFurreByName(name)
             If tPlayer.Visible = tPlayer.WasVisible Then
@@ -522,7 +523,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Public Function LeaveView(reader As TriggerReader) As Boolean
-            ReadParams(reader)
+            ReadTriggeringFurreParams(reader)
             If Player.Visible = Player.WasVisible Then
                 Return False
             End If

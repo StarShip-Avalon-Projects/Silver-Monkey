@@ -56,7 +56,7 @@ Namespace Engine.Libraries
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
             '(0:600) When the bot reads a description.
-            Add(TriggerCategory.Cause, 600, Function(reader) ReadParams(reader),
+            Add(TriggerCategory.Cause, 600, Function(reader) ReadTriggeringFurreParams(reader),
                 " When the bot sees a furre description,")
 
             '(1:600) and triggering furre's description contains {..}
@@ -223,7 +223,7 @@ Namespace Engine.Libraries
 
             '(0:601) When a furre moves,
             Add(TriggerCategory.Cause, 601,
-          Function(reader) ReadParams(reader), " When a furre moves,")
+          Function(reader) ReadTriggeringFurreParams(reader), " When a furre moves,")
             '(0:602) when a furre moves into (x,y),
             Add(TriggerCategory.Cause, 602, AddressOf MoveInto, " when a furre moves into (x,y),")
 
@@ -335,7 +335,7 @@ Namespace Engine.Libraries
             Dim r = New Regex(RGEX_Mov_Steps, RegexOptions.Compiled)
             Dim m = r.Matches(directions)
             Dim ServerSend As Boolean
-            For Each n In m
+            For Each n As Match In m
                 If n.Value.ToLower = "ne" Then
                     ServerSend = SendServer("`m9")
                 ElseIf n.Value.ToLower = "se" Then
@@ -344,12 +344,14 @@ Namespace Engine.Libraries
                     ServerSend = SendServer("`m7")
                 ElseIf n.Value.ToLower = "sw" Then
                     ServerSend = SendServer("`m1")
-                ElseIf n.Value = (1 Or 7 Or 3 Or 9) Then
-                    ServerSend = SendServer("`m" + n.Value)
                 Else
-                    Throw New ArgumentOutOfRangeException(m.ToString)
+                    Select Case Integer.Parse(n.Value)
+                        Case 1 Or 7 Or 3 Or 9
+                            ServerSend = SendServer("`m" + n.Value)
+                        Case Else
+                            Throw New ArgumentOutOfRangeException(m.ToString)
+                    End Select
                 End If
-
                 If Not ServerSend Then Exit For
             Next
 

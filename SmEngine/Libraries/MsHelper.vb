@@ -64,7 +64,7 @@ Namespace Engine.Libraries
         ''' </summary>
         ''' <param name="ActivePlayer"></param>
         ''' <param name="MonkeySpeakPage"></param>
-        Public Shared Sub UpdateTriggerigFurreVariables(ByRef ActivePlayer As IFurre, ByRef MonkeySpeakPage As Page)
+        Public Shared Sub UpdateTriggerigFurreVariables(ByRef ActivePlayer As Furre, ByRef MonkeySpeakPage As Page)
             DirectCast(MonkeySpeakPage.GetVariable(MessageVariable), ConstantVariable).SetValue(ActivePlayer.Message)
             DirectCast(MonkeySpeakPage.GetVariable(TriggeringFurreShortNameVariable), ConstantVariable).SetValue(ActivePlayer.ShortName)
             DirectCast(MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable), ConstantVariable).SetValue(ActivePlayer.Name)

@@ -52,7 +52,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Verbot Knowledgebase Editor.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>VerbotKnoweledgeBaseEditorSNK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -163,6 +163,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Verbot Knowledgebase Editor.pfx" />
+    <None Include="VerbotKnoweledgeBaseEditorSNK.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">

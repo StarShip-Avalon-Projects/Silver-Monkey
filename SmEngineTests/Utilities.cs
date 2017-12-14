@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SmEngineTests
 {
     public static class Utilities
     {
+        public static void HaltFor(int seconds)
+        {
+            DateTime end = DateTime.Now + TimeSpan.FromSeconds(seconds);
+            while (true)
+            {
+                Thread.Sleep(100);
+                if (end < DateTime.Now) break;
+            }
+        }
+
         public static bool AreFilesIdenticalFast(string path1, string path2)
         {
             return AreFilesIdentical(path1, path2, AreStreamsIdenticalFast);

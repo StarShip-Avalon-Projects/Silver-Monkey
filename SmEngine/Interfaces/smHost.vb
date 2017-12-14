@@ -30,13 +30,10 @@ Namespace Interfaces
             End Set
         End Property
 
-        Public Property Dream As Dream Implements Interfaces.ImsHost.Dream
+        Public ReadOnly Property Dream As Dream Implements Interfaces.ImsHost.Dream
             Get
                 Return FurcadiaSession.Dream
             End Get
-            Set(value As Dream)
-                FurcadiaSession.Dream = value
-            End Set
 
         End Property
 

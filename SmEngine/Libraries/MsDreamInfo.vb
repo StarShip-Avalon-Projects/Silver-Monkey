@@ -26,7 +26,7 @@ Namespace Engine.Libraries
             'Emits
             Add(TriggerCategory.Cause, 21,
                  Function(reader)
-                     ReadParams(reader)
+                     ReadTriggeringFurreParams(reader)
                      Return Not FurcadiaSession.IsConnectedCharacter(Player)
                  End Function, " When someone emits something,")
 
@@ -38,12 +38,12 @@ Namespace Engine.Libraries
                  AddressOf MsgContains, " When someone emits something with {..} in it,")
 
             '(0:90) When the bot enters a Dream,
-            Add(TriggerCategory.Cause, 90, AddressOf ReadParams, " When the bot enters a Dream,")
+            Add(TriggerCategory.Cause, 90, AddressOf ReadDreamParams, " When the bot enters a Dream,")
             '(0:91) When the bot enters a Dream named {..},
             Add(TriggerCategory.Cause, 91,
                 AddressOf DreamNameIs, " When the bot enters the Dream named {..},")
             '(0:92) When the bot leaves a Dream,
-            Add(TriggerCategory.Cause, 97, AddressOf ReadParams, " When the bot leaves a Dream,")
+            Add(TriggerCategory.Cause, 97, AddressOf ReadDreamParams, " When the bot leaves a Dream,")
             '(0:93) When the bot leaves the Dream named {..},
             Add(TriggerCategory.Cause, 98,
                 AddressOf DreamNameIs, " When the bot leaves the Dream named {..},")
@@ -148,7 +148,7 @@ Namespace Engine.Libraries
         ''' true on success
         ''' </returns>
         Function DreamNameIs(reader As TriggerReader) As Boolean
-            ReadParams(reader)
+            Dim ParamsSet = ReadDreamParams(reader)
             Return Dream.ShortName = reader.ReadString.ToFurcadiaShortName()
 
         End Function

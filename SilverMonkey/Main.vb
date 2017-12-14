@@ -672,7 +672,7 @@ Public Class Main
         If Not FurcadiaSession Is Nothing Then
             If Not DreamList.SelectedItem Is Nothing Then
                 If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
-                FurcadiaSession.SendFormattedTextToServer("l " + CType(DreamList.SelectedItem, Furre).ShortName)
+                FurcadiaSession.SendFormattedTextToServer("l " + DirectCast(DreamList.SelectedItem, Furre).ShortName)
             End If
         End If
     End Sub

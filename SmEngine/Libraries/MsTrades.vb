@@ -23,7 +23,7 @@ Namespace Engine.Libraries
             '(0:46) When the bot sees a trade request,
             Add(TriggerCategory.Cause, 46,
             Function(reader)
-                ReadParams(reader)
+                ReadTriggeringFurreParams(reader)
                 Return Not FurcadiaSession.IsConnectedCharacter
             End Function, " When the bot sees a trade request,")
             '(0:47) When the bot sees the trade request {..},

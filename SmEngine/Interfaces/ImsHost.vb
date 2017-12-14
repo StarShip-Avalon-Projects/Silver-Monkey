@@ -8,7 +8,7 @@ Namespace Interfaces
 
         ReadOnly Property BotName As String
         Property Data As String
-        Property Dream As Dream
+        ReadOnly Property Dream As Dream
         WriteOnly Property MsPage As Monkeyspeak.Page
         ReadOnly Property Player As Furre
 
