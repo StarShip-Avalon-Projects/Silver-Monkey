@@ -97,9 +97,7 @@ namespace SmEngineTests
         [TestCase(Emote, "Emoe")]
         public void ChannelTextIs(string testc, string ExpectedValue)
         {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-
-            HaltFor(ConnectWaitTime);
+            BotHasConnected_StandAlone();
 
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
              {
@@ -125,7 +123,7 @@ namespace SmEngineTests
         [TestCase(GeroWhisperHi, "Gerolkae")]
         public void ExpectedCharachter(string testc, string ExpectedValue)
         {
-            BotHasConnectedStandAlone();
+            BotHasConnected_StandAlone();
 
             Proxy.ProcessServerChannelData += (sender, Args) =>
            {
@@ -157,7 +155,7 @@ namespace SmEngineTests
         [TestCase(Emote, "emote")]
         public void ExpectedChannelNameIs(string ChannelCode, string ExpectedValue)
         {
-            BotHasConnectedStandAlone();
+            BotHasConnected_StandAlone();
             HaltFor(DreamEntranceDelay);
 
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
@@ -175,7 +173,7 @@ namespace SmEngineTests
         [Test]
         public void ConstanVariablesAreSet()
         {
-            BotHasConnectedStandAlone();
+            BotHasConnected_StandAlone();
             HaltFor(DreamEntranceDelay);
 
             Assert.Multiple(() =>
@@ -219,7 +217,7 @@ namespace SmEngineTests
         [TestCase(false)]
         public void DreamInfoIsSet_StandAlone(bool StandAlone)
         {
-            BotHasConnectedStandAlone(StandAlone);
+            BotHasConnected_StandAlone(StandAlone);
             HaltFor(DreamEntranceDelay);
 
             Assert.Multiple(() =>
@@ -246,7 +244,7 @@ namespace SmEngineTests
         [TestCase(GeroShout, "ping")]
         public void ProxySession_InstructionObjectPlayerIs(string testc, string ExpectedValue)
         {
-            BotHasConnectedStandAlone();
+            BotHasConnected_StandAlone();
 
             //  Proxy.Error += OnErrorException;
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
@@ -260,7 +258,7 @@ namespace SmEngineTests
             DisconnectTests();
         }
 
-        public void BotHasConnectedStandAlone(bool StandAlone = true)
+        public void BotHasConnected_StandAlone(bool StandAlone = true)
         {
             Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
@@ -321,15 +319,6 @@ namespace SmEngineTests
         [TearDown]
         public void Cleanup()
         {
-            //if (Proxy.IsServerSocketConnected)
-            //{
-            //    if (Proxy.FurcadiaClientIsRunning)
-            //        Task.Run(() => Proxy.CloseClient()).Wait();
-            //    HaltFor(CleanupDelayTime);
-            //    Task.Run(() => Proxy.Disconnect()).Wait();
-            //}
-
-            //  HaltFor(5);
             Proxy.ClientData2 -= (data) => Proxy.SendToServer(data);
             Proxy.ServerData2 -= (data) => Proxy.SendToClient(data);
 
