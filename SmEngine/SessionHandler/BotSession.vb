@@ -135,7 +135,7 @@ Public Class BotSession
         If MsEngineOptions.MS_Engine_Enable Then
             Await StartEngine()
         End If
-        Await ConnectAsync()
+        Await Task.Run(action:=Sub() Connect())
     End Function
 
     ''' <summary>
@@ -143,7 +143,7 @@ Public Class BotSession
     ''' </summary>
     Public Overrides Sub Disconnect()
 
-        Task.Run(Sub() MyBase.Disconnect()).Wait()
+        MyBase.Disconnect()
 
     End Sub
 
@@ -557,8 +557,7 @@ Public Class BotSession
 
         If Not MSpage Is Nothing Then
             MSpage.Reset(True)
-            MSpage.Dispose()
-            MSpage = Nothing
+
         End If
 
     End Sub

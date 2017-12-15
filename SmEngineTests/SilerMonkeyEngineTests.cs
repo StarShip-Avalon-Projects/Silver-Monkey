@@ -19,7 +19,7 @@ namespace SmEngineTests
         private BotSession Proxy;
         private const int ConnectWaitTime = 10;
         private const int DreamEntranceDelay = 10;
-        private const int CleanupDelayTime = 10;
+        private const int CleanupDelayTime = 5;
 
         private readonly string SettingsFile;
         private readonly string BackupSettingsFile;
@@ -108,6 +108,7 @@ namespace SmEngineTests
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
             Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
             Proxy.ParseServerChannel(testc, false);
+            DisconnectTests();
         }
 
         [TestCase(WhisperTest, "Gerolkae")]
@@ -258,7 +259,7 @@ namespace SmEngineTests
             DisconnectTests();
         }
 
-        public void BotHasConnected_StandAlone(bool StandAlone = true)
+        public void BotHasConnected_StandAlone(bool StandAlone = false)
         {
             Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
@@ -277,8 +278,8 @@ namespace SmEngineTests
                          $"Proxy.ClientStatus {Proxy.ClientStatus}");
                     Assert.That(Proxy.IsClientSocketConnected == false,
                          $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.FurcadiaClientIsRunning == false,
-                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+                    Assert.That(Proxy.IsFurcadiaClientIsRunning == false,
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
                 }
                 else
                 {
@@ -286,20 +287,16 @@ namespace SmEngineTests
                         $"Proxy.ClientStatus {Proxy.ClientStatus}");
                     Assert.That(Proxy.IsClientSocketConnected == true,
                         $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.FurcadiaClientIsRunning == false,
-                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+                    Assert.That(Proxy.IsFurcadiaClientIsRunning == true,
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
                 }
             });
         }
 
         public void DisconnectTests(bool StandAlone = false)
         {
-            // Incase We're not standalone, Kill the left over Client;
-            if (!StandAlone)
-                if (Proxy.FurcadiaClientIsRunning)
-                    Task.Run(() => Proxy.CloseClient()).Wait();
+            Proxy.Disconnect();
             HaltFor(CleanupDelayTime);
-            Task.Run(() => Proxy.Disconnect()).Wait();
 
             Assert.Multiple(() =>
             {
@@ -311,8 +308,8 @@ namespace SmEngineTests
                      $"Proxy.ClientStatus {Proxy.ClientStatus}");
                 Assert.That(Proxy.IsClientSocketConnected == false,
                      $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                Assert.That(Proxy.FurcadiaClientIsRunning == false,
-                    $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+                Assert.That(Proxy.IsFurcadiaClientIsRunning == false,
+                    $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
             });
         }
 

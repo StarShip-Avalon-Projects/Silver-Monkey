@@ -155,11 +155,13 @@ Public Class Main
         Try
             Monkeyspeak.Logging.Logger.Info("New Session Started")
 
-            Task.Run(Sub() FurcadiaSession.ConnetAsync())
+            Task.Run(Sub() FurcadiaSession.ConnetAsync()).Wait()
 
             ConnectTrayIconMenuItem.Enabled = False
             DisconnectTrayIconMenuItem.Enabled = True
             UpDateDreamList() '
+        Catch ae As AggregateException
+            Furcadia.Logging.Logger.Error(Of Main)(ae)
         Catch ex As Exception
             SndDisplay("ERROR: " + ex.Message, TextDisplayManager.DisplayColors.Error)
         End Try
@@ -737,15 +739,13 @@ Public Class Main
             FurcadiaSession = New BotSession(BotConfig)
         End If
 
-        If FurcadiaSession.ServerStatus = ConnectionPhase.Init OrElse FurcadiaSession.ServerStatus = ConnectionPhase.Disconnected Then
-
-            My.Settings.LastBotFile = CheckBotFolder(BotConfig.CharacterIniFile)
-            My.Settings.Save()
-
-            ConnectBot()
-        Else
+        If FurcadiaSession.ServerStatus = ConnectionPhase.Connected Then
 
             DisconnectBot()
+        Else
+            My.Settings.LastBotFile = CheckBotFolder(BotConfig.CharacterIniFile)
+            My.Settings.Save()
+            ConnectBot()
 
         End If
     End Sub
