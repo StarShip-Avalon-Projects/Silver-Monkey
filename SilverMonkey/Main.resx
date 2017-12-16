@@ -151,9 +151,6 @@
   <data name="$this.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="BotIniOpen.Filter" xml:space="preserve">
-    <value>Bot Files|*.bini</value>
-  </data>
   <data name="Log_.Text" xml:space="preserve">
     <value />
   </data>
@@ -161,11 +158,11 @@
   <data name="PasteToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+V</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1218, 578</value>
+  <data name="&gt;&gt;FurresBindingSource.Name" xml:space="preserve">
+    <value>FurresBindingSource</value>
   </data>
-  <data name="GrpAction.Size" type="System.Drawing.Size, System.Drawing">
-    <value>260, 203</value>
+  <data name="&gt;&gt;ConfigToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;EditBotToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -190,6 +187,9 @@
   </data>
   <data name="&gt;&gt;ToolStripSeparator4.Name" xml:space="preserve">
     <value>ToolStripSeparator4</value>
+  </data>
+  <data name="Btn_Bold.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 29</value>
   </data>
   <data name="&gt;&gt;SplitContainer2.Name" xml:space="preserve">
     <value>SplitContainer2</value>
@@ -218,17 +218,14 @@
   <data name="GrpAction.Location" type="System.Drawing.Point, System.Drawing">
     <value>57, 251</value>
   </data>
+  <data name="&gt;&gt;DreamList.Type" xml:space="preserve">
+    <value>MonkeyCore.Controls.ListBox_NoFlicker, MonkeyCore, Version=2.19.395.1215, Culture=neutral, PublicKeyToken=9a09590b84101966</value>
+  </data>
   <data name="se_.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>AutoSize</value>
   </data>
-  <data name="&gt;&gt;sw_.Name" xml:space="preserve">
-    <value>sw_</value>
-  </data>
   <data name="clientGroup.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
-  </data>
-  <data name="&gt;&gt;MenuCut2.Name" xml:space="preserve">
-    <value>MenuCut2</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="toServer.TabIndex" type="System.Int32, mscorlib">
@@ -239,6 +236,9 @@
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
+  </data>
+  <data name="BTN_TurnL.Text" xml:space="preserve">
+    <value>&lt;=</value>
   </data>
   <data name="&gt;&gt;sendToServer.Name" xml:space="preserve">
     <value>sendToServer</value>
@@ -252,20 +252,17 @@
   <data name="&gt;&gt;SplitContainer2.Panel2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="EditBotToolStripMenuItem.Text" xml:space="preserve">
+    <value>Edit Bot</value>
+  </data>
   <data name="PasteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 30</value>
-  </data>
-  <data name="&gt;&gt;OpenToolStripMenuItem.Name" xml:space="preserve">
-    <value>OpenToolStripMenuItem</value>
   </data>
   <data name="RestoreMainToolStripMenuItem.Text" xml:space="preserve">
     <value>Main Window</value>
   </data>
   <data name="&gt;&gt;MenuStrip1.Name" xml:space="preserve">
     <value>MenuStrip1</value>
-  </data>
-  <data name="&gt;&gt;BTN_TurnL.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="BTN_Italic.Size" type="System.Drawing.Size, System.Drawing">
     <value>27, 29</value>
@@ -276,6 +273,9 @@
   <data name="SplitContainer1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="RestoreMainToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 30</value>
+  </data>
   <data name="&gt;&gt;MenuCopy.Name" xml:space="preserve">
     <value>MenuCopy</value>
   </data>
@@ -284,6 +284,9 @@
   </data>
   <data name="&gt;&gt;SplitContainer1.Panel2.Parent" xml:space="preserve">
     <value>SplitContainer1</value>
+  </data>
+  <data name="ToolStripServerStatus.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
+    <value>None</value>
   </data>
   <data name="&gt;&gt;BTN_Underline.Parent" xml:space="preserve">
     <value>GroupBox3</value>
@@ -312,6 +315,9 @@
   <data name="&gt;&gt;_nw.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="SplitContainer2.SplitterWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
   <data name="DebugToolStripMenuItem.Text" xml:space="preserve">
     <value>Debug</value>
   </data>
@@ -327,6 +333,9 @@
   <data name="MenuCut.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 30</value>
   </data>
+  <data name="se_.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 36</value>
+  </data>
   <data name="clientGroup.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -341,6 +350,9 @@
   </data>
   <data name="&gt;&gt;SplitContainer2.Panel1.Parent" xml:space="preserve">
     <value>SplitContainer2</value>
+  </data>
+  <data name="&gt;&gt;BTN_TurnL.Parent" xml:space="preserve">
+    <value>GrpAction</value>
   </data>
   <data name="&gt;&gt;BTN_Go.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -364,6 +376,9 @@
         xH8vFzCf9IekbwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="TextBox_NoFlicker1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
   <data name="&gt;&gt;ActionTmr.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -373,8 +388,11 @@
   <data name="&gt;&gt;get_.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ConfigToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="sendToServer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 31</value>
+  </data>
+  <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>65</value>
   </data>
   <data name="ToolStripServerStatus.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
     <value>TextBeforeImage</value>
@@ -406,20 +424,20 @@
   <data name="CloseToolStripMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="&gt;&gt;FurresBindingSource1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;SplitContainer1.Type" xml:space="preserve">
     <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BTN_Go.Location" type="System.Drawing.Point, System.Drawing">
+    <value>210, 463</value>
   </data>
   <data name="_ne.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
-  <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="&gt;&gt;GrpAction.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="GrpAction.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
   </data>
   <data name="ExitTrayIconMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
@@ -448,17 +466,11 @@
   <data name="&gt;&gt;se_.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="use_.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="&gt;&gt;Log_.Name" xml:space="preserve">
     <value>Log_</value>
   </data>
   <data name="&gt;&gt;SplitContainer1.Panel2.Name" xml:space="preserve">
     <value>SplitContainer1.Panel2</value>
-  </data>
-  <data name="MenuStrip1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>9, 3, 0, 3</value>
   </data>
   <data name="&gt;&gt;OpenToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -477,6 +489,9 @@
   </data>
   <data name="sendToServer.Text" xml:space="preserve">
     <value>-&gt;</value>
+  </data>
+  <data name="PasteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Paste</value>
   </data>
   <data name="&gt;&gt;ToolStripMenuItem3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -502,13 +517,10 @@
   <data name="&gt;&gt;CloseToolStripMenuItem.Name" xml:space="preserve">
     <value>CloseToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;MenuCopy2.Name" xml:space="preserve">
-    <value>MenuCopy2</value>
+  <data name="ContextTryIcon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 166</value>
   </data>
   <data name="se_.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Log_.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="TS_Filler.Size" type="System.Drawing.Size, System.Drawing">
@@ -538,17 +550,11 @@
   <data name="use_.Text" xml:space="preserve">
     <value>Use</value>
   </data>
-  <data name="&gt;&gt;ReferenceLinksToolStripMenuItem.Name" xml:space="preserve">
-    <value>ReferenceLinksToolStripMenuItem</value>
-  </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="FileToolStripMenuItem.Text" xml:space="preserve">
     <value>File</value>
-  </data>
-  <data name="GroupBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>65</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
@@ -559,14 +565,11 @@
   <data name="BtnSit_stand_Lie.Text" xml:space="preserve">
     <value>Sit</value>
   </data>
-  <data name="get_.ToolTip" xml:space="preserve">
-    <value />
+  <data name="SplitContainer1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1218, 513</value>
   </data>
   <data name="Log_.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
-  </data>
-  <data name="TS_Main.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1218, 30</value>
   </data>
   <data name="DreamList.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 25</value>
@@ -576,6 +579,9 @@
   </data>
   <data name="&gt;&gt;get_.ZOrder" xml:space="preserve">
     <value>6</value>
+  </data>
+  <data name="SplitContainer2.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
+    <value>Horizontal</value>
   </data>
   <data name="SplitContainer2.ToolTip" xml:space="preserve">
     <value />
@@ -601,14 +607,11 @@
   <data name="toServer.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="se_.Location" type="System.Drawing.Point, System.Drawing">
-    <value>172, 86</value>
-  </data>
   <data name="DreamList.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;TextBox_NoFlicker1.Type" xml:space="preserve">
-    <value>MonkeyCore.Controls.TextBox_NoFlicker, MonkeyCore, Version=1.1.316.1006, Culture=neutral, PublicKeyToken=9d1f278a91da92f0</value>
+    <value>MonkeyCore.Controls.TextBox_NoFlicker, MonkeyCore, Version=2.19.395.1215, Culture=neutral, PublicKeyToken=9a09590b84101966</value>
   </data>
   <data name="&gt;&gt;BtnSit_stand_Lie.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -622,8 +625,8 @@
   <data name="MenuCopy.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 30</value>
   </data>
-  <data name="use_.Size" type="System.Drawing.Size, System.Drawing">
-    <value>52, 35</value>
+  <data name="&gt;&gt;BTN_Italic.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="DreamList.Size" type="System.Drawing.Size, System.Drawing">
     <value>306, 164</value>
@@ -631,8 +634,8 @@
   <data name="&gt;&gt;MenuCut.Name" xml:space="preserve">
     <value>MenuCut</value>
   </data>
-  <data name="ToolStripServerStatus.Text" xml:space="preserve">
-    <value>Server Status</value>
+  <data name="BTN_TurnR.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;TS_Main.Name" xml:space="preserve">
     <value>TS_Main</value>
@@ -649,9 +652,6 @@
   <data name="toServer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="&gt;&gt;ToolTip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="ToolStripClientStatus.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -667,14 +667,14 @@
   <data name="BTN_Italic.TabIndex" type="System.Int32, mscorlib">
     <value>58</value>
   </data>
+  <data name="se_.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
   <data name="EditorTrayIconMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 30</value>
   </data>
   <data name="GrpAction.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="&gt;&gt;CheckBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="sw_.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
@@ -685,14 +685,14 @@
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>656, 585</value>
   </data>
-  <data name="BTN_TurnR.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 35</value>
+  <data name="MenuCopy2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 30</value>
+  </data>
+  <data name="_nw.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 36</value>
   </data>
   <data name="BTN_Underline.Text" xml:space="preserve">
     <value>UL</value>
-  </data>
-  <data name="&gt;&gt;ExportMonkeySpeakToolStripMenuItem.Name" xml:space="preserve">
-    <value>ExportMonkeySpeakToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;BTN_Italic.Parent" xml:space="preserve">
     <value>GroupBox3</value>
@@ -700,17 +700,11 @@
   <data name="TS_Main.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 548</value>
   </data>
-  <data name="BTN_TurnR.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="OptionsToolStripMenuItem.Text" xml:space="preserve">
     <value>Options</value>
   </data>
   <data name="RecentToolStripMenuItem.Text" xml:space="preserve">
     <value>Recent</value>
-  </data>
-  <data name="BTN_Italic.Text" xml:space="preserve">
-    <value>I</value>
   </data>
   <data name="ConnectTrayIconMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 30</value>
@@ -727,9 +721,6 @@
   <data name="_ne.WaitOnLoad" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="CheckBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
   <data name="get_.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 151</value>
   </data>
@@ -742,11 +733,11 @@
   <data name="BTN_Italic.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
   </data>
-  <data name="&gt;&gt;ContentsToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="ToolStripServerStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
+  </data>
+  <data name="toServer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;toServer.Parent" xml:space="preserve">
     <value>GroupBox3</value>
@@ -763,6 +754,9 @@
   <data name="WindowsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>98, 29</value>
   </data>
+  <data name="&gt;&gt;ToolStripSeparator3.Name" xml:space="preserve">
+    <value>ToolStripSeparator3</value>
+  </data>
   <data name="&gt;&gt;GrpAction.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
@@ -775,8 +769,8 @@
   <data name="&gt;&gt;SplitContainer1.Panel2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="TextBox_NoFlicker1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="BTN_Go.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 40</value>
   </data>
   <data name="MenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>1218, 35</value>
@@ -814,20 +808,14 @@
   <data name="get_.TabIndex" type="System.Int32, mscorlib">
     <value>37</value>
   </data>
-  <data name="&gt;&gt;DreamList.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+  <data name="se_.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;SplitContainer1.Panel1.Parent" xml:space="preserve">
     <value>SplitContainer1</value>
   </data>
   <data name="&gt;&gt;Btn_Bold.Name" xml:space="preserve">
     <value>Btn_Bold</value>
-  </data>
-  <data name="&gt;&gt;ConnectTrayIconMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_nw.ZOrder" xml:space="preserve">
-    <value>4</value>
   </data>
   <data name="MenuCut2.Text" xml:space="preserve">
     <value>Cut</value>
@@ -868,6 +856,9 @@
   <data name="BtnSit_stand_Lie.TabIndex" type="System.Int32, mscorlib">
     <value>44</value>
   </data>
+  <data name="&gt;&gt;GroupBox3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;HelpToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -879,9 +870,6 @@
   </data>
   <data name="&gt;&gt;MenuCopy2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ExportMonkeySpeakToolStripMenuItem.Text" xml:space="preserve">
-    <value>Export MonkeySpeak</value>
   </data>
   <data name="Log_.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -898,20 +886,23 @@
   <data name="&gt;&gt;BTN_Go.Parent" xml:space="preserve">
     <value>SplitContainer1.Panel2</value>
   </data>
+  <data name="SplitContainer1.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="GroupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
   <data name="&gt;&gt;sendToServer.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="ConfigToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 30</value>
   </data>
-  <data name="&gt;&gt;MenuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;TS_Status_BotName.Name" xml:space="preserve">
+    <value>TS_Status_BotName</value>
   </data>
   <data name="&gt;&gt;BTN_TurnR.Name" xml:space="preserve">
     <value>BTN_TurnR</value>
-  </data>
-  <data name="MenuStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;RecentToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -931,6 +922,9 @@
   <data name="&gt;&gt;NewBotToolStripMenuItem.Name" xml:space="preserve">
     <value>NewBotToolStripMenuItem</value>
   </data>
+  <data name="SplitContainer2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
   <data name="ReferenceLinksToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>144, 29</value>
   </data>
@@ -946,8 +940,8 @@
   <data name="BTN_Go.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
   </data>
-  <data name="MenuCopy2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>188, 30</value>
+  <data name="use_.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="ContextTryIcon.ToolTip" xml:space="preserve">
     <value />
@@ -1431,6 +1425,9 @@
   <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="&gt;&gt;DreamList.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="&gt;&gt;use_.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -1439,6 +1436,9 @@
   </data>
   <data name="&gt;&gt;SplitContainer1.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;TS_Filler.Name" xml:space="preserve">
+    <value>TS_Filler</value>
   </data>
   <data name="&gt;&gt;ToolStripSeparator5.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1467,20 +1467,20 @@
   <data name="&gt;&gt;sw_.Parent" xml:space="preserve">
     <value>GrpAction</value>
   </data>
-  <data name="&gt;&gt;get_.Parent" xml:space="preserve">
-    <value>GrpAction</value>
+  <data name="ReferenceLinksToolStripMenuItem.Text" xml:space="preserve">
+    <value>Reference Links</value>
   </data>
-  <data name="&gt;&gt;MenuStrip1.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;use_.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="GrpAction.Size" type="System.Drawing.Size, System.Drawing">
+    <value>260, 203</value>
   </data>
   <data name="&gt;&gt;BTN_TurnR.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="_nw.Location" type="System.Drawing.Point, System.Drawing">
     <value>105, 29</value>
+  </data>
+  <data name="MenuCut2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 30</value>
   </data>
   <data name="clientGroup.Size" type="System.Drawing.Size, System.Drawing">
     <value>876, 303</value>
@@ -1506,6 +1506,9 @@
   <data name="&gt;&gt;ConnectTrayIconMenuItem.Name" xml:space="preserve">
     <value>ConnectTrayIconMenuItem</value>
   </data>
+  <data name="BTN_Underline.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="MenuStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>57</value>
   </data>
@@ -1524,8 +1527,8 @@
   <data name="DisconnectTrayIconMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 30</value>
   </data>
-  <data name="BTN_TurnL.Text" xml:space="preserve">
-    <value>&lt;=</value>
+  <data name="&gt;&gt;get_.Parent" xml:space="preserve">
+    <value>GrpAction</value>
   </data>
   <data name="CopyMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>189, 100</value>
@@ -1536,14 +1539,14 @@
   <data name="TextBox_NoFlicker1.Text" xml:space="preserve">
     <value>###</value>
   </data>
+  <data name="se_.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
   <data name="NewBotToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>163, 30</value>
   </data>
   <data name="CheckBox1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="&gt;&gt;OptionsToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="clientGroup.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
@@ -1560,20 +1563,23 @@
   <data name="BTN_Underline.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8pt</value>
   </data>
+  <data name="&gt;&gt;FurresBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;toServer.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="sendToServer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>52, 31</value>
+  <data name="CheckBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
   <data name="&gt;&gt;AboutToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="use_.TabIndex" type="System.Int32, mscorlib">
-    <value>38</value>
-  </data>
   <data name="&gt;&gt;ToolStripServerStatus.Name" xml:space="preserve">
     <value>ToolStripServerStatus</value>
+  </data>
+  <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 24</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>336, 242</value>
@@ -1587,11 +1593,11 @@
   <data name="GroupBox3.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="BTN_Go.Text" xml:space="preserve">
-    <value>Go!</value>
+  <data name="ToolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 6</value>
   </data>
-  <data name="SplitContainer2.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
-    <value>Horizontal</value>
+  <data name="&gt;&gt;DreamList.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
   </data>
   <data name="sendToServer.Location" type="System.Drawing.Point, System.Drawing">
     <value>814, 164</value>
@@ -1599,11 +1605,17 @@
   <data name="Btn_Bold.Text" xml:space="preserve">
     <value>B</value>
   </data>
-  <data name="&gt;&gt;DreamList.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="EditBotToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 30</value>
+  </data>
+  <data name="&gt;&gt;MenuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;EditMenu.Name" xml:space="preserve">
     <value>EditMenu</value>
+  </data>
+  <data name="CloseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 30</value>
   </data>
   <data name="SplitContainer1.SplitterWidth" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1611,11 +1623,8 @@
   <data name="&gt;&gt;_ne.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TextBox_NoFlicker1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="&gt;&gt;ToolStripSeparator1.Name" xml:space="preserve">
-    <value>ToolStripSeparator1</value>
+  <data name="BotIniOpen.Filter" xml:space="preserve">
+    <value>Bot Files|*.bini</value>
   </data>
   <data name="OptionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>88, 29</value>
@@ -1623,8 +1632,14 @@
   <data name="AboutToolStripMenuItem1.Text" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="ExportMonkeySpeakToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>264, 30</value>
+  </data>
   <data name="&gt;&gt;SplitContainer2.Panel1.Type" xml:space="preserve">
     <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MenuStrip1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="BtnSit_stand_Lie.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
@@ -1647,14 +1662,14 @@
   <data name="toServer.Size" type="System.Drawing.Size, System.Drawing">
     <value>860, 114</value>
   </data>
-  <data name="&gt;&gt;GroupBox3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ToolStripServerStatus.Text" xml:space="preserve">
+    <value>Server Status</value>
   </data>
   <data name="SplitContainer2.Panel2.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="ToolStripServerStatus.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
-    <value>None</value>
+  <data name="BTN_Go.Text" xml:space="preserve">
+    <value>Go!</value>
   </data>
   <data name="&gt;&gt;TS_Main.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1662,23 +1677,20 @@
   <data name="&gt;&gt;_ne.Parent" xml:space="preserve">
     <value>GrpAction</value>
   </data>
-  <data name="get_.Text" xml:space="preserve">
-    <value>Get</value>
-  </data>
   <data name="&gt;&gt;TS_Status_BotName.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="MenuCut2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>188, 30</value>
+  <data name="&gt;&gt;RestoreMainToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MenuStrip1.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
   <data name="&gt;&gt;use_.Name" xml:space="preserve">
     <value>use_</value>
   </data>
-  <data name="HelpToolStripMenuItem.Text" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="SplitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>876</value>
+  <data name="BTN_TurnR.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 35</value>
   </data>
   <data name="&gt;&gt;FileToolStripMenuItem.Name" xml:space="preserve">
     <value>FileToolStripMenuItem</value>
@@ -1686,11 +1698,8 @@
   <data name="&gt;&gt;Btn_Bold.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="MenuCopy2.Text" xml:space="preserve">
-    <value>Copy</value>
-  </data>
-  <data name="&gt;&gt;toServer.Type" xml:space="preserve">
-    <value>MonkeyCore.Controls.RichTextBoxEx, MonkeyCore, Version=1.1.316.1006, Culture=neutral, PublicKeyToken=9d1f278a91da92f0</value>
+  <data name="sw_.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
   </data>
   <data name="&gt;&gt;HelpToolStripMenuItem.Name" xml:space="preserve">
     <value>HelpToolStripMenuItem</value>
@@ -1717,7 +1726,7 @@
     <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;Log_.Type" xml:space="preserve">
-    <value>MonkeyCore.Controls.RichTextBoxEx, MonkeyCore, Version=1.1.316.1006, Culture=neutral, PublicKeyToken=9d1f278a91da92f0</value>
+    <value>MonkeyCore.Controls.RichTextBoxEx, MonkeyCore, Version=2.19.395.1215, Culture=neutral, PublicKeyToken=9a09590b84101966</value>
   </data>
   <data name="GrpAction.Text" xml:space="preserve">
     <value>Actions</value>
@@ -1725,14 +1734,14 @@
   <data name="GroupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
   </data>
-  <data name="&gt;&gt;FurresBindingSource.Name" xml:space="preserve">
-    <value>FurresBindingSource</value>
+  <data name="BTN_TurnR.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
   </data>
-  <data name="ReferenceLinksToolStripMenuItem.Text" xml:space="preserve">
-    <value>Reference Links</value>
+  <data name="ContentsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 30</value>
   </data>
-  <data name="&gt;&gt;FurresBindingSource1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="GrpAction.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;sw_.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1746,14 +1755,14 @@
   <data name="&gt;&gt;TS_Main.Type" xml:space="preserve">
     <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="_nw.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 36</value>
+  <data name="ExportMonkeySpeakToolStripMenuItem.Text" xml:space="preserve">
+    <value>Export MonkeySpeak</value>
   </data>
   <data name="ExitTrayIconMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 30</value>
   </data>
-  <data name="Btn_Bold.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;FurresBindingSource1.Name" xml:space="preserve">
+    <value>FurresBindingSource1</value>
   </data>
   <data name="&gt;&gt;CheckBox1.Parent" xml:space="preserve">
     <value>GroupBox3</value>
@@ -1791,8 +1800,8 @@
   <data name="BTN_Underline.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="se_.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 36</value>
+  <data name="&gt;&gt;OptionsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="TextBox_NoFlicker1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -1812,11 +1821,14 @@
   <data name="&gt;&gt;BTN_TurnR.Parent" xml:space="preserve">
     <value>GrpAction</value>
   </data>
-  <data name="sw_.TabIndex" type="System.Int32, mscorlib">
-    <value>35</value>
+  <data name="get_.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="SplitContainer2.SplitterWidth" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="&gt;&gt;ExportMonkeySpeakToolStripMenuItem.Name" xml:space="preserve">
+    <value>ExportMonkeySpeakToolStripMenuItem</value>
+  </data>
+  <data name="DisconnectTrayIconMenuItem.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="Label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -1824,8 +1836,8 @@
   <data name="BTN_Go.TabIndex" type="System.Int32, mscorlib">
     <value>66</value>
   </data>
-  <data name="SplitContainer2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="&gt;&gt;OpenToolStripMenuItem.Name" xml:space="preserve">
+    <value>OpenToolStripMenuItem</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 20</value>
@@ -1839,8 +1851,8 @@
   <data name="FurcTimeLbl.Size" type="System.Drawing.Size, System.Drawing">
     <value>234, 25</value>
   </data>
-  <data name="&gt;&gt;ToolStripSeparator3.Name" xml:space="preserve">
-    <value>ToolStripSeparator3</value>
+  <data name="Log_.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="MenuCopy2.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+C</value>
@@ -1863,14 +1875,14 @@
   <data name="&gt;&gt;Log_.Parent" xml:space="preserve">
     <value>clientGroup</value>
   </data>
-  <data name="ToolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 6</value>
+  <data name="CheckBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;MainMenu1.Type" xml:space="preserve">
     <value>System.Windows.Forms.MainMenu, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="EditBotToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 30</value>
+  <data name="MenuStrip1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>9, 3, 0, 3</value>
   </data>
   <data name="ToolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>160, 6</value>
@@ -1893,11 +1905,11 @@
   <data name="&gt;&gt;clientGroup.Parent" xml:space="preserve">
     <value>SplitContainer2.Panel1</value>
   </data>
-  <data name="EditBotToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit Bot</value>
+  <data name="&gt;&gt;ConnectTrayIconMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;AboutToolStripMenuItem1.Name" xml:space="preserve">
-    <value>AboutToolStripMenuItem1</value>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>108, 205</value>
   </data>
   <data name="SplitContainer2.SplitterDistance" type="System.Int32, mscorlib">
     <value>303</value>
@@ -1908,36 +1920,29 @@
   <data name="&gt;&gt;get_.Name" xml:space="preserve">
     <value>get_</value>
   </data>
+  <data name="EditMenu.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;GroupBox3.Parent" xml:space="preserve">
     <value>SplitContainer2.Panel2</value>
   </data>
   <data name="ToolStripMenuItem3.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="_ne.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAbtJREFUWEft1ktLVWEUh/FjaZp4I4UI7zdEiEDMQVASiQiiCF4bqCgIOvCSggOx
-        SXijGiWBkKio4FhB0KkjZ36CPkzPo0c4iBpn6z6j/Ycf6maz93nXu9Z7jEWJEiVKiMlD2tWv4acQvrAJ
-        03HHqMRTPGpclXLwEa+xhAnMYhXvcYhiPLgKPuA56tGBIfSiC1toxncMoxV9+IxfeIFAyUURLOEH+OBv
-        WMYKXKkv+QnvaYD3m1qsYxRWKemUoBPdcLW/MYdttKMGruwJ8pEYK9UIt6EA3pN0FnEOyzsSZ7LwvwdW
-        4wvO4EICNeAFjjCOOi8kkZd4h0+XfwWM+/kVlnwf7qexvPdVwL5xEk5xXbVAeQb31tl2zHZg452gH67y
-        tjgtjp+VC9R8t8UHOX5vYSO6NTNwf2/GxhyEZ0Kg5rsvmSjHPHZho5YhMRWYxBoefPjcFV9iBf7Ef2bA
-        pGMAbpXzH2qqMIVN2C/GD7IAP8AbL4QZz4MW+DL7w7yC5ffgyvZC2PFbz/E8gP0xhh/oQcpiE+7Bg8f9
-        b4M9krKUwj7YwF/YA15LWTznPaycf7/3Pbwe/Z+PKFFCTiz2D6ZCNm2q8kpmAAAAAElFTkSuQmCC
-</value>
+  <data name="&gt;&gt;TS_Main.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
-  <data name="MenuStrip1.ToolTip" xml:space="preserve">
+  <data name="&gt;&gt;MenuCopy2.Name" xml:space="preserve">
+    <value>MenuCopy2</value>
+  </data>
+  <data name="MenuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="Btn_Bold.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="ContextTryIcon.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 166</value>
-  </data>
-  <data name="&gt;&gt;TS_Filler.Name" xml:space="preserve">
-    <value>TS_Filler</value>
-  </data>
-  <data name="&gt;&gt;DreamList.Type" xml:space="preserve">
-    <value>MonkeyCore.Controls.ListBox_NoFlicker, MonkeyCore, Version=1.1.316.1006, Culture=neutral, PublicKeyToken=9d1f278a91da92f0</value>
+  <data name="&gt;&gt;sw_.Name" xml:space="preserve">
+    <value>sw_</value>
   </data>
   <data name="_nw.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
@@ -1947,6 +1952,9 @@
   </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>Furres in Dream:</value>
+  </data>
+  <data name="_nw.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
   </data>
   <data name="&gt;&gt;DebugToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1960,14 +1968,14 @@
   <data name="HelpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 29</value>
   </data>
-  <data name="DisconnectTrayIconMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="TS_Main.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1218, 30</value>
   </data>
   <data name="SplitContainer1.Panel2.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="GroupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+  <data name="GroupBox3.TabIndex" type="System.Int32, mscorlib">
+    <value>65</value>
   </data>
   <data name="&gt;&gt;SplitContainer2.Parent" xml:space="preserve">
     <value>SplitContainer1.Panel1</value>
@@ -1978,23 +1986,20 @@
   <data name="AboutToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>167, 30</value>
   </data>
+  <data name="BTN_Italic.Text" xml:space="preserve">
+    <value>I</value>
+  </data>
   <data name="&gt;&gt;_ne.Name" xml:space="preserve">
     <value>_ne</value>
   </data>
-  <data name="toServer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1218, 578</value>
   </data>
-  <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 24</value>
+  <data name="SplitContainer1.SplitterDistance" type="System.Int32, mscorlib">
+    <value>876</value>
   </data>
-  <data name="SplitContainer1.TabIndex" type="System.Int32, mscorlib">
-    <value>59</value>
-  </data>
-  <data name="se_.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="se_.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+  <data name="&gt;&gt;_nw.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="&gt;&gt;SplitContainer1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -2002,8 +2007,8 @@
   <data name="&gt;&gt;MSEditorToolStripMenuItem.Name" xml:space="preserve">
     <value>MSEditorToolStripMenuItem</value>
   </data>
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>108, 205</value>
+  <data name="&gt;&gt;ToolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;DisconnectTrayIconMenuItem.Name" xml:space="preserve">
     <value>DisconnectTrayIconMenuItem</value>
@@ -2029,17 +2034,6 @@
   <data name="&gt;&gt;FileToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="se_.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABHUlEQVRYR+2UMWpCQRCG9wBiIVhqk8LC
-        XtKkt7MIxMZCS0sbkyKVIIjeIk0ukAvkDLmAB7CysvT/dl15eZAXwd0VZD/4cOYhzHszs2symXvgQ764
-        MD0UP8hHm92AjRzJnWzxICVDuZdN+c6DlPQlxZ9sZsynZBzJ6MhnF555O/1Gpya/5avNHA+SjkQ/Db74
-        yma/YRwDF4aHmdP2v4rDWM5cGBa/7cy82PYy/G/uwjCw1Zzz4rZX0ZY/smezK/E3HJcM5/xSlrLrwutg
-        m7leueG4ZDjnwLZXMZVbWbdZAPz1Skc4534cLBwzp+1l6EI06AxHjW1n4Zg5Bflyz5dcuzA+LBwzp+28
-        CMUbciKT4mfOl1N8YbNMJpPJ/IsxR+JkK0gXW4xsAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="sw_.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
@@ -2049,8 +2043,8 @@
   <data name="TS_Main.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;TS_Main.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="BTN_TurnR.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;WindowsToolStripMenuItem.Name" xml:space="preserve">
     <value>WindowsToolStripMenuItem</value>
@@ -2061,11 +2055,20 @@
   <data name="TS_Status_BotName.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 25</value>
   </data>
-  <data name="&gt;&gt;TS_Status_BotName.Name" xml:space="preserve">
-    <value>TS_Status_BotName</value>
-  </data>
   <data name="&gt;&gt;NewBotToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BTN_TurnL.Name" xml:space="preserve">
+    <value>BTN_TurnL</value>
+  </data>
+  <data name="TextBox_NoFlicker1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;MenuCut2.Name" xml:space="preserve">
+    <value>MenuCut2</value>
+  </data>
+  <data name="WindowsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Windows</value>
   </data>
   <data name="sw_.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2078,28 +2081,13 @@
         HZnuAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="&gt;&gt;BTN_TurnL.Name" xml:space="preserve">
-    <value>BTN_TurnL</value>
-  </data>
-  <data name="BTN_TurnR.TabIndex" type="System.Int32, mscorlib">
-    <value>42</value>
-  </data>
-  <data name="ContentsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 30</value>
-  </data>
-  <data name="WindowsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Windows</value>
-  </data>
-  <data name="RestoreMainToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 30</value>
-  </data>
   <data name="_ne.Location" type="System.Drawing.Point, System.Drawing">
     <value>172, 29</value>
   </data>
   <data name="&gt;&gt;use_.Parent" xml:space="preserve">
     <value>GrpAction</value>
   </data>
-  <data name="&gt;&gt;BTN_Italic.Type" xml:space="preserve">
+  <data name="&gt;&gt;BTN_TurnL.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="sendToServer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -2108,14 +2096,14 @@
   <data name="&gt;&gt;EditorTrayIconMenuItem.Name" xml:space="preserve">
     <value>EditorTrayIconMenuItem</value>
   </data>
-  <data name="ExportMonkeySpeakToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>264, 30</value>
+  <data name="&gt;&gt;CheckBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="_nw.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="PasteToolStripMenuItem.Text" xml:space="preserve">
-    <value>Paste</value>
+  <data name="get_.Text" xml:space="preserve">
+    <value>Get</value>
   </data>
   <data name="BtnSit_stand_Lie.ToolTip" xml:space="preserve">
     <value />
@@ -2123,11 +2111,19 @@
   <data name="&gt;&gt;ActionTmr.Name" xml:space="preserve">
     <value>ActionTmr</value>
   </data>
-  <data name="_nw.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+  <data name="se_.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABHUlEQVRYR+2UMWpCQRCG9wBiIVhqk8LC
+        XtKkt7MIxMZCS0sbkyKVIIjeIk0ukAvkDLmAB7CysvT/dl15eZAXwd0VZD/4cOYhzHszs2symXvgQ764
+        MD0UP8hHm92AjRzJnWzxICVDuZdN+c6DlPQlxZ9sZsynZBzJ6MhnF555O/1Gpya/5avNHA+SjkQ/Db74
+        yma/YRwDF4aHmdP2v4rDWM5cGBa/7cy82PYy/G/uwjCw1Zzz4rZX0ZY/smezK/E3HJcM5/xSlrLrwutg
+        m7leueG4ZDjnwLZXMZVbWbdZAPz1Skc4534cLBwzp+1l6EI06AxHjW1n4Zg5Bflyz5dcuzA+LBwzp+28
+        CMUbciKT4mfOl1N8YbNMJpPJ/IsxR+JkK0gXW4xsAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="EditMenu.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;use_.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
   <data name="&gt;&gt;se_.Parent" xml:space="preserve">
     <value>GrpAction</value>
@@ -2135,8 +2131,8 @@
   <data name="&gt;&gt;BTN_Go.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;BTN_TurnL.Parent" xml:space="preserve">
-    <value>GrpAction</value>
+  <data name="&gt;&gt;ReferenceLinksToolStripMenuItem.Name" xml:space="preserve">
+    <value>ReferenceLinksToolStripMenuItem</value>
   </data>
   <data name="BtnSit_stand_Lie.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 35</value>
@@ -2147,23 +2143,23 @@
   <data name="&gt;&gt;SplitContainer1.Name" xml:space="preserve">
     <value>SplitContainer1</value>
   </data>
-  <data name="Btn_Bold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>27, 29</value>
+  <data name="use_.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
   </data>
   <data name="&gt;&gt;DisconnectTrayIconMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="BTN_Underline.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="&gt;&gt;toServer.Type" xml:space="preserve">
+    <value>MonkeyCore.Controls.RichTextBoxEx, MonkeyCore, Version=2.19.395.1215, Culture=neutral, PublicKeyToken=9a09590b84101966</value>
   </data>
-  <data name="SplitContainer1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1218, 513</value>
+  <data name="&gt;&gt;ToolStripSeparator1.Name" xml:space="preserve">
+    <value>ToolStripSeparator1</value>
   </data>
   <data name="&gt;&gt;BtnSit_stand_Lie.Parent" xml:space="preserve">
     <value>GrpAction</value>
   </data>
-  <data name="CloseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 30</value>
+  <data name="use_.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 35</value>
   </data>
   <data name="Log_.Size" type="System.Drawing.Size, System.Drawing">
     <value>868, 274</value>
@@ -2171,17 +2167,27 @@
   <data name="GroupBox3.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
   </data>
-  <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>65</value>
+  <data name="_ne.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAbtJREFUWEft1ktLVWEUh/FjaZp4I4UI7zdEiEDMQVASiQiiCF4bqCgIOvCSggOx
+        SXijGiWBkKio4FhB0KkjZ36CPkzPo0c4iBpn6z6j/Ycf6maz93nXu9Z7jEWJEiVKiMlD2tWv4acQvrAJ
+        03HHqMRTPGpclXLwEa+xhAnMYhXvcYhiPLgKPuA56tGBIfSiC1toxncMoxV9+IxfeIFAyUURLOEH+OBv
+        WMYKXKkv+QnvaYD3m1qsYxRWKemUoBPdcLW/MYdttKMGruwJ8pEYK9UIt6EA3pN0FnEOyzsSZ7LwvwdW
+        4wvO4EICNeAFjjCOOi8kkZd4h0+XfwWM+/kVlnwf7qexvPdVwL5xEk5xXbVAeQb31tl2zHZg452gH67y
+        tjgtjp+VC9R8t8UHOX5vYSO6NTNwf2/GxhyEZ0Kg5rsvmSjHPHZho5YhMRWYxBoefPjcFV9iBf7Ef2bA
+        pGMAbpXzH2qqMIVN2C/GD7IAP8AbL4QZz4MW+DL7w7yC5ffgyvZC2PFbz/E8gP0xhh/oQcpiE+7Bg8f9
+        b4M9krKUwj7YwF/YA15LWTznPaycf7/3Pbwe/Z+PKFFCTiz2D6ZCNm2q8kpmAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="BTN_Go.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 40</value>
+  <data name="&gt;&gt;AboutToolStripMenuItem1.Name" xml:space="preserve">
+    <value>AboutToolStripMenuItem1</value>
   </data>
   <data name="&gt;&gt;sw_.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="se_.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
+  <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="CheckBox1.Text" xml:space="preserve">
     <value>Auto Scroll</value>
@@ -2189,20 +2195,14 @@
   <data name="&gt;&gt;GrpAction.Name" xml:space="preserve">
     <value>GrpAction</value>
   </data>
-  <data name="&gt;&gt;FurresBindingSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;FurresBindingSource1.Name" xml:space="preserve">
-    <value>FurresBindingSource1</value>
-  </data>
-  <data name="BTN_Go.Location" type="System.Drawing.Point, System.Drawing">
-    <value>210, 463</value>
+  <data name="MenuCopy2.Text" xml:space="preserve">
+    <value>Copy</value>
   </data>
   <data name="&gt;&gt;FurcTimeLbl.Name" xml:space="preserve">
     <value>FurcTimeLbl</value>
   </data>
-  <data name="BTN_TurnR.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+  <data name="&gt;&gt;ContentsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TextBox_NoFlicker1.Parent" xml:space="preserve">
     <value>GroupBox1</value>
@@ -2219,14 +2219,14 @@
   <data name="&gt;&gt;GrpAction.Parent" xml:space="preserve">
     <value>SplitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;RestoreMainToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="HelpToolStripMenuItem.Text" xml:space="preserve">
+    <value>Help</value>
   </data>
   <data name="DreamList.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
   </data>
-  <data name="CheckBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+  <data name="se_.Location" type="System.Drawing.Point, System.Drawing">
+    <value>172, 86</value>
   </data>
   <metadata name="ActionTmr.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>288, 17</value>
@@ -2243,9 +2243,6 @@
   <metadata name="TS_Main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>619, 17</value>
   </metadata>
-  <metadata name="FurresBindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <metadata name="FurresBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>304, 65</value>
   </metadata>
@@ -2254,6 +2251,9 @@
   </metadata>
   <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>en-US</value>
+  </metadata>
+  <metadata name="FurresBindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
   <metadata name="CopyMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>906, 17</value>

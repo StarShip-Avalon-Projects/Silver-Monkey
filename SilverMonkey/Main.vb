@@ -629,7 +629,7 @@ Public Class Main
 
     End Sub
 
-    Public Sub OnFurcadiaSessionError(ex As Exception, o As Object, n As String) _
+    Public Sub OnFurcadiaSessionError(ex As Exception, o As Object) _
         Handles FurcadiaSession.[Error]
 
         If ex.GetType() Is GetType(Monkeyspeak.MonkeyspeakException) Then
@@ -737,6 +737,8 @@ Public Class Main
         End If
         If FurcadiaSession Is Nothing Then
             FurcadiaSession = New BotSession(BotConfig)
+        Else
+            FurcadiaSession.SessionOptions = BotConfig
         End If
 
         If FurcadiaSession.ServerStatus = ConnectionPhase.Connected Then

@@ -1,11 +1,10 @@
 ﻿Imports System.IO
 Imports Furcadia.IO
 Imports Furcadia.Net
-Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 
 <CLSCompliant(True)>
-Public Class BotOptions : Inherits Options.ProxySessionOptions
+Public Class BotOptions : Inherits Options.ProxyOptions
 
 #Region "Private Fields"
 
@@ -63,7 +62,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
 
         s = BotIni.GetKeyValue("Bot", "LPort")
         If Not String.IsNullOrEmpty(s) Then
-            LocalhostPort = 0
+            LocalhostPort = 6700
             Integer.TryParse(s, LocalhostPort)
         End If
 
@@ -83,6 +82,12 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         If Not String.IsNullOrEmpty(s) Then _AutoConnect = Convert.ToBoolean(s)
 
         s = BotIni.GetKeyValue("Bot", "NoEndurance")
+
+        s = BotIni.GetKeyValue("Bot", "ConnectTimeOut")
+        If Not String.IsNullOrEmpty(s) Then ConnectionTimeOut = Integer.Parse(s)
+
+        s = BotIni.GetKeyValue("Bot", "ConnectionRetries")
+        If Not String.IsNullOrEmpty(s) Then ConnectionRetries = Integer.Parse(s)
 
         ' _options()
         s = BotIni.GetKeyValue("GoMap", "IDX")
@@ -191,6 +196,9 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
         BotIni.SetKeyValue("Bot", "BotController", _MonkeySpeakEngineOption.BotController)
         BotIni.SetKeyValue("Bot", "StandAlone", Standalone.ToString)
         BotIni.SetKeyValue("Bot", "AutoConnect", _AutoConnect.ToString)
+
+        BotIni.SetKeyValue("Bot", "ConnectionRetries", ConnectionRetries.ToString)
+        BotIni.SetKeyValue("Bot", "ConnectTimeOut", ConnectionTimeOut.ToString)
 
         BotIni.SetKeyValue("GoMap", "IDX", _GoMap.ToString)
         BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL.ToString())

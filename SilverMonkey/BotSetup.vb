@@ -90,6 +90,9 @@ Public Class BotSetup
         StandAloneChkBx.Checked = bFile.Standalone
         ChkBxAutoConnect.Checked = bFile.AutoConnect
 
+        NumericRetryAttempts.Value = bFile.ConnectionRetries
+        NumericTimeOut.Value = bFile.ConnectionTimeOut
+
         TxtBxDreamURL.Text = bFile.DreamLink.ToString
         Select Case bFile.GoMapIDX
             Case 1
@@ -170,6 +173,9 @@ Public Class BotSetup
         bFile.MonkeySpeakEngineOptions.BotController = TxtBxBotConroller.Text
         bFile.Standalone = Convert.ToBoolean(StandAloneChkBx.Checked)
         bFile.AutoConnect = ChkBxAutoConnect.Checked
+
+        bFile.ConnectionTimeOut = CInt(NumericTimeOut.Value)
+        bFile.ConnectionRetries = CInt(NumericRetryAttempts.Value)
 
         bFile.DreamLink = TxtBxDreamURL.Text
         If RadioButton1.Checked = True Then

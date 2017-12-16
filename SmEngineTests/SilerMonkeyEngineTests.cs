@@ -1,4 +1,5 @@
-﻿using Furcadia.Net;
+﻿using Furcadia.Logging;
+using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
 using MonkeyCore;
 using NUnit.Framework;
@@ -15,15 +16,6 @@ namespace SmEngineTests
     [TestFixture]
     public class SilerMonkeyEngineTests
     {
-        private BotOptions options;
-        private BotSession Proxy;
-        private const int ConnectWaitTime = 10;
-        private const int DreamEntranceDelay = 10;
-        private const int CleanupDelayTime = 5;
-
-        private readonly string SettingsFile;
-        private readonly string BackupSettingsFile;
-
         private const string GeroSayPing = "<name shortname='gerolkae'>Gerolkae</name>: ping";
         private const string GeroWhisperCunchatize = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"crunchatize\" to you. ]</font>";
         private const string GeroWhisperRollOut = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"roll out\" to you. ]</font>";
@@ -44,6 +36,11 @@ namespace SmEngineTests
         private const string EmitWarning = "<font color='warning'><img src='fsh://system.fsh:91' alt='@emit' /><channel name='@emit' /> (<name shortname='silvermonkey'>Silver|Monkey</name> just emitted.)</font>";
 
         private const string CookieBank = "<font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Cookie <a href='http://www.furcadia.com/cookies/Cookie%20Economy.html'>bank</a> has currently collected: 0</font>";
+        private BotSession Proxy;
+
+        public string SettingsFile { get; private set; }
+        public string BackupSettingsFile { get; private set; }
+        public BotOptions options { get; private set; }
 
         public SilerMonkeyEngineTests()
         {
@@ -82,6 +79,7 @@ namespace SmEngineTests
             Proxy = new BotSession(options);
             Proxy.ClientData2 += (ClintData) => Proxy.SendToServer(ClintData);
             Proxy.ServerData2 += (ServerData) => Proxy.SendToClient(ServerData);
+            Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
         }
 
         [TestCase(WhisperTest, "hi")]
@@ -102,7 +100,8 @@ namespace SmEngineTests
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
              {
                  var ServeObject = (ChannelObject)sender;
-                 Assert.That(ServeObject.Player.Message, Is.EqualTo(ExpectedValue));
+                 Assert.That(ServeObject.Player.Message,
+                     Is.EqualTo(ExpectedValue));
              };
 
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
@@ -138,7 +137,8 @@ namespace SmEngineTests
             Proxy.ProcessServerChannelData -= (sender, Args) =>
             {
                 var ServeObject = (ChannelObject)sender;
-                Assert.That(ServeObject.Player.ShortName, Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                Assert.That(ServeObject.Player.ShortName,
+                    Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
             };
             DisconnectTests();
         }
@@ -162,11 +162,10 @@ namespace SmEngineTests
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
             {
                 var ServeObject = (ChannelObject)sender;
-                Assert.That(Args.Channel, Is.EqualTo(ExpectedValue));
+                Assert.That(Args.Channel,
+                    Is.EqualTo(ExpectedValue));
             };
 
-            Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
-            Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
             Proxy.ParseServerChannel(ChannelCode, false);
             DisconnectTests();
         }
@@ -180,36 +179,68 @@ namespace SmEngineTests
             Assert.Multiple(() =>
             {
                 var Var = Proxy.MSpage.GetVariable(TriggeringFurreNameVariable);
-                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
-                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+                Assert.That(Var.Value,
+                    !Is.EqualTo(null),
+                    $"Constant Variable: '{Var}' ");
+                Assert.That(Var.IsConstant,
+                    Is.EqualTo(true),
+                    $"Constant Variable: '{Var}' ");
 
                 Var = Proxy.MSpage.GetVariable(TriggeringFurreShortNameVariable);
-                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
-                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+                Assert.That(Var.Value,
+                    !Is.EqualTo(null),
+                    $"Constant Variable: '{Var}' ");
+                Assert.That(Var.IsConstant,
+                    Is.EqualTo(true),
+                    $"Constant Variable: '{Var}' ");
 
                 Var = Proxy.MSpage.GetVariable(BotControllerVariable);
-                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
-                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+                Assert.That(Var.Value,
+                    !Is.EqualTo(null),
+                    $"Constant Variable: '{Var}' ");
+                Assert.That(Var.IsConstant,
+                    Is.EqualTo(true),
+                    $"Constant Variable: '{Var}' ");
 
                 Var = Proxy.MSpage.GetVariable(BotNameVariable);
-                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
-                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+                Assert.That(Var.Value,
+                    !Is.EqualTo(null),
+                    $"Constant Variable: '{Var}' ");
+                Assert.That(Var.IsConstant,
+                    Is.EqualTo(true),
+                    $"Constant Variable: '{Var}' ");
 
                 Var = Proxy.MSpage.GetVariable(DreamNameVariable);
-                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
-                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+                Assert.That(Var.Value,
+                    !Is.EqualTo(null),
+                    $"Constant Variable: '{Var}' ");
+                Assert.That(Var.IsConstant,
+                    Is.EqualTo(true),
+                    $"Constant Variable: '{Var}' ");
 
                 Var = Proxy.MSpage.GetVariable(DreamOwnerVariable);
-                Assert.IsTrue(Var.Value != null, $"Constant Variable: '{Var}' ");
-                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+                Assert.That(Var.Value,
+                    !Is.EqualTo(null),
+                    $"Constant Variable: '{Var}' ");
+                Assert.That(Var.IsConstant,
+                    Is.EqualTo(true),
+                    $"Constant Variable: '{Var}' ");
 
                 Var = Proxy.MSpage.GetVariable(BanishListVariable);
-                Assert.IsTrue(Var.Value == null, $"Constant Variable: '{Var}' ");
-                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+                Assert.That(Var.Value,
+                    Is.EqualTo(null),
+                    $"Constant Variable: '{Var}' ");
+                Assert.That(Var.IsConstant,
+                    Is.EqualTo(true),
+                    $"Constant Variable: '{Var}' ");
 
                 Var = Proxy.MSpage.GetVariable(BanishNameVariable);
-                Assert.IsTrue(Var.Value == null, $"Constant Variable: '{Var}' ");
-                Assert.IsTrue(Var.IsConstant == true, $"Constant Variable: '{Var}' ");
+                Assert.That(Var.Value,
+                    Is.EqualTo(null),
+                    $"Constant Variable: '{Var}' ");
+                Assert.That(Var.IsConstant,
+                    Is.EqualTo(true),
+                    $"Constant Variable: '{Var}' ");
             });
             DisconnectTests();
         }
@@ -223,20 +254,37 @@ namespace SmEngineTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(Proxy.InDream, Is.EqualTo(true), "Bot has not joined a dream");
-                Assert.IsTrue(Proxy.Dream.Rating != null, $"Dream Rating is '{Proxy.Dream.Rating}'");
-                Assert.IsTrue(Proxy.Dream.Name != null, $"Dream Name is '{Proxy.Dream.Name}'");
-                Assert.IsTrue(Proxy.Dream.Owner != null, $"Dream Owner is '{Proxy.Dream.Owner}'");
-                Assert.IsTrue(Proxy.BotController != null, $"BotController is '{Proxy.BotController}'");
-                Assert.IsTrue(Proxy.Dream.ShortName != null, $"Dream ShortName is '{Proxy.Dream.ShortName}'");
-                Assert.IsTrue(Proxy.Dream.URL != null, $"Dream URL is '{Proxy.Dream.URL}'");
-                //  Assert.IsTrue(Proxy.Dream.Lines > 0, $"DragonSpeak Lines {Proxy.Dream.Lines}");
-
-                Assert.IsTrue(string.IsNullOrWhiteSpace(Proxy.BanishName),
+                Assert.That(Proxy.InDream,
+                    Is.EqualTo(true),
+                    "Bot has not joined a dream");
+                Assert.That(Proxy.Dream.Rating,
+                    !Is.EqualTo(null),
+                    $"Dream Rating is '{Proxy.Dream.Rating}'");
+                Assert.That(Proxy.Dream.Name,
+                    !Is.EqualTo(null),
+                    $"Dream Name is '{Proxy.Dream.Name}'");
+                Assert.That(Proxy.Dream.Owner,
+                    !Is.EqualTo(null),
+                    $"Dream Owner is '{Proxy.Dream.Owner}'");
+                Assert.That(Proxy.BotController,
+                    !Is.EqualTo(null),
+                    $"BotController is '{Proxy.BotController}'");
+                Assert.That(Proxy.Dream.ShortName,
+                    !Is.EqualTo(null),
+                    $"Dream ShortName is '{Proxy.Dream.ShortName}'");
+                Assert.That(Proxy.Dream.URL,
+                    !Is.EqualTo(null),
+                    $"Dream URL is '{Proxy.Dream.URL}'");
+                Assert.That(Proxy.Dream.Lines,
+                    Is.GreaterThan(0),
+                    $"DragonSpeak Lines {Proxy.Dream.Lines}");
+                Assert.That(string.IsNullOrWhiteSpace(Proxy.BanishName),
                     $"BanishName is '{Proxy.BanishName}'");
-                Assert.IsTrue(Proxy.BanishList != null,
+                Assert.That(Proxy.BanishList,
+                    !Is.EqualTo(null),
                     $"BanishList is '{Proxy.BanishList}'");
-                Assert.IsTrue(Proxy.BanishList.Count == 0,
+                Assert.That(Proxy.BanishList.Count,
+                    Is.EqualTo(0),
                     $"BanishList is '{Proxy.BanishList.Count}'");
             });
             DisconnectTests(StandAlone);
@@ -251,7 +299,8 @@ namespace SmEngineTests
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
             {
                 ChannelObject InstructionObject = (ChannelObject)sender;
-                Assert.That(InstructionObject.Player.Message, Is.EqualTo(ExpectedValue));
+                Assert.That(InstructionObject.Player.Message,
+                    Is.EqualTo(ExpectedValue));
             };
             Task.Run(() => Proxy.SendFormattedTextToServer("- Shout")).Wait();
 
@@ -268,26 +317,34 @@ namespace SmEngineTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected,
+                Assert.That(Proxy.ServerStatus,
+                    Is.EqualTo(ConnectionPhase.Connected),
                     $"Proxy.ServerStatus {Proxy.ServerStatus}");
-                Assert.That(Proxy.IsServerSocketConnected == true,
+                Assert.That(Proxy.IsServerSocketConnected,
+                    Is.EqualTo(true),
                     $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
                 if (StandAlone)
                 {
-                    Assert.That(Proxy.ClientStatus == ConnectionPhase.Disconnected,
+                    Assert.That(Proxy.ClientStatus,
+                        Is.EqualTo(ConnectionPhase.Disconnected),
                          $"Proxy.ClientStatus {Proxy.ClientStatus}");
-                    Assert.That(Proxy.IsClientSocketConnected == false,
+                    Assert.That(Proxy.IsClientSocketConnected,
+                        Is.EqualTo(false),
                          $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.IsFurcadiaClientIsRunning == false,
+                    Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                        Is.EqualTo(false),
                         $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
                 }
                 else
                 {
-                    Assert.That(Proxy.ClientStatus == ConnectionPhase.Connected,
+                    Assert.That(Proxy.ClientStatus,
+                        Is.EqualTo(ConnectionPhase.Connected),
                         $"Proxy.ClientStatus {Proxy.ClientStatus}");
-                    Assert.That(Proxy.IsClientSocketConnected == true,
+                    Assert.That(Proxy.IsClientSocketConnected,
+                        Is.EqualTo(true),
                         $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.IsFurcadiaClientIsRunning == true,
+                    Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                        Is.EqualTo(true),
                         $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
                 }
             });
@@ -300,15 +357,20 @@ namespace SmEngineTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(Proxy.ServerStatus == ConnectionPhase.Disconnected,
+                Assert.That(Proxy.ServerStatus,
+                     Is.EqualTo(ConnectionPhase.Disconnected),
                     $"Proxy.ServerStatus {Proxy.ServerStatus}");
-                Assert.That(Proxy.IsServerSocketConnected == false,
+                Assert.That(Proxy.IsServerSocketConnected,
+                     Is.EqualTo(false),
                     $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
-                Assert.That(Proxy.ClientStatus == ConnectionPhase.Disconnected,
+                Assert.That(Proxy.ClientStatus,
+                     Is.EqualTo(ConnectionPhase.Disconnected),
                      $"Proxy.ClientStatus {Proxy.ClientStatus}");
-                Assert.That(Proxy.IsClientSocketConnected == false,
+                Assert.That(Proxy.IsClientSocketConnected,
+                     Is.EqualTo(false),
                      $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                Assert.That(Proxy.IsFurcadiaClientIsRunning == false,
+                Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                     Is.EqualTo(false),
                     $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
             });
         }
@@ -318,6 +380,7 @@ namespace SmEngineTests
         {
             Proxy.ClientData2 -= (data) => Proxy.SendToServer(data);
             Proxy.ServerData2 -= (data) => Proxy.SendToClient(data);
+            Proxy.Error -= (e, o) => Logger.Error($"{e} {o}");
 
             Proxy.Dispose();
             options = null;

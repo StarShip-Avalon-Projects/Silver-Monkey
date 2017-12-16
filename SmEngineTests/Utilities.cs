@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SilverMonkeyEngine;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,8 +9,12 @@ using System.Threading.Tasks;
 
 namespace SmEngineTests
 {
-    public static class Utilities
+    public class Utilities
     {
+        public const int ConnectWaitTime = 10;
+        public const int DreamEntranceDelay = 10;
+        public const int CleanupDelayTime = 5;
+
         public static void HaltFor(int seconds)
         {
             DateTime end = DateTime.Now + TimeSpan.FromSeconds(seconds);

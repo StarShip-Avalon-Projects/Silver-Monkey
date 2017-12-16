@@ -21,9 +21,9 @@ git submodule foreach "git add --all"
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof 
 
-git submodule foreach "git commit -m'Auto Update SubModules'"
+git submodule foreach "git commit --amend --no-edit"
 
-git commit -m"Auto Version Update"
+git commit --amend --no-edit
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof 
 

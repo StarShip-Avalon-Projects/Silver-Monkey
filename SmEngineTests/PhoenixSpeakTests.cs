@@ -1,111 +1,177 @@
-﻿using NUnit.Framework;
-using SilverMonkeyEngine;
-using Furcadia;
-using Monkeyspeak;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using Furcadia.Logging;
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
-using Furcadia.Logging;
+using MonkeyCore;
+using NUnit.Framework;
+using SilverMonkeyEngine;
+using System;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using static SmEngineTests.Utilities;
 
 namespace SmEngineTests
 {
     [TestFixture]
     internal class PhoenixSpeakTests
     {
-        private BotSession Proxy;
         private const string PsGetCharacters = "PS Ok: get: result: b='<array>', bloodofaraven666='<array>', bloodstar='<array>', CJ='<array>', cjkilman='<array>', g='<array>', gerolkae='<array>', h='<array>', queenchrysalis='<array>', r='<array>', s='<array>', silvermonkey='<array>', w='<array>'";
         private const string PsGetCharacterGerolkae = "PS Ok: get: result: sys_lastused_date='2/9/2013 4:31:39 AM', testvar1=1, testvar2='Test2'";
         private const string PsGetCharacterJohn = "PS Error: get: Query error: (-1) Unexpected character '^' at column 17";
         private const string PsGetCharacterJohn2 = "PS Error: get: Query error: Field 'john' does not exist";
 
+        public string SettingsFile { get; private set; }
+        public string BackupSettingsFile { get; private set; }
+        public BotOptions options { get; private set; }
+        public BotSession Proxy { get; private set; }
+
+        public PhoenixSpeakTests()
+        {
+            SettingsFile = Path.Combine(Paths.FurcadiaSettingsPath, @"settings.ini");
+            BackupSettingsFile = Path.Combine(Paths.FurcadiaSettingsPath, @"BackupSettings.ini");
+            File.Copy(SettingsFile, BackupSettingsFile, true);
+        }
+
         [SetUp]
         public void Initialize()
         {
-            Monkeyspeak.Logging.Logger.ErrorEnabled = true;
-            Monkeyspeak.Logging.Logger.DebugEnabled = true;
-            Monkeyspeak.Logging.Logger.InfoEnabled = true;
-            Monkeyspeak.Logging.Logger.SingleThreaded = false;
-            Furcadia.Logging.Logger.ErrorEnabled = true;
-            Furcadia.Logging.Logger.DebugEnabled = true;
-            Furcadia.Logging.Logger.InfoEnabled = true;
             Furcadia.Logging.Logger.SingleThreaded = false;
+            if (!File.Exists(BackupSettingsFile))
+                throw new Exception("BackupSettingsFile Doesn't Exists");
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
             var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Bugreport 165 From Jake.ms");
             var CharacterFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "silvermonkey.ini");
-
-            BotOptions options = new BotOptions(ref BotFile)
+            var MsEngineOption = new SilverMonkeyEngine.Engine.EngineOptoons()
+            {
+                MonkeySpeakScriptFile = MsFile,
+                MS_Engine_Enable = true,
+                BotController = @"Gerolkae"
+            };
+            options = new BotOptions(ref BotFile)
             {
                 Standalone = true,
-                CharacterIniFile = CharacterFile
+                CharacterIniFile = CharacterFile,
+                MonkeySpeakEngineOptions = MsEngineOption
             };
 
-            options.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = MsFile;
-            options.MonkeySpeakEngineOptions.MS_Engine_Enable = true;
             options.SaveBotSettings();
 
             Proxy = new BotSession(options);
-            Proxy.Error += OnErrorException;
-            Proxy.ServerData2 += OnServerData;
-            Proxy.ClientData2 += OnClientData;
-            Task.Run(() => Proxy.ConnetAsync());
+            Proxy.ClientData2 += (ClintData) => Proxy.SendToServer(ClintData);
+            Proxy.ServerData2 += (ServerData) => Proxy.SendToClient(ServerData);
+            Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
         }
 
-        //[Test]
-        //public void TestPsCharacterList()
-        //{
-        //    DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
-        //    while (true)
-        //    {
-        //        Thread.Sleep(100);
-        //        if (end < DateTime.Now) break;
-        //    }
-
-        //    Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
-        //    {
-        //        var ServeObject = (ChannelObject)sender;
-        //        Assert.That(ServeObject.Player.Message, Is.EqualTo(""));
-        //    };
-
-        //    Logger.Debug($"ServerStatus: {Proxy.ServerStatus}");
-        //    Logger.Debug($"ClientStatus: {Proxy.ClientStatus}");
-        //    Proxy.ParseServerChannel(PsGetCharacters, false);
-        //}
-
-        private void OnErrorException(Exception e, object o, string text)
+        [Test]
+        public void TestPsCharacterList()
         {
-            Logger.Error($"{e} {text}");
+            var Standalone = false;
+            BotHasConnected_StandAlone(Standalone);
+            HaltFor(DreamEntranceDelay);
+
+            Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
+            {
+                var ServeObject = (ChannelObject)sender;
+                Assert.That(ServeObject.Player.Message,
+                    Is.EqualTo(""));
+            };
+
+            Proxy.ParseServerChannel(PsGetCharacters, false);
+
+            DisconnectTests(Standalone);
         }
 
-        private void OnServerData(string data)
+        public void BaseTest(bool Standalone)
         {
-            Proxy.SendToClient(data);
+            BotHasConnected_StandAlone(Standalone);
+            HaltFor(DreamEntranceDelay);
+            //
+            Assert.Multiple(() =>
+            {
+            });
+
+            DisconnectTests(Standalone);
         }
 
-        private void OnClientData(string data)
+        public void BotHasConnected_StandAlone(bool StandAlone = false)
         {
-            Proxy.SendToServer(data);
+            Proxy.StandAlone = StandAlone;
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+
+            HaltFor(ConnectWaitTime);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(Proxy.ServerStatus,
+                    Is.EqualTo(ConnectionPhase.Connected),
+                    $"Proxy.ServerStatus {Proxy.ServerStatus}");
+                Assert.That(Proxy.IsServerSocketConnected,
+                    Is.EqualTo(true),
+                    $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
+                if (StandAlone)
+                {
+                    Assert.That(Proxy.ClientStatus,
+                        Is.EqualTo(ConnectionPhase.Connected),
+                         $"Proxy.ClientStatus {Proxy.ClientStatus}");
+                    Assert.That(Proxy.IsClientSocketConnected,
+                        Is.EqualTo(false),
+                         $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
+                    Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                        Is.EqualTo(false),
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                }
+                else
+                {
+                    Assert.That(Proxy.ClientStatus,
+                        Is.EqualTo(ConnectionPhase.Connected),
+                        $"Proxy.ClientStatus {Proxy.ClientStatus}");
+                    Assert.That(Proxy.IsClientSocketConnected,
+                        Is.EqualTo(true),
+                        $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
+                    Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                        Is.EqualTo(true),
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                }
+            });
+        }
+
+        public void DisconnectTests(bool StandAlone = false)
+        {
+            Proxy.Disconnect();
+            HaltFor(CleanupDelayTime);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(Proxy.ServerStatus,
+                     Is.EqualTo(ConnectionPhase.Disconnected),
+                    $"Proxy.ServerStatus {Proxy.ServerStatus}");
+                Assert.That(Proxy.IsServerSocketConnected,
+                     Is.EqualTo(false),
+                    $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
+                Assert.That(Proxy.ClientStatus,
+                     Is.EqualTo(ConnectionPhase.Disconnected),
+                     $"Proxy.ClientStatus {Proxy.ClientStatus}");
+                Assert.That(Proxy.IsClientSocketConnected,
+                     Is.EqualTo(false),
+                     $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
+                Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                     Is.EqualTo(false),
+                    $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+            });
         }
 
         [TearDown]
         public void Cleanup()
         {
-            DateTime end = DateTime.Now + TimeSpan.FromSeconds(10);
-            while (true)
-            {
-                Thread.Sleep(100);
-                if (end < DateTime.Now) break;
-            }
-            Proxy.Disconnect();
+            Proxy.ClientData2 -= (data) => Proxy.SendToServer(data);
+            Proxy.ServerData2 -= (data) => Proxy.SendToClient(data);
+            Proxy.Error -= (e, o) => Logger.Error($"{e} {o}");
+
             Proxy.Dispose();
+            options = null;
         }
     }
 }

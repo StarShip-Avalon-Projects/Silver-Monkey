@@ -586,8 +586,8 @@ Public Class BotSession
     ''' <param name="e">The e.</param>
     ''' <param name="o">The o.</param>
     ''' <param name="n">The n.</param>
-    Protected Overrides Sub SendError(e As Exception, o As Object, n As String) Handles MyBase.[Error]
-        RaiseEvent [Error](e, o, n)
+    Protected Overrides Sub SendError(e As Exception, o As Object) Handles MyBase.[Error]
+        RaiseEvent [Error](e, o)
     End Sub
 
     ''' <summary>
@@ -598,10 +598,10 @@ Public Class BotSession
     ''' <param name="ex"></param>
     Private Sub OnMonkeySpeakError(page As Page, handler As TriggerHandler, trigger As Trigger, ex As Exception) Handles MSpage.Error
         If ex.GetType IsNot GetType(MonkeyspeakException) Then
-            Dim PageError As New MonkeyspeakException(String.Format("Trigger Error: {0}", trigger.ToString), ex)
-            SendError(PageError, handler, trigger.ToString)
+            Dim PageError As New MonkeyspeakException($"Trigger Error: {trigger} {ex}")
+            SendError(PageError, handler)
         Else
-            SendError(ex, handler, trigger.ToString)
+            SendError(ex, handler)
         End If
 
     End Sub
