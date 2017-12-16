@@ -268,26 +268,26 @@ namespace SmEngineTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(Proxy.ServerStatus == ConnectionPhase.Connected,
+                Assert.That(Proxy.ServerStatus, Is.EqualTo(ConnectionPhase.Connected),
                     $"Proxy.ServerStatus {Proxy.ServerStatus}");
-                Assert.That(Proxy.IsServerSocketConnected == true,
+                Assert.That(Proxy.IsServerSocketConnected, Is.EqualTo(true),
                     $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
                 if (StandAlone)
                 {
-                    Assert.That(Proxy.ClientStatus == ConnectionPhase.Disconnected,
+                    Assert.That(Proxy.ClientStatus, Is.EqualTo(ConnectionPhase.Connected),
                          $"Proxy.ClientStatus {Proxy.ClientStatus}");
-                    Assert.That(Proxy.IsClientSocketConnected == false,
+                    Assert.That(Proxy.IsClientSocketConnected, Is.EqualTo(false),
                          $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.IsFurcadiaClientIsRunning == false,
+                    Assert.That(Proxy.IsFurcadiaClientIsRunning, Is.EqualTo(false),
                         $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
                 }
                 else
                 {
                     Assert.That(Proxy.ClientStatus == ConnectionPhase.Connected,
                         $"Proxy.ClientStatus {Proxy.ClientStatus}");
-                    Assert.That(Proxy.IsClientSocketConnected == true,
+                    Assert.That(Proxy.IsClientSocketConnected, Is.EqualTo(true),
                         $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.IsFurcadiaClientIsRunning == true,
+                    Assert.That(Proxy.IsFurcadiaClientIsRunning, Is.EqualTo(true),
                         $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
                 }
             });

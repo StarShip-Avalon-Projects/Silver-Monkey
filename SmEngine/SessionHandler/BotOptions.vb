@@ -63,7 +63,7 @@ Public Class BotOptions : Inherits Options.ProxySessionOptions
 
         s = BotIni.GetKeyValue("Bot", "LPort")
         If Not String.IsNullOrEmpty(s) Then
-            LocalhostPort = 0
+            LocalhostPort = 6700
             Integer.TryParse(s, LocalhostPort)
         End If
 

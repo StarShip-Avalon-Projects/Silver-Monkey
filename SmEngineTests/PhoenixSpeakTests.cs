@@ -80,9 +80,9 @@ namespace SmEngineTests
         //    Proxy.ParseServerChannel(PsGetCharacters, false);
         //}
 
-        private void OnErrorException(Exception e, object o, string text)
+        private void OnErrorException(Exception e, object o)
         {
-            Logger.Error($"{e} {text}");
+            Logger.Error($"{e} {o}");
         }
 
         private void OnServerData(string data)
