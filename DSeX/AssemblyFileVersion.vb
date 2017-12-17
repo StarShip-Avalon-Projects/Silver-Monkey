@@ -5,7 +5,7 @@
 '' 
 Imports System.Reflection
 
-<Assembly: AssemblyVersion("1.1.499.1216")> 
-<Assembly: AssemblyFileVersion("1.1.499.1216")> 
+<Assembly: AssemblyVersion("1.1.499.1215")> 
+<Assembly: AssemblyFileVersion("1.1.499.1215")> 
 <Assembly: AssemblyCopyright("Copyright © 2017 - 2017")>
 
