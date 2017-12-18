@@ -14,6 +14,8 @@ git.exe push --recurse-submodules=on-demand
 set git.exe_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof
 
+git submodule foreach "git push || true"
+
 :PullRequest
 call PullRequest.cmd
 
