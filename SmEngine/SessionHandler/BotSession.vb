@@ -97,8 +97,20 @@ Public Class BotSession
         Initialize()
     End Sub
 
+    ''' <summary>
+    ''' Initializes this instance.
+    ''' <para/>
+    ''' If in debug mode, Loging will be eabled while Debugger is attached
+    ''' </summary>
     Private Sub Initialize()
-        lastDream = New Dream
+#If DEBUG Then
+        If Not Debugger.IsAttached Then
+            Logger.Disable(Of BotSession)()
+        End If
+#Else
+            Logger.Disable(Of BotSession)()
+#End If
+        lastDream = New Dream()
     End Sub
 
     ''' <summary>
@@ -437,10 +449,10 @@ Public Class BotSession
                     End If
                     Exit Sub
                 Case "@cookie"
-                    ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Cookie <a href='http://www.furcadia.com/cookies/Cookie%20Economy.html'>bank</a> has currently collected: 0</font>
-                    ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> All-time Cookie total: 0</font>
-                    ' <font color='success'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Your cookies are ready.  http://furcadia.com/cookies/ for more info!</font>
-                    '<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.
+                    ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie'/><channel name='@cookie'/> Cookie <a href='http://www.furcadia.com/cookies/Cookie%20Economy.html'>bank</a> has currently collected: 0</font>
+                    ' <font color='emit'><img src='fsh://system.fsh:90' alt='@cookie'/><channel name='@cookie'/> All-time Cookie total: 0</font>
+                    ' <font color='success'><img src='fsh://system.fsh:90' alt='@cookie'/><channel name='@cookie'/> Your cookies are ready.  http://furcadia.com/cookies/ for more info!</font>
+                    '<img src='fsh://system.fsh:90' alt='@cookie'/><channel name='@cookie'/> You eat a cookie.
 
                     Dim CookieToMe = New Regex($"{CookieToMeREGEX}")
                     If CookieToMe.Match(Text).Success Then
@@ -462,7 +474,7 @@ Public Class BotSession
                     If CookieFail.Match(Text).Success Then
                         Await MSpage.ExecuteAsync(45, Furr)
                     End If
-                    Dim EatCookie = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> You eat a cookie.") + "(.*?)")
+                    Dim EatCookie = New Regex(Regex.Escape("<img src='fsh://system.fsh:90' alt='@cookie'/><channel name='@cookie'/> You eat a cookie.") + "(.*?)")
                     If EatCookie.Match(Text).Success Then
                         'TODO Cookie eat %MESSAGE can change by Dragon Speak
 
