@@ -21,13 +21,13 @@ git submodule foreach "git add --all"
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof 
 
-git submodule foreach "git commit --amend --no-edit"
+git submodule foreach "git commit --amend --no-edit || true"
 
 git commit --amend --no-edit
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof 
 
-git push --recurse-submodules=check
+git push --recurse-submodules=on-demand
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof
 
