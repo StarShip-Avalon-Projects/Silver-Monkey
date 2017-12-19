@@ -112,7 +112,6 @@ namespace SmEngineTests
 
         [TestCase(WhisperTest, "Gerolkae")]
         [TestCase(PingTest, "Gerolkae")]
-        //   [TestCase(YouWhisper, "Silver Monkey")]
         [TestCase(YouWhisper2, "Silver Monkey")]
         [TestCase(GeroShout, "Gerolkae")]
         [TestCase(YouShouYo, "Silver Monkey")]
