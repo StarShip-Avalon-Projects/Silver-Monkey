@@ -16,6 +16,7 @@ Public Class BotSetup
 
     Public Sub New(ByRef BotConfig As BotOptions)
         bFile = BotConfig
+        HelpLinks = New LabelHotlinks()
         _TabIndex = 0
         InitializeComponent()
         ToolTip1.SetToolTip(LinkLabel1, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
@@ -26,6 +27,7 @@ Public Class BotSetup
 #Region "Private Fields"
 
     Private _TabIndex As Integer
+    Private HelpLinks As LabelHotlinks
 
 #End Region
 
@@ -202,7 +204,7 @@ Public Class BotSetup
     End Sub
 
     Private Sub onFurEdClick(sender As Object, e As EventArgs) Handles LinkLabel1.Click
-        Diagnostics.Process.Start("http://www.furcadia.com/services/retrieve/retrieve.php4")
+        Diagnostics.Process.Start(HelpLinks.IniRetrieval)
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles RadioButton4.CheckedChanged

@@ -45,6 +45,10 @@ Partial Class BotSetup
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.NumericTimeOut = New System.Windows.Forms.NumericUpDown()
+        Me.NumericRetryAttempts = New System.Windows.Forms.NumericUpDown()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.StandAloneChkBx = New System.Windows.Forms.CheckBox()
         Me.ChkBxAutoConnect = New System.Windows.Forms.CheckBox()
         Me.MSEnableChkBx = New System.Windows.Forms.CheckBox()
@@ -70,21 +74,17 @@ Partial Class BotSetup
         Me.Label12 = New System.Windows.Forms.Label()
         Me.IniBrowse = New System.Windows.Forms.OpenFileDialog()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.NumericRetryAttempts = New System.Windows.Forms.NumericUpDown()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.NumericTimeOut = New System.Windows.Forms.NumericUpDown()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
+        CType(Me.NumericTimeOut, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericRetryAttempts, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
-        CType(Me.NumericRetryAttempts, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.NumericTimeOut, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
@@ -175,21 +175,22 @@ Partial Class BotSetup
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabPage1.Size = New System.Drawing.Size(1041, 474)
+        Me.TabPage1.Size = New System.Drawing.Size(1098, 474)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Main"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'LinkLabel1
         '
+        Me.LinkLabel1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Location = New System.Drawing.Point(976, 95)
+        Me.LinkLabel1.Location = New System.Drawing.Point(992, 91)
         Me.LinkLabel1.Margin = New System.Windows.Forms.Padding(8, 0, 8, 0)
         Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(31, 32)
+        Me.LinkLabel1.Size = New System.Drawing.Size(90, 32)
         Me.LinkLabel1.TabIndex = 79
         Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "?"
+        Me.LinkLabel1.Text = "Help?"
         '
         'BtnMS_File
         '
@@ -326,6 +327,38 @@ Partial Class BotSetup
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Connection"
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(632, 183)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(249, 32)
+        Me.Label5.TabIndex = 94
+        Me.Label5.Text = "Time Out Seconds"
+        '
+        'NumericTimeOut
+        '
+        Me.NumericTimeOut.Location = New System.Drawing.Point(897, 181)
+        Me.NumericTimeOut.Name = "NumericTimeOut"
+        Me.NumericTimeOut.Size = New System.Drawing.Size(120, 38)
+        Me.NumericTimeOut.TabIndex = 93
+        '
+        'NumericRetryAttempts
+        '
+        Me.NumericRetryAttempts.Location = New System.Drawing.Point(897, 122)
+        Me.NumericRetryAttempts.Name = "NumericRetryAttempts"
+        Me.NumericRetryAttempts.Size = New System.Drawing.Size(120, 38)
+        Me.NumericRetryAttempts.TabIndex = 91
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(660, 124)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(201, 32)
+        Me.Label2.TabIndex = 92
+        Me.Label2.Text = "Retry Attempts"
+        '
         'StandAloneChkBx
         '
         Me.StandAloneChkBx.AutoSize = True
@@ -461,7 +494,7 @@ Partial Class BotSetup
         Me.TabPage4.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabPage4.Size = New System.Drawing.Size(1041, 474)
+        Me.TabPage4.Size = New System.Drawing.Size(1098, 474)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Log Options"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -601,38 +634,6 @@ Partial Class BotSetup
         Me.ToolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning
         Me.ToolTip1.ToolTipTitle = "Legacy Feature"
         '
-        'NumericRetryAttempts
-        '
-        Me.NumericRetryAttempts.Location = New System.Drawing.Point(897, 122)
-        Me.NumericRetryAttempts.Name = "NumericRetryAttempts"
-        Me.NumericRetryAttempts.Size = New System.Drawing.Size(120, 38)
-        Me.NumericRetryAttempts.TabIndex = 91
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(660, 124)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(201, 32)
-        Me.Label2.TabIndex = 92
-        Me.Label2.Text = "Retry Attempts"
-        '
-        'NumericTimeOut
-        '
-        Me.NumericTimeOut.Location = New System.Drawing.Point(897, 181)
-        Me.NumericTimeOut.Name = "NumericTimeOut"
-        Me.NumericTimeOut.Size = New System.Drawing.Size(120, 38)
-        Me.NumericTimeOut.TabIndex = 93
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(632, 183)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(249, 32)
-        Me.Label5.TabIndex = 94
-        Me.Label5.Text = "Time Out Seconds"
-        '
         'BotSetup
         '
         Me.AcceptButton = Me.OK_Button
@@ -658,6 +659,8 @@ Partial Class BotSetup
         Me.TabPage2.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        CType(Me.NumericTimeOut, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericRetryAttempts, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.TabPage4.ResumeLayout(False)
@@ -665,8 +668,6 @@ Partial Class BotSetup
         Me.GroupBox6.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
-        CType(Me.NumericRetryAttempts, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.NumericTimeOut, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

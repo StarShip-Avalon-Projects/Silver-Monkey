@@ -144,6 +144,7 @@
     <Compile Include="BotSetup.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Controls\LabelHotlinks.vb" />
     <Compile Include="Controls\Settings Editor\Config.Designer.vb">
       <DependentUpon>Config.vb</DependentUpon>
     </Compile>
@@ -257,6 +258,9 @@
     <Content Include="AssemblyInfoersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfoersion1.vb</LastGenOutput>
+    </Content>
+    <Content Include="ControlHelpLinks.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="DotNetChecker.nsh">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
