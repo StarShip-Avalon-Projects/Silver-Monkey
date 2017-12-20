@@ -64,24 +64,6 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
-      <Name>SilverMonkeyEngine</Name>
-      <Project>{3C0E1CBF-D3B9-4282-AC97-4E0216CA6C97}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\ChatBot\ChatBot.vbproj">
-      <Name>ChatBot</Name>
-      <Project>{97caa3b6-e99a-41ab-88df-71cbf8339b89}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
     <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
       <Name>DataMonkey</Name>
       <Project>{9072cd13-8b7e-4a22-bc28-6087785a5d9a}</Project>
@@ -107,32 +89,6 @@
       <DoNotHarvest>
       </DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\SilverMonkey\SilverMonkey2.vbproj">
-      <Name>SilverMonkey2</Name>
-      <Project>{cd544712-0665-44db-bb70-5b9d4395b050}</Project>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\Verbot Knowledgebase Editor\Verbot Knowledgebase Editor.vbproj">
-      <Name>VerbotKnowledgebaseEditor</Name>
-      <Project>{b008b931-21e4-40b6-92f0-dd1bebc569f3}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\VerbotSDK\Verbot5Library.csproj">
-      <Name>Verbot5Library</Name>
-      <Project>{4d25b13b-4d67-433f-9181-bf5fdfa931b6}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
   </ItemGroup>
@@ -190,6 +146,6 @@
   <Target Name="AfterBuild">
     <!-- <Exec Command="Signtool.exe sign /a &quot;%(SignCabs.FullPath)&quot;" />
     <Exec Command="signtool.exe sign /a &quot;..\Build\Installer\$(Configuration)\$(OutputName).msi&quot;" /> -->
-  <!--  <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-$(FileVersion).msi" />-->
+    <!--  <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-$(FileVersion).msi" />-->
   </Target>
 </Project>

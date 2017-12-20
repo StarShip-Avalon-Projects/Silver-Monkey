@@ -74,10 +74,6 @@
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Name>Monkeyspeak</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SmEngine\SilverMonkeyEngine.vbproj">
-      <Project>{3c0e1cbf-d3b9-4282-ac97-4e0216ca6c97}</Project>
-      <Name>SilverMonkeyEngine</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
