@@ -1,0 +1,140 @@
+﻿<Window x:Class="SilverMonkey.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SilverMonkey.Views"
+        mc:Ignorable="d"
+        Title="ShellView" Height="449.278" Width="477.863">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <!-- Row 1-->
+        <TextBlock Grid.Column="1"
+                   Grid.Row="1"
+                   Text="Log"
+                   Padding="10" />
+
+        <TabControl
+             Grid.Column="4"
+             Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2">
+
+            <TabItem Header="Furres">
+                <TreeView
+                    x:Name="FurreList"
+ />
+            </TabItem>
+            <TabItem Header="Dream Info"></TabItem>
+            <TabItem Header="Dream List">
+                <TreeView x:Name="DreamList" />
+            </TabItem>
+        </TabControl>
+
+        <!-- Row 2-->
+        <RichTextBox x:Name="LogOutputBox"
+                     Grid.ColumnSpan="3"
+                     Grid.Column="1"
+                     Grid.Row="2"
+                     MinWidth="150"
+                     MinHeight="100">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
+
+        <!-- Row 3-->
+        <TextBlock Grid.Column="1"
+                   Grid.Row="3"
+                   Text="Text to server"
+                   Padding="10" />
+        <RichTextBox x:Name="InputTextBox"
+                     Binding.SourceUpdated="InputTextBox_SourceUpdated"
+                     Grid.ColumnSpan="3"
+                     Grid.Column="1"
+                     Grid.Row="4"
+                     MinWidth="150"
+                     MinHeight="100">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
+
+        <!-- Row 5-->
+        <Button Grid.Column="2" Grid.Row="5" Content="Submit to Server"
+                Margin="10">
+        </Button>
+
+        <Grid Grid.Column="4" Grid.Row="4"
+          Grid.ColumnSpan="2" Grid.RowSpan="2"
+               Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Button Grid.Column="1"
+                    Grid.Row="1"
+                    Content="Turn CW"
+                    ></Button>
+            <Button Grid.Column="2"
+                    Grid.Row="1"
+                     Content="Move Ne"
+                    ></Button>
+            <Button Grid.Column="3"
+                    Grid.Row="1"
+                     Content="Move NW"
+                    ></Button>
+            <Button Grid.Column="1"
+                    Grid.Row="2"
+                     Content="Turn CCW"
+                    ></Button>
+            <Button Grid.Column="2"
+                    Grid.Row="2"
+                     Content="Move SW"
+                    ></Button>
+            <Button Grid.Column="3"
+                    Grid.Row="2"
+                     Content="Move SE"
+                    ></Button>
+            <Button Grid.Column="1"
+                    Grid.Row="3"
+                     Content="Stand Sit Lie"
+                    ></Button>
+            <Button Grid.Column="2"
+                    Grid.Row="3"
+                     Content="Get/drop"
+                    ></Button>
+            <Button Grid.Column="3"
+                    Grid.Row="3"
+                     Content="Use 'F3'"
+                    ></Button>
+        </Grid>
+    </Grid>
+</Window>

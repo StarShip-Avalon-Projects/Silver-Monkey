@@ -36,10 +36,10 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
-      <DocumentationSource sourceFile="..\SmEngine\SilverMonkeyEngine.vbproj" />
-      <DocumentationSource sourceFile="..\SilverMonkey\SilverMonkey2.vbproj" />
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
       <DocumentationSource sourceFile="..\MonkeySpeakEx\Monkeyspeak.csproj" />
+      <DocumentationSource sourceFile="..\SmEngine\SmEngine.csproj" />
+      <DocumentationSource sourceFile="..\SimverMonkey3\SilverMonkey3.csproj" />
     </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>
