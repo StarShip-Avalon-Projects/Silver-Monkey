@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SilverMonkey.Views
 {
@@ -24,8 +13,67 @@ namespace SilverMonkey.Views
             InitializeComponent();
         }
 
-        private void InputTextBox_SourceUpdated(object sender, DataTransferEventArgs e)
+        private void ButtonUse_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void ButtonGetDrop_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonStandSitLie_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonMoveSe_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonMoveSw_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonTurnCounterClockwise_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonMoveNe_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonMoveNw_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonTurnClocwise_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonGo_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonSend_Click(object sender, RoutedEventArgs e)
+        {
+            SendTextToServer();
+        }
+
+        private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SendTextToServer();
+            }
+        }
+
+        private void SendTextToServer()
+        {
+            if (InputTextBox.Document.Blocks.Count > 0)
+            {
+                var text = InputTextBox.GetText();
+                LogOutputBox.AppendParagraph(text);
+                InputTextBox.Focus();
+            }
         }
     }
 }

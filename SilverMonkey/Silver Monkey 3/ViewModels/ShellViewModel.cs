@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace SilverMonkey.ViewModels
 {
@@ -12,47 +16,46 @@ namespace SilverMonkey.ViewModels
     {
         #region Private Fields
 
-        private string _LogOutputBox;
-        private string _InputTextBox;
+        private string _DreamURL;
+        private string _DreamName;
+        private string _rating;
+
+        private BindableCollection<Furre> _FurreList = new BindableCollection<Furre>();
+        public Furre SelectedFurre { get; set; }
 
         #endregion Private Fields
 
         #region Public Properties
 
-        /// <summary>
-        /// Gets or sets the log output box.
-        /// </summary>
-        /// <value>
-        /// The log output box.
-        /// </value>
-        public string LogOutputBox
+        public string DreamName
         {
-            get { return _LogOutputBox; }
+            get { return _DreamName; }
             set
             {
-                _LogOutputBox = value;
-                NotifyOfPropertyChange(() => LogOutputBox);
+                _DreamName = value;
+                NotifyOfPropertyChange(() => DreamName);
             }
         }
 
-        /// <summary>
-        /// Gets or sets the input text box.
-        /// </summary>
-        /// <value>
-        /// The input text box.
-        /// </value>
-        public string InputTextBox
+        public string DreamRating
         {
-            get { return _InputTextBox; }
+            get { return _rating; }
             set
             {
-                _InputTextBox = value;
-                NotifyOfPropertyChange(() => InputTextBox);
+                _rating = value;
+                NotifyOfPropertyChange(() => DreamRating);
             }
         }
 
-        private BindableCollection<Furre> _FurreList = new BindableCollection<Furre>();
-        public Furre SelectedFurre { get; set; }
+        public string DreamURL
+        {
+            get { return _DreamURL; }
+            set
+            {
+                _DreamURL = value;
+                NotifyOfPropertyChange(() => DreamURL);
+            }
+        }
 
         #endregion Public Properties
     }
