@@ -8,32 +8,22 @@ namespace SilverMonkey.Views
     /// </summary>
     public partial class ShellView : Window
     {
+        #region Public Constructors
+
         public ShellView()
         {
             InitializeComponent();
         }
 
-        private void ButtonUse_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        #endregion Public Constructors
+
+        #region Private Methods
 
         private void ButtonGetDrop_Click(object sender, RoutedEventArgs e)
         {
         }
 
-        private void ButtonStandSitLie_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void ButtonMoveSe_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void ButtonMoveSw_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void ButtonTurnCounterClockwise_Click(object sender, RoutedEventArgs e)
+        private void ButtonGo_Click(object sender, RoutedEventArgs e)
         {
         }
 
@@ -45,11 +35,11 @@ namespace SilverMonkey.Views
         {
         }
 
-        private void ButtonTurnClocwise_Click(object sender, RoutedEventArgs e)
+        private void ButtonMoveSe_Click(object sender, RoutedEventArgs e)
         {
         }
 
-        private void ButtonGo_Click(object sender, RoutedEventArgs e)
+        private void ButtonMoveSw_Click(object sender, RoutedEventArgs e)
         {
         }
 
@@ -58,12 +48,44 @@ namespace SilverMonkey.Views
             SendTextToServer();
         }
 
+        private void ButtonStandSitLie_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonTurnClocwise_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonTurnCounterClockwise_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonUse_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void EditBotMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
         private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 SendTextToServer();
             }
+        }
+
+        private void NewBotMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void OpenBotMeuItem_Click(object sender, RoutedEventArgs e)
+        {
         }
 
         private void SendTextToServer()
@@ -75,5 +97,7 @@ namespace SilverMonkey.Views
                 InputTextBox.Focus();
             }
         }
+
+        #endregion Private Methods
     }
 }

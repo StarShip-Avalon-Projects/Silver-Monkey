@@ -38,15 +38,14 @@ using static Engine.Libraries.MsLibHelper;
 /// </para>
 /// </summary>
 /// <seealso cref="Furcadia.Net.Proxy.ProxySession" />
-/// <seealso cref="System.IDisposable" />
-public class Bot : ProxySession, IDisposable
+public class Bot : ProxySession
 {
     #region Public Fields
 
     /// <summary>
     /// Monkey Speak Page object
     /// </summary>
-    public Monkeyspeak.Page MSpage;
+    public Page MSpage;
 
     #endregion Public Fields
 
@@ -54,14 +53,7 @@ public class Bot : ProxySession, IDisposable
 
     private BotOptions _options;
 
-    //   Public objHost As New smHost(Me)
-    private bool disposed;
-
-    private SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
-
     private Dream lastDream;
-
-    private MonkeyCore.Settings.cMain MainSettings;
 
     // '' <summary>
     // '' Main MonkeySpeak Engine
@@ -97,17 +89,6 @@ public class Bot : ProxySession, IDisposable
     }
 
     #endregion Public Constructors
-
-    #region Public Events
-
-    public event Action CloseSession;
-
-    /// <summary>
-    /// This is triggered when a handled Exception is thrown.
-    /// </summary>
-    public event ErrorEventHandler Error;
-
-    #endregion Public Events
 
     #region Public Properties
 
@@ -149,11 +130,11 @@ public class Bot : ProxySession, IDisposable
     {
         get
         {
-            return _options;
+            return this._options;
         }
         set
         {
-            _options = value;
+            this._options = value;
             base.Options = _options;
             MsEngineOptions = _options.MonkeySpeakEngineOptions;
         }
@@ -174,17 +155,6 @@ public class Bot : ProxySession, IDisposable
     }
 
     /// <summary>
-    /// implementation of Dispose pattern callable by consumers.
-    /// </summary>
-    public override void Dispose()
-    {
-        this.Dispose(true);
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
-    }
-
-    /// <summary>
     /// Pages the set variable.
     /// </summary>
     /// <param name="VariableList">The variable list.</param>
@@ -194,8 +164,6 @@ public class Bot : ProxySession, IDisposable
         {
             MSpage.SetVariable(variable);
         }
-
-        //
     }
 
     /// <summary>
@@ -212,13 +180,13 @@ public class Bot : ProxySession, IDisposable
         SendToClient($"(<b><i>[SM]</i> - {msg}:</b> \"{data}\"");
     }
 
-    // '' <summary>
-    // '' Stop the Monkey Speak Engine
-    // '' </summary>
+    /// <summary>
+    /// Stops the engine.
+    /// </summary>
     public void StopEngine()
     {
         //   RemoveHandler ProcessServerChannelData, Me
-        if (!(MSpage == null))
+        if (MSpage != null)
         {
             MSpage.Reset(true);
         }
@@ -226,44 +194,11 @@ public class Bot : ProxySession, IDisposable
 
     #endregion Public Methods
 
-    #region Protected Methods
 
-    // '' <summary>
-    // '' Dispose components
-    // '' </summary>
-    // '' <param name="disposing"></param>
-    protected void Dispose(bool disposing)
-    {
-        if (this.disposed)
-        {
-            return;
-        }
-
-        if (disposing)
-        {
-            //  Free your own state (unmanaged objects).
-            //  Set large fields to null.
-            base.Dispose();
-        }
-
-        this.disposed = true;
-    }
-
-    /// <summary>
-    /// send errors to the error handler
-    /// </summary>
-    /// <param name="e"></param>
-    /// <param name="o"></param>
-    protected override void SendError(Exception e, object o)
-    {
-        Error(e, o);
-    }
-
-    #endregion Protected Methods
 
     #region Private Methods
 
-    private void BotSession_ClientStatusChanged(object Sender, NetClientEventArgs e)
+    private void OnClientStatusChanged(object Sender, NetClientEventArgs e)
     {
         if ((MSpage == null))
         {
@@ -286,25 +221,31 @@ public class Bot : ProxySession, IDisposable
         }
     }
 
-    private async void ConnetAsync()
+    /// <summary>
+    /// Connets to the game server asyncronously.
+    /// </summary>
+    public async void ConnetAsync()
     {
-        //if (MsEngineOptions.MS_Engine_Enable)
-        //{
-        //    await this.StartEngine();
-        //}
+        if (MsEngineOptions.MS_Engine_Enable)
+        {
+            await this.StartEngine();
+        }
 
         await Task.Run(() => Connect());
     }
 
-    // '' <summary>
-    // '' Initializes this instance.
-    // '' <para/>
-    // '' If in debug mode, Loging will be eabled while Debugger is attached
-    // '' </summary>
+    /// <summary>
+    /// Initializes this instance.
+    /// </summary>
     private void Initialize()
     {
-        // TODO: #End If ... Warning!!! not translated
         lastDream = new Dream();
+        ClientData2 += (ClintData) => SendToServer(ClintData);
+        ServerData2 += (ServerData) => SendToClient(ServerData);
+        ProcessServerChannelData += (s, o) => OnServerChannel(s, o);
+        ProcessServerInstruction += (s, o) => OnParseSererInstructionAsync(s, o);
+        ServerStatusChanged += (s, o) => OnServerStatusChanged(s, o);
+        ClientStatusChanged += (s, o) => OnClientStatusChanged(s, o);
     }
 
     // '' <summary>
@@ -368,22 +309,23 @@ public class Bot : ProxySession, IDisposable
         return MSpage;
     }
 
-    // '' <summary>
-    // '' Pump MonkeySpeak Exceptions to the error handler
-    // '' </summary>
-    // '' <param name="handler"></param>
-    // '' <param name="Trigger"></param>
-    // '' <param name="ex"></param>
+    /// <summary>
+    /// Pump MonkeySpeak Exceptions to the error handler
+    /// </summary>
+    /// <param name="page">The <see cref="Page"/>.</param>
+    /// <param name="handler">The <see cref="TriggerHandler"/></param>
+    /// <param name="trigger">The <see cref="Trigger"/></param>
+    /// <param name="ex">The ex.</param>
     private void OnMonkeySpeakError(Page page, TriggerHandler handler, Trigger trigger, Exception ex)
     {
         if (ex.GetType() != typeof(MonkeyspeakException))
         {
-            MonkeyspeakException PageError = new MonkeyspeakException("Trigger Error: {trigger} {ex}");
-            this.SendError(PageError, handler);
+            MonkeyspeakException PageError = new MonkeyspeakException($"Trigger Error: {trigger} {ex}");
+            SendError(PageError, handler);
         }
         else
         {
-            this.SendError(ex, handler);
+            SendError(ex, handler);
         }
     }
 
@@ -436,7 +378,7 @@ public class Bot : ProxySession, IDisposable
                     break;
 
                 case ServerInstructionType.UpdateColorString:
-                    object fur = ConnectedFurre;
+                    var fur = ConnectedFurre;
                     break;
 
                 case ServerInstructionType.LookResponse:
@@ -761,7 +703,7 @@ public class Bot : ProxySession, IDisposable
     // '' </summary>
     // '' <param name="silent"> Announce Loaded Libraries</param>
 
-    private async void StartEngine()
+    private async Task StartEngine()
     {
         MsEngine = new MonkeyspeakEngine(MsEngineOptions);
         string MonkeySpeakScript = Engine.MsEngineExtentionFunctions.LoadFromScriptFile(MsEngineOptions.MonkeySpeakScriptFile);

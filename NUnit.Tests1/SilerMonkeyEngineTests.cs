@@ -78,8 +78,7 @@ namespace SmEngineTests
             options.SaveBotSettings();
 
             Proxy = new Bot(options);
-            Proxy.ClientData2 += (ClintData) => Proxy.SendToServer(ClintData);
-            Proxy.ServerData2 += (ServerData) => Proxy.SendToClient(ServerData);
+
             Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
         }
 
@@ -311,8 +310,8 @@ namespace SmEngineTests
         public void BotHasConnected_StandAlone(bool StandAlone = false)
         {
             Proxy.StandAlone = StandAlone;
-            //  Task.Run(() => Proxy.ConnetAsync()).Wait();
-            Proxy.Connect();
+            Task.Run(() => Proxy.ConnetAsync()).Wait();
+            //Proxy.Connect();
             HaltFor(ConnectWaitTime);
 
             Assert.Multiple(() =>

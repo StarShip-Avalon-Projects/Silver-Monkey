@@ -5,22 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SilverMonkey.Views"
         mc:Ignorable="d"
-        Title="Silver Monkey" Height="470.614" Width="849.598"
+        Title="Silver Monkey" Height="600" Width="849.598"
         Background="Black"
         Foreground="Crimson"
         FontSize="18">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
@@ -29,26 +32,65 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
+        <Menu Grid.ColumnSpan="8"
+              Grid.Row="0"
+              Grid.Column="1">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New Bot"
+                          x:Name="NewBotMenuItem"
+                          Click="NewBotMenuItem_Click" />
+                <MenuItem Header="_Open"
+                          x:Name="OpenBotMeuItem"
+                          Click="OpenBotMeuItem_Click" />
+                <MenuItem Header="_Recent" />
+                <MenuItem Header="Edit Bot"
+                          x:Name="EditBotMenuItem"
+                          Click="EditBotMenuItem_Click" />
+
+                <MenuItem Header="_Exit"
+                          x:Name="ExitMenuItem"
+                          Click="ExitMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+
+                <MenuItem Header="_Copy" />
+                <MenuItem Header="_Cut" />
+                <MenuItem Header="_Paste" />
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Edit Monkey Speak">
+                </MenuItem>
+                <MenuItem Header="_Debug Window" />
+                <MenuItem Header="_Data Monkey" />
+            </MenuItem>
+            <MenuItem Header="Resource Links">
+            </MenuItem>
+            <MenuItem Header="Help">
+            </MenuItem>
+        </Menu>
+        <TextBox AcceptsReturn="True" />
 
         <!-- Row 1-->
         <TextBlock Grid.Column="1"
                    Grid.Row="1"
                    Text="Log"
+                   Margin="10"
                    Padding="10" />
 
-        <TabControl
+        <TabControl Margin="10"
              Grid.Column="4"
              Grid.Row="1"
             Grid.RowSpan="2"
-            Grid.ColumnSpan="2">
+            Grid.ColumnSpan="4">
 
             <TabItem Header="Furres">
                 <TreeView
                     x:Name="FurreList" />
             </TabItem>
             <TabItem Header="Dream Info">
-                <Grid Grid.Column="4" Grid.Row="4"
-          Grid.ColumnSpan="2"
+                <Grid Grid.Column="4"
+                      Grid.Row="4"
+          Grid.ColumnSpan="4"
                Margin="20"
 
               HorizontalAlignment="Center"
@@ -101,6 +143,7 @@
                      Grid.ColumnSpan="3"
                      Grid.Column="1"
                      Grid.Row="2"
+                     Margin="10"
                      MinWidth="150"
                      MinHeight="100"
                      IsReadOnly="True"
@@ -120,6 +163,7 @@
         <TextBlock Grid.Column="1"
                    Grid.Row="3"
                    Text="Text to server"
+                   Margin="10"
                    Padding="10" />
         <RichTextBox x:Name="InputTextBox"
                      Grid.ColumnSpan="3"
@@ -127,6 +171,7 @@
                      Grid.Row="4"
                      MinWidth="150"
                      MinHeight="100"
+                     Margin="10"
                      IsReadOnly="False"
            TextOptions.TextFormattingMode="Ideal"
                      TextOptions.TextRenderingMode="Aliased"
@@ -142,7 +187,7 @@
         </RichTextBox>
 
         <Grid Grid.Column="4" Grid.Row="4"
-          Grid.ColumnSpan="2"
+          Grid.ColumnSpan="4"
                Margin="10"
               HorizontalAlignment="Center"
               VerticalAlignment="Center">
@@ -213,17 +258,18 @@
         </Grid>
         <!-- Row 5-->
         <Button Name="ButtonSend"
-            Grid.Column="2"
+            Grid.Column="3"
                 Grid.Row="5"
                 Content="Submit to Server"
                 Margin="10"
                 Click="ButtonSend_Click">
         </Button>
         <Button Name="ButtonGo"
-            Grid.Column="4"
+            Grid.Column="6"
                 Grid.Row="5"
                 Content="Go!"
                 Margin="10"
+                MinWidth="100"
                 Click="ButtonGo_Click">
         </Button>
 
