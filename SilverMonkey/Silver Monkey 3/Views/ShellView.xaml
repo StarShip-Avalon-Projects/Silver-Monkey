@@ -4,37 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SilverMonkey.Views"
+        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Title="Silver Monkey" Height="600" Width="849.598"
         Background="Black"
         Foreground="Crimson"
         FontSize="18">
-
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="10" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="20" />
-        </Grid.RowDefinitions>
-        <Menu Grid.ColumnSpan="8"
-              Grid.Row="0"
-              Grid.Column="1">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_New Bot"
                           x:Name="NewBotMenuItem"
@@ -68,78 +45,111 @@
             <MenuItem Header="Help">
             </MenuItem>
         </Menu>
-        <TextBox AcceptsReturn="True" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="10" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
 
-        <!-- Row 1-->
-        <TextBlock Grid.Column="1"
+            <TextBox AcceptsReturn="True" />
+
+            <!-- Row 1-->
+            <TextBlock Grid.Column="1"
                    Grid.Row="1"
                    Text="Log"
                    Margin="10"
                    Padding="10" />
 
-        <TabControl Margin="10"
+            <TabControl Margin="10"
              Grid.Column="4"
              Grid.Row="1"
             Grid.RowSpan="2"
             Grid.ColumnSpan="4">
 
-            <TabItem Header="Furres">
-                <TreeView
-                    x:Name="FurreList" />
-            </TabItem>
-            <TabItem Header="Dream Info">
-                <Grid Grid.Column="4"
-                      Grid.Row="4"
-          Grid.ColumnSpan="4"
-               Margin="20"
+                <TabItem Header="Furres"
+>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
 
-              HorizontalAlignment="Center"
-              VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Dream Name"
+                        <TreeView  x:Name="FurreList"
+                        Grid.Column="0"
+                         Grid.Row="0"
+                         Grid.ColumnSpan="2"
+                         ItemsSource="{Binding Furres}">
+
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Furres}">
+                                    <Border BorderBrush="BurlyWood" BorderThickness="1">
+                                        <TextBlock Text="{Binding Name}" />
+                                    </Border>
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                        <TextBlock x:Name="FurreCount"
+
+                         Grid.Column="1"
+                         Grid.Row="1" />
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Dream Info">
+                    <StackPanel>
+                        <TextBlock x:Name="DreamOwner"
                                Margin="10"
-                               Grid.Column="0"
-                               Grid.Row="0" />
-                    <TextBox Name="DreamName"
-                        Width="100"
-                             Padding="10"
-                             Grid.Column="1"
-                             Grid.Row="0" />
-                    <TextBlock Text="Rating"
-                                Margin="10"
-                               Grid.Column="0"
-                               Grid.Row="1" />
-                    <TextBox Width="100"
-                             Name="DreamRating"
-                              Padding="10"
-                             Grid.Column="1"
-                             Grid.Row="1" />
-                    <TextBlock Text="Dream Url"
-                                Margin="10"
-                               Grid.Column="0"
-                               Grid.Row="2" />
-                    <TextBox Width="100"
-                             Name="DreamURL"
-                              Padding="10"
-                             Grid.Column="1"
-                             Grid.Row="2" />
-                </Grid>
-            </TabItem>
-            <TabItem Header="Dream List">
-                <TreeView x:Name="DreamList" />
-            </TabItem>
-        </TabControl>
+                                   HorizontalAlignment="center"
+                                   VerticalAlignment="Center" />
 
-        <!-- Row 2-->
-        <RichTextBox x:Name="LogOutputBox"
+                        <TextBlock x:Name="DreamTitle"
+                                Margin="10"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                        <TextBlock x:Name="DreaRating"
+                                Margin="10"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+
+                        <TextBlock x:Name="DreamURL"
+                                Margin="10"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Dream List">
+                    <TreeView x:Name="DreamList">
+                        <TreeView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text ="{Binding Name}" />
+                            </DataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </TabItem>
+            </TabControl>
+
+            <!-- Row 2-->
+            <RichTextBox x:Name="LogOutputBox"
                      Grid.ColumnSpan="3"
                      Grid.Column="1"
                      Grid.Row="2"
@@ -152,20 +162,20 @@
                      TextOptions.TextRenderingMode="Aliased"
                      AcceptsTab="false"
                      VerticalScrollBarVisibility="Auto"
-                     AcceptsReturn="True">            <RichTextBox.Resources>
-                <Style TargetType="{x:Type Paragraph}">
-                    <Setter Property="Margin" Value="0" />
-                </Style>
-            </RichTextBox.Resources>
-        </RichTextBox>
+                     AcceptsReturn="True">                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
 
-        <!-- Row 3-->
-        <TextBlock Grid.Column="1"
+            <!-- Row 3-->
+            <TextBlock Grid.Column="1"
                    Grid.Row="3"
                    Text="Text to server"
                    Margin="10"
                    Padding="10" />
-        <RichTextBox x:Name="InputTextBox"
+            <RichTextBox x:Name="InputTextBox"
                      Grid.ColumnSpan="3"
                      Grid.Column="1"
                      Grid.Row="4"
@@ -179,100 +189,101 @@
                      AcceptsReturn="False"
                      KeyDown="InputTextBox_KeyDown"
                      VerticalScrollBarVisibility="Auto">
-            <RichTextBox.Resources>
-                <Style TargetType="{x:Type Paragraph}">
-                    <Setter Property="Margin" Value="0" />
-                </Style>
-            </RichTextBox.Resources>
-        </RichTextBox>
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
 
-        <Grid Grid.Column="4" Grid.Row="4"
+            <Grid Grid.Column="4" Grid.Row="4"
           Grid.ColumnSpan="4"
                Margin="10"
               HorizontalAlignment="Center"
               VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Button Name="ButtonTurnClocwise"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Button Name="ButtonTurnClocwise"
                 Grid.Column="0"
                     Grid.Row="0"
                     Content="Turn CW"
                     Click="ButtonTurnClocwise_Click" />
-            <Button Name="ButtonMoveNw"
+                <Button Name="ButtonMoveNw"
                 Grid.Column="1"
                     Grid.Row="0"
                      Content="Move NW"
                     Click="ButtonMoveNw_Click"
                     ></Button>
-            <Button Name="ButtonMoveNe"
+                <Button Name="ButtonMoveNe"
                 Grid.Column="2"
                     Grid.Row="0"
                      Content="Move Ne"
                     Click="ButtonMoveNe_Click"
                     ></Button>
 
-            <Button Name="ButtonTurnCounterClockwise"
+                <Button Name="ButtonTurnCounterClockwise"
                 Grid.Column="0"
                     Grid.Row="1"
                      Content="Turn CCW"
                     Click="ButtonTurnCounterClockwise_Click"
                     ></Button>
-            <Button Name="ButtonMoveSw"
+                <Button Name="ButtonMoveSw"
                 Grid.Column="1"
                     Grid.Row="1"
                      Content="Move SW"
                     Click="ButtonMoveSw_Click"
                     ></Button>
-            <Button Name="ButtonMoveSe"
+                <Button Name="ButtonMoveSe"
                 Grid.Column="2"
                     Grid.Row="1"
                      Content="Move SE"
                     Click="ButtonMoveSe_Click"
                     ></Button>
-            <Button Name="ButtonStandSitLie"
+                <Button Name="ButtonStandSitLie"
                 Grid.Column="0"
                     Grid.Row="2"
                      Content="Stand Sit Lie"
                     Click="ButtonStandSitLie_Click"
                     ></Button>
-            <Button Name="ButtonGetDrop"
+                <Button Name="ButtonGetDrop"
                 Grid.Column="1"
                     Grid.Row="2"
                      Content="Get/drop Item 'F2'"
                     Click="ButtonGetDrop_Click"
                     ></Button>
-            <Button Name="ButtonUse"
+                <Button Name="ButtonUse"
                 Grid.Column="2"
                     Grid.Row="2"
                      Content="Use Item 'F3'"
                     Click="ButtonUse_Click"
                     ></Button>
-        </Grid>
-        <!-- Row 5-->
-        <Button Name="ButtonSend"
+            </Grid>
+            <!-- Row 5-->
+            <Button Name="ButtonSend"
             Grid.Column="3"
                 Grid.Row="5"
                 Content="Submit to Server"
                 Margin="10"
                 Click="ButtonSend_Click">
-        </Button>
-        <Button Name="ButtonGo"
+            </Button>
+            <Button Name="ButtonGo"
             Grid.Column="6"
                 Grid.Row="5"
                 Content="Go!"
                 Margin="10"
                 MinWidth="100"
                 Click="ButtonGo_Click">
-        </Button>
+            </Button>
 
-        <!--Row 6-->
-    </Grid>
+            <!--Row 6-->
+        </Grid>
+    </DockPanel>
 </Window>

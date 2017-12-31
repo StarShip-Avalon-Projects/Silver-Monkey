@@ -1,5 +1,10 @@
-﻿using System.Windows;
+﻿using BotSession;
+using Furcadia.Net;
+using Furcadia.Net.Utils.ServerParser;
+using System;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace SilverMonkey.Views
 {
@@ -10,9 +15,89 @@ namespace SilverMonkey.Views
     {
         #region Public Constructors
 
+        public BotOptions SessionOptions = new BotOptions();
+        public Bot FurcadiaSession;
+
         public ShellView()
         {
             InitializeComponent();
+            SessionOptions = new BotOptions();
+            FurcadiaSession = new Bot(SessionOptions);
+            FurcadiaSession.ProcessServerChannelData += OnProcessServerChannelData;
+            FurcadiaSession.ProcessServerInstruction += OnProcessServerInstruction;
+            FurreList.ItemsSource = FurcadiaSession.Dream.Furres.ToIList;
+        }
+
+        private void OnProcessServerInstruction(object sender, ParseServerArgs Args)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                     (Action)(() =>
+                     {
+                         var instructionObject = (BaseServerInstruction)sender;
+                         switch (instructionObject.InstructionType)
+                         {
+                             case ServerInstructionType.LoadDreamEvent:
+                             case ServerInstructionType.SpawnAvatar:
+                             case ServerInstructionType.RemoveAvatar:
+
+                                 break;
+                         }
+                     }));
+            }
+            else
+            {
+                var instructionObject = (BaseServerInstruction)sender;
+                switch (instructionObject.InstructionType)
+                {
+                    case ServerInstructionType.LoadDreamEvent:
+                    case ServerInstructionType.SpawnAvatar:
+                    case ServerInstructionType.RemoveAvatar:
+                        FurreList.DataContext = FurcadiaSession.Dream.Furres.ToIList;
+                        break;
+                }
+            }
+        }
+
+        private void OnProcessServerChannelData(object sender, ParseChannelArgs Args)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                    (Action)(() =>
+                    {
+                        var InstructionObject = (ChannelObject)sender;
+                        if (!string.IsNullOrWhiteSpace(InstructionObject.FormattedChannelText))
+                        {
+                            LogOutputBox.AppendParagraph(InstructionObject.FormattedChannelText);
+                        }
+                        else if (!string.IsNullOrWhiteSpace(InstructionObject.Player.Message))
+                        {
+                            LogOutputBox.AppendParagraph(InstructionObject.Player.Message.ToStrippedFurcadiaMarkupString());
+                        }
+                        else
+                        {
+                            LogOutputBox.AppendParagraph(InstructionObject.RawInstruction);
+                        }
+                    }));
+            }
+            else
+            {
+                var InstructionObject = (ChannelObject)sender;
+                if (!string.IsNullOrWhiteSpace(InstructionObject.FormattedChannelText))
+                {
+                    LogOutputBox.AppendParagraph(InstructionObject.FormattedChannelText);
+                }
+                else if (!string.IsNullOrWhiteSpace(InstructionObject.Player.Message))
+                {
+                    LogOutputBox.AppendParagraph(InstructionObject.Player.Message.ToStrippedFurcadiaMarkupString());
+                }
+                else
+                {
+                    LogOutputBox.AppendParagraph(InstructionObject.RawInstruction);
+                }
+            }
         }
 
         #endregion Public Constructors
@@ -23,8 +108,14 @@ namespace SilverMonkey.Views
         {
         }
 
-        private void ButtonGo_Click(object sender, RoutedEventArgs e)
+        private async void ButtonGo_Click(object sender, RoutedEventArgs e)
         {
+            if (FurcadiaSession.IsServerSocketConnected)
+                FurcadiaSession.Disconnect();
+            else
+            {
+                await FurcadiaSession.ConnetAsync();
+            }
         }
 
         private void ButtonMoveNe_Click(object sender, RoutedEventArgs e)
@@ -86,14 +177,35 @@ namespace SilverMonkey.Views
 
         private void OpenBotMeuItem_Click(object sender, RoutedEventArgs e)
         {
+            // Create OpenFileDialog
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                // Set filter for file extension and default file extension
+                DefaultExt = ".bini",
+                Filter = "Bot Information Files (.bini)|*.bini",
+                InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
+            };
+
+            // Display OpenFileDialog by calling ShowDialog method
+            bool? result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox
+            if (result == true)
+            {
+                // Open document
+                string filename = dlg.FileName;
+                SessionOptions = new BotOptions(filename);
+                FurcadiaSession.Options = SessionOptions;
+            }
         }
 
         private void SendTextToServer()
         {
             if (InputTextBox.Document.Blocks.Count > 0)
             {
-                var text = InputTextBox.GetText();
-                LogOutputBox.AppendParagraph(text);
+                var Txt = InputTextBox.GetText();
+                FurcadiaSession.SendFormattedTextToServer(Txt);
+                InputTextBox.Document.Blocks.Clear();
                 InputTextBox.Focus();
             }
         }

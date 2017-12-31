@@ -56,8 +56,12 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Extentions\RichTextBoxEtentions.cs" />
+    <Compile Include="ViewModels\BotSetupViewModel.cs" />
     <Compile Include="ViewModels\HasDocument.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\BotSetupView.xaml.cs">
+      <DependentUpon>BotSetupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -65,6 +69,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\BotSetupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,6 +116,14 @@
     <ProjectReference Include="..\..\FurcLib\FurcadiaLib.csproj">
       <Project>{156C2AF0-3DA8-4D8C-A525-5400185579B3}</Project>
       <Name>FurcadiaLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MonkeyCore\MonkeyCore.vbproj">
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Name>MonkeyCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SmEngine\SmEngine.csproj">
+      <Project>{F1E0FEB3-A74E-43CE-98BF-B908ED1753FA}</Project>
+      <Name>SmEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
