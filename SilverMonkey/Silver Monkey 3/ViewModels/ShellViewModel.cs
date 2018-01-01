@@ -51,6 +51,16 @@ namespace SilverMonkey.ViewModels
             }
         }
 
+        public string DreamTitle
+        {
+            get { return _DreamTitle; }
+            set
+            {
+                _DreamTitle = value;
+                NotifyOfPropertyChange(() => DreamTitle);
+            }
+        }
+
         /// <summary>
         /// Gets or sets the dream rating.
         /// </summary>

@@ -98,8 +98,7 @@
                         <TreeView  x:Name="FurreList"
                         Grid.Column="0"
                          Grid.Row="0"
-                         Grid.ColumnSpan="2"
-                         ItemsSource="{Binding Furres}">
+                         Grid.ColumnSpan="2">
 
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Furres}">
@@ -110,7 +109,7 @@
                             </TreeView.ItemTemplate>
                         </TreeView>
                         <TextBlock x:Name="FurreCount"
-
+Text="{Binding FurreCount}"
                          Grid.Column="1"
                          Grid.Row="1" />
                     </Grid>
@@ -131,10 +130,15 @@
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
 
-                        <TextBlock x:Name="DreamURL"
+                        <TextBlock
                                 Margin="10"
                                    HorizontalAlignment="Center"
-                                   VerticalAlignment="Center" />
+                                   VerticalAlignment="Center">
+                                <Hyperlink
+                                    x:Name="DreamURL"
+                                    RequestNavigate="Hyperlink_RequestNavigate">
+                                </Hyperlink>
+                        </TextBlock>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Dream List">
@@ -156,7 +160,7 @@
                      Margin="10"
                      MinWidth="150"
                      MinHeight="100"
-                     IsReadOnly="True"
+                     IsReadOnly="False"
 
             TextOptions.TextFormattingMode="Ideal"
                      TextOptions.TextRenderingMode="Aliased"

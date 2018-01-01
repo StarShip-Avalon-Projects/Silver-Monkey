@@ -25,7 +25,25 @@ namespace SilverMonkey.Views
             FurcadiaSession = new Bot(SessionOptions);
             FurcadiaSession.ProcessServerChannelData += OnProcessServerChannelData;
             FurcadiaSession.ProcessServerInstruction += OnProcessServerInstruction;
+            FurcadiaSession.Error += OnError;
             FurreList.ItemsSource = FurcadiaSession.Dream.Furres.ToIList;
+            FurreCount.DataContext = FurcadiaSession.Dream.Furres.Count.ToString();
+        }
+
+        private void OnError(Exception e, object o)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                    (Action)(() =>
+                    {
+                        LogOutputBox.AppendParagraph($"{e} {0}");
+                    }));
+            }
+            else
+            {
+                LogOutputBox.AppendParagraph($"{e} {0}");
+            }
         }
 
         private void OnProcessServerInstruction(object sender, ParseServerArgs Args)
@@ -41,6 +59,8 @@ namespace SilverMonkey.Views
                              case ServerInstructionType.LoadDreamEvent:
                              case ServerInstructionType.SpawnAvatar:
                              case ServerInstructionType.RemoveAvatar:
+                                 FurreList.DataContext = null;
+                                 FurreList.DataContext = FurcadiaSession.Dream.Furres.ToIList;
 
                                  break;
                          }
@@ -54,7 +74,9 @@ namespace SilverMonkey.Views
                     case ServerInstructionType.LoadDreamEvent:
                     case ServerInstructionType.SpawnAvatar:
                     case ServerInstructionType.RemoveAvatar:
+                        FurreList.DataContext = null;
                         FurreList.DataContext = FurcadiaSession.Dream.Furres.ToIList;
+
                         break;
                 }
             }
@@ -80,6 +102,7 @@ namespace SilverMonkey.Views
                         {
                             LogOutputBox.AppendParagraph(InstructionObject.RawInstruction);
                         }
+                        LogOutputBox.ScrollToEnd();
                     }));
             }
             else
@@ -97,6 +120,7 @@ namespace SilverMonkey.Views
                 {
                     LogOutputBox.AppendParagraph(InstructionObject.RawInstruction);
                 }
+                LogOutputBox.ScrollToEnd();
             }
         }
 
@@ -211,5 +235,9 @@ namespace SilverMonkey.Views
         }
 
         #endregion Private Methods
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+        }
     }
 }
