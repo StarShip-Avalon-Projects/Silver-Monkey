@@ -26,14 +26,18 @@ build/
 .vs/
 **/bin/*
 
-# Ignore NuGet Packages
+# NuGet Packages
 *.nupkg
-# Ignore the packages folder
-**/packages/*
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
 # except build/, which is used as an MSBuild target.
-!**/packages/build/
+!**/[Pp]ackages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
-#!**/packages/repositories.config
+#!**/[Pp]ackages/repositories.config
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets
+
 /Net40/Debug
 /Net40/Release
 /Net40
@@ -50,4 +54,3 @@ obj
 /SmEngineTests/silvermonkey.ini
 /TestResults
 /backup Src
-/SM.png

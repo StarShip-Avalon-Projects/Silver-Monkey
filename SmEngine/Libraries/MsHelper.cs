@@ -97,7 +97,7 @@ namespace Engine.Libraries
         /// </summary>
         /// <param name="ActiveDream">The active dream.</param>
         /// <param name="MonkeySpeakPage">The monkey speak page.</param>
-        public static void UpdateCurrentDreamVariables(ref Dream ActiveDream, ref Page MonkeySpeakPage)
+        public static void UpdateCurrentDreamVariables(Dream ActiveDream, Page MonkeySpeakPage)
         {
             if (!MonkeySpeakPage.HasVariable(DreamOwnerVariable))
             {
@@ -119,7 +119,7 @@ namespace Engine.Libraries
         /// </summary>
         /// <param name="ActivePlayer">The active player.</param>
         /// <param name="MonkeySpeakPage">The monkey speak page.</param>
-        public static void UpdateTriggerigFurreVariables(ref Furre ActivePlayer, ref Page MonkeySpeakPage)
+        public static void UpdateTriggerigFurreVariables(Furre ActivePlayer, Page MonkeySpeakPage)
         {
             if (!MonkeySpeakPage.HasVariable(MessageVariable))
             {

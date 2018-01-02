@@ -22,6 +22,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Furcadia.Text.FurcadiaMarkup;
 using static Engine.Libraries.MsLibHelper;
+using Engine.Libraries;
 
 namespace BotSession
 {
@@ -281,6 +282,7 @@ namespace BotSession
         new Timers(100),
         new Loops(),
         new Tables(),
+        new MsDreamInfo()
         //new StringLibrary(this),
         //new MsSayLibrary(this),
         //new MsBanish(),
@@ -296,7 +298,7 @@ namespace BotSession
         //new MsPounce(this),
         //new MsSound(this),
         //new MsTrades(this),
-        //new MsDreamInfo(this)
+
         //  New MsPhoenixSpeakBackupAndRestore(Me),
     };
             return LibList;
@@ -305,7 +307,7 @@ namespace BotSession
         private Page LoadLibrary(bool silent)
         {
             // Library Loaded?.. Get the Hell out of here
-            MSpage.AddTriggerHandler(TriggerCategory.Cause, 0, (t) => true);
+
             // " When the Monkey Speak Engine starts,"
             var LibList = this.InitializeEngineLibraries();
             foreach (Monkeyspeak.Libraries.BaseLibrary Library in LibList)
