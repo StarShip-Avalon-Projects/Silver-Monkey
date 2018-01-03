@@ -5,24 +5,22 @@
 // Furre info
 // Bot info
 // Furre Update events?
-using BotSession;
 using Furcadia.Net;
 using Furcadia.Net.DreamInfo;
 using Furcadia.Net.Proxy;
 using Furcadia.Net.Utils.ServerParser;
-using Microsoft.Win32.SafeHandles;
+using Libraries;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using Monkeyspeak.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Furcadia.Text.FurcadiaMarkup;
-using static Engine.Libraries.MsLibHelper;
-using Engine.Libraries;
+using static Libraries.MsLibHelper;
 
 namespace BotSession
 {
@@ -58,9 +56,9 @@ namespace BotSession
 
         private Dream lastDream;
 
-        // '' <summary>
-        // '' Main MonkeySpeak Engine
-        // '' </summary>
+        /// <summary>
+        /// Main MonkeySpeak Engine
+        /// </summary>
         private MonkeyspeakEngine MsEngine;
 
         private EngineOptoons MsEngineOptions;
@@ -241,11 +239,14 @@ namespace BotSession
         /// <summary>
         /// Connets to the game server asyncronously.
         /// </summary>
+        /// <exception cref="FileNotFoundException">
+        /// Can be thrown if there is no Monkey Speak File or Character Ini file supplied
+        /// </exception>
         public async Task ConnetAsync()
         {
-            if (MsEngineOptions.MS_Engine_Enable)
+            if (MsEngineOptions.IsEnabled)
             {
-                await this.StartEngine();
+                await StartEngine();
             }
 
             await Task.Run(() => Connect());
@@ -267,40 +268,41 @@ namespace BotSession
             ClientStatusChanged += (s, o) => OnClientStatusChanged(s, o);
         }
 
-        // '' <summary>
-        // '' Initializes the engine libraries.
-        // '' </summary>
-        // '' <returns></returns>
-        private List<Monkeyspeak.Libraries.BaseLibrary> InitializeEngineLibraries()
+        /// <summary>
+        /// Initializes the engine libraries.
+        /// </summary>
+        /// <returns></returns>
+        private List<BaseLibrary> InitializeEngineLibraries()
         {
-            var LibList = new List<Monkeyspeak.Libraries.BaseLibrary>()
-        {
-        new IO(Options.BotPath),
-        new Monkeyspeak.Libraries.Math(),
-        new StringOperations(),
-        new Sys(),
-        new Timers(100),
-        new Loops(),
-        new Tables(),
-        new MsDreamInfo()
-        //new StringLibrary(this),
-        //new MsSayLibrary(this),
-        //new MsBanish(),
-        //new MsDatabase(this),
-        //new MsWebRequests(this),
-        //new MsCookie(this),
-        //new MsPhoenixSpeak(this),
-        //new MsDice(this),
-        //new MsFurres(this),
-        //new MsMovement(this),
-        //new WmCpyDta(this),
-        //new MsMemberList(this),
-        //new MsPounce(this),
-        //new MsSound(this),
-        //new MsTrades(this),
+            var LibList = new List<BaseLibrary>()
+            {
+                new IO(Options.BotPath),
+                new Monkeyspeak.Libraries.Math(),
+                new StringOperations(),
+                new Sys(),
+                new Timers(100),
+                new Loops(),
+                new Tables(),
+                new MsDreamInfo(),
+                new MsStartup()
+                //new StringLibrary(this),
+                //new MsSayLibrary(this),
+                //new MsBanish(),
+                //new MsDatabase(this),
+                //new MsWebRequests(this),
+                //new MsCookie(this),
+                //new MsPhoenixSpeak(this),
+                //new MsDice(this),
+                //new MsFurres(this),
+                //new MsMovement(this),
+                //new WmCpyDta(this),
+                //new MsMemberList(this),
+                //new MsPounce(this),
+                //new MsSound(this),
+                //new MsTrades(this),
 
-        //  New MsPhoenixSpeakBackupAndRestore(Me),
-    };
+                //  New MsPhoenixSpeakBackupAndRestore(Me),
+            };
             return LibList;
         }
 
@@ -309,15 +311,15 @@ namespace BotSession
             // Library Loaded?.. Get the Hell out of here
 
             // " When the Monkey Speak Engine starts,"
-            var LibList = this.InitializeEngineLibraries();
-            foreach (Monkeyspeak.Libraries.BaseLibrary Library in LibList)
+            var LibList = InitializeEngineLibraries();
+            foreach (BaseLibrary Library in LibList)
             {
                 try
                 {
                     MSpage.LoadLibrary(Library);
                     if (!silent)
                     {
-                        Furcadia.Logging.Logger.Info("{Library.GetType().Name}");
+                        Furcadia.Logging.Logger.Info($"{Library.GetType().Name}");
                     }
                 }
                 catch (Exception ex)
@@ -340,7 +342,7 @@ namespace BotSession
         {
             if (ex.GetType() != typeof(MonkeyspeakException))
             {
-                MonkeyspeakException PageError = new MonkeyspeakException($"Trigger Error: {trigger} {ex}");
+                var PageError = new MonkeyspeakException($"Trigger Error: {trigger} {ex}");
                 SendError(PageError, handler);
             }
             else
@@ -379,22 +381,20 @@ namespace BotSession
                         // (0:30) When someone leaves the bots view,
                         // (0:31) When a furre named {..} leaves the bots view,
                         // (0:29) When a furre named {..} enters the bots view,
-                        var p = (MoveFurre)sender;
-                        await MSpage.ExecuteAsync(new int[] { 28, 30, 31, 29 }, p.Player);
+
+                        await MSpage.ExecuteAsync(new int[] { 28, 30, 31, 29 }, ((MoveFurre)sender).Player);
                         break;
 
                     case ServerInstructionType.RemoveAvatar:
                         // (0:27) When a furre named {..} leaves the Dream,
                         // (0:26) When someone leaves the Dream,
-                        var n = (RemoveAvatar)sender;
-                        await MSpage.ExecuteAsync(new int[] { 27, 26 }, n.Player);
+                        await MSpage.ExecuteAsync(new int[] { 27, 26 }, ((RemoveAvatar)sender).Player);
                         break;
 
                     case ServerInstructionType.SpawnAvatar:
                         // (0:24) When someone enters the Dream,
                         // (0:25) When a furre Named {..} enters the Dream,
-                        var m = (SpawnAvatar)sender;
-                        await MSpage.ExecuteAsync(new int[] { 24, 25 }, m.player);
+                        await MSpage.ExecuteAsync(new int[] { 24, 25 }, ((SpawnAvatar)sender).player);
                         break;
 
                     case ServerInstructionType.UpdateColorString:
@@ -424,12 +424,12 @@ namespace BotSession
                 return;
             }
 
-            if (!MsEngineOptions.MS_Engine_Enable)
+            if (!MsEngineOptions.IsEnabled)
             {
                 return;
             }
 
-            ChannelObject InstructionObject = (ChannelObject)sender;
+            var InstructionObject = (ChannelObject)sender;
             var Furr = InstructionObject.Player;
             string Text = InstructionObject.ChannelText;
             try
@@ -531,9 +531,8 @@ namespace BotSession
                     case "banish":
                         string NameStr;
 
-                        var cv = (ConstantVariable)MSpage.GetVariable(BanishListVariable);
+                        ((ConstantVariable)MSpage.GetVariable(BanishListVariable)).SetValue(string.Join(" ", BanishList.ToArray()));
 
-                        cv.SetValue(string.Join(" ", BanishList.ToArray()));
                         if (Text.Contains(" has been banished from your dreams."))
                         {
                             // banish <name> (online)
@@ -541,8 +540,7 @@ namespace BotSession
                             // (0:52) When the bot sucessfilly banishes a furre,
                             // (0:53) When the bot sucessfilly banishes the furre named {...},
                             // Success: You have canceled all banishments from your dreams.
-                            cv = (ConstantVariable)MSpage.GetVariable(BanishNameVariable);
-                            cv.SetValue(BanishName);
+                            ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(BanishName);
 
                             await MSpage.ExecuteAsync(new int[] { 52, 53 });
                             //  MSpage.ExecuteAsync(53)
@@ -551,10 +549,8 @@ namespace BotSession
                         {
                             // banish-off-all (active list)
                             // Success: You have canceled all banishments from your dreams.
-                            cv = (ConstantVariable)MSpage.GetVariable(BanishListVariable);
-                            cv.SetValue(null);
-                            cv = (ConstantVariable)MSpage.GetVariable(BanishNameVariable);
-                            cv.SetValue(null);
+                            ((ConstantVariable)MSpage.GetVariable(BanishListVariable)).SetValue(null);
+                            ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(null);
 
                             await MSpage.ExecuteAsync(60);
                         }
@@ -564,9 +560,7 @@ namespace BotSession
                             // Success: (.*?) has been temporarily banished from your dreams.
                             // (0:61) When the bot sucessfully temp banishes a Furre
                             // (0:62) When the bot sucessfully temp banishes the furre named {...}
-                            cv = (ConstantVariable)MSpage.GetVariable(BanishNameVariable);
-
-                            cv.SetValue(BanishName);
+                            ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(BanishName);
 
                             await MSpage.ExecuteAsync(new int[] { 61, 62 });
                         }
@@ -585,9 +579,7 @@ namespace BotSession
                             // (0:58) When the bot successfully removes the furre named {...} from the banish list,
                             Regex t = new Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled);
                             NameStr = t.Match(Text).Groups[1].Value;
-                            cv = (ConstantVariable)MSpage.GetVariable(BanishNameVariable);
-
-                            cv.SetValue(BanishName);
+                            ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(BanishName);
 
                             await MSpage.ExecuteAsync(new int[] { 56, 58 });
                         }
@@ -599,9 +591,8 @@ namespace BotSession
                             // (0:51) When the bot fails to banish the furre named {...},
                             Regex t = new Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled);
                             NameStr = t.Match(Text).Groups[1].Value;
-                            cv = (ConstantVariable)MSpage.GetVariable(BanishNameVariable);
+                            ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(NameStr);
 
-                            cv.SetValue(NameStr);
                             await MSpage.ExecuteAsync(new int[] { 50, 51 });
                         }
                         else if ((Text == "Sorry, this player has not been banished from your dreams."))
@@ -610,9 +601,8 @@ namespace BotSession
                             // Error:>> Sorry, this player has not been banished from your dreams.
                             // (0:55) When the Bot fails to remove a furre from the banish list,
                             // (0:56) When the bot fails to remove the furre named {...} from the banish list,
-                            cv = (ConstantVariable)MSpage.GetVariable(BanishNameVariable);
+                            ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(BanishName);
 
-                            cv.SetValue(BanishName);
                             await MSpage.ExecuteAsync(new int[] { 50, 51 });
                         }
                         else if ((Text == "You have not banished anyone."))
@@ -620,8 +610,8 @@ namespace BotSession
                             // banish-off-all (empty List)
                             // Error:>> You have not banished anyone.
                             // (0:59) When the bot fails to see the banish list,
-                            cv = (ConstantVariable)MSpage.GetVariable(BanishListVariable);
-                            cv.SetValue(null);
+                            ((ConstantVariable)MSpage.GetVariable(BanishListVariable)).SetValue(null);
+
                             await MSpage.ExecuteAsync(59);
                         }
                         else if ((Text == "You do not have any cookies to give away right now!"))
@@ -673,11 +663,7 @@ namespace BotSession
                         return;
 
                     case "":
-                        break;
-
                     case null:
-                        break;
-
                     default:
                         return;
                 }
@@ -690,7 +676,7 @@ namespace BotSession
 
         private async void OnServerStatusChanged(object Sender, NetServerEventArgs e)
         {
-            if (!MsEngineOptions.MS_Engine_Enable)
+            if (!MsEngineOptions.IsEnabled)
             {
                 return;
             }
@@ -718,10 +704,10 @@ namespace BotSession
             { SendError(ex, this); }
         }
 
-        // '' <summary>
-        // '' Load Libraries into the engine
-        // '' </summary>
-        // '' <param name="silent"> Announce Loaded Libraries</param>
+        /// <summary>
+        /// Load Libraries into the engine
+        /// </summary>
+        /// <param name="silent"> Announce Loaded Libraries</param>
 
         private async Task StartEngine()
         {

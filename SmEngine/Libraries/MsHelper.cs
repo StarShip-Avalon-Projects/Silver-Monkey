@@ -2,7 +2,7 @@
 using Furcadia.Net.DreamInfo;
 using System.Text.RegularExpressions;
 
-namespace Engine.Libraries
+namespace Libraries
 {
     public sealed class MsLibHelper
     {
