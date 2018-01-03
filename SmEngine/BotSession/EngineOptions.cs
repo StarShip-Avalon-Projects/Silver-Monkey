@@ -3,9 +3,9 @@ using System.IO;
 
 namespace BotSession
 {
-    // '' <summary>
-    // '' MonkeySpeak Engine settings
-    // '' </summary>
+    /// <summary>
+    /// MonkeySpeak Engine settings
+    /// </summary>
     public class EngineOptoons : Monkeyspeak.Options
     {
         #region Private Fields
@@ -13,15 +13,15 @@ namespace BotSession
         private string _BotController;
 
         private string _MonkeySpeakScriptFile;
-        private bool _MS_Engine_Enable;
+        private bool _isEnabled;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        // '' <summary>
-        // '' Default Constructor
-        // '' </summary>
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public EngineOptoons()
         {
             _BotController = null;
@@ -39,13 +39,19 @@ namespace BotSession
             TriggerLimit = 6000;
             VariableCountLimit = 1000;
             StringLengthLimit = Int32.MaxValue;
-            _MS_Engine_Enable = true;
+            _isEnabled = true;
         }
 
         #endregion Public Constructors
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets or sets the furre in charge of the bot.
+        /// </summary>
+        /// <value>
+        /// The bot controller.
+        /// </value>
         public string BotController
         {
             get
@@ -58,6 +64,12 @@ namespace BotSession
             }
         }
 
+        /// <summary>
+        /// Gets the short name of the bot controller.
+        /// </summary>
+        /// <value>
+        /// The short name of the bot controller.
+        /// </value>
         public string BotControllerShortName
         {
             get
@@ -66,13 +78,13 @@ namespace BotSession
             }
         }
 
-        // '' <summary>
-        // '' Gets or sets the monkey speak script file.
-        // '' </summary>
-        // '' <value>
-        // '' The monkey speak script file.
-        // '' </value>
-        // '' <exception cref="ArgumentException">Invalid File type, Not a ""*.ms"" file.</exception>
+        /// <summary>
+        /// Gets or sets the monkey speak script file.
+        /// </summary>
+        /// <value>
+        /// The monkey speak script file.
+        /// </value>
+        /// <exception cref="ArgumentException">Invalid File type, Not a ""*.ms"" file.</exception>
         public string MonkeySpeakScriptFile
         {
             get
@@ -81,7 +93,7 @@ namespace BotSession
             }
             set
             {
-                if (!(Path.GetExtension(value).ToLower() == ".ms"))
+                if (Path.GetExtension(value).ToLower() != ".ms")
                 {
                     throw new ArgumentException("Invalid File type, Not a \"*.ms\" file.");
                 }
@@ -90,15 +102,21 @@ namespace BotSession
             }
         }
 
-        public bool MS_Engine_Enable
+        /// <summary>
+        /// Gets or sets a value indicating whether the monkeyspeak engine is enabled for this instance.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [ms engine enable]; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsEnabled
         {
             get
             {
-                return _MS_Engine_Enable;
+                return _isEnabled;
             }
             set
             {
-                _MS_Engine_Enable = value;
+                _isEnabled = value;
             }
         }
 

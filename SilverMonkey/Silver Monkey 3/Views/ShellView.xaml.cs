@@ -2,9 +2,12 @@
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+
+using Monkeyspeak.Logging;
 
 namespace SilverMonkey.Views
 {
@@ -134,11 +137,23 @@ namespace SilverMonkey.Views
 
         private async void ButtonGo_Click(object sender, RoutedEventArgs e)
         {
-            if (FurcadiaSession.IsServerSocketConnected)
-                FurcadiaSession.Disconnect();
-            else
+            try
             {
-                await FurcadiaSession.ConnetAsync();
+                ButtonGo.IsEnabled = false;
+                if (FurcadiaSession.IsServerSocketConnected)
+                    FurcadiaSession.Disconnect();
+                else
+                {
+                    await FurcadiaSession.ConnetAsync();
+                }
+            }
+            catch (FileNotFoundException fnfe)
+            {
+                Logger.Error(fnfe);
+            }
+            finally
+            {
+                ButtonGo.IsEnabled = true;
             }
         }
 
@@ -219,7 +234,7 @@ namespace SilverMonkey.Views
                 // Open document
                 string filename = dlg.FileName;
                 SessionOptions = new BotOptions(filename);
-                FurcadiaSession.Options = SessionOptions;
+                FurcadiaSession.SetOptions(SessionOptions);
             }
         }
 

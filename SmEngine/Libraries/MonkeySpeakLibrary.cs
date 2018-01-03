@@ -1,14 +1,14 @@
-﻿using static Engine.Libraries.MsLibHelper;
-using Monkeyspeak.Libraries;
-using Monkeyspeak;
+﻿using BotSession;
 using Furcadia.Net.DreamInfo;
-using System.Threading;
+using Monkeyspeak;
+using Monkeyspeak.Libraries;
 using System;
 using System.Linq;
-using BotSession;
+using System.Threading;
 using System.Threading.Tasks;
+using static Libraries.MsLibHelper;
 
-namespace Engine.Libraries
+namespace Libraries
 {
     /// <summary>
     /// The base library in which all Silver Monkey's Monkey Speak Libraries
@@ -19,7 +19,10 @@ namespace Engine.Libraries
     {
         #region Public Fields
 
-        public object[] args;
+        /// <summary>
+        /// The arguments
+        /// </summary>
+        public object[] args = null;
 
         #endregion Public Fields
 
@@ -41,8 +44,18 @@ namespace Engine.Libraries
 
         #region Public Properties
 
+        /// <summary>
+        /// Connected Furre representing Silver Monkey
+        /// </summary>
+        /// <value>
+        /// The connected furre.
+        /// </value>
         public Furre ConnectedFurre { get; set; }
 
+        /// <summary>
+        /// Gets or sets the current dream information for the dream Silver Monkey is located in.
+        /// </summary>
+        /// <value>The dream information.</value>
         public Dream DreamInfo
         {
             get { return _dream; }
@@ -71,9 +84,10 @@ namespace Engine.Libraries
         /// <summary>
         /// Current Triggering Furre
         /// <para/>
-        /// Referenced as a Monkeyspeak Parameter.
+        /// Referenced as a Monkeyspeak <see cref="BaseLibrary.Initialize(object[])"/> Argument.
         /// <para/>
-        /// Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), Object())"/>
+        /// Updates when ever Monkey Speak needs it through <see cref="Page.Execute(int[],
+        /// object[])"/> or <see cref="Page.ExecuteAsync(int[], object[])"/>
         /// </summary>
         public Furre Player { get; set; }
 
@@ -94,6 +108,19 @@ namespace Engine.Libraries
         }
 
         /// <summary>
+        /// Gets the argumet.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="index">The index.</param>
+        /// <returns></returns>
+        public T GetArgumet<T>(int index = 0)
+        {
+            if (args != null && args.Length > index)
+                return (T)args[index];
+            return default(T);
+        }
+
+        /// <summary>
         /// checks the <see cref="FurreList"/>
         /// in the <see cref="DreamInfo">Dream Parameter</see>
         /// for the Target Furre.
@@ -109,7 +136,7 @@ namespace Engine.Libraries
             bool found = false;
             foreach (Furre Fur in DreamInfo.Furres)
             {
-                if ((Fur == TargetFurre))
+                if (Fur == TargetFurre)
                 {
                     found = true;
                     break;
@@ -119,14 +146,24 @@ namespace Engine.Libraries
             return found;
         }
 
+        /// <summary>
+        /// Initializes this instance. Add your trigger handlers here.
+        /// </summary>
+        /// <param name="args">
+        /// Parametized argument of objects to use to pass runtime objects to a library at initialization
+        /// </param>
         public override void Initialize(params object[] args)
         {
             this.args = args;
+
             FurcTimeTimer = new Timer(TimeUpdate, null, TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500));
-            if (args.Length == 1 && ParentBotSession == null)
+
+            var bot = GetArgumet<Bot>();
+            if (bot != null)
             {
-                ParentBotSession = GetArgumetsOfType<Bot>()[0];
-                Add(TriggerCategory.Cause, 0, (t) => true, "When the Monkey Speak script starts,");
+                ParentBotSession = bot;
+                DreamInfo = ParentBotSession.Dream;
+                Player = (Furre)ParentBotSession.Player;
             }
         }
 
@@ -146,23 +183,22 @@ namespace Engine.Libraries
         }
 
         /// <summary>
-        /// Set <see cref="Player"/> and <see cref="DreamInfo"/> from
-        /// GetParametersOfType<T>
+        /// Set <see cref="Player"/> and <see cref="DreamInfo"/> from <see cref="TriggerReader.GetParametersOfType"></see>
         /// </summary>
         /// <param name="reader"></param>
         /// <returns>true if any parameter was set; false otherwise</returns>
         public bool ReadDreamParams(TriggerReader reader)
         {
             bool ParamSet = false;
-            var dreamInfo = reader.GetParametersOfType<Dream>();
-            if (dreamInfo != null && (dreamInfo.Length > 0))
+            var dreamInfo = reader.GetParameter<Dream>();
+            if (dreamInfo != null)
             {
-                if (string.IsNullOrWhiteSpace(dreamInfo[0].Name))
+                if (string.IsNullOrWhiteSpace(dreamInfo.Name))
                 {
                     throw new ArgumentException("DreamInfo not set");
                 }
 
-                DreamInfo = dreamInfo[0];
+                DreamInfo = dreamInfo;
                 ParamSet = true;
                 UpdateCurrentDreamVariables(DreamInfo, reader.Page);
             }
@@ -171,11 +207,10 @@ namespace Engine.Libraries
         }
 
         /// <summary>
-        /// Set <see cref="Player"/> and <see cref="DreamInfo"/> from
-        /// GetParametersOfType<T>
+        /// Reads the triggering furre parameters.
         /// </summary>
-        /// <param name="reader"></param>
-        /// <returns>true if any parameter was set; false otherwise</returns>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
         public bool ReadTriggeringFurreParams(TriggerReader reader)
         {
             var ParamSet = false;
@@ -183,7 +218,7 @@ namespace Engine.Libraries
             if (ActiveFurre != null)
             {
                 Player = ActiveFurre;
-                if ((ActiveFurre.FurreID != -1))
+                if (ActiveFurre.FurreID != -1)
                 {
                     ParamSet = true;
                 }
@@ -208,14 +243,15 @@ namespace Engine.Libraries
         /// <summary>
         /// Send Formated Text to Server
         /// </summary>
-        /// <param name="message">
-        /// Client to server instruction
-        /// </param>
-        /// <returns>
-        /// True is the Server is Connected
-        /// </returns>
+        /// <param name="message">Client to server instruction</param>
+        /// <returns>True is the Server is Connected</returns>
         public bool SendServer(string message)
         {
+            if (ParentBotSession == null)
+            {
+                return false;
+            }
+
             if (ParentBotSession.IsServerSocketConnected)
             {
                 ParentBotSession.SendFormattedTextToServer(message);
@@ -227,11 +263,20 @@ namespace Engine.Libraries
             }
         }
 
+        /// <summary>
+        /// Sends the server asynchronous.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
         public async Task SendServerAsync(string message)
         {
             await Task.Run(() => this.SendServer(message));
         }
 
+        /// <summary>
+        /// Called when page is disposing or resetting.
+        /// </summary>
+        /// <param name="page">The page.</param>
         public override void Unload(Page page)
         {
             FurcTimeTimer.Dispose();
@@ -242,16 +287,10 @@ namespace Engine.Libraries
         #region Protected Methods
 
         /// <summary>
-        /// <para>
-        /// Comparisons are done with Fucadia Markup Stripped
-        /// </para>
+        /// <para>Comparisons are done with Fucadia Markup Stripped</para>
         /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// True if the %MESSAGE system variable contains the specified string
-        /// </returns>
+        /// <param name="reader"><see cref="TriggerReader"/></param>
+        /// <returns>True if the %MESSAGE system variable contains the specified string</returns>
         protected virtual bool MsgContains(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
@@ -261,13 +300,10 @@ namespace Engine.Libraries
         }
 
         /// <summary>
+        ///  <para>Comparisons are done with Fucadia Markup Stripped</para>
         /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true if the System %MESSAGE varible ends with the specified string
-        /// </returns>
+        /// <param name="reader"><see cref="TriggerReader"/></param>
+        /// <returns>true if the System %MESSAGE varible ends with the specified string</returns>
         protected virtual bool MsgEndsWith(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
@@ -298,11 +334,8 @@ namespace Engine.Libraries
         /// <summary>
         /// (1:14) and triggering furre's message doesn't end with {.},
         /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="reader"><see cref="TriggerReader"/></param>
+        /// <returns></returns>
         protected bool MsgNotEndsWith(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
@@ -315,11 +348,8 @@ namespace Engine.Libraries
         /// <summary>
         /// (1:11) and triggering furre's message starts with {.},
         /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="reader"><see cref="TriggerReader"/></param>
+        /// <returns></returns>
         protected bool MsgStartsWith(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
@@ -332,15 +362,11 @@ namespace Engine.Libraries
         /// <summary>
         /// Generic base Furre named {...} is Triggering Furre
         /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// True on Name match
-        /// </returns>
+        /// <param name="reader"><see cref="TriggerReader"/></param>
+        /// <returns>True on Name match</returns>
         /// <remarks>
-        /// any name is acepted and converted to Furcadia Machine name
-        /// (ShortName version, lowercase with special characters stripped)
+        /// any name is acepted and converted to Furcadia Machine name (ShortName version, lowercase
+        /// with special characters stripped)
         /// </remarks>
         protected virtual bool NameIs(TriggerReader reader)
         {

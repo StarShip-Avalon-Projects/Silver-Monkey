@@ -2,9 +2,12 @@
 using Furcadia.Net.DreamInfo;
 using System.Text.RegularExpressions;
 
-namespace Engine.Libraries
+namespace Libraries
 {
-    public sealed class MsLibHelper
+    /// <summary>
+    ///
+    /// </summary>
+    public class MsLibHelper
     {
         #region Public Fields
 
@@ -101,10 +104,10 @@ namespace Engine.Libraries
         {
             if (!MonkeySpeakPage.HasVariable(DreamOwnerVariable))
             {
-                MonkeySpeakPage.SetVariable(new ConstantVariable(DreamOwnerVariable, ActiveDream.Owner));
+                MonkeySpeakPage.SetVariable(new ConstantVariable(DreamOwnerVariable, ActiveDream.DreamOwner));
             }
 
-            ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamOwnerVariable)).SetValue(ActiveDream.Owner);
+            ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamOwnerVariable)).SetValue(ActiveDream.DreamOwner);
 
             if (!MonkeySpeakPage.HasVariable(DreamNameVariable))
             {

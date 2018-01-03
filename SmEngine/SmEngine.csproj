@@ -7,8 +7,8 @@
     <ProjectGuid>{F1E0FEB3-A74E-43CE-98BF-B908ED1753FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmEngine</RootNamespace>
-    <AssemblyName>SmEngine</AssemblyName>
+    <RootNamespace>SilverMonkey.Engine</RootNamespace>
+    <AssemblyName>SilverMonkeyEngine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,6 +20,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\Debug\SilverMonkeyEngine.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,10 +46,11 @@
     <Compile Include="BotSession\BotOptions.cs" />
     <Compile Include="BotSession\MsEngineExtentionFunctions.cs" />
     <Compile Include="BotSession\EngineOptions.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Libraries\MonkeySpeakLibrary.cs" />
     <Compile Include="Libraries\MsDreamInfo.cs" />
     <Compile Include="Libraries\MsHelper.cs" />
+    <Compile Include="Libraries\MsSayLibrary.cs" />
+    <Compile Include="Libraries\MsStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,11 +62,11 @@
       <Name>FurcadiaLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
-      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Project>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
-      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
+      <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
       <Name>Monkeyspeak</Name>
     </ProjectReference>
   </ItemGroup>

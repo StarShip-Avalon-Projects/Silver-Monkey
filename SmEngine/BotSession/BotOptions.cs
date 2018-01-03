@@ -1,10 +1,15 @@
 ﻿using System.IO;
 using Furcadia.IO;
 using Furcadia.Net.Options;
+using MonkeyCore;
 using MonkeyCore.Utils.Logging;
 
 namespace BotSession
 {
+    /// <summary>
+    /// Silver Monkey Bot settings
+    /// </summary>
+    /// <seealso cref="Furcadia.Net.Options.ProxyOptions" />
     public class BotOptions : ProxyOptions
     {
         #region Private Fields
@@ -25,16 +30,24 @@ namespace BotSession
 
         #endregion Private Fields
 
-        #region Private Constructors
+        #region Public Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BotOptions"/> class.
+        /// </summary>
         public BotOptions()
         {
-            this.Initialize();
+            Initialize();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BotOptions"/> class.
+        /// </summary>
+        /// <param name="BFile">The *.bini file containing the Silver Monkey settings</param>
+        /// <exception cref="FileNotFoundException">Bot settings file not found</exception>
         public BotOptions(string BFile)
         {
-            this.Initialize();
+            Initialize();
             LogOptions = new LogSteamOptions()
             {
                 LogPath = MonkeyCore.Paths.SilverMonkeyLogPath
@@ -42,7 +55,7 @@ namespace BotSession
 
             if (!File.Exists(BFile))
             {
-                throw new FileNotFoundException("Bot settings file not found", BFile);
+                throw new FileNotFoundException("Silver Monkey settings file not found", BFile);
             }
 
             string dir = Path.GetDirectoryName(BFile);
@@ -94,7 +107,7 @@ namespace BotSession
             s = BotIni.GetKeyValue("Bot", "MSEngineEnable");
             if (!string.IsNullOrEmpty(s))
             {
-                _MonkeySpeakEngineOption.MS_Engine_Enable = bool.Parse(s);
+                _MonkeySpeakEngineOption.IsEnabled = bool.Parse(s);
             }
 
             s = BotIni.GetKeyValue("Bot", "BotController");
@@ -142,7 +155,7 @@ namespace BotSession
             }
         }
 
-        #endregion Private Constructors
+        #endregion Public Constructors
 
         #region Public Properties
 
@@ -156,10 +169,10 @@ namespace BotSession
             set { _AutoConnect = value; }
         }
 
-        // '' <summary>
-        // '' Bot File (*.bini) path
-        // '' </summary>
-        // '' <returns></returns>
+        /// <summary>
+        /// Bot File (*.bini) path
+        /// </summary>
+        /// <returns></returns>
         public string BotPath
         {
             get
@@ -253,11 +266,6 @@ namespace BotSession
         /// </summary>
         public void SaveBotSettings()
         {
-            if (BotIni == null)
-            {
-                BotIni = new IniFile();
-            }
-
             if (File.Exists(MonkeyCore.Paths.CheckBotFolder(ref _BiniFile)))
                 BotIni.Load(_BiniFile);
 
@@ -268,7 +276,7 @@ namespace BotSession
             BotIni.SetKeyValue("Bot", "BotIni", CharacterIniFile);
             BotIni.SetKeyValue("Bot", "MS_File", _MonkeySpeakEngineOption.MonkeySpeakScriptFile);
             BotIni.SetKeyValue("Bot", "LPort", LocalhostPort.ToString());
-            BotIni.SetKeyValue("Bot", "MSEngineEnable", _MonkeySpeakEngineOption.MS_Engine_Enable.ToString());
+            BotIni.SetKeyValue("Bot", "MSEngineEnable", _MonkeySpeakEngineOption.IsEnabled.ToString());
             BotIni.SetKeyValue("Bot", "BotController", _MonkeySpeakEngineOption.BotController);
             BotIni.SetKeyValue("Bot", "StandAlone", Standalone.ToString());
             BotIni.SetKeyValue("Bot", "AutoConnect", _AutoConnect.ToString());

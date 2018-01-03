@@ -34,12 +34,16 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MonkeySpeak\MonkeySpeakTests.cs" />
     <Compile Include="PhoenixSpeakTests.cs" />
     <Compile Include="SilerMonkeyEngineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Silver Monkey.bini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="silvermonkey.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -70,9 +74,13 @@
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeySpeakEx\Monkeyspeak.csproj">
+    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Name>Monkeyspeak</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmEngine\SmEngine.csproj">
+      <Project>{f1e0feb3-a74e-43ce-98bf-b908ed1753fa}</Project>
+      <Name>SmEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
