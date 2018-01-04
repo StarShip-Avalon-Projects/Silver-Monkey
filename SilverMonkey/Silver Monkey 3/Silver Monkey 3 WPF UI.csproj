@@ -69,7 +69,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="ConsoleWindow.xaml.cs">
+      <DependentUpon>ConsoleWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extentions\RichTextBoxEtentions.cs" />
+    <Compile Include="Logging\ConsoleWindowLogOutput.cs" />
+    <Compile Include="Logging\MutliLogOutput.cs" />
+    <None Include="Logging\NotificationPanelLogOutput.cs" />
     <Compile Include="ViewModels\BotSetupViewModel.cs" />
     <Compile Include="ViewModels\HasDocument.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -83,6 +89,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ConsoleWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\BotSetupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

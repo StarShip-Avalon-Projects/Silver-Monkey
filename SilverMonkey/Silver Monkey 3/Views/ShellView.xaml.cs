@@ -6,6 +6,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using SilverMonkey.Logging;
+using Monkeyspeak.Logging;
 
 using Monkeyspeak.Logging;
 
