@@ -373,7 +373,7 @@ namespace Engine.Libraries
 
             //  (1:4) and the triggering furre's name is not {..},
             Add(TriggerCategory.Condition, 6,
-                r => NameIsNot(r),
+                r => !NameIs(r),
                 "and the triggering furre\'s name is not {..},");
 
             //  (1:5) and the Triggering Furre's message is {..}, (say, emote,
@@ -391,13 +391,13 @@ namespace Engine.Libraries
             // (1:9) and the triggering furre's message does not contain {..} in it,
             // (say, emote, shot, whisper, or emit Channels)
             Add(TriggerCategory.Condition, 9,
-                r => MsgNotContain(r),
+                r => !MsgContains(r),
                 "and the triggering furre\'s message does not contain {..} in it,");
 
             // (1:10) and the triggering furre's message is not {..},
             // (say, emote, shot, whisper, or emit Channels)
             Add(TriggerCategory.Condition, 10,
-                r => MsgIsNot(r),
+                r => !MsgIs(r),
                 "and the triggering furre\'s message is not {..},");
 
             // (1:11) and triggering furre's message starts with {..},
@@ -468,16 +468,16 @@ namespace Engine.Libraries
             //  (5:6) whisper {..} to {..}.
             Add(TriggerCategory.Effect, 6, r =>
             {
-                var msg = r.ReadString();
-                var tname = r.ReadString();
+                string msg = r.ReadString();
+                string tname = r.ReadString();
                 return SndWhisper(tname, msg);
             }, "whisper {..} to furre named {..}.");
 
             //  (5:7) whisper {..} to {..} even if they're off-line.
             Add(TriggerCategory.Effect, 7, r =>
             {
-                var msg = r.ReadString();
-                var tname = r.ReadString();
+                string msg = r.ReadString();
+                string tname = r.ReadString();
                 return SendOffLineWhisper(tname, msg);
             }, "whisper {..} to furre named {..} even if they\'re off-line.");
 
@@ -506,98 +506,6 @@ namespace Engine.Libraries
         }
 
         #endregion Public Methods
-
-        #region Protected Methods
-
-        /// <summary>
-        /// (0:17) When anyone whispers something with {..} in it,
-        /// <para>(0:10) When anyone shouts something with {..} in it,</para>
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        protected override bool MsgContains(TriggerReader reader)
-        {
-            var var = base.MsgContains(reader);
-            return var;
-        }
-
-        /// <summary>
-        /// (1:13) and triggering furre's message ends with {..},
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        protected override bool MsgEndsWith(TriggerReader reader)
-        {
-            return base.MsgEndsWith(reader);
-        }
-
-        /// <summary>
-        /// 0:6) When anyone says {..},
-        /// <para>
-        /// (0:9) When anyone shouts {..},
-        /// </para>
-        /// <para>
-        /// (0:12) When anyone emotes {..},
-        /// </para>
-        /// <para>
-        /// (0:16) When anyone whispers {..},"
-        /// </para>
-        /// <para>
-        /// (0:19) When anyone says or emotes {..},
-        /// </para>
-        /// <para>
-        /// (1:7) and the triggering furre's message is {..},
-        /// </para>
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        protected override bool MsgIs(TriggerReader reader)
-        {
-            return base.MsgIs(reader);
-        }
-
-        /// <summary>
-        /// (0:33) When a furre named {.} requests to summon the bot,"
-        /// <para>
-        /// (0:35) When a furre named {.} requests to join the bot,
-        /// </para>
-        /// <para>
-        /// (0:37) When a furre named {.} requests to follow the bot,
-        /// </para>
-        /// <para>
-        /// (0:39) When a furre named {.} requests to lead the bot,
-        /// </para>
-        /// <para>
-        /// (0:41) When a furre named {.} requests to cuddle with the bot,
-        /// </para>
-        /// <para>
-        /// (1:5) and the triggering furre's name is {.},
-        /// </para>
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        protected override bool NameIs(TriggerReader reader)
-        {
-            return base.NameIs(reader);
-        }
-
-        #endregion Protected Methods
 
         #region Private Methods
 
@@ -631,48 +539,9 @@ namespace Engine.Libraries
             return Player.Visible == Player.WasVisible;
         }
 
-        /// <summary>
-        /// (1:10) and the triggering furre's message is not {..},"
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns></returns>
-        private bool MsgIsNot(TriggerReader reader)
-        {
-            return !base.MsgIs(reader);
-        }
-
-        /// <summary>
-        /// (1:9) and the triggering furre's message does not contain {..}
-        /// in it,"
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        private bool MsgNotContain(TriggerReader reader)
-        {
-            return !base.MsgContains(reader);
-        }
-
         private bool MsgNotStartsWith(TriggerReader reader)
         {
             return !MsgStartsWith(reader);
-        }
-
-        /// <summary>
-        /// (1:6) and the triggering furre's name is not {..},"
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        private bool NameIsNot(TriggerReader reader)
-        {
-            return !base.NameIs(reader);
         }
 
         /// <summary>

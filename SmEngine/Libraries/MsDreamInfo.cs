@@ -50,11 +50,11 @@ namespace Libraries
                 r => !BotIsDreamOwner(r), " and the bot is not the Dream-Owner,");
 
             Add(TriggerCategory.Condition, 21,
-                r => DreamInfo.OwnerShortName == r.ReadString().ToFurcadiaShortName(),
+                r => DreamInfo.Name.ToLower() == r.ReadString().ToLower(),
                 " and the furre named {..} is the Dream owner,");
 
             Add(TriggerCategory.Condition, 22,
-                r => DreamInfo.OwnerShortName != r.ReadString().ToFurcadiaShortName(),
+                r => DreamInfo.Name.ToLower() != r.ReadString().ToLower(),
                 " and the furre named {..} is not the Dream owner,");
 
             Add(TriggerCategory.Condition, 23,
@@ -70,7 +70,7 @@ namespace Libraries
                 TriggeringFurreIsNotDreamOwner, "and the triggering furre is not the Dream owner,");
 
             Add(TriggerCategory.Condition, 27, r =>
-                (ParentBotSession.HasShare || DreamInfo.OwnerShortName == ParentBotSession.ConnectedFurre.ShortName),
+                (ParentBotSession.HasShare || DreamInfo.DreamOwner.ToFurcadiaShortName() == ParentBotSession.ConnectedFurre.ShortName),
                  "and the bot has share control of the Dream or is the Dream owner,");
 
             Add(TriggerCategory.Condition, 28, (r) =>
@@ -112,7 +112,7 @@ namespace Libraries
 
         private bool DreamNameIs(TriggerReader reader)
         {
-            var ParamsSet = ReadDreamParams(reader);
+            ReadDreamParams(reader);
             return DreamInfo.Name.ToLower() == reader.ReadString().ToLower();
         }
 
@@ -126,14 +126,11 @@ namespace Libraries
             var Target = DreamInfo.Furres.GerFurreByName(reader.ReadString());
             if (InDream(Target))
             {
-                SendServer($"share {Target.ShortName}");
-            }
-            else
-            {
-                Logger.Info($"{Target.Name} Is Not in the dream");
+                return SendServer($"share {Target.ShortName}");
             }
 
-            return true;
+            Logger.Info($"{Target.Name} Is Not in the dream");
+            return false;
         }
 
         private bool ShareTrigFurre(TriggerReader reader)
@@ -143,7 +140,7 @@ namespace Libraries
 
         private bool TriggeringFurreIsDreamOwner(TriggerReader reader)
         {
-            return Player.ShortName == DreamInfo.OwnerShortName;
+            return Player.ShortName == DreamInfo.DreamOwner.ToFurcadiaShortName();
         }
 
         private bool TriggeringFurreIsNotDreamOwner(TriggerReader reader)
@@ -158,18 +155,14 @@ namespace Libraries
             {
                 return SendServer($"unshare {Target.ShortName}");
             }
-            else
-            {
-                Logger.Info($"{Target.Name} Is Not in the dream");
-            }
 
+            Logger.Info($"{Target.Name} Is Not in the dream");
             return false;
         }
 
         private bool UnshareTrigFurre(TriggerReader reader)
         {
-            SendServer($"unshare {Player.ShortName}");
-            return true;
+            return SendServer($"unshare {Player.ShortName}");
         }
 
         #endregion Private Methods

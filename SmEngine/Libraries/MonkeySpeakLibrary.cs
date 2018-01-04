@@ -190,7 +190,7 @@ namespace Libraries
         public bool ReadDreamParams(TriggerReader reader)
         {
             bool ParamSet = false;
-            var dreamInfo = reader.GetParameter<Dream>();
+            Dream dreamInfo = reader.GetParameter<Dream>();
             if (dreamInfo != null)
             {
                 if (string.IsNullOrWhiteSpace(dreamInfo.Name))
@@ -213,8 +213,8 @@ namespace Libraries
         /// <returns></returns>
         public bool ReadTriggeringFurreParams(TriggerReader reader)
         {
-            var ParamSet = false;
-            var ActiveFurre = reader.GetParameter<Furre>();
+            bool ParamSet = false;
+            Furre ActiveFurre = reader.GetParameter<Furre>();
             if (ActiveFurre != null)
             {
                 Player = ActiveFurre;
@@ -326,8 +326,8 @@ namespace Libraries
         protected virtual bool MsgIs(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            var msg = Player.Message.ToStrippedFurcadiaMarkupString();
-            var test = reader.ReadString().ToStrippedFurcadiaMarkupString();
+            string msg = Player.Message.ToStrippedFurcadiaMarkupString();
+            string test = reader.ReadString().ToStrippedFurcadiaMarkupString();
             return msg.ToLower() == test.ToLower();
         }
 
@@ -339,8 +339,8 @@ namespace Libraries
         protected bool MsgNotEndsWith(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            var msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
-            var msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower();
+            string msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
+            string msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower();
             return (!msg.ToLower().EndsWith(msMsg.ToLower())
                         & !IsConnectedCharacter(Player));
         }
@@ -353,8 +353,8 @@ namespace Libraries
         protected bool MsgStartsWith(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            var msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
-            var msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower();
+            string msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
+            string msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower();
             return (msg.ToLower().StartsWith(msMsg.ToLower())
                         & !IsConnectedCharacter(Player));
         }
@@ -368,7 +368,7 @@ namespace Libraries
         /// any name is acepted and converted to Furcadia Machine name (ShortName version, lowercase
         /// with special characters stripped)
         /// </remarks>
-        protected virtual bool NameIs(TriggerReader reader)
+        public bool NameIs(TriggerReader reader)
         {
             return reader.ReadString().ToFurcadiaShortName() == Player.ShortName;
         }

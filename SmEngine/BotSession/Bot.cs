@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using static Furcadia.Text.FurcadiaMarkup;
 using static Libraries.MsLibHelper;
@@ -358,6 +359,7 @@ namespace BotSession
 
         private async void OnParseSererInstructionAsync(object sender, ParseServerArgs e)
         {
+            CancellationTokenSource cancel = new CancellationTokenSource(500);
             if ((MSpage == null))
             {
                 return;
@@ -371,13 +373,13 @@ namespace BotSession
                     case ServerInstructionType.LoadDreamEvent:
                         // (0:97) When the bot leaves a Dream,
                         // (0:98) When the bot leaves the Dream named {..},
-                        await MSpage.ExecuteAsync(new int[] { 97, 98 }, lastDream);
+                        await MSpage.ExecuteAsync(new int[] { 97, 98 }, cancel.Token, lastDream);
                         break;
 
                     case ServerInstructionType.BookmarkDream:
                         // (0:90) When the bot enters a Dream,
                         // (0:91) When the bot enters a Dream named {..},
-                        await MSpage.ExecuteAsync(new int[] { 90, 91 }, Dream);
+                        await MSpage.ExecuteAsync(new int[] { 90, 91 }, cancel.Token, Dream);
                         lastDream = Dream;
                         break;
 
@@ -387,19 +389,19 @@ namespace BotSession
                         // (0:31) When a furre named {..} leaves the bots view,
                         // (0:29) When a furre named {..} enters the bots view,
 
-                        await MSpage.ExecuteAsync(new int[] { 28, 30, 31, 29 }, ((MoveFurre)sender).Player);
+                        await MSpage.ExecuteAsync(new int[] { 28, 30, 31, 29 }, cancel.Token, ((MoveFurre)sender).Player);
                         break;
 
                     case ServerInstructionType.RemoveAvatar:
                         // (0:27) When a furre named {..} leaves the Dream,
                         // (0:26) When someone leaves the Dream,
-                        await MSpage.ExecuteAsync(new int[] { 27, 26 }, ((RemoveAvatar)sender).Player);
+                        await MSpage.ExecuteAsync(new int[] { 27, 26 }, cancel.Token, ((RemoveAvatar)sender).Player);
                         break;
 
                     case ServerInstructionType.SpawnAvatar:
                         // (0:24) When someone enters the Dream,
                         // (0:25) When a furre Named {..} enters the Dream,
-                        await MSpage.ExecuteAsync(new int[] { 24, 25 }, ((SpawnAvatar)sender).player);
+                        await MSpage.ExecuteAsync(new int[] { 24, 25 }, cancel.Token, ((SpawnAvatar)sender).player);
                         break;
 
                     case ServerInstructionType.UpdateColorString:
@@ -424,6 +426,7 @@ namespace BotSession
 
         private async void OnServerChannel(object sender, ParseChannelArgs Args)
         {
+            CancellationTokenSource cancel = new CancellationTokenSource(500);
             if ((MSpage == null))
             {
                 return;
@@ -434,8 +437,8 @@ namespace BotSession
                 return;
             }
 
-            var InstructionObject = (ChannelObject)sender;
-            var Furr = InstructionObject.Player;
+            ChannelObject InstructionObject = (ChannelObject)sender;
+            Furre Furr = InstructionObject.Player;
             string Text = InstructionObject.ChannelText;
             try
             {
@@ -449,7 +452,7 @@ namespace BotSession
                             // (0:134) When the bot rolls #d#-#,
                             // (0:136) When any one rolls anything,
 
-                            await MSpage.ExecuteAsync(new int[] { 130, 131, 132, 136 }, Furr);
+                            await MSpage.ExecuteAsync(new int[] { 130, 131, 132, 136 }, cancel.Token, Furr);
                         }
                         else
                         {
@@ -457,31 +460,31 @@ namespace BotSession
                             // (0:138) When a fuure rolls #d#+#,
                             // (0:140) When a furre rolls #d#-#,
                             // (0:136) When any one rolls anything,
-                            await MSpage.ExecuteAsync(new int[] { 133, 134, 135, 136 }, Furr);
+                            await MSpage.ExecuteAsync(new int[] { 133, 134, 135, 136 }, cancel.Token, Furr);
                         }
 
                         return;
 
                     case "trade":
 
-                        await MSpage.ExecuteAsync(new int[] { 46, 46, 48 }, Furr);
+                        await MSpage.ExecuteAsync(new int[] { 46, 46, 48 }, cancel.Token, Furr);
                         return;
 
                     case "shout":
 
-                        await MSpage.ExecuteAsync(new int[] { 8, 9, 10 }, Furr);
+                        await MSpage.ExecuteAsync(new int[] { 8, 9, 10 }, cancel.Token, Furr);
                         return;
 
                     case "say":
 
-                        await MSpage.ExecuteAsync(new int[] { 5, 6, 7, 18, 19, 20 }, Furr);
+                        await MSpage.ExecuteAsync(new int[] { 5, 6, 7, 18, 19, 20 }, cancel.Token, Furr);
                         return;
 
                     case "myspeech":
                         break;
 
                     case "whisper":
-                        await MSpage.ExecuteAsync(new int[] { 15, 16, 17 }, Furr);
+                        await MSpage.ExecuteAsync(new int[] { 15, 16, 17 }, cancel.Token, Furr);
                         return;
 
                     case "emote":
@@ -496,12 +499,12 @@ namespace BotSession
                         //  (0:19) When someone says or emotes {...}
                         //  (0:20) When someone says or emotes something
                         //  with {...} in it
-                        await MSpage.ExecuteAsync(new int[] { 11, 12, 13, 18, 19, 20 }, Furr);
+                        await MSpage.ExecuteAsync(new int[] { 11, 12, 13, 18, 19, 20 }, cancel.Token, Furr);
                         return;
 
                     case "@emit":
 
-                        await MSpage.ExecuteAsync(new int[] { 21, 22, 23 }, Furr, Dream);
+                        await MSpage.ExecuteAsync(new int[] { 21, 22, 23 }, cancel.Token, Furr, Dream);
                         return;
 
                     case "query":
@@ -510,25 +513,25 @@ namespace BotSession
                         {
                             case "summon":
 
-                                await MSpage.ExecuteAsync(new int[] { 34, 35 }, Furr);
+                                await MSpage.ExecuteAsync(new int[] { 34, 35 }, cancel.Token, Furr);
                                 break;
 
                             case "join":
-                                await MSpage.ExecuteAsync(new int[] { 32, 33 }, Furr);
+                                await MSpage.ExecuteAsync(new int[] { 32, 33 }, cancel.Token, Furr);
                                 break;
 
                             case "follow":
 
-                                await MSpage.ExecuteAsync(new int[] { 36, 37 }, Furr);
+                                await MSpage.ExecuteAsync(new int[] { 36, 37 }, cancel.Token, Furr);
                                 break;
 
                             case "lead":
 
-                                await MSpage.ExecuteAsync(new int[] { 38, 39 }, Furr);
+                                await MSpage.ExecuteAsync(new int[] { 38, 39 }, cancel.Token, Furr);
                                 break;
 
                             case "cuddle":
-                                await MSpage.ExecuteAsync(new int[] { 40, 41 }, Furr);
+                                await MSpage.ExecuteAsync(new int[] { 40, 41 }, cancel.Token, Furr);
                                 break;
                         }
                         return;
@@ -630,7 +633,7 @@ namespace BotSession
                         var CookieToMe = new Regex(CookieToMeREGEX);
                         if (CookieToMe.Match(Text).Success)
                         {
-                            await MSpage.ExecuteAsync(new int[] { 42, 43 }, Furr);
+                            await MSpage.ExecuteAsync(new int[] { 42, 43 }, cancel.Token, Furr);
                         }
 
                         Regex CookieToAnyone = new Regex(string.Format("<name shortname=\'(.*?)\'>(.*?)</name> just gave <name shortname=\'(.*?)\'>(.*?)</name> a (.*?)"));
@@ -638,31 +641,31 @@ namespace BotSession
                         {
                             if (IsConnectedCharacter(Furr))
                             {
-                                await MSpage.ExecuteAsync(new int[] { 42, 43 }, Furr);
+                                await MSpage.ExecuteAsync(new int[] { 42, 43 }, cancel.Token, Furr);
                             }
                             else
                             {
-                                await MSpage.ExecuteAsync(44, Furr);
+                                await MSpage.ExecuteAsync(44, cancel.Token, Furr);
                             }
                         }
 
                         var CookieFail = new Regex("You do not have any (.*?) left!");
                         if (CookieFail.Match(Text).Success)
                         {
-                            await MSpage.ExecuteAsync(45, Furr);
+                            await MSpage.ExecuteAsync(45, cancel.Token, Furr);
                         }
 
                         var EatCookie = new Regex((Regex.Escape("<img src=\'fsh://system.fsh:90\' alt=\'@cookie\'/><channel name=\'@cookie\'/> You eat a cookie.") + "(.*?)"));
                         if (EatCookie.Match(Text).Success)
                         {
-                            await MSpage.ExecuteAsync(49, Furr);
+                            await MSpage.ExecuteAsync(49, cancel.Token, Furr);
                         }
 
                         // (0:96) When the Bot sees "Your cookies are ready."
                         Regex CookiesReady = new Regex($"<, aGreaterYour cookies are ready.http://furcadia.com/cookies/ for more info!");
                         if (CookiesReady.Match(Text).Success)
                         {
-                            await MSpage.ExecuteAsync(96, Furr);
+                            await MSpage.ExecuteAsync(96, cancel.Token, Furr);
                         }
 
                         return;

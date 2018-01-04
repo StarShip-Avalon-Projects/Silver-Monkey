@@ -68,30 +68,6 @@ namespace Libraries
         #region Public Methods
 
         /// <summary>
-        /// Reads the variable or number.
-        /// <para />
-        /// Default Value is False
-        /// </summary>
-        /// <param name="reader">The  <see cref="TriggerReader"/></param>
-        /// <param name="addIfNotExist">Add Variable to Variable Scope is it Does not exist,</param>
-        /// <returns><see cref="Double"/></returns>
-        public static double ReadVariableOrNumber(TriggerReader reader, bool addIfNotExist)
-        {
-            double result = 0;
-            if (reader.PeekVariable())
-            {
-                var value = reader.ReadVariable(addIfNotExist).Value.ToString();
-                double.TryParse(value, out result);
-            }
-            else if (reader.PeekNumber())
-            {
-                result = reader.ReadNumber();
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Updates the current dream variables.
         /// <para/>
         /// <see cref="DreamOwnerVariable"/>
@@ -102,17 +78,17 @@ namespace Libraries
         /// <param name="MonkeySpeakPage">The monkey speak page.</param>
         public static void UpdateCurrentDreamVariables(Dream ActiveDream, Page MonkeySpeakPage)
         {
-            if (!MonkeySpeakPage.HasVariable(DreamOwnerVariable))
-            {
-                MonkeySpeakPage.SetVariable(new ConstantVariable(DreamOwnerVariable, ActiveDream.DreamOwner));
-            }
+            //if (!MonkeySpeakPage.HasVariable(DreamOwnerVariable))
+            //{
+            //    MonkeySpeakPage.SetVariable(new ConstantVariable(DreamOwnerVariable, ActiveDream.DreamOwner));
+            //}
 
             ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamOwnerVariable)).SetValue(ActiveDream.DreamOwner);
 
-            if (!MonkeySpeakPage.HasVariable(DreamNameVariable))
-            {
-                MonkeySpeakPage.SetVariable(new ConstantVariable(DreamNameVariable, ActiveDream.Name));
-            }
+            //if (!MonkeySpeakPage.HasVariable(DreamNameVariable))
+            //{
+            //    MonkeySpeakPage.SetVariable(new ConstantVariable(DreamNameVariable, ActiveDream.Name));
+            //}
 
             ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamNameVariable)).SetValue(ActiveDream.Name);
         }
@@ -124,26 +100,26 @@ namespace Libraries
         /// <param name="MonkeySpeakPage">The monkey speak page.</param>
         public static void UpdateTriggerigFurreVariables(Furre ActivePlayer, Page MonkeySpeakPage)
         {
-            if (!MonkeySpeakPage.HasVariable(MessageVariable))
-            {
-                MonkeySpeakPage.SetVariable(new ConstantVariable(MessageVariable, ActivePlayer.Message));
-            }
+            //if (!MonkeySpeakPage.HasVariable(MessageVariable))
+            //{
+            //    MonkeySpeakPage.SetVariable(new ConstantVariable(MessageVariable, ActivePlayer.Message));
+            //}
 
-             ((ConstantVariable)MonkeySpeakPage.GetVariable(MessageVariable)).SetValue(ActivePlayer.Message);
+            ((ConstantVariable)MonkeySpeakPage.GetVariable(MessageVariable)).SetValue(ActivePlayer.Message);
 
-            if (!MonkeySpeakPage.HasVariable(TriggeringFurreShortNameVariable))
-            {
-                MonkeySpeakPage.SetVariable(new ConstantVariable(TriggeringFurreShortNameVariable, ActivePlayer.ShortName));
-            }
+            //if (!MonkeySpeakPage.HasVariable(TriggeringFurreShortNameVariable))
+            //{
+            //    MonkeySpeakPage.SetVariable(new ConstantVariable(TriggeringFurreShortNameVariable, ActivePlayer.ShortName));
+            //}
 
-           ((ConstantVariable)MonkeySpeakPage.GetVariable(TriggeringFurreShortNameVariable)).SetValue(ActivePlayer.ShortName);
+            ((ConstantVariable)MonkeySpeakPage.GetVariable(TriggeringFurreShortNameVariable)).SetValue(ActivePlayer.ShortName);
 
-            if (!MonkeySpeakPage.HasVariable(TriggeringFurreNameVariable))
-            {
-                MonkeySpeakPage.SetVariable(new ConstantVariable(TriggeringFurreNameVariable, ActivePlayer.Name));
-            }
+            //if (!MonkeySpeakPage.HasVariable(TriggeringFurreNameVariable))
+            //{
+            //    MonkeySpeakPage.SetVariable(new ConstantVariable(TriggeringFurreNameVariable, ActivePlayer.Name));
+            //}
 
-           ((ConstantVariable)MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable)).SetValue(ActivePlayer.Name);
+            ((ConstantVariable)MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable)).SetValue(ActivePlayer.Name);
         }
 
         #endregion Public Methods
