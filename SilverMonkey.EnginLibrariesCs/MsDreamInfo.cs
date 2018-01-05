@@ -42,9 +42,6 @@ public class MsDreamInfo : MonkeySpeakLibrary
             r => NameIs(r),
             "When a furre named {..} leaves the Dream,");
 
-        Add(TriggerCategory.Cause, 23,
-            MsgContains, "When someone emits something with {..} in it,");
-
         Add(TriggerCategory.Cause, 90,
             ReadDreamParams, "When the bot enters a Dream,");
 

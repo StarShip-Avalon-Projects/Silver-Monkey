@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SQLite
 Imports System.IO
+Imports Furcadia.Net.Proxy
 Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
@@ -47,6 +48,10 @@ Public NotInheritable Class MsDatabase
     Private cache As Dictionary(Of String, Object) = New Dictionary(Of String, Object)
     Private lock As New Object
     Private QueryRun As Boolean = False
+
+    Public Sub New()
+        ParentBotSession = New ProxySession()
+    End Sub
 
 #End Region
 

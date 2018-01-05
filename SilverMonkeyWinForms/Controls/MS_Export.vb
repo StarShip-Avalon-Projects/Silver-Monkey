@@ -5,7 +5,6 @@ Imports System.Text.RegularExpressions
 Imports System.Windows.Forms
 Imports BotSession
 Imports Monkeyspeak
-Imports SilverMonkeyEngine
 
 Public Class MS_Export
 
@@ -32,9 +31,7 @@ Public Class MS_Export
 
 #End Region
 
-    Private Shared MsPage As Monkeyspeak.Page
-
-    Private Session As Bot
+    Private Shared MsPage As Page
 
 #Region "Private Methods"
 
@@ -48,10 +45,9 @@ Public Class MS_Export
         LoopsList = New List(Of String)
 
         Dim options As New BotOptions()
-        Session = New Bot(options)
         Dim engine As New MonkeyspeakEngine(options.MonkeySpeakEngineOptions)
-        Session.MSpage = engine.LoadFromString("* dummy")
-        Session.MSpage.LoadAllLibraries()
+        MsPage = engine.LoadFromString("* dummy")
+        MsPage.LoadAllLibraries()
 
     End Sub
 

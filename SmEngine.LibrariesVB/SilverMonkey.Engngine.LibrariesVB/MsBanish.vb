@@ -1,5 +1,5 @@
 ﻿Imports Furcadia.Net.DreamInfo
-Imports Libraries
+Imports Furcadia.Net.Proxy
 Imports Monkeyspeak
 
 ''' <summary>
@@ -36,8 +36,12 @@ Imports Monkeyspeak
 ''' </para>
 ''' (0:61) When the bot successfully temp banishes a furre,
 ''' </remarks>
-Public NotInheritable Class MsBanish
+Public Class MsBanish
     Inherits MonkeySpeakLibrary
+
+    Public Sub New()
+        ParentBotSession = New ProxySession()
+    End Sub
 
 #Region "Public Constructors"
 
@@ -126,12 +130,12 @@ Public NotInheritable Class MsBanish
             " unbanish the furre named {...}.")
     End Sub
 
+    ''' <summary>
+    ''' Called when page is disposing or resetting.
+    ''' </summary>
+    ''' <param name="page">The page.</param>
     Public Overrides Sub Unload(page As Page)
 
-    End Sub
-
-    Public Overrides Sub RaiseError(reason As String)
-        MyBase.RaiseError(reason)
     End Sub
 
     Public Overrides Sub Add(trigger As Trigger, handler As TriggerHandler, Optional description As String = Nothing)

@@ -527,7 +527,7 @@ Public Class Main
 
             End If
         Catch ex As Exception
-            Furcadia.Logging.Logger.Error(ex)
+            SndDisplay($"Error: {ex.Message}{Environment.NewLine}", DisplayColors.Error)
         Finally
             BTN_Go.Enabled = True
         End Try

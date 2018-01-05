@@ -288,12 +288,22 @@ namespace SmEngineTests
                     Assert.That(Proxy.Dream.DreamOwner,
                         !Is.EqualTo(null),
                         $"Dream DreamOwner is '{Proxy.Dream.DreamOwner}'");
+                    var Var = Proxy.MSpage.GetVariable(DreamOwnerVariable);
+                    Assert.That(Var.Value,
+                        !Is.EqualTo(null),
+                        $"Constant Variable: '{Var}' ");
                 }
                 else
                 {
                     Assert.That(Proxy.Dream.DreamOwner,
-                        Is.EqualTo(null),
+                        !Is.EqualTo(null),
                         $"Dream DreamOwner is '{Proxy.Dream.DreamOwner}'");
+                    //private dreams most likley to be personal or ddream packs
+                    // Dream Owner shoule be set
+                    var Var = Proxy.MSpage.GetVariable(DreamOwnerVariable);
+                    Assert.That(Var.Value,
+                        !Is.EqualTo(null),
+                        $"Constant Variable: '{Var}' ");
                 }
                 Assert.That(Proxy.BotController,
                     !Is.EqualTo(null),

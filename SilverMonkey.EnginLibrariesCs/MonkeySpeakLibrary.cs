@@ -2,9 +2,9 @@
 using Furcadia.Net.Proxy;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
+using Furcadia;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using static MsLibHelper;
 
@@ -20,7 +20,7 @@ public class MonkeySpeakLibrary : BaseLibrary
     /// <summary>
     /// The arguments
     /// </summary>
-    public object[] args = null;
+    public static object[] _args = null;
 
     #endregion Public Fields
 
@@ -33,10 +33,7 @@ public class MonkeySpeakLibrary : BaseLibrary
     /// <para/>
     /// Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), Object())"/>
     /// </summary>
-    private Dream _dream;
-
-    private DateTime _FurcTime;
-    private Timer FurcTimeTimer;
+    private static Dream _dream;
 
     #endregion Private Fields
 
@@ -48,7 +45,22 @@ public class MonkeySpeakLibrary : BaseLibrary
     /// <value>
     /// The connected furre.
     /// </value>
-    public Furre ConnectedFurre { get; set; }
+    public static Furre ConnectedFurre { get; set; }
+
+    /// <summary>
+    /// Reference to the Main Bot Session for the bot
+    /// </summary>
+    public static ProxySession ParentBotSession { get; set; }
+
+    /// <summary>
+    /// Current Triggering Furre
+    /// <para/>
+    /// Referenced as a Monkeyspeak <see cref="BaseLibrary.Initialize(params object[])"/> Argument.
+    /// <para/>
+    /// Updates when ever Monkey Speak needs it through <see cref="Page.Execute(int[],
+    /// object[])"/> or <see cref="Page.ExecuteAsync(int[], object[])"/>
+    /// </summary>
+    static public Furre Player { get; set; }
 
     /// <summary>
     /// Gets or sets the current dream information for the dream Silver Monkey is located in.
@@ -60,50 +72,9 @@ public class MonkeySpeakLibrary : BaseLibrary
         set { _dream = value; }
     }
 
-    /// <summary>
-    /// Current Furcadia Standard Time (fst)
-    /// </summary>
-    /// <returns>
-    /// Furcadia Time Object in Furcadia Standard Time (fst)
-    /// </returns>
-    public DateTime FurcTime
-    {
-        get
-        {
-            return _FurcTime;
-        }
-    }
-
-    /// <summary>
-    /// Reference to the Main Bot Session for the bot
-    /// </summary>
-    public ProxySession ParentBotSession { get; internal set; }
-
-    /// <summary>
-    /// Current Triggering Furre
-    /// <para/>
-    /// Referenced as a Monkeyspeak <see cref="BaseLibrary.Initialize(object[])"/> Argument.
-    /// <para/>
-    /// Updates when ever Monkey Speak needs it through <see cref="Page.Execute(int[],
-    /// object[])"/> or <see cref="Page.ExecuteAsync(int[], object[])"/>
-    /// </summary>
-    public Furre Player { get; set; }
-
     #endregion Public Properties
 
     #region Public Methods
-
-    /// <summary>
-    /// Gets the type of the argumets of.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public T[] GetArgumetsOfType<T>()
-    {
-        if (args != null && args.Length > 0)
-            return args.OfType<T>().ToArray();
-        return new T[0];
-    }
 
     /// <summary>
     /// Gets the argumet.
@@ -113,9 +84,21 @@ public class MonkeySpeakLibrary : BaseLibrary
     /// <returns></returns>
     public T GetArgumet<T>(int index = 0)
     {
-        if (args != null && args.Length > index)
-            return (T)args[index];
+        if (_args != null && _args.Length > index)
+            return (T)_args[index];
         return default(T);
+    }
+
+    /// <summary>
+    /// Gets the type of the argumets of.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public T[] GetArgumetsOfType<T>()
+    {
+        if (_args != null && _args.Length > 0)
+            return _args.OfType<T>().ToArray();
+        return new T[0];
     }
 
     /// <summary>
@@ -152,9 +135,7 @@ public class MonkeySpeakLibrary : BaseLibrary
     /// </param>
     public override void Initialize(params object[] args)
     {
-        this.args = args;
-
-        FurcTimeTimer = new Timer(TimeUpdate, null, TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500));
+        _args = args;
 
         var bot = GetArgumet<ProxySession>();
         if (bot != null)
@@ -178,6 +159,20 @@ public class MonkeySpeakLibrary : BaseLibrary
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Generic base Furre named {...} is Triggering Furre
+    /// </summary>
+    /// <param name="reader"><see cref="TriggerReader"/></param>
+    /// <returns>True on Name match</returns>
+    /// <remarks>
+    /// any name is acepted and converted to Furcadia Machine name (ShortName version, lowercase
+    /// with special characters stripped)
+    /// </remarks>
+    public bool NameIs(TriggerReader reader)
+    {
+        return reader.ReadString().ToFurcadiaShortName() == Player.ShortName;
     }
 
     /// <summary>
@@ -277,7 +272,6 @@ public class MonkeySpeakLibrary : BaseLibrary
     /// <param name="page">The page.</param>
     public override void Unload(Page page)
     {
-        FurcTimeTimer.Dispose();
     }
 
     #endregion Public Methods
@@ -289,9 +283,10 @@ public class MonkeySpeakLibrary : BaseLibrary
     /// </summary>
     /// <param name="reader"><see cref="TriggerReader"/></param>
     /// <returns>True if the %MESSAGE system variable contains the specified string</returns>
-    protected virtual bool MsgContains(TriggerReader reader)
+    protected bool MsgContains(TriggerReader reader)
     {
         ReadTriggeringFurreParams(reader);
+        ReadDreamParams(reader);
         var msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
         var msg = Player.Message;
         return msg.Contains(msMsg.ToStrippedFurcadiaMarkupString().ToLower());
@@ -302,9 +297,10 @@ public class MonkeySpeakLibrary : BaseLibrary
     /// </summary>
     /// <param name="reader"><see cref="TriggerReader"/></param>
     /// <returns>true if the System %MESSAGE varible ends with the specified string</returns>
-    protected virtual bool MsgEndsWith(TriggerReader reader)
+    protected bool MsgEndsWith(TriggerReader reader)
     {
         ReadTriggeringFurreParams(reader);
+        ReadDreamParams(reader);
         var msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString();
         var msg = Player.Message.ToStrippedFurcadiaMarkupString();
         // Debug.Print("Msg = " & msg)
@@ -321,9 +317,10 @@ public class MonkeySpeakLibrary : BaseLibrary
     /// <returns>
     /// true on success
     /// </returns>
-    protected virtual bool MsgIs(TriggerReader reader)
+    protected bool MsgIs(TriggerReader reader)
     {
         ReadTriggeringFurreParams(reader);
+        ReadDreamParams(reader);
         string msg = Player.Message.ToStrippedFurcadiaMarkupString();
         string test = reader.ReadString().ToStrippedFurcadiaMarkupString();
         return msg.ToLower() == test.ToLower();
@@ -337,6 +334,7 @@ public class MonkeySpeakLibrary : BaseLibrary
     protected bool MsgNotEndsWith(TriggerReader reader)
     {
         ReadTriggeringFurreParams(reader);
+        ReadDreamParams(reader);
         string msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
         string msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower();
         return (!msg.ToLower().EndsWith(msMsg.ToLower())
@@ -351,40 +349,35 @@ public class MonkeySpeakLibrary : BaseLibrary
     protected bool MsgStartsWith(TriggerReader reader)
     {
         ReadTriggeringFurreParams(reader);
+        ReadDreamParams(reader);
         string msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
         string msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower();
         return (msg.ToLower().StartsWith(msMsg.ToLower())
                     & !IsConnectedCharacter(Player));
     }
 
-    /// <summary>
-    /// Generic base Furre named {...} is Triggering Furre
-    /// </summary>
-    /// <param name="reader"><see cref="TriggerReader"/></param>
-    /// <returns>True on Name match</returns>
-    /// <remarks>
-    /// any name is acepted and converted to Furcadia Machine name (ShortName version, lowercase
-    /// with special characters stripped)
-    /// </remarks>
-    public bool NameIs(TriggerReader reader)
-    {
-        return reader.ReadString().ToFurcadiaShortName() == Player.ShortName;
-    }
-
     #endregion Protected Methods
 
-    #region Private Methods
-
     /// <summary>
-    /// Furcadia Clock updater
+    /// Triggerings the furre is bot controller.
     /// </summary>
-    /// <param name="obj">
-    /// Nothing
-    /// </param>
-    private void TimeUpdate(object obj)
+    /// <param name="reader">The reader.</param>
+    /// <returns></returns>
+    public bool TriggeringFurreIsBotController(TriggerReader reader)
     {
-        _FurcTime = DateTime.Now;
+        var var = reader.Page.GetVariable(BotControllerVariable);
+        return var.Value.ToString().ToFurcadiaShortName() == Player.ShortName;
     }
 
-    #endregion Private Methods
+    /// <summary>
+    /// Furres the named is bot controller.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns></returns>
+    public bool FurreNamedIsBotController(TriggerReader reader)
+    {
+        var var = reader.Page.GetVariable(BotControllerVariable);
+        return var.Value.ToString().ToFurcadiaShortName() ==
+            reader.ReadString().ToFurcadiaShortName();
+    }
 }

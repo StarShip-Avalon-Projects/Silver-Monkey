@@ -505,7 +505,7 @@ Namespace Engine.Libraries
             Dim Target = DreamInfo.Furres.GerFurreByName(reader.ReadString())
             Dim Pattern = reader.ReadString
             If String.IsNullOrEmpty(Target.FurreDescription) Then
-                Logger.Error(Of MsMovement)($"Description for {Target.Name}not found. Try looking at the furre first")
+                Logger.Warn($"Description for {Target.Name}not found. Try looking at the furre first")
                 Return False
             End If
             Return Target.FurreDescription.Contains(Pattern)
@@ -535,7 +535,7 @@ Namespace Engine.Libraries
             Dim name = reader.ReadString
             Dim Target = DreamInfo.Furres.GerFurreByName(name)
             If String.IsNullOrEmpty(Target.FurreDescription) Then
-                Logger.Error(Of MsMovement)($"Description for {Target.Name}not found. Try looking at the furre first")
+                Logger.Warn($"Description for {Target.Name}not found. Try looking at the furre first")
                 Return False
             End If
             Var.Value = Target.FurreDescription

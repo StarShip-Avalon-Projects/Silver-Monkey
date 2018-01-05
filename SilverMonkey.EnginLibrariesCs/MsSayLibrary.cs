@@ -204,6 +204,9 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
         Add(TriggerCategory.Cause, 22,
             MsgIs, "When someone emits {..},");
 
+        Add(TriggerCategory.Cause, 23,
+            MsgContains, "When someone emits something with {..} in it,");
+
         // Furre In View
         // TODO: Move to Movement?
         // (0:28) When anyone enters the bots view,
