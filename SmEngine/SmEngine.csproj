@@ -31,6 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Engine.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,15 +52,11 @@
     <Compile Include="BotSession\BotOptions.cs" />
     <Compile Include="BotSession\MsEngineExtentionFunctions.cs" />
     <Compile Include="BotSession\EngineOptions.cs" />
-    <Compile Include="Libraries\MonkeySpeakLibrary.cs" />
-    <Compile Include="Libraries\MsDreamInfo.cs" />
-    <Compile Include="Libraries\MsHelper.cs" />
-    <Compile Include="Libraries\MsSayLibrary.cs" />
-    <Compile Include="Libraries\MsStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extentions\" />
+    <Folder Include="Libraries\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
@@ -69,6 +71,17 @@
       <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
       <Name>Monkeyspeak</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\SilverMonkey.EnginLibrariesCs.csproj">
+      <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
+      <Name>SilverMonkey.EnginLibrariesCs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmEngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB.vbproj">
+      <Project>{4619ff40-2c7c-4dad-887b-14d58755ccd9}</Project>
+      <Name>SilverMonkey.Engngine.LibrariesVB</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

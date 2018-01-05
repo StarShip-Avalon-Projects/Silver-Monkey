@@ -119,36 +119,6 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
           Name="installed" Type="integer" Value="1"
           KeyPath="yes" />
       </Component>
-
-      <Component Id="VerbotKnowledgebaseEditorShortcut" Guid="{9FB44C2E-575A-44B4-B85F-AB1AFC1572B4}">
-
-        <Shortcut Id="$(var.VerbotKnowledgebaseEditor.TargetName)Shortcut"
-                  Name="$(var.VerbotKnowledgebaseEditor.TargetName)"
-                  WorkingDirectory='APPLICATIONFOLDER'
-                  Target="[APPLICATIONFOLDER]$(var.VerbotKnowledgebaseEditor.TargetName)"
-                  Description="Starts $(var.VerbotKnowledgebaseEditor.TargetName)"
- />
-        <RegistryValue
-          Root="HKCU"
-          Key="Software\$(var.CompanyName)\VerbotKnowledgeBaseEditor"
-          Name="installed" Type="integer" Value="1"
-          KeyPath="yes" />
-      </Component>
-
-      <Component Id="ChatBotShortcut" Guid="{F9E10352-4CD5-4000-B334-0000FAEF4FCD}">
-
-        <Shortcut Id="$(var.ChatBot.TargetName)Shortcut"
-                  Name="$(var.ChatBot.TargetName)"
-                  WorkingDirectory='APPLICATIONFOLDER'
-                  Target="[APPLICATIONFOLDER]$(var.ChatBot.TargetName)"
-                  Description="Starts $(var.ChatBot.TargetName)" />
-
-        <RegistryValue
-            Root="HKCU"
-            Key="Software\$(var.CompanyName)\ChatBot"
-            Name="installed" Type="integer" Value="1"
-            KeyPath="yes" />
-      </Component>
     </DirectoryRef>
     <PropertyRef Id="NETFRAMEWORK45" />
     <!--  <Condition Message="This application requires .NET Framework 4.6.1 Please install the .NET Framework then run this installer again.">
@@ -178,11 +148,15 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
 
       <ComponentGroupRef Id="FurcadiaLib.Binaries" />
       <ComponentGroupRef Id="FurcadiaLib.Symbols" />
-      <ComponentGroupRef Id="SilverMonkeyEngine.Binaries" />
-      <ComponentGroupRef Id="SilverMonkeyEngine.Symbols" />
-      <ComponentGroupRef Id="SilverMonkeyEngine.Content" />
-      <ComponentGroupRef Id="Verbot5Library.Binaries" />
-      <ComponentGroupRef Id="Verbot5Library.Symbols" />
+
+      <ComponentGroupRef Id="SmEngine.Binaries" />
+      <ComponentGroupRef Id="SmEngine.Symbols" />
+
+      <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Binaries" />
+      <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Symbols" />
+
+      <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Binaries" />
+      <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Symbols" />
 
       <ComponentRef Id="FCTB" />
       <ComponentRef Id="Irony" />
@@ -199,17 +173,6 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="DataMonkey.Symbols" />
       <ComponentRef Id="DataMonkeyShortcut" />
       <ComponentRef Id="DataMokeyHelp" />
-
-      <Feature Id="ChatBot" Title="Chatbot Application" Level="2">
-        <ComponentGroupRef Id="ChatBot.Binaries" />
-        <ComponentGroupRef Id="ChatBot.Symbols" />
-        <ComponentRef Id="ChatBotShortcut" />
-      </Feature>
-      <Feature Id="VerbotKnowledgebaseEditor" Title="Chatbot Knowedgebase Application" Level="2">
-        <ComponentGroupRef Id="VerbotKnowledgebaseEditor.Binaries" />
-        <ComponentGroupRef Id="VerbotKnowledgebaseEditor.Symbols" />
-        <ComponentRef Id="VerbotKnowledgebaseEditorShortcut" />
-      </Feature>
     </Feature>
 
     <!-- Help file-->

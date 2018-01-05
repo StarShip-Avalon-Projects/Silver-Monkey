@@ -636,11 +636,8 @@ move "$(TargetDir)$(TargetName)_$(PlatformName)_Src.rar" "$(SolutionDir)\SRC\"</
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if $(ConfigurationName) == Release (
-"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"
-)
-IF EXIST "$(SolutionDir)Build\Help\Monkey_Speak_Editor_Help.chm" (
-xcopy  /Y  "$(SolutionDir)Build\Help\Monkey_Speak_Editor_Help.chm" "$(TargetDir)")</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

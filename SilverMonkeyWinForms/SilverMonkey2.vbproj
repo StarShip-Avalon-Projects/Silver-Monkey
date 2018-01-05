@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{CD544712-0665-44DB-BB70-5B9D4395B050}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>WinExe</OutputType>
+    <MyType>WindowsForms</MyType>
+    <RootNamespace>SilverMonkey</RootNamespace>
+    <AssemblyName>SilverMonkey</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <OptionInfer>On</OptionInfer>
+    <OptionStrict>On</OptionStrict>
+    <OptionCompare>Binary</OptionCompare>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
+    <StartupObject>SilverMonkey.My.MyApplication</StartupObject>
+    <ApplicationIcon>metal.ico</ApplicationIcon>
+    <NoWin32Manifest>True</NoWin32Manifest>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <OptionExplicit>Off</OptionExplicit>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <FileAlignment>4096</FileAlignment>
+    <Prefer32Bit>False</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>..\Build\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <DefineConstants>DEBUG=1,TRACE=1</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartAction>Project</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>..\Build\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <DefineConstants>TRACE=1</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DefineConstants>
+    </DefineConstants>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <NoWarn>
+    </NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <DocumentationFile>SilverMonkey.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants />
+    <NoWarn>
+    </NoWarn>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>SecurityRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <DocumentationFile>SilverMonkey.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>SilverMonkey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutBox1.Designer.vb">
+      <DependentUpon>AboutBox1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AboutBox1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="AssemblyFileVersion.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyFileVersion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblyInfoersion1.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BotSetup.Designer.vb">
+      <DependentUpon>BotSetup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BotSetup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LabelHotlinks.vb" />
+    <Compile Include="Controls\Settings Editor\Config.Designer.vb">
+      <DependentUpon>Config.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Settings Editor\Config.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Debug\SetVariables.Designer.vb">
+      <DependentUpon>SetVariables.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Debug\SetVariables.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helper Classes\DeBugWriter.vb" />
+    <Compile Include="IO\TextDisplayManager.vb" />
+    <Compile Include="MultipleLogOutput.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="NewBot.Designer.vb">
+      <DependentUpon>NewBot.vb</DependentUpon>
+    </Compile>
+    <Compile Include="NewBot.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helper Classes\MiscUtils.vb" />
+    <Compile Include="MainModule.vb" />
+    <Compile Include="Helper Classes\DownLoadImage.vb" />
+    <Compile Include="Main.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.vb">
+      <DependentUpon>Main.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\MS_Export.Designer.vb">
+      <DependentUpon>MS_Export.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MS_Export.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Settings.vb" />
+    <Compile Include="Controls\Debug\Variables.Designer.vb">
+      <DependentUpon>Variables.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Debug\Variables.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AboutBox1.resx">
+      <DependentUpon>AboutBox1.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\BotSetup.resx">
+      <DependentUpon>BotSetup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Settings Editor\Config.resx">
+      <DependentUpon>Config.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Debug\SetVariables.resx">
+      <DependentUpon>SetVariables.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.en-US.resx">
+      <DependentUpon>Main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.en.resx">
+      <DependentUpon>Main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewBot.resx">
+      <DependentUpon>NewBot.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MS_Export.resx">
+      <DependentUpon>MS_Export.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Debug\Variables.resx">
+      <DependentUpon>Variables.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="AssemblyInfoersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfoersion1.vb</LastGenOutput>
+    </Content>
+    <Content Include="ControlHelpLinks.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AssemblyFileVersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
+    </Content>
+    <Content Include="metal.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="My Project\app.manifest">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="Furcadia.Net.DreamInfo.Dream.datasource" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="SilverMonkey.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Format Notes.txt" />
+    <None Include="resources\CutHS.png" />
+    <None Include="resources\Edit_UndoHS.png" />
+    <None Include="resources\Edit_RedoHS.png" />
+    <None Include="resources\CopyHS.png" />
+    <None Include="resources\Help.png" />
+    <None Include="resources\Find_VS.png" />
+    <None Include="resources\DocumentHS.png" />
+    <None Include="resources\cwnz38d8.bmp" />
+    <DesignData Include="resources\1240733289676066064.png" />
+    <None Include="resources\metal.ico" />
+    <None Include="resources\metal.png" />
+    <None Include="resources\Connected.ico" />
+    <None Include="resources\Connecting.ico" />
+    <None Include="resources\Disconnected.ico" />
+    <None Include="resources\Connected.jpg" />
+    <None Include="resources\Connecting.jpg" />
+    <None Include="resources\Disconnected.jpg" />
+    <Content Include="SM Lisence.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <DesignData Include="resources\1549_Paper_clip_blue.png" />
+    <DesignData Include="resources\1549_Paper_clip_gray.png" />
+    <None Include="resources\PasteHS.png" />
+    <None Include="resources\OpenFile.png" />
+    <None Include="resources\NewDocumentHS.png" />
+    <None Include="resources\saveHS.png" />
+    <None Include="resources\thnb1rfv.bmp" />
+    <None Include="resources\z8jcnxkd.bmp" />
+    <None Include="resources\PageNumber.png" />
+    <Content Include="resources\SaveAsWebPageHS.png" />
+    <None Include="resources\SaveAsWebPageHS1.png" />
+    <None Include="TextFile1.txt" />
+    <None Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
+      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
+      <Name>FurcadiaLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Name>MonkeyCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
+      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
+      <Name>Monkeyspeak</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\SilverMonkey.EnginLibrariesCs.csproj">
+      <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
+      <Name>SilverMonkey.EnginLibrariesCs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmEngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB.vbproj">
+      <Project>{4619ff40-2c7c-4dad-887b-14d58755ccd9}</Project>
+      <Name>SilverMonkey.Engngine.LibrariesVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmEngine\SmEngine.csproj">
+      <Project>{f1e0feb3-a74e-43ce-98bf-b908ed1753fa}</Project>
+      <Name>SmEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.IO" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PreBuildEvent>"..\..\bin\TextTransform.exe" "$(ProjectDir)AssemblyFileVersion.tt"</PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.101.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.101.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets'))" />
+  </Target>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets')" />
+</Project>

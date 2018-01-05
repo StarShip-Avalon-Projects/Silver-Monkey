@@ -146,7 +146,7 @@ namespace SilverMonkey.Views
                     await FurcadiaSession.ConnetAsync();
                 }
             }
-            catch (FileNotFoundException fnfe)
+            catch (Exception fnfe)
             {
                 Logger.Error(fnfe);
             }

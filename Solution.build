@@ -35,7 +35,7 @@
  <Target Name="Build" AfterTargets="AfterBuild"> 
  <!-- Compile whole solution in release mode -->
  <MSBuild
- Projects="MonkeySystem VS2015.sln"
+ Projects="Silver Monkey.sln"
  Targets="restore;Build"
  Properties="Configuration=$(Configuration);Platform=Any CPU" />
 
@@ -102,12 +102,7 @@
 			WorkingDirectory="Data Monkey/"/>
 
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
-			WorkingDirectory="MonkeyCore/"/>
-
-		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
 			WorkingDirectory="SilverMonkey/"/>
 
-	 <Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
-			WorkingDirectory="SmEngine/"/>
  </Target>
 </Project>

@@ -26,7 +26,11 @@ namespace BotSession
 
         private IniFile BotIni;
 
-        private LogSteamOptions LogOptions;
+        public LogSteamOptions LogOptions
+        {
+            get;
+            set;
+        }
 
         #endregion Private Fields
 

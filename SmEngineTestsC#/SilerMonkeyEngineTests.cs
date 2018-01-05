@@ -7,8 +7,7 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using static Libraries.MsLibHelper;
-
+using static MsLibHelper;
 using static SmEngineTests.Utilities;
 
 namespace SmEngineTests
@@ -169,6 +168,34 @@ namespace SmEngineTests
 
             Proxy.ParseServerChannel(ChannelCode, false);
             DisconnectTests();
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void DownLoadDreamAndCheckVariables(bool StandAlone)
+        {
+            BotHasConnected_StandAlone(StandAlone);
+            HaltFor(DreamEntranceDelay);
+
+            Proxy.SendFormattedTextToServer("`fdl furc://silvermonkey/");
+            HaltFor(DreamEntranceDelay);
+            Assert.Multiple(() =>
+            {
+                var Var = Proxy.MSpage.GetVariable(DreamNameVariable);
+                Assert.That(Var.Value,
+                    !Is.EqualTo(null),
+                    $"Constant Variable: '{Var}' ");
+                Assert.That(Var.IsConstant,
+                    Is.EqualTo(true),
+                    $"Constant Variable: '{Var}' ");
+                Var = Proxy.MSpage.GetVariable(DreamOwnerVariable);
+                Assert.That(Var.Value,
+                    !Is.EqualTo(null),
+                    $"Constant Variable: '{Var}' ");
+                Assert.That(Var.IsConstant,
+                    Is.EqualTo(true),
+                    $"Constant Variable: '{Var}' ");
+            });
         }
 
         [Test]

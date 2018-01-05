@@ -11,7 +11,7 @@ Namespace Utils.Logging
     <CLSCompliant(True)>
     Public Class LogStream
         Implements IDisposable
-        Private Logoptions As LogSteamOptions
+        Private Shared Options As LogSteamOptions
 
 #Region "logging functions"
 
@@ -23,13 +23,25 @@ Namespace Utils.Logging
         ''' </summary>
         ''' <param name="FilePath">
         ''' </param>
+        Public Sub New()
+            Options = New LogSteamOptions
+
+            strErrorFilePath = Paths.SilverMonkeyLogPath
+
+        End Sub
+
+        ''' <summary>
+        ''' Create a new instance of the log file
+        ''' </summary>
+        ''' <param name="FilePath">
+        ''' </param>
         Public Sub New(FilePath As String)
-            Logoptions = New LogSteamOptions With {
+            Options = New LogSteamOptions With {
                 .LogPath = FilePath,
                 .LogNameBase = "Default"
             }
 
-            strErrorFilePath = Path.Combine(FilePath, Logoptions.GetLogName())
+            strErrorFilePath = Path.Combine(FilePath, Options.GetLogName())
 
         End Sub
 
@@ -38,8 +50,8 @@ Namespace Utils.Logging
         ''' </summary>
         ''' <param name="options"></param>
         Sub New(options As LogSteamOptions)
-            Logoptions = options
-            strErrorFilePath = Path.Combine(Logoptions.LogPath, Logoptions.GetLogName())
+            options = options
+            strErrorFilePath = Path.Combine(options.LogPath, options.GetLogName())
         End Sub
 
         ''' <summary>
@@ -50,6 +62,7 @@ Namespace Utils.Logging
         ''' <param name="ObjectException">
         ''' </param>
         Public Shared Sub WriteLine(Message As String, ByRef ObjectException As Exception)
+            If Not Options.log Then Exit Sub
             Dim build As New Text.StringBuilder(Message)
             'Dim Names As MatchCollection = NameRegex.Matches(Message)
             'For Each Name As Match In Names
@@ -112,6 +125,7 @@ Namespace Utils.Logging
         ''' <param name="Message">
         ''' </param>
         Public Shared Sub WriteLine(Message As String)
+            If Not Options.log Then Exit Sub
             Dim build As New StringBuilder(Message)
             'Dim Names As MatchCollection = NameRegex.Matches(Message)
             'For Each Name As Match In Names
