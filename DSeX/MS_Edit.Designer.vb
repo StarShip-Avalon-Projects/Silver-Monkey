@@ -162,7 +162,7 @@ Partial Class MS_Edit
         Me.BtnFind = New System.Windows.Forms.Button()
         Me.SplitContainer4 = New System.Windows.Forms.SplitContainer()
         Me.Causes = New System.Windows.Forms.TabControl()
-        Me.TabControl3 = New System.Windows.Forms.TabControl()
+        Me.EditorTab = New System.Windows.Forms.TabControl()
         Me.sb = New System.Windows.Forms.StatusBar()
         Me.panelCurrentPosition = New System.Windows.Forms.StatusBarPanel()
         Me.panelCurrentLine = New System.Windows.Forms.StatusBarPanel()
@@ -1322,7 +1322,7 @@ Partial Class MS_Edit
         '
         'SplitContainer4.Panel2
         '
-        Me.SplitContainer4.Panel2.Controls.Add(Me.TabControl3)
+        Me.SplitContainer4.Panel2.Controls.Add(Me.EditorTab)
         Me.SplitContainer4.Size = New System.Drawing.Size(1563, 225)
         Me.SplitContainer4.SplitterDistance = 60
         Me.SplitContainer4.SplitterWidth = 10
@@ -1338,15 +1338,15 @@ Partial Class MS_Edit
         Me.Causes.Size = New System.Drawing.Size(150, 60)
         Me.Causes.TabIndex = 10
         '
-        'TabControl3
+        'EditorTab
         '
-        Me.TabControl3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControl3.Location = New System.Drawing.Point(0, 0)
-        Me.TabControl3.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.TabControl3.Name = "TabControl3"
-        Me.TabControl3.SelectedIndex = 0
-        Me.TabControl3.Size = New System.Drawing.Size(1563, 225)
-        Me.TabControl3.TabIndex = 11
+        Me.EditorTab.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.EditorTab.Location = New System.Drawing.Point(0, 0)
+        Me.EditorTab.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.EditorTab.Name = "EditorTab"
+        Me.EditorTab.SelectedIndex = 0
+        Me.EditorTab.Size = New System.Drawing.Size(1563, 225)
+        Me.EditorTab.TabIndex = 11
         '
         'sb
         '
@@ -1574,7 +1574,7 @@ Partial Class MS_Edit
     Friend WithEvents SplitContainer4 As SplitContainer
     Friend WithEvents Causes As TabControl
     Friend WithEvents ShowLineFinderToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents TabControl3 As TabControl
+    Friend WithEvents EditorTab As TabControl
     Friend WithEvents LanguageToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DragonSpeakToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MonkeySpeakToolStripMenuItem As ToolStripMenuItem

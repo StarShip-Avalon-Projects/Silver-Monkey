@@ -118,9 +118,9 @@ namespace SmEngineTests
                     Assert.That(Proxy.IsClientSocketConnected,
                         Is.EqualTo(false),
                          $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                    Assert.That(Proxy.FurcadiaClientIsRunning,
                         Is.EqualTo(false),
-                        $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
                 }
                 else
                 {
@@ -130,9 +130,9 @@ namespace SmEngineTests
                     Assert.That(Proxy.IsClientSocketConnected,
                         Is.EqualTo(true),
                         $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                    Assert.That(Proxy.FurcadiaClientIsRunning,
                         Is.EqualTo(true),
-                        $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
                 }
             });
         }
@@ -156,9 +156,9 @@ namespace SmEngineTests
                 Assert.That(Proxy.IsClientSocketConnected,
                      Is.EqualTo(false),
                      $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                Assert.That(Proxy.FurcadiaClientIsRunning,
                      Is.EqualTo(false),
-                    $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                    $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
             });
         }
 

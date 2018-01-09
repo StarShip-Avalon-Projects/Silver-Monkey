@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Silver Monkey")>
-<Assembly: AssemblyDescription("The bot that makes Furbot look like a monkies uncle!!")>
+<Assembly: AssemblyDescription("The bot that makes Furbot look like a monkey's uncle!!")>
 <Assembly: AssemblyCompany("TS-Projects")>
 <Assembly: AssemblyProduct("Silver Monkey")>
 <Assembly: AssemblyTrademark("")>

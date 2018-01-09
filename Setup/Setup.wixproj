@@ -46,6 +46,15 @@
     </HeatProject>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DSeX\MonkeySpeakEditor.vbproj">
+      <Name>MonkeySpeakEditor</Name>
+      <Project>{65e4cc10-b91d-4645-b20c-d3a381c9a36a}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Name>MonkeyCore</Name>
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
@@ -62,15 +71,6 @@
       <DoNotHarvest>
       </DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\DSeX\MonkeySpeakEditor.vbproj">
-      <Name>MonkeySpeakEditor</Name>
-      <Project>{65e4cc10-b91d-4645-b20c-d3a381c9a36a}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Content</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
@@ -109,13 +109,13 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\SmEngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB.vbproj">
+    <ProjectReference Include="..\SmEngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB.vbproj">
       <Name>SilverMonkey.Engngine.LibrariesVB</Name>
       <Project>{4619ff40-2c7c-4dad-887b-14d58755ccd9}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\SmEngine\SmEngine.csproj">

@@ -82,15 +82,15 @@ public class MsLibHelper
         {
             MonkeySpeakPage.SetVariable(new ConstantVariable(DreamOwnerVariable, ActiveDream.DreamOwner));
         }
-
-        ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamOwnerVariable)).SetValue(ActiveDream.DreamOwner);
+        else
+            ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamOwnerVariable)).SetValue(ActiveDream.DreamOwner);
 
         if (!MonkeySpeakPage.HasVariable(DreamNameVariable))
         {
             MonkeySpeakPage.SetVariable(new ConstantVariable(DreamNameVariable, ActiveDream.Name));
         }
-
-        ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamNameVariable)).SetValue(ActiveDream.Name);
+        else
+            ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamNameVariable)).SetValue(ActiveDream.Name);
     }
 
     /// <summary>
@@ -100,26 +100,26 @@ public class MsLibHelper
     /// <param name="MonkeySpeakPage">The monkey speak page.</param>
     public static void UpdateTriggerigFurreVariables(Furre ActivePlayer, Page MonkeySpeakPage)
     {
-        //if (!MonkeySpeakPage.HasVariable(MessageVariable))
-        //{
-        //    MonkeySpeakPage.SetVariable(new ConstantVariable(MessageVariable, ActivePlayer.Message));
-        //}
+        if (!MonkeySpeakPage.HasVariable(MessageVariable))
+        {
+            MonkeySpeakPage.SetVariable(new ConstantVariable(MessageVariable, ActivePlayer.Message));
+        }
+        else
+            ((ConstantVariable)MonkeySpeakPage.GetVariable(MessageVariable)).SetValue(ActivePlayer.Message);
 
-        ((ConstantVariable)MonkeySpeakPage.GetVariable(MessageVariable)).SetValue(ActivePlayer.Message);
+        if (!MonkeySpeakPage.HasVariable(TriggeringFurreShortNameVariable))
+        {
+            MonkeySpeakPage.SetVariable(new ConstantVariable(TriggeringFurreShortNameVariable, ActivePlayer.ShortName));
+        }
+        else
+            ((ConstantVariable)MonkeySpeakPage.GetVariable(TriggeringFurreShortNameVariable)).SetValue(ActivePlayer.ShortName);
 
-        //if (!MonkeySpeakPage.HasVariable(TriggeringFurreShortNameVariable))
-        //{
-        //    MonkeySpeakPage.SetVariable(new ConstantVariable(TriggeringFurreShortNameVariable, ActivePlayer.ShortName));
-        //}
-
-        ((ConstantVariable)MonkeySpeakPage.GetVariable(TriggeringFurreShortNameVariable)).SetValue(ActivePlayer.ShortName);
-
-        //if (!MonkeySpeakPage.HasVariable(TriggeringFurreNameVariable))
-        //{
-        //    MonkeySpeakPage.SetVariable(new ConstantVariable(TriggeringFurreNameVariable, ActivePlayer.Name));
-        //}
-
-        ((ConstantVariable)MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable)).SetValue(ActivePlayer.Name);
+        if (!MonkeySpeakPage.HasVariable(TriggeringFurreNameVariable))
+        {
+            MonkeySpeakPage.SetVariable(new ConstantVariable(TriggeringFurreNameVariable, ActivePlayer.Name));
+        }
+        else
+            ((ConstantVariable)MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable)).SetValue(ActivePlayer.Name);
     }
 
     #endregion Public Methods

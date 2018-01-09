@@ -33,15 +33,7 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
-
-            Dim logError As New ErrorLogging(e.Exception, sender)
-
-            Dim SendError As New ProcessStartInfo
-            SendError.Arguments = logError.LogFile
-            SendError.FileName = "notepad.exe"
-            ' Path.Combine(Application.Info.DirectoryPath, "BugTragSubmit.exe")
-            Process.Start(SendError)
-
+            Monkeyspeak.Logging.Logger.Error($"{e} {sender}")
         End Sub
 
 #End Region

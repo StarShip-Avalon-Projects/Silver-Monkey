@@ -50,8 +50,8 @@ public class MsBotInformation : MonkeySpeakLibrary
             (t) => true,
             "When the Monkey Speak Engine starts the script,");
         Add(TriggerCategory.Cause, 1,
-         r => true,
-         "When the bot logs into Furcadia,");
+             r => true,
+             "When the bot logs into Furcadia,");
 
         Add(TriggerCategory.Cause, 2,
             r => true,

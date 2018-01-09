@@ -7,10 +7,10 @@ Imports Furcadia.IO.IniFile
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Controls.NativeMethods
-Imports MonkeyCore.IniFile
 Imports MonkeyCore.MyData
 Imports MonkeyCore.Utils
 Imports MonkeyCore.Utils.Logging
+Imports Monkeyspeak
 Imports MonkeySpeakEditor.Controls
 Imports MonkeySpeakEditor.Controls.LineFinder
 
@@ -21,6 +21,8 @@ Public Class MS_Edit
 
 #Region "Private Fields"
 
+    Private MsEngine As MonkeyspeakEngine
+    Private MsPage As Page
     Private Const HelpFile As String = "Silver Monkey.chm"
     'Private Const MonkeySpeakLineHelp As String = "Silver Monkey.chm"
 
@@ -62,7 +64,9 @@ Public Class MS_Edit
 
         ' This call is required by the designer.
         InitializeComponent()
-
+        MsEngine = New MonkeyspeakEngine()
+        MsPage = MsEngine.LoadFromString("dummy")
+        MsPage.LoadAllLibraries()
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub
@@ -547,7 +551,7 @@ Public Class MS_Edit
     ''' </param>
     ''' <param name="LineTab">
     ''' </param>
-    Private Sub AddNewTab(ByRef n As String, ByRef VL_Name As String, ByRef lst As List(Of String), ByRef LineTab As TabControl)
+    Private Sub AddNewTab(ByVal n As String, ByVal VL_Name As String, ByVal lst As IList(Of String), ByRef LineTab As TabControl)
         LineTab.TabPages.Add(n)
         'Adds a new tab to your tab control
 
@@ -558,11 +562,11 @@ Public Class MS_Edit
         'LineTab.SelectedTab = LineTab.TabPages(intLastTabIndex)
 
         'Creates the listview and displays it in the new tab
-        Dim LineFinderListView As New ListView_NoFlicker()
-
-        LineFinderListView.Tag = n
-        LineFinderListView.Dock = DockStyle.Fill
-        LineFinderListView.Sorting = SortOrder.Ascending
+        Dim LineFinderListView As New ListView_NoFlicker With {
+            .Tag = n,
+            .Dock = DockStyle.Fill,
+            .Sorting = SortOrder.Ascending
+        }
         LineFinderListView.Columns.Add(n)
         LineFinderListView.Location = New System.Drawing.Point(6, 3)
         LineFinderListView.Height = LineTab.Height
@@ -633,7 +637,7 @@ Public Class MS_Edit
         Dim iFile As IniFile = KeysIni
         If TabEditStyles(TabControl2.SelectedIndex) = EditStyles.ms Then
             'Then we check MS File
-            tbc = TabControl3
+            tbc = EditorTab
             iFile = MS_KeysIni
         End If
         Debug.WriteLine(tbc.Name + ".TabPages.Count: " & tbc.TabPages.Count)
@@ -1401,6 +1405,7 @@ Public Class MS_Edit
         MS_KeysIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "Keys-MS.ini"))
         KeysHelpMSIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "KeysHelp-MS.ini"))
         KeysHelpIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "KeysHelp.ini"))
+        Dim Catagories() As TriggerCategory = DirectCast([Enum].GetValues(GetType(TriggerCategory)), TriggerCategory())
 
         EditSettings = New MonkeyCore.Settings.EditSettings
 
@@ -1441,12 +1446,12 @@ Public Class MS_Edit
 
         Dim items As List(Of AutocompleteItem) = New List(Of AutocompleteItem)()
         Dim DsKeyCount As Integer = Integer.Parse(KeysIni.GetKeyValue("Init-Types", "Count"))
-        Dim MsKeyCount As Integer = Integer.Parse(MS_KeysIni.GetKeyValue("Init-Types", "Count"))
+
         For i As Integer = 1 To DsKeyCount
             items.Clear()
             Dim DSLines As New List(Of String)
             Dim key As String = KeysIni.GetKeyValue("Init-Types", i.ToString)
-            splash.UpdateProgress("Loading DS " + key + "...", i / (DsKeyCount + MsKeyCount + 2) * 100)
+            splash.UpdateProgress("Loading DS " + key + "...", i / (DsKeyCount + Catagories.Length + 2) * 100)
             Dim DSSection As IniSection = KeysIni.GetSection(key)
 
             For Each K As IniSection.IniKey In DSSection.Keys
@@ -1463,30 +1468,28 @@ Public Class MS_Edit
 
         Next
 
-        For i As Integer = 1 To MsKeyCount
-            items.Clear()
+        For i As Integer = 0 To Catagories.Length - 2
+            Dim cat As TriggerCategory = Catagories(i)
             Dim MsLineFinderSet As New List(Of String)
-            Dim key As String = MS_KeysIni.GetKeyValue("Init-Types", i.ToString)
-            splash.UpdateProgress("Loading MS " + key + "...", i + DsKeyCount / (DsKeyCount + MsKeyCount + 2) * 100)
-            Dim MsSection As IniSection = MS_KeysIni.GetSection(key)
+            items.Clear()
+            splash.UpdateProgress($"Loading MS { Catagories(i).ToString() }...", i + DsKeyCount / (DsKeyCount + Catagories.Length + 2) * 100)
 
-            For Each K As IniSection.IniKey In MsSection.Keys
-
-                Dim MsIniKeyFields As String() = SplitCSV(K.Value)
-
-                If Not IsNothing(MsIniKeyFields) Then
-                    MsLineFinderSet.Add(MsIniKeyFields(2))
-                    items.Add(New DA_AUtoCompleteMenu(MsIniKeyFields(2)))
-                End If
-
+            For Each MsLib In MsPage.Libraries
+                Dim evensQuery = From h In MsLib.Handlers
+                                 Where h.Key.Category = cat
+                                 Select h.Key
+                For Each trigger In evensQuery
+                    MsLineFinderSet.Add(MsPage.GetTriggerDescription(trigger, True))
+                    items.Add(New DA_AUtoCompleteMenu(MsPage.GetTriggerDescription(trigger, True)))
+                Next
             Next
 
-            AddNewTab(key, i.ToString, MsLineFinderSet, TabControl3)
+            AddNewTab(cat.ToString(), i.ToString, MsLineFinderSet, EditorTab)
             MS_autoCompleteList.AddRange(items)
 
         Next
 
-        splash.UpdateProgress("Finishing up...", DsKeyCount + MsKeyCount + 1 / (DsKeyCount + MsKeyCount + 2) * 100)
+        splash.UpdateProgress("Finishing up...", DsKeyCount + Catagories.Length + 1 / (DsKeyCount + Catagories.Length + 2) * 100)
 
         SetDSHilighter()
         SetMSHilighter()

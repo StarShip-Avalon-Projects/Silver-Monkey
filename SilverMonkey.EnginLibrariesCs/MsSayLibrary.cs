@@ -113,12 +113,9 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
         base.Initialize(args);
 
         // says
-        Add(TriggerCategory.Cause, 5, r =>
-        {
-            ReadDreamParams(r);
-            ReadTriggeringFurreParams(r);
-            return !IsConnectedCharacter(Player);
-        }, "When anyone says something,");
+        Add(TriggerCategory.Cause, 5,
+            r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
+            "When anyone says something,");
 
         Add(TriggerCategory.Cause, 6,
             r => MsgIs(r),
@@ -130,12 +127,10 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
             "When anyone says something with {..} in it,");
 
         // Shouts
-        Add(TriggerCategory.Cause, 8, r =>
-         {
-             ReadTriggeringFurreParams(r);
-             return !IsConnectedCharacter(Player);
-         }
-        , "When anyone shouts something,");
+        Add(TriggerCategory.Cause, 8,
+             r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
+            "When anyone shouts something,");
+
         Add(TriggerCategory.Cause, 9,
             r => MsgIs(r),
             "When anyone shouts {..},");
@@ -146,12 +141,9 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
             "When anyone shouts something with {..} in it,");
 
         // emotes
-        Add(TriggerCategory.Cause, 11, r =>
-        {
-            ReadDreamParams(r);
-            ReadTriggeringFurreParams(r);
-            return !IsConnectedCharacter(Player);
-        }, "When anyone emotes something,");
+        Add(TriggerCategory.Cause, 11,
+            r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
+            "When anyone emotes something,");
 
         Add(TriggerCategory.Cause, 12,
             r => MsgIs(r),
@@ -163,12 +155,9 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
             "When anyone emotes something with {..} in it,");
 
         // Whispers
-        Add(TriggerCategory.Cause, 15, r =>
-        {
-            ReadDreamParams(r);
-            ReadTriggeringFurreParams(r);
-            return !IsConnectedCharacter(Player);
-        }, "When anyone whispers something,");
+        Add(TriggerCategory.Cause, 15,
+            r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
+            "When anyone whispers something,");
 
         Add(TriggerCategory.Cause, 16,
             r => MsgIs(r),
@@ -180,11 +169,9 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
             "When anyone whispers something with {..} in it,");
 
         // Says or Emotes
-        Add(TriggerCategory.Cause, 18, r =>
-        {
-            ReadTriggeringFurreParams(r);
-            return !IsConnectedCharacter(Player);
-        }, "When anyone says or emotes something,");
+        Add(TriggerCategory.Cause, 18,
+            r => ReadTriggeringFurreParams(r),
+            "When anyone says or emotes something,");
 
         Add(TriggerCategory.Cause, 19,
             r => MsgIs(r),
@@ -195,17 +182,17 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
             r => MsgContains(r),
             "When anyone says or emotes something with {..} in it,");
 
-        Add(TriggerCategory.Cause, 21, reader =>
-        {
-            ReadTriggeringFurreParams(reader);
-            return !ParentBotSession.IsConnectedCharacter(Player);
-        }, "When someone emits something,");
+        Add(TriggerCategory.Cause, 21,
+               r => ReadTriggeringFurreParams(r) && ReadDreamParams(r),
+             "When someone emits something,");
 
         Add(TriggerCategory.Cause, 22,
-            MsgIs, "When someone emits {..},");
+            r => MsgIs(r),
+            "When someone emits {..},");
 
         Add(TriggerCategory.Cause, 23,
-            MsgContains, "When someone emits something with {..} in it,");
+          r => MsgContains(r),
+          "When someone emits something with {..} in it,");
 
         // Furre In View
         // TODO: Move to Movement?
@@ -233,10 +220,8 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
         // Summon
         // (0:32) When anyone requests to summon the bot,
         Add(TriggerCategory.Cause, 32, r =>
-        {
-            ReadTriggeringFurreParams(r);
-            return "summon" == r.GetParameter<string>();
-        }, "When anyone requests to summon the bot,");
+            ReadTriggeringFurreParams(r) && "summon" == r.GetParameter<string>(),
+            "When anyone requests to summon the bot,");
 
         // (0:33) When a furre named {..} requests to summon the bot,
         Add(TriggerCategory.Cause, 33,
@@ -245,11 +230,9 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
 
         // Join
         // (0:34) When anyone requests to join the bot,
-        Add(TriggerCategory.Cause, 34, r =>
-        {
-            ReadTriggeringFurreParams(r);
-            return "join" == r.GetParameter<string>();
-        }, "When anyone requests to join the bot,");
+        Add(TriggerCategory.Cause, 34,
+           r => ReadTriggeringFurreParams(r) && "join" == r.GetParameter<string>(),
+           "When anyone requests to join the bot,");
 
         // (0:35) When a furre named {..} requests to join the bot,
 
@@ -258,11 +241,9 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
             "When a furre named {..} requests to join the bot,");
         // Follow
         // (0:36) When anyone requests to follow the bot,
-        Add(TriggerCategory.Cause, 36, r =>
-        {
-            ReadTriggeringFurreParams(r);
-            return "follow" == r.GetParameter<string>();
-        }, "When anyone requests to follow the bot,");
+        Add(TriggerCategory.Cause, 36,
+           r => ReadTriggeringFurreParams(r) && "follow" == r.GetParameter<string>(),
+           "When anyone requests to follow the bot,");
 
         // (0:37) When a furre named {..} requests to follow the bot,
         Add(TriggerCategory.Cause, 37,
@@ -271,11 +252,9 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
         // Lead
 
         // (0:38) When anyone requests to lead the bot,
-        Add(TriggerCategory.Cause, 38, r =>
-        {
-            ReadTriggeringFurreParams(r);
-            return "lead" == r.GetParameter<string>();
-        }, "When anyone requests to lead the bot,");
+        Add(TriggerCategory.Cause, 38,
+            r => ReadTriggeringFurreParams(r) && "lead" == r.GetParameter<string>(),
+            "When anyone requests to lead the bot,");
 
         // (0:39) When a furre named {..} requests to lead the bot,
         Add(TriggerCategory.Cause, 39,
@@ -284,11 +263,9 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
 
         // Cuddle
         // (0:40) When anyone requests to cuddle with the bot.
-        Add(TriggerCategory.Cause, 40, r =>
-        {
-            ReadTriggeringFurreParams(r);
-            return "cuddle" == r.GetParameter<string>();
-        }, "When anyone requests to cuddle with the bot,");
+        Add(TriggerCategory.Cause, 40,
+            r => ReadTriggeringFurreParams(r) && "cuddle" == r.GetParameter<string>(),
+            "When anyone requests to cuddle with the bot,");
 
         // (0:41) When a furre named {..} requests to cuddle with the bot,
         Add(TriggerCategory.Cause, 41,
@@ -349,15 +326,15 @@ public sealed class MsSayLibrary : MonkeySpeakLibrary
             r => MsgNotEndsWith(r),
             "and triggering furre\'s message doesn\'t end with {..},");
 
-        //// (1:904) and the triggering furre is the Bot Controller,
-        //Add(TriggerCategory.Condition, 15,
-        //    r => ParentBotSession.IsBotController,
-        //    "and the triggering furre is the Bot Controller,");
+        // (1:904) and the triggering furre is the Bot Controller,
+        Add(TriggerCategory.Condition, 15,
+            r => TriggeringFurreIsBotController(r),
+            "and the triggering furre is the Bot Controller,");
 
-        //// (1:905) and the triggering furre is not the Bot Controller,
-        //Add(TriggerCategory.Condition, 16,
-        //    r => !ParentBotSession.IsBotController,
-        //    "and the triggering furre is not the Bot Controller,");
+        // (1:905) and the triggering furre is not the Bot Controller,
+        Add(TriggerCategory.Condition, 16,
+         r => !TriggeringFurreIsBotController(r),
+            "and the triggering furre is not the Bot Controller,");
 
         // Says
         //  (5:0) say {..}.

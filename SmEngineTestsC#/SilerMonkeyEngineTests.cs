@@ -1,6 +1,7 @@
 ﻿using BotSession;
 using Furcadia.Logging;
 using Furcadia.Net;
+using Furcadia.Net.Proxy;
 using Furcadia.Net.Utils.ServerParser;
 using MonkeyCore;
 using NUnit.Framework;
@@ -77,8 +78,6 @@ namespace SmEngineTests
             options.SaveBotSettings();
 
             Proxy = new Bot(options);
-            Proxy.ClientData2 += (ClintData) => Proxy.SendToServer(ClintData);
-            Proxy.ServerData2 += (ServerData) => Proxy.SendToClient(ServerData);
             Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
         }
 
@@ -367,9 +366,9 @@ namespace SmEngineTests
                     Assert.That(Proxy.IsClientSocketConnected,
                         Is.EqualTo(false),
                          $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                    Assert.That(Proxy.FurcadiaClientIsRunning,
                         Is.EqualTo(false),
-                        $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
                 }
                 else
                 {
@@ -379,9 +378,9 @@ namespace SmEngineTests
                     Assert.That(Proxy.IsClientSocketConnected,
                         Is.EqualTo(true),
                         $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                    Assert.That(Proxy.FurcadiaClientIsRunning,
                         Is.EqualTo(true),
-                        $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
                 }
             });
         }
@@ -405,9 +404,9 @@ namespace SmEngineTests
                 Assert.That(Proxy.IsClientSocketConnected,
                      Is.EqualTo(false),
                      $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                Assert.That(Proxy.FurcadiaClientIsRunning,
                      Is.EqualTo(false),
-                    $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                    $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
             });
         }
 

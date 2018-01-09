@@ -5,6 +5,7 @@ Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Windows.Forms
 Imports BotSession
+Imports Furcadia.Logging
 Imports Furcadia.Net
 Imports Furcadia.Net.DreamInfo
 Imports Furcadia.Net.Utils.ServerParser
@@ -88,7 +89,7 @@ Public Class Main
     ''' </summary>
     Private DebugLogs As StringBuilder
 
-    Private FileLogWriter As LogStream
+    Private Shared FileLogWriter As LogStream
     Private MRUlist As Queue(Of String)
 
 #End Region
@@ -113,17 +114,18 @@ Public Class Main
         ''  MS_KeysIni.Load(Path.Combine(ApplicationPath, "Keys-MS.ini"))
 
         InitializeTextControls()
-        Monkeyspeak.Logging.Logger.LogOutput = New MultipleLogOutput()
         Monkeyspeak.Logging.Logger.InfoEnabled = True
         Monkeyspeak.Logging.Logger.SuppressSpam = False
         Monkeyspeak.Logging.Logger.WarningEnabled = True
         Monkeyspeak.Logging.Logger.SingleThreaded = True
 
-        Furcadia.Logging.Logger.LogOutput = New MultipleLogOutput()
         Furcadia.Logging.Logger.InfoEnabled = True
         Furcadia.Logging.Logger.SuppressSpam = False
         Furcadia.Logging.Logger.WarningEnabled = True
         Furcadia.Logging.Logger.SingleThreaded = True
+        Furcadia.Logging.Logger.LogOutput = New MultiLogOutput(New FileLogger(), New Engine.MultipleLogOutput())
+
+        Monkeyspeak.Logging.Logger.LogOutput = New Monkeyspeak.Logging.MultiLogOutput(New Monkeyspeak.Logging.FileLogger(), New Engine.MultipleLogOutput())
     End Sub
 
 #End Region
@@ -323,7 +325,7 @@ Public Class Main
     ''' <param name="newColor"></param>
     Public Sub SndDisplay(data As String, Optional newColor As DisplayColors = DisplayColors.DefaultColor)
 
-        If BotConfig.LogOptions.log Then FileLogWriter.WriteLine(data)
+        If BotConfig.LogOptions.log Then LogStream.WriteLine(data)
         If CBool(Mainsettings.TimeStamp) Then
             Dim Now As String = DateTime.Now.ToLongTimeString
             data = Now.ToString & ": " & data
@@ -339,7 +341,7 @@ Public Class Main
     ''' <param name="Message"></param>
     Public Sub SndDisplay(Message As Monkeyspeak.Logging.LogMessage)
 
-        If BotConfig.LogOptions.log Then FileLogWriter.WriteLine(Message.message)
+        If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor
         Select Case Message.Level
             Case Monkeyspeak.Logging.Level.Warning
@@ -358,7 +360,7 @@ Public Class Main
     ''' <param name="Message"></param>
     Public Sub SndDisplay(Message As Furcadia.Logging.LogMessage)
 
-        If BotConfig.LogOptions.log Then FileLogWriter.WriteLine(Message.Message)
+        If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor
         Select Case Message.Level
             Case Furcadia.Logging.Level.Warning
@@ -366,7 +368,7 @@ Public Class Main
             Case Furcadia.Logging.Level.Debug Or Furcadia.Logging.Level.Error
                 newColor = DisplayColors.Warning
         End Select
-        SndDisplay(Message.Message, newColor)
+        SndDisplay(Message.message, newColor)
     End Sub
 
     Public Sub UpDatButtonGoText(str As Object)
@@ -990,7 +992,7 @@ Public Class Main
     ''' <see cref="ChannelObject"/>
     ''' </param>
     ''' <param name="Args">
-    ''' <see cref="ChannelObject"/>
+    ''' <see cref="ParseChannelArgs"/>
     ''' </param>
     Private Sub OnProcessServerChannelData(sender As Object, Args As ParseChannelArgs) _
         Handles FurcadiaSession.ProcessServerChannelData
@@ -1025,7 +1027,6 @@ Public Class Main
         If (FurcadiaSession.ServerStatus = ConnectionPhase.MOTD) Then
             SndDisplay(data)
         End If
-        FurcadiaSession.SendToClient(data)
 
     End Sub
 
@@ -1059,21 +1060,18 @@ Public Class Main
     ''' <param name="Args">
     ''' </param>
     Private Sub ParseFurres(sender As Object, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
-        Try
 
-            Select Case Args.ServerInstruction
-                Case ServerInstructionType.SpawnAvatar
-                    UpDateDreamList()
-                Case ServerInstructionType.RemoveAvatar
-                    UpDateDreamList()
-                Case ServerInstructionType.BookmarkDream
-                    UpDateDreamList()
-                Case ServerInstructionType.LoadDreamEvent
-                    UpDateDreamList()
-            End Select
-        Catch
+        Select Case Args.ServerInstruction
+            Case ServerInstructionType.SpawnAvatar
+                UpDateDreamList()
+            Case ServerInstructionType.RemoveAvatar
+                UpDateDreamList()
+            Case ServerInstructionType.BookmarkDream
+                UpDateDreamList()
+            Case ServerInstructionType.LoadDreamEvent
+                UpDateDreamList()
+        End Select
 
-        End Try
     End Sub
 
     Private Sub PasteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles PasteToolStripMenuItem.Click
@@ -1127,7 +1125,7 @@ Public Class Main
     Private Sub SendCommandToServer(ByVal command As String)
 
         If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
-        FurcadiaSession.TextToServer(command)
+        FurcadiaSession.SendFormattedTextToServer(command)
 
     End Sub
 

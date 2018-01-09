@@ -91,9 +91,8 @@
 
  <Target Name="IncrementVersions" Condition=" '$(Configuration)' == 'Debug' ">
  <!-- Compile whole solution in release mode -->
-		<!-- Allow Elta Branch to Manage FurcLib Versioning
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
-			WorkingDirectory="FurcLib/"/> -->
+			WorkingDirectory="FurcLib/"/>
 
 	 <Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
 			WorkingDirectory="DSeX/"/>
@@ -102,7 +101,15 @@
 			WorkingDirectory="Data Monkey/"/>
 
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
-			WorkingDirectory="SilverMonkey/"/>
+			WorkingDirectory="SilverMonkeyWinForms/"/>
+
+		<!-- Silver Monkey Engine v3.0 -->
+		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
+			WorkingDirectory="SmEngine/"/>
+		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
+			WorkingDirectory="SilverMonkey.EnginLibrariesCs/"/>
+		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
+			WorkingDirectory="SmEngine.LibrariesVB/"/>
 
  </Target>
 </Project>

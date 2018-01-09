@@ -81,13 +81,17 @@ namespace BotSession
 
             _BiniFile = BFile;
             string s = "";
+            short LogOption = 0;
+            short.TryParse(BotIni.GetKeyValue("Main", "LogOption"), out LogOption);
+            bool log = false;
+            bool.TryParse(BotIni.GetKeyValue("Main", "LogOption"), out log);
             LogOptions = new LogSteamOptions()
             {
                 // With...
                 LogNameBase = BotIni.GetKeyValue("Main", "LogNameBase"),
                 LogPath = BotIni.GetKeyValue("Main", "LogNamePath"),
-                LogOption = short.Parse(BotIni.GetKeyValue("Main", "LogOption")),
-                log = bool.Parse(BotIni.GetKeyValue("Main", "Log"))
+                LogOption = LogOption,
+                log = log
             };
 
             s = BotIni.GetKeyValue("Bot", "BotIni");
@@ -287,7 +291,7 @@ namespace BotSession
             BotIni.SetKeyValue("Bot", "ConnectionRetries", ConnectionRetries.ToString());
             BotIni.SetKeyValue("Bot", "ConnectTimeOut", ConnectionTimeOut.ToString());
             BotIni.SetKeyValue("GoMap", "IDX", _GoMap.ToString());
-            BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL.ToString());
+            BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL);
             BotIni.Save(MonkeyCore.Paths.CheckBotFolder(ref _BiniFile));
         }
 

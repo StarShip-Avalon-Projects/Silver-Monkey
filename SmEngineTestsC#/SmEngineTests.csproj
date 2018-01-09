@@ -82,10 +82,6 @@
       <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
       <Name>SilverMonkey.EnginLibrariesCs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SmEngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB.vbproj">
-      <Project>{4619ff40-2c7c-4dad-887b-14d58755ccd9}</Project>
-      <Name>SilverMonkey.Engngine.LibrariesVB</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SmEngine\SmEngine.csproj">
       <Project>{f1e0feb3-a74e-43ce-98bf-b908ed1753fa}</Project>
       <Name>SmEngine</Name>

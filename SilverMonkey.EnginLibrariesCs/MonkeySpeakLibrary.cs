@@ -2,7 +2,6 @@
 using Furcadia.Net.Proxy;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
-using Furcadia;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -162,6 +161,31 @@ public class MonkeySpeakLibrary : BaseLibrary
     }
 
     /// <summary>
+    /// Triggerings the furre is bot controller.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns></returns>
+    public bool TriggeringFurreIsBotController(TriggerReader reader)
+    {
+        if (ParentBotSession != null)
+        {
+            return Player.ShortName == reader.Page.GetVariable(BotControllerVariable).Value.ToString().ToFurcadiaShortName();
+        }
+
+        return false;
+    }
+
+    public bool FurreNamedIsBotController(TriggerReader reader)
+    {
+        if (ParentBotSession != null)
+        {
+            return Player.ShortName == reader.ReadString().ToFurcadiaShortName();
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Generic base Furre named {...} is Triggering Furre
     /// </summary>
     /// <param name="reader"><see cref="TriggerReader"/></param>
@@ -183,15 +207,12 @@ public class MonkeySpeakLibrary : BaseLibrary
     /// <exception cref="ArgumentException">DreamInfo not set</exception>
     public bool ReadDreamParams(TriggerReader reader)
     {
-        Dream dreamInfo = reader.GetParametersOfType<Dream>()[0];
-        bool ParamSet = (dreamInfo != null);
+        bool ParamSet = false;
+
+        Dream dreamInfo = reader.GetParametersOfType<Dream>().FirstOrDefault();
+        ParamSet = dreamInfo != null;
         if (ParamSet)
         {
-            if (string.IsNullOrWhiteSpace(dreamInfo.Name))
-            {
-                throw new ArgumentException("DreamInfo not set");
-            }
-
             DreamInfo = dreamInfo;
             UpdateCurrentDreamVariables(DreamInfo, reader.Page);
         }
@@ -207,7 +228,8 @@ public class MonkeySpeakLibrary : BaseLibrary
     public bool ReadTriggeringFurreParams(TriggerReader reader)
     {
         bool ParamSet = false;
-        Furre ActiveFurre = reader.GetParametersOfType<Furre>()[0];
+
+        Furre ActiveFurre = reader.GetParametersOfType<Furre>().FirstOrDefault();
         if (ActiveFurre != null)
         {
             Player = ActiveFurre;
@@ -357,27 +379,4 @@ public class MonkeySpeakLibrary : BaseLibrary
     }
 
     #endregion Protected Methods
-
-    /// <summary>
-    /// Triggerings the furre is bot controller.
-    /// </summary>
-    /// <param name="reader">The reader.</param>
-    /// <returns></returns>
-    public bool TriggeringFurreIsBotController(TriggerReader reader)
-    {
-        var var = reader.Page.GetVariable(BotControllerVariable);
-        return var.Value.ToString().ToFurcadiaShortName() == Player.ShortName;
-    }
-
-    /// <summary>
-    /// Furres the named is bot controller.
-    /// </summary>
-    /// <param name="reader">The reader.</param>
-    /// <returns></returns>
-    public bool FurreNamedIsBotController(TriggerReader reader)
-    {
-        var var = reader.Page.GetVariable(BotControllerVariable);
-        return var.Value.ToString().ToFurcadiaShortName() ==
-            reader.ReadString().ToFurcadiaShortName();
-    }
 }
