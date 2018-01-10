@@ -9,7 +9,8 @@ Imports Furcadia.Logging
 Imports Furcadia.Net
 Imports Furcadia.Net.DreamInfo
 Imports Furcadia.Net.Utils.ServerParser
-
+Imports IO
+Imports Logging
 Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Paths
@@ -289,7 +290,7 @@ Public Class Main
             RecentToolStripMenuItem.DropDownItems.Add(fileRecent)
         Next
         'writing menu list to file
-        Using stringToWrite = New StreamWriter(Path.Combine(ApplicationSettingsPath, "Recent.txt"))
+        Using stringToWrite = New StreamWriter(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"))
             'create file called "Recent.txt" located on app folder
             For Each item As String In MRUlist
                 'write list to stream
@@ -430,7 +431,7 @@ Public Class Main
 
             End If
         Catch eX As Exception
-            Dim logError As New ErrorLogging(eX, Me, FurcadiaSession.Dream.Furres.ToString)
+            Dim logError As New ErrorLogging(eX, Me)
         End Try
     End Sub
 
@@ -506,7 +507,7 @@ Public Class Main
                 FurreCountTxtBx.Text = ""
             Else
                 BTN_Go.Text = "Connecting..."
-                My.Settings.LastBotFile = CheckBotFolder(BotConfig.BotSettingsFile)
+                My.Settings.LastBotFile = Paths.CheckBotFolder(BotConfig.BotSettingsFile)
                 My.Settings.Save()
                 FurcadiaSession.SetOptions(BotConfig)
                 If BotConfig.LogOptions.log Then
@@ -706,10 +707,10 @@ Public Class Main
         End If
 
         Dim processStrt As New ProcessStartInfo With {
-            .FileName = Path.Combine(ApplicationPath, "MonkeySpeakEditor.EXE")
+            .FileName = Path.Combine(Paths.ApplicationPath, "MonkeySpeakEditor.EXE")
         }
 
-        Dim f As String = CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+        Dim f As String = Paths.CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
         If Not String.IsNullOrEmpty(FurcadiaSession.ConnectedFurre.Name) _
             And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
@@ -731,7 +732,7 @@ Public Class Main
         'try to load file. If file isn't found, do nothing
         MRUlist.Clear()
         Try
-            Using listToRead = New StreamReader(Path.Combine(ApplicationSettingsPath, "Recent.txt"))
+            Using listToRead = New StreamReader(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"))
                 'read file stream
                 Dim line As String = ""
                 While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
@@ -859,7 +860,7 @@ Public Class Main
             'e.Handled = True
             'e.SuppressKeyPress = True
         ElseIf (e.KeyCode = Keys.F1) Then
-            If File.Exists(Path.Combine(ApplicationPath, HelpFile)) Then
+            If File.Exists(Path.Combine(Paths.ApplicationPath, HelpFile)) Then
                 Help.ShowHelp(Me, HelpFile)
             End If
         ElseIf (e.KeyCode = Keys.N AndAlso e.Modifiers = Keys.Control) Then
@@ -1039,7 +1040,7 @@ Public Class Main
     Private Sub OpenToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles OpenToolStripMenuItem.Click
         With BotIniOpen
             ' Select Bot ini file
-            .InitialDirectory = SilverMonkeyBotPath
+            .InitialDirectory = Paths.SilverMonkeyBotPath
 
             If .ShowDialog = DialogResult.OK Then
                 UpdateBotConfig(.FileName)

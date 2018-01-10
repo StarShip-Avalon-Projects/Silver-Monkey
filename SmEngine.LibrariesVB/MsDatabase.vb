@@ -1,6 +1,8 @@
 ﻿Imports System.Data.SQLite
 Imports System.IO
 Imports Furcadia.Net.Proxy
+Imports IO
+Imports Logging
 Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
@@ -1066,7 +1068,7 @@ Public NotInheritable Class MsDatabase
     ''' </returns>
     Public Shared Function UseOrCreateSQLiteFileIfNotExist(reader As TriggerReader) As Boolean
         SQLitefile = Paths.CheckBotFolder(reader.ReadString())
-        Logging.Logger.Warn(Of MsDatabase)($"NOTICE: SQLite Database file has changed to {SQLitefile}")
+        Monkeyspeak.Logging.Logger.Warn(Of MsDatabase)($"NOTICE: SQLite Database file has changed to {SQLitefile}")
         Return True
     End Function
 
@@ -1084,7 +1086,7 @@ Public NotInheritable Class MsDatabase
         Dim startDate = Date.Now
         Dim rows = SQLiteDatabase.ExecuteNonQuery("VACUUM")
         Dim ts As TimeSpan = Date.Now.Subtract(startDate)
-        Logging.Logger.Debug(Of MsDatabase)($"Executed ""VACUUM"" in {ts.Seconds.ToString} seconds, {rows} are affected")
+        Monkeyspeak.Logging.Logger.Debug(Of MsDatabase)($"Executed ""VACUUM"" in {ts.Seconds.ToString} seconds, {rows} are affected")
         'TODO: Provide Database Stats for feedback
         Return True
     End Function

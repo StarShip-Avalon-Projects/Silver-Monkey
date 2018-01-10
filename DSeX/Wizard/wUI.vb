@@ -658,7 +658,7 @@ Public Class wUI
     Private Sub ViewFileToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles ViewFileToolStripMenuItem.Click
 
-        If IO.File.Exists(ScriptPaths(PathIndex) & Me.Text()) Then
+        If File.Exists(ScriptPaths(PathIndex) & Me.Text()) Then
             Try
                 System.Diagnostics.Process.Start(ScriptPaths(PathIndex) & Me.Text())
             Catch

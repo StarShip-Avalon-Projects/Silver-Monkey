@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Text
 Imports System.Windows.Forms
+Imports IO
 Imports MonkeyCore
 Imports MonkeyCore.Settings
 

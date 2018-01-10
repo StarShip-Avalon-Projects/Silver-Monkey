@@ -12,7 +12,7 @@ public class MsBotInformation : MonkeySpeakLibrary
 
     /// <summary>
     /// (5:42) start a new instance to Silver Monkey with bot-file {..}.
-    /// </summary>
+    /// </summary>IO
     /// <param name="reader"><see cref="TriggerReader"/></param>
     /// <returns>true on success</returns>
     public static bool StartNewBot(TriggerReader reader)
@@ -22,7 +22,7 @@ public class MsBotInformation : MonkeySpeakLibrary
         {
             Arguments = File,
             FileName = "SilverMonkey.exe",
-            WorkingDirectory = MonkeyCore.Paths.ApplicationPath
+            WorkingDirectory = IO.Paths.ApplicationPath
         };
 
         Process.Start(p);

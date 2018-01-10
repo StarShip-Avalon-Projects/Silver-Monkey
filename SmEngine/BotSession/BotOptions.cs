@@ -1,8 +1,7 @@
-﻿using System.IO;
-using Furcadia.IO;
+﻿using Furcadia.IO;
 using Furcadia.Net.Options;
-using MonkeyCore;
 using MonkeyCore.Utils.Logging;
+using System.IO;
 
 namespace BotSession
 {
@@ -54,7 +53,7 @@ namespace BotSession
             Initialize();
             LogOptions = new LogSteamOptions()
             {
-                LogPath = MonkeyCore.Paths.SilverMonkeyLogPath
+                LogPath = IO.Paths.SilverMonkeyLogPath
             };
 
             if (!File.Exists(BFile))
@@ -65,15 +64,15 @@ namespace BotSession
             string dir = Path.GetDirectoryName(BFile);
             if (string.IsNullOrEmpty(dir))
             {
-                BFile = Path.Combine(MonkeyCore.Paths.SilverMonkeyBotPath, BFile);
+                BFile = Path.Combine(IO.Paths.SilverMonkeyBotPath, BFile);
             }
 
-            if (File.Exists(MonkeyCore.Paths.CheckBotFolder(ref BFile)))
+            if (File.Exists(IO.Paths.CheckBotFolder(ref BFile)))
             {
                 string p = Path.GetDirectoryName(BFile);
                 if (!string.IsNullOrEmpty(p))
                 {
-                    MonkeyCore.Paths.SilverMonkeyBotPath = p;
+                    IO.Paths.SilverMonkeyBotPath = p;
                 }
 
                 BotIni.Load(BFile);
@@ -274,7 +273,7 @@ namespace BotSession
         /// </summary>
         public void SaveBotSettings()
         {
-            if (File.Exists(MonkeyCore.Paths.CheckBotFolder(ref _BiniFile)))
+            if (File.Exists(IO.Paths.CheckBotFolder(ref _BiniFile)))
                 BotIni.Load(_BiniFile);
 
             BotIni.SetKeyValue("Main", "Log", LogOptions.log.ToString());
@@ -292,7 +291,7 @@ namespace BotSession
             BotIni.SetKeyValue("Bot", "ConnectTimeOut", ConnectionTimeOut.ToString());
             BotIni.SetKeyValue("GoMap", "IDX", _GoMap.ToString());
             BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL);
-            BotIni.Save(MonkeyCore.Paths.CheckBotFolder(ref _BiniFile));
+            BotIni.Save(IO.Paths.CheckBotFolder(ref _BiniFile));
         }
 
         #endregion Public Methods

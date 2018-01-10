@@ -1,5 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports BotSession
+Imports IO
 Imports MonkeyCore
 Imports SilverMonkey.Engine
 

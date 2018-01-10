@@ -1,4 +1,5 @@
 Imports System.IO
+Imports Logging
 Imports MonkeyCore
 Imports MonkeyCore.Paths
 Imports MonkeyCore.Utils.Logging
@@ -140,7 +141,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
     Private Sub GetScriptIni()
         selecter.Items.Clear()
         selecter.BeginUpdate()
-        Dim p As String = Paths.MonkeySpeakEditorDsScriptsPath
+        Dim p As String = IO.Paths.MonkeySpeakEditorDsScriptsPath
         ScriptPaths.Clear()
         If Directory.Exists(p) Then
             For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
@@ -150,7 +151,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
             Next
         End If
 
-        p = Paths.MonkeySpeakEditorDocumentsDsScriptsPath
+        p = IO.Paths.MonkeySpeakEditorDocumentsDsScriptsPath
         If Directory.Exists(p) Then
             For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
                 s = Path.GetFileNameWithoutExtension(s)
@@ -158,7 +159,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
                 ScriptPaths.Add(p)
             Next
         End If
-        p = Path.Combine(Paths.FurcadiaProgramFolder, "Scripts")
+        p = Path.Combine(IO.Paths.FurcadiaProgramFolder, "Scripts")
         If Directory.Exists(p) Then
             For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, " * .ini")
                 s = Path.GetFileNameWithoutExtension(s)
@@ -166,7 +167,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
                 ScriptPaths.Add(p)
             Next
         End If
-        p = Path.Combine(Paths.FurcadiaDocumentsFolder, "Scripts")
+        p = Path.Combine(IO.Paths.FurcadiaDocumentsFolder, "Scripts")
         If Directory.Exists(p) Then
             For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, " * .ini")
                 s = Path.GetFileNameWithoutExtension(s)
@@ -181,7 +182,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
         ScriptPaths_MS.Clear()
 
-        p = MonkeySpeakEditorDocumentsScriptsPath
+        p = IO.Paths.MonkeySpeakEditorDocumentsScriptsPath
         If Directory.Exists(p) Then
             For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
                 s = Path.GetFileNameWithoutExtension(s)
@@ -190,7 +191,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
             Next
         End If
 
-        p = MonKeySpeakEditorScriptsPath
+        p = IO.Paths.MonKeySpeakEditorScriptsPath
         If Directory.Exists(p) Then
             For Each s As String In FileIO.FileSystem.GetFiles(p, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
                 Dim e As String = Path.GetExtension(s)
@@ -280,10 +281,10 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
         If wUI.IsDisposed = False Then
             wUI.Dispose()
         End If
-        If File.Exists(Path.Combine(ApplicationPath, "help.txt")) Then
-            wUI.dsdesc2.Text = FileIO.FileSystem.ReadAllText(Path.Combine(ApplicationPath, "help.txt"))
+        If File.Exists(Path.Combine(IO.Paths.ApplicationPath, "help.txt")) Then
+            wUI.dsdesc2.Text = FileIO.FileSystem.ReadAllText(Path.Combine(IO.Paths.ApplicationPath, "help.txt"))
         Else
-            wUI.dsdesc2.Text = "Error:  " & Path.Combine(ApplicationPath, "help.txt") & " doesn't exist.  Help contents cannot be displayed."
+            wUI.dsdesc2.Text = "Error:  " & Path.Combine(IO.Paths.ApplicationPath, "help.txt") & " doesn't exist.  Help contents cannot be displayed."
         End If
         wUI.PathIndex = ScriptSelectorScrollListBox.SelectedIndex
         GetParams(Path.Combine(lst(ScriptSelectorScrollListBox.SelectedIndex), sIni & ".ini"))
