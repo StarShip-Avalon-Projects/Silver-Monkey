@@ -1,6 +1,6 @@
-﻿<#@ template language="vb" hostSpecific="True"#>
-<#@ output extension="vb" #>
-<#@ import namespace="System.IO" #>
+﻿<#@ template language="vb"hostSpecific="True"#>
+<#@ output extension="vb"#>
+<#@ import namespace="System.IO"#>
 <#
     Dim revisionNumber as integer
     Dim time as DateTime = DateTime.now

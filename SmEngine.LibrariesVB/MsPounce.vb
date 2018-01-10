@@ -234,56 +234,56 @@ Public NotInheritable Class MsPounce
         OnlineFurres = New IO.NameList(_onlineListFile)
         ' (0:950) When a furre logs on,
         Add(TriggerCategory.Cause, 950,
-        Function() True, " When a furre logs on,")
+        Function() True, "When a furre logs on,")
 
         '(0:951) When a furre logs off,
         Add(TriggerCategory.Cause, 951,
-        Function() True, " When a furre logs off,")
+        Function() True, "When a furre logs off,")
         '(0:952) When the furre named {...} logs on,
         Add(TriggerCategory.Cause, 952,
-            AddressOf NameIs, " When the furre named {...} logs on,")
+            AddressOf NameIs, "When the furre named {...} logs on,")
         '(0:953) When the furre named {...} logs off,
         Add(TriggerCategory.Cause, 953,
-            AddressOf NameIs, " When the furre named {...} logs off,")
+            AddressOf NameIs, "When the furre named {...} logs off,")
 
         '(1;950) and the furre named {...} is on-line,
         Add(TriggerCategory.Condition, 950,
-            AddressOf FurreNamedonline, " and the furre named {...} is on-line,")
+            AddressOf FurreNamedonline, "and the furre named {...} is on-line,")
 
         '(1:951) and the furre named {...} is off-line,
         Add(TriggerCategory.Condition, 951,
-            AddressOf FurreNamedNotOnline, " and the furre named {...} is off-line,")
+            AddressOf FurreNamedNotOnline, "and the furre named {...} is off-line,")
 
         '(1:952) and triggering furre is on the smPounce List,
         Add(TriggerCategory.Condition, 952,
-            AddressOf TrigFurreIsMember, " and triggering furre is on the smPounce List,")
+            AddressOf TrigFurreIsMember, "and triggering furre is on the smPounce List,")
         '(1:953) and the triggering furre is not on the smPounce List,
         Add(TriggerCategory.Condition, 953,
-            AddressOf TrigFurreIsNotMember, " and the triggering furre is not on the smPounce List,")
+            AddressOf TrigFurreIsNotMember, "and the triggering furre is not on the smPounce List,")
 
         '(1:954) and the furre named {...} is on the smPounce list,
         Add(TriggerCategory.Condition, 954,
-            AddressOf FurreNamedIsMember, " and the furre named {...} is on the smPounce list,")
+            AddressOf FurreNamedIsMember, "and the furre named {...} is on the smPounce list,")
 
         '(1:955) and the furre named {...} is not on the smPounce list,
         Add(TriggerCategory.Condition, 955,
-            AddressOf FurreNamedIsNotMember, " and the furre named {...} is not on the smPounce list,")
+            AddressOf FurreNamedIsNotMember, "and the furre named {...} is not on the smPounce list,")
 
         '(5:950) add the triggering furre to the smPounce List.
         Add(TriggerCategory.Effect, 950,
-            AddressOf AddTrigFurre, " add the triggering furre to the smPounce List.")
+            AddressOf AddTrigFurre, "add the triggering furre to the smPounce List.")
         '(5:951) add the furre named {...} to the smPounce list.
         Add(TriggerCategory.Effect, 951,
-            AddressOf AddFurreNamed, " add the furre named {...} to the smPounce list.")
+            AddressOf AddFurreNamed, "add the furre named {...} to the smPounce list.")
         '(5:952) remove the triggering furre from the smPounce list.
         Add(TriggerCategory.Effect, 952,
-            AddressOf RemoveTrigFurre, " remove the triggering furre from the smPounce list.")
+            AddressOf RemoveTrigFurre, "remove the triggering furre from the smPounce list.")
         '(5:953) remove the furre named {...} from the smPounce list.
         Add(TriggerCategory.Effect, 953,
-            AddressOf RemoveFurreNamed, " remove the furre named {...} from the smPounce list.")
+            AddressOf RemoveFurreNamed, "remove the furre named {...} from the smPounce list.")
         '(5:954) use the file named {...} as the smPounce list.
         Add(TriggerCategory.Effect, 954,
-            AddressOf UseMemberFile, " use the file named {...} as the smPounce list and start the Pounce Clinet Interface.")
+            AddressOf UseMemberFile, "use the file named {...} as the smPounce list and start the Pounce Clinet Interface.")
     End Sub
 
     ''' <summary>
@@ -407,7 +407,7 @@ Public NotInheritable Class MsPounce
     Private Sub CheckonlineList()
         _onlineListFile = Paths.CheckBotFolder(_onlineListFile)
         If File.Exists(_onlineListFile) = False Then
-            Console.WriteLine("On-line List File: " + _onlineListFile + " Doesn't Exist, Creating new file")
+            Console.WriteLine("On-line List File: "+ _onlineListFile + "Doesn't Exist, Creating new file")
             Using sw = New StreamWriter(_onlineListFile, False)
                 sw.Close()
             End Using

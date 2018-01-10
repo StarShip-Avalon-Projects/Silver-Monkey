@@ -2,6 +2,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Furcadia.Text.FurcadiaMarkup
+Imports IO
 
 Namespace Utils.Logging
 
@@ -21,8 +22,6 @@ Namespace Utils.Logging
         ''' <summary>
         ''' Create a new instance of the log file
         ''' </summary>
-        ''' <param name="FilePath">
-        ''' </param>
         Public Sub New()
             Options = New LogSteamOptions
 

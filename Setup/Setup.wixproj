@@ -55,6 +55,15 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
+      <Name>MonkeyCore2</Name>
+      <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Name>MonkeyCore</Name>
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>

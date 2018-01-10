@@ -153,8 +153,12 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
+      <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
+      <Name>MonkeyCore2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
-      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Project>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">

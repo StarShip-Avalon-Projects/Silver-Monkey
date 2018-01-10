@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Windows.Forms
 Imports Furcadia.IO
+Imports IO
 
 Namespace Controls
 
@@ -51,12 +52,11 @@ Namespace Controls
             MyBase.New()
             _MenuItems = New List(Of ToolStripMenuItem)
             HelpIni = New IniFile
-            HelpIni.Load(Path.Combine(Paths.ApplicationPath, "HelpLink.ini"))
+            HelpIni.Load(Path.Combine(IO.Paths.ApplicationPath, "HelpLink.ini"))
             HelpSection = HelpIni.GetSection(SectionName)
             If Not HelpSection Is Nothing Then
                 For Each KeyVal As IniFile.IniSection.IniKey In HelpSection.Keys
                     Dim HelpItem As New ToolStripMenuItem(KeyVal.Name, Nothing, AddressOf RecentFile_click)
-                    HelpItem.Name = KeyVal.Name
                     _MenuItems.Add(HelpItem)
                 Next
             End If

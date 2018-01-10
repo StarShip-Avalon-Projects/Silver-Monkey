@@ -134,6 +134,10 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
       <ComponentGroupRef Id="MonkeyCore.Content" />
 
+      <ComponentGroupRef Id="MonkeyCore2.Binaries" />
+      <ComponentGroupRef Id="MonkeyCore2.Symbols" />
+      <ComponentGroupRef Id="MonkeyCore2.Content" />
+
       <ComponentRef Id="SilverMonkeyShortcut" />
       <ComponentRef Id="MonkeySpeakEditorShortcut" />
       <!--     <ComponentGroupRef Id="TheClaaaw.Binaries" />

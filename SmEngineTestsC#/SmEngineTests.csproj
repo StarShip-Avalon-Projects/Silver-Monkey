@@ -70,6 +70,10 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
+      <Project>{A4512568-6878-4EE9-8549-CFF611D399A1}</Project>
+      <Name>MonkeyCore2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>

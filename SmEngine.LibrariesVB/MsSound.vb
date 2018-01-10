@@ -1,4 +1,5 @@
 ﻿Imports System.Media
+Imports IO
 Imports MonkeyCore
 Imports Monkeyspeak
 
@@ -38,7 +39,7 @@ Public NotInheritable Class MsSound
 
                 End Using
                 Return True
-            End Function, " play the wave file {...}.")
+            End Function, "play the wave file {...}.")
 
         Add(TriggerCategory.Effect, 2011,
             Function(reader As TriggerReader) As Boolean
@@ -49,9 +50,9 @@ Public NotInheritable Class MsSound
                 End If
                 Return simpleSound Is Nothing
 
-            End Function, " play the wave file {...} in a loop. if theres not one playing")
+            End Function, "play the wave file {...} in a loop. if theres not one playing")
         Add(TriggerCategory.Effect, 2012,
-             AddressOf StopSound, " stop playing the sound file.")
+             AddressOf StopSound, "stop playing the sound file.")
     End Sub
 
     ''' <summary>

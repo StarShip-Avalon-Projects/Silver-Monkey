@@ -63,7 +63,7 @@ Namespace Web
         End Function
 
         ''' <summary>
-        ''' send a "GET" request to the server
+        ''' send a "GET"request to the server
         ''' </summary>
         ''' <param name="array"></param>
         ''' <returns></returns>
@@ -71,7 +71,7 @@ Namespace Web
             Dim result As New WebData
             Dim EncodedWebVariables = EncodeWebVariables(array)
 
-            Dim requesttring = New Uri(WebURL.Host + "?" + EncodedWebVariables)
+            Dim requesttring = New Uri(WebURL.Host + "?"+ EncodedWebVariables)
             Dim request As Net.HttpWebRequest =
                 DirectCast(Net.WebRequest.Create(requesttring),
                                Net.HttpWebRequest)
@@ -91,13 +91,13 @@ Namespace Web
                     If String.IsNullOrEmpty(line) Then
                         'Loop
 
-                    ElseIf line = "SM" And Not MS Then
+                    ElseIf line = "SM"And Not MS Then
                         MS = True
-                    ElseIf line <> "SM" And Not MS Then
+                    ElseIf line <> "SM"And Not MS Then
                         line += postreqreader.ReadToEnd
                         Debug.Print(line)
                         line = line.Replace("<br />", Environment.NewLine)
-                        result.ErrMsg = "Invalid Format- Not Monkey Speak Response" & line
+                        result.ErrMsg = "Invalid Format- Not Monkey Speak Response"& line
                         result.Packet = ""
                         result.Status = 2
 
@@ -105,7 +105,7 @@ Namespace Web
                     ElseIf line.StartsWith("s=") Then
                         result.Status = CInt(line.Substring(2))
                         If line.Substring(2) > 0 Then
-                            result.ErrMsg = "The server returned error code " + result.Status.ToString
+                            result.ErrMsg = "The server returned error code "+ result.Status.ToString
                             Exit Do
                         End If
                         readKVPs = True
@@ -216,14 +216,14 @@ Namespace Web
                     If String.IsNullOrEmpty(line) Then
                         'Loop
 
-                    ElseIf line = "SM" And Not MS Then
+                    ElseIf line = "SM"And Not MS Then
                         MS = True
-                    ElseIf line <> "SM" And Not MS Then
+                    ElseIf line <> "SM"And Not MS Then
                         line += postreqreader.ReadToEnd
                         Result.WebPage = line
                         Debug.Print(line)
                         line = line.Replace("<br />", vbCrLf)
-                        Result.ErrMsg = "Invalid Format- Not Monkey Speak Response" & line
+                        Result.ErrMsg = "Invalid Format- Not Monkey Speak Response"& line
                         Result.Packet = ""
                         Result.Status = 2
 
@@ -232,7 +232,7 @@ Namespace Web
                     ElseIf line.StartsWith("s=") Then
                         Result.Status = CInt(line.Substring(2))
                         If line.Substring(2) > 0 Then
-                            Result.ErrMsg = "The server returned error code " + Result.Status.ToString
+                            Result.ErrMsg = "The server returned error code "+ Result.Status.ToString
                             Exit Do
                         End If
                         readKVPs = True

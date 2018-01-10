@@ -57,78 +57,78 @@ Namespace Engine.Libraries
             '(0:500) When the bot starts backing up the character phoenix speak,
             Add(TriggerCategory.Cause, 500,
                 Function() True,
-                " When the bot starts backing up the character phoenix speak,")
+                "When the bot starts backing up the character phoenix speak,")
             '(0:501) When the bot completes backing up the characters phoenix speak,
             Add(TriggerCategory.Cause, 501,
                 Function()
                     Return True
-                End Function, " When the bot completes backing up the characters phoenix speak,")
+                End Function, "When the bot completes backing up the characters phoenix speak,")
             '(0:502) When the bot starts restoring the Dreams Character phoenix speak,
             Add(TriggerCategory.Cause, 502,
                 Function()
                     Return True
-                End Function, " When the bot starts restoring the Dreams Character phoenix speak,")
+                End Function, "When the bot starts restoring the Dreams Character phoenix speak,")
             '(0:503) When the bot finishes restoring the dreams character phoenix speak,
             Add(TriggerCategory.Cause, 503,
                 Function()
                     Return True
-                End Function, " When the bot finishes restoring the dreams character phoenix speak,")
+                End Function, "When the bot finishes restoring the dreams character phoenix speak,")
             Add(TriggerCategory.Cause, 504,
                 Function()
                     Return True
-                End Function, " When the bot backs up phoenix speak for any Furre.")
+                End Function, "When the bot backs up phoenix speak for any Furre.")
             Add(TriggerCategory.Cause, 505,
-                AddressOf BackUpCharacterNamed, " When the bot backs up phoenix speak for the furre named {...}.")
+                AddressOf BackUpCharacterNamed, "When the bot backs up phoenix speak for the furre named {...}.")
             Add(TriggerCategory.Cause, 506,
                 Function()
                     Return True
-                End Function, " When the bot restores any furre's phoenix speak.")
+                End Function, "When the bot restores any furre's phoenix speak.")
             Add(TriggerCategory.Cause, 507,
-                AddressOf BackUpCharacterNamed, " When the bot restores the  phoenix speak for the furre named {...}.")
+                AddressOf BackUpCharacterNamed, "When the bot restores the  phoenix speak for the furre named {...}.")
 
             '(1:520) and the bot is not in the middle of a PS Backup Process
             Add(TriggerCategory.Condition, 520,
-                  AddressOf BotBackup, " and the bot is not in the middle of a PS Backup Process,")
+                  AddressOf BotBackup, "and the bot is not in the middle of a PS Backup Process,")
 
             '(1:521) and the bot is in the middle of a PS Backup Process.
             Add(TriggerCategory.Condition, 521,
-                     AddressOf NotBotBackup, " and the bot is in the middle of a PS Backup Process,")
+                     AddressOf NotBotBackup, "and the bot is in the middle of a PS Backup Process,")
 
             '(1:522) and the bot is not in the middle of a PS Restore Process,
             Add(TriggerCategory.Condition, 522,
-                 AddressOf BotRestore, " and the bot is not in the middle of a PS Restore Process,")
+                 AddressOf BotRestore, "and the bot is not in the middle of a PS Restore Process,")
             '(1:523) and the bot is in the middle of a PS Restore Process,
             Add(TriggerCategory.Condition, 523,
-                 AddressOf NotBotRestore, " and the bot is in the middle of a PS Restore Process,")
+                 AddressOf NotBotRestore, "and the bot is in the middle of a PS Restore Process,")
 
             'TODO: Add missing PS lines
             '(1:) and the backed up phoenix speak database info {...} for the triggering furre exists,
-            '(1:) and the backed up phoenix speak database info {...} for the furre named {...} exists, (use ""[DREAM]"" to check specific info for this dream.)
+            '(1:) and the backed up phoenix speak database info {...} for the furre named {...} exists, (use ""[DREAM]""to check specific info for this dream.)
             '(1:) and the backed up phoenix speak database info for the triggering furre exists,
-            '(1:) and the backed up phoenix speak database info for the furre named {...} exists, (use ""[DREAM]"" to check specific info for this dream.)
+            '(1:) and the backed up phoenix speak database info for the furre named {...} exists, (use ""[DREAM]""to check specific info for this dream.)
 
             '(1:) and the backed up phoenix speak database info {...} for the triggering furre does not exist,
-            '(1:) and the backed up phoenix speak database info {...} for the furre named {...} does not exist, (use ""[DREAM]"" to check specific info for this dream.)
+            '(1:) and the backed up phoenix speak database info {...} for the furre named {...} does not exist, (use ""[DREAM]""to check specific info for this dream.)
             '(1:) and the backed up phoenix speak database info for the triggering furre does not exist,
-            '(1:) and the backed up phoenix speak database info for the furre named {...} does not eist, (use ""[DREAM]"" to check specific info for this dream.)
+            '(1:) and the backed up phoenix speak database info for the furre named {...} does not eist, (use ""[DREAM]""to check specific info for this dream.)
 
             '(5:553) Backup All Character phoenixspeak for the dream
             Add(TriggerCategory.Effect, 553, AddressOf BackupAllPS,
-               " backup All phoenix speak for the dream")
+               "backup All phoenix speak for the dream")
             '(5:554) backup Character named {...} phoenix speak
             Add(TriggerCategory.Effect, 554, AddressOf BackupSingleCharacterPS,
-                   " backup character named {...} phoenix speak. (use ""[DREAM]"" to restore information specific to the dream)")
+                   "backup character named {...} phoenix speak. (use ""[DREAM]""to restore information specific to the dream)")
             '(5:555) restore phoenix speak for character {...}
             Add(TriggerCategory.Effect, 555, AddressOf RestoreCharacterPS,
-                   " restore phoenix speak for character {...}. (use ""[DREAM]"" to restore information specific to the dream)")
+                   "restore phoenix speak for character {...}. (use ""[DREAM]""to restore information specific to the dream)")
             '(5:557) remove Entries older then # days from phoenix speak Character backup.
             Add(TriggerCategory.Effect, 557, AddressOf PruneCharacterBackup,
-                " remove Entries older than # days from phoenix speak backup.")
+                "remove Entries older than # days from phoenix speak backup.")
             Add(TriggerCategory.Effect, 558, AddressOf RestorePS_DataOldrThanDays,
-                " restore phoenix speak character records newer then # days. (zero equals all character records)")
+                "restore phoenix speak character records newer then # days. (zero equals all character records)")
 
             Add(TriggerCategory.Effect, 560, AddressOf AbortPS,
-                " abort phoenix speak backup or restore process")
+                "abort phoenix speak backup or restore process")
 
             '(5:x) Add Settings Info {...} to Database Settings Table {...}.
             '(5:x) update Database Info {...} for Settings Table {...} to {...}.

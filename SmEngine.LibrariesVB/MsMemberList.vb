@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports IO
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports Monkeyspeak.Logging
@@ -19,7 +20,7 @@ Namespace Engine.Libraries
     ''' <para>
     ''' Default Member-List file: <see cref="Paths.SilverMonkeyBotPath"/>\MemberList.txt
     ''' </para>
-    ''' <conceptualLink target="d1358c3d-d6d3-4063-a0ef-259e13752a0f" />
+    ''' <conceptualLink target="d1358c3d-d6d3-4063-a0ef-259e13752a0f"/>
     ''' <para/>
     ''' Credits: Drake for assistance with designing this system
     ''' </summary>
@@ -44,29 +45,29 @@ Namespace Engine.Libraries
             MyBase.Initialize(args)
             MemberList = Paths.CheckBotFolder("MemberList.txt")
             ''(1:900) and the triggering furre is on my Dream Member List,
-            'Add(TriggerCategory.Condition, 900, AddressOf TrigFurreIsMember, " and the triggering furre is on my dream Member List,")
+            'Add(TriggerCategory.Condition, 900, AddressOf TrigFurreIsMember, "and the triggering furre is on my dream Member List,")
             ''(1:901) and the furre named {...} is on my Dream Member list.
-            'Add(TriggerCategory.Condition, 901, AddressOf FurreNamedIsMember, " and the furre named {...} is on my Dream Member list,")
+            'Add(TriggerCategory.Condition, 901, AddressOf FurreNamedIsMember, "and the furre named {...} is on my Dream Member list,")
 
             '(1:902) and the triggering furre is not on my Dream Member list.
-            ''  Add(TriggerCategory.Condition, 902, AddressOf TrigFurreIsNotMember, " and the triggering furre is not on my Dream Member list,")
+            ''  Add(TriggerCategory.Condition, 902, AddressOf TrigFurreIsNotMember, "and the triggering furre is not on my Dream Member list,")
             '(1:903) and the furre named {...} is not on my Dream Member list.
-            ''        Add(TriggerCategory.Condition, 903, AddressOf FurreNamedIsNotMember, " and the furre named {...} is not on my Dream Member list,")
+            ''        Add(TriggerCategory.Condition, 903, AddressOf FurreNamedIsNotMember, "and the furre named {...} is not on my Dream Member list,")
 
             '(1:900) add the triggering furre to my Dream Member list if they aren't already on it.
-            ''     Add(TriggerCategory.Effect, 900, AddressOf AddTrigFurre, " add the triggering furre to my Dream Member list if they aren't already on it.")
+            ''     Add(TriggerCategory.Effect, 900, AddressOf AddTrigFurre, "add the triggering furre to my Dream Member list if they aren't already on it.")
             '(5:901) add the furre named {...} to my Dream Member list if they aren't already on it.
-            ''    Add(TriggerCategory.Effect, 901, AddressOf AddFurreNamed, " add the furre named {...} to my Dream Member list if they aren't already on it.")
+            ''    Add(TriggerCategory.Effect, 901, AddressOf AddFurreNamed, "add the furre named {...} to my Dream Member list if they aren't already on it.")
 
             '(5:902) remove the triggering furre to my Dream Member list if they are on it.
-            Add(TriggerCategory.Effect, 902, AddressOf RemoveTrigFurre, " remove the triggering furre to my Dream Member list if they are on it.")
+            Add(TriggerCategory.Effect, 902, AddressOf RemoveTrigFurre, "remove the triggering furre to my Dream Member list if they are on it.")
             '(5:903) remove the furre named {...} from my Dream Member list if they are on it.
-            Add(TriggerCategory.Effect, 903, AddressOf RemoveFurreNamed, " remove the furre named {...} from my Dream Member list if they are on it.")
+            Add(TriggerCategory.Effect, 903, AddressOf RemoveFurreNamed, "remove the furre named {...} from my Dream Member list if they are on it.")
 
             '(5:904) Use file {...} as the dream member list.
-            Add(TriggerCategory.Effect, 904, AddressOf UseMemberFile, " Use file {...} as the dream member list.")
+            Add(TriggerCategory.Effect, 904, AddressOf UseMemberFile, "Use file {...} as the dream member list.")
             '(5:905) store member list to variable %Variable.
-            Add(TriggerCategory.Effect, 905, AddressOf ListToVariable, " store member list to variable %Variable.")
+            Add(TriggerCategory.Effect, 905, AddressOf ListToVariable, "store member list to variable %Variable.")
 
         End Sub
 
@@ -181,7 +182,7 @@ Namespace Engine.Libraries
 
                 Dim f = New List(Of String)
                 f.AddRange(File.ReadAllLines(MemberList))
-                Furre.Value = String.Join(" ", f.ToArray)
+                Furre.Value = String.Join("", f.ToArray)
 
                 Return True
             Catch ex As Exception

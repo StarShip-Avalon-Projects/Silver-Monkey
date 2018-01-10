@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
+Imports System.Threading.Tasks
 Imports FastColoredTextBoxNS
 Imports Furcadia.IO
 Imports Furcadia.IO.IniFile
@@ -9,10 +10,11 @@ Imports MonkeyCore.Controls
 Imports MonkeyCore.Controls.NativeMethods
 Imports MonkeyCore.MyData
 Imports MonkeyCore.Utils
-Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
 Imports MonkeySpeakEditor.Controls
 Imports MonkeySpeakEditor.Controls.LineFinder
+
+Imports Logging
 
 ''' <summary>
 ''' Silver Monkey Main Form
@@ -24,7 +26,6 @@ Public Class MS_Edit
     Private MsEngine As MonkeyspeakEngine
     Private MsPage As Page
     Private Const HelpFile As String = "Silver Monkey.chm"
-    'Private Const MonkeySpeakLineHelp As String = "Silver Monkey.chm"
 
 #End Region
 
@@ -746,7 +747,7 @@ Public Class MS_Edit
     End Sub
 
     Private Sub BtnTemplateAdd_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click, BtnTemplateAdd.Click
-        Dim TemplatePath As String = (Path.Combine(MonkeyCore.Paths.SilverMonkeyDocumentsPath, "Templates"))
+        Dim TemplatePath As String = (Path.Combine(IO.Paths.SilverMonkeyDocumentsPath, "Templates"))
         Dim message, title As String
         Dim myValue As String
         message = "Name of file?"
@@ -766,9 +767,9 @@ Public Class MS_Edit
         title = "Template Name"
         myValue = InputBox(message, title, "")
         If String.IsNullOrEmpty(myValue) Then Exit Sub
-        TemplatePathsMS.Add(MonkeyCore.Paths.MonkeySpeakEditorDocumentsTemplatesPath)
+        TemplatePathsMS.Add(IO.Paths.MonkeySpeakEditorDocumentsTemplatesPath)
         ListBox3.Items.Add(myValue)
-        File.WriteAllText(Path.Combine(MonkeyCore.Paths.MonkeySpeakEditorDocumentsTemplatesPath, myValue.ToString + ".ms"), MS_Editor.Selection.Text)
+        File.WriteAllText(Path.Combine(IO.Paths.MonkeySpeakEditorDocumentsTemplatesPath, myValue.ToString + ".ms"), MS_Editor.Selection.Text)
     End Sub
 
     Private Sub BtnTemplateDelete_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
@@ -861,7 +862,7 @@ Public Class MS_Edit
     End Sub
 
     Private Sub DragonSpeakFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DragonSpeakFileToolStripMenuItem.Click
-        AddNewEditorTab("", MonkeyCore.Paths.FurcadiaDocumentsFolder, TabControl2.TabCount)
+        AddNewEditorTab("", IO.Paths.FurcadiaDocumentsFolder, TabControl2.TabCount)
         NewFile(EditStyles.ds)
     End Sub
 
@@ -1021,7 +1022,7 @@ Public Class MS_Edit
 
     Private Sub FNewTab_Click(sender As Object, e As EventArgs)
         Dim c As Integer = TabControl2.TabCount
-        AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, c)
+        AddNewEditorTab("", IO.Paths.SilverMonkeyBotPath, c)
         NewFile(EditStyles.ms)
     End Sub
 
@@ -1031,7 +1032,7 @@ Public Class MS_Edit
 
     Private Sub GetTemplates()
         Try
-            Dim p As String = Path.Combine(MonkeyCore.Paths.ApplicationPath, "Templates")
+            Dim p As String = Path.Combine(IO.Paths.ApplicationPath, "Templates")
 
             ListBox3.BeginUpdate()
             TemplatePaths.Clear()
@@ -1048,7 +1049,7 @@ Public Class MS_Edit
                     ListBox2.EndUpdate()
                 Next
             End If
-            p = Path.Combine(MonkeyCore.Paths.FurcadiaDocumentsFolder, "Templates")
+            p = Path.Combine(IO.Paths.FurcadiaDocumentsFolder, "Templates")
             If Directory.Exists(p) Then
                 fileEntries = Directory.GetFiles(p, "*.ds", SearchOption.TopDirectoryOnly)
                 For Each s As String In fileEntries
@@ -1058,7 +1059,7 @@ Public Class MS_Edit
 
                 Next
             End If
-            p = Path.Combine(MonkeyCore.Paths.SilverMonkeyDocumentsPath, "Templates")
+            p = Path.Combine(IO.Paths.SilverMonkeyDocumentsPath, "Templates")
             If Directory.Exists(p) Then
                 fileEntries = Directory.GetFiles(p, "*.ds", SearchOption.TopDirectoryOnly)
                 For Each s As String In fileEntries
@@ -1074,7 +1075,7 @@ Public Class MS_Edit
             TemplatePathsMS.Clear()
             ListBox3.Items.Clear()
 
-            p = MonkeyCore.Paths.MonkeySpeakEditorDocumentsTemplatesPath
+            p = IO.Paths.MonkeySpeakEditorDocumentsTemplatesPath
             If Directory.Exists(p) Then
                 fileEntries = Directory.GetFiles(p, "*.ms", SearchOption.TopDirectoryOnly)
                 For Each s As String In fileEntries
@@ -1085,7 +1086,7 @@ Public Class MS_Edit
                     ListBox3.EndUpdate()
                 Next
             End If
-            p = MonkeyCore.Paths.MonKeySpeakEditorTemplatesPath
+            p = IO.Paths.MonKeySpeakEditorTemplatesPath
             If Directory.Exists(p) Then
 
                 fileEntries = Directory.GetFiles(p, "*.ms", SearchOption.TopDirectoryOnly)
@@ -1292,7 +1293,7 @@ Public Class MS_Edit
     End Sub
 
     Private Sub MonkeySpeakFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MonkeySpeakFileToolStripMenuItem.Click, ToolBoxNew.Click
-        AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyBotPath, TabControl2.TabCount)
+        AddNewEditorTab("", IO.Paths.SilverMonkeyBotPath, TabControl2.TabCount)
         NewFile(EditStyles.ms)
     End Sub
 
@@ -1399,55 +1400,14 @@ Public Class MS_Edit
 
     End Sub
 
-    Private Sub MS_Edit_Load(sender As Object, e As EventArgs) Handles Me.Load
-
-        KeysIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "Keys.ini"))
-        MS_KeysIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "Keys-MS.ini"))
-        KeysHelpMSIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "KeysHelp-MS.ini"))
-        KeysHelpIni.Load(Path.Combine(MonkeyCore.Paths.ApplicationPath, "KeysHelp.ini"))
+    Private Async Function LoadDSLines() As Task
+        Task.Run(Sub() KeysIni.Load(Path.Combine(IO.Paths.ApplicationPath, "Keys.ini"))).Wait()
+        Dim items = New List(Of AutocompleteItem)()
         Dim Catagories() As TriggerCategory = DirectCast([Enum].GetValues(GetType(TriggerCategory)), TriggerCategory())
-
-        EditSettings = New MonkeyCore.Settings.EditSettings
-
-        Dim HelpItems = New MonkeyCore.Controls.HelpLinkToolStripMenu
-        ReferenceLinksToolStripMenuItem.DropDown.Items.AddRange(HelpItems.MenuItems.ToArray)
-
-        Dim splash As SplashScreen1 = CType(My.Application.SplashScreen, SplashScreen1)
-        Dim filename As String = ""
-
-        If My.Application.CommandLineArgs.Count > 0 Then
-            filename = My.Application.CommandLineArgs.Last()
-        End If
-
-        Dim BotName As String = ""
-        If My.Application.CommandLineArgs.Count >= 2 Then
-            BotName = My.Application.CommandLineArgs(0)
-        End If
-
-        DoubleBuffered = True
-        Dim PluginFound As Boolean = False
-        If Directory.Exists(MonkeyCore.Paths.ApplicationPluginPath) Then
-            For Each s As String In FileIO.FileSystem.GetFiles(MonkeyCore.Paths.ApplicationPluginPath, FileIO.SearchOption.SearchTopLevelOnly, "*.ini")
-                Dim FName As String = Path.GetFileNameWithoutExtension(s)
-                If IsNothing(EditSettings.PluginList) Then EditSettings.PluginList = New Dictionary(Of String, Boolean)
-                If Not EditSettings.PluginList.ContainsKey(FName) Then
-                    EditSettings.PluginList.Add(FName, True)
-                    PluginFound = True
-                End If
-                If EditSettings.PluginList.Item(FName) = True Then
-                    MS_KeysIni.Load(s, True)
-                End If
-            Next
-        End If
-        If PluginFound Then EditSettings.SaveEditorSettings()
-
-        Location = My.Settings.EditFormLocation
-        Visible = True
-
-        Dim items As List(Of AutocompleteItem) = New List(Of AutocompleteItem)()
-        Dim DsKeyCount As Integer = Integer.Parse(KeysIni.GetKeyValue("Init-Types", "Count"))
+        Dim DsKeyCount = Integer.Parse(KeysIni.GetKeyValue("Init-Types", "Count"))
 
         For i As Integer = 1 To DsKeyCount
+            Dim index = i
             items.Clear()
             Dim DSLines As New List(Of String)
             Dim key As String = KeysIni.GetKeyValue("Init-Types", i.ToString)
@@ -1463,12 +1423,21 @@ Public Class MS_Edit
 
             Next
 
-            AddNewTab(key, i.ToString, DSLines, Causes)
+            AddNewTab(key, index.ToString, DSLines, Causes)
             DS_autoCompleteList.AddRange(items)
 
         Next
 
+    End Function
+
+    Private Async Function LoadMonkeySpeakLines() As Task
+        Task.Run(Sub() MS_KeysIni.Load(Path.Combine(IO.Paths.ApplicationPath, "Keys-MS.ini"))).Wait()
+        Dim items = New List(Of AutocompleteItem)()
+        Dim Catagories() As TriggerCategory = DirectCast([Enum].GetValues(GetType(TriggerCategory)), TriggerCategory())
+
+        Dim DsKeyCount = Integer.Parse(KeysIni.GetKeyValue("Init-Types", "Count"))
         For i As Integer = 0 To Catagories.Length - 2
+            Dim index = i
             Dim cat As TriggerCategory = Catagories(i)
             Dim MsLineFinderSet As New List(Of String)
             items.Clear()
@@ -1484,12 +1453,47 @@ Public Class MS_Edit
                 Next
             Next
 
-            AddNewTab(cat.ToString(), i.ToString, MsLineFinderSet, EditorTab)
+            AddNewTab(cat.ToString(), index.ToString, MsLineFinderSet, EditorTab)
             MS_autoCompleteList.AddRange(items)
 
         Next
+        Await Task.Run(Sub() splash.UpdateProgress("Finishing up...", DsKeyCount + Catagories.Length + 1 / (DsKeyCount + Catagories.Length + 2) * 100))
+    End Function
 
-        splash.UpdateProgress("Finishing up...", DsKeyCount + Catagories.Length + 1 / (DsKeyCount + Catagories.Length + 2) * 100)
+    Private splash As SplashScreen1 = New SplashScreen1()
+
+    Private Async Sub MS_Edit_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        splash.Show()
+
+        Await Task.Run(Sub() KeysHelpMSIni.Load(Path.Combine(IO.Paths.ApplicationPath, "KeysHelp-MS.ini")))
+        Await Task.Run(Sub() KeysHelpIni.Load(Path.Combine(IO.Paths.ApplicationPath, "KeysHelp.ini")))
+
+        Dim Catagories() As TriggerCategory = DirectCast([Enum].GetValues(GetType(TriggerCategory)), TriggerCategory())
+
+        EditSettings = New MonkeyCore.Settings.EditSettings
+
+        Dim HelpItems = New MonkeyCore.Controls.HelpLinkToolStripMenu
+        ReferenceLinksToolStripMenuItem.DropDown.Items.AddRange(HelpItems.MenuItems.ToArray)
+
+        Dim filename As String = ""
+
+        If My.Application.CommandLineArgs.Count > 0 Then
+            filename = My.Application.CommandLineArgs.Last()
+        End If
+
+        Dim BotName As String = ""
+        If My.Application.CommandLineArgs.Count >= 2 Then
+            BotName = My.Application.CommandLineArgs(0)
+        End If
+
+        DoubleBuffered = True
+
+        Location = My.Settings.EditFormLocation
+        Visible = True
+
+        Await LoadDSLines()
+        Await LoadMonkeySpeakLines()
 
         SetDSHilighter()
         SetMSHilighter()
@@ -1501,7 +1505,7 @@ Public Class MS_Edit
             'AddNewEditorTab(filename, mPath, 0)
             OpenMS_File(filename)
         Else
-            AddNewEditorTab("", MonkeyCore.Paths.SilverMonkeyDocumentsPath, 0)
+            AddNewEditorTab("", IO.Paths.SilverMonkeyDocumentsPath, 0)
             NewFile(EditStyles.ms)
         End If
 
@@ -1510,6 +1514,7 @@ Public Class MS_Edit
         GetTemplates()
 
         splash.UpdateProgress("Complete!", 100)
+        splash.Close()
     End Sub
 
     Private Sub MS_Editor_CursorChanged(sender As Object, e As EventArgs)
@@ -1646,7 +1651,7 @@ Public Class MS_Edit
     Private Sub OpenMS_File()
         With MS_BrosweDialog
             ' Select Character ini file
-            .InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
+            .InitialDirectory = IO.Paths.SilverMonkeyBotPath
 
             If .ShowDialog = DialogResult.OK Then
                 Dim f As String = Path.GetFileName(.FileName)
@@ -1831,7 +1836,7 @@ MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.But
 
         With MSSaveDialog
             ' Select Character ini file
-            .InitialDirectory = MonkeyCore.Paths.SilverMonkeyBotPath
+            .InitialDirectory = IO.Paths.SilverMonkeyBotPath
             If .ShowDialog = DialogResult.OK Then
                 WorkFileName(TabControl2.SelectedIndex) = Path.GetFileName(.FileName)
                 WorkPath(TabControl2.SelectedIndex) = Path.GetDirectoryName(.FileName)

@@ -24,42 +24,42 @@ Namespace Engine.Libraries
         Public Overrides Sub Initialize(ParamArray args() As Object)
             MyBase.Initialize(args)
 
-            '(1:60) and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),
+            '(1:60) and variable %Variable matches wild-card expression {.} ( ""*""or ""?""),
             Add(TriggerCategory.Condition, 60, AddressOf WildCard,
-              " and variable %Variable matches wild-card expression {.} ( ""*"" or ""?""),")
+              "and variable %Variable matches wild-card expression {.} ( ""*""or ""?""),")
 
             Add(TriggerCategory.Condition, 61, AddressOf NotWildCard,
-             " and variable %Variable doesn't match wild-card expression {.} ( ""*"" or ""?""),")
+             "and variable %Variable doesn't match wild-card expression {.} ( ""*""or ""?""),")
 
             Add(TriggerCategory.Condition, 62, AddressOf AndVariableContains,
-             " and variable %variable contains text {...},")
+             "and variable %variable contains text {...},")
 
             Add(TriggerCategory.Condition, 63, AddressOf AndVariableNotContains,
-             " and variable %variable does not contain text {...},")
+             "and variable %variable does not contain text {...},")
 
             '(5:110) use variable % and take word # and put it into variable %
             Add(TriggerCategory.Effect, 120, AddressOf StringSplit,
-                 " use variable %Variable and take word position # and put it into variable %Variable.")
+                 "use variable %Variable and take word position # and put it into variable %Variable.")
 
             '(5:111) use variable % then remove character {.} and put it into variable %.
             Add(TriggerCategory.Effect, 121, AddressOf StripCharacters,
-                 " use variable %Variable then remove all occurrences of character {.} and put it into variable %Variable.")
+                 "use variable %Variable then remove all occurrences of character {.} and put it into variable %Variable.")
 
             '(5:122) chop off the beginning of variable %variable, removing the first # characters of it.
             Add(TriggerCategory.Effect, 122, AddressOf ChopStartString,
-                 " chop off the beginning of variable %variable, removing the first # characters of it.")
+                 "chop off the beginning of variable %variable, removing the first # characters of it.")
 
             '(5:123) chop off the end of variable %Variable, removing the last # characters of it.
             Add(TriggerCategory.Effect, 123, AddressOf ChopEndString,
-                " chop off the end of variable %Variable, removing the last # characters of it.")
+                "chop off the end of variable %Variable, removing the last # characters of it.")
 
             '(5:126) count the number of characters in string variable %variable and put them into variable %Variable .
             Add(TriggerCategory.Effect, 126, AddressOf CountChars,
-             " count the number of characters in string variable %variable and put them into variable %Variable.")
+             "count the number of characters in string variable %variable and put them into variable %Variable.")
 
             '(5:127) take variable %Variable and Convert it to Furcadia short name. (with out special Characters or spaces)
             Add(TriggerCategory.Effect, 127, AddressOf ToShortName,
-            " take variable %Variable and convert it to Furcadia short name. (without special characters or spaces or pipe ""|"").")
+            "take variable %Variable and convert it to Furcadia short name. (without special characters or spaces or pipe ""|"").")
 
         End Sub
 
@@ -142,7 +142,7 @@ Namespace Engine.Libraries
 
         ''' <summary>
         ''' (1:61) and variable %Variable doesn't match wild-card expression
-        ''' {.} ( ""*"" or ""?""),
+        ''' {.} ( ""*""or ""?""),
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>
@@ -172,7 +172,7 @@ Namespace Engine.Libraries
             Dim Var = reader.ReadVariable()
             Dim i = ReadVariableOrNumber(reader)
             Dim NewVar = reader.ReadVariable(True)
-            Dim fields() = Split(Var.Value.ToString, " ")
+            Dim fields() = Split(Var.Value.ToString, "")
             If i < fields.Length Then
                 NewVar.Value = fields(i)
             End If
@@ -204,7 +204,7 @@ Namespace Engine.Libraries
 
         ''' <summary>
         ''' (1:60) and variable %Variable matches wild-card expression {.} (
-        ''' ""*"" or ""?""),
+        ''' ""*""or ""?""),
         ''' </summary>
         ''' <param name="reader">
         ''' <see cref="TriggerReader"/>

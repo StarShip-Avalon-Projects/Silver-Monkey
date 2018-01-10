@@ -1,4 +1,5 @@
-﻿using MonkeyCore.Utils.Logging;
+﻿using Logging;
+using MonkeyCore.Utils.Logging;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -25,7 +26,7 @@ namespace DataMonkey
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = (Exception)e.ExceptionObject;
-            var logError = new ErrorLogging(ref ex, sender);
+            var logError = new ErrorLogging(ex, sender);
             var args = logError.LogFile;
             var Proc = "notepad.exe";
             Process.Start(Proc, args);

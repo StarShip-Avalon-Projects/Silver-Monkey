@@ -54,238 +54,238 @@ Namespace Engine.Libraries
             MyBase.Initialize(args)
             '(0:600) When the bot reads a description.
             Add(TriggerCategory.Cause, 600, Function(reader) ReadTriggeringFurreParams(reader),
-                " When the bot sees a furre description,")
+                "When the bot sees a furre description,")
 
             '(1:600) and triggering furre's description contains {..}
             Add(TriggerCategory.Condition, 600, AddressOf DescContains,
-                " and triggering furre's description contains {..}")
+                "and triggering furre's description contains {..}")
 
             '(1:601) and triggering furre's description does not contain {..}
             Add(TriggerCategory.Condition, 601, AddressOf NotDescContains,
-                " and triggering furre's description does not contain {..}")
+                "and triggering furre's description does not contain {..}")
 
             '(1:602) and the furre named {..} description contains {..}
             Add(TriggerCategory.Condition, 602, AddressOf FurreNamedDescContains,
-                " and the furre named {..} description contains {..}if they are in the dream,")
+                "and the furre named {..} description contains {..}if they are in the dream,")
 
             '(1:603) and the furre named {..} description does not contain {..}
             Add(TriggerCategory.Condition, 603, AddressOf NotDescContainsFurreNamed,
-             " and the furre named {..} description does not contain {..} if they are in the dream")
+             "and the furre named {..} description does not contain {..} if they are in the dream")
 
             '(1:604) and the triggering furre is male,
             Add(TriggerCategory.Condition, 604, AddressOf TriggeringFurreMale,
-                " and the triggering furre is male,")
+                "and the triggering furre is male,")
 
             '(1:605) and the triggering furre is female,
             Add(TriggerCategory.Condition, 605, AddressOf TriggeringFurreFemale,
-                " and the triggering furre is female,")
+                "and the triggering furre is female,")
 
             '(1:606) and the triggering furre is unspecified,
             Add(TriggerCategory.Condition, 606, AddressOf TriggeringFurreUnspecified,
-                " and the triggering furre is unspecified,")
+                "and the triggering furre is unspecified,")
 
             '(1:608) and the furre named {..}'s is male,
             Add(TriggerCategory.Condition, 608, AddressOf FurreNamedMale,
-                " and the furre named {..}'s is male if they are in the dream,")
+                "and the furre named {..}'s is male if they are in the dream,")
 
             '(1:609) and the furre named {..}'s is female,
             Add(TriggerCategory.Condition, 609, AddressOf FurreNamedFemale,
-                " and the furre named {..}'s is female if they are in the dream,")
+                "and the furre named {..}'s is female if they are in the dream,")
 
             '(1:609) and the furre named {..}'s is female,
             Add(TriggerCategory.Condition, 610, AddressOf FurreNamedUnSpecified,
-                 " and the furre Named {..}'s is unspecified if they are in the dream,")
+                 "and the furre Named {..}'s is unspecified if they are in the dream,")
 
             'TODO: as a URL replace tag for descriptions with urls in an ini file
 
             '(1:612) and the trigger furre is Species # (please see http://www.furcadia.com/dsparams/ for info)
             Add(TriggerCategory.Condition, 612, AddressOf TriggeringFurreSpecies,
-                " and the trigger furre is Species # (please see http://www.furcadia.com/dsparams/ for info)")
+                "and the trigger furre is Species # (please see http://www.furcadia.com/dsparams/ for info)")
 
             '(1:613) and the furre named {..} is Species # (please see http://www.furcadia.com/dsparams/ for info)
             Add(TriggerCategory.Condition, 613, AddressOf FurreNamedSpecies,
-                " and the furre named {..} is Species # if they are in the dream (please see http://www.furcadia.com/dsparams/ for info)")
+                "and the furre named {..} is Species # if they are in the dream (please see http://www.furcadia.com/dsparams/ for info)")
 
             '(1:614) and the triggering furre has wings of type #,
             Add(TriggerCategory.Condition, 614, AddressOf TriggeringFurreWings,
-                " and the triggering furre has wings of type #, (please see http://www.furcadia.com/dsparams/ for info)")
+                "and the triggering furre has wings of type #, (please see http://www.furcadia.com/dsparams/ for info)")
 
             '(1:615) and the triggering furre doesn't wings of type #,
             Add(TriggerCategory.Condition, 615, AddressOf TriggeringFurreNoWings,
-                " and the triggering furre doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info)")
+                "and the triggering furre doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info)")
 
             '(1:616) and the furre named {..} has wings of type #,
             Add(TriggerCategory.Condition, 616, AddressOf FurreNamedWings,
-                " and the furre named {..} has wings of type #, (please see http://www.furcadia.com/dsparams/ for info)")
+                "and the furre named {..} has wings of type #, (please see http://www.furcadia.com/dsparams/ for info)")
 
             '(1:617) and the furre named {..}  doesn't wings of type #,
             Add(TriggerCategory.Condition, 617, AddressOf FurreNamedNoWings,
-                " and the furre named {..}  doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info)")
+                "and the furre named {..}  doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info)")
 
             '(1:618) and the triggering furre is standing.
             Add(TriggerCategory.Condition, 618, AddressOf TriggeringFurreStanding,
-                " and the triggering furre is standing.")
+                "and the triggering furre is standing.")
 
             '(1:619) and the triggering furre is sitting.
             Add(TriggerCategory.Condition, 619, AddressOf TriggeringFurreSitting,
-                " and the triggering furre is sitting.")
+                "and the triggering furre is sitting.")
 
             '(1:620) and the triggering furre is laying.
             Add(TriggerCategory.Condition, 620, AddressOf TriggeringFurreLaying,
-                " and the triggering furre is laying.")
+                "and the triggering furre is laying.")
 
             '(1:621) and the triggering furre is facing NE,
             Add(TriggerCategory.Condition, 621, AddressOf TriggeringFurreFacingNE,
-                " and the triggering furre is facing NE,")
+                "and the triggering furre is facing NE,")
 
             '(1:622) and the triggering furre is facing NW,
             Add(TriggerCategory.Condition, 622, AddressOf TriggeringFurreFacingNW,
-                " and the triggering furre is facing NW,")
+                "and the triggering furre is facing NW,")
 
             '(1:623) and the triggering furre is facing SE,
             Add(TriggerCategory.Condition, 623, AddressOf TriggeringFurreFacingSE,
-                " and the triggering furre is facing SE,")
+                "and the triggering furre is facing SE,")
 
             '(1:624) and the triggering furre is facing SW,
             Add(TriggerCategory.Condition, 624, AddressOf TriggeringFurreFacingSW,
-                " and the triggering furre is facing SW,")
+                "and the triggering furre is facing SW,")
 
             '(1:625) and the furre named {..} is standing.
             Add(TriggerCategory.Condition, 625, AddressOf FurreNamedStanding,
-                " and the furre named {..} is standing.")
+                "and the furre named {..} is standing.")
 
             '(1:626) and the furre named {..} is sitting.
             Add(TriggerCategory.Condition, 626, AddressOf FurreNamedSitting,
-                " and the furre named {..} is sitting.")
+                "and the furre named {..} is sitting.")
 
             '(1:627) and the furre named {..} is laying.
             Add(TriggerCategory.Condition, 627, AddressOf FurreNamedLaying,
-                " and the furre named {..} is laying.")
+                "and the furre named {..} is laying.")
 
             '(1:628) and the furre named {..} is facing NE,
             Add(TriggerCategory.Condition, 628, AddressOf FurreNamedFacingNE,
-                " and the furre named {..} is facing NE,")
+                "and the furre named {..} is facing NE,")
 
             '(1:629) and the furre named {..} is facing NW,
             Add(TriggerCategory.Condition, 629, AddressOf FurreNamedFacingNW,
-                " and the furre named {..} is facing NW,")
+                "and the furre named {..} is facing NW,")
 
             '(1:630) and the furre named {..} is facing SE,
             Add(TriggerCategory.Condition, 630, AddressOf FurreNamedFacingSE,
-                " and the furre named {..} is facing SE,")
+                "and the furre named {..} is facing SE,")
 
             '(1:631) and the furre named {..} is facing SW,
             Add(TriggerCategory.Condition, 631, AddressOf FurreNamedFacingSW,
-                " and the furre named {..} is facing SW,")
+                "and the furre named {..} is facing SW,")
 
             '(5:600) set variable %Variable to the Triggering furre's description.
             Add(TriggerCategory.Effect, 600, AddressOf TriggeringFurreDescVar,
-                " set variable %Variable to the Triggering furre's description.")
+                "set variable %Variable to the Triggering furre's description.")
 
             '(5:601) set variable %Variable to the triggering furre's gender.
             Add(TriggerCategory.Effect, 601, AddressOf TriggeringFurreGenderVar,
-                " set variable %Variable to the triggering furre's gender.")
+                "set variable %Variable to the triggering furre's gender.")
 
             '(5:602) set variable %Variable to the triggering furre's species.
             Add(TriggerCategory.Effect, 602, AddressOf TriggeringFurreSpeciesVar,
-                " set variable %Variable to the triggering furre's species.")
+                "set variable %Variable to the triggering furre's species.")
 
             '(5:604) set variable %Variable to the triggering furre's colors.
             Add(TriggerCategory.Effect, 604, AddressOf TriggeringFurreColorsVar,
-                " set variable %Variable to the triggering furre's colors.")
+                "set variable %Variable to the triggering furre's colors.")
 
             '(5:605) set variable %Variable to the furre named {..}'s gender if they are in the dream.
             Add(TriggerCategory.Effect, 605, AddressOf FurreNamedGenderVar,
-                " set variable %Variable to the furre named {..}'s gender if they are in the dream.")
+                "set variable %Variable to the furre named {..}'s gender if they are in the dream.")
 
             '(5:606) set variable %Variable to the furre named {..}'s species, if they are in the dream.
             Add(TriggerCategory.Effect, 606, AddressOf FurreNamedSpeciesVar,
-                " set variable %Variable to the furre named {..}'s species, if they are in the dream.")
+                "set variable %Variable to the furre named {..}'s species, if they are in the dream.")
 
             '(5:607) set variable %Variable to the furred named {..}'s description, if they are in the dream.
             Add(TriggerCategory.Effect, 607, AddressOf FurreNamedDescVar,
-                    " set variable %Variable to the furred named {..}'s description, if they are in the dream.")
+                    "set variable %Variable to the furred named {..}'s description, if they are in the dream.")
 
             '(5:608) set variable %Variable to the furre named {..}'s colors, if they are in the dream.
             Add(TriggerCategory.Effect, 608, AddressOf FurreNamedColorsVar,
-                " set variable %Variable to the furre named {..}'s colors, if they are in the dream.")
+                "set variable %Variable to the furre named {..}'s colors, if they are in the dream.")
 
             '(5:609) set %Variable to the wings type the triggering furre is wearing.
             Add(TriggerCategory.Effect, 609, AddressOf TriggeringFurreWingsVar,
-                " set %Variable to the wings type the triggering furre is wearing.")
+                "set %Variable to the wings type the triggering furre is wearing.")
 
             '(5:610) set %Variable to the wings type the furre named {..} is wearing.
             Add(TriggerCategory.Effect, 610, AddressOf FurreNamedWingsVar,
-                " set %Variable to the wings type the furre named {..} is wearing.")
+                "set %Variable to the wings type the furre named {..} is wearing.")
 
             '(0:601) When a furre moves,
             Add(TriggerCategory.Cause, 601,
-          Function(reader) ReadTriggeringFurreParams(reader), " When a furre moves,")
+          Function(reader) ReadTriggeringFurreParams(reader), "When a furre moves,")
             '(0:602) when a furre moves into (x,y),
-            Add(TriggerCategory.Cause, 602, AddressOf MoveInto, " when a furre moves into (x,y),")
+            Add(TriggerCategory.Cause, 602, AddressOf MoveInto, "when a furre moves into (x,y),")
 
             '(1:900) and the triggering furre moved into/is standing at (x,y),
-            Add(TriggerCategory.Condition, 632, AddressOf MoveInto, " and the triggering furre moved into/is standing at (x,y)")
+            Add(TriggerCategory.Condition, 632, AddressOf MoveInto, "and the triggering furre moved into/is standing at (x,y)")
 
             '(1:633) and the furre named {..} moved into/is standing at (x,y),
-            Add(TriggerCategory.Condition, 633, AddressOf FurreNamedMoveInto, " and the furre named {..} moved into/is standing at (x,y),")
+            Add(TriggerCategory.Condition, 633, AddressOf FurreNamedMoveInto, "and the furre named {..} moved into/is standing at (x,y),")
 
             '(1:634) and the triggering furre moved from (x,y),
-            Add(TriggerCategory.Condition, 634, AddressOf MoveFrom, " and the triggering furre moved from (x,y),")
+            Add(TriggerCategory.Condition, 634, AddressOf MoveFrom, "and the triggering furre moved from (x,y),")
 
             '(1:635) and the furre named {..} moved from (x,y),
-            Add(TriggerCategory.Condition, 635, AddressOf FurreNamedMoveFrom, " and the furre named {..} moved from (x,y),")
+            Add(TriggerCategory.Condition, 635, AddressOf FurreNamedMoveFrom, "and the furre named {..} moved from (x,y),")
 
             '(1:636) and the triggering furre successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)
-            ''    Add(TriggerCategory.Condition, 636, AddressOf MoveIntoDirection, " and the triggering furre successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)")
+            ''    Add(TriggerCategory.Condition, 636, AddressOf MoveIntoDirection, "and the triggering furre successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)")
 
             '(1:637) and the furre named {..}, successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)
-            ''     Add(TriggerCategory.Condition, 637, AddressOf FurreNamedMoveIntoDirection, " and the furre named {..}, successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)")
+            ''     Add(TriggerCategory.Condition, 637, AddressOf FurreNamedMoveIntoDirection, "and the furre named {..}, successfully moved in direction # (seven = North-West, nine = North-East, three = South-East, one = South=West)")
 
             '(1:638) and the triggering furre tried to move but stood still.
-            Add(TriggerCategory.Condition, 638, AddressOf StoodStill, " and the triggering furre tried to move but stood still.")
+            Add(TriggerCategory.Condition, 638, AddressOf StoodStill, "and the triggering furre tried to move but stood still.")
 
             '(1:639) and the furre named {..} tried to move but stood still.
-            ''      Add(TriggerCategory.Condition, 639, AddressOf FurreNamedMoveIntoDirection, " and the furre named {..} tried to move but stood still.")
+            ''      Add(TriggerCategory.Condition, 639, AddressOf FurreNamedMoveIntoDirection, "and the furre named {..} tried to move but stood still.")
 
             '(5:613) move the bot in direction # one space. (seven = North-West, nine = North-East, three = South-East, one = South=West)
-            Add(TriggerCategory.Effect, 613, AddressOf MoveBot, " move the bot in direction # one space. (seven = North-West, nine = North-East, three = South-East, one = South=West)")
+            Add(TriggerCategory.Effect, 613, AddressOf MoveBot, "move the bot in direction # one space. (seven = North-West, nine = North-East, three = South-East, one = South=West)")
 
             '(5:614) turn the bot clock-wise one space.
-            Add(TriggerCategory.Effect, 614, AddressOf TurnCW, " turn the bot clock-wise one space.")
+            Add(TriggerCategory.Effect, 614, AddressOf TurnCW, "turn the bot clock-wise one space.")
 
             '(5:615) turn the bot counter-clockwise one space.
-            Add(TriggerCategory.Effect, 615, AddressOf TurnCCW, " turn the bot counter-clockwise one space.")
+            Add(TriggerCategory.Effect, 615, AddressOf TurnCCW, "turn the bot counter-clockwise one space.")
 
             '(5:616) set variable %Variable to the X coordinate where the triggering furre moved into/is at.
-            Add(TriggerCategory.Effect, 616, AddressOf SetCordX, " set variable %Variable to the X coordinate where the triggering furre moved into/is at.")
+            Add(TriggerCategory.Effect, 616, AddressOf SetCordX, "set variable %Variable to the X coordinate where the triggering furre moved into/is at.")
 
             '(5:617) set variable %Variable to the Y coordinate where the triggering furre moved into/is at.
-            Add(TriggerCategory.Effect, 617, AddressOf SetCordY, " set variable %Variable to the Y coordinate where the triggering furre moved into/is at.")
+            Add(TriggerCategory.Effect, 617, AddressOf SetCordY, "set variable %Variable to the Y coordinate where the triggering furre moved into/is at.")
 
             '(5:618) set variable %Variable to the X coordinate where the furre named {..} moved into/is at.
-            Add(TriggerCategory.Effect, 618, AddressOf FurreNamedSetCordX, " set variable %Variable to the X coordinate where the furre named {..} moved into/is at.")
+            Add(TriggerCategory.Effect, 618, AddressOf FurreNamedSetCordX, "set variable %Variable to the X coordinate where the furre named {..} moved into/is at.")
 
             '(5:619) set variable %Variable to the Y coordinate where the furre named {..} moved into/is at.
-            Add(TriggerCategory.Effect, 619, AddressOf FurreNamedSetCordY, " set variable %Variable to the Y coordinate where the furre named {..} moved into/is at.")
+            Add(TriggerCategory.Effect, 619, AddressOf FurreNamedSetCordY, "set variable %Variable to the Y coordinate where the furre named {..} moved into/is at.")
 
             '(5:620) set %Variable to the direction number the triggering furre is facing/ moved in. (seven = North-West, nine = North-East, three = South-East, one = South=West)
-            ''      Add(TriggerCategory.Effect, 620, AddressOf FaceDirectionNumber, " set %Variable to the direction number the triggering furre is facing/ moved in. (seven = North-West, nine = North-East, three = South-East, one = South=West)")
+            ''      Add(TriggerCategory.Effect, 620, AddressOf FaceDirectionNumber, "set %Variable to the direction number the triggering furre is facing/ moved in. (seven = North-West, nine = North-East, three = South-East, one = South=West)")
 
             '(5:621) set %Variable to the direction number the furre names {..}, is facing/ moved in. (seven = North-West, nine = North-East, three = South-East, one = South=West)
-            ''      Add(TriggerCategory.Effect, 621, AddressOf FurreNamedFaceDirectionNumber, " set %Variable to the direction number the furre names {..}, is facing/ moved in. (seven = North-West, nine = North-East, three = South-East, one = South=West)")
+            ''      Add(TriggerCategory.Effect, 621, AddressOf FurreNamedFaceDirectionNumber, "set %Variable to the direction number the furre names {..}, is facing/ moved in. (seven = North-West, nine = North-East, three = South-East, one = South=West)")
 
             '(5:622) make the bot sit down.
-            Add(TriggerCategory.Effect, 622, AddressOf BotSit, " make the bot sit down.")
+            Add(TriggerCategory.Effect, 622, AddressOf BotSit, "make the bot sit down.")
 
             '(5:623) make the bot lay down.
-            Add(TriggerCategory.Effect, 623, AddressOf BotLie, " make the bot lay down.")
+            Add(TriggerCategory.Effect, 623, AddressOf BotLie, "make the bot lay down.")
 
             '(5:624) make the bot stand up.
-            Add(TriggerCategory.Effect, 624, AddressOf BotStand, " make the bot stand up.")
+            Add(TriggerCategory.Effect, 624, AddressOf BotStand, "make the bot stand up.")
 
             '(5:625) Move the bot  in this sequence {..} (one, sw, three, se, seven, nw, nine, or ne)
-            Add(TriggerCategory.Effect, 625, AddressOf BotMoveSequence, " Move the bot  in this sequence {..} (one, sw, three, se, seven, nw, nine, or ne)")
+            Add(TriggerCategory.Effect, 625, AddressOf BotMoveSequence, "Move the bot  in this sequence {..} (one, sw, three, se, seven, nw, nine, or ne)")
         End Sub
 
         Public Overrides Sub Unload(page As Page)
@@ -333,18 +333,18 @@ Namespace Engine.Libraries
             Dim m = r.Matches(directions)
             Dim ServerSend As Boolean
             For Each n As Match In m
-                If n.Value.ToLower = "ne" Then
+                If n.Value.ToLower = "ne"Then
                     ServerSend = SendServer("`m9")
-                ElseIf n.Value.ToLower = "se" Then
+                ElseIf n.Value.ToLower = "se"Then
                     ServerSend = SendServer("`m3")
-                ElseIf n.Value.ToLower = "nw" Then
+                ElseIf n.Value.ToLower = "nw"Then
                     ServerSend = SendServer("`m7")
-                ElseIf n.Value.ToLower = "sw" Then
+                ElseIf n.Value.ToLower = "sw"Then
                     ServerSend = SendServer("`m1")
                 Else
                     Select Case Integer.Parse(n.Value)
                         Case 1 Or 7 Or 3 Or 9
-                            ServerSend = SendServer("`m" + n.Value)
+                            ServerSend = SendServer("`m"+ n.Value)
                         Case Else
                             Throw New ArgumentOutOfRangeException(m.ToString)
                     End Select
@@ -1116,7 +1116,7 @@ Namespace Engine.Libraries
             Dim Direction = reader.ReadNumber()
             Select Case Direction
                 Case 7 Or 9 Or 3 Or 1
-                    Return SendServer("`m" + Direction.ToString)
+                    Return SendServer("`m"+ Direction.ToString)
                 Case Else
                     Throw New MonkeyspeakException("Directions must be in the form of  7, 9, 3, or 1")
             End Select

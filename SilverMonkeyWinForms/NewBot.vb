@@ -2,6 +2,7 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports BotSession
+Imports IO
 Imports MonkeyCore
 
 Public Class NewBott

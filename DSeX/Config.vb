@@ -217,8 +217,8 @@ Public Class Config
         Dim intIndex As Integer
 
         'Loop through available plugins, creating instances and adding them to listbox
-        If Directory.Exists(MonkeyCore.Paths.ApplicationPluginPath) Then
-            For Each F In Directory.GetFiles(MonkeyCore.Paths.ApplicationPluginPath, "*.ini")
+        If Directory.Exists(IO.Paths.ApplicationPluginPath) Then
+            For Each F In Directory.GetFiles(IO.Paths.ApplicationPluginPath, "*.ini")
                 Dim fname As String = Path.GetFileNameWithoutExtension(F)
                 Dim item As ListViewItem = ListView1.Items.Add(intIndex.ToString)
                 item.SubItems.Add(fname)

@@ -165,7 +165,6 @@
     <Compile Include="Utils\PluginServices.vb" />
     <Compile Include="Utils\SQlite.vb" />
     <Compile Include="Utils\TextWriter.vb" />
-    <Compile Include="Utils\Logging\ErrorLogging.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -181,7 +180,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="IO\Paths.vb" />
     <Compile Include="Settings.vb" />
     <Compile Include="Utils\Utils.vb" />
   </ItemGroup>
@@ -223,6 +221,10 @@
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
+      <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
+      <Name>MonkeyCore2</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
