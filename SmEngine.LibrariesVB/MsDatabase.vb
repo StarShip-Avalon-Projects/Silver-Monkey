@@ -1097,7 +1097,6 @@ Public NotInheritable Class MsDatabase
         Dim startDate = Date.Now
         Dim rows = SQLiteDatabase.ExecuteNonQuery("VACUUM")
         Dim ts As TimeSpan = Date.Now.Subtract(startDate)
-        Monkeyspeak.Logging.Logger.Debug(Of MsDatabase)($"Executed ""VACUUM""in {ts.Seconds.ToString} seconds, {rows} are affected")
         'TODO: Provide Database Stats for feedback
         Return True
     End Function
