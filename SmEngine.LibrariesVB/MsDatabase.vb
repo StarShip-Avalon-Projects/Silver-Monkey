@@ -4,7 +4,6 @@ Imports Furcadia.Net.Proxy
 Imports IO
 Imports Logging
 Imports MonkeyCore
-Imports MonkeyCore.Utils.Logging
 Imports Monkeyspeak
 Imports MsLibHelper
 
@@ -51,205 +50,223 @@ Public NotInheritable Class MsDatabase
     Private lock As New Object
     Private QueryRun As Boolean = False
 
-    Public Sub New()
-        ParentBotSession = New ProxySession()
-    End Sub
-
 #End Region
 
 #Region "Public Constructors"
+
+    Public Overrides ReadOnly Property BaseId As Integer
+        Get
+            Return 500
+        End Get
+    End Property
 
     Public Overrides Sub Initialize(ParamArray args() As Object)
         MyBase.Initialize(args)
         SQLitefile = Paths.CheckBotFolder("SilverMonkey.db")
         '(1:500) and the Database info {...} about the triggering furre is equal to #,
-        Add(TriggerCategory.Condition, 500,
+        Add(TriggerCategory.Condition,
             AddressOf TriggeringFurreinfoEqualToNumber,
             "and the Database info {...} about the triggering furre is equal to #,")
 
         '(1:501) and the Database info {...} about the triggering furre is not equal to #,
-        Add(TriggerCategory.Condition, 501,
+        Add(TriggerCategory.Condition,
         AddressOf TriggeringFurreinfoNotEqualToNumber,
             "and the Database info {...} about the triggering furre is not equal to #,")
 
         '(1:502) and the Database info {...} about the triggering furre is greater than #,
-        Add(TriggerCategory.Condition, 502,
+        Add(TriggerCategory.Condition,
             AddressOf TriggeringFurreinfoGreaterThanNumber,
             "and the Database info {...} about the triggering furre is greater than #,")
         '(1:503) and the Database info {...} about the triggering furre is less than #,
-        Add(TriggerCategory.Condition, 503,
+        Add(TriggerCategory.Condition,
         AddressOf TriggeringFurreinfoLessThanNumber,
             "and the Database info {...} about the triggering furre is less than #,")
 
         '(1:504) and the Database info {...} about the triggering furre is greater than or equal to #,
-        Add(TriggerCategory.Condition, 504,
+        Add(TriggerCategory.Condition,
         AddressOf TriggeringFurreinfoGreaterThanOrEqualToNumber,
             "and the Database info {...} about the triggering furre is greater than or equal to #,")
 
         '(1:505) and the Database info {...} about the triggering furre is less than or equal to#,
-        Add(TriggerCategory.Condition, 505,
+        Add(TriggerCategory.Condition,
         AddressOf TriggeringFurreinfoLessThanOrEqualToNumber,
             "and the Database info {...} about the triggering furre is less than or equal to #,")
 
         '(1:508) and the Database info {...} about the furre named {...} is equal to #,
-        Add(TriggerCategory.Condition, 508,
+        Add(TriggerCategory.Condition,
         AddressOf FurreNamedinfoEqualToNumber, "and the Database info {...} about the furre named {...} is equal to #,")
 
         '(1:509) and the Database info {...} about the furre named {...} is not equal to #,
-        Add(TriggerCategory.Condition, 509,
+        Add(TriggerCategory.Condition,
         AddressOf FurreNamedinfoNotEqualToNumber,
             "and the Database info {...} about the furre named {...} is not equal to #,")
 
         '(1:510) and the Database info {...} about the furre named {...} is greater than #,
-        Add(TriggerCategory.Condition, 510,
+        Add(TriggerCategory.Condition,
         AddressOf FurreNamedinfoGreaterThanNumber,
             "and the Database info {...} about the furre named {...} is greater than #,")
 
         '(1:511) and the Database info {...} about the furre named {...} is less than #,
-        Add(TriggerCategory.Condition, 511,
+        Add(TriggerCategory.Condition,
         AddressOf FurreNamedinfoLessThanNumber,
             "and the Database info {...} about the furre named {...} is less than #,")
 
         '(1:510) and the Database info {...} about the furre named {...} is greater than or equal to #,
-        Add(TriggerCategory.Condition, 512,
+        Add(TriggerCategory.Condition,
     AddressOf FurreNamedinfoGreaterThanOrEqualToNumber,
             "and the Database info {...} about the furre named {...} is greater than or equal to #,")
         '(1:511) and the Database info {...} about the furre named {...} is less than or equal to #,
-        Add(TriggerCategory.Condition, 513,
+        Add(TriggerCategory.Condition,
     AddressOf FurreNamedinfoLessThanOrEqualToNumber,
             "and the Database info {...} about the furre named {...} is less than or equal to #,")
 
         '(1:516) and the Database info {...} about the furre named {...} is equal to {...},
-        Add(TriggerCategory.Condition, 516,
+        Add(TriggerCategory.Condition,
             AddressOf FurreNamedinfoEqualToSTR,
             "and the Database info {...} about the furre named {...} is equal to string {...},")
 
         '(1:517) and the Database info {...} about the furre named {...} is not equal to {...},
-        Add(TriggerCategory.Condition, 517,
+        Add(TriggerCategory.Condition,
     AddressOf FurreNamedinfoNotEqualToSTR,
             "and the Database info {...} about the furre named {...} is not equal to string {...},")
 
         '(1:518) and the Database info {...} about the triggering furre is equal to {...},
-        Add(TriggerCategory.Condition, 518,
+        Add(TriggerCategory.Condition,
             AddressOf TriggeringFurreinfoEqualToSTR,
             "and the Database info {...} about the triggering furre is equal to string {...},")
 
         '(1:519) and the Database info {...} about the triggering furre is not equal to {...},
-        Add(TriggerCategory.Condition, 519,
+        Add(TriggerCategory.Condition,
         AddressOf TriggeringFurreinfoNotEqualToSTR,
             "and the Database info {...} about the triggering furre is not equal to string {...},")
 
         'Installed 7/13/120`16
         '(1:524) and the Database info  {...} in Settings Table {...} exists,
-        Add(TriggerCategory.Condition, 524,
+        Add(TriggerCategory.Condition,
              AddressOf SettingExist,
             "and the Database info  {...} in Settings Table {...} exists,")
 
         '(1:525) and the Database info  {...} in Settings Table {...} doesn't exist,
-        Add(TriggerCategory.Condition, 525,
+        Add(TriggerCategory.Condition,
              AddressOf SettingNotExist,
             "and the Database info  {...} in Settings Table {...} doesn't exist,")
 
         '(1:526) and the Database info {..} in Settings Table  {...} Is equal to {...},
-        Add(TriggerCategory.Condition, 526,
+        Add(TriggerCategory.Condition,
              AddressOf SettingEqualTo, "and the Database info {..} in Settings Table  {...} Is equal to {...},")
 
         '(1:527) and the Database info {..} in Settings Table  {...} Is Not equal to {...},
-        Add(TriggerCategory.Condition, 527,
+        Add(TriggerCategory.Condition,
              AddressOf SettingNotEqualTo,
             "and the Database info {..} in Settings Table  {...} Is not equal to {...},")
 
         '(1:528) and the Database info {..} in Settings Table  {...} Is greater than #,
-        Add(TriggerCategory.Condition, 528,
+        Add(TriggerCategory.Condition,
              AddressOf SettingGreaterThan,
             "and the Database info {..} in Settings Table  {...} Is greater than #,")
 
         '(1:529) and the Database info {..} in Settings Table  {...} Is greater than or equal to #,
-        Add(TriggerCategory.Condition, 529,
+        Add(TriggerCategory.Condition,
              AddressOf SettingGreaterThanOrEqualTo,
             "and the Database info {..} in Settings Table  {...} Is greater than or equal to #,")
 
         '(1:530) and the Database info {..} in Settings Table  {...} Is less than #,
-        Add(TriggerCategory.Condition, 530,
+        Add(TriggerCategory.Condition,
              AddressOf SettingLessThan,
             "and the Database info {..} in Settings Table  {...} Is less than #,")
 
         '(1:530) and the Database info {..} in Settings Table  {...} Is less than #,
-        Add(TriggerCategory.Condition, 531,
+        Add(TriggerCategory.Condition,
              AddressOf SettingLessThanOrEqualTo,
             "and the Database info {..} in Settings Table  {...} Is less than or equal to #,")
 
         '(5:500) use SQLite database file {...} or create file if it does not exist.
-        Add(TriggerCategory.Effect, 500, AddressOf UseOrCreateSQLiteFileIfNotExist,
+        Add(TriggerCategory.Effect,
+            AddressOf UseOrCreateSQLiteFileIfNotExist,
             "use SQLite database file {...} or create file if it does not exist.")
 
         '(5:505 ) Add the triggering furre with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
-        Add(TriggerCategory.Effect, 505, AddressOf InsertTriggeringFurreRecord,
+        Add(TriggerCategory.Effect,
+            AddressOf InsertTriggeringFurreRecord,
             "add the triggering furre with the default access level ""0""to the Furre Table in the database if he, she, or it doesn't exist.")
 
         '(5:506) Add furre named {...} with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
-        Add(TriggerCategory.Effect, 506, AddressOf InsertFurreNamed, "add furre named {...} with the default access level ""0""to the Furre Table in the database if he, she, or it doesn't exist.")
+        Add(TriggerCategory.Effect,
+            AddressOf InsertFurreNamed,
+            "add furre named {...} with the default access level ""0""to the Furre Table in the database if he, she, or it doesn't exist.")
 
         '(5:507) update Database info {...} about the triggering furre will now be #.
-        Add(TriggerCategory.Effect, 507, AddressOf UpdateTriggeringFurreField,
+        Add(TriggerCategory.Effect,
+            AddressOf UpdateTriggeringFurreField,
             "update Database info {...} about the triggering furre will now be #.")
         '(5:508) update Database info {...} about the furre named {...} will now be #.
-        Add(TriggerCategory.Effect, 508, AddressOf UpdateFurreNamed_Field,
+        Add(TriggerCategory.Effect,
+            AddressOf UpdateFurreNamed_Field,
             "update Database info {...} about the furre named {...} will now be #.")
         '(5:509) update Database info {...} about the triggering furre will now be {...}.
-        Add(TriggerCategory.Effect, 509, AddressOf UpdateTriggeringFurreFieldSTR,
+        Add(TriggerCategory.Effect,
+            AddressOf UpdateTriggeringFurreFieldSTR,
             "update Database info {...} about the triggering furre will now be {...}.")
         '(5:510) update Database info {...} about the furre named {...} will now be {...}.
-        Add(TriggerCategory.Effect, 510, AddressOf UpdateFurreNamed_FieldSTR,
+        Add(TriggerCategory.Effect,
+            AddressOf UpdateFurreNamed_FieldSTR,
             "update Database info {...} about the furre named {...} will now be {...}.")
 
         '(5:511) select Database info {...} about the triggering furre, and put it in variable %.
-        Add(TriggerCategory.Effect, 511, AddressOf ReadDatabaseInfo,
+        Add(TriggerCategory.Effect,
+            AddressOf ReadDatabaseInfo,
             "select Database info {...} about the triggering furre, and put it in variable %.")
         '(5:512) select Database info {...} about the furre named {...}, and put it in variable %.
-        Add(TriggerCategory.Effect, 512, AddressOf ReadDatabaseInfoName,
+        Add(TriggerCategory.Effect,
+            AddressOf ReadDatabaseInfoName,
             "select Database info {...} about the furre named {...}, and put it in variable %.")
 
         '(5:513) add column {...} with type {...} to the Furre table.
-        Add(TriggerCategory.Effect, 513, AddressOf AddColumn,
+        Add(TriggerCategory.Effect,
+            AddressOf AddColumn,
             "add column {...} with type {...} to the Furre table.")
 
         '(5:518) delete all Database info about the triggering furre.
-        Add(TriggerCategory.Effect, 518, AddressOf DeleteTriggeringFurre,
+        Add(TriggerCategory.Effect,
+            AddressOf DeleteTriggeringFurre,
             "delete all Database info about the triggering furre.")
         '(5:519) delete all Database info about the furre named {...}.
-        Add(TriggerCategory.Effect, 519, AddressOf DeleteFurreNamed,
+        Add(TriggerCategory.Effect,
+            AddressOf DeleteFurreNamed,
             "delete all Database info about the furre named {...}.")
 
         '(5:522) get the total of records from table {...} and put it into variable %.
-        Add(TriggerCategory.Effect, 522, AddressOf GetTotalRecords,
+        Add(TriggerCategory.Effect,
+            AddressOf GetTotalRecords,
             "get the total number of records from table {...} and put it into variable %Variable.")
 
         '(5:523) take the sum of column{...} in table {...} and put it into variable %
-        Add(TriggerCategory.Effect, 523, AddressOf ColumnSum,
+        Add(TriggerCategory.Effect,
+            AddressOf ColumnSum,
             "take the sum of column{...} in table {...} and put it into variable %Variable.")
 
         '(5:550) take variable %Variable , prepare it for a query, and put it in variable %Variable .   (this is your escaping call, which would depend on however you have to do it internally)
-        Add(TriggerCategory.Effect, 550, AddressOf PrepQuery,
+        Add(TriggerCategory.Effect,
+            AddressOf PrepQuery,
             "take variable %Variable , prepare it for a SQLite Database query, and put it in variable %Variable.")
 
         '(5:551) execute SQLite Database query {...} Select * from table where name=%2
-        Add(TriggerCategory.Effect, 551, AddressOf ExecuteQuery,
+        Add(TriggerCategory.Effect,
+            AddressOf ExecuteQuery,
              "execute SQLite Database query {...}.")
 
         '(5:552) retrieve field {...} from SQLite Database query and put it into variable %Variable .
-        Add(TriggerCategory.Effect, 552, AddressOf RetrieveQuery,
+        Add(TriggerCategory.Effect,
+            AddressOf RetrieveQuery,
             "retrieve field {...} from SQLite Database query and put it into variable %Variable.")
 
-        Add(TriggerCategory.Effect, 559, AddressOf VACUUM,
+        Add(TriggerCategory.Effect,
+            AddressOf VACUUM,
             "execute ""VACUUM""to rebuild the database and reclaim wasted space.")
 
         '(5:561) remember Database Info {...} for Settings Table {...} to {...}.
         '(5:562) forget Database info {...} from Settings Table{...}.
         '(5:563) forget all Settings Table Database info.
-
-        Add(TriggerCategory.Effect, 560, AddressOf InsertVariableTableToFurreTable,
-            "store variable table %VariableTable to database table name {...}.")
 
     End Sub
 

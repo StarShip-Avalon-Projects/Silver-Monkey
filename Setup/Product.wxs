@@ -119,6 +119,21 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
           Name="installed" Type="integer" Value="1"
           KeyPath="yes" />
       </Component>
+
+      <Component Id="BugTraqSubmitShortcut" Guid="{d55d5f63-3c1b-455f-ac4b-a7c6e4dd11a4}">
+
+        <Shortcut Id="$(var.BugTraqSubmit.TargetName)Shortcut"
+                  Name="$(var.BugTraqSubmit.TargetName)"
+                  WorkingDirectory='APPLICATIONFOLDER'
+                  Target="[APPLICATIONFOLDER]$(var.BugTraqSubmit.TargetName)"
+                  Description="Starts $(var.BugTraqSubmit.TargetName)" />
+
+        <RegistryValue
+          Root="HKCU"
+          Key="Software\$(var.CompanyName)\BugTraqSubmit"
+          Name="installed" Type="integer" Value="1"
+          KeyPath="yes" />
+      </Component>
     </DirectoryRef>
     <PropertyRef Id="NETFRAMEWORK45" />
     <!--  <Condition Message="This application requires .NET Framework 4.6.1 Please install the .NET Framework then run this installer again.">
@@ -127,6 +142,7 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
     <Feature Id="SilverMonkey2" Title="Main Application" Level="1">
 
       <!-- Step 3: Tell WiX to install the shortcut -->
+      <ComponentRef Id="SilverMonkeyShortcut" />
       <ComponentGroupRef Id="SilverMonkey2.Binaries" />
       <ComponentGroupRef Id="SilverMonkey2.Symbols" />
       <ComponentRef Id="smHelp" />
@@ -138,14 +154,15 @@ Value="[APPLICATIONFOLDER]\$(var.MonkeySpeakEditor.TargetName)" After="CostFinal
       <ComponentGroupRef Id="MonkeyCore2.Symbols" />
       <ComponentGroupRef Id="MonkeyCore2.Content" />
 
-      <ComponentRef Id="SilverMonkeyShortcut" />
       <ComponentRef Id="MonkeySpeakEditorShortcut" />
-      <!--     <ComponentGroupRef Id="TheClaaaw.Binaries" />
-      <ComponentGroupRef Id="TheClaaaw.Symbols" /> -->
-      <!-- <ComponentRef Id="TheClaaawIni" /> -->
+
       <ComponentGroupRef Id="MonkeySpeakEditor.Binaries" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Content" />
       <ComponentGroupRef Id="MonkeySpeakEditor.Symbols" />
+
+      <ComponentRef Id="BugTraqSubmitShortcut" />
+      <ComponentGroupRef Id="BugTraqSubmit.Binaries" />
+      <ComponentGroupRef Id="MantisConnect.Binaries" />
 
       <ComponentGroupRef Id="Monkeyspeak.Binaries" />
       <ComponentGroupRef Id="Monkeyspeak.Symbols" />

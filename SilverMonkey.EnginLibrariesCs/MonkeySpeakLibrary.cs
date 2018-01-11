@@ -2,9 +2,7 @@
 using Furcadia.Net.Proxy;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
-using System;
 using System.Linq;
-using System.Threading.Tasks;
 using static MsLibHelper;
 
 /// <summary>
@@ -12,7 +10,7 @@ using static MsLibHelper;
 /// are built on. This Library contains the commonly used functions for
 /// all the other libraries
 /// </summary>
-public class MonkeySpeakLibrary : BaseLibrary
+public class MonkeySpeakLibrary : AutoIncrementBaseLibrary
 {
     #region Public Fields
 
@@ -62,6 +60,14 @@ public class MonkeySpeakLibrary : BaseLibrary
     static public Furre Player { get; set; }
 
     /// <summary>
+    /// Gets the base identifier.
+    /// </summary>
+    /// <value>
+    /// The base identifier.
+    /// </value>
+    public override int BaseId => 0;
+
+    /// <summary>
     /// Gets or sets the current dream information for the dream Silver Monkey is located in.
     /// </summary>
     /// <value>The dream information.</value>
@@ -74,6 +80,16 @@ public class MonkeySpeakLibrary : BaseLibrary
     #endregion Public Properties
 
     #region Public Methods
+
+    public bool FurreNamedIsBotController(TriggerReader reader)
+    {
+        if (ParentBotSession != null)
+        {
+            return Player.ShortName == reader.ReadString().ToFurcadiaShortName();
+        }
+
+        return false;
+    }
 
     /// <summary>
     /// Gets the argumet.
@@ -161,31 +177,6 @@ public class MonkeySpeakLibrary : BaseLibrary
     }
 
     /// <summary>
-    /// Triggerings the furre is bot controller.
-    /// </summary>
-    /// <param name="reader">The reader.</param>
-    /// <returns></returns>
-    public bool TriggeringFurreIsBotController(TriggerReader reader)
-    {
-        if (ParentBotSession != null)
-        {
-            return Player.ShortName == reader.Page.GetVariable(BotControllerVariable).Value.ToString().ToFurcadiaShortName();
-        }
-
-        return false;
-    }
-
-    public bool FurreNamedIsBotController(TriggerReader reader)
-    {
-        if (ParentBotSession != null)
-        {
-            return Player.ShortName == reader.ReadString().ToFurcadiaShortName();
-        }
-
-        return false;
-    }
-
-    /// <summary>
     /// Generic base Furre named {...} is Triggering Furre
     /// </summary>
     /// <param name="reader"><see cref="TriggerReader"/></param>
@@ -233,7 +224,7 @@ public class MonkeySpeakLibrary : BaseLibrary
         if (ActiveFurre != null)
         {
             Player = ActiveFurre;
-            if (ActiveFurre.FurreID != -1)
+            if (ActiveFurre.FurreID != -1 || ActiveFurre.ShortName != "unknown")
             {
                 ParamSet = true;
             }
@@ -279,13 +270,18 @@ public class MonkeySpeakLibrary : BaseLibrary
     }
 
     /// <summary>
-    /// Sends the server asynchronous.
+    /// Triggerings the furre is bot controller.
     /// </summary>
-    /// <param name="message">The message.</param>
+    /// <param name="reader">The reader.</param>
     /// <returns></returns>
-    public async Task SendServerAsync(string message)
+    public bool TriggeringFurreIsBotController(TriggerReader reader)
     {
-        await Task.Run(() => this.SendServer(message));
+        if (ParentBotSession != null)
+        {
+            return Player.ShortName == reader.Page.GetVariable(BotControllerVariable).Value.ToString().ToFurcadiaShortName();
+        }
+
+        return false;
     }
 
     /// <summary>

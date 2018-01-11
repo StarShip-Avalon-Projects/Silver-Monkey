@@ -33,6 +33,12 @@ Namespace Engine.Libraries
 
 #Region "Public Constructors"
 
+        Public Overrides ReadOnly Property BaseId As Integer
+            Get
+                Return 130
+            End Get
+        End Property
+
         Public Overrides Sub Initialize(ParamArray args() As Object)
             MyBase.Initialize(args)
             dice = New DiceObject()
@@ -67,39 +73,47 @@ Namespace Engine.Libraries
                 End Function, "When any one rolls anything,")
 
             '(1:130) and the result is # or higher,
-            Add(TriggerCategory.Condition, 130, AddressOf DiceResultNumberOrHigher,
+            Add(TriggerCategory.Condition,
+                AddressOf DiceResultNumberOrHigher,
                 "and the dice roll result is # or higher,")
             '(1:131) and the result is # or Lower,
-            Add(TriggerCategory.Condition, 131, AddressOf DiceResultNumberOrlower,
+            Add(TriggerCategory.Condition,
+                AddressOf DiceResultNumberOrlower,
                 "and the dice roll result is # or lower,")
 
             ' (5:130) set variable % to the total of rolling # dice with #
             ' sides plus #.
-            Add(TriggerCategory.Effect, 130, AddressOf DicePlusNumber,
+            Add(TriggerCategory.Effect,
+                AddressOf DicePlusNumber,
                 "set variable % to the total of rolling # dice with # sides plus #.")
 
             ' (5:131) set variable % to the total of rolling # dice with #
             ' sides minus #.
-            Add(TriggerCategory.Effect, 131, AddressOf DiceMinusNumber,
+            Add(TriggerCategory.Effect,
+                AddressOf DiceMinusNumber,
                 "set variable % to the total of rolling # dice with # sides minus #.")
 
             ' (5:132) set variable %Variable to the number of the dice reult
             ' that the triggering furre rolled.
-            Add(TriggerCategory.Effect, 132, AddressOf TrigFurreRolledVariable,
+            Add(TriggerCategory.Effect,
+                AddressOf TrigFurreRolledVariable,
                 "set variable %Variable to the number of the dice result that the triggering furre rolled.")
 
             ' (5:133) roll # furcadia dice with # sides. (optional Message {...})
-            Add(TriggerCategory.Effect, 133, AddressOf RollDice,
+            Add(TriggerCategory.Effect,
+                AddressOf RollDice,
                 "roll # furcadia dice with # sides. (optional Message {...})")
 
             ' (5:134) roll # furcadia dice with # sides plus #. (optional
             ' Message {...})
-            Add(TriggerCategory.Effect, 134, AddressOf RollDicePlus,
+            Add(TriggerCategory.Effect,
+                AddressOf RollDicePlus,
                 "roll # furcadia dice with # sides plus #. (optional Message {...})")
 
             ' (5:135) roll # furcadia dice with # sides minus #. (optional
             ' Message {...})
-            Add(TriggerCategory.Effect, 135, AddressOf RollDiceMinus,
+            Add(TriggerCategory.Effect,
+                AddressOf RollDiceMinus,
                 "roll # furcadia dice with # sides minus #. (optional Message {...})")
 
         End Sub
@@ -195,7 +209,7 @@ Namespace Engine.Libraries
             Dim side = reader.ReadNumber()
             Dim Message = reader.ReadString
 
-            Return SendServer("roll "+ count.ToString + "d"+ side.ToString + ""+ Message)
+            Return SendServer("roll " + count.ToString + "d" + side.ToString + "" + Message)
 
         End Function
 
@@ -212,7 +226,7 @@ Namespace Engine.Libraries
             Dim side = reader.ReadNumber()
             Dim modifyer = reader.ReadNumber()
 
-            Return SendServer("roll "+ count.ToString + "d"+ side.ToString + "-"+ modifyer.ToString)
+            Return SendServer("roll " + count.ToString + "d" + side.ToString + "-" + modifyer.ToString)
 
         End Function
 
@@ -229,7 +243,7 @@ Namespace Engine.Libraries
             Dim side = reader.ReadNumber()
             Dim modifyer = reader.ReadNumber()
 
-            Return SendServer("roll "+ count.ToString + "d"+ side.ToString + "+"+ modifyer.ToString)
+            Return SendServer("roll " + count.ToString + "d" + side.ToString + "+" + modifyer.ToString)
 
         End Function
 
@@ -278,7 +292,7 @@ Namespace Engine.Libraries
             If sides <> dice.DiceSides Then Return False
             If dice.DiceCount <> DiceCount Then Return False
 
-            Return dice.DiceCompnentMatch = "-"AndAlso dice.DiceResult >= reader.ReadNumber()
+            Return dice.DiceCompnentMatch = "-" AndAlso dice.DiceResult >= reader.ReadNumber()
         End Function
 
         ''' <summary>
@@ -303,7 +317,7 @@ Namespace Engine.Libraries
             If sides <> dice.DiceSides Then Return False
             If dice.DiceCount <> DiceCount Then Return False
 
-            Return dice.DiceCompnentMatch = "+"And dice.DiceResult >= reader.ReadNumber()
+            Return dice.DiceCompnentMatch = "+" And dice.DiceResult >= reader.ReadNumber()
         End Function
 
         ''' <summary>

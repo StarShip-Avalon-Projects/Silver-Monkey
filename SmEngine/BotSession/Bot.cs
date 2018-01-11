@@ -6,6 +6,7 @@
 // Bot info
 // Furre Update events?
 
+using Engine.Libraries;
 using Furcadia.Net;
 using Furcadia.Net.DreamInfo;
 using Furcadia.Net.Proxy;
@@ -262,7 +263,7 @@ namespace BotSession
         /// <summary>
         /// Initializes this instance.
         /// </summary>
-        private void Initialize()
+        private async void Initialize()
         {
             lastDream = new Dream();
             MsEngineOptions = GetOptions().MonkeySpeakEngineOptions;
@@ -273,6 +274,8 @@ namespace BotSession
             ProcessServerInstruction += (s, o) => OnParseSererInstructionAsync(s, o);
             ServerStatusChanged += (s, o) => OnServerStatusChanged(s, o);
             ClientStatusChanged += (s, o) => OnClientStatusChanged(s, o);
+
+            TroatTiredEventHandler += e => MSpage.Execute(new int[] { 5, 6 }, e);
         }
 
         /// <summary>
@@ -293,6 +296,7 @@ namespace BotSession
                 new MsDreamInfo(),
                 new MsBotInformation(),
                 new MsSayLibrary(),
+                new MsQuery(),
                 new MsBanish(),
                 new MsDatabase(),
                 new MsWebRequests(),
@@ -320,17 +324,10 @@ namespace BotSession
             var LibList = InitializeEngineLibraries();
             foreach (BaseLibrary Library in LibList)
             {
-                try
+                MSpage.LoadLibrary(Library, this);
+                if (!silent)
                 {
-                    MSpage.LoadLibrary(Library, this);
-                    if (!silent)
-                    {
-                        Furcadia.Logging.Logger.Info($"{Library.GetType().Name}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new MonkeyspeakException($"{Library.GetType().Name} {ex}", ex);
+                    Furcadia.Logging.Logger.Info($"{Library.GetType().Name}");
                 }
             }
 
@@ -372,16 +369,16 @@ namespace BotSession
                 switch (e.ServerInstruction)
                 {
                     case ServerInstructionType.LoadDreamEvent:
-                        // (0:97) When the bot leaves a Dream,
-                        // (0:98) When the bot leaves the Dream named {..},
+                        // (0:36) When the bot leaves a Dream,
+                        // (0:37) When the bot leaves the Dream named {..},
 
-                        await MSpage.ExecuteAsync(new int[] { 97, 98 }, cancel, lastDream);
+                        await MSpage.ExecuteAsync(new int[] { 36, 37 }, cancel, lastDream);
                         return;
 
                     case ServerInstructionType.BookmarkDream:
-                        // (0:90) When the bot enters a Dream,
-                        // (0:91) When the bot enters a Dream named {..},
-                        await MSpage.ExecuteAsync(new int[] { 90, 91 }, cancel, Dream);
+                        // (0:34) When the bot enters a Dream,
+                        // (0:35) When the bot enters the Dream named {..},
+                        await MSpage.ExecuteAsync(new int[] { 34, 35 }, cancel, Dream);
                         lastDream = Dream;
                         return;
 
@@ -396,15 +393,15 @@ namespace BotSession
                         return;
 
                     case ServerInstructionType.RemoveAvatar:
-                        // (0:27) When a furre named {..} leaves the Dream,
-                        // (0:26) When someone leaves the Dream,
-                        await MSpage.ExecuteAsync(new int[] { 27, 26 }, cancel, ((RemoveAvatar)sender).Player);
+                        // (0:32) When anyone leaves the Dream,
+                        // (0:33) When a furre named {..} leaves the Dream,
+                        await MSpage.ExecuteAsync(new int[] { 32, 33 }, cancel, ((RemoveAvatar)sender).Player);
                         return;
 
                     case ServerInstructionType.SpawnAvatar:
-                        // (0:24) When someone enters the Dream,
-                        // (0:25) When a furre Named {..} enters the Dream,
-                        await MSpage.ExecuteAsync(new int[] { 24, 25 }, cancel, ((SpawnAvatar)sender).player);
+                        // (0:30) When anyone enters the Dream,
+                        // (0:31) When the furre named {..} enters the Dream,
+                        await MSpage.ExecuteAsync(new int[] { 30, 31 }, cancel, ((SpawnAvatar)sender).player);
                         return;
 
                     case ServerInstructionType.UpdateColorString:
@@ -435,9 +432,9 @@ namespace BotSession
                 return;
             }
 
-            ChannelObject InstructionObject = (ChannelObject)sender;
-            Furre Furr = InstructionObject.Player;
-            string Text = InstructionObject.ChannelText;
+            string Text = ((ChannelObject)sender).ChannelText;
+            string data = ((ChannelObject)sender).RawInstruction;
+            Furre Furr = ((ChannelObject)sender).Player;
             try
             {
                 switch (Args.Channel)
@@ -469,20 +466,33 @@ namespace BotSession
                         return;
 
                     case "shout":
-
-                        await MSpage.ExecuteAsync(new int[] { 8, 9, 10 }, cancel, Furr);
+                        // (0:13: When anyone shouts something,
+                        // (0:14) When anyone shouts {..},
+                        // (0:15) When anyone shouts something with {..} in it,
+                        // (0:16) When anyone emotes something,
+                        await MSpage.ExecuteAsync(new int[] { 13, 14, 15, 16 }, cancel, Furr);
                         return;
 
                     case "myspeech":
                         break;
 
                     case "whisper":
-                        await MSpage.ExecuteAsync(new int[] { 15, 16, 17 }, cancel, Furr);
+                        // (0:19) When anyone whispers something,
+                        // (0:20) When anyone whispers {..},
+                        // (0:21) When anyone whispers something with {..} in it,
+                        await MSpage.ExecuteAsync(new int[] { 19, 20, 21 }, cancel, Furr);
                         return;
 
                     case "say":
+                        // (0:10) When anyone says something,
+                        // (0:11) When anyone says {..},
+                        // (0:12) When anyone says something with {..} in it,
 
-                        await MSpage.ExecuteAsync(new int[] { 5, 6, 7, 18, 19, 20 }, cancel, Furr);
+                        // (0:22) When anyone says or emotes something,
+                        // (0:23) When anyone says or emotes {..},
+                        // (0:24) When anyone says or emotes something with {..} in it,
+
+                        await MSpage.ExecuteAsync(new int[] { 10, 11, 12, 22, 23, 24 }, cancel, Furr);
                         return;
 
                     case "emote":
@@ -491,29 +501,45 @@ namespace BotSession
                             return;
                         }
 
-                        //  (0:12) When someone emotes {...} Execute
-                        //  (0:13) When someone emotes something with {...} in it
-                        //  (0:18) When someone says or emotes something
-                        //  (0:19) When someone says or emotes {...}
-                        //  (0:20) When someone says or emotes something
-                        //  with {...} in it
-                        await MSpage.ExecuteAsync(new int[] { 11, 12, 13, 18, 19, 20 }, cancel, Furr);
+                        // (0:16) When anyone emotes something,
+                        // (0:17) When anyone emotes {..},
+                        // (0:18) When anyone emotes something with {..} in it,
+
+                        // (0:22) When anyone says or emotes something,
+                        // (0:23) When anyone says or emotes {..},
+                        // (0:24) When anyone says or emotes something with {..} in it,
+
+                        await MSpage.ExecuteAsync(new int[] { 16, 17, 18, 22, 23, 24 }, cancel, Furr);
                         return;
 
                     case "@emit":
-
-                        await MSpage.ExecuteAsync(new int[] { 21, 22, 23 }, cancel, Furr, Dream);
+                        // (0:25) When someone emits something,
+                        // (0:26) When someone emits {..},
+                        // (0:27) When someone emits something with {..} in it,
+                        await MSpage.ExecuteAsync(new int[] { 24, 26, 27 }, cancel, Furr, Dream);
                         return;
 
                     case "query":
-
-                        Regex QueryCommand = new Regex("<a.*?href=\'command://(.*?)\'>", RegexOptions.Compiled);
-                        await MSpage.ExecuteAsync(new int[] { 34, 35, 32, 33, 40, 41, 38, 39, 36, 37 },
-                             cancel, Furr, QueryCommand.Match(Text).Groups[1].Value);
+                        // (0:40) When anyone requests to summon the bot,
+                        // (0:41) When a furre named {..} requests to summon the bot,
+                        // (0:42) When anyone requests to join the bot,
+                        // (0:43) When a furre named {..} requests to join the bot,
+                        // (0:44) When anyone requests to follow the bot,
+                        // (0:35) When a furre named {..} requests to follow the bot,
+                        // (0:46) When anyone requests to lead the bot,
+                        // (0:47) When a furre named {..} requests to lead the bot,
+                        // (0:48) When anyone requests to cuddle with the bot.
+                        // (0:49) When a furre named {..} requests to cuddle with the bot,
+                        // (0:50) When the bot see a query (lead, follow summon, join, cuddle),
+                        Match QueryMatch = QueryCommand.Match(data);
+                        await MSpage.ExecuteAsync(new int[] { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 },
+                             cancel, Furr, QueryMatch.Groups[5].Value);
                         return;
 
                     case "banish":
-                        string NameStr;
+
+                        //TODO: Add these lines
+                        // (0:60) When the bot fails to empty the banish list,
 
                         ((ConstantVariable)MSpage.GetVariable(BanishListVariable)).SetValue(string.Join(" ", BanishList.ToArray()));
 
@@ -521,77 +547,77 @@ namespace BotSession
                         {
                             // banish <name> (online)
                             // Success: (.*?) has been banished from your dreams.
-                            // Success: You have canceled all banishments from your dreams.
 
                             // (0:52) When the bot sucessfilly banishes a furre,
                             // (0:53) When the bot sucessfilly banishes the furre named {...},
 
                             ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(BanishName);
-                            await MSpage.ExecuteAsync(new int[] { 52, 53 }, cancel);
+                            await MSpage.ExecuteAsync(new int[] { 52, 53 }, cancel, BanishName);
                         }
-                        else if ((Text == "You have canceled all banishments from your dreams."))
+                        else if (Text == "You have canceled all banishments from your dreams.")
                         {
                             // banish-off-all (active list)
                             // Success: You have canceled all banishments from your dreams.
+                            // (0:61) When the bot successfully clears the banish list,
 
                             ((ConstantVariable)MSpage.GetVariable(BanishListVariable)).SetValue(null);
                             ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(null);
-                            await MSpage.ExecuteAsync(60, cancel);
+                            await MSpage.ExecuteAsync(61, cancel, BanishList);
                         }
                         else if (Text.EndsWith(" has been temporarily banished from your dreams."))
                         {
                             // tempbanish <name> (online)
                             // Success: (.*?) has been temporarily banished from your dreams.
-                            // (0:61) When the bot sucessfully temp banishes a Furre
-                            // (0:62) When the bot sucessfully temp banishes the furre named {...}
+                            // (0:62) When the bot successfully temp banishes a furre,
+                            // (0:63) When the bot successfully temp banishes the furre named {...},
 
                             ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(BanishName);
-                            await MSpage.ExecuteAsync(new int[] { 61, 62 }, cancel);
+                            await MSpage.ExecuteAsync(new int[] { 62, 62 }, cancel, BanishName);
                         }
                         else if (Text.StartsWith("Players banished from your dreams: "))
                         {
                             // Banish-List
                             // [notify> Players banished from your dreams:
-                            // `(0:54) When the bot sees the banish list
-                            await MSpage.ExecuteAsync(54, cancel);
+                            // (0:55) When the bot sees the banish list,
+                            await MSpage.ExecuteAsync(55, cancel, BanishList);
                         }
                         else if (Text.StartsWith("The banishment of player "))
                         {
                             // banish-off <name> (on list)
                             // [notify> The banishment of player (.*?) has ended.
-                            // (0:56) When the bot successfully removes a furre from the banish list,
-                            // (0:58) When the bot successfully removes the furre named {...} from the banish list,
+                            // (0:58) When the bot successfully removes a furre from the banish list,
+                            // (0:59) When the bot successfully removes the furre named {...} from the banish list,
 
                             Regex t = new Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled);
-                            NameStr = t.Match(Text).Groups[1].Value;
+                            var NameStr = t.Match(Text).Groups[1].Value;
                             ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(BanishName);
 
-                            await MSpage.ExecuteAsync(new int[] { 56, 58 }, cancel);
+                            await MSpage.ExecuteAsync(new int[] { 58, 59 }, cancel, BanishName);
                         }
                         else if (Text.Contains("There are no furres around right now with a name starting with "))
                         {
                             // Banish <name> (Not online)
                             // Error:>>  There are no furres around right now with a name starting with (.*?) .
-                            // (0:50) When the Bot fails to banish a furre,
-                            // (0:51) When the bot fails to banish the furre named {...},
+                            // (0:51) When the bot fails to banish a furre,
+                            // (0:52) When the bot fails to banish the furre named {...},
 
                             Regex t = new Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled);
-                            NameStr = t.Match(Text).Groups[1].Value;
+                            var NameStr = t.Match(Text).Groups[1].Value;
                             ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(NameStr);
 
-                            await MSpage.ExecuteAsync(new int[] { 50, 51 }, cancel);
+                            await MSpage.ExecuteAsync(new int[] { 51, 52 }, cancel, NameStr);
                         }
-                        else if ((Text == "Sorry, this player has not been banished from your dreams."))
+                        else if (Text == "Sorry, this player has not been banished from your dreams.")
                         {
                             // banish-off <name> (not on list)
                             // Error:>> Sorry, this player has not been banished from your dreams.
-                            // (0:55) When the Bot fails to remove a furre from the banish list,
-                            // (0:56) When the bot fails to remove the furre named {...} from the banish list,
+                            // (0:56) When the bot fails to remove a furre from the banish list,
+                            // (0:57) When the bot fails to remove the furre named {...} from the banish list,
 
                             ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(BanishName);
-                            await MSpage.ExecuteAsync(new int[] { 50, 51 }, cancel);
+                            await MSpage.ExecuteAsync(new int[] { 56, 57 }, cancel, BanishName);
                         }
-                        else if ((Text == "You have not banished anyone."))
+                        else if (Text == "You have not banished anyone.")
                         {
                             // banish-off-all (empty List)
                             // Error:>> You have not banished anyone.
@@ -600,7 +626,7 @@ namespace BotSession
                             ((ConstantVariable)MSpage.GetVariable(BanishListVariable)).SetValue(null);
                             await MSpage.ExecuteAsync(59, cancel);
                         }
-                        else if ((Text == "You do not have any cookies to give away right now!"))
+                        else if (Text == "You do not have any cookies to give away right now!")
                         {
                             await MSpage.ExecuteAsync(95, cancel);
                         }
@@ -670,9 +696,11 @@ namespace BotSession
                     case ConnectionPhase.Disconnected:
                         // (0:2) When the bot logs out of furcadia,
 
-                        await MSpage.ExecuteAsync(2, cancel);
-
-                        MSpage.Dispose();
+                        if (MSpage != null)
+                        {
+                            await MSpage.ExecuteAsync(2, cancel);
+                            StopEngine();
+                        }
                         return;
 
                     case ConnectionPhase.Connected:

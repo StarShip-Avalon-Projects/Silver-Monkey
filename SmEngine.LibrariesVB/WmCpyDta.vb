@@ -16,24 +16,24 @@ Namespace Engine.Libraries
         Public Overrides Sub Initialize(ParamArray args() As Object)
             MyBase.Initialize(args)
             '(0:75) When the bot receives a message from another bot on the same computer,
-            Add(TriggerCategory.Cause, 75,
-                 Function()
-                     Return True
-                 End Function, "When the bot receives a message from another bot on the same computer,")
-            '(0:76) When the bot receives message {...} from another bot on the same computer,
-            Add(TriggerCategory.Cause, 76,
-                AddressOf ReceiveMessage, "When the bot receives message {...} from another bot on the same computer,")
-            '(0:77) When the bot receives a message containing {...} from another bot on the same computer,
-            Add(TriggerCategory.Cause, 77,
-               AddressOf ReceiveMessageContaining, "When the bot receives a message containing {...} from another bot on the same computer,")
+            'Add(TriggerCategory.Cause, 75,
+            '     Function()
+            '         Return True
+            '     End Function, "When the bot receives a message from another bot on the same computer,")
+            ''(0:76) When the bot receives message {...} from another bot on the same computer,
+            'Add(TriggerCategory.Cause, 76,
+            '    AddressOf ReceiveMessage, "When the bot receives message {...} from another bot on the same computer,")
+            ''(0:77) When the bot receives a message containing {...} from another bot on the same computer,
+            'Add(TriggerCategory.Cause, 77,
+            '   AddressOf ReceiveMessageContaining, "When the bot receives a message containing {...} from another bot on the same computer,")
 
-            '(5:75) send message {...} to bot named {...}.
-            Add(TriggerCategory.Effect, 75,
-                AddressOf SendMessage, "send message {...} to bot named {...}.")
+            ''(5:75) send message {...} to bot named {...}.
+            'Add(TriggerCategory.Effect, 75,
+            '    AddressOf SendMessage, "send message {...} to bot named {...}.")
 
-            '(5:76) set Variable %Variable to the Message the bot last received.
-            Add(TriggerCategory.Effect, 76,
-                AddressOf SetVariable, "set Variable %Variable to the Message the bot last received.")
+            ''(5:76) set Variable %Variable to the Message the bot last received.
+            'Add(TriggerCategory.Effect, 76,
+            '    AddressOf SetVariable, "set Variable %Variable to the Message the bot last received.")
         End Sub
 
         Public Overrides Sub Unload(page As Page)
@@ -94,7 +94,7 @@ Namespace Engine.Libraries
             'To send a message to another application the first thing we need is the
             'handle of the receiving application.
             'One way is to use the FindWindow API
-            Dim cstrReceiverWindowName As String = "Silver Monkey: "+ Fur
+            Dim cstrReceiverWindowName As String = "Silver Monkey: " + Fur
             Dim WindowHandleOfToProcess = FindWindow(Nothing, cstrReceiverWindowName)
             'find by window name
             Dim WindowHandle = New IntPtr(WindowHandleOfToProcess)
@@ -109,7 +109,7 @@ Namespace Engine.Libraries
                            IntPtr.Zero,
                            ParentBotSession.ConnectedFurre.ShortName,
                            ParentBotSession.ConnectedFurre.FurreID, strTag, msMsg)
-                SendClientMessage("SYSTEM Send Windows Message to "+ Fur + ": "+ msMsg)
+                SendClientMessage("SYSTEM Send Windows Message to " + Fur + ": " + msMsg)
             End If
             'Debug.Print("Msg = "& msg)
             Return True

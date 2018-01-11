@@ -27,7 +27,14 @@ namespace Logging
     ///
     public class ErrorLogging
     {
+        #region Private Fields
+
+        private Exception Ex;
         private string strErrorFilePath;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         /// <summary>
         /// </summary>
@@ -37,11 +44,16 @@ namespace Logging
         /// </param>
         public ErrorLogging(Exception Ex, object ObjectThrowingError)
         {
+            this.Ex = Ex;
             // Call Log Error
             // CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-            strErrorFilePath = Path.Combine(IO.Paths.SilverMonkeyErrorLogPath, $"{ Assembly.GetExecutingAssembly().GetName().Name } _Error_ {DateTime.Now.ToString("MM_dd_yyyy_H-mm-ss") }.txt");
+            strErrorFilePath = Path.Combine(IO.Paths.SilverMonkeyErrorLogPath, $"{ Assembly.GetEntryAssembly().GetName().Name } _Error_ {DateTime.Now.ToString("MM_dd_yyyy_H-mm-ss") }.txt");
             LogError(Ex, ObjectThrowingError.ToString());
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Fullpath the error document was written to.
@@ -57,6 +69,18 @@ namespace Logging
         }
 
         /// <summary>
+        /// Gets the error log summary
+        /// </summary>
+        /// <value>
+        /// The summary.
+        /// </value>
+        public string Summary { get { return Ex.Message; } }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        /// <summary>
         /// </summary>
         /// <param name="ex">
         /// </param>
@@ -65,15 +89,19 @@ namespace Logging
         public void LogError(Exception ex, object ObjectThrowingError)
         {
             //   BugReport = New ProjectReport
-            using (var LogFile = new System.IO.StreamWriter(strErrorFilePath, false))
+            using (var LogFile = new StreamWriter(strErrorFilePath, false))
             {
                 // ***********************************************************
                 // * Error Log Formatting
                 // ***********************************************************
                 LogFile.WriteLine("-------------------------------------------------------");
-                LogFile.WriteLine("");
-                LogFile.WriteLine($"{ Assembly.GetExecutingAssembly().FullName} Error Report");
-                LogFile.WriteLine($"{Assembly.GetExecutingAssembly().GetName().Version.ToString()} Product Version");
+                LogFile.WriteLine($"{Assembly.GetEntryAssembly().GetName().Version.ToString()} Product Version");
+                var InfoVersion = Attribute
+                   .GetCustomAttribute(
+                       Assembly.GetEntryAssembly(),
+                       typeof(AssemblyInformationalVersionAttribute))
+                   as AssemblyInformationalVersionAttribute;
+                LogFile.WriteLine($"{InfoVersion.InformationalVersion} InformationalVersion");
                 LogFile.WriteLine("");
                 LogFile.WriteLine($"Date: { DateTime.Now.ToString("d")}");
                 LogFile.WriteLine("");
@@ -91,7 +119,8 @@ namespace Logging
                     LogFile.WriteLine("32-Bit OS");
                 }
 
-                if ((Environment.Is64BitProcess == true))
+                if (Environment.Is64BitProcess == true)
+
                 {
                     LogFile.WriteLine("64-Bit Process");
                 }
@@ -108,20 +137,20 @@ namespace Logging
                 LogFile.WriteLine("-------------------------------------------------------");
                 LogFile.WriteLine(("Error: " + ex.Message));
                 LogFile.WriteLine("");
-                if (!(ex.InnerException == null))
+                if (ex.InnerException != null)
                 {
                     LogFile.WriteLine(("Inner Error: " + ex.InnerException.Message));
                     LogFile.WriteLine("");
                 }
-
-                LogFile.WriteLine($"Source: { ObjectThrowingError.ToString()}");
+                var objectName = ObjectThrowingError.GetType().Name;
+                LogFile.WriteLine($"Source: {objectName }");
                 LogFile.WriteLine("");
                 StackTrace st = new StackTrace(ex, true);
                 LogFile.WriteLine("-------------------------------------------------------");
                 LogFile.WriteLine(("Stack Trace: " + st.ToString()));
                 LogFile.WriteLine("");
                 LogFile.WriteLine("-------------------------------------------------------");
-                if (!(ex.InnerException == null))
+                if (ex.InnerException != null)
                 {
                     StackTrace stInner = new StackTrace(ex.InnerException, true);
                     LogFile.WriteLine(("Inner Stack Trace: " + stInner.ToString()));
@@ -132,5 +161,7 @@ namespace Logging
 
             // ***********************************************************
         }
+
+        #endregion Public Methods
     }
 }

@@ -36,6 +36,8 @@
   <ItemGroup>
     <Compile Include="MonkeySpeak\MonkeySpeakTests.cs" />
     <Compile Include="PhoenixSpeakTests.cs" />
+    <Compile Include="QueryTests.cs" />
+    <Compile Include="SetupFixture1.cs" />
     <Compile Include="SilerMonkeyEngineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />

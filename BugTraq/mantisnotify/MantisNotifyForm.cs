@@ -29,11 +29,11 @@ using Futureware.MantisConnect;
 
 namespace Futureware.MantisNotify
 {
-	/// <summary>
-	/// Main form for Mantis Notify sample application.
-	/// </summary>
-	public class MantisNotifyForm : System.Windows.Forms.Form
-	{
+    /// <summary>
+    /// Main form for Mantis Notify sample application.
+    /// </summary>
+    public class MantisNotifyForm : System.Windows.Forms.Form
+    {
         private System.Windows.Forms.Timer checkMantisTimer;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox urlTextBox;
@@ -56,36 +56,37 @@ namespace Futureware.MantisNotify
         private System.Windows.Forms.MenuItem ShowLastIssueMenuItem;
         private System.ComponentModel.IContainer components;
 
-		public MantisNotifyForm()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
-		}
+        public MantisNotifyForm()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MantisNotifyForm));
             this.checkMantisTimer = new System.Windows.Forms.Timer(this.components);
@@ -111,77 +112,77 @@ namespace Futureware.MantisNotify
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // checkMantisTimer
-            // 
+            //
             this.checkMantisTimer.Interval = 10000;
             this.checkMantisTimer.Tick += new System.EventHandler(this.checkMantisTimer_Tick);
-            // 
+            //
             // urlTextBox
-            // 
+            //
             this.urlTextBox.Location = new System.Drawing.Point(128, 16);
             this.urlTextBox.Name = "urlTextBox";
             this.urlTextBox.Size = new System.Drawing.Size(376, 20);
             this.urlTextBox.TabIndex = 0;
             this.urlTextBox.Text = "";
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.Location = new System.Drawing.Point(16, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "Mantis Connect Url";
-            // 
+            //
             // notifyIcon
-            // 
+            //
             this.notifyIcon.ContextMenu = this.contextMenu;
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
             this.notifyIcon.Text = "Mantis Notifier";
             this.notifyIcon.Visible = true;
-            // 
+            //
             // contextMenu
-            // 
+            //
             this.contextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
                                                                                         this.ShowLastIssueMenuItem,
                                                                                         this.checkNowMenuItem,
                                                                                         this.exitMenuItem});
-            // 
+            //
             // ShowLastIssueMenuItem
-            // 
+            //
             this.ShowLastIssueMenuItem.Index = 0;
             this.ShowLastIssueMenuItem.Text = "Show Last Issue";
             this.ShowLastIssueMenuItem.Click += new System.EventHandler(this.menuItem1_Click);
-            // 
+            //
             // checkNowMenuItem
-            // 
+            //
             this.checkNowMenuItem.Index = 1;
             this.checkNowMenuItem.Text = "Check Now";
             this.checkNowMenuItem.Click += new System.EventHandler(this.checkNowMenuItem_Click);
-            // 
+            //
             // exitMenuItem
-            // 
+            //
             this.exitMenuItem.Index = 2;
             this.exitMenuItem.Text = "Exit";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
-            // 
+            //
             // okButton
-            // 
+            //
             this.okButton.Location = new System.Drawing.Point(176, 216);
             this.okButton.Name = "okButton";
             this.okButton.TabIndex = 1;
             this.okButton.Text = "OK";
-            // 
+            //
             // cancelButton
-            // 
+            //
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Location = new System.Drawing.Point(264, 216);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.TabIndex = 0;
             this.cancelButton.Text = "Cancel";
-            // 
+            //
             // groupBox1
-            // 
+            //
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.mantisPasswordTextBox);
             this.groupBox1.Controls.Add(this.mantisUsernameTextBox);
@@ -192,38 +193,38 @@ namespace Futureware.MantisNotify
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Mantis Authentication";
-            // 
+            //
             // label3
-            // 
+            //
             this.label3.Location = new System.Drawing.Point(264, 32);
             this.label3.Name = "label3";
             this.label3.TabIndex = 3;
             this.label3.Text = "Password";
-            // 
+            //
             // mantisPasswordTextBox
-            // 
+            //
             this.mantisPasswordTextBox.Location = new System.Drawing.Point(376, 32);
             this.mantisPasswordTextBox.Name = "mantisPasswordTextBox";
             this.mantisPasswordTextBox.TabIndex = 2;
             this.mantisPasswordTextBox.Text = "";
-            // 
+            //
             // mantisUsernameTextBox
-            // 
+            //
             this.mantisUsernameTextBox.Location = new System.Drawing.Point(96, 32);
             this.mantisUsernameTextBox.Name = "mantisUsernameTextBox";
             this.mantisUsernameTextBox.TabIndex = 1;
             this.mantisUsernameTextBox.Text = "";
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.Location = new System.Drawing.Point(16, 32);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 23);
             this.label2.TabIndex = 0;
             this.label2.Text = "Username";
-            // 
+            //
             // groupBox2
-            // 
+            //
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.basicPasswordTextBox);
             this.groupBox2.Controls.Add(this.basicUsernameTextBox);
@@ -234,38 +235,38 @@ namespace Futureware.MantisNotify
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Basic Authentication";
-            // 
+            //
             // label4
-            // 
+            //
             this.label4.Location = new System.Drawing.Point(264, 32);
             this.label4.Name = "label4";
             this.label4.TabIndex = 3;
             this.label4.Text = "Password";
-            // 
+            //
             // basicPasswordTextBox
-            // 
+            //
             this.basicPasswordTextBox.Location = new System.Drawing.Point(376, 32);
             this.basicPasswordTextBox.Name = "basicPasswordTextBox";
             this.basicPasswordTextBox.TabIndex = 2;
             this.basicPasswordTextBox.Text = "";
-            // 
+            //
             // basicUsernameTextBox
-            // 
+            //
             this.basicUsernameTextBox.Location = new System.Drawing.Point(96, 32);
             this.basicUsernameTextBox.Name = "basicUsernameTextBox";
             this.basicUsernameTextBox.TabIndex = 1;
             this.basicUsernameTextBox.Text = "";
-            // 
+            //
             // label5
-            // 
+            //
             this.label5.Location = new System.Drawing.Point(16, 32);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(64, 23);
             this.label5.TabIndex = 0;
             this.label5.Text = "Username";
-            // 
+            //
             // MantisNotifyForm
-            // 
+            //
             this.AcceptButton = this.okButton;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.CancelButton = this.cancelButton;
@@ -287,13 +288,13 @@ namespace Futureware.MantisNotify
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
-		#endregion
+
+        #endregion Windows Form Designer generated code
 
         protected override void OnResize(EventArgs e)
         {
-            if ( this.WindowState == FormWindowState.Minimized )
+            if (this.WindowState == FormWindowState.Minimized)
                 Hide();
 
             base.OnResize(e);
@@ -310,13 +311,13 @@ namespace Futureware.MantisNotify
             timeToHideNotificationInMs = Convert.ToInt32(appSettings["TimeToHideNotificationSecs"]) * 1000;
 
             taskbarNotifier = new TaskbarNotifier();
-            taskbarNotifier.SetBackgroundBitmap( new Bitmap( GetType(), "skin.bmp"), Color.FromArgb( 255, 0, 255 ) );
-            taskbarNotifier.SetCloseBitmap( new Bitmap( GetType(), "close.bmp" ), Color.FromArgb( 255, 0, 255 ), new Point( 280, 55 ) );
-            taskbarNotifier.TitleRectangle = new Rectangle( 150, 57, 125, 28 );
-            taskbarNotifier.ContentRectangle = new Rectangle( 75, 92, 215, 55 );
-            taskbarNotifier.TitleClick += new EventHandler( TitleClick );
-            taskbarNotifier.ContentClick += new EventHandler( ContentClick );
-            taskbarNotifier.CloseClick += new EventHandler( CloseClick );
+            taskbarNotifier.SetBackgroundBitmap(new Bitmap(GetType(), "skin.bmp"), Color.FromArgb(255, 0, 255));
+            taskbarNotifier.SetCloseBitmap(new Bitmap(GetType(), "close.bmp"), Color.FromArgb(255, 0, 255), new Point(280, 55));
+            taskbarNotifier.TitleRectangle = new Rectangle(150, 57, 125, 28);
+            taskbarNotifier.ContentRectangle = new Rectangle(75, 92, 215, 55);
+            taskbarNotifier.TitleClick += new EventHandler(TitleClick);
+            taskbarNotifier.ContentClick += new EventHandler(ContentClick);
+            taskbarNotifier.CloseClick += new EventHandler(CloseClick);
 
             Connect();
 
@@ -325,7 +326,7 @@ namespace Futureware.MantisNotify
 
         private bool Connect()
         {
-            if ( session == null )
+            if (session == null)
             {
                 try
                 {
@@ -343,12 +344,12 @@ namespace Futureware.MantisNotify
                     string mantisUserName = appSettings["MantisUserName"];
                     string mantisPassword = appSettings["MantisPassword"];
 
-                    session = new Session( mantisConnectUrl, mantisUserName, mantisPassword, nc );
+                    session = new Session(mantisConnectUrl, mantisUserName, mantisPassword, nc);
                     session.Connect();
 
                     notifyIcon.Text = "Mantis Notifier";
                 }
-                catch( System.Net.WebException )
+                catch (System.Net.WebException)
                 {
                     Disconnect();
                 }
@@ -363,16 +364,16 @@ namespace Futureware.MantisNotify
             session = null;
         }
 
-        private void TitleClick( object sender, EventArgs e )
+        private void TitleClick(object sender, EventArgs e)
         {
             string url = ConfigurationManager.AppSettings["MantisConnectWebsite"];
 
-            if ( url != null )
+            if (url != null)
             {
                 System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
                 startInfo.UseShellExecute = true;
                 startInfo.FileName = url;
-                System.Diagnostics.Process.Start( startInfo );
+                System.Diagnostics.Process.Start(startInfo);
             }
         }
 
@@ -384,22 +385,24 @@ namespace Futureware.MantisNotify
             }
         }
 
-        private void ContentClick( object sender, EventArgs e )
+        private void ContentClick(object sender, EventArgs e)
         {
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.UseShellExecute = true;
-            startInfo.FileName = string.Format( "{0}view.php?id={1}", MantisBugtrackerUrl, lastIssueId );
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+            {
+                UseShellExecute = true,
+                FileName = $"{MantisBugtrackerUrl}view.php?id={lastIssueId}"
+            };
 
             try
             {
-                System.Diagnostics.Process.Start( startInfo );
+                System.Diagnostics.Process.Start(startInfo);
             }
             catch
             {
             }
         }
 
-        private void CloseClick( object sender, EventArgs e )
+        private void CloseClick(object sender, EventArgs e)
         {
         }
 
@@ -411,17 +414,17 @@ namespace Futureware.MantisNotify
         {
         }
 
-        private void ShowIssue( int issueId )
+        private void ShowIssue(int issueId)
         {
-            if ( !Connect() )
+            if (!Connect())
                 return;
 
             Issue issue;
             try
             {
-                issue = session.Request.IssueGet( issueId );
+                issue = session.Request.IssueGet(issueId);
             }
-            catch( System.Net.WebException )
+            catch (System.Net.WebException)
             {
                 Disconnect();
                 return;
@@ -434,9 +437,9 @@ namespace Futureware.MantisNotify
             taskbarNotifier.KeepVisibleOnMousOver = true;
             taskbarNotifier.ReShowOnMouseOver = true;
 
-            taskbarNotifier.Show( "Mantis Notifier", string.Format( "{0}: {1}", 
-                issueId, issue.Summary ), timeToShowNotificationInMs, timeToStayNotificationInMs, 
-                timeToHideNotificationInMs );
+            taskbarNotifier.Show("Mantis Notifier", string.Format("{0}: {1}",
+                issueId, issue.Summary), timeToShowNotificationInMs, timeToStayNotificationInMs,
+                timeToHideNotificationInMs);
         }
 
         private void ShowLastIssue()
@@ -445,15 +448,15 @@ namespace Futureware.MantisNotify
             {
                 this.checkMantisTimer.Enabled = false;
 
-                if ( !Connect() )
+                if (!Connect())
                     return;
 
                 int issueId;
                 try
                 {
-                    issueId = session.Request.IssueGetLastId( 0 );
+                    issueId = session.Request.IssueGetLastId(0);
                 }
-                catch( System.Net.WebException )
+                catch (System.Net.WebException)
                 {
                     Disconnect();
                     return;
@@ -463,8 +466,8 @@ namespace Futureware.MantisNotify
                 // can open the issue.
                 lastIssueId = issueId;
 
-				if ( issueId > 0 )
-					ShowIssue( issueId );
+                if (issueId > 0)
+                    ShowIssue(issueId);
             }
             finally
             {
@@ -478,28 +481,28 @@ namespace Futureware.MantisNotify
             {
                 this.checkMantisTimer.Enabled = false;
 
-                if ( !Connect() )
+                if (!Connect())
                     return;
 
                 int issueId;
-                
+
                 try
                 {
-                    issueId = session.Request.IssueGetLastId( 0 );
+                    issueId = session.Request.IssueGetLastId(0);
                 }
-                catch( System.Net.WebException )
+                catch (System.Net.WebException)
                 {
                     Disconnect();
                     return;
                 }
 
-                if ( issueId != lastIssueId )
+                if (issueId != lastIssueId)
                 {
                     // set it here so that if user clicks on the text, the handler
                     // can open the issue.
                     lastIssueId = issueId;
 
-                    ShowIssue( issueId );
+                    ShowIssue(issueId);
                 }
             }
             finally

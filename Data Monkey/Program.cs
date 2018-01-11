@@ -1,5 +1,5 @@
 ﻿using Logging;
-using MonkeyCore.Utils.Logging;
+using MonkeyCore2.Logging;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -26,10 +26,14 @@ namespace DataMonkey
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = (Exception)e.ExceptionObject;
-            var logError = new ErrorLogging(ex, sender);
-            var args = logError.LogFile;
-            var Proc = "notepad.exe";
-            Process.Start(Proc, args);
+            var ErrorLog = new ErrorLogging(ex, e.ExceptionObject);
+            var report = new BugReport(ErrorLog);
+            report.ProjectName = "MonkeyCore2Tests";
+            var ps = new ProcessStartInfo(BugReport.ToolAppName)
+            {
+                Arguments = report.ToCommandLineArgs()
+            };
+            Process.Start(ps);
         }
 
         /// <summary>

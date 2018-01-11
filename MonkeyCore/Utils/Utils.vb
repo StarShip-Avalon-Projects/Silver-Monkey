@@ -4,32 +4,22 @@
 <CLSCompliant(True)>
 Public NotInheritable Class Utilities
 
-#Region "Public Enums"
-
-    Public Enum fColorEnum
-        DefaultColor = 0
-        Say
-        Shout
-        Whisper
-        Emote
-        Emit
-    End Enum
-
-#End Region
-
 #Region "Public Methods"
+
+    Public Shared Function CountOccurrences(ByRef StToSerach As String, ByRef StToLookFor As String) As Int32
+        Dim iPos As Integer = -1
+        Dim iFound As Integer = 0
+        Do
+            iPos = StToSerach.IndexOf(StToLookFor, iPos + 1)
+            If iPos <> -1 Then
+                iFound += 1
+            End If
+        Loop Until iPos = -1
+        Return iFound
+    End Function
 
     Public Shared Function DateTimeToUnixTimestamp(dTime As DateTime) As Double
         Return (dTime - New DateTime(1970, 1, 1).ToLocalTime()).TotalSeconds
-    End Function
-
-    ''' <summary>
-    ''' Gets the file version information.
-    ''' </summary>
-    ''' <param name="filename">The filename.</param>
-    ''' <returns></returns>
-    Public Shared Function GetFileVersionInfo(ByVal filename As String) As Version
-        Return Version.Parse(FileVersionInfo.GetVersionInfo(filename).FileVersion)
     End Function
 
     ''' <summary>
@@ -55,18 +45,6 @@ Public NotInheritable Class Utilities
         End Select
         Input = test
         Return test
-    End Function
-
-    Public Shared Function CountOccurrences(ByRef StToSerach As String, ByRef StToLookFor As String) As Int32
-        Dim iPos As Integer = -1
-        Dim iFound As Integer = 0
-        Do
-            iPos = StToSerach.IndexOf(StToLookFor, iPos + 1)
-            If iPos <> -1 Then
-                iFound += 1
-            End If
-        Loop Until iPos = -1
-        Return iFound
     End Function
 
     ''' <summary>

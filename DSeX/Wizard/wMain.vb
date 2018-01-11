@@ -3,6 +3,7 @@ Imports Logging
 Imports MonkeyCore
 Imports MonkeyCore.Paths
 Imports MonkeyCore.Utils.Logging
+Imports MonkeyCore2.Logging
 
 '######### Please Read ##############
 '
@@ -54,7 +55,14 @@ Public Class WMain
                 wUI.NumericUpDown1.Value = 0
             End If
         Catch ex As Exception
-            Dim x As New ErrorLogging(ex, Me)
+            Dim ErrorLog = New ErrorLogging(ex, Me)
+            Dim report = New BugReport(ErrorLog)
+            report.ProjectName = "MonkeyCore2Tests"
+            Dim ps = New ProcessStartInfo(BugReport.ToolAppName) With
+                {
+                    .Arguments = report.ToCommandLineArgs()
+                }
+            Process.Start(ps)
         End Try
 
     End Sub

@@ -71,9 +71,13 @@
     </Compile>
     <Compile Include="Extentions\Parameters.cs" />
     <Compile Include="MonkeySpeakLibrary.cs" />
+    <Compile Include="MsBanish.cs" />
     <Compile Include="MsBotInformation.cs" />
+    <Compile Include="MsCookie.cs" />
     <Compile Include="MsDreamInfo.cs" />
     <Compile Include="MsHelper.cs" />
+    <Compile Include="MsMovement.cs" />
+    <Compile Include="MsQuery.cs" />
     <Compile Include="MsSayLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

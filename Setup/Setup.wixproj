@@ -46,6 +46,24 @@
     </HeatProject>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BugTraq\mantisconnect\MantisConnect.csproj">
+      <Name>MantisConnect</Name>
+      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\BugTraq\MantisSubmit\BugTraq Submit.csproj">
+      <Name>BugTraqSubmit</Name>
+      <Project>{580c279d-3855-45f7-8ee2-bb036a1ca4a4}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\DSeX\MonkeySpeakEditor.vbproj">
       <Name>MonkeySpeakEditor</Name>
       <Project>{65e4cc10-b91d-4645-b20c-d3a381c9a36a}</Project>

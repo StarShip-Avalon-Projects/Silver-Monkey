@@ -2,6 +2,7 @@
 Imports Logging
 Imports MonkeyCore
 Imports MonkeyCore.Utils.Logging
+Imports MonkeyCore2.Logging
 
 Namespace My
 
@@ -76,10 +77,16 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
-            Dim LogError As New ErrorLogging(e.Exception, e)
-            Dim Proc As String = "NOTEPAD.EXE"
-            'Path.Combine(Application.Info.DirectoryPath, "BugTragSubmit.exe")
-            Process.Start(Proc, LogError.LogFile)
+            Dim ex = e.Exception
+            Dim ErrorLog = New ErrorLogging(ex, Me)
+            Dim report = New BugReport(ErrorLog) With {
+                .ProjectName = "MonkeyCore2Tests"
+            }
+            Dim ps = New ProcessStartInfo(BugReport.ToolAppName) With
+                {
+                    .Arguments = report.ToCommandLineArgs()
+                }
+            Process.Start(ps)
         End Sub
 
 #End Region

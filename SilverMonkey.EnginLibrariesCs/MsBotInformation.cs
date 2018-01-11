@@ -1,5 +1,6 @@
 ﻿using Monkeyspeak;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 /// <summary>
@@ -8,6 +9,18 @@ using System.Threading.Tasks;
 /// <seealso cref="Monkeyspeak.Libraries.BaseLibrary" />
 public class MsBotInformation : MonkeySpeakLibrary
 {
+    #region Public Properties
+
+    /// <summary>
+    /// Gets the base identifier.
+    /// </summary>
+    /// <value>
+    /// The base identifier.
+    /// </value>
+    public override int BaseId => 0;
+
+    #endregion Public Properties
+
     #region Public Methods
 
     /// <summary>
@@ -47,7 +60,7 @@ public class MsBotInformation : MonkeySpeakLibrary
     public override void Initialize(params object[] args)
     {
         Add(TriggerCategory.Cause, 0,
-            (t) => true,
+             r => true,
             "When the Monkey Speak Engine starts the script,");
         Add(TriggerCategory.Cause, 1,
              r => true,
@@ -62,27 +75,49 @@ public class MsBotInformation : MonkeySpeakLibrary
             "When the Furcadia client disconnects or closes,");
 
         // (0:92) When the bot detects the "Your throat is tired. Please wait a few seconds"message,
-        Add(TriggerCategory.Cause, 92,
-            r => true,
+        Add(TriggerCategory.Cause, 5,
+            r =>
+            {
+                var rtn = r.GetParametersOfType<bool?>().FirstOrDefault();
+                if (rtn != null)
+                    return (bool)rtn;
+                return false;
+            },
             "When the bot detects the \"Your throat is tired. Please wait a few seconds\"message,");
 
         // (0:93) When the bot resumes processing after seeing "Your throat is tired"message,
-        Add(TriggerCategory.Cause, 93,
-            r => true,
+        Add(TriggerCategory.Cause, 6,
+            r =>
+            {
+                var rtn = r.GetParametersOfType<bool?>().FirstOrDefault();
+                if (rtn != null)
+                    return (bool)rtn;
+                return false;
+            },
             "When the bot resumes processing after seeing \"Your throat is tired\"message,");
 
+        // (1:904) and the triggering furre is the Bot Controller,
+        Add(TriggerCategory.Condition,
+            r => TriggeringFurreIsBotController(r),
+            "and the triggering furre is the Bot Controller,");
+
+        // (1:905) and the triggering furre is not the Bot Controller,
+        Add(TriggerCategory.Condition,
+         r => !TriggeringFurreIsBotController(r),
+            "and the triggering furre is not the Bot Controller,");
+
         // (5:40) Switch the bot to stand alone mode and close the Furcadia client.
-        Add(TriggerCategory.Effect, 40,
+        Add(TriggerCategory.Effect,
             r => StandAloneMode(r),
             "switch the bot to stand alone mode and close the Furcadia client.");
 
         // (5:41) Disconnect the bot from the Furcadia game server.
-        Add(TriggerCategory.Effect, 41,
+        Add(TriggerCategory.Effect,
             r => FurcadiaDisconnect(r),
             "disconnect the bot from the Furcadia game server.");
 
         // (5:42) start a new instance to Silver Monkey with botfile {..}.
-        Add(TriggerCategory.Effect, 42,
+        Add(TriggerCategory.Effect,
             r => StartNewBot(r),
             "start a new instance to Silver Monkey with bot-file {..}.");
     }
@@ -99,19 +134,10 @@ public class MsBotInformation : MonkeySpeakLibrary
 
     #region Private Methods
 
-    /// <summary>
-    /// (5:40) Switch the bot to stand alone mode and close the Furcadia client.
-    /// </summary>
-    /// <param name="reader">
-    /// <see cref="TriggerReader"/>
-    /// </param>
-    /// <returns>
-    /// true on success
-    /// </returns>
     private bool StandAloneMode(TriggerReader reader)
     {
         ParentBotSession.StandAlone = true;
-        Task.Run(() => ParentBotSession.CloseClient()).Wait();
+        ParentBotSession.CloseClient();
         return true;
     }
 

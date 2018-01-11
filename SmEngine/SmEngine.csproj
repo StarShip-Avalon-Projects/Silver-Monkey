@@ -69,16 +69,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyFileVersion.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyFileVersion.t4</DependentUpon>
-    </Compile>
-    <Compile Include="AssemblyInfoersionCS.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
-    </Compile>
     <Compile Include="BotSession\Bot.cs" />
     <Compile Include="BotSession\BotOptions.cs" />
     <Compile Include="BotSession\MsEngineExtentionFunctions.cs" />
@@ -117,18 +107,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="AssemblyFileVersion.t4">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyFileVersion.cs</LastGenOutput>
-    </None>
     <None Include="Engine.snk" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AssemblyInfoersionCS.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyInfoersionCS.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

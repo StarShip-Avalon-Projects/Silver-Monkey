@@ -21,14 +21,6 @@ Imports IO
 <CLSCompliant(True)>
 Public Class Settings
 
-#Region "Public Fields"
-
-#Disable Warning BC40041 ' Type 'PluginServices.AvailablePlugin' is not CLS-compliant.
-    Public Shared Plugins As New List(Of PluginServices.AvailablePlugin)
-#Enable Warning BC40041 ' Type 'PluginServices.AvailablePlugin' is not CLS-compliant.
-
-#End Region
-
 #Region "Private Fields"
 
     Private Const DragonSpeak As String = "DragonSpeak"
@@ -90,15 +82,6 @@ Public Class Settings
         End Get
         Set(value As IniFile)
             _MS_KeysIni = value
-        End Set
-    End Property
-
-    Public Shared Property PluginList As Dictionary(Of String, Boolean)
-        Get
-            Return _PluginList
-        End Get
-        Set(value As Dictionary(Of String, Boolean))
-            _PluginList = value
         End Set
     End Property
 
@@ -263,18 +246,6 @@ Public Class Settings
             s = ini.GetKeyValue("PhoenixSpeak", "ShowInMainWindow")
             If Not String.IsNullOrEmpty(s) Then _PSShowMainWindow = Convert.ToBoolean(s)
 
-            Dim DSSection As IniSection = ini.GetSection("Plugins")
-            If Not IsNothing(DSSection) Then
-                PluginList.Clear()
-                For Each K As IniSection.IniKey In DSSection.Keys
-                    s = K.Value
-                    If Not String.IsNullOrEmpty(s) Then
-                        PluginList.Add(K.Name, Convert.ToBoolean(K.Value))
-                    Else
-                        PluginList.Add(K.Name, True)
-                    End If
-                Next
-            End If
         End Sub
 
 #End Region
@@ -582,11 +553,6 @@ Public Class Settings
 
             ini.SetKeyValue("PhoenixSpeak", "ShowInClient", _PSShowClient.ToString)
             ini.SetKeyValue("PhoenixSpeak", "ShowInMainWindow", _PSShowMainWindow.ToString)
-            ini.RemoveSection("Plugins")
-            ini.AddSection("Plugins")
-            For Each kv As KeyValuePair(Of String, Boolean) In PluginList
-                ini.SetKeyValue("Plugins", kv.Key, kv.Value.ToString)
-            Next
 
             ini.Save(SettingsFile)
         End Sub

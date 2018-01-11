@@ -18,8 +18,6 @@ Public NotInheritable Class MsPounce
     Inherits MonkeySpeakLibrary
     Implements IDisposable
 
-#Region "Fields"
-
     ''' <summary>
     ''' Pounce list
     ''' </summary>
@@ -30,18 +28,10 @@ Public NotInheritable Class MsPounce
     ''' </summary>
     Private WithEvents SmPounce As PounceClient
 
-#End Region
-
-#Region "Public Fields"
-
     ''' <summary>
     ''' Default File we use
     ''' </summary>
     Public Const ListFile As String = "onlineList.txt"
-
-#End Region
-
-#Region "Private Fields"
 
     ''' <summary>
     ''' Pounce List File Name
@@ -52,10 +42,6 @@ Public NotInheritable Class MsPounce
     ''' Pounce Furre List
     ''' </summary>
     Private PounceFurres As List(Of MsPounceFurre)
-
-#End Region
-
-#Region "Public Properties"
 
     ''' <summary>
     ''' the File of the Friends List to Check
@@ -70,10 +56,6 @@ Public NotInheritable Class MsPounce
         End Get
 
     End Property
-
-#End Region
-
-#Region "Public Methods"
 
     ''' <summary>
     ''' (5:951) add the furre named {...} to the smPounce list.
@@ -116,48 +98,6 @@ Public NotInheritable Class MsPounce
         Return True
 
     End Function
-
-    '''' <summary>
-    '''' MonkeySpeak Execute When a Furre Logged Off
-    '''' <para>
-    '''' (0:951) When a furre logs off,
-    '''' </para>
-    '''' <para>
-    '''' (0:953) When the furre named {...} logs off,
-    '''' </para>
-    '''' </summary>
-    '''' <param name="Furre">
-    '''' PounceFurre Object
-    '''' </param>
-    '''' <param name="e">
-    '''' <see cref="Eventargs.Empty"/>
-    '''' </param>
-    'Public Sub FurreLoggedOff(ByVal Furre As Object, e As EventArgs)
-    '    Dim Furr = DirectCast(Furre, PounceFurre)
-    '    DirectCast(ParentBotSession.MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
-    '    ParentBotSession.MSpage.Execute(951, 953)
-    'End Sub
-
-    '''' <summary>
-    '''' MonkeySpeak Execute When a Furre Logged on
-    '''' <para>
-    '''' (0:950) When a furre logs on,
-    '''' </para>
-    '''' <para>
-    '''' (0:952) When the furre named {...} logs on,
-    '''' </para>
-    '''' </summary>
-    '''' <param name="Furre">
-    '''' PounceFurre Object
-    '''' </param>
-    '''' <param name="e">
-    '''' EventSrgs.Empty
-    '''' </param>
-    'Public Sub FurreLoggedOn(ByVal Furre As Object, e As EventArgs)
-    '    Dim Furr = DirectCast(Furre, PounceFurre)
-    '    DirectCast(ParentBotSession.MSpage.GetVariable("%NAME"), ConstantVariable).SetValue(Furr.Name)
-    '    ParentBotSession.MSpage.Execute(950, 952)
-    'End Sub
 
     ''' <summary>
     ''' (1:954) and the furre named {...} is on the smPounce list,
@@ -400,23 +340,15 @@ Public NotInheritable Class MsPounce
         Return True
     End Function
 
-#End Region
-
-#Region "Private Methods"
-
     Private Sub CheckonlineList()
         _onlineListFile = Paths.CheckBotFolder(_onlineListFile)
         If File.Exists(_onlineListFile) = False Then
-            Console.WriteLine("On-line List File: "+ _onlineListFile + "Doesn't Exist, Creating new file")
+            Console.WriteLine("On-line List File: " + _onlineListFile + "Doesn't Exist, Creating new file")
             Using sw = New StreamWriter(_onlineListFile, False)
                 sw.Close()
             End Using
         End If
     End Sub
-
-#End Region
-
-#Region "IDisposable Support"
 
     Private disposedValue As Boolean ' To detect redundant calls
 
@@ -437,7 +369,5 @@ Public NotInheritable Class MsPounce
         End If
         disposedValue = True
     End Sub
-
-#End Region
 
 End Class

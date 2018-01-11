@@ -14,19 +14,19 @@ Public NotInheritable Class MsTrades
     Public Overrides Sub Initialize(ParamArray args() As Object)
         MyBase.Initialize(args)
 
-        ''(0:46) When the bot sees a trade request,
-        'Add(TriggerCategory.Cause, 46,
-        'Function(reader)
-        '    ReadTriggeringFurreParams(reader)
-        '    Return Not FurcadiaSession.IsConnectedCharacter
-        'End Function, "When the bot sees a trade request,")
-        '(0:47) When the bot sees the trade request {..},
-        Add(TriggerCategory.Cause, 47,
-            AddressOf MsgIs, "When the bot sees the trade request {..},")
+        '    ''(0:46) When the bot sees a trade request,
+        '    'Add(TriggerCategory.Cause, 46,
+        '    'Function(reader)
+        '    '    ReadTriggeringFurreParams(reader)
+        '    '    Return Not FurcadiaSession.IsConnectedCharacter
+        '    'End Function, "When the bot sees a trade request,")
+        '    '(0:47) When the bot sees the trade request {..},
+        '    Add(TriggerCategory.Cause, 47,
+        '        AddressOf MsgIs, "When the bot sees the trade request {..},")
 
-        '(0:48) When the bot sees a trade request with {..} in it,
-        Add(TriggerCategory.Cause, 48,
-        AddressOf MsgContains, "When the bot sees a trade request with {..} in it,")
+        '    '(0:48) When the bot sees a trade request with {..} in it,
+        '    Add(TriggerCategory.Cause, 48,
+        '    AddressOf MsgContains, "When the bot sees a trade request with {..} in it,")
     End Sub
 
     Public Overrides Sub Unload(page As Page)

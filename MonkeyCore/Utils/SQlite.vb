@@ -3,7 +3,6 @@ Imports System.Data.SQLite
 Imports System.IO
 Imports IO
 Imports Logging
-Imports MonkeyCore.Utils.Logging
 
 ''' <summary>
 ''' Monkey Systems generic interface to System.Data.Sqlite
@@ -317,7 +316,7 @@ Public Class SQLiteDatabase
         Try
             Return ExecuteNonQuery(String.Format("delete from {0} where {1};", tableName, where)) > -1
         Catch ex As Exception
-            Dim err As New ErrorLogging(ex, Me)
+            Monkeyspeak.Logging.Logger.Error(Of SQLiteDatabase)(ex)
 
         End Try
         Return False

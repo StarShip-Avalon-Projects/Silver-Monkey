@@ -604,11 +604,6 @@ namespace IO
         /// <exception cref="System.IO.FileNotFoundException"></exception>
         public static string CheckBotFolder(ref string FileToCheck)
         {
-            if (string.IsNullOrWhiteSpace(FileToCheck))
-            {
-                throw new FileNotFoundException(FileToCheck);
-            }
-
             string FilePath = Path.GetDirectoryName(FileToCheck);
             if (string.IsNullOrEmpty(FilePath))
             {

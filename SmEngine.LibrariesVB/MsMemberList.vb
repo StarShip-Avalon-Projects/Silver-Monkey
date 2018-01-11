@@ -41,6 +41,12 @@ Namespace Engine.Libraries
 
 #Region "Public Constructors"
 
+        Public Overrides ReadOnly Property BaseId As Integer
+            Get
+                Return 900
+            End Get
+        End Property
+
         Public Overrides Sub Initialize(ParamArray args() As Object)
             MyBase.Initialize(args)
             MemberList = Paths.CheckBotFolder("MemberList.txt")
@@ -60,14 +66,22 @@ Namespace Engine.Libraries
             ''    Add(TriggerCategory.Effect, 901, AddressOf AddFurreNamed, "add the furre named {...} to my Dream Member list if they aren't already on it.")
 
             '(5:902) remove the triggering furre to my Dream Member list if they are on it.
-            Add(TriggerCategory.Effect, 902, AddressOf RemoveTrigFurre, "remove the triggering furre to my Dream Member list if they are on it.")
+            Add(TriggerCategory.Effect,
+                AddressOf RemoveTrigFurre,
+                "remove the triggering furre to my Dream Member list if they are on it.")
             '(5:903) remove the furre named {...} from my Dream Member list if they are on it.
-            Add(TriggerCategory.Effect, 903, AddressOf RemoveFurreNamed, "remove the furre named {...} from my Dream Member list if they are on it.")
+            Add(TriggerCategory.Effect,
+                AddressOf RemoveFurreNamed,
+                "remove the furre named {...} from my Dream Member list if they are on it.")
 
             '(5:904) Use file {...} as the dream member list.
-            Add(TriggerCategory.Effect, 904, AddressOf UseMemberFile, "Use file {...} as the dream member list.")
+            Add(TriggerCategory.Effect,
+                AddressOf UseMemberFile,
+                "Use file {...} as the dream member list.")
             '(5:905) store member list to variable %Variable.
-            Add(TriggerCategory.Effect, 905, AddressOf ListToVariable, "store member list to variable %Variable.")
+            Add(TriggerCategory.Effect,
+                AddressOf ListToVariable,
+                "store member list to variable %Variable.")
 
         End Sub
 

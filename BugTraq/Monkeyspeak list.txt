@@ -1,0 +1,396 @@
+[Causes]
+MsPopUpDialogs
+
+MonkeySpeakLibrary
+
+MsBotInformation
+(0:0) When the Monkey Speak Engine starts the script,
+(0:1) When the bot logs into Furcadia,
+(0:2) When the bot logs out of Furcadia,
+(0:3) When the Furcadia client disconnects or closes,
+(0:92) When the bot detects the "Your throat is tired. Please wait a few seconds"message,
+(0:93) When the bot resumes processing after seeing "Your throat is tired"message,
+(5:40) switch the bot to stand alone mode and close the Furcadia client.
+(5:41) disconnect the bot from the Furcadia game server.
+(5:42) start a new instance to Silver Monkey with bot-file {..}.
+
+MsSayLibrary
+(0:5) When anyone says something,
+(0:6) When anyone says {..},
+(0:7) When anyone says something with {..} in it,
+(0:8) When anyone shouts something,
+(0:9) When anyone shouts {..},
+(0:10) When anyone shouts something with {..} in it,
+(0:11) When anyone emotes something,
+(0:12) When anyone emotes {..},
+(0:13) When anyone emotes something with {..} in it,
+(0:15) When anyone whispers something,
+(0:16) When anyone whispers {..},
+(0:17) When anyone whispers something with {..} in it,
+(0:18) When anyone says or emotes something,
+(0:19) When anyone says or emotes {..},
+(0:20) When anyone says or emotes something with {..} in it,
+(0:21) When someone emits something,
+(0:22) When someone emits {..},
+(0:23) When someone emits something with {..} in it,
+(0:28) When anyone enters the bots view, 
+(0:29) When a furre named {..} enters the bots view,
+(0:30) When anyone leaves the bots view, 
+(0:31) When a furre named {..} leaves the bots view,
+(0:32) When anyone requests to summon the bot,
+(0:33) When a furre named {..} requests to summon the bot,
+(0:34) When anyone requests to join the bot,
+(0:35) When a furre named {..} requests to join the bot,
+(0:36) When anyone requests to follow the bot,
+(0:37) When a furre named {..} requests to follow the bot,
+(0:38) When anyone requests to lead the bot,
+(0:39) When a furre named {..} requests to lead the bot,
+(0:40) When anyone requests to cuddle with the bot,
+(0:41) When a furre named {..} requests to cuddle with the bot,
+(1:5) and the triggering furre's name is {..},
+(1:6) and the triggering furre's name is not {..},
+(1:7) and the triggering furre's message is {..},
+(1:8) and the triggering furre's message contains {..} in it,
+(1:9) and the triggering furre's message does not contain {..} in it,
+(1:10) and the triggering furre's message is not {..},
+(1:11) and triggering furre's message starts with {..},
+(1:12) and triggering furre's message doesn't start with {..},
+(1:13) and triggering furre's message  ends with {..},
+(1:14) and triggering furre's message doesn't end with {..},
+(1:15) and the triggering furre is the Bot Controller,
+(1:16) and the triggering furre is not the Bot Controller,
+(5:0) say {..}.
+(5:1) emote  message{..}.
+(5:2) shout message {..}.
+(5:3) emit message {..}.
+(5:4) emit-loud message {..}.
+(5:5) whisper {..} to the triggering furre.
+(5:6) whisper {..} to furre named {..}.
+(5:7) whisper {..} to furre named {..} even if they're off-line.
+
+MsDreamInfo
+(0:24) When anyone enters the Dream,
+(0:25) When the furre named {..} enters the Dream,
+(0:26) When anyone leaves the Dream,
+(0:27) When a furre named {..} leaves the Dream,
+(0:90) When the bot enters a Dream,
+(0:91) When the bot enters the Dream named {..},
+(0:97) When the bot leaves a Dream,
+(0:98) When the bot leaves the Dream named {..},
+(1:19) and the bot is the Dream owner,
+(1:20)  and the bot is not the Dream-Owner,
+(1:21)  and the furre named {..} is the Dream owner,
+(1:22)  and the furre named {..} is not the Dream owner,
+(1:23) and the Dream Name is {..},
+(1:24) and the Dream Name is not {..},
+(1:25) and the triggering furre is the Dream owner,
+(1:26) and the triggering furre is not the Dream owner,
+(1:27) and the bot has share control of the Dream or is the Dream owner,
+(1:28) and the bot has share control of the Dream,
+(1:29) and the bot doesn't have share control in the Dream,
+(5:20) give share control to the triggering furre.
+(5:21) remove share control from the triggering furre.
+(5:22) remove share from the furre named {..} if they're in the Dream right now.
+(5:23) give share to the furre named {..} if they're in the Dream right now.
+
+MsCookie
+(0:42) When some one gives a cookie to the bot,
+(0:43) When a furre named {...} gives a cookie to the bot,
+(0:44) When anyone gives a cookie to someone the bot can see,
+(0:49) When bot eats a cookie,
+(0:95) When the Bot sees "You do not have any cookies to give away right now!",
+(0:96) When the Bot sees "Your cookies are ready.",
+(5:45) set variable %Variable to the cookie message the bot received.
+
+MsTrades
+(0:47) When the bot sees the trade request {..},
+(0:48) When the bot sees a trade request with {..} in it,
+
+Banish
+(0:50) When the bot fails to banish a furre,
+(0:51) When the bot fails to banish the furre named {...}
+(0:52) When the bot successfully banishes a furre,
+(0:53) When the bot successfully banishes the furre named {...},
+(0:54) When the bot sees the banish list,
+(0:55) When the bot fails to remove a furre from the banish list,
+(0:56) When the bot fails to remove the furre named {...} from the banish list,
+(0:57) When the bot successfully removes a furre from the banish list,
+(0:58) When the bot successfully removes the furre named {...} from the banish list,
+(0:59) When the bot fails to empty the banish list,
+(0:60) When the bot successfully clears the banish list,
+(0:61) When the bot successfully temp banishes a furre,
+(0:62) When the bot successfully temp banishes the furre named {...},
+(1:50) and the triggering furre is not on the banish list,
+(1:51) and the triggering furre is on the banish list,
+(1:52) and the furre named {...} is not on the banish list,
+(1:53) and the furre named {...} is on the banish list,
+(5:49) save the banish list to the variable % .
+(5:50) ask the server for the banish-list.
+(5:51) banish the triggering furre.
+(5:52) banish the furre named {...}.
+(5:53) temporarily  banish the triggering furre for three days.
+(5:54) temporarily banish the furre named {...} for three days.
+(5:55) unbanish the triggering furre.
+(5:56) unbanish the furre named {...}.
+
+MsWebRequests
+(0:70) When the bot receives a variable list by sending the Web-Cache.
+(1:30) and Web-Cache setting {...} is equal to {...},
+(1:31) and Web-Cache setting {...} is not equal to {...},
+(1:32) and the Web-Cache contains field named {...},
+(1:33) and the Web-Cache doesn't contain field named {...},
+(5:9) remove variable %Variable from the Web-Cache.
+(5:10)  Set the web URL to {...},
+(5:11)  remember setting {...} from Web-Cache and store it into variable %Variable.
+(5:16) send GET request to send the Web-Cache to URL.
+(5:17) store variable %Variable to the Web-Cache.
+(5:18) send POST request to send the Web-Cache to URL.
+(5:19) clear the Web-Cache.
+
+WmCpyDta
+(0:75) When the bot receives a message from another bot on the same computer,
+(0:76) When the bot receives message {...} from another bot on the same computer,
+(0:77) When the bot receives a message containing {...} from another bot on the same computer,
+(5:75) send message {...} to bot named {...}.
+(5:76) set Variable %Variable to the Message the bot last received.
+
+MsPhoenixSpeak
+(0:80) When the bot sees a Phoenix Speak response
+(0:81) When the bot sees the Phoenix Speak response {...},
+(0:82) When the bot sees a Phoenix Speak response with {...} in it,
+(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.
+(5:61) get All Phoenix Speak info for the Furre Named {...} and put it into the PSInfo Cache.
+(5:62) get All Phoenix Speak info for the dream and put it into the PSInfo Cache.
+(5:63) get all list of all characters and put it into the PSInfo cache.
+(5:80) retrieve  Phoenix Speak info {...} and place the value into variable %Variable.
+(5:81) Store PSInfo Key Names to Variable %Variable.
+(5:82) Memorize Phoenix Speak info {...} for the Furre Named {...}.
+(5:83) Forget Phoenix Speak info {...} for the Furre Named {...}.
+(5:84) Memorize Phoenix Speak info {...} for the Triggering Furre.
+(5:85) Forget Phoenix Speak info {...} for the Triggering Furre.
+(5:90) Memorize Phoenix Speak info {...} for this dream.
+(5:91) Forget Phoenix Speak info {...} for this dream.
+(5:94) execute Phoenix Speak command {...}.
+(5:95) Forget ALL Phoenix Speak info for the triggering furre
+(5:96) Forget ALL Phoenix Speak info for the furre named {...}.
+(5:97) Forget ALL Phoenix Speak info for this dream.
+
+Sys
+(0:100) when job # is called put arguments into table % (optional),
+(1:100) and variable % is defined,
+(1:101) and variable % is not defined,
+(1:102) and variable % equals #,
+(1:103) and variable % does not equal #,
+(1:104) and variable % equals {...},
+(1:105) and variable % does not equal {...},
+(1:106) and variable % is constant,
+(1:107) and variable % is not constant,
+(5:100) set variable % to {...}.
+(5:101) set variable % to #.
+(5:102) print {...} to the log.
+(5:103) get the environment variable named {...} and put it into %, (ex: PATH)
+(5:104) create random number and put it into variable %.
+(5:107) delete variable %.
+(5:110) load library from file {...}. (example Monkeyspeak.dll)
+(5:111) unload library {...}. (example Sys)
+(5:112) get all loaded libraries and put them into table %.
+(5:115) call job # with (add strings, variables, numbers here) arguments.
+
+MsDice
+(0:130) When the bot rolls #d#,
+(0:131) When the bot rolls #d#+#,
+(0:132) When the bot rolls #d#-#,
+(0:133) When a furre rolls #d#,
+(0:134) When a furre rolls #d#+#,
+(0:135) When a furre rolls #d#-#,
+(0:136) When any one rolls anything,
+(1:130) and the dice roll result is # or higher,
+(1:131) and the dice roll result is # or lower,
+(5:130) set variable % to the total of rolling # dice with # sides plus #.
+(5:131) set variable % to the total of rolling # dice with # sides minus #.
+(5:132) set variable %Variable to the number of the dice result that the triggering furre rolled.
+(5:133) roll # furcadia dice with # sides. (optional Message {...})
+(5:134) roll # furcadia dice with # sides plus #. (optional Message {...})
+(5:135) roll # furcadia dice with # sides minus #. (optional Message {...})
+
+Timers
+(0:300) when timer # goes off,
+(1:300) and timer # is running,
+(1:301) and timer # is not running,
+(5:300) create timer # to go off every # second(s) with a start delay of # second(s).
+(5:301) stop timer #.
+(5:302) get current timer and put the id into variable %.
+(5:303) pause script execution for # seconds.
+(5:304) get the current uptime and put it into variable %.
+(5:305) get the current hour and put it into variable %.
+(5:306) get the current minutes and put it into variable %.
+(5:307) get the current seconds and put it into variable %.
+(5:308) get the current day of the month and put it into variable %.
+(5:309) get the current month and put it into variable %.
+(5:310) get the current year and put it into variable %.
+(5:311) start timer #.
+(5:312) set the time zone to {...}
+(5:313) get univeral time zone and put it into variable %
+(5:314) get the available time zones and put it into table %
+
+MsPhoenixSpeakBackupAndRestore
+(0:500) When the bot starts backing up the character phoenix speak,
+(0:501) When the bot completes backing up the characters phoenix speak,
+(0:502) When the bot starts restoring the Dreams Character phoenix speak,
+(0:503) When the bot finishes restoring the dreams character phoenix speak,
+(0:504) When the bot backs up phoenix speak for any Furre.
+(0:505) When the bot backs up phoenix speak for the furre named {...}.
+(0:506) When the bot restores any furre's phoenix speak.
+(0:507) When the bot restores the  phoenix speak for the furre named {...}.
+(1:520) and the bot is not in the middle of a PS Backup Process,
+(1:521) and the bot is in the middle of a PS Backup Process,
+(1:522) and the bot is not in the middle of a PS Restore Process,
+(1:523) and the bot is in the middle of a PS Restore Process,
+(5:553) backup All phoenix speak for the dream
+(5:554) backup character named {...} phoenix speak. (use "[DREAM]"to restore information specific to the dream)
+(5:555) restore phoenix speak for character {...}. (use "[DREAM]"to restore information specific to the dream)
+(5:557) remove Entries older than # days from phoenix speak backup.
+(5:558) restore phoenix speak character records newer then # days. (zero equals all character records)
+(5:560) abort phoenix speak backup or restore process
+
+MsMovement
+(0:600) When the bot sees a furre description,
+(0:601) When a furre moves,
+(0:602) when a furre moves into (x,y),
+(1:600) and triggering furre's description contains {..}
+(1:601) and triggering furre's description does not contain {..}
+(1:602) and the furre named {..} description contains {..}if they are in the dream,
+(1:603) and the furre named {..} description does not contain {..} if they are in the dream
+(1:604) and the triggering furre is male,
+(1:605) and the triggering furre is female,
+(1:606) and the triggering furre is unspecified,
+(1:608) and the furre named {..}'s is male if they are in the dream,
+(1:609) and the furre named {..}'s is female if they are in the dream,
+(1:610) and the furre Named {..}'s is unspecified if they are in the dream,
+(1:612) and the trigger furre is Species # (please see http://www.furcadia.com/dsparams/ for info)
+(1:613) and the furre named {..} is Species # if they are in the dream (please see http://www.furcadia.com/dsparams/ for info)
+(1:614) and the triggering furre has wings of type #, (please see http://www.furcadia.com/dsparams/ for info)
+(1:615) and the triggering furre doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info)
+(1:616) and the furre named {..} has wings of type #, (please see http://www.furcadia.com/dsparams/ for info)
+(1:617) and the furre named {..}  doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info)
+(1:618) and the triggering furre is standing.
+(1:619) and the triggering furre is sitting.
+(1:620) and the triggering furre is laying.
+(1:621) and the triggering furre is facing NE,
+(1:622) and the triggering furre is facing NW,
+(1:623) and the triggering furre is facing SE,
+(1:624) and the triggering furre is facing SW,
+(1:625) and the furre named {..} is standing.
+(1:626) and the furre named {..} is sitting.
+(1:627) and the furre named {..} is laying.
+(1:628) and the furre named {..} is facing NE,
+(1:629) and the furre named {..} is facing NW,
+(1:630) and the furre named {..} is facing SE,
+(1:631) and the furre named {..} is facing SW,
+(1:632) and the triggering furre moved into/is standing at (x,y)
+(1:633) and the furre named {..} moved into/is standing at (x,y),
+(1:634) and the triggering furre moved from (x,y),
+(1:635) and the furre named {..} moved from (x,y),
+(1:638) and the triggering furre tried to move but stood still.
+(5:600) set variable %Variable to the Triggering furre's description.
+(5:601) set variable %Variable to the triggering furre's gender.
+(5:602) set variable %Variable to the triggering furre's species.
+(5:604) set variable %Variable to the triggering furre's colors.
+(5:605) set variable %Variable to the furre named {..}'s gender if they are in the dream.
+(5:606) set variable %Variable to the furre named {..}'s species, if they are in the dream.
+(5:607) set variable %Variable to the furred named {..}'s description, if they are in the dream.
+(5:608) set variable %Variable to the furre named {..}'s colors, if they are in the dream.
+(5:609) set %Variable to the wings type the triggering furre is wearing.
+(5:610) set %Variable to the wings type the furre named {..} is wearing.
+(5:613) move the bot in direction # one space. (seven = North-West, nine = North-East, three = South-East, one = South=West)
+(5:614) turn the bot clock-wise one space.
+(5:615) turn the bot counter-clockwise one space.
+(5:616) set variable %Variable to the X coordinate where the triggering furre moved into/is at.
+(5:617) set variable %Variable to the Y coordinate where the triggering furre moved into/is at.
+(5:618) set variable %Variable to the X coordinate where the furre named {..} moved into/is at.
+(5:619) set variable %Variable to the Y coordinate where the furre named {..} moved into/is at.
+(5:622) make the bot sit down.
+(5:623) make the bot lay down.
+(5:624) make the bot stand up.
+(5:625) Move the bot  in this sequence {..} (one, sw, three, se, seven, nw, nine, or ne)
+
+
+
+[Additional Conditions]
+Math
+(1:150) and variable % is greater than #,
+(1:151) and variable % is greater than or equal to #,
+(1:152) and variable % is less than #,
+(1:153) and variable % is less than or equal to #,
+(5:150) take variable % and add # to it.
+(5:151) take variable % and subtract # from it.
+(5:152) take variable % and multiply it by #.
+(5:153) take variable % and divide it by #.
+
+IO
+(1:200) and the file {...} exists,
+(1:201) and the file {...} does not exist,
+(1:202) and the file {...} can be read from,
+(1:203) and the file {...} can be written to,
+(5:200) append {...} to file {...}.
+(5:201) read from file {...} and put it into variable %.
+(5:202) delete file {...}.
+(5:203) create file {...}.
+
+Tables
+(1:250) and variable % is a table,
+(1:251) and variable % is not a table,
+(5:250) create a table as %.
+(5:251) with table % put # in it at key {...}.
+(5:252) with table % put {...} in it at key {...}.
+(5:253) with table % get key {...} put it in into variable %.
+(5:254) with table % remove all entries in it.
+(6:250) for each entry in table % put it into %,
+(6:251) for each key/value pair in table % put them into % and %,
+
+MsFurres
+(1:700) and the triggering furre in the dream.
+(1:701) and the triggering furre is not in the dream.
+(1:702) and the furre named {...} is in the dream.
+(1:703) and the furre named {...} is not in the dream
+(1:704) and the triggering furre is visible.
+(1:705) and the triggering furre is not visible
+(1:706) and the furre named {...} is visible.
+(1:707) and the furre named {...} is not visible
+(1:708) and the furre named {...} is a.f.k.,
+(1:709) and the furre named {...} is active in the dream,
+(5:700) copy the dreams's furre-list to variable %Variable
+(5:701) save the dream furre list count to variable %Variable.
+(5:702) count the number of active furres in the dream and put it in the variable %Variable.
+(5:703) count the number of A.F.K furres in the dream and put it in the variable %Variable.
+
+
+
+[Effects]
+StringOperations
+(5:400) with {...} get word count and set it to variable %.
+(5:401) with {...} set it to variable %.
+(5:402) with {...} get words starting at # to # and set it to variable %.
+(5:403) with {...} get index of {...} and set it to variable %.
+
+Loops
+(5:450) exit the current loop.
+(6:450) while variable % is not #,
+(6:451) while variable % is #,
+(6:452) while variable % is not {...},
+(6:453) while variable % is {...},
+(6:454) after the loop is done,
+
+MsMemberList
+(5:902) remove the triggering furre to my Dream Member list if they are on it.
+(5:903) remove the furre named {...} from my Dream Member list if they are on it.
+(5:904) Use file {...} as the dream member list.
+(5:905) store member list to variable %Variable.
+
+MsSound
+(5:2010) play the wave file {...}.
+(5:2011) play the wave file {...} in a loop. if theres not one playing
+(5:2012) stop playing the sound file.
+
+
+

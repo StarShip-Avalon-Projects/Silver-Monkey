@@ -1,7 +1,8 @@
 ﻿Imports System.Diagnostics
+Imports Logging
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Devices
-Imports MonkeyCore.Utils.Logging
+Imports MonkeyCore2.Logging
 
 Namespace My
 
@@ -33,7 +34,16 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
-            Monkeyspeak.Logging.Logger.Error($"{e} {sender}")
+            Dim ex = e.Exception
+            Dim ErrorLog = New ErrorLogging(ex, Me)
+            Dim report = New BugReport(ErrorLog) With {
+                .ProjectName = "MonkeyCore2Tests"
+            }
+            Dim ps = New ProcessStartInfo(BugReport.ToolAppName) With
+                {
+                    .Arguments = report.ToCommandLineArgs()
+                }
+            Process.Start(ps)
         End Sub
 
 #End Region
