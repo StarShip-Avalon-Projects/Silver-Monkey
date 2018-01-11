@@ -198,6 +198,10 @@ namespace BotSession
             {
                 return _BiniFile;
             }
+            set
+            {
+                _BiniFile = value;
+            }
         }
 
         /// <summary>

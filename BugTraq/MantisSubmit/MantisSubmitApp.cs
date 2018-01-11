@@ -28,13 +28,17 @@ namespace Futureware.MantisSubmit
         {
         }
 
+        private MantisSubmitApp(params string[] args)
+        {
+        }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main() 
+        private static void Main(params string[] args)
         {
-            Application.Run( new SubmitIssueForm() );
+            Application.Run(new SubmitIssueForm(args));
         }
     }
 }

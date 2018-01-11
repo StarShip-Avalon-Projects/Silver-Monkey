@@ -48,7 +48,6 @@
 
 * retrieve the banish list from the server and keep it updated for Temp Banishes
 (0:91) When the bot enters a dream named {dream:name/},
-(0:299) When the time is {12:00:00 am} hh:mm:ss am/pm FST,
     (5:50) ask the server for the banish-list.
 
 * The default file is created automatically for this it is 

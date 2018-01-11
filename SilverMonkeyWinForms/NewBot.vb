@@ -345,6 +345,7 @@ Public Class NewBott
             BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
             MsFile = BotFile
         End If
+
         Dim ext As String = Path.GetExtension(BotFile)
         If String.IsNullOrEmpty(ext) Then
             BotFile += ".bini"
@@ -365,7 +366,7 @@ Public Class NewBott
                 OverWrite = True
             End If
         End If
-
+        bFile.BotSettingsFile = BotFile
         bFile.CharacterIniFile = TxtbxCharacterINI.Text
 
         bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = MsFile
@@ -393,12 +394,15 @@ Public Class NewBott
             SetForm(WizIndex)
             Exit Sub
         End If
+        Try
+            bFile.SaveBotSettings()
+            Main.SaveRecentFile(bFile.BotSettingsFile)
+            Me.DialogResult = System.Windows.Forms.DialogResult.OK
+            Me.Dispose()
+        Catch ex As Exception
 
-        bFile.SaveBotSettings()
-        Main.SaveRecentFile(bFile.BotSettingsFile)
-        Me.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.Dispose()
-
+            MessageBox.Show(ex.Message, "error")
+        End Try
     End Sub
 
     Private Sub SetForm(Index As Integer)

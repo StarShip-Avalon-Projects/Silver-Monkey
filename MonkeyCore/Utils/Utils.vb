@@ -6,14 +6,14 @@ Public NotInheritable Class Utilities
 
 #Region "Public Enums"
 
-    Public Enum fColorEnum
-        DefaultColor = 0
-        Say
-        Shout
-        Whisper
-        Emote
-        Emit
-    End Enum
+    'Public Enum fColorEnum
+    '    DefaultColor = 0
+    '    Say
+    '    Shout
+    '    Whisper
+    '    Emote
+    '    Emit
+    'End Enum
 
 #End Region
 

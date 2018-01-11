@@ -27,7 +27,14 @@ namespace Logging
     ///
     public class ErrorLogging
     {
+        #region Private Fields
+
+        private Exception Ex;
         private string strErrorFilePath;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         /// <summary>
         /// </summary>
@@ -37,11 +44,16 @@ namespace Logging
         /// </param>
         public ErrorLogging(Exception Ex, object ObjectThrowingError)
         {
+            this.Ex = Ex;
             // Call Log Error
             // CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
             strErrorFilePath = Path.Combine(IO.Paths.SilverMonkeyErrorLogPath, $"{ Assembly.GetExecutingAssembly().GetName().Name } _Error_ {DateTime.Now.ToString("MM_dd_yyyy_H-mm-ss") }.txt");
             LogError(Ex, ObjectThrowingError.ToString());
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Fullpath the error document was written to.
@@ -55,6 +67,18 @@ namespace Logging
                 return strErrorFilePath;
             }
         }
+
+        /// <summary>
+        /// Gets the error log summary
+        /// </summary>
+        /// <value>
+        /// The summary.
+        /// </value>
+        public string Summary { get { return Ex.Message; } }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// </summary>
@@ -71,8 +95,6 @@ namespace Logging
                 // * Error Log Formatting
                 // ***********************************************************
                 LogFile.WriteLine("-------------------------------------------------------");
-                LogFile.WriteLine("");
-                LogFile.WriteLine($"{ Assembly.GetExecutingAssembly().FullName} Error Report");
                 LogFile.WriteLine($"{Assembly.GetExecutingAssembly().GetName().Version.ToString()} Product Version");
                 LogFile.WriteLine("");
                 LogFile.WriteLine($"Date: { DateTime.Now.ToString("d")}");
@@ -132,5 +154,7 @@ namespace Logging
 
             // ***********************************************************
         }
+
+        #endregion Public Methods
     }
 }

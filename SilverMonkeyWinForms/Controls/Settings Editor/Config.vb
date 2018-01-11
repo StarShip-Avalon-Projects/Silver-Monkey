@@ -2,8 +2,6 @@
 Imports System.Drawing.Text
 Imports System.Windows.Forms
 Imports IO
-Imports MonkeyCore
-Imports MonkeyCore.Settings
 
 Public Class Config
 
@@ -110,13 +108,6 @@ Public Class Config
         Main.Mainsettings.PSShowClient = CheckBox1.Checked
         'Main.MainSettings.PSShowSettingsWindow = CheckBox2.Checked
 
-        For Each lvItem As ListViewItem In LstVwPlugin.Items
-            If PluginList.ContainsKey(lvItem.SubItems.Item(1).Text.Replace(" ", "")) Then
-                PluginList(lvItem.SubItems.Item(1).Text.Replace(" ", "")) = lvItem.Checked
-            Else
-                PluginList.Add(lvItem.SubItems.Item(1).Text.Replace(" ", ""), lvItem.Checked)
-            End If
-        Next
         Paths.FurcadiaProgramFolder = Main.Mainsettings.FurcPath
         Main.Mainsettings.SaveMainSettings()
 
@@ -168,7 +159,7 @@ Public Class Config
         Main.Mainsettings.TimeStamp = CUShort(ChkTimeStamp.CheckState)
     End Sub
 
-    Private Sub Config_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+    Private Sub Config_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         My.Settings.ConfigFormLocation = Me.Location
         My.Settings.Save()
     End Sub
