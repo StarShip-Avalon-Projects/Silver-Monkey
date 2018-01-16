@@ -287,6 +287,14 @@ namespace Engine.Libraries
                         string tname = r.ReadString();
                         return SendOffLineWhisper(tname, msg);
                     }, "whisper {..} to furre named {..} even if they\'re off-line.");
+
+            Add(TriggerCategory.Effect,
+                r =>
+                {
+                    var var = r.ReadVariable(true);
+                    var.Value = Player.Message;
+                    return true;
+                }, "set variable %variable to the last message seen.");
         }
 
         /// <summary>

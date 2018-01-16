@@ -1,6 +1,9 @@
-﻿using Monkeyspeak;
+﻿using Furcadia.Net.DreamInfo;
+using Monkeyspeak;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Engine.Libraries.MsLibHelper;
 
 namespace Engine.Libraries
 {
@@ -42,6 +45,7 @@ namespace Engine.Libraries
     {
         #region Public Properties
 
+        private List<string> BanishedFurres;
         public override int BaseId => 51;
 
         #endregion Public Properties
@@ -57,67 +61,76 @@ namespace Engine.Libraries
             base.Initialize(args);
             // (0:51) When the bot fails to banish a furre,
             Add(TriggerCategory.Cause, 51,
-                r => true,
+                r => WhenTriggeringFurreBanished(r),
                 "When the bot fails to banish a furre,");
 
             // (0:52) When the bot fails to banish the furre named {...},
             Add(TriggerCategory.Cause, 52,
-                r => WhenFurreBanished(r),
+                r => WhenFurreNamedBanished(r),
                 "When the bot fails to banish the furre named {...},");
 
             // (0:53) When the bot successfully banishes a furre,
             Add(TriggerCategory.Cause, 53,
-                r => true,
+                r => WhenTriggeringFurreBanished(r),
                 "When the bot successfully banishes a furre,");
 
             // (0:54) When the bot successfully banishes the furre named {...},
             Add(TriggerCategory.Cause, 54,
-                r => WhenFurreBanished(r),
+                r => WhenFurreNamedBanished(r),
                 "When the bot successfully banishes the furre named {...},");
 
             // (0:55) When the bot sees the banish list,
             Add(TriggerCategory.Cause, 55,
-                r => true,
+                r => WhenTriggeringFurreBanished(r),
                 "When the bot sees the banish list,");
 
             // (0:56) When the bot fails to remove a furre from the banish list,
             Add(TriggerCategory.Cause, 56,
-                r => true,
+                r => WhenTriggeringFurreBanished(r),
                 "When the bot fails to remove a furre from the banish list,");
 
             // (0:57) When the bot fails to remove the furre named {...} from the banish list,
             Add(TriggerCategory.Cause, 57,
-                 r => WhenFurreBanished(r),
+                 r => WhenFurreNamedBanished(r),
                  "When the bot fails to remove the furre named {...} from the banish list,");
 
             // (0:58) When the bot successfully removes a furre from the banish list,
             Add(TriggerCategory.Cause, 58,
-                r => true,
+                r => WhenTriggeringFurreBanished(r),
                 "When the bot successfully removes a furre from the banish list,");
 
             // (0:59) When the bot successfully removes the furre named {...} from the banish list,
             Add(TriggerCategory.Cause, 59,
-                 r => WhenFurreBanished(r),
+                 r => WhenFurreNamedBanished(r),
                  "When the bot successfully removes the furre named {...} from the banish list,");
 
             // (0:60) When the bot fails to empty the banish list,
             Add(TriggerCategory.Cause, 60,
-                r => true,
+                r => throw new NotImplementedException(),
                 "When the bot fails to empty the banish list,");
 
             // (0:61) When the bot successfully clears the banish list,
             Add(TriggerCategory.Cause, 61,
-                r => true,
+                r =>
+                {
+                    var banisList = r.GetParametersOfType<List<string>>().FirstOrDefault();
+                    if (banisList != null)
+                    {
+                        BanishedFurres = banisList;
+                        return true;
+                    }
+                    return false;
+                },
                 "When the bot successfully clears the banish list,");
 
             // (0:62) When the bot successfully temp banishes a furre,
             Add(TriggerCategory.Cause, 62,
-                r => true,
+                r => WhenTriggeringFurreBanished(r),
                 "When the bot successfully temp banishes a furre,");
 
             // (0:63) When the bot successfully temp banishes the furre named {...},
             Add(TriggerCategory.Cause, 63,
-                 r => WhenFurreBanished(r),
+                 r => WhenFurreNamedBanished(r),
                  "When the bot successfully temp banishes the furre named {...},");
 
             // (1:50) and the triggering furre is not on the banish list,
@@ -196,7 +209,7 @@ namespace Engine.Libraries
         private bool BanishFurreNamed(TriggerReader reader)
         {
             string Furre = reader.ReadString();
-            return SendServer("banish " + Furre);
+            return SendServer($"banish { Furre.ToFurcadiaShortName()}");
         }
 
         private bool BanishList(TriggerReader reader)
@@ -207,13 +220,13 @@ namespace Engine.Libraries
         private bool BanishSave(TriggerReader reader)
         {
             IVariable NewVar = reader.ReadVariable(true);
-            NewVar.Value = string.Join("", ParentBotSession.BanishList.ToArray());
+            NewVar.Value = string.Join("", BanishedFurres.ToArray());
             return true;
         }
 
         private bool BanishTrigFurre(TriggerReader reader)
         {
-            return SendServer(("banish " + Player.Name));
+            return SendServer($"banish { Player.ShortName}");
         }
 
         private bool FurreNamedIsBanished(TriggerReader reader)
@@ -223,9 +236,8 @@ namespace Engine.Libraries
 
         private bool FurreNamedIsNotBanished(TriggerReader reader)
         {
-            List<string> banishlist = ParentBotSession.BanishList;
             string f = reader.ReadString();
-            foreach (var fur in banishlist)
+            foreach (var fur in BanishedFurres)
             {
                 if (fur.ToFurcadiaShortName() == f.ToFurcadiaShortName())
                 {
@@ -238,13 +250,13 @@ namespace Engine.Libraries
 
         private bool TempBanishFurreNamed(TriggerReader reader)
         {
-            return SendServer("tempbanish " + Player.Name);
+            return SendServer($"tempbanish { Player.ShortName}");
         }
 
         private bool TempBanishTrigFurre(TriggerReader reader)
         {
             string Furre = reader.ReadString();
-            return SendServer("tempbanish " + Furre);
+            return SendServer($"tempbanish { Furre.ToFurcadiaShortName()}");
         }
 
         private bool TrigFurreIsBanished(TriggerReader reader)
@@ -254,8 +266,7 @@ namespace Engine.Libraries
 
         private bool TrigFurreIsNotBanished(TriggerReader reader)
         {
-            List<string> banishlist = ParentBotSession.BanishList;
-            foreach (var fur in banishlist)
+            foreach (var fur in BanishedFurres)
             {
                 if (fur.ToFurcadiaShortName() == Player.ShortName)
                 {
@@ -269,19 +280,39 @@ namespace Engine.Libraries
         private bool UnBanishFurreNamed(TriggerReader reader)
         {
             string Furre = reader.ReadString();
-            return SendServer("banish-off " + Furre);
+            return SendServer($"banish-off { Furre.ToFurcadiaShortName()}");
         }
 
         private bool UnBanishTrigFurre(TriggerReader reader)
         {
-            return SendServer("banish-off " + Player.Name);
+            return SendServer($"banish-off { Player.ShortName}");
         }
 
-        private bool WhenFurreBanished(TriggerReader reader)
+        private bool WhenFurreNamedBanished(TriggerReader reader)
         {
+            var name = reader.GetParametersOfType<string>().FirstOrDefault();
+            if (name != null)
+            {
+                Player = new Furre(name);
+                ((ConstantVariable)reader.Page.GetVariable(BanishNameVariable)).SetValue(name);
+                return true;
+            }
             string Furre = reader.ReadString();
             return Furre.ToFurcadiaShortName()
                 == reader.GetParametersOfType<string>().FirstOrDefault();
+        }
+
+        private bool WhenTriggeringFurreBanished(TriggerReader reader)
+        {
+            var name = reader.GetParametersOfType<string>().FirstOrDefault();
+            if (name != null)
+            {
+                Player = new Furre(name);
+                UpdateTriggerigFurreVariables(Player, reader.Page);
+                ((ConstantVariable)reader.Page.GetVariable(BanishNameVariable)).SetValue(name);
+                return true;
+            }
+            return false;
         }
 
         #endregion Private Methods

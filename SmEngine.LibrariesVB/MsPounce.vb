@@ -1,8 +1,7 @@
 ﻿Imports System.IO
 Imports Furcadia.Net.Pounce
-Imports MonkeyCore
 Imports Monkeyspeak
-Imports MsLibHelper
+Imports Engine.Libraries.MsLibHelper
 
 ''' <summary>
 ''' Pounce Server interface with a list of furres contained in a simple text file. This system is styled after <see cref="MsMemberList"/>
@@ -16,32 +15,59 @@ Imports MsLibHelper
 ''' </remarks>
 Public NotInheritable Class MsPounce
     Inherits MonkeySpeakLibrary
-    Implements IDisposable
 
     ''' <summary>
-    ''' Pounce list
+    ''' Gets the base identifier.
     ''' </summary>
-    Private WithEvents OnlineFurres As IO.NameList
+    ''' <value>
+    ''' The base identifier.
+    ''' </value>
+    Public Overrides ReadOnly Property BaseId As Integer
+        Get
+            Return 950
+        End Get
+    End Property
+
+#Region "Fields"
+
+    '''' <summary>
+    '''' Pounce list
+    '''' </summary>
+    'Private WithEvents OnlineFurres As MonkeyCore.IO.NameList
 
     ''' <summary>
     ''' Furcadia Pounce Server
     ''' </summary>
     Private WithEvents SmPounce As PounceClient
 
+#End Region
+
+#Region "Public Fields"
+
     ''' <summary>
     ''' Default File we use
     ''' </summary>
     Public Const ListFile As String = "onlineList.txt"
+
+#End Region
+
+#Region "Private Fields"
 
     ''' <summary>
     ''' Pounce List File Name
     ''' </summary>
     Private _onlineListFile As String
 
+    Private disposedValue As Boolean
+
     ''' <summary>
     ''' Pounce Furre List
     ''' </summary>
-    Private PounceFurres As List(Of MsPounceFurre)
+    Private PounceFurres As List(Of PounceFurre)
+
+#End Region
+
+#Region "Public Properties"
 
     ''' <summary>
     ''' the File of the Friends List to Check
@@ -56,6 +82,10 @@ Public NotInheritable Class MsPounce
         End Get
 
     End Property
+
+#End Region
+
+#Region "Public Methods"
 
     ''' <summary>
     ''' (5:951) add the furre named {...} to the smPounce list.
@@ -170,8 +200,8 @@ Public NotInheritable Class MsPounce
 
         PounceFurres = New List(Of PounceFurre)
         'Setup our Default Objects
-        _onlineListFile = Paths.CheckBotFolder(ListFile)
-        OnlineFurres = New IO.NameList(_onlineListFile)
+        _onlineListFile = IO.Paths.CheckBotFolder(ListFile)
+        '   OnlineFurres = New IO.NameList(_onlineListFile)
         ' (0:950) When a furre logs on,
         Add(TriggerCategory.Cause, 950,
         Function() True, "When a furre logs on,")
@@ -187,42 +217,42 @@ Public NotInheritable Class MsPounce
             AddressOf NameIs, "When the furre named {...} logs off,")
 
         '(1;950) and the furre named {...} is on-line,
-        Add(TriggerCategory.Condition, 950,
+        Add(TriggerCategory.Condition,
             AddressOf FurreNamedonline, "and the furre named {...} is on-line,")
 
         '(1:951) and the furre named {...} is off-line,
-        Add(TriggerCategory.Condition, 951,
+        Add(TriggerCategory.Condition,
             AddressOf FurreNamedNotOnline, "and the furre named {...} is off-line,")
 
         '(1:952) and triggering furre is on the smPounce List,
-        Add(TriggerCategory.Condition, 952,
+        Add(TriggerCategory.Condition,
             AddressOf TrigFurreIsMember, "and triggering furre is on the smPounce List,")
         '(1:953) and the triggering furre is not on the smPounce List,
-        Add(TriggerCategory.Condition, 953,
+        Add(TriggerCategory.Condition,
             AddressOf TrigFurreIsNotMember, "and the triggering furre is not on the smPounce List,")
 
         '(1:954) and the furre named {...} is on the smPounce list,
-        Add(TriggerCategory.Condition, 954,
+        Add(TriggerCategory.Condition,
             AddressOf FurreNamedIsMember, "and the furre named {...} is on the smPounce list,")
 
         '(1:955) and the furre named {...} is not on the smPounce list,
-        Add(TriggerCategory.Condition, 955,
+        Add(TriggerCategory.Condition,
             AddressOf FurreNamedIsNotMember, "and the furre named {...} is not on the smPounce list,")
 
         '(5:950) add the triggering furre to the smPounce List.
-        Add(TriggerCategory.Effect, 950,
+        Add(TriggerCategory.Effect,
             AddressOf AddTrigFurre, "add the triggering furre to the smPounce List.")
         '(5:951) add the furre named {...} to the smPounce list.
-        Add(TriggerCategory.Effect, 951,
+        Add(TriggerCategory.Effect,
             AddressOf AddFurreNamed, "add the furre named {...} to the smPounce list.")
         '(5:952) remove the triggering furre from the smPounce list.
-        Add(TriggerCategory.Effect, 952,
+        Add(TriggerCategory.Effect,
             AddressOf RemoveTrigFurre, "remove the triggering furre from the smPounce list.")
         '(5:953) remove the furre named {...} from the smPounce list.
-        Add(TriggerCategory.Effect, 953,
+        Add(TriggerCategory.Effect,
             AddressOf RemoveFurreNamed, "remove the furre named {...} from the smPounce list.")
         '(5:954) use the file named {...} as the smPounce list.
-        Add(TriggerCategory.Effect, 954,
+        Add(TriggerCategory.Effect,
             AddressOf UseMemberFile, "use the file named {...} as the smPounce list and start the Pounce Clinet Interface.")
     End Sub
 
@@ -316,6 +346,10 @@ Public NotInheritable Class MsPounce
         Return Not TrigFurreIsMember(reader)
     End Function
 
+    ''' <summary>
+    ''' Called when page is disposing or resetting.
+    ''' </summary>
+    ''' <param name="page">The page.</param>
     Public Overrides Sub Unload(page As Page)
         Dispose(True)
     End Sub
@@ -331,34 +365,20 @@ Public NotInheritable Class MsPounce
     ''' True on Success
     ''' </returns>
     Public Function UseMemberFile(reader As TriggerReader) As Boolean
+        Throw New NotImplementedException()
+        'Dim FileList = reader.ReadString
+        'CheckonlineList()
+        'If SmPounce IsNot Nothing Then SmPounce.Dispose()
+        'SmPounce = New PounceClient(OnlineFurres.ToArray, Nothing)
 
-        Dim FileList = reader.ReadString
-        CheckonlineList()
-        If SmPounce IsNot Nothing Then SmPounce.Dispose()
-        SmPounce = New PounceClient(OnlineFurres.ToArray, Nothing)
-
-        Return True
+        'Return True
     End Function
 
-    Private Sub CheckonlineList()
-        _onlineListFile = Paths.CheckBotFolder(_onlineListFile)
-        If File.Exists(_onlineListFile) = False Then
-            Console.WriteLine("On-line List File: " + _onlineListFile + "Doesn't Exist, Creating new file")
-            Using sw = New StreamWriter(_onlineListFile, False)
-                sw.Close()
-            End Using
-        End If
-    End Sub
+#End Region
 
-    Private disposedValue As Boolean ' To detect redundant calls
+#Region "Protected Methods"
 
-    ' This code added by Visual Basic to correctly implement the disposable pattern.
-    Public Sub Dispose() Implements IDisposable.Dispose
-        ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
-        Dispose(True)
-
-    End Sub
-
+    ' To detect redundant calls
     ' IDisposable
     Protected Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
@@ -369,5 +389,21 @@ Public NotInheritable Class MsPounce
         End If
         disposedValue = True
     End Sub
+
+#End Region
+
+#Region "Private Methods"
+
+    Private Sub CheckonlineList()
+        _onlineListFile = IO.Paths.CheckBotFolder(_onlineListFile)
+        If File.Exists(_onlineListFile) = False Then
+            Console.WriteLine("On-line List File: " + _onlineListFile + "Doesn't Exist, Creating new file")
+            Using sw = New StreamWriter(_onlineListFile, False)
+                sw.Close()
+            End Using
+        End If
+    End Sub
+
+#End Region
 
 End Class

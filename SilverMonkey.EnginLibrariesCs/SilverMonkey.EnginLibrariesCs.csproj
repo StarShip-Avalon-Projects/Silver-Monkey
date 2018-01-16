@@ -79,6 +79,7 @@
     <Compile Include="MsMovement.cs" />
     <Compile Include="MsQuery.cs" />
     <Compile Include="MsSayLibrary.cs" />
+    <Compile Include="MsStringExtentions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

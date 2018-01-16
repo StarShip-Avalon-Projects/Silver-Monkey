@@ -27,11 +27,17 @@ Public NotInheritable Class MsSound
 
 #Region "Public Constructors"
 
+    Public Overrides ReadOnly Property BaseId As Integer
+        Get
+            Return 2010
+        End Get
+    End Property
+
     Private simpleSound As SoundPlayer
 
     Public Overrides Sub Initialize(ParamArray args() As Object)
         MyBase.Initialize(args)
-        Add(TriggerCategory.Effect, 2010,
+        Add(TriggerCategory.Effect,
             Function(reader As TriggerReader) As Boolean
                 Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
                 Using PlaySound = New SoundPlayer(SoundFile)
@@ -41,7 +47,7 @@ Public NotInheritable Class MsSound
                 Return True
             End Function, "play the wave file {...}.")
 
-        Add(TriggerCategory.Effect, 2011,
+        Add(TriggerCategory.Effect,
             Function(reader As TriggerReader) As Boolean
                 If Not simpleSound Is Nothing Then
                     Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
@@ -49,9 +55,9 @@ Public NotInheritable Class MsSound
                     simpleSound.PlayLooping()
                 End If
                 Return simpleSound Is Nothing
-
             End Function, "play the wave file {...} in a loop. if theres not one playing")
-        Add(TriggerCategory.Effect, 2012,
+
+        Add(TriggerCategory.Effect,
              AddressOf StopSound, "stop playing the sound file.")
     End Sub
 

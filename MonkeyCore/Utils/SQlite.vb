@@ -88,6 +88,41 @@ Public Class SQLiteDatabase
 #Region "Public Methods"
 
     ''' <summary>
+    ''' Allows the user to easily clear all data from a specific table.
+    ''' </summary>
+    ''' <param name="table">
+    ''' The name of the table to clear.
+    ''' </param>
+    ''' <returns>
+    ''' A boolean true or false to signify success or failure.
+    ''' </returns>
+    Public Shared Function ClearTable(table As String) As Boolean
+        Try
+            Return ExecuteNonQuery(String.Format("delete from {0};", table)) > -1
+        Catch
+            Return False
+        End Try
+    End Function
+
+    '''<Summary>
+    '''    Create a Table with Titles
+    ''' </Summary>
+    ''' <param name="Table"></param><param name="Titles"></param>
+    Public Shared Sub CreateTbl(Table As String, ByRef Titles As String)
+        Using SQLconnect As New SQLiteConnection(dbConnection)
+            Using SQLcommand As SQLiteCommand = SQLconnect.CreateCommand
+                SQLconnect.Open()
+                'SQL query to Create Table
+                ' [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT,
+                SQLcommand.CommandText = SyncPragma + "CREATE TABLE IF NOT EXISTS " & Table & "( " & Titles & " );"
+                SQLcommand.ExecuteNonQuery()
+            End Using
+            SQLconnect.Close()
+        End Using
+        '
+    End Sub
+
+    ''' <summary>
     ''' Allows the programmer to interact with the database for purposes
     ''' other than a query.
     ''' </summary>
@@ -265,41 +300,6 @@ Public Class SQLiteDatabase
     End Function
 
     ''' <summary>
-    ''' Allows the user to easily clear all data from a specific table.
-    ''' </summary>
-    ''' <param name="table">
-    ''' The name of the table to clear.
-    ''' </param>
-    ''' <returns>
-    ''' A boolean true or false to signify success or failure.
-    ''' </returns>
-    Public Shared Function ClearTable(table As String) As Boolean
-        Try
-            Return ExecuteNonQuery(String.Format("delete from {0};", table)) > -1
-        Catch
-            Return False
-        End Try
-    End Function
-
-    '''<Summary>
-    '''    Create a Table with Titles
-    ''' </Summary>
-    ''' <param name="Table"></param><param name="Titles"></param>
-    Public Shared Sub CreateTbl(Table As String, ByRef Titles As String)
-        Using SQLconnect As New SQLiteConnection(dbConnection)
-            Using SQLcommand As SQLiteCommand = SQLconnect.CreateCommand
-                SQLconnect.Open()
-                'SQL query to Create Table
-                ' [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT,
-                SQLcommand.CommandText = SyncPragma + "CREATE TABLE IF NOT EXISTS " & Table & "( " & Titles & " );"
-                SQLcommand.ExecuteNonQuery()
-            End Using
-            SQLconnect.Close()
-        End Using
-        '
-    End Sub
-
-    ''' <summary>
     ''' Allows the programmer to easily delete rows from the DB.
     ''' </summary>
     ''' <param name="tableName">
@@ -344,7 +344,6 @@ Public Class SQLiteDatabase
 
                         rowsUpdated = Nothing
 
-                        ' Finally a.Dispose()
                     End Try
                 End Using
             End Using

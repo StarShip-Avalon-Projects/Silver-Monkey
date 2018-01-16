@@ -3,7 +3,7 @@ using Furcadia.Net.Proxy;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using System.Linq;
-using static MsLibHelper;
+using static Engine.Libraries.MsLibHelper;
 
 /// <summary>
 /// The base library in which all Silver Monkey's Monkey Speak Libraries

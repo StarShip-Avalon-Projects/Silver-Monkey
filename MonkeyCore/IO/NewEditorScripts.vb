@@ -98,20 +98,22 @@ Public NotInheritable Class NewEditorScripts
     ''' <para>Actual format is set in a configuration *.ini file</para>
     ''' </summary>
     ''' <returns>Generic preformated MonkeySpeak file</returns>
-    Public Shared Function NewMSFile() As String
+    Public Shared Function NewMSFile(ver As String) As String
         Dim str As New StringBuilder
-        str.AppendLine(Settings.MS_KeysIni.GetKeyValue("MS-General", "Header"))
+        str.AppendLine(Settings.MS_KeysIni.GetKeyValue("MS-General", "Header").Replace("[VERSION]", ver).TrimEnd(""""c))
         Dim t As String = " "
         Dim n As Integer = 0
         While t <> ""
-            t = Settings.MS_KeysIni.GetKeyValue("MS-General", "H" + n.ToString)
+            t = Settings.MS_KeysIni.GetKeyValue("MS-General", "H" + n.ToString()).TrimEnd(""""c)
             If t <> "" Then str.AppendLine(t)
             n += 1
         End While
-        For i = 0 To CInt(Settings.MS_KeysIni.GetKeyValue("MS-General", "InitLineSpaces"))
+        Dim iMax = 0
+        Integer.TryParse(Settings.MS_KeysIni.GetKeyValue("MS-General", "InitLineSpaces").TrimEnd(""""c), iMax)
+        For i = 0 To iMax
             str.AppendLine("")
         Next
-        str.Append(Settings.MS_KeysIni.GetKeyValue("MS-General", "Footer"))
+        str.Append(Settings.MS_KeysIni.GetKeyValue("MS-General", "Footer").TrimEnd(""""c))
         Return str.ToString
     End Function
 

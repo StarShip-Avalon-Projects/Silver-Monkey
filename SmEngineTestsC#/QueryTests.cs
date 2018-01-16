@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static MsLibHelper;
+using static Engine.Libraries.MsLibHelper;
 using static SmEngineTests.Utilities;
 using System.IO;
 
@@ -19,19 +19,21 @@ namespace SmEngineTests
     public class QueryTests
     {
         public const string GeroJoinBot = "<font color='query'><name shortname='gerolkae'>Gerolkae</name> requests permission to join your company. To accept the request, <a href='command://summon'>click here</a> or type `summon and press &lt;enter&gt;.</font>";
+        public const string GeroFollowBot = "<font color='query'><name shortname='gerolkae'>Gerolkae</name> requests permission to follow you. To accept the request, <a href='command://lead'>click here</a> or type `lead and press &lt;enter&gt;.</font>";
+        public const string GeroLeadBot = "<font color='query'><name shortname='gerolkae'>Gerolkae</name> requests permission to lead you. To accept the request, <a href='command://follow'>click here</a> or type `follow and press &lt;enter&gt;.</font>";
+        public const string GeroSummonBot = "<font color='query'><name shortname='gerolkae'>Gerolkae</name> asks you to join their company in <b>the dream of Silver|Monkey</b>. To accept the request, <a href='command://join'>click here</a> or type `join and press &lt;enter&gt;.</font>";
+        public const string GeroCuddleBot = "<font color='query'><name shortname='gerolkae'>Gerolkae</name> asks you to cuddle with them. To accept the request, <a href='command://cuddle'>click here</a> or type `cuddle and press &lt;enter&gt;.</font>";
 
         private Bot Proxy;
 
         public string SettingsFile { get; private set; }
         public string BackupSettingsFile { get; private set; }
-        public BotOptions options { get; private set; }
+        public BotOptions Options { get; private set; }
 
         [SetUp]
         public void Initialize()
         {
             Furcadia.Logging.Logger.SingleThreaded = false;
-            if (!File.Exists(BackupSettingsFile))
-                throw new Exception("BackupSettingsFile Doesn't Exists");
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
             var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -44,20 +46,24 @@ namespace SmEngineTests
                 IsEnabled = true,
                 BotController = @"Gerolkae"
             };
-            options = new BotOptions(BotFile)
+            Options = new BotOptions(BotFile)
             {
                 Standalone = true,
                 CharacterIniFile = CharacterFile,
                 MonkeySpeakEngineOptions = MsEngineOption
             };
 
-            options.SaveBotSettings();
+            Options.SaveBotSettings();
 
-            Proxy = new Bot(options);
+            Proxy = new Bot(Options);
             Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
         }
 
         [TestCase(GeroJoinBot, "Gerolkae")]
+        [TestCase(GeroFollowBot, "Gerolkae")]
+        [TestCase(GeroLeadBot, "Gerolkae")]
+        [TestCase(GeroSummonBot, "Gerolkae")]
+        [TestCase(GeroCuddleBot, "Gerolkae")]
         public void ExpectedQueryCharacter(string testc, string ExpectedValue)
         {
             BotHasConnected_StandAlone();
@@ -81,6 +87,10 @@ namespace SmEngineTests
         }
 
         [TestCase(GeroJoinBot, "join")]
+        [TestCase(GeroFollowBot, "follow")]
+        [TestCase(GeroLeadBot, "lead")]
+        [TestCase(GeroSummonBot, "summon")]
+        [TestCase(GeroCuddleBot, "cuddle")]
         public void ChannelIsQueryOfType(string ChannelCode, string ExpectedValue)
         {
             BotHasConnected_StandAlone();
@@ -92,9 +102,7 @@ namespace SmEngineTests
                 {
                     var ServeObject = (ChannelObject)sender;
                     Assert.That(Args.Channel,
-                        Is.EqualTo("guery"));
-                    Assert.That(Args.Channel,
-                        Is.EqualTo(ExpectedValue));
+                        Is.EqualTo("query"));
                 });
             };
 
@@ -210,7 +218,7 @@ namespace SmEngineTests
             Proxy.Error -= (e, o) => Logger.Error($"{e} {o}");
 
             Proxy.Dispose();
-            options = null;
+            Options = null;
         }
     }
 }

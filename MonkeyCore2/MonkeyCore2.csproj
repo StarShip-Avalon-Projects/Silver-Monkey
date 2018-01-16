@@ -46,12 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyFileVersion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyFileVersion.t4</DependentUpon>
+    </Compile>
     <Compile Include="AssemblyInfoersionCS.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
     </Compile>
     <Compile Include="IO\Paths.cs" />
+    <Compile Include="IO\RecentFileMenu\RecentFileMenu.cs" />
     <Compile Include="Logging\BugReport.cs" />
     <Compile Include="Logging\ErrorLogging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,7 +73,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AssemblyFileVersion.t4" />
+    <None Include="AssemblyFileVersion.t4">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyFileVersion.cs</LastGenOutput>
+    </None>
     <None Include="MonkeyCore2.snk" />
   </ItemGroup>
   <ItemGroup>

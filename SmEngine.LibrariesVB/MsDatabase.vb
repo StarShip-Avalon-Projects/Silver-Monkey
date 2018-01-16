@@ -5,7 +5,7 @@ Imports IO
 Imports Logging
 Imports MonkeyCore
 Imports Monkeyspeak
-Imports MsLibHelper
+Imports Engine.Libraries.MsLibHelper
 
 ''' <summary>
 ''' SQLite Database Access... Create tables Store records ect. in Silver Monkey
@@ -54,6 +54,12 @@ Public NotInheritable Class MsDatabase
 
 #Region "Public Constructors"
 
+    ''' <summary>
+    ''' Gets the base identifier.
+    ''' </summary>
+    ''' <value>
+    ''' The base identifier.
+    ''' </value>
     Public Overrides ReadOnly Property BaseId As Integer
         Get
             Return 500

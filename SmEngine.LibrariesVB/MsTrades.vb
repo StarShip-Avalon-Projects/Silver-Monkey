@@ -11,6 +11,12 @@ Public NotInheritable Class MsTrades
 
 #Region "Public Methods"
 
+    Public Overrides ReadOnly Property BaseId As Integer
+        Get
+            Throw New NotImplementedException()
+        End Get
+    End Property
+
     Public Overrides Sub Initialize(ParamArray args() As Object)
         MyBase.Initialize(args)
 

@@ -1,4 +1,4 @@
-
+IF "%~1"=="" GOTO NuGetRestore
 :GitPullCurrent
 
 git.exe pull --recurse-submodules=yes
@@ -8,7 +8,10 @@ if not %GIT_STATUS%==0 goto fail
 
 :NuGetRestore
 
+bin\nuget.exe update -self
 bin\nuget.exe restore
+cd monkeyspeak
+..\bin\nuget.exe restore
 
 set GIT_STATUS=%ERRORLEVEL% 
 

@@ -1,9 +1,8 @@
 ﻿Imports System.IO
+Imports Engine.Libraries.MsLibHelper
 Imports IO
-Imports MonkeyCore
 Imports Monkeyspeak
 Imports Monkeyspeak.Logging
-Imports MsLibHelper
 
 Namespace Engine.Libraries
 
@@ -32,7 +31,7 @@ Namespace Engine.Libraries
         ''' <summary>
         ''' Member List file path
         ''' <para/>
-        ''' Defaults to <see cref="MonkeyCore.Paths.SilverMonkeyBotPath"/>\MemberList.txt
+        ''' Defaults to <see cref="IO.Paths.SilverMonkeyBotPath"/>\MemberList.txt
         ''' </summary>
         ''' <returns></returns>
         Public Property MemberList As String
@@ -50,20 +49,32 @@ Namespace Engine.Libraries
         Public Overrides Sub Initialize(ParamArray args() As Object)
             MyBase.Initialize(args)
             MemberList = Paths.CheckBotFolder("MemberList.txt")
-            ''(1:900) and the triggering furre is on my Dream Member List,
-            'Add(TriggerCategory.Condition, 900, AddressOf TrigFurreIsMember, "and the triggering furre is on my dream Member List,")
-            ''(1:901) and the furre named {...} is on my Dream Member list.
-            'Add(TriggerCategory.Condition, 901, AddressOf FurreNamedIsMember, "and the furre named {...} is on my Dream Member list,")
+            '(1:900) and the triggering furre is on my Dream Member List,
+            Add(TriggerCategory.Condition, 900,
+                AddressOf TrigFurreIsMember,
+                "and the triggering furre is on my dream Member List,")
+            '(1:901) and the furre named {...} is on my Dream Member list.
+            Add(TriggerCategory.Condition, 901,
+                AddressOf FurreNamedIsMember,
+                "and the furre named {...} is on my Dream Member list,")
 
-            '(1:902) and the triggering furre is not on my Dream Member list.
-            ''  Add(TriggerCategory.Condition, 902, AddressOf TrigFurreIsNotMember, "and the triggering furre is not on my Dream Member list,")
-            '(1:903) and the furre named {...} is not on my Dream Member list.
-            ''        Add(TriggerCategory.Condition, 903, AddressOf FurreNamedIsNotMember, "and the furre named {...} is not on my Dream Member list,")
+            '(1902) And the triggering furre Is Not on my Dream Member list.
+            Add(TriggerCategory.Condition, 902,
+                AddressOf TrigFurreIsNotMember,
+                "and the triggering furre is not on my Dream Member list,")
+            '(1903) And the furre named {...} Is Not on my Dream Member list.
+            Add(TriggerCategory.Condition, 903,
+                AddressOf FurreNamedIsNotMember,
+                "and the furre named {...} is not on my Dream Member list,")
 
-            '(1:900) add the triggering furre to my Dream Member list if they aren't already on it.
-            ''     Add(TriggerCategory.Effect, 900, AddressOf AddTrigFurre, "add the triggering furre to my Dream Member list if they aren't already on it.")
-            '(5:901) add the furre named {...} to my Dream Member list if they aren't already on it.
-            ''    Add(TriggerCategory.Effect, 901, AddressOf AddFurreNamed, "add the furre named {...} to my Dream Member list if they aren't already on it.")
+            '(1900) add the triggering furre to my Dream Member list if they aren't already on it.
+            Add(TriggerCategory.Effect, 900,
+                AddressOf AddTrigFurre,
+                "add the triggering furre to my Dream Member list if they aren't already on it.")
+            '(5901) add the furre named {...} to my Dream Member list if they aren't already on it.
+            Add(TriggerCategory.Effect, 901,
+                AddressOf AddFurreNamed,
+                "add the furre named {...} to my Dream Member list if they aren't already on it.")
 
             '(5:902) remove the triggering furre to my Dream Member list if they are on it.
             Add(TriggerCategory.Effect,
@@ -85,61 +96,33 @@ Namespace Engine.Libraries
 
         End Sub
 
+        Private Function AddFurreNamed(reader As TriggerReader) As Boolean
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function AddTrigFurre(reader As TriggerReader) As Boolean
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function FurreNamedIsNotMember(reader As TriggerReader) As Boolean
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function TrigFurreIsNotMember(reader As TriggerReader) As Boolean
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function FurreNamedIsMember(reader As TriggerReader) As Boolean
+            Throw New NotImplementedException()
+        End Function
+
+        Private Function TrigFurreIsMember(reader As TriggerReader) As Boolean
+            Throw New NotImplementedException()
+        End Function
+
 #End Region
 
 #Region "Private Methods"
-
-        '''' <summary>
-        '''' (5:901) add the furre named {...} to my Dream Member list if
-        '''' they aren't already on it.
-        '''' </summary>
-        '''' <param name="reader">
-        '''' <see cref="TriggerReader"/>
-        '''' </param>
-        '''' <returns>
-        '''' </returns>
-        'Public Function AddFurreNamed(reader As TriggerReader) As Boolean
-
-        '    Try
-        '        Dim Furre = reader.ReadString
-        '        If FurreNamedIsNotMember(reader) Then
-        '            Using sw = New StreamWriter(MemberList, True)
-        '                sw.WriteLine(Furre)
-        '            End Using
-        '        End If
-        '        Return True
-        '    Catch ex As Exception
-        '        Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
-        '        Logger.Error(Of MsMemberList)($"{ex.Message}")
-        '    End Try
-        '    Return False
-        'End Function
-
-        '''' <summary>
-        '''' (1:900) add the triggering furre to my Dream Member list if they
-        '''' aren't already on it.
-        '''' </summary>
-        '''' <param name="reader">
-        '''' <see cref="TriggerReader"/>
-        '''' </param>
-        '''' <returns>
-        '''' </returns>
-        'Public Function AddTrigFurre(reader As TriggerReader) As Boolean
-
-        '    Try
-        '        Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
-        '        If TrigFurreIsMember(reader) = False AndAlso TrigFurreIsNotMember(reader) Then
-        '            Dim sw = New StreamWriter(MemberList, True)
-        '            sw.WriteLine(Furre)
-        '            sw.Close()
-        '        End If
-        '        Return True
-        '    Catch ex As Exception
-        '        Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
-        '        Logger.Error(Of MsMemberList)($"{ex.Message}")
-        '    End Try
-        '    Return False
-        'End Function
 
         ''' <summary>
         ''' Check for the member list file, If it doesn't exist created it.
@@ -155,33 +138,6 @@ Namespace Engine.Libraries
                 End Using
             End If
         End Sub
-
-        '''' <summary>
-        '''' (1:901) and the furre named {...} is on my Dream Member list.
-        '''' </summary>
-        '''' <param name="reader">
-        '''' <see cref="TriggerReader"/>
-        '''' </param>
-        '''' <returns>
-        '''' </returns>
-        'Public Function FurreNamedIsMember(reader As TriggerReader) As Boolean
-
-        '    Dim Furre = reader.ReadString
-        '    Try
-        '        CheckMemberList()
-        '        Dim f = File.ReadAllLines(MemberList)
-        '        For Each line In f
-        '            If line.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then
-        '                Return True
-        '            End If
-        '        Next
-        '        Return ParentBotSession.IsBotController
-        '    Catch ex As Exception
-        '        Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
-        '        Logger.Error(Of MsMemberList)($"{ex.Message}")
-        '    End Try
-        '    Return False
-        'End Function
 
         ''' <summary>
         ''' (5:905) store member list to variable %Variable.
@@ -282,47 +238,6 @@ Namespace Engine.Libraries
             Return False
         End Function
 
-        '''' <summary>
-        '''' (1:900) and the triggering furre is on my dream Member List,
-        '''' </summary>
-        '''' <param name="reader">
-        '''' <see cref="TriggerReader"/>
-        '''' </param>
-        '''' <returns>
-        '''' </returns>
-        'Public Function TrigFurreIsMember(reader As TriggerReader) As Boolean
-
-        '    Try
-        '        CheckMemberList()
-
-        '        Dim Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString
-
-        '        Dim f = New List(Of String)
-        '        f.AddRange(File.ReadAllLines(MemberList))
-        '        For Each line In f
-        '            If line.ToFurcadiaShortName() = Furre.ToFurcadiaShortName() Then Return True
-        '        Next
-
-        '        Return ParentBotSession.IsBotController
-        '    Catch ex As Exception
-        '        Logger.Info(Of MsMemberList)("A problem occurred checking the member-list")
-        '        Logger.Error(Of MsMemberList)($"{ex.Message}")
-        '    End Try
-        '    Return False
-        'End Function
-
-        '''' <summary>
-        '''' (1:902) and the triggering furre is not on my Dream Member list.
-        '''' </summary>
-        '''' <param name="reader">
-        '''' <see cref="TriggerReader"/>
-        '''' </param>
-        '''' <returns>
-        '''' </returns>
-        'Public Function TrigFurreIsNotMember(reader As TriggerReader) As Boolean
-        '    Return Not TrigFurreIsMember(reader)
-        'End Function
-
         ''' <summary>
         ''' (5:904) Use file {...} as the dream member list.
         ''' </summary>
@@ -343,6 +258,10 @@ Namespace Engine.Libraries
             Return False
         End Function
 
+        ''' <summary>
+        ''' Called when page is disposing or resetting.
+        ''' </summary>
+        ''' <param name="page">The page.</param>
         Public Overrides Sub Unload(page As Page)
 
         End Sub

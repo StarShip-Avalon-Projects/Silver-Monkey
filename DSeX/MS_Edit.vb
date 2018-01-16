@@ -202,7 +202,7 @@ Public Class MS_Edit
         TabEditStyles(TabControl2.SelectedIndex) = style
 
         If style = EditStyles.ms Then
-            MS_Editor.Text = NewEditorScripts.NewMSFile()
+            MS_Editor.Text = NewEditorScripts.NewMSFile(MsPage.GetVariable("%VERSION").Value.ToString)
             lblStatus.Text = "Status: Opened New MonkeySpeak  File "
             popupMenu = New AutocompleteMenu(MS_Editor)
             popupMenu.Enabled = True
@@ -300,7 +300,7 @@ Public Class MS_Edit
                 Case ".ds"
                     MS_Editor.Text = NewEditorScripts.NewDSFile()
                 Case ".ms"
-                    MS_Editor.Text = NewEditorScripts.NewMSFile()
+                    MS_Editor.Text = NewEditorScripts.NewMSFile(MsPage.GetVariable("%VERSION").Value.ToString)
                 Case Else
                     MS_Editor.Text = ""
             End Select

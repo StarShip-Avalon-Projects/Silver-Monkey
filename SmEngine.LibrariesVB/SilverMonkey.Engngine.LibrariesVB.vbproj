@@ -81,7 +81,7 @@
     <Compile Include="MsPhoenixSpeak.vb" />
     <Compile Include="MsPhoenixSpeakBackupAndRestore.vb" />
     <Compile Include="MsPopUpDialogs.vb" />
-    <None Include="MsPounce.vb" />
+    <Compile Include="MsPounce.vb" />
     <Compile Include="MsSound.vb" />
     <Compile Include="MsTrades.vb" />
     <Compile Include="MsWebRequests.vb" />
@@ -105,7 +105,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="packages.config" />
     <Compile Include="WmCpyDta.vb" />
     <None Include="VbLibs.snk" />
   </ItemGroup>

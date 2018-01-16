@@ -674,7 +674,7 @@ Public Class Settings
             _MS_VariableColor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "VariableColor"))
             _MS_NumberColor = ColorTranslator.FromHtml(ini.GetKeyValue(MonkeySpeak, "NumberColor"))
 
-            _AutoCompleteEnable = Convert.ToBoolean(ini.GetKeyValue(MSEditorSection, "AutoComplete"))
+            Boolean.TryParse(ini.GetKeyValue(MSEditorSection, "AutoComplete"), _AutoCompleteEnable)
 
             Dim DSSection As IniSection = ini.GetSection("plugins")
             If Not IsNothing(DSSection) Then

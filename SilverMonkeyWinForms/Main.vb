@@ -43,11 +43,6 @@ Public Class Main
     ''' </summary>
     Public WithEvents FurcadiaSession As Bot
 
-    ''' <summary>
-    ''' Bot Debug tool
-    ''' </summary>
-    Private WithEvents MsExport As MS_Export = Nothing
-
     Public WithEvents NotifyIcon1 As NotifyIcon
 
 #End Region
@@ -655,14 +650,6 @@ Public Class Main
         End Using
     End Sub
 
-    Private Sub ExportMonkeySpeakToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportMonkeySpeakToolStripMenuItem.Click
-        If MsExport Is Nothing Then
-            MsExport = New MS_Export()
-        End If
-        MsExport.Show()
-        MsExport.Activate()
-    End Sub
-
     Private Sub Follow_Click(sender As Object, e As EventArgs) _
         Handles Follow.Click, Lead.Click, Summon.Click, Join.Click
         If Not DreamList.SelectedItem Is Nothing Then
@@ -732,21 +719,22 @@ Public Class Main
         'try to load file. If file isn't found, do nothing
         MRUlist.Clear()
         Try
-            Using listToRead = New StreamReader(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"))
-                'read file stream
-                Dim line As String = ""
-                While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
-                    Dim ext As String = Path.GetExtension(line)
-                    If ext = Extention Then
-                        'read each line until end of file
-                        MRUlist.Enqueue(line)
-                    End If
-                End While
-                'insert to list
-                'close the stream
-                listToRead.Close()
+            Using fStream As New FileStream(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"), FileMode.OpenOrCreate)
+                Using listToRead = New StreamReader(fStream)
+                    'read file stream
+                    Dim line As String = ""
+                    While (InlineAssignHelper(line, listToRead.ReadLine())) IsNot Nothing
+                        Dim ext As String = Path.GetExtension(line)
+                        If ext = Extention Then
+                            'read each line until end of file
+                            MRUlist.Enqueue(line)
+                        End If
+                    End While
+                    'insert to list
+                    'close the stream
+                    listToRead.Close()
+                End Using
             End Using
-
             'throw;
         Catch
         End Try

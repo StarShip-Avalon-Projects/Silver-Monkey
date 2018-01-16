@@ -162,12 +162,6 @@
       <DependentUpon>Main.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\MS_Export.Designer.vb">
-      <DependentUpon>MS_Export.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MS_Export.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -214,9 +208,6 @@
     <EmbeddedResource Include="Main.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Main.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MS_Export.resx">
-      <DependentUpon>MS_Export.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

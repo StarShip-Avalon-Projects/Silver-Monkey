@@ -7,7 +7,7 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using static MsLibHelper;
+using static Engine.Libraries.MsLibHelper;
 using static SmEngineTests.Utilities;
 
 namespace SmEngineTests
@@ -53,8 +53,6 @@ namespace SmEngineTests
         public void Initialize()
         {
             Furcadia.Logging.Logger.SingleThreaded = false;
-            if (!File.Exists(BackupSettingsFile))
-                throw new Exception("BackupSettingsFile Doesn't Exists");
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
             var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,

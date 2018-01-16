@@ -40,7 +40,7 @@ namespace Engine
         /// <returns></returns>
         /// <exception cref="ArgumentException">Filepath npt given</exception>
         /// <exception cref="FileNotFoundException">MonkeySpeak file ({file}) not found. Did you forget to define on or check the file path?</exception>
-        public static string LoadFromScriptFile(string file)
+        public static string LoadFromScriptFile(string file, Version ver)
         {
             if (string.IsNullOrWhiteSpace(file))
             {
@@ -65,6 +65,11 @@ namespace Engine
                     }
                     else if (line.StartsWith(RES_MS_begin))
                     {
+                        var vers = line.Replace(RES_MS_begin, "");
+                        vers = vers.Substring(0, 5);
+                        if (Version.Parse($"{vers}.0.0").MajorRevision < ver.MajorRevision || Version.Parse(vers).Major < ver.Major)
+                            throw new Exception($"Version Mismatch error, Please upgrade the script to MSPKV{ver.Major},{ver.MajorRevision}");
+
                         ScriptContents.AppendLine(line);
                         // MonkeySpeak Script Version Check
                     }
