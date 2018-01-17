@@ -4,7 +4,11 @@ Imports Furcadia.IO
 ''' <summary>
 ''' Generic scripts for preloading into Monkey Speak Editor and Silver Monkey
 ''' </summary>
-Public NotInheritable Class NewEditorScripts
+Public Class NewEditorScripts
+
+    Sub New()
+        _MS_KeysIni = New IniFile()
+    End Sub
 
 #Region "Private Fields"
 
