@@ -136,7 +136,7 @@ Public Class BotSetup
         With IniBrowseDialog
             ' Select Character ini file
 
-            .InitialDirectory = Paths.FurcadiaCharactersFolder
+            .InitialDirectory = MonkeyCore2.IO.Paths.FurcadiaCharactersFolder
 
             If .ShowDialog = DialogResult.OK Then
                 TxtBx_CharIni.Text = .FileName
@@ -147,7 +147,7 @@ Public Class BotSetup
     Private Sub BtnMS_File_Click(sender As System.Object, e As System.EventArgs) Handles BtnMS_File.Click
         With MS_BrosweDialog
             ' Select Character ini file
-            .InitialDirectory = Paths.SilverMonkeyDocumentsPath
+            .InitialDirectory = MonkeyCore2.IO.Paths.SilverMonkeyDocumentsPath
             If .ShowDialog = DialogResult.OK Then
                 TxtBxMS_File.Text = .FileName
             End If
@@ -157,7 +157,7 @@ Public Class BotSetup
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
         With IniBrowse
             ' Select Character ini file
-            .InitialDirectory = Paths.SilverMonkeyLogPath
+            .InitialDirectory = MonkeyCore2.IO.Paths.SilverMonkeyLogPath
             .RestoreDirectory = True
             If .ShowDialog = DialogResult.OK Then
                 Dim filenameOnly As String = Path.GetFileNameWithoutExtension(.FileName)
@@ -177,7 +177,7 @@ Public Class BotSetup
             TxtBxBotIni.Text = "New Bot.bini"
         End If
         Try
-            _botConfig = New BotOptions(Path.Combine(Paths.SilverMonkeyBotPath, TxtBxBotIni.Text))
+            _botConfig = New BotOptions(Path.Combine(MonkeyCore2.IO.Paths.SilverMonkeyBotPath, TxtBxBotIni.Text))
             Integer.TryParse(TxtHPort.Text, _botConfig.LocalhostPort)
             Try
                 _botConfig.CharacterIniFile = TxtBx_CharIni.Text

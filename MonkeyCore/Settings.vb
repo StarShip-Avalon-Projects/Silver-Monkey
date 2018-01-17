@@ -3,7 +3,7 @@ Imports System.IO
 Imports System.Windows.Forms
 Imports Furcadia.IO
 Imports Furcadia.IO.IniFile
-Imports IO
+Imports MonkeyCore2.IO
 
 'Structure Data (Main Settings, Individual Program Groups)
 'Read Master settings.ini
@@ -40,7 +40,7 @@ Public Class Settings
     Private Shared _MS_KeysIni As New IniFile
 
     Private Shared _PluginList As New Dictionary(Of String, Boolean)
-    Private Shared SettingsFile As String = Path.Combine(IO.Paths.ApplicationSettingsPath, SettingFile)
+    Private Shared SettingsFile As String = Path.Combine(MonkeyCore2.IO.Paths.ApplicationSettingsPath, SettingFile)
 
 #End Region
 
@@ -133,7 +133,7 @@ Public Class Settings
         Private _TT_TimeOut As Integer = 90
 
         Private _whColor As Color = Color.Purple
-        Private SettingsFile As String = Path.Combine(IO.Paths.ApplicationSettingsPath, SettingFile)
+        Private SettingsFile As String = Path.Combine(MonkeyCore2.IO.Paths.ApplicationSettingsPath, SettingFile)
 
 #End Region
 
@@ -373,7 +373,7 @@ Public Class Settings
         Public Property FurcPath As String
             Get
                 If String.IsNullOrEmpty(_FurcPath) Then
-                    Return IO.Paths.FurcadiaProgramFolder
+                    Return MonkeyCore2.IO.Paths.FurcadiaProgramFolder
                 End If
                 Return _FurcPath
             End Get
@@ -723,7 +723,7 @@ Public Class Settings
         Public Property FurcPath As String
             Get
                 If String.IsNullOrEmpty(_FurcPath) Then
-                    Return IO.Paths.FurcadiaProgramFolder
+                    Return MonkeyCore2.IO.Paths.FurcadiaProgramFolder
                 End If
                 Return _FurcPath
             End Get

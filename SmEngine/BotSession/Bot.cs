@@ -533,7 +533,7 @@ namespace BotSession
                         // (0:50) When the bot see a query (lead, follow summon, join, cuddle),
                         Match QueryMatch = QueryCommand.Match(data);
                         await MSpage.ExecuteAsync(new int[] { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 },
-                             cancel, Furr, QueryMatch.Groups[6].Value);
+                             cancel, Furr, $"{ QueryMatch.Groups[6].Value} { QueryMatch.Groups[7].Value}");
                         return;
 
                     case "banish":

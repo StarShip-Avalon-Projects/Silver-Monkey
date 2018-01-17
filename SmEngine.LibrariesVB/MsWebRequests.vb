@@ -36,7 +36,7 @@ Public NotInheritable Class MsWebRequests
 
         WebURL = Nothing
         '(0:70) When the bot receives a variable list by sending the Web-Cache.
-        Add(TriggerCategory.Cause, 70,
+        Add(TriggerCategory.Cause,
         Function()
             Return True
         End Function, "When the bot receives a variable list by sending the Web-Cache.")

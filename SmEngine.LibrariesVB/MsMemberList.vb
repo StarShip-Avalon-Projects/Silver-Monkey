@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Imports Engine.Libraries.MsLibHelper
-Imports IO
+Imports MonkeyCore2.IO
 Imports Monkeyspeak
 Imports Monkeyspeak.Logging
 
@@ -50,29 +50,29 @@ Namespace Engine.Libraries
             MyBase.Initialize(args)
             MemberList = Paths.CheckBotFolder("MemberList.txt")
             '(1:900) and the triggering furre is on my Dream Member List,
-            Add(TriggerCategory.Condition, 900,
+            Add(TriggerCategory.Condition,
                 AddressOf TrigFurreIsMember,
                 "and the triggering furre is on my dream Member List,")
             '(1:901) and the furre named {...} is on my Dream Member list.
-            Add(TriggerCategory.Condition, 901,
+            Add(TriggerCategory.Condition,
                 AddressOf FurreNamedIsMember,
                 "and the furre named {...} is on my Dream Member list,")
 
             '(1902) And the triggering furre Is Not on my Dream Member list.
-            Add(TriggerCategory.Condition, 902,
+            Add(TriggerCategory.Condition,
                 AddressOf TrigFurreIsNotMember,
                 "and the triggering furre is not on my Dream Member list,")
             '(1903) And the furre named {...} Is Not on my Dream Member list.
-            Add(TriggerCategory.Condition, 903,
+            Add(TriggerCategory.Condition,
                 AddressOf FurreNamedIsNotMember,
                 "and the furre named {...} is not on my Dream Member list,")
 
             '(1900) add the triggering furre to my Dream Member list if they aren't already on it.
-            Add(TriggerCategory.Effect, 900,
+            Add(TriggerCategory.Effect,
                 AddressOf AddTrigFurre,
                 "add the triggering furre to my Dream Member list if they aren't already on it.")
             '(5901) add the furre named {...} to my Dream Member list if they aren't already on it.
-            Add(TriggerCategory.Effect, 901,
+            Add(TriggerCategory.Effect,
                 AddressOf AddFurreNamed,
                 "add the furre named {...} to my Dream Member list if they aren't already on it.")
 

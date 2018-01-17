@@ -2,7 +2,7 @@
 using Furcadia.Logging;
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
-using IO;
+using MonkeyCore2.IO;
 using MonkeyCore;
 using NUnit.Framework;
 using System;

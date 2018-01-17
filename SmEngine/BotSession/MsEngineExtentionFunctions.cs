@@ -2,7 +2,8 @@
 using System.IO;
 using System;
 using BotSession;
-using IO;
+using MonkeyCore2.IO;
+using System.Text.RegularExpressions;
 
 namespace Engine
 {
@@ -65,8 +66,9 @@ namespace Engine
                     }
                     else if (line.StartsWith(RES_MS_begin))
                     {
-                        var vers = line.Replace(RES_MS_begin, "");
-                        vers = vers.Substring(0, 5);
+                        var vers = line;
+                        var versionregex = new Regex("(\\d{1,3}\\.\\d{1,3})", RegexOptions.Compiled);
+                        vers = versionregex.Match(vers).Groups[1].Value;
                         if (Version.Parse($"{vers}.0.0").MajorRevision < ver.MajorRevision || Version.Parse(vers).Major < ver.Major)
                             throw new Exception($"Version Mismatch error, Please upgrade the script to MSPKV{ver.Major},{ver.MajorRevision}");
 

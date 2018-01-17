@@ -45,7 +45,7 @@ namespace Engine.Libraries
     {
         #region Public Properties
 
-        private List<string> BanishedFurres;
+        private List<string> BanishedFurres = new List<string>();
         public override int BaseId => 51;
 
         #endregion Public Properties
@@ -60,57 +60,57 @@ namespace Engine.Libraries
         {
             base.Initialize(args);
             // (0:51) When the bot fails to banish a furre,
-            Add(TriggerCategory.Cause, 51,
+            Add(TriggerCategory.Cause,
                 r => WhenTriggeringFurreBanished(r),
                 "When the bot fails to banish a furre,");
 
             // (0:52) When the bot fails to banish the furre named {...},
-            Add(TriggerCategory.Cause, 52,
+            Add(TriggerCategory.Cause,
                 r => WhenFurreNamedBanished(r),
                 "When the bot fails to banish the furre named {...},");
 
             // (0:53) When the bot successfully banishes a furre,
-            Add(TriggerCategory.Cause, 53,
+            Add(TriggerCategory.Cause,
                 r => WhenTriggeringFurreBanished(r),
                 "When the bot successfully banishes a furre,");
 
             // (0:54) When the bot successfully banishes the furre named {...},
-            Add(TriggerCategory.Cause, 54,
+            Add(TriggerCategory.Cause,
                 r => WhenFurreNamedBanished(r),
                 "When the bot successfully banishes the furre named {...},");
 
             // (0:55) When the bot sees the banish list,
-            Add(TriggerCategory.Cause, 55,
+            Add(TriggerCategory.Cause,
                 r => WhenTriggeringFurreBanished(r),
                 "When the bot sees the banish list,");
 
             // (0:56) When the bot fails to remove a furre from the banish list,
-            Add(TriggerCategory.Cause, 56,
+            Add(TriggerCategory.Cause,
                 r => WhenTriggeringFurreBanished(r),
                 "When the bot fails to remove a furre from the banish list,");
 
             // (0:57) When the bot fails to remove the furre named {...} from the banish list,
-            Add(TriggerCategory.Cause, 57,
+            Add(TriggerCategory.Cause,
                  r => WhenFurreNamedBanished(r),
                  "When the bot fails to remove the furre named {...} from the banish list,");
 
             // (0:58) When the bot successfully removes a furre from the banish list,
-            Add(TriggerCategory.Cause, 58,
+            Add(TriggerCategory.Cause,
                 r => WhenTriggeringFurreBanished(r),
                 "When the bot successfully removes a furre from the banish list,");
 
             // (0:59) When the bot successfully removes the furre named {...} from the banish list,
-            Add(TriggerCategory.Cause, 59,
+            Add(TriggerCategory.Cause,
                  r => WhenFurreNamedBanished(r),
                  "When the bot successfully removes the furre named {...} from the banish list,");
 
             // (0:60) When the bot fails to empty the banish list,
-            Add(TriggerCategory.Cause, 60,
+            Add(TriggerCategory.Cause,
                 r => throw new NotImplementedException(),
                 "When the bot fails to empty the banish list,");
 
             // (0:61) When the bot successfully clears the banish list,
-            Add(TriggerCategory.Cause, 61,
+            Add(TriggerCategory.Cause,
                 r =>
                 {
                     var banisList = r.GetParametersOfType<List<string>>().FirstOrDefault();
@@ -124,12 +124,12 @@ namespace Engine.Libraries
                 "When the bot successfully clears the banish list,");
 
             // (0:62) When the bot successfully temp banishes a furre,
-            Add(TriggerCategory.Cause, 62,
+            Add(TriggerCategory.Cause,
                 r => WhenTriggeringFurreBanished(r),
                 "When the bot successfully temp banishes a furre,");
 
             // (0:63) When the bot successfully temp banishes the furre named {...},
-            Add(TriggerCategory.Cause, 63,
+            Add(TriggerCategory.Cause,
                  r => WhenFurreNamedBanished(r),
                  "When the bot successfully temp banishes the furre named {...},");
 

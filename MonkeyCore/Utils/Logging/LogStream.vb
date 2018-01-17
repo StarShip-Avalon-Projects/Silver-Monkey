@@ -2,7 +2,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Furcadia.Text.FurcadiaMarkup
-Imports IO
+Imports MonkeyCore2.IO
 
 Namespace Utils.Logging
 
@@ -25,7 +25,7 @@ Namespace Utils.Logging
         Public Sub New()
             Options = New LogSteamOptions
 
-            strErrorFilePath = Paths.SilverMonkeyLogPath
+            strErrorFilePath = MonkeyCore2.IO.Paths.SilverMonkeyLogPath
 
         End Sub
 

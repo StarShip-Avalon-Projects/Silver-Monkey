@@ -47,7 +47,7 @@ namespace Logging
             this.Ex = Ex;
             // Call Log Error
             // CHANGE FILEPATH/STRUCTURE HERE TO CHANGE FILE NAME & SAVING LOCATION
-            strErrorFilePath = Path.Combine(IO.Paths.SilverMonkeyErrorLogPath, $"{ Assembly.GetEntryAssembly().GetName().Name } _Error_ {DateTime.Now.ToString("MM_dd_yyyy_H-mm-ss") }.txt");
+            strErrorFilePath = Path.Combine(MonkeyCore2.IO.Paths.SilverMonkeyErrorLogPath, $"{ Assembly.GetEntryAssembly().GetName().Name } _Error_ {DateTime.Now.ToString("MM_dd_yyyy_H-mm-ss") }.txt");
             LogError(Ex, ObjectThrowingError.ToString());
         }
 
@@ -130,7 +130,7 @@ namespace Logging
                 }
 
                 LogFile.WriteLine("");
-                LogFile.WriteLine($"Program Location: { IO.Paths.ApplicationPath}");
+                LogFile.WriteLine($"Program Location: { MonkeyCore2.IO.Paths.ApplicationPath}");
                 LogFile.WriteLine("");
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Error Details");

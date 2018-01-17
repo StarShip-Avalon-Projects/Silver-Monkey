@@ -43,34 +43,40 @@ Namespace Engine.Libraries
             MyBase.Initialize(args)
             dice = New DiceObject()
             '(0:130) When the bot rolls #d#,
-            Add(TriggerCategory.Cause, 130, AddressOf RollNumber,
+            Add(TriggerCategory.Cause,
+                AddressOf RollNumber,
                 "When the bot rolls #d#,")
             '(0:131) When the bot rolls #d#+#,
-            Add(TriggerCategory.Cause, 131, AddressOf RollNumberPlusModifyer,
+            Add(TriggerCategory.Cause,
+                AddressOf RollNumberPlusModifyer,
                 "When the bot rolls #d#+#,")
             '(0:132) When the bot rolls #d#-#,
-            Add(TriggerCategory.Cause, 132, AddressOf RollNumberMinusModifyer,
+            Add(TriggerCategory.Cause,
+                AddressOf RollNumberMinusModifyer,
                 "When the bot rolls #d#-#,")
 
             '(0:133) When a furre rolls #d#,
-            Add(TriggerCategory.Cause, 133, AddressOf RollNumber,
+            Add(TriggerCategory.Cause,
+                AddressOf RollNumber,
                 "When a furre rolls #d#,")
             '(0:138) When a fuure rolls #d#+#,
-            Add(TriggerCategory.Cause, 134, AddressOf RollNumberPlusModifyer,
+            Add(TriggerCategory.Cause,
+                AddressOf RollNumberPlusModifyer,
                 "When a furre rolls #d#+#,")
             '(0:140) When a furre rolls #d#-#,
-            Add(TriggerCategory.Cause, 135, AddressOf RollNumberMinusModifyer,
+            Add(TriggerCategory.Cause,
+                AddressOf RollNumberMinusModifyer,
                 "When a furre rolls #d#-#,")
 
             '(0:136) When any one rolls anything,
-            Add(TriggerCategory.Cause, 136,
-                Function(reader)
-                    Dim DiceParam = reader.GetParameter(Of DiceObject)
-                    If DiceParam IsNot Nothing Then
-                        dice = DiceParam
-                    End If
-                    Return True
-                End Function, "When any one rolls anything,")
+            Add(TriggerCategory.Cause,
+                 Function(reader)
+                     Dim DiceParam = reader.GetParameter(Of DiceObject)
+                     If DiceParam IsNot Nothing Then
+                         dice = DiceParam
+                     End If
+                     Return True
+                 End Function, "When any one rolls anything,")
 
             '(1:130) and the result is # or higher,
             Add(TriggerCategory.Condition,

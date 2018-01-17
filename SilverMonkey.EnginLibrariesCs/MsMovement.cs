@@ -43,32 +43,30 @@ namespace Engine.Libraries
 
         public override void Initialize(params object[] args)
         {
-            base.Initialize(args);
-
             // Furre In View
             // (0:28) When anyone enters the bots view,
-            Add(TriggerCategory.Cause, 600,
+            Add(TriggerCategory.Cause,
                 r => EnterView(r),
                 "When anyone enters the bots view, ");
 
             // (0:28) When a furre named {..} enters the bots view
-            Add(TriggerCategory.Cause, 601,
+            Add(TriggerCategory.Cause,
                 r => FurreNamedEnterView(r),
                 "When a furre named {..} enters the bots view,");
 
             // Furre Leave View
             // (0:30) When anyone leaves the bots view,
-            Add(TriggerCategory.Cause, 602,
+            Add(TriggerCategory.Cause,
                 r => LeaveView(r),
                 "When anyone leaves the bots view, ");
 
             // (0:31) When a furre named {..} leaves the bots view
-            Add(TriggerCategory.Cause, 603,
+            Add(TriggerCategory.Cause,
                 r => FurreNamedLeaveView(r),
                 "When a furre named {..} leaves the bots view,");
 
             // (0:600) When the bot reads a description.
-            Add(TriggerCategory.Cause, 604,
+            Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r),
                 "When the bot sees a furre description,");
 
@@ -443,7 +441,7 @@ namespace Engine.Libraries
             var name = reader.ReadString();
             var Target = DreamInfo.Furres.GerFurreByName(name);
             Var.Value = Target.FurreColors.ToString();
-            return (Target.FurreID > 0);
+            return Target.FurreID > 0;
         }
 
         /// <summary>

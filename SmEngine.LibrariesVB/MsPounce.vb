@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports Furcadia.Net.Pounce
+Imports MonkeyCore2.IO
 Imports Monkeyspeak
 Imports Engine.Libraries.MsLibHelper
 
@@ -200,20 +201,20 @@ Public NotInheritable Class MsPounce
 
         PounceFurres = New List(Of PounceFurre)
         'Setup our Default Objects
-        _onlineListFile = IO.Paths.CheckBotFolder(ListFile)
+        _onlineListFile = MonkeyCore2.IO.Paths.CheckBotFolder(ListFile)
         '   OnlineFurres = New IO.NameList(_onlineListFile)
         ' (0:950) When a furre logs on,
-        Add(TriggerCategory.Cause, 950,
+        Add(TriggerCategory.Cause,
         Function() True, "When a furre logs on,")
 
         '(0:951) When a furre logs off,
-        Add(TriggerCategory.Cause, 951,
+        Add(TriggerCategory.Cause,
         Function() True, "When a furre logs off,")
         '(0:952) When the furre named {...} logs on,
-        Add(TriggerCategory.Cause, 952,
+        Add(TriggerCategory.Cause,
             AddressOf NameIs, "When the furre named {...} logs on,")
         '(0:953) When the furre named {...} logs off,
-        Add(TriggerCategory.Cause, 953,
+        Add(TriggerCategory.Cause,
             AddressOf NameIs, "When the furre named {...} logs off,")
 
         '(1;950) and the furre named {...} is on-line,
@@ -395,7 +396,7 @@ Public NotInheritable Class MsPounce
 #Region "Private Methods"
 
     Private Sub CheckonlineList()
-        _onlineListFile = IO.Paths.CheckBotFolder(_onlineListFile)
+        _onlineListFile = MonkeyCore2.IO.Paths.CheckBotFolder(_onlineListFile)
         If File.Exists(_onlineListFile) = False Then
             Console.WriteLine("On-line List File: " + _onlineListFile + "Doesn't Exist, Creating new file")
             Using sw = New StreamWriter(_onlineListFile, False)

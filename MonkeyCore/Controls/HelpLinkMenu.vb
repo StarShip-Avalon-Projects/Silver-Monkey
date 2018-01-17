@@ -51,7 +51,7 @@ Namespace Controls
             MyBase.New()
             _MenuItems = New List(Of MenuItem)
             HelpIni = New IniFile
-            HelpIni.Load(Path.Combine(IO.Paths.ApplicationPath, "HelpLink.ini"))
+            HelpIni.Load(Path.Combine(MonkeyCore2.IO.Paths.ApplicationPath, "HelpLink.ini"))
             HelpSection = HelpIni.GetSection(SectionName)
             If Not HelpSection Is Nothing Then
                 For Each KeyVal As IniFile.IniSection.IniKey In HelpSection.Keys

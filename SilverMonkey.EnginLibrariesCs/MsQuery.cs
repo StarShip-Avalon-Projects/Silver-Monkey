@@ -33,78 +33,79 @@ namespace Engine.Libraries
 
             // Summon
             // (0:40) When anyone requests to summon the bot,
-            Add(TriggerCategory.Cause, 40, r =>
+            Add(TriggerCategory.Cause,
+                r =>
                 ReadTriggeringFurreParams(r)
-                && "summon" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && "join their" == r.GetParametersOfType<string>().FirstOrDefault(),
                 "When anyone requests to summon the bot,");
 
             // (0:41) When a furre named {..} requests to summon the bot,
-            Add(TriggerCategory.Cause, 41,
+            Add(TriggerCategory.Cause,
                 r => NameIs(r)
-                && "summon" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && "join their" == r.GetParametersOfType<string>().FirstOrDefault(),
                 "When a furre named {..} requests to summon the bot,");
 
             // Join
             // (0:42) When anyone requests to join the bot,
-            Add(TriggerCategory.Cause, 42,
+            Add(TriggerCategory.Cause,
                r => ReadTriggeringFurreParams(r)
-               && "join" == r.GetParametersOfType<string>().FirstOrDefault(),
+               && "join your" == r.GetParametersOfType<string>().FirstOrDefault(),
                "When anyone requests to join the bot,");
 
             // (0:43) When a furre named {..} requests to join the bot,
-            Add(TriggerCategory.Cause, 43,
+            Add(TriggerCategory.Cause,
                 r => NameIs(r)
-                && "join" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && "join your" == r.GetParametersOfType<string>().FirstOrDefault(),
                 "When a furre named {..} requests to join the bot,");
 
             // Follow
             // (0:44) When anyone requests to follow the bot,
-            Add(TriggerCategory.Cause, 44,
+            Add(TriggerCategory.Cause,
                r => ReadTriggeringFurreParams(r)
-               && "follow" == r.GetParametersOfType<string>().FirstOrDefault(),
+               && "follow you" == r.GetParametersOfType<string>().FirstOrDefault(),
                "When anyone requests to follow the bot,");
 
             // (0:35) When a furre named {..} requests to follow the bot,
-            Add(TriggerCategory.Cause, 45,
+            Add(TriggerCategory.Cause,
                 r => NameIs(r)
-                && "follow" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && "follow you" == r.GetParametersOfType<string>().FirstOrDefault(),
                 "When a furre named {..} requests to follow the bot,");
             // Lead
 
             // (0:46) When anyone requests to lead the bot,
-            Add(TriggerCategory.Cause, 46,
+            Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r)
-                && "lead" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && "lead you" == r.GetParametersOfType<string>().FirstOrDefault(),
                 "When anyone requests to lead the bot,");
 
             // (0:47) When a furre named {..} requests to lead the bot,
-            Add(TriggerCategory.Cause, 47,
+            Add(TriggerCategory.Cause,
                 r => NameIs(r)
-                && "lead" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && "lead you" == r.GetParametersOfType<string>().FirstOrDefault(),
                 "When a furre named {..} requests to lead the bot,");
 
             // Cuddle
             // (0:48) When anyone requests to cuddle with the bot.
-            Add(TriggerCategory.Cause, 48,
+            Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r)
-                && "cuddle" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && "cuddle with" == r.GetParametersOfType<string>().FirstOrDefault(),
                 "When anyone requests to cuddle with the bot,");
 
             // (0:49) When a furre named {..} requests to cuddle with the bot,
-            Add(TriggerCategory.Cause, 49,
+            Add(TriggerCategory.Cause,
                 r => NameIs(r)
-                && "cuddle" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && "cuddle with" == r.GetParametersOfType<string>().FirstOrDefault(),
                 "When a furre named {..} requests to cuddle with the bot,");
 
             // (0:50) When the bot see a query (lead, follow summon, join, cuddle),
-            Add(TriggerCategory.Cause, 50,
+            Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r),
                 "When the bot see a query (lead, follow summon, join, cuddle),");
 
             Add(TriggerCategory.Effect,
                  r => SendServer($"`summon {Player.ShortName}"),
-
                  "summon the triggering furre");
+
             Add(TriggerCategory.Effect,
                 r => SendServer($"`summon {r.ReadString().ToFurcadiaShortName()}"),
                 "summon the the furre named {...}.");
@@ -135,11 +136,11 @@ namespace Engine.Libraries
 
             Add(TriggerCategory.Effect,
                 r => SendServer($"`cuddle {Player.ShortName}"),
-                "cuddle the triggering furre");
+                "cuddle with the triggering furre");
 
             Add(TriggerCategory.Effect,
                 r => SendServer($"`cuddle {r.ReadString().ToFurcadiaShortName()}"),
-                "lead the the cuddle named {...}.");
+                "cuddle with the furre named {...}.");
 
             Add(TriggerCategory.Effect,
                 r => SendServer($"`stop"),

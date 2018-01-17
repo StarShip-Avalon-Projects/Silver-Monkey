@@ -85,7 +85,7 @@ Public Class NewBott
         With OpenFileDialog1
             '.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/Silver Monkey"
 
-            .InitialDirectory = Paths.FurcadiaCharactersFolder
+            .InitialDirectory = MonkeyCore2.IO.Paths.FurcadiaCharactersFolder
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
 
                 TxtbxCharacterINI.Text = .FileName
@@ -195,7 +195,7 @@ Public Class NewBott
         TxtbxFilelocation.Size = New Size(207, 20)
         TxtbxFilelocation.Location = New Point(20, 94)
         TxtbxFilelocation.Visible = True
-        TxtbxFilelocation.Text = Paths.SilverMonkeyBotPath
+        TxtbxFilelocation.Text = MonkeyCore2.IO.Paths.SilverMonkeyBotPath
         TxtbxFilelocation.Anchor = System.Windows.Forms.AnchorStyles.Right _
             Or System.Windows.Forms.AnchorStyles.Left
 
@@ -339,10 +339,10 @@ Public Class NewBott
             BotFile = Path.Combine(TxtbxFilelocation.Text, TxtbxBotName.Text)
             MsFile = BotFile
         ElseIf Not Directory.Exists(TxtbxFilelocation.Text) Then
-            BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
+            BotFile = Path.Combine(MonkeyCore2.IO.Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
             MsFile = BotFile
         Else
-            BotFile = Path.Combine(Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
+            BotFile = Path.Combine(MonkeyCore2.IO.Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
             MsFile = BotFile
         End If
 

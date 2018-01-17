@@ -34,43 +34,43 @@ namespace Engine.Libraries
 
             // Furre Enters
             // (0:30) When anyone enters the Dream,
-            Add(TriggerCategory.Cause, 30,
+            Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
                 "When anyone enters the Dream,");
 
             // (0:31) When the furre named {..} enters the Dream,
-            Add(TriggerCategory.Cause, 31,
+            Add(TriggerCategory.Cause,
                 r => NameIs(r),
                 "When the furre named {..} enters the Dream,");
 
             // Furre Leaves
             // (0:32) When anyone leaves the Dream,
-            Add(TriggerCategory.Cause, 32,
+            Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r),
                 "When anyone leaves the Dream,");
 
             // (0:33) When a furre named {..} leaves the Dream,
-            Add(TriggerCategory.Cause, 33,
+            Add(TriggerCategory.Cause,
                 r => NameIs(r),
                 "When a furre named {..} leaves the Dream,");
 
             // (0:34) When the bot enters a Dream,
-            Add(TriggerCategory.Cause, 34,
+            Add(TriggerCategory.Cause,
              r => ReadDreamParams(r),
                 "When the bot enters a Dream,");
 
             // (0:35) When the bot enters the Dream named {..},
-            Add(TriggerCategory.Cause, 35,
+            Add(TriggerCategory.Cause,
                 r => DreamNameIs(r),
                 "When the bot enters the Dream named {..},");
 
             // (0:36) When the bot leaves a Dream,
-            Add(TriggerCategory.Cause, 36,
+            Add(TriggerCategory.Cause,
                r => ReadDreamParams(r),
                "When the bot leaves a Dream,");
 
             // (0:37) When the bot leaves the Dream named {..},
-            Add(TriggerCategory.Cause, 37,
+            Add(TriggerCategory.Cause,
                r => DreamNameIs(r),
                "When the bot leaves the Dream named {..},");
 

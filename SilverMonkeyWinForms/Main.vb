@@ -9,11 +9,9 @@ Imports Furcadia.Logging
 Imports Furcadia.Net
 Imports Furcadia.Net.DreamInfo
 Imports Furcadia.Net.Utils.ServerParser
-Imports IO
 Imports Logging
 Imports MonkeyCore
 Imports MonkeyCore.Controls
-Imports MonkeyCore.Paths
 Imports MonkeyCore.Settings
 Imports MonkeyCore.Utils.Logging
 
@@ -56,6 +54,7 @@ Public Class Main
 
 #Region "Private Fields"
 
+    Private Const MsEditor As String = "Monkeyspeak Editor.exe"
     Private Const HelpFile As String = "Silver Monkey.chm"
 
     ''' <summary>
@@ -285,7 +284,7 @@ Public Class Main
             RecentToolStripMenuItem.DropDownItems.Add(fileRecent)
         Next
         'writing menu list to file
-        Using stringToWrite = New StreamWriter(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"))
+        Using stringToWrite = New StreamWriter(Path.Combine(MonkeyCore2.IO.Paths.ApplicationSettingsPath, "Recent.txt"))
             'create file called "Recent.txt" located on app folder
             For Each item As String In MRUlist
                 'write list to stream
@@ -379,22 +378,19 @@ Public Class Main
     End Sub
 
     Public Function UpdateBotConfig(BotFilePath As String, Optional BConfig As BotOptions = Nothing) As Boolean
-        Try
-            If BConfig Is Nothing Then
 
-                BotConfig = New BotOptions(BotFilePath)
-            Else
-                BotConfig = BConfig
-            End If
-            FurcadiaSession.SetOptions(BotConfig)
+        If BConfig Is Nothing Then
 
-            SilverMonkeyBotPath = BotConfig.BotPath
+            BotConfig = New BotOptions(BotFilePath)
+        Else
+            BotConfig = BConfig
+        End If
+        FurcadiaSession.SetOptions(BotConfig)
 
-            Return True
-        Catch ex As Exception
-            Furcadia.Logging.Logger.Error(ex)
-        End Try
-        Return False
+        SilverMonkeyBotPath = BotConfig.BotPath
+
+        Return True
+
     End Function
 
     ''' <summary>
@@ -490,6 +486,7 @@ Public Class Main
             ConnectTrayIconMenuItem.Click, DisconnectTrayIconMenuItem.Click, BTN_Go.Click
         BTN_Go.Enabled = False
         Try
+            FurcadiaSession.Options = BotConfig
 
             If Not CanConnect Then Exit Sub
 
@@ -502,7 +499,7 @@ Public Class Main
                 FurreCountTxtBx.Text = ""
             Else
                 BTN_Go.Text = "Connecting..."
-                My.Settings.LastBotFile = Paths.CheckBotFolder(BotConfig.BotSettingsFile)
+                My.Settings.LastBotFile = MonkeyCore2.IO.Paths.CheckBotFolder(BotConfig.BotSettingsFile)
                 My.Settings.Save()
                 FurcadiaSession.SetOptions(BotConfig)
                 If BotConfig.LogOptions.log Then
@@ -694,10 +691,10 @@ Public Class Main
         End If
 
         Dim processStrt As New ProcessStartInfo With {
-            .FileName = Path.Combine(Paths.ApplicationPath, "MonkeySpeakEditor.EXE")
+            .FileName = Path.Combine(MonkeyCore2.IO.Paths.ApplicationPath, MsEditor)
         }
 
-        Dim f As String = Paths.CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+        Dim f As String = MonkeyCore2.IO.Paths.CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
         If Not String.IsNullOrEmpty(FurcadiaSession.ConnectedFurre.Name) _
             And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
@@ -719,7 +716,7 @@ Public Class Main
         'try to load file. If file isn't found, do nothing
         MRUlist.Clear()
         Try
-            Using fStream As New FileStream(Path.Combine(Paths.ApplicationSettingsPath, "Recent.txt"), FileMode.OpenOrCreate)
+            Using fStream As New FileStream(Path.Combine(MonkeyCore2.IO.Paths.ApplicationSettingsPath, "Recent.txt"), FileMode.OpenOrCreate)
                 Using listToRead = New StreamReader(fStream)
                     'read file stream
                     Dim line As String = ""
@@ -848,7 +845,7 @@ Public Class Main
             'e.Handled = True
             'e.SuppressKeyPress = True
         ElseIf (e.KeyCode = Keys.F1) Then
-            If File.Exists(Path.Combine(Paths.ApplicationPath, HelpFile)) Then
+            If File.Exists(Path.Combine(MonkeyCore2.IO.Paths.ApplicationPath, HelpFile)) Then
                 Help.ShowHelp(Me, HelpFile)
             End If
         ElseIf (e.KeyCode = Keys.N AndAlso e.Modifiers = Keys.Control) Then
@@ -1028,7 +1025,7 @@ Public Class Main
     Private Sub OpenToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles OpenToolStripMenuItem.Click
         With BotIniOpen
             ' Select Bot ini file
-            .InitialDirectory = Paths.SilverMonkeyBotPath
+            .InitialDirectory = MonkeyCore2.IO.Paths.SilverMonkeyBotPath
 
             If .ShowDialog = DialogResult.OK Then
                 UpdateBotConfig(.FileName)
@@ -1079,11 +1076,14 @@ Public Class Main
         'BotSetup.ShowDialog()
 
         If Not FurcadiaSession.IsServerSocketConnected Then
+            Try
+                UpdateBotConfig(sender.ToString())
+                My.Settings.LastBotFile = sender.ToString()
+                EditBotToolStripMenuItem.Enabled = True
+                My.Settings.Save()
+            Catch ex As FileNotFoundException
 
-            UpdateBotConfig(sender.ToString())
-            My.Settings.LastBotFile = sender.ToString()
-            EditBotToolStripMenuItem.Enabled = True
-            My.Settings.Save()
+            End Try
         End If
 
         'same as open menu

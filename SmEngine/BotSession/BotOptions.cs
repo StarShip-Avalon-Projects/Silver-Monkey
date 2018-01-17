@@ -1,7 +1,8 @@
-﻿using Furcadia.IO;
-using Furcadia.Net.Options;
+﻿using Furcadia.Net.Options;
 using MonkeyCore.Utils.Logging;
 using System.IO;
+using MonkeyCore2.IO;
+using Furcadia.IO;
 
 namespace BotSession
 {
@@ -53,7 +54,7 @@ namespace BotSession
             Initialize();
             LogOptions = new LogSteamOptions()
             {
-                LogPath = IO.Paths.SilverMonkeyLogPath
+                LogPath = MonkeyCore2.IO.Paths.SilverMonkeyLogPath
             };
 
             if (!File.Exists(BFile))
@@ -64,15 +65,15 @@ namespace BotSession
             string dir = Path.GetDirectoryName(BFile);
             if (string.IsNullOrEmpty(dir))
             {
-                BFile = Path.Combine(IO.Paths.SilverMonkeyBotPath, BFile);
+                BFile = Path.Combine(MonkeyCore2.IO.Paths.SilverMonkeyBotPath, BFile);
             }
 
-            if (File.Exists(IO.Paths.CheckBotFolder(ref BFile)))
+            if (File.Exists(MonkeyCore2.IO.Paths.CheckBotFolder(ref BFile)))
             {
                 string p = Path.GetDirectoryName(BFile);
                 if (!string.IsNullOrEmpty(p))
                 {
-                    IO.Paths.SilverMonkeyBotPath = p;
+                    MonkeyCore2.IO.Paths.SilverMonkeyBotPath = p;
                 }
 
                 BotIni.Load(BFile);
@@ -277,7 +278,7 @@ namespace BotSession
         /// </summary>
         public void SaveBotSettings()
         {
-            if (File.Exists(IO.Paths.CheckBotFolder(ref _BiniFile)))
+            if (File.Exists(MonkeyCore2.IO.Paths.CheckBotFolder(ref _BiniFile)))
                 BotIni.Load(_BiniFile);
 
             BotIni.SetKeyValue("Main", "Log", LogOptions.log.ToString());
@@ -295,7 +296,7 @@ namespace BotSession
             BotIni.SetKeyValue("Bot", "ConnectTimeOut", ConnectionTimeOut.ToString());
             BotIni.SetKeyValue("GoMap", "IDX", _GoMap.ToString());
             BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL);
-            BotIni.Save(IO.Paths.CheckBotFolder(ref _BiniFile));
+            BotIni.Save(MonkeyCore2.IO.Paths.CheckBotFolder(ref _BiniFile));
         }
 
         #endregion Public Methods

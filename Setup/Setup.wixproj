@@ -64,13 +64,13 @@
       <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\DSeX\MonkeySpeakEditor.vbproj">
-      <Name>MonkeySpeakEditor</Name>
-      <Project>{65e4cc10-b91d-4645-b20c-d3a381c9a36a}</Project>
+    <ProjectReference Include="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj">
+      <Name>MonkeyCore.WinFormsControls</Name>
+      <Project>{6a9fc31d-150b-4c4b-9694-7f8c084df602}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
@@ -107,6 +107,33 @@
       <DoNotHarvest>
       </DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak Editor\Monkeyspeak Editor.csproj">
+      <Name>MonkeyspeakEditorSquizzle</Name>
+      <Project>{6e721058-940a-445c-9141-32034944f5fd}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak.Editor.Interfaces\Monkeyspeak.Editor.Interfaces.csproj">
+      <Name>Monkeyspeak.Editor.Interfaces</Name>
+      <Project>{cf6ea88d-bee4-4deb-a4d1-ca6d6e263ac6}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak.Editor.Plugins\Monkeyspeak.Editor.Plugins.csproj">
+      <Name>Monkeyspeak.Editor.Plugins</Name>
+      <Project>{3429d7ee-1715-4ff4-a686-2614e255d8f7}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">

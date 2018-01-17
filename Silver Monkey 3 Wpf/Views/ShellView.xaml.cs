@@ -221,7 +221,7 @@ namespace SilverMonkey.Views
                 // Set filter for file extension and default file extension
                 DefaultExt = ".bini",
                 Filter = "Bot Information Files (.bini)|*.bini",
-                InitialDirectory = IO.Paths.SilverMonkeyBotPath
+                InitialDirectory = MonkeyCore2.IO.Paths.SilverMonkeyBotPath
             };
 
             // Display OpenFileDialog by calling ShowDialog method

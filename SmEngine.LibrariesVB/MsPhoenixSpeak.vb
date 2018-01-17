@@ -25,13 +25,13 @@ Namespace Engine.Libraries
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
             MyBase.Initialize(args)
-            Add(TriggerCategory.Cause, 80,
+            Add(TriggerCategory.Cause,
                 Function() True, "When the bot sees a Phoenix Speak response")
 
-            Add(TriggerCategory.Cause, 81,
-                AddressOf MsgIs, "When the bot sees the Phoenix Speak response {...},")
+            Add(TriggerCategory.Cause,
+                Function(reader) MsgIs(reader), "When the bot sees the Phoenix Speak response {...},")
 
-            Add(TriggerCategory.Cause, 82,
+            Add(TriggerCategory.Cause,
                 AddressOf MsgContains, "When the bot sees a Phoenix Speak response with {...} in it,")
 
             '(5:60) get All Phoenix Speak info for the triggering furre and put it into the PSInfo Cache.

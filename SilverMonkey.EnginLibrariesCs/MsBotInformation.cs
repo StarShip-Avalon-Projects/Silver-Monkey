@@ -35,7 +35,7 @@ public class MsBotInformation : MonkeySpeakLibrary
         {
             Arguments = File,
             FileName = "SilverMonkey.exe",
-            WorkingDirectory = IO.Paths.ApplicationPath
+            WorkingDirectory = MonkeyCore2.IO.Paths.ApplicationPath
         };
 
         Process.Start(p);
@@ -59,23 +59,23 @@ public class MsBotInformation : MonkeySpeakLibrary
     /// <param name="args"></param>
     public override void Initialize(params object[] args)
     {
-        Add(TriggerCategory.Cause, 0,
+        Add(TriggerCategory.Cause,
              r => true,
             "When the Monkey Speak Engine starts the script,");
-        Add(TriggerCategory.Cause, 1,
+        Add(TriggerCategory.Cause,
              r => true,
              "When the bot logs into Furcadia,");
 
-        Add(TriggerCategory.Cause, 2,
+        Add(TriggerCategory.Cause,
             r => true,
             "When the bot logs out of Furcadia,");
 
-        Add(TriggerCategory.Cause, 3,
+        Add(TriggerCategory.Cause,
             r => true,
             "When the Furcadia client disconnects or closes,");
 
         // (0:92) When the bot detects the "Your throat is tired. Please wait a few seconds"message,
-        Add(TriggerCategory.Cause, 5,
+        Add(TriggerCategory.Cause,
             r =>
             {
                 var rtn = r.GetParametersOfType<bool?>().FirstOrDefault();
@@ -86,7 +86,7 @@ public class MsBotInformation : MonkeySpeakLibrary
             "When the bot detects the \"Your throat is tired. Please wait a few seconds\"message,");
 
         // (0:93) When the bot resumes processing after seeing "Your throat is tired"message,
-        Add(TriggerCategory.Cause, 6,
+        Add(TriggerCategory.Cause,
             r =>
             {
                 var rtn = r.GetParametersOfType<bool?>().FirstOrDefault();

@@ -1,5 +1,5 @@
 ﻿Imports System.Media
-Imports IO
+Imports MonkeyCore2.IO
 Imports MonkeyCore
 Imports Monkeyspeak
 
@@ -72,7 +72,7 @@ Public NotInheritable Class MsSound
     ''' </returns>
     Public Function StopSound(reader As TriggerReader) As Boolean
         If Not simpleSound Is Nothing Then
-            Dim SoundFile = Paths.CheckBotFolder(reader.ReadString(True))
+            Dim SoundFile = MonkeyCore2.IO.Paths.CheckBotFolder(reader.ReadString(True))
             ' simpleSound = New SoundPlayer(SoundFile)
             simpleSound.[Stop]()
             simpleSound.Dispose()

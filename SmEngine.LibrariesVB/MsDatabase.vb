@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SQLite
 Imports System.IO
 Imports Furcadia.Net.Proxy
-Imports IO
+Imports MonkeyCore2.IO
 Imports Logging
 Imports MonkeyCore
 Imports Monkeyspeak

@@ -114,7 +114,6 @@ Namespace Engine.Libraries
             'Debug.Print("Msg = "& msg)
             Return True
 
-            Return False
         End Function
 
         ''' <summary>
