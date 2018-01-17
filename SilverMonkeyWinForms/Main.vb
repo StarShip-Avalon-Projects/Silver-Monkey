@@ -268,7 +268,7 @@ Public Class Main
         'clear all recent list from menu
         LoadRecentList(".bini")
         'load list from file
-        If Not (MRUlist.Contains(FilePath)) Then
+        If Not MRUlist.Contains(FilePath) Then
             'prevent duplication on recent list
             MRUlist.Enqueue(FilePath)
         End If

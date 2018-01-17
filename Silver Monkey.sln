@@ -80,6 +80,9 @@ EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup.wixproj", "{C47E57DC-6454-4798-A802-8D0BAC07E580}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Data Monkey Help", "Data Monkey Help\Data Monkey Help.shfbproj", "{3BBD3DBE-40B5-44E7-82A4-F84CD0F7FDB8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A4512568-6878-4EE9-8549-CFF611D399A1} = {A4512568-6878-4EE9-8549-CFF611D399A1}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Silver Monkey 3 WPF UI", "Silver Monkey 3 Wpf\Silver Monkey 3 WPF UI.csproj", "{593E59B0-8787-4454-83CD-EABF37807F1F}"
 EndProject
