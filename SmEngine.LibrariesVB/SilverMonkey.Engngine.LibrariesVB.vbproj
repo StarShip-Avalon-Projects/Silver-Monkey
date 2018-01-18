@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,7 +79,6 @@
     <Compile Include="MsDice.vb" />
     <Compile Include="MsFurreList.vb" />
     <Compile Include="MsMemberList.vb" />
-    <Compile Include="MsPhoenixSpeak.vb" />
     <Compile Include="MsPhoenixSpeakBackupAndRestore.vb" />
     <Compile Include="MsPopUpDialogs.vb" />
     <Compile Include="MsPounce.vb" />

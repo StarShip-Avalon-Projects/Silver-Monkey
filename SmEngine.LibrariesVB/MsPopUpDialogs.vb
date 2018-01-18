@@ -1,6 +1,6 @@
 ﻿Imports Furcadia.Net
 Imports Furcadia.Net.Utils.ServerParser
-Imports Libraries
+Imports Engine.Libraries
 
 Namespace Engine.Libraries
 

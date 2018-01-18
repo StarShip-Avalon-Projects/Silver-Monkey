@@ -4,6 +4,8 @@ Imports MonkeyCore2.IO
 Imports Monkeyspeak
 Imports Monkeyspeak.Logging
 
+Imports Engine.Libraries
+
 Namespace Engine.Libraries
 
     ''' <summary>

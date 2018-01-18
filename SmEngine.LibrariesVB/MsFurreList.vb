@@ -1,6 +1,8 @@
 ﻿Imports Furcadia.Net.DreamInfo
 Imports Monkeyspeak
 
+Imports Engine.Libraries
+
 Namespace Engine.Libraries
 
     ''' <summary>

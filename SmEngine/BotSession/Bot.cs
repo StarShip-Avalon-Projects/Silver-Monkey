@@ -356,7 +356,7 @@ namespace BotSession
 
         private async void OnParseSererInstructionAsync(object sender, ParseServerArgs e)
         {
-            CancellationToken cancel = CancellationToken.None;
+            CancellationToken cancel = new CancellationTokenSource(500).Token;
 
             if (MSpage == null)
             {
@@ -424,7 +424,7 @@ namespace BotSession
 
         private async void OnServerChannel(object sender, ParseChannelArgs Args)
         {
-            CancellationToken cancel = CancellationToken.None;
+            CancellationToken cancel = new CancellationTokenSource(500).Token;
             if (MSpage == null || !MsEngineOptions.IsEnabled)
             {
                 return;
@@ -541,8 +541,6 @@ namespace BotSession
                         //TODO: Add these lines
                         // (0:60) When the bot fails to empty the banish list,
 
-                        ((ConstantVariable)MSpage.GetVariable(BanishListVariable)).SetValue(string.Join(" ", BanishList.ToArray()));
-
                         if (Text.Contains(" has been banished from your dreams."))
                         {
                             // banish <name> (online)
@@ -550,7 +548,7 @@ namespace BotSession
 
                             // (0:53) When the bot successfully banishes a furre,
                             // (0:54) When the bot successfully banishes the furre named {...},
-                            ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(BanishName);
+
                             await MSpage.ExecuteAsync(new int[] { 53, 54 },
                                 cancel, BanishName);
                         }
@@ -560,9 +558,8 @@ namespace BotSession
                             // Success: You have canceled all banishments from your dreams.
                             // (0:61) When the bot successfully clears the banish list,
 
-                            ((ConstantVariable)MSpage.GetVariable(BanishListVariable)).SetValue(null);
-                            ((ConstantVariable)MSpage.GetVariable(BanishNameVariable)).SetValue(null);
-                            await MSpage.ExecuteAsync(61, cancel, BanishList);
+                            await MSpage.ExecuteAsync(61,
+                                cancel, BanishList);
                         }
                         else if (Text.EndsWith(" has been temporarily banished from your dreams."))
                         {
@@ -571,14 +568,16 @@ namespace BotSession
                             // (0:62) When the bot successfully temp banishes a furre,
                             // (0:63) When the bot successfully temp banishes the furre named {...},
 
-                            await MSpage.ExecuteAsync(new int[] { 62, 63 }, cancel, BanishName);
+                            await MSpage.ExecuteAsync(new int[] { 62, 63 },
+                                cancel, BanishName);
                         }
                         else if (Text.StartsWith("Players banished from your dreams: "))
                         {
                             // Banish-List
                             // [notify> Players banished from your dreams:
                             // (0:55) When the bot sees the banish list,
-                            await MSpage.ExecuteAsync(55, cancel, BanishList);
+                            await MSpage.ExecuteAsync(55,
+                                cancel, BanishList);
                         }
                         else if (Text.StartsWith("The banishment of player "))
                         {
@@ -589,7 +588,8 @@ namespace BotSession
 
                             Regex t = new Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled);
                             var NameStr = t.Match(Text).Groups[1].Value;
-                            await MSpage.ExecuteAsync(new int[] { 58, 59 }, cancel, BanishName);
+                            await MSpage.ExecuteAsync(new int[] { 58, 59 },
+                                cancel, BanishName);
                         }
                         else if (Text.Contains("There are no furres around right now with a name starting with "))
                         {
@@ -600,7 +600,8 @@ namespace BotSession
 
                             Regex t = new Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled);
                             var NameStr = t.Match(Text).Groups[1].Value;
-                            await MSpage.ExecuteAsync(new int[] { 56, 57 }, cancel, NameStr);
+                            await MSpage.ExecuteAsync(new int[] { 56, 57 },
+                                cancel, NameStr);
                         }
                         else if (Text == "Sorry, this player has not been banished from your dreams.")
                         {
@@ -618,8 +619,8 @@ namespace BotSession
                             // Error:>> You have not banished anyone.
                             // (0:55) When the bot sees the banish list,
 
-                            ((ConstantVariable)MSpage.GetVariable(BanishListVariable)).SetValue(null);
-                            await MSpage.ExecuteAsync(55, cancel);
+                            await MSpage.ExecuteAsync(55,
+                                cancel, BanishList);
                         }
                         return;
 
@@ -673,7 +674,7 @@ namespace BotSession
 
         private async void OnServerStatusChanged(object Sender, NetServerEventArgs e)
         {
-            var cancel = CancellationToken.None;
+            CancellationToken cancel = new CancellationTokenSource(500).Token;
             if (!MsEngineOptions.IsEnabled)
             {
                 return;
@@ -710,11 +711,13 @@ namespace BotSession
         /// <returns></returns>
         private async Task StartEngine()
         {
-            var cancel = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var TimeStart = DateTime.Now;
+            CancellationToken cancel = new CancellationTokenSource(500).Token;
+
             MsEngine = new MonkeyspeakEngine(MsEngineOptions);
             string MonkeySpeakScript = Engine.MsEngineExtentionFunctions.LoadFromScriptFile(MsEngineOptions.MonkeySpeakScriptFile, MsEngine.Options.Version);
             MSpage = await MsEngine.LoadFromStringAsync(MonkeySpeakScript);
-            var TimeStart = DateTime.Now;
+
             List<IVariable> VariableList = new List<IVariable>();
             MSpage = LoadLibrary(false);
             IFurre fur = new Furre();
@@ -729,7 +732,7 @@ namespace BotSession
             VariableList.Add(new ConstantVariable(BanishListVariable, null));
             PageSetVariable(VariableList);
             // (0:0) When the bot starts,
-            await MSpage.ExecuteAsync(0, cancel.Token);
+            await MSpage.ExecuteAsync(0, cancel);
             Logger.Info($"Done!!! Executed {MSpage.Size} triggers in {DateTime.Now.Subtract(TimeStart).Seconds} seconds.");
         }
 

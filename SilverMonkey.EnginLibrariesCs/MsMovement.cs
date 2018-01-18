@@ -1,5 +1,6 @@
 ﻿using Furcadia.Net.DreamInfo;
 using Monkeyspeak;
+using Monkeyspeak.Libraries;
 using Monkeyspeak.Logging;
 using System;
 using System.Text.RegularExpressions;
@@ -289,33 +290,11 @@ namespace Engine.Libraries
 
         #region Private Methods
 
-        /// <summary>
-        /// (5:623) make the bot lay down
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on sucessess sending the command to the game server
-        /// </returns>
         private bool BotLie(TriggerReader reader)
         {
             return SendServer("`lie");
         }
 
-        /// <summary>
-        /// (5:625) Move the bot in this sequence {..} (one, sw, three, se,
-        /// seven, nw, nine, or ne)
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// is thrown when the arguments supplied are invalid
-        /// </exception>
-        /// <returns>
-        /// true on sending the command to the server queue
-        /// </returns>
         private bool BotMoveSequence(TriggerReader reader)
         {
             // TODO: http://bugtraq.tsprojects.org/view.php?id=55
@@ -368,73 +347,28 @@ namespace Engine.Libraries
             return ServerSend;
         }
 
-        /// <summary>
-        /// (5:622) make the bot sit down
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on sending the commands to the game server
-        /// </returns>
         private bool BotSit(TriggerReader reader)
         {
             return SendServer("`sit");
         }
 
-        /// <summary>
-        /// (5:624) make the bot stand up
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on sending the commands to the game server
-        /// </returns>
         private bool BotStand(TriggerReader reader)
         {
             return SendServer("`stand");
         }
 
-        /// <summary>
-        /// (1:600) and triggering furre's description contains {..}
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the triggering-furre first
-        /// </exception>
-        /// <remarks>
-        /// </remarks>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool DescContains(TriggerReader reader)
         {
             if (string.IsNullOrEmpty(Player.FurreDescription))
             {
-                throw new MonkeyspeakException("Description not found. Try looking at the furre first");
+                Logger.Warn("Description not found. Try looking at the furre first");
+                return false;
             }
 
             return Player.FurreDescription.Contains(reader.ReadString());
         }
 
-        /// <summary>
-        /// (5:608) set variable
-        /// <see cref="Monkeyspeak.Variable">%Variable</see> to the furre
-        /// named {..} colors, if they are in the dream.
-        /// <para>
-        /// For this line to work, the bot must look at the specified furre
-        /// </para>
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// True if the specified furre is in the dream
-        /// </returns>
         private bool FurreNamedColorsVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
@@ -444,23 +378,7 @@ namespace Engine.Libraries
             return Target.FurreID > 0;
         }
 
-        /// <summary>
-        /// (1:602) and the furre named {..} description contains {..}
-        /// description, if they are in the dream.
-        /// <para>
-        /// For this line to work, the bot must look at the specified furre
-        /// </para>
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the specified-furre first
-        /// </exception>
-        /// <returns>
-        /// True on Success
-        /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool FurreNamedDescContains(TriggerReader reader)
         {
             var Target = DreamInfo.Furres.GerFurreByName(reader.ReadString());
@@ -474,24 +392,7 @@ namespace Engine.Libraries
             return Target.FurreDescription.Contains(Pattern);
         }
 
-        /// <summary>
-        /// (5:607) set variable
-        /// <see cref="Monkeyspeak.IVariable">%Variable</see> to the furred
-        /// named {..} description, if they are in the dream.
-        /// <para>
-        /// For this line to work, the bot must look at the specified furre
-        /// </para>
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the triggering-furre first
-        /// </exception>
-        /// <returns>
-        /// True if the specified furre is in the dream
-        /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool FurreNamedDescVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
@@ -507,20 +408,7 @@ namespace Engine.Libraries
             return true;
         }
 
-        /// <summary>
-        /// (5:605) set variable %Variable to the furre named {..} gender if
-        /// they are in the dream.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the triggering-furre first
-        /// </exception>
-        /// <returns>
-        /// true on success
-        /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool FurreNamedGenderVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
@@ -529,7 +417,8 @@ namespace Engine.Libraries
             switch (Target.FurreColors.Gender)
             {
                 case -1:
-                    throw new MonkeyspeakException("Gender not found. Try looking at the furre first");
+                    Logger.Warn("Gender not found. Try looking at the furre first");
+                    return false;
 
                 case 0:
                 case 1:
@@ -539,74 +428,35 @@ namespace Engine.Libraries
             return true;
         }
 
-        /// <summary>
-        /// (1:627) and the furre named {..} is laying.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedLaying(TriggerReader reader)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Ands the furre named is gender.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns></returns>
         private bool AndFurreNamedIsGender(TriggerReader reader)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// (1:635) and the furre named {..} moved from (x,y),
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedMoveFrom(TriggerReader reader)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// (1:901) and the furre named {..} moved into/is standing at (x,y),
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedMoveInto(TriggerReader reader)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// (1:617) and the furre named {..} doesn't wings of type #
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool FurreNamedNoWings(TriggerReader reader)
         {
             var Target = DreamInfo.Furres.GerFurreByName(reader.ReadString());
             switch (Target.LastStat)
             {
                 case -1:
-                    throw new MonkeyspeakException("Wings type not found. Try looking at the furre first");
+                    Logger.Warn("Wings type not found. Try looking at the furre first");
+                    return false;
 
                 case (0 | 1):
                     return (Target.FurreColors.Wings != reader.ReadNumber());
@@ -614,16 +464,6 @@ namespace Engine.Libraries
             return false;
         }
 
-        /// <summary>
-        /// (5:618) set variable %Variable to the X coordinate where the
-        /// furre named {..} moved into/is at.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedSetCordX(TriggerReader reader)
         {
             var Cord = reader.ReadVariable(true);
@@ -632,16 +472,6 @@ namespace Engine.Libraries
             return true;
         }
 
-        /// <summary>
-        /// (5:619) set variable %Variable to the Y coordinate where the
-        /// furre named {..} moved into/is at.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedSetCordY(TriggerReader reader)
         {
             var Cord = reader.ReadVariable(true);
@@ -650,54 +480,17 @@ namespace Engine.Libraries
             return true;
         }
 
-        /// <summary>
-        /// (1:626) and the furre named {..} is sitting.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedSitting(TriggerReader reader)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// (1:613) and the furre named {..} is Species # (please
-        /// <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/dsparams"/>
-        /// for info)
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the triggering-furre first
-        /// </exception>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedSpecies(TriggerReader reader)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// (5:606) set variable %Variable to the furre named {..} species,
-        /// if they are in the dream.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the triggering-furre first
-        /// </exception>
-        /// <returns>
-        /// true on success
-        /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool FurreNamedSpeciesVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
@@ -706,7 +499,8 @@ namespace Engine.Libraries
             switch (TargetFurre.LastStat)
             {
                 case -1:
-                    throw new MonkeyspeakException("Species not found. Try looking at the furre first");
+                    Logger.Warn("Species not found. Try looking at the furre first");
+                    return false;
 
                 case 0:
                 case 1:
@@ -716,54 +510,25 @@ namespace Engine.Libraries
             return true;
         }
 
-        /// <summary>
-        /// (1:625) and the furre named {..} is standing.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedStanding(TriggerReader reader)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// (1:636) and the furre named {..} tried to move but stood still.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// True if the Furres location doesn't change
-        /// </returns>
         private bool FurreNamedStoodStill(TriggerReader reader)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// (1:616) and the furre named {..} has wings of type #
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the triggering-furre first
-        /// </exception>
-        /// <returns>
-        /// true on success
-        /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool FurreNamedWings(TriggerReader reader)
         {
             var Target = DreamInfo.Furres.GerFurreByName(reader.ReadString());
             switch (Target.LastStat)
             {
                 case -1:
-                    throw new MonkeyspeakException("Wings type not found. Try looking at the furre first");
+                    Logger.Warn("Wings type not found. Try looking at the furre first");
+                    return false;
 
                 case 0:
                 case 1:
@@ -772,19 +537,7 @@ namespace Engine.Libraries
             return false;
         }
 
-        /// <summary>
-        /// (5:610) set %Variable to the wings type the furre named {..} is wearing.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the triggering-furre first
-        /// </exception>
-        /// <returns>
-        /// true on success
-        /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool FurreNamedWingsVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
@@ -792,7 +545,8 @@ namespace Engine.Libraries
             switch (TargetFurre.LastStat)
             {
                 case -1:
-                    throw new MonkeyspeakException("Wings type not found. Try looking at the furre first");
+                    Logger.Warn("Wings type not found. Try looking at the furre first");
+                    return false;
 
                 case 0:
                 case 1:
@@ -802,19 +556,6 @@ namespace Engine.Libraries
             return true;
         }
 
-        /// <summary>
-        /// (5:613) move the bot in direction # one space. (seven =
-        /// North-West, nine = North-East, three = South-East, one = South=West)
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when the directions don't match the correct format
-        /// </exception>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool MoveBot(TriggerReader reader)
         {
             var Direction = reader.ReadNumber();
@@ -831,15 +572,6 @@ namespace Engine.Libraries
             }
         }
 
-        /// <summary>
-        /// (1:634) and the triggering furre moved from (x,y),
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool MoveFrom(TriggerReader reader)
         {
             var X = reader.ReadNumber();
@@ -848,18 +580,6 @@ namespace Engine.Libraries
             return Player.LastPosition.X == X && Player.LastPosition.Y == Y;
         }
 
-        /// <summary>
-        /// 0:901) when a furre moves into (x,y),
-        /// <para>
-        /// (1:900) and the triggering furre moved into/is standing at (x,y),
-        /// </para>
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool MoveInto(TriggerReader reader)
         {
             var X = reader.ReadNumber();
@@ -885,11 +605,13 @@ namespace Engine.Libraries
         /// <returns>
         /// true on success
         /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool NotDescContains(TriggerReader reader)
         {
             if (string.IsNullOrEmpty(Player.FurreDescription))
             {
-                throw new MonkeyspeakException("Description not found. Try looking at the furre first");
+                Logger.Warn("Description not found. Try looking at the furre first");
+                return false;
             }
 
             return !Player.FurreDescription.Contains(reader.ReadString());
@@ -907,12 +629,14 @@ namespace Engine.Libraries
         /// </param>
         /// <returns>
         /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool NotDescContainsFurreNamed(TriggerReader reader)
         {
             Furre Target = DreamInfo.Furres.GerFurreByName(reader.ReadString());
             if (string.IsNullOrEmpty(Target.FurreDescription))
             {
-                throw new MonkeyspeakException("Description not found. Try looking at the furre first");
+                Logger.Warn("Description not found. Try looking at the furre first");
+                return false;
             }
 
             return !Target.FurreDescription.Contains(reader.ReadString());
@@ -988,11 +712,13 @@ namespace Engine.Libraries
         /// <returns>
         /// true on success
         /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreDescVar(TriggerReader reader)
         {
             if (Player.FurreDescription == null)
             {
-                throw new MonkeyspeakException("Description not found, Try looking at the furre first.");
+                Logger.Warn("Description not found, Try looking at the furre first.");
+                return false;
             }
 
             reader.ReadVariable(true).Value = Player.FurreDescription;
@@ -1022,11 +748,13 @@ namespace Engine.Libraries
         /// <returns>
         /// true on success
         /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreGenderVar(TriggerReader reader)
         {
             if (Player.FurreColors.Gender == -1 || Player.LastStat == -1)
             {
-                throw new MonkeyspeakException("Wings type not found, Try looking at the furre first");
+                Logger.Warn("Wings type not found, Try looking at the furre first");
+                return false;
             }
 
             var Var = reader.ReadVariable(true);
@@ -1084,26 +812,13 @@ namespace Engine.Libraries
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// (1:612) and the trigger furre is Species # (please
-        /// <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/dsparams"/>
-        /// for info)
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the triggering-furre first
-        /// </exception>
-        /// <returns>
-        /// true on success
-        /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreSpecies(TriggerReader reader)
         {
             if (Player.FurreColors.Gender == -1 || Player.LastStat == -1)
             {
-                throw new MonkeyspeakException("Wings type not found, Try looking at the furre first");
+                Logger.Warn("Wings type not found, Try looking at the furre first");
+                return false;
             }
 
             var Spec = reader.ReadNumber();
@@ -1115,25 +830,14 @@ namespace Engine.Libraries
             return false;
         }
 
-        /// <summary>
-        /// (5:602) set variable %Variable to the triggering furre's species.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the triggering-furre first
-        /// </exception>
-        /// <returns>
-        /// true on success
-        /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreSpeciesVar(TriggerReader reader)
         {
             switch (Player.LastStat)
             {
                 case -1:
-                    throw new MonkeyspeakException("Species not found. Try looking at the furre first");
+                    Logger.Warn("Species not found. Try looking at the furre first");
+                    return false;
 
                 case (0 | 1):
                     reader.ReadVariable(true).Value = Player.FurreColors.Species;
@@ -1173,37 +877,27 @@ namespace Engine.Libraries
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// (5:609) set %Variable to the wings type the triggering furre is wearing.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <exception cref="MonkeySpeakException">
-        /// Thrown when a Furre doesn't have a a description. This can be
-        /// prevented by looking at the triggering-furre first
-        /// </exception>
-        /// <returns>
-        /// true on success
-        /// </returns>
+        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreWingsVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
             switch (Player.LastStat)
             {
                 case -1:
-                    throw new MonkeyspeakException("Wings type not found. Try looking at the furre first");
+                    Logger.Warn("Wings type not found. Try looking at the furre first");
+                    return false;
 
                 case 0:
                     Var.Value = Player.FurreColors.Wings;
                     break;
 
                 case 1:
-                    if ((Player.FurreColors.Wings == -1))
+                    if (Player.FurreColors.Wings == -1)
                     {
-                        if ((Player.FurreColors.Wings == -1))
+                        if (Player.FurreColors.Wings == -1)
                         {
-                            throw new MonkeyspeakException("Wings type not found, Try looking at the furre first");
+                            Logger.Warn("Wings type not found, Try looking at the furre first");
+                            return false;
                         }
 
                         Var.Value = Player.FurreColors.Wings;

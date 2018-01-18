@@ -32,7 +32,8 @@ namespace Engine.Libraries
                 "use variable %Variable and take word position # and put it into variable %Variable.");
             // (5:111) use variable % then remove character {.} and put it into variable %.
             Add(TriggerCategory.Effect,
-                r => StripCharacters(r), "use variable %Variable then remove all occurrences of character {.} and put it into variable %Variable.");
+                r => StripCharacters(r),
+                "use variable %Variable then remove all occurrences of character {.} and put it into variable %Variable.");
             // (5:122) chop off the beginning of variable %variable, removing the first # characters of it.
             Add(TriggerCategory.Effect,
                 r => ChopStartString(r),

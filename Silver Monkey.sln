@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{F3A6B9B4-94FA-488C-BFA2-7618820265AC}"
 EndProject
@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Backup SRC.cmd = Backup SRC.cmd
 		Backup.cmd = Backup.cmd
 		LICENSE = LICENSE
+		MsBuildSolution.cmd = MsBuildSolution.cmd
 		README.md = README.md
 		Release Notes.txt = Release Notes.txt
 		Solution.build = Solution.build
