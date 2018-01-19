@@ -70,9 +70,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
     </Compile>
+    <Compile Include="MsDatabase.cs" />
     <Compile Include="MsPhoenicSpeak.cs" />
+    <Compile Include="MsPhoenixSpeakBackupAndRestore.cs" />
     <Compile Include="PhoenicSpeak\PhoenicSpeakDataObject.cs" />
     <Compile Include="PhoenicSpeak\PhoenixSpeakEventArgs.cs" />
+    <Compile Include="Variables\WebVariable.cs" />
+    <Compile Include="Variables\DatabaseVariable.cs" />
     <Compile Include="Variables\PhoenixSpeakVariable.cs" />
     <Compile Include="Variables\BanishVariable.cs" />
     <Compile Include="Extentions\Parameters.cs" />

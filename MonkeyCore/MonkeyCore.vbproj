@@ -158,7 +158,6 @@
     <Compile Include="Utils\Logging\LogStream.vb" />
     <Compile Include="Utils\MessageHelper.vb" />
     <Compile Include="Utils\MyData.vb" />
-    <Compile Include="Utils\SQlite.vb" />
     <Compile Include="Utils\TextWriter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

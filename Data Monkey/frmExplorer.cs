@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using MonkeyCore2.Data;
 
 namespace DataMonkey
 {

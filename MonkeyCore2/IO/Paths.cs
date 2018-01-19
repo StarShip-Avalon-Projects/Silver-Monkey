@@ -602,7 +602,7 @@ namespace MonkeyCore2.IO
         /// <param name="FileToCheck">The file to check.</param>
         /// <returns></returns>
         /// <exception cref="System.IO.FileNotFoundException"></exception>
-        public static string CheckBotFolder(ref string FileToCheck)
+        public static string CheckBotFolder(string FileToCheck)
         {
             string FilePath = Path.GetDirectoryName(FileToCheck);
             if (string.IsNullOrEmpty(FilePath))
@@ -619,7 +619,7 @@ namespace MonkeyCore2.IO
         /// <param name="FileToCheck">The file to check.</param>
         /// <returns></returns>
         /// <exception cref="System.IO.FileNotFoundException"></exception>
-        public static string CheckCharacterFolder(ref string FileToCheck)
+        public static string CheckCharacterFolder(string FileToCheck)
         {
             if (string.IsNullOrWhiteSpace(FileToCheck))
             {

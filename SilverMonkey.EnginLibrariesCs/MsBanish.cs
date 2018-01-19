@@ -116,15 +116,15 @@ namespace Engine.Libraries
             Add(TriggerCategory.Cause,
                 r =>
                 {
-                    var banisList = r.GetParametersOfType<List<string>>().FirstOrDefault();
-                    if (banisList != null)
+                    var banishList = r.GetParametersOfType<List<string>>().FirstOrDefault();
+                    if (banishList != null)
                     {
-                        BanishedFurreList = banisList;
+                        BanishedFurreList = banishList;
                         ((ConstantVariable)r.Page.GetVariable(BanishListVariable)).SetValue(null);
                         ((ConstantVariable)r.Page.GetVariable(BanishNameVariable)).SetValue(null);
                         return true;
                     }
-                    Logger.Error($"Null parameter banishList = '{banisList}'");
+                    Logger.Error($"Null parameter banishList = '{banishList}'");
                     return false;
                 },
                 "When the bot successfully clears the banish-list,");
@@ -200,8 +200,7 @@ namespace Engine.Libraries
                  "unbanish the furre named {...}.");
             Add(TriggerCategory.Effect,
                 r => CreateBanisListTable(r),
-                "store the banish-list to table %variable."
-                );
+                "store the banish-list to table %variable.");
         }
 
         /// <summary>

@@ -68,7 +68,7 @@ namespace BotSession
                 BFile = Path.Combine(MonkeyCore2.IO.Paths.SilverMonkeyBotPath, BFile);
             }
 
-            if (File.Exists(MonkeyCore2.IO.Paths.CheckBotFolder(ref BFile)))
+            if (File.Exists(MonkeyCore2.IO.Paths.CheckBotFolder(BFile)))
             {
                 string p = Path.GetDirectoryName(BFile);
                 if (!string.IsNullOrEmpty(p))
@@ -278,7 +278,7 @@ namespace BotSession
         /// </summary>
         public void SaveBotSettings()
         {
-            if (File.Exists(MonkeyCore2.IO.Paths.CheckBotFolder(ref _BiniFile)))
+            if (File.Exists(MonkeyCore2.IO.Paths.CheckBotFolder(_BiniFile)))
                 BotIni.Load(_BiniFile);
 
             BotIni.SetKeyValue("Main", "Log", LogOptions.log.ToString());
@@ -296,7 +296,7 @@ namespace BotSession
             BotIni.SetKeyValue("Bot", "ConnectTimeOut", ConnectionTimeOut.ToString());
             BotIni.SetKeyValue("GoMap", "IDX", _GoMap.ToString());
             BotIni.SetKeyValue("GoMap", "DreamURL", _DreamURL);
-            BotIni.Save(MonkeyCore2.IO.Paths.CheckBotFolder(ref _BiniFile));
+            BotIni.Save(MonkeyCore2.IO.Paths.CheckBotFolder(_BiniFile));
         }
 
         #endregion Public Methods

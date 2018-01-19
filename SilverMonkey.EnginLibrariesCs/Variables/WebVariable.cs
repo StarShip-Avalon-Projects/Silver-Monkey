@@ -3,7 +3,7 @@ using System;
 
 namespace Engine.Libraries.Variables
 {
-    public sealed class BanishVariable : IVariable
+    public sealed class WebVariable : IVariable
     {
         #region Private Fields
 
@@ -13,13 +13,22 @@ namespace Engine.Libraries.Variables
 
         #region Public Constructors
 
-        public BanishVariable(string name, object value)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebVariable"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
+        public WebVariable(string name, object value)
         {
             Name = name;
             this.value = value;
         }
 
-        public BanishVariable(IVariable variable)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebVariable"/> class.
+        /// </summary>
+        /// <param name="variable">The variable.</param>
+        public WebVariable(IVariable variable)
         {
             Name = variable.Name;
             this.value = variable.Value;
@@ -64,22 +73,11 @@ namespace Engine.Libraries.Variables
 
         #region Public Methods
 
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>
-        /// true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
-        /// </returns>
         public bool Equals(IVariable other)
         {
             return this.Name.Equals(other.Name, StringComparison.InvariantCultureIgnoreCase) && this.Value.Equals(other.Value);
         }
 
-        /// <summary>
-        /// Sets the value.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public void SetValue(object value)
         {
             this.value = value;

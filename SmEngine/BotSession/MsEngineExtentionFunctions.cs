@@ -49,7 +49,7 @@ namespace Engine
             }
 
             StringBuilder ScriptContents = new StringBuilder();
-            if (!File.Exists(Paths.CheckBotFolder(ref file)))
+            if (!File.Exists(Paths.CheckBotFolder(file)))
             {
                 throw new FileNotFoundException($"MonkeySpeak file ({file}) not found. Did you forget to define on or check the file path?");
             }
