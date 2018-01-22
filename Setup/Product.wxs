@@ -27,8 +27,11 @@
     <!--   <WixVariable Id="WixUIBannerBmp" Value="metal.png" /> -->
     <WixVariable Id="WixUIDialogBmp" Value="metal.png" />
     <MajorUpgrade
-      Schedule="afterInstallFinalize"
-      DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
+        AllowDowngrades="no"
+        AllowSameVersionUpgrades="no"
+        IgnoreRemoveFailure="no"
+        DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."
+        Schedule="afterInstallInitialize" />
 
     <Property Id="ApplicationFolderName" Value="$(var.ProductName)" />
 

@@ -50,6 +50,18 @@ namespace Engine.Libraries
     // '' </remarks>
     public sealed class MsPhoenixSpeakBackupAndRestore : MonkeySpeakLibrary
     {
+        /// <summary>
+        /// Gets the base identifier.
+        /// </summary>
+        /// <value>
+        /// The base identifier.
+        /// </value>
+        public override int BaseId => 550;
+
+        /// <summary>
+        /// Initializes this instance. Add your trigger handlers here.
+        /// </summary>
+        /// <param name="args">Parametized argument of objects to use to pass runtime objects to a library at initialization</param>
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);

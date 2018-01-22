@@ -254,10 +254,15 @@ namespace BotSession
         {
             if (MsEngineOptions.IsEnabled)
             {
-                await StartEngine();
+                await StartEngine().ContinueWith(task =>
+                {
+                    if (task.Exception != null) throw task.Exception;
+                    else
+                        Task.Run(() => Connect());
+                }, TaskContinuationOptions.ExecuteSynchronously);
             }
-
-            await Task.Run(() => Connect());
+            else
+                await Task.Run(() => Connect());
         }
 
         /// <summary>
@@ -714,7 +719,7 @@ namespace BotSession
             var TimeStart = DateTime.Now;
             CancellationToken cancel = new CancellationTokenSource(500).Token;
 
-            MsEngine = new MonkeyspeakEngine(MsEngineOptions);
+            MsEngine = new MonkeyspeakEngine(GetOptions().MonkeySpeakEngineOptions);
             string MonkeySpeakScript = Engine.MsEngineExtentionFunctions.LoadFromScriptFile(MsEngineOptions.MonkeySpeakScriptFile, MsEngine.Options.Version);
             MSpage = await MsEngine.LoadFromStringAsync(MonkeySpeakScript);
 
@@ -724,7 +729,7 @@ namespace BotSession
             VariableList.Add(new ConstantVariable(DreamOwnerVariable, Dream.DreamOwner));
             VariableList.Add(new ConstantVariable(DreamNameVariable, Dream.Name));
             VariableList.Add(new ConstantVariable(BotNameVariable, ConnectedFurre.Name));
-            VariableList.Add(new ConstantVariable(BotControllerVariable, MsEngineOptions.BotController));
+            VariableList.Add(new ConstantVariable(BotControllerVariable, GetOptions().MonkeySpeakEngineOptions.BotController));
             VariableList.Add(new ConstantVariable(TriggeringFurreNameVariable, fur.Name));
             VariableList.Add(new ConstantVariable(TriggeringFurreShortNameVariable, fur.ShortName));
             VariableList.Add(new ConstantVariable(MessageVariable, fur.Message));

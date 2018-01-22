@@ -281,12 +281,14 @@ namespace Engine.Libraries
         /// <returns></returns>
         public bool TriggeringFurreIsBotController(TriggerReader reader)
         {
-            if (ParentBotSession != null)
+            var BotController = reader.Page.GetVariable(BotControllerVariable);
+            if (BotController.Value == null)
             {
-                return Player.ShortName == reader.Page.GetVariable(BotControllerVariable).Value.ToString().ToFurcadiaShortName();
+                Monkeyspeak.Logging.Logger.Warn("BotContriller is not defined, Please specifiy a BotController in the Bot configuration settings,");
+                return false;
             }
 
-            return false;
+            return Player.ShortName == BotController.Value.ToString().ToFurcadiaShortName();
         }
 
         /// <summary>

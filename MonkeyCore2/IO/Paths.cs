@@ -595,8 +595,8 @@ namespace MonkeyCore2.IO
         /// <summary>
         /// Special Functoin for getting the default paths
         /// <para>
-        /// Ideal logic is to check the location of the Bot.Bini file for the
-        /// current path and then check the Silver Monkey folder in my documents
+        /// Ideal logic is to check the location of the Bot.Bini file for the current path and then
+        /// check the Silver Monkey folder in my documents
         /// </para>
         /// </summary>
         /// <param name="FileToCheck">The file to check.</param>

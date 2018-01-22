@@ -94,27 +94,24 @@
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
 			WorkingDirectory="FurcLib/"/>
 
-	 <Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
-			WorkingDirectory="DSeX/"/>
-
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
-			WorkingDirectory="Data Monkey/"/>
+			WorkingDirectory="Data Monkey/"/> 
 
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
 			WorkingDirectory="SilverMonkeyWinForms/"/>
 
-		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
-			WorkingDirectory="MonkeyCore/"/>
+		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
+			WorkingDirectory="MonkeyCore2/"/> 
 
 		<!-- Silver Monkey Engine v3.0 -->
-		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
+		 <Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
 			WorkingDirectory="SmEngine/"/>
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
 			WorkingDirectory="SilverMonkey.EnginLibrariesCs/"/>
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
 			WorkingDirectory="SmEngine.LibrariesVB/"/>
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
-			WorkingDirectory="MonkeyCore2/"/>
+			WorkingDirectory="MonkeyCore2/"/> 
 
  </Target>
 </Project>

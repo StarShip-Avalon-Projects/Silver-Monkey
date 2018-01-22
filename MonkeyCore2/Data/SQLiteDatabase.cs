@@ -1,4 +1,5 @@
-﻿using Logging;
+﻿using Furcadia.Logging;
+using Logging;
 using MonkeyCore2.IO;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace MonkeyCore2.Data
 
         private const string SyncPragma = "PRAGMA encoding = \"UTF-16\"; ";
 
-        private static string dbConnection;
+        private string dbConnection;
 
         #endregion Private Fields
 
@@ -105,16 +106,16 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// A boolean true or false to signify success or failure.
         /// </returns>
-        public static bool ClearTable(string table)
+        public bool ClearTable(string table)
         {
-            return ExecuteNonQuery("delete from {table};") > -1;
+            return ExecuteNonQuery($"delete from {table};") > -1;
         }
 
         ///<Summary>
         ///    Create a Table with Titles
         /// </Summary>
         /// <param name="Table"></param><param name="ColumnNames"></param>
-        public static void CreateTbl(string Table, string ColumnNames)
+        public void CreateTbl(string Table, string ColumnNames)
         {
             using (var SQLconnect = new SQLiteConnection(dbConnection))
             {
@@ -134,7 +135,7 @@ namespace MonkeyCore2.Data
         /// </summary>
         /// <param name="sql">The SQL to be run.</param>
         /// <returns>An Integer containing the number of rows updated.</returns>
-        public static int ExecuteNonQuery(string sql)
+        public int ExecuteNonQuery(string sql)
         {
             int rowsUpdated;
             using (var cnn = new SQLiteConnection(dbConnection))
@@ -162,7 +163,7 @@ namespace MonkeyCore2.Data
         /// </summary>
         /// <param name="sql">The query to run.</param>
         /// <returns>A string.</returns>
-        public static object ExecuteScalar(string sql)
+        public object ExecuteScalar(string sql)
         {
             object value;
             using (var cnn = new SQLiteConnection(dbConnection))
@@ -182,7 +183,7 @@ namespace MonkeyCore2.Data
         /// </summary>
         /// <param name="sql">The SQL to run</param>
         /// <returns>A DataTable containing the result set.</returns>
-        public static DataTable GetDataTable(string sql)
+        public DataTable GetDataTable(string sql)
         {
             var dt = new DataTable();
             using (var cnn = new SQLiteConnection(dbConnection))
@@ -194,8 +195,7 @@ namespace MonkeyCore2.Data
 
                     try
                     {
-                        SQLiteDataReader reader;
-                        reader = mycommand.ExecuteReader();
+                        var reader = mycommand.ExecuteReader();
                         dt.Load(reader);
                         reader.Close();
                     }
@@ -208,37 +208,37 @@ namespace MonkeyCore2.Data
             return dt;
         }
 
-        /// <summary>
-        /// Allows the programmer to easily insert into the DB
-        /// </summary>
-        /// <param name="tableName">Name of the table.</param>
-        /// <param name="ID">The identifier.</param>
-        /// <param name="data">The data.</param>
-        /// <returns></returns>
-        public static bool InsertMultiRow(string tableName, int ID, Dictionary<string, string> data)
-        {
-            List<string> values = new List<string>();
-            int i = 0;
-            try
-            {
-                foreach (var val in data)
-                {
-                    values.Add($" ( '{ID}', '{val.Key}', '{val.Value}' )");
-                }
+        ///// <summary>
+        ///// Allows the programmer to easily insert into the DB
+        ///// </summary>
+        ///// <param name="tableName">Name of the table.</param>
+        ///// <param name="ID">The identifier.</param>
+        ///// <param name="data">The data.</param>
+        ///// <returns></returns>
+        //public bool InsertMultiRow(string tableName, int ID, Dictionary<string, string> data)
+        //{
+        //    List<string> values = new List<string>();
+        //    int i = 0;
+        //    try
+        //    {
+        //        foreach (var val in data)
+        //        {
+        //            values.Add($" ( '{ID}', '{val.Key}', '{val.Value}' )");
+        //        }
 
-                if (values.Count > 0)
-                {
-                    // INSERT INTO 'table' ('column1', 'col2', 'col3') VALUES (1,2,3),  (1, 2, 3), (etc);
-                    string cmd = $"INSERT into '{tableName}' ([NameID], [Key], [Value]) Values {string.Join(";", values.ToArray())}";
-                    i = ExecuteNonQuery(cmd);
-                }
-            }
-            catch
-            { }
+        //        if (values.Count > 0)
+        //        {
+        //            // INSERT INTO 'table' ('column1', 'col2', 'col3') VALUES (1,2,3),  (1, 2, 3), (etc);
+        //            string cmd = $"INSERT into '{tableName}' ([NameID], [Key], [Value]) Values {string.Join(";", values.ToArray())}";
+        //            i = ExecuteNonQuery(cmd);
+        //        }
+        //    }
+        //    catch
+        //    { }
 
-            //  i = -1 if there's an SQLte error
-            return values.Count != 0 && i > -1;
-        }
+        //    //  i = -1 if there's an SQLte error
+        //    return values.Count != 0 && i > -1;
+        //}
 
         /// <summary>
         /// Adds the column to the specified table.
@@ -341,7 +341,7 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// a dictionary of values
         /// </returns>
-        public Dictionary<string, object> GetValueFromTable(string str)
+        public virtual Dictionary<string, object> GetValueFromTable(string str)
         {
             Dictionary<string, object> test3 = null;
             using (var cnn = new SQLiteConnection(dbConnection))
@@ -382,8 +382,9 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// A boolean true or false to signify success or failure.
         /// </returns>
-        public bool Insert(string tableName, Dictionary<string, string> data)
+        public virtual int Insert(string tableName, Dictionary<string, string> data)
         {
+            int rowCount = 0;
             List<string> columns = new List<string>();
             List<string> values = new List<string>();
             foreach (var val in data)
@@ -394,15 +395,16 @@ namespace MonkeyCore2.Data
 
             try
             {
-                string cmd = $"INSERT OR IGNORE into {tableName}({string.Join(";", columns.ToArray())}) VALUES ({string.Join(",", values.ToArray())})";
-                return ExecuteNonQuery(cmd) > -1;
+                string cmd = $"INSERT OR IGNORE into {tableName}({string.Join(",", columns.ToArray())}) VALUES ({string.Join(",", values.ToArray())})";
+                rowCount = ExecuteNonQuery(cmd);
             }
             catch (Exception ex)
             {
+                rowCount = -1;
                 Furcadia.Logging.Logger.Error(ex);
             }
 
-            return false;
+            return rowCount;
         }
 
         /// <summary>
@@ -416,8 +418,8 @@ namespace MonkeyCore2.Data
         /// </returns>
         public bool IsColumnExist(string columnName, string tableName)
         {
-            string columnNames = GetAllColumnName(tableName);
-            return columnNames.Contains(columnName);
+            var columnNames = GetAllColumnName(tableName);
+            return columnNames.Contains($"[{columnName}]");
         }
 
         /// <summary>
@@ -445,28 +447,29 @@ namespace MonkeyCore2.Data
         /// </returns>
         public int RemoveColumn(string tableName, string columnName)
         {
-            string columnNames = GetAllColumnName(tableName);
-            if (!columnNames.Contains(columnName))
+            var ColumnNames = GetAllColumnName(tableName);
+            if (!ColumnNames.Contains($"[{columnName}]"))
             {
                 return -1;
             }
-
-            columnNames = columnNames.Replace((columnName + ", "), "");
-            columnNames = columnNames.Replace((", " + columnName), "");
-            columnNames = columnNames.Replace(columnName, "").Replace("[],", "").Replace(",[]", "");
-            return ExecuteNonQuery("CREATE TEMPORARY TABLE "
-                            + tableName + "backup("
-                            + columnNames + ");" + "INSERT INTO "
-                            + tableName + "backup SELECT "
-                            + columnNames + " FROM "
-                            + tableName + ";" + "DROP TABLE "
-                            + tableName + ";" + "CREATE TABLE "
-                            + tableName + "("
-                            + columnNames + ");" + "INSERT INTO "
-                            + tableName + " SELECT "
-                            + columnNames + " FROM "
-                            + tableName + "backup;" + "DROP TABLE "
-                            + tableName + "backup;");
+            ColumnNames.Remove($"[{columnName}]");
+            var columnNames = string.Join(",", ColumnNames.ToArray());
+            // columnNames = columnNames.Replace("[", "").Replace("]", "");
+            var sql = new StringBuilder();
+            //.Replace("[", "").Replace("]", "")
+            sql.Append("CREATE TEMPORARY TABLE ");
+            sql.Append($"{tableName}backup(");
+            sql.Append($"{columnNames }); INSERT INTO ");
+            sql.Append($"{tableName }backup SELECT ");
+            sql.Append($"{columnNames} FROM ");
+            sql.Append($"{tableName }; DROP TABLE ");
+            sql.Append($"{tableName }; CREATE TABLE ");
+            sql.Append($"{tableName }({columnNames }); INSERT INTO ");
+            sql.Append($"{tableName } SELECT ");
+            sql.Append($"{columnNames} FROM ");
+            sql.Append($"{tableName }backup; DROP TABLE ");
+            sql.Append($"{tableName }backup;");
+            return ExecuteNonQuery(sql.ToString());
         }
 
         /// <summary>
@@ -487,7 +490,7 @@ namespace MonkeyCore2.Data
         public bool Update(string tableName, Dictionary<string, string> data, string where)
         {
             var vals = new List<string>();
-            if (data.Count == 0)
+            if (data == null || data.Count == 0)
             {
                 return false;
             }
@@ -500,14 +503,13 @@ namespace MonkeyCore2.Data
             try
             {
                 string cmd = $"update {tableName} set {string.Join(",", vals.ToArray())} where { where};";
-                return ExecuteNonQuery(cmd) < -1;
+                return ExecuteNonQuery(cmd) > 0;
             }
             catch (Exception ex)
             {
-                ErrorLogging err = new ErrorLogging(ex, this);
-
-                return false;
+                Logger.Error(ex);
             }
+            return false;
         }
 
         #endregion Public Methods
@@ -521,7 +523,7 @@ namespace MonkeyCore2.Data
         /// </param>
         /// <returns>
         /// </returns>
-        private string GetAllColumnName(string tableName)
+        private List<string> GetAllColumnName(string tableName)
         {
             string sql = $"{SyncPragma }SELECT * FROM { tableName}";
             var columnNames = new List<string>();
@@ -542,7 +544,7 @@ namespace MonkeyCore2.Data
                     }
                 }
             }
-            return string.Join(",", columnNames.ToArray());
+            return columnNames;
         }
 
         #endregion Private Methods

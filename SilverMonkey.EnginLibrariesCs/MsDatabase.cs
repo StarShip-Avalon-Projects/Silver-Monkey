@@ -33,14 +33,6 @@ namespace Engine.Libraries
     /// </summary>
     public class MsDatabase : MonkeySpeakLibrary
     {
-        #region Public Fields
-
-        /// <summary>
-        /// </summary>
-        public static SQLiteDataReader SQLreader = null;
-
-        #endregion Public Fields
-
         #region Private Fields
 
         /// <summary>
@@ -66,11 +58,6 @@ namespace Engine.Libraries
         {
             get
             {
-                if (string.IsNullOrEmpty(_SQLitefile))
-                {
-                    _SQLitefile = Path.Combine(Paths.SilverMonkeyBotPath, "SilverMonkey.db");
-                }
-
                 return _SQLitefile;
             }
             set
@@ -103,95 +90,6 @@ namespace Engine.Libraries
             var Type = reader.ReadString();
             var db = new SQLiteDatabase(SQLitefile);
             db.AddColumn("FURRE", $"[{ Column }]", Type);
-            return true;
-        }
-
-        /// <summary>
-        /// (5:424) from table {...} take column {...} from record offest # and
-        /// and put it into variable %
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public static bool CollumnAtRowIndex(TriggerReader reader)
-        {
-            var Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''");
-            var Column = reader.ReadString();
-            var RecordOffset = reader.ReadNumber();
-            var OutVar = reader.ReadVariable(true);
-            string sql = $"SELECT {Column}FROM [{Table }] Where offset=RecordIndex;";
-            var value = SQLiteDatabase.ExecuteScalar(sql);
-            OutVar.Value = value;
-            return true;
-        }
-
-        /// <summary>
-        /// (5:423) take the sum of column{...} in table {...} and put it
-        /// into variable %
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public static bool ColumnSum(TriggerReader reader)
-        {
-            var Column = reader.ReadString();
-            var Table = reader.ReadString();
-            var Total = reader.ReadVariable(true);
-            string sql = $"SELECT { Column } FROM {Table }";
-            var dt = SQLiteDatabase.GetDataTable(sql);
-            Column = Column.Replace("[", "").Replace("]", "");
-            double suma = 0;
-
-            foreach (DataRow row in dt.Rows)
-            {
-                double.TryParse(row[Column].ToString(), out double num);
-                suma = suma + num;
-            }
-
-            // Console.WriteLine("Calculating TotalSum {0}", TotalSum.ToString())
-            Total.Value = suma;
-            return true;
-        }
-
-        /// <summary>
-        /// (5:419) delete all Database info about the furre named {...}.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public static bool DeleteFurreNamed(TriggerReader reader)
-        {
-            var Furre = reader.ReadString().ToFurcadiaShortName();
-            var db = new SQLiteDatabase(SQLitefile);
-            return 0 < SQLiteDatabase.ExecuteNonQuery($"Delete from FURRE where Name='{Furre }'");
-        }
-
-        /// <summary>
-        /// (5:422) get the total number of records from table {...} and put
-        /// it into variable %.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public static bool GetTotalRecords(TriggerReader reader)
-        {
-            var db = new SQLiteDatabase(SQLitefile);
-            var Table = reader.ReadString().Replace("[", "").Replace("]", "");
-            var Total = reader.ReadVariable(true);
-            var count = SQLiteDatabase.ExecuteScalar($"select count(*) from [{Table }]");
-            Total.Value = count;
             return true;
         }
 
@@ -234,7 +132,98 @@ namespace Engine.Libraries
             var Variable = reader.ReadVariable(true);
             //  Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             string cmd = $"SELECT [{info}] FROM FURRE Where [Name]='{Furre}'";
-            Variable.Value = SQLiteDatabase.ExecuteScalar(cmd);
+            Variable.Value = db.ExecuteScalar(cmd);
+            return true;
+        }
+
+        /// <summary>
+        /// (5:424) from table {...} take column {...} from record offest # and
+        /// and put it into variable %
+        /// </summary>
+        /// <param name="reader">
+        /// <see cref="TriggerReader"/>
+        /// </param>
+        /// <returns>
+        /// true on success
+        /// </returns>
+        public bool CollumnAtRowIndex(TriggerReader reader)
+        {
+            var Table = reader.ReadString().Replace("[", "").Replace("]", "").Replace("'", "''");
+            var Column = reader.ReadString();
+            var RecordOffset = reader.ReadNumber();
+            var OutVar = reader.ReadVariable(true);
+            string sql = $"SELECT {Column} FROM [{Table }] Where offset=RecordIndex;";
+            var db = new SQLiteDatabase(SQLitefile);
+            var value = db.ExecuteScalar(sql);
+            OutVar.Value = value;
+            return true;
+        }
+
+        /// <summary>
+        /// (5:423) take the sum of column{...} in table {...} and put it
+        /// into variable %
+        /// </summary>
+        /// <param name="reader">
+        /// <see cref="TriggerReader"/>
+        /// </param>
+        /// <returns>
+        /// true on success
+        /// </returns>
+        public bool ColumnSum(TriggerReader reader)
+        {
+            var Column = reader.ReadString();
+            var Table = reader.ReadString();
+            var Total = reader.ReadVariable(true);
+            string sql = $"SELECT { Column } FROM {Table }";
+            var db = new SQLiteDatabase(SQLitefile);
+            var dt = db.GetDataTable(sql);
+            Column = Column.Replace("[", "").Replace("]", "");
+            double suma = 0;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                double.TryParse(row[Column].ToString(), out double num);
+                suma = suma + num;
+            }
+
+            // Console.WriteLine("Calculating TotalSum {0}", TotalSum.ToString())
+            Total.Value = suma;
+            return true;
+        }
+
+        /// <summary>
+        /// (5:419) delete all Database info about the furre named {...}.
+        /// </summary>
+        /// <param name="reader">
+        /// <see cref="TriggerReader"/>
+        /// </param>
+        /// <returns>
+        /// true on success
+        /// </returns>
+        public bool DeleteFurreNamed(TriggerReader reader)
+        {
+            var Furre = reader.ReadString().ToFurcadiaShortName();
+            var db = new SQLiteDatabase(SQLitefile);
+            return 0 < db.ExecuteNonQuery($"Delete from FURRE where Name='{Furre }'");
+        }
+
+        /// <summary>
+        /// (5:422) get the total number of records from table {...} and put
+        /// it into variable %.
+        /// </summary>
+        /// <param name="reader">
+        /// <see cref="TriggerReader"/>
+        /// </param>
+        /// <returns>
+        /// true on success
+        /// </returns>
+        public bool GetTotalRecords(TriggerReader reader)
+        {
+            var db = new SQLiteDatabase(SQLitefile);
+            var Table = reader.ReadString().Replace("[", "").Replace("]", "");
+            var Total = reader.ReadVariable(true);
+            var count = db.ExecuteScalar($"select count(*) from [{Table }]");
+            Total.Value = count;
             return true;
         }
 
@@ -432,7 +421,7 @@ namespace Engine.Libraries
         private bool DeleteTriggeringFurre(TriggerReader reader)
         {
             var db = new SQLiteDatabase(SQLitefile);
-            return 0 < SQLiteDatabase.ExecuteNonQuery($"Delete from FURRE where Name='{Player.ShortName}'");
+            return 0 < db.ExecuteNonQuery($"Delete from FURRE where Name='{Player.ShortName}'");
         }
 
         /// <summary>
@@ -455,16 +444,15 @@ namespace Engine.Libraries
             var Str = reader.ReadString().Trim();
             cache.Clear();
             QueryRun = false;
+            var db = new SQLiteDatabase(SQLitefile);
             if (Str.ToUpper().StartsWith("SELECT"))
             {
-                var db = new SQLiteDatabase(SQLitefile);
-
                 cache = db.GetValueFromTable(Str);
                 QueryRun = true;
                 return cache.Count > 0;
             }
 
-            SQLiteDatabase.ExecuteNonQuery(Str);
+            db.ExecuteNonQuery(Str);
             return true;
         }
 
@@ -484,10 +472,11 @@ namespace Engine.Libraries
         /// </remarks>
         private bool FurreNamedinfoEqualToNumber(TriggerReader reader)
         {
+            var db = new SQLiteDatabase(SQLitefile);
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var result = SQLiteDatabase.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
             return Value == Variable;
         }
@@ -507,7 +496,8 @@ namespace Engine.Libraries
             string info = reader.ReadString();
             string Furre = reader.ReadString().ToFurcadiaShortName();
             string str = reader.ReadString();
-            var result = SQLiteDatabase.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            var db = new SQLiteDatabase(SQLitefile);
+            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             return result.ToString() == str;
         }
 
@@ -526,7 +516,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var result = SQLiteDatabase.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            var db = new SQLiteDatabase(SQLitefile);
+            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
 
             return Value > Variable;
@@ -547,7 +538,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var result = SQLiteDatabase.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            var db = new SQLiteDatabase(SQLitefile);
+            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
 
             return Value >= Variable;
@@ -568,7 +560,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var result = SQLiteDatabase.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            var db = new SQLiteDatabase(SQLitefile);
+            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
             return Value < Variable;
         }
@@ -588,7 +581,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var result = SQLiteDatabase.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            var db = new SQLiteDatabase(SQLitefile);
+            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
 
             return Value <= Variable;
@@ -609,7 +603,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var result = SQLiteDatabase.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            var db = new SQLiteDatabase(SQLitefile);
+            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
 
             return (Value != Variable);
@@ -630,7 +625,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var str = reader.ReadString();
-            var result = SQLiteDatabase.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            var db = new SQLiteDatabase(SQLitefile);
+            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             return str != result.ToString();
         }
 
@@ -649,7 +645,7 @@ namespace Engine.Libraries
         private object GetValueFromTable(string Column, string Name)
         {
             var db = new SQLiteDatabase(SQLitefile);
-            var result = SQLiteDatabase.ExecuteScalar($"SELECT {Column} FROM FURRE Where Name = '{Name.ToFurcadiaShortName()}'");
+            var result = db.ExecuteScalar($"SELECT {Column} FROM FURRE Where Name = '{Name.ToFurcadiaShortName()}'");
             return result;
         }
 
@@ -687,7 +683,7 @@ namespace Engine.Libraries
                 { "Access Level",$"{info}"}
             };
 
-            return db.Insert("FURRE", data);
+            return db.Insert("FURRE", data) > 0;
         }
 
         /// <summary>
@@ -724,7 +720,7 @@ namespace Engine.Libraries
                 { "Access Level",$"{info}"}
             };
 
-            return db.Insert("FURRE", data);
+            return db.Insert("FURRE", data) > 0;
         }
 
         /// <summary>
@@ -744,8 +740,8 @@ namespace Engine.Libraries
             var Furre = reader.Page.GetVariable(TriggeringFurreShortNameVariable).Value.ToString();
 
             string cmd = $"SELECT [{info }] FROM FURRE Where [Name]='{Furre}'";
-
-            Variable.Value = SQLiteDatabase.ExecuteScalar(cmd);
+            var db = new SQLiteDatabase(SQLitefile);
+            Variable.Value = db.ExecuteScalar(cmd);
             return true;
         }
 
@@ -992,9 +988,8 @@ namespace Engine.Libraries
 
             var Number = reader.ReadNumber();
             string val = GetValueFromTable(info, Player.ShortName).ToString();
-            double Value = 0;
 
-            double.TryParse(val, out Value);
+            double.TryParse(val, out double Value);
 
             return (Value != Number);
         }
@@ -1130,7 +1125,7 @@ namespace Engine.Libraries
                 { info, value.ToString() },
                 { "date modified" ,DateTime.Now.ToShortDateString()}
             };
-            return db.Update("FURRE", data, "[Name]='" + Furre + "'");
+            return db.Update("FURRE", data, $"[Name]='{ Furre }'");
         }
 
         /// <summary>
@@ -1146,7 +1141,7 @@ namespace Engine.Libraries
         private bool UseOrCreateSQLiteFileIfNotExist(TriggerReader reader)
         {
             SQLitefile = Paths.CheckBotFolder(reader.ReadString());
-            Monkeyspeak.Logging.Logger.Warn<MsDatabase>($"NOTICE: SQLite Database file has changed to {SQLitefile}");
+            Monkeyspeak.Logging.Logger.Warn<MsDatabase>($"NOTICE: SQLite Database file is now {SQLitefile}");
             return true;
         }
 
@@ -1163,8 +1158,8 @@ namespace Engine.Libraries
         private bool VACUUM(TriggerReader reader)
         {
             DateTime startDate = DateTime.Now;
-
-            var rows = SQLiteDatabase.ExecuteNonQuery("VACUUM");
+            var db = new SQLiteDatabase(SQLitefile);
+            var rows = db.ExecuteNonQuery("VACUUM");
             var time = DateTime.Now.Subtract(startDate);
             Monkeyspeak.Logging.Logger.Info<MsDatabase>($"VAACUM operation took {time.Seconds} and {rows} were updated");
             return true;
