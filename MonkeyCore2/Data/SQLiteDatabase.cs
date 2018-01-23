@@ -15,21 +15,22 @@ namespace MonkeyCore2.Data
     /// </summary>
     public class SQLiteDatabase
     {
-        #region Public Fields
+        #region Public Properties
 
-        public const string PlayerDbName = "Name";
+        public string DatabaseFile
+        {
+            get => inputFile;
+        }
 
-        #endregion Public Fields
+        #endregion Public Properties
 
         #region Private Fields
 
         private const string DefaultFile = "SilverMonkey.db";
-
-        private const string FurreTable = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT, [PSBackup] DOUBLE";
-
+        private const string FurreTable = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [Access Level] INTEGER DEFAULT 0, [date added] DATETIME DEFAULT(datetime('now','localtime')), [date modified] DATETIME DEFAULT(datetime('now','localtime')), [PSBackup] DOUBLE";
         private const string SyncPragma = "PRAGMA encoding = \"UTF-16\"; ";
-
         private string dbConnection;
+        private string inputFile = Path.Combine(Paths.SilverMonkeyBotPath, DefaultFile);
 
         #endregion Private Fields
 
@@ -40,7 +41,6 @@ namespace MonkeyCore2.Data
         /// </summary>
         public SQLiteDatabase()
         {
-            string inputFile = Path.Combine(Paths.SilverMonkeyBotPath, DefaultFile);
             dbConnection = $"Data Source={ inputFile}";
             CreateTbl("FURRE", FurreTable);
             CreateTbl("BACKUPMASTER", "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [{ PlayerDbName }] TEXT Unique, [date modified] TEXT");
@@ -55,19 +55,22 @@ namespace MonkeyCore2.Data
         /// <param name="inputFile">
         /// The File containing the DB
         /// </param>
-        public SQLiteDatabase(string inputFile)
+        public SQLiteDatabase(string databaseFile)
         {
-            if (string.IsNullOrEmpty(inputFile))
+            if (string.IsNullOrWhiteSpace(databaseFile))
             {
                 inputFile = Path.Combine(Paths.SilverMonkeyBotPath, DefaultFile);
             }
 
-            string dir = Path.GetDirectoryName(inputFile);
-            if (string.IsNullOrEmpty(dir))
+            string dir = Path.GetDirectoryName(databaseFile);
+            if (string.IsNullOrWhiteSpace(dir))
             {
-                inputFile = Path.Combine(Paths.SilverMonkeyBotPath, inputFile);
+                inputFile = Path.Combine(Paths.SilverMonkeyBotPath, databaseFile);
             }
-
+            else
+            {
+                inputFile = databaseFile;
+            }
             dbConnection = $"Data Source={inputFile};";
             CreateTbl("FURRE", FurreTable);
             CreateTbl("BACKUPMASTER", "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [date modified] TEXT");
@@ -98,149 +101,6 @@ namespace MonkeyCore2.Data
         #region Public Methods
 
         /// <summary>
-        /// Allows the user to easily clear all data from a specific table.
-        /// </summary>
-        /// <param name="table">
-        /// The name of the table to clear.
-        /// </param>
-        /// <returns>
-        /// A boolean true or false to signify success or failure.
-        /// </returns>
-        public bool ClearTable(string table)
-        {
-            return ExecuteNonQuery($"delete from {table};") > -1;
-        }
-
-        ///<Summary>
-        ///    Create a Table with Titles
-        /// </Summary>
-        /// <param name="Table"></param><param name="ColumnNames"></param>
-        public void CreateTbl(string Table, string ColumnNames)
-        {
-            using (var SQLconnect = new SQLiteConnection(dbConnection))
-            {
-                using (var SQLcommand = SQLconnect.CreateCommand())
-                {
-                    SQLconnect.Open();
-                    // SQL query to Create Table
-                    //  [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT,
-                    SQLcommand.CommandText = $"{SyncPragma} CREATE TABLE IF NOT EXISTS { Table }( { ColumnNames } );";
-                    SQLcommand.ExecuteNonQuery();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Allows the programmer to interact with the database for purposes other than a query.
-        /// </summary>
-        /// <param name="sql">The SQL to be run.</param>
-        /// <returns>An Integer containing the number of rows updated.</returns>
-        public int ExecuteNonQuery(string sql)
-        {
-            int rowsUpdated;
-            using (var cnn = new SQLiteConnection(dbConnection))
-            {
-                cnn.Open();
-                using (var mycommand = new SQLiteCommand(cnn))
-                {
-                    try
-                    {
-                        mycommand.CommandText = sql;
-                        rowsUpdated = mycommand.ExecuteNonQuery();
-                    }
-                    catch
-                    {
-                        rowsUpdated = -1;
-                    }
-                }
-                cnn.Close();
-            }
-            return rowsUpdated;
-        }
-
-        /// <summary>
-        /// Allows the programmer to retrieve single items from the DB.
-        /// </summary>
-        /// <param name="sql">The query to run.</param>
-        /// <returns>A string.</returns>
-        public object ExecuteScalar(string sql)
-        {
-            object value;
-            using (var cnn = new SQLiteConnection(dbConnection))
-            {
-                cnn.Open();
-                using (var mycommand = new SQLiteCommand(cnn))
-                {
-                    mycommand.CommandText = sql;
-                    value = mycommand.ExecuteScalar();
-                }
-            }
-            return value;
-        }
-
-        /// <summary>
-        /// Allows the programmer to run a query against the Database.
-        /// </summary>
-        /// <param name="sql">The SQL to run</param>
-        /// <returns>A DataTable containing the result set.</returns>
-        public DataTable GetDataTable(string sql)
-        {
-            var dt = new DataTable();
-            using (var cnn = new SQLiteConnection(dbConnection))
-            {
-                cnn.Open();
-                using (var mycommand = new SQLiteCommand(cnn))
-                {
-                    mycommand.CommandText = sql;
-
-                    try
-                    {
-                        var reader = mycommand.ExecuteReader();
-                        dt.Load(reader);
-                        reader.Close();
-                    }
-                    catch
-                    {
-                        dt = null;
-                    }
-                }
-            }
-            return dt;
-        }
-
-        ///// <summary>
-        ///// Allows the programmer to easily insert into the DB
-        ///// </summary>
-        ///// <param name="tableName">Name of the table.</param>
-        ///// <param name="ID">The identifier.</param>
-        ///// <param name="data">The data.</param>
-        ///// <returns></returns>
-        //public bool InsertMultiRow(string tableName, int ID, Dictionary<string, string> data)
-        //{
-        //    List<string> values = new List<string>();
-        //    int i = 0;
-        //    try
-        //    {
-        //        foreach (var val in data)
-        //        {
-        //            values.Add($" ( '{ID}', '{val.Key}', '{val.Value}' )");
-        //        }
-
-        //        if (values.Count > 0)
-        //        {
-        //            // INSERT INTO 'table' ('column1', 'col2', 'col3') VALUES (1,2,3),  (1, 2, 3), (etc);
-        //            string cmd = $"INSERT into '{tableName}' ([NameID], [Key], [Value]) Values {string.Join(";", values.ToArray())}";
-        //            i = ExecuteNonQuery(cmd);
-        //        }
-        //    }
-        //    catch
-        //    { }
-
-        //    //  i = -1 if there's an SQLte error
-        //    return values.Count != 0 && i > -1;
-        //}
-
-        /// <summary>
         /// Adds the column to the specified table.
         /// </summary>
         /// <param name="tableName">Name of the table.</param>
@@ -248,6 +108,7 @@ namespace MonkeyCore2.Data
         /// <param name="columnType">Type of the column.</param>
         public void AddColumn(string tableName, string columnName, string columnType)
         {
+            Logger.Debug<SQLiteDatabase>($"Add Collumn {columnName}");
             if (IsColumnExist(columnName, tableName))
             {
                 return;
@@ -264,6 +125,7 @@ namespace MonkeyCore2.Data
         /// </returns>
         public bool ClearDB()
         {
+            Logger.Debug<SQLiteDatabase>($"ClearDB");
             using (var tables = GetDataTable("select NAME from SQLITE_MASTER where type='table' order by NAME;"))
             {
                 foreach (DataRow table in tables.Rows)
@@ -272,6 +134,41 @@ namespace MonkeyCore2.Data
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        /// Allows the user to easily clear all data from a specific table.
+        /// </summary>
+        /// <param name="table">
+        /// The name of the table to clear.
+        /// </param>
+        /// <returns>
+        /// A boolean true or false to signify success or failure.
+        /// </returns>
+        public bool ClearTable(string table)
+        {
+            Logger.Debug<SQLiteDatabase>($"Clear Table {table}");
+            return ExecuteNonQuery($"delete from {table};") > -1;
+        }
+
+        ///<Summary>
+        ///    Create a Table with Titles
+        /// </Summary>
+        /// <param name="Table"></param><param name="ColumnNames"></param>
+        public void CreateTbl(string Table, string ColumnNames)
+        {
+            Logger.Debug<SQLiteDatabase>($"Create Table {ColumnNames}");
+            using (var SQLconnect = new SQLiteConnection(dbConnection))
+            {
+                using (var SQLcommand = SQLconnect.CreateCommand())
+                {
+                    SQLconnect.Open();
+                    // SQL query to Create Table
+                    //  [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT,
+                    SQLcommand.CommandText = $"{SyncPragma} CREATE TABLE IF NOT EXISTS { Table }( { ColumnNames } );";
+                    SQLcommand.ExecuteNonQuery();
+                }
+            }
         }
 
         /// <summary>
@@ -301,6 +198,35 @@ namespace MonkeyCore2.Data
         }
 
         /// <summary>
+        /// Allows the programmer to interact with the database for purposes other than a query.
+        /// </summary>
+        /// <param name="sql">The SQL to be run.</param>
+        /// <returns>An Integer containing the number of rows updated.</returns>
+        public int ExecuteNonQuery(string sql)
+        {
+            int rowsUpdated;
+            using (var cnn = new SQLiteConnection(dbConnection))
+            {
+                cnn.Open();
+                using (var mycommand = new SQLiteCommand(cnn))
+                {
+                    try
+                    {
+                        mycommand.CommandText = sql;
+                        rowsUpdated = mycommand.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        rowsUpdated = -1;
+                        Logger.Error<SQLiteDatabase>(ex);
+                    }
+                }
+                cnn.Close();
+            }
+            return rowsUpdated;
+        }
+
+        /// <summary>
         /// Executes the query.
         /// </summary>
         /// <param name="sql">
@@ -316,7 +242,7 @@ namespace MonkeyCore2.Data
                 cnn.Open();
                 using (var mycommand = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = SyncPragma + sql;
+                    mycommand.CommandText = $"{SyncPragma}{sql}";
                     using (var a = new SQLiteDataAdapter(mycommand))
                     {
                         try
@@ -334,6 +260,82 @@ namespace MonkeyCore2.Data
         }
 
         /// <summary>
+        /// Allows the programmer to retrieve single items from the DB.
+        /// </summary>
+        /// <param name="sql">The query to run.</param>
+        /// <returns>A string.</returns>
+        public object ExecuteScalar(string sql)
+        {
+            object value;
+            using (var cnn = new SQLiteConnection(dbConnection))
+            {
+                cnn.Open();
+                using (var mycommand = new SQLiteCommand(cnn))
+                {
+                    mycommand.CommandText = sql;
+                    value = mycommand.ExecuteScalar();
+                }
+            }
+            return value;
+        }
+
+        /// <summary>
+        /// Gets all collumn names with meta data.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns></returns>
+        public Dictionary<string, string> GetAllCollumnNamesWithMetaData(string table)
+        {
+            var result = new Dictionary<string, string>();
+            var dt = GetDataTable($"PRAGMA Table_Info({table});");
+            if (dt != null)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    string nullString = "";
+                    string defaultValue = "";
+                    if (int.Parse(row["notnull"].ToString()) == 1)
+                        nullString = " NOT NULL";
+                    if (!string.IsNullOrWhiteSpace(row["dflt_value"].ToString()))
+                        defaultValue = $" DEFAULT ({row["dflt_value"].ToString()})";
+
+                    result.Add($"[{row["name"].ToString()}]", $"{row["type"].ToString()}{nullString}{defaultValue}");
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Allows the programmer to run a query against the Database.
+        /// </summary>
+        /// <param name="sql">The SQL to run</param>
+        /// <returns>A DataTable containing the result set.</returns>
+        public DataTable GetDataTable(string sql)
+        {
+            var dt = new DataTable();
+            using (var cnn = new SQLiteConnection(dbConnection))
+            {
+                cnn.Open();
+                using (var mycommand = new SQLiteCommand(cnn))
+                {
+                    mycommand.CommandText = $"{sql}";
+
+                    try
+                    {
+                        var reader = mycommand.ExecuteReader();
+                        dt.Load(reader);
+                        reader.Close();
+                    }
+                    catch
+                    {
+                        dt = null;
+                    }
+                }
+            }
+            return dt;
+        }
+
+        /// <summary>
         /// Get a set of values from the specified table
         /// </summary>
         /// <param name="str">
@@ -343,7 +345,7 @@ namespace MonkeyCore2.Data
         /// </returns>
         public virtual Dictionary<string, object> GetValueFromTable(string str)
         {
-            Dictionary<string, object> test3 = null;
+            Dictionary<string, object> result = null;
             using (var cnn = new SQLiteConnection(dbConnection))
             {
                 cnn.Open();
@@ -353,13 +355,13 @@ namespace MonkeyCore2.Data
                     using (var reader = mycommand.ExecuteReader())
                     {
                         int Size = 0;
-                        test3 = new Dictionary<string, object>();
+                        result = new Dictionary<string, object>();
                         while (reader.Read())
                         {
                             Size = reader.VisibleFieldCount;
                             for (int i = 0; i <= Size - 1; i++)
                             {
-                                test3.Add(reader.GetName(i), reader.GetValue(i).ToString());
+                                result.Add(reader.GetName(i), reader.GetValue(i).ToString());
                             }
                         }
 
@@ -367,7 +369,7 @@ namespace MonkeyCore2.Data
                     }
                 }
             }
-            return test3;
+            return result;
         }
 
         /// <summary>
@@ -447,28 +449,52 @@ namespace MonkeyCore2.Data
         /// </returns>
         public int RemoveColumn(string tableName, string columnName)
         {
-            var ColumnNames = GetAllColumnName(tableName);
-            if (!ColumnNames.Contains($"[{columnName}]"))
+            string PrimaryKeyClause = string.Empty;
+            string UniqueKeyClause = string.Empty;
+            var Columns = GetAllCollumnNamesWithMetaData(tableName);
+            if (!Columns.ContainsKey($"[{columnName}]"))
             {
                 return -1;
             }
-            ColumnNames.Remove($"[{columnName}]");
-            var columnNames = string.Join(",", ColumnNames.ToArray());
+            Columns.Remove($"[{columnName}]");
+            List<string> PrimaryKeys = GetTablePrimaryKeys(tableName);
+            List<string> UniqueKeys = GetTableUniqeKeys(tableName);
+            PrimaryKeys.Remove($"[{columnName}]");
+            UniqueKeys.Remove($"[{columnName}]");
+            if (PrimaryKeys != null && PrimaryKeys.Count > 0)
+            {
+                PrimaryKeyClause = $", PRIMARY KEY ({string.Join(",", PrimaryKeys.ToArray())})";
+            }
+
+            if (UniqueKeys != null && UniqueKeys.Count > 0)
+            {
+                //CONSTRAINT constraint_name UNIQUE (uc_col1, uc_col2, ... uc_col_n)
+                UniqueKeyClause = $", CONSTRAINT constraint_{tableName} UNIQUE ({string.Join(",", UniqueKeys.ToArray())})";
+            }
+            var ColumnNames = new List<string>();
+            var ColumnNamesWithOutMetaData = new List<string>();
+            foreach (var kvp in Columns)
+            {
+                ColumnNames.Add($"{kvp.Key} {kvp.Value}");
+                ColumnNamesWithOutMetaData.Add($"{kvp.Key}");
+            }
+
+            var columnNamesMetaData = string.Join(", ", ColumnNames.ToArray());
             // columnNames = columnNames.Replace("[", "").Replace("]", "");
-            var sql = new StringBuilder();
+            var sql = new StringBuilder()
             //.Replace("[", "").Replace("]", "")
-            sql.Append("CREATE TEMPORARY TABLE ");
-            sql.Append($"{tableName}backup(");
-            sql.Append($"{columnNames }); INSERT INTO ");
-            sql.Append($"{tableName }backup SELECT ");
-            sql.Append($"{columnNames} FROM ");
-            sql.Append($"{tableName }; DROP TABLE ");
-            sql.Append($"{tableName }; CREATE TABLE ");
-            sql.Append($"{tableName }({columnNames }); INSERT INTO ");
-            sql.Append($"{tableName } SELECT ");
-            sql.Append($"{columnNames} FROM ");
-            sql.Append($"{tableName }backup; DROP TABLE ");
-            sql.Append($"{tableName }backup;");
+            .Append("CREATE TEMPORARY TABLE ")
+            .Append($"{tableName}backup(")
+            .Append($"{columnNamesMetaData }{PrimaryKeyClause}{UniqueKeyClause}); INSERT INTO ")
+            .Append($"{tableName }backup SELECT ")
+            .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")
+            .Append($"{tableName }; DROP TABLE ")
+            .Append($"{tableName }; CREATE TABLE ")
+            .Append($"{tableName }({columnNamesMetaData }{PrimaryKeyClause}{UniqueKeyClause}); INSERT INTO ")
+            .Append($"{tableName } SELECT ")
+            .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")
+            .Append($"{tableName }backup; DROP TABLE ")
+            .Append($"{tableName }backup;");
             return ExecuteNonQuery(sql.ToString());
         }
 
@@ -510,6 +536,60 @@ namespace MonkeyCore2.Data
                 Logger.Error(ex);
             }
             return false;
+        }
+
+        /// <summary>
+        /// Gets the table primary keys.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns></returns>
+        public List<string> GetTablePrimaryKeys(string table)
+        {
+            var result = new List<string>();
+            var dt = GetDataTable($"PRAGMA Table_Info({table});");
+            if (dt != null)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    if (int.Parse(row["pk"].ToString()) > 0)
+                        result.Add($"[{row["name"].ToString()}]");
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the table uniqe keys.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <returns></returns>
+        public List<string> GetTableUniqeKeys(string table)
+        {
+            //PRAGMA index_list(table_name);
+            var result = new List<string>();
+            var IndexListDataTable = GetDataTable($"PRAGMA INDEX_LIST({table});");
+            string test = string.Empty;
+            if (IndexListDataTable != null)
+            {
+                foreach (DataRow row in IndexListDataTable.Rows)
+                {
+                    if (int.Parse(row["unique"].ToString()) != 0)
+                    {
+                        var indexXinfoDataTable = GetDataTable($"PRAGMA index_xinfo({row["name"].ToString()});");
+                        if (indexXinfoDataTable != null)
+                        {
+                            foreach (DataRow row2 in indexXinfoDataTable.Rows)
+                            {
+                                var ColumnName = row2["name"].ToString();
+                                if (!string.IsNullOrWhiteSpace(ColumnName))
+                                    result.Add($"[{ColumnName}]");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
 
         #endregion Public Methods

@@ -19,8 +19,8 @@ namespace MonkeyCore2Tests
         public void OneTimeTearDown()
         {
             // TODO: delete Databae
-            //if (File.Exists(databaseFile))
-            //    File.Delete(databaseFile);
+            //if (File.Exists(database.DatabaseFile))
+            //    File.Delete(database.DatabaseFile);
         }
     }
 }

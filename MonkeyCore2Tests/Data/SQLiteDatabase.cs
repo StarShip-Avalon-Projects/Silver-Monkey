@@ -1,11 +1,5 @@
-﻿using MonkeyCore2.Data;
-using NUnit.Framework;
-using System;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static MonkeyCore2Tests.Data.DatabaseConfig;
 
 namespace MonkeyCore2Tests.Data
@@ -32,7 +26,7 @@ namespace MonkeyCore2Tests.Data
                 { "Access Level", "0" }
             };
             var rowCount = database.Insert("FURRE", data);
-            Assert.That(rowCount > 0, $"Rows affected {rowCount}");
+            Assert.That(rowCount > -1, $"Rows affected {rowCount}");
         }
 
         [Test]
@@ -49,7 +43,7 @@ namespace MonkeyCore2Tests.Data
             {
                 Assert.That(success == true, $"Update has '{success}'");
                 result = database.ExecuteScalar("SELECT [Access Level] FROM FURRE WHERE Name='gerolkae'");
-                Assert.That(result.ToString() == "222", $"Resut expected 222 but got {result}");
+                Assert.That(result.ToString() == "222", $"Resut expected 222 but got '{result}'");
             });
             data = new Dictionary<string, string>
             {
@@ -61,7 +55,7 @@ namespace MonkeyCore2Tests.Data
             {
                 Assert.That(success == true, $"Update has '{success}'");
                 result = database.ExecuteScalar("SELECT [Access Level] FROM FURRE WHERE Name='gerolkae'");
-                Assert.That(result.ToString() == "5", $"Resut expected 5 but got {result}");
+                Assert.That(result.ToString() == "5", $"Resut expected 5 but got '{result}'");
             });
         }
 
@@ -71,6 +65,28 @@ namespace MonkeyCore2Tests.Data
             AddColumnTest("TestCollumn1");
             AddDataTo_FURRE_Table();
             RemoveColumnTest("TestCollumn1");
+        }
+
+        [Test]
+        public void GetTableMetaDataTest()
+        {
+            var meta = database.GetAllCollumnNamesWithMetaData("FURRE");
+            Assert.That(meta != null);
+        }
+
+        [Test]
+        public void GetTableUniquekeysTest()
+        {
+            AddDataTo_FURRE_Table();
+            var meta = database.GetTableUniqeKeys("FURRE");
+            Assert.That(meta != null);
+        }
+
+        [Test]
+        public void GetTablePrimarykeysTest()
+        {
+            var meta = database.GetTablePrimaryKeys("FURRE");
+            Assert.That(meta != null);
         }
 
         public void RemoveColumnTest(string ColumnName)
