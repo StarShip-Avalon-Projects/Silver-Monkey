@@ -1,12 +1,8 @@
-﻿using System;
+﻿using Monkeyspeak;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MonkeyCore2.Data;
-using Monkeyspeak;
 
-namespace SilverMonkey.EnginLibraries.Data
+namespace Engine.Libraries.Data
 {
     /// <summary>
     /// Designed with <see cref="Monkeyspeak.VariableTable"/> in mind
@@ -22,12 +18,26 @@ namespace SilverMonkey.EnginLibraries.Data
         {
         }
 
-        public VariableTable GetVariableTableFromTable(string str)
+        /// <summary>
+        /// Inserts the specified VariableTable into the specified table
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="Variable">The variable.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public int Insert(string tableName, VariableTable Variable)
         {
             throw new NotImplementedException();
         }
 
-        public override int Insert(string tableName, Dictionary<string, string> data)
+        /// <summary>
+        /// Upates the specified table name.
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <param name="Variable">The variable.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public int Upate(string tableName, VariableTable Variable)
         {
             throw new NotImplementedException();
         }

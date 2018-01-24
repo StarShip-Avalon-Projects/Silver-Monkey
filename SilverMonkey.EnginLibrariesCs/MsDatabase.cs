@@ -1,11 +1,10 @@
-﻿using MonkeyCore2.Data;
+﻿using Engine.Libraries.Data;
 using MonkeyCore2.IO;
 using Monkeyspeak;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
-using System.IO;
+using System.Text;
 using static Engine.Libraries.MsLibHelper;
 
 namespace Engine.Libraries
@@ -40,9 +39,7 @@ namespace Engine.Libraries
         /// </summary>
         private static string _SQLitefile;
 
-        private Dictionary<string, object> cache = new Dictionary<string, object>();
-
-        private bool QueryRun = false;
+        private SQLiteDatabase database = null;
 
         #endregion Private Fields
 
@@ -74,45 +71,6 @@ namespace Engine.Libraries
         #endregion Public Properties
 
         #region Public Methods
-
-        /// <summary>
-        /// (5:513) add column {...} with type {...} to the Furre table.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public static bool AddColumn(TriggerReader reader)
-        {
-            var Column = reader.ReadString();
-            var Type = reader.ReadString();
-            var db = new SQLiteDatabase(SQLitefile);
-            db.AddColumn("FURRE", $"[{ Column }]", Type);
-            return true;
-        }
-
-        /// <summary>
-        /// (5:550) take variable %Variable , prepare it for a query, and
-        /// put it in variable %Variable (this is your escaping call, which
-        /// would depend on however you have to do it internally)
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public static bool PrepQuery(TriggerReader reader)
-        {
-            var var1 = reader.ReadVariable(true);
-            var var2 = reader.ReadVariable(true);
-            var str = var1.Value.ToString();
-            str = str.Replace("'", "''");
-            var2.Value = str;
-            return true;
-        }
 
         /// <summary>
         /// (5:412) select Database info {...} about the furre named {...},
@@ -284,7 +242,8 @@ namespace Engine.Libraries
                 "and the Database info {...} about the furre named {...} is equal to string {...},");
             // (1:517) and the Database info {...} about the furre named {...} is not equal to {...},
             Add(TriggerCategory.Condition,
-                r => FurreNamedinfoNotEqualToSTR(r), "and the Database info {...} about the furre named {...} is not equal to string {...},");
+                r => FurreNamedinfoNotEqualToSTR(r),
+                "and the Database info {...} about the furre named {...} is not equal to string {...},");
             // (1:518) and the Database info {...} about the triggering furre is equal to {...},
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreinfoEqualToSTR(r),
@@ -293,51 +252,81 @@ namespace Engine.Libraries
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreinfoNotEqualToSTR(r),
                 "and the Database info {...} about the triggering furre is not equal to string {...},");
-            // Installed 7/13/120`16
-            // (1:524) and the Database info  {...} in Settings Table {...} exists,
+
             Add(TriggerCategory.Condition,
-                r => SettingExist(r),
-                "and the Database info  {...} in Settings Table {...} exists,");
-            // (1:525) and the Database info  {...} in Settings Table {...} doesn't exist,
+                r => AndEntryInTableExists(r),
+                "and entry {...} in Table {...} exists,");
+
             Add(TriggerCategory.Condition,
-                r => SettingNotExist(r),
-                "and the Database info  {...} in Settings Table {...} doesn\t exist,");
-            // (1:526) and the Database info {..} in Settings Table  {...} Is equal to {...},
+                r => !AndEntryInTableExists(r),
+                "and entry {...} in Table {...}  doesn't exist,");
+
             Add(TriggerCategory.Condition,
-                r => SettingEqualTo(r),
-                "and the Database info {..} in Settings Table  {...} Is equal to {...},");
-            // (1:527) and the Database info {..} in Settings Table  {...} Is Not equal to {...},
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "and entry {...} in table % is equal to  {...},");
+
             Add(TriggerCategory.Condition,
-                r => SettingNotEqualTo(r),
-                "and the Database info {..} in Settings Table  {...} Is not equal to {...},");
-            // (1:528) and the Database info {..} in Settings Table  {...} Is greater than #,
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "and entry {...} in table % is not equal to  {...},");
+
             Add(TriggerCategory.Condition,
-                r => SettingGreaterThan(r),
-                "and the Database info {..} in Settings Table  {...} Is greater than #,");
-            // (1:529) and the Database info {..} in Settings Table  {...} Is greater than or equal to #,
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "and entry {...} in table % is equal to  %,");
+
             Add(TriggerCategory.Condition,
-                r => SettingGreaterThanOrEqualTo(r),
-                "and the Database info {..} in Settings Table  {...} Is greater than or equal to #,");
-            // (1:530) and the Database info {..} in Settings Table  {...} Is less than #,
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "and entry {...} in table % is not equal to  %,");
+
             Add(TriggerCategory.Condition,
-                r => SettingLessThan(r),
-                "and the Database info {..} in Settings Table  {...} Is less than #,");
-            // (1:530) and the Database info {..} in Settings Table  {...} Is less than #,
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "and entry {...} in table % is greater than or equal to  %,");
+
             Add(TriggerCategory.Condition,
-                r => SettingLessThanOrEqualTo(r),
-                "and the Database info {..} in Settings Table  {...} Is less than or equal to #,");
-            // (5:500) use SQLite database file {...} or create file if it does not exist.
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "and entry {...} in table % is greater than  %,");
+
+            Add(TriggerCategory.Condition,
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "and entry {...} in table % is less than or equal to %,");
+            Add(TriggerCategory.Condition,
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "and entry {...} in table % is less than %,");
+
             Add(TriggerCategory.Effect,
                 r => UseOrCreateSQLiteFileIfNotExist(r),
                 "use SQLite database file {...} or create file if it does not exist.");
             // (5:505 ) Add the triggering furre with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
             Add(TriggerCategory.Effect,
                 r => InsertTriggeringFurreRecord(r),
-                "add the triggering furre with the default access level \"0\"to the Furre Table in the database if he, she, or it doesn\t exist.");
+                "add the triggering furre with the access level # to the Furre Table in the database if he, she, or it doesn\t exist.");
             // (5:506) Add furre named {...} with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
             Add(TriggerCategory.Effect,
                 r => InsertFurreNamed(r)
-                , "add furre named {...} with the default access level \"0\"to the Furre Table in the database if he, she, or it doesn\t exist.");
+                , "add furre named {...} with the access level # to the Furre Table in the database if he, she, or it doesn\t exist.");
             // (5:507) update Database info {...} about the triggering furre will now be #.
             Add(TriggerCategory.Effect,
                 r => UpdateTriggeringFurreField(r),
@@ -357,14 +346,17 @@ namespace Engine.Libraries
             // (5:511) select Database info {...} about the triggering furre, and put it in variable %.
             Add(TriggerCategory.Effect,
                 r => ReadDatabaseInfoForTheTriggeringFurre(r),
-                "select Database info {...} about the triggering furre, and put it in variable %.");
+                "select database {...} about the triggering furre, and put it in variable %.");
             // (5:512) select Database info {...} about the furre named {...}, and put it in variable %.
             Add(TriggerCategory.Effect,
                 r => ReadDatabaseInfoName(r),
                 "select Database info {...} about the furre named {...}, and put it in variable %.");
             // (5:513) add column {...} with type {...} to the Furre table.
             Add(TriggerCategory.Effect,
-                r => AddColumn(r),
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
                 "add column {...} with type {...} to the Furre table.");
             // (5:518) delete all Database info about the triggering furre.
             Add(TriggerCategory.Effect,
@@ -377,29 +369,43 @@ namespace Engine.Libraries
             // (5:522) get the total of records from table {...} and put it into variable %.
             Add(TriggerCategory.Effect,
                 r => GetTotalRecords(r),
-                "get the total number of records from table {...} and put it into variable %Variable.");
+                "get the total number of records from database table {...} and put it into variable %Variable.");
             // (5:523) take the sum of column{...} in table {...} and put it into variable %
             Add(TriggerCategory.Effect,
                 r => ColumnSum(r),
-                "take the sum of column{...} in table {...} and put it into variable %Variable.");
+                "take the sum of column{...} in database table {...} and put it into variable %Variable.");
             // (5:550) take variable %Variable , prepare it for a query, and put it in variable %Variable .   (this is your escaping call, which would depend on however you have to do it internally)
             Add(TriggerCategory.Effect,
-                r => PrepQuery(r),
-                "take variable %Variable , prepare it for a SQLite Database query, and put it in variable %Variable.");
-            // (5:551) execute SQLite Database query {...} Select * from table where name=%2
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "get the database table {...} and put it into table % .");
+
             Add(TriggerCategory.Effect,
-                r => ExecuteQuery(r),
-                "execute SQLite Database query {...}.");
-            // (5:552) retrieve field {...} from SQLite Database query and put it into variable %Variable .
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "take table % and put it into database table {...}.");
+
             Add(TriggerCategory.Effect,
-                r => RetrieveQuery(r),
-                "retrieve field {...} from SQLite Database query and put it into variable %Variable.");
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
+                "clear the database table {...}.");
             Add(TriggerCategory.Effect,
                 r => VACUUM(r),
                 "execute \"VACUUM\"to rebuild the database and reclaim wasted space.");
             // (5:561) remember Database info {...} for Settings Table {...} to {...}.
             // (5:562) forget Database info {...} from Settings Table{...}.
             // (5:563) forget all Settings Table Database info.
+        }
+
+        private bool AndEntryInTableExists(TriggerReader r)
+        {
+            throw new NotImplementedException();
         }
 
         public override void Unload(Page page)
@@ -409,67 +415,12 @@ namespace Engine.Libraries
 
         #region Private Methods
 
-        /// <summary>
-        /// (5:418) delete all Database info about the triggering furre.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool DeleteTriggeringFurre(TriggerReader reader)
         {
             var db = new SQLiteDatabase(SQLitefile);
             return 0 < db.ExecuteNonQuery($"Delete from FURRE where Name='{Player.ShortName}'");
         }
 
-        /// <summary>
-        /// (5:551) execute query {...}.
-        /// <para>
-        /// Execute raw SQL commands on the database.
-        /// </para>
-        /// <para>
-        /// For SELECT statements <see cref="RetrieveQuery"/>
-        /// </para>
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        private bool ExecuteQuery(TriggerReader reader)
-        {
-            var Str = reader.ReadString().Trim();
-            cache.Clear();
-            QueryRun = false;
-            var db = new SQLiteDatabase(SQLitefile);
-            if (Str.ToUpper().StartsWith("SELECT"))
-            {
-                cache = db.GetValueFromTable(Str);
-                QueryRun = true;
-                return cache.Count > 0;
-            }
-
-            db.ExecuteNonQuery(Str);
-            return true;
-        }
-
-        //
-        /// <summary>
-        /// (1:508) and the Database info {...} about the furre named {...}
-        /// is equal to #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// True if there is no error, otherwise false and stops further
-        /// conditions or effects processing in the currnt block
-        /// </returns>
-        /// <remarks>
-        /// </remarks>
         private bool FurreNamedinfoEqualToNumber(TriggerReader reader)
         {
             var db = new SQLiteDatabase(SQLitefile);
@@ -481,16 +432,6 @@ namespace Engine.Libraries
             return Value == Variable;
         }
 
-        /// <summary>
-        /// (1:516) and the Database info {...} about the furre named {...}
-        /// is equal to string {...},
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedinfoEqualToSTR(TriggerReader reader)
         {
             string info = reader.ReadString();
@@ -501,16 +442,6 @@ namespace Engine.Libraries
             return result.ToString() == str;
         }
 
-        /// <summary>
-        /// (1:510) and the Database info {...} about the furre named {...}
-        /// is greater than #, greater than #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedinfoGreaterThanNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
@@ -523,16 +454,6 @@ namespace Engine.Libraries
             return Value > Variable;
         }
 
-        /// <summary>
-        /// (1:512) and the Database info {...} about the furre named {...}
-        /// is greater than or equal to #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedinfoGreaterThanOrEqualToNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
@@ -545,16 +466,6 @@ namespace Engine.Libraries
             return Value >= Variable;
         }
 
-        /// <summary>
-        /// (1:511) and the Database info {...} about the furre named {...}
-        /// is less than #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedinfoLessThanNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
@@ -566,16 +477,6 @@ namespace Engine.Libraries
             return Value < Variable;
         }
 
-        /// <summary>
-        /// (1:513) and the Database info {...} about the furre named {...}
-        /// is less than or equal to #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedinfoLessThanOrEqualToNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
@@ -588,16 +489,6 @@ namespace Engine.Libraries
             return Value <= Variable;
         }
 
-        /// <summary>
-        /// (1:509) and the Database info {...} about the furre named {...}
-        /// is not equal to #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedinfoNotEqualToNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
@@ -610,16 +501,6 @@ namespace Engine.Libraries
             return (Value != Variable);
         }
 
-        /// <summary>
-        /// (1:517) and the Database info {...} about the furre named {...}
-        /// is not equal to string {...},
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool FurreNamedinfoNotEqualToSTR(TriggerReader reader)
         {
             var info = reader.ReadString();
@@ -630,18 +511,6 @@ namespace Engine.Libraries
             return str != result.ToString();
         }
 
-        /// <summary>
-        /// Gets information from the Furre Table for the specified furre
-        /// </summary>
-        /// <param name="Column">
-        /// Collunm Name as string
-        /// </param>
-        /// <param name="Name">
-        /// Furre Name as string
-        /// </param>
-        /// <returns>
-        /// the Value for the specified Collumn for the specified furre
-        /// </returns>
         private object GetValueFromTable(string Column, string Name)
         {
             var db = new SQLiteDatabase(SQLitefile);
@@ -649,17 +518,6 @@ namespace Engine.Libraries
             return result;
         }
 
-        /// <summary>
-        /// (5:506) add furre named {%NewMember} with the default access
-        /// level "1"to the Furre Table in the database if he, she, or it
-        /// doesn't exist.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool InsertFurreNamed(TriggerReader reader)
         {
             string Furre = reader.ReadString().ToFurcadiaShortName();
@@ -677,25 +535,13 @@ namespace Engine.Libraries
             var db = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
-                { "date modified", DateTime.Now.ToLongDateString() },
                 { "Name",$"{Furre}"},
-                { "date added",$"{DateTime.Now}"},
                 { "Access Level",$"{info}"}
             };
 
             return db.Insert("FURRE", data) > 0;
         }
 
-        /// <summary>
-        /// (5:405) Add the triggering furre with default access level to
-        /// the Furre Table in the database if he, she or it don't already exist.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool InsertTriggeringFurreRecord(TriggerReader reader)
         {
             string info = "0";
@@ -713,26 +559,13 @@ namespace Engine.Libraries
             var db = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
-                { "date modified", DateTime.Now.ToLongDateString() },
                 { "Name",$"{Player.ShortName}"},
-                { $"Access Level",$"{info}"},
-                { "date added",$"{DateTime.Now}"},
                 { "Access Level",$"{info}"}
             };
 
             return db.Insert("FURRE", data) > 0;
         }
 
-        /// <summary>
-        /// (5:411) select Database info {...} about the triggering furre,
-        /// and put it in variable %Variable.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool ReadDatabaseInfoForTheTriggeringFurre(TriggerReader reader)
         {
             var info = reader.ReadString();
@@ -745,108 +578,23 @@ namespace Engine.Libraries
             return true;
         }
 
-        /// <summary>
-        /// (5:552) retrieve field {...} from query and put it into variable %Variable
-        /// <para>
-        /// <see cref="ExecuteQuery"/>
-        /// </para>
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        private bool RetrieveQuery(TriggerReader reader)
-        {
-            var Field = reader.ReadString();
-            var Var = reader.ReadVariable(true);
-            if (QueryRun)
-            {
-                if (cache.Count > 0)
-                {
-                    foreach (var kvp in cache)
-                    {
-                        if (kvp.Key == Field)
-                        {
-                            Var.Value = kvp.Value;
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-
-        private bool SettingEqualTo(TriggerReader r)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// (1:524) and the Database info {...} in Settings Table {...} exists,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool SettingExist(TriggerReader reader)
         {
             var info = reader.ReadString();
             var setting = reader.ReadString();
 
-            string cmd = "select SettingsTable.*, SettingsTableMaster.ID from SettingsTable " + "inner join SettingsTableMaster on " + "SettingsTableMaster."
-                       + info + "= SettingsTable.[SettingsTableID] " + "where SettingsTableMaster.Setting = '"
-                       + setting + "' ";
+            var cmd = new StringBuilder()
+                .Append("select SettingsTable.*, SettingsTableMaster.ID from SettingsTable )")
+                .Append("inner join SettingsTableMaster on ")
+                .Append("SettingsTableMaster.")
+                .Append($"{info}= SettingsTable.[SettingsTableID] ")
+                .Append("where SettingsTableMaster.Setting = '")
+                .Append($"{setting}' ");
 
             var db = new SQLiteDatabase(SQLitefile);
-            cache = db.GetValueFromTable(cmd);
-            QueryRun = true;
-            return cache.Count > 0;
+            return db.GetValueFromTable(cmd.ToString()).Count < 0;
         }
 
-        private bool SettingGreaterThan(TriggerReader r)
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool SettingGreaterThanOrEqualTo(TriggerReader r)
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool SettingLessThan(TriggerReader r)
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool SettingLessThanOrEqualTo(TriggerReader r)
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool SettingNotEqualTo(TriggerReader r)
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool SettingNotExist(TriggerReader r)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// (1:500) and the Database info {...} about the triggering furre
-        /// is equal to #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool TriggeringFurreinfoEqualToNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
@@ -857,24 +605,12 @@ namespace Engine.Libraries
             return Number == Value;
         }
 
-        /// <summary>
-        /// "and the Database info {...} about the triggering furre
-        /// is equal to string {...},
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool TriggeringFurreinfoEqualToSTR(TriggerReader reader)
         {
             var info = reader.ReadString();
-
             var str = reader.ReadString();
 
             if (str == GetValueFromTable(info, Player.ShortName).ToString())
-
             {
                 return true;
             }
@@ -882,136 +618,67 @@ namespace Engine.Libraries
             return false;
         }
 
-        /// <summary>
-        /// (1:502) and the Database info {...} about the triggering furre
-        /// is greater than #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool TriggeringFurreinfoGreaterThanNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
-
             var Number = reader.ReadNumber();
-            var check = GetValueFromTable(info, Player.ShortName);
-            double Value = 0;
 
-            double.TryParse(check.ToString(), out Value);
+            var check = GetValueFromTable(info, Player.ShortName);
+            double.TryParse(check.ToString(), out double Value);
 
             return (Value > Number);
         }
 
-        /// <summary>
-        /// (1:504) and the Database info {...} about the triggering furre
-        /// is greater than or equal to #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool TriggeringFurreinfoGreaterThanOrEqualToNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
-
             var Number = reader.ReadNumber();
-            double Num = 0;
-            var check = GetValueFromTable(info, Player.ShortName);
 
-            double.TryParse(check.ToString(), out Num);
+            var check = GetValueFromTable(info, Player.ShortName);
+            double.TryParse(check.ToString(), out double Num);
 
             return (Num >= Number);
         }
 
-        /// <summary>
-        /// (1:503) and the Database info {...} about the triggering furre
-        /// is less than #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool TriggeringFurreinfoLessThanNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
-
             var Number = reader.ReadNumber();
-            var check = GetValueFromTable(info, Player.ShortName);
 
+            var check = GetValueFromTable(info, Player.ShortName);
             double.TryParse(check.ToString(), out double Num);
 
             return Num < Number;
         }
 
-        /// <summary>
-        /// (1:505) and the Database info {...} about the triggering furre
-        /// is less than or equal to #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool TriggeringFurreinfoLessThanOrEqualToNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
-
             var Number = reader.ReadNumber();
-            var check = GetValueFromTable(info, Player.ShortName);
 
+            var check = GetValueFromTable(info, Player.ShortName);
             double.TryParse(check.ToString(), out double Num);
 
-            return (Num <= Number);
+            return Num <= Number;
         }
 
-        /// <summary>
-        /// (1:501) and the Database info {...} about the triggering furre
-        /// is not equal to #,
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool TriggeringFurreinfoNotEqualToNumber(TriggerReader reader)
         {
             var info = reader.ReadString();
-
             var Number = reader.ReadNumber();
-            string val = GetValueFromTable(info, Player.ShortName).ToString();
 
+            string val = GetValueFromTable(info, Player.ShortName).ToString();
             double.TryParse(val, out double Value);
 
             return (Value != Number);
         }
 
-        /// <summary>
-        /// (1:519) and the Database info {...} about the triggering furre
-        /// is not equal to string {...},
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool TriggeringFurreinfoNotEqualToSTR(TriggerReader reader)
         {
             var info = reader.ReadString();
-
             var str = reader.ReadString();
 
             if (str != GetValueFromTable(info, Player.ShortName).ToString())
-
             {
                 return true;
             }
@@ -1019,16 +686,6 @@ namespace Engine.Libraries
             return false;
         }
 
-        /// <summary>
-        /// (5:408) update Database info {...} about the furre named {...}
-        /// will now be #.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool UpdateFurreNamed_Field(TriggerReader reader)
         {
             var info = reader.ReadString();
@@ -1039,56 +696,35 @@ namespace Engine.Libraries
             var data = new Dictionary<string, string>
             {
                 { "Name", Furre},
-                { info,       value },
+                { info, value },
                 { "date modified" ,DateTime.Now.ToShortDateString()}
             };
 
             return db.Update("FURRE", data, "[Name]='" + Furre + "'");
         }
 
-        /// <summary>
-        /// (5:410) update database info {...} in the furre table  about the furre named {...}
-        /// will now be {...}.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool UpdateFurreNamed_FieldSTR(TriggerReader reader)
         {
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
 
-            // Dim Furre As String = MSpage.GetVariable("~Name").Value.ToString()
             var value = reader.ReadString();
             var db = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
+                { "Name", $"{Furre}"},
                 { "date modified", DateTime.Now.ToLongDateString() },
-                { "Name",$"{Furre}"},
                 { $"{info}",$"{value}"}
             };
 
             return db.Update("FURRE", data, $"[Name]='{Furre}'");
         }
 
-        /// <summary>
-        /// (5407) update Database info {...} about the triggering furre
-        /// will now be #.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool UpdateTriggeringFurreField(TriggerReader reader)
         {
             var info = reader.ReadString();
-
             var value = reader.ReadNumber();
+
             var db = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
@@ -1100,24 +736,12 @@ namespace Engine.Libraries
             return db.Update("FURRE", data, "[Name]='" + Player.ShortName + "'");
         }
 
-        /// <summary>
-        /// (5:409) update Database info {...} about the triggering furre
-        /// will now be {...}.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool UpdateTriggeringFurreFieldSTR(TriggerReader reader)
         {
             var info = reader.ReadString();
-
-            // Dim Furre As String = reader.ReadString()
             var Furre = reader.Page.GetVariable(TriggeringFurreShortNameVariable).Value.ToString();
-
             var value = reader.ReadString();
+
             var db = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
@@ -1128,16 +752,6 @@ namespace Engine.Libraries
             return db.Update("FURRE", data, $"[Name]='{ Furre }'");
         }
 
-        /// <summary>
-        /// (5:500) use SQLite database file {...} or create file if it does
-        /// not exist.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool UseOrCreateSQLiteFileIfNotExist(TriggerReader reader)
         {
             SQLitefile = Paths.CheckBotFolder(reader.ReadString());
@@ -1145,16 +759,6 @@ namespace Engine.Libraries
             return true;
         }
 
-        /// <summary>
-        /// (5:559) execute ""VACUUM""to rebuild the database and reclaim
-        /// wasted space.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private bool VACUUM(TriggerReader reader)
         {
             DateTime startDate = DateTime.Now;

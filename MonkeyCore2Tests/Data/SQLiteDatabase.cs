@@ -20,37 +20,54 @@ namespace MonkeyCore2Tests.Data
 
         public void AddDataTo_FURRE_Table()
         {
-            var data = new Dictionary<string, string>
+            var FurreDataGero = new Dictionary<string, string>
             {
                 { "Name", "gerolkae" },
                 { "Access Level", "0" }
             };
-            var rowCount = database.Insert("FURRE", data);
-            Assert.That(rowCount > -1, $"Rows affected {rowCount}");
+            var FurreDataBill = new Dictionary<string, string>
+            {
+                { "Name", "bill" },
+                { "Access Level", "3" }
+            };
+            var FurreDataJoe = new Dictionary<string, string>
+            {
+                { "Name", "joe" },
+                { "Access Level", "3" }
+            };
+            var rowCountGero = database.Insert("FURRE", FurreDataGero);
+            var rowCountBill = database.Insert("FURRE", FurreDataBill);
+            var rowCountJoe = database.Insert("FURRE", FurreDataJoe);
+            Assert.Multiple(() =>
+            {
+                Assert.That(rowCountGero > -1, $"Gero Rows affected {rowCountGero}");
+                Assert.That(rowCountBill > -1, $"Bill Rows affected {rowCountBill}");
+                Assert.That(rowCountJoe > -1, $"Joe Rows affected {rowCountJoe}");
+            });
         }
 
         [Test]
         public void UpdateDataTo_FURRE_Table()
         {
             object result;
-            var data = new Dictionary<string, string>
+            var FurreTableDataRow = new Dictionary<string, string>
             {
                 { "Name", "gerolkae" },
                 { "Access Level", "222" }
             };
-            var success = database.Update("FURRE", data, "Name == 'gerolkae'");
+            var success = database.Update("FURRE", FurreTableDataRow, "Name == 'gerolkae'");
             Assert.Multiple(() =>
             {
                 Assert.That(success == true, $"Update has '{success}'");
                 result = database.ExecuteScalar("SELECT [Access Level] FROM FURRE WHERE Name='gerolkae'");
                 Assert.That(result.ToString() == "222", $"Resut expected 222 but got '{result}'");
             });
-            data = new Dictionary<string, string>
+            FurreTableDataRow = new Dictionary<string, string>
             {
                 { "Name", "gerolkae" },
                 { "Access Level", "5" }
             };
-            success = database.Update("FURRE", data, "Name == 'gerolkae'");
+            success = database.Update("FURRE", FurreTableDataRow, "Name == 'gerolkae'");
             Assert.Multiple(() =>
             {
                 Assert.That(success == true, $"Update has '{success}'");

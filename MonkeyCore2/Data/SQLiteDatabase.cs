@@ -17,6 +17,12 @@ namespace MonkeyCore2.Data
     {
         #region Public Properties
 
+        /// <summary>
+        /// Gets the database file.
+        /// </summary>
+        /// <value>
+        /// The database file.
+        /// </value>
         public string DatabaseFile
         {
             get => inputFile;
@@ -103,18 +109,25 @@ namespace MonkeyCore2.Data
         /// <summary>
         /// Adds the column to the specified table.
         /// </summary>
-        /// <param name="tableName">Name of the table.</param>
-        /// <param name="columnName">Name of the column.</param>
-        /// <param name="columnType">Type of the column.</param>
-        public void AddColumn(string tableName, string columnName, string columnType)
+        /// <param name="table">Name of the table.</param>
+        /// <param name="collumn">Name of the column.</param>
+        /// <param name="type">Type of the column.</param>
+        public int AddColumn(string table, string collumn, string type)
         {
-            Logger.Debug<SQLiteDatabase>($"Add Collumn {columnName}");
-            if (IsColumnExist(columnName, tableName))
+            Logger.Debug<SQLiteDatabase>($"'{collumn} {type}' TO: '{table}'");
+            if (IsColumnExist(collumn, table))
             {
-                return;
+                return 0;
             }
-
-            ExecuteNonQuery($"ALTER TABLE { tableName } ADD COLUMN { columnName } { columnType };");
+            try
+            {
+                return ExecuteNonQuery($"ALTER TABLE { table } ADD COLUMN { collumn } { type };");
+            }
+            catch (Exception ex)
+            {
+                Furcadia.Logging.Logger.Error<SQLiteDatabase>(ex);
+            }
+            return -1;
         }
 
         /// <summary>
@@ -145,19 +158,27 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// A boolean true or false to signify success or failure.
         /// </returns>
-        public bool ClearTable(string table)
+        public int ClearTable(string table)
         {
             Logger.Debug<SQLiteDatabase>($"Clear Table {table}");
-            return ExecuteNonQuery($"delete from {table};") > -1;
+            try
+            {
+                return ExecuteNonQuery($"delete from {table};");
+            }
+            catch (Exception ex)
+            {
+                Furcadia.Logging.Logger.Error<SQLiteDatabase>(ex);
+            }
+            return -1;
         }
 
         ///<Summary>
-        ///    Create a Table with Titles
+        ///    Create a Table with Collumn Headers
         /// </Summary>
-        /// <param name="Table"></param><param name="ColumnNames"></param>
-        public void CreateTbl(string Table, string ColumnNames)
+        /// <param name="table"></param><param name="columns"></param>
+        public void CreateTbl(string table, string columns)
         {
-            Logger.Debug<SQLiteDatabase>($"Create Table {ColumnNames}");
+            Logger.Debug<SQLiteDatabase>($"Create Table '{table}' with COLUMNS: '{columns}'");
             using (var SQLconnect = new SQLiteConnection(dbConnection))
             {
                 using (var SQLcommand = SQLconnect.CreateCommand())
@@ -165,7 +186,7 @@ namespace MonkeyCore2.Data
                     SQLconnect.Open();
                     // SQL query to Create Table
                     //  [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT,
-                    SQLcommand.CommandText = $"{SyncPragma} CREATE TABLE IF NOT EXISTS { Table }( { ColumnNames } );";
+                    SQLcommand.CommandText = $"{SyncPragma} CREATE TABLE IF NOT EXISTS { table }( { columns } );";
                     SQLcommand.ExecuteNonQuery();
                 }
             }
@@ -174,7 +195,7 @@ namespace MonkeyCore2.Data
         /// <summary>
         /// Allows the programmer to easily delete rows from the DB.
         /// </summary>
-        /// <param name="tableName">
+        /// <param name="table">
         /// The table from which to delete.
         /// </param>
         /// <param name="where">
@@ -183,18 +204,19 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// A boolean true or false to signify success or failure.
         /// </returns>
-        public bool Delete(string tableName, string where)
+        public int Delete(string table, string where)
         {
+            Logger.Debug<SQLiteDatabase>($"'{table}' WHERE: '{where}'");
             try
             {
-                return ExecuteNonQuery($"delete from {tableName} where {where};") > -1;
+                return ExecuteNonQuery($"DELETE FROM {table} WHERE {where};");
             }
             catch (Exception ex)
             {
                 Furcadia.Logging.Logger.Error<SQLiteDatabase>(ex);
             }
 
-            return false;
+            return -1;
         }
 
         /// <summary>
@@ -204,6 +226,7 @@ namespace MonkeyCore2.Data
         /// <returns>An Integer containing the number of rows updated.</returns>
         public int ExecuteNonQuery(string sql)
         {
+            Logger.Debug<SQLiteDatabase>($"'{sql}'");
             int rowsUpdated;
             using (var cnn = new SQLiteConnection(dbConnection))
             {
@@ -236,6 +259,7 @@ namespace MonkeyCore2.Data
         /// </returns>
         public DataSet ExecuteQuery(string sql)
         {
+            Logger.Debug<SQLiteDatabase>($"'{sql}'");
             var rowsUpdated = new DataSet();
             using (var cnn = new SQLiteConnection(dbConnection))
             {
@@ -266,6 +290,7 @@ namespace MonkeyCore2.Data
         /// <returns>A string.</returns>
         public object ExecuteScalar(string sql)
         {
+            Logger.Debug<SQLiteDatabase>($"'{sql}'");
             object value;
             using (var cnn = new SQLiteConnection(dbConnection))
             {
@@ -286,6 +311,7 @@ namespace MonkeyCore2.Data
         /// <returns></returns>
         public Dictionary<string, string> GetAllCollumnNamesWithMetaData(string table)
         {
+            Logger.Debug<SQLiteDatabase>($"'{table}'");
             var result = new Dictionary<string, string>();
             var dt = GetDataTable($"PRAGMA Table_Info({table});");
             if (dt != null)
@@ -312,6 +338,7 @@ namespace MonkeyCore2.Data
         /// <returns>A DataTable containing the result set.</returns>
         public DataTable GetDataTable(string sql)
         {
+            Logger.Debug<SQLiteDatabase>($"'{sql}'");
             var dt = new DataTable();
             using (var cnn = new SQLiteConnection(dbConnection))
             {
@@ -338,27 +365,27 @@ namespace MonkeyCore2.Data
         /// <summary>
         /// Get a set of values from the specified table
         /// </summary>
-        /// <param name="str">
+        /// <param name="SQL">
         /// </param>
         /// <returns>
         /// a dictionary of values
         /// </returns>
-        public virtual Dictionary<string, object> GetValueFromTable(string str)
+        public virtual IDictionary<string, object> GetValueFromTable(string SQL)
         {
-            Dictionary<string, object> result = null;
+            Logger.Debug<SQLiteDatabase>($"'{SQL}'");
+            IDictionary<string, object> result = null;
             using (var cnn = new SQLiteConnection(dbConnection))
             {
                 cnn.Open();
                 using (var mycommand = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = str;
+                    mycommand.CommandText = SQL;
                     using (var reader = mycommand.ExecuteReader())
                     {
-                        int Size = 0;
                         result = new Dictionary<string, object>();
                         while (reader.Read())
                         {
-                            Size = reader.VisibleFieldCount;
+                            int Size = reader.VisibleFieldCount;
                             for (int i = 0; i <= Size - 1; i++)
                             {
                                 result.Add(reader.GetName(i), reader.GetValue(i).ToString());
@@ -375,7 +402,7 @@ namespace MonkeyCore2.Data
         /// <summary>
         /// Allows the programmer to easily insert into the DB
         /// </summary>
-        /// <param name="tableName">
+        /// <param name="table">
         /// The table into which we insert the data.
         /// </param>
         /// <param name="data">
@@ -384,8 +411,13 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// A boolean true or false to signify success or failure.
         /// </returns>
-        public virtual int Insert(string tableName, Dictionary<string, string> data)
+        public virtual int Insert(string table, Dictionary<string, string> data)
         {
+            Logger.Debug<SQLiteDatabase>($"'{table}' data: '{data}'");
+            if (data == null || data.Count == 0)
+            {
+                throw new ArgumentOutOfRangeException("No data to process");
+            }
             int rowCount = 0;
             List<string> columns = new List<string>();
             List<string> values = new List<string>();
@@ -397,7 +429,7 @@ namespace MonkeyCore2.Data
 
             try
             {
-                string cmd = $"INSERT OR IGNORE into {tableName}({string.Join(",", columns.ToArray())}) VALUES ({string.Join(",", values.ToArray())})";
+                string cmd = $"INSERT OR IGNORE into {table}({string.Join(",", columns.ToArray())}) VALUES ({string.Join(",", values.ToArray())})";
                 rowCount = ExecuteNonQuery(cmd);
             }
             catch (Exception ex)
@@ -418,47 +450,58 @@ namespace MonkeyCore2.Data
         /// </param>
         /// <returns>
         /// </returns>
-        public bool IsColumnExist(string columnName, string tableName)
+        public bool IsColumnExist(string columnName, string table)
         {
-            var columnNames = GetAllColumnName(tableName);
+            Logger.Debug<SQLiteDatabase>($"Collumn: '{columnName}' in Table '{table}'");
+            var columnNames = GetAllColumnName(table);
             return columnNames.Contains($"[{columnName}]");
         }
 
         /// <summary>
         /// Determines whether [is table exists] [the specified table name].
         /// </summary>
-        /// <param name="tableName">
+        /// <param name="table">
         /// Name of the table.
         /// </param>
         /// <returns>
         /// True if ExecuteNonQurey returns one or more tables
         /// </returns>
-        public bool IsTableExists(string tableName)
+        public bool IsTableExists(string table)
         {
-            return ExecuteNonQuery($"SELECT name FROM sqlite_master WHERE name='{ tableName }'") > 0;
+            Logger.Debug<SQLiteDatabase>($"'{table}'");
+            try
+            {
+                return ExecuteNonQuery($"SELECT name FROM sqlite_master WHERE name='{ table }'") > 0;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error<SQLiteDatabase>(ex);
+            }
+            return false;
         }
 
         /// <summary>
         /// removes a column of data from the specified table
         /// </summary>
-        /// <param name="tableName">
+        /// <param name="table">
         /// </param>
         /// <param name="columnName">
         /// </param>
         /// <returns>
         /// </returns>
-        public int RemoveColumn(string tableName, string columnName)
+        public int RemoveColumn(string table, string columnName)
         {
+            Logger.Debug<SQLiteDatabase>($"'{columnName}' from '{table}'");
             string PrimaryKeyClause = string.Empty;
             string UniqueKeyClause = string.Empty;
-            var Columns = GetAllCollumnNamesWithMetaData(tableName);
+            var Columns = GetAllCollumnNamesWithMetaData(table);
             if (!Columns.ContainsKey($"[{columnName}]"))
             {
                 return -1;
             }
             Columns.Remove($"[{columnName}]");
-            List<string> PrimaryKeys = GetTablePrimaryKeys(tableName);
-            List<string> UniqueKeys = GetTableUniqeKeys(tableName);
+            List<string> PrimaryKeys = GetTablePrimaryKeys(table);
+            List<string> UniqueKeys = GetTableUniqeKeys(table);
             PrimaryKeys.Remove($"[{columnName}]");
             UniqueKeys.Remove($"[{columnName}]");
             if (PrimaryKeys != null && PrimaryKeys.Count > 0)
@@ -469,7 +512,7 @@ namespace MonkeyCore2.Data
             if (UniqueKeys != null && UniqueKeys.Count > 0)
             {
                 //CONSTRAINT constraint_name UNIQUE (uc_col1, uc_col2, ... uc_col_n)
-                UniqueKeyClause = $", CONSTRAINT constraint_{tableName} UNIQUE ({string.Join(",", UniqueKeys.ToArray())})";
+                UniqueKeyClause = $", CONSTRAINT constraint_{table} UNIQUE ({string.Join(",", UniqueKeys.ToArray())})";
             }
             var ColumnNames = new List<string>();
             var ColumnNamesWithOutMetaData = new List<string>();
@@ -480,28 +523,35 @@ namespace MonkeyCore2.Data
             }
 
             var columnNamesMetaData = string.Join(", ", ColumnNames.ToArray());
-            // columnNames = columnNames.Replace("[", "").Replace("]", "");
+
             var sql = new StringBuilder()
-            //.Replace("[", "").Replace("]", "")
-            .Append("CREATE TEMPORARY TABLE ")
-            .Append($"{tableName}backup(")
-            .Append($"{columnNamesMetaData }{PrimaryKeyClause}{UniqueKeyClause}); INSERT INTO ")
-            .Append($"{tableName }backup SELECT ")
-            .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")
-            .Append($"{tableName }; DROP TABLE ")
-            .Append($"{tableName }; CREATE TABLE ")
-            .Append($"{tableName }({columnNamesMetaData }{PrimaryKeyClause}{UniqueKeyClause}); INSERT INTO ")
-            .Append($"{tableName } SELECT ")
-            .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")
-            .Append($"{tableName }backup; DROP TABLE ")
-            .Append($"{tableName }backup;");
-            return ExecuteNonQuery(sql.ToString());
+                  .Append("CREATE TEMPORARY TABLE ")
+                  .Append($"{table}backup(")
+                  .Append($"{columnNamesMetaData }{PrimaryKeyClause}{UniqueKeyClause}); INSERT INTO ")
+                  .Append($"{table }backup SELECT ")
+                  .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")
+                  .Append($"{table }; DROP TABLE ")
+                  .Append($"{table }; CREATE TABLE ")
+                  .Append($"{table }({columnNamesMetaData }{PrimaryKeyClause}{UniqueKeyClause}); INSERT INTO ")
+                  .Append($"{table } SELECT ")
+                  .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")
+                  .Append($"{table }backup; DROP TABLE ")
+                  .Append($"{table }backup;");
+            try
+            {
+                return ExecuteNonQuery(sql.ToString());
+            }
+            catch (Exception ex)
+            {
+                Logger.Error<SQLiteDatabase>(ex);
+            }
+            return -1;
         }
 
         /// <summary>
         /// Allows the programmer to easily update rows in the DB.
         /// </summary>
-        /// <param name="tableName">
+        /// <param name="table">
         /// The table to update.
         /// </param>
         /// <param name="data">
@@ -513,12 +563,13 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// A boolean true or false to signify success or failure.
         /// </returns>
-        public bool Update(string tableName, Dictionary<string, string> data, string where)
+        public bool Update(string table, Dictionary<string, string> data, string where)
         {
+            Logger.Debug<SQLiteDatabase>($"'{table}' Data: '{data}' WHERE '{where}'");
             var vals = new List<string>();
             if (data == null || data.Count == 0)
             {
-                return false;
+                throw new ArgumentOutOfRangeException("No data to process");
             }
 
             foreach (var val in data)
@@ -528,7 +579,7 @@ namespace MonkeyCore2.Data
 
             try
             {
-                string cmd = $"update {tableName} set {string.Join(",", vals.ToArray())} where { where};";
+                string cmd = $"update {table} set {string.Join(",", vals.ToArray())} where { where};";
                 return ExecuteNonQuery(cmd) > 0;
             }
             catch (Exception ex)
@@ -545,6 +596,7 @@ namespace MonkeyCore2.Data
         /// <returns></returns>
         public List<string> GetTablePrimaryKeys(string table)
         {
+            Logger.Debug<SQLiteDatabase>($"'{table}'");
             var result = new List<string>();
             var dt = GetDataTable($"PRAGMA Table_Info({table});");
             if (dt != null)
@@ -565,7 +617,7 @@ namespace MonkeyCore2.Data
         /// <returns></returns>
         public List<string> GetTableUniqeKeys(string table)
         {
-            //PRAGMA index_list(table_name);
+            Logger.Debug<SQLiteDatabase>($"'{table}'");
             var result = new List<string>();
             var IndexListDataTable = GetDataTable($"PRAGMA INDEX_LIST({table});");
             string test = string.Empty;
@@ -599,13 +651,14 @@ namespace MonkeyCore2.Data
         /// <summary>
         /// gets all table column names in a string
         /// </summary>
-        /// <param name="tableName">
+        /// <param name="table">
         /// </param>
         /// <returns>
         /// </returns>
-        private List<string> GetAllColumnName(string tableName)
+        private List<string> GetAllColumnName(string table)
         {
-            string sql = $"{SyncPragma }SELECT * FROM { tableName}";
+            Logger.Debug<SQLiteDatabase>($"'{table}'");
+            string sql = $"{SyncPragma }SELECT * FROM { table}";
             var columnNames = new List<string>();
             using (var SQLconnect = new SQLiteConnection(dbConnection))
             {
