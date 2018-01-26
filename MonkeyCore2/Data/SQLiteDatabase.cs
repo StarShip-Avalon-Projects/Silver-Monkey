@@ -34,6 +34,10 @@ namespace MonkeyCore2.Data
 
         private const string DefaultFile = "SilverMonkey.db";
         private const string FurreTable = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [Access Level] INTEGER DEFAULT 0, [date added] DATETIME DEFAULT(datetime('now','localtime')), [date modified] DATETIME DEFAULT(datetime('now','localtime')), [PSBackup] DOUBLE";
+        private const string SettingsTableMasterCreateSQL = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT , [SettingsTable] TEXT UNIQUE, [date modified] DATETIME DEFAULT(datetime('now','localtime'))";
+        private const string SettingsTableCreateSQL = "[ID] INTEGER UNIQUE,[SettingsTableID] INTEGER, [Setting] TEXT, [Value] TEXT, PRIMARY KEY ([SettingsTableID], [Setting])";
+        private const string BackUpMasterCreateSQL = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [date modified] TEXT";
+        private const string BackUpCreateSQL = "[NameID] INTEGER, [Key] TEXT, [Value] TEXT, PRIMARY KEY ([NameID],[Key])";
         private const string SyncPragma = "PRAGMA encoding = \"UTF-16\"; ";
         private string dbConnection;
         private string inputFile = Path.Combine(Paths.SilverMonkeyBotPath, DefaultFile);
@@ -49,10 +53,10 @@ namespace MonkeyCore2.Data
         {
             dbConnection = $"Data Source={ inputFile}";
             CreateTbl("FURRE", FurreTable);
-            CreateTbl("BACKUPMASTER", "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [{ PlayerDbName }] TEXT Unique, [date modified] TEXT");
-            CreateTbl("BACKUP", "[NameID] INTEGER, [Key] TEXT, [Value] TEXT, PRIMARY KEY ([NameID],[Key])");
-            CreateTbl("SettingsTableMaster", "[ID] INTEGER UNIQUE, [SettingsTable] TEXT Unique, [date modified] TEXT, PRIMARY KEY ([ID],[SettingsTable])");
-            CreateTbl("SettingsTable", "[ID] INTEGER UNIQUE,[SettingsTableID] INTEGER, [Setting] TEXT, [Value] TEXT");
+            CreateTbl("BACKUPMASTER", BackUpMasterCreateSQL);
+            CreateTbl("BACKUP", BackUpCreateSQL);
+            CreateTbl("SettingsTableMaster", SettingsTableMasterCreateSQL);
+            CreateTbl("SettingsTable", SettingsTableCreateSQL);
         }
 
         /// <summary>
@@ -79,10 +83,10 @@ namespace MonkeyCore2.Data
             }
             dbConnection = $"Data Source={inputFile};";
             CreateTbl("FURRE", FurreTable);
-            CreateTbl("BACKUPMASTER", "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [date modified] TEXT");
-            CreateTbl("BACKUP", "[NameID] INTEGER, [Key] TEXT, [Value] TEXT, PRIMARY KEY ([NameID],[Key])");
-            CreateTbl("SettingsTableMaster", "[ID] INTEGER UNIQUE, [SettingsTable] TEXT Unique, [date modified] TEXT, PRIMARY KEY ([ID],[SettingsTable])");
-            CreateTbl("SettingsTable", "[ID] INTEGER UNIQUE,[SettingsID] INTEGER UNIQUE, [Setting] TEXT, [Value] TEXT");
+            CreateTbl("BACKUPMASTER", BackUpMasterCreateSQL);
+            CreateTbl("BACKUP", BackUpCreateSQL);
+            CreateTbl("SettingsTableMaster", SettingsTableMasterCreateSQL);
+            CreateTbl("SettingsTable", SettingsTableCreateSQL);
         }
 
         /// <summary>
@@ -125,13 +129,13 @@ namespace MonkeyCore2.Data
             }
             catch (Exception ex)
             {
-                Furcadia.Logging.Logger.Error<SQLiteDatabase>(ex);
+                Logger.Error<SQLiteDatabase>(ex);
             }
             return -1;
         }
 
         /// <summary>
-        /// Allows the programmer to easily delete all data from the DB.
+        /// Allows the programmer to easily delete all data FROM the DB.
         /// </summary>
         /// <returns>
         /// A boolean true or false to signify success or failure.
@@ -139,7 +143,7 @@ namespace MonkeyCore2.Data
         public bool ClearDB()
         {
             Logger.Debug<SQLiteDatabase>($"ClearDB");
-            using (var tables = GetDataTable("select NAME from SQLITE_MASTER where type='table' order by NAME;"))
+            using (var tables = GetDataTable("select NAME FROM SQLITE_MASTER where type='table' order by NAME;"))
             {
                 foreach (DataRow table in tables.Rows)
                 {
@@ -150,7 +154,7 @@ namespace MonkeyCore2.Data
         }
 
         /// <summary>
-        /// Allows the user to easily clear all data from a specific table.
+        /// Allows the user to easily clear all data FROM a specific table.
         /// </summary>
         /// <param name="table">
         /// The name of the table to clear.
@@ -163,11 +167,11 @@ namespace MonkeyCore2.Data
             Logger.Debug<SQLiteDatabase>($"Clear Table {table}");
             try
             {
-                return ExecuteNonQuery($"delete from {table};");
+                return ExecuteNonQuery($"delete FROM {table};");
             }
             catch (Exception ex)
             {
-                Furcadia.Logging.Logger.Error<SQLiteDatabase>(ex);
+                Logger.Error<SQLiteDatabase>(ex);
             }
             return -1;
         }
@@ -186,17 +190,21 @@ namespace MonkeyCore2.Data
                     SQLconnect.Open();
                     // SQL query to Create Table
                     //  [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT,
-                    SQLcommand.CommandText = $"{SyncPragma} CREATE TABLE IF NOT EXISTS { table }( { columns } );";
-                    SQLcommand.ExecuteNonQuery();
+
+                    SQLcommand.CommandText = $"{SyncPragma} CREATE TABLE IF NOT EXISTS { table }( { columns })";
+                    if (SQLcommand.ExecuteNonQuery() < 1)
+                        Logger.Warn<SQLiteDatabase>($"Did not create '{table}'");
+                    else
+                        Logger.Info<SQLiteDatabase>($"Sucessfullt created '{table}'");
                 }
             }
         }
 
         /// <summary>
-        /// Allows the programmer to easily delete rows from the DB.
+        /// Allows the programmer to easily delete rows FROM the DB.
         /// </summary>
         /// <param name="table">
-        /// The table from which to delete.
+        /// The table FROM which to delete.
         /// </param>
         /// <param name="where">
         /// The where clause for the delete.
@@ -213,7 +221,7 @@ namespace MonkeyCore2.Data
             }
             catch (Exception ex)
             {
-                Furcadia.Logging.Logger.Error<SQLiteDatabase>(ex);
+                Logger.Error<SQLiteDatabase>(ex);
             }
 
             return -1;
@@ -244,7 +252,6 @@ namespace MonkeyCore2.Data
                         Logger.Error<SQLiteDatabase>(ex);
                     }
                 }
-                cnn.Close();
             }
             return rowsUpdated;
         }
@@ -284,7 +291,7 @@ namespace MonkeyCore2.Data
         }
 
         /// <summary>
-        /// Allows the programmer to retrieve single items from the DB.
+        /// Allows the programmer to retrieve single items FROM the DB.
         /// </summary>
         /// <param name="sql">The query to run.</param>
         /// <returns>A string.</returns>
@@ -305,7 +312,7 @@ namespace MonkeyCore2.Data
         }
 
         /// <summary>
-        /// Gets all collumn names with meta data.
+        /// Gets all collums with meta data.
         /// </summary>
         /// <param name="table">The table.</param>
         /// <returns></returns>
@@ -363,17 +370,17 @@ namespace MonkeyCore2.Data
         }
 
         /// <summary>
-        /// Get a set of values from the specified table
+        /// Get a set of values FROM the specified table
         /// </summary>
         /// <param name="SQL">
         /// </param>
         /// <returns>
         /// a dictionary of values
         /// </returns>
-        public virtual IDictionary<string, object> GetValueFromTable(string SQL)
+        public virtual Dictionary<string, object> GetValueFromTable(string SQL)
         {
             Logger.Debug<SQLiteDatabase>($"'{SQL}'");
-            IDictionary<string, object> result = null;
+            Dictionary<string, object> result = null;
             using (var cnn = new SQLiteConnection(dbConnection))
             {
                 cnn.Open();
@@ -481,7 +488,7 @@ namespace MonkeyCore2.Data
         }
 
         /// <summary>
-        /// removes a column of data from the specified table
+        /// removes a column of data FROM the specified table
         /// </summary>
         /// <param name="table">
         /// </param>
@@ -491,7 +498,7 @@ namespace MonkeyCore2.Data
         /// </returns>
         public int RemoveColumn(string table, string columnName)
         {
-            Logger.Debug<SQLiteDatabase>($"'{columnName}' from '{table}'");
+            Logger.Debug<SQLiteDatabase>($"'{columnName}' FROM '{table}'");
             string PrimaryKeyClause = string.Empty;
             string UniqueKeyClause = string.Empty;
             var Columns = GetAllCollumnNamesWithMetaData(table);

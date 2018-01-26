@@ -39,7 +39,20 @@ namespace Engine.Libraries
         /// </summary>
         private static string _SQLitefile;
 
-        private SQLiteDatabase database = null;
+        //   private SQLiteDatabase database = null;
+        /// <summary>
+        /// These collumns not allowed for deletion or modification, They are core
+        /// columns to SM operation
+        /// </summary>
+        private readonly List<string> SafeFurreTableFields = new List<string>
+        {
+            "[date added]",
+            "[date modified]",
+            "[Access Level]",
+            "[Name]",
+            "[ID]",
+            "[PSBackup]"
+        };
 
         #endregion Private Fields
 
@@ -64,8 +77,11 @@ namespace Engine.Libraries
         }
 
         /// <summary>
-        ///
+        /// Gets the base identifier.
         /// </summary>
+        /// <value>
+        /// The base identifier.
+        /// </value>
         public override int BaseId => 500;
 
         #endregion Public Properties
@@ -144,7 +160,6 @@ namespace Engine.Libraries
                 suma = suma + num;
             }
 
-            // Console.WriteLine("Calculating TotalSum {0}", TotalSum.ToString())
             Total.Value = suma;
             return true;
         }
@@ -189,197 +204,138 @@ namespace Engine.Libraries
         {
             base.Initialize(args);
             SQLitefile = Paths.CheckBotFolder("SilverMonkey.db");
-            // (1:500) and the Database info {...} about the triggering furre is equal to #,
+
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreinfoEqualToNumber(r),
                 "and the Database info {...} about the triggering furre is equal to #,");
-            // (1:501) and the Database info {...} about the triggering furre is not equal to #,
+
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreinfoNotEqualToNumber(r),
                 "and the Database info {...} about the triggering furre is not equal to #,");
-            // (1:502) and the Database info {...} about the triggering furre is greater than #,
+
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreinfoGreaterThanNumber(r),
                 "and the Database info {...} about the triggering furre is greater than #,");
-            // (1:503) and the Database info {...} about the triggering furre is less than #,
+
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreinfoLessThanNumber(r),
                 "and the Database info {...} about the triggering furre is less than #,");
-            // (1:504) and the Database info {...} about the triggering furre is greater than or equal to #,
+
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreinfoGreaterThanOrEqualToNumber(r),
                 "and the Database info {...} about the triggering furre is greater than or equal to #,");
-            // (1:505) and the Database info {...} about the triggering furre is less than or equal to#,
+
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreinfoLessThanOrEqualToNumber(r),
                 "and the Database info {...} about the triggering furre is less than or equal to #,");
-            // (1:508) and the Database info {...} about the furre named {...} is equal to #,
+
             Add(TriggerCategory.Condition,
                 r => FurreNamedinfoEqualToNumber(r),
                 "and the Database info {...} about the furre named {...} is equal to #,");
-            // (1:509) and the Database info {...} about the furre named {...} is not equal to #,
+
             Add(TriggerCategory.Condition,
                 r => FurreNamedinfoNotEqualToNumber(r),
                 "and the Database info {...} about the furre named {...} is not equal to #,");
-            // (1:510) and the Database info {...} about the furre named {...} is greater than #,
+
             Add(TriggerCategory.Condition,
                 r => FurreNamedinfoGreaterThanNumber(r),
                 "and the Database info {...} about the furre named {...} is greater than #,");
-            // (1:511) and the Database info {...} about the furre named {...} is less than #,
+
             Add(TriggerCategory.Condition,
                 r => FurreNamedinfoLessThanNumber(r), "and the Database info {...} about the furre named {...} is less than #,");
-            // (1:510) and the Database info {...} about the furre named {...} is greater than or equal to #,
+
             Add(TriggerCategory.Condition,
                 r => FurreNamedinfoGreaterThanOrEqualToNumber(r),
                 "and the Database info {...} about the furre named {...} is greater than or equal to #,");
-            // (1:511) and the Database info {...} about the furre named {...} is less than or equal to #,
+
             Add(TriggerCategory.Condition,
                 r => FurreNamedinfoLessThanOrEqualToNumber(r),
                 "and the Database info {...} about the furre named {...} is less than or equal to #,");
-            // (1:516) and the Database info {...} about the furre named {...} is equal to {...},
+
             Add(TriggerCategory.Condition,
                 r => FurreNamedinfoEqualToSTR(r),
                 "and the Database info {...} about the furre named {...} is equal to string {...},");
-            // (1:517) and the Database info {...} about the furre named {...} is not equal to {...},
+
             Add(TriggerCategory.Condition,
                 r => FurreNamedinfoNotEqualToSTR(r),
                 "and the Database info {...} about the furre named {...} is not equal to string {...},");
-            // (1:518) and the Database info {...} about the triggering furre is equal to {...},
+
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreinfoEqualToSTR(r),
                 "and the Database info {...} about the triggering furre is equal to string {...},");
-            // (1:519) and the Database info {...} about the triggering furre is not equal to {...},
+
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreinfoNotEqualToSTR(r),
                 "and the Database info {...} about the triggering furre is not equal to string {...},");
 
-            Add(TriggerCategory.Condition,
-                r => AndEntryInTableExists(r),
-                "and entry {...} in Table {...} exists,");
-
-            Add(TriggerCategory.Condition,
-                r => !AndEntryInTableExists(r),
-                "and entry {...} in Table {...}  doesn't exist,");
-
-            Add(TriggerCategory.Condition,
-                r =>
-                {
-                    throw new NotImplementedException();
-                },
-                "and entry {...} in table % is equal to  {...},");
-
-            Add(TriggerCategory.Condition,
-                r =>
-                {
-                    throw new NotImplementedException();
-                },
-                "and entry {...} in table % is not equal to  {...},");
-
-            Add(TriggerCategory.Condition,
-                r =>
-                {
-                    throw new NotImplementedException();
-                },
-                "and entry {...} in table % is equal to  %,");
-
-            Add(TriggerCategory.Condition,
-                r =>
-                {
-                    throw new NotImplementedException();
-                },
-                "and entry {...} in table % is not equal to  %,");
-
-            Add(TriggerCategory.Condition,
-                r =>
-                {
-                    throw new NotImplementedException();
-                },
-                "and entry {...} in table % is greater than or equal to  %,");
-
-            Add(TriggerCategory.Condition,
-                r =>
-                {
-                    throw new NotImplementedException();
-                },
-                "and entry {...} in table % is greater than  %,");
-
-            Add(TriggerCategory.Condition,
-                r =>
-                {
-                    throw new NotImplementedException();
-                },
-                "and entry {...} in table % is less than or equal to %,");
-            Add(TriggerCategory.Condition,
-                r =>
-                {
-                    throw new NotImplementedException();
-                },
-                "and entry {...} in table % is less than %,");
-
             Add(TriggerCategory.Effect,
                 r => UseOrCreateSQLiteFileIfNotExist(r),
                 "use SQLite database file {...} or create file if it does not exist.");
-            // (5:505 ) Add the triggering furre with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
+
             Add(TriggerCategory.Effect,
                 r => InsertTriggeringFurreRecord(r),
                 "add the triggering furre with the access level # to the Furre Table in the database if he, she, or it doesn\t exist.");
-            // (5:506) Add furre named {...} with the default access level 0 to the Furre Table in the database if he, she or it don't exist.
+
             Add(TriggerCategory.Effect,
                 r => InsertFurreNamed(r)
                 , "add furre named {...} with the access level # to the Furre Table in the database if he, she, or it doesn\t exist.");
-            // (5:507) update Database info {...} about the triggering furre will now be #.
+
             Add(TriggerCategory.Effect,
                 r => UpdateTriggeringFurreField(r),
                 "update Database info {...} about the triggering furre will now be #.");
-            // (5:508) update Database info {...} about the furre named {...} will now be #.
+
             Add(TriggerCategory.Effect,
                 r => UpdateFurreNamed_Field(r),
                 "update Database info {...} about the furre named {...} will now be #.");
-            // (5:509) update Database info {...} about the triggering furre will now be {...}.
+
             Add(TriggerCategory.Effect,
                 r => UpdateTriggeringFurreFieldSTR(r),
                 "update Database info {...} about the triggering furre will now be {...}.");
-            // (5:510) update Database info {...} about the furre named {...} will now be {...}.
+
             Add(TriggerCategory.Effect,
                 r => UpdateFurreNamed_FieldSTR(r),
                 "update Database info {...} about the furre named {...} will now be {...}.");
-            // (5:511) select Database info {...} about the triggering furre, and put it in variable %.
+
             Add(TriggerCategory.Effect,
                 r => ReadDatabaseInfoForTheTriggeringFurre(r),
                 "select database {...} about the triggering furre, and put it in variable %.");
-            // (5:512) select Database info {...} about the furre named {...}, and put it in variable %.
+
             Add(TriggerCategory.Effect,
                 r => ReadDatabaseInfoName(r),
                 "select Database info {...} about the furre named {...}, and put it in variable %.");
-            // (5:513) add column {...} with type {...} to the Furre table.
+
             Add(TriggerCategory.Effect,
                 r =>
                 {
                     throw new NotImplementedException();
                 },
                 "add column {...} with type {...} to the Furre table.");
-            // (5:518) delete all Database info about the triggering furre.
-            Add(TriggerCategory.Effect,
-                r => DeleteTriggeringFurre(r),
-                "delete all Database info about the triggering furre.");
-            // (5:519) delete all Database info about the furre named {...}.
-            Add(TriggerCategory.Effect,
-                r => DeleteFurreNamed(r),
-                "delete all Database info about the furre named {...}.");
-            // (5:522) get the total of records from table {...} and put it into variable %.
-            Add(TriggerCategory.Effect,
-                r => GetTotalRecords(r),
-                "get the total number of records from database table {...} and put it into variable %Variable.");
-            // (5:523) take the sum of column{...} in table {...} and put it into variable %
-            Add(TriggerCategory.Effect,
-                r => ColumnSum(r),
-                "take the sum of column{...} in database table {...} and put it into variable %Variable.");
-            // (5:550) take variable %Variable , prepare it for a query, and put it in variable %Variable .   (this is your escaping call, which would depend on however you have to do it internally)
+
             Add(TriggerCategory.Effect,
                 r =>
                 {
                     throw new NotImplementedException();
                 },
+                "remove column {...} from the Furre table.");
+
+            Add(TriggerCategory.Effect,
+                r => DeleteTriggeringFurre(r),
+                "delete all Database info about the triggering furre.");
+
+            Add(TriggerCategory.Effect,
+                r => DeleteFurreNamed(r),
+                "delete all Database info about the furre named {...}.");
+
+            Add(TriggerCategory.Effect,
+                r => GetTotalRecords(r),
+                "get the total number of records from database table {...} and put it into variable %Variable.");
+
+            Add(TriggerCategory.Effect,
+                r => ColumnSum(r),
+                "take the sum of column{...} in database table {...} and put it into variable %Variable.");
+
+            Add(TriggerCategory.Effect,
+                r => GetVariableTableFromDatabaseTable(r),
                 "get the database table {...} and put it into table % .");
 
             Add(TriggerCategory.Effect,
@@ -394,18 +350,18 @@ namespace Engine.Libraries
                 {
                     throw new NotImplementedException();
                 },
+                "take table % and put it into database table {...}.");
+
+            Add(TriggerCategory.Effect,
+                r =>
+                {
+                    throw new NotImplementedException();
+                },
                 "clear the database table {...}.");
+
             Add(TriggerCategory.Effect,
                 r => VACUUM(r),
                 "execute \"VACUUM\"to rebuild the database and reclaim wasted space.");
-            // (5:561) remember Database info {...} for Settings Table {...} to {...}.
-            // (5:562) forget Database info {...} from Settings Table{...}.
-            // (5:563) forget all Settings Table Database info.
-        }
-
-        private bool AndEntryInTableExists(TriggerReader r)
-        {
-            throw new NotImplementedException();
         }
 
         public override void Unload(Page page)
@@ -498,7 +454,7 @@ namespace Engine.Libraries
             var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
 
-            return (Value != Variable);
+            return Value != Variable;
         }
 
         private bool FurreNamedinfoNotEqualToSTR(TriggerReader reader)
@@ -578,21 +534,40 @@ namespace Engine.Libraries
             return true;
         }
 
-        private bool SettingExist(TriggerReader reader)
+        private bool GetVariableTableFromDatabaseTable(TriggerReader reader)
         {
-            var info = reader.ReadString();
-            var setting = reader.ReadString();
+            var DatabaseTable = reader.ReadString();
+            var VarTable = reader.ReadVariableTable(true);
 
-            var cmd = new StringBuilder()
+            var SelectSettngSQL = new StringBuilder()
                 .Append("select SettingsTable.*, SettingsTableMaster.ID from SettingsTable )")
                 .Append("inner join SettingsTableMaster on ")
                 .Append("SettingsTableMaster.")
-                .Append($"{info}= SettingsTable.[SettingsTableID] ")
-                .Append("where SettingsTableMaster.Setting = '")
-                .Append($"{setting}' ");
+                // .Append($"{Entry}= SettingsTable.[SettingsTableID] ")
+                .Append($"where SettingsTableMaster.Setting = '{VarTable}' ");
 
             var db = new SQLiteDatabase(SQLitefile);
-            return db.GetValueFromTable(cmd.ToString()).Count < 0;
+            var data = db.GetValueFromTable(SelectSettngSQL.ToString());
+
+            foreach (KeyValuePair<string, object> kvp in data)
+                VarTable.Add($"%{kvp.Key}", kvp.Value);
+            return true;
+        }
+
+        private bool TableEntryExistInTable(TriggerReader reader)
+        {
+            var Entry = reader.ReadString();
+            var Table = reader.ReadString();
+
+            var SelectSettngSQL = new StringBuilder()
+                .Append("select SettingsTable.*, SettingsTableMaster.ID from SettingsTable )")
+                .Append("inner join SettingsTableMaster on ")
+                .Append("SettingsTableMaster.")
+                .Append($"{Entry}= SettingsTable.[SettingsTableID] ")
+                .Append($"where SettingsTableMaster.Setting = '{Table}' ");
+
+            var db = new SQLiteDatabase(SQLitefile);
+            return db.GetValueFromTable(SelectSettngSQL.ToString()).Count < 0;
         }
 
         private bool TriggeringFurreinfoEqualToNumber(TriggerReader reader)
@@ -610,12 +585,7 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var str = reader.ReadString();
 
-            if (str == GetValueFromTable(info, Player.ShortName).ToString())
-            {
-                return true;
-            }
-
-            return false;
+            return str == GetValueFromTable(info, Player.ShortName).ToString();
         }
 
         private bool TriggeringFurreinfoGreaterThanNumber(TriggerReader reader)
@@ -626,7 +596,7 @@ namespace Engine.Libraries
             var check = GetValueFromTable(info, Player.ShortName);
             double.TryParse(check.ToString(), out double Value);
 
-            return (Value > Number);
+            return Value > Number;
         }
 
         private bool TriggeringFurreinfoGreaterThanOrEqualToNumber(TriggerReader reader)
@@ -637,7 +607,7 @@ namespace Engine.Libraries
             var check = GetValueFromTable(info, Player.ShortName);
             double.TryParse(check.ToString(), out double Num);
 
-            return (Num >= Number);
+            return Num >= Number;
         }
 
         private bool TriggeringFurreinfoLessThanNumber(TriggerReader reader)
@@ -670,7 +640,7 @@ namespace Engine.Libraries
             string val = GetValueFromTable(info, Player.ShortName).ToString();
             double.TryParse(val, out double Value);
 
-            return (Value != Number);
+            return Value != Number;
         }
 
         private bool TriggeringFurreinfoNotEqualToSTR(TriggerReader reader)
@@ -678,12 +648,7 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var str = reader.ReadString();
 
-            if (str != GetValueFromTable(info, Player.ShortName).ToString())
-            {
-                return true;
-            }
-
-            return false;
+            return str != GetValueFromTable(info, Player.ShortName).ToString();
         }
 
         private bool UpdateFurreNamed_Field(TriggerReader reader)

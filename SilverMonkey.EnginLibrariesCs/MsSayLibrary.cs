@@ -67,14 +67,14 @@ namespace Engine.Libraries
     /// (0:92) When the bot detects the "Your throat is tired. Please wait a few seconds"message,
     /// </para>
     /// <para>(0:93) When the bot resumes processing after seeing ""Your throat is tired""message,</para>
-    /// <para>(5:0) say {..}. (Normal Furcadia Text commands)</para>
-    /// <para>(5:1) emote {..}.</para>
-    /// <para>(5:2) shout {..}.</para>
-    /// <para>(5:3) Emit {..}.</para>
-    /// <para>(5:4) Emitloud {..}.</para>
-    /// <para>(5:5) whisper {..} to the triggering furre.</para>
-    /// <para>(5:6) whisper {..} to furre named {..}.</para>
-    /// <para>(5:7) whisper {..} to furre named {..} even if they're off-line.</para>
+    /// <para>(5:0) say {...}. (Normal Furcadia Text commands)</para>
+    /// <para>(5:1) emote {...}.</para>
+    /// <para>(5:2) shout {...}.</para>
+    /// <para>(5:3) Emit {...}.</para>
+    /// <para>(5:4) Emitloud {...}.</para>
+    /// <para>(5:5) whisper {...} to the triggering furre.</para>
+    /// <para>(5:6) whisper {...} to furre named {...}.</para>
+    /// <para>(5:7) whisper {...} to furre named {...} even if they're off-line.</para>
     /// </remarks>
     public sealed class MsSayLibrary : MonkeySpeakLibrary
     {
@@ -98,195 +98,195 @@ namespace Engine.Libraries
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
                 "When anyone says something,");
-            // (0:11) When anyone says {..},
+            // (0:11) When anyone says {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
-                "When anyone says {..},");
+                "When anyone says {...},");
 
-            // (0:12) When anyone says something with {..} in it,
+            // (0:12) When anyone says something with {...} in it,
             Add(TriggerCategory.Cause,
                 r => MsgContains(r),
-                "When anyone says something with {..} in it,");
+                "When anyone says something with {...} in it,");
 
             // (0:13: When anyone shouts something,
             Add(TriggerCategory.Cause,
                  r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
                 "When anyone shouts something,");
-            // (0:14) When anyone shouts {..},
+            // (0:14) When anyone shouts {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
-                "When anyone shouts {..},");
+                "When anyone shouts {...},");
 
-            // (0:15) When anyone shouts something with {..} in it,
+            // (0:15) When anyone shouts something with {...} in it,
             Add(TriggerCategory.Cause,
                 r => MsgContains(r),
-                "When anyone shouts something with {..} in it,");
+                "When anyone shouts something with {...} in it,");
 
             // (0:16) When anyone emotes something,
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
                 "When anyone emotes something,");
 
-            // (0:17) When anyone emotes {..},
+            // (0:17) When anyone emotes {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
-                "When anyone emotes {..},");
+                "When anyone emotes {...},");
 
-            // (0:18) When anyone emotes something with {..} in it,
+            // (0:18) When anyone emotes something with {...} in it,
             Add(TriggerCategory.Cause,
                 r => MsgContains(r),
-                "When anyone emotes something with {..} in it,");
+                "When anyone emotes something with {...} in it,");
 
             // (0:19) When anyone whispers something,
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
                 "When anyone whispers something,");
 
-            // (0:20) When anyone whispers {..},
+            // (0:20) When anyone whispers {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
-                "When anyone whispers {..},");
+                "When anyone whispers {...},");
 
-            // (0:21) When anyone whispers something with {..} in it,
+            // (0:21) When anyone whispers something with {...} in it,
             Add(TriggerCategory.Cause,
                 r => MsgContains(r),
-                "When anyone whispers something with {..} in it,");
+                "When anyone whispers something with {...} in it,");
 
             // Says or Emotes
             // (0:22) When anyone says or emotes something,
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r),
                 "When anyone says or emotes something,");
-            // (0:23) When anyone says or emotes {..},
+            // (0:23) When anyone says or emotes {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
-                "When anyone says or emotes {..},");
+                "When anyone says or emotes {...},");
 
-            // (0:24) When anyone says or emotes something with {..} in it,
+            // (0:24) When anyone says or emotes something with {...} in it,
             Add(TriggerCategory.Cause,
                 r => MsgContains(r),
-                "When anyone says or emotes something with {..} in it,");
+                "When anyone says or emotes something with {...} in it,");
 
             // (0:25) When someone emits something,
             Add(TriggerCategory.Cause,
                    r => ReadTriggeringFurreParams(r) && ReadDreamParams(r),
                  "When someone emits something,");
-            // (0:26) When someone emits {..},
+            // (0:26) When someone emits {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
-                "When someone emits {..},");
+                "When someone emits {...},");
 
-            // (0:27) When someone emits something with {..} in it,
+            // (0:27) When someone emits something with {...} in it,
             Add(TriggerCategory.Cause,
               r => MsgContains(r),
-              "When someone emits something with {..} in it,");
+              "When someone emits something with {...} in it,");
 
-            //  (1:3) and the triggering furre's name is {..},
+            //  (1:3) and the triggering furre's name is {...},
             Add(TriggerCategory.Condition,
                 r => NameIs(r),
-                "and the triggering furre\'s name is {..},");
+                "and the triggering furre\'s name is {...},");
 
-            //  (1:4) and the triggering furre's name is not {..},
+            //  (1:4) and the triggering furre's name is not {...},
             Add(TriggerCategory.Condition,
                 r => !NameIs(r),
-                "and the triggering furre\'s name is not {..},");
+                "and the triggering furre\'s name is not {...},");
 
-            //  (1:5) and the Triggering Furre's message is {..}, (say, emote,
+            //  (1:5) and the Triggering Furre's message is {...}, (say, emote,
             //  shot, whisper, or emit Channels)
             Add(TriggerCategory.Condition,
                 r => MsgIs(r),
-                "and the triggering furre\'s message is {..},");
+                "and the triggering furre\'s message is {...},");
 
-            //  (1:8) and the triggering furre's message contains {..} in it,
+            //  (1:8) and the triggering furre's message contains {...} in it,
             //  (say, emote, shot, whisper, or emit Channels)
             Add(TriggerCategory.Condition,
                 r => MsgContains(r),
-                "and the triggering furre\'s message contains {..} in it,");
+                "and the triggering furre\'s message contains {...} in it,");
 
-            // (1:9) and the triggering furre's message does not contain {..} in it,
+            // (1:9) and the triggering furre's message does not contain {...} in it,
             // (say, emote, shot, whisper, or emit Channels)
             Add(TriggerCategory.Condition,
                 r => !MsgContains(r),
-                "and the triggering furre\'s message does not contain {..} in it,");
+                "and the triggering furre\'s message does not contain {...} in it,");
 
-            // (1:10) and the triggering furre's message is not {..},
+            // (1:10) and the triggering furre's message is not {...},
             // (say, emote, shot, whisper, or emit Channels)
             Add(TriggerCategory.Condition,
                 r => !MsgIs(r),
-                "and the triggering furre\'s message is not {..},");
+                "and the triggering furre\'s message is not {...},");
 
-            // (1:11) and triggering furre's message starts with {..},
+            // (1:11) and triggering furre's message starts with {...},
             Add(TriggerCategory.Condition,
                 r => MsgStartsWith(r),
-                "and triggering furre\'s message starts with {..},");
+                "and triggering furre\'s message starts with {...},");
 
-            // (1:12) and triggering furre's message doesn't start with {..},
+            // (1:12) and triggering furre's message doesn't start with {...},
             Add(TriggerCategory.Condition,
                 r => MsgNotStartsWith(r),
-                "and triggering furre\'s message doesn\'t start with {..},");
+                "and triggering furre\'s message doesn\'t start with {...},");
 
-            // (1:13) and triggering furre's message  ends with {..},
+            // (1:13) and triggering furre's message  ends with {...},
             Add(TriggerCategory.Condition,
                 r => MsgEndsWith(r),
-                "and triggering furre\'s message  ends with {..},");
+                "and triggering furre\'s message  ends with {...},");
 
-            // (1:14) and triggering furre's message doesn't end with {..},
+            // (1:14) and triggering furre's message doesn't end with {...},
             Add(TriggerCategory.Condition,
                 r => MsgNotEndsWith(r),
-                "and triggering furre\'s message doesn\'t end with {..},");
+                "and triggering furre\'s message doesn\'t end with {...},");
 
             // Says
-            //  (5:0) say {..}.
+            //  (5:0) say {...}.
             Add(TriggerCategory.Effect,
                 r => SendSay(r.ReadString()),
-                "say {..}.");
+                "say {...} (Furcadia commands or normal speech).");
 
             // emotes
-            //  (5:1) emote {..}.
+            //  (5:1) emote {...}.
             Add(TriggerCategory.Effect,
                 r => SendEmote(r.ReadString()),
-                "emote  message{..}.");
+                "emote  message {...}.");
 
             // Shouts
-            //  (5:2) shout {..}.
+            //  (5:2) shout {...}.
             Add(TriggerCategory.Effect,
                 r => SndShout(r.ReadString()),
-                "shout message {..}.");
+                "shout message {...}.");
 
             // Emits
-            //  (5:3) emit {..}.
+            //  (5:3) emit {...}.
             Add(TriggerCategory.Effect,
                 r => SendEmit(r.ReadString()),
-                "emit message {..}.");
+                "emit message {...}.");
 
-            //  (5:4) emitloud {..}.
+            //  (5:4) emitloud {...}.
             Add(TriggerCategory.Effect,
                 r => SendEmitLoud(r.ReadString()),
-                "emit-loud message {..}.");
+                "emit-loud message {...}.");
 
             // Whispers
-            //  (5:5) whisper {..} to the triggering furre.
+            //  (5:5) whisper {...} to the triggering furre.
             Add(TriggerCategory.Effect,
                 r => SndWhisper(Player.ShortName, r.ReadString()),
-                "whisper {..} to the triggering furre.");
+                "whisper {...} to the triggering furre.");
 
-            //  (5:6) whisper {..} to {..}.
+            //  (5:6) whisper {...} to {...}.
             Add(TriggerCategory.Effect,
                 r =>
                     {
                         string msg = r.ReadString();
                         string tname = r.ReadString();
                         return SndWhisper(tname, msg);
-                    }, "whisper {..} to furre named {..}.");
+                    }, "whisper {...} to furre named {...}.");
 
-            //  (5:7) whisper {..} to {..} even if they're off-line.
+            //  (5:7) whisper {...} to {...} even if they're off-line.
             Add(TriggerCategory.Effect,
                 r =>
                     {
                         string msg = r.ReadString();
                         string tname = r.ReadString();
                         return SendOffLineWhisper(tname, msg);
-                    }, "whisper {..} to furre named {..} even if they\'re off-line.");
+                    }, "whisper {...} to furre named {...} even if they\'re off-line.");
 
             Add(TriggerCategory.Effect,
                 r =>

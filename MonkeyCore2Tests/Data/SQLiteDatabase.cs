@@ -46,6 +46,33 @@ namespace MonkeyCore2Tests.Data
             });
         }
 
+        [Test] //Create Tables for VariableTable data
+        public void AddDataTo_Settings_Table()
+        {
+            var SettingsTableMasterAdmins = new Dictionary<string, string>
+            {
+                { "SettingsTable", "Admins" },
+            };
+            var SettingsTableMasterSettings = new Dictionary<string, string>
+            {
+                { "SettingsTable", "Settings" },
+            };
+            var SettingsTableMasterFurres = new Dictionary<string, string>
+            {
+                { "SettingsTable", "Furres" },
+            };
+            var rowCountSettingsTableMasterAdmins = database.Insert("SettingsTableMaster", SettingsTableMasterAdmins);
+            var rowCountSettingsTableMasterSettings = database.Insert("SettingsTableMaster", SettingsTableMasterSettings);
+            var rowCountSettingsTableMasterFurres = database.Insert("SettingsTableMaster", SettingsTableMasterFurres);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(rowCountSettingsTableMasterAdmins > -1, $"Admins Rows affected {rowCountSettingsTableMasterAdmins}");
+                Assert.That(rowCountSettingsTableMasterSettings > -1, $"Settings Rows affected {rowCountSettingsTableMasterSettings}");
+                Assert.That(rowCountSettingsTableMasterFurres > -1, $"Joe Rows affected {rowCountSettingsTableMasterFurres}");
+            });
+        }
+
         [Test]
         public void UpdateDataTo_FURRE_Table()
         {
