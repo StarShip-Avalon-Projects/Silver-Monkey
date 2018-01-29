@@ -473,7 +473,7 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// True if ExecuteNonQurey returns one or more tables
         /// </returns>
-        public bool IsTableExists(string table)
+        public bool TableExists(string table)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}'");
             try
@@ -498,6 +498,7 @@ namespace MonkeyCore2.Data
         /// </returns>
         public int RemoveColumn(string table, string columnName)
         {
+            columnName = columnName.Replace("[", string.Empty).Replace("]", string.Empty);
             Logger.Debug<SQLiteDatabase>($"'{columnName}' FROM '{table}'");
             string PrimaryKeyClause = string.Empty;
             string UniqueKeyClause = string.Empty;
@@ -570,7 +571,7 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// A boolean true or false to signify success or failure.
         /// </returns>
-        public bool Update(string table, Dictionary<string, string> data, string where)
+        public int Update(string table, Dictionary<string, string> data, string where)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}' Data: '{data}' WHERE '{where}'");
             var vals = new List<string>();
@@ -587,13 +588,13 @@ namespace MonkeyCore2.Data
             try
             {
                 string cmd = $"update {table} set {string.Join(",", vals.ToArray())} where { where};";
-                return ExecuteNonQuery(cmd) > 0;
+                return ExecuteNonQuery(cmd);
             }
             catch (Exception ex)
             {
                 Logger.Error(ex);
+                return -1;
             }
-            return false;
         }
 
         /// <summary>

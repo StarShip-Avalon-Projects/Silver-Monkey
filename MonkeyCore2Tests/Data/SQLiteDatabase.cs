@@ -82,7 +82,7 @@ namespace MonkeyCore2Tests.Data
                 { "Name", "gerolkae" },
                 { "Access Level", "222" }
             };
-            var success = database.Update("FURRE", FurreTableDataRow, "Name == 'gerolkae'");
+            var success = 0 < database.Update("FURRE", FurreTableDataRow, "Name == 'gerolkae'");
             Assert.Multiple(() =>
             {
                 Assert.That(success == true, $"Update has '{success}'");
@@ -94,7 +94,7 @@ namespace MonkeyCore2Tests.Data
                 { "Name", "gerolkae" },
                 { "Access Level", "5" }
             };
-            success = database.Update("FURRE", FurreTableDataRow, "Name == 'gerolkae'");
+            success = 0 < database.Update("FURRE", FurreTableDataRow, "Name == 'gerolkae'");
             Assert.Multiple(() =>
             {
                 Assert.That(success == true, $"Update has '{success}'");

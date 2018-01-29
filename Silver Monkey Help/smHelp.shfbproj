@@ -41,6 +41,8 @@
       <DocumentationSource sourceFile="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj" />
       <DocumentationSource sourceFile="..\SilverMonkey.EnginLibrariesCs\SilverMonkey.EnginLibrariesCs.csproj" />
       <DocumentationSource sourceFile="..\SmEngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB.vbproj" />
+      <DocumentationSource sourceFile="..\MonkeyCore2\MonkeyCore2.csproj" />
+      <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
     </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>

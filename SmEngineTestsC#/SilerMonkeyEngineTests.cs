@@ -410,8 +410,6 @@ namespace SmEngineTests
         [TearDown]
         public void Cleanup()
         {
-            Proxy.ClientData2 -= (data) => Proxy.SendToServer(data);
-            Proxy.ServerData2 -= (data) => Proxy.SendToClient(data);
             Proxy.Error -= (e, o) => Logger.Error($"{e} {o}");
 
             Proxy.Dispose();

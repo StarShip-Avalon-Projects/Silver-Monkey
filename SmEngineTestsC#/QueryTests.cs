@@ -1,17 +1,13 @@
-﻿using NUnit.Framework;
-using System;
-using BotSession;
+﻿using BotSession;
 using Furcadia.Logging;
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
-using MonkeyCore2.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using NUnit.Framework;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using static Engine.Libraries.MsLibHelper;
 using static SmEngineTests.Utilities;
-using System.IO;
 
 namespace SmEngineTests
 {
@@ -213,8 +209,6 @@ namespace SmEngineTests
         [TearDown]
         public void Cleanup()
         {
-            Proxy.ClientData2 -= (data) => Proxy.SendToServer(data);
-            Proxy.ServerData2 -= (data) => Proxy.SendToClient(data);
             Proxy.Error -= (e, o) => Logger.Error($"{e} {o}");
 
             Proxy.Dispose();
