@@ -1,4 +1,4 @@
-﻿namespace Engine.Libraries.PhoenixSpeak
+﻿namespace Libraries.PhoenixSpeak
 {
     public enum PsSystemRunning
     {

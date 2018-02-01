@@ -1,9 +1,8 @@
-﻿using BotSession;
+﻿using Engine.BotSession;
 using Furcadia.Logging;
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
 using MonkeyCore2.IO;
-using MonkeyCore;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -35,14 +34,13 @@ namespace SmEngineTests
         [SetUp]
         public void Initialize()
         {
-            Furcadia.Logging.Logger.SingleThreaded = false;
             if (!File.Exists(BackupSettingsFile))
                 throw new Exception("BackupSettingsFile Doesn't Exists");
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
             var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Bugreport 165 From Jake.ms");
-            var CharacterFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+            var CharacterFile = Path.Combine(Paths.FurcadiaCharactersFolder,
                 "silvermonkey.ini");
             var MsEngineOption = new EngineOptoons()
             {
@@ -54,7 +52,8 @@ namespace SmEngineTests
             {
                 Standalone = true,
                 CharacterIniFile = CharacterFile,
-                MonkeySpeakEngineOptions = MsEngineOption
+                MonkeySpeakEngineOptions = MsEngineOption,
+                ResetSettingTime = 10
             };
 
             options.SaveBotSettings();
@@ -140,7 +139,7 @@ namespace SmEngineTests
 
         public void DisconnectTests(bool StandAlone = false)
         {
-            Proxy.Disconnect();
+            Proxy.DisconnectServerAndClientStreams();
             HaltFor(CleanupDelayTime);
 
             Assert.Multiple(() =>

@@ -5,7 +5,7 @@ using Monkeyspeak.Logging;
 using System;
 using System.Text.RegularExpressions;
 
-namespace Engine.Libraries
+namespace Libraries
 {
     /// <summary>
     /// <para>

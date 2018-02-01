@@ -7,7 +7,7 @@
     <ProjectGuid>{F1E0FEB3-A74E-43CE-98BF-B908ED1753FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SilverMonkey.Engine</RootNamespace>
+    <RootNamespace>SilverMonkey</RootNamespace>
     <AssemblyName>SilverMonkeyEngine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -74,11 +74,11 @@
     <Compile Include="BotSession\BotOptions.cs" />
     <Compile Include="BotSession\MsEngineExtentionFunctions.cs" />
     <Compile Include="BotSession\EngineOptions.cs" />
+    <Compile Include="Libraries\MsStartBot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extentions\" />
-    <Folder Include="Libraries\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">

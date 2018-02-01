@@ -1,9 +1,7 @@
-﻿Imports Furcadia.Net.DreamInfo
+﻿Imports Libraries
 Imports Monkeyspeak
 
-Imports Engine.Libraries
-
-Namespace Engine.Libraries
+Namespace Libraries
 
     ''' <summary>
     ''' Conditions (1:700) - (1:709)

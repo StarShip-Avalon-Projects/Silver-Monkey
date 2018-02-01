@@ -1,7 +1,7 @@
 ﻿using Monkeyspeak;
 using System;
 
-namespace Engine.Libraries
+namespace Libraries
 {
     // '' <summary>
     // '' Monkey Speak Interface to the

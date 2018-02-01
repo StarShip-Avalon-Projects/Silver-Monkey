@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 using static MonkeyCore2Tests.Data.DatabaseConfig;
+using static MonkeyCore2Tests.Utilities;
 
 namespace MonkeyCore2Tests.Data
 {
@@ -8,14 +9,18 @@ namespace MonkeyCore2Tests.Data
     public class SQLiteDatabaseTests
     {
         [SetUp]
-        public void SetUp()
+        public void Initialize()
         {
         }
 
         public void AddColumnTest(string ColumnName)
         {
-            database.AddColumn("FURRE", ColumnName, "TEXT");
-            Assert.IsTrue(database.IsColumnExist(ColumnName, "FURRE"));
+            var linesAffected = database.AddColumn("FURRE", ColumnName, "TEXT");
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(database.IsColumnExist(ColumnName, "FURRE"));
+                Assert.That(linesAffected, Is.GreaterThanOrEqualTo(0));
+            });
         }
 
         public void AddDataTo_FURRE_Table()
@@ -82,7 +87,7 @@ namespace MonkeyCore2Tests.Data
                 { "Name", "gerolkae" },
                 { "Access Level", "222" }
             };
-            var success = 0 < database.Update("FURRE", FurreTableDataRow, "Name == 'gerolkae'");
+            var success = 0 <= database.Update("FURRE", FurreTableDataRow, "Name == 'gerolkae'");
             Assert.Multiple(() =>
             {
                 Assert.That(success == true, $"Update has '{success}'");
@@ -94,7 +99,7 @@ namespace MonkeyCore2Tests.Data
                 { "Name", "gerolkae" },
                 { "Access Level", "5" }
             };
-            success = 0 < database.Update("FURRE", FurreTableDataRow, "Name == 'gerolkae'");
+            success = 0 <= database.Update("FURRE", FurreTableDataRow, "Name == 'gerolkae'");
             Assert.Multiple(() =>
             {
                 Assert.That(success == true, $"Update has '{success}'");
@@ -139,7 +144,7 @@ namespace MonkeyCore2Tests.Data
             Assert.Multiple(() =>
             {
                 Assert.IsFalse(database.IsColumnExist(ColumnName, "FURRE"));
-                Assert.That(rowCount > 0, $"Rows affected {rowCount}");
+                Assert.That(rowCount >= 0, $"Rows affected {rowCount}");
             });
         }
 

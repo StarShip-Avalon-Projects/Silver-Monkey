@@ -1,9 +1,9 @@
-﻿using Engine.Libraries.Variables;
+﻿using Libraries.Variables;
 using Monkeyspeak;
 using System;
 using System.Collections.Generic;
 
-namespace Engine.Libraries.Data
+namespace Libraries.Data
 {
     /// <summary>
     /// Designed with <see cref="Monkeyspeak.VariableTable"/> in mind

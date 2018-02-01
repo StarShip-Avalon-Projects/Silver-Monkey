@@ -1,11 +1,10 @@
 ﻿Imports System.IO
 Imports Furcadia.Net.Pounce
-Imports MonkeyCore2.IO
+Imports Libraries
+Imports Libraries.MsLibHelper
 Imports Monkeyspeak
-Imports Engine.Libraries.MsLibHelper
-Imports Engine.Libraries
 
-Namespace Engine.Libraries
+Namespace Libraries
 
     ''' <summary>
     ''' Pounce Server interface with a list of furres contained in a simple text file. This system is styled after <see cref="MsMemberList"/>

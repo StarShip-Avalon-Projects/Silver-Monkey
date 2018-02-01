@@ -1,4 +1,4 @@
-﻿Namespace Engine.Libraries.Dice
+﻿Namespace Libraries.Dice
 
     ''' <summary>
     ''' Single Die object for Silver Monkey generating a Dice Roll

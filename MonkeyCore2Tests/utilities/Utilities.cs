@@ -1,17 +1,28 @@
-﻿using System;
+﻿using Furcadia.Logging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SmEngineTests
+namespace MonkeyCore2Tests
 {
     public class Utilities
     {
         public const int ConnectWaitTime = 10;
         public const int DreamEntranceDelay = 10;
         public const int CleanupDelayTime = 5;
+
+        public static void SetLogger()
+        {
+            Logger.InfoEnabled = true;
+            Logger.SuppressSpam = false;
+            Logger.ErrorEnabled = true;
+            Logger.WarningEnabled = true;
+            Logger.SingleThreaded = true;
+            //   Logger.LogOutput = new MultiLogOutput(new FileLogOutput(Level.Debug), new FileLogOutput(Level.Error));
+        }
 
         public static void HaltFor(int seconds)
         {

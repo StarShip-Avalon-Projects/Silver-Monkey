@@ -1,7 +1,7 @@
 ﻿using Monkeyspeak;
 using System.Linq;
 
-namespace Engine.Libraries
+namespace Libraries
 {
     /// <summary>
     /// Join Summon Lead Follow cuddle commands

@@ -1,4 +1,4 @@
-﻿Namespace Engine.Libraries.Dice
+﻿Namespace Libraries.Dice
 
 #Region "Public Methods"
 

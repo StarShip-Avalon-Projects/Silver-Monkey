@@ -1,7 +1,7 @@
 ﻿using Monkeyspeak;
 using System;
 
-namespace Engine.Libraries.Variables
+namespace Libraries.Variables
 {
     public sealed class WebVariable : IVariable
     {

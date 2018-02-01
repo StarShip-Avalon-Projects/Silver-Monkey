@@ -4,7 +4,7 @@ using System.IO;
 using MonkeyCore2.IO;
 using Furcadia.IO;
 
-namespace BotSession
+namespace Engine.BotSession
 {
     /// <summary>
     /// Silver Monkey Bot settings

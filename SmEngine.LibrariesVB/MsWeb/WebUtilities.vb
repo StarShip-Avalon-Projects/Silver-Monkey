@@ -1,4 +1,4 @@
-﻿Namespace Web
+﻿Namespace Libraries.Web
 
     Public Class WebUtilities
 

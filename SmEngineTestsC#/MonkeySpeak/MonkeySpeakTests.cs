@@ -11,8 +11,13 @@ using NUnit.Framework;
 namespace SmEngineTests.MonkeySpeak
 {
     [TestFixture]
-    internal class MonkeySpeakTests
+    public class MonkeySpeakTests
     {
+        [SetUp]
+        public void Initialize()
+        {
+        }
+
         private string ShoutScript = @"
 (0:6) When someone says {Activate module},
  (1:5) and the triggering furre's name is {Vito Blackthornio},

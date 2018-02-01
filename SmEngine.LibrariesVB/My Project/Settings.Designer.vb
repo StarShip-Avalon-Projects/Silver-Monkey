@@ -23,7 +23,7 @@ Namespace My
         Private Shared defaultInstance As MySettings = CType(Global.System.Configuration.ApplicationSettingsBase.Synchronized(New MySettings()),MySettings)
         
 #Region "My.Settings Auto-Save Functionality"
-#If _MyType = "WindowsForms"Then
+#If _MyType = "WindowsForms" Then
     Private Shared addedHandler As Boolean
 
     Private Shared addedHandlerLockObject As New Object
@@ -40,7 +40,7 @@ Namespace My
         Public Shared ReadOnly Property [Default]() As MySettings
             Get
                 
-#If _MyType = "WindowsForms"Then
+#If _MyType = "WindowsForms" Then
                If Not addedHandler Then
                     SyncLock addedHandlerLockObject
                         If Not addedHandler Then
@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.SilverMonkey.Engine.Libraries.My.MySettings
+        Friend ReadOnly Property Settings() As Global.SilverMonkey.Engine.My.MySettings
             Get
-                Return Global.SilverMonkey.Engine.Libraries.My.MySettings.Default
+                Return Global.SilverMonkey.Engine.My.MySettings.Default
             End Get
         End Property
     End Module

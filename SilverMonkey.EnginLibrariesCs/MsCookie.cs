@@ -1,6 +1,6 @@
 ﻿using Monkeyspeak;
 
-namespace Engine.Libraries
+namespace Libraries
 {
     /// <summary>
     /// Furcadia Cookie Interface

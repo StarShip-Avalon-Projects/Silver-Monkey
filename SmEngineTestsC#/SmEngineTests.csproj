@@ -35,18 +35,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MonkeySpeak\MonkeySpeakTests.cs" />
+    <Compile Include="MonkeySpeak\MsDatabaseRecords.cs" />
+    <Compile Include="OneTimeSetupAndTearDown.cs" />
     <Compile Include="PhoenixSpeakTests.cs" />
     <Compile Include="QueryTests.cs" />
-    <Compile Include="SetupFixture1.cs" />
     <Compile Include="SilerMonkeyEngineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Read Me First.txt" />
     <Content Include="Silver Monkey.bini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="silvermonkey.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -100,6 +99,11 @@
     <PackageReference Include="NUnit">
       <Version>3.9.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MsDatabaseRecords.ms">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

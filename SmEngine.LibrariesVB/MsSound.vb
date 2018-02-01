@@ -3,8 +3,9 @@ Imports MonkeyCore2.IO
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports Engine.Libraries
+Imports Libraries
 
-Namespace Engine.Libraries
+Namespace Libraries
 
     ''' <summary>
     ''' Effects: (5:2010) - (5:2012)

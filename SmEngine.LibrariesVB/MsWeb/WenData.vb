@@ -1,7 +1,7 @@
 ﻿'
 Imports Monkeyspeak
 
-Namespace Web
+Namespace Libraries.Web
 
     ''' <summary>
     ''' web response page object

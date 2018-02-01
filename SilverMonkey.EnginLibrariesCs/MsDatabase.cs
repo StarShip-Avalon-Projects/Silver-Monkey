@@ -1,15 +1,15 @@
-﻿using Engine.Libraries.Data;
+﻿using Libraries.Data;
 using MonkeyCore2.IO;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using Monkeyspeak.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Text;
-using static Engine.Libraries.MsLibHelper;
 
-namespace Engine.Libraries
+using System.Text;
+using static Libraries.MsLibHelper;
+
+namespace Libraries
 {
     /// <summary>
     /// SQLite Database Access... Create tables Store records ect. in Silver Monkey
@@ -36,14 +36,16 @@ namespace Engine.Libraries
     {
         #region Private Fields
 
+        private SQLiteDatabase database = null;
         private const string DateTimeFormat = "MM-dd-yyyy hh:mm:ss";
+        private const string DataBaseTimeZone = "Central America Standard Time";
 
         /// <summary>
         /// Shared(Static) Database file
         /// </summary>
         private static string _SQLitefile;
 
-        //   private SQLiteDatabase database = null;
+        //   private SQLiteDatabase database == null;
         /// <summary>
         /// These collumns not allowed for deletion or modification, They are core
         /// columns to SM operation
@@ -259,7 +261,9 @@ namespace Engine.Libraries
         /// </summary>
         /// <param name="page">The page.</param>
         public override void Unload(Page page)
-        { }
+        {
+            database = null;
+        }
 
         #endregion Public Methods
 
@@ -269,15 +273,16 @@ namespace Engine.Libraries
         [TriggerStringParameter]
         [TriggerStringParameter]
         [TriggerVariableParameter]
-        private static bool ReadDatabaseInfoName(TriggerReader reader)
+        private bool ReadDatabaseInfoName(TriggerReader reader)
         {
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null)
+                database = new SQLiteDatabase(SQLitefile);
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadVariable(true);
             //  Dim db As SQLiteDatabase = New SQLiteDatabase(file)
             string cmd = $"SELECT [{info}] FROM FURRE Where [Name]='{Furre}'";
-            Variable.Value = db.ExecuteScalar(cmd);
+            Variable.Value = database.ExecuteScalar(cmd);
             return true;
         }
 
@@ -286,21 +291,21 @@ namespace Engine.Libraries
         [TriggerStringParameter]
         private bool AddRecordColumn(TriggerReader reader)
         {
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
             var colum = reader.ReadString().Replace("[", "").Replace("]", "");
             var type = reader.ReadString();
-            return 0 < db.ExecuteNonQuery($"ALTER TABLE FURRE ADD COLUMN {colum} {type};");
+            return 0 <= database.AddColumn("FURRE", colum, type);
         }
 
         [TriggerDescription("Clears the specified table")]
         [TriggerStringParameter]
         private bool ClearSpecifiedTable(TriggerReader reader)
         {
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
             var tableName = reader.ReadString().Replace("[", "").Replace("]", "");
-            var TableId = db.ExecuteScalar($"SELECT [ID] FROM [SettingsTableMaster] WHERE [SettingsTable] = {tableName}");
-            var result = db.ExecuteNonQuery($"DELETE FROM [SettingsTable] Where [SettingsTableID]  =  {TableId};");
-            result += db.ExecuteNonQuery($"DELETE FROM [SettingsTableMaster] Where [ID]  =  {TableId};");
+            var TableId = database.ExecuteScalar($"SELECT [ID] FROM [SettingsTableMaster] WHERE [SettingsTable] = {tableName}");
+            var result = database.ExecuteNonQuery($"DELETE FROM [SettingsTable] Where [SettingsTableID]  =  {TableId};");
+            result += database.ExecuteNonQuery($"DELETE FROM [SettingsTableMaster] Where [ID]  =  {TableId};");
             return 0 < result;
         }
 
@@ -309,15 +314,15 @@ namespace Engine.Libraries
         private bool DeleteFurreNamedRecord(TriggerReader reader)
         {
             var Furre = reader.ReadString().ToFurcadiaShortName();
-            var db = new SQLiteDatabase(SQLitefile);
-            return 0 < db.ExecuteNonQuery($"Delete from FURRE where Name='{Furre }'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            return 0 < database.ExecuteNonQuery($"Delete from FURRE where Name='{Furre }'");
         }
 
         [TriggerDescription("Deletes the Triggering Furre record from he Furre Table")]
         private bool DeleteTriggeringFurreRecord(TriggerReader reader)
         {
-            var db = new SQLiteDatabase(SQLitefile);
-            return 0 < db.ExecuteNonQuery($"Delete from FURRE where Name='{Player.ShortName}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            return 0 < database.ExecuteNonQuery($"Delete from FURRE where Name='{Player.ShortName}'");
         }
 
         [TriggerStringParameter]
@@ -325,11 +330,11 @@ namespace Engine.Libraries
         [TriggerNumberParameter]
         private bool FurreNamedRecordInfoEqualToNumber(TriggerReader reader)
         {
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
             return Value == Variable;
         }
@@ -342,8 +347,8 @@ namespace Engine.Libraries
             string info = reader.ReadString();
             string Furre = reader.ReadString().ToFurcadiaShortName();
             string str = reader.ReadString();
-            var db = new SQLiteDatabase(SQLitefile);
-            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             return result.ToString() == str;
         }
 
@@ -355,8 +360,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var db = new SQLiteDatabase(SQLitefile);
-            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
 
             return Value > Variable;
@@ -370,8 +375,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var db = new SQLiteDatabase(SQLitefile);
-            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
 
             return Value >= Variable;
@@ -385,8 +390,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var db = new SQLiteDatabase(SQLitefile);
-            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
             return Value < Variable;
         }
@@ -399,8 +404,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var db = new SQLiteDatabase(SQLitefile);
-            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
 
             return Value <= Variable;
@@ -414,8 +419,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var db = new SQLiteDatabase(SQLitefile);
-            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             double.TryParse(result.ToString(), out double Value);
 
             return Value != Variable;
@@ -429,8 +434,8 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var str = reader.ReadString();
-            var db = new SQLiteDatabase(SQLitefile);
-            var result = db.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
             return str != result.ToString();
         }
 
@@ -441,8 +446,8 @@ namespace Engine.Libraries
             var furre = reader.ReadString().ToFurcadiaShortName();
             var TimeStamp = reader.ReadVariable(true);
 
-            var db = new SQLiteDatabase(SQLitefile);
-            var ts = db.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{furre}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var ts = database.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{furre}'");
 
             TimeStamp.Value = DateTime.Parse(ts.ToString());
             return true;
@@ -451,8 +456,8 @@ namespace Engine.Libraries
         private bool GetDateAddedForTriggeringFurre(TriggerReader reader)
         {
             var TimeStamp = reader.ReadVariable(true);
-            var db = new SQLiteDatabase(SQLitefile);
-            var ts = db.ExecuteScalar($"SELECT [date added] FROM FURRE Where Name = '{Player.ShortName}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var ts = database.ExecuteScalar($"SELECT [date added] FROM FURRE Where Name = '{Player.ShortName}'");
             TimeStamp.Value = DateTime.Parse(ts.ToString()).ToString(DateTimeFormat);
             return true;
         }
@@ -461,8 +466,8 @@ namespace Engine.Libraries
         {
             var TimeStamp = reader.ReadVariable(true);
             var furre = reader.ReadString().ToFurcadiaShortName();
-            var db = new SQLiteDatabase(SQLitefile);
-            var ts = db.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{furre}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var ts = database.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{furre}'");
 
             TimeStamp.Value = DateTime.Parse(ts.ToString()).ToString(DateTimeFormat);
             return true;
@@ -471,8 +476,8 @@ namespace Engine.Libraries
         private bool GetDateModifiedForTriggeringFurre(TriggerReader reader)
         {
             var TimeStamp = reader.ReadVariable(true);
-            var db = new SQLiteDatabase(SQLitefile);
-            var ts = db.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{Player.ShortName}'");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var ts = database.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{Player.ShortName}'");
 
             TimeStamp.Value = DateTime.Parse(ts.ToString()).ToString(DateTimeFormat);
             return true;
@@ -480,9 +485,9 @@ namespace Engine.Libraries
 
         private object GetRecordInfoForTheFurreNamed(string Column, string Name)
         {
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
 
-            var result = db.ExecuteScalar($"SELECT [{Column}] FROM FURRE Where Name = '{Name.ToFurcadiaShortName()}'");
+            var result = database.ExecuteScalar($"SELECT [{Column}] FROM FURRE Where Name = '{Name.ToFurcadiaShortName()}'");
             return result;
         }
 
@@ -499,8 +504,8 @@ namespace Engine.Libraries
                 // .Append($"{Entry}= SettingsTable.[SettingsTableID] ")
                 .Append($"where SettingsTableMaster.Setting = '{VarTable}' ");
 
-            var db = new SQLiteDatabase(SQLitefile);
-            var data = db.GetValueFromTable(SelectSettngSQL.ToString());
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var data = database.GetValueFromTable(SelectSettngSQL.ToString());
 
             foreach (KeyValuePair<string, object> kvp in data)
                 VarTable.Add($"%{kvp.Key}", kvp.Value);
@@ -524,16 +529,16 @@ namespace Engine.Libraries
             }
 
             // Dim value As String = reader.ReadVariable.Value.ToString()
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
                 { "Name",$"{Furre}"},
                 { "Access Level",$"{info}"},
-                { "date added",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("cst")).ToString(DateTimeFormat) },
-                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("cst")).ToString(DateTimeFormat) }
+                { "date added",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) },
+                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
 
-            return 0 < db.Insert("FURRE", data);
+            return 0 <= database.Insert("FURRE", data);
         }
 
         [TriggerStringParameter]
@@ -553,16 +558,16 @@ namespace Engine.Libraries
             }
 
             // Dim value As String = reader.ReadVariable.Value.ToString()
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
                 { "Name",$"{Player.ShortName}"},
                 { "Access Level",$"{info}"},
-                { "date added",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("cst")).ToString(DateTimeFormat) },
-                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("cst")).ToString(DateTimeFormat) }
+                { "date added",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) },
+                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
 
-            return db.Insert("FURRE", data) > 0;
+            return database.Insert("FURRE", data) >= 0;
         }
 
         //
@@ -571,7 +576,7 @@ namespace Engine.Libraries
             var VarTable = reader.ReadVariableTable(true);
             var table = reader.ReadString().Replace("[", "").Replace("]", "");
 
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, object>();
 
             foreach (KeyValuePair<string, object> kvp in VarTable)
@@ -580,7 +585,7 @@ namespace Engine.Libraries
                 if (!ReadOnlyFurreTableFields.Contains($"[{column}]"))
                     data.Add($"[{column}]", kvp.Value.ToString());
             }
-            return 0 < db.Update("FURRE", data);
+            return 0 < database.Update("FURRE", data);
         }
 
         [TriggerStringParameter]
@@ -592,8 +597,8 @@ namespace Engine.Libraries
             var Furre = reader.Page.GetVariable(TriggeringFurreShortNameVariable).Value.ToString();
 
             string cmd = $"SELECT [{info }] FROM FURRE Where [Name]='{Furre}'";
-            var db = new SQLiteDatabase(SQLitefile);
-            Variable.Value = db.ExecuteScalar(cmd);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            Variable.Value = database.ExecuteScalar(cmd);
             return true;
         }
 
@@ -607,8 +612,8 @@ namespace Engine.Libraries
                 Logger.Warn<MsDatabase>($"Attempt to delete {column}");
                 return false;
             }
-            var db = new SQLiteDatabase(SQLitefile);
-            return 0 < db.RemoveColumn("FURRE", $"{column}");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            return 0 < database.RemoveColumn("FURRE", $"{column}");
         }
 
         [TriggerStringParameter]
@@ -625,8 +630,8 @@ namespace Engine.Libraries
                 .Append($"{Entry}= SettingsTable.[SettingsTableID] ")
                 .Append($"where SettingsTableMaster.Setting = '{Table}' ");
 
-            var db = new SQLiteDatabase(SQLitefile);
-            return db.GetValueFromTable(SelectSettngSQL.ToString()).Count < 0;
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            return database.GetValueFromTable(SelectSettngSQL.ToString()).Count < 0;
         }
 
         [TriggerStringParameter]
@@ -735,15 +740,16 @@ namespace Engine.Libraries
 
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var value = reader.ReadNumber().ToString();
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null)
+                database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
                 { "Name", Furre},
                 { info, value },
-                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("cst")).ToString(DateTimeFormat) }
+                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
 
-            return 0 < db.Update("FURRE", data, "[Name]='" + Furre + "'");
+            return 0 <= database.Update("FURRE", data, "[Name]='" + Furre + "'");
         }
 
         [TriggerStringParameter]
@@ -755,15 +761,15 @@ namespace Engine.Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
 
             var value = reader.ReadString();
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
                 { "Name", $"{Furre}"},
                 { $"{info}",$"{value}"},
-                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("cst")).ToString(DateTimeFormat) }
+                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
 
-            return 0 < db.Update("FURRE", data, $"[Name]='{Furre}'");
+            return 0 <= database.Update("FURRE", data, $"[Name]='{Furre}'");
         }
 
         [TriggerStringParameter]
@@ -774,15 +780,15 @@ namespace Engine.Libraries
             var info = reader.ReadString();
             var value = reader.ReadNumber();
 
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
                 { "Name", Player.ShortName},
                 { info, value.ToString() },
-                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("cst")).ToString(DateTimeFormat) }
+                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
 
-            return 0 < db.Update("FURRE", data, "[Name]='" + Player.ShortName + "'");
+            return 0 <= database.Update("FURRE", data, "[Name]='" + Player.ShortName + "'");
         }
 
         [TriggerStringParameter]
@@ -793,29 +799,31 @@ namespace Engine.Libraries
             var Furre = reader.Page.GetVariable(TriggeringFurreShortNameVariable).Value.ToString();
             var value = reader.ReadString();
 
-            var db = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, string>
             {
                 { "Name", Player.ShortName},
                 { info, value.ToString() },
-                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("cst")).ToString(DateTimeFormat) }
+                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
-            return 0 < db.Update("FURRE", data, $"[Name]='{ Furre }'");
+            return 0 <= database.Update("FURRE", data, $"[Name]='{ Furre }'");
         }
 
+        [TriggerDescription("Creates a new database or reuses the specified datase.")]
         [TriggerStringParameter]
         private bool UseOrCreateSQLiteFileIfNotExist(TriggerReader reader)
         {
             SQLitefile = Paths.CheckBotFolder(reader.ReadString());
-            Logger.Warn<MsDatabase>($"NOTICE: SQLite Database file is now {SQLitefile}");
+            database = new SQLiteDatabase(SQLitefile);
+            Logger.Warn<MsDatabase>($"NOTICE: SQLite Database file is now \"{SQLitefile}\"");
             return true;
         }
 
         private bool VACUUM(TriggerReader reader)
         {
             DateTime startDate = DateTime.Now;
-            var db = new SQLiteDatabase(SQLitefile);
-            var rows = db.ExecuteNonQuery("VACUUM");
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var rows = database.ExecuteNonQuery("VACUUM");
             var time = DateTime.Now.Subtract(startDate);
             Logger.Info<MsDatabase>($"VAACUM operation took {time.Seconds} and {rows} were updated");
             return true;

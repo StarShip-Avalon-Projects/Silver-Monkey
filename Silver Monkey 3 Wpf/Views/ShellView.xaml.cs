@@ -1,4 +1,4 @@
-﻿using BotSession;
+﻿using Engine.BotSession;
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
 using System;
@@ -140,7 +140,7 @@ namespace SilverMonkey.Views
             {
                 ButtonGo.IsEnabled = false;
                 if (FurcadiaSession.IsServerSocketConnected)
-                    FurcadiaSession.Disconnect();
+                    FurcadiaSession.DisconnectServerAndClientStreams();
                 else
                 {
                     await FurcadiaSession.ConnetAsync();

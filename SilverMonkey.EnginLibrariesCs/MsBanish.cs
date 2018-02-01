@@ -5,10 +5,10 @@ using Monkeyspeak.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Engine.Libraries.MsLibHelper;
-using Engine.Libraries.Variables;
+using static Libraries.MsLibHelper;
+using Libraries.Variables;
 
-namespace Engine.Libraries
+namespace Libraries
 {
     // '' <summary>
     // '' Cause:s (0:50) - (0:62

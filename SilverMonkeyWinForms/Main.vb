@@ -4,7 +4,6 @@ Imports System.Diagnostics
 Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Windows.Forms
-Imports BotSession
 Imports Furcadia.Logging
 Imports Furcadia.Net
 Imports Furcadia.Net.DreamInfo
@@ -14,8 +13,8 @@ Imports MonkeyCore
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Settings
 Imports MonkeyCore.Utils.Logging
-
-Imports SilverMonkey.Engine
+Imports Engine.BotSession
+Imports SilverMonkey.Engine.Libraries.Web
 Imports SilverMonkey.HelperClasses
 Imports SilverMonkey.HelperClasses.TextDisplayManager
 
@@ -39,7 +38,7 @@ Public Class Main
     ''' Move SubSystems to FurcLib (pounce, PhoenixSpeak, Dice ETC)
     ''' </para>
     ''' </summary>
-    Public WithEvents FurcadiaSession As Bot
+    Public WithEvents FurcSession As Bot
 
     Public WithEvents NotifyIcon1 As NotifyIcon
 
@@ -66,7 +65,7 @@ Public Class Main
 
     Private ActionCMD As String
 
-    Private BotConfig As BotOptions
+    Private Shared BotConfig As BotOptions
 
     Private CMD_Idx, CMD_Idx2 As Integer
 
@@ -101,7 +100,7 @@ Public Class Main
         ReferenceLinksToolStripMenuItem.DropDown.Items.AddRange(HelpItems.MenuItems.ToArray)
 
         BotConfig = New BotOptions()
-        FurcadiaSession = New Bot(BotConfig)
+        FurcSession = New Bot(BotConfig)
         MRUlist = New Queue(Of String)(MRUnumber)
         DebugLogs = New StringBuilder()
         Mainsettings = New cMain()
@@ -118,9 +117,9 @@ Public Class Main
         Furcadia.Logging.Logger.SuppressSpam = False
         Furcadia.Logging.Logger.WarningEnabled = True
         Furcadia.Logging.Logger.SingleThreaded = True
-        Furcadia.Logging.Logger.LogOutput = New MultiLogOutput(New FileLogger(), New Engine.MultipleLogOutput())
+        Furcadia.Logging.Logger.LogOutput = New MultiLogOutput(New FileLogOutput(Level.Debug), New FileLogOutput(Level.Error), New Engine.MultipleLogOutput())
 
-        Monkeyspeak.Logging.Logger.LogOutput = New Monkeyspeak.Logging.MultiLogOutput(New Monkeyspeak.Logging.FileLogger(), New Engine.MultipleLogOutput())
+        Monkeyspeak.Logging.Logger.LogOutput = New Monkeyspeak.Logging.MultiLogOutput(New Monkeyspeak.Logging.FileLogOutput(CType(Level.Debug, Monkeyspeak.Logging.Level)), New Monkeyspeak.Logging.FileLogOutput(CType(Level.Error, Monkeyspeak.Logging.Level)), New Engine.MultipleLogOutput())
     End Sub
 
 #End Region
@@ -236,7 +235,7 @@ Public Class Main
     End Sub
 
     Public Sub OnFurcadiaSessionError(ex As Exception, o As Object) _
-        Handles FurcadiaSession.[Error]
+        Handles FurcSession.[Error]
 
         If ex.GetType() Is GetType(Monkeyspeak.MonkeyspeakException) Then
             If o.GetType Is GetType(Monkeyspeak.TriggerHandler) Then
@@ -244,8 +243,8 @@ Public Class Main
             End If
             SndDisplay("MonkeySpeak Error:" + ex.Message + Environment.NewLine + o.ToString, DisplayColors.Error)
             If ex.InnerException IsNot Nothing Then
-                If ex.InnerException.GetType() Is GetType(Libraries.Web.WebException) Then
-                    Dim InnerEx = DirectCast(ex.InnerException, Libraries.Web.WebException)
+                If ex.InnerException.GetType() Is GetType(WebException) Then
+                    Dim InnerEx = DirectCast(ex.InnerException, WebException)
                     SendTextToDebugWindow(InnerEx.ToString)
                 Else
                     SendTextToDebugWindow(ex.InnerException.ToString)
@@ -318,7 +317,7 @@ Public Class Main
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="newColor"></param>
-    Public Sub SndDisplay(data As String, Optional newColor As DisplayColors = DisplayColors.DefaultColor)
+    Public Shared Sub SndDisplay(data As String, Optional newColor As DisplayColors = DisplayColors.DefaultColor)
 
         If BotConfig.LogOptions.log Then LogStream.WriteLine(data)
         If CBool(Mainsettings.TimeStamp) Then
@@ -334,7 +333,7 @@ Public Class Main
     ''' Send formatted text to log box
     ''' </summary>
     ''' <param name="Message"></param>
-    Public Sub SndDisplay(Message As Monkeyspeak.Logging.LogMessage)
+    Public Shared Sub SndDisplay(Message As Monkeyspeak.Logging.LogMessage)
 
         If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor
@@ -353,7 +352,7 @@ Public Class Main
     ''' Send formatted text to log box
     ''' </summary>
     ''' <param name="Message"></param>
-    Public Sub SndDisplay(Message As Furcadia.Logging.LogMessage)
+    Public Shared Sub SndDisplay(Message As Furcadia.Logging.LogMessage)
 
         If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor
@@ -385,7 +384,7 @@ Public Class Main
         Else
             BotConfig = BConfig
         End If
-        FurcadiaSession.SetOptions(BotConfig)
+        FurcSession.SetOptions(BotConfig)
 
         SilverMonkeyBotPath = BotConfig.BotPath
 
@@ -409,14 +408,14 @@ Public Class Main
                         DreamList.DataSource = Nothing
                         DreamList.Refresh()
                     End If
-                    DreamList.DataSource = FurcadiaSession.Dream.Furres.ToIList()
+                    DreamList.DataSource = FurcSession.Dream.Furres.ToIList()
                     DreamList.DisplayMember = "Name"
                     DreamList.ValueMember = "ShortName"
                 Finally
                     DreamList.EndUpdate()
                 End Try
                 Try
-                    FurreCountTxtBx.Text = FurcadiaSession.Dream.Furres.Count.ToString
+                    FurreCountTxtBx.Text = FurcSession.Dream.Furres.Count.ToString
                 Catch
                 End Try
 
@@ -441,8 +440,8 @@ Public Class Main
 
     Private Sub _ne_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _ne.MouseDown
 
-        If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
-        Me.ActionTmr.Enabled = FurcadiaSession.IsServerSocketConnected
+        If Not FurcSession.IsServerSocketConnected Then Exit Sub
+        Me.ActionTmr.Enabled = FurcSession.IsServerSocketConnected
         ActionCMD = "`m 9"
 
     End Sub
@@ -458,7 +457,7 @@ Public Class Main
 
     Private Sub _nw_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles _nw.MouseDown
 
-        Me.ActionTmr.Enabled = FurcadiaSession.IsServerSocketConnected
+        Me.ActionTmr.Enabled = FurcSession.IsServerSocketConnected
         ActionCMD = "`m 7"
 
     End Sub
@@ -486,13 +485,13 @@ Public Class Main
             ConnectTrayIconMenuItem.Click, DisconnectTrayIconMenuItem.Click, BTN_Go.Click
         BTN_Go.Enabled = False
         Try
-            FurcadiaSession.Options = BotConfig
+            FurcSession.Options = BotConfig
 
             If Not CanConnect Then Exit Sub
 
-            If FurcadiaSession.IsServerSocketConnected Or FurcadiaSession.ServerStatus = ConnectionPhase.Connecting Then
+            If FurcSession.IsServerSocketConnected Or FurcSession.ServerStatus = ConnectionPhase.Connecting Then
                 BTN_Go.Text = "Disconnecting..."
-                Await Task.Run(Sub() FurcadiaSession.Disconnect())
+                Await Task.Run(Sub() FurcSession.DisconnectServerAndClientStreams())
                 ConnectTrayIconMenuItem.Enabled = False
                 DisconnectTrayIconMenuItem.Enabled = True
                 NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Now disconnected from Furcadia.", ToolTipIcon.Info)
@@ -501,20 +500,20 @@ Public Class Main
                 BTN_Go.Text = "Connecting..."
                 My.Settings.LastBotFile = MonkeyCore2.IO.Paths.CheckBotFolder(BotConfig.BotSettingsFile)
                 My.Settings.Save()
-                FurcadiaSession.SetOptions(BotConfig)
+                FurcSession.SetOptions(BotConfig)
                 If BotConfig.LogOptions.log Then
                     Try
 
                         FileLogWriter = New LogStream(BotConfig.LogOptions)
                     Catch
-                        Furcadia.Logging.Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogName}")
+                        Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogName}")
                         Exit Sub
                     End Try
                 End If
 
                 Monkeyspeak.Logging.Logger.Info("New Session Started")
-                Await FurcadiaSession.ConnetAsync()
-                If FurcadiaSession.IsServerSocketConnected Then
+                Await FurcSession.ConnetAsync()
+                If FurcSession.IsServerSocketConnected Then
                     ConnectTrayIconMenuItem.Enabled = False
                     DisconnectTrayIconMenuItem.Enabled = True
                     Await Task.Run(Sub() UpDateDreamList()) '
@@ -546,7 +545,7 @@ Public Class Main
 
     Private Sub BtnSit_stand_Lie_Click(sender As System.Object, e As System.EventArgs) Handles BtnSit_stand_Lie.Click
 
-        If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
+        If Not FurcSession.IsServerSocketConnected Then Exit Sub
 
         If BtnSit_stand_Lie.Text = "Stand" Then
             BtnSit_stand_Lie.Text = "Lay"
@@ -571,7 +570,7 @@ Public Class Main
     ''' <param name="e">
     ''' </param>
     Private Sub ClientStatusUpdate(Sender As Object, e As NetClientEventArgs) _
-        Handles FurcadiaSession.ClientStatusChanged
+        Handles FurcSession.ClientStatusChanged
 
         UpdateUiClientStatus(e.ConnectPhase)
 
@@ -594,8 +593,8 @@ Public Class Main
     End Sub
 
     Private Async Sub ContextTryIcon_Opened(sender As Object, e As System.EventArgs) Handles ContextTryIcon.Opened
-        If FurcadiaSession Is Nothing Then Exit Sub
-        Select Case FurcadiaSession.ServerStatus
+        If FurcSession Is Nothing Then Exit Sub
+        Select Case FurcSession.ServerStatus
 
             Case ConnectionPhase.Init
                 Await Meep(DisconnectTrayIconMenuItem, False)
@@ -618,7 +617,7 @@ Public Class Main
     ''' </param>
     Private Sub DebugToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DebugToolStripMenuItem.Click
         If DebugWindow Is Nothing OrElse DebugWindow.IsDisposed() Then
-            DebugWindow = New Variables(FurcadiaSession.MSpage)
+            DebugWindow = New Variables(FurcSession.MSpage)
         End If
 
         DebugWindow.Show()
@@ -632,8 +631,8 @@ Public Class Main
     Private Sub DreamList_DoubleClick(sender As Object, e As System.EventArgs) Handles DreamList.DoubleClick
 
         If Not DreamList.SelectedItem Is Nothing Then
-            If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
-            FurcadiaSession.SendFormattedTextToServer("l " + DirectCast(DreamList.SelectedItem, Furre).ShortName)
+            If Not FurcSession.IsServerSocketConnected Then Exit Sub
+            FurcSession.SendFormattedTextToServer("l " + DirectCast(DreamList.SelectedItem, Furre).ShortName)
         End If
 
     End Sub
@@ -650,8 +649,8 @@ Public Class Main
     Private Sub Follow_Click(sender As Object, e As EventArgs) _
         Handles Follow.Click, Lead.Click, Summon.Click, Join.Click
         If Not DreamList.SelectedItem Is Nothing Then
-            If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
-            FurcadiaSession.SendFormattedTextToServer($"`{DirectCast(sender, ToolStripMenuItem).Tag} {DirectCast(DreamList.SelectedItem, Furre).ShortName}")
+            If Not FurcSession.IsServerSocketConnected Then Exit Sub
+            FurcSession.SendFormattedTextToServer($"`{DirectCast(sender, ToolStripMenuItem).Tag} {DirectCast(DreamList.SelectedItem, Furre).ShortName}")
         End If
     End Sub
 
@@ -659,7 +658,7 @@ Public Class Main
         _FormClose = True
         My.Settings.MainFormLocation = Me.Location
         My.Settings.LastBotFile = BotConfig.Name
-        FurcadiaSession.Dispose()
+        FurcSession.Dispose()
         'Save the user settings so next time the
         'window will be the same size and location
         Mainsettings.SaveMainSettings()
@@ -696,12 +695,12 @@ Public Class Main
 
         Dim f As String = MonkeyCore2.IO.Paths.CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
-        If Not String.IsNullOrEmpty(FurcadiaSession.ConnectedFurre.Name) _
+        If Not String.IsNullOrEmpty(FurcSession.ConnectedFurre.Name) _
             And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
 
-            processStrt.Arguments = "-B=""" + FurcadiaSession.ConnectedFurre.Name + """ """ + f + """"
+            processStrt.Arguments = "-B=""" + FurcSession.ConnectedFurre.Name + """ """ + f + """"
 
-        ElseIf String.IsNullOrEmpty(FurcadiaSession.ConnectedFurre.Name) _
+        ElseIf String.IsNullOrEmpty(FurcSession.ConnectedFurre.Name) _
         And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
 
             processStrt.Arguments = """" + f + """"
@@ -800,8 +799,8 @@ Public Class Main
 
     Private Sub Look_Click(sender As Object, e As EventArgs) Handles Look.Click
         If Not DreamList.SelectedItem Is Nothing Then
-            If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
-            FurcadiaSession.SendFormattedTextToServer("l " + DirectCast(DreamList.SelectedItem, Furre).ShortName)
+            If Not FurcSession.IsServerSocketConnected Then Exit Sub
+            FurcSession.SendFormattedTextToServer("l " + DirectCast(DreamList.SelectedItem, Furre).ShortName)
         End If
     End Sub
 
@@ -981,7 +980,7 @@ Public Class Main
     ''' <see cref="ParseChannelArgs"/>
     ''' </param>
     Private Sub OnProcessServerChannelData(sender As Object, Args As ParseChannelArgs) _
-        Handles FurcadiaSession.ProcessServerChannelData
+        Handles FurcSession.ProcessServerChannelData
 
         Dim InstructionObject = DirectCast(sender, ChannelObject)
         Dim color = DisplayColors.DefaultColor
@@ -1009,8 +1008,8 @@ Public Class Main
 
     End Sub
 
-    Private Sub OnServerReceive(data As String) Handles FurcadiaSession.ServerData2
-        If (FurcadiaSession.ServerStatus = ConnectionPhase.MOTD) Then
+    Private Sub OnServerReceive(data As String) Handles FurcSession.ServerData2
+        If (FurcSession.ServerStatus = ConnectionPhase.MOTD) Then
             SndDisplay(data)
         End If
 
@@ -1045,7 +1044,7 @@ Public Class Main
     ''' </param>
     ''' <param name="Args">
     ''' </param>
-    Private Sub ParseFurres(sender As Object, Args As ParseServerArgs) Handles FurcadiaSession.ProcessServerInstruction
+    Private Sub ParseFurres(sender As Object, Args As ParseServerArgs) Handles FurcSession.ProcessServerInstruction
 
         Select Case Args.ServerInstruction
             Case ServerInstructionType.SpawnAvatar
@@ -1075,7 +1074,7 @@ Public Class Main
         'BotSetup.BotFile =
         'BotSetup.ShowDialog()
 
-        If Not FurcadiaSession.IsServerSocketConnected Then
+        If Not FurcSession.IsServerSocketConnected Then
             Try
                 UpdateBotConfig(sender.ToString())
                 My.Settings.LastBotFile = sender.ToString()
@@ -1095,8 +1094,8 @@ Public Class Main
 
     Private Sub Se__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles se_.MouseDown
 
-        If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
-        Me.ActionTmr.Enabled = FurcadiaSession.IsServerSocketConnected
+        If Not FurcSession.IsServerSocketConnected Then Exit Sub
+        Me.ActionTmr.Enabled = FurcSession.IsServerSocketConnected
         ActionCMD = "`m 3"
 
     End Sub
@@ -1113,8 +1112,8 @@ Public Class Main
     ''' </param>
     Private Sub SendCommandToServer(ByVal command As String)
 
-        If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
-        FurcadiaSession.SendFormattedTextToServer(command)
+        If Not FurcSession.IsServerSocketConnected Then Exit Sub
+        FurcSession.SendFormattedTextToServer(command)
 
     End Sub
 
@@ -1124,7 +1123,7 @@ Public Class Main
         toServer.Clear()
     End Sub
 
-    Private Sub ServerStatusUpdate(Sender As Object, e As NetServerEventArgs) Handles FurcadiaSession.ServerStatusChanged
+    Private Sub ServerStatusUpdate(Sender As Object, e As NetServerEventArgs) Handles FurcSession.ServerStatusChanged
         UpdateUiServerStatus(e.ConnectPhase)
 
     End Sub
@@ -1140,7 +1139,7 @@ Public Class Main
     End Sub
 
     Private Sub Sw__MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sw_.MouseDown
-        Me.ActionTmr.Enabled = FurcadiaSession.IsServerSocketConnected
+        Me.ActionTmr.Enabled = FurcSession.IsServerSocketConnected
         ActionCMD = "`m 1"
     End Sub
 
@@ -1233,7 +1232,7 @@ Public Class Main
                 Case ConnectionPhase.Connected
                     ToolStripServerStatus.Image = My.Resources.ConnectedImg
                     UpDatButtonGoText("Connected.")
-                    MainTitleText($"Silver Monkey: {FurcadiaSession.ConnectedFurre.Name}")
+                    MainTitleText($"Silver Monkey: {FurcSession.ConnectedFurre.Name}")
                 Case ConnectionPhase.Connecting
                     ToolStripServerStatus.Image = My.Resources.ConnectedImg
                     UpDatButtonGoText("Connecting...")
@@ -1261,7 +1260,7 @@ Public Class Main
 
     Private Sub Whisper_Click(sender As Object, e As EventArgs) Handles Whisper.Click
         If Not DreamList.SelectedItem Is Nothing Then
-            If Not FurcadiaSession.IsServerSocketConnected Then Exit Sub
+            If Not FurcSession.IsServerSocketConnected Then Exit Sub
             toServer.Focus()
             toServer.Text = $"/%{DirectCast(DreamList.SelectedItem, Furre).ShortName} "
             toServer.SelectionStart = toServer.Text.Length

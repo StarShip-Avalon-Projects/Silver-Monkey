@@ -15,8 +15,7 @@ using Furcadia.Net.Utils.ServerParser;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using Monkeyspeak.Logging;
-using SilverMonkey.Engine.Libraries;
-using SilverMonkey.Engine.Libraries.Engine.Libraries;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,9 +24,12 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using static Furcadia.Text.FurcadiaMarkup;
-using static Engine.Libraries.MsLibHelper;
+using static Libraries.MsLibHelper;
+using SilverMonkey.Engine.Libraries;
 
-namespace BotSession
+using Libraries;
+
+namespace Engine.BotSession
 {
     ///  <summary>
     /// This Instance handles the current Furcadia Session.
@@ -79,19 +81,18 @@ namespace BotSession
         public Bot(BotOptions BotSessionOptions) :
                 base(BotSessionOptions)
         {
+            SetOptions(BotSessionOptions);
+            Initialize();
 #if DEBUG
-            // TODO: #If Then ... Warning!!! not translated
-            if (!Debugger.IsAttached)
-            {
-                Logger.Disable<Bot>();
-            }
+            //// TODO: #If Then ... Warning!!! not translated
+            //if (!Debugger.IsAttached)
+            //{
+            //    Logger.Disable<Bot>();
+            //}
 #else
         // TODO: # ... Warning!!! not translated
         Logger.Disable<Bot>();
 #endif
-            SetOptions(BotSessionOptions);
-
-            Initialize();
         }
 
         /// <summary>
@@ -99,18 +100,18 @@ namespace BotSession
         /// </summary>
         public Bot()
         {
+            SetOptions(new BotOptions());
+            this.Initialize();
 #if DEBUG
             // TODO: #If Then ... Warning!!! not translated
-            if (!Debugger.IsAttached)
-            {
-                Logger.Disable<Bot>();
-            }
+            //if (!Debugger.IsAttached)
+            //{
+            //    Logger.Disable<Bot>();
+            //}
 #else
         // TODO: # ... Warning!!! not translated
         Logger.Disable<Bot>();
 #endif
-            SetOptions(new BotOptions());
-            this.Initialize();
         }
 
         #endregion Public Constructors
@@ -145,26 +146,6 @@ namespace BotSession
             }
         }
 
-        /// <summary>
-        /// Gets the silver monkey settings.
-        /// </summary>
-        /// <returns></returns>
-        public BotOptions GetOptions()
-        {
-            return _options;
-        }
-
-        /// <summary>
-        /// Sets the silver monkey settings.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        public void SetOptions(BotOptions value)
-        {
-            _options = value;
-            base.Options = _options;
-            MsEngineOptions = _options.MonkeySpeakEngineOptions;
-        }
-
         #endregion Public Properties
 
         #region Public Methods
@@ -177,6 +158,36 @@ namespace BotSession
             _options = new BotOptions();
             MsEngineOptions = _options.MonkeySpeakEngineOptions;
             Initialize();
+        }
+
+        /// <summary>
+        /// Connets to the game server asyncronously.
+        /// </summary>
+        /// <exception cref="FileNotFoundException">
+        /// Can be thrown if there is no Monkey Speak File or Character Ini file supplied
+        /// </exception>
+        public async Task ConnetAsync()
+        {
+            if (MsEngineOptions.IsEnabled)
+            {
+                await StartEngine().ContinueWith(task =>
+                {
+                    if (task.Exception != null) SendError(task.Exception.InnerException, task);
+                    else
+                        Task.Run(() => Connect());
+                }, TaskContinuationOptions.ExecuteSynchronously);
+            }
+            else
+                await Task.Run(() => Connect());
+        }
+
+        /// <summary>
+        /// Gets the silver monkey settings.
+        /// </summary>
+        /// <returns></returns>
+        public BotOptions GetOptions()
+        {
+            return _options;
         }
 
         /// <summary>
@@ -206,6 +217,17 @@ namespace BotSession
         }
 
         /// <summary>
+        /// Sets the silver monkey settings.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        public void SetOptions(BotOptions value)
+        {
+            _options = value;
+            base.Options = _options;
+            MsEngineOptions = _options.MonkeySpeakEngineOptions;
+        }
+
+        /// <summary>
         /// Stops the engine.
         /// </summary>
         public void StopEngine()
@@ -220,50 +242,6 @@ namespace BotSession
         #endregion Public Methods
 
         #region Private Methods
-
-        private void OnClientStatusChanged(object Sender, NetClientEventArgs e)
-        {
-            if ((MSpage == null))
-            {
-                return;
-            }
-
-            try
-            {
-                switch (e.ConnectPhase)
-                {
-                    case ConnectionPhase.Connected:
-                        var b = (ConstantVariable)MSpage.GetVariable(BotNameVariable);
-                        b.SetValue(ConnectedFurre.Name);
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error<Bot>(ex);
-            }
-        }
-
-        /// <summary>
-        /// Connets to the game server asyncronously.
-        /// </summary>
-        /// <exception cref="FileNotFoundException">
-        /// Can be thrown if there is no Monkey Speak File or Character Ini file supplied
-        /// </exception>
-        public async Task ConnetAsync()
-        {
-            if (MsEngineOptions.IsEnabled)
-            {
-                await StartEngine().ContinueWith(task =>
-                {
-                    if (task.Exception != null) throw task.Exception;
-                    else
-                        Task.Run(() => Connect());
-                }, TaskContinuationOptions.ExecuteSynchronously);
-            }
-            else
-                await Task.Run(() => Connect());
-        }
 
         /// <summary>
         /// Initializes this instance.
@@ -291,7 +269,8 @@ namespace BotSession
         {
             var LibList = new List<BaseLibrary>()
             {
-                new Monkeyspeak.Libraries.IO(GetOptions().BotPath),
+                new MsStartBot(),
+                new IO(GetOptions().BotPath),
                 new Monkeyspeak.Libraries.Math(),
                 new StringOperations(),
                 new Sys(),
@@ -316,7 +295,7 @@ namespace BotSession
                 new MsTrades(),
                 new MsPhoenixSpeak(),
                 new MsPounce(),
-                 new MsPhoenixSpeakBackupAndRestore(),
+                new MsPhoenixSpeakBackupAndRestore(),
             };
             return LibList;
         }
@@ -332,11 +311,35 @@ namespace BotSession
                 MSpage.LoadLibrary(Library, this);
                 if (!silent)
                 {
-                    Furcadia.Logging.Logger.Info($"{Library.GetType().Name}");
+                    Monkeyspeak.Logging.Logger.Info($"{Library.GetType().Name}");
                 }
+                Logger.Debug<Bot>($"{Library.GetType().Name}");
             }
 
             return MSpage;
+        }
+
+        private void OnClientStatusChanged(object Sender, NetClientEventArgs e)
+        {
+            if ((MSpage == null))
+            {
+                return;
+            }
+
+            try
+            {
+                switch (e.ConnectPhase)
+                {
+                    case ConnectionPhase.Connected:
+                        var b = (ConstantVariable)MSpage.GetVariable(BotNameVariable);
+                        b.SetValue(ConnectedFurre.Name);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error<Bot>(ex);
+            }
         }
 
         /// <summary>
@@ -361,7 +364,7 @@ namespace BotSession
 
         private async void OnParseSererInstructionAsync(object sender, ParseServerArgs e)
         {
-            CancellationToken cancel = new CancellationTokenSource(500).Token;
+            CancellationToken cancel = new CancellationTokenSource(800).Token;
 
             if (MSpage == null)
             {
@@ -429,7 +432,7 @@ namespace BotSession
 
         private async void OnServerChannel(object sender, ParseChannelArgs Args)
         {
-            CancellationToken cancel = new CancellationTokenSource(500).Token;
+            CancellationToken cancel = new CancellationTokenSource(TimeSpan.FromSeconds(4)).Token;
             if (MSpage == null || !MsEngineOptions.IsEnabled)
             {
                 return;
@@ -679,7 +682,8 @@ namespace BotSession
 
         private async void OnServerStatusChanged(object Sender, NetServerEventArgs e)
         {
-            CancellationToken cancel = new CancellationTokenSource(500).Token;
+            if (MSpage == null) return;
+            CancellationToken cancel = new CancellationTokenSource(800).Token;
             if (!MsEngineOptions.IsEnabled)
             {
                 return;
@@ -717,10 +721,10 @@ namespace BotSession
         private async Task StartEngine()
         {
             var TimeStart = DateTime.Now;
-            CancellationToken cancel = new CancellationTokenSource(500).Token;
+            CancellationToken cancel = new CancellationTokenSource(TimeSpan.FromSeconds(3)).Token;
 
             MsEngine = new MonkeyspeakEngine(GetOptions().MonkeySpeakEngineOptions);
-            string MonkeySpeakScript = Engine.MsEngineExtentionFunctions.LoadFromScriptFile(MsEngineOptions.MonkeySpeakScriptFile, MsEngine.Options.Version);
+            string MonkeySpeakScript = MsEngineExtentionFunctions.LoadFromScriptFile(MsEngineOptions.MonkeySpeakScriptFile, MsEngine.Options.Version);
             MSpage = await MsEngine.LoadFromStringAsync(MonkeySpeakScript);
 
             List<IVariable> VariableList = new List<IVariable>();
@@ -737,8 +741,8 @@ namespace BotSession
             VariableList.Add(new ConstantVariable(BanishListVariable, null));
             PageSetVariable(VariableList);
             // (0:0) When the bot starts,
-            await MSpage.ExecuteAsync(0, cancel);
-            Logger.Info($"Done!!! Executed {MSpage.Size} triggers in {DateTime.Now.Subtract(TimeStart).Seconds} seconds.");
+            await MSpage.ExecuteAsync(0, cancel, this);
+            Logger.Info($"Done!!! Loaded {MSpage.Size} triggers in {DateTime.Now.Subtract(TimeStart).Milliseconds} miliseconds.");
         }
 
         #endregion Private Methods

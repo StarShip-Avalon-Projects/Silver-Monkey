@@ -3,7 +3,7 @@ using Furcadia.Net.DreamInfo;
 using System.Text.RegularExpressions;
 using Monkeyspeak.Logging;
 
-namespace Engine.Libraries
+namespace Libraries
 {
     /// <summary>
     ///

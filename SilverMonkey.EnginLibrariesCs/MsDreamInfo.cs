@@ -1,7 +1,7 @@
 ﻿using Monkeyspeak;
 using Monkeyspeak.Logging;
 
-namespace Engine.Libraries
+namespace Libraries
 {
     /// <summary>
     /// Monkey Speak for Dream Info items,
@@ -35,7 +35,7 @@ namespace Engine.Libraries
             // Furre Enters
             // (0:30) When anyone enters the Dream,
             Add(TriggerCategory.Cause,
-                r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
+                r => ReadTriggeringFurreParams(r),
                 "When anyone enters the Dream,");
 
             // (0:31) When the furre named {..} enters the Dream,

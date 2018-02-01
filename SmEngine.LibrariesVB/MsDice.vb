@@ -1,11 +1,10 @@
 ﻿Imports Furcadia.Net.Utils.ServerObjects
-Imports Engine.Libraries
-Imports Monkeyspeak
-Imports SilverMonkey.Engine.Libraries.Engine.Libraries.Dice
-Imports Engine.Libraries.Dice
-Imports Engine.Libraries.MsLibHelper
 
-Namespace Engine.Libraries
+Imports Monkeyspeak
+Imports SilverMonkey.Engine.Libraries.Dice
+Imports Libraries
+
+Namespace Libraries
 
     ''' <summary>
     ''' Cause: (0:130 - (0:136

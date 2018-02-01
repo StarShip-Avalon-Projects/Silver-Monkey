@@ -1,18 +1,19 @@
-﻿using BotSession;
+﻿using Engine.BotSession;
 using Furcadia.Logging;
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
+using MonkeyCore2.IO;
 using NUnit.Framework;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using static Engine.Libraries.MsLibHelper;
+using static Libraries.MsLibHelper;
 using static SmEngineTests.Utilities;
 
 namespace SmEngineTests
 {
     [TestFixture]
-    public class QueryTests
+    public class SilverMonkeyQueryTests
     {
         public const string GeroJoinBot = "<font color='query'><name shortname='gerolkae'>Gerolkae</name> requests permission to join your company. To accept the request, <a href='command://summon'>click here</a> or type `summon and press &lt;enter&gt;.</font>";
         public const string GeroFollowBot = "<font color='query'><name shortname='gerolkae'>Gerolkae</name> requests permission to follow you. To accept the request, <a href='command://lead'>click here</a> or type `lead and press &lt;enter&gt;.</font>";
@@ -29,12 +30,11 @@ namespace SmEngineTests
         [SetUp]
         public void Initialize()
         {
-            Furcadia.Logging.Logger.SingleThreaded = false;
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
             var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Bugreport 165 From Jake.ms");
-            var CharacterFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+            var CharacterFile = Path.Combine(Paths.FurcadiaCharactersFolder,
                 "silvermonkey.ini");
             var MsEngineOption = new EngineOptoons()
             {
@@ -46,7 +46,8 @@ namespace SmEngineTests
             {
                 Standalone = true,
                 CharacterIniFile = CharacterFile,
-                MonkeySpeakEngineOptions = MsEngineOption
+                MonkeySpeakEngineOptions = MsEngineOption,
+                ResetSettingTime = 10
             };
 
             Options.SaveBotSettings();
@@ -183,7 +184,7 @@ namespace SmEngineTests
 
         public void BotHaseDisconnected_Standalone(bool StandAlone = false)
         {
-            Proxy.Disconnect();
+            Proxy.DisconnectServerAndClientStreams();
             HaltFor(CleanupDelayTime);
 
             Assert.Multiple(() =>

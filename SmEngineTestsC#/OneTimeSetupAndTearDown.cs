@@ -1,16 +1,18 @@
-﻿using NUnit.Framework;
+﻿using Monkeyspeak.Logging;
+using NUnit.Framework;
 using System;
+using static SmEngineTests.Utilities;
+using Logging = Furcadia.Logging;
 
 namespace SmEngineTests
 {
     [SetUpFixture]
-    public class SetupFixture1
+    public class OneTimeSetupAndTearDown
     {
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            // TODO: Add code here that is run before
-            //  all tests in the assembly are run            
+            SetLogger();
         }
 
         [OneTimeTearDown]

@@ -1,8 +1,8 @@
-﻿using static Engine.Libraries.MsLibHelper;
+﻿using static Libraries.MsLibHelper;
 using Furcadia.Net.Utils.ServerObjects;
 using System.Text.RegularExpressions;
 
-namespace Engine.Libraries.PhoenixSpeak
+namespace Libraries.PhoenixSpeak
 {
     // '' <summary>
     // '' Store a Phoenix Speak 'Get' response and send it to the MonkeySpeak

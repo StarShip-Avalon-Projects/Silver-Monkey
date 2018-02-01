@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4619FF40-2C7C-4DAD-887B-14D58755CCD9}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SilverMonkey.Engine.Libraries</RootNamespace>
+    <RootNamespace>SilverMonkey.Engine</RootNamespace>
     <AssemblyName>SilverMonkey.Engine.LibrariesVB</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>

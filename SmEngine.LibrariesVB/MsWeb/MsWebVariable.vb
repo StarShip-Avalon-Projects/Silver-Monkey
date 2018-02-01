@@ -1,6 +1,6 @@
 ﻿Imports Monkeyspeak
 
-Namespace Web
+Namespace Libraries.Web
 
     ''' <summary>
     ''' Silver  Monkey implementation of <see cref="IVariable"/> for web requests

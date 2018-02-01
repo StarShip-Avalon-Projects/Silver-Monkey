@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -38,7 +39,7 @@ namespace MonkeyCore2.Data
         private const string SettingsTableCreateSQL = "[ID] INTEGER UNIQUE,[SettingsTableID] INTEGER, [Setting] TEXT, [Value] TEXT, PRIMARY KEY ([SettingsTableID], [Setting])";
         private const string BackUpMasterCreateSQL = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [date modified] TEXT";
         private const string BackUpCreateSQL = "[NameID] INTEGER, [Key] TEXT, [Value] TEXT, PRIMARY KEY ([NameID],[Key])";
-        private const string SyncPragma = "PRAGMA encoding = \"UTF-16\"; ";
+        private const string SyncPragma = "PRAGMA synchronous = 0;";
         private string dbConnection;
         private string inputFile = Path.Combine(Paths.SilverMonkeyBotPath, DefaultFile);
 
@@ -51,7 +52,8 @@ namespace MonkeyCore2.Data
         /// </summary>
         public SQLiteDatabase()
         {
-            dbConnection = $"Data Source={ inputFile}";
+            dbConnection = $"Data Source={ inputFile};";
+
             CreateTbl("FURRE", FurreTable);
             CreateTbl("BACKUPMASTER", BackUpMasterCreateSQL);
             CreateTbl("BACKUP", BackUpCreateSQL);
@@ -81,7 +83,8 @@ namespace MonkeyCore2.Data
             {
                 inputFile = databaseFile;
             }
-            dbConnection = $"Data Source={inputFile};";
+            dbConnection = $"Data Source={ inputFile};";
+
             CreateTbl("FURRE", FurreTable);
             CreateTbl("BACKUPMASTER", BackUpMasterCreateSQL);
             CreateTbl("BACKUP", BackUpCreateSQL);
@@ -127,9 +130,9 @@ namespace MonkeyCore2.Data
             {
                 return ExecuteNonQuery($"ALTER TABLE { table } ADD COLUMN { collumn } { type };");
             }
-            catch (Exception ex)
+            catch
             {
-                Logger.Error<SQLiteDatabase>(ex);
+                Logger.Warn($"Failed to create column [{collumn}]. Most likely it already exists, which is fine.");
             }
             return -1;
         }
@@ -183,20 +186,13 @@ namespace MonkeyCore2.Data
         public void CreateTbl(string table, string columns)
         {
             Logger.Debug<SQLiteDatabase>($"Create Table '{table}' with COLUMNS: '{columns}'");
-            using (var SQLconnect = new SQLiteConnection(dbConnection))
+            try
             {
-                using (var SQLcommand = SQLconnect.CreateCommand())
-                {
-                    SQLconnect.Open();
-                    // SQL query to Create Table
-                    //  [Access Level] INTEGER, [date added] TEXT, [date modified] TEXT,
-
-                    SQLcommand.CommandText = $"{SyncPragma} CREATE TABLE IF NOT EXISTS { table }( { columns })";
-                    if (SQLcommand.ExecuteNonQuery() < 1)
-                        Logger.Warn<SQLiteDatabase>($"Did not create '{table}'");
-                    else
-                        Logger.Info<SQLiteDatabase>($"Sucessfullt created '{table}'");
-                }
+                ExecuteNonQuery($"CREATE TABLE IF NOT EXISTS { table }( { columns })");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error<SQLiteDatabase>(ex);
             }
         }
 
@@ -234,6 +230,8 @@ namespace MonkeyCore2.Data
         /// <returns>An Integer containing the number of rows updated.</returns>
         public int ExecuteNonQuery(string sql)
         {
+            var Start = new Stopwatch();
+            Start.Start();
             Logger.Debug<SQLiteDatabase>($"'{sql}'");
             int rowsUpdated;
             using (var cnn = new SQLiteConnection(dbConnection))
@@ -241,18 +239,11 @@ namespace MonkeyCore2.Data
                 cnn.Open();
                 using (var mycommand = new SQLiteCommand(cnn))
                 {
-                    try
-                    {
-                        mycommand.CommandText = sql;
-                        rowsUpdated = mycommand.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        rowsUpdated = -1;
-                        Logger.Error<SQLiteDatabase>(ex);
-                    }
+                    mycommand.CommandText = $"{SyncPragma} {sql}";
+                    rowsUpdated = mycommand.ExecuteNonQuery();
                 }
             }
+            Logger.Debug<SQLiteDatabase>($"{Start.Elapsed}");
             return rowsUpdated;
         }
 
@@ -266,6 +257,8 @@ namespace MonkeyCore2.Data
         /// </returns>
         public DataSet ExecuteQuery(string sql)
         {
+            var Start = new Stopwatch();
+            Start.Start();
             Logger.Debug<SQLiteDatabase>($"'{sql}'");
             var rowsUpdated = new DataSet();
             using (var cnn = new SQLiteConnection(dbConnection))
@@ -273,7 +266,7 @@ namespace MonkeyCore2.Data
                 cnn.Open();
                 using (var mycommand = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = $"{SyncPragma}{sql}";
+                    mycommand.CommandText = $"{SyncPragma} {sql}";
                     using (var a = new SQLiteDataAdapter(mycommand))
                     {
                         try
@@ -287,6 +280,7 @@ namespace MonkeyCore2.Data
                     }
                 }
             }
+            Logger.Debug<SQLiteDatabase>($"{Start.Elapsed}");
             return rowsUpdated;
         }
 
@@ -297,17 +291,21 @@ namespace MonkeyCore2.Data
         /// <returns>A string.</returns>
         public object ExecuteScalar(string sql)
         {
+            var Start = new Stopwatch();
+            Start.Start();
             Logger.Debug<SQLiteDatabase>($"'{sql}'");
             object value;
+
             using (var cnn = new SQLiteConnection(dbConnection))
             {
                 cnn.Open();
                 using (var mycommand = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = sql;
+                    mycommand.CommandText = $"{SyncPragma} {sql}";
                     value = mycommand.ExecuteScalar();
                 }
             }
+            Logger.Debug<SQLiteDatabase>($"{Start.Elapsed}");
             return value;
         }
 
@@ -352,7 +350,7 @@ namespace MonkeyCore2.Data
                 cnn.Open();
                 using (var mycommand = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = $"{sql}";
+                    mycommand.CommandText = $"{SyncPragma} {sql}";
 
                     try
                     {
@@ -377,16 +375,16 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// a dictionary of values
         /// </returns>
-        public virtual Dictionary<string, object> GetValueFromTable(string SQL)
+        public virtual Dictionary<string, object> GetValueFromTable(string sql)
         {
-            Logger.Debug<SQLiteDatabase>($"'{SQL}'");
+            Logger.Debug<SQLiteDatabase>($"'{sql}'");
             Dictionary<string, object> result = null;
             using (var cnn = new SQLiteConnection(dbConnection))
             {
                 cnn.Open();
                 using (var mycommand = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = SQL;
+                    mycommand.CommandText = $"{SyncPragma} {sql}";
                     using (var reader = mycommand.ExecuteReader())
                     {
                         result = new Dictionary<string, object>();
@@ -436,13 +434,13 @@ namespace MonkeyCore2.Data
 
             try
             {
-                string cmd = $"INSERT OR IGNORE into {table}({string.Join(",", columns.ToArray())}) VALUES ({string.Join(",", values.ToArray())})";
+                string cmd = $"INSERT OR IGNORE into {table} ({string.Join(", ", columns.ToArray())}) VALUES ({string.Join(", ", values.ToArray())})";
                 rowCount = ExecuteNonQuery(cmd);
             }
             catch (Exception ex)
             {
                 rowCount = -1;
-                Furcadia.Logging.Logger.Error(ex);
+                Logger.Error(ex);
             }
 
             return rowCount;
@@ -582,12 +580,11 @@ namespace MonkeyCore2.Data
 
             foreach (var val in data)
             {
-                vals.Add($"'{val.Key}'='{val.Value}'");
+                vals.Add($"[{val.Key}] = '{val.Value}'");
             }
-
+            string cmd = $"UPDATE {table} SET {string.Join(", ", vals.ToArray())} WHERE { where};";
             try
             {
-                string cmd = $"update {table} set {string.Join(",", vals.ToArray())} where { where};";
                 return ExecuteNonQuery(cmd);
             }
             catch (Exception ex)
@@ -666,14 +663,14 @@ namespace MonkeyCore2.Data
         private List<string> GetAllColumnName(string table)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}'");
-            string sql = $"{SyncPragma }SELECT * FROM { table}";
+            string sql = $"SELECT * FROM { table}";
             var columnNames = new List<string>();
             using (var SQLconnect = new SQLiteConnection(dbConnection))
             {
                 SQLconnect.Open();
                 using (var SQLcommand = SQLconnect.CreateCommand())
                 {
-                    SQLcommand.CommandText = sql;
+                    SQLcommand.CommandText = $"{SyncPragma} {sql}";
                     using (var sqlDataReader = SQLcommand.ExecuteReader())
                     {
                         for (int i = 0; i <= sqlDataReader.VisibleFieldCount - 1; i++)

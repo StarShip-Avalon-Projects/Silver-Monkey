@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace BotSession
+namespace Engine.BotSession
 {
     /// <summary>
     /// MonkeySpeak Engine settings

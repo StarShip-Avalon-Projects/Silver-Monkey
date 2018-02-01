@@ -204,7 +204,7 @@
       <ComponentRef Id="MahApps.Metro.IconPacks.Material" />
       <ComponentRef Id="MahApps.Metro.IconPacks.Modern" />
       <ComponentRef Id="System.Windows.Interactivity" />
-      <ComponentRef Id="System.ValueTuple" />
+      <!--   <ComponentRef Id="System.ValueTuple" /> -->
       <ComponentRef Id="Xceed.Wpf.AvalonDock.dll" />
       <ComponentRef Id="Xceed.Wpf.AvalonDock.Themes.Metro" />
       <ComponentRef Id="Xceed.Wpf.AvalonDock.Themes.VS2010" />
@@ -270,9 +270,9 @@
       <Component Id="Octokit" Guid="{b080ec40-816a-48bc-be06-a459c8c6332f}">
         <File Id="Octokit.dll" Source="$(var.SilverMonkey2.TargetDir)Octokit.dll" KeyPath="no" Checksum="yes" />
       </Component>
-      <Component Id="System.ValueTuple" Guid="{9b97c1f1-ccae-4d08-82fd-d215ac8bf6e5}">
+      <!--  <Component Id="System.ValueTuple" Guid="{9b97c1f1-ccae-4d08-82fd-d215ac8bf6e5}">
         <File Id="System.ValueTuple.dll" Source="$(var.SilverMonkey2.TargetDir)System.ValueTuple.dll" KeyPath="no" Checksum="yes" />
-      </Component>
+      </Component> -->
       <Component Id="System.Windows.Interactivity" Guid="{f220239b-a3bd-4e38-9c9d-0bac9daf8f61}">
         <File Id="System.Windows.Interactivity.dll" Source="$(var.SilverMonkey2.TargetDir)System.Windows.Interactivity.dll" KeyPath="no" Checksum="yes" />
       </Component>

@@ -1,8 +1,6 @@
-﻿Imports Furcadia.Net
-Imports Furcadia.Net.Utils.ServerParser
-Imports Engine.Libraries
+﻿Imports Libraries
 
-Namespace Engine.Libraries
+Namespace Libraries
 
     ''' <summary>
     ''' Furcadia Popup Windows

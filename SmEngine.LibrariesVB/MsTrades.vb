@@ -1,8 +1,7 @@
-﻿Imports Monkeyspeak
+﻿Imports Libraries
+Imports Monkeyspeak
 
-Imports Engine.Libraries
-
-Namespace Engine.Libraries
+Namespace Libraries
 
     ''' <summary>
     ''' Monkey Speak for Furcadia's in-game trade system

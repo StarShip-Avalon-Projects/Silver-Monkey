@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using System.IO;
 using System;
-using BotSession;
+using Engine.BotSession;
 using MonkeyCore2.IO;
 using System.Text.RegularExpressions;
 
-namespace Engine
+namespace Engine.BotSession
 {
     /// <summary>
     /// Silver Monkey's MonkeySpeak Engine with our Customizations

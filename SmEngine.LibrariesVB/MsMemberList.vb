@@ -1,12 +1,13 @@
 ﻿Imports System.IO
-Imports Engine.Libraries.MsLibHelper
+Imports Libraries.MsLibHelper
 Imports MonkeyCore2.IO
 Imports Monkeyspeak
 Imports Monkeyspeak.Logging
 
 Imports Engine.Libraries
+Imports Libraries
 
-Namespace Engine.Libraries
+Namespace Libraries
 
     ''' <summary>
     ''' Dream Member List management

@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.Serialization
 Imports System.Text
 
-Namespace Web
+Namespace Libraries.Web
 
     ''' <summary>
     '''
@@ -42,7 +42,7 @@ Namespace Web
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder()
             sb.AppendLine(WebObject.ErrMsg)
-            sb.AppendLine("Status Code"+ WebObject.Status.ToString())
+            sb.AppendLine("Status Code" + WebObject.Status.ToString())
             sb.AppendLine(WebObject.WebPage)
             Return sb.ToString()
 

@@ -1,9 +1,7 @@
 ﻿Imports System.Diagnostics
 Imports System.Drawing
 Imports System.Windows.Forms
-Imports BotSession
-Imports IO
-Imports MonkeyCore
+Imports Engine.BotSession
 
 Public Class NewBott
 

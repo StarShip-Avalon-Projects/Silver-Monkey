@@ -1,10 +1,11 @@
 ﻿Imports MonkeyCore.Controls.NativeMethods
 Imports MonkeyCore.Utils
 Imports Monkeyspeak
-Imports Engine.Libraries
-Imports Engine.Libraries.MsLibHelper
+Imports Libraries.MsLibHelper
 
-Namespace Engine.Libraries
+Imports Libraries
+
+Namespace Libraries
 
     ''' <summary>
     ''' Bot to Bot Messaging using Window Calls
