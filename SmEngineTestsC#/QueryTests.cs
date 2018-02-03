@@ -21,11 +21,14 @@ namespace SmEngineTests
         public const string GeroSummonBot = "<font color='query'><name shortname='gerolkae'>Gerolkae</name> asks you to join their company in <b>the dream of Silver|Monkey</b>. To accept the request, <a href='command://join'>click here</a> or type `join and press &lt;enter&gt;.</font>";
         public const string GeroCuddleBot = "<font color='query'><name shortname='gerolkae'>Gerolkae</name> asks you to cuddle with them. To accept the request, <a href='command://cuddle'>click here</a> or type `cuddle and press &lt;enter&gt;.</font>";
 
-        private Bot Proxy;
+        private static Bot Proxy;
 
         public string SettingsFile { get; private set; }
         public string BackupSettingsFile { get; private set; }
         public BotOptions Options { get; private set; }
+
+        private void Startup()
+        { }
 
         [SetUp]
         public void Initialize()
@@ -91,7 +94,8 @@ namespace SmEngineTests
         public void ChannelIsQueryOfType(string ChannelCode, string ExpectedValue)
         {
             BotHasConnected_StandAlone();
-            HaltFor(DreamEntranceDelay);
+            if (!Proxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
 
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
             {
@@ -111,7 +115,8 @@ namespace SmEngineTests
         public void QueryMonkeySpeakVariablesAreSet()
         {
             BotHasConnected_StandAlone();
-            HaltFor(DreamEntranceDelay);
+            if (!Proxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
 
             Assert.Multiple(() =>
             {
@@ -140,7 +145,7 @@ namespace SmEngineTests
             BotHaseDisconnected_Standalone();
         }
 
-        public void BotHasConnected_StandAlone(bool StandAlone = false)
+        public void BotHasConnected_StandAlone(bool StandAlone = true)
         {
             Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
@@ -185,7 +190,8 @@ namespace SmEngineTests
         public void BotHaseDisconnected_Standalone(bool StandAlone = false)
         {
             Proxy.DisconnectServerAndClientStreams();
-            HaltFor(CleanupDelayTime);
+            if (!Proxy.StandAlone)
+                HaltFor(CleanupDelayTime);
 
             Assert.Multiple(() =>
             {

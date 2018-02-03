@@ -64,14 +64,15 @@ namespace SmEngineTests
             Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
         }
 
-        [Test]
-        public void TestPsCharacterList()
+        [TestCase(true)]
+        //  [TestCase(false)]
+        public void TestPsCharacterList_StandAlone(bool Standalone)
         {
-            var Standalone = false;
             BotHasConnected_StandAlone(Standalone);
-            HaltFor(DreamEntranceDelay);
+            if (!Proxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
 
-            Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
+            Proxy.ProcessServerChannelData += (sender, Args) =>
             {
                 var ServeObject = (ChannelObject)sender;
                 Assert.That(ServeObject.Player.Message,
@@ -80,26 +81,28 @@ namespace SmEngineTests
 
             Proxy.ParseServerChannel(PsGetCharacters, false);
 
-            DisconnectTests(Standalone);
+            DisconnectTests();
         }
 
-        public void BaseTest(bool Standalone)
-        {
-            BotHasConnected_StandAlone(Standalone);
-            HaltFor(DreamEntranceDelay);
-            //
-            Assert.Multiple(() =>
-            {
-            });
+        // Template for recogmended tests
+        //public void BaseTest(bool Standalone)
+        //{
+        //    BotHasConnected_StandAlone(Standalone);
+        //    HaltFor(DreamEntranceDelay);
+        //    //
+        //    Assert.Multiple(() =>
+        //    {
+        //    });
 
-            DisconnectTests(Standalone);
-        }
+        //    DisconnectTests();
+        //}
 
-        public void BotHasConnected_StandAlone(bool StandAlone = false)
+        public void BotHasConnected_StandAlone(bool StandAlone = true)
         {
             Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
 
+            // Gice the Furcadia Client a chance to fall in line
             HaltFor(ConnectWaitTime);
 
             Assert.Multiple(() =>
@@ -113,7 +116,7 @@ namespace SmEngineTests
                 if (StandAlone)
                 {
                     Assert.That(Proxy.ClientStatus,
-                        Is.EqualTo(ConnectionPhase.Connected),
+                        Is.EqualTo(ConnectionPhase.Disconnected),
                          $"Proxy.ClientStatus {Proxy.ClientStatus}");
                     Assert.That(Proxy.IsClientSocketConnected,
                         Is.EqualTo(false),
@@ -137,10 +140,11 @@ namespace SmEngineTests
             });
         }
 
-        public void DisconnectTests(bool StandAlone = false)
+        public void DisconnectTests()
         {
             Proxy.DisconnectServerAndClientStreams();
-            HaltFor(CleanupDelayTime);
+            if (!Proxy.StandAlone)
+                HaltFor(CleanupDelayTime);
 
             Assert.Multiple(() =>
             {

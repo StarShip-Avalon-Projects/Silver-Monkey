@@ -1,5 +1,8 @@
-﻿using Monkeyspeak;
+﻿using System;
+using System.Text.RegularExpressions;
+using Monkeyspeak;
 using Monkeyspeak.Logging;
+using static Furcadia.Text.FurcadiaMarkup;
 
 namespace Libraries
 {
@@ -83,11 +86,11 @@ namespace Libraries
                 " and the bot is not the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
-                r => DreamInfo.DreamOwner.ToFurcadiaShortName() == r.ReadString().ToLower(),
+                r => AndFurreNamedIsDreamOwner(r),
                 " and the furre named {..} is the Dream owner,");
 
             Add(TriggerCategory.Condition,
-                r => DreamInfo.DreamOwner.ToFurcadiaShortName() != r.ReadString().ToLower(),
+                r => !AndFurreNamedIsDreamOwner(r),
                 " and the furre named {..} is not the Dream owner,");
 
             Add(TriggerCategory.Condition,
@@ -95,7 +98,7 @@ namespace Libraries
               "and the Dream Name is {..},");
 
             Add(TriggerCategory.Condition,
-                r => DreamNameIsNot(r),
+                r => !DreamNameIs(r),
                 "and the Dream Name is not {..},");
 
             Add(TriggerCategory.Condition,
@@ -103,7 +106,7 @@ namespace Libraries
                 "and the triggering furre is the Dream owner,");
 
             Add(TriggerCategory.Condition,
-                r => TriggeringFurreIsNotDreamOwner(r),
+                r => !TriggeringFurreIsDreamOwner(r),
                 "and the triggering furre is not the Dream owner,");
 
             Add(TriggerCategory.Condition,
@@ -112,11 +115,11 @@ namespace Libraries
                  "and the bot has share control of the Dream or is the Dream owner,");
 
             Add(TriggerCategory.Condition,
-                (r) => ParentBotSession.HasShare,
+               r => ParentBotSession.HasShare,
              "and the bot has share control of the Dream,");
 
             Add(TriggerCategory.Condition,
-                (r) => !ParentBotSession.HasShare,
+               r => !ParentBotSession.HasShare,
              "and the bot doesn't have share control in the Dream,");
 
             Add(TriggerCategory.Effect,
@@ -134,6 +137,12 @@ namespace Libraries
             Add(TriggerCategory.Effect,
               r => ShareFurreNamed(r),
               "give share to the furre named {..} if they're in the Dream right now.");
+        }
+
+        private bool AndFurreNamedIsDreamOwner(TriggerReader reader)
+        {
+            return DreamInfo.DreamOwner.ToFurcadiaShortName()
+                != reader.ReadString().ToLower();
         }
 
         /// <summary>
@@ -156,12 +165,25 @@ namespace Libraries
         private bool DreamNameIs(TriggerReader reader)
         {
             ReadDreamParams(reader);
-            return DreamInfo.Name.ToLower() == reader.ReadString().ToLower();
-        }
+            string dreamOwner;
+            string title;
 
-        private bool DreamNameIsNot(TriggerReader reader)
-        {
-            return !DreamNameIs(reader);
+            var url = reader.ReadString().ToLower().Replace("furc://", "").TrimEnd('/');
+            var UrlMatch = URLRegex.Match($"furc://{url}/");
+
+            if (string.IsNullOrWhiteSpace(UrlMatch.Groups[2].Value))
+            {
+                dreamOwner = UrlMatch.Groups[1].Value;
+                return DreamInfo.Name.ToLower() == dreamOwner.ToFurcadiaShortName();
+            }
+            if (string.IsNullOrWhiteSpace(UrlMatch.Groups[1].Value))
+            {
+                return DreamInfo.Name.ToLower() == UrlMatch.Groups[2].Value.ToFurcadiaShortName();
+            }
+
+            dreamOwner = UrlMatch.Groups[1].Value;
+            title = UrlMatch.Groups[3].Value;
+            return DreamInfo.Name.ToLower() == $"{dreamOwner.ToFurcadiaShortName()}:{title.ToFurcadiaShortName()}";
         }
 
         private bool ShareFurreNamed(TriggerReader reader)
@@ -184,11 +206,6 @@ namespace Libraries
         private bool TriggeringFurreIsDreamOwner(TriggerReader reader)
         {
             return Player.ShortName == DreamInfo.DreamOwner.ToFurcadiaShortName();
-        }
-
-        private bool TriggeringFurreIsNotDreamOwner(TriggerReader reader)
-        {
-            return !TriggeringFurreIsDreamOwner(reader);
         }
 
         private bool UnshareFurreNamed(TriggerReader reader)

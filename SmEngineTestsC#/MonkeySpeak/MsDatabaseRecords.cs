@@ -12,7 +12,7 @@ using static SmEngineTests.Utilities;
 namespace SmEngineTests.MonkeySpeak
 {
     [TestFixture]
-    public class MsDatabaseRecords
+    public class MsDatabaseRecords_Alt_AtlantisFacility
     {
         #region Private Fields
 
@@ -30,7 +30,7 @@ namespace SmEngineTests.MonkeySpeak
 
         #region Public Methods
 
-        public void BotHasConnected_StandAlone(bool StandAlone = false)
+        public void BotHasConnected_StandAlone(bool StandAlone = true)
         {
             Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
@@ -72,10 +72,11 @@ namespace SmEngineTests.MonkeySpeak
             });
         }
 
-        public void BotHaseDisconnected_Standalone(bool StandAlone = false)
+        public void BotHaseDisconnected()
         {
             Proxy.DisconnectServerAndClientStreams();
-            HaltFor(CleanupDelayTime);
+            if (!Proxy.StandAlone)
+                HaltFor(CleanupDelayTime);
 
             Assert.Multiple(() =>
             {
@@ -108,11 +109,13 @@ namespace SmEngineTests.MonkeySpeak
             Options = null;
         }
 
-        [Test]
-        public void ConstanVariablesAreSet()
+        [TestCase(true)]
+        // [TestCase(false)]
+        public void ConstanVariablesAreSet(bool StandAlone)
         {
-            BotHasConnected_StandAlone();
-            HaltFor(DreamEntranceDelay);
+            BotHasConnected_StandAlone(StandAlone);
+            if (!Proxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
 
             Assert.Multiple(() =>
             {
@@ -175,10 +178,11 @@ namespace SmEngineTests.MonkeySpeak
             DisconnectTests();
         }
 
-        public void DisconnectTests(bool StandAlone = false)
+        public void DisconnectTests()
         {
             Proxy.DisconnectServerAndClientStreams();
-            HaltFor(CleanupDelayTime);
+            if (!Proxy.StandAlone)
+                HaltFor(CleanupDelayTime);
 
             Assert.Multiple(() =>
             {
@@ -201,11 +205,12 @@ namespace SmEngineTests.MonkeySpeak
         }
 
         [TestCase(true)]
-        [TestCase(false)]
+        //  [TestCase(false)]
         public void DreamInfoIsSet_StandAlone(bool StandAlone)
         {
             BotHasConnected_StandAlone(StandAlone);
-            HaltFor(DreamEntranceDelay);
+            if (!Proxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
 
             Assert.Multiple(() =>
             {
@@ -231,13 +236,13 @@ namespace SmEngineTests.MonkeySpeak
                 else
                 {
                     Assert.That(Proxy.Dream.DreamOwner,
-                        !Is.EqualTo(null),
+                        Is.EqualTo(null),
                         $"Dream DreamOwner is '{Proxy.Dream.DreamOwner}'");
                     //private dreams most likley to be personal or ddream packs
                     // Dream Owner shoule be set
                     var Var = Proxy.MSpage.GetVariable(DreamOwnerVariable);
                     Assert.That(Var.Value,
-                        !Is.EqualTo(null),
+                        Is.EqualTo(null),
                         $"Constant Variable: '{Var}' ");
                 }
                 Assert.That(Proxy.BotController,
@@ -258,7 +263,7 @@ namespace SmEngineTests.MonkeySpeak
                     Is.EqualTo(0),
                     $"BanishList is '{Proxy.BanishList.Count}'");
             });
-            DisconnectTests(StandAlone);
+            DisconnectTests();
         }
 
         [SetUp]

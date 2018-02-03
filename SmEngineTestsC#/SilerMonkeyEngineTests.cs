@@ -13,7 +13,7 @@ using static SmEngineTests.Utilities;
 namespace SmEngineTests
 {
     [TestFixture]
-    public class SilerMonkeyEngineTests
+    public class SilerMonkeyEngineTests_Alt_DBugger
     {
         private const string GeroSayPing = "<name shortname='gerolkae'>Gerolkae</name>: ping";
         private const string GeroWhisperCunchatize = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"crunchatize\" to you. ]</font>";
@@ -42,7 +42,7 @@ namespace SmEngineTests
         public string BackupSettingsFile { get; private set; }
         public BotOptions options { get; private set; }
 
-        public SilerMonkeyEngineTests()
+        public SilerMonkeyEngineTests_Alt_DBugger()
         {
             SettingsFile = Path.Combine(Paths.FurcadiaSettingsPath, @"settings.ini");
             BackupSettingsFile = Path.Combine(Paths.FurcadiaSettingsPath, @"BackupSettings.ini");
@@ -162,7 +162,8 @@ namespace SmEngineTests
         public void ExpectedChannelNameIs(string ChannelCode, string ExpectedValue)
         {
             BotHasConnected_StandAlone();
-            HaltFor(DreamEntranceDelay);
+            if (!Proxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
 
             Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
             {
@@ -176,14 +177,16 @@ namespace SmEngineTests
         }
 
         [TestCase(true)]
-        [TestCase(false)]
+        // [TestCase(false)]
         public void DownLoadDreamAndCheckVariables(bool StandAlone)
         {
             BotHasConnected_StandAlone(StandAlone);
-            HaltFor(DreamEntranceDelay);
+            if (!Proxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
 
             Proxy.SendFormattedTextToServer("`fdl furc://silvermonkey/");
-            HaltFor(DreamEntranceDelay);
+            if (!Proxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
             Assert.Multiple(() =>
             {
                 var Var = Proxy.MSpage.GetVariable(DreamNameVariable);
@@ -203,11 +206,13 @@ namespace SmEngineTests
             });
         }
 
-        [Test]
-        public void ConstanVariablesAreSet()
+        [TestCase(true)]
+        // [TestCase(false)]
+        public void ConstanVariablesAreSet(bool StandAlone)
         {
-            BotHasConnected_StandAlone();
-            HaltFor(DreamEntranceDelay);
+            BotHasConnected_StandAlone(StandAlone);
+            if (!Proxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
 
             Assert.Multiple(() =>
             {
@@ -275,16 +280,18 @@ namespace SmEngineTests
         public void DreamInfoIsSet_StandAlone(bool StandAlone)
         {
             BotHasConnected_StandAlone(StandAlone);
-            HaltFor(DreamEntranceDelay);
-
+            if (!Proxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
             Assert.Multiple(() =>
             {
                 Assert.That(Proxy.InDream,
                     Is.EqualTo(true),
                     "Bot has not joined a dream");
+
                 Assert.That(Proxy.Dream.Rating,
                     !Is.EqualTo(null),
                     $"Dream Rating is '{Proxy.Dream.Rating}'");
+
                 Assert.That(Proxy.Dream.Name,
                     !Is.EqualTo(null),
                     $"Dream Name is '{Proxy.Dream.Name}'");
@@ -328,7 +335,7 @@ namespace SmEngineTests
                     Is.EqualTo(0),
                     $"BanishList is '{Proxy.BanishList.Count}'");
             });
-            DisconnectTests(StandAlone);
+            DisconnectTests();
         }
 
         [TestCase(GeroShout, "ping")]
@@ -349,11 +356,10 @@ namespace SmEngineTests
             DisconnectTests();
         }
 
-        public void BotHasConnected_StandAlone(bool StandAlone = false)
+        public void BotHasConnected_StandAlone(bool StandAlone = true)
         {
             Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
-
             HaltFor(ConnectWaitTime);
 
             Assert.Multiple(() =>
@@ -391,10 +397,14 @@ namespace SmEngineTests
             });
         }
 
-        public void DisconnectTests(bool StandAlone = false)
+        public void DisconnectTests()
         {
             Proxy.DisconnectServerAndClientStreams();
-            HaltFor(CleanupDelayTime);
+
+            // If we're not using the Client, Why delay?
+            // We should be handling it our selves!!!
+            if (!Proxy.StandAlone)
+                HaltFor(CleanupDelayTime);
 
             Assert.Multiple(() =>
             {

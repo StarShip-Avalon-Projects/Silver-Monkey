@@ -1,4 +1,5 @@
 ﻿using Engine.Libraries;
+using Furcadia.Net;
 using Monkeyspeak;
 using System.Diagnostics;
 using System.Linq;
@@ -137,7 +138,7 @@ namespace Libraries
         private bool StandAloneMode(TriggerReader reader)
         {
             ParentBotSession.StandAlone = true;
-            ParentBotSession.CloseFurcadiaClient();
+            NetProxy.CloseFurcadiaClient();
             return true;
         }
 
