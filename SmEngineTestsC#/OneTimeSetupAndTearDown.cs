@@ -1,8 +1,8 @@
-﻿using Monkeyspeak.Logging;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using static SmEngineTests.Utilities;
-using Logging = Furcadia.Logging;
+using FurcLog = Furcadia.Logging;
+using MsLog = Monkeyspeak.Logging;
 
 namespace SmEngineTests
 {

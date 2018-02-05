@@ -146,6 +146,19 @@ namespace Engine.BotSession
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether The Monkey
+        /// Speak engine is enabled.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [engine enable]; otherwise, <c>false</c>.
+        /// </value>
+        public bool EngineEnable
+        {
+            get => MsEngineOptions.IsEnabled;
+            set => MsEngineOptions.IsEnabled = value;
+        }
+
         #endregion Public Properties
 
         #region Public Methods
@@ -364,12 +377,11 @@ namespace Engine.BotSession
 
         private async void OnParseSererInstructionAsync(object sender, ParseServerArgs e)
         {
-            CancellationToken cancel = new CancellationTokenSource(800).Token;
-
-            if (MSpage == null)
+            if (MSpage == null || !EngineEnable)
             {
                 return;
             }
+            CancellationToken cancel = new CancellationTokenSource(800).Token;
 
             try
             {
@@ -433,7 +445,7 @@ namespace Engine.BotSession
         private async void OnServerChannel(object sender, ParseChannelArgs Args)
         {
             CancellationToken cancel = new CancellationTokenSource(TimeSpan.FromSeconds(4)).Token;
-            if (MSpage == null || !MsEngineOptions.IsEnabled)
+            if (MSpage == null || !EngineEnable)
             {
                 return;
             }
@@ -539,9 +551,8 @@ namespace Engine.BotSession
                         // (0:48) When anyone requests to cuddle with the bot.
                         // (0:49) When a furre named {..} requests to cuddle with the bot,
                         // (0:50) When the bot see a query (lead, follow summon, join, cuddle),
-                        Match QueryMatch = QueryCommand.Match(data);
                         await MSpage.ExecuteAsync(new int[] { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 },
-                             cancel, Furr, $"{ QueryMatch.Groups[6].Value} { QueryMatch.Groups[7].Value}");
+                            cancel, sender, Furr);
                         return;
 
                     case "banish":
@@ -682,7 +693,7 @@ namespace Engine.BotSession
 
         private async void OnServerStatusChanged(object Sender, NetServerEventArgs e)
         {
-            if (MSpage == null) return;
+            if (MSpage == null || !EngineEnable) return;
             CancellationToken cancel = new CancellationTokenSource(800).Token;
             if (!MsEngineOptions.IsEnabled)
             {

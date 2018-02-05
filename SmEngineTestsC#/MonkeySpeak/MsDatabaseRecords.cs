@@ -1,6 +1,7 @@
 ﻿using Engine.BotSession;
 using Furcadia.Logging;
 using Furcadia.Net;
+using Furcadia.Net.Utils.ServerParser;
 using MonkeyCore2.IO;
 using NUnit.Framework;
 using System;
@@ -72,35 +73,10 @@ namespace SmEngineTests.MonkeySpeak
             });
         }
 
-        public void BotHaseDisconnected()
-        {
-            Proxy.DisconnectServerAndClientStreams();
-            if (!Proxy.StandAlone)
-                HaltFor(CleanupDelayTime);
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(Proxy.ServerStatus,
-                     Is.EqualTo(ConnectionPhase.Disconnected),
-                    $"Proxy.ServerStatus {Proxy.ServerStatus}");
-                Assert.That(Proxy.IsServerSocketConnected,
-                     Is.EqualTo(false),
-                    $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
-                Assert.That(Proxy.ClientStatus,
-                     Is.EqualTo(ConnectionPhase.Disconnected),
-                     $"Proxy.ClientStatus {Proxy.ClientStatus}");
-                Assert.That(Proxy.IsClientSocketConnected,
-                     Is.EqualTo(false),
-                     $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                Assert.That(Proxy.FurcadiaClientIsRunning,
-                     Is.EqualTo(false),
-                    $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
-            });
-        }
-
-        [TearDown]
+        [OneTimeTearDown]
         public void Cleanup()
         {
+            DisconnectTests();
             Proxy.ClientData2 -= (data) => Proxy.SendToServer(data);
             Proxy.ServerData2 -= (data) => Proxy.SendToClient(data);
             Proxy.Error -= (e, o) => Logger.Error($"{e} {o}");
@@ -109,164 +85,276 @@ namespace SmEngineTests.MonkeySpeak
             Options = null;
         }
 
-        [TestCase(true)]
-        // [TestCase(false)]
-        public void ConstanVariablesAreSet(bool StandAlone)
+        [TestCase("furc://furrabiannights/", "furrabiannights")]
+        [TestCase("furc://theshoddyribbon:murdermysteryhotelwip/", "The Shoddy Ribbon", "Murder Mystery Hotel (WIP)")]
+        [TestCase("furc://silvermonkey:stargatebase/", "SilverMonkey", "Stargate Base")]
+        [TestCase("furc://imaginarium/", "imaginarium")]
+        [TestCase("furc://vinca/", "vinca")]
+        [Author("Gerolkae")]
+        public void ConstanVariablesAreSet(string DreamUrl, string DreamOwner, string DreamTitle = null)
         {
-            BotHasConnected_StandAlone(StandAlone);
-            if (!Proxy.StandAlone)
-                HaltFor(DreamEntranceDelay);
-
-            Assert.Multiple(() =>
+            Proxy.ProcessServerInstruction += (data, handled) =>
             {
-                var Var = Proxy.MSpage.GetVariable(TriggeringFurreNameVariable);
-                Assert.That(Var.Value,
-                    !Is.EqualTo(null),
-                    $"Constant Variable: '{Var}' ");
-                Assert.That(Var.IsConstant,
-                    Is.EqualTo(true),
-                    $"Constant Variable: '{Var}' ");
+                if (data is DreamBookmark)
+                {
+                    Assert.Multiple(() =>
+                    {
+                        var Var = Proxy.MSpage.GetVariable(TriggeringFurreNameVariable);
+                        Assert.That(Var.Value,
+                            !Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
 
-                Var = Proxy.MSpage.GetVariable(TriggeringFurreShortNameVariable);
-                Assert.That(Var.Value,
-                    !Is.EqualTo(null),
-                    $"Constant Variable: '{Var}' ");
-                Assert.That(Var.IsConstant,
-                    Is.EqualTo(true),
-                    $"Constant Variable: '{Var}' ");
+                        Var = Proxy.MSpage.GetVariable(TriggeringFurreShortNameVariable);
+                        Assert.That(Var.Value,
+                            !Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
 
-                Var = Proxy.MSpage.GetVariable(BotControllerVariable);
-                Assert.That(Var.Value,
-                    !Is.EqualTo(null),
-                    $"Constant Variable: '{Var}' ");
-                Assert.That(Var.IsConstant,
-                    Is.EqualTo(true),
-                    $"Constant Variable: '{Var}' ");
+                        Var = Proxy.MSpage.GetVariable(BotControllerVariable);
+                        Assert.That(Var.Value,
+                            !Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
 
-                Var = Proxy.MSpage.GetVariable(BotNameVariable);
-                Assert.That(Var.Value,
-                    !Is.EqualTo(null),
-                    $"Constant Variable: '{Var}' ");
-                Assert.That(Var.IsConstant,
-                    Is.EqualTo(true),
-                    $"Constant Variable: '{Var}' ");
+                        Var = Proxy.MSpage.GetVariable(BotNameVariable);
+                        Assert.That(Var.Value,
+                            !Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
 
-                Var = Proxy.MSpage.GetVariable(DreamNameVariable);
-                Assert.That(Var.Value,
-                    !Is.EqualTo(null),
-                    $"Constant Variable: '{Var}' ");
-                Assert.That(Var.IsConstant,
-                    Is.EqualTo(true),
-                    $"Constant Variable: '{Var}' ");
+                        Var = Proxy.MSpage.GetVariable(DreamNameVariable);
+                        Assert.That(Var.Value,
+                            !Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
 
-                Var = Proxy.MSpage.GetVariable(BanishListVariable);
-                Assert.That(Var.Value,
-                    Is.EqualTo(null),
-                    $"Constant Variable: '{Var}' ");
-                Assert.That(Var.IsConstant,
-                    Is.EqualTo(true),
-                    $"Constant Variable: '{Var}' ");
+                        Var = Proxy.MSpage.GetVariable(BanishListVariable);
+                        Assert.That(Var.Value,
+                            Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
 
-                Var = Proxy.MSpage.GetVariable(BanishNameVariable);
-                Assert.That(Var.Value,
-                    Is.EqualTo(null),
-                    $"Constant Variable: '{Var}' ");
-                Assert.That(Var.IsConstant,
-                    Is.EqualTo(true),
-                    $"Constant Variable: '{Var}' ");
-            });
-            DisconnectTests();
+                        Var = Proxy.MSpage.GetVariable(BanishNameVariable);
+                        Assert.That(Var.Value,
+                            Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
+                    });
+                }
+            };
+
+            Proxy.SendFormattedTextToServer($"`fdl {DreamUrl}");
+
+            Proxy.ProcessServerInstruction -= (data, handled) =>
+            {
+                if (data is DreamBookmark)
+                {
+                    Assert.Multiple(() =>
+                    {
+                        var Var = Proxy.MSpage.GetVariable(TriggeringFurreNameVariable);
+                        Assert.That(Var.Value,
+                            !Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
+
+                        Var = Proxy.MSpage.GetVariable(TriggeringFurreShortNameVariable);
+                        Assert.That(Var.Value,
+                            !Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
+
+                        Var = Proxy.MSpage.GetVariable(BotControllerVariable);
+                        Assert.That(Var.Value,
+                            !Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
+
+                        Var = Proxy.MSpage.GetVariable(BotNameVariable);
+                        Assert.That(Var.Value,
+                            !Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
+
+                        Var = Proxy.MSpage.GetVariable(DreamNameVariable);
+                        Assert.That(Var.Value,
+                            !Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
+
+                        Var = Proxy.MSpage.GetVariable(BanishListVariable);
+                        Assert.That(Var.Value,
+                            Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
+
+                        Var = Proxy.MSpage.GetVariable(BanishNameVariable);
+                        Assert.That(Var.Value,
+                            Is.EqualTo(null),
+                            $"Constant Variable: '{Var}' ");
+                        Assert.That(Var.IsConstant,
+                            Is.EqualTo(true),
+                            $"Constant Variable: '{Var}' ");
+                    });
+                }
+            };
         }
 
         public void DisconnectTests()
         {
+            Proxy.ServerStatusChanged += (sender, e) =>
+            {
+                if (e.ConnectPhase == ConnectionPhase.Disconnected)
+                {
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(Proxy.ServerStatus,
+                             Is.EqualTo(ConnectionPhase.Disconnected),
+                            $"Proxy.ServerStatus {Proxy.ServerStatus}");
+                        Assert.That(Proxy.IsServerSocketConnected,
+                             Is.EqualTo(false),
+                            $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
+                        Assert.That(Proxy.ClientStatus,
+                             Is.EqualTo(ConnectionPhase.Disconnected),
+                             $"Proxy.ClientStatus {Proxy.ClientStatus}");
+                        Assert.That(Proxy.IsClientSocketConnected,
+                             Is.EqualTo(false),
+                             $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
+                        Assert.That(Proxy.FurcadiaClientIsRunning,
+                             Is.EqualTo(false),
+                            $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+                    });
+                }
+            };
             Proxy.DisconnectServerAndClientStreams();
-            if (!Proxy.StandAlone)
-                HaltFor(CleanupDelayTime);
-
-            Assert.Multiple(() =>
+            Proxy.ServerStatusChanged -= (sender, e) =>
             {
-                Assert.That(Proxy.ServerStatus,
-                     Is.EqualTo(ConnectionPhase.Disconnected),
-                    $"Proxy.ServerStatus {Proxy.ServerStatus}");
-                Assert.That(Proxy.IsServerSocketConnected,
-                     Is.EqualTo(false),
-                    $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
-                Assert.That(Proxy.ClientStatus,
-                     Is.EqualTo(ConnectionPhase.Disconnected),
-                     $"Proxy.ClientStatus {Proxy.ClientStatus}");
-                Assert.That(Proxy.IsClientSocketConnected,
-                     Is.EqualTo(false),
-                     $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                Assert.That(Proxy.FurcadiaClientIsRunning,
-                     Is.EqualTo(false),
-                    $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
-            });
+                if (e.ConnectPhase == ConnectionPhase.Disconnected)
+                {
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(Proxy.ServerStatus,
+                             Is.EqualTo(ConnectionPhase.Disconnected),
+                            $"Proxy.ServerStatus {Proxy.ServerStatus}");
+                        Assert.That(Proxy.IsServerSocketConnected,
+                             Is.EqualTo(false),
+                            $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
+                        Assert.That(Proxy.ClientStatus,
+                             Is.EqualTo(ConnectionPhase.Disconnected),
+                             $"Proxy.ClientStatus {Proxy.ClientStatus}");
+                        Assert.That(Proxy.IsClientSocketConnected,
+                             Is.EqualTo(false),
+                             $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
+                        Assert.That(Proxy.FurcadiaClientIsRunning,
+                             Is.EqualTo(false),
+                            $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+                    });
+                }
+            };
         }
 
-        [TestCase(true)]
-        //  [TestCase(false)]
-        public void DreamInfoIsSet_StandAlone(bool StandAlone)
+        [Test]
+        public void DreamInfoIsSet()
         {
-            BotHasConnected_StandAlone(StandAlone);
-            if (!Proxy.StandAlone)
-                HaltFor(DreamEntranceDelay);
-
-            Assert.Multiple(() =>
+            Proxy.ProcessServerInstruction += (data, handled) =>
             {
-                Assert.That(Proxy.InDream,
-                    Is.EqualTo(true),
-                    "Bot has not joined a dream");
-                Assert.That(Proxy.Dream.Rating,
-                    !Is.EqualTo(null),
-                    $"Dream Rating is '{Proxy.Dream.Rating}'");
-                Assert.That(Proxy.Dream.Name,
-                    !Is.EqualTo(null),
-                    $"Dream Name is '{Proxy.Dream.Name}'");
-                if (Proxy.Dream.IsPermanent)
+                if (data is DreamBookmark)
                 {
-                    Assert.That(Proxy.Dream.DreamOwner,
-                        !Is.EqualTo(null),
-                        $"Dream DreamOwner is '{Proxy.Dream.DreamOwner}'");
-                    var Var = Proxy.MSpage.GetVariable(DreamOwnerVariable);
-                    Assert.That(Var.Value,
-                        !Is.EqualTo(null),
-                        $"Constant Variable: '{Var}' ");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(Proxy.InDream,
+                            Is.EqualTo(true),
+                            "Bot has not joined a dream");
+                        Assert.That(Proxy.Dream.Rating,
+                            !Is.EqualTo(null),
+                            $"Dream Rating is '{Proxy.Dream.Rating}'");
+                        Assert.That(Proxy.Dream.Name,
+                            !Is.EqualTo(null),
+                            $"Dream Name is '{Proxy.Dream.Name}'");
+
+                        Assert.That(Proxy.Dream.DreamOwner,
+                            !Is.EqualTo(null),
+                            $"Dream DreamOwner is '{Proxy.Dream.DreamOwner}'");
+
+                        Assert.That(Proxy.Dream.DreamUrl,
+                            !Is.EqualTo(null),
+                            $"Dream URL is '{Proxy.Dream.DreamUrl}'");
+                        Assert.That(string.IsNullOrWhiteSpace(Proxy.BanishName),
+                            $"BanishName is '{Proxy.BanishName}'");
+                        Assert.That(Proxy.BanishList,
+                            !Is.EqualTo(null),
+                            $"BanishList is '{Proxy.BanishList}'");
+                        Assert.That(Proxy.BanishList.Count,
+                            Is.EqualTo(0),
+                            $"BanishList is '{Proxy.BanishList.Count}'");
+                    });
                 }
-                else
+            };
+            Proxy.SendFormattedTextToServer("`fdl furc://SilverMonkey");
+
+            Proxy.ProcessServerInstruction -= (data, handled) =>
+            {
+                if (data is DreamBookmark)
                 {
-                    Assert.That(Proxy.Dream.DreamOwner,
-                        Is.EqualTo(null),
-                        $"Dream DreamOwner is '{Proxy.Dream.DreamOwner}'");
-                    //private dreams most likley to be personal or ddream packs
-                    // Dream Owner shoule be set
-                    var Var = Proxy.MSpage.GetVariable(DreamOwnerVariable);
-                    Assert.That(Var.Value,
-                        Is.EqualTo(null),
-                        $"Constant Variable: '{Var}' ");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(Proxy.InDream,
+                            Is.EqualTo(true),
+                            "Bot has not joined a dream");
+                        Assert.That(Proxy.Dream.Rating,
+                            !Is.EqualTo(null),
+                            $"Dream Rating is '{Proxy.Dream.Rating}'");
+                        Assert.That(Proxy.Dream.Name,
+                            !Is.EqualTo(null),
+                            $"Dream Name is '{Proxy.Dream.Name}'");
+
+                        Assert.That(Proxy.Dream.DreamOwner,
+                            !Is.EqualTo(null),
+                            $"Dream DreamOwner is '{Proxy.Dream.DreamOwner}'");
+
+                        Assert.That(Proxy.Dream.DreamUrl,
+                            !Is.EqualTo(null),
+                            $"Dream URL is '{Proxy.Dream.DreamUrl}'");
+                        Assert.That(string.IsNullOrWhiteSpace(Proxy.BanishName),
+                            $"BanishName is '{Proxy.BanishName}'");
+                        Assert.That(Proxy.BanishList,
+                            !Is.EqualTo(null),
+                            $"BanishList is '{Proxy.BanishList}'");
+                        Assert.That(Proxy.BanishList.Count,
+                            Is.EqualTo(0),
+                            $"BanishList is '{Proxy.BanishList.Count}'");
+                    });
                 }
-                Assert.That(Proxy.BotController,
-                    !Is.EqualTo(null),
-                    $"BotController is '{Proxy.BotController}'");
-                Assert.That(Proxy.Dream.URL,
-                    !Is.EqualTo(null),
-                    $"Dream URL is '{Proxy.Dream.URL}'");
-                //Assert.That(Proxy.Dream.Lines,
-                //    Is.GreaterThan(0),
-                //    $"DragonSpeak Lines {Proxy.Dream.Lines}");
-                Assert.That(string.IsNullOrWhiteSpace(Proxy.BanishName),
-                    $"BanishName is '{Proxy.BanishName}'");
-                Assert.That(Proxy.BanishList,
-                    !Is.EqualTo(null),
-                    $"BanishList is '{Proxy.BanishList}'");
-                Assert.That(Proxy.BanishList.Count,
-                    Is.EqualTo(0),
-                    $"BanishList is '{Proxy.BanishList.Count}'");
-            });
-            DisconnectTests();
+            };
         }
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Initialize()
         {
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -293,6 +381,7 @@ namespace SmEngineTests.MonkeySpeak
 
             Proxy = new Bot(Options);
             Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
+            BotHasConnected_StandAlone(Proxy.StandAlone);
         }
 
         #endregion Public Methods

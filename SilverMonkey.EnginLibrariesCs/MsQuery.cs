@@ -1,4 +1,5 @@
-﻿using Monkeyspeak;
+﻿using Furcadia.Net.Utils.ChannelObjects;
+using Monkeyspeak;
 using System.Linq;
 
 namespace Libraries
@@ -36,65 +37,65 @@ namespace Libraries
             Add(TriggerCategory.Cause,
                 r =>
                 ReadTriggeringFurreParams(r)
-                && "join their" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && QueryType.summon == r.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query,
                 "When anyone requests to summon the bot,");
 
             // (0:41) When a furre named {..} requests to summon the bot,
             Add(TriggerCategory.Cause,
                 r => NameIs(r)
-                && "join their" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && QueryType.summon == r.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query,
                 "When a furre named {..} requests to summon the bot,");
 
             // Join
             // (0:42) When anyone requests to join the bot,
             Add(TriggerCategory.Cause,
                r => ReadTriggeringFurreParams(r)
-               && "join your" == r.GetParametersOfType<string>().FirstOrDefault(),
+               && QueryType.join == r.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query,
                "When anyone requests to join the bot,");
 
             // (0:43) When a furre named {..} requests to join the bot,
             Add(TriggerCategory.Cause,
                 r => NameIs(r)
-                && "join your" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && QueryType.join == r.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query,
                 "When a furre named {..} requests to join the bot,");
 
             // Follow
             // (0:44) When anyone requests to follow the bot,
             Add(TriggerCategory.Cause,
                r => ReadTriggeringFurreParams(r)
-               && "follow you" == r.GetParametersOfType<string>().FirstOrDefault(),
+               && QueryType.follow == r.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query,
                "When anyone requests to follow the bot,");
 
             // (0:35) When a furre named {..} requests to follow the bot,
             Add(TriggerCategory.Cause,
                 r => NameIs(r)
-                && "follow you" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && QueryType.follow == r.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query,
                 "When a furre named {..} requests to follow the bot,");
             // Lead
 
             // (0:46) When anyone requests to lead the bot,
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r)
-                && "lead you" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && QueryType.lead == r.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query,
                 "When anyone requests to lead the bot,");
 
             // (0:47) When a furre named {..} requests to lead the bot,
             Add(TriggerCategory.Cause,
                 r => NameIs(r)
-                && "lead you" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && QueryType.lead == r.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query,
                 "When a furre named {..} requests to lead the bot,");
 
             // Cuddle
             // (0:48) When anyone requests to cuddle with the bot.
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r)
-                && "cuddle with" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && QueryType.cuddle == r.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query,
                 "When anyone requests to cuddle with the bot,");
 
             // (0:49) When a furre named {..} requests to cuddle with the bot,
             Add(TriggerCategory.Cause,
                 r => NameIs(r)
-                && "cuddle with" == r.GetParametersOfType<string>().FirstOrDefault(),
+                && QueryType.cuddle == r.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query,
                 "When a furre named {..} requests to cuddle with the bot,");
 
             // (0:50) When the bot see a query (lead, follow summon, join, cuddle),

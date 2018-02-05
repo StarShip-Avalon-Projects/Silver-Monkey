@@ -1,4 +1,5 @@
-﻿using Furcadia.Logging;
+﻿using FurcLog = Furcadia.Logging;
+using MsLog = Monkeyspeak.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,22 +14,23 @@ namespace SmEngineTests
         public const int ConnectWaitTime = 10;
         public const int DreamEntranceDelay = 10;
         public const int CleanupDelayTime = 5;
+        public const int OneTimeSetupDelay = 5;
 
         public static void SetLogger()
         {
-            Logger.InfoEnabled = true;
-            Logger.SuppressSpam = false;
-            Logger.ErrorEnabled = true;
-            Logger.WarningEnabled = true;
-            Logger.SingleThreaded = true;
+            MsLog.Logger.InfoEnabled = true;
+            MsLog.Logger.SuppressSpam = true;
+            MsLog.Logger.ErrorEnabled = true;
+            MsLog.Logger.WarningEnabled = true;
+            MsLog.Logger.SingleThreaded = true;
 
             //     Logger.LogOutput = new MultiLogOutput(new FileLogOutput(Level.Debug), new FileLogOutput(Level.Error));
 
-            Monkeyspeak.Logging.Logger.InfoEnabled = true;
-            Monkeyspeak.Logging.Logger.SuppressSpam = false;
-            Monkeyspeak.Logging.Logger.ErrorEnabled = true;
-            Monkeyspeak.Logging.Logger.WarningEnabled = true;
-            Monkeyspeak.Logging.Logger.SingleThreaded = true;
+            FurcLog.Logger.InfoEnabled = true;
+            FurcLog.Logger.SuppressSpam = true;
+            FurcLog.Logger.ErrorEnabled = true;
+            FurcLog.Logger.WarningEnabled = true;
+            FurcLog.Logger.SingleThreaded = true;
             //   Monkeyspeak.Logging.Logger.LogOutput = new Monkeyspeak.Logging.MultiLogOutput(new Monkeyspeak.Logging.FileLogOutput(Monkeyspeak.Logging.Level.Debug), new Monkeyspeak.Logging.FileLogOutput(Monkeyspeak.Logging.Level.Error));
         }
 

@@ -34,6 +34,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BotScriptTests\TurretTests_Alt_SilverMonkey.cs" />
     <Compile Include="MonkeySpeak\MonkeySpeakTests.cs" />
     <Compile Include="MonkeySpeak\MsDatabaseRecords.cs" />
     <Compile Include="OneTimeSetupAndTearDown.cs" />
@@ -41,6 +42,7 @@
     <Compile Include="QueryTests.cs" />
     <Compile Include="SilerMonkeyEngineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SilverMonkeyJoinDreamTests.cs" />
     <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MsDatabaseRecords.ms">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Turret Tests.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

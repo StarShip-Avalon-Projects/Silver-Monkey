@@ -3,6 +3,7 @@ using Furcadia.Net.Proxy;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using System.Linq;
+using MsLog = Monkeyspeak.Logging;
 using static Libraries.MsLibHelper;
 
 namespace Libraries
@@ -44,7 +45,10 @@ namespace Libraries
         /// <value>
         /// The connected furre.
         /// </value>
-        public static Furre ConnectedFurre { get; set; }
+        public static Furre ConnectedFurre
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Reference to the Main Bot Session for the bot
@@ -73,7 +77,7 @@ namespace Libraries
         /// Gets or sets the current dream information for the dream Silver Monkey is located in.
         /// </summary>
         /// <value>The dream information.</value>
-        public Dream DreamInfo
+        public static Dream DreamInfo
         {
             get { return _dream; }
             set { _dream = value; }
@@ -154,12 +158,12 @@ namespace Libraries
         {
             _args = args;
 
-            var bot = GetArgumet<ProxySession>();
+            var bot = GetArgumetsOfType<ProxySession>().FirstOrDefault();
             if (bot != null)
             {
                 ParentBotSession = bot;
                 DreamInfo = ParentBotSession.Dream;
-                Player = (Furre)ParentBotSession.Player;
+                Player = ParentBotSession.Player;
             }
         }
 
@@ -170,12 +174,9 @@ namespace Libraries
         /// <returns></returns>
         public bool IsConnectedCharacter(Furre Furr)
         {
-            if (ParentBotSession != null)
-            {
-                return ParentBotSession.IsConnectedCharacter(Furr);
-            }
-
-            return false;
+            if (Furr == null || ParentBotSession == null)
+                return false;
+            return ParentBotSession.IsConnectedCharacter(Furr);
         }
 
         /// <summary>
@@ -198,19 +199,19 @@ namespace Libraries
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">DreamInfo not set</exception>
-        public bool ReadDreamParams(TriggerReader reader)
+        public static bool ReadDreamParams(TriggerReader reader)
         {
-            bool ParamSet = false;
-
             Dream dreamInfo = reader.GetParametersOfType<Dream>().FirstOrDefault();
-            ParamSet = dreamInfo != null;
-            if (ParamSet)
+            if (dreamInfo == null)
+                return false;
+
+            if (dreamInfo != DreamInfo)
             {
                 DreamInfo = dreamInfo;
                 UpdateCurrentDreamVariables(DreamInfo, reader.Page);
             }
 
-            return ParamSet;
+            return true;
         }
 
         /// <summary>
@@ -218,12 +219,14 @@ namespace Libraries
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
-        public bool ReadTriggeringFurreParams(TriggerReader reader)
+        public static bool ReadTriggeringFurreParams(TriggerReader reader)
         {
             bool ParamSet = false;
 
             Furre ActiveFurre = reader.GetParametersOfType<Furre>().FirstOrDefault();
-            if (ActiveFurre != null)
+            if (ActiveFurre == null)
+                return ParamSet;
+            if (ActiveFurre != Player)
             {
                 Player = ActiveFurre;
                 if (ActiveFurre.FurreID != -1 || ActiveFurre.ShortName != "unknown")
@@ -284,7 +287,7 @@ namespace Libraries
             var BotController = reader.Page.GetVariable(BotControllerVariable);
             if (BotController.Value == null)
             {
-                Monkeyspeak.Logging.Logger.Warn("BotContriller is not defined, Please specifiy a BotController in the Bot configuration settings,");
+                MsLog.Logger.Warn("BotContriller is not defined, Please specifiy a BotController in the Bot configuration settings,");
                 return false;
             }
 
@@ -312,9 +315,11 @@ namespace Libraries
         {
             ReadTriggeringFurreParams(reader);
             ReadDreamParams(reader);
-            var msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
+            var msMsg = reader.ReadString();
             var msg = Player.Message;
-            return msg.Contains(msMsg.ToStrippedFurcadiaMarkupString().ToLower());
+            if (msg is null || msMsg is null)
+                return false;
+            return msg.Contains(msMsg.ToStrippedFurcadiaMarkupString());
         }
 
         /// <summary>
@@ -328,8 +333,9 @@ namespace Libraries
             ReadDreamParams(reader);
             var msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString();
             var msg = Player.Message.ToStrippedFurcadiaMarkupString();
-            // Debug.Print("Msg = " & msg)
-            return (msg.ToLower().EndsWith(msMsg.ToLower())
+            if (msg is null || msMsg is null)
+                return false;
+            return (msg.EndsWith(msMsg)
                         & !IsConnectedCharacter(Player));
         }
 
@@ -348,22 +354,9 @@ namespace Libraries
             ReadDreamParams(reader);
             string msg = Player.Message.ToStrippedFurcadiaMarkupString();
             string test = reader.ReadString().ToStrippedFurcadiaMarkupString();
+            if (msg is null || test is null)
+                return msg == test;
             return msg.ToLower() == test.ToLower();
-        }
-
-        /// <summary>
-        /// (1:14) and triggering furre's message doesn't end with {.},
-        /// </summary>
-        /// <param name="reader"><see cref="TriggerReader"/></param>
-        /// <returns></returns>
-        protected bool MsgNotEndsWith(TriggerReader reader)
-        {
-            ReadTriggeringFurreParams(reader);
-            ReadDreamParams(reader);
-            string msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
-            string msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower();
-            return (!msg.ToLower().EndsWith(msMsg.ToLower())
-                        & !IsConnectedCharacter(Player));
         }
 
         /// <summary>
@@ -377,6 +370,8 @@ namespace Libraries
             ReadDreamParams(reader);
             string msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
             string msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower();
+            if (msg is null || msMsg is null)
+                return false;
             return (msg.ToLower().StartsWith(msMsg.ToLower())
                         & !IsConnectedCharacter(Player));
         }

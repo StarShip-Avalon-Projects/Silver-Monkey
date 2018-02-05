@@ -1,6 +1,7 @@
 ﻿using Engine.BotSession;
 using Furcadia.Logging;
 using Furcadia.Net;
+using Furcadia.Net.Utils.ChannelObjects;
 using Furcadia.Net.Utils.ServerParser;
 using MonkeyCore2.IO;
 using NUnit.Framework;
@@ -27,10 +28,7 @@ namespace SmEngineTests
         public string BackupSettingsFile { get; private set; }
         public BotOptions Options { get; private set; }
 
-        private void Startup()
-        { }
-
-        [SetUp]
+        [OneTimeSetUp]
         public void Initialize()
         {
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -57,6 +55,7 @@ namespace SmEngineTests
 
             Proxy = new Bot(Options);
             Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
+            BotHasConnected();
         }
 
         [TestCase(GeroJoinBot, "Gerolkae")]
@@ -66,55 +65,60 @@ namespace SmEngineTests
         [TestCase(GeroCuddleBot, "Gerolkae")]
         public void ExpectedQueryCharacter(string testc, string ExpectedValue)
         {
-            BotHasConnected_StandAlone();
-
             Proxy.ProcessServerChannelData += (sender, Args) =>
             {
-                var ServeObject = (ChannelObject)sender;
-                Assert.That(ServeObject.Player.ShortName, Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                if (sender is QueryChannelObject queryObject)
+                {
+                    Assert.That(queryObject.Player.ShortName,
+                        Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                }
             };
 
-            Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
-            Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
             Proxy.ParseServerChannel(testc, false);
             Proxy.ProcessServerChannelData -= (sender, Args) =>
             {
-                var ServeObject = (ChannelObject)sender;
-                Assert.That(ServeObject.Player.ShortName,
-                    Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                if (sender is QueryChannelObject queryObject)
+                {
+                    Assert.That(queryObject.Player.ShortName,
+                        Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                }
             };
-            BotHaseDisconnected_Standalone();
+            Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");
+            Console.WriteLine($"ClientStatus: {Proxy.ClientStatus}");
         }
 
-        [TestCase(GeroJoinBot, "join")]
-        [TestCase(GeroFollowBot, "follow")]
-        [TestCase(GeroLeadBot, "lead")]
-        [TestCase(GeroSummonBot, "summon")]
-        [TestCase(GeroCuddleBot, "cuddle")]
-        public void ChannelIsQueryOfType(string ChannelCode, string ExpectedValue)
+        [TestCase(GeroJoinBot, QueryType.join)]
+        [TestCase(GeroFollowBot, QueryType.follow)]
+        [TestCase(GeroLeadBot, QueryType.lead)]
+        [TestCase(GeroSummonBot, QueryType.summon)]
+        [TestCase(GeroCuddleBot, QueryType.cuddle)]
+        public void ChannelIsQueryOfType(string ChannelCode, QueryType ExpectedValue)
         {
-            BotHasConnected_StandAlone();
-            if (!Proxy.StandAlone)
-                HaltFor(DreamEntranceDelay);
-
-            Proxy.ProcessServerChannelData += delegate (object sender, ParseChannelArgs Args)
+            Proxy.ProcessServerChannelData += (sender, Args) =>
             {
-                Assert.Multiple(() =>
-                {
-                    var ServeObject = (ChannelObject)sender;
-                    Assert.That(Args.Channel,
-                        Is.EqualTo("query"));
-                });
+                if (sender is QueryChannelObject queryObject)
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(queryObject.Query,
+                            Is.EqualTo(ExpectedValue));
+                    });
             };
 
             Proxy.ParseServerChannel(ChannelCode, false);
-            BotHaseDisconnected_Standalone();
+            Proxy.ProcessServerChannelData -= (sender, Args) =>
+            {
+                if (sender is QueryChannelObject queryObject)
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(queryObject.Query,
+                            Is.EqualTo(ExpectedValue));
+                    });
+            };
         }
 
         // TODO: Need MonkeySpeak Script
         public void QueryMonkeySpeakVariablesAreSet()
         {
-            BotHasConnected_StandAlone();
             if (!Proxy.StandAlone)
                 HaltFor(DreamEntranceDelay);
 
@@ -142,10 +146,9 @@ namespace SmEngineTests
                     Is.EqualTo("gerolkae"),
                     $"Constant Variable: '{Var}' ");
             });
-            BotHaseDisconnected_Standalone();
         }
 
-        public void BotHasConnected_StandAlone(bool StandAlone = true)
+        public void BotHasConnected(bool StandAlone = true)
         {
             Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
@@ -187,7 +190,7 @@ namespace SmEngineTests
             });
         }
 
-        public void BotHaseDisconnected_Standalone(bool StandAlone = false)
+        public void BotHaseDisconnected()
         {
             Proxy.DisconnectServerAndClientStreams();
             if (!Proxy.StandAlone)
@@ -213,9 +216,10 @@ namespace SmEngineTests
             });
         }
 
-        [TearDown]
+        [OneTimeSetUp]
         public void Cleanup()
         {
+            BotHaseDisconnected();
             Proxy.Error -= (e, o) => Logger.Error($"{e} {o}");
 
             Proxy.Dispose();

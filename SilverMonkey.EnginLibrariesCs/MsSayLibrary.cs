@@ -232,7 +232,7 @@ namespace Libraries
 
             // (1:14) and triggering furre's message doesn't end with {...},
             Add(TriggerCategory.Condition,
-                r => MsgNotEndsWith(r),
+                r => !MsgEndsWith(r),
                 "and triggering furre\'s message doesn\'t end with {...},");
 
             // Says

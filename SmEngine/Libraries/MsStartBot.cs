@@ -34,7 +34,8 @@ namespace SilverMonkey.Engine.Libraries
         private bool StartScript(TriggerReader reader)
         {
             Bot ThisBot = reader.GetParametersOfType<Bot>().FirstOrDefault();
-            ParentBotSession = ThisBot;
+            if (ParentBotSession != ThisBot)
+                ParentBotSession = ThisBot;
 
             return true;
         }

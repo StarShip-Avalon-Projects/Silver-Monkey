@@ -531,13 +531,9 @@ namespace MonkeyCore2.Data
             var columnNamesMetaData = string.Join(", ", ColumnNames.ToArray());
 
             var sql = new StringBuilder()
-                  .Append("CREATE TEMPORARY TABLE ")
-                  .Append($"{table}backup(")
-                  .Append($"{columnNamesMetaData }{PrimaryKeyClause}{UniqueKeyClause}); INSERT INTO ")
-                  .Append($"{table }backup SELECT ")
-                  .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")
-                  .Append($"{table }; DROP TABLE ")
-                  .Append($"{table }; CREATE TABLE ")
+                  .Append("ALTER TABLE ")
+                  .Append($"{table} RENAME TO {table}backup ;")
+                  .Append("CREATE TABLE ")
                   .Append($"{table }({columnNamesMetaData }{PrimaryKeyClause}{UniqueKeyClause}); INSERT INTO ")
                   .Append($"{table } SELECT ")
                   .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")

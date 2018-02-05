@@ -9,7 +9,7 @@ namespace Libraries
     /// <summary>
     /// Monkey Speak for Dream Info items,
     /// <para/>
-    /// things ike Dream Name, Dream Owner, Dream URL ect
+    /// things ike Dream Name, Dream-Owner, Dream URL ect
     /// </summary>
     public class MsDreamInfo : MonkeySpeakLibrary
     {
@@ -79,7 +79,7 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                  r => BotIsDreamOwner(r),
-                 "and the bot is the Dream owner,");
+                 "and the bot is the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
                 r => !BotIsDreamOwner(r),
@@ -87,11 +87,11 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => AndFurreNamedIsDreamOwner(r),
-                " and the furre named {..} is the Dream owner,");
+                " and the furre named {..} is the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
                 r => !AndFurreNamedIsDreamOwner(r),
-                " and the furre named {..} is not the Dream owner,");
+                " and the furre named {..} is not the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
               r => DreamNameIs(r),
@@ -103,16 +103,16 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreIsDreamOwner(r),
-                "and the triggering furre is the Dream owner,");
+                "and the triggering furre is the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
                 r => !TriggeringFurreIsDreamOwner(r),
-                "and the triggering furre is not the Dream owner,");
+                "and the triggering furre is not the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
                 r =>
                 (ParentBotSession.HasShare || DreamInfo.DreamOwner.ToFurcadiaShortName() == ParentBotSession.ConnectedFurre.ShortName),
-                 "and the bot has share control of the Dream or is the Dream owner,");
+                 "and the bot has share control of the Dream or is the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
                r => ParentBotSession.HasShare,
@@ -169,21 +169,24 @@ namespace Libraries
             string title;
 
             var url = reader.ReadString().ToLower().Replace("furc://", "").TrimEnd('/');
-            var UrlMatch = URLRegex.Match($"furc://{url}/");
-
-            if (string.IsNullOrWhiteSpace(UrlMatch.Groups[2].Value))
+            var urlSegments = url.Split(':');
+            if (urlSegments.Length == 2)
             {
-                dreamOwner = UrlMatch.Groups[1].Value;
-                return DreamInfo.Name.ToLower() == dreamOwner.ToFurcadiaShortName();
+                dreamOwner = urlSegments[0];
+                title = urlSegments[1];
             }
-            if (string.IsNullOrWhiteSpace(UrlMatch.Groups[1].Value))
+            else
             {
-                return DreamInfo.Name.ToLower() == UrlMatch.Groups[2].Value.ToFurcadiaShortName();
+                dreamOwner = url;
+                title = null;
             }
-
-            dreamOwner = UrlMatch.Groups[1].Value;
-            title = UrlMatch.Groups[3].Value;
-            return DreamInfo.Name.ToLower() == $"{dreamOwner.ToFurcadiaShortName()}:{title.ToFurcadiaShortName()}";
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                return DreamInfo.DreamOwner.ToLower()
+                    == dreamOwner.ToFurcadiaShortName();
+            }
+            return DreamInfo.Name.ToLower()
+                == $"{dreamOwner.ToFurcadiaShortName()}:{title.ToFurcadiaShortName()}";
         }
 
         private bool ShareFurreNamed(TriggerReader reader)
