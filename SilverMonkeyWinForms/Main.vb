@@ -522,6 +522,7 @@ Public Class Main
             End If
         Catch ex As Exception
             SndDisplay($"Error: {ex.Message}{Environment.NewLine}", DisplayColors.Error)
+            FurcSession.DisconnectServerAndClientStreams()
         Finally
             BTN_Go.Enabled = True
         End Try

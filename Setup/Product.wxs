@@ -20,20 +20,25 @@
       <Property Id="ALLUSERS" Value="2" />
     </UI>
     <InstallExecuteSequence>
-      <Custom Action="SilverMonkey.TaskClose" Before="InstallFinalize" />
-      <Custom Action="DataMonkey.TaskClose" Before="InstallFinalize" />
-      <Custom Action="MSEditor.TaskClose" Before="InstallFinalize" />
+      <Custom Action="SilverMonkey.TaskClose"  After="InstallInitialize" />
+      <Custom Action="DataMonkey.TaskClose"  After="InstallInitialize" />
+      <Custom Action="MSEditor.TaskClose"  After="InstallInitialize" />
     </InstallExecuteSequence>
     <WixVariable Id="WixUISupportPerUser" Value="0" />
     <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="license.Rtf" />
-    <!--   <WixVariable Id="WixUIBannerBmp" Value="metal.png" /> -->
+
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED" />
+    <Condition Message="$(var.ProductName) requires .NET Framework 4.6.1 or higher.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED]]>
+    </Condition>
+
     <WixVariable Id="WixUIDialogBmp" Value="metal.png" />
     <MajorUpgrade
         AllowDowngrades="no"
         AllowSameVersionUpgrades="no"
         IgnoreRemoveFailure="no"
         DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."
-        Schedule="afterInstallInitialize" />
+        Schedule="afterInstallValidate" />
 
     <Property Id="ApplicationFolderName" Value="$(var.ProductName)" />
 
@@ -151,6 +156,7 @@
 
       <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Binaries" />
       <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Symbols" />
+      <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Content" />
 
       <ComponentGroupRef Id="MonkeyCore.Binaries" />
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
@@ -183,18 +189,23 @@
       <ComponentGroupRef Id="Monkeyspeak.Binaries" />
       <ComponentGroupRef Id="Monkeyspeak.Symbols" />
       <ComponentGroupRef Id="Monkeyspeak.Satellites" />
+      <ComponentGroupRef Id="Monkeyspeak.Content" />
 
       <ComponentGroupRef Id="FurcadiaLib.Binaries" />
       <ComponentGroupRef Id="FurcadiaLib.Symbols" />
+      <ComponentGroupRef Id="FurcadiaLib.Content" />
 
       <ComponentGroupRef Id="SmEngine.Binaries" />
       <ComponentGroupRef Id="SmEngine.Symbols" />
+      <ComponentGroupRef Id="SmEngine.Content" />
 
       <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Binaries" />
       <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Symbols" />
+      <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Content" />
 
       <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Binaries" />
       <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Symbols" />
+      <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Content" />
 
       <ComponentRef Id="FCTB" />
       <ComponentRef Id="Irony" />
@@ -209,6 +220,8 @@
 
       <ComponentGroupRef Id="DataMonkey.Binaries" />
       <ComponentGroupRef Id="DataMonkey.Symbols" />
+      <ComponentGroupRef Id="DataMonkey.Content" />
+
       <ComponentRef Id="DataMonkeyShortcut" />
       <ComponentRef Id="DataMokeyHelp" />
 
@@ -271,49 +284,49 @@
 
       <!-- Support Squizzles Editor libs-->
       <Component Id="ICSharpCode.AvalonEdit" Guid="{d609a14e-27ac-4090-ba65-4b0de6fa7b98}">
-        <File Id="ICSharpCode.AvalonEdit.dll" Source="$(var.SilverMonkey2.TargetDir)ICSharpCode.AvalonEdit.dll" KeyPath="no" Checksum="yes" />
+        <File Id="ICSharpCode.AvalonEdit.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)ICSharpCode.AvalonEdit.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="MahApps.Metro" Guid="{e53c4590-dcd9-41da-bdf0-5757033500da}">
-        <File Id="MahApps.Metro.dll" Source="$(var.SilverMonkey2.TargetDir)MahApps.Metro.dll" KeyPath="no" Checksum="yes" />
+        <File Id="MahApps.Metro.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)MahApps.Metro.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="MahApps.Metro.IconPacks.FontAwesome" Guid="{9280a072-b383-469c-8aca-97b758a93d59}">
-        <File Id="MahApps.Metro.IconPacks.FontAwesome.dll" Source="$(var.SilverMonkey2.TargetDir)MahApps.Metro.IconPacks.FontAwesome.dll" KeyPath="no" Checksum="yes" />
+        <File Id="MahApps.Metro.IconPacks.FontAwesome.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)MahApps.Metro.IconPacks.FontAwesome.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="MahApps.Metro.IconPacks.Material" Guid="{ff628fff-acb8-414a-bea4-f3943bc90cec}">
-        <File Id="MahApps.Metro.IconPacks.Material.dll" Source="$(var.SilverMonkey2.TargetDir)MahApps.Metro.IconPacks.Material.dll" KeyPath="no" Checksum="yes" />
+        <File Id="MahApps.Metro.IconPacks.Material.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)MahApps.Metro.IconPacks.Material.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="MahApps.Metro.IconPacks.Modern" Guid="{1a27fcad-ef59-4aa6-b7e9-3887f00fb48d}">
-        <File Id="MahApps.Metro.IconPacks.Modern.dll" Source="$(var.SilverMonkey2.TargetDir)MahApps.Metro.IconPacks.Modern.dll" KeyPath="no" Checksum="yes" />
+        <File Id="MahApps.Metro.IconPacks.Modern.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)MahApps.Metro.IconPacks.Modern.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="Octokit" Guid="{b080ec40-816a-48bc-be06-a459c8c6332f}">
-        <File Id="Octokit.dll" Source="$(var.SilverMonkey2.TargetDir)Octokit.dll" KeyPath="no" Checksum="yes" />
+        <File Id="Octokit.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Octokit.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="ControlzEx.dll" Guid="{4f12eec0-60bb-4d91-a462-f68191531926}">
-        <File Id="ControlzEx" Source="$(var.SilverMonkey2.TargetDir)ControlzEx.dll" KeyPath="no" Checksum="yes" />
+        <File Id="ControlzEx" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)ControlzEx.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="System.Windows.Interactivity.dll" Guid="{0349a069-d1ad-4387-83c5-5aea2b55b6ce}">
-        <File Id="System.Windows.Interactivity" Source="$(var.SilverMonkey2.TargetDir)System.Windows.Interactivity.dll" KeyPath="no" Checksum="yes" />
+        <File Id="System.Windows.Interactivity" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)System.Windows.Interactivity.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <!--  <Component Id="System.ValueTuple" Guid="{9b97c1f1-ccae-4d08-82fd-d215ac8bf6e5}">
         <File Id="System.ValueTuple.dll" Source="$(var.SilverMonkey2.TargetDir)System.ValueTuple.dll" KeyPath="no" Checksum="yes" />
       </Component> -->
       <Component Id="Xceed.Wpf.AvalonDock.dll" Guid="{ee0089d2-0884-47c8-a30d-1065f051c8a1}">
-        <File Id="Xceed.Wpf.AvalonDock.dll" Source="$(var.SilverMonkey2.TargetDir)Xceed.Wpf.AvalonDock.dll" KeyPath="no" Checksum="yes" />
+        <File Id="Xceed.Wpf.AvalonDock.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.AvalonDock.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Guid="{7e5885b5-f6ec-4f3d-b50d-a8acef729be4}">
-        <File Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Source="$(var.SilverMonkey2.TargetDir)Xceed.Wpf.AvalonDock.Themes.Aero.dll" KeyPath="no" Checksum="yes" />
+        <File Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.AvalonDock.Themes.Aero.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="Xceed.Wpf.AvalonDock.Themes.Metro" Guid="{a367d94c-e573-4cb5-912e-b68b8495e392}">
-        <File Id="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Source="$(var.SilverMonkey2.TargetDir)Xceed.Wpf.AvalonDock.Themes.Metro.dll" KeyPath="no" Checksum="yes" />
+        <File Id="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.AvalonDock.Themes.Metro.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="Xceed.Wpf.AvalonDock.Themes.VS2010" Guid="{416c70b9-fa5d-47b7-b871-235ba43b5b59}">
-        <File Id="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Source="$(var.SilverMonkey2.TargetDir)Xceed.Wpf.AvalonDock.Themes.VS2010.dll" KeyPath="no" Checksum="yes" />
+        <File Id="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.AvalonDock.Themes.VS2010.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="Xceed.Wpf.DataGrid" Guid="{23dc95cd-7a52-4e9e-8370-599c5555786e}">
-        <File Id="Xceed.Wpf.DataGrid.dll" Source="$(var.SilverMonkey2.TargetDir)Xceed.Wpf.DataGrid.dll" KeyPath="no" Checksum="yes" />
+        <File Id="Xceed.Wpf.DataGrid.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.DataGrid.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="Xceed.Wpf.Toolkit" Guid="{9bcd87a4-0a9d-4267-940c-3f37c1eeed90}">
-        <File Id="Xceed.Wpf.Toolkit.dll" Source="$(var.SilverMonkey2.TargetDir)Xceed.Wpf.Toolkit.dll" KeyPath="no" Checksum="yes" />
+        <File Id="Xceed.Wpf.Toolkit.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.Toolkit.dll" KeyPath="no" Checksum="yes" />
       </Component>
     </DirectoryRef>
     <DirectoryRef Id="X86">

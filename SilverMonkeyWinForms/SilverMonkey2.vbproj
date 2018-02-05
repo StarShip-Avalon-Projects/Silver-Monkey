@@ -296,7 +296,7 @@
     <None Include="resources\thnb1rfv.bmp" />
     <None Include="resources\z8jcnxkd.bmp" />
     <None Include="resources\PageNumber.png" />
-    <Content Include="resources\SaveAsWebPageHS.png" />
+    <None Include="resources\SaveAsWebPageHS.png" />
     <None Include="resources\SaveAsWebPageHS1.png" />
     <None Include="TextFile1.txt" />
     <None Include="TODO.txt" />

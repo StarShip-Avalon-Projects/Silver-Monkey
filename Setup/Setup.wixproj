@@ -79,7 +79,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
@@ -88,7 +88,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
@@ -97,7 +97,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
@@ -106,7 +106,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak Editor\Monkeyspeak Editor.csproj">
@@ -133,7 +133,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
@@ -142,7 +142,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\SilverMonkey.EnginLibrariesCs.csproj">
@@ -169,7 +169,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\SmEngine\SmEngine.csproj">

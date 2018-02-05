@@ -128,14 +128,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AssemblyFileVersion.tt">
+    <None Include="AssemblyFileVersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
-    </Content>
-    <Content Include="AssemblyInfoersion.tt">
+    </None>
+    <None Include="AssemblyInfoersion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

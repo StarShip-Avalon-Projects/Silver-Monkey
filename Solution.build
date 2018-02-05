@@ -55,7 +55,7 @@
 
  <Target Name="BackupSource" DependsOnTargets="AfterBuild"> <!-- BeforeTargets="CopyFiles"> -->
 		<!-- SilverMonkey_Binaties -->
- 		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.txt -n*.config SilverMonkey_Binaries_.rar *.*"
+ 		<Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -n*.exe -n*.dll -n*.ds -n*.ms -n*.ini -n*license*.* -n*.pdb -n*.txt -n*.config SilverMonkey_Binaries_.rar *.*"
 			WorkingDirectory="Build\$(Configuration)\"/>
 			<!-- Plugins_API -->
 		<!-- <Exec Command="&quot;c:/program files/winrar/rar.exe&quot; a -r -nBaseModule.* -nSystem.Data.SQLite.* -nSQLite.Interop.* -nInterfaces.* -nFastColoredTextBox.* -nSQLite.Interop.* -nFurcadiaLib.* -nMonkeyCore.* -nIrony.dll ..\..\Build\Installer\Plugins_API_$(Configuration)-$(FileVersion).rar *.*"

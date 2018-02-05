@@ -75,10 +75,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AssemblyInfoersionCS.tt">
+    <None Include="AssemblyInfoersionCS.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfoersionCS.cs</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
