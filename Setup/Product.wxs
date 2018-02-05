@@ -136,6 +136,7 @@
       <ComponentRef Id="SilverMonkeyShortcut" />
       <ComponentGroupRef Id="SilverMonkey2.Binaries" />
       <ComponentGroupRef Id="SilverMonkey2.Symbols" />
+      <ComponentGroupRef Id="SilverMonkey2.Content" />
       <ComponentRef Id="smHelp" />
 
       <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Binaries" />
@@ -203,10 +204,12 @@
       <ComponentRef Id="MahApps.Metro.IconPacks.FontAwesome" />
       <ComponentRef Id="MahApps.Metro.IconPacks.Material" />
       <ComponentRef Id="MahApps.Metro.IconPacks.Modern" />
+
       <!--   <ComponentRef Id="System.ValueTuple" /> -->
       <ComponentRef Id="Xceed.Wpf.AvalonDock.dll" />
       <ComponentRef Id="Xceed.Wpf.AvalonDock.Themes.Metro" />
       <ComponentRef Id="Xceed.Wpf.AvalonDock.Themes.VS2010" />
+      <ComponentRef Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
       <ComponentRef Id="Xceed.Wpf.DataGrid" />
       <ComponentRef Id="Xceed.Wpf.Toolkit" />
       <ComponentRef Id="ControlzEx.dll" />
@@ -282,6 +285,9 @@
       </Component> -->
       <Component Id="Xceed.Wpf.AvalonDock.dll" Guid="{ee0089d2-0884-47c8-a30d-1065f051c8a1}">
         <File Id="Xceed.Wpf.AvalonDock.dll" Source="$(var.SilverMonkey2.TargetDir)Xceed.Wpf.AvalonDock.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Guid="{7e5885b5-f6ec-4f3d-b50d-a8acef729be4}">
+        <File Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Source="$(var.SilverMonkey2.TargetDir)Xceed.Wpf.AvalonDock.Themes.Aero.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="Xceed.Wpf.AvalonDock.Themes.Metro" Guid="{a367d94c-e573-4cb5-912e-b68b8495e392}">
         <File Id="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Source="$(var.SilverMonkey2.TargetDir)Xceed.Wpf.AvalonDock.Themes.Metro.dll" KeyPath="no" Checksum="yes" />
