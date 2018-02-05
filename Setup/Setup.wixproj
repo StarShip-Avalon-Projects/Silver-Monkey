@@ -70,7 +70,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
@@ -115,7 +115,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak.Editor.Interfaces\Monkeyspeak.Editor.Interfaces.csproj">
@@ -124,7 +124,7 @@
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content</RefProjectOutputGroups>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak.Editor.Plugins\Monkeyspeak.Editor.Plugins.csproj">

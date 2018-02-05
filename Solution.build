@@ -112,6 +112,7 @@
 			WorkingDirectory="SmEngine.LibrariesVB/"/>
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
 			WorkingDirectory="MonkeyCore2/"/> 
-
+					<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
+			WorkingDirectory="Silver Monkey 3 Wpf/"/> 
  </Target>
 </Project>

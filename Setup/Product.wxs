@@ -20,7 +20,9 @@
       <Property Id="ALLUSERS" Value="2" />
     </UI>
     <InstallExecuteSequence>
-      <Custom Action="APP.TaskClose" Before="InstallFinalize" />
+      <Custom Action="SilverMonkey.TaskClose" Before="InstallFinalize" />
+      <Custom Action="DataMonkey.TaskClose" Before="InstallFinalize" />
+      <Custom Action="MSEditor.TaskClose" Before="InstallFinalize" />
     </InstallExecuteSequence>
     <WixVariable Id="WixUISupportPerUser" Value="0" />
     <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="license.Rtf" />
@@ -52,8 +54,14 @@
       </Directory>
     </Directory>
 
-    <Property Id="QtExecCmdLine" Value='"[WindowsFolder]\System32\taskkill.exe" /F /IM SilverMonkey.exe' />
-    <CustomAction Id="APP.TaskClose" BinaryKey="WixCA" DllEntry="WixQuietExecCmdLine" Execute="deferred" Return="asyncWait" />
+    <Property Id="SmExecCmdLine" Value='"[WindowsFolder]\System32\taskkill.exe" /F /IM SilverMonkey.exe /T' />
+    <CustomAction Id="SilverMonkey.TaskClose" BinaryKey="WixCA" DllEntry="WixQuietExecCmdLine" Execute="deferred" Return="asyncWait" />
+
+    <Property Id="MSeExecCmdLine" Value='"[WindowsFolder]\System32\taskkill.exe" /F /IM MonkeyspeakEditor.exe /T' />
+    <CustomAction Id="MSEditor.TaskClose" BinaryKey="WixCA" DllEntry="WixQuietExecCmdLine" Execute="deferred" Return="asyncWait" />
+
+    <Property Id="DwExecCmdLine" Value='"[WindowsFolder]\System32\taskkill.exe" /F /IM Data "Monkey.exe" /T' />
+    <CustomAction Id="DataMonkey.TaskClose" BinaryKey="WixCA" DllEntry="WixQuietExecCmdLine" Execute="deferred" Return="asyncWait" />
 
     <!-- Step 2: Add the shortcut to your installer package -->
     <DirectoryRef Id="ApplicationProgramsFolder">
@@ -137,6 +145,8 @@
       <ComponentGroupRef Id="SilverMonkey2.Binaries" />
       <ComponentGroupRef Id="SilverMonkey2.Symbols" />
       <ComponentGroupRef Id="SilverMonkey2.Content" />
+      <ComponentGroupRef Id="SilverMonkey2.Satellites" />
+
       <ComponentRef Id="smHelp" />
 
       <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Binaries" />
@@ -154,14 +164,17 @@
       <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Binaries" />
       <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Content" />
       <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Symbols" />
+      <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Satellites" />
 
       <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Binaries" />
       <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Content" />
       <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Symbols" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Satellites" />
 
       <ComponentGroupRef Id="Monkeyspeak.Editor.Plugins.Binaries" />
       <ComponentGroupRef Id="Monkeyspeak.Editor.Plugins.Content" />
       <ComponentGroupRef Id="Monkeyspeak.Editor.Plugins.Symbols" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Plugins.Satellites" />
 
       <ComponentRef Id="BugTraqSubmitShortcut" />
       <ComponentGroupRef Id="BugTraqSubmit.Binaries" />
@@ -169,6 +182,7 @@
 
       <ComponentGroupRef Id="Monkeyspeak.Binaries" />
       <ComponentGroupRef Id="Monkeyspeak.Symbols" />
+      <ComponentGroupRef Id="Monkeyspeak.Satellites" />
 
       <ComponentGroupRef Id="FurcadiaLib.Binaries" />
       <ComponentGroupRef Id="FurcadiaLib.Symbols" />
