@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <EnableProjectHarvesting>True</EnableProjectHarvesting>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.9</ProductVersion>
+    <ProjectGuid>{3f6ef586-6818-4d23-817a-b282bf2ffa8e}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>SilverMonkey3-Setup</OutputName>
+    <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\WiX Toolset\v4\wix.targets</WixTargetsPath>
+    <WixToolPath>C:\Program Files (x86)\WiX Toolset v4.0\bin\</WixToolPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>..\Build\Installer\Debug3\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug;</DefineConstants>
+    <LeaveTemporaryFiles>False</LeaveTemporaryFiles>
+    <WixVariables>
+    </WixVariables>
+    <LinkerAdditionalOptions>
+    </LinkerAdditionalOptions>
+    <VerboseOutput>True</VerboseOutput>
+    <SuppressAllWarnings>False</SuppressAllWarnings>
+    <Pedantic>False</Pedantic>
+    <CompilerAdditionalOptions>
+    </CompilerAdditionalOptions>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>..\Build\Installer\Release3\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <ItemGroup>
+    <None Include="license.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <HeatProject Include="@(ProjectReference->'%(FullPath)')">
+      <ProjectOutputGroups>Binaries;Symbols;Documents;Satellites;Content</ProjectOutputGroups>
+    </HeatProject>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BugTraq\mantisconnect\MantisConnect.csproj">
+      <Name>MantisConnect</Name>
+      <Project>{f4391f6f-0239-48e2-b415-c39a6d920303}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\BugTraq\MantisSubmit\BugTraq Submit.csproj">
+      <Name>BugTraqSubmit</Name>
+      <Project>{580c279d-3855-45f7-8ee2-bb036a1ca4a4}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj">
+      <Name>MonkeyCore.WinFormsControls</Name>
+      <Project>{6a9fc31d-150b-4c4b-9694-7f8c084df602}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
+      <Name>MonkeyCore2</Name>
+      <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+      <Name>MonkeyCore</Name>
+      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
+      <Name>DataMonkey</Name>
+      <Project>{9072cd13-8b7e-4a22-bc28-6087785a5d9a}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
+      <Name>FurcadiaLib</Name>
+      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak Editor\Monkeyspeak Editor.csproj">
+      <Name>MonkeyspeakEditorSquizzle</Name>
+      <Project>{6e721058-940a-445c-9141-32034944f5fd}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak.Editor.Interfaces\Monkeyspeak.Editor.Interfaces.csproj">
+      <Name>Monkeyspeak.Editor.Interfaces</Name>
+      <Project>{cf6ea88d-bee4-4deb-a4d1-ca6d6e263ac6}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak.Editor.Plugins\Monkeyspeak.Editor.Plugins.csproj">
+      <Name>Monkeyspeak.Editor.Plugins</Name>
+      <Project>{3429d7ee-1715-4ff4-a686-2614e255d8f7}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
+      <Name>Monkeyspeak</Name>
+      <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Silver Monkey 3 Wpf\Silver Monkey 3 WPF UI.csproj">
+      <Name>SilverMonkey3</Name>
+      <Project>{593e59b0-8787-4454-83cd-eabf37807f1f}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\SilverMonkey.EnginLibrariesCs.csproj">
+      <Name>SilverMonkey.EnginLibrariesCs</Name>
+      <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\SmEngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB.vbproj">
+      <Name>SilverMonkey.Engngine.LibrariesVB</Name>
+      <Project>{4619ff40-2c7c-4dad-887b-14d58755ccd9}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\SmEngine\SmEngine.csproj">
+      <Name>SmEngine</Name>
+      <Project>{f1e0feb3-a74e-43ce-98bf-b908ed1753fa}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixFirewallExtension">
+      <HintPath>$(WixExtDir)\WixFirewallExtension.dll</HintPath>
+      <Name>WixFirewallExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="metal.png" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <Target Name="EnsureWixToolsetInstalled" Condition=" !Exists('$(WixTargetsPath)') ">
+    <Error Text="The WiX Toolset v4 build tools must be installed to build this project. To download the WiX Toolset v4, see http://wixtoolset.org/releases/" />
+  </Target>
+  <Target Name="BeforeBuild" Condition=" '$(FileVersion)' == '' ">
+    <GetAssemblyIdentity AssemblyFiles="Build\$(Configuration)\Silver Monkey 3.exe">
+      <Output TaskParameter="Assemblies" ItemName="Sm3AsmInfo" />
+    </GetAssemblyIdentity>
+    <CreateProperty Value="%(Sm3AsmInfo.Version)">
+      <Output TaskParameter="Value" PropertyName="FileVersion" />
+    </CreateProperty>
+    <CreateProperty Value="$(DefineConstants)">
+      <Output TaskParameter="Value" PropertyName="DefineConstantsOriginal" />
+    </CreateProperty>
+    <CreateProperty Value="$(DefineConstants);FileVersion=$(FileVersion)">
+      <Output TaskParameter="Value" PropertyName="DefineConstants" />
+    </CreateProperty>
+  </Target>
+  <!-- rename the output msi with Version number -->
+  <Target Name="AfterBuild">
+    <!-- <Exec Command="Signtool.exe sign /a &quot;%(SignCabs.FullPath)&quot;" />
+    <Exec Command="signtool.exe sign /a &quot;..\Build\Installer\$(Configuration)\$(OutputName).msi&quot;" /> -->
+    <!--  <Copy SourceFiles="..\Build\Installer\$(Configuration)\$(OutputName).msi" DestinationFiles="..\Build\Installer\SilverMonkey_$(Configuration)_$(OutputName)_(AnyCPU)-$(FileVersion).msi" />-->
+  </Target>
+</Project>

@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
+       xmlns:ui="http://schemas.microsoft.com/wix/UIExtension">
+  <?define ProductName="Silver Monkey" ?>
+  <?define CompanyName="Starship Avalon Projects" ?>
+  <Product
+    Id="*"
+    Name="$(var.ProductName)"
+    Version="$(var.FileVersion)"
+    Manufacturer="$(var.CompanyName)"
+    Language="1033"
+    UpgradeCode="A709F3A0-BEE3-403E-AC47-1FE1AD189C77">
+    <Package InstallerVersion="400" InstallPrivileges="elevated"  Compressed="yes" />
+    <Media Id="1" Cabinet="SilverMonkey.cab" EmbedCab="yes" CompressionLevel="high" />
+
+    <UI>
+      <UIRef Id="WixUI_Advanced" />
+      <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
+      <Property Id="ALLUSERS" Value="2" />
+    </UI>
+    <InstallExecuteSequence>
+      <Custom Action="SilverMonkey.TaskClose"  After="InstallInitialize" />
+      <Custom Action="DataMonkey.TaskClose"  After="InstallInitialize" />
+      <Custom Action="MSEditor.TaskClose"  After="InstallInitialize" />
+    </InstallExecuteSequence>
+    <WixVariable Id="WixUISupportPerUser" Value="0" />
+    <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="license.Rtf" />
+
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED" />
+    <Condition Message="$(var.ProductName) requires .NET Framework 4.6.1 or higher.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED]]>
+    </Condition>
+
+    <WixVariable Id="WixUIDialogBmp" Value="metal.png" />
+    <MajorUpgrade
+        AllowDowngrades="no"
+        AllowSameVersionUpgrades="no"
+        IgnoreRemoveFailure="no"
+        DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."
+        Schedule="afterInstallValidate" />
+
+    <Property Id="ApplicationFolderName" Value="$(var.ProductName)" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONFOLDER" Name="$(var.ProductName)">
+          <Directory Id="PLUGINS" Name="Plugins" />
+          <Directory Id="X86" Name="x86" />
+          <Directory Id="X64" Name="x64" />
+        </Directory>
+      </Directory>
+
+      <!-- Step 1: Define the directory structure -->
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="$(var.ProductName)" />
+        <Directory Id="StartupFolder" Name="Startup" />
+      </Directory>
+    </Directory>
+
+    <Property Id="SmExecCmdLine" Value='"[WindowsFolder]\System32\taskkill.exe" /F /IM SilverMonkey.exe /T' />
+    <CustomAction Id="SilverMonkey.TaskClose" BinaryKey="WixCA" DllEntry="WixQuietExecCmdLine" Execute="deferred" Return="asyncWait" />
+
+    <Property Id="MSeExecCmdLine" Value='"[WindowsFolder]\System32\taskkill.exe" /F /IM MonkeyspeakEditor.exe /T' />
+    <CustomAction Id="MSEditor.TaskClose" BinaryKey="WixCA" DllEntry="WixQuietExecCmdLine" Execute="deferred" Return="asyncWait" />
+
+    <Property Id="DwExecCmdLine" Value='"[WindowsFolder]\System32\taskkill.exe" /F /IM Data "Monkey.exe" /T' />
+    <CustomAction Id="DataMonkey.TaskClose" BinaryKey="WixCA" DllEntry="WixQuietExecCmdLine" Execute="deferred" Return="asyncWait" />
+
+    <!-- Step 2: Add the shortcut to your installer package -->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="SilverMonkeyShortcut" Guid="{a9a7ca3c-72f4-452f-a2c3-90d76c61ed35}">
+        <Shortcut Id='$(var.SilverMonkey3.TargetName)Shortcut'
+                Advertise="no"
+                Name='$(var.ProductName)'
+                Description='$(var.ProductName)'
+                  WorkingDirectory='APPLICATIONFOLDER'
+                  Target="[APPLICATIONFOLDER]\$(var.SilverMonkey3.TargetName)" />
+
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+
+        <RegistryValue Root="HKCU"
+                       Key="Software\$(var.CompanyName)\SilverMonkey"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+
+        <ProgId Id="SilverMonkey.exe"  Description="$(var.ProductName) File type" Advertise="no">
+          <Extension Id="bini"  ContentType="Text/Plain" Advertise="no">
+            <Verb Command="Open" Id="open" TargetProperty="FileAssociationProperty" Argument="&quot;%1&quot;" />
+          </Extension>
+        </ProgId>
+      </Component>
+
+      <Component Id="DataMonkeyShortcut" Guid="{9B9BA57E-16C0-4E6C-A343-2E372C65000C}">
+
+        <Shortcut Id="$(var.DataMonkey.TargetName)Shortcut"
+                  Name="$(var.DataMonkey.TargetName)"
+                  WorkingDirectory='APPLICATIONFOLDER'
+                  Target="[APPLICATIONFOLDER]$(var.DataMonkey.TargetName)"
+                  Description="Starts $(var.DataMonkey.TargetName)" />
+
+        <RegistryValue
+          Root="HKCU"
+          Key="Software\$(var.CompanyName)\DataMonkey"
+          Name="installed" Type="integer" Value="1"
+          KeyPath="yes" />
+      </Component>
+
+      <Component Id="MonkeyspeakEditorSquizzleShortcut" Guid="{4de238b4-571a-4dfa-b632-a0d4be9a072a}">
+
+        <Shortcut Id="$(var.MonkeyspeakEditorSquizzle.TargetName)Shortcut"
+                  Name="$(var.MonkeyspeakEditorSquizzle.TargetName)"
+                  WorkingDirectory='APPLICATIONFOLDER'
+                  Target="[APPLICATIONFOLDER]$(var.MonkeyspeakEditorSquizzle.TargetName)"
+                  Description="Starts $(var.MonkeyspeakEditorSquizzle.TargetName)" />
+
+        <RegistryValue
+          Root="HKCU"
+          Key="Software\$(var.CompanyName)\MonkeyspeakEditorSquizzle"
+          Name="installed" Type="integer" Value="1"
+          KeyPath="yes" />
+      </Component>
+
+      <Component Id="BugTraqSubmitShortcut" Guid="{d55d5f63-3c1b-455f-ac4b-a7c6e4dd11a4}">
+
+        <Shortcut Id="$(var.BugTraqSubmit.TargetName)Shortcut"
+                  Name="$(var.BugTraqSubmit.TargetName)"
+                  WorkingDirectory='APPLICATIONFOLDER'
+                  Target="[APPLICATIONFOLDER]$(var.BugTraqSubmit.TargetName)"
+                  Description="Starts $(var.BugTraqSubmit.TargetName)" />
+
+        <RegistryValue
+          Root="HKCU"
+          Key="Software\$(var.CompanyName)\BugTraqSubmit"
+          Name="installed" Type="integer" Value="1"
+          KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <PropertyRef Id="NETFRAMEWORK45" />
+    <!--  <Condition Message="This application requires .NET Framework 4.6.1 Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED]]>
+    </Condition>-->
+    <Feature Id="SilverMonkey3" Title="Main Application" Level="1">
+
+      <!-- Step 3: Tell WiX to install the shortcut -->
+      <ComponentRef Id="SilverMonkeyShortcut" />
+      <ComponentGroupRef Id="SilverMonkey3.Binaries" />
+      <ComponentGroupRef Id="SilverMonkey3.Symbols" />
+      <ComponentGroupRef Id="SilverMonkey3.Content" />
+      <ComponentGroupRef Id="SilverMonkey3.Satellites" />
+
+      <ComponentRef Id="smHelp" />
+
+      <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Binaries" />
+      <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Symbols" />
+      <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Content" />
+
+      <ComponentGroupRef Id="MonkeyCore.Binaries" />
+      <ComponentGroupRef Id="MonkeyCore.Symbols" />
+      <ComponentGroupRef Id="MonkeyCore.Content" />
+
+      <ComponentGroupRef Id="MonkeyCore2.Binaries" />
+      <ComponentGroupRef Id="MonkeyCore2.Symbols" />
+      <ComponentGroupRef Id="MonkeyCore2.Content" />
+
+      <ComponentRef Id="MonkeyspeakEditorSquizzleShortcut" />
+      <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Binaries" />
+      <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Content" />
+      <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Symbols" />
+      <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Satellites" />
+
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Binaries" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Content" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Symbols" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Satellites" />
+
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Plugins.Binaries" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Plugins.Content" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Plugins.Symbols" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Plugins.Satellites" />
+
+      <ComponentRef Id="BugTraqSubmitShortcut" />
+      <ComponentGroupRef Id="BugTraqSubmit.Binaries" />
+      <ComponentGroupRef Id="MantisConnect.Binaries" />
+
+      <ComponentGroupRef Id="Monkeyspeak.Binaries" />
+      <ComponentGroupRef Id="Monkeyspeak.Symbols" />
+      <ComponentGroupRef Id="Monkeyspeak.Satellites" />
+      <ComponentGroupRef Id="Monkeyspeak.Content" />
+
+      <ComponentGroupRef Id="FurcadiaLib.Binaries" />
+      <ComponentGroupRef Id="FurcadiaLib.Symbols" />
+      <ComponentGroupRef Id="FurcadiaLib.Content" />
+
+      <ComponentGroupRef Id="SmEngine.Binaries" />
+      <ComponentGroupRef Id="SmEngine.Symbols" />
+      <ComponentGroupRef Id="SmEngine.Content" />
+
+      <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Binaries" />
+      <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Symbols" />
+      <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Content" />
+
+      <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Binaries" />
+      <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Symbols" />
+      <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Content" />
+
+      <ComponentRef Id="FCTB" />
+      <ComponentRef Id="Irony" />
+
+      <ComponentRef Id="EntityFramework" />
+      <ComponentRef Id="EntityFrameworkSqlServer" />
+      <ComponentRef Id="SQLite" />
+      <ComponentRef Id="SQLiteEF6" />
+      <ComponentRef Id="SQLiteLinq" />
+      <ComponentRef Id="X86" />
+      <ComponentRef Id="X64" />
+
+      <ComponentGroupRef Id="DataMonkey.Binaries" />
+      <ComponentGroupRef Id="DataMonkey.Symbols" />
+      <ComponentGroupRef Id="DataMonkey.Content" />
+
+      <ComponentRef Id="DataMonkeyShortcut" />
+      <ComponentRef Id="DataMokeyHelp" />
+
+      <ComponentRef Id="ICSharpCode.AvalonEdit" />
+      <ComponentRef Id="Octokit" />
+      <ComponentRef Id="MahApps.Metro" />
+      <ComponentRef Id="MahApps.Metro.IconPacks.FontAwesome" />
+      <ComponentRef Id="MahApps.Metro.IconPacks.Material" />
+      <ComponentRef Id="MahApps.Metro.IconPacks.Modern" />
+
+      <!--   <ComponentRef Id="System.ValueTuple" /> -->
+      <ComponentRef Id="Xceed.Wpf.AvalonDock.dll" />
+      <ComponentRef Id="Xceed.Wpf.AvalonDock.Themes.Metro" />
+      <ComponentRef Id="Xceed.Wpf.AvalonDock.Themes.VS2010" />
+      <ComponentRef Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
+      <ComponentRef Id="Xceed.Wpf.DataGrid" />
+      <ComponentRef Id="Xceed.Wpf.Toolkit" />
+      <ComponentRef Id="ControlzEx.dll" />
+      <ComponentRef Id="System.Windows.Interactivity.dll" />
+    </Feature>
+
+    <!-- Help file-->
+    <DirectoryRef Id="APPLICATIONFOLDER">
+      <Component Id="smHelp" Guid="{7FEB427A-07AB-4083-8792-2005152C64F3}">
+        <File Id="smHelp" Source="$(var.SolutionDir)Build/Help/Silver Monkey.chm" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="DataMokeyHelp" Guid="{0219f1a1-d0d4-4c1b-817b-a6fa3f6e95fd}">
+        <File Id="DataMonkeyHelp" Source="$(var.SolutionDir)Build/Help/Data_Monkey_Help.chm" KeyPath="no" Checksum="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- Misc DLLS-->
+    <DirectoryRef Id="APPLICATIONFOLDER">
+      <Component Id="FCTB" Guid="{CAA87BC5-9387-47D4-B1BB-A0022C1A71B8}">
+        <File Id="FCTB" Source="$(var.SilverMonkey3.TargetDir)FastColoredTextBox.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+
+      <Component Id="Irony" Guid="{B078886D-97DD-491F-BFBB-5080A889CB12}">
+        <File Id="Irony" Source="$(var.SilverMonkey3.TargetDir)Irony.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- SQLite Components -->
+    <DirectoryRef Id="APPLICATIONFOLDER">
+      <Component Id="SQLite" Guid="{CADE1E29-CD6A-4301-8315-C611156C6462}">
+        <File Id="System.Data.SQLite" Source="$(var.SilverMonkey3.TargetDir)System.Data.SQLite.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="SQLiteLinq" Guid="{82579691-5906-4861-9f12-7c855ed7848f}">
+        <File Id="System.Data.SQLite.Linq.dll" Source="$(var.SilverMonkey3.TargetDir)System.Data.SQLite.Linq.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="SQLiteEF6" Guid="{0ae9984b-ac3c-4ec9-ab3c-717a4bebf455}">
+        <File Id="System.Data.SQLite.EF6.dll" Source="$(var.SilverMonkey3.TargetDir)System.Data.SQLite.EF6.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="EntityFramework" Guid="{ba158fe8-719e-4979-bbbb-85fd7cffd8f7}">
+        <File Id="EntityFramework.dll" Source="$(var.SilverMonkey3.TargetDir)EntityFramework.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="EntityFrameworkSqlServer" Guid="{ff852303-464b-414d-9a5b-1f431b1db645}">
+        <File Id="EntityFramework.SqlServer.dll" Source="$(var.SilverMonkey3.TargetDir)EntityFramework.SqlServer.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+
+      <!-- Support Squizzles Editor libs-->
+      <Component Id="ICSharpCode.AvalonEdit" Guid="{d609a14e-27ac-4090-ba65-4b0de6fa7b98}">
+        <File Id="ICSharpCode.AvalonEdit.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)ICSharpCode.AvalonEdit.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="MahApps.Metro" Guid="{e53c4590-dcd9-41da-bdf0-5757033500da}">
+        <File Id="MahApps.Metro.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)MahApps.Metro.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="MahApps.Metro.IconPacks.FontAwesome" Guid="{9280a072-b383-469c-8aca-97b758a93d59}">
+        <File Id="MahApps.Metro.IconPacks.FontAwesome.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)MahApps.Metro.IconPacks.FontAwesome.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="MahApps.Metro.IconPacks.Material" Guid="{ff628fff-acb8-414a-bea4-f3943bc90cec}">
+        <File Id="MahApps.Metro.IconPacks.Material.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)MahApps.Metro.IconPacks.Material.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="MahApps.Metro.IconPacks.Modern" Guid="{1a27fcad-ef59-4aa6-b7e9-3887f00fb48d}">
+        <File Id="MahApps.Metro.IconPacks.Modern.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)MahApps.Metro.IconPacks.Modern.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="Octokit" Guid="{b080ec40-816a-48bc-be06-a459c8c6332f}">
+        <File Id="Octokit.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Octokit.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="ControlzEx.dll" Guid="{4f12eec0-60bb-4d91-a462-f68191531926}">
+        <File Id="ControlzEx" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)ControlzEx.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="System.Windows.Interactivity.dll" Guid="{0349a069-d1ad-4387-83c5-5aea2b55b6ce}">
+        <File Id="System.Windows.Interactivity" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)System.Windows.Interactivity.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <!--  <Component Id="System.ValueTuple" Guid="{9b97c1f1-ccae-4d08-82fd-d215ac8bf6e5}">
+        <File Id="System.ValueTuple.dll" Source="$(var.SilverMonkey3.TargetDir)System.ValueTuple.dll" KeyPath="no" Checksum="yes" />
+      </Component> -->
+      <Component Id="Xceed.Wpf.AvalonDock.dll" Guid="{ee0089d2-0884-47c8-a30d-1065f051c8a1}">
+        <File Id="Xceed.Wpf.AvalonDock.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.AvalonDock.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Guid="{7e5885b5-f6ec-4f3d-b50d-a8acef729be4}">
+        <File Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.AvalonDock.Themes.Aero.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.Metro" Guid="{a367d94c-e573-4cb5-912e-b68b8495e392}">
+        <File Id="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.AvalonDock.Themes.Metro.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.VS2010" Guid="{416c70b9-fa5d-47b7-b871-235ba43b5b59}">
+        <File Id="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.AvalonDock.Themes.VS2010.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="Xceed.Wpf.DataGrid" Guid="{23dc95cd-7a52-4e9e-8370-599c5555786e}">
+        <File Id="Xceed.Wpf.DataGrid.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.DataGrid.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+      <Component Id="Xceed.Wpf.Toolkit" Guid="{9bcd87a4-0a9d-4267-940c-3f37c1eeed90}">
+        <File Id="Xceed.Wpf.Toolkit.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.Toolkit.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="X86">
+      <Component Id="X86" Guid="{E8C8E211-70E7-4B7E-B6B2-2058E91E7C13}">
+        <File Id="SQLite.Interop.X86" Source="$(var.SilverMonkey3.TargetDir)x86\SQLite.Interop.dll" KeyPath="no" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="X64">
+      <Component Id="X64" Guid="{7336B0B3-C8D0-4390-A714-837192E31007}">
+        <File Id="SQLite.Interop.X64" Source="$(var.SilverMonkey3.TargetDir)x64\SQLite.Interop.dll" KeyPath="no" />
+      </Component>
+    </DirectoryRef>
+  </Product>
+</Wix>

@@ -21,6 +21,12 @@
  <CreateProperty Value="%(AsmInfo.Version)">
  <Output TaskParameter="Value" PropertyName="FileVersion" />
  </CreateProperty>
+  <GetAssemblyIdentity AssemblyFiles="Build\$(Configuration)\Silver Monkey 3.exe">
+ <Output TaskParameter="Assemblies" ItemName="Sm3AsmInfo" />
+ </GetAssemblyIdentity>
+ <CreateProperty Value="%(Sm3AsmInfo.Version)">
+ <Output TaskParameter="Value" PropertyName="FileVersion" />
+ </CreateProperty>
 
  <!-- <CreateProperty Value="$(DefineConstants)">
  <Output TaskParameter="Value" PropertyName="DefineConstantsOriginal" />
