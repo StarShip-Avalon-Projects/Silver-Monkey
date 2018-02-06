@@ -92,10 +92,10 @@
 			<MonkeySpeakSourceFiles Include="Build\Installer\$(Configuration)\*.msi"/>
 			<MonkeySpeakSourceFiles Include="Build\$(Configuration)\*.rar"/>
 	</ItemGroup> 
-	<ItemGroup> 
+	<!--<ItemGroup> 
 			<SilverMonkey3SourceFiles Include="Build\Installer\$(Configuration)3\*.msi"/>
 			<SilverMonkey3SourceFiles Include="Build\$(Configuration)\*.rar"/>
-	</ItemGroup> 
+	</ItemGroup> -->
 		<Copy 
  SourceFiles="@(MonkeySpeakSourceFiles)" 
  DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(FileVersion)-PreAlpa%(Extension)')" />
