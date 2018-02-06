@@ -151,12 +151,11 @@
       <ComponentGroupRef Id="SilverMonkey3.Symbols" />
       <ComponentGroupRef Id="SilverMonkey3.Content" />
       <ComponentGroupRef Id="SilverMonkey3.Satellites" />
+      <ComponentRef Id="Caliburn.Micro.Platform.Core" />
+      <ComponentRef Id="Caliburn.Micro.Platform" />
+      <ComponentRef Id="Caliburn.Micro" />
 
       <ComponentRef Id="smHelp" />
-
-      <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Binaries" />
-      <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Symbols" />
-      <ComponentGroupRef Id="MonkeyCore.WinFormsControls.Content" />
 
       <ComponentGroupRef Id="MonkeyCore.Binaries" />
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
@@ -280,6 +279,18 @@
       </Component>
       <Component Id="EntityFrameworkSqlServer" Guid="{ff852303-464b-414d-9a5b-1f431b1db645}">
         <File Id="EntityFramework.SqlServer.dll" Source="$(var.SilverMonkey3.TargetDir)EntityFramework.SqlServer.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+
+      <Component Id="Caliburn.Micro.Platform.Core" Guid="{285e8b59-2f3c-43f8-ab0e-8e1a6e6dc6ce}">
+        <File Id="Caliburn.Micro.Platform.Core.dll" Source="$(var.SilverMonkey3.TargetDir)Caliburn.Micro.Platform.Core.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+
+      <Component Id="Caliburn.Micro.Platform" Guid="{285e8b59-2f3c-43f8-ab0e-8e1a6e6dc6ce}">
+        <File Id="Caliburn.Micro.Platform.dll" Source="$(var.SilverMonkey3.TargetDir)Caliburn.Micro.Platform.dll" KeyPath="no" Checksum="yes" />
+      </Component>
+
+      <Component Id="Caliburn.Micro" Guid="{f0e684df-9bf8-455b-b085-4966c9299fef}">
+        <File Id="Caliburn.Micro.dll" Source="$(var.SilverMonkey3.TargetDir)Caliburn.Micro.dll" KeyPath="no" Checksum="yes" />
       </Component>
 
       <!-- Support Squizzles Editor libs-->

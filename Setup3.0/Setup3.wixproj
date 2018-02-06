@@ -64,15 +64,6 @@
       <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj">
-      <Name>MonkeyCore.WinFormsControls</Name>
-      <Project>{6a9fc31d-150b-4c4b-9694-7f8c084df602}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
       <Name>MonkeyCore2</Name>
       <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>

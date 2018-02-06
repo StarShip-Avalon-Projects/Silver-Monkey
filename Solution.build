@@ -21,11 +21,12 @@
  <CreateProperty Value="%(AsmInfo.Version)">
  <Output TaskParameter="Value" PropertyName="FileVersion" />
  </CreateProperty>
+
   <GetAssemblyIdentity AssemblyFiles="Build\$(Configuration)\Silver Monkey 3.exe">
  <Output TaskParameter="Assemblies" ItemName="Sm3AsmInfo" />
  </GetAssemblyIdentity>
  <CreateProperty Value="%(Sm3AsmInfo.Version)">
- <Output TaskParameter="Value" PropertyName="FileVersion" />
+ <Output TaskParameter="Value" PropertyName="Sm3FileVersion" />
  </CreateProperty>
 
  <!-- <CreateProperty Value="$(DefineConstants)">
@@ -73,7 +74,9 @@
  <Target Name="Clean" Condition=" '$(Configuration)' == 'Debug' ">
  <ItemGroup>
 		<FilesToDelete Include="Build\Debug\*.rar"/>
-		<FilesToDelete Include="Build\elease\*.rar"/>
+		<FilesToDelete Include="Build\Release\*.rar"/>
+		<FilesToDelete Include="Build\Debug3\*.rar"/>
+		<FilesToDelete Include="Build\Release3\*.rar"/>
 		<FilesToDelete Include="Build\Installer\*.msi"/>
 		<FilesToDelete Include="Build\Installer\*.rar"/>
 		<FilesToDelete Include="Build\Installer\*.zip"/>
@@ -88,10 +91,17 @@
 	 <ItemGroup> 
 			<MonkeySpeakSourceFiles Include="Build\Installer\$(Configuration)\*.msi"/>
 			<MonkeySpeakSourceFiles Include="Build\$(Configuration)\*.rar"/>
-		</ItemGroup> 
+	</ItemGroup> 
+	<ItemGroup> 
+			<SilverMonkey3SourceFiles Include="Build\Installer\$(Configuration)3\*.msi"/>
+			<SilverMonkey3SourceFiles Include="Build\$(Configuration)\*.rar"/>
+	</ItemGroup> 
 		<Copy 
  SourceFiles="@(MonkeySpeakSourceFiles)" 
  DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(FileVersion)-PreAlpa%(Extension)')" />
+ 		<Copy 
+ SourceFiles="@(SilverMonkey3SourceFiles)" 
+ DestinationFiles="@(SilverMonkey3SourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(Sm3FileVersion)-PreAlpa%(Extension)')" />
 
  </Target>
 
