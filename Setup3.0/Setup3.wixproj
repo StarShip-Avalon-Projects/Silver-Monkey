@@ -9,7 +9,7 @@
     <ProductVersion>3.9</ProductVersion>
     <ProjectGuid>{3f6ef586-6818-4d23-817a-b282bf2ffa8e}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>SilverMonkey3-Setup</OutputName>
+    <OutputName>SilverMonkey3_Setup</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\WiX Toolset\v4\wix.targets</WixTargetsPath>
     <WixToolPath>C:\Program Files (x86)\WiX Toolset v4.0\bin\</WixToolPath>
@@ -108,6 +108,15 @@
       </DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak.Editor.Collaborate\Monkeyspeak.Editor.Collaborate.csproj">
+      <Name>Monkeyspeak.Editor.Collaborate</Name>
+      <Project>{d2d53365-7195-41b7-adc8-38fd2de476cc}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak.Editor.Interfaces\Monkeyspeak.Editor.Interfaces.csproj">
       <Name>Monkeyspeak.Editor.Interfaces</Name>

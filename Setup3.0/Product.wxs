@@ -171,6 +171,11 @@
       <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Symbols" />
       <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Satellites" />
 
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Collaborate.Binaries" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Collaborate.Content" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Collaborate.Symbols" />
+      <ComponentGroupRef Id="Monkeyspeak.Editor.Collaborate.Satellites" />
+
       <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Binaries" />
       <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Content" />
       <ComponentGroupRef Id="Monkeyspeak.Editor.Interfaces.Symbols" />
