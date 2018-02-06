@@ -115,6 +115,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonkeyCore.WinFormsControls", "MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj", "{6A9FC31D-150B-4C4B-9694-7F8C084DF602}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup3", "Setup3.0\Setup3.wixproj", "{3F6EF586-6818-4D23-817A-B282BF2FFA8E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C9EDB4B0-618F-497D-944F-AB0A72736B00} = {C9EDB4B0-618F-497D-944F-AB0A72736B00}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
