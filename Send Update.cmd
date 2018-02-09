@@ -15,6 +15,10 @@ set git.exe_STATUS=%ERRORLEVEL%
 if not %GIT_STATUS%==0 goto eof
 
 rem git submodule foreach "git push || true"
+:AutoPruneLocal
+git.exe rc --prune=now --auto
+set git.exe_STATUS=%ERRORLEVEL% 
+if not %GIT_STATUS%==0 goto eof
 
 :PullRequest
 call PullRequest.cmd
