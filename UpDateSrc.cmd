@@ -1,7 +1,8 @@
 :GitPullCurrent
 
 rem git checkout V3.0
-git.exe pull --recurse-submodules=on-demand
+git.exe pull origin --recurse-submodules=on-demand 
+rem --rebase --autostash
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto fail 
 
@@ -34,5 +35,7 @@ cd ..
 :eof
 
 exit /b 0
-
+:fail
+pause
+exit /b 0
 
