@@ -1,18 +1,14 @@
-﻿using MonkeyCore2.IO;
-using FurcLog = Furcadia.Logging;
-using MsLog = Monkeyspeak.Logging;
+﻿using Engine.BotSession;
 using Furcadia.Net;
-using Furcadia.Net.Options;
-using Furcadia.Net.Proxy;
-using Engine.BotSession;
-
+using Furcadia.Net.Utils.ServerParser;
+using MonkeyCore2.IO;
 using NUnit.Framework;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using static Libraries.MsLibHelper;
 using static SmEngineTests.Utilities;
-using Furcadia.Net.Utils.ServerParser;
+using FurcLog = Furcadia.Logging;
+using MsLog = Monkeyspeak.Logging;
 
 namespace SmEngineTests.BotScriptTests
 {
@@ -40,6 +36,20 @@ namespace SmEngineTests.BotScriptTests
         [OneTimeSetUp]
         public void Initialize()
         {
+            MsLog.Logger.InfoEnabled = true;
+            MsLog.Logger.SuppressSpam = true;
+            MsLog.Logger.ErrorEnabled = true;
+            MsLog.Logger.WarningEnabled = true;
+            MsLog.Logger.SingleThreaded = true;
+            MsLog.Logger.LogOutput = new MsLog.MultiLogOutput(new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath, "TurretTests.log"), MsLog.Level.Debug), new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath, "TurretTests.log"), MsLog.Level.Warning), new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath), MsLog.Level.Debug), new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath), MsLog.Level.Error));
+
+            FurcLog.Logger.InfoEnabled = true;
+            FurcLog.Logger.SuppressSpam = true;
+            FurcLog.Logger.ErrorEnabled = true;
+            FurcLog.Logger.WarningEnabled = true;
+            FurcLog.Logger.SingleThreaded = true;
+            FurcLog.Logger.LogOutput = new FurcLog.MultiLogOutput(new FurcLog.FileLogOutput(FurcLog.Level.Debug), new FurcLog.FileLogOutput(FurcLog.Level.Error));
+
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
             var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -114,6 +124,8 @@ namespace SmEngineTests.BotScriptTests
         [OneTimeTearDown]
         public void Cleanup()
         {
+            if (Proxy == null)
+                return;
             BotHaseDisconnected();
             Proxy.ClientData2 -= (data) => Proxy.SendToServer(data);
             Proxy.ServerData2 -= (data) => Proxy.SendToClient(data);
@@ -130,7 +142,7 @@ namespace SmEngineTests.BotScriptTests
             Task.Run(() => Proxy.ConnetAsync()).Wait();
             Proxy.MSpage.Error += (page, handler, trigger, ex) =>
                 MsLog.Logger.Error($"{page} {handler}  {trigger}  {ex}");
-            MsLog.Logger.LogOutput = new MsLog.MultiLogOutput(new MsLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, MsLog.Level.Debug), new MsLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, MsLog.Level.Error));
+            MsLog.Logger.LogOutput = new MsLog.MultiLogOutput(new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath, "TurretTests.log"), MsLog.Level.Debug), new MsLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, MsLog.Level.Error));
             FurcLog.Logger.LogOutput = new FurcLog.MultiLogOutput(new FurcLog.FileLogOutput(FurcLog.Level.Debug), new FurcLog.FileLogOutput(FurcLog.Level.Error));
             HaltFor(ConnectWaitTime);
 
@@ -168,6 +180,13 @@ namespace SmEngineTests.BotScriptTests
                 }
             });
         }
+
+        //[TearDown]
+        //public void TearDown()
+        //{ }
+
+        //[SetUp]
+        //public void setup() { }
 
         public void BotHaseDisconnected()
         {

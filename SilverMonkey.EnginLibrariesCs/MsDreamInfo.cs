@@ -185,8 +185,11 @@ namespace Libraries
                 return DreamInfo.DreamOwner.ToLower()
                     == dreamOwner.ToFurcadiaShortName();
             }
+            if (!string.IsNullOrWhiteSpace(title) && !string.IsNullOrWhiteSpace(dreamOwner))
+                return DreamInfo.Name.ToLower()
+                    == $"{dreamOwner.ToFurcadiaShortName()}:{title.ToFurcadiaShortName()}";
             return DreamInfo.Name.ToLower()
-                == $"{dreamOwner.ToFurcadiaShortName()}:{title.ToFurcadiaShortName()}";
+                    == $"{dreamOwner.ToFurcadiaShortName()}";
         }
 
         private bool ShareFurreNamed(TriggerReader reader)

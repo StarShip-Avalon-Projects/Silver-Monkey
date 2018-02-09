@@ -16,23 +16,23 @@ namespace SmEngineTests
         public const int CleanupDelayTime = 5;
         public const int OneTimeSetupDelay = 5;
 
-        public static void SetLogger()
-        {
-            MsLog.Logger.InfoEnabled = true;
-            MsLog.Logger.SuppressSpam = true;
-            MsLog.Logger.ErrorEnabled = true;
-            MsLog.Logger.WarningEnabled = true;
-            MsLog.Logger.SingleThreaded = true;
+        //public static void SetLogger()
+        //{
+        //    MsLog.Logger.InfoEnabled = true;
+        //    MsLog.Logger.SuppressSpam = true;
+        //    MsLog.Logger.ErrorEnabled = true;
+        //    MsLog.Logger.WarningEnabled = true;
+        //    MsLog.Logger.SingleThreaded = true;
 
-            //     Logger.LogOutput = new MultiLogOutput(new FileLogOutput(Level.Debug), new FileLogOutput(Level.Error));
+        //    //     Logger.LogOutput = new MultiLogOutput(new FileLogOutput(Level.Debug), new FileLogOutput(Level.Error));
 
-            FurcLog.Logger.InfoEnabled = true;
-            FurcLog.Logger.SuppressSpam = true;
-            FurcLog.Logger.ErrorEnabled = true;
-            FurcLog.Logger.WarningEnabled = true;
-            FurcLog.Logger.SingleThreaded = true;
-            //   Monkeyspeak.Logging.Logger.LogOutput = new Monkeyspeak.Logging.MultiLogOutput(new Monkeyspeak.Logging.FileLogOutput(Monkeyspeak.Logging.Level.Debug), new Monkeyspeak.Logging.FileLogOutput(Monkeyspeak.Logging.Level.Error));
-        }
+        //    FurcLog.Logger.InfoEnabled = true;
+        //    FurcLog.Logger.SuppressSpam = true;
+        //    FurcLog.Logger.ErrorEnabled = true;
+        //    FurcLog.Logger.WarningEnabled = true;
+        //    FurcLog.Logger.SingleThreaded = true;
+        //    //   Monkeyspeak.Logging.Logger.LogOutput = new Monkeyspeak.Logging.MultiLogOutput(new Monkeyspeak.Logging.FileLogOutput(Monkeyspeak.Logging.Level.Debug), new Monkeyspeak.Logging.FileLogOutput(Monkeyspeak.Logging.Level.Error));
+        //}
 
         public static void HaltFor(int seconds)
         {

@@ -51,6 +51,11 @@ namespace SmEngineTests
             File.Copy(SettingsFile, BackupSettingsFile, true);
         }
 
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+        }
+
         [SetUp]
         public void Initialize()
         {

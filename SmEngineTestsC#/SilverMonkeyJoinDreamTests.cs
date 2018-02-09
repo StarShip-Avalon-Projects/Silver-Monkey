@@ -1,5 +1,6 @@
 ﻿using Engine.BotSession;
-using Furcadia.Logging;
+using FurcLog = Furcadia.Logging;
+using MsLog = Monkeyspeak.Logging;
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
 using MonkeyCore2.IO;
@@ -15,6 +16,25 @@ namespace SmEngineTests
     [TestFixture]
     public class SilverMonkeyJoinDreamTests
     {
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            MsLog.Logger.InfoEnabled = true;
+            MsLog.Logger.SuppressSpam = true;
+            MsLog.Logger.ErrorEnabled = true;
+            MsLog.Logger.WarningEnabled = true;
+            MsLog.Logger.SingleThreaded = true;
+
+            //     Logger.LogOutput = new MultiLogOutput(new FileLogOutput(Level.Debug), new FileLogOutput(Level.Error));
+
+            FurcLog.Logger.InfoEnabled = true;
+            FurcLog.Logger.SuppressSpam = true;
+            FurcLog.Logger.ErrorEnabled = true;
+            FurcLog.Logger.WarningEnabled = true;
+            FurcLog.Logger.SingleThreaded = true;
+            //   Monkeyspeak.Logging.Logger.LogOutput = new Monkeyspeak.Logging.MultiLogOutput(new Monkeyspeak.Logging.FileLogOutput(Monkeyspeak.Logging.Level.Debug), new Monkeyspeak.Logging.FileLogOutput(Monkeyspeak.Logging.Level.Error));
+        }
+
         #region Private Fields
 
         private const string CookieBank = "<font color='emit'><img src='fsh://system.fsh:90' alt='@cookie' /><channel name='@cookie' /> Cookie <a href='http://www.furcadia.com/cookies/Cookie%20Economy.html'>bank</a> has currently collected: 0</font>";
@@ -96,7 +116,7 @@ namespace SmEngineTests
             DisconnectTests();
             Proxy.ClientData2 -= data => Proxy.SendToServer(data);
             Proxy.ServerData2 -= data => Proxy.SendToClient(data);
-            Proxy.Error -= (e, o) => Logger.Error($"{e} {o}");
+            Proxy.Error -= (e, o) => MsLog.Logger.Error($"{e} {o}");
 
             Proxy.Dispose();
             Options = null;
@@ -181,7 +201,7 @@ namespace SmEngineTests
             options.SaveBotSettings();
 
             Proxy = new Bot(options);
-            Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
+            Proxy.Error += (e, o) => MsLog.Logger.Error($"{e} {o}");
             BotHasConnected(Proxy.StandAlone);
         }
 

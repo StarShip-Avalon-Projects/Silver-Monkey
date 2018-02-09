@@ -37,7 +37,6 @@
     <Compile Include="BotScriptTests\TurretTests_Alt_SilverMonkey.cs" />
     <Compile Include="MonkeySpeak\MonkeySpeakTests.cs" />
     <Compile Include="MonkeySpeak\MsDatabaseRecords.cs" />
-    <Compile Include="OneTimeSetupAndTearDown.cs" />
     <Compile Include="PhoenixSpeakTests.cs" />
     <Compile Include="QueryTests.cs" />
     <Compile Include="SilerMonkeyEngineTests.cs" />
@@ -99,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NUnit">
-      <Version>3.9.0</Version>
+      <Version>3.8.1</Version>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite">
       <Version>1.0.107</Version>
