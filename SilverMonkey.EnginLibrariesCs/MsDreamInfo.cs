@@ -139,7 +139,7 @@ namespace Libraries
               "give share to the furre named {..} if they're in the Dream right now.");
         }
 
-        private static bool EnterOrLeaveTheDreamNamed(TriggerReader reader)
+        private bool EnterOrLeaveTheDreamNamed(TriggerReader reader)
         {
             ReadDreamParams(reader);
             return DreamNameIs(reader);
@@ -168,24 +168,32 @@ namespace Libraries
             return DreamInfo.DreamOwner.ToFurcadiaShortName() == ParentBotSession.ConnectedFurre.ShortName;
         }
 
-        private static bool DreamNameIsNot(TriggerReader reader)
+        private bool DreamNameIsNot(TriggerReader reader)
         {
-            MsLog.Logger.Debug<MsDreamInfo>("Dream Is Not");
-            return !DreamNameIsInternal(reader);
+            var dreamname = !DreamNameIsInternal(reader);
+            MsLog.Logger.Debug<MsDreamInfo>($"DreamNameIsNot {dreamname}");
+            return dreamname;
         }
 
-        private static bool DreamNameIs(TriggerReader reader)
+        private bool DreamNameIs(TriggerReader reader)
         {
-            MsLog.Logger.Debug<MsDreamInfo>("Dream Is");
-            return DreamNameIsInternal(reader);
+            var dreamname = DreamNameIsInternal(reader);
+            MsLog.Logger.Debug<MsDreamInfo>($"DreamNameIs {dreamname}");
+            return dreamname;
         }
 
-        internal static bool DreamNameIsInternal(TriggerReader reader)
+        internal bool DreamNameIsInternal(TriggerReader reader)
         {
             string dreamOwner;
             string title;
 
-            var url = reader.ReadString().ToLower().Replace("furc://", "").TrimEnd('/');
+            var url = reader.ReadString();
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                //  MsLog.Logger.Warn<MsDreamInfo>("No argument supplied");
+                return false;
+            }
+            url = url.ToLower().Replace("furc://", "").TrimEnd('/');
             var urlSegments = url.Split(new char[] { ':' }, 2, StringSplitOptions.None);
             if (urlSegments.Length == 2)
             {

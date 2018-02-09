@@ -7,7 +7,7 @@
 		(5:102) print {Arrived in Dream %DREAMNAME} to the log.
 
 (0:34) When the bot enters a Dream,
-    (1:35) and the Dream Name is not {The Shoddy Ribbon: Murder Mystery Hotel(WIP)},
+    (1:35) and the Dream Name is not {The Shoddy Ribbon},
     (1:35) and the Dream Name is not {Furrabian Nights},
 	   (5:16) whisper {DREAMNAME is Not %DREAMNAME} to furre named {%BOTCONTROLLER}.
 		(5:102) print {NOT MY MINTY~~~} to the log.
