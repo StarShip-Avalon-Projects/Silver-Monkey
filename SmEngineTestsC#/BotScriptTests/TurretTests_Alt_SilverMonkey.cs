@@ -130,7 +130,7 @@ namespace SmEngineTests.BotScriptTests
             Task.Run(() => Proxy.ConnetAsync()).Wait();
             Proxy.MSpage.Error += (page, handler, trigger, ex) =>
                 MsLog.Logger.Error($"{page} {handler}  {trigger}  {ex}");
-            MsLog.Logger.LogOutput = new MsLog.MultiLogOutput(new MsLog.FileLogOutput(MsLog.Level.Debug), new MsLog.FileLogOutput(MsLog.Level.Error));
+            MsLog.Logger.LogOutput = new MsLog.MultiLogOutput(new MsLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, MsLog.Level.Debug), new MsLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, MsLog.Level.Error));
             FurcLog.Logger.LogOutput = new FurcLog.MultiLogOutput(new FurcLog.FileLogOutput(FurcLog.Level.Debug), new FurcLog.FileLogOutput(FurcLog.Level.Error));
             HaltFor(ConnectWaitTime);
 

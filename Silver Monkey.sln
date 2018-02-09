@@ -29,10 +29,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Backup.cmd = Backup.cmd
 		LICENSE = LICENSE
 		MsBuildSolution.cmd = MsBuildSolution.cmd
+		PullRequest.cmd = PullRequest.cmd
 		README.md = README.md
 		Release Notes.txt = Release Notes.txt
+		Send Update.cmd = Send Update.cmd
 		Solution.build = Solution.build
 		TODO.txt = TODO.txt
+		UpdateFrom2.19.xElta.cmd = UpdateFrom2.19.xElta.cmd
 		UpDateSrc.cmd = UpDateSrc.cmd
 	EndProjectSection
 EndProject

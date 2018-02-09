@@ -4,7 +4,8 @@ Imports System.Diagnostics
 Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Windows.Forms
-Imports Furcadia.Logging
+Imports furcLog = Furcadia.Logging
+Imports MsLog = Monkeyspeak.Logging
 Imports Furcadia.Net
 Imports Furcadia.Net.DreamInfo
 Imports Furcadia.Net.Utils.ServerParser
@@ -17,6 +18,7 @@ Imports Engine.BotSession
 Imports SilverMonkey.Engine.Libraries.Web
 Imports SilverMonkey.HelperClasses
 Imports SilverMonkey.HelperClasses.TextDisplayManager
+Imports MonkeyCore2.IO
 
 Public Class Main
     Inherits Form
@@ -108,18 +110,18 @@ Public Class Main
         ''  MS_KeysIni.Load(Path.Combine(ApplicationPath, "Keys-MS.ini"))
 
         InitializeTextControls()
-        Monkeyspeak.Logging.Logger.InfoEnabled = True
-        Monkeyspeak.Logging.Logger.SuppressSpam = False
-        Monkeyspeak.Logging.Logger.WarningEnabled = True
-        Monkeyspeak.Logging.Logger.SingleThreaded = True
+        MsLog.Logger.InfoEnabled = True
+        MsLog.Logger.SuppressSpam = False
+        MsLog.Logger.WarningEnabled = True
+        MsLog.Logger.SingleThreaded = True
 
-        Furcadia.Logging.Logger.InfoEnabled = True
-        Furcadia.Logging.Logger.SuppressSpam = False
-        Furcadia.Logging.Logger.WarningEnabled = True
-        Furcadia.Logging.Logger.SingleThreaded = True
-        Furcadia.Logging.Logger.LogOutput = New MultiLogOutput(New FileLogOutput(Level.Debug), New FileLogOutput(Level.Error), New Engine.MultipleLogOutput())
+        furcLog.Logger.InfoEnabled = True
+        furcLog.Logger.SuppressSpam = False
+        furcLog.Logger.WarningEnabled = True
+        furcLog.Logger.SingleThreaded = True
+        furcLog.Logger.LogOutput = New furcLog.MultiLogOutput(New furcLog.FileLogOutput(furcLog.Level.Debug), New furcLog.FileLogOutput(furcLog.Level.Error), New Engine.MultipleLogOutput())
 
-        Monkeyspeak.Logging.Logger.LogOutput = New Monkeyspeak.Logging.MultiLogOutput(New Monkeyspeak.Logging.FileLogOutput(CType(Level.Debug, Monkeyspeak.Logging.Level)), New Monkeyspeak.Logging.FileLogOutput(CType(Level.Error, Monkeyspeak.Logging.Level)), New Engine.MultipleLogOutput())
+        MsLog.Logger.LogOutput = New MsLog.MultiLogOutput(New MsLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, MsLog.Level.Debug), New MsLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, MsLog.Level.Error), New Engine.MultipleLogOutput())
     End Sub
 
 #End Region
@@ -333,16 +335,16 @@ Public Class Main
     ''' Send formatted text to log box
     ''' </summary>
     ''' <param name="Message"></param>
-    Public Shared Sub SndDisplay(Message As Monkeyspeak.Logging.LogMessage)
+    Public Shared Sub SndDisplay(Message As MsLog.LogMessage)
 
         If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor
         Select Case Message.Level
-            Case Monkeyspeak.Logging.Level.Warning
+            Case MsLog.Level.Warning
                 newColor = DisplayColors.Warning
-            Case Monkeyspeak.Logging.Level.Debug
+            Case MsLog.Level.Debug
                 newColor = DisplayColors.Warning
-            Case Monkeyspeak.Logging.Level.Error
+            Case MsLog.Level.Error
                 newColor = DisplayColors.Error
         End Select
         SndDisplay(Message.message, newColor)
@@ -352,14 +354,14 @@ Public Class Main
     ''' Send formatted text to log box
     ''' </summary>
     ''' <param name="Message"></param>
-    Public Shared Sub SndDisplay(Message As Furcadia.Logging.LogMessage)
+    Public Shared Sub SndDisplay(Message As furcLog.LogMessage)
 
         If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor
         Select Case Message.Level
-            Case Furcadia.Logging.Level.Warning
+            Case furcLog.Level.Warning
                 newColor = DisplayColors.Error
-            Case Furcadia.Logging.Level.Debug Or Furcadia.Logging.Level.Error
+            Case furcLog.Level.Debug Or furcLog.Level.Error
                 newColor = DisplayColors.Warning
         End Select
         SndDisplay(Message.message, newColor)
@@ -506,12 +508,12 @@ Public Class Main
 
                         FileLogWriter = New LogStream(BotConfig.LogOptions)
                     Catch
-                        Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogName}")
+                        furcLog.Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogName}")
                         Exit Sub
                     End Try
                 End If
 
-                Monkeyspeak.Logging.Logger.Info("New Session Started")
+                MsLog.Logger.Info("New Session Started")
                 Await FurcSession.ConnetAsync()
                 If FurcSession.IsServerSocketConnected Then
                     ConnectTrayIconMenuItem.Enabled = False
@@ -910,11 +912,11 @@ Public Class Main
 
                 UpdateBotConfig(File)
                 EditBotToolStripMenuItem.Enabled = True
-                Monkeyspeak.Logging.Logger.Info($"Loaded: ""{ File }""")
+                MsLog.Logger.Info($"Loaded: ""{ File }""")
             ElseIf Mainsettings.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) And My.Application.CommandLineArgs.Count = 0 Then
                 UpdateBotConfig(My.Settings.LastBotFile)
                 EditBotToolStripMenuItem.Enabled = True
-                Monkeyspeak.Logging.Logger.Info($"Loaded: ""{My.Settings.LastBotFile}""")
+                MsLog.Logger.Info($"Loaded: ""{My.Settings.LastBotFile}""")
             End If
 
             'If Not IsNothing(BotConfig) Then
@@ -924,7 +926,7 @@ Public Class Main
             '    End If
             'End If
         Catch ex As Exception
-            Furcadia.Logging.Logger.Error(ex)
+            furcLog.Logger.Error(ex)
         End Try
     End Sub
 

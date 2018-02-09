@@ -253,6 +253,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Furcadia.Net.DreamInfo.Dream.datasource" />
+    <Content Include="MS Scripts.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

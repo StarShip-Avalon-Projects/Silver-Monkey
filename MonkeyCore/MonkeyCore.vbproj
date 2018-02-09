@@ -153,7 +153,6 @@
     </Compile>
     <Compile Include="Controls\Win32.vb" />
     <Compile Include="GlobalSuppressions.vb" />
-    <Compile Include="IO\NewEditorScripts.vb" />
     <Compile Include="Utils\Logging\LogSteamOptions.vb" />
     <Compile Include="Utils\Logging\LogStream.vb" />
     <Compile Include="Utils\MessageHelper.vb" />
