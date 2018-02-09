@@ -238,6 +238,8 @@
       <ComponentRef Id="MahApps.Metro.IconPacks.Modern" />
 
       <!--   <ComponentRef Id="System.ValueTuple" /> -->
+
+      <ComponentRef Id="SharpYaml.dll" />
       <ComponentRef Id="Xceed.Wpf.AvalonDock.dll" />
       <ComponentRef Id="Xceed.Wpf.AvalonDock.Themes.Metro" />
       <ComponentRef Id="Xceed.Wpf.AvalonDock.Themes.VS2010" />
@@ -288,6 +290,10 @@
       </Component>
 
       <!-- Support Squizzles Editor libs-->
+
+      <Component Id="SharpYaml.dll" Guid="{e673cda6-d5f1-4a6a-bdc8-0a8b8f3067b5}">
+        <File Id="SharpYaml.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)SharpYaml.dll" KeyPath="no" Checksum="yes" />
+      </Component>
       <Component Id="ICSharpCode.AvalonEdit" Guid="{d609a14e-27ac-4090-ba65-4b0de6fa7b98}">
         <File Id="ICSharpCode.AvalonEdit.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)ICSharpCode.AvalonEdit.dll" KeyPath="no" Checksum="yes" />
       </Component>

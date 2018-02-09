@@ -1,6 +1,6 @@
 :GitPullCurrent
 
-git checkout V3.0
+rem git checkout V3.0
 git.exe pull --recurse-submodules=on-demand
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto fail 
