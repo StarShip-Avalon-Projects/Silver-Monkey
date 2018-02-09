@@ -170,16 +170,12 @@ namespace Libraries
 
         private bool DreamNameIsNot(TriggerReader reader)
         {
-            var dreamname = !DreamNameIsInternal(reader);
-            MsLog.Logger.Debug<MsDreamInfo>($"DreamNameIsNot {dreamname}");
-            return dreamname;
+            return !DreamNameIsInternal(reader);
         }
 
         private bool DreamNameIs(TriggerReader reader)
         {
-            var dreamname = DreamNameIsInternal(reader);
-            MsLog.Logger.Debug<MsDreamInfo>($"DreamNameIs {dreamname}");
-            return dreamname;
+            return DreamNameIsInternal(reader);
         }
 
         internal bool DreamNameIsInternal(TriggerReader reader)
