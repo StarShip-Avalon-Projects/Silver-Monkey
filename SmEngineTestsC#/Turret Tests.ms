@@ -10,11 +10,9 @@
     (1:35) and the Dream Name is not {The Shoddy Ribbon: Murder Mystery Hotel(WIP)},
     (1:35) and the Dream Name is not {Furrabian Nights},
 	   (5:16) whisper {DREAMNAME is Not %DREAMNAME} to furre named {%BOTCONTROLLER}.
+		(5:102) print {NOT MY MINTY~~~} to the log.
          (5:16) whisper {Downloading Dream furc://theshoddyribbon} to furre named {%BOTCONTROLLER}.
 	  (5:10) say {`fdl furc://theshoddyribbon}.
-	(1:34) and the Dream Name is {The Shoddy Ribbon: Murder Mystery Hotel(WIP)},
-		(5:16) whisper {DREAMNAME is %DREAMNAME} to furre named {%BOTCONTROLLER}.
-	(1:34) and the Dream Name is {Furrabian Nights},
-		(5:16) whisper {DREAMNAME is %DREAMNAME} to furre named {%BOTCONTROLLER}.
+
 
 *Endtriggers* 8888 *Endtriggers*

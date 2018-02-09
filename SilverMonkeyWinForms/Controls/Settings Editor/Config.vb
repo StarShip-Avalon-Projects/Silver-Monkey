@@ -56,7 +56,6 @@ Public Class Config
         chkBxBroadcast.Checked = Main.Mainsettings.Broadcast
         chkBxAutoLoadLastBotFile.Checked = Main.Mainsettings.LoadLastBotFile
         chkBxClientDisconnectToggle.Checked = Main.Mainsettings.DisconnectPopupToggle
-        Me.Location = My.Settings.ConfigFormLocation
 
         CheckBox1.Checked = Main.Mainsettings.PSShowClient
         'CheckBox2.Checked = Main.MainSettings.PSShowSettingsWindow
@@ -159,20 +158,13 @@ Public Class Config
         Main.Mainsettings.TimeStamp = CUShort(ChkTimeStamp.CheckState)
     End Sub
 
-    Private Sub Config_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        My.Settings.ConfigFormLocation = Me.Location
-        My.Settings.Save()
-    End Sub
-
     Private Sub Config_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
-        ConfigTabs.SelectedIndex = My.Settings.ConfigSelectedTab
         Loadconfig()
     End Sub
 
     Private Sub ConfigTabs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles _
         ConfigTabs.SelectedIndexChanged
         Dim s As TabControl = CType(sender, TabControl)
-        My.Settings.ConfigSelectedTab = s.SelectedIndex
     End Sub
 
     Private Sub DefaultColorBox_Click(sender As Object, e As EventArgs) Handles _
