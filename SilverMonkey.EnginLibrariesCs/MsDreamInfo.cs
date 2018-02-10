@@ -170,47 +170,25 @@ namespace Libraries
 
         private bool DreamNameIsNot(TriggerReader reader)
         {
-            return !DreamNameIsInternal(reader);
+            return !DreamNameIs(reader);
         }
 
         private bool DreamNameIs(TriggerReader reader)
         {
-            return DreamNameIsInternal(reader);
-        }
+            var url = reader.ReadString().ToLower().Trim().Replace("furc://", "").TrimEnd('/');
 
-        internal bool DreamNameIsInternal(TriggerReader reader)
-        {
-            string dreamOwner;
-            string title;
+            if (string.IsNullOrWhiteSpace(url)) { return false; }
 
-            var url = reader.ReadString();
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                //  MsLog.Logger.Warn<MsDreamInfo>("No argument supplied");
-                return false;
-            }
-            url = url.ToLower().Replace("furc://", "").TrimEnd('/');
             var urlSegments = url.Split(new char[] { ':' }, 2, StringSplitOptions.None);
-            if (urlSegments.Length == 2)
+
+            if (urlSegments.Length < 1)
             {
-                dreamOwner = urlSegments[0];
-                title = urlSegments[1];
+                return DreamInfo.Name == urlSegments[0].ToFurcadiaShortName();
             }
             else
             {
-                dreamOwner = url;
-                title = null;
+                return DreamInfo.Name == $"{urlSegments[0].ToFurcadiaShortName()}:{urlSegments[1].ToFurcadiaShortName()}";
             }
-            if (string.IsNullOrWhiteSpace(title))
-            {
-                return DreamInfo.DreamOwner.ToLower()
-                    == dreamOwner.ToFurcadiaShortName();
-            }
-            if (!string.IsNullOrWhiteSpace(title) && !string.IsNullOrWhiteSpace(dreamOwner))
-                return DreamInfo.Name.ToLower()
-                    == $"{dreamOwner.ToFurcadiaShortName()}:{title.ToFurcadiaShortName()}";
-            return DreamInfo.Name.ToLower()
-                    == $"{dreamOwner.ToFurcadiaShortName()}";
         }
 
         private bool ShareFurreNamed(TriggerReader reader)
@@ -221,7 +199,7 @@ namespace Libraries
                 return SendServer($"share {Target.ShortName}");
             }
 
-            MsLog.Logger.Info($"{Target.Name} Is Not in the dream");
+            MsLog.Logger.Warn($"{Target.Name} Is Not in the dream");
             return false;
         }
 
@@ -243,7 +221,7 @@ namespace Libraries
                 return SendServer($"unshare {Target.ShortName}");
             }
 
-            MsLog.Logger.Info($"{Target.Name} Is Not in the dream");
+            MsLog.Logger.Warn($"{Target.Name} Is Not in the dream");
             return false;
         }
 
