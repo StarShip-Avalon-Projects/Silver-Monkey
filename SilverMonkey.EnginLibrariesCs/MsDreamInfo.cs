@@ -175,20 +175,19 @@ namespace Libraries
 
         private bool DreamNameIs(TriggerReader reader)
         {
-            var url = reader.ReadString().ToLower().Trim().Replace("furc://", "").TrimEnd('/');
+            var url = reader.ReadString();
 
             if (string.IsNullOrWhiteSpace(url)) { return false; }
 
+            url = url.ToLower().Trim().Replace("furc://", "").TrimEnd('/');
+
             var urlSegments = url.Split(new char[] { ':' }, 2, StringSplitOptions.None);
 
-            if (urlSegments.Length < 1)
+            if (urlSegments.Length < 2)
             {
                 return DreamInfo.Name == urlSegments[0].ToFurcadiaShortName();
             }
-            else
-            {
-                return DreamInfo.Name == $"{urlSegments[0].ToFurcadiaShortName()}:{urlSegments[1].ToFurcadiaShortName()}";
-            }
+            return DreamInfo.Name == $"{urlSegments[0].ToFurcadiaShortName()}:{urlSegments[1].ToFurcadiaShortName()}";
         }
 
         private bool ShareFurreNamed(TriggerReader reader)
