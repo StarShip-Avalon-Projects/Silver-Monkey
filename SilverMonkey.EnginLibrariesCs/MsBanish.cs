@@ -1,4 +1,4 @@
-﻿using Furcadia.Net.DreamInfo;
+﻿using Libraries.Variables;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using Monkeyspeak.Logging;
@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Libraries.MsLibHelper;
-using Libraries.Variables;
 
 namespace Libraries
 {
@@ -26,24 +25,6 @@ namespace Libraries
     // '' idea to run a daily schedule to refresh the list for temp banishes
     // '' to drop off.
     // '' </summary>
-    // '' <remarks>
-    // '' This Lib contains the following unnamed delegates
-    // '' <para>
-    // '' (0:50) When the bot fails to banish a furre,
-    // '' </para>
-    // '' (0:54) When the bot sees the banish-list,
-    // '' <para>
-    // '' (0:55) When the bot fails to remove a furre from the banish-list,
-    // '' </para>
-    // '' <para>
-    // '' (0:57) When the bot successfully removes a furre from the banish-list,
-    // '' </para>
-    // '' (0:59) When the bot fails to empty the banish-list,
-    // '' <para>
-    // '' (0:60) When the bot successfully clears the banish-list,
-    // '' </para>
-    // '' (0:61) When the bot successfully temp banishes a furre,
-    // '' </remarks>
     public class MsBanish : MonkeySpeakLibrary
     {
         #region Public Properties
@@ -62,57 +43,47 @@ namespace Libraries
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);
-            // (0:51) When the bot fails to banish a furre,
+
             Add(TriggerCategory.Cause,
                 r => WhenAnyFurreBanished(r),
                 "When the bot fails to banish a furre,");
 
-            // (0:52) When the bot fails to banish the furre named {...},
             Add(TriggerCategory.Cause,
                 r => WhenFurreNamedBanished(r),
                 "When the bot fails to banish the furre named {...},");
 
-            // (0:53) When the bot successfully banishes a furre,
             Add(TriggerCategory.Cause,
                 r => WhenAnyFurreBanished(r),
                 "When the bot successfully banishes a furre,");
 
-            // (0:54) When the bot successfully banishes the furre named {...},
             Add(TriggerCategory.Cause,
                 r => WhenFurreNamedBanished(r),
                 "When the bot successfully banishes the furre named {...},");
 
-            // (0:55) When the bot sees the banish-list,
             Add(TriggerCategory.Cause,
                 r => WhenAnyFurreBanished(r),
                 "When the bot sees the banish-list,");
 
-            // (0:56) When the bot fails to remove a furre from the banish-list,
             Add(TriggerCategory.Cause,
                 r => WhenAnyFurreBanished(r),
                 "When the bot fails to remove a furre from the banish-list,");
 
-            // (0:57) When the bot fails to remove the furre named {...} from the banish-list,
             Add(TriggerCategory.Cause,
-                 r => WhenFurreNamedBanished(r),
-                 "When the bot fails to remove the furre named {...} from the banish-list,");
+                  r => WhenFurreNamedBanished(r),
+                  "When the bot fails to remove the furre named {...} from the banish-list,");
 
-            // (0:58) When the bot successfully removes a furre from the banish-list,
             Add(TriggerCategory.Cause,
                 r => WhenAnyFurreBanished(r),
                 "When the bot successfully removes a furre from the banish-list,");
 
-            // (0:59) When the bot successfully removes the furre named {...} from the banish-list,
             Add(TriggerCategory.Cause,
                  r => WhenFurreNamedBanished(r),
                  "When the bot successfully removes the furre named {...} from the banish-list,");
 
-            // (0:60) When the bot fails to empty the banish-list,
             Add(TriggerCategory.Cause,
                  r => throw new NotImplementedException(),
                 "When the bot fails to empty the banish-list,");
 
-            // (0:61) When the bot successfully clears the banish-list,
             Add(TriggerCategory.Cause,
                 r =>
                 {
@@ -129,75 +100,62 @@ namespace Libraries
                 },
                 "When the bot successfully clears the banish-list,");
 
-            // (0:62) When the bot successfully temp banishes a furre,
             Add(TriggerCategory.Cause,
                 r => WhenAnyFurreBanished(r),
                 "When the bot successfully temp banishes a furre,");
 
-            // (0:63) When the bot successfully temp banishes the furre named {...},
             Add(TriggerCategory.Cause,
                  r => WhenFurreNamedBanished(r),
                  "When the bot successfully temp banishes the furre named {...},");
 
-            // (1:50) and the triggering furre is not on the banish-list,
             Add(TriggerCategory.Condition,
                 r => TrigFurreIsNotBanished(r),
                 "and the triggering furre is not on the banish-list,");
 
-            // (1:51) and the triggering furre is on the banish-list,
             Add(TriggerCategory.Condition,
                 r => !TrigFurreIsNotBanished(r),
                 "and the triggering furre is on the banish-list,");
 
-            // (1:52) and the furre named {...} is not on the banish-list,
             Add(TriggerCategory.Condition,
                 r => FurreNamedIsNotBanished(r),
                 "and the furre named {...} is not on the banish-list,");
 
-            // (1:53) and the furre named {...} is on the banish-list,
             Add(TriggerCategory.Condition,
                 r => !FurreNamedIsNotBanished(r),
                 "and the furre named {...} is on the banish-list,");
 
-            //  (5: ) save the banish-list to the variable % .
             Add(TriggerCategory.Effect,
-                 r => BanishSave(r),
+                 r => SaveBanishListToVariable(r),
                  "save the banish-list to the variable % .");
 
-            // (5:x) as the server for the banish-list.
             Add(TriggerCategory.Effect,
                 r => SendServer("banish-list"),
                 "ask the server for the banish-list.");
 
-            // (5:x) banish the triggering furre.
             Add(TriggerCategory.Effect,
                  r => SendServer($"banish { Player.ShortName}"),
                  "banish the triggering furre.");
 
-            // (5:x) banish the furre named {...}.
             Add(TriggerCategory.Effect,
                 r => BanishFurreNamed(r),
                 "banish the furre named {...}.");
 
-            // (5:x) temporarily  banish the triggering furre for three days.
             Add(TriggerCategory.Effect,
                 r => TempBanishTrigFurre(r),
                 "temporarily  banish the triggering furre for three days.");
 
-            // (5:x) temporarily banish the furre named {...} for three days.
             Add(TriggerCategory.Effect,
                  r => SendServer($"tempbanish { Player.ShortName}"),
                  "temporarily banish the furre named {...} for three days.");
 
-            // (5:x) unbanish the triggering furre.
             Add(TriggerCategory.Effect,
                  r => SendServer($"banish-off { Player.ShortName}"),
                  "unbanish the triggering furre.");
 
-            // (5:x) unbanish the furre named {...}.
             Add(TriggerCategory.Effect,
                  r => UnBanishFurreNamed(r),
                  "unbanish the furre named {...}.");
+
             Add(TriggerCategory.Effect,
                 r => CreateBanisListTable(r),
                 "store the banish-list to table %variable.");
@@ -221,7 +179,7 @@ namespace Libraries
             return SendServer($"banish { Furre.ToFurcadiaShortName()}");
         }
 
-        private bool BanishSave(TriggerReader reader)
+        private bool SaveBanishListToVariable(TriggerReader reader)
         {
             IVariable NewVar = reader.ReadVariable(true);
             NewVar.Value = string.Join("", BanishedFurreList.ToArray());
@@ -261,7 +219,6 @@ namespace Libraries
                     break;
                 }
             }
-
             return result;
         }
 
