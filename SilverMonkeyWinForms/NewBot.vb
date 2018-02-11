@@ -2,6 +2,7 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports Engine.BotSession
+Imports MonkeyCore2.IO
 
 Public Class NewBott
 
@@ -391,6 +392,12 @@ Public Class NewBott
             WizIndex = 2
             SetForm(WizIndex)
             Exit Sub
+        End If
+        Dim ScriptFile As String = bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile
+        If Not File.Exists(ScriptFile) Then
+            Dim Script = New EditorScript(Path.Combine(Paths.ApplicationPath, "MS Scripts.ini"))
+            Script.ReadScriptTemplate("Default New Script", bFile.MonkeySpeakEngineOptions.Version.ToString())
+            Script.WriteScriptToFile(ScriptFile)
         End If
         Try
             bFile.SaveBotSettings()

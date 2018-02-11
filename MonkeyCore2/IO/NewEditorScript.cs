@@ -1,58 +1,67 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using Furcadia.IO;
 
-public class NewEditorScript
+namespace MonkeyCore2.IO
 {
-    #region Private Fields
-
-    private IniFile MsIniFile;
-
-    private StringBuilder str = new StringBuilder();
-
-    #endregion Private Fields
-
-    #region Public Constructors
-
-    public NewEditorScript()
+    public class EditorScript
     {
-        MsIniFile = new IniFile();
-    }
+        #region Private Fields
 
-    public NewEditorScript(string IniFile)
-    {
-        MsIniFile = new IniFile();
-        MsIniFile.Load(IniFile);
-    }
+        private IniFile MsIniFile;
 
-    #endregion Public Constructors
+        private StringBuilder str = new StringBuilder();
 
-    #region Public Methods
+        #endregion Private Fields
 
-    public void ReadScriptTemplate(string ScriptName, string ver)
-    {
-        str.AppendLine(MsIniFile.GetKeyValue(ScriptName, "Header").Replace("[VERSION]", ver).TrimEnd('"'));
-        string t = " ";
-        int n = 0;
-        while (t != "")
+        #region Public Constructors
+
+        public EditorScript()
         {
-            t = MsIniFile.GetKeyValue(ScriptName, "H" + n.ToString()).TrimEnd('"');
-            if (t != "")
+            MsIniFile = new IniFile();
+        }
+
+        public EditorScript(string IniFile)
+        {
+            MsIniFile = new IniFile();
+            MsIniFile.Load(IniFile);
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public void ReadScriptTemplate(string ScriptName, string ver)
+        {
+            str.AppendLine(MsIniFile.GetKeyValue(ScriptName, "Header").Replace("[VERSION]", ver).TrimEnd('"'));
+            string t = " ";
+            int n = 0;
+            int.TryParse(MsIniFile.GetKeyValue(ScriptName, "HMax"), out int HMax);
+            while (n != HMax)
+            {
+                t = MsIniFile.GetKeyValue(ScriptName, "H" + n.ToString()).TrimEnd('"');
                 str.AppendLine(t);
-            n += 1;
+                n += 1;
+            }
+
+            int.TryParse(MsIniFile.GetKeyValue(ScriptName, "InitLineSpaces").TrimEnd('"'), out int iMax);
+            for (int i = 0; i <= iMax; i++)
+            {
+                str.AppendLine("");
+            }
+
+            str.Append(MsIniFile.GetKeyValue(ScriptName, "Footer").TrimEnd('"'));
         }
 
-        int.TryParse(MsIniFile.GetKeyValue(ScriptName, "InitLineSpaces").TrimEnd('"'), out int iMax);
-        for (int i = 0; i <= iMax; i++)
+        public void WriteScriptToFile(string FileName)
         {
-            str.AppendLine("");
+            using (var script = new FileStream(FileName, FileMode.Create))
+            using (var fWriter = new StreamWriter(script))
+            {
+                fWriter.Write(str.ToString());
+            }
         }
 
-        str.Append(MsIniFile.GetKeyValue(ScriptName, "Footer").TrimEnd('"'));
+        #endregion Public Methods
     }
-
-    public void WriteScriptToFile(string FileName)
-    {
-    }
-
-    #endregion Public Methods
 }
