@@ -33,44 +33,34 @@ namespace Libraries
         {
             base.Initialize(args);
 
-            // Furre Enters
-            // (0:30) When anyone enters the Dream,
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r),
                 "When anyone enters the Dream,");
 
-            // (0:31) When the furre named {..} enters the Dream,
             Add(TriggerCategory.Cause,
                  NameIs,
                 "When the furre named {..} enters the Dream,");
 
-            // Furre Leaves
-            // (0:32) When anyone leaves the Dream,
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r),
                 "When anyone leaves the Dream,");
 
-            // (0:33) When a furre named {..} leaves the Dream,
             Add(TriggerCategory.Cause,
                 r => NameIs(r),
                 "When a furre named {..} leaves the Dream,");
 
-            // (0:34) When the bot enters a Dream,
             Add(TriggerCategory.Cause,
                 ReadDreamParams,
                 "When the bot enters a Dream,");
 
-            // (0:35) When the bot enters the Dream named {..},
             Add(TriggerCategory.Cause,
                 EnterOrLeaveTheDreamNamed,
                 "When the bot enters the Dream named {..},");
 
-            // (0:36) When the bot leaves a Dream,
             Add(TriggerCategory.Cause,
                EnterOrLeaveTheDreamNamed,
                "When the bot leaves a Dream,");
 
-            // (0:37) When the bot leaves the Dream named {..},
             Add(TriggerCategory.Cause,
                r => DreamNameIs(r),
                "When the bot leaves the Dream named {..},");
@@ -166,12 +156,12 @@ namespace Libraries
             return DreamInfo.DreamOwner.ToFurcadiaShortName() == ParentBotSession.ConnectedFurre.ShortName;
         }
 
-        private bool DreamNameIsNot(TriggerReader reader)
+        private static bool DreamNameIsNot(TriggerReader reader)
         {
             return !DreamNameIs(reader);
         }
 
-        private bool DreamNameIs(TriggerReader reader)
+        private static bool DreamNameIs(TriggerReader reader)
         {
             var url = reader.ReadString();
 
@@ -184,8 +174,8 @@ namespace Libraries
             if (urlSegments.Length < 2)
             {
                 //One Argument suppplied, Should be Dream Owner Test
-                return DreamInfo.DreamOwner.ToFurcadiaShortName() == urlSegments[0].ToFurcadiaShortName()
-                    || DreamInfo.Name == urlSegments[0].ToFurcadiaShortName();
+                return DreamInfo.Name == urlSegments[0].ToFurcadiaShortName()
+                    || DreamInfo.DreamOwner.ToFurcadiaShortName() == urlSegments[0].ToFurcadiaShortName();
             }
             //Full Dream Name Supplied
             return DreamInfo.Name == $"{urlSegments[0].ToFurcadiaShortName()}:{urlSegments[1].ToFurcadiaShortName()}";
@@ -208,7 +198,7 @@ namespace Libraries
             return SendServer($"share { Player.ShortName}");
         }
 
-        private bool TriggeringFurreIsDreamOwner(TriggerReader reader)
+        private static bool TriggeringFurreIsDreamOwner(TriggerReader reader)
         {
             return Player.ShortName == DreamInfo.DreamOwner.ToFurcadiaShortName();
         }
