@@ -41,7 +41,7 @@ namespace SmEngineTests.BotScriptTests
             MsLog.Logger.ErrorEnabled = true;
             MsLog.Logger.WarningEnabled = true;
             MsLog.Logger.SingleThreaded = true;
-            MsLog.Logger.LogOutput = new MsLog.MultiLogOutput(new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath, "TurretTests.log"), MsLog.Level.Debug), new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath, "TurretTests.log"), MsLog.Level.Warning), new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath), MsLog.Level.Debug), new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath), MsLog.Level.Error));
+            MsLog.Logger.LogOutput = new MsLog.MultiLogOutput(new MsLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, MsLog.Level.Debug), new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath, "TurretTests.log"), MsLog.Level.Warning), new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath), MsLog.Level.Debug), new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath), MsLog.Level.Error));
 
             FurcLog.Logger.InfoEnabled = true;
             FurcLog.Logger.SuppressSpam = true;

@@ -500,8 +500,6 @@ Public Class Main
                 FurreCountTxtBx.Text = ""
             Else
                 BTN_Go.Text = "Connecting..."
-                My.Settings.LastBotFile = MonkeyCore2.IO.Paths.CheckBotFolder(BotConfig.BotSettingsFile)
-                My.Settings.Save()
                 FurcSession.SetOptions(BotConfig)
                 If BotConfig.LogOptions.log Then
                     Try
@@ -659,8 +657,6 @@ Public Class Main
 
     Private Sub FormClose()
         _FormClose = True
-        My.Settings.MainFormLocation = Me.Location
-        My.Settings.LastBotFile = BotConfig.Name
         FurcSession.Dispose()
         'Save the user settings so next time the
         'window will be the same size and location
@@ -889,8 +885,6 @@ Public Class Main
             writer = New TextBoxWriter(Log_)
             Console.SetOut(writer)
 
-            'Me.Size = My.Settings.MainFormSize
-            Me.Location = My.Settings.MainFormLocation
             MainTitleText($"Silver Monkey: {Application.ProductVersion}")
             Me.Visible = True
 
@@ -913,10 +907,8 @@ Public Class Main
                 UpdateBotConfig(File)
                 EditBotToolStripMenuItem.Enabled = True
                 MsLog.Logger.Info($"Loaded: ""{ File }""")
-            ElseIf Mainsettings.LoadLastBotFile And Not String.IsNullOrEmpty(My.Settings.LastBotFile) And My.Application.CommandLineArgs.Count = 0 Then
-                UpdateBotConfig(My.Settings.LastBotFile)
+            ElseIf Mainsettings.LoadLastBotFile And My.Application.CommandLineArgs.Count = 0 Then
                 EditBotToolStripMenuItem.Enabled = True
-                MsLog.Logger.Info($"Loaded: ""{My.Settings.LastBotFile}""")
             End If
 
             'If Not IsNothing(BotConfig) Then
@@ -1080,7 +1072,6 @@ Public Class Main
         If Not FurcSession.IsServerSocketConnected Then
             Try
                 UpdateBotConfig(sender.ToString())
-                My.Settings.LastBotFile = sender.ToString()
                 EditBotToolStripMenuItem.Enabled = True
                 My.Settings.Save()
             Catch ex As FileNotFoundException

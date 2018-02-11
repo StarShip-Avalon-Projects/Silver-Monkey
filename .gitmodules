@@ -4,7 +4,9 @@
 [submodule "UnitTests"]
 	path = UnitTests
 	url = https://github.com/StarShip-Avalon-Projects/UnitTests.git
+	branch = master
 
 [submodule "Monkeyspeak"]
 	path = Monkeyspeak
 	url = https://github.com/StarShip-Avalon-Projects/monkeyspeak.git
+	branch = Master

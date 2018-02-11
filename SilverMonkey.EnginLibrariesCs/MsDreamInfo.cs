@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Monkeyspeak;
-using Monkeyspeak.Logging;
+using MsLog = Monkeyspeak.Logging;
 using static Furcadia.Text.FurcadiaMarkup;
 
 namespace Libraries
@@ -43,7 +43,7 @@ namespace Libraries
 
             // (0:31) When the furre named {..} enters the Dream,
             Add(TriggerCategory.Cause,
-                r => NameIs(r),
+                 NameIs,
                 "When the furre named {..} enters the Dream,");
 
             // Furre Leaves
@@ -59,17 +59,17 @@ namespace Libraries
 
             // (0:34) When the bot enters a Dream,
             Add(TriggerCategory.Cause,
-             r => ReadDreamParams(r),
+                ReadDreamParams,
                 "When the bot enters a Dream,");
 
             // (0:35) When the bot enters the Dream named {..},
             Add(TriggerCategory.Cause,
-                r => DreamNameIs(r),
+                EnterOrLeaveTheDreamNamed,
                 "When the bot enters the Dream named {..},");
 
             // (0:36) When the bot leaves a Dream,
             Add(TriggerCategory.Cause,
-               r => ReadDreamParams(r),
+               EnterOrLeaveTheDreamNamed,
                "When the bot leaves a Dream,");
 
             // (0:37) When the bot leaves the Dream named {..},
@@ -83,22 +83,22 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => !BotIsDreamOwner(r),
-                " and the bot is not the Dream-Owner,");
+                "and the bot is not the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
                 r => AndFurreNamedIsDreamOwner(r),
-                " and the furre named {..} is the Dream-Owner,");
+                "and the furre named {..} is the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
                 r => !AndFurreNamedIsDreamOwner(r),
-                " and the furre named {..} is not the Dream-Owner,");
+                "and the furre named {..} is not the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
-              r => DreamNameIs(r),
+               DreamNameIs,
               "and the Dream Name is {..},");
 
             Add(TriggerCategory.Condition,
-                r => !DreamNameIs(r),
+                 DreamNameIsNot,
                 "and the Dream Name is not {..},");
 
             Add(TriggerCategory.Condition,
@@ -139,7 +139,13 @@ namespace Libraries
               "give share to the furre named {..} if they're in the Dream right now.");
         }
 
-        private bool AndFurreNamedIsDreamOwner(TriggerReader reader)
+        private bool EnterOrLeaveTheDreamNamed(TriggerReader reader)
+        {
+            ReadDreamParams(reader);
+            return DreamNameIs(reader);
+        }
+
+        private static bool AndFurreNamedIsDreamOwner(TriggerReader reader)
         {
             return DreamInfo.DreamOwner.ToFurcadiaShortName()
                 != reader.ReadString().ToLower();
@@ -157,39 +163,31 @@ namespace Libraries
 
         #region Private Methods
 
-        private bool BotIsDreamOwner(TriggerReader reader)
+        private static bool BotIsDreamOwner(TriggerReader reader)
         {
             return DreamInfo.DreamOwner.ToFurcadiaShortName() == ParentBotSession.ConnectedFurre.ShortName;
         }
 
+        private bool DreamNameIsNot(TriggerReader reader)
+        {
+            return !DreamNameIs(reader);
+        }
+
         private bool DreamNameIs(TriggerReader reader)
         {
-            ReadDreamParams(reader);
-            string dreamOwner;
-            string title;
+            var url = reader.ReadString();
 
-            var url = reader.ReadString().ToLower().Replace("furc://", "").TrimEnd('/');
-            var urlSegments = url.Split(':');
-            if (urlSegments.Length == 2)
+            if (string.IsNullOrWhiteSpace(url)) { return false; }
+
+            url = url.ToLower().Trim().Replace("furc://", "").TrimEnd('/');
+
+            var urlSegments = url.Split(new char[] { ':' }, 2, StringSplitOptions.None);
+
+            if (urlSegments.Length < 2)
             {
-                dreamOwner = urlSegments[0];
-                title = urlSegments[1];
+                return DreamInfo.Name == urlSegments[0].ToFurcadiaShortName();
             }
-            else
-            {
-                dreamOwner = url;
-                title = null;
-            }
-            if (string.IsNullOrWhiteSpace(title))
-            {
-                return DreamInfo.DreamOwner.ToLower()
-                    == dreamOwner.ToFurcadiaShortName();
-            }
-            if (!string.IsNullOrWhiteSpace(title) && !string.IsNullOrWhiteSpace(dreamOwner))
-                return DreamInfo.Name.ToLower()
-                    == $"{dreamOwner.ToFurcadiaShortName()}:{title.ToFurcadiaShortName()}";
-            return DreamInfo.Name.ToLower()
-                    == $"{dreamOwner.ToFurcadiaShortName()}";
+            return DreamInfo.Name == $"{urlSegments[0].ToFurcadiaShortName()}:{urlSegments[1].ToFurcadiaShortName()}";
         }
 
         private bool ShareFurreNamed(TriggerReader reader)
@@ -200,7 +198,7 @@ namespace Libraries
                 return SendServer($"share {Target.ShortName}");
             }
 
-            Logger.Info($"{Target.Name} Is Not in the dream");
+            MsLog.Logger.Warn($"{Target.Name} Is Not in the dream");
             return false;
         }
 
@@ -222,7 +220,7 @@ namespace Libraries
                 return SendServer($"unshare {Target.ShortName}");
             }
 
-            Logger.Info($"{Target.Name} Is Not in the dream");
+            MsLog.Logger.Warn($"{Target.Name} Is Not in the dream");
             return false;
         }
 
