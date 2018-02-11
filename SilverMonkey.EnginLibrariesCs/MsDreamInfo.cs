@@ -1,8 +1,6 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using Monkeyspeak;
+﻿using Monkeyspeak;
+using System;
 using MsLog = Monkeyspeak.Logging;
-using static Furcadia.Text.FurcadiaMarkup;
 
 namespace Libraries
 {
@@ -185,8 +183,11 @@ namespace Libraries
 
             if (urlSegments.Length < 2)
             {
-                return DreamInfo.Name == urlSegments[0].ToFurcadiaShortName();
+                //One Argument suppplied, Should be Dream Owner Test
+                return DreamInfo.DreamOwner.ToFurcadiaShortName() == urlSegments[0].ToFurcadiaShortName()
+                    || DreamInfo.Name == urlSegments[0].ToFurcadiaShortName();
             }
+            //Full Dream Name Supplied
             return DreamInfo.Name == $"{urlSegments[0].ToFurcadiaShortName()}:{urlSegments[1].ToFurcadiaShortName()}";
         }
 

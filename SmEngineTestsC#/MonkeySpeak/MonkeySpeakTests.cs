@@ -37,18 +37,18 @@ namespace SmEngineTests.MonkeySpeak
 (5:5) whisper {Please do not swear in shouts! Thank you #SA} to the triggering furre.
 ";
 
-        [Test]
-        public void LexerPrint()
-        {
-            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(ShoutScript)))
-            using (Lexer lexer = new Lexer(new MonkeyspeakEngine(), new SStreamReader(stream)))
-            {
-                foreach (var token in lexer.Read())
-                {
-                    if (token.Type != TokenType.COMMENT)
-                        Logger.Info($"{token} = {new string(lexer.Read(token.ValueStartPosition, token.Length))}");
-                }
-            }
-        }
+        //[Test]
+        //public void LexerPrint()
+        //{
+        //    using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(ShoutScript)))
+        //    using (Lexer lexer = new Lexer(new MonkeyspeakEngine(), new SStreamReader(stream)))
+        //    {
+        //        foreach (var token in lexer.Read())
+        //        {
+        //            if (token.GetType() != TokenType.COMMENT)
+        //                Logger.Info($"{token} = {new string(lexer.Read(token.ValueStartPosition, token.Length))}");
+        //        }
+        //    }
+        //}
     }
 }
