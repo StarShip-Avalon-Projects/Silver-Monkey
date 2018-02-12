@@ -17,7 +17,13 @@ namespace Libraries
     /// </summary>
     public sealed class MsStringExtentions : MonkeySpeakLibrary
     {
+        #region Public Properties
+
         public override int BaseId => 120;
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void Initialize(params object[] args)
         {
@@ -52,133 +58,15 @@ namespace Libraries
                 "take variable %Variable and convert it to Furcadia short name. (without special characters or spaces or pipe \"|\").");
         }
 
-        /// <summary>
-        /// (5:123) chop off the end of variable %Variable, removing the
-        /// last # characters of it.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public bool ChopEndString(TriggerReader reader)
+        public override void Unload(Page page)
         {
-            var Var = reader.ReadVariable(true);
-            var test = int.TryParse(reader.ReadNumber().ToString(), out int Count);
-            var str = Var.Value.ToString();
-            if ((str.Length < Count))
-            {
-                Var.Value = str;
-            }
-            else
-            {
-                Var.Value = str.Substring(0, (str.Length - Count));
-            }
-
-            return true;
         }
 
-        /// <summary>
-        /// (5:122) chop off the beginning of variable %variable, removing
-        /// the first # characters of it.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public bool ChopStartString(TriggerReader reader)
-        {
-            var Var = reader.ReadVariable(true);
-            var test = int.TryParse(reader.ReadNumber().ToString(), out int Count);
-            var str = Var.Value.ToString();
-            if ((str.Length < Count))
-            {
-                Var.Value = null;
-            }
-            else
-            {
-                Var.Value = str.Substring(Count);
-            }
+        #endregion Public Methods
 
-            return true;
-        }
+        #region Private Methods
 
-        /// <summary>
-        /// (5:126) count the number of characters in string variable
-        /// %variable and put them into variable %Variable .
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public bool CountChars(TriggerReader reader)
-        {
-            var var1 = reader.ReadVariable();
-            var var2 = reader.ReadVariable(true);
-            var Count = var1.Value.ToString().Length;
-            var2.Value = Count;
-            return true;
-        }
-
-        /// <summary>
-        /// (5:120) use variable % and take word # and put it into variable %
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        private bool StringSplit(TriggerReader reader)
-        {
-            var Var = reader.ReadVariable();
-            var i = reader.ReadNumber();
-            var NewVar = reader.ReadVariable(true);
-            var fields = Var.Value.ToString().Split(' ');
-            if (i < fields.Length)
-            {
-                NewVar.Value = fields[(int)i];
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// (5:121) use variable % then remove character {.} and put it into
-        /// variable %.
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public bool StripCharacters(TriggerReader reader)
-        {
-            var Var = reader.ReadVariable();
-            var ch = reader.ReadString()[0].ToString();
-            var NewVar = reader.ReadVariable();
-            var varStr = Var.Value.ToString();
-            var NewStr = varStr.Replace(@ch, string.Empty);
-            NewVar.Value = NewStr;
-            return true;
-        }
-
-        /// <summary>
-        /// (1:62) and variable %variable contains text {...},
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
-        public static bool AndVariableContains(TriggerReader reader)
+        private static bool AndVariableContains(TriggerReader reader)
         {
             var VariableToCheck = reader.ReadVariable();
             string Argument;
@@ -198,16 +86,6 @@ namespace Libraries
             return VariableToCheck.Value.ToString().Contains(Argument);
         }
 
-        /// <summary>
-        /// (5:127) take variable %Variable and convert it to Furcadia short
-        /// name. (without special characters or spaces or pipe ""|"").
-        /// </summary>
-        /// <param name="reader">
-        /// <see cref="TriggerReader"/>
-        /// </param>
-        /// <returns>
-        /// true on success
-        /// </returns>
         private static bool ToShortName(TriggerReader reader)
         {
             if (reader.PeekVariable())
@@ -227,8 +105,74 @@ namespace Libraries
             }
         }
 
-        public override void Unload(Page page)
+        private bool ChopEndString(TriggerReader reader)
         {
+            var Var = reader.ReadVariable(true);
+            var test = int.TryParse(reader.ReadNumber().ToString(), out int Count);
+            var str = Var.Value.ToString();
+            if ((str.Length < Count))
+            {
+                Var.Value = str;
+            }
+            else
+            {
+                Var.Value = str.Substring(0, (str.Length - Count));
+            }
+
+            return true;
         }
+
+        private bool ChopStartString(TriggerReader reader)
+        {
+            var Var = reader.ReadVariable(true);
+            var test = int.TryParse(reader.ReadNumber().ToString(), out int Count);
+            var str = Var.Value.ToString();
+            if ((str.Length < Count))
+            {
+                Var.Value = null;
+            }
+            else
+            {
+                Var.Value = str.Substring(Count);
+            }
+
+            return true;
+        }
+
+        private bool CountChars(TriggerReader reader)
+        {
+            var var1 = reader.ReadVariable();
+            var var2 = reader.ReadVariable(true);
+            var Count = var1.Value.ToString().Length;
+            var2.Value = Count;
+            return true;
+        }
+
+        private bool StringSplit(TriggerReader reader)
+        {
+            var Var = reader.ReadVariable();
+            var i = reader.ReadNumber();
+            var NewVar = reader.ReadVariable(true);
+            var fields = Var.Value.ToString().Split(' ');
+            if (i < fields.Length)
+            {
+                NewVar.Value = fields[(int)i];
+            }
+
+            return true;
+        }
+
+        private bool StripCharacters(TriggerReader reader)
+        {
+            var Var = reader.ReadVariable();
+            var ch = reader.ReadString()[0].ToString();
+            var NewVar = reader.ReadVariable();
+            var varStr = Var.Value.ToString();
+            var NewStr = varStr.Replace(@ch, string.Empty);
+            NewVar.Value = NewStr;
+            return true;
+        }
+
+        #endregion Private Methods
     }
 }
