@@ -68,7 +68,7 @@ Partial Class BotSetup
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.TxtBxLogName = New System.Windows.Forms.TextBox()
-        Me.ChckSaveToLog = New System.Windows.Forms.CheckBox()
+        Me.LogEnableChkBox = New System.Windows.Forms.CheckBox()
         Me.TxtBxLogPath = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -552,7 +552,7 @@ Partial Class BotSetup
         '
         Me.GroupBox4.Controls.Add(Me.Label14)
         Me.GroupBox4.Controls.Add(Me.TxtBxLogName)
-        Me.GroupBox4.Controls.Add(Me.ChckSaveToLog)
+        Me.GroupBox4.Controls.Add(Me.LogEnableChkBox)
         Me.GroupBox4.Controls.Add(Me.TxtBxLogPath)
         Me.GroupBox4.Controls.Add(Me.Button1)
         Me.GroupBox4.Controls.Add(Me.Label12)
@@ -583,17 +583,17 @@ Partial Class BotSetup
         Me.TxtBxLogName.Size = New System.Drawing.Size(532, 38)
         Me.TxtBxLogName.TabIndex = 6
         '
-        'ChckSaveToLog
+        'LogEnableChkBox
         '
-        Me.ChckSaveToLog.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ChckSaveToLog.AutoSize = True
-        Me.ChckSaveToLog.Location = New System.Drawing.Point(683, 191)
-        Me.ChckSaveToLog.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.ChckSaveToLog.Name = "ChckSaveToLog"
-        Me.ChckSaveToLog.Size = New System.Drawing.Size(258, 36)
-        Me.ChckSaveToLog.TabIndex = 59
-        Me.ChckSaveToLog.Text = "Save to Log File"
-        Me.ChckSaveToLog.UseVisualStyleBackColor = True
+        Me.LogEnableChkBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LogEnableChkBox.AutoSize = True
+        Me.LogEnableChkBox.Location = New System.Drawing.Point(683, 191)
+        Me.LogEnableChkBox.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.LogEnableChkBox.Name = "LogEnableChkBox"
+        Me.LogEnableChkBox.Size = New System.Drawing.Size(258, 36)
+        Me.LogEnableChkBox.TabIndex = 59
+        Me.LogEnableChkBox.Text = "Save to Log File"
+        Me.LogEnableChkBox.UseVisualStyleBackColor = True
         '
         'TxtBxLogPath
         '
@@ -710,7 +710,7 @@ Partial Class BotSetup
     Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents TxtBxLogName As System.Windows.Forms.TextBox
-    Friend WithEvents ChckSaveToLog As System.Windows.Forms.CheckBox
+    Friend WithEvents LogEnableChkBox As System.Windows.Forms.CheckBox
     Friend WithEvents TxtBxLogPath As System.Windows.Forms.TextBox
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Label12 As System.Windows.Forms.Label

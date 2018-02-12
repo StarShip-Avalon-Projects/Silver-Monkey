@@ -371,7 +371,7 @@ Public Class NewBott
         bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile = MsFile
 
         bFile.LogOptions.LogNameBase = TxtbxBotName.Text
-        bFile.LogOptions.log = True
+        bFile.LogOptions.Enabled = True
 
         bFile.MonkeySpeakEngineOptions.BotController = TxtbxBotController.Text
 

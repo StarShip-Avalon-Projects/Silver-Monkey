@@ -96,12 +96,13 @@ Public Class Main
         _FormClose = False
         ' This call is required by the designer.
         InitializeComponent()
-        FileLogWriter = New LogStream
+
         ' Add any initialization after the InitializeComponent() call.
         Dim HelpItems = New HelpLinkToolStripMenu()
         ReferenceLinksToolStripMenuItem.DropDown.Items.AddRange(HelpItems.MenuItems.ToArray)
 
         BotConfig = New BotOptions()
+        FileLogWriter = New LogStream(BotConfig.LogOptions)
         FurcSession = New Bot(BotConfig)
         MRUlist = New Queue(Of String)(MRUnumber)
         DebugLogs = New StringBuilder()
@@ -321,7 +322,7 @@ Public Class Main
     ''' <param name="newColor"></param>
     Public Shared Sub SndDisplay(data As String, Optional newColor As DisplayColors = DisplayColors.DefaultColor)
 
-        If BotConfig.LogOptions.log Then LogStream.WriteLine(data)
+        FileLogWriter.WriteLine(data)
         If CBool(Mainsettings.TimeStamp) Then
             Dim Now As String = DateTime.Now.ToLongTimeString
             data = Now.ToString & ": " & data
@@ -337,7 +338,7 @@ Public Class Main
     ''' <param name="Message"></param>
     Public Shared Sub SndDisplay(Message As MsLog.LogMessage)
 
-        If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
+        FileLogWriter.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor
         Select Case Message.Level
             Case MsLog.Level.Warning
@@ -356,7 +357,7 @@ Public Class Main
     ''' <param name="Message"></param>
     Public Shared Sub SndDisplay(Message As furcLog.LogMessage)
 
-        If BotConfig.LogOptions.log Then LogStream.WriteLine(Message.message)
+        FileLogWriter.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor
         Select Case Message.Level
             Case furcLog.Level.Warning
@@ -501,7 +502,7 @@ Public Class Main
             Else
                 BTN_Go.Text = "Connecting..."
                 FurcSession.SetOptions(BotConfig)
-                If BotConfig.LogOptions.log Then
+                If BotConfig.LogOptions.Enabled Then
                     Try
 
                         FileLogWriter = New LogStream(BotConfig.LogOptions)

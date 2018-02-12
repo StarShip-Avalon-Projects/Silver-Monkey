@@ -52,10 +52,7 @@ namespace Engine.BotSession
         public BotOptions(string BFile)
         {
             Initialize();
-            LogOptions = new LogSteamOptions()
-            {
-                LogPath = MonkeyCore2.IO.Paths.SilverMonkeyLogPath
-            };
+            LogOptions = new LogSteamOptions();
 
             if (!File.Exists(BFile))
             {
@@ -81,17 +78,17 @@ namespace Engine.BotSession
 
             _BiniFile = BFile;
             string s = "";
-            short LogOption = 0;
-            short.TryParse(BotIni.GetKeyValue("Main", "LogOption"), out LogOption);
-            bool log = false;
-            bool.TryParse(BotIni.GetKeyValue("Main", "LogOption"), out log);
+            short.TryParse(BotIni.GetKeyValue("Main", "LogOption"), out short LogOption);
+            bool.TryParse(BotIni.GetKeyValue("Main", "LogOption"), out bool log);
+            string BaseFileName = BotIni.GetKeyValue("Main", "LogNameBase");
+            string logPath = BotIni.GetKeyValue("Main", "LogNamePath");
+
             LogOptions = new LogSteamOptions()
             {
-                // With...
-                LogNameBase = BotIni.GetKeyValue("Main", "LogNameBase"),
-                LogPath = BotIni.GetKeyValue("Main", "LogNamePath"),
+                LogNameBase = BaseFileName ?? "Default",
+                LogPath = logPath ?? MonkeyCore2.IO.Paths.SilverMonkeyLogPath,
                 LogOption = LogOption,
-                log = log
+                Enabled = log
             };
 
             s = BotIni.GetKeyValue("Bot", "BotIni");
@@ -281,7 +278,7 @@ namespace Engine.BotSession
             if (File.Exists(MonkeyCore2.IO.Paths.CheckBotFolder(_BiniFile)))
                 BotIni.Load(_BiniFile);
 
-            BotIni.SetKeyValue("Main", "Log", LogOptions.log.ToString());
+            BotIni.SetKeyValue("Main", "Log", LogOptions.Enabled.ToString());
             BotIni.SetKeyValue("Main", "LogNameBase", LogOptions.LogNameBase);
             BotIni.SetKeyValue("Main", "LogOption", LogOptions.LogOption.ToString());
             BotIni.SetKeyValue("Main", "LogNamePath", LogOptions.LogPath);

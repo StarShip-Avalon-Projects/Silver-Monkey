@@ -12,22 +12,12 @@ Namespace Utils.Logging
     <CLSCompliant(True)>
     Public Class LogStream
         Implements IDisposable
-        Private Shared Options As LogSteamOptions
+        Private Options As LogSteamOptions
 
 #Region "logging functions"
 
         Private Shared Stack As New List(Of String)
         Private Shared strErrorFilePath As String
-
-        ''' <summary>
-        ''' Create a new instance of the log file
-        ''' </summary>
-        Public Sub New()
-            Options = New LogSteamOptions
-
-            strErrorFilePath = MonkeyCore2.IO.Paths.SilverMonkeyLogPath
-
-        End Sub
 
         ''' <summary>
         ''' Create a new instance of the log file
@@ -49,88 +39,18 @@ Namespace Utils.Logging
         ''' </summary>
         ''' <param name="options"></param>
         Sub New(options As LogSteamOptions)
-            options = options
-            strErrorFilePath = Path.Combine(options.LogPath, options.GetLogName())
+            Me.Options = options
+            strErrorFilePath = Path.Combine(Me.Options.LogPath, Me.Options.GetLogName())
         End Sub
-
-        ''' <summary>
-        ''' Write a an exception line to the log file
-        ''' </summary>
-        ''' <param name="Message">
-        ''' </param>
-        ''' <param name="ObjectException">
-        ''' </param>
-        Public Shared Sub WriteLine(Message As String, ByRef ObjectException As Exception)
-            If Not Options.log Then Exit Sub
-            Dim build As New Text.StringBuilder(Message)
-            'Dim Names As MatchCollection = NameRegex.Matches(Message)
-            'For Each Name As Match In Names
-            '    build = build.Replace(Name.Value, Name.Groups(3).Value)
-            'Next
-
-            Message = build.ToString
-
-            Dim Now As String = Date.Now().ToString("MM/dd/yyyy H:mm:ss")
-            Message = Now & ": " & Message
-            Using ioFile As StreamWriter = New StreamWriter(strErrorFilePath, True)
-                Try
-
-                    For Each line In Stack.ToArray
-                        ioFile.WriteLine(line)
-                    Next
-                    Stack.Clear()
-                    ioFile.WriteLine(Message)
-                    ioFile.Write(PrintStackTrace(ObjectException, Nothing))
-                Catch ex As IOException
-                    If (ex.Message.StartsWith("The process cannot access the file") AndAlso
-                            ex.Message.EndsWith("because it is being used by another process.")) Then
-                        Stack.Add(Message)
-                        Stack.AddRange(PrintStackTrace(ObjectException, Nothing).Split(CChar(Environment.NewLine)))
-                        Stack.Add(ObjectException.Source)
-                        Stack.Add(ObjectException.StackTrace)
-                    End If
-                Catch ex As Exception
-                    Throw ex
-                End Try
-            End Using
-        End Sub
-
-        Shared Function PrintStackTrace(ex As Exception, ObjectThrowingError As Object) As String
-            Dim LogFile = New StringBuilder()
-            If Not ex.InnerException Is Nothing Then
-                LogFile.AppendLine("Inner Error: " & ex.InnerException.Message)
-                LogFile.AppendLine("")
-            End If
-            LogFile.AppendLine("Source: " & ObjectThrowingError.ToString)
-            LogFile.AppendLine("")
-            Dim st As New StackTrace(ex, True)
-            LogFile.AppendLine("-------------------------------------------------------")
-
-            LogFile.AppendLine("Stack Trace: " & st.ToString())
-            LogFile.AppendLine("")
-            LogFile.AppendLine("-------------------------------------------------------")
-            If Not ex.InnerException Is Nothing Then
-                Dim stInner As New StackTrace(ex.InnerException, True)
-                LogFile.AppendLine("Inner Stack Trace: " & stInner.ToString())
-                LogFile.AppendLine("")
-                LogFile.AppendLine("-------------------------------------------------------")
-            End If
-            Return LogFile.ToString
-        End Function
 
         ''' <summary>
         ''' Write a line to the log file
         ''' </summary>
         ''' <param name="Message">
         ''' </param>
-        Public Shared Sub WriteLine(Message As String)
-            If Not Options.log Then Exit Sub
+        Public Sub WriteLine(Message As String)
+            If Not Options.Enabled Then Exit Sub
             Dim build As New StringBuilder(Message)
-            'Dim Names As MatchCollection = NameRegex.Matches(Message)
-            'For Each Name As Match In Names
-            '    build = build.Replace(Name.Value, Name.Groups(3).Value)
-            'Next
-            '<name shortname='acuara' forced>
             Dim MyIcon As MatchCollection = Regex.Matches(Message, Iconfilter)
 
             For Each Icon As Match In MyIcon
@@ -146,15 +66,17 @@ Namespace Utils.Logging
             Dim Now As String = Date.Now().ToString("MM/dd/yyyy H:mm:ss")
             Message = Now & ": " & Message
             Try
-                Using ioFile As New StreamWriter(strErrorFilePath, True)
+                Using fStream = New FileStream(strErrorFilePath, FileMode.Append)
+                    Using ioFile As New StreamWriter(fStream)
 
-                    ' Try
+                        ' Try
 
-                    For Each line In Stack.ToArray
-                        ioFile.WriteLine(line)
-                    Next
-                    Stack.Clear()
-                    ioFile.WriteLine(Message)
+                        For Each line In Stack.ToArray
+                            ioFile.WriteLine(line)
+                        Next
+                        Stack.Clear()
+                        ioFile.WriteLine(Message)
+                    End Using
                 End Using
             Catch ex As IOException
                 If (ex.Message.StartsWith("The process cannot access the file") AndAlso

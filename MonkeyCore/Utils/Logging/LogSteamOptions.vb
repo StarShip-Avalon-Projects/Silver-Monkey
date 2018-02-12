@@ -1,11 +1,13 @@
-﻿Namespace Utils.Logging
+﻿Imports MonkeyCore2.IO
+
+Namespace Utils.Logging
 
     ''' <summary>
     ''' Logging options for Bot Logs
     ''' </summary>
     <CLSCompliant(True)>
     Public Class LogSteamOptions
-        Private ext As String
+        Private ext As String = ".log"
         Private _log As Boolean
         Private _logIdx As Integer
         Private _logNamebase As String
@@ -13,14 +15,16 @@
         Private _logPath As String
 
         Sub New()
-
+            _logNamebase = "Default"
+            _log = False
+            _logPath = Paths.SilverMonkeyLogPath
         End Sub
 
         ''' <summary>
         ''' enable logging
         ''' </summary>
         ''' <returns></returns>
-        Public Property log As Boolean
+        Public Property Enabled As Boolean
             Get
                 Return _log
             End Get
@@ -29,6 +33,12 @@
             End Set
         End Property
 
+        ''' <summary>
+        ''' Gets or sets the index of the log.
+        ''' </summary>
+        ''' <value>
+        ''' The index of the log.
+        ''' </value>
         Public Property LogIdx As Integer
             Get
                 Return _logIdx
@@ -83,17 +93,19 @@
         ''' <returns>
         ''' </returns>
         Public Function GetLogName() As String
+            Dim LogFile As String = Nothing
             Select Case _logOption
                 Case 0
-                    Return _logNamebase
+                    LogFile = _logNamebase
                 Case 1
                     _logIdx += 1
 
-                    Return LogNameBase & LogIdx.ToString
+                    LogFile = LogNameBase & LogIdx.ToString
                 Case 2
-                    Return LogNameBase & Date.Now().ToString("MM_dd_yyyy_H-mm-ss")
+                    LogFile = LogNameBase & Date.Now().ToString("MM_dd_yyyy_H-mm-ss")
             End Select
-            Return "Default"
+
+            Return LogFile + ext
         End Function
 
     End Class

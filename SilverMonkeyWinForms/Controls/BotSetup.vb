@@ -1,9 +1,5 @@
 ﻿Imports System.Windows.Forms
-Imports BotSession
 Imports Engine.BotSession
-Imports IO
-Imports MonkeyCore
-Imports SilverMonkey.Engine
 
 Public Class BotSetup
 
@@ -124,7 +120,7 @@ Public Class BotSetup
                 RadioButton4.Checked = True
         End Select
         With _botConfig.LogOptions
-            ChckSaveToLog.Checked = .log
+            LogEnableChkBox.Checked = .Enabled
             SetLogOptions()
             TxtBxLogName.Text = .LogNameBase
             TxtBxLogPath.Text = .LogPath
@@ -207,10 +203,10 @@ Public Class BotSetup
                 _botConfig.GoMapIDX = 4
             End If
             With _botConfig.LogOptions
+                .Enabled = LogEnableChkBox.Checked
                 .LogOption = LogOption()
                 .LogNameBase = TxtBxLogName.Text
                 .LogPath = TxtBxLogPath.Text
-                .log = ChckSaveToLog.Checked
             End With
 
             _botConfig.SaveBotSettings()
