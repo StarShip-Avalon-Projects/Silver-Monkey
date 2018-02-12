@@ -451,239 +451,246 @@ namespace Engine.BotSession
                 return;
             }
 
-            string Text = ((ChannelObject)sender).ChannelText;
-            string data = ((ChannelObject)sender).RawInstruction;
-            Furre Furr = ((ChannelObject)sender).Player;
             try
             {
-                switch (Args.Channel)
+                if (sender is QueryChannelObject qObject)
                 {
-                    case "@roll":
-                        if (IsConnectedCharacter(Furr))
-                        {
-                            // (0:130) When the bot rolls #d#,
-                            // (0:131) When the bot rolls #d#+#,
-                            // (0:132) When the bot rolls #d#-#,
-                            // (0:136) When any one rolls anything,
+                    // (0:40) When anyone requests to summon the bot,
+                    // (0:41) When a furre named {..} requests to summon the bot,
+                    // (0:42) When anyone requests to join the bot,
+                    // (0:43) When a furre named {..} requests to join the bot,
+                    // (0:44) When anyone requests to follow the bot,
+                    // (0:35) When a furre named {..} requests to follow the bot,
+                    // (0:46) When anyone requests to lead the bot,
+                    // (0:47) When a furre named {..} requests to lead the bot,
+                    // (0:48) When anyone requests to cuddle with the bot.
+                    // (0:49) When a furre named {..} requests to cuddle with the bot,
+                    // (0:50) When the bot see a query (lead, follow summon, join, cuddle),
+                    await MSpage.ExecuteAsync(new int[] { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 },
+                        cancel, qObject, qObject.Player);
+                    return;
+                }
 
-                            await MSpage.ExecuteAsync(new int[] { 130, 131, 132, 136 },
-                                cancel, Furr);
-                        }
-                        else
-                        {
-                            // (0:133) When a furre rolls #d#,
-                            // (0:134) When a furre rolls #d#+#,
-                            // (0:135) When a furre rolls #d#-#,
-                            // (0:136) When any one rolls anything,
-                            await MSpage.ExecuteAsync(new int[] { 133, 134, 135, 136 },
-                                cancel, Furr);
-                        }
-
-                        return;
-
-                    case "trade":
-
-                        // await MSpage.ExecuteAsync(new int[] { 46, 46, 48 }, cancel, Furr);
-                        return;
-
-                    case "shout":
-                        // (0:13) When anyone shouts something,
-                        // (0:14) When anyone shouts {..},
-                        // (0:15) When anyone shouts something with {..} in it,
-                        await MSpage.ExecuteAsync(new int[] { 13, 14, 15 },
-                            cancel, Furr);
-                        return;
-
-                    case "myspeech":
-                        break;
-
-                    case "whisper":
-                        // (0:19) When anyone whispers something,
-                        // (0:20) When anyone whispers {..},
-                        // (0:21) When anyone whispers something with {..} in it,
-                        await MSpage.ExecuteAsync(new int[] { 19, 20, 21 }, cancel, Furr);
-                        return;
-
-                    case "say":
-                        // (0:10) When anyone says something,
-                        // (0:11) When anyone says {..},
-                        // (0:12) When anyone says something with {..} in it,
-
-                        // (0:22) When anyone says or emotes something,
-                        // (0:23) When anyone says or emotes {..},
-                        // (0:24) When anyone says or emotes something with {..} in it,
-
-                        await MSpage.ExecuteAsync(new int[] { 10, 11, 12, 22, 23, 24 }, cancel, Furr);
-                        return;
-
-                    case "emote":
-                        if (IsConnectedCharacter(Furr))
-                        {
-                            return;
-                        }
-
-                        // (0:16) When anyone emotes something,
-                        // (0:17) When anyone emotes {..},
-                        // (0:18) When anyone emotes something with {..} in it,
-
-                        // (0:22) When anyone says or emotes something,
-                        // (0:23) When anyone says or emotes {..},
-                        // (0:24) When anyone says or emotes something with {..} in it,
-
-                        await MSpage.ExecuteAsync(new int[] { 16, 17, 18, 22, 23, 24 }, cancel, Furr);
-                        return;
-
-                    case "@emit":
-                        // (0:25) When someone emits something,
-                        // (0:26) When someone emits {..},
-                        // (0:27) When someone emits something with {..} in it,
-                        await MSpage.ExecuteAsync(new int[] { 24, 26, 27 }, cancel, Furr, Dream);
-                        return;
-
-                    case "query":
-                        // (0:40) When anyone requests to summon the bot,
-                        // (0:41) When a furre named {..} requests to summon the bot,
-                        // (0:42) When anyone requests to join the bot,
-                        // (0:43) When a furre named {..} requests to join the bot,
-                        // (0:44) When anyone requests to follow the bot,
-                        // (0:35) When a furre named {..} requests to follow the bot,
-                        // (0:46) When anyone requests to lead the bot,
-                        // (0:47) When a furre named {..} requests to lead the bot,
-                        // (0:48) When anyone requests to cuddle with the bot.
-                        // (0:49) When a furre named {..} requests to cuddle with the bot,
-                        // (0:50) When the bot see a query (lead, follow summon, join, cuddle),
-                        await MSpage.ExecuteAsync(new int[] { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 },
-                            cancel, new QueryChannelObject(((ChannelObject)sender).RawInstruction), Furr);
-                        return;
-
-                    case "banish":
-
-                        //TODO: Add these lines
-                        // (0:60) When the bot fails to empty the banish list,
-
-                        if (Text.Contains(" has been banished from your dreams."))
-                        {
-                            // banish <name> (online)
-                            // Success: (.*?) has been banished from your dreams.
-
-                            // (0:53) When the bot successfully banishes a furre,
-                            // (0:54) When the bot successfully banishes the furre named {...},
-
-                            await MSpage.ExecuteAsync(new int[] { 53, 54 },
-                                cancel, BanishName);
-                        }
-                        else if (Text == "You have canceled all banishments from your dreams.")
-                        {
-                            // banish-off-all (active list)
-                            // Success: You have canceled all banishments from your dreams.
-                            // (0:61) When the bot successfully clears the banish list,
-
-                            await MSpage.ExecuteAsync(61,
-                                cancel, BanishList);
-                        }
-                        else if (Text.EndsWith(" has been temporarily banished from your dreams."))
-                        {
-                            // tempbanish <name> (online)
-                            // Success: (.*?) has been temporarily banished from your dreams.
-                            // (0:62) When the bot successfully temp banishes a furre,
-                            // (0:63) When the bot successfully temp banishes the furre named {...},
-
-                            await MSpage.ExecuteAsync(new int[] { 62, 63 },
-                                cancel, BanishName);
-                        }
-                        else if (Text.StartsWith("Players banished from your dreams: "))
-                        {
-                            // Banish-List
-                            // [notify> Players banished from your dreams:
-                            // (0:55) When the bot sees the banish list,
-                            await MSpage.ExecuteAsync(55,
-                                cancel, BanishList);
-                        }
-                        else if (Text.StartsWith("The banishment of player "))
-                        {
-                            // banish-off <name> (on list)
-                            // [notify> The banishment of player (.*?) has ended.
-                            // (0:58) When the bot successfully removes a furre from the banish list,
-                            // (0:59) When the bot successfully removes the furre named {...} from the banish list,
-
-                            Regex t = new Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled);
-                            var NameStr = t.Match(Text).Groups[1].Value;
-                            await MSpage.ExecuteAsync(new int[] { 58, 59 },
-                                cancel, BanishName);
-                        }
-                        else if (Text.Contains("There are no furres around right now with a name starting with "))
-                        {
-                            // Banish <name> (Not online)
-                            // Error:>>  There are no furres around right now with a name starting with (.*?) .
-                            // (0:56) When the bot fails to remove a furre from the banish list,
-                            //  (0:57) When the bot fails to remove the furre named {...} from the banish list,
-
-                            Regex t = new Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled);
-                            var NameStr = t.Match(Text).Groups[1].Value;
-                            await MSpage.ExecuteAsync(new int[] { 56, 57 },
-                                cancel, NameStr);
-                        }
-                        else if (Text == "Sorry, this player has not been banished from your dreams.")
-                        {
-                            // banish-off <name> (not on list)
-                            // Error:>> Sorry, this player has not been banished from your dreams.
-                            // (0:51) When the bot fails to banish a furre,
-                            // (0:52) When the bot fails to banish the furre named {...},
-
-                            await MSpage.ExecuteAsync(new int[] { 51, 52 },
-                                cancel, BanishName);
-                        }
-                        else if (Text == "You have not banished anyone.")
-                        {
-                            // banish-off-all (empty List)
-                            // Error:>> You have not banished anyone.
-                            // (0:55) When the bot sees the banish list,
-
-                            await MSpage.ExecuteAsync(55,
-                                cancel, BanishList);
-                        }
-                        return;
-
-                    case "@cookie":
-                        var CookieToMe = new Regex(CookieToMeREGEX);
-                        if (CookieToMe.Match(Text).Success)
-                        {
-                            //  await MSpage.ExecuteAsync(new int[] { 42, 43 }, cancel, Furr);
-                        }
-
-                        Regex CookieToAnyone = new Regex(string.Format("<name shortname=\'(.*?)\'>(.*?)</name> just gave <name shortname=\'(.*?)\'>(.*?)</name> a (.*?)", RegexOptions.Compiled));
-                        if (CookieToAnyone.Match(Text).Success)
-                        {
+                if (sender is ChannelObject ChanObject)
+                {
+                    string Text = ChanObject.ChannelText;
+                    string data = ChanObject.RawInstruction;
+                    Furre Furr = ChanObject.Player;
+                    switch (Args.Channel)
+                    {
+                        case "@roll":
                             if (IsConnectedCharacter(Furr))
                             {
-                                //  await MSpage.ExecuteAsync(new int[] { 42, 43 }, cancel, Furr);
+                                // (0:130) When the bot rolls #d#,
+                                // (0:131) When the bot rolls #d#+#,
+                                // (0:132) When the bot rolls #d#-#,
+                                // (0:136) When any one rolls anything,
+
+                                await MSpage.ExecuteAsync(new int[] { 130, 131, 132, 136 },
+                                    cancel, Furr);
                             }
                             else
                             {
-                                //   await MSpage.ExecuteAsync(44, cancel, Furr);
+                                // (0:133) When a furre rolls #d#,
+                                // (0:134) When a furre rolls #d#+#,
+                                // (0:135) When a furre rolls #d#-#,
+                                // (0:136) When any one rolls anything,
+                                await MSpage.ExecuteAsync(new int[] { 133, 134, 135, 136 },
+                                    cancel, Furr);
                             }
-                        }
 
-                        var CookieFail = new Regex("You do not have any (.*?) left!", RegexOptions.Compiled);
-                        if (CookieFail.Match(Text).Success)
-                        {
-                            // await MSpage.ExecuteAsync(45, cancel, Furr);
-                        }
+                            return;
 
-                        var EatCookie = new Regex((Regex.Escape("<img src=\'fsh://system.fsh:90\' alt=\'@cookie\'/><channel name=\'@cookie\'/> You eat a cookie.") + "(.*?)"), RegexOptions.Compiled);
-                        if (EatCookie.Match(Text).Success)
-                        {
-                            //  await MSpage.ExecuteAsync(49, cancel, Furr);
-                        }
+                        case "trade":
 
-                        // (0:96) When the Bot sees "Your cookies are ready."
-                        Regex CookiesReady = new Regex($"<Your cookies are ready.http://furcadia.com/cookies/ for more info!", RegexOptions.Compiled);
-                        if (CookiesReady.Match(Text).Success)
-                        {
-                            //  await MSpage.ExecuteAsync(96, cancel, Furr);
-                        }
+                            // await MSpage.ExecuteAsync(new int[] { 46, 46, 48 }, cancel, Furr);
+                            return;
 
-                        return;
+                        case "shout":
+                            // (0:13) When anyone shouts something,
+                            // (0:14) When anyone shouts {..},
+                            // (0:15) When anyone shouts something with {..} in it,
+                            await MSpage.ExecuteAsync(new int[] { 13, 14, 15 },
+                                cancel, Furr);
+                            return;
+
+                        case "myspeech":
+                            break;
+
+                        case "whisper":
+                            // (0:19) When anyone whispers something,
+                            // (0:20) When anyone whispers {..},
+                            // (0:21) When anyone whispers something with {..} in it,
+                            await MSpage.ExecuteAsync(new int[] { 19, 20, 21 }, cancel, Furr);
+                            return;
+
+                        case "say":
+                            // (0:10) When anyone says something,
+                            // (0:11) When anyone says {..},
+                            // (0:12) When anyone says something with {..} in it,
+
+                            // (0:22) When anyone says or emotes something,
+                            // (0:23) When anyone says or emotes {..},
+                            // (0:24) When anyone says or emotes something with {..} in it,
+
+                            await MSpage.ExecuteAsync(new int[] { 10, 11, 12, 22, 23, 24 }, cancel, Furr);
+                            return;
+
+                        case "emote":
+                            if (IsConnectedCharacter(Furr))
+                            {
+                                return;
+                            }
+
+                            // (0:16) When anyone emotes something,
+                            // (0:17) When anyone emotes {..},
+                            // (0:18) When anyone emotes something with {..} in it,
+
+                            // (0:22) When anyone says or emotes something,
+                            // (0:23) When anyone says or emotes {..},
+                            // (0:24) When anyone says or emotes something with {..} in it,
+
+                            await MSpage.ExecuteAsync(new int[] { 16, 17, 18, 22, 23, 24 }, cancel, Furr);
+                            return;
+
+                        case "@emit":
+                            // (0:25) When someone emits something,
+                            // (0:26) When someone emits {..},
+                            // (0:27) When someone emits something with {..} in it,
+                            await MSpage.ExecuteAsync(new int[] { 24, 26, 27 }, cancel, Furr, Dream);
+                            return;
+
+                        case "query":
+
+                        case "banish":
+
+                            //TODO: Add these lines
+                            // (0:60) When the bot fails to empty the banish list,
+
+                            if (Text.Contains(" has been banished from your dreams."))
+                            {
+                                // banish <name> (online)
+                                // Success: (.*?) has been banished from your dreams.
+
+                                // (0:53) When the bot successfully banishes a furre,
+                                // (0:54) When the bot successfully banishes the furre named {...},
+
+                                await MSpage.ExecuteAsync(new int[] { 53, 54 },
+                                    cancel, BanishName);
+                            }
+                            else if (Text == "You have canceled all banishments from your dreams.")
+                            {
+                                // banish-off-all (active list)
+                                // Success: You have canceled all banishments from your dreams.
+                                // (0:61) When the bot successfully clears the banish list,
+
+                                await MSpage.ExecuteAsync(61,
+                                    cancel, BanishList);
+                            }
+                            else if (Text.EndsWith(" has been temporarily banished from your dreams."))
+                            {
+                                // tempbanish <name> (online)
+                                // Success: (.*?) has been temporarily banished from your dreams.
+                                // (0:62) When the bot successfully temp banishes a furre,
+                                // (0:63) When the bot successfully temp banishes the furre named {...},
+
+                                await MSpage.ExecuteAsync(new int[] { 62, 63 },
+                                    cancel, BanishName);
+                            }
+                            else if (Text.StartsWith("Players banished from your dreams: "))
+                            {
+                                // Banish-List
+                                // [notify> Players banished from your dreams:
+                                // (0:55) When the bot sees the banish list,
+                                await MSpage.ExecuteAsync(55,
+                                    cancel, BanishList);
+                            }
+                            else if (Text.StartsWith("The banishment of player "))
+                            {
+                                // banish-off <name> (on list)
+                                // [notify> The banishment of player (.*?) has ended.
+                                // (0:58) When the bot successfully removes a furre from the banish list,
+                                // (0:59) When the bot successfully removes the furre named {...} from the banish list,
+
+                                Regex t = new Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled);
+                                var NameStr = t.Match(Text).Groups[1].Value;
+                                await MSpage.ExecuteAsync(new int[] { 58, 59 },
+                                    cancel, BanishName);
+                            }
+                            else if (Text.Contains("There are no furres around right now with a name starting with "))
+                            {
+                                // Banish <name> (Not online)
+                                // Error:>>  There are no furres around right now with a name starting with (.*?) .
+                                // (0:56) When the bot fails to remove a furre from the banish list,
+                                //  (0:57) When the bot fails to remove the furre named {...} from the banish list,
+
+                                Regex t = new Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled);
+                                var NameStr = t.Match(Text).Groups[1].Value;
+                                await MSpage.ExecuteAsync(new int[] { 56, 57 },
+                                    cancel, NameStr);
+                            }
+                            else if (Text == "Sorry, this player has not been banished from your dreams.")
+                            {
+                                // banish-off <name> (not on list)
+                                // Error:>> Sorry, this player has not been banished from your dreams.
+                                // (0:51) When the bot fails to banish a furre,
+                                // (0:52) When the bot fails to banish the furre named {...},
+
+                                await MSpage.ExecuteAsync(new int[] { 51, 52 },
+                                    cancel, BanishName);
+                            }
+                            else if (Text == "You have not banished anyone.")
+                            {
+                                // banish-off-all (empty List)
+                                // Error:>> You have not banished anyone.
+                                // (0:55) When the bot sees the banish list,
+
+                                await MSpage.ExecuteAsync(55,
+                                    cancel, BanishList);
+                            }
+                            return;
+
+                        case "@cookie":
+                            var CookieToMe = new Regex(CookieToMeREGEX);
+                            if (CookieToMe.Match(Text).Success)
+                            {
+                                //  await MSpage.ExecuteAsync(new int[] { 42, 43 }, cancel, Furr);
+                            }
+
+                            Regex CookieToAnyone = new Regex(string.Format("<name shortname=\'(.*?)\'>(.*?)</name> just gave <name shortname=\'(.*?)\'>(.*?)</name> a (.*?)", RegexOptions.Compiled));
+                            if (CookieToAnyone.Match(Text).Success)
+                            {
+                                if (IsConnectedCharacter(Furr))
+                                {
+                                    //  await MSpage.ExecuteAsync(new int[] { 42, 43 }, cancel, Furr);
+                                }
+                                else
+                                {
+                                    //   await MSpage.ExecuteAsync(44, cancel, Furr);
+                                }
+                            }
+
+                            var CookieFail = new Regex("You do not have any (.*?) left!", RegexOptions.Compiled);
+                            if (CookieFail.Match(Text).Success)
+                            {
+                                // await MSpage.ExecuteAsync(45, cancel, Furr);
+                            }
+
+                            var EatCookie = new Regex((Regex.Escape("<img src=\'fsh://system.fsh:90\' alt=\'@cookie\'/><channel name=\'@cookie\'/> You eat a cookie.") + "(.*?)"), RegexOptions.Compiled);
+                            if (EatCookie.Match(Text).Success)
+                            {
+                                //  await MSpage.ExecuteAsync(49, cancel, Furr);
+                            }
+
+                            // (0:96) When the Bot sees "Your cookies are ready."
+                            Regex CookiesReady = new Regex($"<Your cookies are ready.http://furcadia.com/cookies/ for more info!", RegexOptions.Compiled);
+                            if (CookiesReady.Match(Text).Success)
+                            {
+                                //  await MSpage.ExecuteAsync(96, cancel, Furr);
+                            }
+
+                            return;
+                    }
                 }
             }
             catch (Exception ex)
