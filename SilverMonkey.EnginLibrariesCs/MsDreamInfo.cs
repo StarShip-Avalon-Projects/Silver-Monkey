@@ -127,18 +127,6 @@ namespace Libraries
               "give share to the furre named {..} if they're in the Dream right now.");
         }
 
-        private bool EnterOrLeaveTheDreamNamed(TriggerReader reader)
-        {
-            ReadDreamParams(reader);
-            return DreamNameIs(reader);
-        }
-
-        private static bool AndFurreNamedIsDreamOwner(TriggerReader reader)
-        {
-            return DreamInfo.DreamOwner.ToFurcadiaShortName()
-                != reader.ReadString().ToLower();
-        }
-
         /// <summary>
         /// Called when page is disposing or resetting.
         /// </summary>
@@ -151,14 +139,15 @@ namespace Libraries
 
         #region Private Methods
 
+        private static bool AndFurreNamedIsDreamOwner(TriggerReader reader)
+        {
+            return DreamInfo.DreamOwner.ToFurcadiaShortName()
+                != reader.ReadString().ToLower();
+        }
+
         private static bool BotIsDreamOwner(TriggerReader reader)
         {
             return DreamInfo.DreamOwner.ToFurcadiaShortName() == ParentBotSession.ConnectedFurre.ShortName;
-        }
-
-        private static bool DreamNameIsNot(TriggerReader reader)
-        {
-            return !DreamNameIs(reader);
         }
 
         private static bool DreamNameIs(TriggerReader reader)
@@ -181,21 +170,9 @@ namespace Libraries
             return DreamInfo.Name == $"{urlSegments[0].ToFurcadiaShortName()}:{urlSegments[1].ToFurcadiaShortName()}";
         }
 
-        private bool ShareFurreNamed(TriggerReader reader)
+        private static bool DreamNameIsNot(TriggerReader reader)
         {
-            var Target = DreamInfo.Furres.GerFurreByName(reader.ReadString());
-            if (InDream(Target))
-            {
-                return SendServer($"share {Target.ShortName}");
-            }
-
-            MsLog.Logger.Warn($"{Target.Name} Is Not in the dream");
-            return false;
-        }
-
-        private bool ShareTrigFurre(TriggerReader reader)
-        {
-            return SendServer($"share { Player.ShortName}");
+            return !DreamNameIs(reader);
         }
 
         private static bool TriggeringFurreIsDreamOwner(TriggerReader reader)
@@ -203,21 +180,44 @@ namespace Libraries
             return Player.ShortName == DreamInfo.DreamOwner.ToFurcadiaShortName();
         }
 
+        private bool EnterOrLeaveTheDreamNamed(TriggerReader reader)
+        {
+            ReadDreamParams(reader);
+            return DreamNameIs(reader);
+        }
+
+        private bool ShareFurreNamed(TriggerReader reader)
+        {
+            var Target = DreamInfo.Furres.GerFurreByName(reader.ReadString());
+            if (InDream(Target))
+                return SendServer($"share {Target.ShortName}");
+            MsLog.Logger.Warn($"Cannot give share to {Target.Name} because they're not in the dream");
+            return false;
+        }
+
+        private bool ShareTrigFurre(TriggerReader reader)
+        {
+            if (InDream(Player))
+                return SendServer($"share { Player.ShortName}");
+            MsLog.Logger.Warn($"Cannot give share to {Player.Name} because they're not in the dream");
+            return false;
+        }
+
         private bool UnshareFurreNamed(TriggerReader reader)
         {
             var Target = DreamInfo.Furres.GerFurreByName(reader.ReadString());
             if (InDream(Target))
-            {
                 return SendServer($"unshare {Target.ShortName}");
-            }
-
-            MsLog.Logger.Warn($"{Target.Name} Is Not in the dream");
+            MsLog.Logger.Warn($"cannot thake share from {Target.Name} they're not in the dream");
             return false;
         }
 
         private bool UnshareTrigFurre(TriggerReader reader)
         {
-            return SendServer($"unshare {Player.ShortName}");
+            if (InDream(Player))
+                return SendServer($"unshare {Player.ShortName}");
+            MsLog.Logger.Warn($"Cannot take share from {Player.Name} because they're not in the dream");
+            return false;
         }
 
         #endregion Private Methods
