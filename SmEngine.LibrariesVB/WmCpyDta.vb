@@ -10,7 +10,7 @@ Namespace Libraries
     ''' <summary>
     ''' Bot to Bot Messaging using Window Calls
     ''' </summary>
-    Public NotInheritable Class WmCpyDta
+    Public Class WmCpyDta
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"

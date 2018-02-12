@@ -2,7 +2,6 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Furcadia.Text.FurcadiaMarkup
-Imports MonkeyCore2.IO
 
 Namespace Utils.Logging
 

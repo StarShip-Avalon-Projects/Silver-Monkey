@@ -223,13 +223,13 @@ namespace Libraries
         {
             bool ParamSet = false;
 
-            Furre ActiveFurre = reader.GetParametersOfType<Furre>().FirstOrDefault();
+            Furre ActiveFurre = reader.GetParametersOfType<Furre>().First();
             if (ActiveFurre == null)
                 return ParamSet;
             if (ActiveFurre != Player)
             {
                 Player = ActiveFurre;
-                if (ActiveFurre.FurreID != -1 || ActiveFurre.ShortName != "unknown")
+                if (ActiveFurre.FurreID != -1 && ActiveFurre.ShortName != "unknown")
                 {
                     ParamSet = true;
                 }

@@ -109,19 +109,19 @@ namespace Libraries
                  "When the bot successfully temp banishes the furre named {...},");
 
             Add(TriggerCategory.Condition,
-                r => TrigFurreIsNotBanished(r),
+                r => !TriggeringFurreIsBanished(r),
                 "and the triggering furre is not on the banish-list,");
 
             Add(TriggerCategory.Condition,
-                r => !TrigFurreIsNotBanished(r),
+                r => TriggeringFurreIsBanished(r),
                 "and the triggering furre is on the banish-list,");
 
             Add(TriggerCategory.Condition,
-                r => FurreNamedIsNotBanished(r),
+                r => FurreNamedIsBanished(r),
                 "and the furre named {...} is not on the banish-list,");
 
             Add(TriggerCategory.Condition,
-                r => !FurreNamedIsNotBanished(r),
+                r => !FurreNamedIsBanished(r),
                 "and the furre named {...} is on the banish-list,");
 
             Add(TriggerCategory.Effect,
@@ -186,7 +186,7 @@ namespace Libraries
             return true;
         }
 
-        private bool FurreNamedIsNotBanished(TriggerReader reader)
+        private bool FurreNamedIsBanished(TriggerReader reader)
         {
             var result = false;
             string f = reader.ReadString();
@@ -208,7 +208,7 @@ namespace Libraries
             return SendServer($"tempbanish { Furre.ToFurcadiaShortName()}");
         }
 
-        private bool TrigFurreIsNotBanished(TriggerReader reader)
+        private bool TriggeringFurreIsBanished(TriggerReader reader)
         {
             var result = false;
             foreach (var fur in BanishedFurreList)

@@ -31,6 +31,7 @@
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
       <DocumentationSource sourceFile="..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll" />
+      <DocumentationSource sourceFile="..\MonkeyCore2\MonkeyCore2.csproj" />
     </DocumentationSources>
     <WarnOnMissingSourceContext>True</WarnOnMissingSourceContext>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>

@@ -16,7 +16,7 @@ Namespace Libraries
     ''' <para/>
     ''' Why 30 seconds? Because the Furcadia pounce server runs on a 30 second cron job, Therefore it makes sense to stick with it update time.
     ''' </remarks>
-    Public NotInheritable Class MsPounce
+    Public Class MsPounce
         Inherits MonkeySpeakLibrary
 
         ''' <summary>

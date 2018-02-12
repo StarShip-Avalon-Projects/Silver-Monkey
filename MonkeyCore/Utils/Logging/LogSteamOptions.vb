@@ -21,9 +21,11 @@ Namespace Utils.Logging
         End Sub
 
         ''' <summary>
-        ''' enable logging
+        ''' Gets or sets a value indicating whether this <see cref="LogSteamOptions"/> is enabled.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <value>
+        '''   <c>true</c> if enabled; otherwise, <c>false</c>.
+        ''' </value>
         Public Property Enabled As Boolean
             Get
                 Return _log

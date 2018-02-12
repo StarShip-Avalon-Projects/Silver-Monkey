@@ -9,7 +9,7 @@ Namespace Libraries
     ''' DEP recommends this system for trading digos and things
     ''' </para>
     ''' </summary>
-    Public NotInheritable Class MsTrades
+    Public Class MsTrades
         Inherits MonkeySpeakLibrary
 
 #Region "Public Methods"

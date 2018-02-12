@@ -1,10 +1,9 @@
 ﻿using Engine.BotSession;
-using Libraries;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using System.Linq;
 
-namespace SilverMonkey.Engine.Libraries
+namespace Libraries
 {
     /// <summary>
     /// Initial Class to Launch the Engie with

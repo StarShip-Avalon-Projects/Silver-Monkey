@@ -25,7 +25,7 @@ Namespace Libraries
     ''' (5:2011) play the wave file {...} in a loop. if theres not one playing
     ''' </para>
     ''' </remarks>
-    Public NotInheritable Class MsSound
+    Public Class MsSound
         Inherits MonkeySpeakLibrary
         Implements IDisposable
 

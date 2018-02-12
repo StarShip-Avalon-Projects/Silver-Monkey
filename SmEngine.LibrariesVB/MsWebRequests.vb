@@ -1,8 +1,5 @@
-﻿Imports Furcadia.Net.Web
-Imports Engine.Libraries
+﻿Imports Libraries
 Imports Monkeyspeak
-Imports Web
-Imports Libraries
 Imports SilverMonkey.Engine.Libraries.Web
 
 Namespace Libraries
@@ -16,7 +13,7 @@ Namespace Libraries
     ''' Effects: (5:10) - (5:60)
     ''' </para>
     ''' </summary>
-    Public NotInheritable Class MsWebRequests
+    Public Class MsWebRequests
         Inherits MonkeySpeakLibrary
 
 #Region "Private Fields"

@@ -43,6 +43,7 @@
       <DocumentationSource sourceFile="..\SmEngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB.vbproj" />
       <DocumentationSource sourceFile="..\MonkeyCore2\MonkeyCore2.csproj" />
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
+      <DocumentationSource sourceFile="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj" />
     </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>

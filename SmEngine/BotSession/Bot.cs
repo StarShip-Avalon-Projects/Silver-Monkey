@@ -28,6 +28,7 @@ using static Libraries.MsLibHelper;
 using SilverMonkey.Engine.Libraries;
 
 using Libraries;
+using Furcadia.Net.Utils.ChannelObjects;
 
 namespace Engine.BotSession
 {
@@ -552,7 +553,7 @@ namespace Engine.BotSession
                         // (0:49) When a furre named {..} requests to cuddle with the bot,
                         // (0:50) When the bot see a query (lead, follow summon, join, cuddle),
                         await MSpage.ExecuteAsync(new int[] { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 },
-                            cancel, sender, Furr);
+                            cancel, new QueryChannelObject(((ChannelObject)sender).RawInstruction), Furr);
                         return;
 
                     case "banish":

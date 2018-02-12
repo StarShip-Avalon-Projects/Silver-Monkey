@@ -8,7 +8,7 @@ Namespace Libraries
     ''' TODO: Complete Class
     ''' </para>
     ''' </summary>
-    Public NotInheritable Class MsPopUpDialogs
+    Public Class MsPopUpDialogs
         Inherits MonkeySpeakLibrary
 
 #Region "Public Constructors"
