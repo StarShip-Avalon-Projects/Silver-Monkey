@@ -139,16 +139,22 @@ namespace Libraries
                 "stop leading ,following or cuddling");
         }
 
+        /// <summary>
+        /// Called when page is disposing or resetting.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        public override void Unload(Page page)
+        {
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
         private bool AnyQueryRequest(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
             return true;
-        }
-
-        private bool CuddleRequestFurreNamed(TriggerReader reader)
-        {
-            return NameIs(reader)
-                && QueryType.cuddle == reader.GetParametersOfType<QueryChannelObject>().First().Query;
         }
 
         private bool CuddleRequestAnyFurre(TriggerReader reader)
@@ -157,22 +163,10 @@ namespace Libraries
             return QueryType.cuddle == reader.GetParametersOfType<QueryChannelObject>().First().Query;
         }
 
-        private bool LeadRequestFurreNamed(TriggerReader reader)
+        private bool CuddleRequestFurreNamed(TriggerReader reader)
         {
             return NameIs(reader)
-               && QueryType.lead == reader.GetParametersOfType<QueryChannelObject>().First().Query;
-        }
-
-        private bool LeadRequestAnyFurre(TriggerReader reader)
-        {
-            ReadTriggeringFurreParams(reader);
-            return QueryType.lead == reader.GetParametersOfType<QueryChannelObject>().First().Query;
-        }
-
-        private bool FollowRequestFurreNamed(TriggerReader reader)
-        {
-            return NameIs(reader)
-                 && QueryType.follow == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+                && QueryType.cuddle == reader.GetParametersOfType<QueryChannelObject>().First().Query;
         }
 
         private bool FollowRequestAnyFurre(TriggerReader reader)
@@ -181,10 +175,10 @@ namespace Libraries
             return QueryType.follow == reader.GetParametersOfType<QueryChannelObject>().First().Query;
         }
 
-        private bool SummonRequestFurreNamed(TriggerReader reader)
+        private bool FollowRequestFurreNamed(TriggerReader reader)
         {
-            return NameIs(reader) &&
-                 QueryType.summon == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+            return NameIs(reader)
+                 && QueryType.follow == reader.GetParametersOfType<QueryChannelObject>().First().Query;
         }
 
         private bool JoinRequestFurreNamed(TriggerReader reader)
@@ -199,20 +193,30 @@ namespace Libraries
             return QueryType.join == reader.GetParametersOfType<QueryChannelObject>().First().Query;
         }
 
+        private bool LeadRequestAnyFurre(TriggerReader reader)
+        {
+            ReadTriggeringFurreParams(reader);
+            return QueryType.lead == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+        }
+
+        private bool LeadRequestFurreNamed(TriggerReader reader)
+        {
+            return NameIs(reader)
+               && QueryType.lead == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+        }
+
+        private bool SummonRequestFurreNamed(TriggerReader reader)
+        {
+            return NameIs(reader) &&
+                 QueryType.summon == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+        }
+
         private bool SummonRequestTriggeringFurre(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
             return QueryType.summon == reader.GetParametersOfType<QueryChannelObject>().First().Query;
         }
 
-        /// <summary>
-        /// Called when page is disposing or resetting.
-        /// </summary>
-        /// <param name="page">The page.</param>
-        public override void Unload(Page page)
-        {
-        }
-
-        #endregion Public Methods
+        #endregion Private Methods
     }
 }
