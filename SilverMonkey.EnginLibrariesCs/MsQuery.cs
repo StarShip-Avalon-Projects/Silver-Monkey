@@ -33,62 +33,46 @@ namespace Libraries
         {
             base.Initialize(args);
 
-            // Summon
-            // (0:40) When anyone requests to summon the bot,
             Add(TriggerCategory.Cause,
                 SummonRequestTriggeringFurre,
                 "When anyone requests to summon the bot,");
 
-            // (0:41) When a furre named {..} requests to summon the bot,
             Add(TriggerCategory.Cause,
                 SummonRequestFurreNamed,
                 "When a furre named {..} requests to summon the bot,");
 
-            // Join
-            // (0:42) When anyone requests to join the bot,
             Add(TriggerCategory.Cause,
               JoinRequestTriggeringFurre,
                "When anyone requests to join the bot,");
 
-            // (0:43) When a furre named {..} requests to join the bot,
             Add(TriggerCategory.Cause,
                 JoinRequestFurreNamed,
                 "When a furre named {..} requests to join the bot,");
 
-            // Follow
-            // (0:44) When anyone requests to follow the bot,
             Add(TriggerCategory.Cause,
               FollowRequestAnyFurre,
                "When anyone requests to follow the bot,");
 
-            // (0:35) When a furre named {..} requests to follow the bot,
             Add(TriggerCategory.Cause,
                FollowRequestFurreNamed,
                 "When a furre named {..} requests to follow the bot,");
-            // Lead
 
-            // (0:46) When anyone requests to lead the bot,
             Add(TriggerCategory.Cause,
               LeadRequestAnyFurre,
                 "When anyone requests to lead the bot,");
 
-            // (0:47) When a furre named {..} requests to lead the bot,
             Add(TriggerCategory.Cause,
               LeadRequestFurreNamed,
                 "When a furre named {..} requests to lead the bot,");
 
-            // Cuddle
-            // (0:48) When anyone requests to cuddle with the bot.
             Add(TriggerCategory.Cause,
              CuddleRequestAnyFurre,
                 "When anyone requests to cuddle with the bot,");
 
-            // (0:49) When a furre named {..} requests to cuddle with the bot,
             Add(TriggerCategory.Cause,
                CuddleRequestFurreNamed,
                 "When a furre named {..} requests to cuddle with the bot,");
 
-            // (0:50) When the bot see a query (lead, follow summon, join, cuddle),
             Add(TriggerCategory.Cause,
                AnyQueryRequest,
                 "When the bot see a query (lead, follow summon, join, cuddle),");
@@ -99,15 +83,18 @@ namespace Libraries
                  "summon the triggering furre");
 
             Add(TriggerCategory.Effect,
-                r => SendServer($"`summon {r.ReadString().ToFurcadiaShortName()}"),
+                r =>
+                SendServer($"`summon {r.ReadString().ToFurcadiaShortName()}"),
                 "summon the the furre named {...}.");
 
             Add(TriggerCategory.Effect,
-                r => SendServer($"`join {Player.ShortName}"),
+                r =>
+                SendServer($"`join {Player.ShortName}"),
                 "join the triggering furre");
 
             Add(TriggerCategory.Effect,
-                r => SendServer($"`join {r.ReadString().ToFurcadiaShortName()}"),
+                r =>
+                SendServer($"`join {r.ReadString().ToFurcadiaShortName()}"),
                 "join the the furre named {...}.");
 
             Add(TriggerCategory.Effect,
