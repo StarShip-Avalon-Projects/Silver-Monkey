@@ -7,7 +7,7 @@ Namespace Utils.Logging
     ''' </summary>
     <CLSCompliant(True)>
     Public Class LogSteamOptions
-        Private ext As String = ".log"
+        Private Const ext As String = ".log"
         Private _log As Boolean
         Private _logIdx As Integer
         Private _logNamebase As String

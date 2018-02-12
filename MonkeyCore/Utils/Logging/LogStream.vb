@@ -16,8 +16,8 @@ Namespace Utils.Logging
 
 #Region "logging functions"
 
-        Private Shared Stack As New List(Of String)
-        Private Shared strErrorFilePath As String
+        Private Stack As New List(Of String)
+        Private ReadOnly strErrorFilePath As String
 
         ''' <summary>
         ''' Create a new instance of the log file
