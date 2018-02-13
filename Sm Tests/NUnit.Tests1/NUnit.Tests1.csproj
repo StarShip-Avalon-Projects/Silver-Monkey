@@ -31,9 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
-      <HintPath>..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -73,6 +72,10 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MonkeyCore2\MonkeyCore2.csproj">
+      <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
+      <Name>MonkeyCore2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MonkeyCore\MonkeyCore.vbproj">
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>
@@ -80,6 +83,18 @@
     <ProjectReference Include="..\..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
       <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
       <Name>Monkeyspeak</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Silvermonkey.Engine\Silvermonkey.Engine.csproj">
+      <Project>{f1e0feb3-a74e-43ce-98bf-b908ed1753fa}</Project>
+      <Name>Silvermonkey.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Libraries CS.csproj">
+      <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
+      <Name>Silvermonkey.Engine.Libraries CS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SmEngine.LibrariesVB\Silvermonkey.Engine.Libraries VB.vbproj">
+      <Project>{4619ff40-2c7c-4dad-887b-14d58755ccd9}</Project>
+      <Name>Silvermonkey.Engine.Libraries VB</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

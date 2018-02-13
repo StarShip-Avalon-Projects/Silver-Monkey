@@ -160,6 +160,10 @@
       <Project>{925781E6-8B75-471B-887F-616495BBBFDD}</Project>
       <Name>Monkeyspeak</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Silvermonkey.Engine\Silvermonkey.Engine.csproj">
+      <Project>{F1E0FEB3-A74E-43CE-98BF-B908ED1753FA}</Project>
+      <Name>Silvermonkey.Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Libraries CS.csproj">
       <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
       <Name>Silvermonkey.Engine.Libraries CS</Name>

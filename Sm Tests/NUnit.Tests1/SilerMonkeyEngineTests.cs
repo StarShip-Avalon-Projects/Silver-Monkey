@@ -1,14 +1,14 @@
-﻿using BotSession;
+﻿using Engine.BotSession;
 using Furcadia.Logging;
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
-using MonkeyCore;
+using MonkeyCore2.IO;
 using NUnit.Framework;
 
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using static Engine.Libraries.MsLibHelper;
+using static Libraries.MsLibHelper;
 
 using static SmEngineTests.Utilities;
 
@@ -65,7 +65,7 @@ namespace SmEngineTests
             var MsEngineOption = new EngineOptoons()
             {
                 MonkeySpeakScriptFile = MsFile,
-                MS_Engine_Enable = true,
+                IsEnabled = true,
                 BotController = @"Gerolkae"
             };
             options = new BotOptions(BotFile)
@@ -262,18 +262,15 @@ namespace SmEngineTests
                 Assert.That(Proxy.Dream.Name,
                     !Is.EqualTo(null),
                     $"Dream Name is '{Proxy.Dream.Name}'");
-                Assert.That(Proxy.Dream.Owner,
+                Assert.That(Proxy.Dream.DreamOwner,
                     !Is.EqualTo(null),
-                    $"Dream Owner is '{Proxy.Dream.Owner}'");
+                    $"Dream Owner is '{Proxy.Dream.DreamOwner}'");
                 Assert.That(Proxy.BotController,
                     !Is.EqualTo(null),
                     $"BotController is '{Proxy.BotController}'");
-                Assert.That(Proxy.Dream.ShortName,
+                Assert.That(Proxy.Dream.DreamUrl,
                     !Is.EqualTo(null),
-                    $"Dream ShortName is '{Proxy.Dream.ShortName}'");
-                Assert.That(Proxy.Dream.URL,
-                    !Is.EqualTo(null),
-                    $"Dream URL is '{Proxy.Dream.URL}'");
+                    $"Dream URL is '{Proxy.Dream.DreamUrl}'");
                 Assert.That(Proxy.Dream.Lines,
                     Is.GreaterThan(0),
                     $"DragonSpeak Lines {Proxy.Dream.Lines}");
@@ -330,9 +327,9 @@ namespace SmEngineTests
                     Assert.That(Proxy.IsClientSocketConnected,
                         Is.EqualTo(false),
                          $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                    Assert.That(Proxy.FurcadiaClientIsRunning,
                         Is.EqualTo(false),
-                        $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
                 }
                 else
                 {
@@ -342,16 +339,16 @@ namespace SmEngineTests
                     Assert.That(Proxy.IsClientSocketConnected,
                         Is.EqualTo(true),
                         $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                    Assert.That(Proxy.FurcadiaClientIsRunning,
                         Is.EqualTo(true),
-                        $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
                 }
             });
         }
 
         public void DisconnectTests(bool StandAlone = false)
         {
-            Proxy.Disconnect();
+            Proxy.DisconnectServerAndClientStreams();
             HaltFor(CleanupDelayTime);
 
             Assert.Multiple(() =>
@@ -368,9 +365,9 @@ namespace SmEngineTests
                 Assert.That(Proxy.IsClientSocketConnected,
                      Is.EqualTo(false),
                      $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                Assert.That(Proxy.IsFurcadiaClientIsRunning,
+                Assert.That(Proxy.FurcadiaClientIsRunning,
                      Is.EqualTo(false),
-                    $"Proxy.FurcadiaClientIsRunning {Proxy.IsFurcadiaClientIsRunning}");
+                    $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
             });
         }
 
