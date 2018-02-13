@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9072CD13-8B7E-4A22-BC28-6087785A5D9A}</ProjectGuid>
-    <RootNamespace>DataMonkey</RootNamespace>
+    <RootNamespace>Datamonkey</RootNamespace>
     <AssemblyName>Data Monkey</AssemblyName>
     <OutputType>WinExe</OutputType>
     <ApplicationIcon>Icons\App.ico</ApplicationIcon>

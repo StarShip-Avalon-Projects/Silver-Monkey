@@ -7,7 +7,7 @@
     <ProjectGuid>{4619FF40-2C7C-4DAD-887B-14D58755CCD9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SilverMonkey.Engine</RootNamespace>
-    <AssemblyName>SilverMonkey.Engine.LibrariesVB</AssemblyName>
+    <AssemblyName>Silvermonkey.Engine.LibrariesVB</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -21,7 +21,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SilverMonkey.Engine.LibrariesVB.xml</DocumentationFile>
+    <DocumentationFile>Silvermonkey.Engine.LibrariesVB.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -30,7 +30,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SilverMonkey.Engine.LibrariesVB.xml</DocumentationFile>
+    <DocumentationFile>Silvermonkey.Engine.LibrariesVB.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -159,7 +159,7 @@
     </ProjectReference>
     <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Librarie.csproj">
       <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
-      <Name>Silvermonkey.Engine.Librarie</Name>
+      <Name>Silvermonkey.Engine.Libraries</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

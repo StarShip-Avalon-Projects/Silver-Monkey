@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SilverMonkey.Engine</RootNamespace>
-    <AssemblyName>SilverMonkey.EnginLibraries</AssemblyName>
+    <AssemblyName>Silvermonkey.Engine.Libraries</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
