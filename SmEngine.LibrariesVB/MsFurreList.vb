@@ -203,7 +203,7 @@ Namespace Libraries
         Public Function FurreNamedActive(reader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = DreamInfo.Furres.GerFurreByName(name)
+            Dim Target = DreamInfo.Furres.GetFurreByName(name)
             Return Target.AfkTime = 0
 
         End Function
@@ -220,7 +220,7 @@ Namespace Libraries
         Public Function FurreNamedAFK(reader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = DreamInfo.Furres.GerFurreByName(name)
+            Dim Target = DreamInfo.Furres.GetFurreByName(name)
             Return Target.AfkTime > 0
 
         End Function
@@ -237,7 +237,7 @@ Namespace Libraries
         Public Function FurreNamedCanSe(reader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = DreamInfo.Furres.GerFurreByName(name)
+            Dim Target = DreamInfo.Furres.GetFurreByName(name)
             Return Target.Visible
 
         End Function
@@ -254,7 +254,7 @@ Namespace Libraries
         Public Function FurreNamedInDream(reader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = DreamInfo.Furres.GerFurreByName(name)
+            Dim Target = DreamInfo.Furres.GetFurreByName(name)
             Return InDream(Target)
 
         End Function
@@ -271,7 +271,7 @@ Namespace Libraries
         Public Function FurreNamedNotCanSe(reader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = DreamInfo.Furres.GerFurreByName(name)
+            Dim Target = DreamInfo.Furres.GetFurreByName(name)
             Return Not Target.Visible
 
         End Function
@@ -288,7 +288,7 @@ Namespace Libraries
         Public Function FurreNamedNotInDream(reader) As Boolean
 
             Dim name = reader.ReadString
-            Dim Target = DreamInfo.Furres.GerFurreByName(name)
+            Dim Target = DreamInfo.Furres.GetFurreByName(name)
             Return Not InDream(Target)
 
         End Function

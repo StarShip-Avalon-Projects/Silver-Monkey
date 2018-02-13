@@ -188,7 +188,7 @@ namespace Libraries
 
         private bool ShareFurreNamed(TriggerReader reader)
         {
-            var Target = DreamInfo.Furres.GerFurreByName(reader.ReadString());
+            var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
             if (InDream(Target))
                 return SendServer($"share {Target.ShortName}");
             MsLog.Logger.Warn($"Cannot give share to {Target.Name} because they're not in the dream");
@@ -205,7 +205,7 @@ namespace Libraries
 
         private bool UnshareFurreNamed(TriggerReader reader)
         {
-            var Target = DreamInfo.Furres.GerFurreByName(reader.ReadString());
+            var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
             if (InDream(Target))
                 return SendServer($"unshare {Target.ShortName}");
             MsLog.Logger.Warn($"cannot thake share from {Target.Name} they're not in the dream");

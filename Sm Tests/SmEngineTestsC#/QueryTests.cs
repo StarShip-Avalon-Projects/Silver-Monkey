@@ -28,7 +28,7 @@ namespace SmEngineTests
         public string BackupSettingsFile { get; private set; }
         public BotOptions Options { get; private set; }
 
-        [OneTimeSetUp]
+        [SetUp]
         public void Initialize()
         {
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -216,7 +216,7 @@ namespace SmEngineTests
             });
         }
 
-        [OneTimeSetUp]
+        [TearDown]
         public void Cleanup()
         {
             BotHaseDisconnected();
