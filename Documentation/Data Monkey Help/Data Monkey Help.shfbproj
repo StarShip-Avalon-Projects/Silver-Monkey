@@ -14,7 +14,7 @@
     <Name>Data_Monkey_Help</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.6.1</FrameworkVersion>
-    <OutputPath>..\build\help\datamonkey\</OutputPath>
+    <OutputPath>..\..\build\help\datamonkey\</OutputPath>
     <HtmlHelpName>Data_Monkey_Help</HtmlHelpName>
     <Language>en-US</Language>
     <TransformComponentArguments>
@@ -27,11 +27,10 @@
       <Argument Key="maxVersionParts" Value="" xmlns="" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Data Monkey\Data Monkey.csproj" />
-      <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
-      <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
-      <DocumentationSource sourceFile="..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll" />
-      <DocumentationSource sourceFile="..\MonkeyCore2\MonkeyCore2.csproj" />
+      <DocumentationSource sourceFile="..\..\Datamonkey.WinForms\Datamonkey.WinForms.csproj" />
+      <DocumentationSource sourceFile="..\..\MonkeyCore\MonkeyCore.vbproj" />
+      <DocumentationSource sourceFile="..\..\MonkeyCore2\MonkeyCore2.csproj" />
+      <DocumentationSource sourceFile="..\..\FurcLib\FurcadiaLib.csproj" />
     </DocumentationSources>
     <WarnOnMissingSourceContext>True</WarnOnMissingSourceContext>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
@@ -147,7 +146,7 @@
     <IncludeFavorites>True</IncludeFavorites>
     <BinaryTOC>True</BinaryTOC>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, ProtectedInternalAsProtected, PublicCompilerGenerated, EditorBrowsableNever, NonBrowsable</VisibleItems>
-    <BuildLogFile>..\Build\Help\DatamonkeyHelp.log</BuildLogFile>
+    <BuildLogFile>..\..\Build\Help\DatamonkeyHelp.log</BuildLogFile>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
@@ -187,23 +186,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons\Help.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
-      <Name>Data Monkey</Name>
-      <Project>{9072cd13-8b7e-4a22-bc28-6087785a5d9a}</Project>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
-      <Name>FurcadiaLib</Name>
-      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
-      <Name>MonkeyCore</Name>
-      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FastColoredTextBox, Version=2.16.21.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b">

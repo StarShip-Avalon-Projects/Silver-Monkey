@@ -157,9 +157,9 @@
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Name>Monkeyspeak</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\SilverMonkey.EnginLibrariesCs.csproj">
+    <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Libraries CS.csproj">
       <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
-      <Name>SilverMonkey.EnginLibrariesCs</Name>
+      <Name>Silvermonkey.Engine.Libraries CS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

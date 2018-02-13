@@ -11,10 +11,10 @@
     <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual Studio adds them anyway -->
     <AssemblyName>Documentation</AssemblyName>
     <RootNamespace>Documentation</RootNamespace>
-    <Name>Documentation</Name>
+    <Name>Silvermonkey.Help</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.6.1</FrameworkVersion>
-    <OutputPath>..\build\help\silvermonkey\</OutputPath>
+    <OutputPath>..\..\build\help\silvermonkey\</OutputPath>
     <HtmlHelpName>Silver Monkey</HtmlHelpName>
     <Language>en-US</Language>
     <BuildAssemblerVerbosity>OnlyErrors</BuildAssemblerVerbosity>
@@ -36,14 +36,14 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
-      <DocumentationSource sourceFile="..\SmEngine\SmEngine.csproj" />
-      <DocumentationSource sourceFile="..\SilverMonkey\Silver Monkey 3\Silver Monkey 3 WPF UI.csproj" />
       <DocumentationSource sourceFile="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj" />
-      <DocumentationSource sourceFile="..\SilverMonkey.EnginLibrariesCs\SilverMonkey.EnginLibrariesCs.csproj" />
-      <DocumentationSource sourceFile="..\SmEngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB.vbproj" />
       <DocumentationSource sourceFile="..\MonkeyCore2\MonkeyCore2.csproj" />
       <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
       <DocumentationSource sourceFile="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj" />
+      <DocumentationSource sourceFile="..\..\SmEngine.LibrariesVB\Silvermonkey.Engine.Libraries VB.vbproj" />
+      <DocumentationSource sourceFile="..\..\Silvermonkey.Engine\Silvermonkey.Engine.csproj" />
+      <DocumentationSource sourceFile="..\..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Libraries CS.csproj" />
+      <DocumentationSource sourceFile="..\..\Silvermonkey.WPF\Silvermonkey.WPF.csproj" />
     </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>
@@ -140,7 +140,7 @@
     <BuildLogFile>..\Build\Help\SmHelp.log</BuildLogFile>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <RootNamespaceTitle>Silver Monkey SDK</RootNamespaceTitle>
-    <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
+    <WarnOnMissingSourceContext>True</WarnOnMissingSourceContext>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="DataMonkey" isDocumented="True" />
       <NamespaceSummaryItem name="Furcadia (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>

@@ -200,17 +200,17 @@
       <ComponentGroupRef Id="FurcadiaLib.Symbols" />
       <ComponentGroupRef Id="FurcadiaLib.Content" />
 
-      <ComponentGroupRef Id="SmEngine.Binaries" />
-      <ComponentGroupRef Id="SmEngine.Symbols" />
-      <ComponentGroupRef Id="SmEngine.Content" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.Binaries" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.Symbols" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.Content" />
 
-      <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Binaries" />
-      <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Symbols" />
-      <ComponentGroupRef Id="SilverMonkey.Engngine.LibrariesVB.Content" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesVB.Binaries" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesVB.Symbols" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesVB.Content" />
 
-      <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Binaries" />
-      <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Symbols" />
-      <ComponentGroupRef Id="SilverMonkey.EnginLibrariesCs.Content" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesCS.Binaries" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesCS.Symbols" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesCS.Content" />
 
       <ComponentRef Id="FCTB" />
       <ComponentRef Id="Irony" />

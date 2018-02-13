@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8EDF4429-251A-416D-BB68-93F227191BCF}</ProjectGuid>
+    <ProjectGuid>{B1D4A8CF-93A0-49A8-B883-C5578924DEAB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SmEngineTests</RootNamespace>
@@ -68,29 +68,25 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
+    <ProjectReference Include="..\..\FurcLib\FurcadiaLib.csproj">
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
+    <ProjectReference Include="..\..\MonkeyCore2\MonkeyCore2.csproj">
       <Project>{A4512568-6878-4EE9-8549-CFF611D399A1}</Project>
       <Name>MonkeyCore2</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+    <ProjectReference Include="..\..\MonkeyCore\MonkeyCore.vbproj">
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
+    <ProjectReference Include="..\..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Name>Monkeyspeak</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\SilverMonkey.EnginLibrariesCs.csproj">
+    <ProjectReference Include="..\..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Libraries CS.csproj">
       <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
-      <Name>SilverMonkey.EnginLibrariesCs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SmEngine\SmEngine.csproj">
-      <Project>{f1e0feb3-a74e-43ce-98bf-b908ed1753fa}</Project>
-      <Name>SmEngine</Name>
+      <Name>Silvermonkey.Engine.Libraries CS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

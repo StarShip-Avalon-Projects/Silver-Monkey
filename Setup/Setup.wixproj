@@ -64,6 +64,23 @@
       <RefProjectOutputGroups>Binaries</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
+    <ProjectReference Include="..\Datamonkey.WinForms\Datamonkey.WinForms.csproj">
+      <Name>DataMonkey</Name>
+      <Project>{9072cd13-8b7e-4a22-bc28-6087785a5d9a}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Documentation\Silver Monkey Help\Silvermonkey.Help.shfbproj">
+      <Name>Silvermonkey.Help</Name>
+      <Project>{c9edb4b0-618f-497d-944f-ab0a72736b00}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj">
       <Name>MonkeyCore.WinFormsControls</Name>
       <Project>{6a9fc31d-150b-4c4b-9694-7f8c084df602}</Project>
@@ -85,15 +102,6 @@
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
       <Name>MonkeyCore</Name>
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\Data Monkey\Data Monkey.csproj">
-      <Name>DataMonkey</Name>
-      <Project>{9072cd13-8b7e-4a22-bc28-6087785a5d9a}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
@@ -154,8 +162,17 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\SilverMonkey.EnginLibrariesCs.csproj">
-      <Name>SilverMonkey.EnginLibrariesCs</Name>
+    <ProjectReference Include="..\Silvermonkey.Engine\Silvermonkey.Engine.csproj">
+      <Name>Silvermonkey.Engine</Name>
+      <Project>{f1e0feb3-a74e-43ce-98bf-b908ed1753fa}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>
+      </DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
+      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Libraries CS.csproj">
+      <Name>Silvermonkey.Engine.LibrariesCS</Name>
       <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
       <Private>True</Private>
       <DoNotHarvest>
@@ -163,7 +180,7 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\SilverMonkeyWinForms\SilverMonkey2.vbproj">
+    <ProjectReference Include="..\SilverMonkeyWinForms\Silvermonkey.WinForms.vbproj">
       <Name>SilverMonkey2</Name>
       <Project>{cd544712-0665-44db-bb70-5b9d4395b050}</Project>
       <Private>True</Private>
@@ -172,18 +189,9 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\SmEngine.LibrariesVB\SilverMonkey.Engngine.LibrariesVB.vbproj">
-      <Name>SilverMonkey.Engngine.LibrariesVB</Name>
+    <ProjectReference Include="..\SmEngine.LibrariesVB\Silvermonkey.Engine.Libraries VB.vbproj">
+      <Name>Silvermonkey.Engine.LibrariesVB</Name>
       <Project>{4619ff40-2c7c-4dad-887b-14d58755ccd9}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\SmEngine\SmEngine.csproj">
-      <Name>SmEngine</Name>
-      <Project>{f1e0feb3-a74e-43ce-98bf-b908ed1753fa}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
