@@ -227,12 +227,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
-      <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
-      <Name>MonkeyCore2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MonkeyCore\MonkeyCore.vbproj">
+    <ProjectReference Include="..\MonkeyCoreVB\MonkeyCore VB.vbproj">
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Name>MonkeyCore VB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.csproj">
+      <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
   </ItemGroup>

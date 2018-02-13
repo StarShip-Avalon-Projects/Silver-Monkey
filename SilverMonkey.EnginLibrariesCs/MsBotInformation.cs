@@ -108,7 +108,7 @@ namespace Libraries
                 //TODO Change FileName to Reflection
                 Arguments = File,
                 FileName = "SilverMonkey.exe",
-                WorkingDirectory = MonkeyCore2.IO.Paths.ApplicationPath
+                WorkingDirectory = IO.Paths.ApplicationPath
             };
 
             Process.Start(p);

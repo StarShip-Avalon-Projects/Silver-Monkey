@@ -3,7 +3,7 @@ using Furcadia.Logging;
 using Furcadia.Net;
 using Furcadia.Net.Utils.ChannelObjects;
 using Furcadia.Net.Utils.ServerParser;
-using MonkeyCore2.IO;
+using IO;
 using NUnit.Framework;
 using System;
 using System.IO;

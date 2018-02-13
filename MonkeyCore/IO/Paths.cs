@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace MonkeyCore2.IO
+namespace IO
 {
     /// <summary>
     /// Monkey System core File Paths

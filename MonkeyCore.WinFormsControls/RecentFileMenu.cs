@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System;
-using MonkeyCore2.IO;
+using IO;
 
 namespace MonkeyCore.WinForms.Controls
 {

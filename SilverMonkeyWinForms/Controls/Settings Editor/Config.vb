@@ -107,7 +107,7 @@ Public Class Config
         Main.Mainsettings.PSShowClient = CheckBox1.Checked
         'Main.MainSettings.PSShowSettingsWindow = CheckBox2.Checked
 
-        MonkeyCore2.IO.Paths.FurcadiaProgramFolder = Main.Mainsettings.FurcPath
+        IO.Paths.FurcadiaProgramFolder = Main.Mainsettings.FurcPath
         Main.Mainsettings.SaveMainSettings()
 
         'Settings.InitializeTextControls()
@@ -148,7 +148,7 @@ Public Class Config
         ' Take some action based on the response.
         If response = MsgBoxResult.Yes Then
             Main.RecentToolStripMenuItem.DropDownItems.Clear()
-            File.Delete(Path.Combine(MonkeyCore2.IO.Paths.ApplicationSettingsPath, "Recent.txt"))
+            File.Delete(Path.Combine(IO.Paths.ApplicationSettingsPath, "Recent.txt"))
 
         End If
 

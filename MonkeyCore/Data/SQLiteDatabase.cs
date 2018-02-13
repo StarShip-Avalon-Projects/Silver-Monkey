@@ -1,6 +1,5 @@
 ﻿using Furcadia.Logging;
-using Logging;
-using MonkeyCore2.IO;
+using IO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,7 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace MonkeyCore2.Data
+namespace MonkeyCore.Data
 {
     /// <summary>
     /// Monkey Systems generic interface to System.Data.Sqlite
@@ -416,7 +415,7 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// A boolean true or false to signify success or failure.
         /// </returns>
-        public virtual int Insert(string table, Dictionary<string, string> data)
+        public virtual int Insert(string table, Dictionary<string, object> data)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}' data: '{data}'");
             if (data == null || data.Count == 0)
@@ -429,7 +428,7 @@ namespace MonkeyCore2.Data
             foreach (var val in data)
             {
                 columns.Add($"[{val.Key}]");
-                values.Add($"'{val.Value}'");
+                values.Add($"'{val.Value.ToString()}'");
             }
 
             try
@@ -565,7 +564,7 @@ namespace MonkeyCore2.Data
         /// <returns>
         /// A boolean true or false to signify success or failure.
         /// </returns>
-        public int Update(string table, Dictionary<string, string> data, string where)
+        public int Update(string table, Dictionary<string, object> data, string where)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}' Data: '{data}' WHERE '{where}'");
             var vals = new List<string>();
@@ -576,7 +575,7 @@ namespace MonkeyCore2.Data
 
             foreach (var val in data)
             {
-                vals.Add($"[{val.Key}] = '{val.Value}'");
+                vals.Add($"[{val.Key}] = '{val.Value.ToString()}'");
             }
             string cmd = $"UPDATE {table} SET {string.Join(", ", vals.ToArray())} WHERE { where};";
             try

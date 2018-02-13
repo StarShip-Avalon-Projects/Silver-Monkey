@@ -1,11 +1,11 @@
 ﻿using NUnit.Framework;
-using static MonkeyCore2Tests.Data.DatabaseConfig;
-using static MonkeyCore2Tests.Utilities;
+using static MonkeyCoreTests.Data.DatabaseConfig;
+using static MonkeyCoreTests.Utilities;
 using System.IO;
-using MonkeyCore2.Data;
+using MonkeyCore.Data;
 using Monkeyspeak.Logging;
 
-namespace MonkeyCore2Tests
+namespace MonkeyCoreTests
 {
     [SetUpFixture]
     public class OneTimeSetupAndTearDown

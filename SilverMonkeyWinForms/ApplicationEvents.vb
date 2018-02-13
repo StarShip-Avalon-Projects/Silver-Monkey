@@ -2,7 +2,7 @@
 Imports Logging
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Devices
-Imports MonkeyCore2.Logging
+Imports MonkeyCore.Logging
 
 Namespace My
 
@@ -37,7 +37,7 @@ Namespace My
             Dim ex = e.Exception
             Dim ErrorLog = New ErrorLogging(ex, Me)
             Dim report = New BugReport(ErrorLog) With {
-                .ProjectName = "MonkeyCore2Tests"
+                .ProjectName = "MonkeyCoreTests"
             }
             Dim ps = New ProcessStartInfo(BugReport.ToolAppName) With
                 {

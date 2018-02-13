@@ -70,13 +70,13 @@
 
     <!-- Step 2: Add the shortcut to your installer package -->
     <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="SilverMonkeyShortcut" Guid="{A925EA28-043C-4F6A-8ED4-980EF218BBD4}">
-        <Shortcut Id='$(var.SilverMonkey2.TargetName)Shortcut'
+      <Component Id="SilverMonkey.WinFormsShortcut" Guid="{A925EA28-043C-4F6A-8ED4-980EF218BBD4}">
+        <Shortcut Id='$(var.SilverMonkey.WinForms.TargetName)Shortcut'
                 Advertise="no"
                 Name='$(var.ProductName)'
                 Description='$(var.ProductName)'
                   WorkingDirectory='APPLICATIONFOLDER'
-                  Target="[APPLICATIONFOLDER]\$(var.SilverMonkey2.TargetName)" />
+                  Target="[APPLICATIONFOLDER]\$(var.SilverMonkey.WinForms.TargetName)" />
 
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
 
@@ -143,14 +143,14 @@
     <!--  <Condition Message="This application requires .NET Framework 4.6.1 Please install the .NET Framework then run this installer again.">
       <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED]]>
     </Condition>-->
-    <Feature Id="SilverMonkey2" Title="Main Application" Level="1">
+    <Feature Id="SilverMonkey.WinForms" Title="Main Application" Level="1">
 
       <!-- Step 3: Tell WiX to install the shortcut -->
-      <ComponentRef Id="SilverMonkeyShortcut" />
-      <ComponentGroupRef Id="SilverMonkey2.Binaries" />
-      <ComponentGroupRef Id="SilverMonkey2.Symbols" />
-      <ComponentGroupRef Id="SilverMonkey2.Content" />
-      <ComponentGroupRef Id="SilverMonkey2.Satellites" />
+      <ComponentRef Id="SilverMonkey.WinFormsShortcut" />
+      <ComponentGroupRef Id="SilverMonkey.WinForms.Binaries" />
+      <ComponentGroupRef Id="SilverMonkey.WinForms.Symbols" />
+      <ComponentGroupRef Id="SilverMonkey.WinForms.Content" />
+      <ComponentGroupRef Id="SilverMonkey.WinForms.Satellites" />
 
       <ComponentRef Id="smHelp" />
 
@@ -162,9 +162,9 @@
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
       <ComponentGroupRef Id="MonkeyCore.Content" />
 
-      <ComponentGroupRef Id="MonkeyCore2.Binaries" />
-      <ComponentGroupRef Id="MonkeyCore2.Symbols" />
-      <ComponentGroupRef Id="MonkeyCore2.Content" />
+      <ComponentGroupRef Id="MonkeyCoreVB.Binaries" />
+      <ComponentGroupRef Id="MonkeyCoreVB.Symbols" />
+      <ComponentGroupRef Id="MonkeyCoreVB.Content" />
 
       <ComponentRef Id="MonkeyspeakEditorSquizzleShortcut" />
       <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Binaries" />
@@ -208,9 +208,9 @@
       <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesVB.Symbols" />
       <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesVB.Content" />
 
-      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesCS.Binaries" />
-      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesCS.Symbols" />
-      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesCS.Content" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.Libraries.Binaries" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.Libraries.Symbols" />
+      <ComponentGroupRef Id="Silvermonkey.Engine.Libraries.Content" />
 
       <ComponentRef Id="FCTB" />
       <ComponentRef Id="Irony" />
@@ -263,30 +263,30 @@
     <!-- Misc DLLS-->
     <DirectoryRef Id="APPLICATIONFOLDER">
       <Component Id="FCTB" Guid="{CAA87BC5-9387-47D4-B1BB-A0022C1A71B8}">
-        <File Id="FCTB" Source="$(var.SilverMonkey2.TargetDir)FastColoredTextBox.dll" KeyPath="no" Checksum="yes" />
+        <File Id="FCTB" Source="$(var.SilverMonkey.WinForms.TargetDir)FastColoredTextBox.dll" KeyPath="no" Checksum="yes" />
       </Component>
 
       <Component Id="Irony" Guid="{B078886D-97DD-491F-BFBB-5080A889CB12}">
-        <File Id="Irony" Source="$(var.SilverMonkey2.TargetDir)Irony.dll" KeyPath="no" Checksum="yes" />
+        <File Id="Irony" Source="$(var.SilverMonkey.WinForms.TargetDir)Irony.dll" KeyPath="no" Checksum="yes" />
       </Component>
     </DirectoryRef>
 
     <!-- SQLite Components -->
     <DirectoryRef Id="APPLICATIONFOLDER">
       <Component Id="SQLite" Guid="{CADE1E29-CD6A-4301-8315-C611156C6462}">
-        <File Id="System.Data.SQLite" Source="$(var.SilverMonkey2.TargetDir)System.Data.SQLite.dll" KeyPath="no" Checksum="yes" />
+        <File Id="System.Data.SQLite" Source="$(var.SilverMonkey.WinForms.TargetDir)System.Data.SQLite.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="SQLiteLinq" Guid="{82579691-5906-4861-9f12-7c855ed7848f}">
-        <File Id="System.Data.SQLite.Linq.dll" Source="$(var.SilverMonkey2.TargetDir)System.Data.SQLite.Linq.dll" KeyPath="no" Checksum="yes" />
+        <File Id="System.Data.SQLite.Linq.dll" Source="$(var.SilverMonkey.WinForms.TargetDir)System.Data.SQLite.Linq.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="SQLiteEF6" Guid="{0ae9984b-ac3c-4ec9-ab3c-717a4bebf455}">
-        <File Id="System.Data.SQLite.EF6.dll" Source="$(var.SilverMonkey2.TargetDir)System.Data.SQLite.EF6.dll" KeyPath="no" Checksum="yes" />
+        <File Id="System.Data.SQLite.EF6.dll" Source="$(var.SilverMonkey.WinForms.TargetDir)System.Data.SQLite.EF6.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="EntityFramework" Guid="{ba158fe8-719e-4979-bbbb-85fd7cffd8f7}">
-        <File Id="EntityFramework.dll" Source="$(var.SilverMonkey2.TargetDir)EntityFramework.dll" KeyPath="no" Checksum="yes" />
+        <File Id="EntityFramework.dll" Source="$(var.SilverMonkey.WinForms.TargetDir)EntityFramework.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <Component Id="EntityFrameworkSqlServer" Guid="{ff852303-464b-414d-9a5b-1f431b1db645}">
-        <File Id="EntityFramework.SqlServer.dll" Source="$(var.SilverMonkey2.TargetDir)EntityFramework.SqlServer.dll" KeyPath="no" Checksum="yes" />
+        <File Id="EntityFramework.SqlServer.dll" Source="$(var.SilverMonkey.WinForms.TargetDir)EntityFramework.SqlServer.dll" KeyPath="no" Checksum="yes" />
       </Component>
 
       <!-- Support Squizzles Editor libs-->
@@ -319,7 +319,7 @@
         <File Id="System.Windows.Interactivity" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)System.Windows.Interactivity.dll" KeyPath="no" Checksum="yes" />
       </Component>
       <!--  <Component Id="System.ValueTuple" Guid="{9b97c1f1-ccae-4d08-82fd-d215ac8bf6e5}">
-        <File Id="System.ValueTuple.dll" Source="$(var.SilverMonkey2.TargetDir)System.ValueTuple.dll" KeyPath="no" Checksum="yes" />
+        <File Id="System.ValueTuple.dll" Source="$(var.SilverMonkey.WinForms.TargetDir)System.ValueTuple.dll" KeyPath="no" Checksum="yes" />
       </Component> -->
       <Component Id="Xceed.Wpf.AvalonDock.dll" Guid="{ee0089d2-0884-47c8-a30d-1065f051c8a1}">
         <File Id="Xceed.Wpf.AvalonDock.dll" Source="$(var.MonkeyspeakEditorSquizzle.TargetDir)Xceed.Wpf.AvalonDock.dll" KeyPath="no" Checksum="yes" />
@@ -342,12 +342,12 @@
     </DirectoryRef>
     <DirectoryRef Id="X86">
       <Component Id="X86" Guid="{E8C8E211-70E7-4B7E-B6B2-2058E91E7C13}">
-        <File Id="SQLite.Interop.X86" Source="$(var.SilverMonkey2.TargetDir)x86\SQLite.Interop.dll" KeyPath="no" />
+        <File Id="SQLite.Interop.X86" Source="$(var.SilverMonkey.WinForms.TargetDir)x86\SQLite.Interop.dll" KeyPath="no" />
       </Component>
     </DirectoryRef>
     <DirectoryRef Id="X64">
       <Component Id="X64" Guid="{7336B0B3-C8D0-4390-A714-837192E31007}">
-        <File Id="SQLite.Interop.X64" Source="$(var.SilverMonkey2.TargetDir)x64\SQLite.Interop.dll" KeyPath="no" />
+        <File Id="SQLite.Interop.X64" Source="$(var.SilverMonkey.WinForms.TargetDir)x64\SQLite.Interop.dll" KeyPath="no" />
       </Component>
     </DirectoryRef>
   </Product>

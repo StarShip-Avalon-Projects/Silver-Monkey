@@ -203,7 +203,7 @@ Namespace Libraries
 
             PounceFurres = New List(Of PounceFurre)
             'Setup our Default Objects
-            _onlineListFile = MonkeyCore2.IO.Paths.CheckBotFolder(ListFile)
+            _onlineListFile = IO.Paths.CheckBotFolder(ListFile)
             '   OnlineFurres = New IO.NameList(_onlineListFile)
             ' (0:950) When a furre logs on,
             Add(TriggerCategory.Cause,
@@ -398,7 +398,7 @@ Namespace Libraries
 #Region "Private Methods"
 
         Private Sub CheckonlineList()
-            _onlineListFile = MonkeyCore2.IO.Paths.CheckBotFolder(_onlineListFile)
+            _onlineListFile = IO.Paths.CheckBotFolder(_onlineListFile)
             If File.Exists(_onlineListFile) = False Then
                 Console.WriteLine("On-line List File: " + _onlineListFile + "Doesn't Exist, Creating new file")
                 Using sw = New StreamWriter(_onlineListFile, False)

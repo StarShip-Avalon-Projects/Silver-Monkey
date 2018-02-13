@@ -72,12 +72,12 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MonkeyCore2\MonkeyCore2.csproj">
-      <Project>{A4512568-6878-4EE9-8549-CFF611D399A1}</Project>
-      <Name>MonkeyCore2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\MonkeyCore\MonkeyCore.vbproj">
+    <ProjectReference Include="..\..\MonkeyCoreVB\MonkeyCore VB.vbproj">
       <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
+      <Name>MonkeyCore VB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MonkeyCore\MonkeyCore.csproj">
+      <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
       <Name>MonkeyCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
@@ -88,9 +88,9 @@
       <Project>{F1E0FEB3-A74E-43CE-98BF-B908ED1753FA}</Project>
       <Name>Silvermonkey.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Libraries CS.csproj">
+    <ProjectReference Include="..\..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Librarie.csproj">
       <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
-      <Name>Silvermonkey.Engine.Libraries CS</Name>
+      <Name>Silvermonkey.Engine.Librarie</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

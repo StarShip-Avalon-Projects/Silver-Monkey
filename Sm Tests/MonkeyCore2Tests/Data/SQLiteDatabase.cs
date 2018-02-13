@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
-using static MonkeyCore2Tests.Data.DatabaseConfig;
-using static MonkeyCore2Tests.Utilities;
+using static MonkeyCoreTests.Data.DatabaseConfig;
+using static MonkeyCoreTests.Utilities;
 
-namespace MonkeyCore2Tests.Data
+namespace MonkeyCoreTests.Data
 {
     [TestFixture]
     public class SQLiteDatabaseTests
@@ -25,17 +25,17 @@ namespace MonkeyCore2Tests.Data
 
         public void AddDataTo_FURRE_Table()
         {
-            var FurreDataGero = new Dictionary<string, string>
+            var FurreDataGero = new Dictionary<string, object>
             {
                 { "Name", "gerolkae" },
                 { "Access Level", "0" }
             };
-            var FurreDataBill = new Dictionary<string, string>
+            var FurreDataBill = new Dictionary<string, object>
             {
                 { "Name", "bill" },
                 { "Access Level", "3" }
             };
-            var FurreDataJoe = new Dictionary<string, string>
+            var FurreDataJoe = new Dictionary<string, object>
             {
                 { "Name", "joe" },
                 { "Access Level", "3" }
@@ -54,15 +54,15 @@ namespace MonkeyCore2Tests.Data
         [Test] //Create Tables for VariableTable data
         public void AddDataTo_Settings_Table()
         {
-            var SettingsTableMasterAdmins = new Dictionary<string, string>
+            var SettingsTableMasterAdmins = new Dictionary<string, object>
             {
                 { "SettingsTable", "Admins" },
             };
-            var SettingsTableMasterSettings = new Dictionary<string, string>
+            var SettingsTableMasterSettings = new Dictionary<string, object>
             {
                 { "SettingsTable", "Settings" },
             };
-            var SettingsTableMasterFurres = new Dictionary<string, string>
+            var SettingsTableMasterFurres = new Dictionary<string, object>
             {
                 { "SettingsTable", "Furres" },
             };
@@ -82,7 +82,7 @@ namespace MonkeyCore2Tests.Data
         public void UpdateDataTo_FURRE_Table()
         {
             object result;
-            var FurreTableDataRow = new Dictionary<string, string>
+            var FurreTableDataRow = new Dictionary<string, object>
             {
                 { "Name", "gerolkae" },
                 { "Access Level", "222" }
@@ -94,7 +94,7 @@ namespace MonkeyCore2Tests.Data
                 result = database.ExecuteScalar("SELECT [Access Level] FROM FURRE WHERE Name='gerolkae'");
                 Assert.That(result.ToString() == "222", $"Resut expected 222 but got '{result}'");
             });
-            FurreTableDataRow = new Dictionary<string, string>
+            FurreTableDataRow = new Dictionary<string, object>
             {
                 { "Name", "gerolkae" },
                 { "Access Level", "5" }

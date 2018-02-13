@@ -284,7 +284,7 @@ namespace Engine.BotSession
             var LibList = new List<BaseLibrary>()
             {
                 new MsStartBot(),
-                new IO(GetOptions().BotPath),
+                new Monkeyspeak.Libraries.IO(GetOptions().BotPath),
                 new Monkeyspeak.Libraries.Math(),
                 new StringOperations(),
                 new Sys(),

@@ -1,5 +1,5 @@
 ﻿These tests are designed around Silver Monkey's Core Application links.
-MonkeyCore and MonkeyCore2 containShared code between each application, such as
+MonkeyCore and MonkeyCore containShared code between each application, such as
 a common shared File Path class, Special Logging and Error reporting classes, and 
 SQLite database warper interface.
 

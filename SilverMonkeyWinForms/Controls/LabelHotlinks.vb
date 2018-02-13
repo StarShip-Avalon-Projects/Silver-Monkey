@@ -9,7 +9,7 @@ Public Class LabelHotlinks
     Sub New()
         HelpLink = New IniFile()
         Try
-            HelpLink.Load(Path.Combine(MonkeyCore2.IO.Paths.ApplicationPath, HelpIniFile))
+            HelpLink.Load(Path.Combine(IO.Paths.ApplicationPath, HelpIniFile))
             Dim HelpSection = HelpLink.GetSection("BotSettings")
             Dim s = HelpSection.GetKey("IniRetrieve").GetValue()
             If Not String.IsNullOrWhiteSpace(s) Then _iniRetrieval = s

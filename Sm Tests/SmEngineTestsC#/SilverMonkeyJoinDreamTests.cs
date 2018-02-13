@@ -3,7 +3,7 @@ using FurcLog = Furcadia.Logging;
 using MsLog = Monkeyspeak.Logging;
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
-using MonkeyCore2.IO;
+using IO;
 using NUnit.Framework;
 using System;
 using System.IO;

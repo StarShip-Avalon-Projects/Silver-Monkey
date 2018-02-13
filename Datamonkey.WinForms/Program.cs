@@ -1,5 +1,4 @@
 ﻿using Logging;
-using MonkeyCore2.Logging;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;

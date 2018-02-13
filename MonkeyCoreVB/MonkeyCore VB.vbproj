@@ -7,7 +7,7 @@
     <ProjectGuid>{7E3780F5-8434-4978-82ED-8C05D1F07D8B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>MonkeyCore</RootNamespace>
-    <AssemblyName>MonkeyCore</AssemblyName>
+    <AssemblyName>MonkeyCoreVB</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -21,7 +21,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\Build\Debug\</OutputPath>
-    <DocumentationFile>MonkeyCore.xml</DocumentationFile>
+    <DocumentationFile>MonkeyCoreVB.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -35,7 +35,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\Build\Release\</OutputPath>
-    <DocumentationFile>MonkeyCore.xml</DocumentationFile>
+    <DocumentationFile>MonkeyCoreVB.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -217,9 +217,9 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
+    <ProjectReference Include="..\MonkeyCore\MonkeyCore.csproj">
       <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
-      <Name>MonkeyCore2</Name>
+      <Name>MonkeyCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>

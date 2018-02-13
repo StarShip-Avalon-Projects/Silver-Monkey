@@ -28,9 +28,9 @@
     </TransformComponentArguments>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\..\Datamonkey.WinForms\Datamonkey.WinForms.csproj" />
-      <DocumentationSource sourceFile="..\..\MonkeyCore\MonkeyCore.vbproj" />
-      <DocumentationSource sourceFile="..\..\MonkeyCore2\MonkeyCore2.csproj" />
       <DocumentationSource sourceFile="..\..\FurcLib\FurcadiaLib.csproj" />
+      <DocumentationSource sourceFile="..\..\MonkeyCore\MonkeyCore.csproj" />
+      <DocumentationSource sourceFile="..\..\MonkeyCoreVB\MonkeyCore VB.vbproj" />
     </DocumentationSources>
     <WarnOnMissingSourceContext>True</WarnOnMissingSourceContext>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>

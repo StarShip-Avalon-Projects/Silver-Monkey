@@ -17,7 +17,7 @@ Namespace Utils.Logging
         Sub New()
             _logNamebase = "Default"
             _log = False
-            _logPath = Paths.SilverMonkeyLogPath
+            _logPath = IO.Paths.SilverMonkeyLogPath
         End Sub
 
         ''' <summary>

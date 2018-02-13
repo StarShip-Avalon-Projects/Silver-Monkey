@@ -1,5 +1,5 @@
 ﻿Imports System.Media
-Imports MonkeyCore2.IO
+Imports IO
 Imports MonkeyCore
 Imports Monkeyspeak
 Imports Engine.Libraries
@@ -29,7 +29,15 @@ Namespace Libraries
         Inherits MonkeySpeakLibrary
         Implements IDisposable
 
-#Region "Public Constructors"
+#Region "Private Fields"
+
+        Private disposedValue As Boolean
+
+        Private simpleSound As SoundPlayer
+
+#End Region
+
+#Region "Public Properties"
 
         Public Overrides ReadOnly Property BaseId As Integer
             Get
@@ -37,7 +45,17 @@ Namespace Libraries
             End Get
         End Property
 
-        Private simpleSound As SoundPlayer
+#End Region
+
+#Region "Public Methods"
+
+        ''' <summary>
+        ''' This code added by Visual Basic to correctly implement the disposable pattern.
+        ''' </summary>
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+        End Sub
 
         Public Overrides Sub Initialize(ParamArray args() As Object)
             MyBase.Initialize(args)
@@ -76,7 +94,7 @@ Namespace Libraries
         ''' </returns>
         Public Function StopSound(reader As TriggerReader) As Boolean
             If Not simpleSound Is Nothing Then
-                Dim SoundFile = MonkeyCore2.IO.Paths.CheckBotFolder(reader.ReadString(True))
+                Dim SoundFile = IO.Paths.CheckBotFolder(reader.ReadString(True))
                 ' simpleSound = New SoundPlayer(SoundFile)
                 simpleSound.[Stop]()
                 simpleSound.Dispose()
@@ -85,18 +103,7 @@ Namespace Libraries
 
         End Function
 
-#Region "IDisposable Support"
-
-        Private disposedValue As Boolean ' To detect redundant calls
-
-        ''' <summary>
-        ''' This code added by Visual Basic to correctly implement the disposable pattern.
-        ''' </summary>
-        Public Sub Dispose() Implements IDisposable.Dispose
-            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
-            Dispose(True)
-        End Sub
-
+        ' To detect redundant calls
         ''' <summary>
         ''' Override Dispose method
         ''' </summary>
@@ -104,6 +111,10 @@ Namespace Libraries
         Public Overrides Sub Unload(page As Page)
             Dispose(True)
         End Sub
+
+#End Region
+
+#Region "Protected Methods"
 
         ' IDisposable
         Protected Sub Dispose(disposing As Boolean)
@@ -119,8 +130,6 @@ Namespace Libraries
             End If
             disposedValue = True
         End Sub
-
-#End Region
 
 #End Region
 

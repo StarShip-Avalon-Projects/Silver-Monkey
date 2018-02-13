@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{35E0BF00-3F71-4216-85F3-1BB9B8842F1F}</ProjectGuid>
+    <ProjectGuid>{A4512568-6878-4EE9-8549-CFF611D399A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SilverMonkey.Engine</RootNamespace>
-    <AssemblyName>SilverMonkey.EnginLibraries</AssemblyName>
+    <RootNamespace>MonkeyCore</RootNamespace>
+    <AssemblyName>MonkeyCore</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,7 +35,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>CsLibrary.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>MonkeyCore2.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -76,26 +75,10 @@
       <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\SQLiteDatabase.cs" />
-    <Compile Include="MsDatabase.cs" />
-    <Compile Include="MsPhoenicSpeak.cs" />
-    <Compile Include="MsPhoenixSpeakBackupAndRestore.cs" />
-    <Compile Include="PhoenicSpeak\PhoenicSpeakDataObject.cs" />
-    <Compile Include="PhoenicSpeak\PhoenixSpeakEventArgs.cs" />
-    <Compile Include="Variables\WebVariable.cs" />
-    <Compile Include="Variables\DatabaseVariable.cs" />
-    <Compile Include="Variables\PhoenixSpeakVariable.cs" />
-    <Compile Include="Variables\BanishVariable.cs" />
-    <Compile Include="Extentions\Parameters.cs" />
-    <Compile Include="MonkeySpeakLibrary.cs" />
-    <Compile Include="MsBanish.cs" />
-    <Compile Include="MsBotInformation.cs" />
-    <Compile Include="MsCookie.cs" />
-    <Compile Include="MsDreamInfo.cs" />
-    <Compile Include="MsHelper.cs" />
-    <Compile Include="MsMovement.cs" />
-    <Compile Include="MsQuery.cs" />
-    <Compile Include="MsSayLibrary.cs" />
-    <Compile Include="MsStringExtentions.cs" />
+    <Compile Include="IO\NewEditorScript.cs" />
+    <Compile Include="IO\Paths.cs" />
+    <Compile Include="Logging\BugReport.cs" />
+    <Compile Include="Logging\ErrorLogging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,20 +86,10 @@
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyCore2\MonkeyCore2.csproj">
-      <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
-      <Name>MonkeyCore2</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj">
       <Project>{925781e6-8b75-471b-887f-616495bbbfdd}</Project>
       <Name>Monkeyspeak</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AssemblyInfoersionCS.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyInfoersionCS.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -124,13 +97,18 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.cs</LastGenOutput>
     </None>
-    <None Include="CsLibrary.snk" />
+    <None Include="MonkeyCore2.snk" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AssemblyInfoersionCS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyInfoersionCS.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.107.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.107.0\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,10 +1,9 @@
-﻿using Logging;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace MonkeyCore2.Logging
+namespace Logging
 {
     public sealed class BugReport
     {

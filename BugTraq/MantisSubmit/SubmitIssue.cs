@@ -14,7 +14,7 @@
 //-----------------------------------------------------------------------
 
 using Futureware.MantisConnect;
-using MonkeyCore2.Logging;
+using Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -151,7 +151,7 @@ namespace Futureware.MantisSubmit
         {
             openFileDialog1.FileName = attachmentTextBox.Text;
             openFileDialog1.CheckFileExists = true;
-            openFileDialog1.InitialDirectory = MonkeyCore2.IO.Paths.SilverMonkeyErrorLogPath;
+            openFileDialog1.InitialDirectory = IO.Paths.SilverMonkeyErrorLogPath;
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {

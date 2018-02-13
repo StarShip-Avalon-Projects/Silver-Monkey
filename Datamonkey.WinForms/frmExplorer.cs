@@ -1,6 +1,5 @@
 using DataMonkey.Controls;
 using FastColoredTextBoxNS;
-using MonkeyCore2.IO;
 using MonkeyCore;
 using MonkeyCore.Controls;
 using System;
@@ -9,7 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using MonkeyCore2.Data;
+using MonkeyCore.Data;
 
 namespace DataMonkey
 {
@@ -756,7 +755,7 @@ namespace DataMonkey
             using (OpenFileDialog oFile = new OpenFileDialog())
             {
                 oFile.Title = "Data Monkey Database Locator";
-                oFile.InitialDirectory = Paths.SilverMonkeyBotPath;
+                oFile.InitialDirectory = IO.Paths.SilverMonkeyBotPath;
                 oFile.Filter = "All files (*.*)|*.*|DB Files (*.db)|*.db";
                 oFile.FilterIndex = 2;
                 oFile.RestoreDirectory = true;
@@ -778,7 +777,7 @@ namespace DataMonkey
             using (SaveFileDialog oFile = new SaveFileDialog())
             {
                 oFile.Title = "Data Monkey Database Locator";
-                oFile.InitialDirectory = Paths.SilverMonkeyBotPath;
+                oFile.InitialDirectory = IO.Paths.SilverMonkeyBotPath;
                 oFile.Filter = "All files (*.*)|*.*|DB Files (*.db)|*.db";
                 oFile.FilterIndex = 2;
                 oFile.RestoreDirectory = true;

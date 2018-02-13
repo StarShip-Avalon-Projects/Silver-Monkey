@@ -1,5 +1,4 @@
-using MonkeyCore;
-using MonkeyCore2.Data;
+using MonkeyCore.Data;
 using System.Data;
 
 namespace DataMonkey

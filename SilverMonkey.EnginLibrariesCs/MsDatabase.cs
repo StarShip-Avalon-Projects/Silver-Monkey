@@ -1,5 +1,5 @@
-﻿using Libraries.Data;
-using MonkeyCore2.IO;
+﻿using IO;
+using MonkeyCore.Data;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using Monkeyspeak.Logging;
@@ -530,7 +530,7 @@ namespace Libraries
 
             // Dim value As String = reader.ReadVariable.Value.ToString()
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, string>
+            var data = new Dictionary<string, object>
             {
                 { "Name",$"{Furre}"},
                 { "Access Level",$"{info}"},
@@ -559,7 +559,7 @@ namespace Libraries
 
             // Dim value As String = reader.ReadVariable.Value.ToString()
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, string>
+            var data = new Dictionary<string, object>
             {
                 { "Name",$"{Player.ShortName}"},
                 { "Access Level",$"{info}"},
@@ -585,7 +585,7 @@ namespace Libraries
                 if (!ReadOnlyFurreTableFields.Contains($"[{column}]"))
                     data.Add($"[{column}]", kvp.Value.ToString());
             }
-            return 0 < database.Update("FURRE", data);
+            return 0 < database.Insert("FURRE", data);
         }
 
         [TriggerStringParameter]
@@ -742,7 +742,7 @@ namespace Libraries
             var value = reader.ReadNumber().ToString();
             if (database == null)
                 database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, string>
+            var data = new Dictionary<string, object>
             {
                 { "Name", Furre},
                 { info, value },
@@ -762,7 +762,7 @@ namespace Libraries
 
             var value = reader.ReadString();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, string>
+            var data = new Dictionary<string, object>
             {
                 { "Name", $"{Furre}"},
                 { $"{info}",$"{value}"},
@@ -781,7 +781,7 @@ namespace Libraries
             var value = reader.ReadNumber();
 
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, string>
+            var data = new Dictionary<string, object>
             {
                 { "Name", Player.ShortName},
                 { info, value.ToString() },
@@ -800,7 +800,7 @@ namespace Libraries
             var value = reader.ReadString();
 
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, string>
+            var data = new Dictionary<string, object>
             {
                 { "Name", Player.ShortName},
                 { info, value.ToString() },

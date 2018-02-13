@@ -37,13 +37,13 @@
     <DocumentationSources>
       <DocumentationSource sourceFile="..\FurcLib\FurcadiaLib.csproj" />
       <DocumentationSource sourceFile="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj" />
-      <DocumentationSource sourceFile="..\MonkeyCore2\MonkeyCore2.csproj" />
-      <DocumentationSource sourceFile="..\MonkeyCore\MonkeyCore.vbproj" />
       <DocumentationSource sourceFile="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj" />
       <DocumentationSource sourceFile="..\..\SmEngine.LibrariesVB\Silvermonkey.Engine.Libraries VB.vbproj" />
       <DocumentationSource sourceFile="..\..\Silvermonkey.Engine\Silvermonkey.Engine.csproj" />
       <DocumentationSource sourceFile="..\..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Libraries CS.csproj" />
       <DocumentationSource sourceFile="..\..\Silvermonkey.WPF\Silvermonkey.WPF.csproj" />
+      <DocumentationSource sourceFile="..\..\MonkeyCore\MonkeyCore.csproj" />
+      <DocumentationSource sourceFile="..\..\MonkeyCoreVB\MonkeyCore VB.vbproj" />
     </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>

@@ -2,7 +2,7 @@
 using System.Text;
 using Furcadia.IO;
 
-namespace MonkeyCore2.IO
+namespace IO
 {
     public class EditorScript
     {
