@@ -142,7 +142,7 @@ namespace MonkeyCore.Data
         public bool ClearDB()
         {
             Logger.Debug<SQLiteDatabase>($"ClearDB");
-            using (var tables = GetDataTable("select NAME FROM SQLITE_MASTER where type='table' order by NAME;"))
+            using (DataTable tables = GetDataTable("select NAME FROM SQLITE_MASTER where type='table';")) // order by NAME
             {
                 foreach (DataRow table in tables.Rows)
                 {
