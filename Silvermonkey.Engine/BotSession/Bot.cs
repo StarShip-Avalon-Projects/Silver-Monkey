@@ -6,29 +6,24 @@
 // Bot info
 // Furre Update events?
 
-using Engine.Libraries;
 using Furcadia.Net;
 using Furcadia.Net.DreamInfo;
 using Furcadia.Net.Proxy;
+using Furcadia.Net.Utils.ChannelObjects;
 using Furcadia.Net.Utils.ServerParser;
-
+using Libraries;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using Monkeyspeak.Logging;
-
+using SilverMonkey.Engine.Libraries;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using static Furcadia.Text.FurcadiaMarkup;
 using static Libraries.MsLibHelper;
-using SilverMonkey.Engine.Libraries;
-
-using Libraries;
-using Furcadia.Net.Utils.ChannelObjects;
 
 namespace Engine.BotSession
 {
@@ -453,24 +448,6 @@ namespace Engine.BotSession
 
             try
             {
-                if (sender is QueryChannelObject qObject)
-                {
-                    // (0:40) When anyone requests to summon the bot,
-                    // (0:41) When a furre named {..} requests to summon the bot,
-                    // (0:42) When anyone requests to join the bot,
-                    // (0:43) When a furre named {..} requests to join the bot,
-                    // (0:44) When anyone requests to follow the bot,
-                    // (0:35) When a furre named {..} requests to follow the bot,
-                    // (0:46) When anyone requests to lead the bot,
-                    // (0:47) When a furre named {..} requests to lead the bot,
-                    // (0:48) When anyone requests to cuddle with the bot.
-                    // (0:49) When a furre named {..} requests to cuddle with the bot,
-                    // (0:50) When the bot see a query (lead, follow summon, join, cuddle),
-                    await MSpage.ExecuteAsync(new int[] { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 },
-                        cancel, qObject, qObject.Player);
-                    return;
-                }
-
                 if (sender is ChannelObject ChanObject)
                 {
                     string Text = ChanObject.ChannelText;
@@ -561,6 +538,20 @@ namespace Engine.BotSession
                             return;
 
                         case "query":
+                            // (0:40) When anyone requests to summon the bot,
+                            // (0:41) When a furre named {..} requests to summon the bot,
+                            // (0:42) When anyone requests to join the bot,
+                            // (0:43) When a furre named {..} requests to join the bot,
+                            // (0:44) When anyone requests to follow the bot,
+                            // (0:35) When a furre named {..} requests to follow the bot,
+                            // (0:46) When anyone requests to lead the bot,
+                            // (0:47) When a furre named {..} requests to lead the bot,
+                            // (0:48) When anyone requests to cuddle with the bot.
+                            // (0:49) When a furre named {..} requests to cuddle with the bot,
+                            // (0:50) When the bot see a query (lead, follow summon, join, cuddle),
+                            await MSpage.ExecuteAsync(new int[] { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 },
+                                cancel, ChanObject, ChanObject.Player);
+                            return;
 
                         case "banish":
 

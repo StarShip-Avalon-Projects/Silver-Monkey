@@ -23,10 +23,7 @@ namespace MonkeyCore.Data
         /// <value>
         /// The database file.
         /// </value>
-        public string DatabaseFile
-        {
-            get => inputFile;
-        }
+        public string DatabaseFile => inputFile;
 
         #endregion Public Properties
 
@@ -92,15 +89,15 @@ namespace MonkeyCore.Data
         }
 
         /// <summary>
-        /// Single Param Constructor for specifying advanced connection options.
+        /// Single Param Constructor for specifying advanced cnnection options.
         /// </summary>
         /// <param name="connectionOpts">
         /// A dictionary containing all desired options and their values
         /// </param>
-        public SQLiteDatabase(Dictionary<string, string> connectionOpts)
+        public SQLiteDatabase(Dictionary<string, string> cnnectionOpts)
         {
-            var str = new StringBuilder();
-            foreach (KeyValuePair<string, string> row in connectionOpts)
+            StringBuilder str = new StringBuilder();
+            foreach (KeyValuePair<string, string> row in cnnectionOpts)
             {
                 str.Append($"{row.Key}={row.Value}; ");
             }
@@ -173,7 +170,7 @@ namespace MonkeyCore.Data
             }
             catch (Exception ex)
             {
-                Logger.Error<SQLiteDatabase>(ex);
+                ex.Log(Monkeyspeak.Logging.Level.Error);
             }
             return -1;
         }
@@ -191,7 +188,7 @@ namespace MonkeyCore.Data
             }
             catch (Exception ex)
             {
-                Logger.Error<SQLiteDatabase>(ex);
+                ex.Log(Monkeyspeak.Logging.Level.Error);
             }
         }
 
@@ -216,7 +213,7 @@ namespace MonkeyCore.Data
             }
             catch (Exception ex)
             {
-                Logger.Error<SQLiteDatabase>(ex);
+                ex.Log(Monkeyspeak.Logging.Level.Error);
             }
 
             return -1;
@@ -229,20 +226,17 @@ namespace MonkeyCore.Data
         /// <returns>An Integer containing the number of rows updated.</returns>
         public int ExecuteNonQuery(string sql)
         {
-            var Start = new Stopwatch();
-            Start.Start();
             Logger.Debug<SQLiteDatabase>($"'{sql}'");
             int rowsUpdated;
-            using (var cnn = new SQLiteConnection(dbConnection))
+            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
             {
                 cnn.Open();
-                using (var mycommand = new SQLiteCommand(cnn))
+                using (SQLiteCommand cmd = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = $"{SyncPragma} {sql}";
-                    rowsUpdated = mycommand.ExecuteNonQuery();
+                    cmd.CommandText = $"{SyncPragma} {sql}";
+                    rowsUpdated = cmd.ExecuteNonQuery();
                 }
             }
-            Logger.Debug<SQLiteDatabase>($"{Start.Elapsed}");
             return rowsUpdated;
         }
 
@@ -259,14 +253,14 @@ namespace MonkeyCore.Data
             var Start = new Stopwatch();
             Start.Start();
             Logger.Debug<SQLiteDatabase>($"'{sql}'");
-            var rowsUpdated = new DataSet();
-            using (var cnn = new SQLiteConnection(dbConnection))
+            DataSet rowsUpdated = new DataSet();
+            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
             {
                 cnn.Open();
-                using (var mycommand = new SQLiteCommand(cnn))
+                using (SQLiteCommand cmd = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = $"{SyncPragma} {sql}";
-                    using (var a = new SQLiteDataAdapter(mycommand))
+                    cmd.CommandText = $"{SyncPragma} {sql}";
+                    using (SQLiteDataAdapter a = new SQLiteDataAdapter(cmd))
                     {
                         try
                         {
@@ -290,21 +284,18 @@ namespace MonkeyCore.Data
         /// <returns>A string.</returns>
         public object ExecuteScalar(string sql)
         {
-            var Start = new Stopwatch();
-            Start.Start();
             Logger.Debug<SQLiteDatabase>($"'{sql}'");
             object value;
 
-            using (var cnn = new SQLiteConnection(dbConnection))
+            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
             {
                 cnn.Open();
-                using (var mycommand = new SQLiteCommand(cnn))
+                using (SQLiteCommand cmd = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = $"{SyncPragma} {sql}";
-                    value = mycommand.ExecuteScalar();
+                    cmd.CommandText = $"{SyncPragma} {sql}";
+                    value = cmd.ExecuteScalar();
                 }
             }
-            Logger.Debug<SQLiteDatabase>($"{Start.Elapsed}");
             return value;
         }
 
@@ -316,20 +307,18 @@ namespace MonkeyCore.Data
         public Dictionary<string, string> GetAllCollumnNamesWithMetaData(string table)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}'");
-            var result = new Dictionary<string, string>();
-            var dt = GetDataTable($"PRAGMA Table_Info({table});");
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            DataTable dt = GetDataTable($"PRAGMA Table_Info({table});");
             if (dt != null)
             {
                 foreach (DataRow row in dt.Rows)
                 {
                     string nullString = "";
-                    string defaultValue = "";
                     if (int.Parse(row["notnull"].ToString()) == 1)
                         nullString = " NOT NULL";
                     if (!string.IsNullOrWhiteSpace(row["dflt_value"].ToString()))
-                        defaultValue = $" DEFAULT ({row["dflt_value"].ToString()})";
-
-                    result.Add($"[{row["name"].ToString()}]", $"{row["type"].ToString()}{nullString}{defaultValue}");
+                        nullString += $" DEFAULT ({row["dflt_value"].ToString()})";
+                    result.Add($"[{row["name"].ToString()}]", $"{row["type"].ToString()}{nullString}");
                 }
             }
             return result;
@@ -343,17 +332,17 @@ namespace MonkeyCore.Data
         public DataTable GetDataTable(string sql)
         {
             Logger.Debug<SQLiteDatabase>($"'{sql}'");
-            var dt = new DataTable();
-            using (var cnn = new SQLiteConnection(dbConnection))
+            DataTable dt = new DataTable();
+            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
             {
                 cnn.Open();
-                using (var mycommand = new SQLiteCommand(cnn))
+                using (SQLiteCommand cmd = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = $"{SyncPragma} {sql}";
+                    cmd.CommandText = $"{SyncPragma} {sql}";
 
                     try
                     {
-                        var reader = mycommand.ExecuteReader();
+                        SQLiteDataReader reader = cmd.ExecuteReader();
                         dt.Load(reader);
                         reader.Close();
                     }
@@ -377,16 +366,15 @@ namespace MonkeyCore.Data
         public virtual Dictionary<string, object> GetValueFromTable(string sql)
         {
             Logger.Debug<SQLiteDatabase>($"'{sql}'");
-            Dictionary<string, object> result = null;
-            using (var cnn = new SQLiteConnection(dbConnection))
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
             {
                 cnn.Open();
-                using (var mycommand = new SQLiteCommand(cnn))
+                using (SQLiteCommand cmd = new SQLiteCommand(cnn))
                 {
-                    mycommand.CommandText = $"{SyncPragma} {sql}";
-                    using (var reader = mycommand.ExecuteReader())
+                    cmd.CommandText = $"{SyncPragma} {sql}";
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
                     {
-                        result = new Dictionary<string, object>();
                         while (reader.Read())
                         {
                             int Size = reader.VisibleFieldCount;
@@ -395,8 +383,6 @@ namespace MonkeyCore.Data
                                 result.Add(reader.GetName(i), reader.GetValue(i).ToString());
                             }
                         }
-
-                        reader.Close();
                     }
                 }
             }
@@ -425,7 +411,7 @@ namespace MonkeyCore.Data
             int rowCount = 0;
             List<string> columns = new List<string>();
             List<string> values = new List<string>();
-            foreach (var val in data)
+            foreach (KeyValuePair<string, object> val in data)
             {
                 columns.Add($"[{val.Key}]");
                 values.Add($"'{val.Value.ToString()}'");
@@ -456,9 +442,28 @@ namespace MonkeyCore.Data
         /// </returns>
         public bool IsColumnExist(string columnName, string table)
         {
-            Logger.Debug<SQLiteDatabase>($"Collumn: '{columnName}' in Table '{table}'");
-            var columnNames = GetAllColumnName(table);
-            return columnNames.Contains($"[{columnName}]");
+            bool returnval = false;
+            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
+            {
+                cnn.Open();
+                SQLiteCommand cmd = cnn.CreateCommand();
+                cmd.CommandText = $"{SyncPragma}PRAGMA table_info({table})";
+
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    int nameIndex = reader.GetOrdinal("Name");
+
+                    while (reader.Read())
+                    {
+                        if (reader.GetString(nameIndex).Equals(columnName))
+                        {
+                            returnval = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            return returnval;
         }
 
         /// <summary>
@@ -479,7 +484,7 @@ namespace MonkeyCore.Data
             }
             catch (Exception ex)
             {
-                Logger.Error<SQLiteDatabase>(ex);
+                ex.Log(Monkeyspeak.Logging.Level.Error);
             }
             return false;
         }
@@ -495,11 +500,10 @@ namespace MonkeyCore.Data
         /// </returns>
         public int RemoveColumn(string table, string columnName)
         {
-            columnName = columnName.Replace("[", string.Empty).Replace("]", string.Empty);
+            columnName = columnName.Replace("[", "").Replace("]", "");
             Logger.Debug<SQLiteDatabase>($"'{columnName}' FROM '{table}'");
-            string PrimaryKeyClause = string.Empty;
-            string UniqueKeyClause = string.Empty;
-            var Columns = GetAllCollumnNamesWithMetaData(table);
+            string KeyClause = "";
+            Dictionary<string, string> Columns = GetAllCollumnNamesWithMetaData(table);
             if (!Columns.ContainsKey($"[{columnName}]"))
             {
                 return -1;
@@ -511,40 +515,40 @@ namespace MonkeyCore.Data
             UniqueKeys.Remove($"[{columnName}]");
             if (PrimaryKeys != null && PrimaryKeys.Count > 0)
             {
-                PrimaryKeyClause = $", PRIMARY KEY ({string.Join(",", PrimaryKeys.ToArray())})";
+                KeyClause = $", PRIMARY KEY ({string.Join(",", PrimaryKeys.ToArray())})";
             }
 
             if (UniqueKeys != null && UniqueKeys.Count > 0)
             {
                 //CONSTRAINT constraint_name UNIQUE (uc_col1, uc_col2, ... uc_col_n)
-                UniqueKeyClause = $", CONSTRAINT constraint_{table} UNIQUE ({string.Join(",", UniqueKeys.ToArray())})";
+                KeyClause += $", CONSTRAINT constraint_{table} UNIQUE ({string.Join(",", UniqueKeys.ToArray())})";
             }
-            var ColumnNames = new List<string>();
-            var ColumnNamesWithOutMetaData = new List<string>();
-            foreach (var kvp in Columns)
+            List<string> ColumnNames = new List<string>();
+            List<string> ColumnNamesWithOutMetaData = new List<string>();
+            foreach (KeyValuePair<string, string> kvp in Columns)
             {
                 ColumnNames.Add($"{kvp.Key} {kvp.Value}");
                 ColumnNamesWithOutMetaData.Add($"{kvp.Key}");
             }
 
-            var columnNamesMetaData = string.Join(", ", ColumnNames.ToArray());
+            string columnNamesMetaData = string.Join(", ", ColumnNames.ToArray());
 
-            var sql = new StringBuilder()
-                  .Append("ALTER TABLE ")
-                  .Append($"{table} RENAME TO {table}backup ;")
-                  .Append("CREATE TABLE ")
-                  .Append($"{table }({columnNamesMetaData }{PrimaryKeyClause}{UniqueKeyClause}); INSERT INTO ")
-                  .Append($"{table } SELECT ")
-                  .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")
-                  .Append($"{table }backup; DROP TABLE ")
-                  .Append($"{table }backup;");
+            StringBuilder sql = new StringBuilder()
+                    .Append("ALTER TABLE ")
+                    .Append($"{table} RENAME TO {table}backup ;")
+                    .Append("CREATE TABLE ")
+                    .Append($"{table }({columnNamesMetaData }{KeyClause}); INSERT INTO ")
+                    .Append($"{table } SELECT ")
+                    .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")
+                    .Append($"{table }backup; DROP TABLE ")
+                    .Append($"{table }backup;");
             try
             {
                 return ExecuteNonQuery(sql.ToString());
             }
             catch (Exception ex)
             {
-                Logger.Error<SQLiteDatabase>(ex);
+                ex.Log(Monkeyspeak.Logging.Level.Error);
             }
             return -1;
         }
@@ -567,12 +571,12 @@ namespace MonkeyCore.Data
         public int Update(string table, Dictionary<string, object> data, string where)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}' Data: '{data}' WHERE '{where}'");
-            var vals = new List<string>();
+
             if (data == null || data.Count == 0)
             {
                 throw new ArgumentOutOfRangeException("No data to process");
             }
-
+            List<string> vals = new List<string>();
             foreach (var val in data)
             {
                 vals.Add($"[{val.Key}] = '{val.Value.ToString()}'");
@@ -597,8 +601,8 @@ namespace MonkeyCore.Data
         public List<string> GetTablePrimaryKeys(string table)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}'");
-            var result = new List<string>();
-            var dt = GetDataTable($"PRAGMA Table_Info({table});");
+            List<string> result = new List<string>();
+            DataTable dt = GetDataTable($"PRAGMA Table_Info({table});");
             if (dt != null)
             {
                 foreach (DataRow row in dt.Rows)
@@ -618,21 +622,20 @@ namespace MonkeyCore.Data
         public List<string> GetTableUniqeKeys(string table)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}'");
-            var result = new List<string>();
-            var IndexListDataTable = GetDataTable($"PRAGMA INDEX_LIST({table});");
-            string test = string.Empty;
+            List<string> result = new List<string>();
+            DataTable IndexListDataTable = GetDataTable($"PRAGMA INDEX_LIST({table});");
             if (IndexListDataTable != null)
             {
                 foreach (DataRow row in IndexListDataTable.Rows)
                 {
                     if (int.Parse(row["unique"].ToString()) != 0)
                     {
-                        var indexXinfoDataTable = GetDataTable($"PRAGMA index_xinfo({row["name"].ToString()});");
+                        DataTable indexXinfoDataTable = GetDataTable($"PRAGMA index_xinfo({row["name"].ToString()});");
                         if (indexXinfoDataTable != null)
                         {
                             foreach (DataRow row2 in indexXinfoDataTable.Rows)
                             {
-                                var ColumnName = row2["name"].ToString();
+                                string ColumnName = row2["name"].ToString();
                                 if (!string.IsNullOrWhiteSpace(ColumnName))
                                     result.Add($"[{ColumnName}]");
                             }
@@ -658,22 +661,21 @@ namespace MonkeyCore.Data
         private List<string> GetAllColumnName(string table)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}'");
+            //PRAGMA table_info(table_name);
             string sql = $"SELECT * FROM { table}";
-            var columnNames = new List<string>();
-            using (var SQLconnect = new SQLiteConnection(dbConnection))
+            List<string> columnNames = new List<string>();
+            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
             {
-                SQLconnect.Open();
-                using (var SQLcommand = SQLconnect.CreateCommand())
+                cnn.Open();
+                using (SQLiteCommand SQLcommand = cnn.CreateCommand())
                 {
                     SQLcommand.CommandText = $"{SyncPragma} {sql}";
-                    using (var sqlDataReader = SQLcommand.ExecuteReader())
+                    using (SQLiteDataReader sqlDataReader = SQLcommand.ExecuteReader())
                     {
                         for (int i = 0; i <= sqlDataReader.VisibleFieldCount - 1; i++)
                         {
                             columnNames.Add($"[{ sqlDataReader.GetName(i) }]");
                         }
-
-                        sqlDataReader.Close();
                     }
                 }
             }
