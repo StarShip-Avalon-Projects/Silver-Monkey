@@ -604,7 +604,7 @@ namespace Engine.BotSession
                                 // (0:59) When the bot successfully removes the furre named {...} from the banish list,
 
                                 Regex t = new Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled);
-                                var NameStr = t.Match(Text).Groups[1].Value;
+                                string NameStr = t.Match(Text).Groups[1].Value;
                                 await MSpage.ExecuteAsync(new int[] { 58, 59 },
                                     cancel, BanishName);
                             }
@@ -616,7 +616,7 @@ namespace Engine.BotSession
                                 //  (0:57) When the bot fails to remove the furre named {...} from the banish list,
 
                                 Regex t = new Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled);
-                                var NameStr = t.Match(Text).Groups[1].Value;
+                                string NameStr = t.Match(Text).Groups[1].Value;
                                 await MSpage.ExecuteAsync(new int[] { 56, 57 },
                                     cancel, NameStr);
                             }

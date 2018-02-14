@@ -54,14 +54,8 @@ namespace Engine.BotSession
         /// </value>
         public string BotController
         {
-            get
-            {
-                return _BotController;
-            }
-            set
-            {
-                _BotController = value;
-            }
+            get => _BotController;
+            set => _BotController = value;
         }
 
         /// <summary>
@@ -70,13 +64,7 @@ namespace Engine.BotSession
         /// <value>
         /// The short name of the bot controller.
         /// </value>
-        public string BotControllerShortName
-        {
-            get
-            {
-                return _BotController.ToFurcadiaShortName();
-            }
-        }
+        public string BotControllerShortName => _BotController.ToFurcadiaShortName();
 
         /// <summary>
         /// Gets or sets the monkey speak script file.
@@ -87,10 +75,7 @@ namespace Engine.BotSession
         /// <exception cref="ArgumentException">Invalid File type, Not a ""*.ms"" file.</exception>
         public string MonkeySpeakScriptFile
         {
-            get
-            {
-                return _MonkeySpeakScriptFile;
-            }
+            get => _MonkeySpeakScriptFile;
             set
             {
                 if (Path.GetExtension(value).ToLower() != ".ms")
@@ -110,14 +95,8 @@ namespace Engine.BotSession
         /// </value>
         public bool IsEnabled
         {
-            get
-            {
-                return _isEnabled;
-            }
-            set
-            {
-                _isEnabled = value;
-            }
+            get => _isEnabled;
+            set => _isEnabled = value;
         }
 
         #endregion Public Properties

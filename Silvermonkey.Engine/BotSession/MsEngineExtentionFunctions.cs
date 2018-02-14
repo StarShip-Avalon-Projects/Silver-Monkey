@@ -12,23 +12,11 @@ namespace Engine.BotSession
     /// </summary>
     public sealed class MsEngineExtentionFunctions
     {
-        #region Public Fields
-
-        /// <summary>
-        /// The furcadia session
-        /// </summary>
-        public Bot FurcadiaSession;
-
-        #endregion Public Fields
-
         #region Private Fields
 
-        private const string MS_Footer = "*Endtriggers* 8888 *Endtriggers*";
+        private static string RES_MS_begin => "*MSPK V";
 
-        private const string MS_Header = "*MSPK V04.00 Silver Monkey";
-        private const string RES_MS_begin = "*MSPK V";
-
-        private const string RES_MS_end = "*Endtriggers* 8888 *Endtriggers*";
+        private static string RES_MS_end => "*Endtriggers* 8888 *Endtriggers*";
 
         #endregion Private Fields
 

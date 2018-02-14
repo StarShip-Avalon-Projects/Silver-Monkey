@@ -170,21 +170,15 @@ namespace Engine.BotSession
         /// <value><c>true</c> if [automatic connect]; otherwise, <c>false</c>.</value>
         public bool AutoConnect
         {
-            get { return _AutoConnect; }
-            set { _AutoConnect = value; }
+            get => _AutoConnect;
+            set => _AutoConnect = value;
         }
 
         /// <summary>
         /// Bot File (*.bini) path
         /// </summary>
         /// <returns></returns>
-        public string BotPath
-        {
-            get
-            {
-                return Path.GetDirectoryName(_BiniFile);
-            }
-        }
+        public string BotPath => Path.GetDirectoryName(_BiniFile);
 
         /// <summary>
         /// Gets the bot settings file.
@@ -192,14 +186,8 @@ namespace Engine.BotSession
         /// <value>The bot settings file.</value>
         public string BotSettingsFile
         {
-            get
-            {
-                return _BiniFile;
-            }
-            set
-            {
-                _BiniFile = value;
-            }
+            get => _BiniFile;
+            set => _BiniFile = value;
         }
 
         /// <summary>
@@ -210,14 +198,8 @@ namespace Engine.BotSession
         /// </value>
         public string DreamLink
         {
-            get
-            {
-                return _DreamURL;
-            }
-            set
-            {
-                _DreamURL = value;
-            }
+            get => _DreamURL;
+            set => _DreamURL = value;
         }
 
         /// <summary>
@@ -226,14 +208,8 @@ namespace Engine.BotSession
         /// <value>The index of the go map.</value>
         public int GoMapIDX
         {
-            get
-            {
-                return _GoMap;
-            }
-            set
-            {
-                _GoMap = value;
-            }
+            get => _GoMap;
+            set => _GoMap = value;
         }
 
         /// <summary>
@@ -244,27 +220,15 @@ namespace Engine.BotSession
         /// </value>
         public EngineOptoons MonkeySpeakEngineOptions
         {
-            get
-            {
-                return _MonkeySpeakEngineOption;
-            }
-            set
-            {
-                _MonkeySpeakEngineOption = value;
-            }
+            get => _MonkeySpeakEngineOption;
+            set => _MonkeySpeakEngineOption = value;
         }
 
         /// <summary>
         /// Gets the name.
         /// </summary>
         /// <value>The name.</value>
-        public string Name
-        {
-            get
-            {
-                return Path.GetFileName(_BiniFile);
-            }
-        }
+        public string Name => Path.GetFileName(_BiniFile);
 
         #endregion Public Properties
 
