@@ -136,9 +136,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox1.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="AboutBox1.cs" />
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
@@ -152,12 +150,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RemoveColumn.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmExplorer.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Controls\RemoveColumn.cs" />
+    <Compile Include="frmExplorer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="SQLite\StatementBuilder.cs" />
     <Compile Include="SQLite\StatementParser.cs" />
@@ -170,27 +164,19 @@
     <EmbeddedResource Include="frmExplorer.resx">
       <DependentUpon>frmExplorer.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\AddColumn.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Controls\AddColumn.cs" />
     <EmbeddedResource Include="Controls\AddColumn.resx">
       <DependentUpon>AddColumn.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\AddTable.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Controls\AddTable.cs" />
     <EmbeddedResource Include="Controls\AddTable.resx">
       <DependentUpon>AddTable.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\BasePopup.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Controls\BasePopup.cs" />
     <EmbeddedResource Include="Controls\BasePopup.resx">
       <DependentUpon>BasePopup.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\RenameTable.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Controls\RenameTable.cs" />
     <EmbeddedResource Include="Controls\RenameTable.resx">
       <DependentUpon>RenameTable.cs</DependentUpon>
     </EmbeddedResource>
