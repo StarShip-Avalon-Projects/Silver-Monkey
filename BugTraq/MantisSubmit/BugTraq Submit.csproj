@@ -135,7 +135,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SubmitIssue.cs" />
+    <Compile Include="SubmitIssue.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Content Include="Properties\AssemblyInfoersionCS.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfoersionCS.cs</LastGenOutput>

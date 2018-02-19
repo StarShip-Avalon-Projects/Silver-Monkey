@@ -114,7 +114,9 @@
     <Compile Include="AboutBox1.Designer.vb">
       <DependentUpon>AboutBox1.vb</DependentUpon>
     </Compile>
-    <Compile Include="AboutBox1.vb" />
+    <Compile Include="AboutBox1.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="AssemblyFileVersion.vb">
       <AutoGen>True</AutoGen>
@@ -129,16 +131,22 @@
     <Compile Include="Controls\BotSetup.Designer.vb">
       <DependentUpon>BotSetup.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\BotSetup.vb" />
+    <Compile Include="Controls\BotSetup.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\LabelHotlinks.vb" />
     <Compile Include="Controls\Settings Editor\Config.Designer.vb">
       <DependentUpon>Config.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Settings Editor\Config.vb" />
+    <Compile Include="Controls\Settings Editor\Config.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\Debug\SetVariables.Designer.vb">
       <DependentUpon>SetVariables.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Debug\SetVariables.vb" />
+    <Compile Include="Controls\Debug\SetVariables.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Helper Classes\DeBugWriter.vb" />
     <Compile Include="IO\TextDisplayManager.vb" />
     <Compile Include="MultipleLogOutput.vb" />
@@ -150,11 +158,15 @@
     <Compile Include="NewBot.Designer.vb">
       <DependentUpon>NewBot.vb</DependentUpon>
     </Compile>
-    <Compile Include="NewBot.vb" />
+    <Compile Include="NewBot.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Helper Classes\MiscUtils.vb" />
     <Compile Include="MainModule.vb" />
     <Compile Include="Helper Classes\DownLoadImage.vb" />
-    <Compile Include="Main.vb" />
+    <Compile Include="Main.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Main.Designer.vb">
       <DependentUpon>Main.vb</DependentUpon>
       <SubType>Form</SubType>
@@ -173,7 +185,9 @@
     <Compile Include="Controls\Debug\Variables.Designer.vb">
       <DependentUpon>Variables.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Debug\Variables.vb" />
+    <Compile Include="Controls\Debug\Variables.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutBox1.resx">

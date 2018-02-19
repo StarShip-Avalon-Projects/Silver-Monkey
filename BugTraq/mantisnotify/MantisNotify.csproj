@@ -122,13 +122,17 @@
     <Compile Include="MantisNotifyApp.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MantisNotifyForm.cs" />
+    <Compile Include="MantisNotifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="TaskbarNotifier.cs" />
+    <Compile Include="TaskbarNotifier.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="close.bmp" />
     <EmbeddedResource Include="MantisNotifyForm.resx">
       <DependentUpon>MantisNotifyForm.cs</DependentUpon>

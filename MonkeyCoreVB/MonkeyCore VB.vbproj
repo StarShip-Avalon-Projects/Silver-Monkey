@@ -114,23 +114,43 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="CompilerServices.vb" />
-    <Compile Include="Controls\HelpLinkMenu.vb" />
-    <Compile Include="Controls\HelpLinkToolStripMenu.vb" />
-    <Compile Include="Controls\ListBox_NoFlicker.vb" />
+    <Compile Include="Controls\HelpLinkMenu.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\HelpLinkToolStripMenu.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ListBox_NoFlicker.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ListView_NoFlicker.Designer.vb">
       <DependentUpon>ListView_NoFlicker.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ListView_NoFlicker.vb" />
+    <Compile Include="Controls\ListView_NoFlicker.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\NativeMethods.vb" />
-    <Compile Include="Controls\RichTextBoxEx.vb" />
-    <Compile Include="Controls\ScrollingListBox.vb" />
+    <Compile Include="Controls\RichTextBoxEx.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ScrollingListBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SilverMonkeyFCTB.Designer.vb">
       <DependentUpon>SilverMonkeyFCTB.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SilverMonkeyFCTB.vb" />
-    <Compile Include="Controls\TabControleExTabs.vb" />
-    <Compile Include="Controls\TabControlEx.vb" />
-    <Compile Include="Controls\TextBox_NoFlicker.vb" />
+    <Compile Include="Controls\SilverMonkeyFCTB.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TabControleExTabs.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TabControlEx.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TextBox_NoFlicker.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\Win32.vb" />
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="Utils\Logging\LogSteamOptions.vb" />
