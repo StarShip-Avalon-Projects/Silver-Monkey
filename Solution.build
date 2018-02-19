@@ -116,7 +116,8 @@
 
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
 			WorkingDirectory="MonkeyCore/"/> 
-
+		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
+			WorkingDirectory="MonkeyCoreVB/"/> 
 		<!-- Silver Monkey Engine v3.0 -->
 		 <Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
 			WorkingDirectory="Silvermonkey.Engine/"/>
