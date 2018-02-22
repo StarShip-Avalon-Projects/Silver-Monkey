@@ -126,15 +126,6 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\Monkeyspeak\Monkeyspeak.Editor.Collaborate\Monkeyspeak.Editor.Collaborate.csproj">
-      <Name>MonkeyspeakEditorCollaborate</Name>
-      <Project>{d2d53365-7195-41b7-adc8-38fd2de476cc}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
     <ProjectReference Include="..\Monkeyspeak\Monkeyspeak.Editor.Interfaces\Monkeyspeak.Editor.Interfaces.csproj">
       <Name>Monkeyspeak.Editor.Interfaces</Name>
       <Project>{cf6ea88d-bee4-4deb-a4d1-ca6d6e263ac6}</Project>
