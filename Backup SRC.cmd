@@ -18,22 +18,9 @@ if not %GIT_STATUS%==0 goto fail
 
 :End
 
-git add --all
-
-git submodule foreach "git add --all"
+"send update.cmd"
 set GIT_STATUS=%ERRORLEVEL% 
-if not %GIT_STATUS%==0 goto fail 
-
-git submodule foreach "git commit -m'Auto Update SubModules' || true"
-
-
-git commit -m"Auto Version Update"
-set GIT_STATUS=%ERRORLEVEL% 
-if not %GIT_STATUS%==0 goto fail 
-
-git push --recurse-submodules=on-demand
-set GIT_STATUS=%ERRORLEVEL% 
-if not %GIT_STATUS%==0 goto fail
+if not %GIT_STATUS%==0 goto eof
 
 :PullRest
 call PullRequest.cmd
