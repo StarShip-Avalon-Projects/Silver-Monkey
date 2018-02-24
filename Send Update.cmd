@@ -11,10 +11,11 @@ if not %GIT_STATUS%==0 goto fail
 
 git push --recurse-submodules=on-demand
 set git.exe_STATUS=%ERRORLEVEL% 
-if not %GIT_STATUS%==0 goto fail
+if %GIT_STATUS%==0 goto eof
 
-rem git submodule foreach "git push || true"
-
+git push
+set GIT_STATUS=%ERRORLEVEL% 
+if not %GIT_STATUS%==0 goto fail 
 
 :eof
 exit /b 0
