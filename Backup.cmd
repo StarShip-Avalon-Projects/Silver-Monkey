@@ -1,5 +1,3 @@
-cd
-
 IF "%~1"=="" GOTO BuildAll
 IF "%~1"=="VersionBump" GOTO VersionBump
 
@@ -15,19 +13,8 @@ set GIT_STATUS=%ERRORLEVEL%
 if not %GIT_STATUS%==0 goto eof 
 
 :End
-git add --all
 
-git submodule foreach "git add --all"
-set GIT_STATUS=%ERRORLEVEL% 
-if not %GIT_STATUS%==0 goto eof 
-
-git submodule foreach "git commit --amend --no-edit || true"
-
-git commit --amend --no-edit
-set GIT_STATUS=%ERRORLEVEL% 
-if not %GIT_STATUS%==0 goto eof 
-
-git push --recurse-submodules=on-demand
+"send update.cmd"
 set GIT_STATUS=%ERRORLEVEL% 
 if not %GIT_STATUS%==0 goto eof
 
