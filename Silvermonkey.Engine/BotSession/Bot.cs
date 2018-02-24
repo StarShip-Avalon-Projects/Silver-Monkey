@@ -301,7 +301,6 @@ namespace Engine.BotSession
                 new WmCpyDta(),
                 new MsMemberList(),
                 new MsSound(),
-                new MsTrades(),
                 new MsPhoenixSpeak(),
                 new MsPounce(),
                 new MsPhoenixSpeakBackupAndRestore(),

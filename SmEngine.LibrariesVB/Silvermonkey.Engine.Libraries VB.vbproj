@@ -78,10 +78,8 @@
     <Compile Include="MsDice.vb" />
     <Compile Include="MsFurreList.vb" />
     <Compile Include="MsMemberList.vb" />
-    <Compile Include="MsPopUpDialogs.vb" />
     <Compile Include="MsPounce.vb" />
     <Compile Include="MsSound.vb" />
-    <Compile Include="MsTrades.vb" />
     <Compile Include="MsWebRequests.vb" />
     <Compile Include="MsWeb\MsWebVariable.vb" />
     <Compile Include="MsWeb\WebException.vb" />
