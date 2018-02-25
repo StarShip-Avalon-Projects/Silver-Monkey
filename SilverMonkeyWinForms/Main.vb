@@ -875,7 +875,7 @@ Public Class Main
                 .ContextMenuStrip = ContextTryIcon,
                 .Icon = My.Resources.metal,
                 .BalloonTipTitle = My.Application.Info.ProductName,
-                .Text = My.Application.Info.ProductName + ": " + My.Application.Info.Version.ToString
+                .Text = $"{My.Application.Info.ProductName}: {My.Application.Info.Version.ToString()}"
             }
                 AddHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
             End If
@@ -911,12 +911,12 @@ Public Class Main
                 EditBotToolStripMenuItem.Enabled = True
             End If
 
-            'If Not IsNothing(BotConfig) Then
-            '    UpdateBotConfig(BotConfig.BotSettingsFile, BotConfig)
-            '    If BotConfig.AutoConnect Then
-            '        '' BTN_Go.PerformClick()
-            '    End If
-            'End If
+            If Not IsNothing(BotConfig) Then
+                UpdateBotConfig(BotConfig.BotSettingsFile, BotConfig)
+                If BotConfig.AutoConnect Then
+                    BTN_Go.PerformClick()
+                End If
+            End If
         Catch ex As Exception
             furcLog.Logger.Error(ex)
         End Try

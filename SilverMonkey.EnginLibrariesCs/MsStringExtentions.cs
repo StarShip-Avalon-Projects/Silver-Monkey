@@ -99,10 +99,8 @@ namespace Libraries
                 var.Value = var.Value.ToString().ToFurcadiaShortName();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private bool ChopEndString(TriggerReader reader)
