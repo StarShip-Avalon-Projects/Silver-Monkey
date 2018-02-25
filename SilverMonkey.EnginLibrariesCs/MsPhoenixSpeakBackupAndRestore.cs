@@ -3,51 +3,51 @@ using System;
 
 namespace Libraries
 {
-    // '' <summary>
-    // '' backup and restore a dreams
-    // '' <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha">Phoenix
-    // '' Speak</see> database to Silver Monkey's built in SQLite database
-    // '' system. Silver Monkey uses the Command Line interface to walk and
-    // '' backup or restore the database for the dream.
-    // '' <para>
-    // '' NOTE: PhoenixSpeak Database is not SQL based like SQLite. Phoenix
-    // '' Speak resembles an XML style system
-    // '' </para>
-    // '' <pra>Bot Testers: Be aware this class needs to be tested any way possible!</pra>
-    // '' </summary>
-    // '' <remarks>
-    // '' furre List Looping.
-    // '' <para>
-    // '' first build the furre list
-    // '' </para>
-    // '' <para>
-    // '' Send the First PhoenixSpeak Query-set to the server Enqueue
-    // '' </para>
-    // '' <para>
-    // '' PsReceived will read the incoming server responses and keep track
-    // '' which mode we're in
-    // '' </para>
-    // '' <para>
-    // '' Read CharacterList(0).name into a variable
-    // '' </para>
-    // '' <para>
-    // '' Remove furre at CharacterList(0)
-    // '' </para>
-    // '' <para>
-    // '' Enqueue the Next Phoenix Speak Command
-    // '' </para>
-    // '' <para>
-    // '' Change mode as necessary IE CharacterList.Count = 0
-    // '' </para>
-    // '' <para>
-    // '' PSiInfoCache is the List of PhoenixSpeak.Variables last transmitted
-    // '' by the server
-    // '' </para>
-    // '' <para>
-    // '' this list does take into account Multi-Page responses from the
-    // '' server and will flag an 'an overflow if page 6 is detected.
-    // '' </para>
-    // '' </remarks>
+    /// <summary>
+    /// backup and restore a dreams
+    /// <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha">Phoenix
+    /// Speak</see> database to Silver Monkey's built in SQLite database
+    /// system. Silver Monkey uses the Command Line interface to walk and
+    /// backup or restore the database for the dream.
+    /// <para>
+    /// NOTE: PhoenixSpeak Database is not SQL based like SQLite. Phoenix
+    /// Speak resembles an XML style system
+    /// </para>
+    /// <pra>Bot Testers: Be aware this class needs to be tested any way possible!</pra>
+    /// </summary>
+    /// <remarks>
+    /// furre List Looping.
+    /// <para>
+    /// first build the furre list
+    /// </para>
+    /// <para>
+    /// Send the First PhoenixSpeak Query-set to the server Enqueue
+    /// </para>
+    /// <para>
+    /// PsReceived will read the incoming server responses and keep track
+    /// which mode we're in
+    /// </para>
+    /// <para>
+    /// Read CharacterList(0).name into a variable
+    /// </para>
+    /// <para>
+    /// Remove furre at CharacterList(0)
+    /// </para>
+    /// <para>
+    /// Enqueue the Next Phoenix Speak Command
+    /// </para>
+    /// <para>
+    /// Change mode as necessary IE CharacterList.Count = 0
+    /// </para>
+    /// <para>
+    /// PSiInfoCache is the List of PhoenixSpeak.Variables last transmitted
+    /// by the server
+    /// </para>
+    /// <para>
+    /// this list does take into account Multi-Page responses from the
+    /// server and will flag an 'an overflow if page 6 is detected.
+    /// </para>
+    /// </remarks>
     public sealed class MsPhoenixSpeakBackupAndRestore : MonkeySpeakLibrary
     {
         /// <summary>
@@ -61,7 +61,7 @@ namespace Libraries
         /// <summary>
         /// Initializes this instance. Add your trigger handlers here.
         /// </summary>
-        /// <param name="args">Parametized argument of objects to use to pass runtime objects to a library at initialization</param>
+        /// <param name="args">Parametized argument of vars to use to pass runtime vars to a library at initialization</param>
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);

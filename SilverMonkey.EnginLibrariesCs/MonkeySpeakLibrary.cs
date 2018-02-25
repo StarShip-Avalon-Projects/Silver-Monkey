@@ -31,7 +31,7 @@ namespace Libraries
         /// <para/>
         /// Referenced as a Monkeyspeak Parameter.
         /// <para/>
-        /// Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), Object())"/>
+        /// Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), var())"/>
         /// </summary>
         private static Dream _dream;
 
@@ -152,7 +152,7 @@ namespace Libraries
         /// Initializes this instance. Add your trigger handlers here.
         /// </summary>
         /// <param name="args">
-        /// Parametized argument of objects to use to pass runtime objects to a library at initialization
+        /// Parametized argument of vars to use to pass runtime vars to a library at initialization
         /// </param>
         public override void Initialize(params object[] args)
         {
@@ -246,7 +246,7 @@ namespace Libraries
         /// <param name="message">
         /// Message sring
         /// </param>
-        public void SendClientMessage(ref string message)
+        public void SendClientMessage(string message)
         {
             ParentBotSession.SendToClient(message);
         }

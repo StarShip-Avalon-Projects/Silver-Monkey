@@ -5,32 +5,25 @@ Imports Irony.Parsing
 
 Namespace Controls
 
-#Disable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'https://github.com/PavelTorgashov/FastColoredTextBox' that could not be resolved.
-#Disable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'Http://irony.codeplex.com/' that could not be resolved.
-#Disable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'Http://www.codeproject.com/articles/161871/fast-colored-textbox-for-syntax-highlighting' that could not be resolved.
-
     ''' <summary>
     ''' FastColoredTextBox with Irony parser support
     ''' </summary>
-    ''' <see cref="Http://www.codeproject.com/articles/161871/fast-colored-textbox-for-syntax-highlighting"/>
-    '''    ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' '''
-    ''' <see cref="https://github.com/PavelTorgashov/FastColoredTextBox"/>
-    '''    ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' ''' '''
-    ''' <see cref="Http://irony.codeplex.com/"/>
-    '''
+    ''' <seealso href="Http://www.codeproject.com/articles/161871/fast-colored-textbox-for-syntax-highlighting"/>
+    ''' <seealso href="https://github.com/PavelTorgashov/FastColoredTextBox"/>
+    ''' <seealso href="Http://irony.codeplex.com/"/>
     Public Class SilverMonkeyFCTB
-#Enable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'Http://www.codeproject.com/articles/161871/fast-colored-textbox-for-syntax-highlighting' that could not be resolved.
-#Enable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'Http://irony.codeplex.com/' that could not be resolved.
-#Enable Warning BC42309 ' XML comment has a tag with a 'cref' attribute 'https://github.com/PavelTorgashov/FastColoredTextBox' that could not be resolved.
         Inherits FastColoredTextBox
 
 #Region "Public Fields"
 
+        ''' <summary>
+        ''' The wavy style
+        ''' </summary>
         Public WavyStyle As Style = New WavyLineStyle(255, Color.Red)
 
 #End Region
 
-#Region "Protected Fields"
+#Region "Private Fields"
 
         Private _grammar As Grammar
         Private m_parser As Parser
@@ -55,15 +48,6 @@ Namespace Controls
 
 #Region "Public Properties"
 
-        Public Property Parser() As Parser
-            Get
-                Return m_parser
-            End Get
-            Set
-                SetParser(Value)
-            End Set
-        End Property
-
         Public Property Grammar() As Grammar
             Get
 
@@ -76,6 +60,15 @@ Namespace Controls
             End Get
             Set
                 _grammar = Value
+                SetParser(Value)
+            End Set
+        End Property
+
+        Public Property Parser() As Parser
+            Get
+                Return m_parser
+            End Get
+            Set
                 SetParser(Value)
             End Set
         End Property

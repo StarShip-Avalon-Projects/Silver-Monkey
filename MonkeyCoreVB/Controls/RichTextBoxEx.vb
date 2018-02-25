@@ -2,7 +2,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
-Imports MonkeyCore.Controls.Win32
+Imports Controls.NativeMethods
 
 Namespace Controls
 
@@ -15,6 +15,8 @@ Namespace Controls
 
 #Region "Private Fields"
 
+        Private oldEventMask As IntPtr
+        Private updating As Integer
         Private _protocols As List(Of String)
         Dim instance As Control
         Dim value As VerticalAlignment
@@ -50,10 +52,10 @@ Namespace Controls
         ''' </summary>
         Public Property HScrollPos() As Integer
             Get
-                Return GetScrollPos(Me.Handle, SB_HORZ)
+                Return GetScrollPos(Me.Handle, SBOrientation.SB_HORZ)
             End Get
             Set(ByVal value As Integer)
-                SetScrollPos(Me.Handle, SB_HORZ, value, True)
+                SetScrollPos(Me.Handle, SBOrientation.SB_HORZ, value, True)
             End Set
         End Property
 
@@ -71,10 +73,10 @@ Namespace Controls
         ''' </summary>
         Public Property VScrollPos() As Integer
             Get
-                Return GetScrollPos(Me.Handle, SB_VERT)
+                Return GetScrollPos(Me.Handle, SBOrientation.SB_VERT)
             End Get
             Set(ByVal value As Integer)
-                SetScrollPos(Me.Handle, SB_VERT, value, True)
+                SetScrollPos(Me.Handle, SBOrientation.SB_VERT, value, True)
             End Set
         End Property
 

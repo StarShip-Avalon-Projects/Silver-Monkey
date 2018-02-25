@@ -2,9 +2,9 @@
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Controls.NativeMethods
 Imports Furcadia.Text.FurcadiaMarkup
 Imports MonkeyCore.Controls
-Imports MonkeyCore.Controls.NativeMethods
 Imports MonkeyCore.Settings
 
 Namespace HelperClasses
@@ -322,8 +322,6 @@ Namespace HelperClasses
 
 #Region "Log Scroll"
 
-        Private Const SBS_HORZ As Integer = 0
-        Private Const SBS_VERT As Integer = 1
         Dim Pos_Old As Integer = 0
 
         Private Sub ScrollToEnd()
@@ -334,13 +332,14 @@ Namespace HelperClasses
             End If
             Dim scrollMin As Integer = 0
             Dim Sinfo As New SCROLLINFO
-            Sinfo.CbSize = Marshal.SizeOf(Sinfo)
+            Sinfo.cbSize = Marshal.SizeOf(Sinfo)
             Sinfo.fMask = ScrollInfoMask.SIF_POS
             Dim scrollMax As Integer = 0
-            Dim test As Integer = GetScrollInfo(LogDisplayBox.Handle, SBOrientation.SB_VERT, Sinfo)
 
-            If (GetScrollRange(LogDisplayBox.Handle, SBS_VERT, scrollMin, scrollMax)) Then
-                Dim pos As Integer = GetScrollPos(LogDisplayBox.Handle, SBS_VERT)
+            GetScrollInfo(LogDisplayBox.Handle, SBOrientation.SB_VERT, Sinfo)
+
+            If (GetScrollRange(LogDisplayBox.Handle, SBOrientation.SB_VERT, scrollMin, scrollMax)) Then
+                Dim pos As Integer = GetScrollPos(LogDisplayBox.Handle, SBOrientation.SB_VERT)
                 If scrollMax = Pos_Old Then
                     LogDisplayBox.SelectionStart = LogDisplayBox.Text.Length
                 End If

@@ -28,7 +28,7 @@ namespace Libraries
         /// <summary>
         /// Initializes this instance. Add your trigger handlers here.
         /// </summary>
-        /// <param name="args">Parametized argument of objects to use to pass runtime objects to a library at initialization</param>
+        /// <param name="args">Parametized argument of vars to use to pass runtime vars to a library at initialization</param>
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);

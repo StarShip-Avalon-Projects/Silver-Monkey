@@ -65,11 +65,11 @@ namespace Libraries.Variables
         #region Public Methods
 
         /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
+        /// Indicates whether the current var is equal to another var of the same type.
         /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
+        /// <param name="other">An var to compare with this var.</param>
         /// <returns>
-        /// true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
+        /// true if the current var is equal to the <paramref name="other" /> parameter; otherwise, false.
         /// </returns>
         public bool Equals(IVariable other)
         {

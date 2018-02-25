@@ -129,7 +129,6 @@
     <Compile Include="Controls\ListView_NoFlicker.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\NativeMethods.vb" />
     <Compile Include="Controls\RichTextBoxEx.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -151,12 +150,9 @@
     <Compile Include="Controls\TextBox_NoFlicker.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Win32.vb" />
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="Utils\Logging\LogSteamOptions.vb" />
     <Compile Include="Utils\Logging\LogStream.vb" />
-    <Compile Include="Utils\MessageHelper.vb" />
-    <Compile Include="Utils\MyData.vb" />
     <Compile Include="Utils\TextWriter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -199,7 +195,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>
     </None>
-    <None Include="MonkeyCore.pfx" />
     <None Include="MonkeyCore.SNK" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -216,6 +211,10 @@
     <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
       <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Name>FurcadiaLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj">
+      <Project>{6a9fc31d-150b-4c4b-9694-7f8c084df602}</Project>
+      <Name>MonkeyCore.WinFormsControls</Name>
     </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.csproj">
       <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>

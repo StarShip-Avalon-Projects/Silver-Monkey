@@ -4,17 +4,17 @@ using System.Text.RegularExpressions;
 
 namespace Libraries.PhoenixSpeak
 {
-    // '' <summary>
-    // '' Store a Phoenix Speak 'Get' response and send it to the MonkeySpeak
-    // '' Library for PhonixSpeak Processing.
-    // '' <para>
-    // '' MonkeySpeak library grabs the PS Page and transforms it into a
-    // '' PsInfo object. A PsInfo object is a list of PhoenixSpeak Variables
-    // '' retrieved from the Furcadia Game-Server via the command line
-    // '' interface.
-    // '' <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha">Phoenix Speak</see>
-    // '' </para>
-    // '' </summary>
+    /// <summary>
+    /// Store a Phoenix Speak 'Get' response and send it to the MonkeySpeak
+    /// Library for PhonixSpeak Processing.
+    /// <para>
+    /// MonkeySpeak library grabs the PS Page and transforms it into a
+    /// PsInfo var. A PsInfo var is a list of PhoenixSpeak Variables
+    /// retrieved from the Furcadia Game-Server via the command line
+    /// interface.
+    /// <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha">Phoenix Speak</see>
+    /// </para>
+    /// </summary>
     public class PhoenicSpeakDataObject : DataObject
     {
         private Regex PsPage = new Regex("multi_result?(\\ d +)?/(\\d+)?", SmRegExOptions);
@@ -77,9 +77,9 @@ namespace Libraries.PhoenixSpeak
             _PS_Page = PsPage.Replace(data, "");
         }
 
-        // '' <summary>
-        // '' returns number of Phoenix Speak pages remaining
-        // '' </summary>
+        /// <summary>
+        /// returns number of Phoenix Speak pages remaining
+        /// </summary>
         public int PagesRemaining
         {
             get

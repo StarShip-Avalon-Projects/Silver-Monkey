@@ -298,7 +298,7 @@ namespace Engine.BotSession
                 new MsDice(),
                 new MsFurres(),
                 new MsMovement(),
-                new WmCpyDta(),
+                new MsBotMessage(),
                 new MsMemberList(),
                 new MsSound(),
                 new MsPhoenixSpeak(),

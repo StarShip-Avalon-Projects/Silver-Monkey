@@ -9,22 +9,22 @@ using static Libraries.MsLibHelper;
 
 namespace Libraries
 {
-    // '' <summary>
-    // '' Cause:s (0:50) - (0:62
-    // '' <para>
-    // '' Conditions: (1:50) - (1:53)
-    // '' </para>
-    // '' Effects: (5:49) - (5:56)
-    // '' <para>
-    // '' Banish Monkey Speak
-    // '' </para>
-    // '' This system mirrors Furcadia's banish system by tracking the banish
-    // '' commands sent to the game aerver and keep a list of banished furres
-    // '' locally. To help keep the list accurate, It is reconmended to ask
-    // '' the server for a banish-list upon joining the dream. It maybe a good
-    // '' idea to run a daily schedule to refresh the list for temp banishes
-    // '' to drop off.
-    // '' </summary>
+    /// <summary>
+    /// Cause:s (0:50) - (0:62
+    /// <para>
+    /// Conditions: (1:50) - (1:53)
+    /// </para>
+    /// Effects: (5:49) - (5:56)
+    /// <para>
+    /// Banish Monkey Speak
+    /// </para>
+    /// This system mirrors Furcadia's banish system by tracking the banish
+    /// commands sent to the game aerver and keep a list of banished furres
+    /// locally. To help keep the list accurate, It is reconmended to ask
+    /// the server for a banish-list upon joining the dream. It maybe a good
+    /// idea to run a daily schedule to refresh the list for temp banishes
+    /// to drop off.
+    /// </summary>
     public class MsBanish : MonkeySpeakLibrary
     {
         #region Public Properties
@@ -39,7 +39,7 @@ namespace Libraries
         /// <summary>
         /// Initializes this instance. Add your trigger handlers here.
         /// </summary>
-        /// <param name="args">Parametized argument of objects to use to pass runtime objects to a library at initialization</param>
+        /// <param name="args">Parametized argument of vars to use to pass runtime vars to a library at initialization</param>
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);

@@ -3,16 +3,16 @@ using System;
 
 namespace Libraries
 {
-    // '' <summary>
-    // '' Monkey Speak Interface to the
-    // '' <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha">Phoenix
-    // '' Speak</see> server command line interface
-    // '' <para>
-    // '' Checks and executes predefined Phoenix Speak commands to manages a
-    // '' dreams database.
-    // '' </para>
-    // '' <pra>Bot Testers: Be aware this class needs to be tested any way possible!</pra>
-    // '' </summary>
+    /// <summary>
+    /// Monkey Speak Interface to the
+    /// <see href="https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha">Phoenix
+    /// Speak</see> server command line interface
+    /// <para>
+    /// Checks and executes predefined Phoenix Speak commands to manages a
+    /// dreams database.
+    /// </para>
+    /// <pra>Bot Testers: Be aware this class needs to be tested any way possible!</pra>
+    /// </summary>
     public class MsPhoenixSpeak : MonkeySpeakLibrary
     {
         public override int BaseId => 80;
