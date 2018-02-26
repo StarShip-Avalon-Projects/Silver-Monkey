@@ -9,71 +9,47 @@ namespace Controls
     /// </summary>
     public sealed class NativeMethods
     {
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        #region Public Fields
-
-        public const int CFE_AUTOCOLOR = 1073741824;
-
-        public const int CFE_BOLD = 1;
-
-        public const int CFE_ITALIC = 2;
-
-        public const int CFE_LINK = 32;
-
-        public const int CFE_PROTECTED = 16;
-
-        public const int CFE_STRIKEOUT = 8;
-
-        public const int CFM_LINK = 32;
-
-        public const byte CFU_UNDERLINEWORD = 2;
-
-        public const int EM_GETCHARFORMAT = (WM_USER + 58);
-
-        public const int EM_GETEVENTMASK = (WM_USER + 59);
-
-        public const int EM_SETCHARFORMAT = (WM_USER + 68);
-
-        public const int EM_SETEVENTMASK = (WM_USER + 69);
-
-        public const int WM_SETREDRAW = 11;
-
-        #endregion Public Fields
-
         #region Internal Fields
 
-        public const int CFE_SUBSCRIPT = 65536;
+        internal const int CFE_AUTOCOLOR = 1073741824;
+
+        internal const int CFE_BOLD = 1;
+
+        internal const int CFE_ITALIC = 2;
+
+        internal const int CFE_LINK = 32;
+
+        internal const int CFE_PROTECTED = 16;
+
+        internal const int CFE_STRIKEOUT = 8;
+
+        internal const int CFE_SUBSCRIPT = 65536;
 
         //  Superscript and subscript are
-        public const int CFE_SUPERSCRIPT = 131072;
+        internal const int CFE_SUPERSCRIPT = 131072;
 
-        public const int CFE_UNDERLINE = 4;
+        internal const int CFE_UNDERLINE = 4;
 
         //   mutually exclusive
         //  (*)
-        public const int CFM_ALLCAPS = 128;
+        internal const int CFM_ALLCAPS = 128;
 
         //  (*)
-        public const int CFM_ANIMATION = 262144;
+        internal const int CFM_ANIMATION = 262144;
 
-        public const int CFM_BACKCOLOR = 67108864;
+        internal const int CFM_BACKCOLOR = 67108864;
 
-        public const int CFM_BOLD = 1;
+        internal const int CFM_BOLD = 1;
 
-        public const int CFM_CHARSET = 134217728;
+        internal const int CFM_CHARSET = 134217728;
 
-        public const int CFM_COLOR = 1073741824;
-
-        //  (*)
-        public const int CFM_DISABLED = 8192;
+        internal const int CFM_COLOR = 1073741824;
 
         //  (*)
-        public const int CFM_EMBOSS = 2048;
+        internal const int CFM_DISABLED = 8192;
+
+        //  (*)
+        internal const int CFM_EMBOSS = 2048;
 
         internal const int CFM_FACE = 536870912;
 
@@ -89,6 +65,7 @@ namespace Controls
         internal const int CFM_KERNING = 1048576;
 
         internal const int CFM_LCID = 33554432;
+        internal const int CFM_LINK = 32;
 
         internal const int CFM_OFFSET = 268435456;
 
@@ -106,33 +83,24 @@ namespace Controls
         internal const int CFM_SHADOW = 1024;
 
         internal const uint CFM_SIZE = 2_147_483_648;
-
         internal const int CFM_SMALLCAPS = 64;
-
         internal const int CFM_SPACING = 2097152;
-
         internal const int CFM_STRIKEOUT = 8;
 
         //  (*)
         internal const int CFM_STYLE = 524288;
 
         internal const int CFM_SUBSCRIPT = (CFE_SUBSCRIPT | CFE_SUPERSCRIPT);
-
         internal const int CFM_SUPERSCRIPT = CFM_SUBSCRIPT;
-
         internal const int CFM_UNDERLINE = 4;
-
         internal const int CFM_UNDERLINETYPE = 8388608;
 
         //  Many displayed by 3.0
         internal const int CFM_WEIGHT = 4194304;
 
         internal const byte CFU_UNDERLINE = 1;
-
         internal const byte CFU_UNDERLINEDASH = 5;
-
         internal const byte CFU_UNDERLINEDASHDOT = 6;
-
         internal const byte CFU_UNDERLINEDASHDOTDOT = 7;
 
         //  (*) displayed as ordinary underline
@@ -142,20 +110,45 @@ namespace Controls
         internal const byte CFU_UNDERLINEDOUBLE = 3;
 
         internal const byte CFU_UNDERLINEHAIRLINE = 10;
-
         internal const byte CFU_UNDERLINENONE = 0;
+        internal const byte CFU_UNDERLINETHICK = 9;
 
-        public const byte CFU_UNDERLINETHICK = 9;
+        internal const byte CFU_UNDERLINEWAVE = 8;
 
-        public const byte CFU_UNDERLINEWAVE = 8;
+        internal const byte CFU_UNDERLINEWORD = 2;
 
-        public const int SCF_ALL = 4;
+        internal const int EM_GETCHARFORMAT = (WM_USER + 58);
 
-        public const int SCF_SELECTION = 1;
+        internal const int EM_GETEVENTMASK = (WM_USER + 59);
+
+        internal const int EM_SETCHARFORMAT = (WM_USER + 68);
+
+        internal const int EM_SETEVENTMASK = (WM_USER + 69);
+
+        internal const int SB_ENDSCROLL = 8;
+        internal const int SB_LEFT = 6;
+        internal const int SB_LINEDOWN = 1;
+        internal const int SB_LINELEFT = 0;
+        internal const int SB_LINERIGHT = 1;
+        internal const int SB_LINEUP = 0;
+        internal const int SB_PAGEBOTTOM = 7;
+        internal const int SB_PAGEDOWN = 3;
+        internal const int SB_PAGELEFT = 2;
+        internal const int SB_PAGERIGHT = 3;
+        internal const int SB_PAGETOP = 6;
+        internal const int SB_PAGEUP = 2;
+        internal const int SB_RIGHT = 7;
+        internal const int SB_THUMBPOSITION = 4;
+        internal const int SB_THUMBTRACK = 5;
+        internal const int SCF_ALL = 4;
+
+        internal const int SCF_SELECTION = 1;
 
         internal const int SCF_WORD = 2;
-
+        internal const int WM_HSCROLL = 276;
+        internal const int WM_SETREDRAW = 11;
         internal const int WM_USER = 1024;
+        internal const int WM_VSCROLL = 277;
 
         #endregion Internal Fields
 
@@ -183,6 +176,12 @@ namespace Controls
         #endregion Public Enums
 
         #region Public Methods
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
 
         /// <summary>
         ///
@@ -345,7 +344,7 @@ namespace Controls
         public struct SCROLLINFO
         {
             public int cbSize;
-            public uint fMask;
+            public ScrollInfoMask fMask;
             public int nMin;
             public int nMax;
             public uint nPage;
@@ -354,9 +353,5 @@ namespace Controls
         }
 
         #endregion Public Structs
-
-        //internal static IntPtr oldEventMask;
-
-        //internal static int updating;
     }
 }

@@ -129,17 +129,11 @@
     <Compile Include="Controls\ListView_NoFlicker.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\ScrollingListBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\SilverMonkeyFCTB.Designer.vb">
       <DependentUpon>SilverMonkeyFCTB.vb</DependentUpon>
     </Compile>
     <Compile Include="Controls\SilverMonkeyFCTB.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TabControleExTabs.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TabControlEx.vb">
       <SubType>Component</SubType>

@@ -19,9 +19,9 @@ namespace MonkeyCore.WinForms.Controls
 
         private List<string> _protocols;
 
-        private Control instance;
+        //private Control instance;
 
-        private VerticalAlignment value;
+        //private VerticalAlignment value;
 
         public RichTextBoxEx()
         {
@@ -111,23 +111,6 @@ namespace MonkeyCore.WinForms.Controls
         }
 
         /// <summary>
-        /// Appends text to the current text of a text box.
-        /// </summary>
-        /// <param name="text">The text to append to the current contents of the text box.</param>
-        /// <PermissionSet>
-        ///   <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
-        ///   <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
-        ///   <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
-        ///   <IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
-        /// </PermissionSet>
-        public void AppendText(string text)
-        {
-            BeginUpdate();
-            base.AppendText(text);
-            EndUpdate();
-        }
-
-        /// <summary>
         /// Maintains performance while updating.
         /// </summary>
         /// <remarks>
@@ -173,7 +156,7 @@ namespace MonkeyCore.WinForms.Controls
         {
             //  Deal with nested calls.
             updating--;
-            if ((updating > 0))
+            if (updating > 0)
             {
                 return;
             }
@@ -304,7 +287,7 @@ namespace MonkeyCore.WinForms.Controls
             IntPtr lpar = Marshal.AllocCoTaskMem(Marshal.SizeOf(cf));
             Marshal.StructureToPtr(cf, lpar, false);
             IntPtr res = SendMessage(Handle, EM_GETCHARFORMAT, wpar, lpar);
-            cf = ((CHARFORMAT2_STRUCT)(Marshal.PtrToStructure(lpar, typeof(CHARFORMAT2_STRUCT))));
+            cf = ((CHARFORMAT2_STRUCT)Marshal.PtrToStructure(lpar, typeof(CHARFORMAT2_STRUCT)));
             int state;
             //  dwMask holds the information which properties are consistent
             //  throughout the selection:

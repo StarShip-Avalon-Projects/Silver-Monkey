@@ -60,6 +60,9 @@
     <Compile Include="RichTextBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ScrollingListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecentFileMenu.cs">
