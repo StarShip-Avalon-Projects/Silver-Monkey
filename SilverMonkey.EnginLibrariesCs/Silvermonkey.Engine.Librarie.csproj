@@ -75,6 +75,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extentions\Utils.cs" />
     <Compile Include="MsBotMessage.cs" />
     <Compile Include="MsDatabase.cs" />
     <Compile Include="MsPhoenicSpeak.cs" />

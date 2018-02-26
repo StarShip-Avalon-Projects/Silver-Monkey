@@ -113,7 +113,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="CompilerServices.vb" />
     <Compile Include="Controls\HelpLinkMenu.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -141,10 +140,8 @@
     <Compile Include="Controls\TextBox_NoFlicker.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="Utils\Logging\LogSteamOptions.vb" />
     <Compile Include="Utils\Logging\LogStream.vb" />
-    <Compile Include="Utils\TextWriter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -161,7 +158,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Settings.vb" />
-    <Compile Include="Utils\Utils.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
