@@ -1267,7 +1267,8 @@ Public Class Main
             'Dim mystr As COPYDATASTRUCT
             Dim mystr2 As COPYDATASTRUCT = DirectCast(Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT)), COPYDATASTRUCT)
             If mystr2.cbData = Marshal.SizeOf(GetType(FurreDataStructure)) Then
-                ' ' Marshal the data from the unmanaged memory block to a ' ' MyStruct managed struct. '
+                '' Marshal the data from the unmanaged memory block to a
+                ' MyStruct managed struct. '
                 Dim FurreData As FurreDataStructure = DirectCast(Marshal.PtrToStructure(mystr2.lpData, GetType(FurreDataStructure)), FurreDataStructure)
 
             End If
