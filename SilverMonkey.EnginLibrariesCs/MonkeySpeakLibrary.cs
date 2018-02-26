@@ -201,7 +201,7 @@ namespace Libraries
         /// <exception cref="ArgumentException">DreamInfo not set</exception>
         public static bool ReadDreamParams(TriggerReader reader)
         {
-            Dream dreamInfo = reader.GetParametersOfType<Dream>().FirstOrDefault();
+            Dream dreamInfo = reader.GetParametersOfType<Dream>().First();
             if (dreamInfo == null)
                 return false;
 

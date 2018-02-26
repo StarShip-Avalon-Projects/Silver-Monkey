@@ -63,6 +63,9 @@
     <Compile Include="ScrollingListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TabControlEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TextWriter.cs" />
     <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

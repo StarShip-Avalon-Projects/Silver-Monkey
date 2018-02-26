@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using MonkeyCore.Data;
+using Controls;
 
 namespace DataMonkey
 {
@@ -232,7 +233,7 @@ namespace DataMonkey
             this.DatabaseTreeView = new System.Windows.Forms.TreeView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.SQLAreaTabControl = new MonkeyCore.Controls.TabControlEx();
+            this.SQLAreaTabControl = new TabControlEx();
             this.SqlResultsListView = new MonkeyCore.Controls.ListView_NoFlicker();
             ((System.ComponentModel.ISupportInitialize)(this.sqlStatementTextBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
