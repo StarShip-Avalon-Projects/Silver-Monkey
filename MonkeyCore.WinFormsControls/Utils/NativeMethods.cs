@@ -149,6 +149,7 @@ namespace Controls
         internal const int WM_SETREDRAW = 11;
         internal const int WM_USER = 1024;
         internal const int WM_VSCROLL = 277;
+        public const int WM_COPYDATA = 74;
 
         #endregion Internal Fields
 

@@ -9,10 +9,6 @@ namespace Controls
     /// </summary>
     public static class WindowsMessageing
     {
-        public const int WM_COPYDATA = 74;
-
-        public const int WM_USER = 1024;
-
         /// <summary>
         /// Used for WM_COPYDATA for string messages
         /// </summary>
