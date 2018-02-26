@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports System.Windows.Forms
 Imports MonkeyCore.Controls
+Imports MonkeyCore.WinForms.Controls
 
 Public Class DeBugWriter
     Inherits TextWriter

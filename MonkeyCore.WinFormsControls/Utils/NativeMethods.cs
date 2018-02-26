@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using static MyData;
+using static Controls.WindowsMessageing;
 
 namespace Controls
 {
@@ -258,6 +258,9 @@ namespace Controls
         /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern int SetScrollPos(IntPtr hWnd, int nBar, int nPos, bool bRedraw);
+
+        [DllImport("user32.dll")]
+        public static extern int SetScrollPos(IntPtr hWnd, SBOrientation nBar, int nPos, bool bRedraw);
 
         #endregion Public Methods
 

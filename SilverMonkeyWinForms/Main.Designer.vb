@@ -1,3 +1,5 @@
+Imports MonkeyCore.WinForms.Controls
+
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Main
     Inherits System.Windows.Forms.Form
@@ -98,8 +100,8 @@ Partial Class Main
         Me.MainMenu1 = New System.Windows.Forms.MainMenu(Me.components)
         Me.BotIniOpen = New System.Windows.Forms.OpenFileDialog()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Log_ = New MonkeyCore.Controls.RichTextBoxEx()
-        Me.toServer = New MonkeyCore.Controls.RichTextBoxEx()
+        Me.Log_ = New RichTextBoxEx()
+        Me.toServer = New RichTextBoxEx()
         Me.FurreCountTxtBx = New MonkeyCore.Controls.TextBox_NoFlicker()
         Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
         Me.DreamBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -748,8 +750,8 @@ Partial Class Main
     Friend WithEvents clientGroup As Windows.Forms.GroupBox
     Friend WithEvents BTN_Go As Windows.Forms.Button
     Friend WithEvents ReferenceLinksToolStripMenuItem As Windows.Forms.ToolStripMenuItem
-    Friend WithEvents toServer As MonkeyCore.Controls.RichTextBoxEx
-    Friend WithEvents Log_ As MonkeyCore.Controls.RichTextBoxEx
+    Friend WithEvents toServer As RichTextBoxEx
+    Friend WithEvents Log_ As RichTextBoxEx
     Friend WithEvents FurreCountTxtBx As MonkeyCore.Controls.TextBox_NoFlicker
     Friend WithEvents DreamList As MonkeyCore.Controls.ListBox_NoFlicker
     Friend WithEvents Furre As Windows.Forms.ContextMenuStrip

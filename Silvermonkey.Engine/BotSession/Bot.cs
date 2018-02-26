@@ -316,12 +316,19 @@ namespace Engine.BotSession
             var LibList = InitializeEngineLibraries();
             foreach (BaseLibrary Library in LibList)
             {
-                MSpage.LoadLibrary(Library, this);
-                if (!silent)
+                try
                 {
-                    Monkeyspeak.Logging.Logger.Info($"{Library.GetType().Name}");
+                    MSpage.LoadLibrary(Library, this);
+                    if (!silent)
+                    {
+                        Monkeyspeak.Logging.Logger.Info($"{Library.GetType().Name}");
+                    }
+                    Logger.Debug<Bot>($"{Library.GetType().Name}");
                 }
-                Logger.Debug<Bot>($"{Library.GetType().Name}");
+                catch (Exception e)
+                {
+                    SendError(e, null);
+                }
             }
 
             return MSpage;

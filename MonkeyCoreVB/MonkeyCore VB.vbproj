@@ -129,9 +129,6 @@
     <Compile Include="Controls\ListView_NoFlicker.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\RichTextBoxEx.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\ScrollingListBox.vb">
       <SubType>Component</SubType>
     </Compile>

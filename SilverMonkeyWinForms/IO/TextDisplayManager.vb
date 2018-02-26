@@ -4,8 +4,9 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Controls.NativeMethods
 Imports Furcadia.Text.FurcadiaMarkup
-Imports MonkeyCore.Controls
 Imports MonkeyCore.Settings
+
+Imports MonkeyCore.WinForms.Controls
 
 Namespace HelperClasses
 

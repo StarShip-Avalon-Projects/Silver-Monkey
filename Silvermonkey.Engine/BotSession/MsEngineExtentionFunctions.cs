@@ -26,9 +26,11 @@ namespace Engine.BotSession
         /// Loads from script file.
         /// </summary>
         /// <param name="file">The file.</param>
+        /// <param name="ver">Specified Version</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">Filepath npt given</exception>
-        /// <exception cref="FileNotFoundException">MonkeySpeak file ({file}) not found. Did you forget to define on or check the file path?</exception>
+        /// <exception cref="FileNotFoundException"></exception>
+        /// <exception cref="Exception"></exception>
         public static string LoadFromScriptFile(string file, Version ver)
         {
             if (string.IsNullOrWhiteSpace(file))

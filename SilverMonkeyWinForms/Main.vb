@@ -18,6 +18,10 @@ Imports Engine.BotSession
 Imports SilverMonkey.Engine.Libraries.Web
 Imports SilverMonkey.HelperClasses
 Imports SilverMonkey.HelperClasses.TextDisplayManager
+Imports System.Runtime.InteropServices
+Imports Controls.WindowsMessageing
+Imports Controls.NativeMethods
+Imports MonkeyCore.WinForms.Controls
 
 Public Class Main
     Inherits Form
@@ -110,6 +114,7 @@ Public Class Main
         ''  MS_KeysIni.Load(Path.Combine(ApplicationPath, "Keys-MS.ini"))
 
         InitializeTextControls()
+
         MsLog.Logger.InfoEnabled = True
         MsLog.Logger.SuppressSpam = False
         MsLog.Logger.WarningEnabled = True
@@ -150,7 +155,7 @@ Public Class Main
 
 #Region "Public Methods"
 
-    Public Shared Sub FormatRichTectBox(ByRef TB As MonkeyCore.Controls.RichTextBoxEx,
+    Public Shared Sub FormatRichTectBox(ByRef TB As RichTextBoxEx,
          ByRef style As System.Drawing.FontStyle)
         With TB
             If .SelectionFont IsNot Nothing Then
@@ -859,10 +864,6 @@ Public Class Main
 
     End Sub
 
-    Private Sub Main_Leave(sender As Object, e As EventArgs) Handles Me.Leave
-
-    End Sub
-
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         Try
@@ -879,12 +880,12 @@ Public Class Main
             }
                 AddHandler NotifyIcon1.MouseDoubleClick, AddressOf NotifyIcon1_DoubleClick
             End If
-            TextDisplayer = New TextDisplayManager(Mainsettings, Log_)
+
             If Not NotifyIcon1.Visible Then NotifyIcon1.Visible = True
 
             writer = New TextBoxWriter(Log_)
             Console.SetOut(writer)
-
+            TextDisplayer = New TextDisplayManager(Mainsettings, Log_)
             MainTitleText($"Silver Monkey: {Application.ProductVersion}")
             Me.Visible = True
 
@@ -1258,6 +1259,20 @@ Public Class Main
             toServer.Focus()
             toServer.Text = $"/%{DirectCast(DreamList.SelectedItem, Furre).ShortName} "
             toServer.SelectionStart = toServer.Text.Length
+        End If
+    End Sub
+
+    Protected Overrides Sub WndProc(ByRef m As Message)
+        If m.Msg = WM_COPYDATA Then
+            'Dim mystr As COPYDATASTRUCT
+            Dim mystr2 As COPYDATASTRUCT = DirectCast(Marshal.PtrToStructure(m.LParam(), GetType(COPYDATASTRUCT)), COPYDATASTRUCT)
+            If mystr2.cbData = Marshal.SizeOf(GetType(FurreDataStructure)) Then
+                ' ' Marshal the data from the unmanaged memory block to a ' ' MyStruct managed struct. '
+                Dim FurreData As FurreDataStructure = DirectCast(Marshal.PtrToStructure(mystr2.lpData, GetType(FurreDataStructure)), FurreDataStructure)
+
+            End If
+        Else
+            MyBase.WndProc(m)
         End If
     End Sub
 

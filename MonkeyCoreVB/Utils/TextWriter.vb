@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports System.Windows.Forms
 Imports MonkeyCore.Controls
+Imports MonkeyCore.WinForms.Controls
 
 <CLSCompliant(True)>
 Public Class TextBoxWriter
@@ -16,13 +17,6 @@ Public Class TextBoxWriter
 #Region "Public Constructors"
 
     Public Sub New(ByVal control As TextBox)
-        Me.control = control
-        AddHandler control.HandleCreated,
-           New EventHandler(AddressOf OnHandleCreated)
-        Builder = New StringBuilder()
-    End Sub
-
-    Public Sub New(ByVal control As RichTextBoxEx)
         Me.control = control
         AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)

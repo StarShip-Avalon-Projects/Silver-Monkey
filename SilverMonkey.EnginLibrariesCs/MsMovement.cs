@@ -245,7 +245,7 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => BotSit(r),
-            "make the bot sit down.");
+                "make the bot sit down.");
 
             Add(TriggerCategory.Effect,
                 r => BotLie(r),
@@ -257,7 +257,7 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => BotMoveSequence(r),
-                "Move the bot  in this sequence {..} (one, sw, three, se, seven, nw, nine, or ne)");
+                "Move the bot in this sequence {..} (one, sw, three, se, seven, nw, nine, or ne)");
         }
 
         public override void Unload(Page page)
@@ -364,7 +364,7 @@ namespace Libraries
             var name = reader.ReadString();
             var Target = DreamInfo.Furres.GetFurreByName(name);
             Var.Value = Target.FurreColors.ToString();
-            return Target.FurreID > 0;
+            return Target.FurreID >= 0;
         }
 
         [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
