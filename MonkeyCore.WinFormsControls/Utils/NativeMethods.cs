@@ -178,12 +178,32 @@ namespace Controls
 
         #region Public Methods
 
+        /// <summary>
+        /// Sets the parent.
+        /// </summary>
+        /// <param name="hWndChild">The h WND child.</param>
+        /// <param name="hWndNewParent">The h WND new parent.</param>
+        /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
+        /// <summary>
+        /// Finds the window.
+        /// </summary>
+        /// <param name="lpClassName">Name of the lp class.</param>
+        /// <param name="lpWindowName">Name of the lp window.</param>
+        /// <returns></returns>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
+        /// <summary>
+        /// Finds the window ex.
+        /// </summary>
+        /// <param name="parentHandle">The parent handle.</param>
+        /// <param name="childAfter">The child after.</param>
+        /// <param name="className">Name of the class.</param>
+        /// <param name="windowTitle">The window title.</param>
+        /// <returns></returns>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
 
@@ -194,7 +214,7 @@ namespace Controls
         /// <param name="fnBar"></param>
         /// <param name="lpsi"></param>
         /// <returns></returns>
-        [DllImport("user32,dll.dll")]
+        [DllImport("user32.dll")]
         public static extern void GetScrollInfo(IntPtr hwnd, int fnBar, ref SCROLLINFO lpsi);
 
         /// <summary>
@@ -217,9 +237,8 @@ namespace Controls
         [DllImport("user32.dll")]
         public static extern bool GetScrollRange(IntPtr hWnd, int nBar, ref int lpMinPos, ref int lpMaxPos);
 
-        // For use with WM_COPYDATA and COPYDATASTRUCT
         /// <summary>
-        ///
+        ///For use with WM_COPYDATA and COPYDATASTRUCT
         /// </summary>
         /// <param name="hWnd"></param>
         /// <param name="Msg"></param>
@@ -262,6 +281,14 @@ namespace Controls
         [DllImport("user32.dll")]
         public static extern int SetScrollPos(IntPtr hWnd, int nBar, int nPos, bool bRedraw);
 
+        /// <summary>
+        /// Sets the scroll position.
+        /// </summary>
+        /// <param name="hWnd">The h WND.</param>
+        /// <param name="nBar">The n bar.</param>
+        /// <param name="nPos">The n position.</param>
+        /// <param name="bRedraw">if set to <c>true</c> [b redraw].</param>
+        /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern int SetScrollPos(IntPtr hWnd, SBOrientation nBar, int nPos, bool bRedraw);
 
@@ -292,6 +319,9 @@ namespace Controls
 
         #region Public Structs
 
+        /// <summary>
+        ///
+        /// </summary>
         public struct CHARFORMAT2_STRUCT
         {
             #region Public Fields
@@ -340,10 +370,9 @@ namespace Controls
             #endregion Public Fields
         }
 
-        //private SBOrientation fnBar;
-
-        //private SCROLLINFO lpsi;
-
+        /// <summary>
+        ///
+        /// </summary>
         [Serializable, StructLayout(LayoutKind.Sequential)]
         public struct SCROLLINFO
         {

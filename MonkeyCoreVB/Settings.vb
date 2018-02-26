@@ -17,7 +17,6 @@ Imports Furcadia.IO.IniFile
 ' User Specified Key/Value pairs
 ' Phoenix Speak Backup Tables
 
-<CLSCompliant(True)>
 Public Class Settings
 
 #Region "Private Fields"
@@ -41,7 +40,7 @@ Public Class Settings
 
 #Region "Public Properties"
 
-    Public Shared Property ini As IniFile
+    Public Shared Property Ini As IniFile
         Get
 
             Return _ini
@@ -72,7 +71,7 @@ Public Class Settings
     ''' <summary>
     ''' Main Configuration for every application in package
     ''' </summary>
-    Public Class cMain
+    Public Class CMain
 
 #Region "Private Fields"
 
@@ -121,85 +120,85 @@ Public Class Settings
 
         Public Sub New()
             If File.Exists(SettingsFile) Then
-                ini.Load(SettingsFile)
+                Ini.Load(SettingsFile)
             End If
 
             Dim s As String = ""
-            s = ini.GetKeyValue("Main", "Host")
+            s = Ini.GetKeyValue("Main", "Host")
             If Not String.IsNullOrEmpty(s) Then _Host = s.Trim
 
-            s = ini.GetKeyValue("Main", "TT Interval")
+            s = Ini.GetKeyValue("Main", "TT Interval")
             ' If Not String.IsNullOrEmpty(s) Then _TT_TimeInterval = s.ToInteger
 
-            s = ini.GetKeyValue("Main", "TT TimeOut")
+            s = Ini.GetKeyValue("Main", "TT TimeOut")
             If Not String.IsNullOrEmpty(s) Then
                 Integer.TryParse(s, _TT_TimeOut)
             End If
 
-            s = ini.GetKeyValue("Main", "SPort")
+            s = Ini.GetKeyValue("Main", "SPort")
             If Not String.IsNullOrEmpty(s) Then
                 Integer.TryParse(s, _sPort)
             End If
 
-            s = ini.GetKeyValue("Main", "Time Out")
+            s = Ini.GetKeyValue("Main", "Time Out")
             If Not String.IsNullOrEmpty(s) Then
                 Integer.TryParse(s, _reconnectMax)
             End If
 
-            s = ini.GetKeyValue("Main", "Auto Reconnect")
+            s = Ini.GetKeyValue("Main", "Auto Reconnect")
             If Not String.IsNullOrEmpty(s) Then _AutoReconnect = Convert.ToBoolean(s)
 
-            s = ini.GetKeyValue("Main", "AutoCloseProc")
+            s = Ini.GetKeyValue("Main", "AutoCloseProc")
             If Not String.IsNullOrEmpty(s) Then _CloseProc = Convert.ToBoolean(s)
 
-            s = ini.GetKeyValue("Main", "Debug")
+            s = Ini.GetKeyValue("Main", "Debug")
             If Not String.IsNullOrEmpty(s) Then _debug = Convert.ToBoolean(s)
 
-            s = ini.GetKeyValue("Main", "TimeStamp")
+            s = Ini.GetKeyValue("Main", "TimeStamp")
             If Not String.IsNullOrEmpty(s) Then _TimeStamp = CUShort(Convert.ToInt16(s))
 
-            s = ini.GetKeyValue("Main", "FontFace")
+            s = Ini.GetKeyValue("Main", "FontFace")
             If Not String.IsNullOrEmpty(s) Then _FontFace = s
 
-            s = ini.GetKeyValue("Main", "FontSize")
+            s = Ini.GetKeyValue("Main", "FontSize")
             If Not String.IsNullOrEmpty(s) Then
                 Integer.TryParse(s, _FontSize)
             End If
 
             _AppFont = New Font(_FontFace, _FontSize)
 
-            s = ini.GetKeyValue("Main", "Ping")
+            s = Ini.GetKeyValue("Main", "Ping")
             If Not String.IsNullOrEmpty(s) Then
                 Integer.TryParse(s, _ping)
             End If
 
-            s = ini.GetKeyValue("Main", "EmitColor")
+            s = Ini.GetKeyValue("Main", "EmitColor")
             If Not String.IsNullOrEmpty(s) Then _emitColor = ColorTranslator.FromHtml(s)
 
-            s = ini.GetKeyValue("Main", "SayColor")
+            s = Ini.GetKeyValue("Main", "SayColor")
             If Not String.IsNullOrEmpty(s) Then _sayColor = ColorTranslator.FromHtml(s)
 
-            s = ini.GetKeyValue("Main", "ShoutColor")
+            s = Ini.GetKeyValue("Main", "ShoutColor")
             If Not String.IsNullOrEmpty(s) Then _shoutColor = ColorTranslator.FromHtml(s)
 
-            s = ini.GetKeyValue("Main", "WhColor")
+            s = Ini.GetKeyValue("Main", "WhColor")
             If Not String.IsNullOrEmpty(s) Then _whColor = ColorTranslator.FromHtml(s)
 
-            s = ini.GetKeyValue("Main", "DefaultColor")
+            s = Ini.GetKeyValue("Main", "DefaultColor")
             If Not String.IsNullOrEmpty(s) Then _defaultColor = ColorTranslator.FromHtml(s)
 
-            s = ini.GetKeyValue("Main", "EmoteColor")
+            s = Ini.GetKeyValue("Main", "EmoteColor")
             If Not String.IsNullOrEmpty(s) Then _emoteColor = ColorTranslator.FromHtml(s)
 
-            s = ini.GetKeyValue("Main", "FurcPath")
+            s = Ini.GetKeyValue("Main", "FurcPath")
             If Not String.IsNullOrEmpty(s) Then _FurcPath = s
 
-            s = ini.GetKeyValue("Main", "ConnectTimeOut")
+            s = Ini.GetKeyValue("Main", "ConnectTimeOut")
             If Not String.IsNullOrEmpty(s) Then
                 Integer.TryParse(s, _ConnectTimeOut)
             End If
 
-            s = ini.GetKeyValue("Main", "SysTray")
+            s = Ini.GetKeyValue("Main", "SysTray")
             If Not String.IsNullOrEmpty(s) Then
                 Select Case s.ToLower
                     Case "checked"
@@ -210,20 +209,20 @@ Public Class Settings
                         _TrayIcon = CheckState.Indeterminate
                 End Select
             End If
-            s = ini.GetKeyValue("Main", "Advertisment")
+            s = Ini.GetKeyValue("Main", "Advertisment")
             If Not String.IsNullOrEmpty(s) Then _Advertisment = Convert.ToBoolean(s)
-            s = ini.GetKeyValue("Main", "Broadcast")
+            s = Ini.GetKeyValue("Main", "Broadcast")
             If Not String.IsNullOrEmpty(s) Then _Broadcast = Convert.ToBoolean(s)
-            s = ini.GetKeyValue("Main", "Announcement")
+            s = Ini.GetKeyValue("Main", "Announcement")
             If Not String.IsNullOrEmpty(s) Then _Announcement = Convert.ToBoolean(s)
-            s = ini.GetKeyValue("Main", "LoadLastBotFile")
+            s = Ini.GetKeyValue("Main", "LoadLastBotFile")
             If Not String.IsNullOrEmpty(s) Then _LoadLastBotFile = Convert.ToBoolean(s)
-            s = ini.GetKeyValue("Main", "DisconnectPopupToggle")
+            s = Ini.GetKeyValue("Main", "DisconnectPopupToggle")
             If Not String.IsNullOrEmpty(s) Then _DisconnectPopupToggle = Convert.ToBoolean(s)
-            s = ini.GetKeyValue("PhoenixSpeak", "ShowInClient")
+            s = Ini.GetKeyValue("PhoenixSpeak", "ShowInClient")
             If Not String.IsNullOrEmpty(s) Then _PSShowClient = Convert.ToBoolean(s)
 
-            s = ini.GetKeyValue("PhoenixSpeak", "ShowInMainWindow")
+            s = Ini.GetKeyValue("PhoenixSpeak", "ShowInMainWindow")
             If Not String.IsNullOrEmpty(s) Then _PSShowMainWindow = Convert.ToBoolean(s)
 
         End Sub
@@ -295,7 +294,7 @@ Public Class Settings
             End Set
         End Property
 
-        Public Property debug() As Boolean
+        Public Property Debug() As Boolean
             Get
                 Return _debug
             End Get
@@ -499,42 +498,42 @@ Public Class Settings
             ' Lets Read local appData Settings.ini for last used Settings as
             ' other programs use the file too
             If File.Exists(SettingsFile) Then
-                ini.Load(SettingsFile, True)
+                Ini.Load(SettingsFile, True)
             End If
-            ini.SetKeyValue("Main", "FurcPath", _FurcPath)
-            ini.SetKeyValue("Main", "Host", _Host)
+            Ini.SetKeyValue("Main", "FurcPath", _FurcPath)
+            Ini.SetKeyValue("Main", "Host", _Host)
             '_reconnectMax
-            ini.SetKeyValue("Main", "Time Out", _reconnectMax.ToString)
-            ini.SetKeyValue("Main", "SPort", _sPort.ToString)
+            Ini.SetKeyValue("Main", "Time Out", _reconnectMax.ToString)
+            Ini.SetKeyValue("Main", "SPort", _sPort.ToString)
 
-            ini.SetKeyValue("Main", "AutoCloseProc", _CloseProc.ToString)
-            ini.SetKeyValue("Main", "Auto Reconnect", _AutoReconnect.ToString)
-            ini.SetKeyValue("Main", "Debug", _debug.ToString)
+            Ini.SetKeyValue("Main", "AutoCloseProc", _CloseProc.ToString)
+            Ini.SetKeyValue("Main", "Auto Reconnect", _AutoReconnect.ToString)
+            Ini.SetKeyValue("Main", "Debug", _debug.ToString)
 
-            ini.SetKeyValue("Main", "TimeStamp", _TimeStamp.ToString)
-            ini.SetKeyValue("Main", "FontFace", ApFont.Name)
-            ini.SetKeyValue("Main", "FontSize", ApFont.Size.ToString)
-            ini.SetKeyValue("Main", "EmitColor", ColorTranslator.ToHtml(_emitColor).ToString)
-            ini.SetKeyValue("Main", "SayColor", ColorTranslator.ToHtml(_sayColor).ToString)
-            ini.SetKeyValue("Main", "ShoutColor", ColorTranslator.ToHtml(_shoutColor).ToString)
-            ini.SetKeyValue("Main", "WhColor", ColorTranslator.ToHtml(_whColor).ToString)
-            ini.SetKeyValue("Main", "DefaultColor", ColorTranslator.ToHtml(_defaultColor).ToString)
-            ini.SetKeyValue("Main", "EmoteColor", ColorTranslator.ToHtml(_emoteColor).ToString)
-            ini.SetKeyValue("Main", "SysTray", _TrayIcon.ToString)
-            ini.SetKeyValue("Main", "TT TimeOut", _TT_TimeOut.ToString)
-            ini.SetKeyValue("Main", "FurcPath", _FurcPath)
-            ini.SetKeyValue("Main", "ConnectTimeOut", _ConnectTimeOut.ToString)
-            ini.SetKeyValue("Main", "Ping", _ping.ToString)
-            ini.SetKeyValue("Main", "Advertisment", _Advertisment.ToString)
-            ini.SetKeyValue("Main", "Broadcast", _Broadcast.ToString)
-            ini.SetKeyValue("Main", "Announcement", _Announcement.ToString)
-            ini.SetKeyValue("Main", "LoadLastBotFile", _LoadLastBotFile.ToString)
-            ini.SetKeyValue("Main", "DisconnectPopupToggle", _DisconnectPopupToggle.ToString)
+            Ini.SetKeyValue("Main", "TimeStamp", _TimeStamp.ToString)
+            Ini.SetKeyValue("Main", "FontFace", ApFont.Name)
+            Ini.SetKeyValue("Main", "FontSize", ApFont.Size.ToString)
+            Ini.SetKeyValue("Main", "EmitColor", ColorTranslator.ToHtml(_emitColor).ToString)
+            Ini.SetKeyValue("Main", "SayColor", ColorTranslator.ToHtml(_sayColor).ToString)
+            Ini.SetKeyValue("Main", "ShoutColor", ColorTranslator.ToHtml(_shoutColor).ToString)
+            Ini.SetKeyValue("Main", "WhColor", ColorTranslator.ToHtml(_whColor).ToString)
+            Ini.SetKeyValue("Main", "DefaultColor", ColorTranslator.ToHtml(_defaultColor).ToString)
+            Ini.SetKeyValue("Main", "EmoteColor", ColorTranslator.ToHtml(_emoteColor).ToString)
+            Ini.SetKeyValue("Main", "SysTray", _TrayIcon.ToString)
+            Ini.SetKeyValue("Main", "TT TimeOut", _TT_TimeOut.ToString)
+            Ini.SetKeyValue("Main", "FurcPath", _FurcPath)
+            Ini.SetKeyValue("Main", "ConnectTimeOut", _ConnectTimeOut.ToString)
+            Ini.SetKeyValue("Main", "Ping", _ping.ToString)
+            Ini.SetKeyValue("Main", "Advertisment", _Advertisment.ToString)
+            Ini.SetKeyValue("Main", "Broadcast", _Broadcast.ToString)
+            Ini.SetKeyValue("Main", "Announcement", _Announcement.ToString)
+            Ini.SetKeyValue("Main", "LoadLastBotFile", _LoadLastBotFile.ToString)
+            Ini.SetKeyValue("Main", "DisconnectPopupToggle", _DisconnectPopupToggle.ToString)
 
-            ini.SetKeyValue("PhoenixSpeak", "ShowInClient", _PSShowClient.ToString)
-            ini.SetKeyValue("PhoenixSpeak", "ShowInMainWindow", _PSShowMainWindow.ToString)
+            Ini.SetKeyValue("PhoenixSpeak", "ShowInClient", _PSShowClient.ToString)
+            Ini.SetKeyValue("PhoenixSpeak", "ShowInMainWindow", _PSShowMainWindow.ToString)
 
-            ini.Save(SettingsFile)
+            Ini.Save(SettingsFile)
         End Sub
 
         Public Sub SetDefault()
@@ -573,9 +572,9 @@ Public Class Settings
 
         Public Sub New()
             If File.Exists(SettingsFile) Then
-                ini.Load(SettingsFile, True)
+                Ini.Load(SettingsFile, True)
             End If
-            Dim MantisSection As IniSection = ini.GetSection("MantisConnect")
+            Dim MantisSection As IniSection = Ini.GetSection("MantisConnect")
 
             Dim MantisKey As IniSection.IniKey = MantisSection.GetKey("HttpPassword")
             If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
@@ -658,15 +657,15 @@ Public Class Settings
             ' Lets Read local appData Settings.ini for last used Settings as
             ' other programs use the file too
             If File.Exists(SettingsFile) Then
-                ini.Load(SettingsFile, True)
+                Ini.Load(SettingsFile, True)
             End If
-            ini.SetKeyValue("Mantis", "StoreSettings", _StoreSettings.ToString)
-            ini.SetKeyValue("Mantis", "HttpPassword", _HttpPassword)
-            ini.SetKeyValue("Mantis", "HttpUserName", _HttpUserName)
-            ini.SetKeyValue("Mantis", "MantisPassword", _MantisPassword)
-            ini.SetKeyValue("Mantis", "MantisUserName", _MantisUserName)
+            Ini.SetKeyValue("Mantis", "StoreSettings", _StoreSettings.ToString)
+            Ini.SetKeyValue("Mantis", "HttpPassword", _HttpPassword)
+            Ini.SetKeyValue("Mantis", "HttpUserName", _HttpUserName)
+            Ini.SetKeyValue("Mantis", "MantisPassword", _MantisPassword)
+            Ini.SetKeyValue("Mantis", "MantisUserName", _MantisUserName)
 
-            ini.Save(SettingsFile)
+            Ini.Save(SettingsFile)
         End Sub
 
 #End Region

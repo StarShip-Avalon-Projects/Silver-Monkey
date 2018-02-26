@@ -12,20 +12,26 @@ Namespace HelperClasses
 
     Public Class TextDisplayManager
 
-#Region "Private Fields"
+#Region "Fields"
 
         ''' <summary>
         ''' RichTextBoxEx to work with
         ''' </summary>
         Private WithEvents LogDisplayBox As RichTextBoxEx
 
-        Private Mainsettings As cMain
+#End Region
+
+#Region "Private Fields"
+
+        Private Mainsettings As CMain
+
+        Dim Pos_Old As Integer = 0
 
 #End Region
 
 #Region "Public Constructors"
 
-        Sub New(settings As cMain, ByRef logBox As RichTextBoxEx)
+        Sub New(settings As CMain, ByRef logBox As RichTextBoxEx)
             LogDisplayBox = logBox
 
             Mainsettings = settings
@@ -93,8 +99,6 @@ Namespace HelperClasses
 
 #End Region
 
-        Private data As New System.Text.StringBuilder()
-
 #Region "Public Methods"
 
         ''' <summary>
@@ -103,7 +107,7 @@ Namespace HelperClasses
         ''' <param name="TextObject"></param>
         Public Sub AddDataToList(TextObject As TextDisplayObject)
             If LogDisplayBox.InvokeRequired Then
-                Dim dataArray() As Object = {TextObject}
+                Dim dataArray() As TextDisplayObject = {TextObject}
                 LogDisplayBox.Invoke(New AddDataToListCaller(AddressOf AddDataToList), dataArray)
             Else
                 Dim RtfReadonly As Boolean
@@ -211,7 +215,7 @@ Namespace HelperClasses
             RftData.Replace("</ul>", "\ul0 ")
             RftData.Replace("<ul>", "\ul ")
 
-            Dim myColor As System.Drawing.Color = FColor(newColor)
+            Dim myColor As Color = FColor(newColor)
             Dim ColorString As String = "{\colortbl ;"
             ColorString += "\red" & myColor.R & "\green" & myColor.G & "\blue" & myColor.B & ";}"
             Dim FontSize As Single = Mainsettings.ApFont.Size
@@ -226,6 +230,70 @@ Namespace HelperClasses
             FontSize *= 2
             Return "{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fcharset0 " & FontFace & ";}}\viewkind4\uc1\fs" & FontSize.ToString & " " & data & "}"
         End Function
+
+#End Region
+
+#Region "Private Methods"
+
+        Private Sub Log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles LogDisplayBox.LinkClicked
+            'Dim Proto As String = ""
+            'Dim Str As String = e.LinkText
+            'Try
+            '    If Str.Contains("#") Then
+            '        Proto = Str.Substring(Str.IndexOf("#"), Str.IndexOf("://"))
+
+            '    End If
+            'Catch
+            'End Try
+            'Select Case Proto.ToLower
+            '    Case "http"
+            '        Try
+            '            lb.Cursor = System.Windows.Forms.Cursors.AppStarting
+            '            Dim url As String = Str.Substring(Str.IndexOf("#"))
+            '            Process.Start(url)
+            '        Catch ex As Exception
+            '        Finally
+            '            lb.Cursor = System.Windows.Forms.Cursors.Default
+            '        End Try
+            '    Case "https"
+            '        Try
+            '            lb.Cursor = System.Windows.Forms.Cursors.AppStarting
+            '            Dim url As String = Str.Substring(Str.IndexOf("#"))
+            '            Process.Start(url)
+            '        Catch ex As Exception
+            '        Finally
+            '            lb.Cursor = System.Windows.Forms.Cursors.Default
+            '        End Try
+
+            '    Case Else
+            '        MsgBox("Protocol: """ & Proto & """ Not yet implemented")
+            'End Select
+            'MsgBox(Proto)
+        End Sub
+
+        'Private Sub ScrollToEnd()
+        '    If LogDisplayBox.InvokeRequired Then
+
+        '        Dim d As New Log_Scoll(AddressOf ScrollToEnd)
+        '        d.Invoke()
+        '    End If
+        '    Dim scrollMin As Integer = 0
+        '    Dim Sinfo As SCROLLINFO
+        '    Sinfo.cbSize = Marshal.SizeOf(Sinfo)
+        '    Sinfo.fMask = ScrollInfoMask.SIF_POS
+        '    Dim scrollMax As Integer = 0
+
+        '    GetScrollInfo(LogDisplayBox.Handle, SBOrientation.SB_VERT, Sinfo)
+
+        '    If (GetScrollRange(LogDisplayBox.Handle, SBOrientation.SB_VERT, scrollMin, scrollMax)) Then
+        '        Dim pos As Integer = GetScrollPos(LogDisplayBox.Handle, SBOrientation.SB_VERT)
+        '        If scrollMax = Pos_Old Then
+        '            LogDisplayBox.SelectionStart = LogDisplayBox.Text.Length
+        '        End If
+        '        'Pos_Old = GetScrollPos(rtb.Handle, SBS_VERT)
+        '        ' Detect if they're at the bottom
+        '    End If
+        'End Sub
 
 #End Region
 
@@ -278,76 +346,6 @@ Namespace HelperClasses
 #End Region
 
         End Class
-
-#End Region
-
-#Region "Private Methods"
-
-        Private Sub Log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles LogDisplayBox.LinkClicked
-            'Dim Proto As String = ""
-            'Dim Str As String = e.LinkText
-            'Try
-            '    If Str.Contains("#") Then
-            '        Proto = Str.Substring(Str.IndexOf("#"), Str.IndexOf("://"))
-
-            '    End If
-            'Catch
-            'End Try
-            'Select Case Proto.ToLower
-            '    Case "http"
-            '        Try
-            '            lb.Cursor = System.Windows.Forms.Cursors.AppStarting
-            '            Dim url As String = Str.Substring(Str.IndexOf("#"))
-            '            Process.Start(url)
-            '        Catch ex As Exception
-            '        Finally
-            '            lb.Cursor = System.Windows.Forms.Cursors.Default
-            '        End Try
-            '    Case "https"
-            '        Try
-            '            lb.Cursor = System.Windows.Forms.Cursors.AppStarting
-            '            Dim url As String = Str.Substring(Str.IndexOf("#"))
-            '            Process.Start(url)
-            '        Catch ex As Exception
-            '        Finally
-            '            lb.Cursor = System.Windows.Forms.Cursors.Default
-            '        End Try
-
-            '    Case Else
-            '        MsgBox("Protocol: """ & Proto & """ Not yet implemented")
-            'End Select
-            'MsgBox(Proto)
-        End Sub
-
-#End Region
-
-#Region "Log Scroll"
-
-        Dim Pos_Old As Integer = 0
-
-        Private Sub ScrollToEnd()
-            If LogDisplayBox.InvokeRequired Then
-
-                Dim d As New Log_Scoll(AddressOf ScrollToEnd)
-                d.Invoke()
-            End If
-            Dim scrollMin As Integer = 0
-            Dim Sinfo As New SCROLLINFO
-            Sinfo.cbSize = Marshal.SizeOf(Sinfo)
-            Sinfo.fMask = ScrollInfoMask.SIF_POS
-            Dim scrollMax As Integer = 0
-
-            GetScrollInfo(LogDisplayBox.Handle, SBOrientation.SB_VERT, Sinfo)
-
-            If (GetScrollRange(LogDisplayBox.Handle, SBOrientation.SB_VERT, scrollMin, scrollMax)) Then
-                Dim pos As Integer = GetScrollPos(LogDisplayBox.Handle, SBOrientation.SB_VERT)
-                If scrollMax = Pos_Old Then
-                    LogDisplayBox.SelectionStart = LogDisplayBox.Text.Length
-                End If
-                'Pos_Old = GetScrollPos(rtb.Handle, SBS_VERT)
-                ' Detect if they're at the bottom
-            End If
-        End Sub
 
 #End Region
 

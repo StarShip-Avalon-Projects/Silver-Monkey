@@ -8,8 +8,8 @@ namespace Controls
     {
         public ScrollingListBox()
         {
-            this.InitializeComponent();
-            this.DoubleBuffered = true;
+            InitializeComponent();
+            DoubleBuffered = true;
         }
 
         public event ScrollEventHandler OnHorizontalScroll;
@@ -52,9 +52,9 @@ namespace Controls
 
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            this.Size = new System.Drawing.Size(120, 95);
-            this.ResumeLayout(false);
+            SuspendLayout();
+            Size = new System.Drawing.Size(120, 95);
+            ResumeLayout(false);
         }
     }
 }

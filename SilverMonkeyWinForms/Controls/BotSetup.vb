@@ -3,6 +3,16 @@ Imports Engine.BotSession
 
 Public Class BotSetup
 
+#Region "Private Fields"
+
+    Private _botConfig As BotOptions
+
+    Private _TabIndex As Integer
+
+    Private HelpLinks As LabelHotlinks
+
+#End Region
+
 #Region "Public Constructors"
 
     Public Sub New()
@@ -21,23 +31,9 @@ Public Class BotSetup
         Initialize()
     End Sub
 
-    Private Sub Initialize()
-        HelpLinks = New LabelHotlinks()
-        ToolTip1.SetToolTip(CharacterRetervialHelpLink, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
-    End Sub
-
 #End Region
 
-#Region "Private Fields"
-
-    Private _TabIndex As Integer
-    Private HelpLinks As LabelHotlinks
-
-#End Region
-
-#Region "Public Fields"
-
-    Private _botConfig As BotOptions
+#Region "Public Properties"
 
     Public Property BotConfig As BotOptions
         Get
@@ -167,6 +163,11 @@ Public Class BotSetup
     Private Sub Cancel_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel_Button.Click
         Me.DialogResult = DialogResult.Cancel
         Me.Close()
+    End Sub
+
+    Private Sub Initialize()
+        HelpLinks = New LabelHotlinks()
+        ToolTip1.SetToolTip(CharacterRetervialHelpLink, "Please make sure you have a current Character.ini file downloaded from Furadia Services, This will override you're FurEd settings.")
     End Sub
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click

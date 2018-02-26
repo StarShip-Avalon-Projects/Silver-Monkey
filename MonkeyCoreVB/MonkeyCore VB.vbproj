@@ -137,8 +137,6 @@
     <Compile Include="Controls\TextBox_NoFlicker.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Utils\Logging\LogSteamOptions.vb" />
-    <Compile Include="Utils\Logging\LogStream.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

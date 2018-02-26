@@ -1,5 +1,5 @@
 ﻿using Furcadia.Net.Options;
-using MonkeyCore.Utils.Logging;
+using MonkeyCore.Logging;
 using System.IO;
 using MonkeyCore;
 using Furcadia.IO;
@@ -26,7 +26,7 @@ namespace Engine.BotSession
 
         private IniFile BotIni;
 
-        public LogSteamOptions LogOptions
+        public LogStreamOptions LogOptions
         {
             get;
             set;
@@ -52,7 +52,7 @@ namespace Engine.BotSession
         public BotOptions(string BFile)
         {
             Initialize();
-            LogOptions = new LogSteamOptions();
+            LogOptions = new LogStreamOptions();
 
             if (!File.Exists(BFile))
             {
@@ -79,11 +79,11 @@ namespace Engine.BotSession
             _BiniFile = BFile;
             string s = "";
             short.TryParse(BotIni.GetKeyValue("Main", "LogOption"), out short LogOption);
-            bool.TryParse(BotIni.GetKeyValue("Main", "LogOption"), out bool log);
+            bool.TryParse(BotIni.GetKeyValue("Main", "Log"), out bool log);
             string BaseFileName = BotIni.GetKeyValue("Main", "LogNameBase");
             string logPath = BotIni.GetKeyValue("Main", "LogNamePath");
 
-            LogOptions = new LogSteamOptions()
+            LogOptions = new LogStreamOptions()
             {
                 LogNameBase = BaseFileName ?? "Default",
                 LogPath = logPath ?? IO.Paths.SilverMonkeyLogPath,
@@ -268,7 +268,7 @@ namespace Engine.BotSession
         {
             BotIni = new IniFile();
             _MonkeySpeakEngineOption = new EngineOptoons();
-            LogOptions = new LogSteamOptions();
+            LogOptions = new LogStreamOptions();
         }
 
         #endregion Private Methods

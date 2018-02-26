@@ -26,6 +26,7 @@ namespace Controls
         {
             this.control = control;
             control.HandleCreated += OnHandleCreated;
+            Builder = new StringBuilder();
         }
 
         public delegate void AppendTextDelegate(string Text);

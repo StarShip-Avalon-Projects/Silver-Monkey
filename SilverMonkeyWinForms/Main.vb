@@ -1,28 +1,27 @@
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Diagnostics
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading.Tasks
 Imports System.Windows.Forms
-Imports furcLog = Furcadia.Logging
-Imports MsLog = Monkeyspeak.Logging
+Imports Controls
+Imports Controls.NativeMethods
+Imports Controls.WindowsMessageing
+Imports Engine.BotSession
 Imports Furcadia.Net
 Imports Furcadia.Net.DreamInfo
 Imports Furcadia.Net.Utils.ServerParser
 Imports Logging
-Imports MonkeyCore
 Imports MonkeyCore.Controls
+Imports MonkeyCore.Logging
 Imports MonkeyCore.Settings
-Imports MonkeyCore.Utils.Logging
-Imports Engine.BotSession
+Imports MonkeyCore.WinForms.Controls
 Imports SilverMonkey.Engine.Libraries.Web
 Imports SilverMonkey.HelperClasses
 Imports SilverMonkey.HelperClasses.TextDisplayManager
-Imports System.Runtime.InteropServices
-Imports Controls.WindowsMessageing
-Imports Controls.NativeMethods
-Imports MonkeyCore.WinForms.Controls
-Imports Controls
+Imports furcLog = Furcadia.Logging
+Imports MsLog = Monkeyspeak.Logging
 
 Public Class Main
     Inherits Form
@@ -52,7 +51,7 @@ Public Class Main
 
 #Region "Public Fields"
 
-    Public Shared Mainsettings As cMain
+    Public Shared Mainsettings As CMain
     Public writer As TextBoxWriter = Nothing
 
 #End Region
@@ -110,7 +109,7 @@ Public Class Main
         FurcSession = New Bot(BotConfig)
         MRUlist = New Queue(Of String)(MRUnumber)
         DebugLogs = New StringBuilder()
-        Mainsettings = New cMain()
+        Mainsettings = New CMain()
 
         ''  MS_KeysIni.Load(Path.Combine(ApplicationPath, "Keys-MS.ini"))
 
@@ -507,15 +506,14 @@ Public Class Main
             Else
                 BTN_Go.Text = "Connecting..."
                 FurcSession.SetOptions(BotConfig)
-                If BotConfig.LogOptions.Enabled Then
-                    Try
 
-                        FileLogWriter = New LogStream(BotConfig.LogOptions)
-                    Catch
-                        furcLog.Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogName}")
-                        Exit Sub
-                    End Try
-                End If
+                Try
+
+                    FileLogWriter = New LogStream(BotConfig.LogOptions)
+                Catch
+                    furcLog.Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogName}")
+                    Exit Sub
+                End Try
 
                 MsLog.Logger.Info("New Session Started")
                 Await FurcSession.ConnetAsync()
