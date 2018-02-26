@@ -57,6 +57,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
     </Compile>
+    <Compile Include="HelpLinkMenu.cs" />
+    <Compile Include="HelpLinkToolStripMenu.cs" />
     <Compile Include="RichTextBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -91,6 +93,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.cs</LastGenOutput>
     </None>
+    <Content Include="HelpLink.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="MonkeyCore.WinForms.snk" />
   </ItemGroup>
   <ItemGroup>

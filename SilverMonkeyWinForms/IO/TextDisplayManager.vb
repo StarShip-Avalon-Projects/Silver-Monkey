@@ -233,69 +233,7 @@ Namespace HelperClasses
 
 #End Region
 
-#Region "Private Methods"
 
-        Private Sub Log__LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles LogDisplayBox.LinkClicked
-            'Dim Proto As String = ""
-            'Dim Str As String = e.LinkText
-            'Try
-            '    If Str.Contains("#") Then
-            '        Proto = Str.Substring(Str.IndexOf("#"), Str.IndexOf("://"))
-
-            '    End If
-            'Catch
-            'End Try
-            'Select Case Proto.ToLower
-            '    Case "http"
-            '        Try
-            '            lb.Cursor = System.Windows.Forms.Cursors.AppStarting
-            '            Dim url As String = Str.Substring(Str.IndexOf("#"))
-            '            Process.Start(url)
-            '        Catch ex As Exception
-            '        Finally
-            '            lb.Cursor = System.Windows.Forms.Cursors.Default
-            '        End Try
-            '    Case "https"
-            '        Try
-            '            lb.Cursor = System.Windows.Forms.Cursors.AppStarting
-            '            Dim url As String = Str.Substring(Str.IndexOf("#"))
-            '            Process.Start(url)
-            '        Catch ex As Exception
-            '        Finally
-            '            lb.Cursor = System.Windows.Forms.Cursors.Default
-            '        End Try
-
-            '    Case Else
-            '        MsgBox("Protocol: """ & Proto & """ Not yet implemented")
-            'End Select
-            'MsgBox(Proto)
-        End Sub
-
-        'Private Sub ScrollToEnd()
-        '    If LogDisplayBox.InvokeRequired Then
-
-        '        Dim d As New Log_Scoll(AddressOf ScrollToEnd)
-        '        d.Invoke()
-        '    End If
-        '    Dim scrollMin As Integer = 0
-        '    Dim Sinfo As SCROLLINFO
-        '    Sinfo.cbSize = Marshal.SizeOf(Sinfo)
-        '    Sinfo.fMask = ScrollInfoMask.SIF_POS
-        '    Dim scrollMax As Integer = 0
-
-        '    GetScrollInfo(LogDisplayBox.Handle, SBOrientation.SB_VERT, Sinfo)
-
-        '    If (GetScrollRange(LogDisplayBox.Handle, SBOrientation.SB_VERT, scrollMin, scrollMax)) Then
-        '        Dim pos As Integer = GetScrollPos(LogDisplayBox.Handle, SBOrientation.SB_VERT)
-        '        If scrollMax = Pos_Old Then
-        '            LogDisplayBox.SelectionStart = LogDisplayBox.Text.Length
-        '        End If
-        '        'Pos_Old = GetScrollPos(rtb.Handle, SBS_VERT)
-        '        ' Detect if they're at the bottom
-        '    End If
-        'End Sub
-
-#End Region
 
 #Region "Public Classes"
 

@@ -111,7 +111,7 @@ namespace DataMonkey
 
             sqlStatementTextBox.ContextMenu = new ContextMenu();
             sqlStatementTextBox.ContextMenu.MenuItems.Add(objExecuteSQL);
-            var HelpItems = new MonkeyCore.Controls.HelpLinkMenu();
+            var HelpItems = new HelpLinkMenu();
             menuItem6.MenuItems.AddRange(HelpItems.MenuItems.ToArray());
         }
 

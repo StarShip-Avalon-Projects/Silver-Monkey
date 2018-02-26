@@ -511,7 +511,7 @@ Public Class Main
 
                     FileLogWriter = New LogStream(BotConfig.LogOptions)
                 Catch
-                    furcLog.Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogName}")
+                    furcLog.Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogFileName}")
                     Exit Sub
                 End Try
 

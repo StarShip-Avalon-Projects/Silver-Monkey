@@ -1,17 +1,37 @@
-﻿using static System.DateTime;
+﻿using System;
 
 namespace MonkeyCore.Logging
 {
+    /// <summary>
+    /// Log Configuration options
+    /// </summary>
     public class LogStreamOptions
     {
+        #region Private Fields
+
+        private const string DateFormat = "MM_dd_yyyy_H-mm-ss";
+        private const string DefaultLogFile = "Default";
         private const string ext = ".log";
 
-        public LogStreamOptions(string paramLogNameBase = "Default", bool paramEnabled = false)
+        #endregion Private Fields
+
+        #region Public Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogStreamOptions"/> class.
+        /// </summary>
+        /// <param name="LogNameBase">The log name base.</param>
+        /// <param name="LogEnabled">if set to <c>true</c> [log enabled].</param>
+        public LogStreamOptions(string LogNameBase = DefaultLogFile, bool LogEnabled = false)
         {
-            LogNameBase = paramLogNameBase;
-            Enabled = paramEnabled;
+            this.LogNameBase = LogNameBase;
+            Enabled = LogEnabled;
             LogPath = IO.Paths.SilverMonkeyLogPath;
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="LogStreamOptions"/> is enabled.
@@ -21,19 +41,55 @@ namespace MonkeyCore.Logging
         /// </value>
         public bool Enabled { get; set; }
 
+        /// <summary>
+        /// Gets or sets the index of the log.
+        /// </summary>
+        /// <value>
+        /// The index of the log.
+        /// </value>
         public int LogIdx { get; set; }
 
+        /// <summary>
+        /// Gets or sets the log name base.
+        /// </summary>
+        /// <value>
+        /// The log name base.
+        /// </value>
         public string LogNameBase { get; set; }
 
+        /// <summary>
+        /// Gets or sets the log option.
+        /// </summary>
+        /// <value>
+        /// The log option.
+        /// </value>
         public short LogOption { get; set; }
 
+        /// <summary>
+        /// Gets or sets the log path.
+        /// </summary>
+        /// <value>
+        /// The log path.
+        /// </value>
         public string LogPath { get; set; }
 
-        public string GetLogName()
+        #endregion Public Properties
+
+        #region Public Methods
+
+        /// <summary>
+        /// Gets the name of the logfile.
+        /// </summary>
+        /// <returns></returns>
+        public string GetLogFileName()
         {
             string LogFile = null;
             switch (LogOption)
             {
+                case -1:
+                    LogFile = DefaultLogFile;
+                    break;
+
                 case 0:
                     LogFile = LogNameBase;
                     break;
@@ -44,10 +100,12 @@ namespace MonkeyCore.Logging
                     break;
 
                 case 2:
-                    Now.ToString("MM_dd_yyyy_H-mm-ss");
+                    DateTime.Now.ToString(DateFormat);
                     break;
             }
             return LogFile + ext;
         }
+
+        #endregion Public Methods
     }
 }

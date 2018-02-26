@@ -1,8 +1,7 @@
-﻿using Furcadia.Net.Options;
+﻿using Furcadia.IO;
+using Furcadia.Net.Options;
 using MonkeyCore.Logging;
 using System.IO;
-using MonkeyCore;
-using Furcadia.IO;
 
 namespace Engine.BotSession
 {
@@ -26,12 +25,6 @@ namespace Engine.BotSession
 
         private IniFile BotIni;
 
-        public LogStreamOptions LogOptions
-        {
-            get;
-            set;
-        }
-
         #endregion Private Fields
 
         #region Public Constructors
@@ -52,7 +45,6 @@ namespace Engine.BotSession
         public BotOptions(string BFile)
         {
             Initialize();
-            LogOptions = new LogStreamOptions();
 
             if (!File.Exists(BFile))
             {
@@ -146,7 +138,6 @@ namespace Engine.BotSession
                 ConnectionRetries = int.Parse(s);
             }
 
-            //  _options()
             s = BotIni.GetKeyValue("GoMap", "IDX");
             if (!string.IsNullOrEmpty(s))
             {
@@ -165,7 +156,8 @@ namespace Engine.BotSession
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets a value indicating whether to connect to the server when the Bini file is loaded.
+        /// Gets or sets a value indicating whether to connect
+        /// to the server when the Bini file is loaded.
         /// </summary>
         /// <value><c>true</c> if [automatic connect]; otherwise, <c>false</c>.</value>
         public bool AutoConnect
@@ -210,6 +202,18 @@ namespace Engine.BotSession
         {
             get => _GoMap;
             set => _GoMap = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the log options.
+        /// </summary>
+        /// <value>
+        /// The log options.
+        /// </value>
+        public LogStreamOptions LogOptions
+        {
+            get;
+            set;
         }
 
         /// <summary>

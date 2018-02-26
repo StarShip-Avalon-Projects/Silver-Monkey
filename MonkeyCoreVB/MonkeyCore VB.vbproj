@@ -113,12 +113,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Controls\HelpLinkMenu.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\HelpLinkToolStripMenu.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\ListBox_NoFlicker.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -170,9 +164,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyFileVersion.vb</LastGenOutput>
     </None>
-    <Content Include="HelpLink.ini">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="AssemblyInfoersion.t4">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfoersion.vb</LastGenOutput>

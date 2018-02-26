@@ -16,21 +16,16 @@ namespace MonkeyCore.Logging
 
         private List<string> Stack = new List<string>();
 
-        private string strErrorFilePath;
-
         #endregion Private Fields
 
         #region Public Constructors
 
         /// <summary>
-        /// Create a new instance of the log file
+        /// Initializes a new instance of the <see cref="LogStream"/> class.
         /// </summary>
-        /// <param name="FilePath">
-        /// </param>
-        public LogStream(string FilePath)
+        public LogStream()
         {
             Options = new LogStreamOptions();
-            strErrorFilePath = Path.Combine(FilePath, Options.GetLogName());
         }
 
         /// <summary>
@@ -40,8 +35,9 @@ namespace MonkeyCore.Logging
         public LogStream(LogStreamOptions options)
         {
             Options = options;
-            strErrorFilePath = Path.Combine(Options.LogPath, Options.GetLogName());
         }
+
+        private string LogFilePath => Path.Combine(Options.LogPath, Options.GetLogFileName());
 
         #endregion Public Constructors
 
@@ -71,20 +67,16 @@ namespace MonkeyCore.Logging
             Message = $"{DateTime.Now.ToString("MM/dd/yyyy H:mm:ss")}: {Message}";
             try
             {
-                using (var fStream = new FileStream(strErrorFilePath, FileMode.Append))
+                using (FileStream fStream = new FileStream(LogFilePath, FileMode.Append))
+                using (StreamWriter ioFile = new StreamWriter(fStream))
                 {
-                    using (var ioFile = new StreamWriter(fStream))
+                    foreach (string line in Stack.ToArray())
                     {
-                        new StreamWriter(fStream);
-
-                        foreach (var line in Stack.ToArray())
-                        {
-                            ioFile.WriteLine(line);
-                        }
-
-                        Stack.Clear();
-                        ioFile.WriteLine(Message);
+                        ioFile.WriteLine(line);
                     }
+
+                    Stack.Clear();
+                    ioFile.WriteLine(Message);
                 }
             }
             catch (IOException ex)

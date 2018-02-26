@@ -21,19 +21,14 @@ Public Class Settings
 
 #Region "Private Fields"
 
-    Private Const DragonSpeak As String = "DragonSpeak"
-    Private Const FurcadiaPath As String = "Furcadia"
     Private Const Main_Host As String = "lightbringer.Furcadia.com"
 
     Private Const MainSection As String = "Main"
-    Private Const MonkeySpeak As String = "MonkeySpeak"
-    Private Const MSEditorSection As String = "Editor"
     Private Const SettingFile As String = "Settings.Ini"
     Private Shared _ini As New IniFile
 
     Private Shared _MS_KeysIni As New IniFile
 
-    Private Shared _PluginList As New Dictionary(Of String, Boolean)
     Private Shared SettingsFile As String = Path.Combine(IO.Paths.ApplicationSettingsPath, SettingFile)
 
 #End Region
@@ -442,7 +437,12 @@ Public Class Settings
             End Set
         End Property
 
-        'systray Status
+        ''' <summary>
+        ''' Gets or sets the system tray.
+        ''' </summary>
+        ''' <value>
+        ''' The system tray.
+        ''' </value>
         Public Property SysTray As CheckState
             Get
                 Return _TrayIcon
@@ -452,14 +452,19 @@ Public Class Settings
             End Set
         End Property
 
-        'Time Stamp mode
-        ' 0 = off
-        ' 1 = time
-        ' 2 = Date Time
-#Disable Warning BC40027 ' Return type of function 'TimeStamp' is not CLS-compliant.
-
+        ''' <summary>
+        ''' Gets or sets the time stamp.
+        ''' <para/>
+        ''' 0 = off
+        ''' <para/>
+        ''' 1 = Time
+        ''' <para/>
+        ''' 2 = Date Time
+        ''' </summary>
+        ''' <value>
+        ''' The time stamp.
+        ''' </value>
         Public Property TimeStamp() As UShort
-#Enable Warning BC40027 ' Return type of function 'TimeStamp' is not CLS-compliant.
             Get
                 Return _TimeStamp
             End Get
@@ -539,133 +544,6 @@ Public Class Settings
         Public Sub SetDefault()
             _debug = False
             _TimeStamp = 0
-        End Sub
-
-#End Region
-
-    End Class
-
-    Public Class EditSettings
-
-#Region "Private Fields"
-
-        Private MS_KeysIni As IniFile = Settings.MS_KeysIni
-
-#End Region
-
-    End Class
-
-    <CLSCompliant(True)>
-    Public Class MantisConnectSettings
-
-#Region "Private Fields"
-
-        Private _HttpPassword As String
-        Private _HttpUserName As String
-        Private _MantisPassword As String
-        Private _MantisUserName As String
-        Private _StoreSettings As Boolean
-
-#End Region
-
-#Region "Public Constructors"
-
-        Public Sub New()
-            If File.Exists(SettingsFile) Then
-                Ini.Load(SettingsFile, True)
-            End If
-            Dim MantisSection As IniSection = Ini.GetSection("MantisConnect")
-
-            Dim MantisKey As IniSection.IniKey = MantisSection.GetKey("HttpPassword")
-            If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
-                _HttpPassword = MantisKey.GetValue
-            End If
-            MantisKey = MantisSection.GetKey("StoreSettings")
-            If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
-                _StoreSettings = Boolean.Parse(MantisKey.GetValue)
-            End If
-
-            MantisKey = MantisSection.GetKey("HttpUserName")
-            If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
-                _HttpUserName = MantisKey.GetValue
-            End If
-            MantisKey = MantisSection.GetKey("MantisUserName")
-            If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
-                _MantisUserName = MantisKey.GetValue
-            End If
-            MantisKey = MantisSection.GetKey("MantisPassword")
-            If Not String.IsNullOrEmpty(MantisKey.GetValue) Then
-                _MantisPassword = MantisKey.GetValue
-            End If
-
-        End Sub
-
-#End Region
-
-#Region "Public Properties"
-
-        Public Property HttpPassword As String
-            Get
-                Return _HttpPassword
-            End Get
-            Set(value As String)
-                _HttpPassword = value
-            End Set
-        End Property
-
-        Public Property HttpUserName As String
-            Get
-                Return _HttpUserName
-            End Get
-            Set(value As String)
-                _HttpUserName = value
-            End Set
-        End Property
-
-        Public Property MantisPassword As String
-            Get
-                Return _MantisPassword
-            End Get
-            Set(value As String)
-                _MantisPassword = value
-            End Set
-        End Property
-
-        Public Property MantisUserName As String
-            Get
-                Return _MantisUserName
-            End Get
-            Set(value As String)
-                _MantisUserName = value
-            End Set
-        End Property
-
-        Public Property StoreSettings As Boolean
-            Get
-                Return _StoreSettings
-            End Get
-            Set(value As Boolean)
-                _StoreSettings = value
-            End Set
-        End Property
-
-#End Region
-
-#Region "Public Methods"
-
-        Public Sub SaveSettings()
-            ' Lets Read local appData Settings.ini for last used Settings as
-            ' other programs use the file too
-            If File.Exists(SettingsFile) Then
-                Ini.Load(SettingsFile, True)
-            End If
-            Ini.SetKeyValue("Mantis", "StoreSettings", _StoreSettings.ToString)
-            Ini.SetKeyValue("Mantis", "HttpPassword", _HttpPassword)
-            Ini.SetKeyValue("Mantis", "HttpUserName", _HttpUserName)
-            Ini.SetKeyValue("Mantis", "MantisPassword", _MantisPassword)
-            Ini.SetKeyValue("Mantis", "MantisUserName", _MantisUserName)
-
-            Ini.Save(SettingsFile)
         End Sub
 
 #End Region
