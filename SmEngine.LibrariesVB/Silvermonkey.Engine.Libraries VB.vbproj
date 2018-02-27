@@ -73,7 +73,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
     </Compile>
-    <Compile Include="MsFurreList.vb" />
     <Compile Include="MsMemberList.vb" />
     <Compile Include="MsPounce.vb" />
     <Compile Include="MsSound.vb" />

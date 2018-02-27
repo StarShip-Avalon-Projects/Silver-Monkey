@@ -80,6 +80,7 @@
     <Compile Include="Extentions\Utils.cs" />
     <Compile Include="MsBotMessage.cs" />
     <Compile Include="MsDatabase.cs" />
+    <Compile Include="MsFurres.cs" />
     <Compile Include="MsPhoenicSpeak.cs" />
     <Compile Include="MsPhoenixSpeakBackupAndRestore.cs" />
     <Compile Include="PhoenicSpeak\PhoenicSpeakDataObject.cs" />

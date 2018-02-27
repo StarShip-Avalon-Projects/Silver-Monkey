@@ -3,7 +3,7 @@
 namespace Libraries.Dice
 {
     /// <summary>
-    /// Single Die object for Silver Monkey generating a Dice Roll
+    /// Single Die object for Silver Monkey to generate a Dice Roll
     /// </summary>
     public class Die
     {
