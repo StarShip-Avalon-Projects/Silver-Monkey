@@ -10,10 +10,10 @@ namespace Engine.BotSession
     {
         #region Private Fields
 
-        private string _BotController;
+        private string botController;
 
-        private string _MonkeySpeakScriptFile;
-        private bool _isEnabled;
+        private string monkeySpeakScriptFile;
+        private bool isEnabled;
 
         #endregion Private Fields
 
@@ -22,24 +22,13 @@ namespace Engine.BotSession
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public EngineOptoons()
+        public EngineOptoons() : base()
         {
-            _BotController = null;
-            CanOverrideTriggerHandlers = false;
-            StringBeginSymbol = '{';
-
-            StringEndSymbol = '}';
-
-            VariableDeclarationSymbol = '%';
-
-            LineCommentSymbol = '*';
-
-            BlockCommentBeginSymbol = "/*";
-            BlockCommentEndSymbol = "*/";
+            botController = null;
+            isEnabled = true;
+            // Monkeyspeak overrides
             TriggerLimit = 6000;
-            VariableCountLimit = 1000;
-            StringLengthLimit = Int32.MaxValue;
-            _isEnabled = true;
+            StringLengthLimit = 2048;
         }
 
         #endregion Public Constructors
@@ -54,8 +43,8 @@ namespace Engine.BotSession
         /// </value>
         public string BotController
         {
-            get => _BotController;
-            set => _BotController = value;
+            get => botController;
+            set => botController = value;
         }
 
         /// <summary>
@@ -64,7 +53,7 @@ namespace Engine.BotSession
         /// <value>
         /// The short name of the bot controller.
         /// </value>
-        public string BotControllerShortName => _BotController.ToFurcadiaShortName();
+        public string BotControllerShortName => botController.ToFurcadiaShortName();
 
         /// <summary>
         /// Gets or sets the monkey speak script file.
@@ -75,7 +64,7 @@ namespace Engine.BotSession
         /// <exception cref="ArgumentException">Invalid File type, Not a ""*.ms"" file.</exception>
         public string MonkeySpeakScriptFile
         {
-            get => _MonkeySpeakScriptFile;
+            get => monkeySpeakScriptFile;
             set
             {
                 if (Path.GetExtension(value).ToLower() != ".ms")
@@ -83,7 +72,7 @@ namespace Engine.BotSession
                     throw new ArgumentException("Invalid File type, Not a \"*.ms\" file.");
                 }
 
-                _MonkeySpeakScriptFile = value;
+                monkeySpeakScriptFile = value;
             }
         }
 
@@ -95,8 +84,8 @@ namespace Engine.BotSession
         /// </value>
         public bool IsEnabled
         {
-            get => _isEnabled;
-            set => _isEnabled = value;
+            get => isEnabled;
+            set => isEnabled = value;
         }
 
         #endregion Public Properties

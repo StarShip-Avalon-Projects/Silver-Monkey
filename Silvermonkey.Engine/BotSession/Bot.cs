@@ -9,7 +9,6 @@
 using Furcadia.Net;
 using Furcadia.Net.DreamInfo;
 using Furcadia.Net.Proxy;
-using Furcadia.Net.Utils.ChannelObjects;
 using Furcadia.Net.Utils.ServerParser;
 using Libraries;
 using Monkeyspeak;
@@ -18,6 +17,7 @@ using Monkeyspeak.Logging;
 using SilverMonkey.Engine.Libraries;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -74,21 +74,10 @@ namespace Engine.BotSession
         /// Initializes a new instance of the <see cref="Bot"/> class.
         /// </summary>
         /// <param name="BotSessionOptions">The bot session options.</param>
-        public Bot(BotOptions BotSessionOptions) :
-                base(BotSessionOptions)
+        public Bot(BotOptions BotSessionOptions) : base(BotSessionOptions)
         {
             SetOptions(BotSessionOptions);
             Initialize();
-#if DEBUG
-            //// TODO: #If Then ... Warning!!! not translated
-            //if (!Debugger.IsAttached)
-            //{
-            //    Logger.Disable<Bot>();
-            //}
-#else
-        // TODO: # ... Warning!!! not translated
-        Logger.Disable<Bot>();
-#endif
         }
 
         /// <summary>
@@ -98,16 +87,6 @@ namespace Engine.BotSession
         {
             SetOptions(new BotOptions());
             this.Initialize();
-#if DEBUG
-            // TODO: #If Then ... Warning!!! not translated
-            //if (!Debugger.IsAttached)
-            //{
-            //    Logger.Disable<Bot>();
-            //}
-#else
-        // TODO: # ... Warning!!! not translated
-        Logger.Disable<Bot>();
-#endif
         }
 
         #endregion Public Constructors
@@ -120,27 +99,7 @@ namespace Engine.BotSession
         /// <value>
         /// The bot controller.
         /// </value>
-        public string BotController
-        {
-            get
-            {
-                return MsEngineOptions.BotController;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this instance is bot controller.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is bot controller; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsBotController
-        {
-            get
-            {
-                return ConnectedFurre.ShortName == BotController.ToFurcadiaShortName();
-            }
-        }
+        public string BotController => MsEngineOptions.BotController;
 
         /// <summary>
         /// Gets or sets a value indicating whether The Monkey
@@ -155,19 +114,17 @@ namespace Engine.BotSession
             set => MsEngineOptions.IsEnabled = value;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is bot controller.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is bot controller; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsBotController => ConnectedFurre.ShortName == BotController.ToFurcadiaShortName();
+
         #endregion Public Properties
 
         #region Public Methods
-
-        /// <summary>
-        /// Bots the session.
-        /// </summary>
-        public void BotSession()
-        {
-            _options = new BotOptions();
-            MsEngineOptions = _options.MonkeySpeakEngineOptions;
-            Initialize();
-        }
 
         /// <summary>
         /// Connets to the game server asyncronously.
@@ -268,6 +225,15 @@ namespace Engine.BotSession
             ClientStatusChanged += (s, o) => OnClientStatusChanged(s, o);
 
             TroatTiredEventHandler += e => MSpage.Execute(new int[] { 5, 6 }, e);
+
+#if DEBUG
+            if (!Debugger.IsAttached)
+            {
+                Logger.Disable<Bot>();
+            }
+#else
+        Logger.Disable<Bot>();
+#endif
         }
 
         /// <summary>
@@ -336,7 +302,7 @@ namespace Engine.BotSession
 
         private void OnClientStatusChanged(object Sender, NetClientEventArgs e)
         {
-            if ((MSpage == null))
+            if (MSpage == null)
             {
                 return;
             }
