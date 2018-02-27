@@ -132,7 +132,7 @@ namespace Libraries
             var NumberPlus = reader.ReadNumber();
             var dice = new DiceRollCollection(Number, sides, NumberPlus, '-');
 
-            Var.Value = dice.RollAll();
+            Var.Value = dice.Roll();
             return true;
         }
 
@@ -148,7 +148,7 @@ namespace Libraries
             var NumberPlus = reader.ReadNumber();
             var dice = new DiceRollCollection(Number, sides, NumberPlus);
 
-            Var.Value = dice.RollAll();
+            Var.Value = dice.Roll();
             return true;
         }
 

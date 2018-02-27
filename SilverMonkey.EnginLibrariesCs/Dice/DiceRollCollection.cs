@@ -5,11 +5,32 @@ namespace Libraries.Dice
     /// <summary>
     /// Grab your dice and shake them till you're ready to roll
     /// </summary>
-    public class DiceRollCollection : System.Collections.ObjectModel.Collection<Die>
+    public class DiceRollCollection
     {
         private List<Die> Dice = new List<Die>();
         private double Offset;
         private char DiceModifyer = '+';
+        private double total = 0;
+
+        /// <summary>
+        /// Adds the specified die.
+        /// </summary>
+        /// <param name="die">The die.</param>
+        public void Add(Die die)
+        {
+            Dice.Add(die);
+        }
+
+        /// <summary>
+        /// Add a Die with the number of sides specified
+        /// </summary>
+        /// <param name="sides">The sides.</param>
+        public void Add(double sides)
+        {
+            Dice.Add(new Die(sides));
+        }
+
+        public double Result => total;
 
         /// <summary>
         /// Mix up the Dice in hand and roll them
@@ -17,9 +38,8 @@ namespace Libraries.Dice
         /// <returns>
         /// Sum of the result as <see cref="Double"/>
         /// </returns>
-        public double RollAll()
+        public double Roll()
         {
-            double total = 0;
             foreach (Die die in Dice)
             {
                 total += die.Roll();
@@ -31,6 +51,7 @@ namespace Libraries.Dice
             return total;
         }
 
+        //
         public DiceRollCollection(double NumberDice, double NumberSides, double Offset = 0, char Modifyer = '+')
         {
             this.DiceModifyer = Modifyer;
@@ -38,7 +59,7 @@ namespace Libraries.Dice
 
             for (double I = 0; I <= NumberDice - 1; I++)
             {
-                Dice.Add(new Die(NumberSides));
+                Add(NumberSides);
             }
         }
     }

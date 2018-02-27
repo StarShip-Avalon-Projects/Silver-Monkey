@@ -23,6 +23,12 @@ namespace Libraries.Dice
             this.faceCount = faceCount;
         }
 
+        /// <summary>
+        /// Gets or sets the face count.
+        /// </summary>
+        /// <value>
+        /// The face count.
+        /// </value>
         public double FaceCount
         {
             get
@@ -35,6 +41,12 @@ namespace Libraries.Dice
             }
         }
 
+        /// <summary>
+        /// Gets the side of the die we land on
+        /// </summary>
+        /// <value>
+        /// <see cref="Double"/>
+        /// </value>
         public double Value
         {
             get
@@ -47,7 +59,7 @@ namespace Libraries.Dice
         /// Roll a single die
         /// </summary>
         /// <returns>
-        /// <see cref="Double"/>
+        /// the side of the die as <see cref="Double"/>
         /// </returns>
         public double Roll()
         {
