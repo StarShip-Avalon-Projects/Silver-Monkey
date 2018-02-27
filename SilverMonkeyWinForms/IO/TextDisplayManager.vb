@@ -7,6 +7,7 @@ Imports Furcadia.Text.FurcadiaMarkup
 Imports MonkeyCore.Settings
 
 Imports MonkeyCore.WinForms.Controls
+Imports Settings
 
 Namespace HelperClasses
 
@@ -232,8 +233,6 @@ Namespace HelperClasses
         End Function
 
 #End Region
-
-
 
 #Region "Public Classes"
 

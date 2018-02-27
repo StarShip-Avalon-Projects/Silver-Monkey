@@ -51,8 +51,8 @@ Public Class Config
         NumSonnectTimeOut.Value = Main.Mainsettings.ConnectTimeOut
         NumPing.Value = Main.Mainsettings.Ping
 
-        chkBxAdvertisment.Checked = Main.Mainsettings.Advertisment
-        chkBxAnnouncement.Checked = Main.Mainsettings.Announcement
+        'chkBxAdvertisment.Checked = Main.Mainsettings.Advertisment
+        'chkBxAnnouncement.Checked = Main.Mainsettings.Announcement
         chkBxBroadcast.Checked = Main.Mainsettings.Broadcast
         chkBxAutoLoadLastBotFile.Checked = Main.Mainsettings.LoadLastBotFile
         chkBxClientDisconnectToggle.Checked = Main.Mainsettings.DisconnectPopupToggle
@@ -97,8 +97,8 @@ Public Class Config
         Main.Mainsettings.FurcPath = TxtBxFurPath.Text
         Main.Mainsettings.Ping = CInt(NumPing.Value)
 
-        Main.Mainsettings.Advertisment = chkBxAdvertisment.Checked
-        Main.Mainsettings.Announcement = chkBxAnnouncement.Checked
+        'Main.Mainsettings.Advertisment = chkBxAdvertisment.Checked
+        'Main.Mainsettings.Announcement = chkBxAnnouncement.Checked
         Main.Mainsettings.Broadcast = chkBxBroadcast.Checked
         Main.Mainsettings.LoadLastBotFile = chkBxAutoLoadLastBotFile.Checked
         Main.Mainsettings.DisconnectPopupToggle = chkBxClientDisconnectToggle.Checked

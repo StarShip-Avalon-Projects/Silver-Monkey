@@ -17,6 +17,7 @@ Imports MonkeyCore.Controls
 Imports MonkeyCore.Logging
 Imports MonkeyCore.Settings
 Imports MonkeyCore.WinForms.Controls
+Imports Settings
 Imports SilverMonkey.Engine.Libraries.Web
 Imports SilverMonkey.HelperClasses
 Imports SilverMonkey.HelperClasses.TextDisplayManager

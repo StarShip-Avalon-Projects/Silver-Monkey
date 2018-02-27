@@ -63,7 +63,7 @@ namespace MonkeyCore.Logging
             {
                 return;
             }
-
+            // TODO: Fix the Time options on this
             Message = $"{DateTime.Now.ToString("MM/dd/yyyy H:mm:ss")}: {Message}";
             try
             {
