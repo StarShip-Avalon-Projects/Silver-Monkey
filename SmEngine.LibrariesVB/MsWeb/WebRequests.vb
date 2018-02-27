@@ -2,6 +2,7 @@
 Imports System.Net
 Imports System.Text
 Imports System.Web
+Imports Libraries.Variables
 Imports Monkeyspeak
 
 'Web Module
@@ -55,8 +56,8 @@ Namespace Libraries.Web
             Dim FormattedVariables As New StringBuilder()
             For Each item As IVariable In VariableList
                 If item.Value IsNot Nothing Then
-                    FormattedVariables.AppendFormat(String.Format("{0}={1}&",
-                      HttpUtility.UrlEncode(item.Name.Replace("%", String.Empty)), HttpUtility.UrlEncode(item.Value.ToString())))
+                    FormattedVariables.AppendFormat($"{HttpUtility.UrlEncode(item.Name.Replace("%", String.Empty))}={HttpUtility.UrlEncode(item.Value.ToString())}&")
+
                 End If
             Next
             Return FormattedVariables.ToString()
@@ -114,7 +115,7 @@ Namespace Libraries.Web
                             Dim pos() = line.Split("=", 0, 1)
                             If pos.Length > 0 Then
                                 result.ReceivedPage = True
-                                Dim var = New MsWebVariable(pos(0), pos(1))
+                                Dim var = New WebVariable(pos(0), pos(1))
                                 'Assign Variables
                                 Try
                                     result.WebStack.Add(var)
@@ -132,12 +133,12 @@ Namespace Libraries.Web
                 Dim message = New StringBuilder()
                 If Not ex.Response Is Nothing Then
                     For i = 0 To ex.Response.Headers.Count - 1
-                        message.AppendLine(String.Format("Header Name:{0}, Header value :{1}", ex.Response.Headers.Keys(i), ex.Response.Headers(i)))
+                        message.AppendLine($"Header Name:{ex.Response.Headers.Keys(i)}, Header value :{ex.Response.Headers(i)}")
                     Next
 
                     If ex.Status = WebExceptionStatus.ProtocolError Then
-                        message.AppendLine(String.Format("Status Code : {0}", DirectCast(ex.Response, HttpWebResponse).StatusCode))
-                        message.AppendLine(String.Format("Status Description : {0}", DirectCast(ex.Response, HttpWebResponse).StatusDescription))
+                        message.AppendLine($"Status Code : {DirectCast(ex.Response, HttpWebResponse).StatusCode}")
+                        message.AppendLine($"Status Description : {DirectCast(ex.Response, HttpWebResponse).StatusDescription}")
 
                         Using reader As New StreamReader(ex.Response.GetResponseStream())
                             message.Append(reader.ReadToEnd().Replace(vbNewLine, vbCrLf))
@@ -187,12 +188,12 @@ Namespace Libraries.Web
                 Dim message = New StringBuilder()
                 If Not ex.Response Is Nothing Then
                     For i = 0 To ex.Response.Headers.Count - 1
-                        message.AppendLine(String.Format("Header Name:{0}, Header value :{1}", ex.Response.Headers.Keys(i), ex.Response.Headers(i)))
+                        message.AppendLine($"Header Name:{ex.Response.Headers.Keys(i)}, Header value :{ex.Response.Headers(i)}")
                     Next
 
                     If ex.Status = WebExceptionStatus.ProtocolError Then
-                        message.AppendLine(String.Format("Status Code : {0}", DirectCast(ex.Response, HttpWebResponse).StatusCode))
-                        message.AppendLine(String.Format("Status Description : {0}", DirectCast(ex.Response, HttpWebResponse).StatusDescription))
+                        message.AppendLine($"Status Code : {DirectCast(ex.Response, HttpWebResponse).StatusCode}")
+                        message.AppendLine($"Status Description : {DirectCast(ex.Response, HttpWebResponse).StatusDescription}")
 
                         Using reader As New StreamReader(ex.Response.GetResponseStream())
                             message.Append(reader.ReadToEnd().Replace(vbNewLine, vbCrLf))
@@ -223,7 +224,7 @@ Namespace Libraries.Web
                         Result.WebPage = line
                         Debug.Print(line)
                         line = line.Replace("<br />", vbCrLf)
-                        Result.ErrMsg = "Invalid Format- Not Monkey Speak Response" & line
+                        Result.ErrMsg = $"Invalid Format- Not Monkey Speak Response {line}"
                         Result.Packet = ""
                         Result.Status = 2
 
@@ -232,7 +233,7 @@ Namespace Libraries.Web
                     ElseIf line.StartsWith("s=") Then
                         Result.Status = CInt(line.Substring(2))
                         If line.Substring(2) > 0 Then
-                            Result.ErrMsg = "The server returned error code " + Result.Status.ToString
+                            Result.ErrMsg = $"The server returned error code {Result.Status}"
                             Exit Do
                         End If
                         readKVPs = True
@@ -241,7 +242,7 @@ Namespace Libraries.Web
                             Dim pos() = line.Split("=", 0, 1)
                             If pos.Length > 0 Then
                                 Result.ReceivedPage = True
-                                Dim var = New MsWebVariable(pos(0), pos(1))
+                                Dim var = New WebVariable(pos(0), pos(1))
 
                                 'Assign Variables
                                 Try
@@ -262,12 +263,12 @@ Namespace Libraries.Web
                 Dim message = New StringBuilder()
                 If Not ex.Response Is Nothing Then
                     For i = 0 To ex.Response.Headers.Count - 1
-                        message.AppendLine(String.Format("Header Name:{0}, Header value :{1}", ex.Response.Headers.Keys(i), ex.Response.Headers(i)))
+                        message.AppendLine($"Header Name:{ex.Response.Headers.Keys(i)}, Header value :{ ex.Response.Headers(i)}")
                     Next
 
                     If ex.Status = WebExceptionStatus.ProtocolError Then
-                        message.AppendLine(String.Format("Status Code : {0}", DirectCast(ex.Response, HttpWebResponse).StatusCode))
-                        message.AppendLine(String.Format("Status Description : {0}", DirectCast(ex.Response, HttpWebResponse).StatusDescription))
+                        message.AppendLine($"Status Code : {DirectCast(ex.Response, HttpWebResponse).StatusCode}")
+                        message.AppendLine($"Status Description : {DirectCast(ex.Response, HttpWebResponse).StatusDescription}")
 
                         Using reader As New StreamReader(ex.Response.GetResponseStream())
                             message.Append(reader.ReadToEnd().Replace(vbNewLine, vbCrLf))

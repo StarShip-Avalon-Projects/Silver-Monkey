@@ -18,7 +18,7 @@ namespace Libraries.Variables
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="value">The value.</param>
-        public WebVariable(string name, object value)
+        public WebVariable(string name, object value = null)
         {
             Name = name;
             this.value = value;

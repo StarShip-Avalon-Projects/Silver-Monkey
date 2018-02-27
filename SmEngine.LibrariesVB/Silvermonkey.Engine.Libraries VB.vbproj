@@ -75,7 +75,6 @@
     </Compile>
     <Compile Include="MsPounce.vb" />
     <Compile Include="MsWebRequests.vb" />
-    <Compile Include="MsWeb\MsWebVariable.vb" />
     <Compile Include="MsWeb\WebException.vb" />
     <Compile Include="MsWeb\WebRequests.vb" />
     <Compile Include="MsWeb\WebUtilities.vb" />
