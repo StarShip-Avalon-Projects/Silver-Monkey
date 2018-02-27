@@ -73,9 +73,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dice\Die.vb" />
-    <Compile Include="Dice\MsDice.DiceRollCollection.vb" />
-    <Compile Include="MsDice.vb" />
     <Compile Include="MsFurreList.vb" />
     <Compile Include="MsMemberList.vb" />
     <Compile Include="MsPounce.vb" />
