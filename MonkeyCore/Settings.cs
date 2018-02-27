@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Furcadia.IO;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Furcadia.IO;
 
 // Structure Data (Main Settings, Individual Program Groups)
 // Read Master settings.ini
@@ -17,6 +17,8 @@ using Furcadia.IO;
 //  Phoenix Speak Backup Tables
 public class Settings
 {
+    #region Private Fields
+
     private const string Main_Host = "lightbringer.Furcadia.com";
 
     private const string MainSection = "Main";
@@ -28,6 +30,10 @@ public class Settings
     private static IniFile _MS_KeysIni = new IniFile();
 
     private static string SettingsFile = Path.Combine(IO.Paths.ApplicationSettingsPath, SettingFile);
+
+    #endregion Private Fields
+
+    #region Public Properties
 
     public static IniFile Ini
     {
@@ -53,11 +59,17 @@ public class Settings
         }
     }
 
+    #endregion Public Properties
+
+    #region Public Classes
+
     /// <summary>
     /// Main Configuration for every application in package
     /// </summary>
     public class CMain
     {
+        #region Private Fields
+
         private bool _Advertisment = false;
 
         private bool _Announcement = false;
@@ -119,6 +131,10 @@ public class Settings
         private Color _whColor = Color.Purple;
 
         private string SettingsFile = Path.Combine(IO.Paths.ApplicationSettingsPath, SettingFile);
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public CMain()
         {
@@ -307,166 +323,122 @@ public class Settings
             }
         }
 
-        private bool value;
+        #endregion Public Constructors
 
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets Announcment Channel Enable
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if announcement; otherwise, <c>false</c>.
+        /// </value>
         public bool Announcement
         {
-            get
-            {
-                return _Announcement;
-            }
-            set
-            {
-                _Announcement = value;
-            }
+            get => _Announcement;
+            set => _Announcement = value;
         }
 
         public Font ApFont
         {
-            get
-            {
-                return _AppFont;
-            }
-            set
-            {
-                _AppFont = value;
-            }
+            get => _AppFont;
+            set => _AppFont = value;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [automatic reconnect].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [automatic reconnect]; otherwise, <c>false</c>.
+        /// </value>
         public bool AutoReconnect
         {
-            get
-            {
-                return _AutoReconnect;
-            }
-            set
-            {
-                _AutoReconnect = value;
-            }
+            get => _AutoReconnect;
+            set => _AutoReconnect = value;
         }
 
+        /// <summary>
+        /// Ignore Broadcast channel?
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if broadcast; otherwise, <c>false</c>.
+        /// </value>
         public bool Broadcast
         {
-            get
-            {
-                return _Broadcast;
-            }
-            set
-            {
-                _Broadcast = value;
-            }
+            get => _Broadcast;
+            set => _Broadcast = value;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [close proc].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [close proc]; otherwise, <c>false</c>.
+        /// </value>
         public bool CloseProc
         {
-            get
-            {
-                return _CloseProc;
-            }
-            set
-            {
-                _CloseProc = value;
-            }
+            get => _CloseProc;
+            set => _CloseProc = value;
         }
 
+        /// <summary>
+        /// Gets or sets the connect time out.
+        /// </summary>
+        /// <value>
+        /// The connect time out.
+        /// </value>
         public int ConnectTimeOut
         {
-            get
-            {
-                return _ConnectTimeOut;
-            }
-            set
-            {
-                _ConnectTimeOut = value;
-            }
+            get => _ConnectTimeOut;
+            set => _ConnectTimeOut = value;
         }
 
         public bool Debug
         {
-            get
-            {
-                return _debug;
-            }
-            set
-            {
-                _debug = value;
-            }
+            get => _debug;
+            set => _debug = value;
         }
 
         public Color DefaultColor
         {
-            get
-            {
-                return _defaultColor;
-            }
-            set
-            {
-                _defaultColor = value;
-            }
+            get => _defaultColor;
+            set => _defaultColor = value;
         }
 
         public bool DisconnectPopupToggle
         {
-            get
-            {
-                return _DisconnectPopupToggle;
-            }
-            set
-            {
-                _DisconnectPopupToggle = value;
-            }
+            get => _DisconnectPopupToggle;
+            set => _DisconnectPopupToggle = value;
         }
 
         public Color EmitColor
         {
-            get
-            {
-                return _emitColor;
-            }
-            set
-            {
-                _emitColor = value;
-            }
+            get => _emitColor;
+            set => _emitColor = value;
         }
 
         public Color EmoteColor
         {
-            get
-            {
-                return _emoteColor;
-            }
-            set
-            {
-                _emoteColor = value;
-            }
+            get => _emoteColor;
+            set => _emoteColor = value;
         }
 
         public Color ErrorColor
         {
-            get
-            {
-                return _errorColor;
-            }
-            set
-            {
-                _errorColor = value;
-            }
+            get => _errorColor;
+            set => _errorColor = value;
         }
 
         public string FurcPath
         {
+            set => _FurcPath = value;
             get
             {
                 if (string.IsNullOrEmpty(_FurcPath))
                 {
                     return IO.Paths.FurcadiaProgramFolder;
                 }
-
                 return _FurcPath;
-            }
-            set
-            {
-                _FurcPath = value;
             }
         }
 
@@ -484,147 +456,79 @@ public class Settings
 
         public bool LoadLastBotFile
         {
-            get
-            {
-                return _LoadLastBotFile;
-            }
-            set
-            {
-                _LoadLastBotFile = value;
-            }
+            get => _LoadLastBotFile;
+            set => _LoadLastBotFile = value;
         }
 
         public int Ping
         {
-            get
-            {
-                return _ping;
-            }
-            set
-            {
-                _ping = value;
-            }
+            get => _ping;
+            set => _ping = value;
         }
 
         public bool PSShowClient
         {
-            get
-            {
-                return _PSShowClient;
-            }
-            set
-            {
-                _PSShowClient = value;
-            }
+            get => _PSShowClient;
+            set => _PSShowClient = value;
         }
 
         public bool PSShowMainWindow
         {
-            get
-            {
-                return _PSShowMainWindow;
-            }
-            set
-            {
-                _PSShowMainWindow = value;
-            }
+            get => _PSShowMainWindow;
+            set => _PSShowMainWindow = value;
         }
 
         public int ReconnectMax
         {
-            get
-            {
-                return _reconnectMax;
-            }
-            set
-            {
-                _reconnectMax = value;
-            }
+            get => _reconnectMax;
+            set => _reconnectMax = value;
         }
 
         public Color SayColor
         {
-            get
-            {
-                return _sayColor;
-            }
-            set
-            {
-                _sayColor = value;
-            }
+            get => _sayColor;
+            set => _sayColor = value;
         }
 
         public Color ShoutColor
         {
-            get
-            {
-                return _shoutColor;
-            }
-            set
-            {
-                _shoutColor = value;
-            }
+            get => _shoutColor;
+            set => _shoutColor = value;
         }
 
-        public int sPort
+        public int SPort
         {
-            get
-            {
-                return _sPort;
-            }
-            set
-            {
-                _sPort = value;
-            }
+            get => _sPort;
+            set => _sPort = value;
         }
 
         public CheckState SysTray
         {
-            get
-            {
-                return _TrayIcon;
-            }
-            set
-            {
-                _TrayIcon = value;
-            }
+            get => _TrayIcon;
+            set => _TrayIcon = value;
         }
 
         public ushort TimeStamp
         {
-            get
-            {
-                return _TimeStamp;
-            }
-            set
-            {
-                _TimeStamp = value;
-            }
+            get => _TimeStamp;
+            set => _TimeStamp = value;
         }
 
         public int TT_TimeOut
         {
-            get
-            {
-                return _TT_TimeOut;
-            }
-            set
-            {
-                _TT_TimeOut = value;
-            }
+            get => _TT_TimeOut;
+            set => _TT_TimeOut = value;
         }
 
         public Color WhColor
         {
-            get
-            {
-                return _whColor;
-            }
-            set
-            {
-                _whColor = value;
-            }
+            get => _whColor;
+            set => _whColor = value;
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Save Application settings
@@ -669,5 +573,9 @@ public class Settings
             Ini.SetKeyValue("PhoenixSpeak", "ShowInMainWindow", _PSShowMainWindow.ToString());
             Ini.Save(SettingsFile);
         }
+
+        #endregion Public Methods
     }
+
+    #endregion Public Classes
 }

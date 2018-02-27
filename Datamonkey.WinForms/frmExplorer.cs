@@ -1,15 +1,13 @@
+using Controls;
 using DataMonkey.Controls;
 using FastColoredTextBoxNS;
-using MonkeyCore;
-using MonkeyCore.Controls;
+using MonkeyCore.Data;
 using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using MonkeyCore.Data;
-using Controls;
 
 namespace DataMonkey
 {
@@ -234,7 +232,7 @@ namespace DataMonkey
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.SQLAreaTabControl = new TabControlEx();
-            this.SqlResultsListView = new MonkeyCore.Controls.ListView_NoFlicker();
+            this.SqlResultsListView = new ListView_NoFlicker();
             ((System.ComponentModel.ISupportInitialize)(this.sqlStatementTextBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -632,7 +630,7 @@ namespace DataMonkey
 
         private TabPage GenerateTabPage()
         {
-            FastColoredTextBox tempTextBox = new SilverMonkeyFCTB();
+            SilverMonkeyFCTB tempTextBox = new SilverMonkeyFCTB();
             TabPage tempTabPage = new TabPage();
             // sqlStatementTextBox
             tempTextBox.Dock = DockStyle.Fill;

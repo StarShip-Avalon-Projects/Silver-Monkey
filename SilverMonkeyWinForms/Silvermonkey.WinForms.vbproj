@@ -312,10 +312,6 @@
       <Project>{6A9FC31D-150B-4C4B-9694-7F8C084DF602}</Project>
       <Name>MonkeyCore.WinFormsControls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyCoreVB\MonkeyCore VB.vbproj">
-      <Project>{7e3780f5-8434-4978-82ed-8c05d1f07d8b}</Project>
-      <Name>MonkeyCore VB</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MonkeyCore\MonkeyCore.csproj">
       <Project>{a4512568-6878-4ee9-8549-cff611d399a1}</Project>
       <Name>MonkeyCore</Name>

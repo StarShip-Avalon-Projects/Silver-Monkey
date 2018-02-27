@@ -162,10 +162,6 @@
       <ComponentGroupRef Id="MonkeyCore.Symbols" />
       <ComponentGroupRef Id="MonkeyCore.Content" />
 
-      <ComponentGroupRef Id="MonkeyCoreVB.Binaries" />
-      <ComponentGroupRef Id="MonkeyCoreVB.Symbols" />
-      <ComponentGroupRef Id="MonkeyCoreVB.Content" />
-
       <ComponentRef Id="MonkeyspeakEditorSquizzleShortcut" />
       <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Binaries" />
       <ComponentGroupRef Id="MonkeyspeakEditorSquizzle.Content" />

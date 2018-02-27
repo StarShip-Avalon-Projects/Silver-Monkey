@@ -17,7 +17,7 @@ Public Class Config
 
     Public Sub Loadconfig()
         TxtBx_Server.Text = Main.Mainsettings.Host
-        TxtSPort.Text = Main.Mainsettings.sPort.ToString
+        TxtSPort.Text = Main.Mainsettings.SPort.ToString
         ChkBxAutoReconnect.Checked = Main.Mainsettings.AutoReconnect
 
         ChkBxAutoCloseProc.Checked = Main.Mainsettings.CloseProc
@@ -73,7 +73,7 @@ Public Class Config
     Private Sub BTN_Ok_Click(ByVal sender As Object, ByVal e As EventArgs) Handles BTN_Ok.Click
         'apply the Settings
         Main.Mainsettings.Host = TxtBx_Server.Text
-        Main.Mainsettings.sPort = Convert.ToInt32(TxtSPort.Text)
+        Main.Mainsettings.SPort = Convert.ToInt32(TxtSPort.Text)
 
         Main.Mainsettings.ReconnectMax = CInt(ReconnectUpDown.Value)
         Main.Mainsettings.TT_TimeOut = CInt(NumericUpDown4.Value)

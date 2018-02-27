@@ -1,4 +1,5 @@
-﻿Imports MonkeyCore.Controls
+﻿Imports Controls
+Imports MonkeyCore.Controls
 Imports SilverMonkeyEngine
 
 <CompilerServices.DesignerGenerated()>
@@ -27,7 +28,7 @@ Partial Class Variables
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.ListView1 = New MonkeyCore.Controls.ListView_NoFlicker()
+        Me.ListView1 = New Controls.ListView_NoFlicker()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)

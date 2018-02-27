@@ -102,8 +102,8 @@ Partial Class Main
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.Log_ = New RichTextBoxEx()
         Me.toServer = New RichTextBoxEx()
-        Me.FurreCountTxtBx = New MonkeyCore.Controls.TextBox_NoFlicker()
-        Me.DreamList = New MonkeyCore.Controls.ListBox_NoFlicker()
+        Me.FurreCountTxtBx = New Controls.TextBox_NoFlicker()
+        Me.DreamList = New Controls.ListBox_NoFlicker()
         Me.DreamBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -752,8 +752,8 @@ Partial Class Main
     Friend WithEvents ReferenceLinksToolStripMenuItem As Windows.Forms.ToolStripMenuItem
     Friend WithEvents toServer As RichTextBoxEx
     Friend WithEvents Log_ As RichTextBoxEx
-    Friend WithEvents FurreCountTxtBx As MonkeyCore.Controls.TextBox_NoFlicker
-    Friend WithEvents DreamList As MonkeyCore.Controls.ListBox_NoFlicker
+    Friend WithEvents FurreCountTxtBx As Controls.TextBox_NoFlicker
+    Friend WithEvents DreamList As Controls.ListBox_NoFlicker
     Friend WithEvents Furre As Windows.Forms.ContextMenuStrip
     Friend WithEvents Look As Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator6 As Windows.Forms.ToolStripSeparator

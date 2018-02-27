@@ -35,6 +35,12 @@
     <AssemblyOriginatorKeyFile>MonkeyCore.WinForms.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FastColoredTextBox, Version=2.16.21.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
+    </Reference>
+    <Reference Include="Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47, processorArchitecture=MSIL">
+      <HintPath>..\packages\Irony.0.9.1\lib\net40\Irony.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -59,13 +65,25 @@
     </Compile>
     <Compile Include="HelpLinkMenu.cs" />
     <Compile Include="HelpLinkToolStripMenu.cs" />
+    <Compile Include="ListBox_NoFlicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ListView_NoFlicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="RichTextBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ScrollingListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="SilverMonkeyFCTB.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="TabControlEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox_NoFlicker.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TextWriter.cs" />
@@ -97,6 +115,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="MonkeyCore.WinForms.snk" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AssemblyInfoersionCS.tt">
