@@ -73,9 +73,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssemblyInfoersion.tt</DependentUpon>
     </Compile>
-    <Compile Include="MsMemberList.vb" />
     <Compile Include="MsPounce.vb" />
-    <Compile Include="MsSound.vb" />
     <Compile Include="MsWebRequests.vb" />
     <Compile Include="MsWeb\MsWebVariable.vb" />
     <Compile Include="MsWeb\WebException.vb" />

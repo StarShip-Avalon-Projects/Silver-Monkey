@@ -81,8 +81,10 @@
     <Compile Include="MsBotMessage.cs" />
     <Compile Include="MsDatabase.cs" />
     <Compile Include="MsFurres.cs" />
+    <Compile Include="MsMemberList.cs" />
     <Compile Include="MsPhoenicSpeak.cs" />
     <Compile Include="MsPhoenixSpeakBackupAndRestore.cs" />
+    <Compile Include="MsSound.cs" />
     <Compile Include="PhoenicSpeak\PhoenicSpeakDataObject.cs" />
     <Compile Include="PhoenicSpeak\PhoenixSpeakEventArgs.cs" />
     <Compile Include="Variables\WebVariable.cs" />
