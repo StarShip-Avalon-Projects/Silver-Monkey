@@ -25,16 +25,16 @@ namespace Libraries
         {
             base.Initialize(args);
             Add(TriggerCategory.Cause,
-                 r => StartScript(r),
+                 StartScript,
                 "When the Monkey Speak Engine starts the script,");
         }
 
         [TriggerDescription("Triggers afte the Libraries are loaded and bot constant variables are set.")]
         private bool StartScript(TriggerReader reader)
         {
-            Bot ThisBot = reader.GetParametersOfType<Bot>().FirstOrDefault();
-            if (ParentBotSession != ThisBot)
-                ParentBotSession = ThisBot;
+            Bot bot = reader.GetParametersOfType<Bot>().FirstOrDefault();
+            if (ParentBotSession != bot)
+                ParentBotSession = bot;
 
             return true;
         }

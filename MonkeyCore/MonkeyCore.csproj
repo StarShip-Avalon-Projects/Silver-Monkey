@@ -77,7 +77,7 @@
       <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\SQLiteDatabase.cs" />
-    <Compile Include="IO\NewEditorScript.cs" />
+    <Compile Include="IO\EditorScriptBuilder.cs" />
     <Compile Include="IO\Paths.cs" />
     <Compile Include="Logging\BugReport.cs" />
     <Compile Include="Logging\ErrorLogging.cs" />

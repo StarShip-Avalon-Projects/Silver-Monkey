@@ -24,11 +24,13 @@ namespace Engine.BotSession
         /// </summary>
         public EngineOptoons() : base()
         {
+            // Bot Defaults
             botController = null;
             isEnabled = true;
+
             // Monkeyspeak overrides
-            TriggerLimit = 6000;
-            StringLengthLimit = 2048;
+            TriggerLimit = 512 * 1024;
+            StringLengthLimit = 2 * 1024;
         }
 
         #endregion Public Constructors

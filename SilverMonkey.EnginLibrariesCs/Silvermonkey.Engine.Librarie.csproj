@@ -80,6 +80,7 @@
     <Compile Include="Extentions\Utils.cs" />
     <Compile Include="MsBotMessage.cs" />
     <Compile Include="MsDatabase.cs" />
+    <Compile Include="MsDice.cs" />
     <Compile Include="MsFurres.cs" />
     <Compile Include="MsMemberList.cs" />
     <Compile Include="MsPhoenicSpeak.cs" />

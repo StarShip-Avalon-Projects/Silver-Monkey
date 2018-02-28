@@ -65,22 +65,19 @@ namespace Libraries
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);
-            // (0:500) When the bot starts backing up the furre Phoenix Speak,
-            Add(TriggerCategory.Cause,
-             r => true,
-             "When the bot starts a Phoenix Speak backup process,");
 
-            // (0:501) When the bot completes backing up the characters Phoenix Speak,
             Add(TriggerCategory.Cause,
-             r => true,
-             "When the bot completes a Phoenix Speak backup process,");
+             handler: r => true,
+             description: "When the bot starts a Phoenix Speak backup process,");
 
-            // (0:502) When the bot starts restoring the dream's furre Phoenix Speak,
+            Add(TriggerCategory.Cause,
+             handler: r => true,
+             description: "When the bot completes a Phoenix Speak backup process,");
+
             Add(TriggerCategory.Cause,
              r => true,
              "When the bot starts restoring the dream's Phoenix Speak,");
 
-            // (0:503) When the bot finishes restoring the dreams furre Phoenix Speak,
             Add(TriggerCategory.Cause,
              r => true,
              "When the bot finishes restoring the dream's Phoenix Speak,");
@@ -98,25 +95,21 @@ namespace Libraries
              "When the bot restores any furre\'s Phoenix Speak,");
 
             Add(TriggerCategory.Cause,
-             r => BackUpCharacterNamed(r),
-             "When the bot restores the Phoenix Speak for the furre named {...},");
+             handler: r => BackUpCharacterNamed(r),
+             description: "When the bot restores the Phoenix Speak for the furre named {...},");
 
-            // (1:520) and the bot is not in the middle of a Phoenix Speak backup process
             Add(TriggerCategory.Condition,
              r => BotBackup(r),
              "and the bot is not in the middle of a Phoenix Speak backup process,");
 
-            // (1:521) and the bot is in the middle of a Phoenix Speak backup process.
             Add(TriggerCategory.Condition,
              r => NotBotBackup(r),
              "and the bot is in the middle of a Phoenix Speak backup process,");
 
-            // (1:522) and the bot is not in the middle of a Phoenix Speak restore process,
             Add(TriggerCategory.Condition,
              r => BotRestore(r),
              "and the bot is not in the middle of a Phoenix Speak restore process,");
 
-            // (1:523) and the bot is in the middle of a Phoenix Speak restore process,
             Add(TriggerCategory.Condition,
              r => NotBotRestore(r),
              "and the bot is in the middle of a Phoenix Speak restore process,");
@@ -131,22 +124,18 @@ namespace Libraries
             // (1:) and the backed up Phoenix Speak database info for the triggering furre does not exist,
             // (1:) and the backed up Phoenix Speak database info for the furre named {...} does not eist, (use ""[DREAM]"" to check specific info for this dream.)
 
-            // (5:553) backup all furre phoenixspeak for the dream
             Add(TriggerCategory.Effect,
              r => BackupAllPS(r),
              "backup all Phoenix Speak for the dream.");
 
-            // (5:554) backup furre named {...} Phoenix Speak
             Add(TriggerCategory.Effect,
              r => BackupSingleCharacterPS(r),
              "backup the Phoenix Speak for the furre named {...} . (use \"[DREAM]\" to restore information specific to the dream)");
 
-            // (5:555) restore Phoenix Speak for furre {...}
             Add(TriggerCategory.Effect,
              r => RestoreCharacterPS(r),
              "restore the Phoenix Speak for furre named {...}. (use \"[DREAM]\" to restore information specific to the dream)");
 
-            // (5:557) remove entries older then # days from Phoenix Speak furre backup.
             Add(TriggerCategory.Effect,
              r => PruneCharacterBackup(r),
              "remove entries older than # days from Phoenix Speak backup.");

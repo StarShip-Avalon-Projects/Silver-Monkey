@@ -6,7 +6,7 @@ using System.Linq;
 
 // https://cms.furcadia.com/help/commands/keycommands/generalcommands/basiccommands#
 // roll "die"d"sides" (ex: roll 1d6)
-// TODO: Check Dice Commands, Furcadia Docs see to be Missing a +/= Modifyer
+// TODO: Check Dice Commands, Furcadia Docs seem to be Missing a +/= Modifyer
 
 namespace Libraries
 {
@@ -48,7 +48,7 @@ namespace Libraries
             base.Initialize(args);
 
             Add(TriggerCategory.Cause,
-                r => RollNumber(r),
+                r => WhenAnyOneRollsANumber(r),
                 "When the bot rolls #d#,");
 
             Add(TriggerCategory.Cause,
@@ -60,7 +60,7 @@ namespace Libraries
                  "When the bot rolls #d#-#,");
 
             Add(TriggerCategory.Cause,
-                r => RollNumber(r),
+                r => WhenAnyOneRollsANumber(r),
                 "When a furre rolls #d#,");
 
             Add(TriggerCategory.Cause,
@@ -196,7 +196,7 @@ namespace Libraries
             var count = reader.ReadNumber();
             var side = reader.ReadNumber();
             var modifyer = reader.ReadNumber();
-            return SendServer($"roll {count.ToString()}d{side.ToString()} {modifyer.ToString()}");
+            return SendServer($"roll {count.ToString()}d{side.ToString()}-{modifyer.ToString()}");
         }
 
         [TriggerNumberParameter]
@@ -207,11 +207,11 @@ namespace Libraries
             var count = reader.ReadNumber();
             var side = reader.ReadNumber();
             var modifyer = reader.ReadNumber();
-            return SendServer($"roll {count.ToString()}d{side.ToString()} {modifyer.ToString()}");
+            return SendServer($"roll {count.ToString()}d{side.ToString()}+{modifyer.ToString()}");
         }
 
         [TriggerParameter("Dice Object from Server")]
-        private bool RollNumber(TriggerReader reader)
+        private bool WhenAnyOneRollsANumber(TriggerReader reader)
         {
             var DiceParam = reader.GetParametersOfType<DiceObject>().FirstOrDefault();
             if (DiceParam != dice)

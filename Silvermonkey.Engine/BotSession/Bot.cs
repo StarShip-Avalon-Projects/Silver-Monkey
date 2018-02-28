@@ -134,17 +134,11 @@ namespace Engine.BotSession
         /// </exception>
         public async Task ConnetAsync()
         {
-            if (MsEngineOptions.IsEnabled)
+            if (EngineEnable)
             {
-                await StartEngine().ContinueWith(task =>
-                {
-                    if (task.Exception != null) SendError(task.Exception.InnerException, task);
-                    else
-                        Task.Run(() => Connect());
-                }, TaskContinuationOptions.ExecuteSynchronously);
+                StartEngine();
             }
-            else
-                await Task.Run(() => Connect());
+            await Task.Run(() => Connect());
         }
 
         /// <summary>
@@ -198,7 +192,6 @@ namespace Engine.BotSession
         /// </summary>
         public void StopEngine()
         {
-            //   RemoveHandler ProcessServerChannelData, Me
             if (MSpage != null)
             {
                 MSpage.Reset(true);
@@ -287,7 +280,7 @@ namespace Engine.BotSession
                     MSpage.LoadLibrary(Library, this);
                     if (!silent)
                     {
-                        Monkeyspeak.Logging.Logger.Info($"{Library.GetType().Name}");
+                        Logger.Info($"{Library.GetType().Name}");
                     }
                     Logger.Debug<Bot>($"{Library.GetType().Name}");
                 }
@@ -302,10 +295,7 @@ namespace Engine.BotSession
 
         private void OnClientStatusChanged(object Sender, NetClientEventArgs e)
         {
-            if (MSpage == null)
-            {
-                return;
-            }
+            if (MSpage == null || !EngineEnable) return;
 
             try
             {
@@ -345,10 +335,8 @@ namespace Engine.BotSession
 
         private async void OnParseSererInstructionAsync(object sender, ParseServerArgs e)
         {
-            if (MSpage == null || !EngineEnable)
-            {
-                return;
-            }
+            if (MSpage == null || !EngineEnable) return;
+
             CancellationToken cancel = new CancellationTokenSource(800).Token;
 
             try
@@ -412,11 +400,9 @@ namespace Engine.BotSession
 
         private async void OnServerChannel(object sender, ParseChannelArgs Args)
         {
+            if (MSpage == null || !EngineEnable) return;
+
             CancellationToken cancel = new CancellationTokenSource(TimeSpan.FromSeconds(4)).Token;
-            if (MSpage == null || !EngineEnable)
-            {
-                return;
-            }
 
             try
             {
@@ -665,11 +651,8 @@ namespace Engine.BotSession
         private async void OnServerStatusChanged(object Sender, NetServerEventArgs e)
         {
             if (MSpage == null || !EngineEnable) return;
+
             CancellationToken cancel = new CancellationTokenSource(800).Token;
-            if (!MsEngineOptions.IsEnabled)
-            {
-                return;
-            }
 
             try
             {
@@ -700,14 +683,14 @@ namespace Engine.BotSession
         /// Starts the engine.
         /// </summary>
         /// <returns></returns>
-        private async Task StartEngine()
+        private void StartEngine()
         {
             var TimeStart = DateTime.Now;
             CancellationToken cancel = new CancellationTokenSource(TimeSpan.FromSeconds(3)).Token;
 
             MsEngine = new MonkeyspeakEngine(GetOptions().MonkeySpeakEngineOptions);
             string MonkeySpeakScript = MsEngineExtentionFunctions.LoadFromScriptFile(MsEngineOptions.MonkeySpeakScriptFile, MsEngine.Options.Version);
-            MSpage = await MsEngine.LoadFromStringAsync(MonkeySpeakScript);
+            MSpage = MsEngine.LoadFromString(MonkeySpeakScript);
 
             List<IVariable> VariableList = new List<IVariable>();
             MSpage = LoadLibrary(false);
@@ -723,7 +706,7 @@ namespace Engine.BotSession
             VariableList.Add(new ConstantVariable(BanishListVariable, null));
             PageSetVariable(VariableList);
             // (0:0) When the bot starts,
-            await MSpage.ExecuteAsync(0, cancel, this);
+            MSpage.Execute(0, this);
             Logger.Info($"Done!!! Loaded {MSpage.Size} triggers in {DateTime.Now.Subtract(TimeStart).Milliseconds} miliseconds.");
         }
 

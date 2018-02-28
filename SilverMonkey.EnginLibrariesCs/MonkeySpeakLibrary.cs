@@ -5,6 +5,7 @@ using Monkeyspeak.Libraries;
 using System.Linq;
 using MsLog = Monkeyspeak.Logging;
 using static Libraries.MsLibHelper;
+using MonkeyCore.Data;
 
 namespace Libraries
 {
@@ -15,27 +16,27 @@ namespace Libraries
     /// </summary>
     public class MonkeySpeakLibrary : AutoIncrementBaseLibrary
     {
+        internal const string DateTimeFormat = "MM-dd-yyyy hh:mm:ss";
+        internal const string DataBaseTimeZone = "Central Standard Time";
+
+        /// <summary>
+        /// Currenly used database filfe
+        /// </summary>
+        /// <returns>
+        /// SQLite database file with Silver Monkey system tables and user data
+        /// </returns>
+        internal static string SQLitefile { get; set; }
+
+        internal static SQLiteDatabase database = null;
+
         #region Public Fields
 
         /// <summary>
         /// The arguments
         /// </summary>
-        public static object[] _args = null;
+        private static object[] args = null;
 
         #endregion Public Fields
-
-        #region Private Fields
-
-        /// <summary>
-        /// Current Dream the Bot is in
-        /// <para/>
-        /// Referenced as a Monkeyspeak Parameter.
-        /// <para/>
-        /// Updates when ever Monkey Speak needs it through <see cref="Monkeyspeak.Page.Execute(Integer(), var())"/>
-        /// </summary>
-        private static Dream _dream;
-
-        #endregion Private Fields
 
         #region Public Properties
 
@@ -45,10 +46,7 @@ namespace Libraries
         /// <value>
         /// The connected furre.
         /// </value>
-        public static Furre ConnectedFurre
-        {
-            get; set;
-        }
+        public static Furre ConnectedFurre { get; set; }
 
         /// <summary>
         /// Reference to the Main Bot Session for the bot
@@ -77,11 +75,7 @@ namespace Libraries
         /// Gets or sets the current dream information for the dream Silver Monkey is located in.
         /// </summary>
         /// <value>The dream information.</value>
-        public static Dream DreamInfo
-        {
-            get { return _dream; }
-            set { _dream = value; }
-        }
+        public static Dream DreamInfo { get; set; }
 
         #endregion Public Properties
 
@@ -105,9 +99,18 @@ namespace Libraries
         /// <returns></returns>
         public T GetArgumet<T>(int index = 0)
         {
-            if (_args != null && _args.Length > index)
-                return (T)_args[index];
+            if (args != null && args.Length > index)
+                return (T)args[index];
             return default(T);
+        }
+
+        /// <summary>
+        /// Called when page is disposing or resetting.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public override void Unload(Page page)
+        {
         }
 
         /// <summary>
@@ -117,8 +120,8 @@ namespace Libraries
         /// <returns></returns>
         public T[] GetArgumetsOfType<T>()
         {
-            if (_args != null && _args.Length > 0)
-                return _args.OfType<T>().ToArray();
+            if (args != null && args.Length > 0)
+                return args.OfType<T>().ToArray();
             return new T[0];
         }
 
@@ -156,10 +159,10 @@ namespace Libraries
         /// </param>
         public override void Initialize(params object[] args)
         {
-            _args = args;
+            MonkeySpeakLibrary.args = args;
 
             var bot = GetArgumetsOfType<ProxySession>().FirstOrDefault();
-            if (bot != null)
+            if (bot != ParentBotSession)
             {
                 ParentBotSession = bot;
                 DreamInfo = ParentBotSession.Dream;
@@ -202,13 +205,12 @@ namespace Libraries
         public static bool ReadDreamParams(TriggerReader reader)
         {
             Dream dreamInfo = reader.GetParametersOfType<Dream>().First();
-            if (dreamInfo == null)
-                return false;
 
             if (dreamInfo != DreamInfo)
             {
                 DreamInfo = dreamInfo;
                 UpdateCurrentDreamVariables(DreamInfo, reader.Page);
+                return true;
             }
 
             return true;
@@ -224,8 +226,6 @@ namespace Libraries
             bool ParamSet = false;
 
             Furre ActiveFurre = reader.GetParametersOfType<Furre>().First();
-            if (ActiveFurre == null)
-                return ParamSet;
             if (ActiveFurre != Player)
             {
                 Player = ActiveFurre;
@@ -258,23 +258,16 @@ namespace Libraries
         /// <returns>True is the Server is Connected</returns>
         public bool SendServer(string message)
         {
-            if (string.IsNullOrWhiteSpace(message))
+            if (string.IsNullOrWhiteSpace(message) || ParentBotSession == null)
                 return false;
-
-            if (ParentBotSession == null)
-            {
-                return false;
-            }
 
             if (ParentBotSession.IsServerSocketConnected)
             {
                 ParentBotSession.SendFormattedTextToServer(message);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>
@@ -285,21 +278,13 @@ namespace Libraries
         public bool TriggeringFurreIsBotController(TriggerReader reader)
         {
             var BotController = reader.Page.GetVariable(BotControllerVariable);
-            if (BotController.Value == null)
+            if (string.IsNullOrWhiteSpace(BotController.Value.ToString()))
             {
-                MsLog.Logger.Warn("BotContriller is not defined, Please specifiy a BotController in the Bot configuration settings,");
+                MsLog.Logger.Warn("BotController is not defined, Please specifiy a BotController in the Bot configuration settings,");
                 return false;
             }
 
             return Player.ShortName == BotController.Value.ToString().ToFurcadiaShortName();
-        }
-
-        /// <summary>
-        /// Called when page is disposing or resetting.
-        /// </summary>
-        /// <param name="page">The page.</param>
-        public override void Unload(Page page)
-        {
         }
 
         #endregion Public Methods
@@ -335,8 +320,7 @@ namespace Libraries
             var msg = Player.Message.ToStrippedFurcadiaMarkupString();
             if (msg is null || msMsg is null)
                 return false;
-            return (msg.EndsWith(msMsg)
-                        & !IsConnectedCharacter(Player));
+            return msg.EndsWith(msMsg) & !IsConnectedCharacter(Player);
         }
 
         /// <summary>
@@ -372,8 +356,7 @@ namespace Libraries
             string msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower();
             if (msg is null || msMsg is null)
                 return false;
-            return (msg.ToLower().StartsWith(msMsg.ToLower())
-                        & !IsConnectedCharacter(Player));
+            return msg.ToLower().StartsWith(msMsg.ToLower()) & !IsConnectedCharacter(Player);
         }
 
         #endregion Protected Methods

@@ -333,23 +333,23 @@ Public Class NewBott
                 Exit Sub
             End If
         End If
-        Dim BotFile As String
+        Dim BotFile As String = String.Empty
         Dim MsFile As String = String.Empty
         If Not String.IsNullOrEmpty(TxtbxFilelocation.Text) Then
             BotFile = Path.Combine(TxtbxFilelocation.Text, TxtbxBotName.Text)
-            MsFile = BotFile
-        ElseIf Not Directory.Exists(TxtbxFilelocation.Text) Then
-            BotFile = Path.Combine(IO.Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
-            MsFile = BotFile
+            MsFile = Path.Combine(TxtbxFilelocation.Text, TxtbxBotName.Text)
         Else
             BotFile = Path.Combine(IO.Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
-            MsFile = BotFile
+            MsFile = Path.Combine(IO.Paths.SilverMonkeyBotPath, TxtbxBotName.Text)
         End If
 
         Dim ext As String = Path.GetExtension(BotFile)
         If String.IsNullOrEmpty(ext) Then
-            BotFile += ".bini"
-            MsFile += ".ms"
+            BotFile = $"{BotFile}.bini"
+        End If
+        ext = Path.GetExtension(MsFile)
+        If String.IsNullOrEmpty(ext) Then
+            MsFile = $"{MsFile}.ms"
         End If
 
         If File.Exists(BotFile) And Not OverWrite Then
@@ -396,7 +396,7 @@ Public Class NewBott
         End If
         Dim ScriptFile As String = bFile.MonkeySpeakEngineOptions.MonkeySpeakScriptFile
         If Not File.Exists(ScriptFile) Then
-            Dim Script = New EditorScript(Path.Combine(Paths.ApplicationPath, "MS Scripts.ini"))
+            Dim Script = New EditorScriptBuilder(Path.Combine(Paths.ApplicationPath, "MS Scripts.ini"))
             Script.ReadScriptTemplate("Default New Script", bFile.MonkeySpeakEngineOptions.Version.ToString())
             Script.WriteScriptToFile(ScriptFile)
         End If

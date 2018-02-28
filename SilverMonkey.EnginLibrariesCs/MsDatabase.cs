@@ -36,16 +36,6 @@ namespace Libraries
     {
         #region Private Fields
 
-        private SQLiteDatabase database = null;
-        private const string DateTimeFormat = "MM-dd-yyyy hh:mm:ss";
-        private const string DataBaseTimeZone = "Central America Standard Time";
-
-        /// <summary>
-        /// Shared(Static) Database file
-        /// </summary>
-        private static string _SQLitefile;
-
-        //   private SQLiteDatabase database == null;
         /// <summary>
         /// These collumns not allowed for deletion or modification, They are core
         /// columns to SM operation
@@ -70,24 +60,6 @@ namespace Libraries
         #endregion Private Fields
 
         #region Public Properties
-
-        /// <summary>
-        /// Currenly used database filfe
-        /// </summary>
-        /// <returns>
-        /// SQLite database file with Silver Monkey system tables and user data
-        /// </returns>
-        public static string SQLitefile
-        {
-            get
-            {
-                return _SQLitefile;
-            }
-            set
-            {
-                _SQLitefile = Paths.CheckBotFolder(value);
-            }
-        }
 
         /// <summary>
         /// Gets the base identifier.
@@ -275,8 +247,8 @@ namespace Libraries
         [TriggerVariableParameter]
         private bool ReadDatabaseInfoName(TriggerReader reader)
         {
-            if (database == null)
-                database = new SQLiteDatabase(SQLitefile);
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadVariable(true);
