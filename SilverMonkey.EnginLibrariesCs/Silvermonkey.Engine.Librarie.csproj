@@ -57,6 +57,7 @@
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.107.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.107.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -86,6 +87,10 @@
     <Compile Include="MsPhoenicSpeak.cs" />
     <Compile Include="MsPhoenixSpeakBackupAndRestore.cs" />
     <Compile Include="MsSound.cs" />
+    <Compile Include="MsWebRequests.cs" />
+    <Compile Include="MsWeb\WebData.cs" />
+    <Compile Include="MsWeb\WebException.cs" />
+    <Compile Include="MsWeb\WebRequests.cs" />
     <Compile Include="PhoenicSpeak\PhoenicSpeakDataObject.cs" />
     <Compile Include="PhoenicSpeak\PhoenixSpeakEventArgs.cs" />
     <Compile Include="Variables\WebVariable.cs" />

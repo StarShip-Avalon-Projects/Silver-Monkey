@@ -75,10 +75,6 @@
     </Compile>
     <Compile Include="MsPounce.vb" />
     <Compile Include="MsWebRequests.vb" />
-    <Compile Include="MsWeb\WebException.vb" />
-    <Compile Include="MsWeb\WebRequests.vb" />
-    <Compile Include="MsWeb\WebUtilities.vb" />
-    <Compile Include="MsWeb\WenData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
