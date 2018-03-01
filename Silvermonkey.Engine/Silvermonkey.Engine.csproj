@@ -85,7 +85,6 @@
     <Compile Include="BotSession\MsEngineExtentionFunctions.cs" />
     <Compile Include="BotSession\EngineOptions.cs" />
     <Compile Include="Libraries\MsStartBot.cs" />
-    <Compile Include="MsDice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

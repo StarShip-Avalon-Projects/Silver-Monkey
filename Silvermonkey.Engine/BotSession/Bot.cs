@@ -670,7 +670,7 @@ namespace Engine.BotSession
                     case ConnectionPhase.Connected:
                         // (0:1) When the bot logs into furcadia,
 
-                        await MSpage.ExecuteAsync(1, cancel);
+                        await MSpage.ExecuteAsync(1, cancel, this);
                         return;
                 }
             }

@@ -28,9 +28,9 @@ namespace Libraries
         #region Public Methods
 
         /// <summary>
-        ///
+        /// Initializes this instance. Add your trigger handlers here.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">Parametized argument of vars to use to pass runtime vars to a library at initialization</param>
         public override void Initialize(params object[] args)
         {
             Add(TriggerCategory.Cause,

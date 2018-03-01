@@ -30,7 +30,7 @@ namespace Libraries
         }
 
         [TriggerDescription("Triggers afte the Libraries are loaded and bot constant variables are set.")]
-        private bool StartScript(TriggerReader reader)
+        private static bool StartScript(TriggerReader reader)
         {
             Bot bot = reader.GetParametersOfType<Bot>().FirstOrDefault();
             if (ParentBotSession != bot)

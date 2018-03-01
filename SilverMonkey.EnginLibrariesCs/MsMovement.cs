@@ -1,4 +1,5 @@
-﻿using Furcadia.Net.DreamInfo;
+﻿using Furcadia.Drawing;
+using Furcadia.Net.DreamInfo;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using Monkeyspeak.Logging;
@@ -49,48 +50,56 @@ namespace Libraries
         public override void Initialize(params object[] args)
         {
             Add(TriggerCategory.Cause,
-                r => EnterView(r),
+                r => WhenAnyoneEnterView(r),
                 "When anyone enters the bots view, ");
 
             Add(TriggerCategory.Cause,
-                r => FurreNamedEnterView(r),
-                "When a furre named {..} enters the bots view,");
+                r => WhenFurreNamedEnterView(r),
+                "When a furre named {...} enters the bots view,");
 
             Add(TriggerCategory.Cause,
-                r => LeaveView(r),
+                r => WhenAnyoneLeaveView(r),
                 "When anyone leaves the bots view, ");
 
             Add(TriggerCategory.Cause,
-                r => FurreNamedLeaveView(r),
-                "When a furre named {..} leaves the bots view,");
+                r => WhenFurreNamedLeaveView(r),
+                "When a furre named {...} leaves the bots view,");
 
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r),
                 "When the bot sees a furre description,");
 
-            Add(TriggerCategory.Condition,
-                r => DescContains(r),
-                "and triggering furre\'s description contains {..}");
+            Add(TriggerCategory.Cause,
+                r => ReadTriggeringFurreParams(r),
+                "When a furre moves,");
+
+            Add(TriggerCategory.Cause,
+                r => WhenAnyoneMoveInto(r),
+                "when anyone moves into (x,y),");
 
             Add(TriggerCategory.Condition,
-                r => NotDescContains(r),
-                "and triggering furre\'s description does not contain {..}");
+                r => AndDescContains(r),
+                "and triggering furre\'s description contains {...}");
 
             Add(TriggerCategory.Condition,
-                r => FurreNamedDescContains(r),
-                "and the furre named {..} description contains {..}if they are in the dream,");
+                r => AndNotDescContains(r),
+                "and triggering furre\'s description does not contain {...}");
 
             Add(TriggerCategory.Condition,
-                r => NotDescContainsFurreNamed(r),
-                "and the furre named {..} description does not contain {..} if they are in the dream");
+                r => AndFurreNamedDescContains(r),
+                "and the furre named {...} description contains {...}if they are in the dream,");
 
             Add(TriggerCategory.Condition,
-                r => TriggeringFurreIsGender(r),
+                r => AndNotDescContainsFurreNamed(r),
+                "and the furre named {...} description does not contain {...} if they are in the dream");
+
+            Add(TriggerCategory.Condition,
+                r => AndTriggeringFurreIsGender(r),
                 "and the triggering furre is gender #,");
 
             Add(TriggerCategory.Condition,
                 r => AndFurreNamedIsGender(r),
-                "and the furre named {..}\'s is male if they are in the dream,");
+                "and the furre named {...}\'s is male if they are in the dream,");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreSpecies(r),
@@ -98,7 +107,7 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedSpecies(r),
-                "and the furre named {..} is Species # if they are in the dream (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the furre named {...} is Species # if they are in the dream (please see http://www.furcadia.com/dsparams/ for info)");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreWings(r),
@@ -110,11 +119,11 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedWings(r),
-                "and the furre named {..} has wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the furre named {...} has wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedNoWings(r),
-                "and the furre named {..}  doesn\'t wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the furre named {...}  doesn\'t wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreStanding(r),
@@ -134,19 +143,38 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedStanding(r),
-                "and the furre named {..} is standing.");
+                "and the furre named {...} is standing.");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedSitting(r),
-                "and the furre named {..} is sitting.");
+                "and the furre named {...} is sitting.");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedLaying(r),
-                "and the furre named {..} is laying.");
+                "and the furre named {...} is laying.");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedFacingIsFacingDirection(r),
-                "and the furre named {..} is facing direction #,");
+                "and the furre named {...} is facing direction #,");
+
+            Add(TriggerCategory.Condition,
+                 r => WhenAnyoneMoveInto(r),
+                 "and the triggering furre moved into/is standing at (x,y)");
+
+            Add(TriggerCategory.Condition,
+                r => FurreNamedMoveInto(r),
+                "and the furre named {...} moved into/is standing at (x,y),");
+
+            Add(TriggerCategory.Condition,
+                r => MoveFrom(r), "and the triggering furre moved from (x,y),");
+
+            Add(TriggerCategory.Condition,
+                r => FurreNamedMoveFrom(r),
+                "and the furre named {...} moved from (x,y),");
+
+            Add(TriggerCategory.Condition,
+                r => AndTriggeringFurreStoodStill(r),
+                "and the triggering furre tried to move but stood still.");
 
             Add(TriggerCategory.Effect,
                 r => TriggeringFurreDescVar(r),
@@ -166,19 +194,19 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedGenderVar(r),
-                "set variable %Variable to the furre named {..}\'s gender if they are in the dream.");
+                "set variable %Variable to the furre named {...}\'s gender if they are in the dream.");
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedSpeciesVar(r),
-                "set variable %Variable to the furre named {..}\'s species, if they are in the dream.");
+                "set variable %Variable to the furre named {...}\'s species, if they are in the dream.");
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedDescVar(r),
-                "set variable %Variable to the furred named {..}\'s description, if they are in the dream.");
+                "set variable %Variable to the furred named {...}\'s description, if they are in the dream.");
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedColorsVar(r),
-                "set variable %Variable to the furre named {..}\'s colors, if they are in the dream.");
+                "set variable %Variable to the furre named {...}\'s colors, if they are in the dream.");
 
             Add(TriggerCategory.Effect,
                 r => TriggeringFurreWingsVar(r),
@@ -186,38 +214,7 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedWingsVar(r),
-                "set %Variable to the wings type the furre named {..} is wearing.");
-
-            Add(TriggerCategory.Cause,
-                r => ReadTriggeringFurreParams(r),
-                "When a furre moves,");
-
-            Add(TriggerCategory.Cause,
-                r => MoveInto(r),
-                "when a furre moves into (x,y),");
-
-            Add(TriggerCategory.Condition,
-                r => MoveInto(r),
-                "and the triggering furre moved into/is standing at (x,y)");
-
-            Add(TriggerCategory.Condition,
-                r => FurreNamedMoveInto(r),
-            "and the furre named {..} moved into/is standing at (x,y),");
-
-            Add(TriggerCategory.Condition,
-                r => MoveFrom(r), "and the triggering furre moved from (x,y),");
-
-            Add(TriggerCategory.Condition,
-                r => FurreNamedMoveFrom(r),
-            "and the furre named {..} moved from (x,y),");
-
-            Add(TriggerCategory.Condition,
-                r => StoodStill(r),
-                "and the triggering furre tried to move but stood still.");
-
-            Add(TriggerCategory.Effect,
-                r => MoveBot(r),
-                "move the bot in direction # one space. (seven = North-West, nine = North-East, three = South-East, one = South-West)");
+                "set %Variable to the wings type the furre named {...} is wearing.");
 
             Add(TriggerCategory.Effect,
                 r => TurnCW(r),
@@ -225,7 +222,7 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => TurnCCW(r),
-            "turn the bot counter-clockwise one space.");
+                "turn the bot counter-clockwise one space.");
 
             Add(TriggerCategory.Effect,
                 r => SetCordX(r),
@@ -237,11 +234,11 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedSetCordX(r),
-                "set variable %Variable to the X coordinate where the furre named {..} moved into/is at.");
+                "set variable %Variable to the X coordinate where the furre named {...} moved into/is at.");
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedSetCordY(r),
-            "set variable %Variable to the Y coordinate where the furre named {..} moved into/is at.");
+                "set variable %Variable to the Y coordinate where the furre named {...} moved into/is at.");
 
             Add(TriggerCategory.Effect,
                 r => BotSit(r),
@@ -257,7 +254,7 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => BotMoveSequence(r),
-                "Move the bot in this sequence {..} (one, sw, three, se, seven, nw, nine, or ne)");
+                "Move the bot in this sequence {...} (one, sw, three, se, seven, nw, nine, or ne)");
         }
 
         public override void Unload(Page page)
@@ -341,7 +338,7 @@ namespace Libraries
         }
 
         [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
-        private bool DescContains(TriggerReader reader)
+        private bool AndDescContains(TriggerReader reader)
         {
             if (string.IsNullOrEmpty(Player.FurreDescription))
             {
@@ -352,7 +349,7 @@ namespace Libraries
             return Player.FurreDescription.Contains(reader.ReadString());
         }
 
-        private bool EnterView(TriggerReader reader)
+        private bool WhenAnyoneEnterView(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
             return Player.Visible == Player.WasVisible;
@@ -368,7 +365,7 @@ namespace Libraries
         }
 
         [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
-        private bool FurreNamedDescContains(TriggerReader reader)
+        private bool AndFurreNamedDescContains(TriggerReader reader)
         {
             var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
             var Pattern = reader.ReadString();
@@ -397,7 +394,7 @@ namespace Libraries
             return true;
         }
 
-        private bool FurreNamedEnterView(TriggerReader reader)
+        private bool WhenFurreNamedEnterView(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
             var tPlayer = DreamInfo.Furres.GetFurreByName(reader.ReadString());
@@ -434,7 +431,7 @@ namespace Libraries
             throw new NotImplementedException();
         }
 
-        private bool FurreNamedLeaveView(TriggerReader reader)
+        private bool WhenFurreNamedLeaveView(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
             var tPlayer = DreamInfo.Furres.GetFurreByName(reader.ReadString());
@@ -471,7 +468,7 @@ namespace Libraries
         {
             var Cord = reader.ReadVariable(true);
             var tPlayer = DreamInfo.Furres.GetFurreByName(reader.ReadString());
-            Cord.Value = tPlayer.Position.X;
+            Cord.Value = tPlayer.Location.X;
             return true;
         }
 
@@ -479,7 +476,7 @@ namespace Libraries
         {
             var Cord = reader.ReadVariable(true);
             var tPlayer = DreamInfo.Furres.GetFurreByName(reader.ReadString());
-            Cord.Value = tPlayer.Position.Y;
+            Cord.Value = tPlayer.Location.Y;
             return true;
         }
 
@@ -559,46 +556,32 @@ namespace Libraries
             return true;
         }
 
-        private bool LeaveView(TriggerReader reader)
+        private bool WhenAnyoneLeaveView(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
             return Player.Visible == Player.WasVisible;
         }
 
-        private bool MoveBot(TriggerReader reader)
-        {
-            var Direction = reader.ReadNumber();
-            switch (Direction)
-            {
-                case 7:
-                case 9:
-                case 3:
-                case 1:
-                    return SendServer("`m" + Direction.ToString());
-
-                default:
-                    throw new MonkeyspeakException("Directions must be in the form of  7, 9, 3, or 1");
-            }
-        }
-
         private bool MoveFrom(TriggerReader reader)
         {
+            ReadTriggeringFurreParams(reader);
             var X = reader.ReadNumber();
             var Y = reader.ReadNumber();
 
-            return Player.LastPosition.X == X && Player.LastPosition.Y == Y;
+            return Player.LastPosition == new FurrePosition(X, Y);
         }
 
-        private bool MoveInto(TriggerReader reader)
+        private bool WhenAnyoneMoveInto(TriggerReader reader)
         {
+            ReadTriggeringFurreParams(reader);
             var X = reader.ReadNumber();
             var Y = reader.ReadNumber();
 
-            return Player.Position.X == X && Player.Position.Y == Y;
+            return Player.Location == new FurrePosition(X, Y);
         }
 
         [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
-        private bool NotDescContains(TriggerReader reader)
+        private bool AndNotDescContains(TriggerReader reader)
         {
             if (string.IsNullOrEmpty(Player.FurreDescription))
             {
@@ -610,7 +593,7 @@ namespace Libraries
         }
 
         [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
-        private bool NotDescContainsFurreNamed(TriggerReader reader)
+        private bool AndNotDescContainsFurreNamed(TriggerReader reader)
         {
             Furre Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
             if (string.IsNullOrEmpty(Target.FurreDescription))
@@ -624,17 +607,17 @@ namespace Libraries
 
         private bool SetCordX(TriggerReader reader)
         {
-            reader.ReadVariable(true).Value = Player.Position.X;
+            reader.ReadVariable(true).Value = Player.Location.X;
             return true;
         }
 
         private bool SetCordY(TriggerReader reader)
         {
-            reader.ReadVariable(true).Value = Player.Position.Y;
+            reader.ReadVariable(true).Value = Player.Location.Y;
             return true;
         }
 
-        private bool StoodStill(TriggerReader reader)
+        private bool AndTriggeringFurreStoodStill(TriggerReader reader)
         {
             throw new NotImplementedException();
         }
@@ -681,7 +664,7 @@ namespace Libraries
             throw new NotImplementedException();
         }
 
-        private bool TriggeringFurreIsGender(TriggerReader reader)
+        private bool AndTriggeringFurreIsGender(TriggerReader reader)
         {
             throw new NotImplementedException();
         }

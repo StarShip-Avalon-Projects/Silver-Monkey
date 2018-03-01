@@ -77,7 +77,7 @@
       <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
     </Compile>
     <Compile Include="Dice\DiceRollCollection.cs" />
-    <Compile Include="Dice\Die.cs" />
+    <Compile Include="Die.cs" />
     <Compile Include="Extentions\Utils.cs" />
     <Compile Include="MsBotMessage.cs" />
     <Compile Include="MsDatabase.cs" />

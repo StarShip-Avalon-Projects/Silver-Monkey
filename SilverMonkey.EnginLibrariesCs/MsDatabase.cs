@@ -610,10 +610,13 @@ namespace Libraries
         [TriggerNumberParameter]
         private bool TriggeringFurreRecordInfoEqualToNumber(TriggerReader reader)
         {
+            if (Player.FurreID == -1 || Player.ShortName == "furcadiagameserver")
+                return false;
             var info = reader.ReadString();
             var Number = reader.ReadNumber();
 
-            double.TryParse(GetRecordInfoForTheFurreNamed(info, Player.ShortName).ToString(), out double Value);
+            var Meep = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
+            double.TryParse(Meep.ToString(), out double Value);
 
             return Number == Value;
         }
