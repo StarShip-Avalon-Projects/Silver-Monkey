@@ -171,15 +171,6 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\SmEngine.LibrariesVB\Silvermonkey.Engine.Libraries VB.vbproj">
-      <Name>Silvermonkey.Engine.LibrariesVB</Name>
-      <Project>{4619ff40-2c7c-4dad-887b-14d58755ccd9}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>
-      </DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
-      <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUtilExtension">

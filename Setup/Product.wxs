@@ -200,10 +200,6 @@
       <ComponentGroupRef Id="Silvermonkey.Engine.Symbols" />
       <ComponentGroupRef Id="Silvermonkey.Engine.Content" />
 
-      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesVB.Binaries" />
-      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesVB.Symbols" />
-      <ComponentGroupRef Id="Silvermonkey.Engine.LibrariesVB.Content" />
-
       <ComponentGroupRef Id="Silvermonkey.Engine.Libraries.Binaries" />
       <ComponentGroupRef Id="Silvermonkey.Engine.Libraries.Symbols" />
       <ComponentGroupRef Id="Silvermonkey.Engine.Libraries.Content" />

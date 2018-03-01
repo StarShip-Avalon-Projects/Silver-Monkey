@@ -328,10 +328,6 @@
       <Project>{35e0bf00-3f71-4216-85f3-1bb9b8842f1f}</Project>
       <Name>Silvermonkey.Engine.Librarie</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SmEngine.LibrariesVB\Silvermonkey.Engine.Libraries VB.vbproj">
-      <Project>{4619ff40-2c7c-4dad-887b-14d58755ccd9}</Project>
-      <Name>Silvermonkey.Engine.Libraries VB</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />

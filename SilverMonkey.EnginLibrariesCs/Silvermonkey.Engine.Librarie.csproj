@@ -86,6 +86,7 @@
     <Compile Include="MsMemberList.cs" />
     <Compile Include="MsPhoenicSpeak.cs" />
     <Compile Include="MsPhoenixSpeakBackupAndRestore.cs" />
+    <Compile Include="MsPounce.cs" />
     <Compile Include="MsSound.cs" />
     <Compile Include="MsWebRequests.cs" />
     <Compile Include="MsWeb\WebData.cs" />

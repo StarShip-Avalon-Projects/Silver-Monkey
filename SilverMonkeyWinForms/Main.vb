@@ -12,6 +12,7 @@ Imports Engine.BotSession
 Imports Furcadia.Net
 Imports Furcadia.Net.DreamInfo
 Imports Furcadia.Net.Utils.ServerParser
+Imports Libraries.Web
 Imports Logging
 Imports MonkeyCore.Controls
 Imports MonkeyCore.Logging

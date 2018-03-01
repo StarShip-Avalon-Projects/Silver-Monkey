@@ -122,8 +122,6 @@
 			WorkingDirectory="Silvermonkey.Engine/"/>
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
 			WorkingDirectory="SilverMonkey.EnginLibrariesCs/"/>
-		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
-			WorkingDirectory="SmEngine.LibrariesVB/"/>
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
 			WorkingDirectory="Silvermonkey.WPF/"/> 
  </Target>
