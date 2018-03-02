@@ -54,6 +54,14 @@ namespace Libraries
             /// <summary>
             /// Initializes a new instance of the <see cref="Furr"/> class.
             /// </summary>
+            public Furr()
+            {
+                name = "unknown";
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Furr"/> class.
+            /// </summary>
             /// <param name="Name">The Furre's name.</param>
             public Furr(string Name)
             {
@@ -94,21 +102,21 @@ namespace Libraries
             /// <summary>
             /// Implements the operator !=.
             /// </summary>
-            /// <param name="a">a.</param>
+            /// <param name="Furre1">a.</param>
             /// <param name="b">The b.</param>
             /// <returns>
             /// The result of the operator.
             /// </returns>
-            public static bool operator !=(Furr a, IFurre b)
+            public static bool operator !=(Furr Furre1, IFurre Furre2)
             {
                 // If left hand side is null...
-                if (a is null)
+                if (Furre1 is null)
                 {
-                    return b is null;
+                    return Furre2 is null;
                 }
 
                 // Return true if the fields match:
-                return !a.Equals(b);
+                return !Furre1.Equals(Furre2);
             }
 
             /// <summary>
@@ -176,19 +184,19 @@ namespace Libraries
 
         #region Private Fields
 
-        private List<IFurre> MembersList;
+        private IList<IFurre> MembersList;
 
         #endregion Private Fields
 
         #region Public Properties
 
-        public override int BaseId
-        {
-            get
-            {
-                return 900;
-            }
-        }
+        /// <summary>
+        /// Gets the base identifier.
+        /// </summary>
+        /// <value>
+        /// The base identifier.
+        /// </value>
+        public override int BaseId => 900;
 
         /// <summary>
         /// Member List file path
@@ -271,22 +279,37 @@ namespace Libraries
 
         private bool AddFurreNamed(TriggerReader reader)
         {
-            MembersList.Add(new Furr(reader.ReadString()));
-            using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-            using (StreamWriter streamWriter = new StreamWriter(fileStream))
-                foreach (var fur in MembersList)
-                    streamWriter.Write($"{fur}");
+            CheckMemberList();
+            Furr furr = new Furr(reader.ReadString());
+            MembersList.Add(furr);
+
+            if (!MembersList.Contains(furr))
+                using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                {
+                    MembersList.Add(furr);
+                    foreach (var fur in MembersList)
+                        streamWriter.Write($"{fur}");
+                }
 
             return true;
         }
 
         private bool AddTrigFurre(TriggerReader reader)
         {
+            CheckMemberList();
+
             MembersList.Add(Player);
-            using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-            using (StreamWriter streamWriter = new StreamWriter(fileStream))
-                foreach (var fur in MembersList)
-                    streamWriter.Write($"{fur}");
+
+            if (!MembersList.Contains(Player))
+                using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                {
+                    MembersList.Add(Player);
+                    foreach (var fur in MembersList)
+                        streamWriter.Write($"{fur}");
+                }
+
             return true;
         }
 
@@ -295,10 +318,14 @@ namespace Libraries
             MemberListFile = Paths.CheckBotFolder(MemberListFile);
             if (!File.Exists(MemberListFile))
             {
-                using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate))
-                using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.Read))
+                using (StreamReader streamReader = new StreamReader(fileStream))
                 {
-                    streamWriter.Close();
+                    MembersList.Clear();
+                    while (streamReader.Peek() != -1)
+                    {
+                        MembersList.Add(new Furr(streamReader.ReadLine()));
+                    }
                 }
             }
         }
@@ -307,8 +334,11 @@ namespace Libraries
         [TriggerStringParameter]
         private bool FurreNamedIsMember(TriggerReader reader)
         {
+            CheckMemberList();
             var fur = new Furr(reader.ReadString());
-            return MembersList.Contains(fur);
+            if (MembersList.Contains(fur))
+                return true;
+            return FurreNamedIsBotController(reader);
         }
 
         [TriggerDescription("Checks to see it the active player or triggering furre isnot on the member list")]
@@ -322,7 +352,8 @@ namespace Libraries
         [TriggerVariableParameter]
         private bool ListToVariableTable(TriggerReader reader)
         {
-            var table = reader.ReadVariableTable(true);
+            CheckMemberList();
+            VariableTable table = reader.ReadVariableTable(true);
             foreach (var fur in MembersList)
             {
                 table.Add($"%{fur.ShortName}", fur.Name);
@@ -333,84 +364,68 @@ namespace Libraries
         [TriggerStringParameter]
         private bool RemoveFurreNamed(TriggerReader reader)
         {
-            try
+            CheckMemberList();
+            string furre = reader.ReadString();
+            string line;
+            using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
-                CheckMemberList();
-                string furre = reader.ReadString();
-                string line;
-                using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                using (StreamReader streamReader = new StreamReader(fileStream))
                 {
-                    using (StreamReader streamReader = new StreamReader(fileStream))
+                    while (streamReader.Peek() != -1)
                     {
-                        while (streamReader.Peek() != -1)
+                        line = streamReader.ReadLine();
+                        for (int i = 0; i < MembersList.Count; i++)
                         {
-                            line = streamReader.ReadLine();
-                            for (int i = 0; i <= MembersList.Count - 1; i++)
+                            if (line.ToFurcadiaShortName() == furre.ToFurcadiaShortName())
                             {
-                                if (line.ToFurcadiaShortName() == furre.ToFurcadiaShortName())
-                                {
-                                    MembersList.RemoveAt(i);
-                                    break;
-                                }
+                                MembersList.RemoveAt(i);
+                                break;
                             }
                         }
                     }
-                    using (StreamWriter streamWriter = new StreamWriter(fileStream))
-                        foreach (var fur in MembersList)
-                            streamWriter.Write($"{fur}");
                 }
-                return true;
+                using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                    foreach (var fur in MembersList)
+                        streamWriter.Write($"{fur}");
             }
-            catch (Exception ex)
-            {
-                Logger.Info<MsMemberList>("A problem occurred checking the member-list");
-                Logger.Error<MsMemberList>($"{ex.Message}");
-            }
-            return false;
+            return true;
         }
 
         private bool RemoveTrigFurre(TriggerReader reader)
         {
-            try
-            {
-                CheckMemberList();
-                string furre = Player.Name;
-                string line;
+            CheckMemberList();
+            string line;
 
-                using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                using (StreamReader streamReader = new StreamReader(fileStream))
                 {
-                    using (StreamReader streamReader = new StreamReader(fileStream))
+                    while (streamReader.Peek() != -1)
                     {
-                        while (streamReader.Peek() != -1)
+                        line = streamReader.ReadLine();
+                        for (int i = 0; i < MembersList.Count; i++)
                         {
-                            line = streamReader.ReadLine();
-                            for (int i = 0; i <= MembersList.Count - 1; i++)
+                            if (line.ToFurcadiaShortName() == Player.ShortName)
                             {
-                                if (line.ToFurcadiaShortName() == furre.ToFurcadiaShortName())
-                                {
-                                    MembersList.RemoveAt(i);
-                                    break;
-                                }
+                                MembersList.RemoveAt(i);
+                                break;
                             }
                         }
                     }
-                    using (StreamWriter streamWriter = new StreamWriter(fileStream))
-                        foreach (Furr fur in MembersList)
-                            streamWriter.Write($"{fur}");
                 }
-                return true;
+                using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                    foreach (Furr fur in MembersList)
+                        streamWriter.Write($"{fur}");
             }
-            catch (Exception ex)
-            {
-                Logger.Info<MsMemberList>("A problem occurred checking the member-list");
-                Logger.Error<MsMemberList>($"{ex.Message}");
-            }
-            return false;
+            return true;
         }
 
         private bool TrigFurreIsMember(TriggerReader reader)
         {
-            return MembersList.Contains(Player);
+            CheckMemberList();
+            if (MembersList.Contains(Player))
+                return true;
+            return TriggeringFurreIsBotController(reader);
         }
 
         private bool TrigFurreIsNotMember(TriggerReader reader)
