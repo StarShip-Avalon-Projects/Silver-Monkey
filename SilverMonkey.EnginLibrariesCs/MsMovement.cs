@@ -103,39 +103,39 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreSpecies(r),
-                "and the trigger furre is Species # (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the trigger furre is Species # (please see http://www.furcadia.com/dsparams/ for info),");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedSpecies(r),
-                "and the furre named {...} is Species # if they are in the dream (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the furre named {...} is Species # if they are in the dream (please see http://www.furcadia.com/dsparams/ for info),");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreWings(r),
-                "and the triggering furre has wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the triggering furre has wings of type #, (please see http://www.furcadia.com/dsparams/ for info),");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreNoWings(r),
-                "and the triggering furre doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the triggering furre doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info),");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedWings(r),
-                "and the furre named {...} has wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the furre named {...} has wings of type #, (please see http://www.furcadia.com/dsparams/ for info),");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedNoWings(r),
-                "and the furre named {...}  doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the furre named {...}  doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info),");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreStanding(r),
-                "and the triggering furre is standing.");
+                "and the triggering furre is standing,");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreSitting(r),
-                "and the triggering furre is sitting.");
+                "and the triggering furre is sitting,");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreLaying(r),
-                "and the triggering furre is laying.");
+                "and the triggering furre is laying,");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreIsFacingDirection(r),
@@ -143,15 +143,15 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedStanding(r),
-                "and the furre named {...} is standing.");
+                "and the furre named {...} is standing,");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedSitting(r),
-                "and the furre named {...} is sitting.");
+                "and the furre named {...} is sitting,");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedLaying(r),
-                "and the furre named {...} is laying.");
+                "and the furre named {...} is laying,");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedFacingIsFacingDirection(r),
@@ -175,7 +175,7 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => AndTriggeringFurreStoodStill(r),
-                "and the triggering furre tried to move but stood still.");
+                "and the triggering furre tried to move but stood still,");
 
             Add(TriggerCategory.Effect,
                 r => TriggeringFurreDescVar(r),
