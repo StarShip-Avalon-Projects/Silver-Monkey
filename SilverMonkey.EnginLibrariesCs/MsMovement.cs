@@ -87,7 +87,7 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => AndFurreNamedDescContains(r),
-                "and the furre named {...} description contains {...}if they are in the dream,");
+                "and the furre named {...} description contains {...} if they are in the dream,");
 
             Add(TriggerCategory.Condition,
                 r => AndNotDescContainsFurreNamed(r),
