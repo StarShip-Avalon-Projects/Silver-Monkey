@@ -51,7 +51,7 @@ namespace Libraries
         {
             Add(TriggerCategory.Cause,
                 r => WhenAnyoneEnterView(r),
-                "When anyone enters the bots view, ");
+                "When anyone enters the bots view,");
 
             Add(TriggerCategory.Cause,
                 r => WhenFurreNamedEnterView(r),
@@ -79,11 +79,11 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => AndDescContains(r),
-                "and triggering furre\'s description contains {...}");
+                "and triggering furre's description contains {...}");
 
             Add(TriggerCategory.Condition,
                 r => AndNotDescContains(r),
-                "and triggering furre\'s description does not contain {...}");
+                "and triggering furre's description does not contain {...}");
 
             Add(TriggerCategory.Condition,
                 r => AndFurreNamedDescContains(r),
@@ -99,7 +99,7 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => AndFurreNamedIsGender(r),
-                "and the furre named {...}\'s is male if they are in the dream,");
+                "and the furre named {...}'s is male if they are in the dream,");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreSpecies(r),
@@ -115,7 +115,7 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreNoWings(r),
-                "and the triggering furre doesn\'t wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the triggering furre doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedWings(r),
@@ -123,7 +123,7 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedNoWings(r),
-                "and the furre named {...}  doesn\'t wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
+                "and the furre named {...}  doesn't wings of type #, (please see http://www.furcadia.com/dsparams/ for info)");
 
             Add(TriggerCategory.Condition,
                 r => TriggeringFurreStanding(r),
@@ -166,7 +166,8 @@ namespace Libraries
                 "and the furre named {...} moved into/is standing at (x,y),");
 
             Add(TriggerCategory.Condition,
-                r => MoveFrom(r), "and the triggering furre moved from (x,y),");
+                r => MoveFrom(r),
+                "and the triggering furre moved from (x,y),");
 
             Add(TriggerCategory.Condition,
                 r => FurreNamedMoveFrom(r),
@@ -178,43 +179,43 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => TriggeringFurreDescVar(r),
-                "set variable %Variable to the Triggering furre\'s description.");
+                "set variable %Variable to the Triggering furre's description.");
 
             Add(TriggerCategory.Effect,
                 r => TriggeringFurreGenderVar(r),
-                "set variable %Variable to the triggering furre\'s gender.");
+                "set variable %Variable to the triggering furre's gender.");
 
             Add(TriggerCategory.Effect,
                 r => TriggeringFurreSpeciesVar(r),
-                "set variable %Variable to the triggering furre\'s species.");
+                "set variable %Variable to the triggering furre's species.");
 
             Add(TriggerCategory.Effect,
                 r => TriggeringFurreColorsVar(r),
-                "set variable %Variable to the triggering furre\'s colors.");
+                "set variable %Variable to the triggering furre's colors.");
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedGenderVar(r),
-                "set variable %Variable to the furre named {...}\'s gender if they are in the dream.");
+                "set variable %Variable to the furre named {...}'s gender if they are in the dream.");
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedSpeciesVar(r),
-                "set variable %Variable to the furre named {...}\'s species, if they are in the dream.");
+                "set variable %Variable to the furre named {...}'s species, if they are in the dream.");
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedDescVar(r),
-                "set variable %Variable to the furred named {...}\'s description, if they are in the dream.");
+                "set variable %Variable to the furred named {...}'s description, if they are in the dream.");
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedColorsVar(r),
-                "set variable %Variable to the furre named {...}\'s colors, if they are in the dream.");
+                "set variable %Variable to the furre named {...}'s colors, if they are in the dream.");
 
             Add(TriggerCategory.Effect,
                 r => TriggeringFurreWingsVar(r),
-                "set %Variable to the wings type the triggering furre is wearing.");
+                "set %Variable to the wings type, the triggering furre is wearing.");
 
             Add(TriggerCategory.Effect,
                 r => FurreNamedWingsVar(r),
-                "set %Variable to the wings type the furre named {...} is wearing.");
+                "set %Variable to the type of wings, the furre named {...}, is wearing.");
 
             Add(TriggerCategory.Effect,
                 r => TurnCW(r),
@@ -337,7 +338,7 @@ namespace Libraries
             return SendServer("`stand");
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool AndDescContains(TriggerReader reader)
         {
             if (string.IsNullOrEmpty(Player.FurreDescription))
@@ -355,6 +356,8 @@ namespace Libraries
             return Player.Visible == Player.WasVisible;
         }
 
+        [TriggerNumberParameter]
+        [TriggerStringParameter]
         private bool FurreNamedColorsVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
@@ -364,7 +367,7 @@ namespace Libraries
             return Target.FurreID >= 0;
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool AndFurreNamedDescContains(TriggerReader reader)
         {
             var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
@@ -378,7 +381,7 @@ namespace Libraries
             return Target.FurreDescription.Contains(Pattern);
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool FurreNamedDescVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
@@ -397,8 +400,8 @@ namespace Libraries
         private bool WhenFurreNamedEnterView(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            var tPlayer = DreamInfo.Furres.GetFurreByName(reader.ReadString());
-            return tPlayer.Visible == tPlayer.WasVisible;
+            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            return TargetFurre.Visible == TargetFurre.WasVisible;
         }
 
         private bool FurreNamedFacingIsFacingDirection(TriggerReader r)
@@ -406,7 +409,7 @@ namespace Libraries
             throw new NotImplementedException();
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool FurreNamedGenderVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
@@ -434,8 +437,8 @@ namespace Libraries
         private bool WhenFurreNamedLeaveView(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            var tPlayer = DreamInfo.Furres.GetFurreByName(reader.ReadString());
-            return tPlayer.Visible == tPlayer.WasVisible;
+            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            return TargetFurre.Visible == TargetFurre.WasVisible;
         }
 
         private bool FurreNamedMoveFrom(TriggerReader reader)
@@ -448,7 +451,7 @@ namespace Libraries
             throw new NotImplementedException();
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool FurreNamedNoWings(TriggerReader reader)
         {
             var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
@@ -458,8 +461,9 @@ namespace Libraries
                     Logger.Warn("Wings type not found. Try looking at the furre first");
                     return false;
 
-                case (0 | 1):
-                    return (Target.FurreColors.Wings != reader.ReadNumber());
+                case 0:
+                case 1:
+                    return Target.FurreColors.Wings != reader.ReadNumber();
             }
             return false;
         }
@@ -467,16 +471,16 @@ namespace Libraries
         private bool FurreNamedSetCordX(TriggerReader reader)
         {
             var Cord = reader.ReadVariable(true);
-            var tPlayer = DreamInfo.Furres.GetFurreByName(reader.ReadString());
-            Cord.Value = tPlayer.Location.X;
+            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            Cord.Value = TargetFurre.Location.X;
             return true;
         }
 
         private bool FurreNamedSetCordY(TriggerReader reader)
         {
             var Cord = reader.ReadVariable(true);
-            var tPlayer = DreamInfo.Furres.GetFurreByName(reader.ReadString());
-            Cord.Value = tPlayer.Location.Y;
+            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            Cord.Value = TargetFurre.Location.Y;
             return true;
         }
 
@@ -490,7 +494,7 @@ namespace Libraries
             throw new NotImplementedException();
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool FurreNamedSpeciesVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
@@ -520,7 +524,7 @@ namespace Libraries
             throw new NotImplementedException();
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool FurreNamedWings(TriggerReader reader)
         {
             var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
@@ -537,7 +541,7 @@ namespace Libraries
             return false;
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool FurreNamedWingsVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
@@ -580,7 +584,7 @@ namespace Libraries
             return Player.Location == new FurrePosition(X, Y);
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool AndNotDescContains(TriggerReader reader)
         {
             if (string.IsNullOrEmpty(Player.FurreDescription))
@@ -592,7 +596,7 @@ namespace Libraries
             return !Player.FurreDescription.Contains(reader.ReadString());
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool AndNotDescContainsFurreNamed(TriggerReader reader)
         {
             Furre Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
@@ -628,7 +632,7 @@ namespace Libraries
             return true;
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreDescVar(TriggerReader reader)
         {
             if (Player.FurreDescription == null)
@@ -641,7 +645,7 @@ namespace Libraries
             return true;
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreGenderVar(TriggerReader reader)
         {
             if (Player.FurreColors.Gender == -1 || Player.LastStat == -1)
@@ -684,7 +688,7 @@ namespace Libraries
             throw new NotImplementedException();
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreSpecies(TriggerReader reader)
         {
             if (Player.FurreColors.Gender == -1 || Player.LastStat == -1)
@@ -702,7 +706,7 @@ namespace Libraries
             return false;
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreSpeciesVar(TriggerReader reader)
         {
             switch (Player.LastStat)
@@ -728,7 +732,7 @@ namespace Libraries
             throw new NotImplementedException();
         }
 
-        [TriggerDescription(" This line only works after the bot has looked at the specified furre")]
+        [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreWingsVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
