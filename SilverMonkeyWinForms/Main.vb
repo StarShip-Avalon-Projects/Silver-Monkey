@@ -14,12 +14,9 @@ Imports Furcadia.Net.DreamInfo
 Imports Furcadia.Net.Utils.ServerParser
 Imports Libraries.Web
 Imports Logging
-Imports MonkeyCore.Controls
 Imports MonkeyCore.Logging
-Imports MonkeyCore.Settings
 Imports MonkeyCore.WinForms.Controls
 Imports Settings
-Imports SilverMonkey.Engine.Libraries.Web
 Imports SilverMonkey.HelperClasses
 Imports SilverMonkey.HelperClasses.TextDisplayManager
 Imports furcLog = Furcadia.Logging
@@ -30,7 +27,11 @@ Public Class Main
 
 #Region "Fields"
 
+    ''' <summary>
+    ''' The debug window
+    ''' </summary>
     Public Shared WithEvents DebugWindow As Variables
+
     Private Shared WithEvents TextDisplayer As TextDisplayManager
 
     ''' <summary>
@@ -47,13 +48,23 @@ Public Class Main
     ''' </summary>
     Public WithEvents FurcSession As Bot
 
+    ''' <summary>
+    ''' The notify icon1
+    ''' </summary>
     Public WithEvents NotifyIcon1 As NotifyIcon
 
 #End Region
 
 #Region "Public Fields"
 
+    ''' <summary>
+    ''' The mainsettings
+    ''' </summary>
     Public Shared Mainsettings As CMain
+
+    ''' <summary>
+    ''' The writer
+    ''' </summary>
     Public writer As TextBoxWriter = Nothing
 
 #End Region
@@ -76,7 +87,7 @@ Public Class Main
 
     Private CMD_Idx, CMD_Idx2 As Integer
 
-    Dim CMD_Lck As Boolean = False
+    Private CMD_Lck As Boolean = False
 
     'Input History
     Private CMD_Max As Integer = 20
@@ -147,6 +158,12 @@ Public Class Main
 
 #Region "Public Properties"
 
+    ''' <summary>
+    ''' Gets a value indicating whether this instance can connect.
+    ''' </summary>
+    ''' <value>
+    '''   <c>true</c> if this instance can connect; otherwise, <c>false</c>.
+    ''' </value>
     Public ReadOnly Property CanConnect As Boolean
         Get
             Return Not String.IsNullOrWhiteSpace(BotConfig.BotSettingsFile)
@@ -157,6 +174,11 @@ Public Class Main
 
 #Region "Public Methods"
 
+    ''' <summary>
+    ''' Formats the rich tect box.
+    ''' </summary>
+    ''' <param name="TB">The tb.</param>
+    ''' <param name="style">The style.</param>
     Public Shared Sub FormatRichTectBox(ByRef TB As RichTextBoxEx,
          ByRef style As System.Drawing.FontStyle)
         With TB
@@ -178,6 +200,13 @@ Public Class Main
         End With
     End Sub
 
+    ''' <summary>
+    ''' Gets the word under mouse.
+    ''' </summary>
+    ''' <param name="Rtf">The RTF.</param>
+    ''' <param name="X">The x.</param>
+    ''' <param name="Y">The y.</param>
+    ''' <returns></returns>
     Public Function GetWordUnderMouse(ByRef Rtf As RichTextBoxEx, ByVal X As Integer, ByVal Y As Integer) As String
         If Rtf.InvokeRequired Then
             Dim d As New WordUnderMouse(AddressOf GetWordUnderMouse)
@@ -243,6 +272,11 @@ Public Class Main
 
     End Sub
 
+    ''' <summary>
+    ''' Called when [furcadia session error].
+    ''' </summary>
+    ''' <param name="ex">The ex.</param>
+    ''' <param name="o">The o.</param>
     Public Sub OnFurcadiaSessionError(ex As Exception, o As Object) _
         Handles FurcSession.[Error]
 
@@ -374,10 +408,14 @@ Public Class Main
         SndDisplay(Message.message, newColor)
     End Sub
 
-    Public Sub UpDatButtonGoText(str As Object)
+    ''' <summary>
+    ''' Updates the button go text.
+    ''' </summary>
+    ''' <param name="str">The string.</param>
+    Public Sub UpdateButtonGoText(str As Object)
         If Me.InvokeRequired Then
 
-            Dim d As New UpdateUiDelegate(AddressOf UpDatButtonGoText)
+            Dim d As New UpdateUiDelegate(AddressOf UpdateButtonGoText)
             Me.Invoke(d, str.ToString)
         Else
             BTN_Go.Text = str.ToString
@@ -385,6 +423,12 @@ Public Class Main
 
     End Sub
 
+    ''' <summary>
+    ''' Updates the bot configuration.
+    ''' </summary>
+    ''' <param name="BotFilePath">The bot file path.</param>
+    ''' <param name="BConfig">The b configuration.</param>
+    ''' <returns></returns>
     Public Function UpdateBotConfig(BotFilePath As String, Optional BConfig As BotOptions = Nothing) As Boolean
 
         If BConfig Is Nothing Then
@@ -837,10 +881,6 @@ Public Class Main
         End Try
     End Sub
 
-    Private Sub Main_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-
-    End Sub
-
     Private Sub Main_KeyUp(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyUp
         If (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
 
@@ -1227,14 +1267,14 @@ Public Class Main
 
                 Case ConnectionPhase.Connected
                     ToolStripServerStatus.Image = My.Resources.ConnectedImg
-                    UpDatButtonGoText("Connected.")
+                    UpdateButtonGoText("Connected.")
                     MainTitleText($"Silver Monkey: {FurcSession.ConnectedFurre.Name}")
                 Case ConnectionPhase.Connecting
                     ToolStripServerStatus.Image = My.Resources.ConnectedImg
-                    UpDatButtonGoText("Connecting...")
+                    UpdateButtonGoText("Connecting...")
                 Case ConnectionPhase.Disconnected
                     ToolStripServerStatus.Image = My.Resources.DisconnectedImg
-                    UpDatButtonGoText("Go!")
+                    UpdateButtonGoText("Go!")
                     MainTitleText($"Silver Monkey: {Application.ProductVersion}")
                 Case ConnectionPhase.Auth
                     ToolStripServerStatus.Image = My.Resources.ConnectingImg
@@ -1244,7 +1284,7 @@ Public Class Main
 
                 Case ConnectionPhase.Init
                     ToolStripServerStatus.Image = My.Resources.DisconnectedImg
-                    UpDatButtonGoText("Go!")
+                    UpdateButtonGoText("Go!")
             End Select
         End If
 
