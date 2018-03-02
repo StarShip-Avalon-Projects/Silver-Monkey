@@ -17,10 +17,10 @@ namespace DataMonkey.Controls
 
         #region Public Constructors
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RenameTable.RenameTable()'
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RenameTable"/> class.
+        /// </summary>
         public RenameTable()
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RenameTable.RenameTable()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -30,10 +30,13 @@ namespace DataMonkey.Controls
 
         #region Properties
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RenameTable.NewTableName'
-
+        /// <summary>
+        /// Gets the new name of the table.
+        /// </summary>
+        /// <value>
+        /// The new name of the table.
+        /// </value>
         public string NewTableName
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RenameTable.NewTableName'
         {
             get { return RenameTableTextBox.Text; }
         }

@@ -9,10 +9,10 @@ namespace DataMonkey
     {
         #region Public Constructors
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.StatementBuilder()'
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StatementBuilder"/> class.
+        /// </summary>
         public StatementBuilder()
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.StatementBuilder()'
         {
         }
 
@@ -20,10 +20,12 @@ namespace DataMonkey
 
         #region BuildTableOpenSql
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildTableOpenSql(string)'
-
+        /// <summary>
+        /// Builds the table open SQL.
+        /// </summary>
+        /// <param name="TableName">Name of the table.</param>
+        /// <returns></returns>
         public static string BuildTableOpenSql(string TableName)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildTableOpenSql(string)'
         {
             StringBuilder sb = new StringBuilder();
 
@@ -39,10 +41,14 @@ namespace DataMonkey
 
         #region BuildAddColumnSQL
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildAddColumnSQL(string, string, string)'
-
+        /// <summary>
+        /// Builds the add column SQL.
+        /// </summary>
+        /// <param name="TableName">Name of the table.</param>
+        /// <param name="ColumnName">Name of the column.</param>
+        /// <param name="ColumnType">Type of the column.</param>
+        /// <returns></returns>
         public static string BuildAddColumnSQL(string TableName, string ColumnName, string ColumnType)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildAddColumnSQL(string, string, string)'
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Alter Table ");
@@ -59,10 +65,12 @@ namespace DataMonkey
 
         #region Build Add Table Sql
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildAddTableSQL(string)'
-
+        /// <summary>
+        /// Builds the add table SQL.
+        /// </summary>
+        /// <param name="TableName">Name of the table.</param>
+        /// <returns></returns>
         public static string BuildAddTableSQL(string TableName)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildAddTableSQL(string)'
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Create Table ");
@@ -78,10 +86,11 @@ namespace DataMonkey
 
         #region BuildMasterquery
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildMasterQuery()'
-
+        /// <summary>
+        /// Builds the master query.
+        /// </summary>
+        /// <returns></returns>
         public static string BuildMasterQuery()
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildMasterQuery()'
         {
             return "Select name from sqlite_master where type = 'table' order by name";
         }
@@ -90,10 +99,13 @@ namespace DataMonkey
 
         #region BuildRenameTableSQL
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildRenameTableSQL(string, string)'
-
+        /// <summary>
+        /// Builds the rename table SQL.
+        /// </summary>
+        /// <param name="TableName">Name of the table.</param>
+        /// <param name="NewTableName">New name of the table.</param>
+        /// <returns></returns>
         public static string BuildRenameTableSQL(string TableName, string NewTableName)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildRenameTableSQL(string, string)'
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Alter table ");
@@ -108,10 +120,14 @@ namespace DataMonkey
 
         #region BuildRowDeleteSQL
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildRowDeleteSQL(string, string, string)'
-
+        /// <summary>
+        /// Builds the row delete SQL.
+        /// </summary>
+        /// <param name="TableName">Name of the table.</param>
+        /// <param name="RowName">Name of the row.</param>
+        /// <param name="RowID">The row identifier.</param>
+        /// <returns></returns>
         public static string BuildRowDeleteSQL(string TableName, string RowName, string RowID)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildRowDeleteSQL(string, string, string)'
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Delete from ");
@@ -128,10 +144,12 @@ namespace DataMonkey
 
         #region BuildTableDeleteSQL
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildTableDeleteSQL(string)'
-
+        /// <summary>
+        /// Builds the table delete SQL.
+        /// </summary>
+        /// <param name="TableName">Name of the table.</param>
+        /// <returns></returns>
         public static string BuildTableDeleteSQL(string TableName)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildTableDeleteSQL(string)'
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Drop Table ");
@@ -144,10 +162,11 @@ namespace DataMonkey
 
         #region BuildIntegrityCheckSQL
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildIntegrityCheckSQL()'
-
+        /// <summary>
+        /// Builds the integrity check SQL.
+        /// </summary>
+        /// <returns></returns>
         public static string BuildIntegrityCheckSQL()
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementBuilder.BuildIntegrityCheckSQL()'
         {
             string retval = "PRAGMA integrity_check";
             return retval;

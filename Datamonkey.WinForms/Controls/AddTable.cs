@@ -16,10 +16,10 @@ namespace DataMonkey.Controls
 
         #region Public Constructors
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AddTable.AddTable()'
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddTable"/> class.
+        /// </summary>
         public AddTable()
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AddTable.AddTable()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -29,10 +29,13 @@ namespace DataMonkey.Controls
 
         #region Properties
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AddTable.TableName'
-
+        /// <summary>
+        /// Gets the name of the table.
+        /// </summary>
+        /// <value>
+        /// The name of the table.
+        /// </value>
         public string TableName
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AddTable.TableName'
         {
             get { return AddTableTextBox.Text; }
         }

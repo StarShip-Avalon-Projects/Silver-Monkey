@@ -11,16 +11,18 @@ using System.Windows.Forms;
 
 namespace DataMonkey
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer'
-
+    /// <summary>
+    ///
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.Form" />
     public class frmExplorer : Form
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer'
     {
         #region Members
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer.SqlResultsListView'
+        /// <summary>
+        /// The SQL results ListView
+        /// </summary>
         public ListView_NoFlicker SqlResultsListView;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer.SqlResultsListView'
 
         //Database String
         private static string ActiveDatabaseLocation;
@@ -94,10 +96,10 @@ namespace DataMonkey
 
         #region Constructor / Destructor
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer.frmExplorer()'
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="frmExplorer"/> class.
+        /// </summary>
         public frmExplorer()
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'frmExplorer.frmExplorer()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();

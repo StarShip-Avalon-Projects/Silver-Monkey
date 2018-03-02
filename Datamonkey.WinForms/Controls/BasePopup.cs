@@ -9,17 +9,19 @@ namespace DataMonkey.Controls
     {
         #region Public Fields
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.OkButton'
+        /// <summary>
+        /// The ok button
+        /// </summary>
         public static Button OkButton;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.OkButton'
 
         #endregion Public Fields
 
         #region Protected Fields
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.CanButton'
+        /// <summary>
+        /// The can button
+        /// </summary>
         protected static Button CanButton;
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.CanButton'
 
         #endregion Protected Fields
 
@@ -34,10 +36,10 @@ namespace DataMonkey.Controls
 
         #region Public Constructors
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.BasePopup()'
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePopup"/> class.
+        /// </summary>
         public BasePopup()
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.BasePopup()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -105,10 +107,12 @@ namespace DataMonkey.Controls
 
         #region Button Events
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.tb_KeyDown(object, KeyEventArgs)'
-
+        /// <summary>
+        /// Handles the KeyDown event of the Tb control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
         public static void Tb_KeyDown(object sender, KeyEventArgs e)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.tb_KeyDown(object, KeyEventArgs)'
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -117,10 +121,12 @@ namespace DataMonkey.Controls
             }
         }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.OkButton_Click(object, EventArgs)'
-
+        /// <summary>
+        /// Handles the Click event of the OkButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         public void OkButton_Click(object sender, System.EventArgs e)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'BasePopup.OkButton_Click(object, EventArgs)'
         {
             Close();
         }

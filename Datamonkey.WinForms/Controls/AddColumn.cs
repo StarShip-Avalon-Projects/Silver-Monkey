@@ -18,10 +18,10 @@ namespace DataMonkey.Controls
 
         #region Public Constructors
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.AddColumn()'
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddColumn"/> class.
+        /// </summary>
         public AddColumn()
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.AddColumn()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -101,18 +101,24 @@ namespace DataMonkey.Controls
 
         #region Properties
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.ColumnName'
-
+        /// <summary>
+        /// Gets the name of the column.
+        /// </summary>
+        /// <value>
+        /// The name of the column.
+        /// </value>
         public string ColumnName
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.ColumnName'
         {
             get { return NameTextBox.Text; }
         }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.ColumnType'
-
+        /// <summary>
+        /// Gets the type of the column.
+        /// </summary>
+        /// <value>
+        /// The type of the column.
+        /// </value>
         public string ColumnType
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'AddColumn.ColumnType'
         {
             //x != 0.0 ? Math.Sin(x) / x : 1.0;
             get { return TypeComboBox.SelectedItem != null ? TypeComboBox.SelectedItem.ToString() : "TEXT"; }

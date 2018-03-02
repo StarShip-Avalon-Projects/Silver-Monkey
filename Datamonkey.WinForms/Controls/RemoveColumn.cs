@@ -17,10 +17,10 @@ namespace DataMonkey.Controls
 
         #region Public Constructors
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RemoveColumn.RemoveColumn()'
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RemoveColumn"/> class.
+        /// </summary>
         public RemoveColumn()
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RemoveColumn.RemoveColumn()'
         {
             // Required for Windows Form Designer support
             InitializeComponent();
@@ -84,10 +84,13 @@ namespace DataMonkey.Controls
 
         #region Properties
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'RemoveColumn.ColumnName'
-
+        /// <summary>
+        /// Gets the name of the column.
+        /// </summary>
+        /// <value>
+        /// The name of the column.
+        /// </value>
         public string ColumnName
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'RemoveColumn.ColumnName'
         {
             get { return NameTextBox.Text; }
         }

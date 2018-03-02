@@ -10,16 +10,28 @@ namespace DataMonkey
     {
         #region Public Methods
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.ReturnResults(string, string, out string)'
-
+        /// <summary>
+        /// Returns the results.
+        /// </summary>
+        /// <param name="SQLStatement">The SQL statement.</param>
+        /// <param name="DatabaseLocation">The database location.</param>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
         public static bool ReturnResults(string SQLStatement, string DatabaseLocation, out string message)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member 'StatementParser.ReturnResults(string, string, out string)'
         {
             DataSet ds = null;
 
             return ReturnResults(SQLStatement, DatabaseLocation, ref ds, out message);
         }
 
+        /// <summary>
+        /// Returns the results.
+        /// </summary>
+        /// <param name="SQLStatement">The SQL statement.</param>
+        /// <param name="DatabaseLocation">The database location.</param>
+        /// <param name="ds">The ds.</param>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
         public static bool ReturnResults(string SQLStatement, string DatabaseLocation, ref DataSet ds, out string message)
         {
             //Add a call here to a parser that will
