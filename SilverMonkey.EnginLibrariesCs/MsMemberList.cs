@@ -1,4 +1,5 @@
 ﻿using Furcadia.Net.DreamInfo;
+using Furcadia.Text;
 using IO;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
@@ -41,7 +42,7 @@ namespace Libraries
 
             #region Private Fields
 
-            private int id;
+            private Base220 id;
 
             private string message;
 
@@ -75,7 +76,7 @@ namespace Libraries
             /// <summary>
             /// Implements the FurreID or unique furre identifyer
             /// </summary>
-            public int FurreID { get => id; set => id = value; }
+            public Base220 FurreID { get => id; set => id = value; }
 
             /// <summary>
             /// Gets or sets the message.
@@ -122,21 +123,21 @@ namespace Libraries
             /// <summary>
             /// Implements the operator ==.
             /// </summary>
-            /// <param name="a">a.</param>
-            /// <param name="b">The b.</param>
+            /// <param name="Furre1">a.</param>
+            /// <param name="Furre2">The b.</param>
             /// <returns>
             /// The result of the operator.
             /// </returns>
-            public static bool operator ==(Furr a, IFurre b)
+            public static bool operator ==(Furr Furre1, IFurre Furre2)
             {
                 // If left hand side is null...
-                if (a is null)
+                if (Furre1 is null)
                 {
-                    return b is null;
+                    return Furre2 is null;
                 }
 
                 // Return true if the fields match:
-                return a.Equals(b);
+                return Furre1.Equals(Furre2);
             }
 
             /// <summary>
