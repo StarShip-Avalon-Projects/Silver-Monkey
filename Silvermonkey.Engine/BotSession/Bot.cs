@@ -409,7 +409,7 @@ namespace Engine.BotSession
                 {
                     string Text = ChanObject.ChannelText;
                     string data = ChanObject.RawInstruction;
-                    Furre Furr = ChanObject.Player;
+                    Furre Furr = (Furre)ChanObject.Player;
                     switch (Args.Channel)
                     {
                         case "@roll":

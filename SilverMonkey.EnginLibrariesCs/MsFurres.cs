@@ -41,45 +41,46 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 TriggeringInDream,
-                "and the triggering furre in the dream.");
+                "and the triggering furre in the dream,");
 
             Add(TriggerCategory.Condition,
                 TriggeringNotInDream,
-                "and the triggering furre is not in the dream.");
+                "and the triggering furre is not in the dream,");
 
             Add(TriggerCategory.Condition,
                 FurreNamedInDream,
-                "and the furre named {...} is in the dream.");
+                "and the furre named {...} is in the dream,");
 
             Add(TriggerCategory.Condition,
                 FurreNamedNotInDream,
-                "and the furre named {...} is not in the dream");
+                "and the furre named {...} is not in the dream,");
 
             Add(TriggerCategory.Condition,
                 TriggeringCanSe,
-                "and the triggering furre is visible.");
+                "and the triggering furre is visible,");
 
             Add(TriggerCategory.Condition,
                 TriggeringNotCanSe,
-                "and the triggering furre is not visible");
+                "and the triggering furre is not visible,");
 
             Add(TriggerCategory.Condition,
                 FurreNamedCanSe,
-                "and the furre named {...} is visible.");
+                "and the furre named {...} is visible,");
 
             Add(TriggerCategory.Condition,
-                FurreNamedNotCanSe, "and the furre named {...} is not visible");
+                FurreNamedNotCanSe,
+                "and the furre named {...} is not visible,");
 
             Add(TriggerCategory.Condition,
                 FurreNamedAFK,
-            "and the furre named {...} is a.f.k.,");
+             "and the furre named {...}, status is a.f.k.,");
 
             Add(TriggerCategory.Condition,
                 FurreNamedActive,
                 "and the furre named {...} is active in the dream,");
 
             Add(TriggerCategory.Effect, FurreListToVariable,
-                "copy the dreams\'s furre-list to variable %Variable");
+                "copy the dreams's furre-list to variable %Variable.");
 
             Add(TriggerCategory.Effect,
                 FurresCount,
@@ -87,7 +88,7 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 FurreActiveListCount,
-            "count the number of active furres in the dream and put it in the variable %Variable.");
+                "count the number of active furres in the dream and put it in the variable %Variable.");
 
             Add(TriggerCategory.Effect,
                 FurreAFKListCount,
@@ -144,7 +145,7 @@ namespace Libraries
         private bool FurreNamedActive(TriggerReader reader)
         {
             var name = reader.ReadString();
-            var Target = DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
             return Target.AfkTime > 0;
         }
 
@@ -152,7 +153,7 @@ namespace Libraries
         private bool FurreNamedAFK(TriggerReader reader)
         {
             var name = reader.ReadString();
-            var Target = DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
             return Target.AfkTime > 0;
         }
 
@@ -160,7 +161,7 @@ namespace Libraries
         private bool FurreNamedCanSe(TriggerReader reader)
         {
             var name = reader.ReadString();
-            var Target = DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
             return Target.Visible;
         }
 
@@ -176,7 +177,7 @@ namespace Libraries
         private bool FurreNamedNotCanSe(TriggerReader reader)
         {
             var name = reader.ReadString();
-            var Target = DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
             return !Target.Visible;
         }
 
@@ -212,7 +213,7 @@ namespace Libraries
 
         private bool TriggeringCanSe(TriggerReader reader)
         {
-            return Player.Visible;
+            return ((Furre)Player).Visible;
         }
 
         private bool TriggeringInDream(TriggerReader reader)
@@ -222,7 +223,7 @@ namespace Libraries
 
         private bool TriggeringNotCanSe(TriggerReader reader)
         {
-            return !Player.Visible;
+            return !((Furre)Player).Visible;
         }
 
         private bool TriggeringNotInDream(TriggerReader reader)

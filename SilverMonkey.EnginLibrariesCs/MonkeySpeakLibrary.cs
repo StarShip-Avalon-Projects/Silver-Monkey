@@ -61,7 +61,7 @@ namespace Libraries
         /// Updates when ever Monkey Speak needs it through <see cref="Page.Execute(int[],
         /// object[])"/> or <see cref="Page.ExecuteAsync(int[], object[])"/>
         /// </summary>
-        static public Furre Player { get; set; }
+        static public IFurre Player { get; set; }
 
         /// <summary>
         /// Gets the base identifier.
@@ -136,10 +136,10 @@ namespace Libraries
         /// <returns>
         /// True if the furre is in the dream <see cref="FurreList"/>
         /// </returns>
-        public bool InDream(Furre TargetFurre)
+        public bool InDream(IFurre TargetFurre)
         {
             bool found = false;
-            foreach (Furre Fur in DreamInfo.Furres)
+            foreach (IFurre Fur in DreamInfo.Furres)
             {
                 if (Fur == TargetFurre)
                 {
@@ -175,7 +175,7 @@ namespace Libraries
         /// </summary>
         /// <param name="Furr"></param>
         /// <returns></returns>
-        public bool IsConnectedCharacter(Furre Furr)
+        public bool IsConnectedCharacter(IFurre Furr)
         {
             if (Furr == null || ParentBotSession == null)
                 return false;

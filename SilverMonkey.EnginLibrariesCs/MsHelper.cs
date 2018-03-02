@@ -100,7 +100,7 @@ namespace Libraries
         /// </summary>
         /// <param name="ActivePlayer">The active player.</param>
         /// <param name="MonkeySpeakPage">The monkey speak page.</param>
-        public static void UpdateTriggerigFurreVariables(Furre ActivePlayer, Page MonkeySpeakPage)
+        public static void UpdateTriggerigFurreVariables(IFurre ActivePlayer, Page MonkeySpeakPage)
         {
             if (!MonkeySpeakPage.HasVariable(MessageVariable))
             {

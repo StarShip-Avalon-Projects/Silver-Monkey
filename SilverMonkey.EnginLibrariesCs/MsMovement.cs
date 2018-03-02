@@ -226,11 +226,11 @@ namespace Libraries
                 "turn the bot counter-clockwise one space.");
 
             Add(TriggerCategory.Effect,
-                r => SetCordX(r),
+                r => SetVariableToCordX(r),
                 "set variable %Variable to the X coordinate where the triggering furre moved into/is at.");
 
             Add(TriggerCategory.Effect,
-                r => SetCordY(r),
+                r => SetVariableToCordY(r),
                 "set variable %Variable to the Y coordinate where the triggering furre moved into/is at.");
 
             Add(TriggerCategory.Effect,
@@ -276,6 +276,7 @@ namespace Libraries
             return SendServer("`lie");
         }
 
+        [TriggerStringParameter]
         private bool BotMoveSequence(TriggerReader reader)
         {
             // TODO: http://bugtraq.tsprojects.org/view.php?id=55
@@ -339,21 +340,22 @@ namespace Libraries
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
+        [TriggerStringParameter]
         private bool AndDescContains(TriggerReader reader)
         {
-            if (string.IsNullOrEmpty(Player.FurreDescription))
+            if (string.IsNullOrEmpty(((Furre)Player).FurreDescription))
             {
                 Logger.Warn("Description not found. Try looking at the furre first");
                 return false;
             }
 
-            return Player.FurreDescription.Contains(reader.ReadString());
+            return ((Furre)Player).FurreDescription.Contains(reader.ReadString());
         }
 
         private bool WhenAnyoneEnterView(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            return Player.Visible == Player.WasVisible;
+            return ((Furre)Player).Visible == ((Furre)Player).WasVisible;
         }
 
         [TriggerNumberParameter]
@@ -362,7 +364,7 @@ namespace Libraries
         {
             var Var = reader.ReadVariable(true);
             var name = reader.ReadString();
-            var Target = DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
             Var.Value = Target.FurreColors.ToString();
             return Target.FurreID >= 0;
         }
@@ -370,7 +372,7 @@ namespace Libraries
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool AndFurreNamedDescContains(TriggerReader reader)
         {
-            var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            var Target = (Furre)DreamInfo.Furres.GetFurreByName(reader.ReadString());
             var Pattern = reader.ReadString();
             if (string.IsNullOrEmpty(Target.FurreDescription))
             {
@@ -382,11 +384,13 @@ namespace Libraries
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
+        [TriggerVariableParameter]
+        [TriggerStringParameter]
         private bool FurreNamedDescVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
             var name = reader.ReadString();
-            var Target = DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
             if (string.IsNullOrEmpty(Target.FurreDescription))
             {
                 Logger.Warn("Description for {Target.Name}not found. Try looking at the furre first");
@@ -397,10 +401,11 @@ namespace Libraries
             return true;
         }
 
+        [TriggerStringParameter]
         private bool WhenFurreNamedEnterView(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            var TargetFurre = (Furre)DreamInfo.Furres.GetFurreByName(reader.ReadString());
             return TargetFurre.Visible == TargetFurre.WasVisible;
         }
 
@@ -410,11 +415,13 @@ namespace Libraries
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
+        [TriggerVariableParameter]
+        [TriggerStringParameter]
         private bool FurreNamedGenderVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
             var name = reader.ReadString();
-            var Target = DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
             switch (Target.FurreColors.Gender)
             {
                 case -1:
@@ -434,10 +441,11 @@ namespace Libraries
             throw new NotImplementedException();
         }
 
+        [TriggerStringParameter]
         private bool WhenFurreNamedLeaveView(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            var TargetFurre = (Furre)DreamInfo.Furres.GetFurreByName(reader.ReadString());
             return TargetFurre.Visible == TargetFurre.WasVisible;
         }
 
@@ -452,9 +460,10 @@ namespace Libraries
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
+        [TriggerStringParameter]
         private bool FurreNamedNoWings(TriggerReader reader)
         {
-            var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            var Target = (Furre)DreamInfo.Furres.GetFurreByName(reader.ReadString());
             switch (Target.LastStat)
             {
                 case -1:
@@ -468,18 +477,21 @@ namespace Libraries
             return false;
         }
 
+        [TriggerStringParameter]
         private bool FurreNamedSetCordX(TriggerReader reader)
         {
             var Cord = reader.ReadVariable(true);
-            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            var TargetFurre = (Furre)DreamInfo.Furres.GetFurreByName(reader.ReadString());
             Cord.Value = TargetFurre.Location.X;
             return true;
         }
 
+        [TriggerVariableParameter]
+        [TriggerStringParameter]
         private bool FurreNamedSetCordY(TriggerReader reader)
         {
             var Cord = reader.ReadVariable(true);
-            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            var TargetFurre = (Furre)DreamInfo.Furres.GetFurreByName(reader.ReadString());
             Cord.Value = TargetFurre.Location.Y;
             return true;
         }
@@ -495,11 +507,13 @@ namespace Libraries
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
+        [TriggerVariableParameter]
+        [TriggerStringParameter]
         private bool FurreNamedSpeciesVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
             var name = reader.ReadString();
-            var TargetFurre = DreamInfo.Furres.GetFurreByName(name);
+            var TargetFurre = (Furre)DreamInfo.Furres.GetFurreByName(name);
             switch (TargetFurre.LastStat)
             {
                 case -1:
@@ -525,9 +539,10 @@ namespace Libraries
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
+        [TriggerStringParameter]
         private bool FurreNamedWings(TriggerReader reader)
         {
-            var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            var Target = (Furre)DreamInfo.Furres.GetFurreByName(reader.ReadString());
             switch (Target.LastStat)
             {
                 case -1:
@@ -542,10 +557,12 @@ namespace Libraries
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
+        [TriggerVariableParameter]
+        [TriggerStringParameter]
         private bool FurreNamedWingsVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
-            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            var TargetFurre = (Furre)DreamInfo.Furres.GetFurreByName(reader.ReadString());
             switch (TargetFurre.LastStat)
             {
                 case -1:
@@ -563,43 +580,48 @@ namespace Libraries
         private bool WhenAnyoneLeaveView(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            return Player.Visible == Player.WasVisible;
+            return ((Furre)Player).Visible == ((Furre)Player).WasVisible;
         }
 
+        [TriggerNumberParameter]
+        [TriggerNumberParameter]
         private bool MoveFrom(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
             var X = reader.ReadNumber();
             var Y = reader.ReadNumber();
 
-            return Player.LastPosition == new FurrePosition(X, Y);
+            return ((Furre)Player).LastPosition == new FurrePosition(X, Y);
         }
 
+        [TriggerNumberParameter]
+        [TriggerNumberParameter]
         private bool WhenAnyoneMoveInto(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
             var X = reader.ReadNumber();
             var Y = reader.ReadNumber();
 
-            return Player.Location == new FurrePosition(X, Y);
+            return ((Furre)Player).Location == new FurrePosition(X, Y);
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
+        [TriggerStringParameter]
         private bool AndNotDescContains(TriggerReader reader)
         {
-            if (string.IsNullOrEmpty(Player.FurreDescription))
+            if (string.IsNullOrEmpty(((Furre)Player).FurreDescription))
             {
                 Logger.Warn("Description not found. Try looking at the furre first");
                 return false;
             }
 
-            return !Player.FurreDescription.Contains(reader.ReadString());
+            return !((Furre)Player).FurreDescription.Contains(reader.ReadString());
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool AndNotDescContainsFurreNamed(TriggerReader reader)
         {
-            Furre Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            Furre Target = (Furre)DreamInfo.Furres.GetFurreByName(reader.ReadString());
             if (string.IsNullOrEmpty(Target.FurreDescription))
             {
                 Logger.Warn("Description not found. Try looking at the furre first");
@@ -609,15 +631,19 @@ namespace Libraries
             return !Target.FurreDescription.Contains(reader.ReadString());
         }
 
-        private bool SetCordX(TriggerReader reader)
+        [TriggerDescription("Set the specified variable to the X coordinate of the Triggering Furre")]
+        [TriggerVariableParameter]
+        private bool SetVariableToCordX(TriggerReader reader)
         {
-            reader.ReadVariable(true).Value = Player.Location.X;
+            reader.ReadVariable(true).Value = ((Furre)Player).Location.X;
             return true;
         }
 
-        private bool SetCordY(TriggerReader reader)
+        [TriggerDescription("Set the specified variable to the Y coordinate of the Triggering Furre")]
+        [TriggerVariableParameter]
+        private bool SetVariableToCordY(TriggerReader reader)
         {
-            reader.ReadVariable(true).Value = Player.Location.Y;
+            reader.ReadVariable(true).Value = ((Furre)Player).Location.Y;
             return true;
         }
 
@@ -626,38 +652,40 @@ namespace Libraries
             throw new NotImplementedException();
         }
 
+        [TriggerVariableParameter]
         private bool TriggeringFurreColorsVar(TriggerReader reader)
         {
-            reader.ReadVariable(true).Value = Player.FurreColors.ToString();
+            reader.ReadVariable(true).Value = ((Furre)Player).FurreColors.ToString();
             return true;
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
+        [TriggerVariableParameter]
         private bool TriggeringFurreDescVar(TriggerReader reader)
         {
-            if (Player.FurreDescription == null)
+            if (((Furre)Player).FurreDescription == null)
             {
                 Logger.Warn("Description not found, Try looking at the furre first.");
                 return false;
             }
 
-            reader.ReadVariable(true).Value = Player.FurreDescription;
+            reader.ReadVariable(true).Value = ((Furre)Player).FurreDescription;
             return true;
         }
 
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreGenderVar(TriggerReader reader)
         {
-            if (Player.FurreColors.Gender == -1 || Player.LastStat == -1)
+            if (((Furre)Player).FurreColors.Gender == -1 || ((Furre)Player).LastStat == -1)
             {
                 Logger.Warn("Wings type not found, Try looking at the furre first");
                 return false;
             }
 
             var Var = reader.ReadVariable(true);
-            if (Player.LastStat == 0 || Player.LastStat == 1)
+            if (((Furre)Player).LastStat == 0 || ((Furre)Player).LastStat == 1)
             {
-                Var.Value = Player.FurreColors.Gender;
+                Var.Value = ((Furre)Player).FurreColors.Gender;
             }
 
             return true;
@@ -691,14 +719,14 @@ namespace Libraries
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreSpecies(TriggerReader reader)
         {
-            if (Player.FurreColors.Gender == -1 || Player.LastStat == -1)
+            if (((Furre)Player).FurreColors.Gender == -1 || ((Furre)Player).LastStat == -1)
             {
                 Logger.Warn("Wings type not found, Try looking at the furre first");
                 return false;
             }
 
             var Spec = reader.ReadNumber();
-            if (Player.LastStat == 0 || Player.LastStat == 1)
+            if (((Furre)Player).LastStat == 0 || ((Furre)Player).LastStat == 1)
             {
                 return true;
             }
@@ -709,14 +737,15 @@ namespace Libraries
         [TriggerDescription(" This trigger only works after the bot has looked at the specified furre")]
         private bool TriggeringFurreSpeciesVar(TriggerReader reader)
         {
-            switch (Player.LastStat)
+            switch (((Furre)Player).LastStat)
             {
                 case -1:
                     Logger.Warn("Species not found. Try looking at the furre first");
                     return false;
 
-                case (0 | 1):
-                    reader.ReadVariable(true).Value = Player.FurreColors.Species;
+                case 0:
+                case 1:
+                    reader.ReadVariable(true).Value = ((Furre)Player).FurreColors.Species;
                     break;
             }
             return true;
@@ -736,30 +765,30 @@ namespace Libraries
         private bool TriggeringFurreWingsVar(TriggerReader reader)
         {
             var Var = reader.ReadVariable(true);
-            switch (Player.LastStat)
+            switch (((Furre)Player).LastStat)
             {
                 case -1:
                     Logger.Warn("Wings type not found. Try looking at the furre first");
                     return false;
 
                 case 0:
-                    Var.Value = Player.FurreColors.Wings;
+                    Var.Value = ((Furre)Player).FurreColors.Wings;
                     break;
 
                 case 1:
-                    if (Player.FurreColors.Wings == -1)
+                    if (((Furre)Player).FurreColors.Wings == -1)
                     {
-                        if (Player.FurreColors.Wings == -1)
+                        if (((Furre)Player).FurreColors.Wings == -1)
                         {
                             Logger.Warn("Wings type not found, Try looking at the furre first");
                             return false;
                         }
 
-                        Var.Value = Player.FurreColors.Wings;
+                        Var.Value = ((Furre)Player).FurreColors.Wings;
                     }
                     else
                     {
-                        Var.Value = Player.FurreColors.Wings;
+                        Var.Value = ((Furre)Player).FurreColors.Wings;
                     }
 
                     break;

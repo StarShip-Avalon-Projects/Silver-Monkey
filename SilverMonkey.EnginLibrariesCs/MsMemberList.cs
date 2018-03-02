@@ -1,5 +1,7 @@
-﻿using IO;
+﻿using Furcadia.Net.DreamInfo;
+using IO;
 using Monkeyspeak;
+using Monkeyspeak.Libraries;
 using Monkeyspeak.Logging;
 using System;
 using System.Collections.Generic;
@@ -27,9 +29,154 @@ namespace Libraries
     /// </summary>
     public class MsMemberList : MonkeySpeakLibrary
     {
+        #region Private Classes
+
+        /// <summary>
+        /// Small furre object for Memberlist comparason
+        /// </summary>
+        /// <seealso cref="Furcadia.Net.DreamInfo.IFurre" />
+        private class Furr : IFurre
+        {
+            // Can use this as prototype for new PounceFurre class?
+
+            #region Private Fields
+
+            private int id;
+
+            private string message;
+
+            private string name;
+
+            #endregion Private Fields
+
+            #region Public Constructors
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Furr"/> class.
+            /// </summary>
+            /// <param name="Name">The Furre's name.</param>
+            public Furr(string Name)
+            {
+                name = Name;
+            }
+
+            #endregion Public Constructors
+
+            #region Public Properties
+
+            /// <summary>
+            /// Implements the FurreID or unique furre identifyer
+            /// </summary>
+            public int FurreID { get => id; set => id = value; }
+
+            /// <summary>
+            /// Gets or sets the message.
+            /// </summary>
+            /// <value>
+            /// The message.
+            /// </value>
+            public string Message { get => message; set => message = value; }
+
+            /// <summary>
+            /// implements the Furre;s Name Property
+            /// </summary>
+            public string Name { get => name; set => name = value; }
+
+            /// <summary>
+            /// implements the Furre;s Name Property
+            /// </summary>
+            public string ShortName => name.ToFurcadiaShortName();
+
+            #endregion Public Properties
+
+            #region Public Methods
+
+            /// <summary>
+            /// Implements the operator !=.
+            /// </summary>
+            /// <param name="a">a.</param>
+            /// <param name="b">The b.</param>
+            /// <returns>
+            /// The result of the operator.
+            /// </returns>
+            public static bool operator !=(Furr a, IFurre b)
+            {
+                // If left hand side is null...
+                if (a is null)
+                {
+                    return b is null;
+                }
+
+                // Return true if the fields match:
+                return !a.Equals(b);
+            }
+
+            /// <summary>
+            /// Implements the operator ==.
+            /// </summary>
+            /// <param name="a">a.</param>
+            /// <param name="b">The b.</param>
+            /// <returns>
+            /// The result of the operator.
+            /// </returns>
+            public static bool operator ==(Furr a, IFurre b)
+            {
+                // If left hand side is null...
+                if (a is null)
+                {
+                    return b is null;
+                }
+
+                // Return true if the fields match:
+                return a.Equals(b);
+            }
+
+            /// <summary>
+            /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+            /// </summary>
+            /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+            /// <returns>
+            ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+            /// </returns>
+            public override bool Equals(object obj)
+            {
+                if (obj is null)
+                    return false;
+                if (obj is IFurre ob)
+                    return ShortName == ob.ShortName;
+                return base.Equals(obj);
+            }
+
+            /// <summary>
+            /// Returns a hash code for this instance.
+            /// </summary>
+            /// <returns>
+            /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+            /// </returns>
+            public override int GetHashCode()
+            {
+                return ShortName.GetHashCode() ^ id;
+            }
+
+            /// <summary>
+            /// Returns a <see cref="System.String" /> that represents this instance.
+            /// </summary>
+            /// <returns>
+            /// A <see cref="System.String" /> that represents this instance.
+            /// </returns>
+            public override string ToString()
+            {
+                return name;
+            }
+
+            #endregion Public Methods
+        }
+
+        #endregion Private Classes
+
         #region Private Fields
 
-        private List<string> Members = new List<string>();
+        private List<IFurre> MembersList;
 
         #endregion Private Fields
 
@@ -49,7 +196,7 @@ namespace Libraries
         /// Defaults to <see cref="IO.Paths.SilverMonkeyBotPath"/>\MemberList.txt
         /// </summary>
         /// <returns></returns>
-        public string MemberList
+        public string MemberListFile
         {
             get;
             private set;
@@ -66,47 +213,48 @@ namespace Libraries
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);
-            MemberList = Paths.CheckBotFolder("MemberList.txt");
+            MembersList = new List<IFurre>();
+            MemberListFile = Paths.CheckBotFolder("MemberList.txt");
 
             Add(TriggerCategory.Condition,
                 TrigFurreIsMember,
-                "and the triggering furre is on my dream Member List,");
+                "and the triggering furre is on the Dream-Member List,");
 
             Add(TriggerCategory.Condition,
                 FurreNamedIsMember,
-                "and the furre named {...} is on my Dream Member list,");
+                "and the furre named {...} is on the Dream-Member list,");
 
             Add(TriggerCategory.Condition,
                 TrigFurreIsNotMember,
-                "and the triggering furre is not on my Dream Member list,");
+                "and the triggering furre is not on the Dream-Member list,");
 
             Add(TriggerCategory.Condition,
                 FurreNamedIsNotMember,
-                "and the furre named {...} is not on my Dream Member list,");
+                "and the furre named {...} is not on the Dream-Member list,");
 
             Add(TriggerCategory.Effect,
                 AddTrigFurre,
-                "add the triggering furre to my Dream Member list if they aren\'t already on it.");
+                "add the triggering furre to the Dream-Member list if they aren't already on it.");
 
             Add(TriggerCategory.Effect,
                 AddFurreNamed,
-                "add the furre named {...} to my Dream Member list if they aren\'t already on it.");
+                "add the furre named {...} to the Dream-Member list if they aren't already on it.");
 
             Add(TriggerCategory.Effect,
                 RemoveTrigFurre,
-                "remove the triggering furre to my Dream Member list if they are on it.");
+                "remove the triggering furre to the Dream-Member list if they are on it.");
 
             Add(TriggerCategory.Effect,
                 RemoveFurreNamed,
-                "remove the furre named {...} from my Dream Member list if they are on it.");
+                "remove the furre named {...} from the Dream-Member list if they are on it.");
 
             Add(TriggerCategory.Effect,
                 UseMemberFile,
                 "Use file {...} as the dream member list.");
-            // (5:905) store member list to variable %Variable.
+
             Add(TriggerCategory.Effect,
-                ListToVariable,
-                "store member list to variable %Variable.");
+                ListToVariableTable,
+                "store member list to variable table %VariableTable.");
         }
 
         /// <summary>
@@ -123,65 +271,93 @@ namespace Libraries
 
         private bool AddFurreNamed(TriggerReader reader)
         {
-            throw new NotImplementedException();
+            MembersList.Add(new Furr(reader.ReadString()));
+            using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                foreach (var fur in MembersList)
+                    streamWriter.Write($"{fur}");
+
+            return true;
         }
 
         private bool AddTrigFurre(TriggerReader reader)
         {
-            throw new NotImplementedException();
+            MembersList.Add(Player);
+            using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                foreach (var fur in MembersList)
+                    streamWriter.Write($"{fur}");
+            return true;
         }
 
         private void CheckMemberList()
         {
-            MemberList = Paths.CheckBotFolder(MemberList);
-            if (!File.Exists(MemberList))
+            MemberListFile = Paths.CheckBotFolder(MemberListFile);
+            if (!File.Exists(MemberListFile))
             {
-                using (FileStream fStream = new FileStream(MemberList, FileMode.OpenOrCreate))
-                using (StreamWriter writer = new StreamWriter(fStream))
+                using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate))
+                using (StreamWriter streamWriter = new StreamWriter(fileStream))
                 {
-                    writer.Close();
+                    streamWriter.Close();
                 }
             }
         }
 
+        [TriggerDescription("Checks to see it the active player or triggering furre is on the member list")]
+        [TriggerStringParameter]
         private bool FurreNamedIsMember(TriggerReader reader)
         {
-            throw new NotImplementedException();
+            var fur = new Furr(reader.ReadString());
+            return MembersList.Contains(fur);
         }
 
+        [TriggerDescription("Checks to see it the active player or triggering furre isnot on the member list")]
+        [TriggerStringParameter]
         private bool FurreNamedIsNotMember(TriggerReader reader)
         {
-            throw new NotImplementedException();
+            return !FurreNamedIsMember(reader);
         }
 
-        private bool ListToVariable(TriggerReader reader)
+        [TriggerDescription("reads the member list and puts each furre in the variable table as %shortname = \"Name\"")]
+        [TriggerVariableParameter]
+        private bool ListToVariableTable(TriggerReader reader)
         {
-            throw new NotImplementedException();
+            var table = reader.ReadVariableTable(true);
+            foreach (var fur in MembersList)
+            {
+                table.Add($"%{fur.ShortName}", fur.Name);
+            }
+            return true;
         }
 
+        [TriggerStringParameter]
         private bool RemoveFurreNamed(TriggerReader reader)
         {
             try
             {
-                this.CheckMemberList();
-                var Furre = reader.ReadString();
+                CheckMemberList();
+                string furre = reader.ReadString();
                 string line;
-                using (var fStream = new FileStream(MemberList, FileMode.OpenOrCreate))
-                using (var SR = new StreamReader(fStream))
+                using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                 {
-                    while (SR.Peek() != -1)
+                    using (StreamReader streamReader = new StreamReader(fileStream))
                     {
-                        line = SR.ReadLine();
-                        for (int i = 0; i <= Members.Count - 1; i++)
+                        while (streamReader.Peek() != -1)
                         {
-                            if (line.ToFurcadiaShortName() == Furre.ToFurcadiaShortName())
+                            line = streamReader.ReadLine();
+                            for (int i = 0; i <= MembersList.Count - 1; i++)
                             {
-                                Members.RemoveAt(i);
-                                File.WriteAllLines(MemberList, Members.ToArray());
-                                break;
+                                if (line.ToFurcadiaShortName() == furre.ToFurcadiaShortName())
+                                {
+                                    MembersList.RemoveAt(i);
+                                    break;
+                                }
                             }
                         }
                     }
+                    using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                        foreach (var fur in MembersList)
+                            streamWriter.Write($"{fur}");
                 }
                 return true;
             }
@@ -198,24 +374,29 @@ namespace Libraries
             try
             {
                 CheckMemberList();
-                var Furre = reader.Page.GetVariable(TriggeringFurreNameVariable).Value.ToString();
-                List<string> linesList = new List<string>(File.ReadAllLines(MemberList));
-                using (var fStream = new FileStream(MemberList, FileMode.OpenOrCreate))
-                using (var SR = new StreamReader(fStream))
+                string furre = Player.Name;
+                string line;
+
+                using (FileStream fileStream = new FileStream(MemberListFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                 {
-                    while (SR.Peek() != -1)
+                    using (StreamReader streamReader = new StreamReader(fileStream))
                     {
-                        var line = SR.ReadLine();
-                        for (int i = 0; i <= linesList.Count - 1; i++)
+                        while (streamReader.Peek() != -1)
                         {
-                            if (line.ToFurcadiaShortName() == Furre.ToFurcadiaShortName())
+                            line = streamReader.ReadLine();
+                            for (int i = 0; i <= MembersList.Count - 1; i++)
                             {
-                                linesList.RemoveAt(i);
-                                File.WriteAllLines(MemberList, linesList.ToArray());
-                                break;
+                                if (line.ToFurcadiaShortName() == furre.ToFurcadiaShortName())
+                                {
+                                    MembersList.RemoveAt(i);
+                                    break;
+                                }
                             }
                         }
                     }
+                    using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                        foreach (Furr fur in MembersList)
+                            streamWriter.Write($"{fur}");
                 }
                 return true;
             }
@@ -229,20 +410,22 @@ namespace Libraries
 
         private bool TrigFurreIsMember(TriggerReader reader)
         {
-            throw new NotImplementedException();
+            return MembersList.Contains(Player);
         }
 
         private bool TrigFurreIsNotMember(TriggerReader reader)
         {
-            throw new NotImplementedException();
+            return !TrigFurreIsMember(reader);
         }
 
+        [TriggerDescription("sets the file name of the memberlist file, This defaults to \"Documents\\Silver Monkey\\MembersList.txt\"")]
+        [TriggerStringParameter]
         private bool UseMemberFile(TriggerReader reader)
         {
             try
             {
-                MemberList = reader.ReadString();
-                this.CheckMemberList();
+                MemberListFile = reader.ReadString();
+                CheckMemberList();
                 return true;
             }
             catch (Exception ex)

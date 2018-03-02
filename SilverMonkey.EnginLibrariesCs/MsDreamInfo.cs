@@ -1,4 +1,5 @@
 ﻿using Monkeyspeak;
+using Monkeyspeak.Libraries;
 using System;
 using MsLog = Monkeyspeak.Logging;
 
@@ -103,12 +104,12 @@ namespace Libraries
                  "and the bot has share control of the Dream or is the Dream-Owner,");
 
             Add(TriggerCategory.Condition,
-               r => ParentBotSession.HasShare,
-             "and the bot has share control of the Dream,");
+                r => ParentBotSession.HasShare,
+                "and the bot has share control of the Dream,");
 
             Add(TriggerCategory.Condition,
-               r => !ParentBotSession.HasShare,
-             "and the bot doesn't have share control in the Dream,");
+                r => !ParentBotSession.HasShare,
+                "and the bot doesn't have share control in the Dream,");
 
             Add(TriggerCategory.Effect,
                 r => ShareTrigFurre(r),
@@ -139,6 +140,7 @@ namespace Libraries
 
         #region Private Methods
 
+        [TriggerStringParameter]
         private static bool AndFurreNamedIsDreamOwner(TriggerReader reader)
         {
             return DreamInfo.DreamOwner.ToFurcadiaShortName()
@@ -150,11 +152,12 @@ namespace Libraries
             return DreamInfo.DreamOwner.ToFurcadiaShortName() == ParentBotSession.ConnectedFurre.ShortName;
         }
 
+        [TriggerStringParameter]
         private static bool DreamNameIs(TriggerReader reader)
         {
             var url = reader.ReadString();
 
-            if (string.IsNullOrWhiteSpace(url)) { return false; }
+            if (string.IsNullOrWhiteSpace(url)) return false;
 
             url = url.ToLower().Trim().Replace("furc://", "").TrimEnd('/');
 
@@ -186,12 +189,13 @@ namespace Libraries
             return DreamNameIs(reader);
         }
 
+        [TriggerStringParameter]
         private bool ShareFurreNamed(TriggerReader reader)
         {
-            var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
-            if (InDream(Target))
-                return SendServer($"share {Target.ShortName}");
-            MsLog.Logger.Warn($"Cannot give share to {Target.Name} because they're not in the dream");
+            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            if (InDream(TargetFurre))
+                return SendServer($"share {TargetFurre.ShortName}");
+            MsLog.Logger.Warn($"Cannot give share to {TargetFurre.Name} because they're not in the dream");
             return false;
         }
 
@@ -203,12 +207,13 @@ namespace Libraries
             return false;
         }
 
+        [TriggerStringParameter]
         private bool UnshareFurreNamed(TriggerReader reader)
         {
-            var Target = DreamInfo.Furres.GetFurreByName(reader.ReadString());
-            if (InDream(Target))
-                return SendServer($"unshare {Target.ShortName}");
-            MsLog.Logger.Warn($"cannot thake share from {Target.Name} they're not in the dream");
+            var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
+            if (InDream(TargetFurre))
+                return SendServer($"unshare {TargetFurre.ShortName}");
+            MsLog.Logger.Warn($"cannot thake share from {TargetFurre.Name} they're not in the dream");
             return false;
         }
 
