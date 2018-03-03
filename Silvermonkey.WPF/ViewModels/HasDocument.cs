@@ -9,8 +9,15 @@ using System.Windows.Documents;
 
 namespace SilverMonkey.ViewModels
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <seealso cref="System.Windows.DependencyObject" />
     public class HasDocument : DependencyObject
     {
+        /// <summary>
+        /// The document property
+        /// </summary>
         public static readonly DependencyProperty DocumentProperty =
             DependencyProperty.Register("Document",
                                         typeof(FlowDocument),
@@ -22,6 +29,12 @@ namespace SilverMonkey.ViewModels
             Debug.WriteLine("Document has changed");
         }
 
+        /// <summary>
+        /// Gets or sets the document.
+        /// </summary>
+        /// <value>
+        /// The document.
+        /// </value>
         public FlowDocument Document
         {
             get { return GetValue(DocumentProperty) as FlowDocument; }

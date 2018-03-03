@@ -12,6 +12,10 @@ using System.Windows.Input;
 
 namespace SilverMonkey.ViewModels
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <seealso cref="Caliburn.Micro.Screen" />
     public class ShellViewModel : Screen
     {
         #region Private Fields
@@ -51,6 +55,12 @@ namespace SilverMonkey.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the dream title.
+        /// </summary>
+        /// <value>
+        /// The dream title.
+        /// </value>
         public string DreamTitle
         {
             get { return _DreamTitle; }
@@ -94,8 +104,6 @@ namespace SilverMonkey.ViewModels
         }
 
         /// <summary>
-
-        /// <summary>
         /// Gets or sets the dream count.
         /// </summary>
         /// <value>
@@ -116,6 +124,7 @@ namespace SilverMonkey.ViewModels
             }
         }
 
+        /// <summary>
         /// Gets or sets the furre count.
         /// </summary>
         /// <value>
@@ -136,6 +145,12 @@ namespace SilverMonkey.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the furres.
+        /// </summary>
+        /// <value>
+        /// The furres.
+        /// </value>
         public List<Furre> Furres
         {
             get

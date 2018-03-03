@@ -19,6 +19,9 @@ namespace SilverMonkey.Views
     /// </summary>
     public partial class BotSetupView : Window
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BotSetupView"/> class.
+        /// </summary>
         public BotSetupView()
         {
             InitializeComponent();

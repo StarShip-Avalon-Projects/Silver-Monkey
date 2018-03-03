@@ -90,12 +90,16 @@ namespace Futureware.MantisSubmit
 
         #region Public Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubmitIssueForm"/> class.
+        /// </summary>
         public SubmitIssueForm()
         {
             //
             // Required for Windows Form Designer support
             //
             InitializeComponent();
+            populating = false;
         }
 
         /// <summary>
@@ -706,11 +710,13 @@ namespace Futureware.MantisSubmit
         }
 
         /// <summary>
-        /// Walks the nodes to populate Projects
+        /// Walks the node.
         /// </summary>
         /// <param name="projects">The projects.</param>
         /// <param name="Tn">The tn.</param>
-        private void WalkNode(List<Project> projects, ref TreeNode Tn, ref TreeNode FounNode, string NameToFind)
+        /// <param name="FoundNode">The foun node.</param>
+        /// <param name="NameToFind">The name to find.</param>
+        private void WalkNode(List<Project> projects, ref TreeNode Tn, ref TreeNode FoundNode, string NameToFind)
         {
             for (int i = 0; i < projects.Count; i++)
             {
@@ -720,9 +726,9 @@ namespace Futureware.MantisSubmit
                 };
                 Tn.Nodes.Add(Node);
                 if (projects[i].Name == NameToFind)
-                    FounNode = Node;
+                    FoundNode = Node;
                 if (projects[i].Subprojects.Count > 0)
-                    WalkNode(projects[i].Subprojects, ref Tn, ref FounNode, NameToFind);
+                    WalkNode(projects[i].Subprojects, ref Tn, ref FoundNode, NameToFind);
             }
         }
 

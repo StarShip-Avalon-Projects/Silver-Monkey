@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace SilverMonkey.ViewModels
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <seealso cref="Caliburn.Micro.Screen" />
     public class BotSetupViewModel : Screen
     {
     }

@@ -17,9 +17,19 @@ namespace SilverMonkey.Views
     {
         #region Public Constructors
 
+        /// <summary>
+        /// The session options
+        /// </summary>
         public BotOptions SessionOptions = new BotOptions();
+
+        /// <summary>
+        /// The furcadia session
+        /// </summary>
         public Bot FurcadiaSession;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShellView"/> class.
+        /// </summary>
         public ShellView()
         {
             InitializeComponent();

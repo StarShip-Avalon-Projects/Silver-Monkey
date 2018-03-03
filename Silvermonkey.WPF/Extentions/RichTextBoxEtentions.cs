@@ -8,8 +8,16 @@ using System.Windows.Documents;
 
 namespace SilverMonkey
 {
+    /// <summary>
+    ///
+    /// </summary>
     public static class RichTextBoxEtentions
     {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="richTextBox"></param>
+        /// <param name="text"></param>
         public static void SetText(this RichTextBox richTextBox, string text)
         {
             richTextBox.Document.Blocks.Clear();
@@ -19,6 +27,11 @@ namespace SilverMonkey
             richTextBox.Document.Blocks.Add(para);
         }
 
+        /// <summary>
+        /// Appends the paragraph.
+        /// </summary>
+        /// <param name="richTextBox">The rich text box.</param>
+        /// <param name="text">The text.</param>
         public static void AppendParagraph(this RichTextBox richTextBox, string text)
         {
             Paragraph para = new Paragraph(new Run(text));
@@ -27,6 +40,11 @@ namespace SilverMonkey
             richTextBox.Document.Blocks.Add(para);
         }
 
+        /// <summary>
+        /// Gets the text.
+        /// </summary>
+        /// <param name="richTextBox">The rich text box.</param>
+        /// <returns></returns>
         public static string GetText(this RichTextBox richTextBox)
         {
             return new TextRange(richTextBox.Document.ContentStart,
