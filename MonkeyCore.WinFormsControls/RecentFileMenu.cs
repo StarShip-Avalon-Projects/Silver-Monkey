@@ -16,10 +16,11 @@ namespace MonkeyCore.WinForms.Controls
         /// </summary>
         private const int MRUnumber = 15;
 
-        private static ToolStripMenuItem _Menu;
+        private static ToolStripMenuItem menu;
 
         public RecentFileMenu()
         {
+            menu = null;
         }
 
         private void ReadRecentMenutList()
@@ -51,7 +52,7 @@ namespace MonkeyCore.WinForms.Controls
         /// <param name="path"></param>
         public void SaveRecentFile(string path)
         {
-            _Menu.DropDownItems.Clear();
+            menu.DropDownItems.Clear();
             // clear all recent list from menu
             ReadRecentMenutList();
             // load list from file
@@ -71,7 +72,7 @@ namespace MonkeyCore.WinForms.Controls
                 ToolStripMenuItem fileRecent = new ToolStripMenuItem(item, null, new System.EventHandler(this.RecentFile_click));
                 // create new menu for each item in list
                 // add the menu to "recent" menu
-                _Menu.DropDownItems.Add(fileRecent);
+                menu.DropDownItems.Add(fileRecent);
             }
 
             // writing menu list to file

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace IO
 {
@@ -189,7 +185,7 @@ namespace IO
             {
                 if (string.IsNullOrEmpty(_FurcadiaCharactersFolder))
                 {
-                    if ((_Paths == null))
+                    if (_Paths == null)
                     {
                         _Paths = new Furcadia.IO.Paths(_FurcadiaProgramFolder);
                     }
@@ -226,7 +222,7 @@ namespace IO
                     return _FurcadiaDocumentsFolder;
                 }
 
-                if ((_Paths == null))
+                if (_Paths == null)
                 {
                     _Paths = new Furcadia.IO.Paths(_FurcadiaProgramFolder);
                 }
@@ -283,7 +279,7 @@ namespace IO
                     return _FurcadiaSettingsFilder;
                 }
 
-                if ((_Paths == null))
+                if (_Paths == null)
                 {
                     _Paths = new Furcadia.IO.Paths(_FurcadiaSettingsFilder);
                 }
@@ -570,7 +566,7 @@ namespace IO
         {
             get
             {
-                if ((_SilverMonkeyLogPath == null))
+                if (_SilverMonkeyLogPath == null)
                 {
                     _SilverMonkeyDocumentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), MyDocumentsPath);
                     _SilverMonkeyLogPath = Path.Combine(_SilverMonkeyDocumentsPath, LogPath);

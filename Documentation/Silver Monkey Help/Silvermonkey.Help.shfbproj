@@ -36,14 +36,14 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\Monkeyspeak\Monkeyspeak\Monkeyspeak.csproj" />
-<DocumentationSource sourceFile="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj" />
-<DocumentationSource sourceFile="..\..\Silvermonkey.Engine\Silvermonkey.Engine.csproj" />
-<DocumentationSource sourceFile="..\..\Silvermonkey.WPF\Silvermonkey.WPF.csproj" />
-<DocumentationSource sourceFile="..\..\MonkeyCore\MonkeyCore.csproj" />
-<DocumentationSource sourceFile="..\..\MonkeyCoreVB\MonkeyCore VB.vbproj" />
-<DocumentationSource sourceFile="..\..\FurcLib\FurcadiaLib.csproj" />
-<DocumentationSource sourceFile="..\..\SmEngine.LibrariesVB\Silvermonkey.Engine.Libraries VB.vbproj" />
-<DocumentationSource sourceFile="..\..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Librarie.csproj" /></DocumentationSources>
+      <DocumentationSource sourceFile="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj" />
+      <DocumentationSource sourceFile="..\..\Silvermonkey.Engine\Silvermonkey.Engine.csproj" />
+      <DocumentationSource sourceFile="..\..\Silvermonkey.WPF\Silvermonkey.WPF.csproj" />
+      <DocumentationSource sourceFile="..\..\MonkeyCore\MonkeyCore.csproj" />
+      <DocumentationSource sourceFile="..\..\FurcLib\FurcadiaLib.csproj" />
+      <DocumentationSource sourceFile="..\..\SmEngine.LibrariesVB\Silvermonkey.Engine.Libraries VB.vbproj" />
+      <DocumentationSource sourceFile="..\..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Librarie.csproj" />
+    </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
     <FeedbackEMailAddress>gerolkae%40hotmail.com</FeedbackEMailAddress>
     <HelpFileVersion>2.19.0.0</HelpFileVersion>
@@ -61,18 +61,48 @@
           <colorizer syntaxFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xml" styleFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.xsl" stylesheet="{@SHFBFolder}PresentationStyles\Colorizer\highlight.css" scriptFile="{@SHFBFolder}PresentationStyles\Colorizer\highlight.js" disabled="{@DisableCodeBlockComponent}" language="cs" tabSize="0" numberLines="true" outlining="true" keepSeeTags="true" defaultTitle="true" />
         </component>
       </ComponentConfig>
-<ComponentConfig id="IntelliSense Component" enabled="True"><component id="IntelliSense Component"><!-- Output options (optional)
+      <ComponentConfig id="IntelliSense Component" enabled="True">
+        <component id="IntelliSense Component">
+          <!-- Output options (optional)
   Attributes:
     Include namespaces (false by default)
     Namespaces comments filename ("Namespaces" if not specified or empty)
-    Output folder (current folder if not specified or empty) --><output includeNamespaces="true" namespacesFile="Namespaces" folder="{@OutputFolder}" boundedCapacity="100" /></component></ComponentConfig>
-<ComponentConfig id="Syntax Component" enabled="True"><component id="Syntax Component"><syntax input="/document/reference" output="/document/syntax" renderReferenceLinks="false" /><generators>
+    Output folder (current folder if not specified or empty) -->
+          <output includeNamespaces="true" namespacesFile="Namespaces" folder="{@OutputFolder}" boundedCapacity="100" />
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="Syntax Component" enabled="True">
+        <component id="Syntax Component">
+          <syntax input="/document/reference" output="/document/syntax" renderReferenceLinks="false" />
+          <generators>
             {@SyntaxFilters}
-          </generators><containerElement name="codeSnippetGroup" addNoExampleTabs="true" includeOnSingleSnippets="false" groupingEnabled="{@CodeSnippetGrouping}" /><configurations><generator id="C#" /><generator id="Visual Basic"><includeLineContinuation value="false" /></generator><generator id="Visual Basic Usage"><includeLineContinuation value="false" /></generator><generator id="Managed C++" /><generator id="F#" /><generator id="J#" /><generator id="JScript" /><generator id="JavaScript" /><generator id="XAML Usage" /><generator id="ASP.NET" /></configurations></component></ComponentConfig>
-<ComponentConfig id="API Token Resolution" enabled="True"><component id="API Token Resolution">
+          </generators>
+          <containerElement name="codeSnippetGroup" addNoExampleTabs="true" includeOnSingleSnippets="false" groupingEnabled="{@CodeSnippetGrouping}" />
+          <configurations>
+            <generator id="C#" />
+            <generator id="Visual Basic">
+              <includeLineContinuation value="false" />
+            </generator>
+            <generator id="Visual Basic Usage">
+              <includeLineContinuation value="false" />
+            </generator>
+            <generator id="Managed C++" />
+            <generator id="F#" />
+            <generator id="J#" />
+            <generator id="JScript" />
+            <generator id="JavaScript" />
+            <generator id="XAML Usage" />
+            <generator id="ASP.NET" />
+          </configurations>
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="API Token Resolution" enabled="True">
+        <component id="API Token Resolution">
           {@TokenFiles}
-          <replace elements="/*//token" item="string(.)" /></component></ComponentConfig>
-<ComponentConfig id="Resolve Reference Links (ESENT Cache)" enabled="True"><component id="Resolve Reference Links (ESENT Cache)">{@HRefFormat}
+          <replace elements="/*//token" item="string(.)" /></component>
+      </ComponentConfig>
+      <ComponentConfig id="Resolve Reference Links (ESENT Cache)" enabled="True">
+        <component id="Resolve Reference Links (ESENT Cache)">{@HRefFormat}
 <locale value="{@Locale}" /><linkTarget value="{@SdkLinkTarget}" /><helpOutput format="HtmlHelp1"><msdnContentIdCache path="{@LocalDataFolder}Cache\MsdnContentId.cache" cachePath="{@LocalDataFolder}Cache\ESentMsdnContentIdCache" localCacheSize="2500" /><targets base="{@FrameworkReflectionDataFolder}" recurse="true" files="*.xml" type="{@HtmlSdkLinkType}" id="FrameworkTargets" cachePath="{@LocalDataFolder}Cache\ESentFrameworkTargetCache" localCacheSize="2500">
 		{@ReferenceLinkNamespaceFiles}
 	</targets><targets files="reflection.xml" type="Local" id="ProjectTargets" cachePath="" localCacheSize="2500" noReload="true" /></helpOutput><helpOutput format="MSHelpViewer"><msdnContentIdCache path="{@LocalDataFolder}Cache\MsdnContentId.cache" cachePath="{@LocalDataFolder}Cache\ESentMsdnContentIdCache" localCacheSize="2500" /><targets base="{@FrameworkReflectionDataFolder}" recurse="true" files="*.xml" type="{@MSHelpViewerSdkLinkType}" id="FrameworkTargets" cachePath="{@LocalDataFolder}Cache\ESentFrameworkTargetCache" localCacheSize="2500">
@@ -83,23 +113,29 @@
 		{@ReferenceLinkNamespaceFiles}
 	</targets><targets files="reflection.xml" type="Local" id="ProjectTargets" cachePath="" localCacheSize="2500" noReload="true" /></helpOutput><helpOutput format="Markdown"><msdnContentIdCache path="{@LocalDataFolder}Cache\MsdnContentId.cache" cachePath="{@LocalDataFolder}Cache\ESentMsdnContentIdCache" localCacheSize="2500" /><targets base="{@FrameworkReflectionDataFolder}" recurse="true" files="*.xml" type="{@WebsiteSdkLinkType}" id="FrameworkTargets" cachePath="{@LocalDataFolder}Cache\ESentFrameworkTargetCache" localCacheSize="2500">
 		{@ReferenceLinkNamespaceFiles}
-	</targets><targets files="reflection.xml" type="Local" id="ProjectTargets" cachePath="" localCacheSize="2500" noReload="true" /></helpOutput></component></ComponentConfig>
-<ComponentConfig id="Reflection Index Data (ESENT Cache)" enabled="True"><component id="Reflection Index Data (ESENT Cache)">
-  <index name="reflection" value="/reflection/apis/api" key="@id" cache="15" localCacheSize="2500" frameworkCachePath="{@LocalDataFolder}Cache\ReflectionIndexCache" projectCachePath="">
-    <data base="{@FrameworkReflectionDataFolder}" recurse="true" files="*.xml" duplicateWarning="false" groupId="ReflectionIndexCache">
+	</targets><targets files="reflection.xml" type="Local" id="ProjectTargets" cachePath="" localCacheSize="2500" noReload="true" /></helpOutput></component>
+      </ComponentConfig>
+      <ComponentConfig id="Reflection Index Data (ESENT Cache)" enabled="True">
+        <component id="Reflection Index Data (ESENT Cache)">
+          <index name="reflection" value="/reflection/apis/api" key="@id" cache="15" localCacheSize="2500" frameworkCachePath="{@LocalDataFolder}Cache\ReflectionIndexCache" projectCachePath="">
+            <data base="{@FrameworkReflectionDataFolder}" recurse="true" files="*.xml" duplicateWarning="false" groupId="ReflectionIndexCache">
 		{@ReferenceLinkNamespaceFiles}
 	</data>
-    <data files="reflection.xml" groupId="Project_Ref_{@UniqueID}" />
-  </index>
-  <copy name="reflection" source="*" target="/document/reference" />
-</component></ComponentConfig>
-<ComponentConfig id="Comments Index Data (ESENT Cache)" enabled="True"><component id="Comments Index Data (ESENT Cache)">
-  <index name="comments" value="/doc/members/member" key="@name" cache="30" localCacheSize="2500" frameworkCachePath="{@LocalDataFolder}Cache\CommentsIndexCache" projectCachePath="">
+            <data files="reflection.xml" groupId="Project_Ref_{@UniqueID}" />
+          </index>
+          <copy name="reflection" source="*" target="/document/reference" />
+        </component>
+      </ComponentConfig>
+      <ComponentConfig id="Comments Index Data (ESENT Cache)" enabled="True">
+        <component id="Comments Index Data (ESENT Cache)">
+          <index name="comments" value="/doc/members/member" key="@name" cache="30" localCacheSize="2500" frameworkCachePath="{@LocalDataFolder}Cache\CommentsIndexCache" projectCachePath="">
 	{@FrameworkCommentList}
 	{@CommentFileList}
 </index>
-  <copy name="comments" source="*" target="/document/comments" />
-</component></ComponentConfig></ComponentConfigurations>
+          <copy name="comments" source="*" target="/document/comments" />
+        </component>
+      </ComponentConfig>
+    </ComponentConfigurations>
     <FooterText>
     </FooterText>
     <HeaderText>
@@ -140,29 +176,29 @@
     <WarnOnMissingSourceContext>True</WarnOnMissingSourceContext>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="DataMonkey" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Furcadia" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Furcadia.Drawing (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths&lt;p&gt;
+      <NamespaceSummaryItem name="Furcadia (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Furcadia" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths. The Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here at the GitHub Repository&lt;/a&gt;.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Furcadia.Drawing (Group)" isGroup="True" isDocumented="True">Furcadia Framework for Third Party Programs. This is the base library for our connection process and file paths&lt;p&gt;
         the Documentation for this library can be found&lt;a href="https://starship-avalon-projects.github.io/FurcadiaFramework" target="_new"&gt;here&lt;/a&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Furcadia.Drawing" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.Drawing.Graphics" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.EventArgs" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.FurcMap" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.IO (Group)" isGroup="True" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.IO" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.IO.SubSystem" isDocumented="True" />
-<NamespaceSummaryItem name="Furcadia.Net" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore (Group)" isGroup="True" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore.Controls" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore.My" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey (Group)" isGroup="True" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.DataMonkey.Controls" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.My" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.PhoenixSpeak" isDocumented="True" />
-<NamespaceSummaryItem name="(global)" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.Engine.Libraries (Group)" isGroup="True" isDocumented="True">&lt;h1&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/H1&gt;
+      <NamespaceSummaryItem name="Furcadia.Drawing" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.Drawing.Graphics" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.EventArgs" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.FurcMap" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.IO (Group)" isGroup="True" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.IO" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.IO.SubSystem" isDocumented="True" />
+      <NamespaceSummaryItem name="Furcadia.Net" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore (Group)" isGroup="True" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore.Controls" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore.My" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey (Group)" isGroup="True" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.DataMonkey.Controls" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.My" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.PhoenixSpeak" isDocumented="True" />
+      <NamespaceSummaryItem name="(global)" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.Engine.Libraries (Group)" isGroup="True" isDocumented="True">&lt;h1&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/H1&gt;
 &lt;p&gt; Some of the Default Monkey Speak Libraries are used from the Monkey Speak Engine itself. They can be found here at
 &lt;codeEntityReference qualifyHint="false"&gt;T:Monkeyspeak.Libraries&lt;/codeEntityReference&gt;
 &lt;/p&gt;
@@ -171,10 +207,10 @@
 &lt;p&gt;
 These Libraries are what powers Silver monkey's Features. They are the Monkey Speak lines you'll see in MonkeySpeak Editor. Each Library is seperated into a method representing the guts of the Monkey Speak line, Some methods will have Monkey Speak Exceptions, When this Occures, Execution of the Monkey Speak block of lines will hault, Displaying an Error in the Log Box. Some times Extra information with the exception will be sent to the Debug Window.
 &lt;/p&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Monkeyspeak" isDocumented="True">Provides Functionality of Monkey Speak
+      <NamespaceSummaryItem name="Monkeyspeak" isDocumented="True">Provides Functionality of Monkey Speak
 &lt;a href="https://starship-avalon-projects.github.io/MonkeySpeakExtendedEngine/html/8d0a663e-8095-408a-b860-f55d2fc3ccbe.htm"&gt;Monkey Speak Ex Documentation&lt;/a&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SilverMonkeyEngine.My" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries (Group)" isGroup="True" isDocumented="True">&lt;p&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/p&gt;
+      <NamespaceSummaryItem name="SilverMonkeyEngine.My" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries (Group)" isGroup="True" isDocumented="True">&lt;p&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/p&gt;
 &lt;p&gt; Some of the Default Monkey Speak Libraries are used from the Monkey Speak Engine itself. They can be found here at
 &lt;codeEntityReference qualifyHint="false"&gt;T:Monkeyspeak.Libraries&lt;/codeEntityReference&gt;
 &lt;/p&gt;
@@ -183,7 +219,7 @@ These Libraries are what powers Silver monkey's Features. They are the Monkey Sp
 &lt;p&gt;
 These Libraries are what powers Silver monkey's Features. They are the Monkey Speak lines you'll see in MonkeySpeak Editor. Each Library is seperated into a method representing the guts of the Monkey Speak line, Some methods will have Monkey Speak Exceptions, When this Occures, Execution of the Monkey Speak block of lines will hault, Displaying an Error in the Log Box. Some times Extra information with the exception will be sent to the Debug Window.
 &lt;/p&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True">&lt;p&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/p&gt;
+      <NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries" isDocumented="True">&lt;p&gt;Silver Monkey uses these Monkey Speak Libraries.&lt;/p&gt;
 &lt;p&gt; Some of the Default Monkey Speak Libraries are used from the Monkey Speak Engine itself. They can be found here at
 &lt;codeEntityReference qualifyHint="false"&gt;T:Monkeyspeak.Libraries&lt;/codeEntityReference&gt;
 &lt;/p&gt;
@@ -192,25 +228,26 @@ These Libraries are what powers Silver monkey's Features. They are the Monkey Sp
 &lt;p&gt;
 These Libraries are what powers Silver monkey's Features. They are the Monkey Speak lines you'll see in MonkeySpeak Editor. Each Library is seperated into a method representing the guts of the Monkey Speak line, Some methods will have Monkey Speak Exceptions, When this Occures, Execution of the Monkey Speak block of lines will hault, Displaying an Error in the Log Box. Some times Extra information with the exception will be sent to the Debug Window.
 &lt;/p&gt;</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries.Pounce" isDocumented="True">Furcadia Framework does not use Furcadia's  online.ini.
+      <NamespaceSummaryItem name="SilverMonkeyEngine.Engine.Libraries.Pounce" isDocumented="True">Furcadia Framework does not use Furcadia's  online.ini.
 &lt;p/&gt;
 Instead Pounce uses a List of names and checks the Pounce server for furre online status.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Engine.BotSession" isDocumented="True" />
-<NamespaceSummaryItem name="IO" isDocumented="True" />
-<NamespaceSummaryItem name="Libraries" isDocumented="True" />
-<NamespaceSummaryItem name="Logging" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore.Data" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore.Utils (Group)" isGroup="True" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore.Utils" isDocumented="True" />
-<NamespaceSummaryItem name="MonkeyCore.Utils.Logging" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.Engine (Group)" isGroup="True" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.Engine.Libraries" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.Engine.Libraries.Dice" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.Engine.Libraries.Web" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.Engine.My" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.ViewModels" isDocumented="True" />
-<NamespaceSummaryItem name="SilverMonkey.Views" isDocumented="True" />
-<NamespaceSummaryItem name="SilveyMonkey" isDocumented="True" /></NamespaceSummaries>
+      <NamespaceSummaryItem name="Engine.BotSession" isDocumented="True" />
+      <NamespaceSummaryItem name="IO" isDocumented="True" />
+      <NamespaceSummaryItem name="Libraries" isDocumented="True" />
+      <NamespaceSummaryItem name="Logging" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore.Data" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore.Utils (Group)" isGroup="True" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore.Utils" isDocumented="True" />
+      <NamespaceSummaryItem name="MonkeyCore.Utils.Logging" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.Engine (Group)" isGroup="True" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.Engine.Libraries" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.Engine.Libraries.Dice" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.Engine.Libraries.Web" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.Engine.My" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.ViewModels" isDocumented="True" />
+      <NamespaceSummaryItem name="SilverMonkey.Views" isDocumented="True" />
+      <NamespaceSummaryItem name="SilveyMonkey" isDocumented="True" />
+    </NamespaceSummaries>
     <PlugInConfigurations>
       <PlugInConfig id="Output Deployment" enabled="True">
         <configuration deleteAfterDeploy="false" verboseLogging="false">
