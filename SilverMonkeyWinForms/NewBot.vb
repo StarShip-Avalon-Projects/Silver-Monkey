@@ -3,28 +3,115 @@ Imports System.Drawing
 Imports System.Windows.Forms
 Imports Engine.BotSession
 Imports IO
-Imports MonkeyCore.IO
 
+''' <summary>
+'''
+''' </summary>
+''' <seealso cref="System.Windows.Forms.Form" />
 Public Class NewBott
-
-#Region "Public Properties"
-
-    Public ReadOnly Property BotConfig As BotOptions
-        Get
-            Return bFile
-        End Get
-    End Property
-
-#End Region
 
 #Region "Public Fields"
 
+    ''' <summary>
+    ''' The BTN character ini
+    ''' </summary>
+    Public BtnCharacterINI As New Button
+
+    ''' <summary>
+    ''' The BTN file location
+    ''' </summary>
+    Public BtnFileLocation As New Button
+
+    ''' <summary>
+    ''' The label bot controller
+    ''' </summary>
+    Public LblBotController As New Label
+
+    ''' <summary>
+    ''' The label bot name
+    ''' </summary>
+    Public LblBotName As New Label
+
+    ''' <summary>
+    ''' The label character ini
+    ''' </summary>
+    Public LblCharacterINI As New Label
+
+    ''' <summary>
+    ''' The label file location
+    ''' </summary>
+    Public LblFileLocation As New Label
+
+    ''' <summary>
+    ''' The radio go dream URL
+    ''' </summary>
+    Public RadioGoDreamURL As New RadioButton
+
+    ''' <summary>
+    ''' The radio go map acropolis
+    ''' </summary>
+    Public RadioGoMapAcropolis As New RadioButton
+
+    ''' <summary>
+    ''' The radio go map allgeria island
+    ''' </summary>
+    Public RadioGoMapAllgeriaIsland As New RadioButton
+
+    ''' <summary>
+    ''' The radio go map none
+    ''' </summary>
+    Public RadioGoMapNone As New RadioButton
+
+    ''' <summary>
+    ''' The TXTBX bot controller
+    ''' </summary>
+    Public TxtbxBotController As New TextBox
+
+    ''' <summary>
+    ''' The TXTBX bot name
+    ''' </summary>
+    Public TxtbxBotName As New TextBox
+
+    ''' <summary>
+    ''' The TXTBX character ini
+    ''' </summary>
+    Public TxtbxCharacterINI As New TextBox
+
+    ''' <summary>
+    ''' The TXTBX dream URL
+    ''' </summary>
+    Public TxtbxDreamURL As New TextBox
+
+    ''' <summary>
+    ''' The TXTBX filelocation
+    ''' </summary>
+    Public TxtbxFilelocation As New TextBox
+
+#End Region
+
+#Region "Private Fields"
+
+    Private Const PageCount As Integer = 2
+
+    ''' <summary>
+    ''' The b file
+    ''' </summary>
     Private bFile As BotOptions
+
+    Private HelpLinks As LabelHotlinks
+
+    Dim OverWrite As Boolean = False
+
+    Dim WizIndex As Integer = 1
 
 #End Region
 
 #Region "Public Constructors"
 
+    ''' <summary>
+    ''' Initializes a new instance of the <see cref="NewBott"/> class.
+    ''' </summary>
+    ''' <param name="options">The options.</param>
     Public Sub New(ByRef options As BotOptions)
         Dim Prt As New Random(Date.Now.Millisecond)
         options = New BotOptions()
@@ -40,46 +127,29 @@ Public Class NewBott
 
 #End Region
 
-#Region "Private Fields"
+#Region "Public Properties"
 
-    Dim OverWrite As Boolean = False
-    Dim WizIndex As Integer = 1
-    Private HelpLinks As LabelHotlinks
-
-#End Region
-
-#Region "Controls"
-
-    Public BtnCharacterINI As New Button
-    Public BtnFileLocation As New Button
-    Public LblBotController As New Label
-    Public LblBotName As New Label
-    Public LblCharacterINI As New Label
-    Public LblFileLocation As New Label
-
-    'Value 4
-    Public RadioGoDreamURL As New RadioButton
-
-    'Value 2
-    Public RadioGoMapAcropolis As New RadioButton
-
-    'Value 1
-    Public RadioGoMapAllgeriaIsland As New RadioButton
-
-    'Value 3
-    Public RadioGoMapNone As New RadioButton
-
-    Public TxtbxBotController As New TextBox
-    Public TxtbxBotName As New TextBox
-    Public TxtbxCharacterINI As New TextBox
-    Public TxtbxDreamURL As New TextBox
-    Public TxtbxFilelocation As New TextBox
-    Private Const PageCount As Integer = 2
+    ''' <summary>
+    ''' Gets the bot configuration.
+    ''' </summary>
+    ''' <value>
+    ''' The bot configuration.
+    ''' </value>
+    Public ReadOnly Property BotConfig As BotOptions
+        Get
+            Return bFile
+        End Get
+    End Property
 
 #End Region
 
 #Region "Public Methods"
 
+    ''' <summary>
+    ''' Handles the click event of the BtnCharacterINI control.
+    ''' </summary>
+    ''' <param name="sender">The source of the event.</param>
+    ''' <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     Public Sub BtnCharacterINI_click(sender As Object, e As EventArgs)
 
         With OpenFileDialog1
@@ -94,6 +164,11 @@ Public Class NewBott
 
     End Sub
 
+    ''' <summary>
+    ''' Handles the click event of the BtnFileLocation control.
+    ''' </summary>
+    ''' <param name="sender">The source of the event.</param>
+    ''' <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     Public Sub BtnFileLocation_click(sender As Object, e As EventArgs)
         Dim btn As Button = CType(sender, Button)
 
@@ -411,6 +486,10 @@ Public Class NewBott
         End Try
     End Sub
 
+    Private Sub OnFurEdClick(sender As Object, e As EventArgs) Handles LinkLabel1.Click
+        Process.Start(HelpLinks.IniRetrieval)
+    End Sub
+
     Private Sub SetForm(Index As Integer)
 
         Select Case Index
@@ -450,9 +529,5 @@ Public Class NewBott
     End Sub
 
 #End Region
-
-    Private Sub OnFurEdClick(sender As Object, e As EventArgs) Handles LinkLabel1.Click
-        Process.Start(HelpLinks.IniRetrieval)
-    End Sub
 
 End Class

@@ -47,6 +47,7 @@ namespace Libraries
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);
+            Webrequest = null;
             WebURL = null;
             Add(TriggerCategory.Cause,
                 r => true,

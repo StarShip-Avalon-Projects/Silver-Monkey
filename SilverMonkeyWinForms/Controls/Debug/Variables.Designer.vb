@@ -1,6 +1,4 @@
 ﻿Imports Controls
-Imports MonkeyCore.Controls
-Imports SilverMonkeyEngine
 
 <CompilerServices.DesignerGenerated()>
 Partial Class Variables

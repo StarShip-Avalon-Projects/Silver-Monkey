@@ -15,13 +15,19 @@ namespace Controls
         [StructLayout(LayoutKind.Sequential)]
         public struct COPYDATASTRUCT
         {
-            // Any value the sender chooses.  Perhaps its main window handle?
+            /// <summary>
+            /// Any value the sender chooses.  Perhaps its main window handle?
+            /// </summary>
             public IntPtr dwData;
 
-            // The count of bytes in the message.
+            /// <summary>
+            /// The count of bytes in the message.
+            /// </summary>
             public int cbData;
 
-            // The address of the message.
+            /// <summary>
+            /// The address of the message.
+            /// </summary>
             public IntPtr lpData;
         }
 
@@ -31,14 +37,26 @@ namespace Controls
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode, Pack = 1)]
         public struct FurreDataStructure
         {
+            /// <summary>
+            /// Furre Gameserver ID
+            /// </summary>
             public int FurreId;
 
+            /// <summary>
+            /// The furre name
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
             public string FurreName;
 
+            /// <summary>
+            /// The lp tag
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 78)]
             public string lpTag;
 
+            /// <summary>
+            /// The furre message
+            /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 2048)]
             public string FurreMessage;
         }

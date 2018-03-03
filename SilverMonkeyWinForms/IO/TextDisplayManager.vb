@@ -1,16 +1,16 @@
 ﻿Imports System.Drawing
-Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Controls.NativeMethods
 Imports Furcadia.Text.FurcadiaMarkup
-Imports MonkeyCore.Settings
 
 Imports MonkeyCore.WinForms.Controls
 Imports Settings
 
 Namespace HelperClasses
 
+    ''' <summary>
+    '''
+    ''' </summary>
     Public Class TextDisplayManager
 
 #Region "Fields"
@@ -26,12 +26,17 @@ Namespace HelperClasses
 
         Private Mainsettings As CMain
 
-        Dim Pos_Old As Integer = 0
+        Private Pos_Old As Integer = 0
 
 #End Region
 
 #Region "Public Constructors"
 
+        ''' <summary>
+        ''' Initializes a new instance of the <see cref="TextDisplayManager"/> class.
+        ''' </summary>
+        ''' <param name="settings">The settings.</param>
+        ''' <param name="logBox">The log box.</param>
         Sub New(settings As CMain, ByRef logBox As RichTextBoxEx)
             LogDisplayBox = logBox
 

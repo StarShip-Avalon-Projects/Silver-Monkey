@@ -8,11 +8,18 @@ using static Controls.NativeMethods;
 
 namespace Controls
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.TabControl" />
     [ToolboxBitmap(typeof(TabControl))]
     public class TabControlEx : TabControl
     {
         #region Protected Fields
 
+        /// <summary>
+        /// The close button collection
+        /// </summary>
         protected Dictionary<Button, TabPage> CloseButtonCollection = new Dictionary<Button, TabPage>();
 
         #endregion Protected Fields

@@ -19,10 +19,9 @@ namespace MonkeyCore.WinForms.Controls
 
         private List<string> _protocols;
 
-        //private Control instance;
-
-        //private VerticalAlignment value;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RichTextBoxEx"/> class.
+        /// </summary>
         public RichTextBoxEx()
         {
             this.DoubleBuffered = true;
@@ -61,6 +60,12 @@ namespace MonkeyCore.WinForms.Controls
             }
         }
 
+        /// <summary>
+        /// Gets or sets the v scroll position.
+        /// </summary>
+        /// <value>
+        /// The v scroll position.
+        /// </value>
         public int VScrollPos
         {
             get
@@ -73,6 +78,12 @@ namespace MonkeyCore.WinForms.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the protocols.
+        /// </summary>
+        /// <value>
+        /// The protocols.
+        /// </value>
         public List<string> Protocols
         {
             get
@@ -81,8 +92,23 @@ namespace MonkeyCore.WinForms.Controls
             }
         }
 
+        /// <summary>
+        /// Gets or sets the vertical content alignment.
+        /// </summary>
+        /// <value>
+        /// The vertical content alignment.
+        /// </value>
         public VerticalAlignment VerticalContentAlignment { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the <see cref="T:System.Windows.Forms.RichTextBox" /> will automatically format a Uniform Resource Locator (URL) when it is typed into the control.
+        /// </summary>
+        /// <PermissionSet>
+        ///   <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        ///   <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        ///   <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+        ///   <IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        /// </PermissionSet>
         [Editor(("System.Windows.Forms.Design.StringCollectionEditor," + "System.Design, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"), typeof(System.Drawing.Design.UITypeEditor))]
         public new bool DetectUrls
         {
@@ -96,6 +122,9 @@ namespace MonkeyCore.WinForms.Controls
             }
         }
 
+        /// <summary>
+        /// Gets or sets the current text in the rich text box.
+        /// </summary>
         public override string Text
         {
             get
@@ -141,9 +170,6 @@ namespace MonkeyCore.WinForms.Controls
             SendMessage(this.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
         }
 
-        // Public Sub urlClicked(ByVal sender As Object, ByVal e As LinkClickedEventArgs) Handles Me.LinkClicked
-        //     MessageBox.Show(e.LinkText)
-        // End Sub
         /// <summary>
         /// Resumes drawing and event handling.
         /// </summary>
@@ -252,7 +278,6 @@ namespace MonkeyCore.WinForms.Controls
                 throw new ArgumentOutOfRangeException("position");
             }
 
-            //  BeginUpdate()
             this.SelectionStart = position;
             this.SelectedRtf = ("{\\rtf1\\ansi\\deff0\\uc1 "
                         + (text + ("\\v #"
@@ -263,8 +288,6 @@ namespace MonkeyCore.WinForms.Controls
             this.Select((position
                             + (text.Length
                             + (hyperlink.Length + 1))), 0);
-            //   Me.Select(position + text.Length + 1 + hyperlink.Length, 0)
-            //  EndUpdate()
         }
 
         /// <summary>

@@ -41,7 +41,6 @@
       <DocumentationSource sourceFile="..\..\Silvermonkey.WPF\Silvermonkey.WPF.csproj" />
       <DocumentationSource sourceFile="..\..\MonkeyCore\MonkeyCore.csproj" />
       <DocumentationSource sourceFile="..\..\FurcLib\FurcadiaLib.csproj" />
-      <DocumentationSource sourceFile="..\..\SmEngine.LibrariesVB\Silvermonkey.Engine.Libraries VB.vbproj" />
       <DocumentationSource sourceFile="..\..\SilverMonkey.EnginLibrariesCs\Silvermonkey.Engine.Librarie.csproj" />
     </DocumentationSources>
     <FeedbackEMailLinkText>Gerolkae</FeedbackEMailLinkText>
@@ -289,6 +288,7 @@ Instead Pounce uses a List of names and checks the Pounce server for furre onlin
     <PostBuildEvent>xcopy /y "$(OutputPath)Silver Monkey.chm" "$(SolutionDir)build\$(Configuration)"</PostBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <AppendMarkdownFileExtensionsToUrls>True</AppendMarkdownFileExtensionsToUrls>
+    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter, AutoDocumentDispose</MissingTags>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->

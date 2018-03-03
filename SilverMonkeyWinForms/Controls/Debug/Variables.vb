@@ -1,8 +1,11 @@
 ﻿Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports Monkeyspeak
-Imports SilverMonkeyEngine
 
+''' <summary>
+'''
+''' </summary>
+''' <seealso cref="System.Windows.Forms.Form" />
 Public Class Variables
     Inherits Form
 
@@ -41,6 +44,9 @@ Public Class Variables
 
 #Region "Public Methods"
 
+    ''' <summary>
+    ''' Updates the variables.
+    ''' </summary>
     Public Sub UpdateVariables()
 
         If ListView1.InvokeRequired Then
@@ -130,7 +136,7 @@ Public Class Variables
         ElseIf Log.GetType() Is GetType(Monkeyspeak.Logging.LogMessage) Then
             ErrorLogTxtBx.AppendText(DirectCast(Log, Monkeyspeak.Logging.LogMessage).message + Environment.NewLine)
         ElseIf Log.GetType() Is GetType(Furcadia.Logging.LogMessage) Then
-            ErrorLogTxtBx.AppendText(DirectCast(Log, Furcadia.Logging.LogMessage).Message + Environment.NewLine)
+            ErrorLogTxtBx.AppendText(DirectCast(Log, Furcadia.Logging.LogMessage).message + Environment.NewLine)
         ElseIf Log.GetType() Is GetType(String) Then
             ErrorLogTxtBx.AppendText(Log.ToString + Environment.NewLine)
         End If

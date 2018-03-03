@@ -149,28 +149,75 @@ namespace Controls
         internal const int WM_SETREDRAW = 11;
         internal const int WM_USER = 1024;
         internal const int WM_VSCROLL = 277;
+
+        /// <summary>
+        /// The wm copydata
+        /// </summary>
         public const int WM_COPYDATA = 74;
 
         #endregion Internal Fields
 
         #region Public Enums
 
+        /// <summary>
+        ///
+        /// </summary>
         public enum SBOrientation : int
         {
+            /// <summary>
+            /// The sb horz
+            /// </summary>
             SB_HORZ = 0,
+
+            /// <summary>
+            /// The sb vert
+            /// </summary>
             SB_VERT = 1,
+
+            /// <summary>
+            /// The sb control
+            /// </summary>
             SB_CTL = 2,
+
+            /// <summary>
+            /// The sb both
+            /// </summary>
             SB_BOTH = 3,
         }
 
-        //  (*) displayed as ordinary underline
+        /// <summary>
+        /// (*) displayed as ordinary underline
+        /// </summary>
         public enum ScrollInfoMask : uint
         {
+            /// <summary>
+            /// The sif range
+            /// </summary>
             SIF_RANGE = 0x1,
+
+            /// <summary>
+            /// The sif page
+            /// </summary>
             SIF_PAGE = 0x2,
+
+            /// <summary>
+            /// The sif position
+            /// </summary>
             SIF_POS = 0x4,
+
+            /// <summary>
+            /// The sif disablenoscroll
+            /// </summary>
             SIF_DISABLENOSCROLL = 0x8,
+
+            /// <summary>
+            /// The sif trackpos
+            /// </summary>
             SIF_TRACKPOS = 0x10,
+
+            /// <summary>
+            /// The sif all
+            /// </summary>
             SIF_ALL = (SIF_RANGE | SIF_PAGE | SIF_POS | SIF_TRACKPOS),
         }
 
@@ -208,12 +255,11 @@ namespace Controls
         public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
 
         /// <summary>
-        ///
+        /// Gets the scroll information.
         /// </summary>
-        /// <param name="hWnd"></param>
-        /// <param name="fnBar"></param>
-        /// <param name="lpsi"></param>
-        /// <returns></returns>
+        /// <param name="hwnd">The HWND.</param>
+        /// <param name="fnBar">The function bar.</param>
+        /// <param name="lpsi">The lpsi.</param>
         [DllImport("user32.dll")]
         public static extern void GetScrollInfo(IntPtr hwnd, int fnBar, ref SCROLLINFO lpsi);
 
@@ -259,6 +305,14 @@ namespace Controls
         [DllImport("User32.dll")]
         public static extern IntPtr PostMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
+        /// <summary>
+        /// Sends the message.
+        /// </summary>
+        /// <param name="hWnd">The h WND.</param>
+        /// <param name="msg">The MSG.</param>
+        /// <param name="wParam">The w parameter.</param>
+        /// <param name="lParam">The l parameter.</param>
+        /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
@@ -326,45 +380,104 @@ namespace Controls
         {
             #region Public Fields
 
+            /// <summary>
+            /// The b animation
+            /// </summary>
             public byte bAnimation;
 
+            /// <summary>
+            /// The b character set
+            /// </summary>
             public byte bCharSet;
 
+            /// <summary>
+            /// The b pitch and family
+            /// </summary>
             public byte bPitchAndFamily;
 
+            /// <summary>
+            /// The b reserved1
+            /// </summary>
             public byte bReserved1;
 
+            /// <summary>
+            /// The b rev author
+            /// </summary>
             public byte bRevAuthor;
 
+            /// <summary>
+            /// The b underline type
+            /// </summary>
             public byte bUnderlineType;
 
+            /// <summary>
+            /// The cb size
+            /// </summary>
             public int cbSize;
 
+            /// <summary>
+            /// The cr back color
+            /// </summary>
             public int crBackColor;
 
+            /// <summary>
+            /// The cr text color
+            /// </summary>
             public int crTextColor;
 
+            /// <summary>
+            /// The dw effects
+            /// </summary>
             public int dwEffects;
 
+            /// <summary>
+            /// The dw mask
+            /// </summary>
             public int dwMask;
 
+            /// <summary>
+            /// The dw reserved
+            /// </summary>
             public int dwReserved;
 
-            //  Color.ToArgb() -> int
+            /// <summary>
+            /// Color.ToArgb() -> int
+            /// </summary>
             public int lcid;
 
+            /// <summary>
+            /// The s spacing
+            /// </summary>
             public short sSpacing;
 
+            /// <summary>
+            /// The s style
+            /// </summary>
             public short sStyle;
 
+            /// <summary>
+            /// The sz face name
+            /// </summary>
             public char[] szFaceName;
 
+            /// <summary>
+            /// The w kerning
+            /// </summary>
             public short wKerning;
 
+            /// <summary>
+            /// The w weight
+            /// </summary>
             public short wWeight;
 
+            /// <summary>
+            /// The y height
+            /// </summary>
             public int yHeight;
 
+            /// <summary>
+            /// The y offset
+            /// </summary>
             public int yOffset;
 
             #endregion Public Fields
@@ -376,12 +489,39 @@ namespace Controls
         [Serializable, StructLayout(LayoutKind.Sequential)]
         public struct SCROLLINFO
         {
+            /// <summary>
+            /// The cb size
+            /// </summary>
             public int cbSize;
+
+            /// <summary>
+            /// The f mask
+            /// </summary>
             public ScrollInfoMask fMask;
+
+            /// <summary>
+            /// The n minimum
+            /// </summary>
             public int nMin;
+
+            /// <summary>
+            /// The n maximum
+            /// </summary>
             public int nMax;
+
+            /// <summary>
+            /// The n page
+            /// </summary>
             public uint nPage;
+
+            /// <summary>
+            /// The n position
+            /// </summary>
             public int nPos;
+
+            /// <summary>
+            /// The n track position
+            /// </summary>
             public int nTrackPos;
         }
 

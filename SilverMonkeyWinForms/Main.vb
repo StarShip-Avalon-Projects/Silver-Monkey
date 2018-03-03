@@ -643,13 +643,13 @@ Public Class Main
 
     End Sub
 
-    Private Async Sub ContextTryIcon_Opened(sender As Object, e As System.EventArgs) Handles ContextTryIcon.Opened
+    Private Sub ContextTryIcon_Opened(sender As Object, e As System.EventArgs) Handles ContextTryIcon.Opened
         If FurcSession Is Nothing Then Exit Sub
         Select Case FurcSession.ServerStatus
 
             Case ConnectionPhase.Init
-                Await Meep(DisconnectTrayIconMenuItem, False)
-                Await Meep(ConnectTrayIconMenuItem, True)
+                Meep(DisconnectTrayIconMenuItem, False)
+                Meep(ConnectTrayIconMenuItem, True)
 
             Case ConnectionPhase.MOTD Or ConnectionPhase.Connecting
                 DisconnectTrayIconMenuItem.Enabled = True
@@ -964,9 +964,9 @@ Public Class Main
         End Try
     End Sub
 
-    Private Function Meep(disconnectTrayIconMenuItem As ToolStripMenuItem, v As Boolean) As Task
+    Private Sub Meep(disconnectTrayIconMenuItem As ToolStripMenuItem, v As Boolean)
         disconnectTrayIconMenuItem.Enabled = v
-    End Function
+    End Sub
 
     Private Sub MenuCopy_Click(sender As System.Object, e As System.EventArgs) Handles MenuCopy.Click
         toServer.Copy()

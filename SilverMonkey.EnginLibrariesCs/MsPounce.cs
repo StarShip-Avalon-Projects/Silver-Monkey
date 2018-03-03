@@ -20,20 +20,12 @@ namespace Libraries
     /// </remarks>
     public class MsPounce : MonkeySpeakLibrary
     {
-        /// <summary>
-        /// Gets the base identifier.
-        /// </summary>
-        /// <value>
-        /// The base identifier.
-        /// </value>
-        public override int BaseId => 950;
+        public MsPounce()
+        {
+            SmPounce = null;
+        }
 
-        private PounceClient SmPounce;
-
-        /// <summary>
-        /// Default File we use
-        /// </summary>
-        public string ListFile => "onlineList.txt";
+        #region Private Fields
 
         /// <summary>
         /// Pounce List File Name
@@ -47,6 +39,25 @@ namespace Libraries
         /// </summary>
         private List<PounceFurre> PounceFurres;
 
+        private PounceClient SmPounce;
+
+        #endregion Private Fields
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets the base identifier.
+        /// </summary>
+        /// <value>
+        /// The base identifier.
+        /// </value>
+        public override int BaseId => 950;
+
+        /// <summary>
+        /// Default File we use
+        /// </summary>
+        public string ListFile => "onlineList.txt";
+
         /// <summary>
         /// the File of the Friends List to Check
         /// <para/>
@@ -55,6 +66,117 @@ namespace Libraries
         /// <returns>
         /// </returns>
         public string OnlineListFile => _onlineListFile;
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public override void Initialize(params object[] args)
+        {
+            base.Initialize(args);
+            SmPounce = new PounceClient();
+            PounceFurres = new List<PounceFurre>();
+            _onlineListFile = IO.Paths.CheckBotFolder(ListFile);
+            //    OnlineFurres = New IO.NameList(_onlineListFile)
+
+            Add(TriggerCategory.Cause,
+                r => true,
+                "When a furre logs on,");
+
+            Add(TriggerCategory.Cause,
+                r => true,
+                "When a furre logs off,");
+
+            Add(TriggerCategory.Cause,
+                NameIs,
+                "When the furre named {...} logs on,");
+
+            Add(TriggerCategory.Cause,
+                NameIs,
+                "When the furre named {...} logs off,");
+
+            Add(TriggerCategory.Condition,
+                FurreNamedonline,
+                "and the furre named {...} is on-line,");
+
+            Add(TriggerCategory.Condition,
+                FurreNamedNotOnline,
+                "and the furre named {...} is off-line,");
+
+            Add(TriggerCategory.Condition,
+                TrigFurreIsMember,
+                "and triggering furre is on the smPounce List,");
+
+            Add(TriggerCategory.Condition,
+                TrigFurreIsNotMember,
+                "and the triggering furre is not on the smPounce List,");
+
+            Add(TriggerCategory.Condition,
+                FurreNamedIsMember,
+                "and the furre named {...} is on the smPounce list,");
+
+            Add(TriggerCategory.Condition,
+                FurreNamedIsNotMember,
+                "and the furre named {...} is not on the smPounce list,");
+
+            Add(TriggerCategory.Effect,
+                AddTriggeringFurreToMemberList,
+                "add the triggering furre to the smPounce List.");
+
+            Add(TriggerCategory.Effect,
+                AddFurreNamed,
+                "add the furre named {...} to the smPounce list.");
+
+            Add(TriggerCategory.Effect,
+                RemoveTrigFurre,
+                "remove the triggering furre from the smPounce list.");
+
+            Add(TriggerCategory.Effect,
+                RemoveFurreNamed,
+                "remove the furre named {...} from the smPounce list.");
+
+            Add(TriggerCategory.Effect,
+                UseMemberFile,
+                "use the file named {...} as the smPounce list and start the Pounce Clinet Interface.");
+        }
+
+        /// <summary>
+        /// Called when page is disposing or resetting.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        public override void Unload(Page page)
+        {
+            Dispose(true);
+        }
+
+        #endregion Public Methods
+
+        #region Protected Methods
+
+        //  To detect redundant calls
+        //  IDisposable
+        protected void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (SmPounce != null)
+                    {
+                        SmPounce.Dispose();
+                    }
+                }
+
+                disposedValue = true;
+            }
+
+            // TODO: #End Region ... Warning!!! not translated
+            // TODO: #Region ... Warning!!! not translated
+        }
+
+        #endregion Protected Methods
+
+        #region Private Methods
 
         /// <summary>
         /// (5:951) add the furre named {...} to the smPounce list.
@@ -73,6 +195,23 @@ namespace Libraries
                     sw.WriteLine(reader.ReadString());
             }
             return true;
+        }
+
+        private bool AddTriggeringFurreToMemberList(TriggerReader reader)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CheckonlineList()
+        {
+            _onlineListFile = IO.Paths.CheckBotFolder(_onlineListFile);
+            if (File.Exists(_onlineListFile) == false)
+            {
+                Logger.Warn<MsPounce>($"On-line List File: '{_onlineListFile}' Doesn't Exist, Creating new file");
+                using (var fStream = new FileStream(_onlineListFile, FileMode.Create))
+                using (var sw = new StreamWriter(fStream))
+                    sw.Close();
+            }
         }
 
         /// <summary>
@@ -148,79 +287,6 @@ namespace Libraries
 
             // add Machine Name parser
             return false;
-        }
-
-        public override void Initialize(params object[] args)
-        {
-            base.Initialize(args);
-            PounceFurres = new List<PounceFurre>();
-            _onlineListFile = IO.Paths.CheckBotFolder(ListFile);
-            //    OnlineFurres = New IO.NameList(_onlineListFile)
-
-            Add(TriggerCategory.Cause,
-                r => true,
-                "When a furre logs on,");
-
-            Add(TriggerCategory.Cause,
-                r => true,
-                "When a furre logs off,");
-
-            Add(TriggerCategory.Cause,
-                NameIs,
-                "When the furre named {...} logs on,");
-
-            Add(TriggerCategory.Cause,
-                NameIs,
-                "When the furre named {...} logs off,");
-
-            Add(TriggerCategory.Condition,
-                FurreNamedonline,
-                "and the furre named {...} is on-line,");
-
-            Add(TriggerCategory.Condition,
-                FurreNamedNotOnline,
-                "and the furre named {...} is off-line,");
-
-            Add(TriggerCategory.Condition,
-                TrigFurreIsMember,
-                "and triggering furre is on the smPounce List,");
-
-            Add(TriggerCategory.Condition,
-                TrigFurreIsNotMember,
-                "and the triggering furre is not on the smPounce List,");
-
-            Add(TriggerCategory.Condition,
-                FurreNamedIsMember,
-                "and the furre named {...} is on the smPounce list,");
-
-            Add(TriggerCategory.Condition,
-                FurreNamedIsNotMember,
-                "and the furre named {...} is not on the smPounce list,");
-
-            Add(TriggerCategory.Effect,
-                AddTriggeringFurreToMemberList,
-                "add the triggering furre to the smPounce List.");
-
-            Add(TriggerCategory.Effect,
-                AddFurreNamed,
-                "add the furre named {...} to the smPounce list.");
-
-            Add(TriggerCategory.Effect,
-                RemoveTrigFurre,
-                "remove the triggering furre from the smPounce list.");
-
-            Add(TriggerCategory.Effect,
-                RemoveFurreNamed,
-                "remove the furre named {...} from the smPounce list.");
-
-            Add(TriggerCategory.Effect,
-                UseMemberFile,
-                "use the file named {...} as the smPounce list and start the Pounce Clinet Interface.");
-        }
-
-        private bool AddTriggeringFurreToMemberList(TriggerReader reader)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -324,15 +390,6 @@ namespace Libraries
         }
 
         /// <summary>
-        /// Called when page is disposing or resetting.
-        /// </summary>
-        /// <param name="page">The page.</param>
-        public override void Unload(Page page)
-        {
-            Dispose(true);
-        }
-
-        /// <summary>
         /// (5:904) Use file {...} as the dream member list.
         /// <para/>
         /// Defaults to 'BotFolder\on-lineList.txt"
@@ -352,37 +409,6 @@ namespace Libraries
             // Return True
         }
 
-        //  To detect redundant calls
-        //  IDisposable
-        protected void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    if (SmPounce != null)
-                    {
-                        SmPounce.Dispose();
-                    }
-                }
-
-                disposedValue = true;
-            }
-
-            // TODO: #End Region ... Warning!!! not translated
-            // TODO: #Region ... Warning!!! not translated
-        }
-
-        private void CheckonlineList()
-        {
-            _onlineListFile = IO.Paths.CheckBotFolder(_onlineListFile);
-            if (File.Exists(_onlineListFile) == false)
-            {
-                Logger.Warn<MsPounce>($"On-line List File: '{_onlineListFile}' Doesn't Exist, Creating new file");
-                using (var fStream = new FileStream(_onlineListFile, FileMode.Create))
-                using (var sw = new StreamWriter(fStream))
-                    sw.Close();
-            }
-        }
+        #endregion Private Methods
     }
 }

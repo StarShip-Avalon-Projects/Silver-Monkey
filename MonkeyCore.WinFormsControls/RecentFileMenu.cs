@@ -6,9 +6,20 @@ using IO;
 
 namespace MonkeyCore.WinForms.Controls
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.ToolStripMenuItem" />
     public class RecentFileMenu : ToolStripMenuItem
     {
+        /// <summary>
+        /// The recent file
+        /// </summary>
         public const string RecentFile = "Recent.txt";
+
+        /// <summary>
+        /// The mr ulist
+        /// </summary>
         public List<string> MRUlist = new List<string>(MRUnumber);
 
         /// <summary>
@@ -18,6 +29,9 @@ namespace MonkeyCore.WinForms.Controls
 
         private static ToolStripMenuItem menu;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecentFileMenu"/> class.
+        /// </summary>
         public RecentFileMenu()
         {
             menu = null;
@@ -34,6 +48,10 @@ namespace MonkeyCore.WinForms.Controls
             }
         }
 
+        /// <summary>
+        /// Removes the item from list.
+        /// </summary>
+        /// <param name="item">The item.</param>
         public void RemoveItemFromList(string item)
         {
         }

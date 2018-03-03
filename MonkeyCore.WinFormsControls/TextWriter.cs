@@ -15,6 +15,10 @@ namespace Controls
 
         private TextBoxBase control;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextBoxWriter"/> class.
+        /// </summary>
+        /// <param name="control">The control.</param>
         public TextBoxWriter(TextBox control)
         {
             this.control = control;
@@ -22,6 +26,10 @@ namespace Controls
             Builder = new StringBuilder();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextBoxWriter"/> class.
+        /// </summary>
+        /// <param name="control">The control.</param>
         public TextBoxWriter(RichTextBox control)
         {
             this.control = control;
@@ -29,8 +37,15 @@ namespace Controls
             Builder = new StringBuilder();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Text">The text.</param>
         public delegate void AppendTextDelegate(string Text);
 
+        /// <summary>
+        /// When overridden in a derived class, returns the character encoding in which the output is written.
+        /// </summary>
         public override Encoding Encoding
         {
             get
@@ -39,11 +54,19 @@ namespace Controls
             }
         }
 
+        /// <summary>
+        /// Writes the specified ch.
+        /// </summary>
+        /// <param name="ch">The ch.</param>
         public override void Write(char ch)
         {
             this.Write(ch.ToString());
         }
 
+        /// <summary>
+        /// Writes the specified s.
+        /// </summary>
+        /// <param name="s">The s.</param>
         public override void Write(string s)
         {
             if (control.IsHandleCreated)
@@ -56,6 +79,10 @@ namespace Controls
             }
         }
 
+        /// <summary>
+        /// Writes the line.
+        /// </summary>
+        /// <param name="s">The s.</param>
         public override void WriteLine(string s)
         {
             this.Write(s + Environment.NewLine);
@@ -77,8 +104,6 @@ namespace Controls
                 }
 
                 control.AppendText(Text);
-                //  (ByRef lb As Object, ByRef obj As Object, ByRef newColor As fColorEnum)
-                // Main.AddDataToList(Main.log_, s, 0)
             }
         }
 

@@ -4,18 +4,35 @@ using static Controls.NativeMethods;
 
 namespace Controls
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.ListBox" />
     public class ScrollingListBox : ListBox
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollingListBox"/> class.
+        /// </summary>
         public ScrollingListBox()
         {
             InitializeComponent();
             DoubleBuffered = true;
         }
 
+        /// <summary>
+        /// Occurs when [on horizontal scroll].
+        /// </summary>
         public event ScrollEventHandler OnHorizontalScroll;
 
+        /// <summary>
+        /// Occurs when [on vertical scroll].
+        /// </summary>
         public event ScrollEventHandler OnVerticalScroll;
 
+        /// <summary>
+        /// WNDs the proc.
+        /// </summary>
+        /// <param name="msg">The MSG.</param>
         protected override void WndProc(ref Message msg)
         {
             if (msg.Msg == WM_HSCROLL)

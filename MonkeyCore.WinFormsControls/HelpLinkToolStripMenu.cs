@@ -46,6 +46,12 @@ namespace Controls
             }
         }
 
+        /// <summary>
+        /// Gets the menu items.
+        /// </summary>
+        /// <value>
+        /// The menu items.
+        /// </value>
         public List<ToolStripMenuItem> MenuItems
         {
             get

@@ -18,8 +18,10 @@ namespace Libraries.Web
 
         private Monkeyspeak.Page page;
         private string UserAgent = "Silver Monkey a Furcadia Bot (gerolkae@gmail.com.com)";
-        private int Ver = 1;
+
+        // private int Ver = 1;
         private Encoding WebEncoding = Encoding.GetEncoding(1252);
+
         private string WebReferer = "https://silvermonkey.tsprojects.org";
 
         private Uri WebURL;

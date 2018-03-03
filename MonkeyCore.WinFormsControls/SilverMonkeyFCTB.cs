@@ -33,18 +33,27 @@ namespace Controls
     {
         #region Public Fields
 
+        /// <summary>
+        /// The wavy style
+        /// </summary>
         public Style WavyStyle = new WavyLineStyle(255, Color.Red);
 
         #endregion Public Fields
 
         #region Protected Fields
 
+        /// <summary>
+        /// The parser
+        /// </summary>
         protected Parser parser;
 
         #endregion Protected Fields
 
         #region Public Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SilverMonkeyFCTB"/> class.
+        /// </summary>
         public SilverMonkeyFCTB()
         {
         }
@@ -53,6 +62,9 @@ namespace Controls
 
         #region Public Events
 
+        /// <summary>
+        /// Occurs when [style needed].
+        /// </summary>
         public event EventHandler<StyleNeededEventArgs> StyleNeeded;
 
         #endregion Public Events
@@ -114,11 +126,19 @@ namespace Controls
             return r;
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:StyleNeeded" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="StyleNeededEventArgs"/> instance containing the event data.</param>
         public virtual void OnStyleNeeded(StyleNeededEventArgs e)
         {
             StyleNeeded?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Called when [text changed delayed].
+        /// </summary>
+        /// <param name="changedRange">The changed range.</param>
         public override void OnTextChangedDelayed(Range changedRange)
         {
             DoHighlighting();
@@ -158,6 +178,9 @@ namespace Controls
 
         #region Protected Methods
 
+        /// <summary>
+        /// Does the highlighting.
+        /// </summary>
         protected virtual void DoHighlighting()
         {
             if (parser == null)
@@ -229,6 +252,9 @@ namespace Controls
             }
         }
 
+        /// <summary>
+        /// Initializes the braces.
+        /// </summary>
         protected virtual void InitBraces()
         {
             LeftBracket = '\x0';
@@ -268,16 +294,27 @@ namespace Controls
         #endregion Protected Methods
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <seealso cref="System.EventArgs" />
     public class StyleNeededEventArgs : EventArgs
     {
         #region Public Fields
 
+        /// <summary>
+        /// The token
+        /// </summary>
         public readonly Token Token;
 
         #endregion Public Fields
 
         #region Public Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StyleNeededEventArgs"/> class.
+        /// </summary>
+        /// <param name="t">The t.</param>
         public StyleNeededEventArgs(Token t)
         {
             Token = t;
@@ -287,7 +324,20 @@ namespace Controls
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="StyleNeededEventArgs"/> is cancel.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if cancel; otherwise, <c>false</c>.
+        /// </value>
         public bool Cancel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the style.
+        /// </summary>
+        /// <value>
+        /// The style.
+        /// </value>
         public Style Style { get; set; }
 
         #endregion Public Properties

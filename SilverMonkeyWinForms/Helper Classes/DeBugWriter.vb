@@ -1,8 +1,11 @@
 ﻿Imports System.Text
 Imports System.Windows.Forms
-Imports MonkeyCore.Controls
 Imports MonkeyCore.WinForms.Controls
 
+''' <summary>
+'''
+''' </summary>
+''' <seealso cref="System.IO.TextWriter" />
 Public Class DeBugWriter
     Inherits TextWriter
 
@@ -15,18 +18,30 @@ Public Class DeBugWriter
 
 #Region "Public Constructors"
 
+    ''' <summary>
+    ''' Initializes a new instance of the <see cref="DeBugWriter"/> class.
+    ''' </summary>
+    ''' <param name="control">The control.</param>
     Public Sub New(ByVal control As TextBox)
         Me.control = control
         AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
 
+    ''' <summary>
+    ''' Initializes a new instance of the <see cref="DeBugWriter"/> class.
+    ''' </summary>
+    ''' <param name="control">The control.</param>
     Public Sub New(ByVal control As RichTextBoxEx)
         Me.control = control
         AddHandler control.HandleCreated,
            New EventHandler(AddressOf OnHandleCreated)
     End Sub
 
+    ''' <summary>
+    ''' Initializes a new instance of the <see cref="DeBugWriter"/> class.
+    ''' </summary>
+    ''' <param name="control">The control.</param>
     Public Sub New(ByVal control As RichTextBox)
         Me.control = control
         AddHandler control.HandleCreated,
@@ -37,12 +52,19 @@ Public Class DeBugWriter
 
 #Region "Public Delegates"
 
+    ''' <summary>
+    '''
+    ''' </summary>
+    ''' <param name="s">The s.</param>
     Delegate Sub UpDateBtn_GoCallback(ByRef s As String)
 
 #End Region
 
 #Region "Public Properties"
 
+    ''' <summary>
+    ''' When overridden in a derived class, returns the character encoding in which the output is written.
+    ''' </summary>
     Public Overrides ReadOnly Property Encoding() As Encoding
         Get
             Return Encoding.Default
@@ -53,10 +75,18 @@ Public Class DeBugWriter
 
 #Region "Public Methods"
 
+    ''' <summary>
+    ''' Writes the specified ch.
+    ''' </summary>
+    ''' <param name="ch">The ch.</param>
     Public Overrides Sub Write(ByVal ch As Char)
         Write(ch.ToString())
     End Sub
 
+    ''' <summary>
+    ''' Writes the specified s.
+    ''' </summary>
+    ''' <param name="s">The s.</param>
     Public Overrides Sub Write(ByVal s As String)
         If (control.IsHandleCreated) Then
             AppendText(s)
@@ -65,6 +95,10 @@ Public Class DeBugWriter
         End If
     End Sub
 
+    ''' <summary>
+    ''' Writes the line.
+    ''' </summary>
+    ''' <param name="s">The s.</param>
     Public Overrides Sub WriteLine(ByVal s As String)
         Write(s + Environment.NewLine)
     End Sub
