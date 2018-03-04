@@ -9,6 +9,15 @@ namespace Controls
     /// </summary>
     public sealed class NativeMethods
     {
+        #region Public Fields
+
+        /// <summary>
+        /// The wm copydata
+        /// </summary>
+        public const int WM_COPYDATA = 74;
+
+        #endregion Public Fields
+
         #region Internal Fields
 
         internal const int CFE_AUTOCOLOR = 1073741824;
@@ -150,11 +159,6 @@ namespace Controls
         internal const int WM_USER = 1024;
         internal const int WM_VSCROLL = 277;
 
-        /// <summary>
-        /// The wm copydata
-        /// </summary>
-        public const int WM_COPYDATA = 74;
-
         #endregion Internal Fields
 
         #region Public Enums
@@ -224,15 +228,6 @@ namespace Controls
         #endregion Public Enums
 
         #region Public Methods
-
-        /// <summary>
-        /// Sets the parent.
-        /// </summary>
-        /// <param name="hWndChild">The h WND child.</param>
-        /// <param name="hWndNewParent">The h WND new parent.</param>
-        /// <returns></returns>
-        [DllImport("user32.dll")]
-        public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
         /// <summary>
         /// Finds the window.
@@ -323,6 +318,15 @@ namespace Controls
         /// <returns></returns>
         [DllImport("User32.dll")]
         public static extern bool SetForegroundWindow(int hWnd);
+
+        /// <summary>
+        /// Sets the parent.
+        /// </summary>
+        /// <param name="hWndChild">The h WND child.</param>
+        /// <param name="hWndNewParent">The h WND new parent.</param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
         /// <summary>
         /// Sets the scroll position.

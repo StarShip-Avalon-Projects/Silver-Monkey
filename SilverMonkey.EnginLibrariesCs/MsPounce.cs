@@ -74,11 +74,11 @@ namespace Libraries
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);
-            SmPounce = new PounceClient();
+
             PounceFurres = new List<PounceFurre>();
             _onlineListFile = IO.Paths.CheckBotFolder(ListFile);
             //    OnlineFurres = New IO.NameList(_onlineListFile)
-
+            // SmPounce = new PounceClient(PounceFurres, null);
             Add(TriggerCategory.Cause,
                 r => true,
                 "When a furre logs on,");
