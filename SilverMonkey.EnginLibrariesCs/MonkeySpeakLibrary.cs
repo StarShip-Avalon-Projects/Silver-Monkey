@@ -25,7 +25,7 @@ namespace Libraries
         /// <returns>
         /// SQLite database file with Silver Monkey system tables and user data
         /// </returns>
-        internal static string SQLitefile { get; set; }
+        internal static string SQLitefile { get; set; } = null;
 
         internal static SQLiteDatabase database = null;
 
@@ -83,12 +83,7 @@ namespace Libraries
 
         public bool FurreNamedIsBotController(TriggerReader reader)
         {
-            if (ParentBotSession != null)
-            {
-                return Player.ShortName == reader.ReadString().ToFurcadiaShortName();
-            }
-
-            return false;
+            return Player.ShortName == reader.ReadString().ToFurcadiaShortName();
         }
 
         /// <summary>
@@ -304,7 +299,7 @@ namespace Libraries
             var msg = Player.Message;
             if (msg is null || msMsg is null)
                 return false;
-            return msg.Contains(msMsg.ToStrippedFurcadiaMarkupString());
+            return msg.ToLower().Contains(msMsg.ToStrippedFurcadiaMarkupString().ToLower());
         }
 
         /// <summary>
@@ -320,7 +315,7 @@ namespace Libraries
             var msg = Player.Message.ToStrippedFurcadiaMarkupString();
             if (msg is null || msMsg is null)
                 return false;
-            return msg.EndsWith(msMsg) & !IsConnectedCharacter(Player);
+            return msg.ToLower().EndsWith(msMsg.ToLower()) & !IsConnectedCharacter(Player);
         }
 
         /// <summary>
@@ -352,8 +347,8 @@ namespace Libraries
         {
             ReadTriggeringFurreParams(reader);
             ReadDreamParams(reader);
-            string msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString().ToLower();
-            string msg = Player.Message.ToStrippedFurcadiaMarkupString().ToLower();
+            string msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString();
+            string msg = Player.Message.ToStrippedFurcadiaMarkupString();
             if (msg is null || msMsg is null)
                 return false;
             return msg.ToLower().StartsWith(msMsg.ToLower()) & !IsConnectedCharacter(Player);

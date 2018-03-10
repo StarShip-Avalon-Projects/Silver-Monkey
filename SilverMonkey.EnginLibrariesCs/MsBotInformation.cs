@@ -1,5 +1,5 @@
-﻿using Engine.Libraries;
-using Furcadia.Net;
+﻿using Furcadia.Net;
+using Furcadia.Net.Proxy;
 using Monkeyspeak;
 using System.Diagnostics;
 using System.Linq;
