@@ -137,7 +137,8 @@ Public Class Main
         furcLog.Logger.SuppressSpam = False
         furcLog.Logger.WarningEnabled = True
         furcLog.Logger.SingleThreaded = True
-        furcLog.Logger.LogOutput = New furcLog.MultiLogOutput(New furcLog.FileLogOutput(furcLog.Level.Debug), New furcLog.FileLogOutput(furcLog.Level.Error), New Engine.MultipleLogOutput())
+
+        furcLog.Logger.LogOutput = New furcLog.MultiLogOutput(New furcLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, furcLog.Level.Debug), New furcLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, furcLog.Level.Error), New Engine.MultipleLogOutput())
 
         MsLog.Logger.LogOutput = New MsLog.MultiLogOutput(New MsLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, MsLog.Level.Debug), New MsLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, MsLog.Level.Error), New Engine.MultipleLogOutput())
     End Sub

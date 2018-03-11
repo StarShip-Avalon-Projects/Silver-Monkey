@@ -48,7 +48,7 @@ namespace SmEngineTests.BotScriptTests
             FurcLog.Logger.ErrorEnabled = true;
             FurcLog.Logger.WarningEnabled = true;
             FurcLog.Logger.SingleThreaded = true;
-            FurcLog.Logger.LogOutput = new FurcLog.MultiLogOutput(new FurcLog.FileLogOutput(FurcLog.Level.Debug), new FurcLog.FileLogOutput(FurcLog.Level.Error));
+            FurcLog.Logger.LogOutput = new FurcLog.MultiLogOutput(new FurcLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, FurcLog.Level.Debug), new FurcLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, FurcLog.Level.Error));
 
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
@@ -143,7 +143,7 @@ namespace SmEngineTests.BotScriptTests
             Proxy.MSpage.Error += (page, handler, trigger, ex) =>
                 MsLog.Logger.Error($"{page} {handler}  {trigger}  {ex}");
             MsLog.Logger.LogOutput = new MsLog.MultiLogOutput(new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath, "TurretTests.log"), MsLog.Level.Debug), new MsLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, MsLog.Level.Error));
-            FurcLog.Logger.LogOutput = new FurcLog.MultiLogOutput(new FurcLog.FileLogOutput(FurcLog.Level.Debug), new FurcLog.FileLogOutput(FurcLog.Level.Error));
+            FurcLog.Logger.LogOutput = new FurcLog.MultiLogOutput(new FurcLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, FurcLog.Level.Debug), new FurcLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, FurcLog.Level.Error));
             HaltFor(ConnectWaitTime);
 
             Assert.Multiple(() =>
@@ -180,13 +180,6 @@ namespace SmEngineTests.BotScriptTests
                 }
             });
         }
-
-        //[TearDown]
-        //public void TearDown()
-        //{ }
-
-        //[SetUp]
-        //public void setup() { }
 
         public void BotHaseDisconnected()
         {
