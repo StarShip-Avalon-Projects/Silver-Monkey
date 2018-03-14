@@ -128,19 +128,14 @@ Public Class Main
 
         InitializeTextControls()
 
-        MsLog.Logger.InfoEnabled = True
-        MsLog.Logger.SuppressSpam = False
-        MsLog.Logger.WarningEnabled = True
-        MsLog.Logger.SingleThreaded = True
+        Logger.InfoEnabled = True
+        Logger.SuppressSpam = True
+        Logger.WarningEnabled = True
+        Logger.SingleThreaded = False
 
-        furcLog.Logger.InfoEnabled = True
-        furcLog.Logger.SuppressSpam = False
-        furcLog.Logger.WarningEnabled = True
-        furcLog.Logger.SingleThreaded = True
-
-        furcLog.Logger.LogOutput = New furcLog.MultiLogOutput(New furcLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, furcLog.Level.Debug), New furcLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, furcLog.Level.Error), New Engine.MultipleLogOutput())
-
-        MsLog.Logger.LogOutput = New MsLog.MultiLogOutput(New MsLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, MsLog.Level.Debug), New MsLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, MsLog.Level.Error), New Engine.MultipleLogOutput())
+        Logger.LogOutput = New MultiLogOutput(New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, Level.Debug), New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, Level.Error), New Engine.MultipleLogOutput())
+        furcLog.Logger.LogOutput = Logger.LogOutput
+        MsLog.Logger.LogOutput = Logger.LogOutput
     End Sub
 
 #End Region
@@ -377,34 +372,17 @@ Public Class Main
     ''' Send formatted text to log box
     ''' </summary>
     ''' <param name="Message"></param>
-    Public Shared Sub SndDisplay(Message As MsLog.LogMessage)
+    Public Shared Sub SndDisplay(Message As LogMessage)
 
         FileLogWriter.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor
         Select Case Message.Level
-            Case MsLog.Level.Warning
+            Case Level.Warning
                 newColor = DisplayColors.Warning
-            Case MsLog.Level.Debug
+            Case Level.Debug
                 newColor = DisplayColors.Warning
-            Case MsLog.Level.Error
+            Case Level.Error
                 newColor = DisplayColors.Error
-        End Select
-        SndDisplay(Message.message, newColor)
-    End Sub
-
-    ''' <summary>
-    ''' Send formatted text to log box
-    ''' </summary>
-    ''' <param name="Message"></param>
-    Public Shared Sub SndDisplay(Message As furcLog.LogMessage)
-
-        FileLogWriter.WriteLine(Message.message)
-        Dim newColor = DisplayColors.DefaultColor
-        Select Case Message.Level
-            Case furcLog.Level.Warning
-                newColor = DisplayColors.Error
-            Case furcLog.Level.Debug Or furcLog.Level.Error
-                newColor = DisplayColors.Warning
         End Select
         SndDisplay(Message.message, newColor)
     End Sub
