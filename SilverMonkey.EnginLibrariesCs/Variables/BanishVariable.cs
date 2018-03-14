@@ -5,24 +5,27 @@ namespace Libraries.Variables
 {
     public sealed class BanishVariable : IVariable
     {
-        #region Private Fields
-
-        private object value;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BanishVariable"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
         public BanishVariable(string name, object value)
         {
             Name = name;
-            this.value = value;
+            Value = value;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BanishVariable"/> class.
+        /// </summary>
+        /// <param name="variable">The variable.</param>
         public BanishVariable(IVariable variable)
         {
             Name = variable.Name;
-            this.value = variable.Value;
+            Value = variable.Value;
         }
 
         #endregion Public Constructors
@@ -51,14 +54,7 @@ namespace Libraries.Variables
         /// <value>
         /// The value.
         /// </value>
-        public object Value
-        {
-            get { return value; }
-            set
-            {
-                this.value = value;
-            }
-        }
+        public object Value { get; set; }
 
         #endregion Public Properties
 
@@ -73,7 +69,7 @@ namespace Libraries.Variables
         /// </returns>
         public bool Equals(IVariable other)
         {
-            return this.Name.Equals(other.Name, StringComparison.InvariantCultureIgnoreCase) && this.Value.Equals(other.Value);
+            return Name.Equals(other.Name, StringComparison.InvariantCultureIgnoreCase) && this.Value.Equals(other.Value);
         }
 
         /// <summary>
@@ -82,7 +78,7 @@ namespace Libraries.Variables
         /// <param name="value">The value.</param>
         public void SetValue(object value)
         {
-            this.value = value;
+            Value = value;
         }
 
         /// <summary>
@@ -92,7 +88,7 @@ namespace Libraries.Variables
         /// <returns></returns>
         public override string ToString()
         {
-            return ((IsConstant) ? "const " : "") + $"{Name} = {value ?? "null"}";
+            return IsConstant ? "const " : string.Empty + $"{Name} = {Value ?? "null"}";
         }
 
         #endregion Public Methods

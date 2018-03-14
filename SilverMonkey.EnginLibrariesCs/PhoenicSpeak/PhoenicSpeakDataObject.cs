@@ -22,10 +22,6 @@ namespace Libraries.PhoenixSpeak
 
         private int _PageCount;
 
-        private short _PhoenixSpeakId;
-
-        private string _PS_Page;
-
         public int CurrentPage
         {
             get
@@ -46,25 +42,9 @@ namespace Libraries.PhoenixSpeak
             }
         }
 
-        public short PhoenixSpeakID
-        {
-            get
-            {
-                return _PhoenixSpeakId;
-            }
-            set
-            {
-                _PhoenixSpeakId = value;
-            }
-        }
+        public short PhoenixSpeakID { get; set; }
 
-        public string PS_Page
-        {
-            get
-            {
-                return _PS_Page;
-            }
-        }
+        public string PS_Page { get; }
 
         public PhoenicSpeakDataObject()
         {
@@ -74,20 +54,14 @@ namespace Libraries.PhoenixSpeak
         {
             int.TryParse(PsPage.Match(data, 0).Groups[1].Value, out _CurrentPage);
             int.TryParse(PsPage.Match(data, 0).Groups[2].Value, out _PageCount);
-            _PS_Page = PsPage.Replace(data, "");
+            PS_Page = PsPage.Replace(data, "");
         }
 
+        // Add "," to the end of match #1.
+        // Input: "bank=200, clearance=10, member=1, message='test', stafflv=2, sys_lastused_date=1340046340,"
         /// <summary>
         /// returns number of Phoenix Speak pages remaining
         /// </summary>
-        public int PagesRemaining
-        {
-            get
-            {
-                return (_PageCount - _CurrentPage);
-                // Add "," to the end of match #1.
-                // Input: "bank=200, clearance=10, member=1, message='test', stafflv=2, sys_lastused_date=1340046340,"
-            }
-        }
+        public int PagesRemaining => _PageCount - _CurrentPage;
     }
 }

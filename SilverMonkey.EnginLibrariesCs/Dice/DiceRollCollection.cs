@@ -7,10 +7,50 @@ namespace Libraries.Dice
     /// </summary>
     public class DiceRollCollection
     {
+        #region Private Fields
+
         private List<Die> Dice = new List<Die>();
-        private double Offset;
         private char DiceModifyer = '+';
+        private double Offset;
         private double total = 0;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiceRollCollection"/> class.
+        /// </summary>
+        /// <param name="NumberDice">The number dice.</param>
+        /// <param name="NumberSides">The number sides.</param>
+        /// <param name="Offset">The offset.</param>
+        /// <param name="Modifyer">The modifyer.</param>
+        public DiceRollCollection(double NumberDice, double NumberSides, double Offset = 0, char Modifyer = '+')
+        {
+            this.DiceModifyer = Modifyer;
+            this.Offset = Offset;
+
+            for (double I = 0; I <= NumberDice - 1; I++)
+            {
+                Add(NumberSides);
+            }
+        }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets the result.
+        /// </summary>
+        /// <value>
+        /// The result.
+        /// </value>
+        public double Result => total;
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Adds the specified die.
@@ -29,8 +69,6 @@ namespace Libraries.Dice
         {
             Dice.Add(new Die(sides));
         }
-
-        public double Result => total;
 
         /// <summary>
         /// Mix up the Dice in hand and roll them
@@ -51,16 +89,6 @@ namespace Libraries.Dice
             return total;
         }
 
-        //
-        public DiceRollCollection(double NumberDice, double NumberSides, double Offset = 0, char Modifyer = '+')
-        {
-            this.DiceModifyer = Modifyer;
-            this.Offset = Offset;
-
-            for (double I = 0; I <= NumberDice - 1; I++)
-            {
-                Add(NumberSides);
-            }
-        }
+        #endregion Public Methods
     }
 }

@@ -19,6 +19,9 @@
     /// </summary>
     public class PhoenixSpeakEventArgs : Furcadia.Net.NetChannelEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PhoenixSpeakEventArgs"/> class.
+        /// </summary>
         public PhoenixSpeakEventArgs()
         {
             Channel = "PhoenixSpeak";

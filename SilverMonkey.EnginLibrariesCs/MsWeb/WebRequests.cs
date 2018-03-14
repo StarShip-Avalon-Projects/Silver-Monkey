@@ -16,7 +16,7 @@ namespace Libraries.Web
     {
         #region Private Fields
 
-        private Monkeyspeak.Page page;
+        private Page page;
         private string UserAgent = "Silver Monkey a Furcadia Bot (gerolkae@gmail.com.com)";
 
         // private int Ver = 1;
@@ -35,9 +35,10 @@ namespace Libraries.Web
         // Key={key]
         // *Value=[Value]
         /// <summary>
-        /// Constructor Specifying the Web url to connect to
+        /// Initializes a new instance of the <see cref="WebRequests"/> class.
         /// </summary>
-        /// <param name="Url"> </param>
+        /// <param name="Url">The URL.</param>
+        /// <param name="reader">The reader.</param>
         public WebRequests(Uri Url, TriggerReader reader)
         {
             WebURL = Url;
@@ -49,9 +50,9 @@ namespace Libraries.Web
         #region Public Methods
 
         /// <summary>
-        /// Pack the Variables into a URL Encoded String as ServerData
+        /// Encodes the web variables.
         /// </summary>
-        /// <param name="VariableList"></param>
+        /// <param name="VariableList">The variable list.</param>
         /// <returns></returns>
         public static string EncodeWebVariables(List<IVariable> VariableList)
         {

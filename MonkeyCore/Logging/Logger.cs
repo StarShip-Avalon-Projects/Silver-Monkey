@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using Monkeyspeak.Collections;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -404,11 +405,22 @@ namespace MonkeyCore.Logging
         /// </value>
         public static TimeSpan MessagesExpire { get; set; } = TimeSpan.FromSeconds(10);
 
+        private static ILogOutput logOutput;
+
         /// <summary>
         /// Sets the <see cref="ILogOutput"/>.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">output</exception>
-        public static ILogOutput LogOutput { get; set; }
+        public static ILogOutput LogOutput
+        {
+            get => logOutput;
+            set
+            {
+                logOutput = value;
+                FurcLog.Logger.LogOutput = logOutput;
+                MsLog.Logger.LogOutput = logOutput;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [single threaded].

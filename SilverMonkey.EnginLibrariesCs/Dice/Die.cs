@@ -9,10 +9,11 @@ namespace Libraries.Dice
     {
         private static Random faceSelector = new Random();
 
-        private double faceCount;
-
-        private double value;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Die"/> class.
+        /// </summary>
+        /// <param name="faceCount">The face count.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">faceCount - Dice must have one or more faces.</exception>
         public Die(double faceCount)
         {
             if (faceCount < 1)
@@ -20,7 +21,7 @@ namespace Libraries.Dice
                 throw new ArgumentOutOfRangeException("faceCount", "Dice must have one or more faces.");
             }
 
-            this.faceCount = faceCount;
+            FaceCount = faceCount;
         }
 
         /// <summary>
@@ -29,17 +30,7 @@ namespace Libraries.Dice
         /// <value>
         /// The face count.
         /// </value>
-        public double FaceCount
-        {
-            get
-            {
-                return faceCount;
-            }
-            set
-            {
-                faceCount = value;
-            }
-        }
+        public double FaceCount { get; set; }
 
         /// <summary>
         /// Gets the side of the die we land on
@@ -47,13 +38,7 @@ namespace Libraries.Dice
         /// <value>
         /// <see cref="Double"/>
         /// </value>
-        public double Value
-        {
-            get
-            {
-                return value;
-            }
-        }
+        public double Value { get; private set; }
 
         /// <summary>
         /// Roll a single die
@@ -63,7 +48,7 @@ namespace Libraries.Dice
         /// </returns>
         public double Roll()
         {
-            value = faceSelector.Next(1, (int)FaceCount);
+            Value = faceSelector.Next(1, (int)FaceCount);
             return Value;
         }
     }

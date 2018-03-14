@@ -13,7 +13,7 @@ using Furcadia.Net.Utils.ServerParser;
 using Libraries;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
-using Monkeyspeak.Logging;
+using MonkeyCore.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

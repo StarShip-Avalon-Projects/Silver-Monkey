@@ -2,7 +2,7 @@
 using Furcadia.Net.DreamInfo;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
-using Monkeyspeak.Logging;
+using MonkeyCore.Logging;
 using System;
 using System.Text.RegularExpressions;
 

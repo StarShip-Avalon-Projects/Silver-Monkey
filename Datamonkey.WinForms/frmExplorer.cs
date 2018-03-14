@@ -2,6 +2,7 @@ using Controls;
 using DataMonkey.Controls;
 using FastColoredTextBoxNS;
 using MonkeyCore.Data;
+using MonkeyCore.Logging;
 using System;
 using System.ComponentModel;
 using System.Data;
@@ -103,7 +104,12 @@ namespace DataMonkey
         {
             // Required for Windows Form Designer support
             InitializeComponent();
+            Logger.InfoEnabled = true;
+            Logger.SuppressSpam = true;
+            Logger.WarningEnabled = true;
+            Logger.SingleThreaded = true;
 
+            Logger.LogOutput = new MultiLogOutput(new FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, Level.Debug), new FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, Level.Error));
             //
             //sqlStatementTextBox
             //

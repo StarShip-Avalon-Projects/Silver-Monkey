@@ -83,7 +83,6 @@
     <Compile Include="IO\EditorScriptBuilder.cs" />
     <Compile Include="IO\Paths.cs" />
     <Compile Include="Logging\BugReport.cs" />
-    <Compile Include="Logging\ConcurrentList.cs" />
     <Compile Include="Logging\ConsoleLogOutput.cs" />
     <Compile Include="Logging\ErrorLogging.cs" />
     <Compile Include="Logging\FileLogOutput.cs" />

@@ -1,14 +1,17 @@
-﻿namespace MonkeyCore.Logging
+﻿using MsLog = Monkeyspeak.Logging;
+using FurcLog = Furcadia.Logging;
+
+namespace MonkeyCore.Logging
 {
     /// <summary>
-    ///
+    /// Unverisal Logging interface that unites Furcadia.Logging and Monkeyspeak.Logging
     /// </summary>
-    public interface ILogOutput : Monkeyspeak.Logging.ILogOutput, Furcadia.Logging.ILogOutput
+    public interface ILogOutput : MsLog.ILogOutput, FurcLog.ILogOutput
     {
         /// <summary>
-        /// Logs the specified log MSG.
+        /// Logs the specified log Message.
         /// </summary>
-        /// <param name="logMsg">The log MSG.</param>
+        /// <param name="logMsg">The Message object.</param>
         void Log(LogMessage logMsg);
     }
 }

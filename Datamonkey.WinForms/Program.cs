@@ -26,8 +26,10 @@ namespace DataMonkey
         {
             var ex = (Exception)e.ExceptionObject;
             var ErrorLog = new ErrorLogging(ex, e.ExceptionObject);
-            var report = new BugReport(ErrorLog);
-            report.ProjectName = "MonkeyCore2Tests";
+            var report = new BugReport(ErrorLog)
+            {
+                ProjectName = "MonkeyCore2Tests"
+            };
             var ps = new ProcessStartInfo(BugReport.ToolAppName)
             {
                 Arguments = report.ToCommandLineArgs()

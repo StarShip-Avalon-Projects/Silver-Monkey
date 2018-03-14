@@ -24,40 +24,14 @@ public class Settings
     private const string MainSection = "Main";
 
     private const string SettingFile = "Settings.Ini";
-
-    private static IniFile _ini = new IniFile();
-
-    private static IniFile _MS_KeysIni = new IniFile();
-
     private static string SettingsFile = Path.Combine(IO.Paths.ApplicationSettingsPath, SettingFile);
 
     #endregion Private Fields
 
     #region Public Properties
 
-    public static IniFile Ini
-    {
-        get
-        {
-            return _ini;
-        }
-        set
-        {
-            _ini = value;
-        }
-    }
-
-    public static IniFile MS_KeysIni
-    {
-        get
-        {
-            return _MS_KeysIni;
-        }
-        set
-        {
-            _MS_KeysIni = value;
-        }
-    }
+    public static IniFile Ini { get; set; } = new IniFile();
+    public static IniFile MS_KeysIni { get; set; } = new IniFile();
 
     #endregion Public Properties
 
@@ -101,9 +75,6 @@ public class Settings
         private int _FontSize = 10;
 
         private string _FurcPath = "";
-
-        private string _Host = Main_Host;
-
         private bool _LoadLastBotFile = false;
 
         private int _ping = 300;
@@ -147,7 +118,7 @@ public class Settings
             s = Ini.GetKeyValue("Main", "Host");
             if (!string.IsNullOrEmpty(s))
             {
-                _Host = s.Trim();
+                Host = s.Trim();
             }
 
             s = Ini.GetKeyValue("Main", "TT Interval");
@@ -442,17 +413,7 @@ public class Settings
             }
         }
 
-        public string Host
-        {
-            get
-            {
-                return _Host;
-            }
-            set
-            {
-                _Host = value;
-            }
-        }
+        public string Host { get; set; } = Main_Host;
 
         public bool LoadLastBotFile
         {
@@ -543,7 +504,7 @@ public class Settings
             }
 
             Ini.SetKeyValue("Main", "FurcPath", _FurcPath);
-            Ini.SetKeyValue("Main", "Host", _Host);
+            Ini.SetKeyValue("Main", "Host", Host);
             // _reconnectMax
             Ini.SetKeyValue("Main", "Time Out", _reconnectMax.ToString());
             Ini.SetKeyValue("Main", "SPort", _sPort.ToString());

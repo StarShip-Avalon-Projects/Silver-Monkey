@@ -1,7 +1,7 @@
 ﻿using Monkeyspeak;
 using Furcadia.Net.DreamInfo;
 using System.Text.RegularExpressions;
-using Monkeyspeak.Logging;
+using MonkeyCore.Logging;
 
 namespace Libraries
 {

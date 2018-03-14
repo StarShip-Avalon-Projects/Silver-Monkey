@@ -134,8 +134,7 @@ Public Class Main
         Logger.SingleThreaded = False
 
         Logger.LogOutput = New MultiLogOutput(New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, Level.Debug), New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, Level.Error), New Engine.MultipleLogOutput())
-        furcLog.Logger.LogOutput = Logger.LogOutput
-        MsLog.Logger.LogOutput = Logger.LogOutput
+
     End Sub
 
 #End Region

@@ -1,7 +1,4 @@
-﻿/// <summary>
-/// General Utility functions we haven't found a home for yet
-/// </summary>
-using System;
+﻿using System;
 
 namespace Extentions
 {

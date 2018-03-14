@@ -3,7 +3,7 @@ using Furcadia.Net.Proxy;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using System.Linq;
-using MsLog = Monkeyspeak.Logging;
+using MonkeyCore.Logging;
 using static Libraries.MsLibHelper;
 using MonkeyCore.Data;
 
@@ -275,7 +275,7 @@ namespace Libraries
             var BotController = reader.Page.GetVariable(BotControllerVariable);
             if (string.IsNullOrWhiteSpace(BotController.Value.ToString()))
             {
-                MsLog.Logger.Warn("BotController is not defined, Please specifiy a BotController in the Bot configuration settings,");
+                Logger.Warn("BotController is not defined, Please specifiy a BotController in the Bot configuration settings,");
                 return false;
             }
 

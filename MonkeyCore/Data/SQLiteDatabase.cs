@@ -1,4 +1,4 @@
-﻿using Furcadia.Logging;
+﻿using MonkeyCore.Logging;
 using IO;
 using System;
 using System.Collections.Generic;

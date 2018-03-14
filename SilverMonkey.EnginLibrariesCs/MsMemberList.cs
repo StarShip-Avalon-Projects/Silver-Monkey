@@ -3,7 +3,7 @@ using Furcadia.Text;
 using IO;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
-using Monkeyspeak.Logging;
+using MonkeyCore.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;

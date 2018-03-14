@@ -1,8 +1,7 @@
-﻿using System.Text;
-using System.IO;
+﻿using IO;
 using System;
-using Engine.BotSession;
-using IO;
+using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Engine.BotSession
@@ -37,12 +36,12 @@ namespace Engine.BotSession
             {
                 throw new ArgumentException("Filepath npt given", file);
             }
-
-            StringBuilder ScriptContents = new StringBuilder();
             if (!File.Exists(Paths.CheckBotFolder(file)))
             {
                 throw new FileNotFoundException($"MonkeySpeak file ({file}) not found. Did you forget to define on or check the file path?");
             }
+
+            StringBuilder ScriptContents = new StringBuilder();
 
             using (var MonkeySpeakScriptReader = new StreamReader(file))
             {

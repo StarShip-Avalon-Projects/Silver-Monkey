@@ -14,7 +14,7 @@ namespace MonkeyCore.Logging
         private bool disposedValue;
         private LogStreamOptions Options;
 
-        private List<string> Stack = new List<string>();
+        private List<string> LogList = new List<string>();
 
         #endregion Private Fields
 
@@ -70,12 +70,12 @@ namespace MonkeyCore.Logging
                 using (FileStream fStream = new FileStream(LogFilePath, FileMode.Append))
                 using (StreamWriter ioFile = new StreamWriter(fStream))
                 {
-                    foreach (string line in Stack.ToArray())
+                    foreach (string line in LogList.ToArray())
                     {
                         ioFile.WriteLine(line);
                     }
 
-                    Stack.Clear();
+                    LogList.Clear();
                     ioFile.WriteLine(Message);
                 }
             }
@@ -84,7 +84,7 @@ namespace MonkeyCore.Logging
                 if (ex.Message.StartsWith("The process cannot access the file")
                     && ex.Message.EndsWith("because it is being used by another process."))
                 {
-                    Stack.Add(Message);
+                    LogList.Add(Message);
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace MonkeyCore.Logging
             {
                 if (disposing)
                 {
-                    Stack.Clear();
+                    LogList.Clear();
                 }
             }
 

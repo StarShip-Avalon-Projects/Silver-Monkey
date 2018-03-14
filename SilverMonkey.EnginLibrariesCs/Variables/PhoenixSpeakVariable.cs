@@ -3,14 +3,12 @@ using System;
 
 namespace Libraries.Variables
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <seealso cref="Monkeyspeak.IVariable" />
     public sealed class PhoenixSpeakVariable : IVariable
     {
-        #region Private Fields
-
-        private object value;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         /// <summary>
@@ -21,7 +19,7 @@ namespace Libraries.Variables
         public PhoenixSpeakVariable(string name, object value)
         {
             Name = name;
-            this.value = value;
+            this.Value = value;
         }
 
         /// <summary>
@@ -31,7 +29,7 @@ namespace Libraries.Variables
         public PhoenixSpeakVariable(IVariable variable)
         {
             Name = variable.Name;
-            this.value = variable.Value;
+            this.Value = variable.Value;
         }
 
         #endregion Public Constructors
@@ -60,14 +58,7 @@ namespace Libraries.Variables
         /// <value>
         /// The value.
         /// </value>
-        public object Value
-        {
-            get { return value; }
-            set
-            {
-                this.value = value;
-            }
-        }
+        public object Value { get; set; }
 
         #endregion Public Properties
 
@@ -91,7 +82,7 @@ namespace Libraries.Variables
         /// <param name="value">The value.</param>
         public void SetValue(object value)
         {
-            this.value = value;
+            this.Value = value;
         }
 
         /// <summary>
@@ -101,7 +92,7 @@ namespace Libraries.Variables
         /// <returns></returns>
         public override string ToString()
         {
-            return ((IsConstant) ? "const " : "") + $"{Name} = {value ?? "null"}";
+            return IsConstant ? "const " : string.Empty + $"{Name} = {Value ?? "null"}";
         }
 
         #endregion Public Methods

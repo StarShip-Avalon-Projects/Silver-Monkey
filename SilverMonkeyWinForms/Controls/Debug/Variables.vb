@@ -143,15 +143,11 @@ Public Class Variables
 
     Private Sub Variables_Load(sender As Object, e As EventArgs) Handles Me.Load
         IsDisposed = False
-        Monkeyspeak.Logging.Logger.DebugEnabled = True
-        Furcadia.Logging.Logger.DebugEnabled = True
         Logger.DebugEnabled = True
 
     End Sub
 
     Private Sub Variables_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Monkeyspeak.Logging.Logger.DebugEnabled = False
-        Furcadia.Logging.Logger.DebugEnabled = False
         Logger.DebugEnabled = False
     End Sub
 

@@ -13,12 +13,22 @@ namespace Libraries
     {
         #region Public Properties
 
+        /// <summary>
+        /// Gets the base identifier.
+        /// </summary>
+        /// <value>
+        /// The base identifier.
+        /// </value>
         public override int BaseId => 210;
 
         #endregion Public Properties
 
         #region Public Methods
 
+        /// <summary>
+        /// Initializes this instance. Add your trigger handlers here.
+        /// </summary>
+        /// <param name="args">Parametized argument of vars to use to pass runtime vars to a library at initialization</param>
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);

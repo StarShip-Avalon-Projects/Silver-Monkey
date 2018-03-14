@@ -1,7 +1,7 @@
 ﻿using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using System;
-using MsLog = Monkeyspeak.Logging;
+using MonkeyCore.Logging;
 
 namespace Libraries
 {
@@ -195,7 +195,7 @@ namespace Libraries
             var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
             if (InDream(TargetFurre))
                 return SendServer($"share {TargetFurre.ShortName}");
-            MsLog.Logger.Warn($"Cannot give share to {TargetFurre.Name} because they're not in the dream");
+            Logger.Warn($"Cannot give share to {TargetFurre.Name} because they're not in the dream");
             return false;
         }
 
@@ -203,7 +203,7 @@ namespace Libraries
         {
             if (InDream(Player))
                 return SendServer($"share { Player.ShortName}");
-            MsLog.Logger.Warn($"Cannot give share to {Player.Name} because they're not in the dream");
+            Logger.Warn($"Cannot give share to {Player.Name} because they're not in the dream");
             return false;
         }
 
@@ -213,7 +213,7 @@ namespace Libraries
             var TargetFurre = DreamInfo.Furres.GetFurreByName(reader.ReadString());
             if (InDream(TargetFurre))
                 return SendServer($"unshare {TargetFurre.ShortName}");
-            MsLog.Logger.Warn($"cannot thake share from {TargetFurre.Name} they're not in the dream");
+            Logger.Warn($"cannot thake share from {TargetFurre.Name} they're not in the dream");
             return false;
         }
 
@@ -221,7 +221,7 @@ namespace Libraries
         {
             if (InDream(Player))
                 return SendServer($"unshare {Player.ShortName}");
-            MsLog.Logger.Warn($"Cannot take share from {Player.Name} because they're not in the dream");
+            Logger.Warn($"Cannot take share from {Player.Name} because they're not in the dream");
             return false;
         }
 

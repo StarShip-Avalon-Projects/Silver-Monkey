@@ -11,6 +11,8 @@ namespace Libraries
     /// <seealso cref="Libraries.MonkeySpeakLibrary" />
     public class MsStartBot : MonkeySpeakLibrary
     {
+        /// <summary>
+        /// Gets the base identifier.
         /// </summary>
         /// <value>
         /// The base identifier.
