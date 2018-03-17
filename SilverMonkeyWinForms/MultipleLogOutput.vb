@@ -8,6 +8,8 @@ Namespace Engine
 
     Public Class MultipleLogOutput
         Implements ILogOutput
+        Implements MsLog.ILogOutput
+        Implements FurcLog.ILogOutput
 
         Public Sub New()
         End Sub
@@ -31,6 +33,10 @@ Namespace Engine
             Return msg
         End Function
 
+        ''' <summary>
+        ''' Logs the specified log Message.
+        ''' </summary>
+        ''' <param name="logMsg">The Message object.</param>
         Public Sub Log(logMsg As LogMessage) Implements ILogOutput.Log
             If logMsg.message Is Nothing Then
                 Return
@@ -47,16 +53,25 @@ Namespace Engine
                     Or logMsg.Level = Level.Error _
                     Or logMsg.Level = Level.Warning Then
                 Main.SndDisplay(logMsg)
+
             End If
 
         End Sub
 
+        ''' <summary>
+        ''' Logs the specified log MSG.
+        ''' </summary>
+        ''' <param name="logMsg">The log MSG.</param>
         Public Sub Log(logMsg As MsLog.LogMessage) Implements MsLog.ILogOutput.Log
-            Log(logMsg)
+            Me.Log(CType(logMsg, LogMessage))
         End Sub
 
+        ''' <summary>
+        ''' Logs the specified log MSG.
+        ''' </summary>
+        ''' <param name="logMsg">The log MSG.</param>
         Public Sub Log(logMsg As FurcLog.LogMessage) Implements FurcLog.ILogOutput.Log
-            Log(logMsg)
+            Me.Log(CType(logMsg, LogMessage))
         End Sub
 
     End Class

@@ -5,7 +5,7 @@ using System.Reflection;
 
 // Imports SilverMonkey.BugTraqConnect.Libs
 
-namespace Logging
+namespace MonkeyCore.Logging
 {
     /// <summary>
     ///Error Logging Class

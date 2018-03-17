@@ -170,7 +170,7 @@ namespace MonkeyCore.Data
             }
             catch (Exception ex)
             {
-                ex.Log(Monkeyspeak.Logging.Level.Error);
+                ex.Log(Level.Error);
             }
             return -1;
         }
@@ -188,7 +188,7 @@ namespace MonkeyCore.Data
             }
             catch (Exception ex)
             {
-                ex.Log(Monkeyspeak.Logging.Level.Error);
+                ex.Log(Level.Error);
             }
         }
 
@@ -213,7 +213,7 @@ namespace MonkeyCore.Data
             }
             catch (Exception ex)
             {
-                ex.Log(Monkeyspeak.Logging.Level.Error);
+                ex.Log(Level.Error);
             }
 
             return -1;
@@ -484,7 +484,7 @@ namespace MonkeyCore.Data
             }
             catch (Exception ex)
             {
-                ex.Log(Monkeyspeak.Logging.Level.Error);
+                ex.Log(Level.Error);
             }
             return false;
         }
@@ -548,7 +548,7 @@ namespace MonkeyCore.Data
             }
             catch (Exception ex)
             {
-                ex.Log(Monkeyspeak.Logging.Level.Error);
+                ex.Log(Level.Error);
             }
             return -1;
         }

@@ -80,6 +80,8 @@
       <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\SQLiteDatabase.cs" />
+    <Compile Include="Extentions\ExceptionExtensions.cs" />
+    <Compile Include="Extentions\Logging.cs" />
     <Compile Include="IO\EditorScriptBuilder.cs" />
     <Compile Include="IO\Paths.cs" />
     <Compile Include="Logging\BugReport.cs" />
@@ -122,6 +124,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

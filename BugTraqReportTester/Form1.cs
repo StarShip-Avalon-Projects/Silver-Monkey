@@ -1,4 +1,4 @@
-﻿using Logging;
+﻿using MonkeyCore.Logging;
 
 using System;
 using System.Diagnostics;

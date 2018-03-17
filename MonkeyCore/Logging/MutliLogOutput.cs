@@ -1,69 +1,73 @@
-﻿using System.Collections.Generic;
+﻿using Monkeyspeak.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using furcLog = Furcadia.Logging;
+
 using MsLog = Monkeyspeak.Logging;
-using FurcLog = Furcadia.Logging;
 
 namespace MonkeyCore.Logging
 {
     /// <summary>
     /// Multi log output
     /// </summary>
-    /// <seealso cref="Furcadia.Logging.ILogOutput" />
-    public class MultiLogOutput : ILogOutput, MsLog.ILogOutput, FurcLog.ILogOutput
+    /// <seealso cref="Monkeyspeak.Logging.ILogOutput" />
+    public class MultiLogOutput : ILogOutput, MsLog.ILogOutput, furcLog.ILogOutput
     {
         private List<ILogOutput> outputs;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MultiLogOutput"/> class.
-        /// </summary>
-        /// <param name="outputs">The outputs.</param>
         public MultiLogOutput(params ILogOutput[] outputs)
         {
             this.outputs = new List<ILogOutput>(outputs);
         }
 
-        /// <summary>
-        /// Logs the specified log MSG.
-        /// </summary>
-        /// <param name="logMsg">The log MSG.</param>
         public void Log(LogMessage logMsg)
         {
             foreach (var output in outputs) output.Log(logMsg);
         }
 
-        /// <summary>
-        /// Gets the outputs.
-        /// </summary>
-        /// <value>
-        /// The outputs.
-        /// </value>
         public IEnumerable<ILogOutput> Outputs => outputs;
 
-        /// <summary>
-        /// Adds the specified outputs.
-        /// </summary>
-        /// <param name="outputs">The outputs.</param>
         public void Add(params ILogOutput[] outputs)
         {
             this.outputs.AddRange(outputs);
         }
 
-        /// <summary>
-        /// Removes the specified output.
-        /// </summary>
-        /// <param name="output">The output.</param>
         public void Remove(ILogOutput output)
         {
             outputs.Remove(output);
         }
 
-        void MsLog.ILogOutput.Log(MsLog.LogMessage logMsg)
+        public void Add(params furcLog.ILogOutput[] outputs)
         {
-            Log(logMsg);
+            Add((ILogOutput[])outputs);
         }
 
-        void FurcLog.ILogOutput.Log(FurcLog.LogMessage logMsg)
+        public void Remove(furcLog.ILogOutput output)
         {
-            Log(logMsg);
+            outputs.Remove((ILogOutput)output);
+        }
+
+        public void Add(params MsLog.ILogOutput[] outputs)
+        {
+            this.outputs.AddRange((ILogOutput[])outputs);
+        }
+
+        public void Remove(MsLog.ILogOutput output)
+        {
+            outputs.Remove((ILogOutput)output);
+        }
+
+        public void Log(MsLog.LogMessage logMsg)
+        {
+            Log((LogMessage)logMsg);
+        }
+
+        public void Log(furcLog.LogMessage logMsg)
+        {
+            Log((LogMessage)logMsg);
         }
     }
 }

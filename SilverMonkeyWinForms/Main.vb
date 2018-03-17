@@ -13,7 +13,6 @@ Imports Furcadia.Net
 Imports Furcadia.Net.DreamInfo
 Imports Furcadia.Net.Utils.ServerParser
 Imports Libraries.Web
-Imports Logging
 Imports MonkeyCore.Logging
 Imports MonkeyCore.WinForms.Controls
 Imports Settings
@@ -21,6 +20,7 @@ Imports SilverMonkey.HelperClasses
 Imports SilverMonkey.HelperClasses.TextDisplayManager
 Imports furcLog = Furcadia.Logging
 Imports MsLog = Monkeyspeak.Logging
+Imports MonkeyCore
 
 Public Class Main
     Inherits Form
@@ -129,11 +129,23 @@ Public Class Main
         InitializeTextControls()
 
         Logger.InfoEnabled = True
-        Logger.SuppressSpam = True
+        Logger.SuppressSpam = False
         Logger.WarningEnabled = True
         Logger.SingleThreaded = False
 
+        MsLog.Logger.InfoEnabled = True
+        MsLog.Logger.SuppressSpam = False
+        MsLog.Logger.WarningEnabled = True
+        MsLog.Logger.SingleThreaded = False
+
+        furcLog.Logger.InfoEnabled = True
+        furcLog.Logger.SuppressSpam = False
+        furcLog.Logger.WarningEnabled = True
+        furcLog.Logger.SingleThreaded = False
+
         Logger.LogOutput = New MultiLogOutput(New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, Level.Debug), New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, Level.Error), New Engine.MultipleLogOutput())
+        MsLog.Logger.LogOutput = New MultiLogOutput(New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, MsLog.Level.Debug.ToLevel()), New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, MsLog.Level.Error.ToLevel()), New Engine.MultipleLogOutput())
+        furcLog.Logger.LogOutput = New MultiLogOutput(New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, furcLog.Level.Debug.ToLevel()), New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, furcLog.Level.Error.ToLevel()), New Engine.MultipleLogOutput())
 
     End Sub
 
@@ -535,11 +547,11 @@ Public Class Main
 
                     FileLogWriter = New LogStream(BotConfig.LogOptions)
                 Catch
-                    furcLog.Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogFileName}")
+                    Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogFileName}")
                     Exit Sub
                 End Try
 
-                MsLog.Logger.Info("New Session Started")
+                Logger.Info("New Session Started")
                 Await FurcSession.ConnetAsync()
                 If FurcSession.IsServerSocketConnected Then
                     ConnectTrayIconMenuItem.Enabled = False
@@ -926,7 +938,7 @@ Public Class Main
 
                 UpdateBotConfig(File)
                 EditBotToolStripMenuItem.Enabled = True
-                MsLog.Logger.Info($"Loaded: ""{ File }""")
+                Logger.Info($"Loaded: ""{ File }""")
             ElseIf Mainsettings.LoadLastBotFile And My.Application.CommandLineArgs.Count = 0 Then
                 EditBotToolStripMenuItem.Enabled = True
             End If
@@ -938,7 +950,7 @@ Public Class Main
                 End If
             End If
         Catch ex As Exception
-            furcLog.Logger.Error(ex)
+            Logger.Error(ex)
         End Try
     End Sub
 

@@ -7,33 +7,19 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Furcadia.Logging;
-using Monkeyspeak.Logging;
 
 #endregion Usings
 
 namespace MonkeyCore.Logging
 {
-    /// <summary>
-    ///
-    /// </summary>
-    /// <seealso cref="Furcadia.Logging.ILogOutput" />
-    public class ConsoleLogOutput : ILogOutput, Monkeyspeak.Logging.ILogOutput, Furcadia.Logging.ILogOutput
+    public class ConsoleLogOutput : ILogOutput
     {
-        ///private static readonly DateTime startTime = new DateTime();
+        private static readonly DateTime startTime = new DateTime();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConsoleLogOutput"/> class.
-        /// </summary>
         public ConsoleLogOutput()
         {
         }
 
-        /// <summary>
-        /// Builds the message.
-        /// </summary>
-        /// <param name="msg">The MSG.</param>
-        /// <returns></returns>
         protected LogMessage BuildMessage(ref LogMessage msg)
         {
             var level = msg.Level;
@@ -52,10 +38,6 @@ namespace MonkeyCore.Logging
             return msg;
         }
 
-        /// <summary>
-        /// Logs the specified log MSG.
-        /// </summary>
-        /// <param name="logMsg">The log MSG.</param>
         public virtual void Log(LogMessage logMsg)
         {
             if (logMsg.message == null)
@@ -95,16 +77,6 @@ namespace MonkeyCore.Logging
                 Console.ResetColor();
             }
             catch { }
-        }
-
-        public void Log(Monkeyspeak.Logging.LogMessage logMsg)
-        {
-            Log(logMsg);
-        }
-
-        public void Log(Furcadia.Logging.LogMessage logMsg)
-        {
-            Log(logMsg);
         }
     }
 }

@@ -14,7 +14,7 @@
 //-----------------------------------------------------------------------
 
 using Futureware.MantisConnect;
-using Logging;
+using MonkeyCore.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;

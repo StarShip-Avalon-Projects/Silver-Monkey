@@ -2,6 +2,8 @@
 Imports System.Windows.Forms
 Imports Monkeyspeak
 Imports MonkeyCore.Logging
+Imports FurcLog = Furcadia.Logging
+Imports MsLog = Monkeyspeak.Logging
 
 ''' <summary>
 '''
@@ -134,21 +136,30 @@ Public Class Variables
         If IsDisposed Then Exit Sub
         If Me.InvokeRequired Then
             ErrorLogTxtBx.Invoke(New LogMessageDelegate(AddressOf SendLogsToDemugWindow), Log)
-        ElseIf Log.GetType() Is GetType(LogMessage) Then
-            ErrorLogTxtBx.AppendText(DirectCast(Log, LogMessage).message + Environment.NewLine)
-        ElseIf Log.GetType() Is GetType(String) Then
+
+        ElseIf Log Is GetType(String) Then
             ErrorLogTxtBx.AppendText(Log.ToString + Environment.NewLine)
+
+        ElseIf Log.GetType() Is GetType(MsLog.LogMessage) _
+            OrElse Log.GetType() Is GetType(FurcLog.LogMessage) _
+            OrElse Log.GetType() Is GetType(LogMessage) Then
+
+            ErrorLogTxtBx.AppendText(CType(Log, LogMessage).message + Environment.NewLine)
+
         End If
     End Sub
 
     Private Sub Variables_Load(sender As Object, e As EventArgs) Handles Me.Load
         IsDisposed = False
         Logger.DebugEnabled = True
-
+        MsLog.Logger.DebugEnabled = True
+        FurcLog.Logger.DebugEnabled = True
     End Sub
 
     Private Sub Variables_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         Logger.DebugEnabled = False
+        MsLog.Logger.DebugEnabled = False
+        FurcLog.Logger.DebugEnabled = False
     End Sub
 
     Private Sub Variables_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed

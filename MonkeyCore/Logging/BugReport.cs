@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Logging
+namespace MonkeyCore.Logging
 {
     public sealed class BugReport
     {

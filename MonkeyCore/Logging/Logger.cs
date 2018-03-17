@@ -1,6 +1,4 @@
-﻿#region Usings
-
-using Monkeyspeak.Collections;
+﻿using Monkeyspeak.Collections;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -9,8 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using FurcLog = Furcadia.Logging;
 using MsLog = Monkeyspeak.Logging;
-
-#endregion Usings
 
 namespace MonkeyCore.Logging
 {
@@ -40,33 +36,43 @@ namespace MonkeyCore.Logging
         Debug = 4
     }
 
-    internal class LogMessageComparer : IComparer<LogMessage>
-    {
-        public int Compare(LogMessage x, LogMessage y)
-        {
-            if (x.TimeStamp > y.TimeStamp) return -1;
-            if (x.TimeStamp < y.TimeStamp) return 1;
-            return 0;
-        }
-    }
-
     /// <summary>
     ///
     /// </summary>
     public struct LogMessage : IEquatable<LogMessage>
     {
+        #region Public Fields
+
         /// <summary>
         /// The message
         /// </summary>
         public string message;
 
-        private DateTime expires, timeStamp;
-        private Thread curThread;
+        #endregion Public Fields
 
-        private bool IsEmpty
+        #region Private Fields
+
+        private Thread curThread;
+        private DateTime expires, timeStamp;
+
+        #endregion Private Fields
+
+        #region Private Constructors
+
+        private LogMessage(Level level, string msg, TimeSpan expireDuration)
         {
-            get { return string.IsNullOrWhiteSpace(message); }
+            Level = level;
+            message = string.IsNullOrEmpty(msg) ? string.Empty : msg;
+            var now = DateTime.Now;
+            expires = now.Add(expireDuration);
+            timeStamp = now;
+            IsSpam = false;
+            curThread = Thread.CurrentThread;
         }
+
+        #endregion Private Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets a value indicating whether this instance is spam.
@@ -107,16 +113,18 @@ namespace MonkeyCore.Logging
         /// </value>
         public DateTime TimeStamp { get => timeStamp; internal set => timeStamp = value; }
 
-        private LogMessage(Level level, string msg, TimeSpan expireDuration)
+        #endregion Public Properties
+
+        #region Private Properties
+
+        private bool IsEmpty
         {
-            Level = level;
-            message = string.IsNullOrEmpty(msg) ? string.Empty : msg;
-            var now = DateTime.Now;
-            expires = now.Add(expireDuration);
-            timeStamp = now;
-            IsSpam = false;
-            curThread = Thread.CurrentThread;
+            get { return string.IsNullOrWhiteSpace(message); }
         }
+
+        #endregion Private Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Froms the specified level.
@@ -155,6 +163,30 @@ namespace MonkeyCore.Logging
             return null;
         }
 
+        public static explicit operator LogMessage(MsLog.LogMessage msg)
+        {
+            return new LogMessage()
+            {
+                Level = (Level)msg.Level,
+                message = msg.message,
+                IsSpam = msg.IsSpam,
+                Thread = msg.Thread,
+                TimeStamp = msg.TimeStamp,
+            };
+        }
+
+        public static explicit operator LogMessage(FurcLog.LogMessage msg)
+        {
+            return new LogMessage()
+            {
+                Level = (Level)msg.Level,
+                message = msg.message,
+                IsSpam = msg.IsSpam,
+                Thread = msg.Thread,
+                TimeStamp = msg.TimeStamp,
+            };
+        }
+
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
         /// </summary>
@@ -165,17 +197,6 @@ namespace MonkeyCore.Logging
         public override bool Equals(object obj)
         {
             return obj != null && obj is LogMessage lm && Equals(lm);
-        }
-
-        /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
-        /// </returns>
-        public override string ToString()
-        {
-            return message;
         }
 
         /// <summary>
@@ -210,52 +231,50 @@ namespace MonkeyCore.Logging
             return hashCode;
         }
 
-        public static implicit operator LogMessage(Monkeyspeak.Logging.LogMessage msg)
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
         {
-            return new LogMessage()
-            {
-                Level = (Level)msg.Level,
-                message = msg.message,
-                IsSpam = msg.IsSpam,
-                Thread = msg.Thread,
-                TimeStamp = msg.TimeStamp,
-            };
+            return message;
         }
 
-        public static implicit operator LogMessage(Furcadia.Logging.LogMessage msg)
-        {
-            return new LogMessage()
-            {
-                Level = (Level)msg.Level,
-                message = msg.message,
-                IsSpam = msg.IsSpam,
-                Thread = msg.Thread,
-                TimeStamp = msg.TimeStamp,
-            };
-        }
+        #endregion Public Methods
     }
 
     /// <summary>
-    ///
+    /// universal logger uniting Furcadia.Logging and Monkeyspeak.Logging
     /// </summary>
     public static class Logger
     {
+        #region Internal Fields
+
         internal static readonly ConcurrentList<LogMessage> history = new ConcurrentList<LogMessage>();
         internal static readonly ConcurrentQueue<LogMessage> queue = new ConcurrentQueue<LogMessage>();
+
+        #endregion Internal Fields
+
+        #region Private Fields
+
         private static readonly ConcurrentList<Type> disabledTypes = new ConcurrentList<Type>();
-        private static LogMessageComparer comparer = new LogMessageComparer();
-        private static object syncObj = new object();
-        private static bool singleThreaded; //, initialized;
-
-        private static Task logTask;
-
         private static CancellationTokenSource cancelToken;
+        private static LogMessageComparer comparer = new LogMessageComparer();
+        private static Task logTask;
+        private static bool singleThreaded;
+        private static bool surppresSpam;
+        private static object syncObj = new object();
+        private static bool warningEnabled = true;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         /// <summary>
-        /// Occurs when [spam found].
+        /// Initializes the <see cref="Logger"/> class.
         /// </summary>
-        public static event Action<LogMessage> SpamFound;
-
         static Logger()
         {
             LogOutput = new ConsoleLogOutput();
@@ -273,23 +292,43 @@ namespace MonkeyCore.Logging
             Initialize();
         }
 
-        private static void Initialize()
-        {
-            cancelToken = new CancellationTokenSource();
-            logTask = new Task(() =>
-            {
-                while (true)
-                {
-                    Thread.Sleep(10);
-                    if (!singleThreaded)
-                    {
-                        // take a dump
-                        Dump();
-                    }
-                }
-            }, cancelToken.Token, TaskCreationOptions.LongRunning);
-            if (!singleThreaded) logTask.Start();
-        }
+        #endregion Public Constructors
+
+        #region Public Events
+
+        //, initialized;
+        /// <summary>
+        /// Occurs when [spam found].
+        /// </summary>
+        public static event Action<LogMessage> SpamFound;
+
+        #endregion Public Events
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [debug enabled].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [debug enabled]; otherwise, <c>false</c>.
+        /// </value>
+        public static bool DebugEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [error enabled].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [error enabled]; otherwise, <c>false</c>.
+        /// </value>
+        public static bool ErrorEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [information enabled].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [information enabled]; otherwise, <c>false</c>.
+        /// </value>
+        public static bool InfoEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [log calling method].
@@ -300,99 +339,22 @@ namespace MonkeyCore.Logging
         public static bool LogCallingMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [information enabled].
+        /// Sets the <see cref="ILogOutput"/>.
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if [information enabled]; otherwise, <c>false</c>.
-        /// </value>
-        public static bool InfoEnabled
+        /// <exception cref="System.ArgumentNullException">output</exception>
+        public static ILogOutput LogOutput { get; set; }
+
+        public static MsLog.ILogOutput MsLogOutput
         {
-            get
-            { return infoEnabled; }
-            set
-            {
-                infoEnabled = value;
-                FurcLog.Logger.InfoEnabled = infoEnabled;
-                MsLog.Logger.InfoEnabled = infoEnabled;
-            }
+            get { return (MsLog.ILogOutput)LogOutput; }
+            set { LogOutput = (ILogOutput)value; }
         }
 
-        private static bool infoEnabled = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [warning enabled].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [warning enabled]; otherwise, <c>false</c>.
-        /// </value>
-        public static bool WarningEnabled
+        public static FurcLog.ILogOutput FurcLogOutput
         {
-            get => warningEnabled;
-            set
-            {
-                warningEnabled = value;
-                FurcLog.Logger.WarningEnabled = warningEnabled;
-                MsLog.Logger.WarningEnabled = warningEnabled;
-            }
+            get { return (FurcLog.ILogOutput)LogOutput; }
+            set { LogOutput = (ILogOutput)value; }
         }
-
-        private static bool warningEnabled = true;
-        private static bool errorEnabled = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [error enabled].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [error enabled]; otherwise, <c>false</c>.
-        /// </value>
-        public static bool ErrorEnabled
-        {
-            get => errorEnabled;
-            set
-            {
-                errorEnabled = value;
-                FurcLog.Logger.ErrorEnabled = errorEnabled;
-                MsLog.Logger.ErrorEnabled = errorEnabled;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [debug enabled].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [debug enabled]; otherwise, <c>false</c>.
-        /// </value>
-        public static bool DebugEnabled
-        {
-            get => debugEnabled;
-            set
-            {
-                debugEnabled = value;
-                FurcLog.Logger.DebugEnabled = debugEnabled;
-                MsLog.Logger.DebugEnabled = debugEnabled;
-            }
-        }
-
-        private static bool debugEnabled = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [suppress spam].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [suppress spam]; otherwise, <c>false</c>.
-        /// </value>
-        public static bool SuppressSpam
-        {
-            get => surppresSpam;
-            set
-            {
-                surppresSpam = value;
-                FurcLog.Logger.SuppressSpam = surppresSpam;
-                MsLog.Logger.SuppressSpam = surppresSpam;
-            }
-        }
-
-        private static bool surppresSpam;
 
         /// <summary>
         /// Gets or sets the messages expire time limit.
@@ -404,23 +366,6 @@ namespace MonkeyCore.Logging
         /// The messages expire time limit.
         /// </value>
         public static TimeSpan MessagesExpire { get; set; } = TimeSpan.FromSeconds(10);
-
-        private static ILogOutput logOutput;
-
-        /// <summary>
-        /// Sets the <see cref="ILogOutput"/>.
-        /// </summary>
-        /// <exception cref="System.ArgumentNullException">output</exception>
-        public static ILogOutput LogOutput
-        {
-            get => logOutput;
-            set
-            {
-                logOutput = value;
-                FurcLog.Logger.LogOutput = logOutput;
-                MsLog.Logger.LogOutput = logOutput;
-            }
-        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [single threaded].
@@ -434,8 +379,6 @@ namespace MonkeyCore.Logging
             set
             {
                 singleThreaded = value;
-                FurcLog.Logger.SingleThreaded = singleThreaded;
-                MsLog.Logger.SingleThreaded = singleThreaded;
                 if (singleThreaded) cancelToken.Cancel();
                 else
                 {
@@ -449,72 +392,38 @@ namespace MonkeyCore.Logging
         }
 
         /// <summary>
-        /// Disables logging for the specified type.
+        /// Gets or sets a value indicating whether [suppress spam].
         /// </summary>
-        /// <typeparam name="T">the type</typeparam>
-        public static void Disable<T>()
+        /// <value>
+        ///   <c>true</c> if [suppress spam]; otherwise, <c>false</c>.
+        /// </value>
+        public static bool SuppressSpam
         {
-            if (!disabledTypes.Contains(typeof(T)))
-                disabledTypes.Add(typeof(T));
-        }
-
-        private static bool TypeCheck(Type type, out string typeName)
-        {
-            if (disabledTypes.Contains(type))
+            get => surppresSpam;
+            set
             {
-                typeName = null;
-                return false;
-            }
-            typeName = type.Name;
-            return true;
-        }
-
-        private static void Log(LogMessage? msg)
-        {
-            if (msg == null) return;
-            queue.Enqueue(msg.Value);
-            if (singleThreaded)
-            {
-                Dump();
+                surppresSpam = value;
             }
         }
 
-        private static void Dump()
+        /// <summary>
+        /// Gets or sets a value indicating whether [warning enabled].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [warning enabled]; otherwise, <c>false</c>.
+        /// </value>
+        public static bool WarningEnabled
         {
-            if (queue.Count == 0) return;
-            if (queue.TryDequeue(out LogMessage msg))
+            get => warningEnabled;
+            set
             {
-                if (msg.IsSpam)
-                {
-                    SpamFound?.Invoke(msg);
-                    if (SuppressSpam)
-                        return;
-                }
-                switch (msg.Level)
-                {
-                    case Level.Debug:
-                        if (!DebugEnabled)
-                            return;
-                        break;
-
-                    case Level.Error:
-                        if (!ErrorEnabled)
-                            return;
-                        break;
-
-                    case Level.Info:
-                        if (!InfoEnabled)
-                            return;
-                        break;
-
-                    case Level.Warning:
-                        if (!WarningEnabled)
-                            return;
-                        break;
-                }
-                LogOutput.Log(msg);
+                warningEnabled = value;
             }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Asserts the specified cond.
@@ -580,6 +489,62 @@ namespace MonkeyCore.Logging
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Debugs the specified MSG.
+        /// </summary>
+        /// <param name="msg">The MSG.</param>
+        /// <param name="memberName">Name of the member.</param>
+        public static void Debug(object msg, [CallerMemberName]string memberName = "")
+        {
+            if (!DebugEnabled) return;
+            Log(LogMessage.From(Level.Debug, $"System{(LogCallingMethod && !memberName.IsNullOrBlank() ? $" ({memberName})" : "")}: {(msg != null ? msg.ToString() : "null")}", MessagesExpire));
+        }
+
+        /// <summary>
+        /// Debugs the specified MSG.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="msg">The MSG.</param>
+        /// <param name="memberName">Name of the member.</param>
+        public static void Debug<T>(object msg, [CallerMemberName]string memberName = "")
+        {
+            if (DebugEnabled && TypeCheck(typeof(T), out string typeName))
+                Log(LogMessage.From(Level.Debug, $"{typeName}{(LogCallingMethod && !memberName.IsNullOrBlank() ? $" ({memberName})" : "")}: {msg}", MessagesExpire));
+        }
+
+        /// <summary>
+        /// Disables logging for the specified type.
+        /// </summary>
+        /// <typeparam name="T">the type</typeparam>
+        public static void Disable<T>()
+        {
+            if (!disabledTypes.Contains(typeof(T)))
+                disabledTypes.Add(typeof(T));
+        }
+
+        /// <summary>
+        /// Errors the specified MSG.
+        /// </summary>
+        /// <param name="msg">The MSG.</param>
+        /// <param name="memberName">Name of the member.</param>
+        public static void Error(object msg, [CallerMemberName]string memberName = "")
+        {
+            if (!ErrorEnabled) return;
+            Log(LogMessage.From(Level.Error, $"System{(LogCallingMethod && !memberName.IsNullOrBlank() ? $" ({memberName})" : "")}: {(msg != null ? msg.ToString() : "null")}", MessagesExpire));
+        }
+
+        /// <summary>
+        /// Errors the specified MSG.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="msg">The MSG.</param>
+        /// <param name="memberName">Name of the member.</param>
+        public static void Error<T>(object msg, [CallerMemberName]string memberName = "")
+        {
+            if (ErrorEnabled && TypeCheck(typeof(T), out string typeName))
+                Log(LogMessage.From(Level.Error, $"{typeName}{(LogCallingMethod && !memberName.IsNullOrBlank() ? $" ({memberName})" : "")}: {msg}", MessagesExpire));
         }
 
         /// <summary>
@@ -649,29 +614,6 @@ namespace MonkeyCore.Logging
         }
 
         /// <summary>
-        /// Debugs the specified MSG.
-        /// </summary>
-        /// <param name="msg">The MSG.</param>
-        /// <param name="memberName">Name of the member.</param>
-        public static void Debug(object msg, [CallerMemberName]string memberName = "")
-        {
-            if (!DebugEnabled) return;
-            Log(LogMessage.From(Level.Debug, $"System{(LogCallingMethod && !memberName.IsNullOrBlank() ? $" ({memberName})" : "")}: {(msg != null ? msg.ToString() : "null")}", MessagesExpire));
-        }
-
-        /// <summary>
-        /// Debugs the specified MSG.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="msg">The MSG.</param>
-        /// <param name="memberName">Name of the member.</param>
-        public static void Debug<T>(object msg, [CallerMemberName]string memberName = "")
-        {
-            if (DebugEnabled && TypeCheck(typeof(T), out string typeName))
-                Log(LogMessage.From(Level.Debug, $"{typeName}{(LogCallingMethod && !memberName.IsNullOrBlank() ? $" ({memberName})" : "")}: {msg}", MessagesExpire));
-        }
-
-        /// <summary>
         /// Informations the specified MSG.
         /// </summary>
         /// <param name="msg">The MSG.</param>
@@ -692,29 +634,6 @@ namespace MonkeyCore.Logging
         {
             if (InfoEnabled && TypeCheck(typeof(T), out string typeName))
                 Log(LogMessage.From(Level.Info, $"{typeName}{(LogCallingMethod && !memberName.IsNullOrBlank() ? $" ({memberName})" : "")}: {msg}", MessagesExpire));
-        }
-
-        /// <summary>
-        /// Errors the specified MSG.
-        /// </summary>
-        /// <param name="msg">The MSG.</param>
-        /// <param name="memberName">Name of the member.</param>
-        public static void Error(object msg, [CallerMemberName]string memberName = "")
-        {
-            if (!ErrorEnabled) return;
-            Log(LogMessage.From(Level.Error, $"System{(LogCallingMethod && !memberName.IsNullOrBlank() ? $" ({memberName})" : "")}: {(msg != null ? msg.ToString() : "null")}", MessagesExpire));
-        }
-
-        /// <summary>
-        /// Errors the specified MSG.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="msg">The MSG.</param>
-        /// <param name="memberName">Name of the member.</param>
-        public static void Error<T>(object msg, [CallerMemberName]string memberName = "")
-        {
-            if (ErrorEnabled && TypeCheck(typeof(T), out string typeName))
-                Log(LogMessage.From(Level.Error, $"{typeName}{(LogCallingMethod && !memberName.IsNullOrBlank() ? $" ({memberName})" : "")}: {msg}", MessagesExpire));
         }
 
         /// <summary>
@@ -739,5 +658,103 @@ namespace MonkeyCore.Logging
             if (WarningEnabled && TypeCheck(typeof(T), out string typeName))
                 Log(LogMessage.From(Level.Warning, $"{typeName}{(LogCallingMethod && !memberName.IsNullOrBlank() ? $" ({memberName})" : "")}: {msg}", MessagesExpire));
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private static EventWaitHandle waitHandle = new EventWaitHandle(true, EventResetMode.AutoReset);
+
+        private static void Dump()
+        {
+            if (queue.Count == 0) return;
+            if (queue.TryDequeue(out LogMessage msg))
+            {
+                if (msg.IsSpam)
+                {
+                    SpamFound?.Invoke(msg);
+                    if (SuppressSpam)
+                        return;
+                }
+                switch (msg.Level)
+                {
+                    case Level.Debug:
+                        if (!DebugEnabled)
+                            return;
+                        break;
+
+                    case Level.Error:
+                        if (!ErrorEnabled)
+                            return;
+                        break;
+
+                    case Level.Info:
+                        if (!InfoEnabled)
+                            return;
+                        break;
+
+                    case Level.Warning:
+                        if (!WarningEnabled)
+                            return;
+                        break;
+                }
+                LogOutput.Log(msg);
+            }
+        }
+
+        private static void Initialize()
+        {
+            cancelToken = new CancellationTokenSource();
+            logTask = new Task(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(10);
+                    if (!singleThreaded)
+                    {
+                        // take a dump
+                        Dump();
+                    }
+                }
+            }, cancelToken.Token, TaskCreationOptions.LongRunning);
+            if (!singleThreaded) logTask.Start();
+        }
+
+        private static void Log(LogMessage? msg)
+        {
+            if (msg == null) return;
+            queue.Enqueue(msg.Value);
+            if (singleThreaded)
+            {
+                Dump();
+            }
+        }
+
+        private static bool TypeCheck(Type type, out string typeName)
+        {
+            if (disabledTypes.Contains(type))
+            {
+                typeName = null;
+                return false;
+            }
+            typeName = type.Name;
+            return true;
+        }
+
+        #endregion Private Methods
+    }
+
+    internal class LogMessageComparer : IComparer<LogMessage>
+    {
+        #region Public Methods
+
+        public int Compare(LogMessage x, LogMessage y)
+        {
+            if (x.TimeStamp > y.TimeStamp) return -1;
+            if (x.TimeStamp < y.TimeStamp) return 1;
+            return 0;
+        }
+
+        #endregion Public Methods
     }
 }
