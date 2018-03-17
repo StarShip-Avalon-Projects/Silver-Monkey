@@ -1,6 +1,5 @@
 ﻿#region Usings
 
-using MonkeyCore.Logging;
 using System;
 using System.Runtime.CompilerServices;
 

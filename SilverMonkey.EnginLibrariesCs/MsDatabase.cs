@@ -306,8 +306,10 @@ namespace Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double.TryParse(result.ToString(), out double Value);
+            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
             return Value == Variable;
         }
 
@@ -333,8 +335,10 @@ namespace Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double.TryParse(result.ToString(), out double Value);
+            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
 
             return Value > Variable;
         }
@@ -348,8 +352,10 @@ namespace Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double.TryParse(result.ToString(), out double Value);
+            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
 
             return Value >= Variable;
         }
@@ -363,8 +369,10 @@ namespace Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double.TryParse(result.ToString(), out double Value);
+            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
             return Value < Variable;
         }
 
@@ -377,8 +385,10 @@ namespace Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double.TryParse(result.ToString(), out double Value);
+            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
 
             return Value <= Variable;
         }
@@ -392,8 +402,10 @@ namespace Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double.TryParse(result.ToString(), out double Value);
+            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
 
             return Value != Variable;
         }
@@ -459,8 +471,7 @@ namespace Libraries
         {
             if (database == null) database = new SQLiteDatabase(SQLitefile);
 
-            var result = database.ExecuteScalar($"SELECT [{Column}] FROM FURRE Where Name = '{Name.ToFurcadiaShortName()}'");
-            return result;
+            return database.ExecuteScalar($"SELECT [{Column}] FROM FURRE Where Name = '{Name.ToFurcadiaShortName()}'");
         }
 
         [TriggerVariableParameter]
@@ -615,8 +626,10 @@ namespace Libraries
             var info = reader.ReadString();
             var Number = reader.ReadNumber();
 
-            var Meep = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            double.TryParse(Meep.ToString(), out double Value);
+            var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
 
             return Number == Value;
         }
@@ -639,7 +652,9 @@ namespace Libraries
             var Number = reader.ReadNumber();
 
             var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            double.TryParse(check.ToString(), out double Value);
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
 
             return Value > Number;
         }
@@ -652,9 +667,11 @@ namespace Libraries
             var Number = reader.ReadNumber();
 
             var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            double.TryParse(check.ToString(), out double Num);
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
 
-            return Num >= Number;
+            return Value >= Number;
         }
 
         [TriggerStringParameter]
@@ -665,8 +682,9 @@ namespace Libraries
             var Number = reader.ReadNumber();
 
             var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            double.TryParse(check.ToString(), out double Num);
-
+            double.TryParse(check.ToString(), out double Num); double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
             return Num < Number;
         }
 
@@ -678,9 +696,11 @@ namespace Libraries
             var Number = reader.ReadNumber();
 
             var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            double.TryParse(check.ToString(), out double Num);
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
 
-            return Num <= Number;
+            return Value <= Number;
         }
 
         [TriggerStringParameter]
@@ -690,8 +710,10 @@ namespace Libraries
             var info = reader.ReadString();
             var Number = reader.ReadNumber();
 
-            string val = GetRecordInfoForTheFurreNamed(info, Player.ShortName).ToString();
-            double.TryParse(val, out double Value);
+            string check = GetRecordInfoForTheFurreNamed(info, Player.ShortName).ToString();
+            double Value = 0;
+            if (check != null)
+                double.TryParse(check.ToString(), out Value);
 
             return Value != Number;
         }

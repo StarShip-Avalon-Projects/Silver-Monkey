@@ -1,5 +1,7 @@
-﻿using MonkeyCore.Logging;
+﻿#region Usings
+
 using IO;
+using MonkeyCore.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,6 +9,8 @@ using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+
+#endregion Usings
 
 namespace MonkeyCore.Data
 {
@@ -425,7 +429,7 @@ namespace MonkeyCore.Data
             catch (Exception ex)
             {
                 rowCount = -1;
-                Logger.Error(ex);
+                ex.Log(Level.Error);
             }
 
             return rowCount;

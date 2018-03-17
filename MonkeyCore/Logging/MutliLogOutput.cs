@@ -1,11 +1,5 @@
-﻿using Monkeyspeak.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using furcLog = Furcadia.Logging;
-
+﻿using System.Collections.Generic;
+using FurcLog = Furcadia.Logging;
 using MsLog = Monkeyspeak.Logging;
 
 namespace MonkeyCore.Logging
@@ -13,8 +7,9 @@ namespace MonkeyCore.Logging
     /// <summary>
     /// Multi log output
     /// </summary>
-    /// <seealso cref="Monkeyspeak.Logging.ILogOutput" />
-    public class MultiLogOutput : ILogOutput, MsLog.ILogOutput, furcLog.ILogOutput
+    /// <seealso cref="MsLog.ILogOutput" />
+    /// <seealso cref="FurcLog.ILogOutput" />
+    public class MultiLogOutput : ILogOutput, MsLog.ILogOutput, FurcLog.ILogOutput
     {
         private List<ILogOutput> outputs;
 
@@ -40,12 +35,12 @@ namespace MonkeyCore.Logging
             outputs.Remove(output);
         }
 
-        public void Add(params furcLog.ILogOutput[] outputs)
+        public void Add(params FurcLog.ILogOutput[] outputs)
         {
             Add((ILogOutput[])outputs);
         }
 
-        public void Remove(furcLog.ILogOutput output)
+        public void Remove(FurcLog.ILogOutput output)
         {
             outputs.Remove((ILogOutput)output);
         }
@@ -65,7 +60,7 @@ namespace MonkeyCore.Logging
             Log((LogMessage)logMsg);
         }
 
-        public void Log(furcLog.LogMessage logMsg)
+        public void Log(FurcLog.LogMessage logMsg)
         {
             Log((LogMessage)logMsg);
         }
