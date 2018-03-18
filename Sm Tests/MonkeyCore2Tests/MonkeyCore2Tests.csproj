@@ -63,32 +63,14 @@
     <Compile Include="Data\DatabaseConfig.cs" />
     <Compile Include="Data\SQLiteDatabase.cs" />
     <Compile Include="OneTimeSetupAndTearDown.cs" />
-    <Compile Include="Properties\AssemblyFileVersion.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyFileVersion.t4</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfoersionCS.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AssemblyInfoersionCS.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Properties\AssemblyFileVersion.t4">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyFileVersion.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\AssemblyInfoersionCS.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyInfoersionCS.cs</LastGenOutput>
-    </Content>
     <Content Include="Read Me First.txt" />
   </ItemGroup>
   <ItemGroup>

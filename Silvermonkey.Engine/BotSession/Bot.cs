@@ -281,7 +281,7 @@ namespace Engine.BotSession
                     {
                         Logger.Info($"{Library.GetType().Name}");
                     }
-                    Logger.Debug<Bot>($"{Library.GetType().Name}");
+                    Logger.Debug($"{Library.GetType().Name}");
                 }
                 catch (Exception e)
                 {
