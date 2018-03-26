@@ -132,16 +132,19 @@ Public Class Main
         Logger.SuppressSpam = False
         Logger.WarningEnabled = True
         Logger.SingleThreaded = False
+        Logger.ErrorEnabled = True
 
         MsLog.Logger.InfoEnabled = True
         MsLog.Logger.SuppressSpam = False
         MsLog.Logger.WarningEnabled = True
         MsLog.Logger.SingleThreaded = False
+        MsLog.Logger.ErrorEnabled = True
 
         furcLog.Logger.InfoEnabled = True
         furcLog.Logger.SuppressSpam = False
         furcLog.Logger.WarningEnabled = True
         furcLog.Logger.SingleThreaded = False
+        furcLog.Logger.ErrorEnabled = True
 
         Logger.LogOutput = New MultiLogOutput(New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, Level.Debug), New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, Level.Error), New Engine.MultipleLogOutput())
         MsLog.Logger.LogOutput = New MultiLogOutput(New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, MsLog.Level.Debug.ToLevel()), New FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, MsLog.Level.Error.ToLevel()), New Engine.MultipleLogOutput())

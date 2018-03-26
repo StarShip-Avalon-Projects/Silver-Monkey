@@ -79,7 +79,14 @@ namespace Libraries
         /// <param name="MonkeySpeakPage">The monkey speak page.</param>
         public static void UpdateCurrentDreamVariables(Dream ActiveDream, Page MonkeySpeakPage)
         {
-            Logger.Debug($"{ActiveDream}");
+            if (ActiveDream == null)
+            {
+                ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamOwnerVariable)).SetValue(null);
+                ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamNameVariable)).SetValue(null);
+                return;
+            }
+
+            Logger.Debug((ActiveDream != null) ? ActiveDream.ToString() : "null");
             if (!MonkeySpeakPage.HasVariable(DreamOwnerVariable))
             {
                 MonkeySpeakPage.SetVariable(new ConstantVariable(DreamOwnerVariable, ActiveDream.DreamOwner));
@@ -102,6 +109,14 @@ namespace Libraries
         /// <param name="MonkeySpeakPage">The monkey speak page.</param>
         public static void UpdateTriggerigFurreVariables(IFurre ActivePlayer, Page MonkeySpeakPage)
         {
+            Logger.Debug((ActivePlayer != null) ? ActivePlayer.ToString() : "null");
+            if (ActivePlayer == null)
+            {
+                MonkeySpeakPage.SetVariable(new ConstantVariable(MessageVariable, null));
+                MonkeySpeakPage.SetVariable(new ConstantVariable(TriggeringFurreShortNameVariable, null));
+                ((ConstantVariable)MonkeySpeakPage.GetVariable(TriggeringFurreNameVariable)).SetValue(null);
+                return;
+            }
             if (!MonkeySpeakPage.HasVariable(MessageVariable))
             {
                 MonkeySpeakPage.SetVariable(new ConstantVariable(MessageVariable, ActivePlayer.Message));

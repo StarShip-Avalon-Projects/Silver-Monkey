@@ -96,10 +96,10 @@
 	</ItemGroup> -->
 		<Copy 
 			 SourceFiles="@(MonkeySpeakSourceFiles)" 
-			 DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(FileVersion)-PreAlpa%(Extension)')" />
+			 DestinationFiles="@(MonkeySpeakSourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(FileVersion)-Beta%(Extension)')" />
  		<Copy 
 			 SourceFiles="@(SilverMonkey3SourceFiles)" 
-			 DestinationFiles="@(SilverMonkey3SourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(Sm3FileVersion)-PreAlpa%(Extension)')" />
+			 DestinationFiles="@(SilverMonkey3SourceFiles->'Build\Installer\%(Filename)_$(Configuration)-v$(Sm3FileVersion)-Beta%(Extension)')" />
 
  </Target>
 

@@ -48,7 +48,7 @@ namespace Libraries
             Add(TriggerCategory.Cause,
                 r =>
                 {
-                    var rtn = r.GetParametersOfType<bool?>().First();
+                    var rtn = r.GetParametersOfType<bool?>().FirstOrDefault();
                     if (rtn != null)
                         return (bool)rtn;
                     return false;

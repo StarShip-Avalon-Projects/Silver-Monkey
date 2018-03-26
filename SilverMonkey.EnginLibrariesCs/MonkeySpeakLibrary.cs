@@ -6,6 +6,7 @@ using System.Linq;
 using MonkeyCore.Logging;
 using static Libraries.MsLibHelper;
 using MonkeyCore.Data;
+using Furcadia.Net.Utils.ServerParser;
 
 namespace Libraries
 {
@@ -199,16 +200,15 @@ namespace Libraries
         /// <exception cref="ArgumentException">DreamInfo not set</exception>
         public static bool ReadDreamParams(TriggerReader reader)
         {
-            Dream dreamInfo = reader.GetParametersOfType<Dream>().First();
+            Dream dreamInfo = reader.GetParametersOfType<Dream>().FirstOrDefault();
 
             if (dreamInfo != DreamInfo)
             {
                 DreamInfo = dreamInfo;
                 UpdateCurrentDreamVariables(DreamInfo, reader.Page);
-                return true;
             }
 
-            return true;
+            return dreamInfo == DreamInfo;
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Libraries
         {
             bool ParamSet = false;
 
-            Furre ActiveFurre = reader.GetParametersOfType<Furre>().First();
+            Furre ActiveFurre = reader.GetParametersOfType<Furre>().FirstOrDefault();
             if (ActiveFurre != Player)
             {
                 Player = ActiveFurre;
@@ -230,9 +230,10 @@ namespace Libraries
                 }
 
                 UpdateTriggerigFurreVariables(Player, reader.Page);
+                return ParamSet;
             }
 
-            return ParamSet;
+            return Player == ActiveFurre;
         }
 
         /// <summary>
@@ -297,6 +298,7 @@ namespace Libraries
             ReadDreamParams(reader);
             var msMsg = reader.ReadString();
             var msg = Player.Message;
+
             if (msg is null || msMsg is null)
                 return false;
             return msg.ToLower().Contains(msMsg.ToStrippedFurcadiaMarkupString().ToLower());
@@ -329,8 +331,10 @@ namespace Libraries
         /// </returns>
         protected bool MsgIs(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
-            ReadDreamParams(reader);
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
+            if (!ReadDreamParams(reader))
+                throw new MonkeyspeakException("Failed to set Dream Variables");
             string msg = Player.Message.ToStrippedFurcadiaMarkupString();
             string test = reader.ReadString().ToStrippedFurcadiaMarkupString();
             if (msg is null || test is null)

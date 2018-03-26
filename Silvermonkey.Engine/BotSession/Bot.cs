@@ -336,11 +336,12 @@ namespace Engine.BotSession
         {
             if (MSpage == null || !EngineEnable) return;
 
-            CancellationToken cancel = new CancellationTokenSource(800).Token;
+            CancellationToken cancel = new CancellationTokenSource(TimeSpan.FromSeconds(2)).Token;
 
             try
             {
-                Logger.Debug<Bot>((BaseServerInstruction)sender);
+                if (sender is BaseServerInstruction snder)
+                    Logger.Debug<Bot>(snder);
                 switch (e.ServerInstruction)
                 {
                     case ServerInstructionType.LoadDreamEvent:
@@ -353,6 +354,7 @@ namespace Engine.BotSession
                     case ServerInstructionType.BookmarkDream:
                         // (0:34) When the bot enters a Dream,
                         // (0:35) When the bot enters the Dream named {..},
+
                         await MSpage.ExecuteAsync(new int[] { 34, 35 }, cancel, Dream);
                         lastDream = Dream;
                         return;
@@ -387,7 +389,7 @@ namespace Engine.BotSession
 
                     case ServerInstructionType.LookResponse:
                         // (0:600) When the bot reads a description.
-                        //   Await MSpage.ExecuteAsync(600, DirectCast(sender, SpawnAvatar).player)
+                        //await MSpage.ExecuteAsync(600, cancel,((SpawnAvatar)sender).player);
                         return;
                 }
             }
@@ -407,7 +409,6 @@ namespace Engine.BotSession
             {
                 if (sender is ChannelObject ChanObject)
                 {
-                    string Text = ChanObject.ChannelText;
                     string data = ChanObject.RawInstruction;
                     Furre Furr = (Furre)ChanObject.Player;
                     switch (Args.Channel)
@@ -510,12 +511,14 @@ namespace Engine.BotSession
                                 cancel, ChanObject, ChanObject.Player);
                             return;
 
-                        case "banish":
+                        case "error":
+                        case "notify":
+                        case "success":
 
                             //TODO: Add these lines
                             // (0:60) When the bot fails to empty the banish list,
 
-                            if (Text.Contains(" has been banished from your dreams."))
+                            if (ChanObject.ChannelText.Contains(" has been banished from your dreams."))
                             {
                                 // banish <name> (online)
                                 // Success: (.*?) has been banished from your dreams.
@@ -526,7 +529,7 @@ namespace Engine.BotSession
                                 await MSpage.ExecuteAsync(new int[] { 53, 54 },
                                     cancel, BanishName);
                             }
-                            else if (Text == "You have canceled all banishments from your dreams.")
+                            else if (ChanObject.ChannelText == "You have canceled all banishments from your dreams.")
                             {
                                 // banish-off-all (active list)
                                 // Success: You have canceled all banishments from your dreams.
@@ -535,7 +538,7 @@ namespace Engine.BotSession
                                 await MSpage.ExecuteAsync(61,
                                     cancel, BanishList);
                             }
-                            else if (Text.EndsWith(" has been temporarily banished from your dreams."))
+                            else if (ChanObject.ChannelText.EndsWith(" has been temporarily banished from your dreams."))
                             {
                                 // tempbanish <name> (online)
                                 // Success: (.*?) has been temporarily banished from your dreams.
@@ -545,7 +548,7 @@ namespace Engine.BotSession
                                 await MSpage.ExecuteAsync(new int[] { 62, 63 },
                                     cancel, BanishName);
                             }
-                            else if (Text.StartsWith("Players banished from your dreams: "))
+                            else if (ChanObject.ChannelText.StartsWith("Players banished from your dreams: "))
                             {
                                 // Banish-List
                                 // [notify> Players banished from your dreams:
@@ -553,7 +556,7 @@ namespace Engine.BotSession
                                 await MSpage.ExecuteAsync(55,
                                     cancel, BanishList);
                             }
-                            else if (Text.StartsWith("The banishment of player "))
+                            else if (ChanObject.ChannelText.StartsWith("The banishment of player "))
                             {
                                 // banish-off <name> (on list)
                                 // [notify> The banishment of player (.*?) has ended.
@@ -561,11 +564,11 @@ namespace Engine.BotSession
                                 // (0:59) When the bot successfully removes the furre named {...} from the banish list,
 
                                 Regex t = new Regex("The banishment of player (.*?) has ended.", RegexOptions.Compiled);
-                                string NameStr = t.Match(Text).Groups[1].Value;
+                                string NameStr = t.Match(ChanObject.ChannelText).Groups[1].Value;
                                 await MSpage.ExecuteAsync(new int[] { 58, 59 },
                                     cancel, BanishName);
                             }
-                            else if (Text.Contains("There are no furres around right now with a name starting with "))
+                            else if (ChanObject.ChannelText.Contains("There are no furres around right now with a name starting with "))
                             {
                                 // Banish <name> (Not online)
                                 // Error:>>  There are no furres around right now with a name starting with (.*?) .
@@ -573,11 +576,11 @@ namespace Engine.BotSession
                                 //  (0:57) When the bot fails to remove the furre named {...} from the banish list,
 
                                 Regex t = new Regex("There are no furres around right now with a name starting with (.*?) .", RegexOptions.Compiled);
-                                string NameStr = t.Match(Text).Groups[1].Value;
+                                string NameStr = t.Match(ChanObject.ChannelText).Groups[1].Value;
                                 await MSpage.ExecuteAsync(new int[] { 56, 57 },
                                     cancel, NameStr);
                             }
-                            else if (Text == "Sorry, this player has not been banished from your dreams.")
+                            else if (ChanObject.ChannelText == "Sorry, this player has not been banished from your dreams.")
                             {
                                 // banish-off <name> (not on list)
                                 // Error:>> Sorry, this player has not been banished from your dreams.
@@ -587,7 +590,7 @@ namespace Engine.BotSession
                                 await MSpage.ExecuteAsync(new int[] { 51, 52 },
                                     cancel, BanishName);
                             }
-                            else if (Text == "You have not banished anyone.")
+                            else if (ChanObject.ChannelText == "You have not banished anyone.")
                             {
                                 // banish-off-all (empty List)
                                 // Error:>> You have not banished anyone.
@@ -600,13 +603,13 @@ namespace Engine.BotSession
 
                         case "@cookie":
                             var CookieToMe = new Regex(CookieToMeREGEX);
-                            if (CookieToMe.Match(Text).Success)
+                            if (CookieToMe.Match(ChanObject.ChannelText).Success)
                             {
                                 //  await MSpage.ExecuteAsync(new int[] { 42, 43 }, cancel, Furr);
                             }
 
                             Regex CookieToAnyone = new Regex(string.Format("<name shortname=\'(.*?)\'>(.*?)</name> just gave <name shortname=\'(.*?)\'>(.*?)</name> a (.*?)", RegexOptions.Compiled));
-                            if (CookieToAnyone.Match(Text).Success)
+                            if (CookieToAnyone.Match(ChanObject.ChannelText).Success)
                             {
                                 if (IsConnectedCharacter(Furr))
                                 {
@@ -619,20 +622,20 @@ namespace Engine.BotSession
                             }
 
                             var CookieFail = new Regex("You do not have any (.*?) left!", RegexOptions.Compiled);
-                            if (CookieFail.Match(Text).Success)
+                            if (CookieFail.Match(ChanObject.ChannelText).Success)
                             {
                                 // await MSpage.ExecuteAsync(45, cancel, Furr);
                             }
 
                             var EatCookie = new Regex((Regex.Escape("<img src=\'fsh://system.fsh:90\' alt=\'@cookie\'/><channel name=\'@cookie\'/> You eat a cookie.") + "(.*?)"), RegexOptions.Compiled);
-                            if (EatCookie.Match(Text).Success)
+                            if (EatCookie.Match(ChanObject.ChannelText).Success)
                             {
                                 //  await MSpage.ExecuteAsync(49, cancel, Furr);
                             }
 
                             // (0:96) When the Bot sees "Your cookies are ready."
                             Regex CookiesReady = new Regex($"<Your cookies are ready.http://furcadia.com/cookies/ for more info!", RegexOptions.Compiled);
-                            if (CookiesReady.Match(Text).Success)
+                            if (CookiesReady.Match(ChanObject.ChannelText).Success)
                             {
                                 //  await MSpage.ExecuteAsync(96, cancel, Furr);
                             }

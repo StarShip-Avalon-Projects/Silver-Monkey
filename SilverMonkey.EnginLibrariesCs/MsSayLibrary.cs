@@ -139,7 +139,11 @@ namespace Libraries
 
             // (0:19) When anyone whispers something,
             Add(TriggerCategory.Cause,
-                r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
+                r =>
+                {
+                    ReadTriggeringFurreParams(r);
+                    return !IsConnectedCharacter(Player);
+                },
                 "When anyone whispers something,");
 
             // (0:20) When anyone whispers {...},
@@ -169,7 +173,13 @@ namespace Libraries
 
             // (0:25) When someone emits something,
             Add(TriggerCategory.Cause,
-                   r => ReadTriggeringFurreParams(r) && ReadDreamParams(r),
+                   r =>
+                   {
+                       ReadTriggeringFurreParams(r);
+                       ReadDreamParams(r);
+                       return true;
+                   },
+
                  "When someone emits something,");
             // (0:26) When someone emits {...},
             Add(TriggerCategory.Cause,

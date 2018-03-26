@@ -62,7 +62,13 @@ namespace MonkeyCore.Logging
         {
             if (logMsg.Level != level) return;
             logMsg = BuildMessage(ref logMsg);
-            using (var mutex = new Mutex(false, GetType().Name))
+            string MutexName = GetType().Name;
+            if (Assembly.GetEntryAssembly() != null)
+                MutexName = $"{Assembly.GetEntryAssembly().GetName().Name}.{level}";
+            else if (Assembly.GetCallingAssembly() != null)
+                MutexName = $"{Assembly.GetCallingAssembly().GetName().Name}.{level}";
+
+            using (var mutex = new Mutex(false, MutexName))
             {
                 if (mutex.WaitOne())
                     try

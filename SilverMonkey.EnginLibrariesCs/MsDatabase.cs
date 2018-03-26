@@ -1,13 +1,18 @@
-﻿using IO;
+﻿#region Usings
+
+using Furcadia.Extensions;
+using IO;
 using MonkeyCore.Data;
+using MonkeyCore.Logging;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
-using MonkeyCore.Logging;
 using System;
 using System.Collections.Generic;
-
+using System.Data;
 using System.Text;
 using static Libraries.MsLibHelper;
+
+#endregion Usings
 
 namespace Libraries
 {
@@ -80,11 +85,11 @@ namespace Libraries
             SQLitefile = Paths.CheckBotFolder("SilverMonkey.db");
 
             Add(TriggerCategory.Condition,
-                r => TriggeringFurreRecordInfoEqualToNumber(r),
+                r => TriggeringFurreRecordInfoEqualToNumberOrVariable(r),
                 "and the Database Record {...} about the triggering furre is equal to #,");
 
             Add(TriggerCategory.Condition,
-                r => TriggeringFurreRecordInfoNotEqualToNumber(r),
+                r => TriggeringFurreRecordInfoNotEqualToNumberOrVariable(r),
                 "and the Database Record {...} about the triggering furre is not equal to #,");
 
             Add(TriggerCategory.Condition,
@@ -104,11 +109,11 @@ namespace Libraries
                 "and the Database Record {...} about the triggering furre is less than or equal to #,");
 
             Add(TriggerCategory.Condition,
-                r => FurreNamedRecordInfoEqualToNumber(r),
+                r => FurreNamedRecordInfoEqualToNumberOrVariable(r),
                 "and the Database Record {...} about the furre named {...} is equal to #,");
 
             Add(TriggerCategory.Condition,
-                r => FurreNamedRecordInfoNotEqualToNumber(r),
+                r => FurreNamedRecordInfoNotEqualToNumberOrVariable(r),
                 "and the Database Record {...} about the furre named {...} is not equal to #,");
 
             Add(TriggerCategory.Condition,
@@ -128,19 +133,19 @@ namespace Libraries
                 "and the Database Record {...} about the furre named {...} is less than or equal to #,");
 
             Add(TriggerCategory.Condition,
-                r => FurreNamedRecordInfoEqualToSTR(r),
+                r => FurreNamedRecordInfoEqualToString(r),
                 "and the Database Record {...} about the furre named {...} is equal to string {...},");
 
             Add(TriggerCategory.Condition,
-                r => FurreNamedRecordInfoNotEqualToSTR(r),
+                r => FurreNamedRecordInfoNotEqualToString(r),
                 "and the Database Record {...} about the furre named {...} is not equal to string {...},");
 
             Add(TriggerCategory.Condition,
-                r => TriggeringFurreRecordInfoEqualToSTR(r),
+                r => TriggeringFurreRecordInfoEqualToString(r),
                 "and the Database Record {...} about the triggering furre is equal to string {...},");
 
             Add(TriggerCategory.Condition,
-                r => TriggeringFurreRecordInfoNotEqualToSTR(r),
+                r => TriggeringFurreRecordInfoNotEqualToString(r),
                 "and the Database Record {...} about the triggering furre is not equal to string {...},");
 
             Add(TriggerCategory.Effect,
@@ -173,11 +178,11 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => ReadDatabaseInfoForTheTriggeringFurre(r),
-                "select Database Record {...} about the triggering furre, and put it in variable %.");
+                "get Database Record {...} about the triggering furre, and put it in variable %.");
 
             Add(TriggerCategory.Effect,
                 r => ReadDatabaseInfoName(r),
-                "select Database Record {...} about the furre named {...}, and put it in variable %.");
+                "get Database Record {...} about the furre named {...}, and put it in variable %.");
 
             Add(TriggerCategory.Effect,
                 r => GetDateAddedForFurreNamed(r),
@@ -194,6 +199,10 @@ namespace Libraries
             Add(TriggerCategory.Effect,
                 r => GetDateModifiedForTriggeringFurre(r),
                 "get the date modified time stamp for the triggering furre and put it in variable %.");
+
+            Add(TriggerCategory.Effect,
+              r => GetMemberList(r),
+              "get the memberlist from furre records and put them in table %");
 
             Add(TriggerCategory.Effect,
                 r => AddRecordColumn(r),
@@ -228,6 +237,23 @@ namespace Libraries
                 "execute \"VACUUM\"to rebuild the database and reclaim wasted space.");
         }
 
+        [TriggerVariableParameter]
+        private bool GetMemberList(TriggerReader reader)
+        {
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var table = reader.ReadVariableTable(true);
+            table.Clear();
+            string sql = $"SELECT [Name] FROM FURRE";
+            var dataTable = database.GetDataTable(sql);
+            int index = 0;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                index++;
+                table.Add(index.ToString(), row["Name"]);
+            }
+            return true;
+        }
+
         /// <summary>
         /// Called when page is disposing or resetting.
         /// </summary>
@@ -253,8 +279,8 @@ namespace Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadVariable(true);
             //  Dim db As SQLiteDatabase = New SQLiteDatabase(file)
-            string cmd = $"SELECT [{info}] FROM FURRE Where [Name]='{Furre}'";
-            Variable.Value = database.ExecuteScalar(cmd);
+            string sql = $"SELECT [{info}] FROM FURRE Where [Name]='{Furre}'";
+            Variable.Value = database.ExecuteScalar(sql);
             return true;
         }
 
@@ -300,30 +326,32 @@ namespace Libraries
         [TriggerStringParameter]
         [TriggerStringParameter]
         [TriggerNumberParameter]
-        private bool FurreNamedRecordInfoEqualToNumber(TriggerReader reader)
+        private bool FurreNamedRecordInfoEqualToNumberOrVariable(TriggerReader reader)
         {
             if (database == null) database = new SQLiteDatabase(SQLitefile);
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
-            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
-            return Value == Variable;
+            var check = database.ExecuteScalar($"SELECT [{info}] FROM FURRE Where Name = '{Furre}'");
+            return check.AsDouble(0d) == Variable;
         }
 
         [TriggerStringParameter]
         [TriggerStringParameter]
         [TriggerNumberParameter]
-        private bool FurreNamedRecordInfoEqualToSTR(TriggerReader reader)
+        private bool FurreNamedRecordInfoEqualToString(TriggerReader reader)
         {
             string info = reader.ReadString();
             string Furre = reader.ReadString().ToFurcadiaShortName();
-            string str = reader.ReadString();
-            if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            return result.ToString() == str;
+
+            if (reader.PeekString())
+            {
+                string str = reader.ReadString();
+                if (database == null) database = new SQLiteDatabase(SQLitefile);
+                var result = database.ExecuteScalar($"SELECT [{info}] FROM FURRE Where Name = '{Furre}'");
+                return result.ToString() == str;
+            }
+            return false;
         }
 
         [TriggerStringParameter]
@@ -335,12 +363,8 @@ namespace Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
-
-            return Value > Variable;
+            var check = database.ExecuteScalar($"SELECT [{info}] FROM FURRE Where Name = '{Furre}'");
+            return check.AsDouble(0d) > Variable;
         }
 
         [TriggerStringParameter]
@@ -352,12 +376,9 @@ namespace Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
+            var check = database.ExecuteScalar($"SELECT [{info}] FROM FURRE Where Name = '{Furre}'");
 
-            return Value >= Variable;
+            return check.AsDouble(0d) >= Variable;
         }
 
         [TriggerStringParameter]
@@ -369,11 +390,8 @@ namespace Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
-            return Value < Variable;
+            var check = database.ExecuteScalar($"SELECT [{info}] FROM FURRE Where Name = '{Furre}'");
+            return check.AsDouble(0d) < Variable;
         }
 
         [TriggerStringParameter]
@@ -385,42 +403,24 @@ namespace Libraries
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var Variable = reader.ReadNumber();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
-
-            return Value <= Variable;
+            var check = database.ExecuteScalar($"SELECT [{info}] FROM FURRE Where Name = '{Furre}'");
+            return check.AsDouble(0d) <= Variable;
         }
 
         [TriggerStringParameter]
         [TriggerStringParameter]
         [TriggerNumberParameter]
-        private bool FurreNamedRecordInfoNotEqualToNumber(TriggerReader reader)
+        private bool FurreNamedRecordInfoNotEqualToNumberOrVariable(TriggerReader reader)
         {
-            var info = reader.ReadString();
-            var Furre = reader.ReadString().ToFurcadiaShortName();
-            var Variable = reader.ReadNumber();
-            if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var check = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
-
-            return Value != Variable;
+            return !FurreNamedRecordInfoEqualToNumberOrVariable(reader);
         }
 
         [TriggerStringParameter]
         [TriggerStringParameter]
         [TriggerNumberParameter]
-        private bool FurreNamedRecordInfoNotEqualToSTR(TriggerReader reader)
+        private bool FurreNamedRecordInfoNotEqualToString(TriggerReader reader)
         {
-            var info = reader.ReadString();
-            var Furre = reader.ReadString().ToFurcadiaShortName();
-            var str = reader.ReadString();
-            if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var result = database.ExecuteScalar($"SELECT {info} FROM FURRE Where Name = '{Furre}'");
-            return str != result.ToString();
+            return !FurreNamedRecordInfoEqualToString(reader);
         }
 
         [TriggerStringParameter]
@@ -431,9 +431,9 @@ namespace Libraries
             var TimeStamp = reader.ReadVariable(true);
 
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var ts = database.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{furre}'");
+            var result = database.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{furre}'");
 
-            TimeStamp.Value = DateTime.Parse(ts.ToString());
+            TimeStamp.Value = DateTime.Parse(result.ToString());
             return true;
         }
 
@@ -441,8 +441,8 @@ namespace Libraries
         {
             var TimeStamp = reader.ReadVariable(true);
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var ts = database.ExecuteScalar($"SELECT [date added] FROM FURRE Where Name = '{Player.ShortName}'");
-            TimeStamp.Value = DateTime.Parse(ts.ToString()).ToString(DateTimeFormat);
+            var result = database.ExecuteScalar($"SELECT [date added] FROM FURRE Where Name = '{Player.ShortName}'");
+            TimeStamp.Value = DateTime.Parse(result.ToString()).ToString(DateTimeFormat);
             return true;
         }
 
@@ -451,9 +451,9 @@ namespace Libraries
             var TimeStamp = reader.ReadVariable(true);
             var furre = reader.ReadString().ToFurcadiaShortName();
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var ts = database.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{furre}'");
+            var result = database.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{furre}'");
 
-            TimeStamp.Value = DateTime.Parse(ts.ToString()).ToString(DateTimeFormat);
+            TimeStamp.Value = DateTime.Parse(result.ToString()).ToString(DateTimeFormat);
             return true;
         }
 
@@ -461,9 +461,9 @@ namespace Libraries
         {
             var TimeStamp = reader.ReadVariable(true);
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var ts = database.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{Player.ShortName}'");
+            var result = database.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{Player.ShortName}'");
 
-            TimeStamp.Value = DateTime.Parse(ts.ToString()).ToString(DateTimeFormat);
+            TimeStamp.Value = DateTime.Parse(result.ToString()).ToString(DateTimeFormat);
             return true;
         }
 
@@ -480,7 +480,7 @@ namespace Libraries
             var DatabaseTable = reader.ReadString();
             var VarTable = reader.ReadVariableTable(true);
 
-            var SelectSettngSQL = new StringBuilder()
+            var SQL = new StringBuilder()
                 .Append("select SettingsTable.*, SettingsTableMaster.ID from SettingsTable )")
                 .Append("inner join SettingsTableMaster on ")
                 .Append("SettingsTableMaster.")
@@ -488,7 +488,7 @@ namespace Libraries
                 .Append($"where SettingsTableMaster.Setting = '{VarTable}' ");
 
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = database.GetValueFromTable(SelectSettngSQL.ToString());
+            var data = database.GetValueFromTable(SQL.ToString());
 
             foreach (KeyValuePair<string, object> kvp in data)
                 VarTable.Add($"%{kvp.Key}", kvp.Value);
@@ -529,7 +529,7 @@ namespace Libraries
         [TriggerNumberParameter]
         private bool InsertTriggeringFurreRecord(TriggerReader reader)
         {
-            string info = "0";
+            object info = "0";
 
             if (reader.PeekString())
             {
@@ -537,7 +537,7 @@ namespace Libraries
             }
             else
             {
-                info = reader.ReadNumber().ToString();
+                info = reader.ReadNumber();
             }
 
             // Dim value As String = reader.ReadVariable.Value.ToString()
@@ -579,9 +579,9 @@ namespace Libraries
             var Variable = reader.ReadVariable(true);
             var Furre = reader.Page.GetVariable(TriggeringFurreShortNameVariable).Value.ToString();
 
-            string cmd = $"SELECT [{info }] FROM FURRE Where [Name]='{Furre}'";
+            string sql = $"SELECT [{info }] FROM FURRE Where [Name]='{Furre}'";
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            Variable.Value = database.ExecuteScalar(cmd);
+            Variable.Value = database.ExecuteScalar(sql);
             return true;
         }
 
@@ -619,7 +619,7 @@ namespace Libraries
 
         [TriggerStringParameter]
         [TriggerNumberParameter]
-        private bool TriggeringFurreRecordInfoEqualToNumber(TriggerReader reader)
+        private bool TriggeringFurreRecordInfoEqualToNumberOrVariable(TriggerReader reader)
         {
             if (Player.FurreID == -1 || Player.ShortName == "furcadiagameserver")
                 return false;
@@ -627,21 +627,17 @@ namespace Libraries
             var Number = reader.ReadNumber();
 
             var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
-
-            return Number == Value;
+            return Number == check.AsDouble(0d);
         }
 
         [TriggerStringParameter]
         [TriggerStringParameter]
-        private bool TriggeringFurreRecordInfoEqualToSTR(TriggerReader reader)
+        private bool TriggeringFurreRecordInfoEqualToString(TriggerReader reader)
         {
             var info = reader.ReadString();
             var str = reader.ReadString();
 
-            return str == GetRecordInfoForTheFurreNamed(info, Player.ShortName).ToString();
+            return str == GetRecordInfoForTheFurreNamed(info, Player.ShortName).AsString();
         }
 
         [TriggerStringParameter]
@@ -652,11 +648,8 @@ namespace Libraries
             var Number = reader.ReadNumber();
 
             var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
 
-            return Value > Number;
+            return check.AsDouble(0d) > Number;
         }
 
         [TriggerStringParameter]
@@ -667,11 +660,8 @@ namespace Libraries
             var Number = reader.ReadNumber();
 
             var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
 
-            return Value >= Number;
+            return check.AsDouble(0d) >= Number;
         }
 
         [TriggerStringParameter]
@@ -682,10 +672,8 @@ namespace Libraries
             var Number = reader.ReadNumber();
 
             var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            double.TryParse(check.ToString(), out double Num); double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
-            return Num < Number;
+
+            return check.AsDouble(0d) < Number;
         }
 
         [TriggerStringParameter]
@@ -696,36 +684,22 @@ namespace Libraries
             var Number = reader.ReadNumber();
 
             var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
 
-            return Value <= Number;
+            return check.AsDouble(0d) <= Number;
         }
 
         [TriggerStringParameter]
         [TriggerNumberParameter]
-        private bool TriggeringFurreRecordInfoNotEqualToNumber(TriggerReader reader)
+        private bool TriggeringFurreRecordInfoNotEqualToNumberOrVariable(TriggerReader reader)
         {
-            var info = reader.ReadString();
-            var Number = reader.ReadNumber();
-
-            string check = GetRecordInfoForTheFurreNamed(info, Player.ShortName).ToString();
-            double Value = 0;
-            if (check != null)
-                double.TryParse(check.ToString(), out Value);
-
-            return Value != Number;
+            return !TriggeringFurreRecordInfoEqualToNumberOrVariable(reader);
         }
 
         [TriggerStringParameter]
         [TriggerStringParameter]
-        private bool TriggeringFurreRecordInfoNotEqualToSTR(TriggerReader reader)
+        private bool TriggeringFurreRecordInfoNotEqualToString(TriggerReader reader)
         {
-            var info = reader.ReadString();
-            var str = reader.ReadString();
-
-            return str != GetRecordInfoForTheFurreNamed(info, Player.ShortName).ToString();
+            return !TriggeringFurreRecordInfoEqualToString(reader);
         }
 
         [TriggerStringParameter]
@@ -736,7 +710,7 @@ namespace Libraries
             var info = reader.ReadString();
 
             var Furre = reader.ReadString().ToFurcadiaShortName();
-            var value = reader.ReadNumber().ToString();
+            var value = reader.ReadNumber();
             if (database == null)
                 database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, object>
