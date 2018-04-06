@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace MonkeyCore.Logging
 {
@@ -65,27 +66,28 @@ namespace MonkeyCore.Logging
             }
             // TODO: Fix the Time options on this
             Message = $"{DateTime.Now.ToString("MM/dd/yyyy H:mm:ss")}: {Message}";
-            try
-            {
-                using (FileStream fStream = new FileStream(LogFilePath, FileMode.Append))
-                using (StreamWriter ioFile = new StreamWriter(fStream))
-                {
-                    foreach (string line in LogList.ToArray())
-                    {
-                        ioFile.WriteLine(line);
-                    }
 
-                    LogList.Clear();
-                    ioFile.WriteLine(Message);
-                }
-            }
-            catch (IOException ex)
+            using (var mutex = new Mutex(false, Options.GetLogFileName(), out bool test))
             {
-                if (ex.Message.StartsWith("The process cannot access the file")
-                    && ex.Message.EndsWith("because it is being used by another process."))
-                {
-                    LogList.Add(Message);
-                }
+                if (mutex.WaitOne(800, true))
+                    try
+                    {
+                        using (FileStream fStream = new FileStream(LogFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite, 4096))
+                        using (StreamWriter ioFile = new StreamWriter(fStream))
+                        {
+                            foreach (string line in LogList.ToArray())
+                            {
+                                ioFile.WriteLine(line);
+                            }
+
+                            LogList.Clear();
+                            ioFile.WriteLine(Message);
+                        }
+                    }
+                    finally
+                    {
+                        mutex.ReleaseMutex();
+                    }
             }
         }
 

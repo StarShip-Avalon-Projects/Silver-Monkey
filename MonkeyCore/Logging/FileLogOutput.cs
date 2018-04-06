@@ -1,13 +1,10 @@
-﻿using Monkeyspeak.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 using furcLog = Furcadia.Logging;
 using MsLog = Monkeyspeak.Logging;
@@ -25,13 +22,33 @@ namespace MonkeyCore.Logging
 
         public FileLogOutput(string rootFolder, Level level = Level.Error)
         {
-            if (Assembly.GetEntryAssembly() != null)
-                filePath = Path.Combine(rootFolder, $"{Assembly.GetEntryAssembly().GetName().Name}.{level}.log");
-            else if (Assembly.GetCallingAssembly() != null)
-                filePath = Path.Combine(rootFolder, $"{Assembly.GetCallingAssembly().GetName().Name}.{level}.log");
-            if (!Directory.Exists(Path.GetDirectoryName(filePath))) Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-            if (File.Exists(filePath)) File.WriteAllText(filePath, ""); // make sure it is a clean file
             this.level = level;
+            if (Assembly.GetEntryAssembly() != null)
+                filePath = Path.Combine(rootFolder, $"{Assembly.GetEntryAssembly().GetName().Name}.{this.level}.log");
+            else if (Assembly.GetCallingAssembly() != null)
+                filePath = Path.Combine(rootFolder, $"{Assembly.GetCallingAssembly().GetName().Name}.{this.level}.log");
+            if (!Directory.Exists(Path.GetDirectoryName(filePath))) Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+            if (File.Exists(filePath))
+            {
+                string MutexName = $"{GetType().Name}.{level}";
+                if (Assembly.GetEntryAssembly() != null)
+                    MutexName = $"{Assembly.GetEntryAssembly().GetName().Name}.{this.level}";
+                else if (Assembly.GetCallingAssembly() != null)
+                    MutexName = $"{Assembly.GetCallingAssembly().GetName().Name}.{this.level}";
+                using (var mutex = new Mutex(false, MutexName))
+                {
+                    if (mutex.WaitOne(200, true))
+                        try
+                        {
+                            File.WriteAllText(filePath, ""); // make sure it is a clean file
+                        }
+                        finally
+                        {
+                            mutex.ReleaseMutex();
+                        }
+                }
+            }
         }
 
         public override bool Equals(object obj)
@@ -42,7 +59,7 @@ namespace MonkeyCore.Logging
         public bool Equals(FileLogOutput other)
         {
             return other != null &&
-                   level == other.level &&
+                   this.level == other.level &&
                    filePath == other.filePath;
         }
 
@@ -62,18 +79,18 @@ namespace MonkeyCore.Logging
         {
             if (logMsg.Level != level) return;
             logMsg = BuildMessage(ref logMsg);
-            string MutexName = GetType().Name;
+            string MutexName = $"{GetType().Name}.{level}";
             if (Assembly.GetEntryAssembly() != null)
-                MutexName = $"{Assembly.GetEntryAssembly().GetName().Name}.{level}";
+                MutexName = $"{Assembly.GetEntryAssembly().GetName().Name}.{this.level}";
             else if (Assembly.GetCallingAssembly() != null)
-                MutexName = $"{Assembly.GetCallingAssembly().GetName().Name}.{level}";
+                MutexName = $"{Assembly.GetCallingAssembly().GetName().Name}.{this.level}";
 
             using (var mutex = new Mutex(false, MutexName))
             {
-                if (mutex.WaitOne())
+                if (mutex.WaitOne(200, true))
                     try
                     {
-                        using (FileStream stream = new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Write, 4096))
+                        using (FileStream stream = new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite, 4096))
                         using (StreamWriter writer = new StreamWriter(stream))
                         {
                             writer.WriteLine(logMsg.message);

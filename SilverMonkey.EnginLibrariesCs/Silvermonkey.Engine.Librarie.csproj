@@ -88,7 +88,6 @@
     <Compile Include="MsFurres.cs" />
     <Compile Include="MsMemberList.cs" />
     <Compile Include="MsPhoenixSpeak.cs" />
-    <Compile Include="MsPhoenixSpeakBackupAndRestore.cs" />
     <Compile Include="MsPounce.cs" />
     <Compile Include="MsSound.cs" />
     <Compile Include="MsWebRequests.cs" />
@@ -96,7 +95,6 @@
     <Compile Include="MsWeb\WebException.cs" />
     <Compile Include="MsWeb\WebRequests.cs" />
     <Compile Include="PhoenicSpeak\PhoenicSpeakDataObject.cs" />
-    <Compile Include="PhoenicSpeak\PhoenixSpeakEventArgs.cs" />
     <Compile Include="Variables\WebVariable.cs" />
     <Compile Include="Variables\DatabaseVariable.cs" />
     <Compile Include="Variables\PhoenixSpeakVariable.cs" />
@@ -104,7 +102,6 @@
     <Compile Include="Extentions\Parameters.cs" />
     <Compile Include="MonkeySpeakLibrary.cs" />
     <Compile Include="MsBanish.cs" />
-    <Compile Include="MsBotInformation.cs" />
     <Compile Include="MsCookie.cs" />
     <Compile Include="MsDreamInfo.cs" />
     <Compile Include="MsHelper.cs" />

@@ -101,7 +101,7 @@ Public Class Main
     ''' </summary>
     Private DebugLogs As StringBuilder
 
-    Private Shared FileLogWriter As LogStream
+    Private FileLogWriter As LogStream
     Private MRUlist As Queue(Of String)
 
 #End Region
@@ -370,7 +370,7 @@ Public Class Main
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="newColor"></param>
-    Public Shared Sub SndDisplay(data As String, Optional newColor As DisplayColors = DisplayColors.DefaultColor)
+    Public Sub SndDisplay(data As String, Optional newColor As DisplayColors = DisplayColors.DefaultColor)
 
         FileLogWriter.WriteLine(data)
         If CBool(Mainsettings.TimeStamp) Then
@@ -386,7 +386,7 @@ Public Class Main
     ''' Send formatted text to log box
     ''' </summary>
     ''' <param name="Message"></param>
-    Public Shared Sub SndDisplay(Message As LogMessage)
+    Public Sub SndDisplay(Message As LogMessage)
 
         FileLogWriter.WriteLine(Message.message)
         Dim newColor = DisplayColors.DefaultColor

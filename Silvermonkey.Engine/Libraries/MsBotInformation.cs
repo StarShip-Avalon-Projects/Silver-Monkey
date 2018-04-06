@@ -1,5 +1,7 @@
-﻿using Furcadia.Net.Proxy;
+﻿using Engine.BotSession;
+using Furcadia.Net.Proxy;
 using Monkeyspeak;
+using Monkeyspeak.Libraries;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +22,7 @@ namespace Libraries
         /// <value>
         /// The base identifier.
         /// </value>
-        public override int BaseId => 1;
+        public override int BaseId => 0;
 
         #endregion Public Properties
 
@@ -33,15 +35,39 @@ namespace Libraries
         public override void Initialize(params object[] args)
         {
             Add(TriggerCategory.Cause,
-                 r => true,
+                 StartScript,
+                "When the Monkey Speak Engine starts the script,");
+
+            Add(TriggerCategory.Cause,
+                 r =>
+                 {
+                     Bot bot = r.GetParametersOfType<Bot>().FirstOrDefault();
+                     if (ParentBotSession != bot)
+                         ParentBotSession = bot;
+                     return true;
+                 },
                  "When the bot logs into Furcadia,");
 
             Add(TriggerCategory.Cause,
-                r => true,
+                r =>
+                {
+                    Bot bot = r.GetParametersOfType<Bot>().FirstOrDefault();
+                    if (ParentBotSession != bot)
+                        ParentBotSession = bot;
+                    return true;
+                },
                 "When the bot logs out of Furcadia,");
 
             Add(TriggerCategory.Cause,
-                r => true,
+                r =>
+                {
+                    {
+                        Bot bot = r.GetParametersOfType<Bot>().FirstOrDefault();
+                        if (ParentBotSession != bot)
+                            ParentBotSession = bot;
+                        return true;
+                    }
+                },
                 "When the Furcadia client disconnects or closes,");
 
             // (0:92) When the bot detects the "Your throat is tired. Please wait a few seconds"message,
@@ -59,7 +85,7 @@ namespace Libraries
             Add(TriggerCategory.Cause,
                 r =>
                 {
-                    var rtn = r.GetParametersOfType<bool?>().First();
+                    var rtn = r.GetParametersOfType<bool?>().FirstOrDefault();
                     if (rtn != null)
                         return (bool)rtn;
                     return false;
@@ -99,6 +125,7 @@ namespace Libraries
 
         #region Private Methods
 
+        [TriggerDescription("starts a new Silver Monkey Instance")]
         private static bool StartNewBot(TriggerReader reader)
         {
             var File = reader.ReadString();
@@ -109,17 +136,27 @@ namespace Libraries
                 FileName = "SilverMonkey.exe",
                 WorkingDirectory = IO.Paths.ApplicationPath
             };
-
             Process.Start(p);
             return true;
         }
 
+        [TriggerDescription("Triggers afte the Libraries are loaded and bot constant variables are set.")]
+        private static bool StartScript(TriggerReader reader)
+        {
+            Bot bot = reader.GetParametersOfType<Bot>().FirstOrDefault();
+            if (ParentBotSession != bot)
+                ParentBotSession = bot;
+            return true;
+        }
+
+        [TriggerDescription("Disconnects the bot from the Furcadia game server")]
         private bool FurcadiaDisconnect(TriggerReader reader)
         {
             Task.Run(() => ParentBotSession.DisconnectServerAndClientStreams()).Wait();
             return !ParentBotSession.IsServerSocketConnected;
         }
 
+        [TriggerDescription("Changes the bot to Stand Alone mode and closes the Furcadia client")]
         private bool StandAloneMode(TriggerReader reader)
         {
             ParentBotSession.StandAlone = true;

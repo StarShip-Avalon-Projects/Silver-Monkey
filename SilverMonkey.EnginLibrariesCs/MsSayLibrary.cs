@@ -20,27 +20,27 @@ namespace Libraries
     /// <para>(0:2) When the bot logs out of Furcadia,</para>
     /// <para>(0:3) When the Furcadia client disconnects or closes,"</para>
     /// <para>
-    /// (0:5) When anyone says something,
+    /// (0:5) When anyone says anything,
     /// <para>Ignores Bots speech</para>
     /// </para>
     /// <para>
-    /// (0:8) When anyone shouts something,
+    /// (0:8) When anyone shouts anything,
     /// <para>Ignores Bots speech</para>
     /// </para>
     /// <para>
-    /// (0:11) When anyone emotes something,
+    /// (0:11) When anyone emotes anything,
     /// <para>Ignores Bots speech</para>
     /// </para>
     /// <para>
-    /// (0:15) When anyone whispers something,
+    /// (0:15) When anyone whispers anything,
     /// <para>Ignores Bots speech</para>
     /// </para>
     /// <para>
-    /// (0:18) When anyone says or emotes something,
+    /// (0:18) When anyone says or emotes anything,
     /// <para>Ignores Bots speech</para>
     /// </para>
     /// <para>
-    /// (0:21) When anyone emits something,
+    /// (0:21) When anyone emits anything,
     /// <para>Ignores Bots speech</para>
     /// </para>
     /// <para>(0:24) When anyone enters the Dream,</para>
@@ -94,84 +94,84 @@ namespace Libraries
         {
             base.Initialize(args);
 
-            // (0:10) When anyone says something,
+            // (0:10) When anyone says anything,
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
-                "When anyone says something,");
+                "When anyone says anything,");
             // (0:11) When anyone says {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
                 "When anyone says {...},");
 
-            // (0:12) When anyone says something with {...} in it,
+            // (0:12) When anyone says anything with {...} in it,
             Add(TriggerCategory.Cause,
                 r => MsgContains(r),
-                "When anyone says something with {...} in it,");
+                "When anyone says anything with {...} in it,");
 
-            // (0:13: When anyone shouts something,
+            // (0:13: When anyone shouts anything,
             Add(TriggerCategory.Cause,
                  r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
-                "When anyone shouts something,");
+                "When anyone shouts anything,");
             // (0:14) When anyone shouts {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
                 "When anyone shouts {...},");
 
-            // (0:15) When anyone shouts something with {...} in it,
+            // (0:15) When anyone shouts anything with {...} in it,
             Add(TriggerCategory.Cause,
                 r => MsgContains(r),
-                "When anyone shouts something with {...} in it,");
+                "When anyone shouts anything with {...} in it,");
 
-            // (0:16) When anyone emotes something,
+            // (0:16) When anyone emotes anything,
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r) && !IsConnectedCharacter(Player),
-                "When anyone emotes something,");
+                "When anyone emotes anything,");
 
             // (0:17) When anyone emotes {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
                 "When anyone emotes {...},");
 
-            // (0:18) When anyone emotes something with {...} in it,
+            // (0:18) When anyone emotes anything with {...} in it,
             Add(TriggerCategory.Cause,
                 r => MsgContains(r),
-                "When anyone emotes something with {...} in it,");
+                "When anyone emotes anything with {...} in it,");
 
-            // (0:19) When anyone whispers something,
+            // (0:19) When anyone whispers anything,
             Add(TriggerCategory.Cause,
                 r =>
                 {
                     ReadTriggeringFurreParams(r);
                     return !IsConnectedCharacter(Player);
                 },
-                "When anyone whispers something,");
+                "When anyone whispers anything,");
 
             // (0:20) When anyone whispers {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
                 "When anyone whispers {...},");
 
-            // (0:21) When anyone whispers something with {...} in it,
+            // (0:21) When anyone whispers anything with {...} in it,
             Add(TriggerCategory.Cause,
                 r => MsgContains(r),
-                "When anyone whispers something with {...} in it,");
+                "When anyone whispers anything with {...} in it,");
 
             // Says or Emotes
-            // (0:22) When anyone says or emotes something,
+            // (0:22) When anyone says or emotes anything,
             Add(TriggerCategory.Cause,
                 r => ReadTriggeringFurreParams(r),
-                "When anyone says or emotes something,");
+                "When anyone says or emotes anything,");
             // (0:23) When anyone says or emotes {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
                 "When anyone says or emotes {...},");
 
-            // (0:24) When anyone says or emotes something with {...} in it,
+            // (0:24) When anyone says or emotes anything with {...} in it,
             Add(TriggerCategory.Cause,
                 r => MsgContains(r),
-                "When anyone says or emotes something with {...} in it,");
+                "When anyone says or emotes anything with {...} in it,");
 
-            // (0:25) When someone emits something,
+            // (0:25) When someone emits anything,
             Add(TriggerCategory.Cause,
                    r =>
                    {
@@ -180,16 +180,16 @@ namespace Libraries
                        return true;
                    },
 
-                 "When someone emits something,");
+                 "When someone emits anything,");
             // (0:26) When someone emits {...},
             Add(TriggerCategory.Cause,
                 r => MsgIs(r),
                 "When someone emits {...},");
 
-            // (0:27) When someone emits something with {...} in it,
+            // (0:27) When someone emits anything with {...} in it,
             Add(TriggerCategory.Cause,
               r => MsgContains(r),
-              "When someone emits something with {...} in it,");
+              "When someone emits anything with {...} in it,");
 
             //  (1:3) and the triggering furre's name is {...},
             Add(TriggerCategory.Condition,

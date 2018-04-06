@@ -35,7 +35,11 @@ namespace Libraries
             base.Initialize(args);
 
             Add(TriggerCategory.Cause,
-                r => ReadTriggeringFurreParams(r),
+                r =>
+                {
+                    ReadTriggeringFurreParams(r);
+                    return true;
+                },
                 "When anyone enters the Dream,");
 
             Add(TriggerCategory.Cause,
@@ -43,7 +47,11 @@ namespace Libraries
                 "When the furre named {..} enters the Dream,");
 
             Add(TriggerCategory.Cause,
-                r => ReadTriggeringFurreParams(r),
+                r =>
+                {
+                    ReadTriggeringFurreParams(r);
+                    return true;
+                },
                 "When anyone leaves the Dream,");
 
             Add(TriggerCategory.Cause,

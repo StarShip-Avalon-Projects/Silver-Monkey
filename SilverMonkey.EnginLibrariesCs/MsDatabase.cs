@@ -148,6 +148,12 @@ namespace Libraries
                 r => TriggeringFurreRecordInfoNotEqualToString(r),
                 "and the Database Record {...} about the triggering furre is not equal to string {...},");
 
+            // TODO: Add Monkeu Speak
+            // (1:xx) and the Database Record {...} about the triggerig furre exists,
+            // (1:xx) and the Database Record{...} about the triggerig furre does not exist,
+            // (1:xx) and the Database Record {...} about the furre named {...} exists,
+            // (1:xx) and the Database Record {...} about the furre named {...} does not exist,
+
             Add(TriggerCategory.Effect,
                 r => UseOrCreateSQLiteFileIfNotExist(r),
                 "use SQLite database file {...} or create file if it does not exist.");
@@ -237,6 +243,7 @@ namespace Libraries
                 "execute \"VACUUM\"to rebuild the database and reclaim wasted space.");
         }
 
+        [TriggerDescription("Gets a the list of furres from furre records and put them into %table")]
         [TriggerVariableParameter]
         private bool GetMemberList(TriggerReader reader)
         {
@@ -491,7 +498,7 @@ namespace Libraries
             var data = database.GetValueFromTable(SQL.ToString());
 
             foreach (KeyValuePair<string, object> kvp in data)
-                VarTable.Add($"%{kvp.Key}", kvp.Value);
+                VarTable.Add(kvp.Key, kvp.Value);
             return true;
         }
 
@@ -501,22 +508,22 @@ namespace Libraries
         private bool InsertFurreNamedRecord(TriggerReader reader)
         {
             string Furre = reader.ReadString().ToFurcadiaShortName();
-            string info;
+            object info;
             if (reader.PeekString())
             {
                 info = reader.ReadString();
             }
             else
             {
-                info = reader.ReadNumber().ToString();
+                info = reader.ReadNumber();
             }
 
             // Dim value As String = reader.ReadVariable.Value.ToString()
             if (database == null) database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, object>
             {
-                { "Name",$"{Furre}"},
-                { "Access Level",$"{info}"},
+                { "Name", Furre},
+                { "Access Level",info},
                 { "date added",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) },
                 { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
@@ -544,8 +551,8 @@ namespace Libraries
             if (database == null) database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, object>
             {
-                { "Name",$"{Player.ShortName}"},
-                { "Access Level",$"{info}"},
+                { "Name",Player.ShortName},
+                { "Access Level",info},
                 { "date added",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) },
                 { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
@@ -566,7 +573,7 @@ namespace Libraries
             {
                 string column = kvp.Key.Substring(1);
                 if (!ReadOnlyFurreTableFields.Contains($"[{column}]"))
-                    data.Add($"[{column}]", kvp.Value.ToString());
+                    data.Add($"[{column}]", kvp.Value);
             }
             return 0 < database.Insert("FURRE", data);
         }
@@ -735,8 +742,8 @@ namespace Libraries
             if (database == null) database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, object>
             {
-                { "Name", $"{Furre}"},
-                { $"{info}",$"{value}"},
+                { "Name", Furre},
+                { info,value},
                 { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
 
@@ -755,7 +762,7 @@ namespace Libraries
             var data = new Dictionary<string, object>
             {
                 { "Name", Player.ShortName},
-                { info, value.ToString() },
+                { info, value },
                 { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
 
@@ -774,7 +781,7 @@ namespace Libraries
             var data = new Dictionary<string, object>
             {
                 { "Name", Player.ShortName},
-                { info, value.ToString() },
+                { info, value },
                 { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
             return 0 <= database.Update("FURRE", data, $"[Name]='{ Furre }'");
@@ -790,6 +797,7 @@ namespace Libraries
             return true;
         }
 
+        [TriggerDescription("This is like a system defrag for the database.")]
         private bool VACUUM(TriggerReader reader)
         {
             DateTime startDate = DateTime.Now;
