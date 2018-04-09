@@ -37,7 +37,7 @@ namespace Engine.BotSession
     ///</para><para>
     ///Part2a: Proxy Functions do link to Monkey Speak trigger execution
     ///</para><para>
-    /// Part3: This Class Links loosley to the GUI
+    /// Part3: This Class Links loosely to the GUI
     /// </para>
     /// </summary>
     /// <seealso cref="Furcadia.Net.Proxy.ProxySession" />
@@ -126,7 +126,7 @@ namespace Engine.BotSession
         #region Public Methods
 
         /// <summary>
-        /// Connets to the game server asyncronously.
+        /// Connects to the game server asynchronously.
         /// </summary>
         /// <exception cref="FileNotFoundException">
         /// Can be thrown if there is no Monkey Speak File or Character Ini file supplied
@@ -504,7 +504,7 @@ namespace Engine.BotSession
 
                         if (ChanObject.ChannelText.Contains(" has been banished from your dreams."))
                         {
-                            // banish <name> (online)
+                            // banish <name> (furre must be on-line)
                             // Success: (.*?) has been banished from your dreams.
 
                             // (0:53) When the bot successfully banishes a furre,
@@ -522,7 +522,7 @@ namespace Engine.BotSession
                         }
                         else if (ChanObject.ChannelText.EndsWith(" has been temporarily banished from your dreams."))
                         {
-                            // tempbanish <name> (online)
+                            // tempbanish <name> (furre must be on-line)
                             // Success: (.*?) has been temporarily banished from your dreams.
                             // (0:62) When the bot successfully temp banishes a furre,
                             // (0:63) When the bot successfully temp banishes the furre named {...},
@@ -634,7 +634,7 @@ namespace Engine.BotSession
 
                         if (MSpage != null)
                         {
-                            MSpage.Execute(2);
+                            MSpage.Execute(2, this);
                             StopEngine();
                         }
                         return;
@@ -677,7 +677,7 @@ namespace Engine.BotSession
             PageSetVariable(VariableList);
             // (0:0) When the bot starts,
             MSpage.Execute(0, this);
-            Logger.Info($"Done!!! Loaded {MSpage.Size} triggers in {DateTime.Now.Subtract(TimeStart).Milliseconds} miliseconds.");
+            Logger.Info($"Done!!! Loaded {MSpage.Size} triggers in {DateTime.Now.Subtract(TimeStart).Milliseconds} milliseconds.");
         }
 
         #endregion Private Methods

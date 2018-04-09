@@ -20,7 +20,6 @@ Imports SilverMonkey.HelperClasses
 Imports SilverMonkey.HelperClasses.TextDisplayManager
 Imports furcLog = Furcadia.Logging
 Imports MsLog = Monkeyspeak.Logging
-Imports MonkeyCore
 
 Public Class Main
     Inherits Form
@@ -531,9 +530,7 @@ Public Class Main
             ConnectTrayIconMenuItem.Click, DisconnectTrayIconMenuItem.Click, BTN_Go.Click
         BTN_Go.Enabled = False
         Try
-            FurcSession.Options = BotConfig
-
-            If Not CanConnect Then Exit Sub
+            FurcSession.SetOptions(BotConfig)
 
             If FurcSession.IsServerSocketConnected Or FurcSession.ServerStatus = ConnectionPhase.Connecting Then
                 BTN_Go.Text = "Disconnecting..."
@@ -543,11 +540,12 @@ Public Class Main
                 NotifyIcon1.ShowBalloonTip(3000, "SilverMonkey", "Now disconnected from Furcadia.", ToolTipIcon.Info)
                 FurreCountTxtBx.Text = ""
             Else
+                If Not CanConnect Then Exit Sub
+
                 BTN_Go.Text = "Connecting..."
                 FurcSession.SetOptions(BotConfig)
 
                 Try
-
                     FileLogWriter = New LogStream(BotConfig.LogOptions)
                 Catch
                     Logger.Error($"There's an error with log-file {BotConfig.LogOptions.GetLogFileName}")
@@ -1028,10 +1026,15 @@ Public Class Main
             Case "shout"
                 color = DisplayColors.Shout
         End Select
-        If Not String.IsNullOrEmpty(InstructionObject.FormattedChannelText) Then
-            SndDisplay(InstructionObject.FormattedChannelText, color)
-        ElseIf Not String.IsNullOrEmpty(InstructionObject.Player.Message) Then
+
+        If Not String.IsNullOrEmpty(InstructionObject.Player.Message) And Args.Channel <> "" Then
             SndDisplay(InstructionObject.Player.Message.ToStrippedFurcadiaMarkupString, color)
+        ElseIf Not String.IsNullOrEmpty(InstructionObject.Player.Message) And Args.Channel = "" Then
+            SndDisplay(InstructionObject.Player.Message, color)
+        ElseIf Not String.IsNullOrEmpty(InstructionObject.FormattedChannelText) And Args.Channel <> "" Then
+            SndDisplay(InstructionObject.FormattedChannelText, color)
+        ElseIf Not String.IsNullOrEmpty(InstructionObject.FormattedChannelText) And Args.Channel = "" Then
+            SndDisplay(InstructionObject.RawInstruction, color)
         Else
             SndDisplay(InstructionObject.RawInstruction, color)
         End If

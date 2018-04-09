@@ -97,7 +97,7 @@
     <Compile Include="PhoenicSpeak\PhoenicSpeakDataObject.cs" />
     <Compile Include="Variables\WebVariable.cs" />
     <Compile Include="Variables\DatabaseVariable.cs" />
-    <Compile Include="Variables\PhoenixSpeakVariable.cs" />
+    <None Include="Variables\PhoenixSpeakVariable.cs" />
     <Compile Include="Variables\BanishVariable.cs" />
     <Compile Include="Extentions\Parameters.cs" />
     <Compile Include="MonkeySpeakLibrary.cs" />
