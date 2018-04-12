@@ -17,27 +17,19 @@ namespace Libraries
     /// </summary>
     public class MonkeySpeakLibrary : AutoIncrementBaseLibrary
     {
-        internal const string DateTimeFormat = "MM-dd-yyyy hh:mm:ss";
+        #region Internal Fields
+
         internal const string DataBaseTimeZone = "Central Standard Time";
-
-        /// <summary>
-        /// Currenly used database filfe
-        /// </summary>
-        /// <returns>
-        /// SQLite database file with Silver Monkey system tables and user data
-        /// </returns>
-        internal static string SQLitefile { get; set; } = null;
-
+        internal const string DateTimeFormat = "MM-dd-yyyy hh:mm:ss";
         internal static SQLiteDatabase database = null;
 
-        #region Public Fields
+        #endregion Internal Fields
 
-        /// <summary>
-        /// The arguments
-        /// </summary>
+        #region Private Fields
+
         private static object[] args = null;
 
-        #endregion Public Fields
+        #endregion Private Fields
 
         #region Public Properties
 
@@ -45,9 +37,15 @@ namespace Libraries
         /// Connected Furre representing Silver Monkey
         /// </summary>
         /// <value>
-        /// The connected furre.
+        /// The connected Furre.
         /// </value>
         public static Furre ConnectedFurre { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current dream information for the dream Silver Monkey is located in.
+        /// </summary>
+        /// <value>The dream information.</value>
+        public static Dream DreamInfo { get; set; }
 
         /// <summary>
         /// Reference to the Main Bot Session for the bot
@@ -57,7 +55,7 @@ namespace Libraries
         /// <summary>
         /// Current Triggering Furre
         /// <para/>
-        /// Referenced as a Monkeyspeak <see cref="BaseLibrary.Initialize(params object[])"/> Argument.
+        /// Referenced as a Monkey-Speak <see cref="BaseLibrary.Initialize(params object[])"/> Argument.
         /// <para/>
         /// Updates when ever Monkey Speak needs it through <see cref="Page.Execute(int[],
         /// object[])"/> or <see cref="Page.ExecuteAsync(int[], object[])"/>
@@ -72,125 +70,21 @@ namespace Libraries
         /// </value>
         public override int BaseId => 0;
 
-        /// <summary>
-        /// Gets or sets the current dream information for the dream Silver Monkey is located in.
-        /// </summary>
-        /// <value>The dream information.</value>
-        public static Dream DreamInfo { get; set; }
-
         #endregion Public Properties
 
-        #region Public Methods
-
-        public bool FurreNamedIsBotController(TriggerReader reader)
-        {
-            return Player.ShortName == reader.ReadString().ToFurcadiaShortName();
-        }
+        #region Internal Properties
 
         /// <summary>
-        /// Gets the argumet.
+        /// Currently used database file.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="index">The index.</param>
-        /// <returns></returns>
-        public T GetArgumet<T>(int index = 0)
-        {
-            if (args != null && args.Length > index)
-                return (T)args[index];
-            return default(T);
-        }
-
-        /// <summary>
-        /// Called when page is disposing or resetting.
-        /// </summary>
-        /// <param name="page">The page.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public override void Unload(Page page)
-        {
-        }
-
-        /// <summary>
-        /// Gets the type of the argumets of.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public T[] GetArgumetsOfType<T>()
-        {
-            if (args != null && args.Length > 0)
-                return args.OfType<T>().ToArray();
-            return new T[0];
-        }
-
-        /// <summary>
-        /// checks the <see cref="FurreList"/>
-        /// in the <see cref="DreamInfo">Dream Parameter</see>
-        /// for the Target Furre.
-        /// </summary>
-        /// <param name="TargetFurre">
-        /// Target Furre
-        /// </param>
         /// <returns>
-        /// True if the furre is in the dream <see cref="FurreList"/>
+        /// SQLite database file with Silver Monkey system tables and user data
         /// </returns>
-        public bool InDream(IFurre TargetFurre)
-        {
-            bool found = false;
-            foreach (IFurre Fur in DreamInfo.Furres)
-            {
-                if (Fur == TargetFurre)
-                {
-                    found = true;
-                    break;
-                }
-            }
+        internal static string SQLitefile { get; set; } = null;
 
-            return found;
-        }
+        #endregion Internal Properties
 
-        /// <summary>
-        /// Initializes this instance. Add your trigger handlers here.
-        /// </summary>
-        /// <param name="args">
-        /// Parametized argument of vars to use to pass runtime vars to a library at initialization
-        /// </param>
-        public override void Initialize(params object[] args)
-        {
-            MonkeySpeakLibrary.args = args;
-
-            var bot = GetArgumetsOfType<ProxySession>().FirstOrDefault();
-            if (bot != ParentBotSession)
-            {
-                ParentBotSession = bot;
-                DreamInfo = ParentBotSession.Dream;
-                Player = ParentBotSession.Player;
-            }
-        }
-
-        /// <summary>
-        /// Seperate function for unit testing
-        /// </summary>
-        /// <param name="Furr"></param>
-        /// <returns></returns>
-        public bool IsConnectedCharacter(IFurre Furr)
-        {
-            if (Furr == null || ParentBotSession == null)
-                return false;
-            return ParentBotSession.IsConnectedCharacter(Furr);
-        }
-
-        /// <summary>
-        /// Generic base Furre named {...} is Triggering Furre
-        /// </summary>
-        /// <param name="reader"><see cref="TriggerReader"/></param>
-        /// <returns>True on Name match</returns>
-        /// <remarks>
-        /// any name is acepted and converted to Furcadia Machine name (ShortName version, lowercase
-        /// with special characters stripped)
-        /// </remarks>
-        public bool NameIs(TriggerReader reader)
-        {
-            return reader.ReadString().ToFurcadiaShortName() == Player.ShortName;
-        }
+        #region Public Methods
 
         /// <summary>
         /// Set <see cref="DreamInfo"/> from <see cref="TriggerReader.GetParameter"></see>
@@ -212,7 +106,7 @@ namespace Libraries
         }
 
         /// <summary>
-        /// Reads the triggering furre parameters.
+        /// Reads the triggering Furre parameters.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
@@ -237,10 +131,118 @@ namespace Libraries
         }
 
         /// <summary>
+        /// Check to see if the specified Furre is the bot controller.
+        /// <para/>
+        /// used for bot control Monkey-Speak
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        public bool FurreNamedIsBotController(TriggerReader reader)
+        {
+            return Player.ShortName == reader.ReadString().ToFurcadiaShortName();
+        }
+
+        /// <summary>
+        /// Gets the argument.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="index">The index.</param>
+        /// <returns></returns>
+        public T GetArgumet<T>(int index = 0)
+        {
+            if (args != null && args.Length > index)
+                return (T)args[index];
+            return default(T);
+        }
+
+        /// <summary>
+        /// Gets the arguments of type T.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>array of type T or null</returns>
+        public T[] GetArgumetsOfType<T>()
+        {
+            if (args != null && args.Length > 0)
+                return args.OfType<T>().ToArray();
+            return new T[0];
+        }
+
+        /// <summary>
+        /// checks the <see cref="FurreList"/>
+        /// in the <see cref="DreamInfo">Dream Parameter</see>
+        /// for the Target Furre.
+        /// </summary>
+        /// <param name="TargetFurre">
+        /// Target Furre
+        /// </param>
+        /// <returns>
+        /// True if the Furre is in the dream <see cref="FurreList"/>
+        /// </returns>
+        public bool InDream(IFurre TargetFurre)
+        {
+            bool found = false;
+            foreach (IFurre Fur in DreamInfo.Furres)
+            {
+                if (Fur == TargetFurre)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            return found;
+        }
+
+        /// <summary>
+        /// Initializes this instance. Add your trigger handlers here.
+        /// </summary>
+        /// <param name="args">
+        /// Parametrized argument of vars to use to pass runtime vars to a library at initialization
+        /// </param>
+        public override void Initialize(params object[] args)
+        {
+            MonkeySpeakLibrary.args = args;
+
+            var bot = GetArgumetsOfType<ProxySession>().FirstOrDefault();
+            if (bot != ParentBotSession)
+            {
+                ParentBotSession = bot;
+                DreamInfo = ParentBotSession.Dream;
+                Player = ParentBotSession.Player;
+            }
+        }
+
+        /// <summary>
+        /// Separate function for unit testing
+        /// </summary>
+        /// <param name="Furr"></param>
+        /// <returns></returns>
+        public bool IsConnectedCharacter(IFurre Furr)
+        {
+            if (Furr == null || ParentBotSession == null)
+                return false;
+            return ParentBotSession.IsConnectedCharacter(Furr);
+        }
+
+        /// <summary>
+        /// Generic base Furre named {...} is Triggering Furre
+        /// </summary>
+        /// <param name="reader"><see cref="TriggerReader"/></param>
+        /// <returns>True on Name match</returns>
+        /// <remarks>
+        /// any name is accepted and converted to Furcadia Machine name (ShortName version, lowercase
+        /// with special characters stripped)
+        /// </remarks>
+        public bool NameIs(TriggerReader reader)
+        {
+            return reader.ReadString().ToFurcadiaShortName() == Player.ShortName;
+        }
+
+        /// <summary>
         /// Send a raw instruction to the client
         /// </summary>
         /// <param name="message">
-        /// Message sring
+        /// Message string.
         /// </param>
         public void SendClientMessage(string message)
         {
@@ -252,7 +254,7 @@ namespace Libraries
         /// </summary>
         /// <param name="message">Client to server instruction</param>
         /// <returns>True is the Server is Connected</returns>
-        public bool SendServer(string message)
+        public virtual bool SendServer(string message)
         {
             if (string.IsNullOrWhiteSpace(message) || ParentBotSession == null)
                 return false;
@@ -267,13 +269,14 @@ namespace Libraries
         }
 
         /// <summary>
-        /// Triggerings the furre is bot controller.
+        /// Triggering Furre is bot controller.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
         public bool TriggeringFurreIsBotController(TriggerReader reader)
         {
             var BotController = reader.Page.GetVariable(BotControllerVariable);
+
             if (string.IsNullOrWhiteSpace(BotController.Value.ToString()))
             {
                 Logger.Warn("BotController is not defined, Please specifiy a BotController in the Bot configuration settings,");
@@ -283,45 +286,67 @@ namespace Libraries
             return Player.ShortName == BotController.Value.ToString().ToFurcadiaShortName();
         }
 
+        /// <summary>
+        /// Called when page is disposing or resetting.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public override void Unload(Page page)
+        {
+            args = null;
+        }
+
         #endregion Public Methods
 
         #region Protected Methods
 
         /// <summary>
-        /// <para>Comparisons are done with Fucadia Markup Stripped</para>
+        /// Comparisons are done with Fucadia Markup Stripped
+        /// <para/>
+        /// comparisons done Markup Stripped and lower-case
         /// </summary>
         /// <param name="reader"><see cref="TriggerReader"/></param>
         /// <returns>True if the %MESSAGE system variable contains the specified string</returns>
         protected bool MsgContains(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
-            ReadDreamParams(reader);
-            var msMsg = reader.ReadString();
-            var msg = Player.Message;
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
+            if (!ReadDreamParams(reader))
+                throw new MonkeyspeakException("Failed to set Dream Variables");
+
+            var msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString();
+            var msg = Player.Message.ToStrippedFurcadiaMarkupString();
 
             if (msg is null || msMsg is null)
                 return false;
-            return msg.ToLower().Contains(msMsg.ToStrippedFurcadiaMarkupString().ToLower());
+            return msg.ToLower().Contains(msMsg.ToLower());
         }
 
         /// <summary>
-        ///  <para>Comparisons are done with Fucadia Markup Stripped</para>
+        /// <para/>
+        /// comparisons done Markup Stripped and lower-case
         /// </summary>
         /// <param name="reader"><see cref="TriggerReader"/></param>
-        /// <returns>true if the System %MESSAGE varible ends with the specified string</returns>
+        /// <returns>true if the System %MESSAGE variable ends with the specified string</returns>
         protected bool MsgEndsWith(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
-            ReadDreamParams(reader);
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
+            if (!ReadDreamParams(reader))
+                throw new MonkeyspeakException("Failed to set Dream Variables");
+
             var msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString();
             var msg = Player.Message.ToStrippedFurcadiaMarkupString();
+
             if (msg is null || msMsg is null)
                 return false;
             return msg.ToLower().EndsWith(msMsg.ToLower()) & !IsConnectedCharacter(Player);
         }
 
         /// <summary>
-        /// the Main Message is Comparason function
+        /// the Main Message is comparison function
+        /// <para/>
+        /// comparisons done Markup Stripped and lower-case
         /// </summary>
         /// <param name="reader">
         /// <see cref="TriggerReader"/>
@@ -335,24 +360,32 @@ namespace Libraries
                 throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
             if (!ReadDreamParams(reader))
                 throw new MonkeyspeakException("Failed to set Dream Variables");
+
             string msg = Player.Message.ToStrippedFurcadiaMarkupString();
             string test = reader.ReadString().ToStrippedFurcadiaMarkupString();
+
             if (msg is null || test is null)
                 return msg == test;
             return msg.ToLower() == test.ToLower();
         }
 
         /// <summary>
-        /// (1:11) and triggering furre's message starts with {.},
+        /// message starts with ...
+        /// <para/>
+        /// comparisons done Markup Stripped and lower-case
         /// </summary>
         /// <param name="reader"><see cref="TriggerReader"/></param>
         /// <returns></returns>
         protected bool MsgStartsWith(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
-            ReadDreamParams(reader);
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
+            if (!ReadDreamParams(reader))
+                throw new MonkeyspeakException("Failed to set Dream Variables");
+
             string msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString();
             string msg = Player.Message.ToStrippedFurcadiaMarkupString();
+
             if (msg is null || msMsg is null)
                 return false;
             return msg.ToLower().StartsWith(msMsg.ToLower()) & !IsConnectedCharacter(Player);

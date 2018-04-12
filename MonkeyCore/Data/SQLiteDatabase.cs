@@ -436,6 +436,42 @@ namespace MonkeyCore.Data
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public virtual int InsertOrReplace(string table, Dictionary<string, object> data)
+        {
+            Logger.Debug<SQLiteDatabase>($"'{table}' data: '{data}'");
+            if (data == null || data.Count == 0)
+            {
+                throw new ArgumentOutOfRangeException("No data to process");
+            }
+            int rowCount = 0;
+            List<string> columns = new List<string>();
+            List<string> values = new List<string>();
+            foreach (KeyValuePair<string, object> val in data)
+            {
+                columns.Add($"[{val.Key}]");
+                values.Add($"'{val.Value}'");
+            }
+
+            try
+            {
+                string cmd = $"INSERT OR REPLACE into {table} ({string.Join(", ", columns.ToArray())}) VALUES ({string.Join(", ", values.ToArray())})";
+                rowCount = ExecuteNonQuery(cmd);
+            }
+            catch (Exception ex)
+            {
+                rowCount = -1;
+                ex.Log(Level.Error);
+            }
+
+            return rowCount;
+        }
+
+        /// <summary>
         /// Does the Column name exist in the specified table
         /// </summary>
         /// <param name="columnName">

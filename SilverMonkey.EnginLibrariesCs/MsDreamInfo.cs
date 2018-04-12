@@ -59,7 +59,11 @@ namespace Libraries
                 "When a furre named {..} leaves the Dream,");
 
             Add(TriggerCategory.Cause,
-                ReadDreamParams,
+                  r =>
+                  {
+                      ReadDreamParams(r);
+                      return true;
+                  },
                 "When the bot enters a Dream,");
 
             Add(TriggerCategory.Cause,

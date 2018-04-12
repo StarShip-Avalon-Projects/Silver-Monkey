@@ -148,7 +148,7 @@ namespace Libraries
                 r => TriggeringFurreRecordInfoNotEqualToString(r),
                 "and the Database Record {...} about the triggering furre is not equal to string {...},");
 
-            // TODO: Add Monkeu Speak
+            // TODO: Add Monkey Speak
             // (1:xx) and the Database Record {...} about the triggerig furre exists,
             // (1:xx) and the Database Record{...} about the triggerig furre does not exist,
             // (1:xx) and the Database Record {...} about the furre named {...} exists,
@@ -168,47 +168,47 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => UpdateTriggeringFurreField(r),
-                "update Database Record {...} about the triggering furre will now be #.");
+                "memorize Database Record {...} about the triggering furre will now be #.");
 
             Add(TriggerCategory.Effect,
                 r => UpdateFurreNamed_Field(r),
-                "update Database Record {...} about the furre named {...} will now be #.");
+                "memorize Database Record {...} about the furre named {...} will now be #.");
 
             Add(TriggerCategory.Effect,
                 r => UpdateTriggeringFurreFieldSTR(r),
-                "update Database Record {...} about the triggering furre will now be {...}.");
+                "memorize Database Record {...} about the triggering furre will now be {...}.");
 
             Add(TriggerCategory.Effect,
                 r => UpdateFurreNamed_FieldSTR(r),
-                "update Database Record {...} about the furre named {...} will now be {...}.");
+                "memorize Database Record {...} about the furre named {...} will now be {...}.");
 
             Add(TriggerCategory.Effect,
                 r => ReadDatabaseInfoForTheTriggeringFurre(r),
-                "get Database Record {...} about the triggering furre, and put it in variable %.");
+                "remember Database Record {...} about the triggering furre, and put it in variable %.");
 
             Add(TriggerCategory.Effect,
                 r => ReadDatabaseInfoName(r),
-                "get Database Record {...} about the furre named {...}, and put it in variable %.");
+                "remember Database Record {...} about the furre named {...}, and put it in variable %.");
 
             Add(TriggerCategory.Effect,
                 r => GetDateAddedForFurreNamed(r),
-                "get the date added time stamp for the furre named {...}, and put it in variable %.");
+                "remember the date added time stamp for the furre named {...}, and put it in variable %.");
 
             Add(TriggerCategory.Effect,
                 r => GetDateModifiedForFurreNamed(r),
-                "get the date modified time stamp for the furre named {...}, and put it in variable %.");
+                "remember the date modified time stamp for the furre named {...}, and put it in variable %.");
 
             Add(TriggerCategory.Effect,
                 r => GetDateAddedForTriggeringFurre(r),
-                "get the date added time stamp for the triggering furre and put it in variable %.");
+                "remember the date added time stamp for the triggering furre and put it in variable %.");
 
             Add(TriggerCategory.Effect,
                 r => GetDateModifiedForTriggeringFurre(r),
-                "get the date modified time stamp for the triggering furre and put it in variable %.");
+                "remember the date modified time stamp for the triggering furre and put it in variable %.");
 
             Add(TriggerCategory.Effect,
               r => GetMemberList(r),
-              "get the memberlist from furre records and put them in table %");
+              "get the member-list from furre records and put them in table %");
 
             Add(TriggerCategory.Effect,
                 r => AddRecordColumn(r),
@@ -220,19 +220,19 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r => DeleteTriggeringFurreRecord(r),
-                "delete all Database Record about the triggering furre.");
+                "forget all Database Record about the triggering furre.");
 
             Add(TriggerCategory.Effect,
                 r => DeleteFurreNamedRecord(r),
-                "delete all Database Record about the furre named {...}.");
+                "forget all Database Records about the furre named {...}.");
 
             Add(TriggerCategory.Effect,
                 r => GetVariableTableFromDatabaseTable(r),
-                "get the database table {...} and put it into table % .");
+                "remember the database table {...} and put it into table % .");
 
             Add(TriggerCategory.Effect,
                 r => PutVariableTableIntoDatabaseTable(r),
-                "take table % and put it into database table {...}.");
+                "memorize table % to database table {...}.");
 
             Add(TriggerCategory.Effect,
                 r => ClearSpecifiedTable(r),
@@ -560,7 +560,10 @@ namespace Libraries
             return database.Insert("FURRE", data) >= 0;
         }
 
-        //
+        //memorize table % to database table {...}.
+        [TriggerDescription("Store the specified variable table to the specified database table")]
+        [TriggerVariableParameter]
+        [TriggerStringParameter]
         private bool PutVariableTableIntoDatabaseTable(TriggerReader reader)
         {
             var VarTable = reader.ReadVariableTable(true);
@@ -573,9 +576,9 @@ namespace Libraries
             {
                 string column = kvp.Key.Substring(1);
                 if (!ReadOnlyFurreTableFields.Contains($"[{column}]"))
-                    data.Add($"[{column}]", kvp.Value);
+                    data.Add($"{column}", kvp.Value);
             }
-            return 0 < database.Insert("FURRE", data);
+            return 0 < database.InsertOrReplace("FURRE", data);
         }
 
         [TriggerStringParameter]
@@ -599,7 +602,7 @@ namespace Libraries
             var column = reader.ReadString().Replace("[", "").Replace("]", "");
             if (SafeFurreTableFields.Contains($"[{column}]"))
             {
-                Logger.Warn<MsDatabase>($"Attempt to delete {column}");
+                Logger.Warn<MsDatabase>($"Attempt to forget {column}");
                 return false;
             }
             if (database == null) database = new SQLiteDatabase(SQLitefile);

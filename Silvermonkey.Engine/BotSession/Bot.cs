@@ -211,8 +211,8 @@ namespace Engine.BotSession
 
             ClientData2 += ClintData => SendToServer(ClintData);
             ServerData2 += ServerData => SendToClient(ServerData);
-            ProcessServerChannelData += (s, o) => OnServerChannel(s, o);
-            ProcessServerInstruction += (s, o) => OnParseSererInstructionAsync(s, o);
+            ProcessServerChannelData += (s, o) => ParseServerChannel(s, o);
+            ProcessServerInstruction += (s, o) => ParseServerData(s, o);
             ServerStatusChanged += (s, o) => OnServerStatusChanged(s, o);
             ClientStatusChanged += (s, o) => OnClientStatusChanged(s, o);
 
@@ -330,6 +330,12 @@ namespace Engine.BotSession
             }
         }
 
+        private void ParseServerData(object sender, ParseServerArgs e)
+        {
+            var ParseServerDataThread = new Thread(() => OnParseSererInstructionAsync(sender, e));
+            ParseServerDataThread.Start();
+        }
+
         private void OnParseSererInstructionAsync(object sender, ParseServerArgs e)
         {
             if (MSpage == null || !EngineEnable) return;
@@ -388,6 +394,12 @@ namespace Engine.BotSession
                     //await MSpage.ExecuteAsync(600, cancel,((SpawnAvatar)sender).player);
                     return;
             }
+        }
+
+        private void ParseServerChannel(object sender, ParseChannelArgs Args)
+        {
+            var ParseChannelThread = new Thread(() => OnServerChannel(sender, Args));
+            ParseChannelThread.Start();
         }
 
         private void OnServerChannel(object sender, ParseChannelArgs Args)

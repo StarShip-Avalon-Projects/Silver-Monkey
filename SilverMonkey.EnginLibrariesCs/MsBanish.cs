@@ -19,8 +19,8 @@ namespace Libraries
     /// Banish Monkey Speak
     /// </para>
     /// This system mirrors Furcadia's banish system by tracking the banish
-    /// commands sent to the game aerver and keep a list of banished furres
-    /// locally. To help keep the list accurate, It is reconmended to ask
+    /// commands sent to the game server and keep a list of banished furres
+    /// locally. To help keep the list accurate, It is recommended to ask
     /// the server for a banish-list upon joining the dream. It maybe a good
     /// idea to run a daily schedule to refresh the list for temp banishes
     /// to drop off.
@@ -39,7 +39,7 @@ namespace Libraries
         /// <summary>
         /// Initializes this instance. Add your trigger handlers here.
         /// </summary>
-        /// <param name="args">Parametized argument of vars to use to pass runtime vars to a library at initialization</param>
+        /// <param name="args">Parametrized argument of vars to use to pass runtime vars to a library at initialization</param>
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);
@@ -125,8 +125,8 @@ namespace Libraries
                 "and the furre named {...} is on the banish-list,");
 
             Add(TriggerCategory.Effect,
-                 r => SaveBanishListToVariable(r),
-                 "save the banish-list to the variable % .");
+                 r => SaveBanishListToVariableTable(r),
+                 "save the banish-list to table % .");
 
             Add(TriggerCategory.Effect,
                 r => SendServer("banish-list"),
@@ -173,26 +173,38 @@ namespace Libraries
 
         #region Private Methods
 
+        [TriggerDescription("Tell the game-server to add the specified furre to the Dreams Banish-list. This can error when the specified furre is off line.")]
+        [TriggerStringParameter]
         private bool BanishFurreNamed(TriggerReader reader)
         {
             string Furre = reader.ReadString();
             return SendServer($"banish { Furre.ToFurcadiaShortName()}");
         }
 
-        private bool SaveBanishListToVariable(TriggerReader reader)
+        [TriggerDescription("Stores every furre on the banish-list to the specified Table")]
+        [TriggerVariableParameter]
+        private bool SaveBanishListToVariableTable(TriggerReader reader)
         {
-            IVariable NewVar = reader.ReadVariable(true);
-            NewVar.Value = string.Join("", BanishedFurreList.ToArray());
+            var table = reader.ReadVariableTable(true);
+            var index = 0;
+            foreach (string Furre in BanishedFurreList)
+            {
+                index++;
+                table.Add($"{index}", Furre);
+            }
             return true;
         }
 
+        [TriggerDescription("Checks Banish-List for the Specified furre")]
+        [TriggerStringParameter]
         private bool FurreNamedIsBanished(TriggerReader reader)
         {
             var result = false;
-            string f = reader.ReadString();
-            foreach (var fur in BanishedFurreList)
+            string Furre = reader.ReadString();
+
+            foreach (var furre in BanishedFurreList)
             {
-                if (fur.ToFurcadiaShortName() == f.ToFurcadiaShortName())
+                if (furre.ToFurcadiaShortName() == Furre.ToFurcadiaShortName())
                 {
                     result = false;
                     break;
@@ -202,12 +214,15 @@ namespace Libraries
             return result;
         }
 
+        [TriggerDescription("Temporarily Banish a Furre from the dream for 72 hours.")]
+        [TriggerStringParameter]
         private bool TempBanishTrigFurre(TriggerReader reader)
         {
             string Furre = reader.ReadString();
             return SendServer($"tempbanish { Furre.ToFurcadiaShortName()}");
         }
 
+        [TriggerDescription("triggered when the triggering furre is added to the banished list")]
         private bool TriggeringFurreIsBanished(TriggerReader reader)
         {
             var result = false;
@@ -222,14 +237,16 @@ namespace Libraries
             return result;
         }
 
+        [TriggerDescription("Ask the server to remove a furre from the banish list.")]
+        [TriggerStringParameter]
         private bool UnBanishFurreNamed(TriggerReader reader)
         {
             string Furre = reader.ReadString();
             return SendServer($"banish-off { Furre.ToFurcadiaShortName()}");
         }
 
-        //   [TriggerDescription($"Sets {BanishNameVariable}")]
-        [TriggerVariableParameter]
+        [TriggerDescription("Triggered when the specified furre is added to the banish list.")]
+        [TriggerStringParameter]
         private bool WhenFurreNamedBanished(TriggerReader reader)
         {
             var name = reader.GetParametersOfType<string>().FirstOrDefault();
@@ -243,6 +260,7 @@ namespace Libraries
             throw new ArgumentNullException("Name", $"Null parameter = {name} ");
         }
 
+        [TriggerDescription("Triggered when any furre is added to the banish list")]
         private bool WhenAnyFurreBanished(TriggerReader reader)
         {
             var name = reader.GetParametersOfType<string>().FirstOrDefault();

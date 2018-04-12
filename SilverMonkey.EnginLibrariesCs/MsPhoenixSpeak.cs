@@ -2,12 +2,14 @@
 using Furcadia.Net;
 using Furcadia.Net.Utils.ServerParser;
 using Libraries.PhoenixSpeak;
+using MonkeyCore.Logging;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Libraries
 {
@@ -25,8 +27,7 @@ namespace Libraries
     {
         #region Private Fields
 
-        private short currentPsID;
-        private Queue<PhoenixSpeakDataObject> phoenxSpeakObjects;
+        private ConcurrentQueue<PhoenixSpeakDataObject> phoenxSpeakObjects;
 
         #endregion Private Fields
 
@@ -39,24 +40,21 @@ namespace Libraries
         /// <para/>
         /// Use currentPsID to check the status of the current Phoenix Speak ID
         /// </summary>
-        public short GetPsId
-        {
-            get
-            {
-                currentPsID++;
-                return currentPsID;
-            }
-        }
+        public short GetPsId { get; private set; }
 
         #endregion Public Properties
 
         #region Public Methods
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="args"></param>
         public override void Initialize(params object[] args)
         {
             base.Initialize(args);
-            currentPsID = 0;
-            phoenxSpeakObjects = new Queue<PhoenixSpeakDataObject>();
+            GetPsId = 0;
+            phoenxSpeakObjects = new ConcurrentQueue<PhoenixSpeakDataObject>();
 
             //Add(TriggerCategory.Cause,
             //    r => true,
@@ -96,7 +94,7 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                MemorizeVariableTableToPhoenixSpeakForTriggeringFurre,
-               "memorize %Table to Phoenix Speak about the triggering furre. (use [DREAM] for this dream's Phoenix Speak)");
+               "memorize Phoenix Speak table %Table about the triggering furre.");
 
             Add(TriggerCategory.Effect,
                 ForgetPSFieldForCharacterNamed,
@@ -121,14 +119,15 @@ namespace Libraries
             Add(TriggerCategory.Effect,
                  ForgetAllPSForFurreNamed,
                 "forget all Phoenix Speak info about the furre named {...}. (use [DREAM] for this dream's Phoenix Speak)");
-            ParentBotSession.ProcessServerChannelData += OnServerChannel;
+            if (ParentBotSession != null)
+                ParentBotSession.ProcessServerChannelData += OnServerChannel;
         }
 
         public override void Unload(Page page)
         {
-            currentPsID = 0;
-            phoenxSpeakObjects.Clear();
-            ParentBotSession.ProcessServerChannelData -= OnServerChannel;
+            GetPsId = 0;
+            if (ParentBotSession != null)
+                ParentBotSession.ProcessServerChannelData -= OnServerChannel;
         }
 
         #endregion Public Methods
@@ -140,6 +139,7 @@ namespace Libraries
         private bool ForgetAllPSForFurreNamed(TriggerReader reader)
         {
             var Furre = reader.ReadString();
+            GetPsId++;
             if (Furre.ToLower() == "[dream]")
                 return SendServer($"ps {GetPsId} clear dream.*");
             return SendServer($"ps {GetPsId} clear character.{Furre.ToFurcadiaShortName()}");
@@ -149,6 +149,7 @@ namespace Libraries
         [TriggerStringParameter]
         private bool ForgetAllPSForTriggeringFurre(TriggerReader reader)
         {
+            GetPsId++;
             return SendServer($"ps {GetPsId} clear character.{Player.ShortName}");
         }
 
@@ -159,6 +160,7 @@ namespace Libraries
         {
             var Field = reader.ReadString();
             var Furre = reader.ReadString();
+            GetPsId++;
             if (Furre.ToLower() == "[dream]")
                 return SendServer($"ps {GetPsId} clear dream.{Field}");
             return SendServer($"ps {GetPsId} clear character.{Field}");
@@ -169,6 +171,7 @@ namespace Libraries
         private bool ForgetPSFieldForTriggeringFurre(TriggerReader reader)
         {
             var Field = reader.ReadString();
+            GetPsId++;
             return SendServer($"ps {GetPsId} clear character.{Player.ShortName}.{Field}");
         }
 
@@ -187,6 +190,9 @@ namespace Libraries
             var Field = reader.ReadString();
             var Furre = reader.ReadString();
             var Value = reader.ReadNumber();
+
+            GetPsId++;
+
             if (Furre.ToLower() == "[dream]")
                 return SendServer($"ps {GetPsId} set dream.{Field}='{Value}'");
             return SendServer($"ps {GetPsId} set character.{Furre}.{Field}='{Value}'");
@@ -201,6 +207,9 @@ namespace Libraries
             var Field = reader.ReadString();
             var Furre = reader.ReadString();
             var Value = reader.ReadString();
+
+            GetPsId++;
+
             if (Furre.ToLower() == "[dream]")
                 return SendServer($"ps {GetPsId} set dream.{Field}='{Value}'");
             return SendServer($"ps {GetPsId} set character.{Furre}.{Field}='{Value}'");
@@ -213,6 +222,9 @@ namespace Libraries
         {
             var Field = reader.ReadString();
             var Value = reader.ReadNumber();
+
+            GetPsId++;
+
             return SendServer($"ps {GetPsId} set character.{Player.ShortName}.{Field}='{Value}'");
         }
 
@@ -223,6 +235,9 @@ namespace Libraries
         {
             var Field = reader.ReadString();
             var Value = reader.ReadString();
+
+            GetPsId++;
+
             return SendServer($"ps {GetPsId} set character.{Player.ShortName}.{Field}='{Value}'");
         }
 
@@ -236,6 +251,8 @@ namespace Libraries
             var VarTable = reader.ReadVariableTable(true);
             var Furre = reader.ReadString();
 
+            GetPsId++;
+
             foreach (KeyValuePair<string, object> kvp in VarTable)
             {
                 data.Add($"{kvp.Key}='{kvp.Value}'");
@@ -245,13 +262,19 @@ namespace Libraries
             return SendServer($"ps {GetPsId} set character.{Furre.ToFurcadiaShortName()}.{string.Join(",", data.ToArray())}");
         }
 
+        /// <summary>
+        /// memorize Phoenix Speak table %Table about the triggering furre.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         [TriggerDescription("Formats the variable table to a string readable by the game server and sends the Phoenix Speak data about the triggering furre.")]
         [TriggerVariableParameter]
         private bool MemorizeVariableTableToPhoenixSpeakForTriggeringFurre(TriggerReader reader)
         {
             var data = new List<string>();
-
             var VarTable = reader.ReadVariableTable(true);
+
+            GetPsId++;
 
             foreach (KeyValuePair<string, object> kvp in VarTable)
             {
@@ -267,24 +290,24 @@ namespace Libraries
         /// <param name="Args"></param>
         private void OnServerChannel(object sender, ParseChannelArgs Args)
         {
-            if (sender is ChannelObject ChanObject)
+            if (sender is ChannelObject ChanObject && Args.Channel == "")
             {
-                if (Args.Channel == "")
+                Logger.Debug<MsPhoenixSpeak>(ChanObject.ChannelText);
+                // Snag the PS data only if the API has sent a PS Query
+                // Sample Data, Thanks Wiren ~ Gero
+                // PS ### Ok: get: result: money='500', partysize='1', playerexp='0', playerlevel='1', pokeballs='15', pokemon1='7 1 n Squirtle 1 0 1 tackle', pokemon2='0', pokemon3='0', pokemon4='0', pokemon5='0', pokemon6='0', sys_lastused_date=1523076301, totalpokemon='1'
+                if (ChanObject.ChannelText.StartsWith("PS ") && GetPsId > 0)
                 {
-                    // Snag the PS data only if the API has sent a PS Query
-                    if (ChanObject.ChannelText.StartsWith("PS ") && currentPsID > 0)
+                    var PsQuery = ChanObject.ChannelText.Split(new char[] { ' ' }, 5);
+                    if (PsQuery[1].AsInt16(0) > 0 && PsQuery[3] == "get:")
                     {
-                        var PsQuery = ChanObject.ChannelText.Split(new char[] { ' ' }, 5);
-                        if (PsQuery[1].AsInt16(0) > 0 && PsQuery[3] == "get:")
-                        {
-                            phoenxSpeakObjects.Enqueue(new PhoenixSpeakDataObject(ChanObject.RawInstruction));
-                        }
+                        phoenxSpeakObjects.Enqueue(new PhoenixSpeakDataObject(ChanObject.RawInstruction));
                     }
-                    // PS ### Ok: get: result: money='500', partysize='1', playerexp='0', playerlevel='1', pokeballs='15', pokemon1='7 1 n Squirtle 1 0 1 tackle', pokemon2='0', pokemon3='0', pokemon4='0', pokemon5='0', pokemon6='0', sys_lastused_date=1523076301, totalpokemon='1'
-                    // PS ### Error: get: Query error: Field 'bulldog' does not exist
-
-                    // phoenixSpeakTables.AddOrUpdate();
+                    if (phoenxSpeakObjects.Count == 0)
+                        GetPsId = 0;
                 }
+
+                // PS ### Error: get: Query error: Field 'field' does not exist
             }
         }
 
@@ -292,24 +315,38 @@ namespace Libraries
         [TriggerVariableParameter]
         private bool RememberPSForFurreNamedToVariableTable(TriggerReader reader)
         {
-            var CurrentPsId = GetPsId;
             var Furre = reader.ReadString();
             var table = reader.ReadVariableTable(true);
-            if (Furre.ToLower() == "[dream]")
-                SendServer($"ps {CurrentPsId} get dream.*");
-            else
-                SendServer($"ps {CurrentPsId} get character.{Furre.ToFurcadiaShortName()}.*");
 
+            GetPsId++;
+
+            if (Furre.ToLower() == "[dream]")
+                SendServer($"ps {GetPsId} get dream.*");
+            else
+                SendServer($"ps {GetPsId} get character.{Furre.ToFurcadiaShortName()}.*");
+
+            // Wait for game server to give us the data
+            var TimeOut = DateTime.Now.AddSeconds(1);
             while (phoenxSpeakObjects.Count == 0)
-                Thread.Sleep(100);
-            if (CurrentPsId == phoenxSpeakObjects.Peek().PhoenixSpeakID)
             {
-                foreach (var variable in phoenxSpeakObjects.Dequeue().PsTable)
-                    table.Add(variable);
+                if (DateTime.Now > TimeOut)
+                    throw new MonkeyspeakException($"RememberPSForFurreNamedToVariableTable did not see a PhoenisSpeakObject in the allotted time.");
+                Thread.Sleep(100);
             }
+
+            // Snag Ps Data and throw it into the specified Table
+            if (phoenxSpeakObjects.TryDequeue(out PhoenixSpeakDataObject result))
+            {
+                if (GetPsId == result.PhoenixSpeakID)
+                    foreach (var variable in result.PsTable)
+                        table.Add(variable);
+            }
+
             // reset Phoenix Speak ID index,
             if (phoenxSpeakObjects.Count == 0)
-                currentPsID = 0;
+            {
+                GetPsId = 0;
+            }
             return true;
         }
 
@@ -317,19 +354,41 @@ namespace Libraries
         [TriggerVariableParameter]
         private bool RememberPSForTrigFurreToVariableTable(TriggerReader reader)
         {
-            var CurrentPsId = GetPsId;
             var table = reader.ReadVariableTable(true);
-            SendServer($"ps {CurrentPsId} get character.{Player.ShortName}.*");
-            while (phoenxSpeakObjects.Count == 0)
-                Thread.Sleep(100);
-            if (CurrentPsId == phoenxSpeakObjects.Peek().PhoenixSpeakID)
-            {
-                foreach (var variable in phoenxSpeakObjects.Dequeue().PsTable)
+
+            GetPsId++;
+            SendServer($"ps {GetPsId} get character.{Player.ShortName}.*");
+            Logger.Debug<MsPhoenixSpeak>($"ps {GetPsId} get character.{Player.ShortName}.*");
+
+            // Snag Ps Data and throw it into the specified Table
+            var result = GetData(GetPsId).Result;
+
+            if (GetPsId == result.PhoenixSpeakID)
+                foreach (var variable in result.PsTable)
                     table.Add(variable);
-            }
+
+            Logger.Debug<MsPhoenixSpeak>($"table items:'{table.Count}'");
+
+            // reset Phoenix Speak ID index,
             if (phoenxSpeakObjects.Count == 0)
-                currentPsID = 0;
+            {
+                GetPsId = 0;
+            }
+
             return true;
+        }
+
+        private Task<PhoenixSpeakDataObject> GetData(short PsId)
+        {
+            var TimeOut = DateTime.Now.AddSeconds(3);
+            do
+            {
+                if (DateTime.Now > TimeOut)
+                    break;
+                Task.Delay(800);
+            } while (phoenxSpeakObjects.Count == 0);
+            phoenxSpeakObjects.TryDequeue(out PhoenixSpeakDataObject result);
+            return Task.FromResult(result);
         }
 
         #endregion Private Methods
