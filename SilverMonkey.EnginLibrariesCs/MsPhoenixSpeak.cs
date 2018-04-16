@@ -120,14 +120,14 @@ namespace Libraries
                  ForgetAllPSForFurreNamed,
                 "forget all Phoenix Speak info about the furre named {...}. (use [DREAM] for this dream's Phoenix Speak)");
             if (ParentBotSession != null)
-                ParentBotSession.ProcessServerChannelData += OnServerChannel;
+                ParentBotSession.ProcessServerChannelData += ParseServerChannel;
         }
 
         public override void Unload(Page page)
         {
             GetPsId = 0;
             if (ParentBotSession != null)
-                ParentBotSession.ProcessServerChannelData -= OnServerChannel;
+                ParentBotSession.ProcessServerChannelData -= ParseServerChannel;
         }
 
         #endregion Public Methods
@@ -146,7 +146,6 @@ namespace Libraries
         }
 
         [TriggerDescription("Clears all Phoenix Speak about the triggering furre")]
-        [TriggerStringParameter]
         private bool ForgetAllPSForTriggeringFurre(TriggerReader reader)
         {
             GetPsId++;
@@ -283,6 +282,12 @@ namespace Libraries
             return SendServer($"ps {GetPsId} set character.{Player.ShortName}.{string.Join(",", data.ToArray())}");
         }
 
+        private void ParseServerChannel(object sender, ParseChannelArgs Args)
+        {
+            var ParseChannelThread = new Thread(() => OnServerChannel(sender, Args));
+            ParseChannelThread.Start();
+        }
+
         /// <summary>
         /// Parse Phoenix Speak data
         /// </summary>
@@ -296,10 +301,11 @@ namespace Libraries
                 // Snag the PS data only if the API has sent a PS Query
                 // Sample Data, Thanks Wiren ~ Gero
                 // PS ### Ok: get: result: money='500', partysize='1', playerexp='0', playerlevel='1', pokeballs='15', pokemon1='7 1 n Squirtle 1 0 1 tackle', pokemon2='0', pokemon3='0', pokemon4='0', pokemon5='0', pokemon6='0', sys_lastused_date=1523076301, totalpokemon='1'
+
                 if (ChanObject.ChannelText.StartsWith("PS ") && GetPsId > 0)
                 {
                     var PsQuery = ChanObject.ChannelText.Split(new char[] { ' ' }, 5);
-                    if (PsQuery[1].AsInt16(0) > 0 && PsQuery[3] == "get:")
+                    if (short.TryParse(PsQuery[1].AsString(), out short psID) && psID > 0 && PsQuery[3] == "get:")
                     {
                         phoenxSpeakObjects.Enqueue(new PhoenixSpeakDataObject(ChanObject.RawInstruction));
                     }
@@ -326,27 +332,13 @@ namespace Libraries
                 SendServer($"ps {GetPsId} get character.{Furre.ToFurcadiaShortName()}.*");
 
             // Wait for game server to give us the data
-            var TimeOut = DateTime.Now.AddSeconds(1);
-            while (phoenxSpeakObjects.Count == 0)
-            {
-                if (DateTime.Now > TimeOut)
-                    throw new MonkeyspeakException($"RememberPSForFurreNamedToVariableTable did not see a PhoenisSpeakObject in the allotted time.");
-                Thread.Sleep(100);
-            }
+            var result = GetPhoenixSpeakData(GetPsId).Result;
 
-            // Snag Ps Data and throw it into the specified Table
-            if (phoenxSpeakObjects.TryDequeue(out PhoenixSpeakDataObject result))
-            {
-                if (GetPsId == result.PhoenixSpeakID)
-                    foreach (var variable in result.PsTable)
-                        table.Add(variable);
-            }
+            if (GetPsId == result.PhoenixSpeakID)
+                foreach (var variable in result.PsTable)
+                    table.Add(variable);
+            Logger.Debug<MsPhoenixSpeak>($"table items:'{table.Count}'");
 
-            // reset Phoenix Speak ID index,
-            if (phoenxSpeakObjects.Count == 0)
-            {
-                GetPsId = 0;
-            }
             return true;
         }
 
@@ -361,7 +353,7 @@ namespace Libraries
             Logger.Debug<MsPhoenixSpeak>($"ps {GetPsId} get character.{Player.ShortName}.*");
 
             // Snag Ps Data and throw it into the specified Table
-            var result = GetData(GetPsId).Result;
+            var result = GetPhoenixSpeakData(GetPsId).Result;
 
             if (GetPsId == result.PhoenixSpeakID)
                 foreach (var variable in result.PsTable)
@@ -369,25 +361,35 @@ namespace Libraries
 
             Logger.Debug<MsPhoenixSpeak>($"table items:'{table.Count}'");
 
-            // reset Phoenix Speak ID index,
-            if (phoenxSpeakObjects.Count == 0)
-            {
-                GetPsId = 0;
-            }
-
             return true;
         }
 
-        private Task<PhoenixSpeakDataObject> GetData(short PsId)
+        /// <summary>
+        /// Used after sending a Phoenix Speak command to the game server to retrieve the Phoenix Speak data
+        /// </summary>
+        /// <param name="CurrentPsId"></param>
+        /// <returns></returns>
+        private Task<PhoenixSpeakDataObject> GetPhoenixSpeakData(short CurrentPsId = -1)
         {
             var TimeOut = DateTime.Now.AddSeconds(3);
             do
             {
                 if (DateTime.Now > TimeOut)
+                {
+                    Logger.Error("Did not receive Phoenix Speak data in the allotted time.");
                     break;
-                Task.Delay(800);
+                }
+                Task.Delay(300);
             } while (phoenxSpeakObjects.Count == 0);
-            phoenxSpeakObjects.TryDequeue(out PhoenixSpeakDataObject result);
+
+            if (phoenxSpeakObjects.TryPeek(out PhoenixSpeakDataObject result))
+            {
+                if (result.PhoenixSpeakID == CurrentPsId)
+                    phoenxSpeakObjects.TryDequeue(out result);
+                else
+                    Logger.Error($"Expected CurrentPsId'{CurrentPsId}' but got '{result.PhoenixSpeakID}'");
+            }
+
             return Task.FromResult(result);
         }
 

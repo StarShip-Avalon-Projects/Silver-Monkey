@@ -283,7 +283,7 @@ namespace Engine.BotSession
                 }
                 catch (Exception e)
                 {
-                    SendError(e, null);
+                    e.Log();
                 }
             }
 
@@ -382,7 +382,7 @@ namespace Engine.BotSession
                 case ServerInstructionType.SpawnAvatar:
                     // (0:30) When anyone enters the Dream,
                     // (0:31) When the furre named {..} enters the Dream,
-                    MSpage.Execute(new int[] { 30, 31 }, cancel, ((SpawnAvatar)sender).player);
+                    MSpage.Execute(new int[] { 30, 31 }, cancel, ((SpawnAvatar)sender).Player);
                     return;
 
                 case ServerInstructionType.UpdateColorString:

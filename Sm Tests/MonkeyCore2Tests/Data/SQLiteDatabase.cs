@@ -18,7 +18,7 @@ namespace MonkeyCoreTests.Data
             var linesAffected = database.AddColumn("FURRE", ColumnName, "TEXT");
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(database.IsColumnExist(ColumnName, "FURRE"));
+                Assert.IsTrue(database.ColumnExist(ColumnName, "FURRE"));
                 Assert.That(linesAffected, Is.GreaterThanOrEqualTo(0));
             });
         }
@@ -127,7 +127,7 @@ namespace MonkeyCoreTests.Data
         public void GetTableUniquekeysTest()
         {
             AddDataTo_FURRE_Table();
-            var meta = database.GetTableUniqeKeys("FURRE");
+            var meta = database.GetTableUniqueKeys("FURRE");
             Assert.That(meta != null);
         }
 
@@ -143,7 +143,7 @@ namespace MonkeyCoreTests.Data
             var rowCount = database.RemoveColumn("FURRE", ColumnName);
             Assert.Multiple(() =>
             {
-                Assert.IsFalse(database.IsColumnExist(ColumnName, "FURRE"));
+                Assert.IsFalse(database.ColumnExist(ColumnName, "FURRE"));
                 Assert.That(rowCount >= 0, $"Rows affected {rowCount}");
             });
         }

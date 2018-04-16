@@ -7,6 +7,7 @@ using MonkeyCore.Logging;
 using static Libraries.MsLibHelper;
 using MonkeyCore.Data;
 using Furcadia.Net.Utils.ServerParser;
+using System.Threading;
 
 namespace Libraries
 {
@@ -60,7 +61,7 @@ namespace Libraries
         /// Updates when ever Monkey Speak needs it through <see cref="Page.Execute(int[],
         /// object[])"/> or <see cref="Page.ExecuteAsync(int[], object[])"/>
         /// </summary>
-        static public IFurre Player { get; set; }
+        static public Furre Player { get; set; }
 
         /// <summary>
         /// Gets the base identifier.
@@ -233,6 +234,8 @@ namespace Libraries
         /// any name is accepted and converted to Furcadia Machine name (ShortName version, lowercase
         /// with special characters stripped)
         /// </remarks>
+        [TriggerDescription("Triggers when the specified furre is the triggering furre")]
+        [TriggerStringParameter]
         public bool NameIs(TriggerReader reader)
         {
             return reader.ReadString().ToFurcadiaShortName() == Player.ShortName;
@@ -246,7 +249,11 @@ namespace Libraries
         /// </param>
         public void SendClientMessage(string message)
         {
-            ParentBotSession.SendToClient(message);
+            var SendTextToServerThread = new Thread(() =>
+            {
+                ParentBotSession.SendToClient(message);
+            });
+            SendTextToServerThread.Start();
         }
 
         /// <summary>
@@ -256,16 +263,17 @@ namespace Libraries
         /// <returns>True is the Server is Connected</returns>
         public virtual bool SendServer(string message)
         {
-            if (string.IsNullOrWhiteSpace(message) || ParentBotSession == null)
+            if (ParentBotSession == null)
                 return false;
-
             if (ParentBotSession.IsServerSocketConnected)
             {
-                ParentBotSession.SendFormattedTextToServer(message);
-                return true;
+                var SendTextToServerThread = new Thread(() =>
+                {
+                    ParentBotSession.SendFormattedTextToServer(message);
+                });
+                SendTextToServerThread.Start();
             }
-
-            return false;
+            return true;
         }
 
         /// <summary>
@@ -279,7 +287,7 @@ namespace Libraries
 
             if (string.IsNullOrWhiteSpace(BotController.Value.ToString()))
             {
-                Logger.Warn("BotController is not defined, Please specifiy a BotController in the Bot configuration settings,");
+                Logger.Warn("BotController is not defined, Please specify a BotController in the Bot configuration settings,");
                 return false;
             }
 
@@ -376,6 +384,8 @@ namespace Libraries
         /// </summary>
         /// <param name="reader"><see cref="TriggerReader"/></param>
         /// <returns></returns>
+        [TriggerDescription("Continues processing if the triggering furre's text contains the specified text")]
+        [TriggerStringParameter]
         protected bool MsgStartsWith(TriggerReader reader)
         {
             if (!ReadTriggeringFurreParams(reader))

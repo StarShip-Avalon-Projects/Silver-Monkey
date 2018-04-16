@@ -55,7 +55,7 @@ namespace Libraries
 
             Add(TriggerCategory.Condition,
                 WebArrayEqualTo,
-                "and Web-Table setting {...} is equal to {...},");
+                "and Web-Table {...} is equal to {...},");
 
             Add(TriggerCategory.Condition,
                 WebArrayNotEqualTo,
@@ -137,7 +137,7 @@ namespace Libraries
         /// </returns>
         private bool RememberSetting(TriggerReader reader)
         {
-            var setting = reader.Page.SetVariable(reader.ReadString(), null, false);
+            var setting = reader.Page.SetVariable(new Variable($"%{reader.ReadString()}", false));
             var var = reader.ReadVariable(true);
             if (WebStack.Contains(setting))
             {
@@ -243,7 +243,7 @@ namespace Libraries
         /// <returns></returns>
         private bool WebArrayContainArrayField(TriggerReader reader)
         {
-            var var = reader.Page.SetVariable(reader.ReadString(), null, false);
+            var var = reader.Page.SetVariable(new Variable($"%{reader.ReadString()}", false));
             return WebStack.Contains(var);
         }
 
@@ -270,7 +270,7 @@ namespace Libraries
         /// <returns></returns>
         private bool WebArrayNotContainArrayField(TriggerReader reader)
         {
-            return !WebStack.Contains(reader.Page.SetVariable(reader.ReadString(), null, false));
+            return !WebStack.Contains(reader.Page.SetVariable(new Variable($"%{reader.ReadString()}", false)));
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 
 using IO;
 using MonkeyCore.Logging;
+using Monkeyspeak.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -36,9 +37,7 @@ namespace MonkeyCore.Data
         private const string DefaultFile = "SilverMonkey.db";
         private const string FurreTable = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [Access Level] INTEGER DEFAULT 0, [date added] DATETIME DEFAULT(datetime('now','localtime')), [date modified] DATETIME DEFAULT(datetime('now','localtime')), [PSBackup] DOUBLE";
         private const string SettingsTableMasterCreateSQL = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT , [SettingsTable] TEXT UNIQUE, [date modified] DATETIME DEFAULT(datetime('now','localtime'))";
-        private const string SettingsTableCreateSQL = "[ID] INTEGER UNIQUE,[SettingsTableID] INTEGER, [Setting] TEXT, [Value] TEXT, PRIMARY KEY ([SettingsTableID], [Setting])";
-        private const string BackUpMasterCreateSQL = "[ID] INTEGER PRIMARY KEY AUTOINCREMENT, [Name] TEXT Unique, [date modified] TEXT";
-        private const string BackUpCreateSQL = "[NameID] INTEGER, [Key] TEXT, [Value] TEXT, PRIMARY KEY ([NameID],[Key])";
+        private const string SettingsTableCreateSQL = "[SettingsTableID] INTEGER, [Setting] TEXT, [Value] TEXT, PRIMARY KEY ([SettingsTableID], [Setting])";
         private const string SyncPragma = "PRAGMA synchronous = 0;";
         private string dbConnection;
         private string inputFile = Path.Combine(Paths.SilverMonkeyBotPath, DefaultFile);
@@ -55,8 +54,6 @@ namespace MonkeyCore.Data
             dbConnection = $"Data Source={ inputFile};";
 
             CreateTbl("FURRE", FurreTable);
-            CreateTbl("BACKUPMASTER", BackUpMasterCreateSQL);
-            CreateTbl("BACKUP", BackUpCreateSQL);
             CreateTbl("SettingsTableMaster", SettingsTableMasterCreateSQL);
             CreateTbl("SettingsTable", SettingsTableCreateSQL);
         }
@@ -86,8 +83,6 @@ namespace MonkeyCore.Data
             dbConnection = $"Data Source={ inputFile};";
 
             CreateTbl("FURRE", FurreTable);
-            CreateTbl("BACKUPMASTER", BackUpMasterCreateSQL);
-            CreateTbl("BACKUP", BackUpCreateSQL);
             CreateTbl("SettingsTableMaster", SettingsTableMasterCreateSQL);
             CreateTbl("SettingsTable", SettingsTableCreateSQL);
         }
@@ -122,7 +117,7 @@ namespace MonkeyCore.Data
         public int AddColumn(string table, string collumn, string type)
         {
             Logger.Debug<SQLiteDatabase>($"'{collumn} {type}' TO: '{table}'");
-            if (IsColumnExist(collumn, table))
+            if (ColumnExist(collumn, table))
             {
                 return 0;
             }
@@ -277,7 +272,7 @@ namespace MonkeyCore.Data
                     }
                 }
             }
-            Logger.Debug<SQLiteDatabase>($"{Start.Elapsed}");
+            Logger.Debug<SQLiteDatabase>($"Elapsed time: '{Start.Elapsed}'");
             return rowsUpdated;
         }
 
@@ -320,9 +315,9 @@ namespace MonkeyCore.Data
                     string nullString = "";
                     if (int.Parse(row["notnull"].ToString()) == 1)
                         nullString = " NOT NULL";
-                    if (!string.IsNullOrWhiteSpace(row["dflt_value"].ToString()))
-                        nullString += $" DEFAULT ({row["dflt_value"].ToString()})";
-                    result.Add($"[{row["name"].ToString()}]", $"{row["type"].ToString()}{nullString}");
+                    if (!string.IsNullOrWhiteSpace(row["dflt_value"].AsString()))
+                        nullString += $" DEFAULT ({row["dflt_value"]})";
+                    result.Add($"[{row["name"]}]", $"{row["type"]}{nullString}");
                 }
             }
             return result;
@@ -350,9 +345,10 @@ namespace MonkeyCore.Data
                         dt.Load(reader);
                         reader.Close();
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         dt = null;
+                        ex.Log(Level.Error);
                     }
                 }
             }
@@ -371,24 +367,44 @@ namespace MonkeyCore.Data
         {
             Logger.Debug<SQLiteDatabase>($"'{sql}'");
             Dictionary<string, object> result = new Dictionary<string, object>();
-            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
+            try
             {
-                cnn.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(cnn))
+                using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
                 {
-                    cmd.CommandText = $"{SyncPragma} {sql}";
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    cnn.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(cnn))
                     {
-                        while (reader.Read())
+                        cmd.CommandText = $"{SyncPragma} {sql}";
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
-                            int Size = reader.VisibleFieldCount;
-                            for (int i = 0; i <= Size - 1; i++)
+                            if (reader.HasRows)
                             {
-                                result.Add(reader.GetName(i), reader.GetValue(i).ToString());
+                                DataTable schemaTable = reader.GetSchemaTable();
+                                DataTable data = new DataTable();
+                                foreach (DataRow row in schemaTable.Rows)
+                                {
+                                    string colName = row.Field<string>("ColumnName");
+                                    Type t = row.Field<Type>("DataType");
+                                    data.Columns.Add(colName, t);
+                                }
+                                while (reader.Read())
+                                {
+                                    var newRow = data.Rows.Add();
+                                    foreach (DataColumn col in data.Columns)
+                                    {
+                                        newRow[col.ColumnName] = reader[col.ColumnName];
+                                    }
+                                }
+                                foreach (DataRow row in data.Rows)
+                                    result.Add(row[0].AsString(), row[1]);
                             }
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                ex.Log(Level.Error);
             }
             return result;
         }
@@ -418,7 +434,7 @@ namespace MonkeyCore.Data
             foreach (KeyValuePair<string, object> val in data)
             {
                 columns.Add($"[{val.Key}]");
-                values.Add($"'{val.Value.ToString()}'");
+                values.Add($"'{val.Value}'");
             }
 
             try
@@ -436,12 +452,14 @@ namespace MonkeyCore.Data
         }
 
         /// <summary>
-        ///
+        /// Inserts or replace multi row.
         /// </summary>
-        /// <param name="table"></param>
-        /// <param name="data"></param>
+        /// <param name="table">The table.</param>
+        /// <param name="data">The data.</param>
+        /// <param name="SettingsTableID">The settings table identifier.</param>
         /// <returns></returns>
-        public virtual int InsertOrReplace(string table, Dictionary<string, object> data)
+        /// <exception cref="ArgumentOutOfRangeException">No data to process</exception>
+        public virtual int InsertOrReplaceMultiRow(string table, Dictionary<string, object> data, string SettingsTableID)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}' data: '{data}'");
             if (data == null || data.Count == 0)
@@ -449,18 +467,24 @@ namespace MonkeyCore.Data
                 throw new ArgumentOutOfRangeException("No data to process");
             }
             int rowCount = 0;
-            List<string> columns = new List<string>();
-            List<string> values = new List<string>();
-            foreach (KeyValuePair<string, object> val in data)
+            List<string> DataRow = new List<string>();
+
+            // SQL Table Key Value
+            foreach (KeyValuePair<string, object> Table_kvp in data)
             {
-                columns.Add($"[{val.Key}]");
-                values.Add($"'{val.Value}'");
+                DataRow.Add($"('{SettingsTableID}', '{Table_kvp.Key}','{Table_kvp.Value}')");
             }
 
             try
             {
-                string cmd = $"INSERT OR REPLACE into {table} ({string.Join(", ", columns.ToArray())}) VALUES ({string.Join(", ", values.ToArray())})";
-                rowCount = ExecuteNonQuery(cmd);
+                // INSERT OR IGNORE INTO my_table(SettingsTableID, Key, Value) VALUES('Karen', 34, ' '),(' ',' ',' ')
+                // UPDATE my_table SET age = 34 WHERE name = 'Karen'
+
+                var SQL = new StringBuilder()
+                    .Append($"INSERT OR REPLACE INTO {table}( SettingsTableID, Setting, Value)")
+                    .Append("VALUES")
+                    .Append(string.Join(", ", DataRow.ToArray()));
+                rowCount = ExecuteNonQuery(SQL.ToString());
             }
             catch (Exception ex)
             {
@@ -480,7 +504,7 @@ namespace MonkeyCore.Data
         /// </param>
         /// <returns>
         /// </returns>
-        public bool IsColumnExist(string columnName, string table)
+        public bool ColumnExist(string columnName, string table)
         {
             bool returnval = false;
             using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
@@ -550,7 +574,7 @@ namespace MonkeyCore.Data
             }
             Columns.Remove($"[{columnName}]");
             List<string> PrimaryKeys = GetTablePrimaryKeys(table);
-            List<string> UniqueKeys = GetTableUniqeKeys(table);
+            List<string> UniqueKeys = GetTableUniqueKeys(table);
             PrimaryKeys.Remove($"[{columnName}]");
             UniqueKeys.Remove($"[{columnName}]");
             if (PrimaryKeys != null && PrimaryKeys.Count > 0)
@@ -628,7 +652,7 @@ namespace MonkeyCore.Data
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                ex.Log(Level.Error);
                 return -1;
             }
         }
@@ -643,47 +667,62 @@ namespace MonkeyCore.Data
             Logger.Debug<SQLiteDatabase>($"'{table}'");
             List<string> result = new List<string>();
             DataTable dt = GetDataTable($"PRAGMA Table_Info({table});");
-            if (dt != null)
+            try
             {
-                foreach (DataRow row in dt.Rows)
+                if (dt != null)
                 {
-                    if (int.Parse(row["pk"].ToString()) > 0)
-                        result.Add($"[{row["name"].ToString()}]");
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (int.Parse(row["pk"].ToString()) > 0)
+                            result.Add($"[{row["name"].ToString()}]");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                ex.Log(Level.Error);
+                return null;
             }
             return result;
         }
 
         /// <summary>
-        /// Gets the table uniqe keys.
+        /// Gets the table unique keys.
         /// </summary>
         /// <param name="table">The table.</param>
         /// <returns></returns>
-        public List<string> GetTableUniqeKeys(string table)
+        public List<string> GetTableUniqueKeys(string table)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}'");
             List<string> result = new List<string>();
-            DataTable IndexListDataTable = GetDataTable($"PRAGMA INDEX_LIST({table});");
-            if (IndexListDataTable != null)
+            try
             {
-                foreach (DataRow row in IndexListDataTable.Rows)
+                DataTable IndexListDataTable = GetDataTable($"PRAGMA INDEX_LIST({table});");
+                if (IndexListDataTable != null)
                 {
-                    if (int.Parse(row["unique"].ToString()) != 0)
+                    foreach (DataRow row in IndexListDataTable.Rows)
                     {
-                        DataTable indexXinfoDataTable = GetDataTable($"PRAGMA index_xinfo({row["name"].ToString()});");
-                        if (indexXinfoDataTable != null)
+                        if (int.Parse(row["unique"].ToString()) != 0)
                         {
-                            foreach (DataRow row2 in indexXinfoDataTable.Rows)
+                            DataTable indexXinfoDataTable = GetDataTable($"PRAGMA index_xinfo({row["name"]});");
+                            if (indexXinfoDataTable != null)
                             {
-                                string ColumnName = row2["name"].ToString();
-                                if (!string.IsNullOrWhiteSpace(ColumnName))
-                                    result.Add($"[{ColumnName}]");
+                                foreach (DataRow row2 in indexXinfoDataTable.Rows)
+                                {
+                                    string ColumnName = row2["name"].ToString();
+                                    if (!string.IsNullOrWhiteSpace(ColumnName))
+                                        result.Add($"[{ColumnName}]");
+                                }
                             }
                         }
                     }
                 }
             }
-
+            catch (Exception ex)
+            {
+                ex.Log(Level.Error);
+                return null;
+            }
             return result;
         }
 
@@ -698,26 +737,33 @@ namespace MonkeyCore.Data
         /// </param>
         /// <returns>
         /// </returns>
-        private List<string> GetAllColumnName(string table)
+        private List<string> GetAllColumnNames(string table)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}'");
             //PRAGMA table_info(table_name);
             string sql = $"SELECT * FROM { table}";
             List<string> columnNames = new List<string>();
-            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
+            try
             {
-                cnn.Open();
-                using (SQLiteCommand SQLcommand = cnn.CreateCommand())
+                using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
                 {
-                    SQLcommand.CommandText = $"{SyncPragma} {sql}";
-                    using (SQLiteDataReader sqlDataReader = SQLcommand.ExecuteReader())
+                    cnn.Open();
+                    using (SQLiteCommand SQLcommand = cnn.CreateCommand())
                     {
-                        for (int i = 0; i <= sqlDataReader.VisibleFieldCount - 1; i++)
+                        SQLcommand.CommandText = $"{SyncPragma} {sql}";
+                        using (SQLiteDataReader sqlDataReader = SQLcommand.ExecuteReader())
                         {
-                            columnNames.Add($"[{ sqlDataReader.GetName(i) }]");
+                            for (int i = 0; i <= sqlDataReader.VisibleFieldCount - 1; i++)
+                            {
+                                columnNames.Add($"[{ sqlDataReader.GetName(i) }]");
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                ex.Log(Level.Error);
             }
             return columnNames;
         }

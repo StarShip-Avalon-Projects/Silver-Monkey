@@ -1,4 +1,4 @@
-﻿#region Usings
+﻿#region Imports
 
 using Furcadia.Extensions;
 using IO;
@@ -12,12 +12,12 @@ using System.Data;
 using System.Text;
 using static Libraries.MsLibHelper;
 
-#endregion Usings
+#endregion Imports
 
 namespace Libraries
 {
     /// <summary>
-    /// SQLite Database Access... Create tables Store records ect. in Silver Monkey
+    /// SQLite Database Access... Create tables Store records ETC. in Silver Monkey
     /// <para>
     /// To view and edit these tables manually Please look as Data Monkey
     /// </para>
@@ -481,27 +481,32 @@ namespace Libraries
             return database.ExecuteScalar($"SELECT [{Column}] FROM FURRE Where Name = '{Name.ToFurcadiaShortName()}'");
         }
 
+        /// <summary>
+        /// remember the database table {...} and put it into table % .
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        [TriggerDescription("gets the specified database table and puts the data into the specified variable table")]
+        [TriggerStringParameter]
         [TriggerVariableParameter]
         private bool GetVariableTableFromDatabaseTable(TriggerReader reader)
         {
-            var DatabaseTable = reader.ReadString();
+            var table = reader.ReadString();
             var VarTable = reader.ReadVariableTable(true);
 
-            var SQL = new StringBuilder()
-                .Append("select SettingsTable.*, SettingsTableMaster.ID from SettingsTable )")
-                .Append("inner join SettingsTableMaster on ")
-                .Append("SettingsTableMaster.")
-                // .Append($"{Entry}= SettingsTable.[SettingsTableID] ")
-                .Append($"where SettingsTableMaster.Setting = '{VarTable}' ");
-
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = database.GetValueFromTable(SQL.ToString());
+
+            var SettingsTableID = database.ExecuteScalar($"SELECT ID FROM SettingsTableMaster WHERE SettingsTable = '{table}'");
+            var SQL = $"SELECT [Setting], [Value] FROM SettingsTable WHERE SettingsTableID = {SettingsTableID}";
+
+            var data = database.GetValueFromTable(SQL);
 
             foreach (KeyValuePair<string, object> kvp in data)
                 VarTable.Add(kvp.Key, kvp.Value);
             return true;
         }
 
+        [TriggerDescription("Add a new record to the FURRE table for the specified furre")]
         [TriggerStringParameter]
         [TriggerStringParameter]
         [TriggerNumberParameter]
@@ -523,7 +528,7 @@ namespace Libraries
             var data = new Dictionary<string, object>
             {
                 { "Name", Furre},
-                { "Access Level",info},
+                { "Access Level",info.AsInt32(0)},
                 { "date added",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) },
                 { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
@@ -531,12 +536,13 @@ namespace Libraries
             return 0 <= database.Insert("FURRE", data);
         }
 
+        [TriggerDescription("Add a new record to the FURRE table for the triggering furre")]
         [TriggerStringParameter]
         [TriggerStringParameter]
         [TriggerNumberParameter]
         private bool InsertTriggeringFurreRecord(TriggerReader reader)
         {
-            object info = "0";
+            object info = 0;
 
             if (reader.PeekString())
             {
@@ -552,7 +558,7 @@ namespace Libraries
             var data = new Dictionary<string, object>
             {
                 { "Name",Player.ShortName},
-                { "Access Level",info},
+                { "Access Level",info.AsInt32(0)},
                 { "date added",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) },
                 { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
@@ -560,7 +566,11 @@ namespace Libraries
             return database.Insert("FURRE", data) >= 0;
         }
 
-        //memorize table % to database table {...}.
+        /// <summary>
+        /// memorize table % to database table {...}.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
         [TriggerDescription("Store the specified variable table to the specified database table")]
         [TriggerVariableParameter]
         [TriggerStringParameter]
@@ -570,15 +580,21 @@ namespace Libraries
             var table = reader.ReadString().Replace("[", "").Replace("]", "");
 
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, object>();
+            //Create Setting Table and retrieve Table ID
+            var test = database.ExecuteNonQuery($"INSERT OR IGNORE INTO SettingsTableMaster (SettingsTable) VALUES ('{table}') ");
+            var SettingsTableID = database.ExecuteScalar($"SELECT ID FROM SettingsTableMaster WHERE SettingsTable = '{table}'");
+
+            var data = new Dictionary<string, object>
+            {
+                { "SettingsTableID", SettingsTableID }
+            };
 
             foreach (KeyValuePair<string, object> kvp in VarTable)
             {
-                string column = kvp.Key.Substring(1);
-                if (!ReadOnlyFurreTableFields.Contains($"[{column}]"))
-                    data.Add($"{column}", kvp.Value);
+                data.Add($"{kvp.Key}", kvp.Value);
             }
-            return 0 < database.InsertOrReplace("FURRE", data);
+
+            return 0 < database.InsertOrReplaceMultiRow("SettingsTable", data, $"{SettingsTableID}");
         }
 
         [TriggerStringParameter]
@@ -616,7 +632,7 @@ namespace Libraries
             var Entry = reader.ReadString();
             var Table = reader.ReadString();
 
-            var SelectSettngSQL = new StringBuilder()
+            var SQL = new StringBuilder()
                 .Append("select SettingsTable.*, SettingsTableMaster.ID from SettingsTable )")
                 .Append("inner join SettingsTableMaster on ")
                 .Append("SettingsTableMaster.")
@@ -624,7 +640,7 @@ namespace Libraries
                 .Append($"where SettingsTableMaster.Setting = '{Table}' ");
 
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            return database.GetValueFromTable(SelectSettngSQL.ToString()).Count < 0;
+            return database.GetValueFromTable(SQL.ToString()).Count < 0;
         }
 
         [TriggerStringParameter]
@@ -718,9 +734,9 @@ namespace Libraries
         private bool UpdateFurreNamed_Field(TriggerReader reader)
         {
             var info = reader.ReadString();
-
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var value = reader.ReadNumber();
+
             if (database == null)
                 database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, object>
@@ -740,8 +756,8 @@ namespace Libraries
         {
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
-
             var value = reader.ReadString();
+
             if (database == null) database = new SQLiteDatabase(SQLitefile);
             var data = new Dictionary<string, object>
             {

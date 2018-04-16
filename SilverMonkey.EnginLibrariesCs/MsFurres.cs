@@ -162,7 +162,7 @@ namespace Libraries
         {
             var name = reader.ReadString();
             var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
-            return Target.Visible;
+            return Target.InRange;
         }
 
         [TriggerStringParameter]
@@ -178,7 +178,7 @@ namespace Libraries
         {
             var name = reader.ReadString();
             var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
-            return !Target.Visible;
+            return !Target.InRange;
         }
 
         [TriggerStringParameter]
@@ -213,7 +213,7 @@ namespace Libraries
 
         private bool TriggeringCanSe(TriggerReader reader)
         {
-            return ((Furre)Player).Visible;
+            return ((Furre)Player).InRange;
         }
 
         private bool TriggeringInDream(TriggerReader reader)
@@ -223,7 +223,7 @@ namespace Libraries
 
         private bool TriggeringNotCanSe(TriggerReader reader)
         {
-            return !((Furre)Player).Visible;
+            return !((Furre)Player).InRange;
         }
 
         private bool TriggeringNotInDream(TriggerReader reader)
