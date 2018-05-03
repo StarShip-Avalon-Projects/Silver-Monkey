@@ -10,6 +10,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using static Libraries.PhoenixSpeak.PhoenixSpeakDataObject;
 
 namespace Libraries
 {
@@ -27,6 +28,7 @@ namespace Libraries
     {
         #region Private Fields
 
+        private const string PhoenixSpeakErrorMessage = "Sorry, I do not have access to Phoenix Speak in this dream. Please have the dream owner set my Access_Level. Reference: Furcadia Phoenix Speak https://cms.furcadia.com/creations/dreammaking/dragonspeak/psalpha";
         private ConcurrentQueue<PhoenixSpeakDataObject> phoenxSpeakObjects;
 
         #endregion Private Fields
@@ -40,7 +42,7 @@ namespace Libraries
         /// <para/>
         /// Use currentPsID to check the status of the current Phoenix Speak ID
         /// </summary>
-        public short GetPsId { get; private set; }
+        public static short GetPsId { get; private set; }
 
         #endregion Public Properties
 
@@ -141,15 +143,47 @@ namespace Libraries
             var Furre = reader.ReadString();
             GetPsId++;
             if (Furre.ToLower() == "[dream]")
-                return SendServer($"ps {GetPsId} clear dream.*");
-            return SendServer($"ps {GetPsId} clear character.{Furre.ToFurcadiaShortName()}");
+                SendServer($"ps {GetPsId} clear dream.*");
+            else
+                SendServer($"ps {GetPsId} clear character.{Furre.ToFurcadiaShortName()}");
+            var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+            if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Clear)
+                return true;
+
+            return true;
         }
 
         [TriggerDescription("Clears all Phoenix Speak about the triggering furre")]
         private bool ForgetAllPSForTriggeringFurre(TriggerReader reader)
         {
             GetPsId++;
-            return SendServer($"ps {GetPsId} clear character.{Player.ShortName}");
+            SendServer($"ps {GetPsId} clear character.{Player.ShortName}");
+
+            var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+            if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Clear)
+                return true;
+
+            return true;
         }
 
         [TriggerDescription("Clears the specified field about the specified character")]
@@ -161,8 +195,24 @@ namespace Libraries
             var Furre = reader.ReadString();
             GetPsId++;
             if (Furre.ToLower() == "[dream]")
-                return SendServer($"ps {GetPsId} clear dream.{Field}");
-            return SendServer($"ps {GetPsId} clear character.{Field}");
+                SendServer($"ps {GetPsId} clear dream.{Field}");
+            else
+                SendServer($"ps {GetPsId} clear character.{Field}");
+            var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+            if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Clear)
+                return true;
+
+            return true;
         }
 
         [TriggerDescription("Clears the specified Phoenix Speak about the triggering furre")]
@@ -171,7 +221,23 @@ namespace Libraries
         {
             var Field = reader.ReadString();
             GetPsId++;
-            return SendServer($"ps {GetPsId} clear character.{Player.ShortName}.{Field}");
+            SendServer($"ps {GetPsId} clear character.{Player.ShortName}.{Field}");
+
+            var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+            if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Clear)
+                return true;
+
+            return true;
         }
 
         private bool GetPsCharacterListToVariableTable(TriggerReader reader)
@@ -193,8 +259,24 @@ namespace Libraries
             GetPsId++;
 
             if (Furre.ToLower() == "[dream]")
-                return SendServer($"ps {GetPsId} set dream.{Field}='{Value}'");
-            return SendServer($"ps {GetPsId} set character.{Furre}.{Field}='{Value}'");
+                SendServer($"ps {GetPsId} set dream.{Field}='{Value}'");
+            else
+                SendServer($"ps {GetPsId} set character.{Furre}.{Field}='{Value}'");
+            var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+            if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+                return true;
+
+            return true;
         }
 
         [TriggerDescription("Sets the specified field about the specified character.")]
@@ -210,8 +292,24 @@ namespace Libraries
             GetPsId++;
 
             if (Furre.ToLower() == "[dream]")
-                return SendServer($"ps {GetPsId} set dream.{Field}='{Value}'");
-            return SendServer($"ps {GetPsId} set character.{Furre}.{Field}='{Value}'");
+                SendServer($"ps {GetPsId} set dream.{Field}='{Value}'");
+            else
+                SendServer($"ps {GetPsId} set character.{Furre}.{Field}='{Value}'");
+            var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+            if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+                return true;
+
+            return true;
         }
 
         [TriggerDescription("Sets the specified field as number or variable about the triggering furre.")]
@@ -224,7 +322,22 @@ namespace Libraries
 
             GetPsId++;
 
-            return SendServer($"ps {GetPsId} set character.{Player.ShortName}.{Field}='{Value}'");
+            SendServer($"ps {GetPsId} set character.{Player.ShortName}.{Field}='{Value}'");
+            var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+            if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+                return true;
+
+            return true;
         }
 
         [TriggerDescription("Sets the specified field as string about the triggering furre.")]
@@ -237,7 +350,23 @@ namespace Libraries
 
             GetPsId++;
 
-            return SendServer($"ps {GetPsId} set character.{Player.ShortName}.{Field}='{Value}'");
+            SendServer($"ps {GetPsId} set character.{Player.ShortName}.{Field}='{Value}'");
+
+            var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+            if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+                return true;
+
+            return true;
         }
 
         [TriggerDescription("Formats the variable table to a string readable by the game server and sends the Phoenix Speak data about the specified furre.")]
@@ -257,8 +386,24 @@ namespace Libraries
                 data.Add($"{kvp.Key}='{kvp.Value}'");
             }
             if (Furre.ToLower() == "[dream]")
-                return SendServer($"ps {GetPsId} set dream.{string.Join(",", data.ToArray())}");
-            return SendServer($"ps {GetPsId} set character.{Furre.ToFurcadiaShortName()}.{string.Join(",", data.ToArray())}");
+                SendServer($"ps {GetPsId} set dream.{string.Join(",", data.ToArray())}");
+            else
+                SendServer($"ps {GetPsId} set character.{Furre.ToFurcadiaShortName()}.{string.Join(",", data.ToArray())}");
+            var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+            if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+                return true;
+
+            return true;
         }
 
         /// <summary>
@@ -279,7 +424,23 @@ namespace Libraries
             {
                 data.Add($"{kvp.Key}='{kvp.Value}'");
             }
-            return SendServer($"ps {GetPsId} set character.{Player.ShortName}.{string.Join(",", data.ToArray())}");
+            SendServer($"ps {GetPsId} set character.{Player.ShortName}.{string.Join(",", data.ToArray())}");
+
+            var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+            if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+                return true;
+
+            return true;
         }
 
         private void ParseServerChannel(object sender, ParseChannelArgs Args)
@@ -295,29 +456,43 @@ namespace Libraries
         /// <param name="Args"></param>
         private void OnServerChannel(object sender, ParseChannelArgs Args)
         {
-            if (sender is ChannelObject ChanObject && Args.Channel == "")
+            if (sender is ChannelObject ChanObject && (Args.Channel == "text" || Args.Channel == "error"))
             {
                 Logger.Debug<MsPhoenixSpeak>(ChanObject.ChannelText);
                 // Snag the PS data only if the API has sent a PS Query
                 // Sample Data, Thanks Wiren ~ Gero
                 // PS ### Ok: get: result: money='500', partysize='1', playerexp='0', playerlevel='1', pokeballs='15', pokemon1='7 1 n Squirtle 1 0 1 tackle', pokemon2='0', pokemon3='0', pokemon4='0', pokemon5='0', pokemon6='0', sys_lastused_date=1523076301, totalpokemon='1'
-
-                if (ChanObject.ChannelText.StartsWith("PS ") && GetPsId > 0)
+                switch (Args.Channel)
                 {
-                    var PsQuery = ChanObject.ChannelText.Split(new char[] { ' ' }, 5);
-                    if (short.TryParse(PsQuery[1].AsString(), out short psID) && psID > 0 && PsQuery[3] == "get:")
-                    {
-                        phoenxSpeakObjects.Enqueue(new PhoenixSpeakDataObject(ChanObject.RawInstruction));
-                    }
-                    if (phoenxSpeakObjects.Count == 0)
-                        GetPsId = 0;
-                }
+                    case "text":
+                        if (ChanObject.ChannelText.StartsWith("PS ") && GetPsId > 0) //
+                        {
+                            var PsQuery = ChanObject.ChannelText.Split(new char[] { ' ' }, 5);
 
-                // PS ### Error: get: Query error: Field 'field' does not exist
+                            if (short.TryParse(PsQuery[1].AsString(), out short psID) && psID > 0)
+                            {
+                                if (PsQuery[2] == "Error:")
+                                    Logger.Warn(PhoenixSpeakErrorMessage);
+                                phoenxSpeakObjects.Enqueue(new PhoenixSpeakDataObject(ChanObject.RawInstruction));
+                                break;
+                            }
+                        }
+                        break;
+                    //Sorry, you do not have access to this PhoenixSpeak command.
+                    case "error":
+                        if (ChanObject.ChannelText == "Sorry, you do not have access to this PhoenixSpeak command.")
+                        {
+                            Logger.Warn(PhoenixSpeakErrorMessage);
+                        }
+                        break;
+                        // PS ### Error: get: Query error: Field 'field' does not exist
+                }
+                if (phoenxSpeakObjects.Count == 0)
+                    GetPsId = 0;
             }
         }
 
-        [TriggerDescription("Sends a Phoenix Speak Command to the Furcadia game-server, that requests all data for the specified furre and puts the results to a variable table")]
+        [TriggerDescription("Sends a Phoenix Speak Command to the Furcadia game-server, that requests all data for the specified furre and puts the results to a variable table. On error, this will stop return false and stop executing.")]
         [TriggerVariableParameter]
         private bool RememberPSForFurreNamedToVariableTable(TriggerReader reader)
         {
@@ -334,15 +509,27 @@ namespace Libraries
             // Wait for game server to give us the data
             var result = GetPhoenixSpeakData(GetPsId).Result;
 
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
+
             if (GetPsId == result.PhoenixSpeakID)
+            {
                 foreach (var variable in result.PsTable)
                     table.Add(variable);
-            Logger.Debug<MsPhoenixSpeak>($"table items:'{table.Count}'");
+                Logger.Debug<MsPhoenixSpeak>($"table items:'{table.Count}'");
+            }
 
             return true;
         }
 
-        [TriggerDescription("Sends a Phoenix Speak Command to the Furcadia game-server, that requests all data for the triggering furre and puts the results to a variable table")]
+        [TriggerDescription("Sends a Phoenix Speak Command to the Furcadia game-server, that requests all data for the triggering furre and puts the results to a variable table. On error, this will stop return false and stop executing.")]
         [TriggerVariableParameter]
         private bool RememberPSForTrigFurreToVariableTable(TriggerReader reader)
         {
@@ -354,6 +541,16 @@ namespace Libraries
 
             // Snag Ps Data and throw it into the specified Table
             var result = GetPhoenixSpeakData(GetPsId).Result;
+
+            if (result is null || result.IsError)
+            {
+                Logger.Debug<MsPhoenixSpeak>("An error has occurred.");
+                return false;
+            }
+            if (result.PhoenixSpeakID <= 0)
+            {
+                return false;
+            }
 
             if (GetPsId == result.PhoenixSpeakID)
                 foreach (var variable in result.PsTable)
@@ -371,12 +568,14 @@ namespace Libraries
         /// <returns></returns>
         private Task<PhoenixSpeakDataObject> GetPhoenixSpeakData(short CurrentPsId = -1)
         {
+            if (CurrentPsId < 1)
+                throw new ArgumentOutOfRangeException("CurrentPsId", CurrentPsId, "Current Phoenix Speak ID is out of range.");
             var TimeOut = DateTime.Now.AddSeconds(3);
             do
             {
                 if (DateTime.Now > TimeOut)
                 {
-                    Logger.Error("Did not receive Phoenix Speak data in the allotted time.");
+                    Logger.Warn($"Timed out while waiting for Phoenix Speak Data with ID {CurrentPsId}");
                     break;
                 }
                 Task.Delay(300);

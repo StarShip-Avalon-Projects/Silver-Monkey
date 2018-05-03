@@ -704,7 +704,7 @@ namespace MonkeyCore.Logging
 
         private static void Initialize()
         {
-            cancelToken = new CancellationTokenSource();
+            cancelToken = new CancellationTokenSource(800);
             logTask = new Task(() =>
             {
                 while (true)

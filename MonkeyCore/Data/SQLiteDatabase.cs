@@ -121,15 +121,8 @@ namespace MonkeyCore.Data
             {
                 return 0;
             }
-            try
-            {
-                return ExecuteNonQuery($"ALTER TABLE { table } ADD COLUMN { collumn } { type };");
-            }
-            catch
-            {
-                Logger.Warn($"Failed to create column [{collumn}]. Most likely it already exists, which is fine.");
-            }
-            return -1;
+
+            return ExecuteNonQuery($"ALTER TABLE { table } ADD COLUMN { collumn } { type };");
         }
 
         /// <summary>
@@ -163,15 +156,8 @@ namespace MonkeyCore.Data
         public int ClearTable(string table)
         {
             Logger.Debug<SQLiteDatabase>($"Clear Table {table}");
-            try
-            {
-                return ExecuteNonQuery($"delete FROM {table};");
-            }
-            catch (Exception ex)
-            {
-                ex.Log(Level.Error);
-            }
-            return -1;
+
+            return ExecuteNonQuery($"delete FROM {table};");
         }
 
         ///<Summary>
@@ -181,14 +167,8 @@ namespace MonkeyCore.Data
         public void CreateTbl(string table, string columns)
         {
             Logger.Debug<SQLiteDatabase>($"Create Table '{table}' with COLUMNS: '{columns}'");
-            try
-            {
-                ExecuteNonQuery($"CREATE TABLE IF NOT EXISTS { table }( { columns })");
-            }
-            catch (Exception ex)
-            {
-                ex.Log(Level.Error);
-            }
+
+            ExecuteNonQuery($"CREATE TABLE IF NOT EXISTS { table }( { columns })");
         }
 
         /// <summary>
@@ -206,16 +186,8 @@ namespace MonkeyCore.Data
         public int Delete(string table, string where)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}' WHERE: '{where}'");
-            try
-            {
-                return ExecuteNonQuery($"DELETE FROM {table} WHERE {where};");
-            }
-            catch (Exception ex)
-            {
-                ex.Log(Level.Error);
-            }
 
-            return -1;
+            return ExecuteNonQuery($"DELETE FROM {table} WHERE {where};");
         }
 
         /// <summary>
@@ -339,17 +311,9 @@ namespace MonkeyCore.Data
                 {
                     cmd.CommandText = $"{SyncPragma} {sql}";
 
-                    try
-                    {
-                        SQLiteDataReader reader = cmd.ExecuteReader();
-                        dt.Load(reader);
-                        reader.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        dt = null;
-                        ex.Log(Level.Error);
-                    }
+                    SQLiteDataReader reader = cmd.ExecuteReader();
+                    dt.Load(reader);
+                    reader.Close();
                 }
             }
             return dt;
@@ -367,45 +331,40 @@ namespace MonkeyCore.Data
         {
             Logger.Debug<SQLiteDatabase>($"'{sql}'");
             Dictionary<string, object> result = new Dictionary<string, object>();
-            try
+
+            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
             {
-                using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
+                cnn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(cnn))
                 {
-                    cnn.Open();
-                    using (SQLiteCommand cmd = new SQLiteCommand(cnn))
+                    cmd.CommandText = $"{SyncPragma} {sql}";
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.CommandText = $"{SyncPragma} {sql}";
-                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        if (reader.HasRows)
                         {
-                            if (reader.HasRows)
+                            DataTable schemaTable = reader.GetSchemaTable();
+                            DataTable data = new DataTable();
+                            foreach (DataRow row in schemaTable.Rows)
                             {
-                                DataTable schemaTable = reader.GetSchemaTable();
-                                DataTable data = new DataTable();
-                                foreach (DataRow row in schemaTable.Rows)
-                                {
-                                    string colName = row.Field<string>("ColumnName");
-                                    Type t = row.Field<Type>("DataType");
-                                    data.Columns.Add(colName, t);
-                                }
-                                while (reader.Read())
-                                {
-                                    var newRow = data.Rows.Add();
-                                    foreach (DataColumn col in data.Columns)
-                                    {
-                                        newRow[col.ColumnName] = reader[col.ColumnName];
-                                    }
-                                }
-                                foreach (DataRow row in data.Rows)
-                                    result.Add(row[0].AsString(), row[1]);
+                                string colName = row.Field<string>("ColumnName");
+                                Type t = row.Field<Type>("DataType");
+                                data.Columns.Add(colName, t);
                             }
+                            while (reader.Read())
+                            {
+                                var newRow = data.Rows.Add();
+                                foreach (DataColumn col in data.Columns)
+                                {
+                                    newRow[col.ColumnName] = reader[col.ColumnName];
+                                }
+                            }
+                            foreach (DataRow row in data.Rows)
+                                result.Add(row[0].AsString(), row[1]);
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                ex.Log(Level.Error);
-            }
+
             return result;
         }
 
@@ -437,16 +396,8 @@ namespace MonkeyCore.Data
                 values.Add($"'{val.Value}'");
             }
 
-            try
-            {
-                string cmd = $"INSERT OR IGNORE into {table} ({string.Join(", ", columns.ToArray())}) VALUES ({string.Join(", ", values.ToArray())})";
-                rowCount = ExecuteNonQuery(cmd);
-            }
-            catch (Exception ex)
-            {
-                rowCount = -1;
-                ex.Log(Level.Error);
-            }
+            string cmd = $"INSERT OR IGNORE into {table} ({string.Join(", ", columns.ToArray())}) VALUES ({string.Join(", ", values.ToArray())})";
+            rowCount = ExecuteNonQuery(cmd);
 
             return rowCount;
         }
@@ -464,7 +415,7 @@ namespace MonkeyCore.Data
             Logger.Debug<SQLiteDatabase>($"'{table}' data: '{data}'");
             if (data == null || data.Count == 0)
             {
-                throw new ArgumentOutOfRangeException("No data to process");
+                throw new ArgumentOutOfRangeException("data", data, "No data to process");
             }
             int rowCount = 0;
             List<string> DataRow = new List<string>();
@@ -475,22 +426,14 @@ namespace MonkeyCore.Data
                 DataRow.Add($"('{SettingsTableID}', '{Table_kvp.Key}','{Table_kvp.Value}')");
             }
 
-            try
-            {
-                // INSERT OR IGNORE INTO my_table(SettingsTableID, Key, Value) VALUES('Karen', 34, ' '),(' ',' ',' ')
-                // UPDATE my_table SET age = 34 WHERE name = 'Karen'
+            // INSERT OR IGNORE INTO my_table(SettingsTableID, Key, Value) VALUES('Karen', 34, ' '),(' ',' ',' ')
+            // UPDATE my_table SET age = 34 WHERE name = 'Karen'
 
-                var SQL = new StringBuilder()
-                    .Append($"INSERT OR REPLACE INTO {table}( SettingsTableID, Setting, Value)")
-                    .Append("VALUES")
-                    .Append(string.Join(", ", DataRow.ToArray()));
-                rowCount = ExecuteNonQuery(SQL.ToString());
-            }
-            catch (Exception ex)
-            {
-                rowCount = -1;
-                ex.Log(Level.Error);
-            }
+            var SQL = new StringBuilder()
+                .Append($"INSERT OR REPLACE INTO {table}( SettingsTableID, Setting, Value)")
+                .Append("VALUES")
+                .Append(string.Join(", ", DataRow.ToArray()));
+            rowCount = ExecuteNonQuery(SQL.ToString());
 
             return rowCount;
         }
@@ -542,15 +485,8 @@ namespace MonkeyCore.Data
         public bool TableExists(string table)
         {
             Logger.Debug<SQLiteDatabase>($"'{table}'");
-            try
-            {
-                return ExecuteNonQuery($"SELECT name FROM sqlite_master WHERE name='{ table }'") > 0;
-            }
-            catch (Exception ex)
-            {
-                ex.Log(Level.Error);
-            }
-            return false;
+
+            return ExecuteNonQuery($"SELECT name FROM sqlite_master WHERE name='{ table }'") > 0;
         }
 
         /// <summary>
@@ -606,15 +542,8 @@ namespace MonkeyCore.Data
                     .Append($"{string.Join(", ", ColumnNamesWithOutMetaData.ToArray())} FROM ")
                     .Append($"{table }backup; DROP TABLE ")
                     .Append($"{table }backup;");
-            try
-            {
-                return ExecuteNonQuery(sql.ToString());
-            }
-            catch (Exception ex)
-            {
-                ex.Log(Level.Error);
-            }
-            return -1;
+
+            return ExecuteNonQuery(sql.ToString());
         }
 
         /// <summary>
@@ -646,15 +575,8 @@ namespace MonkeyCore.Data
                 vals.Add($"[{val.Key}] = '{val.Value.ToString()}'");
             }
             string cmd = $"UPDATE {table} SET {string.Join(", ", vals.ToArray())} WHERE { where};";
-            try
-            {
-                return ExecuteNonQuery(cmd);
-            }
-            catch (Exception ex)
-            {
-                ex.Log(Level.Error);
-                return -1;
-            }
+
+            return ExecuteNonQuery(cmd);
         }
 
         /// <summary>
@@ -667,22 +589,16 @@ namespace MonkeyCore.Data
             Logger.Debug<SQLiteDatabase>($"'{table}'");
             List<string> result = new List<string>();
             DataTable dt = GetDataTable($"PRAGMA Table_Info({table});");
-            try
+
+            if (dt != null)
             {
-                if (dt != null)
+                foreach (DataRow row in dt.Rows)
                 {
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        if (int.Parse(row["pk"].ToString()) > 0)
-                            result.Add($"[{row["name"].ToString()}]");
-                    }
+                    if (int.Parse(row["pk"].ToString()) > 0)
+                        result.Add($"[{row["name"].ToString()}]");
                 }
             }
-            catch (Exception ex)
-            {
-                ex.Log(Level.Error);
-                return null;
-            }
+
             return result;
         }
 
@@ -695,34 +611,28 @@ namespace MonkeyCore.Data
         {
             Logger.Debug<SQLiteDatabase>($"'{table}'");
             List<string> result = new List<string>();
-            try
+
+            DataTable IndexListDataTable = GetDataTable($"PRAGMA INDEX_LIST({table});");
+            if (IndexListDataTable != null)
             {
-                DataTable IndexListDataTable = GetDataTable($"PRAGMA INDEX_LIST({table});");
-                if (IndexListDataTable != null)
+                foreach (DataRow row in IndexListDataTable.Rows)
                 {
-                    foreach (DataRow row in IndexListDataTable.Rows)
+                    if (int.Parse(row["unique"].ToString()) != 0)
                     {
-                        if (int.Parse(row["unique"].ToString()) != 0)
+                        DataTable indexXinfoDataTable = GetDataTable($"PRAGMA index_xinfo({row["name"]});");
+                        if (indexXinfoDataTable != null)
                         {
-                            DataTable indexXinfoDataTable = GetDataTable($"PRAGMA index_xinfo({row["name"]});");
-                            if (indexXinfoDataTable != null)
+                            foreach (DataRow row2 in indexXinfoDataTable.Rows)
                             {
-                                foreach (DataRow row2 in indexXinfoDataTable.Rows)
-                                {
-                                    string ColumnName = row2["name"].ToString();
-                                    if (!string.IsNullOrWhiteSpace(ColumnName))
-                                        result.Add($"[{ColumnName}]");
-                                }
+                                string ColumnName = row2["name"].ToString();
+                                if (!string.IsNullOrWhiteSpace(ColumnName))
+                                    result.Add($"[{ColumnName}]");
                             }
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                ex.Log(Level.Error);
-                return null;
-            }
+
             return result;
         }
 
@@ -743,28 +653,23 @@ namespace MonkeyCore.Data
             //PRAGMA table_info(table_name);
             string sql = $"SELECT * FROM { table}";
             List<string> columnNames = new List<string>();
-            try
+
+            using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
             {
-                using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
+                cnn.Open();
+                using (SQLiteCommand SQLcommand = cnn.CreateCommand())
                 {
-                    cnn.Open();
-                    using (SQLiteCommand SQLcommand = cnn.CreateCommand())
+                    SQLcommand.CommandText = $"{SyncPragma} {sql}";
+                    using (SQLiteDataReader sqlDataReader = SQLcommand.ExecuteReader())
                     {
-                        SQLcommand.CommandText = $"{SyncPragma} {sql}";
-                        using (SQLiteDataReader sqlDataReader = SQLcommand.ExecuteReader())
+                        for (int i = 0; i <= sqlDataReader.VisibleFieldCount - 1; i++)
                         {
-                            for (int i = 0; i <= sqlDataReader.VisibleFieldCount - 1; i++)
-                            {
-                                columnNames.Add($"[{ sqlDataReader.GetName(i) }]");
-                            }
+                            columnNames.Add($"[{ sqlDataReader.GetName(i) }]");
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                ex.Log(Level.Error);
-            }
+
             return columnNames;
         }
 

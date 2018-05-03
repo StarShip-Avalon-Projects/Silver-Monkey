@@ -15,9 +15,14 @@ namespace SmEngineTests
     internal class PhoenixSpeakTests
     {
         private const string PsGetCharacters = "PS Ok: get: result: b='<array>', bloodofaraven666='<array>', bloodstar='<array>', CJ='<array>', cjkilman='<array>', g='<array>', gerolkae='<array>', h='<array>', queenchrysalis='<array>', r='<array>', s='<array>', silvermonkey='<array>', w='<array>'";
-        private const string PsGetCharacterGerolkae = "PS Ok: get: result: sys_lastused_date='2/9/2013 4:31:39 AM', testvar1=1, testvar2='Test2'";
-        private const string PsGetCharacterJohn = "PS Error: get: Query error: (-1) Unexpected character '^' at column 17";
-        private const string PsGetCharacterJohn2 = "PS Error: get: Query error: Field 'john' does not exist";
+        private const string PsGetCharacterOk = "PS Ok: get: result: sys_lastused_date='2/9/2013 4:31:39 AM', testvar1=1, testvar2='Test2'";
+        private const string PsGetCharacterError = "PS Error: get: Query error: (-1) Unexpected character '^' at column 17";
+        private const string PsGetCharacterError2 = "PS Error: get: Query error: Field 'john' does not exist";
+
+        private const string PsIdGetCharacters = "PS 666 Ok: get: result: b='<array>', bloodofaraven666='<array>', bloodstar='<array>', CJ='<array>', cjkilman='<array>', g='<array>', gerolkae='<array>', h='<array>', queenchrysalis='<array>', r='<array>', s='<array>', silvermonkey='<array>', w='<array>'";
+        private const string PsIdGetCharacterOk = "PS 666 Ok: get: result: sys_lastused_date='2/9/2013 4:31:39 AM', testvar1=1, testvar2='Test2'";
+        private const string PsIdGetCharacterError = "PS 666 Error: get: Query error: (-1) Unexpected character '^' at column 17";
+        private const string PsIdGetCharacterError2 = "PS 666 Error: get: Query error: Field 'john' does not exist";
 
         public string SettingsFile { get; private set; }
         public string BackupSettingsFile { get; private set; }
@@ -69,22 +74,44 @@ namespace SmEngineTests
             Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
         }
 
-        [TestCase(true)]
-        //  [TestCase(false)]
-        public void TestPsCharacterList_StandAlone(bool Standalone)
+        [TestCase(PsGetCharacters, PsGetCharacters)]
+        public void TestPsCharacterList_StandAlone(string PSData, string ExpectedValue, string ExpectedChannel = "text")
         {
-            BotHasConnected_StandAlone(Standalone);
+            BotHasConnected_StandAlone();
             if (!Proxy.StandAlone)
                 HaltFor(DreamEntranceDelay);
 
             Proxy.ProcessServerChannelData += (sender, Args) =>
             {
-                var ServeObject = (ChannelObject)sender;
-                Assert.That(ServeObject.Player.Message,
-                    Is.EqualTo(""));
+                if (sender is ChannelObject ServeObject)
+                {
+                    Assert.That(ServeObject.Player.Message.Trim(),
+                        Is.EqualTo(ExpectedValue.Trim()),
+                        $"Player.Message '{ServeObject.Player.Message}' ExpectedValue: {ExpectedValue}"
+                        );
+                    Assert.That(Args.Channel,
+                        Is.EqualTo(ExpectedChannel),
+                        $"Player.Message '{Args.Channel}' ExpectedValue: {ExpectedChannel}"
+                        );
+                }
             };
 
-            Proxy.ParseServerChannel(PsGetCharacters, false);
+            Proxy.ParseServerChannel(PSData, false);
+
+            Proxy.ProcessServerChannelData -= (sender, Args) =>
+            {
+                if (sender is ChannelObject ServeObject)
+                {
+                    Assert.That(ServeObject.Player.Message.Trim(),
+                        Is.EqualTo(ExpectedValue.Trim()),
+                        $"Player.Message '{ServeObject.Player.Message}' ExpectedValue: {ExpectedValue}"
+                        );
+                    Assert.That(Args.Channel,
+                        Is.EqualTo(ExpectedChannel),
+                        $"Player.Message '{Args.Channel}' ExpectedValue: {ExpectedChannel}"
+                        );
+                }
+            };
 
             DisconnectTests();
         }

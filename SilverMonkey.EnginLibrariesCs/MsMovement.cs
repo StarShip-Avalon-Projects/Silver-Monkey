@@ -444,7 +444,7 @@ namespace Libraries
             var Var = reader.ReadVariable(true);
             var name = reader.ReadString();
             var Target = DreamInfo.Furres.GetFurreByName(name);
-            switch (Target.FurreColors.Gender)
+            switch (Target.FurreColors.Gender.Value)
             {
                 case -1:
                     Logger.Warn("Gender not found. Try looking at the furre first");

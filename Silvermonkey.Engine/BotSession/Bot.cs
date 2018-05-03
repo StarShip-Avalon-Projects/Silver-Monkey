@@ -446,7 +446,7 @@ namespace Engine.BotSession
                         return;
 
                     case "myspeech":
-                        break;
+                        return;
 
                     case "whisper":
                         // (0:19) When anyone whispers something,
@@ -469,9 +469,7 @@ namespace Engine.BotSession
 
                     case "emote":
                         if (IsConnectedCharacter(ChanObject.Player))
-                        {
                             return;
-                        }
 
                         // (0:16) When anyone emotes something,
                         // (0:17) When anyone emotes {..},

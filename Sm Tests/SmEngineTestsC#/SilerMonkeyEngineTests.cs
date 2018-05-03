@@ -93,7 +93,7 @@ namespace SmEngineTests
         [TestCase(EmitWarning, "(<name shortname='silvermonkey'>Silver|Monkey</name> just emitted.)")]
         [TestCase(Emit, "Silver|Monkey has arrived...")]
         [TestCase(EmitBlah, "Blah")]
-        [TestCase(Emote, "Emoe")]
+        [TestCase(Emote, " Emoe")]
         [TestCase(EmitTest, "test")]
         public void ChannelTextIs(string testc, string ExpectedValue)
         {
@@ -101,8 +101,8 @@ namespace SmEngineTests
             {
                 if (sender is ChannelObject ServeObject)
                 {
-                    Assert.That(ServeObject.Player.Message,
-                        Is.EqualTo(ExpectedValue));
+                    Assert.That(ServeObject.Player.Message.Trim(),
+                        Is.EqualTo(ExpectedValue.Trim()));
                 }
             };
 
@@ -112,8 +112,8 @@ namespace SmEngineTests
             {
                 if (sender is ChannelObject ServeObject)
                 {
-                    Assert.That(ServeObject.Player.Message,
-                        Is.EqualTo(ExpectedValue));
+                    Assert.That(ServeObject.Player.Message.Trim(),
+                        Is.EqualTo(ExpectedValue.Trim()));
                 }
             };
 
@@ -168,7 +168,7 @@ namespace SmEngineTests
         }
 
         [TestCase(GeroShout, "ping")]
-        public void ProxySession_InstructionObjectPlayerIs(string testc, string ExpectedValue)
+        public void SilverMonkeyEngine_InstructionObjectPlayerIs(string testc, string ExpectedValue)
         {
             //Turn the channel on
             Proxy.SendFormattedTextToServer("- Shout");
@@ -177,8 +177,8 @@ namespace SmEngineTests
             {
                 if (sender is ChannelObject InstructionObject)
                 {
-                    Assert.That(InstructionObject.Player.Message,
-                        Is.EqualTo(ExpectedValue));
+                    Assert.That(InstructionObject.Player.Message.Trim(),
+                        Is.EqualTo(ExpectedValue.Trim()));
                 }
             };
 
@@ -188,8 +188,8 @@ namespace SmEngineTests
             {
                 if (sender is ChannelObject InstructionObject)
                 {
-                    Assert.That(InstructionObject.Player.Message,
-                        Is.EqualTo(ExpectedValue));
+                    Assert.That(InstructionObject.Player.Message.Trim(),
+                        Is.EqualTo(ExpectedValue.Trim()));
                 }
             };
         }

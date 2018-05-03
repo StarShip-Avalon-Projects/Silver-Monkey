@@ -115,7 +115,6 @@ Public Class Main
         ' Add any initialization after the InitializeComponent() call.
         Dim HelpItems = New HelpLinkToolStripMenu()
         ReferenceLinksToolStripMenuItem.DropDown.Items.AddRange(HelpItems.MenuItems.ToArray)
-
         BotConfig = New BotOptions()
         FileLogWriter = New LogStream(BotConfig.LogOptions)
         FurcSession = New Bot(BotConfig)
@@ -683,7 +682,7 @@ Public Class Main
         Using Bsetup = New BotSetup()
             Bsetup.BotConfig = BotConfig
             If Bsetup.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                BotConfig = Bsetup.BotConfig
+                UpdateBotConfig(Bsetup.BotConfig.BotPath, Bsetup.BotConfig)
             End If
         End Using
     End Sub
@@ -720,8 +719,8 @@ Public Class Main
         FurreCountTxtBx.Font = Mainsettings.ApFont
     End Sub
 
-    Private Sub LaunchEditor()
-        If String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
+    Private Sub LaunchEditor(ByVal MonkeySpeakScriptFile As String)
+        If String.IsNullOrEmpty(MonkeySpeakScriptFile) Then
             Dim result As Integer = MessageBox.Show("No Botfile Loaded", "caption", MessageBoxButtons.OK)
             If result = DialogResult.OK Then
                 Exit Sub
@@ -733,15 +732,15 @@ Public Class Main
             .FileName = Path.Combine(IO.Paths.ApplicationPath, MsEditor)
         }
 
-        Dim f As String = IO.Paths.CheckBotFolder(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
+        Dim f As String = IO.Paths.CheckBotFolder(MonkeySpeakScriptFile)
 
         If Not String.IsNullOrEmpty(FurcSession.ConnectedFurre.Name) _
-            And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
+            And Not String.IsNullOrEmpty(MonkeySpeakScriptFile) Then
 
             processStrt.Arguments = "-B=""" + FurcSession.ConnectedFurre.Name + """ """ + f + """"
 
         ElseIf String.IsNullOrEmpty(FurcSession.ConnectedFurre.Name) _
-        And Not String.IsNullOrEmpty(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile) Then
+        And Not String.IsNullOrEmpty(MonkeySpeakScriptFile) Then
 
             processStrt.Arguments = """" + f + """"
         End If
@@ -875,7 +874,7 @@ Public Class Main
     Private Sub Main_KeyUp(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyUp
         If (e.KeyCode = Keys.E AndAlso e.Modifiers = Keys.Control) Then
 
-            LaunchEditor()
+            LaunchEditor(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
 
             'e.Handled = True
             'e.SuppressKeyPress = True
@@ -937,18 +936,16 @@ Public Class Main
                     File = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Silver Monkey", File)
                 End If
 
-                UpdateBotConfig(File)
+                UpdateBotConfig(File, BotConfig)
                 EditBotToolStripMenuItem.Enabled = True
                 Logger.Info($"Loaded: ""{ File }""")
             ElseIf Mainsettings.LoadLastBotFile And My.Application.CommandLineArgs.Count = 0 Then
                 EditBotToolStripMenuItem.Enabled = True
             End If
 
-            If Not IsNothing(BotConfig) Then
-                UpdateBotConfig(BotConfig.BotSettingsFile, BotConfig)
-                If BotConfig.AutoConnect Then
-                    BTN_Go.PerformClick()
-                End If
+            UpdateBotConfig(BotConfig.BotSettingsFile, BotConfig)
+            If BotConfig.AutoConnect Then
+                BTN_Go.PerformClick()
             End If
         Catch ex As Exception
             Logger.Error(ex)
@@ -972,7 +969,7 @@ Public Class Main
     End Sub
 
     Private Sub MSEditorToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles MSEditorToolStripMenuItem.Click, EditorTrayIconMenuItem.Click
-        LaunchEditor()
+        LaunchEditor(BotConfig.MonkeySpeakEngineOptions.MonkeySpeakScriptFile)
     End Sub
 
     Private Sub NewBotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles NewBotToolStripMenuItem.Click
@@ -1060,9 +1057,8 @@ Public Class Main
             .InitialDirectory = IO.Paths.SilverMonkeyBotPath
 
             If .ShowDialog = DialogResult.OK Then
-                UpdateBotConfig(.FileName)
                 SaveRecentFile(.FileName)
-                UpdateBotConfig(.FileName)
+                UpdateBotConfig(.FileName, BotConfig)
                 ' BotSetup.BotFile = .FileName BotSetup.ShowDialog()
                 Me.EditBotToolStripMenuItem.Enabled = True
             End If

@@ -1,5 +1,6 @@
 ﻿using Furcadia.Net.Utils.ChannelObjects;
 using Monkeyspeak;
+using Monkeyspeak.Libraries;
 using System;
 using System.Linq;
 
@@ -80,50 +81,50 @@ namespace Libraries
             Add(TriggerCategory.Effect,
                  r =>
                  SendServer($"`summon {Player.ShortName}"),
-                 "summon the triggering furre");
+                 "summon the triggering furre.");
 
             Add(TriggerCategory.Effect,
                 r =>
                 SendServer($"`summon {r.ReadString().ToFurcadiaShortName()}"),
-                "summon the the furre named {...}.");
+                "summon the furre named {...}.");
 
             Add(TriggerCategory.Effect,
                 r =>
                 SendServer($"`join {Player.ShortName}"),
-                "join the triggering furre");
+                "join the triggering furre.");
 
             Add(TriggerCategory.Effect,
                 r =>
                 SendServer($"`join {r.ReadString().ToFurcadiaShortName()}"),
-                "join the the furre named {...}.");
+                "join the furre named {...}.");
 
             Add(TriggerCategory.Effect,
-                r => SendServer($"`follow {Player.ShortName}"),
-                "follow the triggering furre");
+               FolloTriggeringFurre,
+                "follow the triggering furre.");
 
             Add(TriggerCategory.Effect,
                 r => SendServer($"`follow {r.ReadString().ToFurcadiaShortName()}"),
-                "follow the the furre named {...}.");
+                "follow the furre named {...}.");
 
             Add(TriggerCategory.Effect,
-                r => SendServer($"`lean {Player.ShortName}"),
-                "lead the triggering furre");
+                r => SendServer($"`lead"),
+                "lead the triggering furre.");
 
             Add(TriggerCategory.Effect,
                 r => SendServer($"`lead {r.ReadString().ToFurcadiaShortName()}"),
-                "lead the the furre named {...}.");
+                "lead the furre named {...}.");
 
             Add(TriggerCategory.Effect,
-                r => SendServer($"`cuddle {Player.ShortName}"),
-                "cuddle with the triggering furre");
+                r => SendServer($"`cuddle"),
+                "cuddle with the triggering furre.");
 
             Add(TriggerCategory.Effect,
                 r => SendServer($"`cuddle {r.ReadString().ToFurcadiaShortName()}"),
                 "cuddle with the furre named {...}.");
 
             Add(TriggerCategory.Effect,
-                r => SendServer($"`stop"),
-                "stop leading ,following or cuddling");
+                StopQuery,
+                "stop leading, following, or cuddling.");
         }
 
         /// <summary>
@@ -138,70 +139,94 @@ namespace Libraries
 
         #region Private Methods
 
+        [TriggerDescription("Detect any query request by any furre")]
         private bool AnyQueryRequest(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
             return true;
         }
 
+        [TriggerDescription("Detect a cuddle request by any furre.")]
         private bool CuddleRequestAnyFurre(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            return QueryType.cuddle == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+            return QueryType.cuddle == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
+        [TriggerDescription("Detect a cuddle request by the specified furre")]
         private bool CuddleRequestFurreNamed(TriggerReader reader)
         {
+            ReadTriggeringFurreParams(reader);
             return NameIs(reader)
-                && QueryType.cuddle == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+                && QueryType.cuddle == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
+        [TriggerDescription("respond to a lead request of the triggering furre.")]
+        private bool FolloTriggeringFurre(TriggerReader reader)
+        {
+            return SendServer($"`follow");
+        }
+
+        [TriggerDescription("Detect a follow request by any furre.")]
         private bool FollowRequestAnyFurre(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            return QueryType.follow == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+            return QueryType.follow == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
+        [TriggerDescription("Detect a follow request by the specified furre.")]
         private bool FollowRequestFurreNamed(TriggerReader reader)
         {
             return NameIs(reader)
-                 && QueryType.follow == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+                && QueryType.follow == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
+        [TriggerDescription("Detect a join request by the specified.")]
         private bool JoinRequestFurreNamed(TriggerReader reader)
         {
             return NameIs(reader) &&
-                QueryType.join == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+                QueryType.join == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
+        [TriggerDescription("Detect join request by any furre.")]
         private bool JoinRequestTriggeringFurre(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            return QueryType.join == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+            return QueryType.join == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
+        [TriggerDescription("Detect leading request by any furre.")]
         private bool LeadRequestAnyFurre(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            return QueryType.lead == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+            return QueryType.lead == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
+        [TriggerDescription("Detect a lead request by the specified furre.")]
         private bool LeadRequestFurreNamed(TriggerReader reader)
         {
             return NameIs(reader)
-               && QueryType.lead == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+               && QueryType.lead == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
+        [TriggerDescription("Cancels the last query, Lead, Follow, and cuddle.")]
+        private bool StopQuery(TriggerReader reader)
+        {
+            return SendServer($"`stop");
+        }
+
+        [TriggerDescription("Detect summoning request by the specified furre.")]
         private bool SummonRequestFurreNamed(TriggerReader reader)
         {
             return NameIs(reader) &&
-                 QueryType.summon == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+                 QueryType.summon == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
+        [TriggerDescription("Detect summoning request by any furre.")]
         private bool SummonRequestTriggeringFurre(TriggerReader reader)
         {
             ReadTriggeringFurreParams(reader);
-            return QueryType.summon == reader.GetParametersOfType<QueryChannelObject>().First().Query;
+            return QueryType.summon == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
         #endregion Private Methods

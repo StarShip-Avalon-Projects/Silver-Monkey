@@ -9,6 +9,7 @@ using Monkeyspeak.Libraries;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SQLite;
 using System.Text;
 using static Libraries.MsLibHelper;
 
@@ -493,17 +494,47 @@ namespace Libraries
         {
             var table = reader.ReadString();
             var VarTable = reader.ReadVariableTable(true);
-
+            object SettingsTableID;
+            string SQL;
             if (database == null) database = new SQLiteDatabase(SQLitefile);
+            try
+            {
+                SQL = $"SELECT ID FROM SettingsTableMaster WHERE SettingsTable = '{table}'";
+                SettingsTableID = database.ExecuteScalar(SQL);
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
+            try
+            {
+                if (SettingsTableID.AsInt32() > -1)
+                {
+                    SQL = $"SELECT [Setting], [Value] FROM SettingsTable WHERE SettingsTableID = {SettingsTableID}";
 
-            var SettingsTableID = database.ExecuteScalar($"SELECT ID FROM SettingsTableMaster WHERE SettingsTable = '{table}'");
-            var SQL = $"SELECT [Setting], [Value] FROM SettingsTable WHERE SettingsTableID = {SettingsTableID}";
+                    var data = database.GetValueFromTable(SQL);
 
-            var data = database.GetValueFromTable(SQL);
-
-            foreach (KeyValuePair<string, object> kvp in data)
-                VarTable.Add(kvp.Key, kvp.Value);
-            return true;
+                    foreach (KeyValuePair<string, object> kvp in data)
+                        VarTable.Add(kvp.Key, kvp.Value);
+                    return true;
+                }
+                else
+                {
+                    Logger.Warn($"table '{table}' does not exist");
+                }
+                return false;
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerDescription("Add a new record to the FURRE table for the specified furre")]
@@ -532,8 +563,20 @@ namespace Libraries
                 { "date added",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) },
                 { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
-
-            return 0 <= database.Insert("FURRE", data);
+            try
+            {
+                return 0 <= database.Insert("FURRE", data);
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerDescription("Add a new record to the FURRE table for the triggering furre")]
@@ -562,11 +605,25 @@ namespace Libraries
                 { "date added",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) },
                 { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
             };
-
-            return database.Insert("FURRE", data) >= 0;
+            try
+            {
+                return database.Insert("FURRE", data) >= 0;
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         /// <summary>
+        /// Puts the variable table into database table.
+        /// <para/>
         /// memorize table % to database table {...}.
         /// </summary>
         /// <param name="reader">The reader.</param>
@@ -584,17 +641,30 @@ namespace Libraries
             var test = database.ExecuteNonQuery($"INSERT OR IGNORE INTO SettingsTableMaster (SettingsTable) VALUES ('{table}') ");
             var SettingsTableID = database.ExecuteScalar($"SELECT ID FROM SettingsTableMaster WHERE SettingsTable = '{table}'");
 
-            var data = new Dictionary<string, object>
+            var data = new Dictionary<string, object>();
+            try
             {
-                { "SettingsTableID", SettingsTableID }
-            };
+                foreach (KeyValuePair<string, object> kvp in VarTable)
+                {
+                    data.Add($"{kvp.Key}", kvp.Value);
+                }
 
-            foreach (KeyValuePair<string, object> kvp in VarTable)
-            {
-                data.Add($"{kvp.Key}", kvp.Value);
+                return 0 < database.InsertOrReplaceMultiRow("SettingsTable", data, $"{SettingsTableID}");
             }
-
-            return 0 < database.InsertOrReplaceMultiRow("SettingsTable", data, $"{SettingsTableID}");
+            catch (ArgumentOutOfRangeException)
+            {
+                return true;
+            }
+            //catch (SQLiteException ex)
+            //{
+            //    ex.Log();
+            //    return false;
+            //}
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -604,11 +674,23 @@ namespace Libraries
             var info = reader.ReadString();
             var Variable = reader.ReadVariable(true);
             var Furre = reader.Page.GetVariable(TriggeringFurreShortNameVariable).Value.ToString();
-
-            string sql = $"SELECT [{info }] FROM FURRE Where [Name]='{Furre}'";
-            if (database == null) database = new SQLiteDatabase(SQLitefile);
-            Variable.Value = database.ExecuteScalar(sql);
-            return true;
+            try
+            {
+                string sql = $"SELECT [{info }] FROM FURRE Where [Name]='{Furre}'";
+                if (database == null) database = new SQLiteDatabase(SQLitefile);
+                Variable.Value = database.ExecuteScalar(sql);
+                return true;
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerDescription("Removes a column to the Furre Table")]
@@ -622,7 +704,20 @@ namespace Libraries
                 return false;
             }
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            return 0 < database.RemoveColumn("FURRE", $"{column}");
+            try
+            {
+                return 0 < database.RemoveColumn("FURRE", $"{column}");
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -640,7 +735,20 @@ namespace Libraries
                 .Append($"where SettingsTableMaster.Setting = '{Table}' ");
 
             if (database == null) database = new SQLiteDatabase(SQLitefile);
-            return database.GetValueFromTable(SQL.ToString()).Count < 0;
+            try
+            {
+                return database.GetValueFromTable(SQL.ToString()).Count < 0;
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -651,9 +759,21 @@ namespace Libraries
                 return false;
             var info = reader.ReadString();
             var Number = reader.ReadNumber();
-
-            var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-            return Number == check.AsDouble(0d);
+            try
+            {
+                var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
+                return Number == check.AsDouble(0d);
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -662,8 +782,20 @@ namespace Libraries
         {
             var info = reader.ReadString();
             var str = reader.ReadString();
-
-            return str == GetRecordInfoForTheFurreNamed(info, Player.ShortName).AsString();
+            try
+            {
+                return str == GetRecordInfoForTheFurreNamed(info, Player.ShortName).AsString();
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -672,10 +804,22 @@ namespace Libraries
         {
             var info = reader.ReadString();
             var Number = reader.ReadNumber();
+            try
+            {
+                var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
 
-            var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-
-            return check.AsDouble(0d) > Number;
+                return check.AsDouble(0d) > Number;
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -684,10 +828,22 @@ namespace Libraries
         {
             var info = reader.ReadString();
             var Number = reader.ReadNumber();
+            try
+            {
+                var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
 
-            var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-
-            return check.AsDouble(0d) >= Number;
+                return check.AsDouble(0d) >= Number;
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -696,10 +852,22 @@ namespace Libraries
         {
             var info = reader.ReadString();
             var Number = reader.ReadNumber();
+            try
+            {
+                var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
 
-            var check = GetRecordInfoForTheFurreNamed(info, Player.ShortName);
-
-            return check.AsDouble(0d) < Number;
+                return check.AsDouble(0d) < Number;
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -736,17 +904,29 @@ namespace Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var value = reader.ReadNumber();
-
-            if (database == null)
-                database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, object>
+            try
             {
-                { "Name", Furre},
-                { info, value },
-                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
-            };
+                if (database == null)
+                    database = new SQLiteDatabase(SQLitefile);
+                var data = new Dictionary<string, object>
+                {
+                    { "Name", Furre},
+                    { info, value },
+                    { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
+                };
 
-            return 0 <= database.Update("FURRE", data, "[Name]='" + Furre + "'");
+                return 0 <= database.Update("FURRE", data, "[Name]='" + Furre + "'");
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -757,16 +937,28 @@ namespace Libraries
             var info = reader.ReadString();
             var Furre = reader.ReadString().ToFurcadiaShortName();
             var value = reader.ReadString();
-
-            if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, object>
+            try
             {
-                { "Name", Furre},
-                { info,value},
-                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
-            };
+                if (database == null) database = new SQLiteDatabase(SQLitefile);
+                var data = new Dictionary<string, object>
+                {
+                    { "Name", Furre},
+                    { info,value},
+                    { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
+                };
 
-            return 0 <= database.Update("FURRE", data, $"[Name]='{Furre}'");
+                return 0 <= database.Update("FURRE", data, $"[Name]='{Furre}'");
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -776,16 +968,28 @@ namespace Libraries
         {
             var info = reader.ReadString();
             var value = reader.ReadNumber();
-
-            if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, object>
+            try
             {
-                { "Name", Player.ShortName},
-                { info, value },
-                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
-            };
+                if (database == null) database = new SQLiteDatabase(SQLitefile);
+                var data = new Dictionary<string, object>
+                {
+                    { "Name", Player.ShortName},
+                    { info, value },
+                    { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
+                };
 
-            return 0 <= database.Update("FURRE", data, "[Name]='" + Player.ShortName + "'");
+                return 0 <= database.Update("FURRE", data, "[Name]='" + Player.ShortName + "'");
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerStringParameter]
@@ -795,15 +999,27 @@ namespace Libraries
             var info = reader.ReadString();
             var Furre = reader.Page.GetVariable(TriggeringFurreShortNameVariable).Value.ToString();
             var value = reader.ReadString();
-
-            if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var data = new Dictionary<string, object>
+            try
             {
-                { "Name", Player.ShortName},
-                { info, value },
-                { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
-            };
-            return 0 <= database.Update("FURRE", data, $"[Name]='{ Furre }'");
+                if (database == null) database = new SQLiteDatabase(SQLitefile);
+                var data = new Dictionary<string, object>
+                {
+                    { "Name", Player.ShortName},
+                    { info, value },
+                    { "date modified",TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById(DataBaseTimeZone)).ToString(DateTimeFormat) }
+                };
+                return 0 <= database.Update("FURRE", data, $"[Name]='{ Furre }'");
+            }
+            catch (SQLiteException ex)
+            {
+                ex.Log();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return false;
+            }
         }
 
         [TriggerDescription("Creates a new database or reuses the specified datase.")]

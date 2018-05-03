@@ -21,10 +21,40 @@ namespace Libraries.PhoenixSpeak
     {
         #region Private Fields
 
+        /// <summary>
+        /// Gets the error message.
+        /// </summary>
+        /// <value>
+        /// The error message.
+        /// </value>
+        public string ErrorMessage { get; private set; }
+
+        public bool IsError { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the phoenix speak.
+        /// </summary>
+        /// <value>
+        /// The type of the phoenix speak.
+        /// </value>
+        public PhoenixSpeakTypes phoenixSpeakType { get; private set; } = PhoenixSpeakTypes.Unknown;
+
         private int _CurrentPage;
         private int _PageCount;
         private Regex PsPage = new Regex("multi_result?([0-9]+)?/([0-9]+)?", SmRegExOptions);
         private Regex PsData = new Regex(@"\s(.*?)=('(.*?)'|[0-9]+)");
+
+        /// <summary>
+        /// Phoenix Speak Response Types
+        /// </summary>
+        public enum PhoenixSpeakTypes : byte
+        {
+            Unknown,
+            Get,
+            Set,
+            Clear,
+            Error
+        }
 
         #endregion Private Fields
 
@@ -38,15 +68,26 @@ namespace Libraries.PhoenixSpeak
         {
             int.TryParse(PsPage.Match(data, 0).Groups[1].Value, out _CurrentPage);
             int.TryParse(PsPage.Match(data, 0).Groups[2].Value, out _PageCount);
+
             PS_Page = PsPage.Replace(data, "");
+
             var PsQuery = data.Split(new char[] { ' ' }, 5);
-            if (PsQuery[1].AsInt16(0) > 0 && PsQuery[3] == "get:")
+            PsTable = new VariableTable(PsQuery[1]);
+
+            //Query isn't something we sent
+            if (PsQuery[1].AsInt16(0) <= 0)
+                return;
+
+            PhoenixSpeakID = PsQuery[1].AsInt16(0);
+
+            IsError = PsQuery[2] != "Ok:";
+
+            switch (PsQuery[3])
             {
-                PhoenixSpeakID = PsQuery[1].AsInt16(0);
-                PsTable = new VariableTable(PsQuery[1]);
-                // Data available
-                if (PsQuery[2] == "Ok:")
-                {
+                case "get:":
+                    phoenixSpeakType = PhoenixSpeakTypes.Get;
+                    // Data available
+
                     // PS ### Ok: get: result: money='500', partysize='1', playerexp='0', playerlevel='1', pokeballs='15', pokemon1='7 1 n Squirtle 1 0 1 tackle', pokemon2='0', pokemon3='0', pokemon4='0', pokemon5='0', pokemon6='0', sys_lastused_date=1523076301, totalpokemon='1'
 
                     var PsMatches = PsData.Matches(PsQuery[4]);
@@ -55,9 +96,27 @@ namespace Libraries.PhoenixSpeak
                             PsTable.Add(psMatch.Groups[1].Value, psMatch.Groups[2].Value);
                         else
                             PsTable.Add(psMatch.Groups[1].Value, psMatch.Groups[3].Value);
-                }
-                // No data available
-                // PS ### Error: get: Query error: Field 'bulldog' does not exist
+
+                    break;
+
+                //PS Error: clear: Query error: Field 'characer' does not exist
+
+                case "Error:":
+
+                    phoenixSpeakType = PhoenixSpeakTypes.Error;
+                    ErrorMessage = $"{PsQuery[3]} {PsQuery[4]}";
+                    // No data available
+                    // PS ### Error: get: Query error: Field 'bulldog' does not exist
+                    break;
+                //PS ### Ok: clear: Ok
+                case "clear:":
+                    phoenixSpeakType = PhoenixSpeakTypes.Clear;
+                    break;
+
+                //PS ### Ok: set: Ok
+                case "set:":
+                    phoenixSpeakType = PhoenixSpeakTypes.Set;
+                    break;
             }
         }
 
