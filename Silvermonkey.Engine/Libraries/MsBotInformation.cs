@@ -152,7 +152,7 @@ namespace Libraries
         [TriggerDescription("Disconnects the bot from the Furcadia game server")]
         private bool FurcadiaDisconnect(TriggerReader reader)
         {
-            Task.Run(() => ParentBotSession.DisconnectServerAndClientStreams()).Wait();
+            Task.Run(() => ParentBotSession.Disconnect()).Wait();
             return !ParentBotSession.IsServerSocketConnected;
         }
 

@@ -259,7 +259,7 @@ namespace SmEngineTests
                         $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
                 });
             };
-            Proxy.DisconnectServerAndClientStreams();
+            Proxy.Disconnect();
             Proxy.ServerDisconnected -= () =>
             {
                 Assert.Multiple(() =>

@@ -148,7 +148,7 @@ namespace SmEngineTests
                     });
                 }
             };
-            Proxy.DisconnectServerAndClientStreams();
+            Proxy.Disconnect();
             Proxy.ServerStatusChanged -= (sender, e) =>
             {
                 if (e.ConnectPhase == ConnectionPhase.Disconnected)

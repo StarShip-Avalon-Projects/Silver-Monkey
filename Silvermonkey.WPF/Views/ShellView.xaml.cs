@@ -22,10 +22,12 @@ namespace SilverMonkey.Views
         /// </summary>
         public BotOptions SessionOptions = new BotOptions();
 
+        private static Bot furcadiaSession;
+
         /// <summary>
         /// The furcadia session
         /// </summary>
-        public Bot FurcadiaSession;
+        public Bot FurcadiaSession { get => furcadiaSession; set => furcadiaSession = value; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShellView"/> class.
@@ -34,12 +36,15 @@ namespace SilverMonkey.Views
         {
             InitializeComponent();
             SessionOptions = new BotOptions();
-            FurcadiaSession = new Bot(SessionOptions);
-            FurcadiaSession.ProcessServerChannelData += OnProcessServerChannelData;
-            FurcadiaSession.ProcessServerInstruction += OnProcessServerInstruction;
-            FurcadiaSession.Error += OnError;
-            FurreList.ItemsSource = FurcadiaSession.Dream.Furres.ToIList;
-            FurreCount.DataContext = FurcadiaSession.Dream.Furres.Count.ToString();
+            if (FurcadiaSession is null)
+            {
+                FurcadiaSession = new Bot(SessionOptions);
+                FurcadiaSession.ProcessServerChannelData += OnProcessServerChannelData;
+                FurcadiaSession.ProcessServerInstruction += OnProcessServerInstruction;
+                FurcadiaSession.Error += OnError;
+                FurreList.ItemsSource = FurcadiaSession.Furres;
+                FurreCount.DataContext = FurcadiaSession.Furres.Count.ToString();
+            }
         }
 
         private void OnError(Exception e, object o)
@@ -72,7 +77,7 @@ namespace SilverMonkey.Views
                              case ServerInstructionType.SpawnAvatar:
                              case ServerInstructionType.RemoveAvatar:
                                  FurreList.DataContext = null;
-                                 FurreList.DataContext = FurcadiaSession.Dream.Furres.ToIList;
+                                 FurreList.DataContext = FurcadiaSession.Furres;
 
                                  break;
                          }
@@ -87,7 +92,7 @@ namespace SilverMonkey.Views
                     case ServerInstructionType.SpawnAvatar:
                     case ServerInstructionType.RemoveAvatar:
                         FurreList.DataContext = null;
-                        FurreList.DataContext = FurcadiaSession.Dream.Furres.ToIList;
+                        FurreList.DataContext = FurcadiaSession.Furres;
 
                         break;
                 }
@@ -150,7 +155,7 @@ namespace SilverMonkey.Views
             {
                 ButtonGo.IsEnabled = false;
                 if (FurcadiaSession.IsServerSocketConnected)
-                    FurcadiaSession.DisconnectServerAndClientStreams();
+                    FurcadiaSession.Disconnect();
                 else
                 {
                     await FurcadiaSession.ConnetAsync();

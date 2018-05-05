@@ -232,7 +232,7 @@ namespace Libraries
                 "remember the database table {...} and put it into table % .");
 
             Add(TriggerCategory.Effect,
-                r => PutVariableTableIntoDatabaseTable(r),
+                PutVariableTableIntoDatabaseTable,
                 "memorize table % to database table {...}.");
 
             Add(TriggerCategory.Effect,
@@ -644,9 +644,9 @@ namespace Libraries
             var data = new Dictionary<string, object>();
             try
             {
-                foreach (KeyValuePair<string, object> kvp in VarTable)
+                foreach (var kvp in VarTable)
                 {
-                    data.Add($"{kvp.Key}", kvp.Value);
+                    data.Add(kvp.Key, kvp.Value);
                 }
 
                 return 0 < database.InsertOrReplaceMultiRow("SettingsTable", data, $"{SettingsTableID}");

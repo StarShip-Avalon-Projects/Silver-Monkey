@@ -48,6 +48,8 @@ namespace Libraries
         /// <value>The dream information.</value>
         public static Dream DreamInfo { get; set; }
 
+        public static FurreList Furres { get; set; }
+
         /// <summary>
         /// Reference to the Main Bot Session for the bot
         /// </summary>
@@ -182,7 +184,7 @@ namespace Libraries
         public bool InDream(IFurre TargetFurre)
         {
             bool found = false;
-            foreach (IFurre Fur in DreamInfo.Furres)
+            foreach (IFurre Fur in Furres)
             {
                 if (Fur == TargetFurre)
                 {

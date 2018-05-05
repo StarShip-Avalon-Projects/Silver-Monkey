@@ -54,7 +54,7 @@ namespace Engine.BotSession
 
         #region Private Fields
 
-        private BotOptions _options;
+        private BotOptions options;
 
         private Dream lastDream;
 
@@ -62,8 +62,6 @@ namespace Engine.BotSession
         /// Main MonkeySpeak Engine
         /// </summary>
         private MonkeyspeakEngine MsEngine;
-
-        private EngineOptoons MsEngineOptions;
 
         #endregion Private Fields
 
@@ -75,16 +73,15 @@ namespace Engine.BotSession
         /// <param name="BotSessionOptions">The bot session options.</param>
         public Bot(BotOptions BotSessionOptions) : base(BotSessionOptions)
         {
-            SetOptions(BotSessionOptions);
             Initialize();
+            options = BotSessionOptions;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bot"/> class.
         /// </summary>
-        public Bot()
+        public Bot() : base()
         {
-            SetOptions(new BotOptions());
             this.Initialize();
         }
 
@@ -98,7 +95,7 @@ namespace Engine.BotSession
         /// <value>
         /// The bot controller.
         /// </value>
-        public string BotController => MsEngineOptions.BotController;
+        public string BotController => options.MonkeySpeakEngineOptions.BotController;
 
         /// <summary>
         /// Gets or sets a value indicating whether The Monkey
@@ -109,8 +106,8 @@ namespace Engine.BotSession
         /// </value>
         public bool EngineEnable
         {
-            get => MsEngineOptions.IsEnabled;
-            set => MsEngineOptions.IsEnabled = value;
+            get => options.MonkeySpeakEngineOptions.IsEnabled;
+            set => options.MonkeySpeakEngineOptions.IsEnabled = value;
         }
 
         /// <summary>
@@ -146,7 +143,7 @@ namespace Engine.BotSession
         /// <returns></returns>
         public BotOptions GetOptions()
         {
-            return _options;
+            return options;
         }
 
         /// <summary>
@@ -181,9 +178,8 @@ namespace Engine.BotSession
         /// <param name="value">The value.</param>
         public void SetOptions(BotOptions value)
         {
-            _options = value;
-            base.Options = _options;
-            MsEngineOptions = _options.MonkeySpeakEngineOptions;
+            options = value;
+            Proxy.Options = options;
         }
 
         /// <summary>
@@ -206,11 +202,12 @@ namespace Engine.BotSession
         /// </summary>
         private void Initialize()
         {
-            lastDream = new Dream();
-            MsEngineOptions = GetOptions().MonkeySpeakEngineOptions;
+            options = new BotOptions();
 
-            ClientData2 += ClintData => SendToServer(ClintData);
-            ServerData2 += ServerData => SendToClient(ServerData);
+            lastDream = new Dream();
+
+            Proxy.ClientData2 += ClintData => SendToServer(ClintData);
+            Proxy.ServerData2 += ServerData => SendToClient(ServerData);
             ProcessServerChannelData += (s, o) => ParseServerChannel(s, o);
             ProcessServerInstruction += (s, o) => ParseServerData(s, o);
             ServerStatusChanged += (s, o) => OnServerStatusChanged(s, o);
@@ -322,11 +319,11 @@ namespace Engine.BotSession
             if (ex.GetType() != typeof(MonkeyspeakException))
             {
                 var PageError = new MonkeyspeakException($"Trigger Error: {trigger} {ex}");
-                SendError(PageError, handler);
+                Proxy.SendError(PageError, handler);
             }
             else
             {
-                SendError(ex, handler);
+                Proxy.SendError(ex, handler);
             }
         }
 
@@ -340,7 +337,7 @@ namespace Engine.BotSession
         {
             if (MSpage == null || !EngineEnable) return;
 
-            CancellationToken cancel = new CancellationTokenSource().Token;
+            //  CancellationToken cancel = new CancellationTokenSource().Token;
 
             if (sender is BaseServerInstruction snder)
                 Logger.Debug<Bot>(snder);
@@ -350,14 +347,14 @@ namespace Engine.BotSession
                     // (0:36) When the bot leaves a Dream,
                     // (0:37) When the bot leaves the Dream named {..},
 
-                    MSpage.Execute(new int[] { 36, 37 }, cancel, lastDream);
+                    MSpage.Execute(new int[] { 36, 37 }, lastDream);
                     return;
 
                 case ServerInstructionType.BookmarkDream:
                     // (0:34) When the bot enters a Dream,
                     // (0:35) When the bot enters the Dream named {..},
 
-                    MSpage.Execute(new int[] { 34, 35 }, cancel, Dream);
+                    MSpage.Execute(new int[] { 34, 35 }, Dream);
                     lastDream = Dream;
                     return;
 
@@ -370,19 +367,19 @@ namespace Engine.BotSession
                     // (0:605) When a furre moves,
                     // (0:606) when a furre moves into(x, y),
                     MSpage.Execute(new int[] { 600, 601, 602, 603, 60, 605, 606 },
-                        cancel, ((MoveFurre)sender).Player);
+                         ((MoveFurre)sender).Player);
                     return;
 
                 case ServerInstructionType.RemoveAvatar:
                     // (0:32) When anyone leaves the Dream,
                     // (0:33) When a furre named {..} leaves the Dream,
-                    MSpage.Execute(new int[] { 32, 33 }, cancel, ((RemoveAvatar)sender).Player);
+                    MSpage.Execute(new int[] { 32, 33 }, ((RemoveAvatar)sender).Player);
                     return;
 
                 case ServerInstructionType.SpawnAvatar:
                     // (0:30) When anyone enters the Dream,
                     // (0:31) When the furre named {..} enters the Dream,
-                    MSpage.Execute(new int[] { 30, 31 }, cancel, ((SpawnAvatar)sender).Player);
+                    MSpage.Execute(new int[] { 30, 31 }, ((SpawnAvatar)sender).Player);
                     return;
 
                 case ServerInstructionType.UpdateColorString:
@@ -657,7 +654,7 @@ namespace Engine.BotSession
                 }
             }
             catch (Exception ex)
-            { SendError(ex, this); }
+            { Proxy.SendError(ex, this); }
         }
 
         /// <summary>
@@ -668,8 +665,8 @@ namespace Engine.BotSession
         {
             var TimeStart = DateTime.Now;
 
-            MsEngine = new MonkeyspeakEngine(GetOptions().MonkeySpeakEngineOptions);
-            string MonkeySpeakScript = MsEngineExtentionFunctions.LoadFromScriptFile(MsEngineOptions.MonkeySpeakScriptFile, MsEngine.Options.Version);
+            MsEngine = new MonkeyspeakEngine(options.MonkeySpeakEngineOptions);
+            string MonkeySpeakScript = MsEngineExtentionFunctions.LoadFromScriptFile(options.MonkeySpeakEngineOptions.MonkeySpeakScriptFile, MsEngine.Options.Version);
             MSpage = MsEngine.LoadFromString(MonkeySpeakScript);
 
             List<IVariable> VariableList = new List<IVariable>();

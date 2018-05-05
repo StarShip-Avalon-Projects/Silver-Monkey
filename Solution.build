@@ -111,8 +111,6 @@
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
 			WorkingDirectory="Datamonkey.WinForms/"/> 
 
-		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.tt" 
-			WorkingDirectory="SilverMonkeyWinForms/"/>
 
 		<Exec Command="..\bin\TextTransform.exe AssemblyFileVersion.t4" 
 			WorkingDirectory="MonkeyCore/"/> 

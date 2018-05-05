@@ -192,7 +192,7 @@ namespace SmEngineTests
 
         public void BotHaseDisconnected()
         {
-            Proxy.DisconnectServerAndClientStreams();
+            Proxy.Disconnect();
             if (!Proxy.StandAlone)
                 HaltFor(CleanupDelayTime);
 

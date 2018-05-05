@@ -162,9 +162,9 @@
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\SilverMonkeyWinForms\Silvermonkey.WinForms.vbproj">
-      <Name>SilverMonkey.WinForms</Name>
-      <Project>{cd544712-0665-44db-bb70-5b9d4395b050}</Project>
+    <ProjectReference Include="..\Silvermonkey.WPF\Silvermonkey.WPF.csproj">
+      <Name>SilverMonkey.WPF</Name>
+      <Project>{593e59b0-8787-4454-83cd-eabf37807f1f}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>

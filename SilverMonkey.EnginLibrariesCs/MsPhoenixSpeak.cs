@@ -58,18 +58,6 @@ namespace Libraries
             GetPsId = 0;
             phoenxSpeakObjects = new ConcurrentQueue<PhoenixSpeakDataObject>();
 
-            //Add(TriggerCategory.Cause,
-            //    r => true,
-            //    "When the bot sees a Phoenix Speak response,");
-
-            //Add(TriggerCategory.Cause,
-            //    r => MsgIs(r),
-            //     "When the bot sees the Phoenix Speak response {...},");
-
-            //Add(TriggerCategory.Cause,
-            //    r => MsgContains(r),
-            //    "When the bot sees a Phoenix Speak response with {...} in it,");
-
             Add(TriggerCategory.Effect,
                 RememberPSForTrigFurreToVariableTable,
                 "remember all Phoenix Speak info about the triggering furre and put it into Variable-Table %Table.");
@@ -121,15 +109,16 @@ namespace Libraries
             Add(TriggerCategory.Effect,
                  ForgetAllPSForFurreNamed,
                 "forget all Phoenix Speak info about the furre named {...}. (use [DREAM] for this dream's Phoenix Speak)");
+
             if (ParentBotSession != null)
-                ParentBotSession.ProcessServerChannelData += ParseServerChannel;
+                ParentBotSession.ProcessServerChannelData += ParsePhoenixSpeak;
         }
 
         public override void Unload(Page page)
         {
             GetPsId = 0;
             if (ParentBotSession != null)
-                ParentBotSession.ProcessServerChannelData -= ParseServerChannel;
+                ParentBotSession.ProcessServerChannelData -= ParsePhoenixSpeak;
         }
 
         #endregion Public Methods
@@ -158,9 +147,12 @@ namespace Libraries
                 return false;
             }
             if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Clear)
+            {
+                Logger.Info($"Success: {Furre} has been forgotten from this dream");
                 return true;
+            }
 
-            return true;
+            return false;
         }
 
         [TriggerDescription("Clears all Phoenix Speak about the triggering furre")]
@@ -181,9 +173,12 @@ namespace Libraries
                 return false;
             }
             if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Clear)
+            {
+                Logger.Info($"Success: {Player.Name} has been forgotten from this dream");
                 return true;
+            }
 
-            return true;
+            return false;
         }
 
         [TriggerDescription("Clears the specified field about the specified character")]
@@ -210,9 +205,12 @@ namespace Libraries
                 return false;
             }
             if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Clear)
+            {
+                Logger.Info($"Success: {Furre}'s field '{Field}' has been forgotten.");
                 return true;
+            }
 
-            return true;
+            return false;
         }
 
         [TriggerDescription("Clears the specified Phoenix Speak about the triggering furre")]
@@ -235,9 +233,12 @@ namespace Libraries
                 return false;
             }
             if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Clear)
+            {
+                Logger.Info($"Success: {Player.Name}'s field '{Field}' has been forgotten.");
                 return true;
+            }
 
-            return true;
+            return false;
         }
 
         private bool GetPsCharacterListToVariableTable(TriggerReader reader)
@@ -274,9 +275,12 @@ namespace Libraries
                 return false;
             }
             if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+            {
+                Logger.Info($"Success: {Furre}'s field '{Field}' has been memorized.");
                 return true;
+            }
 
-            return true;
+            return false;
         }
 
         [TriggerDescription("Sets the specified field about the specified character.")]
@@ -307,9 +311,12 @@ namespace Libraries
                 return false;
             }
             if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+            {
+                Logger.Info($"Success: {Furre}'s field '{Field}' has been memorized.");
                 return true;
+            }
 
-            return true;
+            return false;
         }
 
         [TriggerDescription("Sets the specified field as number or variable about the triggering furre.")]
@@ -335,9 +342,12 @@ namespace Libraries
                 return false;
             }
             if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+            {
+                Logger.Info($"Success: {Player.Name}'s field '{Field}' has been memorized.");
                 return true;
+            }
 
-            return true;
+            return false;
         }
 
         [TriggerDescription("Sets the specified field as string about the triggering furre.")]
@@ -364,9 +374,12 @@ namespace Libraries
                 return false;
             }
             if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+            {
+                Logger.Info($"Success: {Player.Name}'s field '{Field}' has been memorized.");
                 return true;
+            }
 
-            return true;
+            return false;
         }
 
         [TriggerDescription("Formats the variable table to a string readable by the game server and sends the Phoenix Speak data about the specified furre.")]
@@ -401,9 +414,12 @@ namespace Libraries
                 return false;
             }
             if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+            {
+                Logger.Info($"Success: {Furre}'s variable table '{VarTable.Name}' has been memorized.");
                 return true;
+            }
 
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -438,14 +454,17 @@ namespace Libraries
                 return false;
             }
             if (GetPsId == result.PhoenixSpeakID && result.phoenixSpeakType == PhoenixSpeakTypes.Set)
+            {
+                Logger.Info($"Success: {Player.Name}'s variable table '{VarTable.Name}' has been memorized.");
                 return true;
+            }
 
-            return true;
+            return false;
         }
 
-        private void ParseServerChannel(object sender, ParseChannelArgs Args)
+        private void ParsePhoenixSpeak(object sender, ParseChannelArgs Args)
         {
-            var ParseChannelThread = new Thread(() => OnServerChannel(sender, Args));
+            var ParseChannelThread = new Thread(() => OnParePhoenixSpeak(sender, Args));
             ParseChannelThread.Start();
         }
 
@@ -454,7 +473,7 @@ namespace Libraries
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="Args"></param>
-        private void OnServerChannel(object sender, ParseChannelArgs Args)
+        private void OnParePhoenixSpeak(object sender, ParseChannelArgs Args)
         {
             if (sender is ChannelObject ChanObject && (Args.Channel == "text" || Args.Channel == "error"))
             {
@@ -523,10 +542,10 @@ namespace Libraries
             {
                 foreach (var variable in result.PsTable)
                     table.Add(variable);
-                Logger.Debug<MsPhoenixSpeak>($"table items:'{table.Count}'");
+                Logger.Info($"Success: {Furre}'s Phoenix Speak has been remembered to Variable-Table '{table.Name}'.");
             }
 
-            return true;
+            return false;
         }
 
         [TriggerDescription("Sends a Phoenix Speak Command to the Furcadia game-server, that requests all data for the triggering furre and puts the results to a variable table. On error, this will stop return false and stop executing.")]
@@ -553,12 +572,15 @@ namespace Libraries
             }
 
             if (GetPsId == result.PhoenixSpeakID)
+            {
                 foreach (var variable in result.PsTable)
                     table.Add(variable);
 
-            Logger.Debug<MsPhoenixSpeak>($"table items:'{table.Count}'");
+                Logger.Info($"Success: {Player.Name}'s Phoenix Speak has been remembered to Variable-Table '{table.Name}'.");
+                return true;
+            }
 
-            return true;
+            return false;
         }
 
         /// <summary>

@@ -112,7 +112,7 @@ namespace Libraries
         {
             var var = reader.ReadVariable(true);
             double count = 0;
-            foreach (Furre fur in DreamInfo.Furres)
+            foreach (Furre fur in Furres)
             {
                 if (fur.AfkTime == 0)
                 {
@@ -129,7 +129,7 @@ namespace Libraries
         {
             var var = reader.ReadVariable(true);
             double count = 0;
-            foreach (Furre fs in DreamInfo.Furres)
+            foreach (Furre fs in Furres)
             {
                 if (fs.AfkTime > 0)
                 {
@@ -145,7 +145,7 @@ namespace Libraries
         private bool FurreNamedActive(TriggerReader reader)
         {
             var name = reader.ReadString();
-            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)Furres.GetFurreByName(name);
             return Target.AfkTime > 0;
         }
 
@@ -153,7 +153,7 @@ namespace Libraries
         private bool FurreNamedAFK(TriggerReader reader)
         {
             var name = reader.ReadString();
-            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)Furres.GetFurreByName(name);
             return Target.AfkTime > 0;
         }
 
@@ -161,7 +161,7 @@ namespace Libraries
         private bool FurreNamedCanSe(TriggerReader reader)
         {
             var name = reader.ReadString();
-            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)Furres.GetFurreByName(name);
             return Target.InRange;
         }
 
@@ -169,7 +169,7 @@ namespace Libraries
         private bool FurreNamedInDream(TriggerReader reader)
         {
             var name = reader.ReadString();
-            var Target = DreamInfo.Furres.GetFurreByName(name);
+            var Target = Furres.GetFurreByName(name);
             return InDream(Target);
         }
 
@@ -177,7 +177,7 @@ namespace Libraries
         private bool FurreNamedNotCanSe(TriggerReader reader)
         {
             var name = reader.ReadString();
-            var Target = (Furre)DreamInfo.Furres.GetFurreByName(name);
+            var Target = (Furre)Furres.GetFurreByName(name);
             return !Target.InRange;
         }
 
@@ -185,7 +185,7 @@ namespace Libraries
         private bool FurreNamedNotInDream(TriggerReader reader)
         {
             var name = reader.ReadString();
-            var Target = DreamInfo.Furres.GetFurreByName(name);
+            var Target = Furres.GetFurreByName(name);
             return !InDream(Target);
         }
 
@@ -193,7 +193,7 @@ namespace Libraries
         private bool FurresCount(TriggerReader reader)
         {
             var var = reader.ReadVariable(true);
-            var.Value = DreamInfo.Furres.Count;
+            var.Value = Furres.Count;
             return true;
         }
 
@@ -202,7 +202,7 @@ namespace Libraries
         {
             var var = reader.ReadVariable(true);
             List<string> FurList = new List<string>();
-            foreach (Furre fur in DreamInfo.Furres)
+            foreach (Furre fur in Furres)
             {
                 FurList.Add(fur.Name);
             }

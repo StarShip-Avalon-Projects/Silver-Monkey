@@ -21,8 +21,6 @@ namespace Engine.BotSession
 
         private int _GoMap;
 
-        private EngineOptoons _MonkeySpeakEngineOption;
-
         private IniFile BotIni;
 
         #endregion Private Fields
@@ -98,19 +96,19 @@ namespace Engine.BotSession
             s = BotIni.GetKeyValue("Bot", "MS_File");
             if (!string.IsNullOrEmpty(s))
             {
-                _MonkeySpeakEngineOption.MonkeySpeakScriptFile = s;
+                MonkeySpeakEngineOptions.MonkeySpeakScriptFile = s;
             }
 
             s = BotIni.GetKeyValue("Bot", "MSEngineEnable");
             if (!string.IsNullOrEmpty(s))
             {
-                _MonkeySpeakEngineOption.IsEnabled = bool.Parse(s);
+                MonkeySpeakEngineOptions.IsEnabled = bool.Parse(s);
             }
 
             s = BotIni.GetKeyValue("Bot", "BotController");
             if (!string.IsNullOrEmpty(s))
             {
-                _MonkeySpeakEngineOption.BotController = s;
+                MonkeySpeakEngineOptions.BotController = s;
             }
 
             s = BotIni.GetKeyValue("Bot", "StandAlone");
@@ -222,11 +220,7 @@ namespace Engine.BotSession
         /// <value>
         /// The monkey speak engine options.
         /// </value>
-        public EngineOptoons MonkeySpeakEngineOptions
-        {
-            get => _MonkeySpeakEngineOption;
-            set => _MonkeySpeakEngineOption = value;
-        }
+        public EngineOptoons MonkeySpeakEngineOptions { get; set; }
 
         /// <summary>
         /// Gets the name.
@@ -251,10 +245,10 @@ namespace Engine.BotSession
             BotIni.SetKeyValue("Main", "LogOption", LogOptions.LogOption.ToString());
             BotIni.SetKeyValue("Main", "LogNamePath", LogOptions.LogPath);
             BotIni.SetKeyValue("Bot", "BotIni", CharacterIniFile);
-            BotIni.SetKeyValue("Bot", "MS_File", _MonkeySpeakEngineOption.MonkeySpeakScriptFile);
+            BotIni.SetKeyValue("Bot", "MS_File", MonkeySpeakEngineOptions.MonkeySpeakScriptFile);
             BotIni.SetKeyValue("Bot", "LPort", LocalhostPort.ToString());
-            BotIni.SetKeyValue("Bot", "MSEngineEnable", _MonkeySpeakEngineOption.IsEnabled.ToString());
-            BotIni.SetKeyValue("Bot", "BotController", _MonkeySpeakEngineOption.BotController);
+            BotIni.SetKeyValue("Bot", "MSEngineEnable", MonkeySpeakEngineOptions.IsEnabled.ToString());
+            BotIni.SetKeyValue("Bot", "BotController", MonkeySpeakEngineOptions.BotController);
             BotIni.SetKeyValue("Bot", "StandAlone", Standalone.ToString());
             BotIni.SetKeyValue("Bot", "AutoConnect", _AutoConnect.ToString());
             BotIni.SetKeyValue("Bot", "ConnectionRetries", ConnectionRetries.ToString());
@@ -271,7 +265,7 @@ namespace Engine.BotSession
         private void Initialize()
         {
             BotIni = new IniFile();
-            _MonkeySpeakEngineOption = new EngineOptoons();
+            MonkeySpeakEngineOptions = new EngineOptoons();
             LogOptions = new LogStreamOptions();
         }
 
