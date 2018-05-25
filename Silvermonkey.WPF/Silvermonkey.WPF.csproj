@@ -82,9 +82,9 @@
       <DependentUpon>AssemblyInfoersionCS.t4</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Logging\ConsoleWindowLogOutput.cs" />
     <Compile Include="Extentions\RichTextBoxEtentions.cs" />
     <Compile Include="ViewModels\BotSetupViewModel.cs" />
-    <Compile Include="ViewModels\HasDocument.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\BotSetupView.xaml.cs">
       <DependentUpon>BotSetupView.xaml</DependentUpon>

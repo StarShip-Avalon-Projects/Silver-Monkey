@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Engine.BotSession;
 using Furcadia.Net.DreamInfo;
 using System;
 using System.Collections.Generic;
@@ -20,20 +21,12 @@ namespace SilverMonkey.ViewModels
     {
         #region Private Fields
 
-        private int _DreamCount;
-        private string _DreamOwner = "Dream Owner";
-        private string _DreamTitle = "title";
-        private int _FurreCount;
-        private List<Furre> _FurreList = new List<Furre>();
-        private string _rating;
-
-        /// <summary>
-        /// Gets or sets the selected furre.
-        /// </summary>
-        /// <value>
-        /// The selected furre.
-        /// </value>
-        public Furre SelectedFurre { get; set; } = new Furre();
+        private int dreamCount;
+        private string dreamOwner = "Dream Owner";
+        private string dreamTitle = "title";
+        private int furreCount;
+        private FurreList furreList = new FurreList(100);
+        private string rating;
 
         #endregion Private Fields
 
@@ -47,10 +40,10 @@ namespace SilverMonkey.ViewModels
         /// </value>
         public string DreamOwner
         {
-            get { return _DreamOwner; }
+            get { return dreamOwner; }
             set
             {
-                _DreamOwner = value;
+                dreamOwner = value;
                 NotifyOfPropertyChange(() => DreamOwner);
             }
         }
@@ -63,10 +56,10 @@ namespace SilverMonkey.ViewModels
         /// </value>
         public string DreamTitle
         {
-            get { return _DreamTitle; }
+            get { return dreamTitle; }
             set
             {
-                _DreamTitle = value;
+                dreamTitle = value;
                 NotifyOfPropertyChange(() => DreamTitle);
             }
         }
@@ -79,10 +72,10 @@ namespace SilverMonkey.ViewModels
         /// </value>
         public string DreamRating
         {
-            get { return _rating; }
+            get { return rating; }
             set
             {
-                _rating = value;
+                rating = value;
                 NotifyOfPropertyChange(() => DreamRating);
             }
         }
@@ -95,10 +88,10 @@ namespace SilverMonkey.ViewModels
         /// </value>
         public string DreamURL
         {
-            get { return $"furc://{_DreamOwner.ToFurcadiaShortName()}:{_DreamTitle.ToFurcadiaShortName()}/"; }
+            get { return $"furc://{dreamOwner.ToFurcadiaShortName()}:{dreamTitle.ToFurcadiaShortName()}/"; }
             set
             {
-                _DreamTitle = value;
+                dreamTitle = value;
                 NotifyOfPropertyChange(() => DreamURL);
             }
         }
@@ -113,13 +106,13 @@ namespace SilverMonkey.ViewModels
         {
             get
             {
-                return $"Total Furres: {_DreamCount}";
+                return $"Total Furres: {dreamCount}";
             }
 
             set
             {
-                _DreamCount = 0;
-                int.TryParse(value, out _DreamCount);
+                dreamCount = 0;
+                int.TryParse(value, out dreamCount);
                 NotifyOfPropertyChange(() => DreamCount);
             }
         }
@@ -134,13 +127,13 @@ namespace SilverMonkey.ViewModels
         {
             get
             {
-                return $"Total Furres: {_FurreCount}";
+                return $"Total Furres: {furreCount}";
             }
 
             set
             {
-                _FurreCount = 0;
-                int.TryParse(value, out _FurreCount);
+                furreCount = 0;
+                int.TryParse(value, out furreCount);
                 NotifyOfPropertyChange(() => FurreCount);
             }
         }
@@ -151,16 +144,16 @@ namespace SilverMonkey.ViewModels
         /// <value>
         /// The furres.
         /// </value>
-        public List<Furre> Furres
+        public FurreList Furres
         {
             get
             {
-                return _FurreList;
+                return furreList;
             }
 
             set
             {
-                _FurreList = value;
+                furreList = value;
                 NotifyOfPropertyChange(() => Furres);
             }
         }

@@ -8,6 +8,7 @@ using static Libraries.MsLibHelper;
 using MonkeyCore.Data;
 using Furcadia.Net.Utils.ServerParser;
 using System.Threading;
+using System;
 
 namespace Libraries
 {
@@ -28,27 +29,30 @@ namespace Libraries
 
         #region Private Fields
 
+        private static Dream _dreamInfo;
         private static object[] args = null;
+        private static Furre player;
 
         #endregion Private Fields
 
         #region Public Properties
 
         /// <summary>
-        /// Connected Furre representing Silver Monkey
-        /// </summary>
-        /// <value>
-        /// The connected Furre.
-        /// </value>
-        public static Furre ConnectedFurre { get; set; }
-
-        /// <summary>
         /// Gets or sets the current dream information for the dream Silver Monkey is located in.
         /// </summary>
         /// <value>The dream information.</value>
-        public static Dream DreamInfo { get; set; }
+        public static Dream DreamInfo
+        {
+            get
+            {
+                if (_dreamInfo is null)
+                    _dreamInfo = ParentBotSession.Dream;
+                return _dreamInfo;
+            }
+            set => _dreamInfo = value;
+        }
 
-        public static FurreList Furres { get; set; }
+        public static FurreList Furres { get => ParentBotSession.Furres; }
 
         /// <summary>
         /// Reference to the Main Bot Session for the bot
@@ -63,7 +67,16 @@ namespace Libraries
         /// Updates when ever Monkey Speak needs it through <see cref="Page.Execute(int[],
         /// object[])"/> or <see cref="Page.ExecuteAsync(int[], object[])"/>
         /// </summary>
-        static public Furre Player { get; set; }
+        static public Furre Player
+        {
+            get
+            {
+                if (player == null)
+                    player = ParentBotSession.Player;
+                return player;
+            }
+            set => player = value;
+        }
 
         /// <summary>
         /// Gets the base identifier.
@@ -95,6 +108,7 @@ namespace Libraries
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">DreamInfo not set</exception>
+        [TriggerDescription("Gets the information for the current dream and set the dream Monkeyspeak variables.")]
         public static bool ReadDreamParams(TriggerReader reader)
         {
             Dream dreamInfo = reader.GetParametersOfType<Dream>().FirstOrDefault();
@@ -113,6 +127,7 @@ namespace Libraries
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
+        [TriggerDescription("gets the triggering furre information and set the Triggering furre Monkeyspeak Variables.")]
         public static bool ReadTriggeringFurreParams(TriggerReader reader)
         {
             bool ParamSet = false;
@@ -140,9 +155,17 @@ namespace Libraries
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
+        [TriggerDescription("Check the specified furre to see if they are the bot controller")]
         public bool FurreNamedIsBotController(TriggerReader reader)
         {
-            return Player.ShortName == reader.ReadString().ToFurcadiaShortName();
+            var BotController = reader.Page.GetVariable(BotControllerVariable);
+
+            if (string.IsNullOrWhiteSpace(BotController.Value.ToString()))
+            {
+                Logger.Warn("BotController is not defined, Please specify a BotController in the Bot configuration settings,");
+                return false;
+            }
+            return BotController.Value.ToString().ToFurcadiaShortName() == reader.ReadString().ToFurcadiaShortName();
         }
 
         /// <summary>
@@ -210,8 +233,6 @@ namespace Libraries
             if (bot != ParentBotSession)
             {
                 ParentBotSession = bot;
-                DreamInfo = ParentBotSession.Dream;
-                Player = ParentBotSession.Player;
             }
         }
 
@@ -236,7 +257,7 @@ namespace Libraries
         /// any name is accepted and converted to Furcadia Machine name (ShortName version, lowercase
         /// with special characters stripped)
         /// </remarks>
-        [TriggerDescription("Triggers when the specified furre is the triggering furre")]
+        [TriggerDescription("Checks to see if the current triggering furre is the specified furre")]
         [TriggerStringParameter]
         public bool NameIs(TriggerReader reader)
         {
@@ -283,6 +304,7 @@ namespace Libraries
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
+        [TriggerDescription("Check to see if the current triggering furre is the bot controller")]
         public bool TriggeringFurreIsBotController(TriggerReader reader)
         {
             var BotController = reader.Page.GetVariable(BotControllerVariable);
@@ -311,19 +333,14 @@ namespace Libraries
         #region Protected Methods
 
         /// <summary>
-        /// Comparisons are done with Fucadia Markup Stripped
-        /// <para/>
-        /// comparisons done Markup Stripped and lower-case
+        /// Check <see cref="Player.Message"/> against the specified string it should contain.
         /// </summary>
-        /// <param name="reader"><see cref="TriggerReader"/></param>
-        /// <returns>True if the %MESSAGE system variable contains the specified string</returns>
-        protected bool MsgContains(TriggerReader reader)
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        [TriggerDescription("Check the specified string against the Triggering Furre's message. The message is compared with Fucadia Markup stripped with non case sensitivity")]
+        [TriggerStringParameter]
+        protected bool MessageContains(TriggerReader reader)
         {
-            if (!ReadTriggeringFurreParams(reader))
-                throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
-            if (!ReadDreamParams(reader))
-                throw new MonkeyspeakException("Failed to set Dream Variables");
-
             var msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString();
             var msg = Player.Message.ToStrippedFurcadiaMarkupString();
 
@@ -333,18 +350,33 @@ namespace Libraries
         }
 
         /// <summary>
+        /// Check <see cref="Player.Message"/> against the specified string it should contain.
         /// <para/>
-        /// comparisons done Markup Stripped and lower-case
+        /// This also set the Triggering Furre and Dream Variable sets with <see cref="Page.Execute(int, object[])"/> Parameters
         /// </summary>
         /// <param name="reader"><see cref="TriggerReader"/></param>
-        /// <returns>true if the System %MESSAGE variable ends with the specified string</returns>
-        protected bool MsgEndsWith(TriggerReader reader)
+        /// <returns>True if the %MESSAGE system variable contains the specified string</returns>
+        [TriggerDescription("Check the specified string against the Triggering Furre's message. The message is compared with Fucadia Markup stripped with non case sensitivity")]
+        [TriggerStringParameter]
+        protected bool MessageContainsAndSetVariables(TriggerReader reader)
         {
             if (!ReadTriggeringFurreParams(reader))
                 throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
             if (!ReadDreamParams(reader))
                 throw new MonkeyspeakException("Failed to set Dream Variables");
 
+            return MessageContains(reader);
+        }
+
+        /// <summary>
+        /// Check <see cref="Player.Message"/> against the specified string it should end with.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        [TriggerDescription("Check the specified string against the Triggering Furre's message. The message is compared with Fucadia Markup stripped with non case sensitivity")]
+        [TriggerStringParameter]
+        protected bool MessageEndsWith(TriggerReader reader)
+        {
             var msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString();
             var msg = Player.Message.ToStrippedFurcadiaMarkupString();
 
@@ -354,9 +386,45 @@ namespace Libraries
         }
 
         /// <summary>
-        /// the Main Message is comparison function
+        /// Check <see cref="Player.Message"/> against the specified string it should end with.
         /// <para/>
-        /// comparisons done Markup Stripped and lower-case
+        /// This also set the Triggering Furre and Dream Variable sets with <see cref="Page.Execute(int, object[])"/> Parameters
+        /// </summary>
+        /// <param name="reader"><see cref="TriggerReader"/></param>
+        /// <returns>true if the System %MESSAGE variable ends with the specified string</returns>
+        [TriggerDescription("Check the specified string against the Triggering Furre's message. The message is compared with Fucadia Markup stripped with non case sensitivity")]
+        [TriggerStringParameter]
+        protected bool MessageEndsWithAndSetVariabled(TriggerReader reader)
+        {
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
+            if (!ReadDreamParams(reader))
+                throw new MonkeyspeakException("Failed to set Dream Variables");
+
+            return MessageEndsWith(reader);
+        }
+
+        /// <summary>
+        /// Check <see cref="Player.Message"/> against the specified Message
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        [TriggerDescription("Check the specified string against the Triggering Furre's message. The message is compared with Fucadia Markup stripped with non case sensitivity")]
+        [TriggerStringParameter]
+        protected bool MessageIs(TriggerReader reader)
+        {
+            string msg = Player.Message.ToStrippedFurcadiaMarkupString();
+            string test = reader.ReadString().ToStrippedFurcadiaMarkupString();
+
+            if (msg is null)
+                return test is null;
+            return msg.ToLower() == test.ToLower();
+        }
+
+        /// <summary>
+        /// Check <see cref="Player.Message"/> against the specified Message
+        /// <para/>
+        /// This also set the Triggering Furre and Dream Variable sets with <see cref="Page.Execute(int, object[])"/> Parameters
         /// </summary>
         /// <param name="reader">
         /// <see cref="TriggerReader"/>
@@ -364,43 +432,52 @@ namespace Libraries
         /// <returns>
         /// true on success
         /// </returns>
-        protected bool MsgIs(TriggerReader reader)
+        [TriggerDescription("Check the specified string against the Triggering Furre's message. The message is compared with Fucadia Markup stripped with non case sensitivity")]
+        [TriggerStringParameter]
+        protected bool MessageIsAndSetVariables(TriggerReader reader)
         {
             if (!ReadTriggeringFurreParams(reader))
                 throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
             if (!ReadDreamParams(reader))
                 throw new MonkeyspeakException("Failed to set Dream Variables");
 
-            string msg = Player.Message.ToStrippedFurcadiaMarkupString();
-            string test = reader.ReadString().ToStrippedFurcadiaMarkupString();
-
-            if (msg is null || test is null)
-                return msg == test;
-            return msg.ToLower() == test.ToLower();
+            return MessageIs(reader);
         }
 
         /// <summary>
-        /// message starts with ...
-        /// <para/>
-        /// comparisons done Markup Stripped and lower-case
+        /// Check <see cref="Player.Message"/>  against the specified string the message should contain
         /// </summary>
-        /// <param name="reader"><see cref="TriggerReader"/></param>
+        /// <param name="reader"></param>
         /// <returns></returns>
-        [TriggerDescription("Continues processing if the triggering furre's text contains the specified text")]
+        [TriggerDescription("Check the specified string against the Triggering Furre's message. The message is compared with Fucadia Markup stripped with non case sensitivity")]
         [TriggerStringParameter]
-        protected bool MsgStartsWith(TriggerReader reader)
+        protected bool MessageStartsWith(TriggerReader reader)
         {
-            if (!ReadTriggeringFurreParams(reader))
-                throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
-            if (!ReadDreamParams(reader))
-                throw new MonkeyspeakException("Failed to set Dream Variables");
-
             string msMsg = reader.ReadString().ToStrippedFurcadiaMarkupString();
             string msg = Player.Message.ToStrippedFurcadiaMarkupString();
 
             if (msg is null || msMsg is null)
                 return false;
             return msg.ToLower().StartsWith(msMsg.ToLower()) & !IsConnectedCharacter(Player);
+        }
+
+        /// <summary>
+        /// Check <see cref="Player.Message"/>  against the specified string the message should contain
+        /// <para/>
+        /// This also set the Triggering Furre and Dream Variable sets with <see cref="Page.Execute(int, object[])"/> Parameters
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        [TriggerDescription("Check the specified string against the Triggering Furre's message. The message is compared with Fucadia Markup stripped with non case sensitivity")]
+        [TriggerStringParameter]
+        protected bool MessageStartsWithAndSetVariables(TriggerReader reader)
+        {
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
+            if (!ReadDreamParams(reader))
+                throw new MonkeyspeakException("Failed to set Dream Variables");
+
+            return MessageStartsWith(reader);
         }
 
         #endregion Protected Methods

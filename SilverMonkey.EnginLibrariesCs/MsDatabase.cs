@@ -1,6 +1,4 @@
-﻿#region Imports
-
-using Furcadia.Extensions;
+﻿using Furcadia.Extensions;
 using IO;
 using MonkeyCore.Data;
 using MonkeyCore.Logging;
@@ -12,8 +10,6 @@ using System.Data;
 using System.Data.SQLite;
 using System.Text;
 using static Libraries.MsLibHelper;
-
-#endregion Imports
 
 namespace Libraries
 {
@@ -42,6 +38,13 @@ namespace Libraries
     {
         #region Private Fields
 
+        private readonly List<string> ReadOnlyFurreTableFields = new List<string>
+        {
+            "[Access Level]",
+            "[Name]",
+            "[ID]",
+        };
+
         /// <summary>
         /// These collumns not allowed for deletion or modification, They are core
         /// columns to SM operation
@@ -54,13 +57,6 @@ namespace Libraries
             "[Name]",
             "[ID]",
             "[PSBackup]"
-        };
-
-        private readonly List<string> ReadOnlyFurreTableFields = new List<string>
-        {
-            "[Access Level]",
-            "[Name]",
-            "[ID]",
         };
 
         #endregion Private Fields
@@ -149,11 +145,25 @@ namespace Libraries
                 r => TriggeringFurreRecordInfoNotEqualToString(r),
                 "and the Database Record {...} about the triggering furre is not equal to string {...},");
 
-            // TODO: Add Monkey Speak
-            // (1:xx) and the Database Record {...} about the triggerig furre exists,
-            // (1:xx) and the Database Record{...} about the triggerig furre does not exist,
-            // (1:xx) and the Database Record {...} about the furre named {...} exists,
-            // (1:xx) and the Database Record {...} about the furre named {...} does not exist,
+            Add(TriggerCategory.Condition,
+                 AndDatabaseRecordForTriggeringFurreExists,
+                "and the field {...} exists in Furre Records,");
+
+            Add(TriggerCategory.Condition,
+                 AndTriggeringFurreDatabaseRecordExists,
+                "and the triggering furre has a Database Record,");
+
+            Add(TriggerCategory.Condition,
+                 AndTriggeringFurreDatabaseRecordNotExists,
+                "and the triggering furre doesn't have a Database Record,");
+
+            Add(TriggerCategory.Condition,
+                 AndFurreNamedDatabaseRecordExists,
+                "and the furre named {...} has a Database Record,");
+
+            Add(TriggerCategory.Condition,
+                 AndFurreNamedDatabaseRecordNotExists,
+                "and the furre named {...} doesn't have a Database Record,");
 
             Add(TriggerCategory.Effect,
                 r => UseOrCreateSQLiteFileIfNotExist(r),
@@ -244,24 +254,6 @@ namespace Libraries
                 "execute \"VACUUM\"to rebuild the database and reclaim wasted space.");
         }
 
-        [TriggerDescription("Gets a the list of furres from furre records and put them into %table")]
-        [TriggerVariableParameter]
-        private bool GetMemberList(TriggerReader reader)
-        {
-            if (database == null) database = new SQLiteDatabase(SQLitefile);
-            var table = reader.ReadVariableTable(true);
-            table.Clear();
-            string sql = $"SELECT [Name] FROM FURRE";
-            var dataTable = database.GetDataTable(sql);
-            int index = 0;
-            foreach (DataRow row in dataTable.Rows)
-            {
-                index++;
-                table.Add(index.ToString(), row["Name"]);
-            }
-            return true;
-        }
-
         /// <summary>
         /// Called when page is disposing or resetting.
         /// </summary>
@@ -275,23 +267,6 @@ namespace Libraries
 
         #region Private Methods
 
-        [TriggerDescription("reads column information for the specified furre from Furre Records into the specified variable")]
-        [TriggerStringParameter]
-        [TriggerStringParameter]
-        [TriggerVariableParameter]
-        private bool ReadDatabaseInfoName(TriggerReader reader)
-        {
-            if (database == null) database = new SQLiteDatabase(SQLitefile);
-
-            var info = reader.ReadString();
-            var Furre = reader.ReadString().ToFurcadiaShortName();
-            var Variable = reader.ReadVariable(true);
-            //  Dim db As SQLiteDatabase = New SQLiteDatabase(file)
-            string sql = $"SELECT [{info}] FROM FURRE Where [Name]='{Furre}'";
-            Variable.Value = database.ExecuteScalar(sql);
-            return true;
-        }
-
         [TriggerDescription("Adds a column to the Furre Table")]
         [TriggerStringParameter]
         [TriggerStringParameter]
@@ -301,6 +276,76 @@ namespace Libraries
             var colum = reader.ReadString().Replace("[", "").Replace("]", "");
             var type = reader.ReadString();
             return 0 <= database.AddColumn("FURRE", colum, type);
+        }
+
+        /// <summary>
+        /// and the field {...} exists in Furre Records,
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private bool AndDatabaseRecordForTriggeringFurreExists(TriggerReader reader)
+        {
+            var field = reader.ReadString();
+            if (database == null)
+                return false;
+            return database.TableColumnExist(field, "FURRE");
+        }
+
+        /// <summary>
+        /// and the furre named {...} has a Database Record,
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [TriggerDescription("Check the FURRE table for the specified furre and return true is the furre exists.")]
+        [TriggerStringParameter]
+        private bool AndFurreNamedDatabaseRecordExists(TriggerReader reader)
+        {
+            var Furre = reader.ReadString();
+            if (database == null)
+                return false;
+            return database.TableRowExists("FURRE", "Name", Furre.ToFurcadiaShortName());
+        }
+
+        /// <summary>
+        /// and the furre named {...} doesn't have a Database Record,
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        [TriggerDescription("Check the FURRE table for the specified furre and returns true is the furre doesn't exist")]
+        [TriggerStringParameter]
+        private bool AndFurreNamedDatabaseRecordNotExists(TriggerReader reader)
+        {
+            if (database == null)
+                return false;
+            return !AndFurreNamedDatabaseRecordExists(reader);
+        }
+
+        /// <summary>
+        /// and the triggering furre has a Database Record,
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        [TriggerDescription("Check the Furre Table for the triggering furre and returns true if the triggering furre does exist")]
+        private bool AndTriggeringFurreDatabaseRecordExists(TriggerReader reader)
+        {
+            if (database == null)
+                return false;
+            return database.TableRowExists("FURRE", "Name", Player.ShortName);
+        }
+
+        /// <summary>
+        /// and the triggering furre doesn't have a Database Record,
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        [TriggerDescription("Check the Furre Table for the triggering furre and returns true if the triggering furre doesn't exist")]
+        private bool AndTriggeringFurreDatabaseRecordNotExists(TriggerReader reader)
+        {
+            if (database == null)
+                return false;
+            return !AndTriggeringFurreDatabaseRecordExists(reader);
         }
 
         [TriggerDescription("Clears the specified table")]
@@ -465,6 +510,11 @@ namespace Libraries
             return true;
         }
 
+        /// <summary>
+        /// Gets the date modified for triggering furre.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
         private bool GetDateModifiedForTriggeringFurre(TriggerReader reader)
         {
             var TimeStamp = reader.ReadVariable(true);
@@ -472,6 +522,24 @@ namespace Libraries
             var result = database.ExecuteScalar($"SELECT [date modified] FROM FURRE Where Name = '{Player.ShortName}'");
 
             TimeStamp.Value = DateTime.Parse(result.ToString()).ToString(DateTimeFormat);
+            return true;
+        }
+
+        [TriggerDescription("Gets a the list of furres from furre records and put them into %table")]
+        [TriggerVariableParameter]
+        private bool GetMemberList(TriggerReader reader)
+        {
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+            var table = reader.ReadVariableTable(true);
+            table.Clear();
+            string sql = $"SELECT [Name] FROM FURRE";
+            var dataTable = database.GetDataTable(sql);
+            int index = 0;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                index++;
+                table.Add(index.ToString(), row["Name"]);
+            }
             return true;
         }
 
@@ -691,6 +759,23 @@ namespace Libraries
                 ex.Log();
                 return false;
             }
+        }
+
+        [TriggerDescription("reads column information for the specified furre from Furre Records into the specified variable")]
+        [TriggerStringParameter]
+        [TriggerStringParameter]
+        [TriggerVariableParameter]
+        private bool ReadDatabaseInfoName(TriggerReader reader)
+        {
+            if (database == null) database = new SQLiteDatabase(SQLitefile);
+
+            var info = reader.ReadString();
+            var Furre = reader.ReadString().ToFurcadiaShortName();
+            var Variable = reader.ReadVariable(true);
+            //  Dim db As SQLiteDatabase = New SQLiteDatabase(file)
+            string sql = $"SELECT [{info}] FROM FURRE Where [Name]='{Furre}'";
+            Variable.Value = database.ExecuteScalar(sql);
+            return true;
         }
 
         [TriggerDescription("Removes a column to the Furre Table")]

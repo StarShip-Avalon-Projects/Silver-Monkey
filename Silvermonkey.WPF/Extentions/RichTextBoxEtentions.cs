@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 
-namespace SilverMonkey
+namespace SilverMonkey.Extentions
 {
     /// <summary>
     ///
@@ -21,9 +22,11 @@ namespace SilverMonkey
         public static void SetText(this RichTextBox richTextBox, string text)
         {
             richTextBox.Document.Blocks.Clear();
-            Paragraph para = new Paragraph(new Run(text));
-            para.Margin = new System.Windows.Thickness(0);
-            para.Padding = new System.Windows.Thickness(0);
+            Paragraph para = new Paragraph(new Run(text))
+            {
+                Margin = new System.Windows.Thickness(0),
+                Padding = new System.Windows.Thickness(0)
+            };
             richTextBox.Document.Blocks.Add(para);
         }
 
@@ -32,12 +35,18 @@ namespace SilverMonkey
         /// </summary>
         /// <param name="richTextBox">The rich text box.</param>
         /// <param name="text">The text.</param>
-        public static void AppendParagraph(this RichTextBox richTextBox, string text)
+        public static void AppendParagraph(this RichTextBox richTextBox, string text, Brush brush = null)
         {
-            Paragraph para = new Paragraph(new Run(text));
-            para.Margin = new System.Windows.Thickness(0);
-            para.Padding = new System.Windows.Thickness(0);
+            if (brush == null)
+                brush = Brushes.Black;
+            Paragraph para = new Paragraph(new Run(text))
+            {
+                Margin = new System.Windows.Thickness(0),
+                Padding = new System.Windows.Thickness(0),
+                Foreground = brush
+            };
             richTextBox.Document.Blocks.Add(para);
+            richTextBox.ScrollToEnd();
         }
 
         /// <summary>

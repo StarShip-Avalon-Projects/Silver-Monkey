@@ -101,12 +101,12 @@ namespace Libraries
                 "When anyone says anything,");
             // (0:11) When anyone says {...},
             Add(TriggerCategory.Cause,
-                r => MsgIs(r),
+                r => MessageIsAndSetVariables(r),
                 "When anyone says {...},");
 
             // (0:12) When anyone says anything with {...} in it,
             Add(TriggerCategory.Cause,
-                r => MsgContains(r),
+                r => MessageContainsAndSetVariables(r),
                 "When anyone says anything with {...} in it,");
 
             // (0:13: When anyone shouts anything,
@@ -115,12 +115,12 @@ namespace Libraries
                 "When anyone shouts anything,");
             // (0:14) When anyone shouts {...},
             Add(TriggerCategory.Cause,
-                r => MsgIs(r),
+                r => MessageIsAndSetVariables(r),
                 "When anyone shouts {...},");
 
             // (0:15) When anyone shouts anything with {...} in it,
             Add(TriggerCategory.Cause,
-                r => MsgContains(r),
+                r => MessageContainsAndSetVariables(r),
                 "When anyone shouts anything with {...} in it,");
 
             // (0:16) When anyone emotes anything,
@@ -134,12 +134,12 @@ namespace Libraries
 
             // (0:17) When anyone emotes {...},
             Add(TriggerCategory.Cause,
-                r => MsgIs(r),
+                r => MessageIsAndSetVariables(r),
                 "When anyone emotes {...},");
 
             // (0:18) When anyone emotes anything with {...} in it,
             Add(TriggerCategory.Cause,
-                r => MsgContains(r),
+                r => MessageContainsAndSetVariables(r),
                 "When anyone emotes anything with {...} in it,");
 
             // (0:19) When anyone whispers anything,
@@ -153,12 +153,12 @@ namespace Libraries
 
             // (0:20) When anyone whispers {...},
             Add(TriggerCategory.Cause,
-                r => MsgIs(r),
+                r => MessageContainsAndSetVariables(r),
                 "When anyone whispers {...},");
 
             // (0:21) When anyone whispers anything with {...} in it,
             Add(TriggerCategory.Cause,
-                r => MsgContains(r),
+                r => MessageContainsAndSetVariables(r),
                 "When anyone whispers anything with {...} in it,");
 
             // Says or Emotes
@@ -172,12 +172,12 @@ namespace Libraries
                 "When anyone says or emotes anything,");
             // (0:23) When anyone says or emotes {...},
             Add(TriggerCategory.Cause,
-                r => MsgIs(r),
+                r => MessageIsAndSetVariables(r),
                 "When anyone says or emotes {...},");
 
             // (0:24) When anyone says or emotes anything with {...} in it,
             Add(TriggerCategory.Cause,
-                r => MsgContains(r),
+                r => MessageContainsAndSetVariables(r),
                 "When anyone says or emotes anything with {...} in it,");
 
             // (0:25) When someone emits anything,
@@ -192,12 +192,12 @@ namespace Libraries
                  "When someone emits anything,");
             // (0:26) When someone emits {...},
             Add(TriggerCategory.Cause,
-                r => MsgIs(r),
+                r => MessageIsAndSetVariables(r),
                 "When someone emits {...},");
 
             // (0:27) When someone emits anything with {...} in it,
             Add(TriggerCategory.Cause,
-              r => MsgContains(r),
+              r => MessageContainsAndSetVariables(r),
               "When someone emits anything with {...} in it,");
 
             //  (1:3) and the triggering furre's name is {...},
@@ -213,45 +213,45 @@ namespace Libraries
             //  (1:5) and the Triggering Furre's message is {...}, (say, emote,
             //  shot, whisper, or emit Channels)
             Add(TriggerCategory.Condition,
-                r => MsgIs(r),
+                r => MessageIs(r),
                 "and the triggering furre's message is {...},");
 
             //  (1:8) and the triggering furre's message contains {...} in it,
             //  (say, emote, shot, whisper, or emit Channels)
             Add(TriggerCategory.Condition,
-                r => MsgContains(r),
+                r => MessageContains(r),
                 "and the triggering furre's message contains {...} in it,");
 
             // (1:9) and the triggering furre's message does not contain {...} in it,
             // (say, emote, shot, whisper, or emit Channels)
             Add(TriggerCategory.Condition,
-                r => !MsgContains(r),
+                r => !MessageContains(r),
                 "and the triggering furre's message does not contain {...} in it,");
 
             // (1:10) and the triggering furre's message is not {...},
             // (say, emote, shot, whisper, or emit Channels)
             Add(TriggerCategory.Condition,
-                r => !MsgIs(r),
+                r => !MessageIs(r),
                 "and the triggering furre's message is not {...},");
 
             // (1:11) and triggering furre's message starts with {...},
             Add(TriggerCategory.Condition,
-                r => MsgStartsWith(r),
+                r => MessageStartsWith(r),
                 "and triggering furre's message starts with {...},");
 
             // (1:12) and triggering furre's message doesn't start with {...},
             Add(TriggerCategory.Condition,
-                r => MsgNotStartsWith(r),
+                r => !MessageStartsWith(r),
                 "and triggering furre's message doesn't start with {...},");
 
             // (1:13) and triggering furre's message  ends with {...},
             Add(TriggerCategory.Condition,
-                r => MsgEndsWith(r),
+                r => MessageEndsWith(r),
                 "and triggering furre's message  ends with {...},");
 
             // (1:14) and triggering furre's message doesn't end with {...},
             Add(TriggerCategory.Condition,
-                r => !MsgEndsWith(r),
+                r => !MessageEndsWith(r),
                 "and triggering furre's message doesn't end with {...},");
 
             // Says
@@ -337,7 +337,7 @@ namespace Libraries
         [TriggerStringParameter]
         private bool MsgNotStartsWith(TriggerReader reader)
         {
-            return !MsgStartsWith(reader);
+            return !MessageStartsWithAndSetVariables(reader);
         }
 
         /// <summary>

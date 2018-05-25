@@ -190,6 +190,7 @@ namespace Engine.BotSession
             if (MSpage != null)
             {
                 MSpage.Reset(true);
+                MSpage.Error -= (page, handler, trigger, ex) => OnMonkeySpeakError(page, handler, trigger, ex);
             }
         }
 
@@ -316,15 +317,7 @@ namespace Engine.BotSession
         /// <param name="ex">The ex.</param>
         private void OnMonkeySpeakError(Page page, TriggerHandler handler, Trigger trigger, Exception ex)
         {
-            if (ex.GetType() != typeof(MonkeyspeakException))
-            {
-                var PageError = new MonkeyspeakException($"Trigger Error: {trigger} {ex}");
-                Proxy.SendError(PageError, handler);
-            }
-            else
-            {
-                Proxy.SendError(ex, handler);
-            }
+            Logger.Error($"{handler.Method.Name} in {trigger.ToString(page.Engine)}\n{ex}");
         }
 
         private void ParseServerData(object sender, ParseServerArgs e)
@@ -671,6 +664,7 @@ namespace Engine.BotSession
 
             List<IVariable> VariableList = new List<IVariable>();
             MSpage = LoadLibrary(false);
+            MSpage.Error += (page, handler, trigger, ex) => OnMonkeySpeakError(page, handler, trigger, ex);
             IFurre fur = new Furre();
             VariableList.Add(new ConstantVariable(DreamOwnerVariable, Dream.DreamOwner));
             VariableList.Add(new ConstantVariable(DreamNameVariable, Dream.Name));

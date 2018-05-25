@@ -117,7 +117,7 @@ namespace MonkeyCore.Data
         public int AddColumn(string table, string collumn, string type)
         {
             Logger.Debug<SQLiteDatabase>($"'{collumn} {type}' TO: '{table}'");
-            if (ColumnExist(collumn, table))
+            if (TableColumnExist(collumn, table))
             {
                 return 0;
             }
@@ -447,7 +447,7 @@ namespace MonkeyCore.Data
         /// </param>
         /// <returns>
         /// </returns>
-        public bool ColumnExist(string columnName, string table)
+        public bool TableColumnExist(string columnName, string table)
         {
             bool returnval = false;
             using (SQLiteConnection cnn = new SQLiteConnection(dbConnection))
@@ -487,6 +487,17 @@ namespace MonkeyCore.Data
             Logger.Debug<SQLiteDatabase>($"'{table}'");
 
             return ExecuteNonQuery($"SELECT name FROM sqlite_master WHERE name='{ table }'") > 0;
+        }
+
+        /// <summary>
+        /// Tables the row exists.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <param name="Row">The row.</param>
+        /// <returns></returns>
+        public bool TableRowExists(string table, string Collumn, string value)
+        {
+            return 1 == ExecuteNonQuery($"SELECT EXISTS(SELECT {Collumn} FROM {table} WHERE {Collumn}='{value}' LIMIT 1");
         }
 
         /// <summary>

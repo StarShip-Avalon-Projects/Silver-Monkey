@@ -95,13 +95,13 @@
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
 
-                        <TreeView  x:Name="FurreList"
+                        <TreeView  x:Name="Furres"
                         Grid.Column="0"
                          Grid.Row="0"
                          Grid.ColumnSpan="2">
 
                             <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate ItemsSource="{Binding Furres}">
+                                <HierarchicalDataTemplate  ItemsSource="{Binding Furres}">
                                     <Border BorderBrush="BurlyWood" BorderThickness="1">
                                         <TextBlock Text="{Binding Name}" />
                                     </Border>
@@ -125,7 +125,7 @@ Text="{Binding FurreCount}"
                                 Margin="10"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
-                        <TextBlock x:Name="DreaRating"
+                        <TextBlock x:Name="DreamRating"
                                 Margin="10"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
@@ -166,12 +166,13 @@ Text="{Binding FurreCount}"
                      TextOptions.TextRenderingMode="Aliased"
                      AcceptsTab="false"
                      VerticalScrollBarVisibility="Auto"
-                     AcceptsReturn="True">                <RichTextBox.Resources>
+                     AcceptsReturn="True">
+                <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0" />
                     </Style>
                 </RichTextBox.Resources>
-            </RichTextBox>
+            </RichTextBox>
 
             <!-- Row 3-->
             <TextBlock Grid.Column="1"

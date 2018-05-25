@@ -2,6 +2,7 @@
 using Furcadia.Net.Proxy;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -160,8 +161,16 @@ namespace Libraries
         private bool StandAloneMode(TriggerReader reader)
         {
             ParentBotSession.StandAlone = true;
-            NetProxy.CloseFurcadiaClient();
+            CloseFurcadiaClient();
             return true;
+        }
+
+        /// <summary>
+        /// Closes the furcadia client.
+        /// </summary>
+        public void CloseFurcadiaClient()
+        {
+            ParentBotSession.CloseFurcadiaClient();
         }
 
         #endregion Private Methods

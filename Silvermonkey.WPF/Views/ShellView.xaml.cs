@@ -6,7 +6,16 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Monkeyspeak.Logging;
+
+using SilverMonkey.Extentions;
+
+using MonkeyCore.Logging;
+using MsLog = Monkeyspeak.Logging;
+using FurcLog = Furcadia.Logging;
+
+using System.Collections.ObjectModel;
+using Furcadia.Net.DreamInfo;
+using SilverMonkey.Logging;
 
 namespace SilverMonkey.Views
 {
@@ -30,115 +39,46 @@ namespace SilverMonkey.Views
         public Bot FurcadiaSession { get => furcadiaSession; set => furcadiaSession = value; }
 
         /// <summary>
+        /// Gets or sets the selected furre.
+        /// </summary>
+        /// <value>
+        /// The selected furre.
+        /// </value>
+        public Furre SelectedFurre { get; set; } = new Furre();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ShellView"/> class.
         /// </summary>
         public ShellView()
         {
             InitializeComponent();
             SessionOptions = new BotOptions();
-            if (FurcadiaSession is null)
-            {
-                FurcadiaSession = new Bot(SessionOptions);
-                FurcadiaSession.ProcessServerChannelData += OnProcessServerChannelData;
-                FurcadiaSession.ProcessServerInstruction += OnProcessServerInstruction;
-                FurcadiaSession.Error += OnError;
-                FurreList.ItemsSource = FurcadiaSession.Furres;
-                FurreCount.DataContext = FurcadiaSession.Furres.Count.ToString();
-            }
-        }
-
-        private void OnError(Exception e, object o)
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(DispatcherPriority.Normal,
-                    (Action)(() =>
-                    {
-                        LogOutputBox.AppendParagraph($"{e} {0}");
-                    }));
-            }
-            else
-            {
-                LogOutputBox.AppendParagraph($"{e} {0}");
-            }
-        }
-
-        private void OnProcessServerInstruction(object sender, ParseServerArgs Args)
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(DispatcherPriority.Normal,
-                     (Action)(() =>
-                     {
-                         var instructionObject = (BaseServerInstruction)sender;
-                         switch (instructionObject.InstructionType)
-                         {
-                             case ServerInstructionType.LoadDreamEvent:
-                             case ServerInstructionType.SpawnAvatar:
-                             case ServerInstructionType.RemoveAvatar:
-                                 FurreList.DataContext = null;
-                                 FurreList.DataContext = FurcadiaSession.Furres;
-
-                                 break;
-                         }
-                     }));
-            }
-            else
-            {
-                var instructionObject = (BaseServerInstruction)sender;
-                switch (instructionObject.InstructionType)
-                {
-                    case ServerInstructionType.LoadDreamEvent:
-                    case ServerInstructionType.SpawnAvatar:
-                    case ServerInstructionType.RemoveAvatar:
-                        FurreList.DataContext = null;
-                        FurreList.DataContext = FurcadiaSession.Furres;
-
-                        break;
-                }
-            }
-        }
-
-        private void OnProcessServerChannelData(object sender, ParseChannelArgs Args)
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(DispatcherPriority.Normal,
-                    (Action)(() =>
-                    {
-                        var InstructionObject = (ChannelObject)sender;
-                        if (!string.IsNullOrWhiteSpace(InstructionObject.FormattedChannelText))
-                        {
-                            LogOutputBox.AppendParagraph(InstructionObject.FormattedChannelText);
-                        }
-                        else if (!string.IsNullOrWhiteSpace(InstructionObject.Player.Message))
-                        {
-                            LogOutputBox.AppendParagraph(InstructionObject.Player.Message.ToStrippedFurcadiaMarkupString());
-                        }
-                        else
-                        {
-                            LogOutputBox.AppendParagraph(InstructionObject.RawInstruction);
-                        }
-                        LogOutputBox.ScrollToEnd();
-                    }));
-            }
-            else
-            {
-                var InstructionObject = (ChannelObject)sender;
-                if (!string.IsNullOrWhiteSpace(InstructionObject.FormattedChannelText))
-                {
-                    LogOutputBox.AppendParagraph(InstructionObject.FormattedChannelText);
-                }
-                else if (!string.IsNullOrWhiteSpace(InstructionObject.Player.Message))
-                {
-                    LogOutputBox.AppendParagraph(InstructionObject.Player.Message.ToStrippedFurcadiaMarkupString());
-                }
-                else
-                {
-                    LogOutputBox.AppendParagraph(InstructionObject.RawInstruction);
-                }
-                LogOutputBox.ScrollToEnd();
-            }
+            FurcadiaSession = new Bot(SessionOptions);
+            FurcadiaSession.ProcessServerChannelData += OnProcessServerChannelData;
+            FurcadiaSession.ProcessServerInstruction += OnProcessServerInstruction;
+            FurcadiaSession.Error += OnError;
+            Furres.ItemsSource = FurcadiaSession.Furres;
+            MsLog.Logger.InfoEnabled = true;
+            MsLog.Logger.ErrorEnabled = true;
+            FurcLog.Logger.InfoEnabled = true;
+            FurcLog.Logger.ErrorEnabled = true;
+            Logger.InfoEnabled = true;
+            Logger.ErrorEnabled = true;
+            Logger.LogOutput = new MultiLogOutput(
+                new ConsoleWindowLogOutput(LogOutputBox, Level.Error),
+                new ConsoleWindowLogOutput(LogOutputBox, Level.Info),
+                new ConsoleWindowLogOutput(LogOutputBox, Level.Warning)
+                );
+            FurcLog.Logger.LogOutput = new MultiLogOutput(
+                new ConsoleWindowLogOutput(LogOutputBox, FurcLog.Level.Error.ToLevel()),
+                new ConsoleWindowLogOutput(LogOutputBox, FurcLog.Level.Info.ToLevel()),
+                new ConsoleWindowLogOutput(LogOutputBox, FurcLog.Level.Warning.ToLevel())
+                );
+            MsLog.Logger.LogOutput = new MultiLogOutput(
+                new ConsoleWindowLogOutput(LogOutputBox, MsLog.Level.Error.ToLevel()),
+                new ConsoleWindowLogOutput(LogOutputBox, MsLog.Level.Info.ToLevel()),
+                new ConsoleWindowLogOutput(LogOutputBox, MsLog.Level.Warning.ToLevel())
+                );
         }
 
         #endregion Public Constructors
@@ -264,6 +204,100 @@ namespace SilverMonkey.Views
         }
 
         #endregion Private Methods
+
+        private void OnError(Exception e, object o)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                    (Action)(() =>
+                    {
+                        LogOutputBox.AppendParagraph($"{e} {o}");
+                    }));
+            }
+        }
+
+        private void OnProcessServerChannelData(object sender, ParseChannelArgs Args)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                    (Action)(() =>
+                    {
+                        if (sender is ChannelObject InstructionObject)
+                        {
+                            LogOutputBox.AppendParagraph(InstructionObject.ChannelText);
+                        }
+                    }));
+            }
+            else if (sender is ChannelObject InstructionObject)
+            {
+                LogOutputBox.AppendParagraph(InstructionObject.ChannelText);
+            }
+        }
+
+        private void OnProcessServerInstruction(object sender, ParseServerArgs Args)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                     (Action)(() =>
+                     {
+                         if (sender is BaseServerInstruction instructionObject)
+                         {
+                             if (furcadiaSession.ServerStatus == ConnectionPhase.MOTD)
+                                 LogOutputBox.AppendParagraph(instructionObject.RawInstruction);
+                             switch (instructionObject.InstructionType)
+                             {
+                                 case ServerInstructionType.LoadDreamEvent:
+                                 case ServerInstructionType.SpawnAvatar:
+                                 case ServerInstructionType.RemoveAvatar:
+                                     Furres.ItemsSource = FurcadiaSession.Furres;
+                                     Furres.Items.Refresh();
+                                     Furres.UpdateLayout();
+                                     FurreCount.Text = $"Total Furres: {FurcadiaSession.Furres.Count}";
+                                     break;
+                             }
+                             switch (instructionObject.InstructionType)
+                             {
+                                 case ServerInstructionType.BookmarkDream:
+                                 case ServerInstructionType.LoadDreamEvent:
+                                     DreamOwner.Text = FurcadiaSession.Dream.DreamOwner;
+                                     DreamTitle.Text = FurcadiaSession.Dream.Title;
+                                     DreamRating.Text = FurcadiaSession.Dream.Rating;
+                                     // DreamURL.NavigateUri = new Uri(FurcadiaSession.Dream.DreamUrl);
+                                     break;
+                             }
+                         }
+                     }));
+            }
+            else if (sender is BaseServerInstruction instructionObject)
+            {
+                if (furcadiaSession.ServerStatus == ConnectionPhase.MOTD)
+                    LogOutputBox.AppendParagraph(instructionObject.RawInstruction);
+                switch (instructionObject.InstructionType)
+                {
+                    case ServerInstructionType.LoadDreamEvent:
+                    case ServerInstructionType.SpawnAvatar:
+                    case ServerInstructionType.RemoveAvatar:
+                        Furres.ItemsSource = FurcadiaSession.Furres;
+                        Furres.Items.Refresh();
+                        Furres.UpdateLayout();
+                        FurreCount.Text = $"Total Furres: {FurcadiaSession.Furres.Count}";
+                        break;
+                }
+                switch (instructionObject.InstructionType)
+                {
+                    case ServerInstructionType.BookmarkDream:
+                    case ServerInstructionType.LoadDreamEvent:
+                        DreamOwner.Text = FurcadiaSession.Dream.DreamOwner;
+                        DreamTitle.Text = FurcadiaSession.Dream.Title;
+                        DreamRating.Text = FurcadiaSession.Dream.Rating;
+                        // DreamURL.NavigateUri = new Uri(FurcadiaSession.Dream.DreamUrl);
+                        break;
+                }
+            }
+        }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {

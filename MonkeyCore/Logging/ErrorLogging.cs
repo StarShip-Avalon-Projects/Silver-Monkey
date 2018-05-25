@@ -81,11 +81,10 @@ namespace MonkeyCore.Logging
         #region Public Methods
 
         /// <summary>
+        /// Logs the error to a date time stamped file.
         /// </summary>
-        /// <param name="ex">
-        /// </param>
-        /// <param name="ObjectThrowingError">
-        /// </param>
+        /// <param name="ex">The ex.</param>
+        /// <param name="ObjectThrowingError">The object throwing error.</param>
         public void LogError(Exception ex, object ObjectThrowingError)
         {
             //   BugReport = New ProjectReport
@@ -96,12 +95,14 @@ namespace MonkeyCore.Logging
                 // ***********************************************************
                 LogFile.WriteLine("-------------------------------------------------------");
                 LogFile.WriteLine($"{Assembly.GetEntryAssembly().GetName().Version.ToString()} Product Version");
+
                 var InfoVersion = Attribute
                    .GetCustomAttribute(
                        Assembly.GetEntryAssembly(),
                        typeof(AssemblyInformationalVersionAttribute))
                    as AssemblyInformationalVersionAttribute;
                 LogFile.WriteLine($"{InfoVersion.InformationalVersion} InformationalVersion");
+
                 LogFile.WriteLine("");
                 LogFile.WriteLine($"Date: { DateTime.Now.ToString("d")}");
                 LogFile.WriteLine("");

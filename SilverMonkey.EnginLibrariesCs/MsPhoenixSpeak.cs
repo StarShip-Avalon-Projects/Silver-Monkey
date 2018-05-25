@@ -608,7 +608,7 @@ namespace Libraries
                 if (result.PhoenixSpeakID == CurrentPsId)
                     phoenxSpeakObjects.TryDequeue(out result);
                 else
-                    Logger.Error($"Expected CurrentPsId'{CurrentPsId}' but got '{result.PhoenixSpeakID}'");
+                    Logger.Error($"Expected CurrentPsId: '{CurrentPsId}' but got result.PhoenixSpeakID: '{result.PhoenixSpeakID}'");
             }
 
             return Task.FromResult(result);
