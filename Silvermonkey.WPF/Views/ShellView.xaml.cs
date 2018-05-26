@@ -1,21 +1,18 @@
 ﻿using Engine.BotSession;
 using Furcadia.Net;
+using Furcadia.Net.DreamInfo;
 using Furcadia.Net.Utils.ServerParser;
+using MonkeyCore.Logging;
+using SilverMonkey.Extentions;
+using SilverMonkey.Logging;
 using System;
-using System.IO;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
-
-using SilverMonkey.Extentions;
-
-using MonkeyCore.Logging;
-using MsLog = Monkeyspeak.Logging;
 using FurcLog = Furcadia.Logging;
-
-using System.Collections.ObjectModel;
-using Furcadia.Net.DreamInfo;
-using SilverMonkey.Logging;
+using MsLog = Monkeyspeak.Logging;
 
 namespace SilverMonkey.Views
 {
@@ -56,6 +53,7 @@ namespace SilverMonkey.Views
             FurcadiaSession = new Bot(SessionOptions);
             FurcadiaSession.ProcessServerChannelData += OnProcessServerChannelData;
             FurcadiaSession.ProcessServerInstruction += OnProcessServerInstruction;
+            FurcadiaSession.ServerStatusChanged += OnServerStatusChanged;
             FurcadiaSession.Error += OnError;
             Furres.ItemsSource = FurcadiaSession.Furres;
             MsLog.Logger.InfoEnabled = true;
@@ -95,18 +93,32 @@ namespace SilverMonkey.Views
             {
                 ButtonGo.IsEnabled = false;
                 if (FurcadiaSession.IsServerSocketConnected)
+                {
                     FurcadiaSession.Disconnect();
+                    ButtonGo.Background = Brushes.LightGray;
+                }
                 else
                 {
                     await FurcadiaSession.ConnetAsync();
                 }
             }
-            catch (Exception fnfe)
+            catch (Exception crap)
             {
-                Logger.Error(fnfe);
+                crap.Log();
             }
             finally
             {
+                if (FurcadiaSession.IsServerSocketConnected)
+                {
+                    ButtonGo.Content = "Stop!";
+                    ButtonGo.Background = Brushes.Green;
+                }
+                else
+                {
+                    ButtonGo.Content = "Go!";
+                    ButtonGo.Background = Brushes.LightGray;
+                }
+
                 ButtonGo.IsEnabled = true;
             }
         }
@@ -203,6 +215,28 @@ namespace SilverMonkey.Views
             }
         }
 
+        private void UpdateFurreList()
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                    (Action)(() =>
+                    {
+                        Furres.ItemsSource = FurcadiaSession.Furres;
+                        Furres.Items.Refresh();
+                        Furres.UpdateLayout();
+                        FurreCount.Text = $"Total Furres: {FurcadiaSession.Furres.Count}";
+                    }));
+            }
+            else
+            {
+                Furres.ItemsSource = FurcadiaSession.Furres;
+                Furres.Items.Refresh();
+                Furres.UpdateLayout();
+                FurreCount.Text = $"Total Furres: {FurcadiaSession.Furres.Count}";
+            }
+        }
+
         #endregion Private Methods
 
         private void OnError(Exception e, object o)
@@ -214,6 +248,38 @@ namespace SilverMonkey.Views
                     {
                         LogOutputBox.AppendParagraph($"{e} {o}");
                     }));
+            }
+        }
+
+        private void OnServerStatusChanged(object Sender, NetServerEventArgs e)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal,
+                     (Action)(() =>
+                     {
+                         switch (e.ConnectPhase)
+                         {
+                             case ConnectionPhase.Disconnected:
+                                 ButtonGo.Background = Brushes.Red;
+                                 ButtonGo.Content = "Disconnected!";
+
+                                 UpdateFurreList();
+                                 break;
+
+                             case ConnectionPhase.Connecting:
+                                 ButtonGo.Background = Brushes.Orange;
+                                 ButtonGo.Content = "Connecting ...";
+
+                                 break;
+
+                             case ConnectionPhase.Connected:
+                                 ButtonGo.Background = Brushes.LightGreen;
+                                 ButtonGo.Content = "Connected!!!";
+
+                                 break;
+                         }
+                     }));
             }
         }
 
@@ -252,10 +318,7 @@ namespace SilverMonkey.Views
                                  case ServerInstructionType.LoadDreamEvent:
                                  case ServerInstructionType.SpawnAvatar:
                                  case ServerInstructionType.RemoveAvatar:
-                                     Furres.ItemsSource = FurcadiaSession.Furres;
-                                     Furres.Items.Refresh();
-                                     Furres.UpdateLayout();
-                                     FurreCount.Text = $"Total Furres: {FurcadiaSession.Furres.Count}";
+                                     UpdateFurreList();
                                      break;
                              }
                              switch (instructionObject.InstructionType)
@@ -280,10 +343,7 @@ namespace SilverMonkey.Views
                     case ServerInstructionType.LoadDreamEvent:
                     case ServerInstructionType.SpawnAvatar:
                     case ServerInstructionType.RemoveAvatar:
-                        Furres.ItemsSource = FurcadiaSession.Furres;
-                        Furres.Items.Refresh();
-                        Furres.UpdateLayout();
-                        FurreCount.Text = $"Total Furres: {FurcadiaSession.Furres.Count}";
+                        UpdateFurreList();
                         break;
                 }
                 switch (instructionObject.InstructionType)
@@ -301,6 +361,35 @@ namespace SilverMonkey.Views
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
+        }
+
+        private void MsEditor_Click(object sender, RoutedEventArgs e)
+        {
+            var msProcassStarInfo = new ProcessStartInfo
+            {
+                Arguments = SessionOptions.MonkeySpeakEngineOptions.MonkeySpeakScriptFile,
+                WorkingDirectory = IO.Paths.ApplicationPath,
+                FileName = "Monkeyspeak Editor.exe"
+            };
+            var MsProcess = new Process
+            {
+                StartInfo = msProcassStarInfo
+            };
+            MsProcess.Start();
+        }
+
+        private void DataMonkey_Click(object sender, RoutedEventArgs e)
+        {
+            var msProcassStarInfo = new ProcessStartInfo
+            {
+                WorkingDirectory = IO.Paths.ApplicationPath,
+                FileName = "Data Monkey.exe"
+            };
+            var MsProcess = new Process
+            {
+                StartInfo = msProcassStarInfo
+            };
+            MsProcess.Start();
         }
     }
 }

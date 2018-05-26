@@ -80,7 +80,7 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                  r =>
-                 SendServer($"`summon {Player.ShortName}"),
+                 SendServer($"`summon"),
                  "summon the triggering furre.");
 
             Add(TriggerCategory.Effect,
@@ -90,7 +90,7 @@ namespace Libraries
 
             Add(TriggerCategory.Effect,
                 r =>
-                SendServer($"`join {Player.ShortName}"),
+                SendServer($"`join"),
                 "join the triggering furre.");
 
             Add(TriggerCategory.Effect,
@@ -142,22 +142,23 @@ namespace Libraries
         [TriggerDescription("Detect any query request by any furre")]
         private bool AnyQueryRequest(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Could not set triggering furre variables");
             return true;
         }
 
         [TriggerDescription("Detect a cuddle request by any furre.")]
         private bool CuddleRequestAnyFurre(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Could not set triggering furre variables");
             return QueryType.cuddle == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
         [TriggerDescription("Detect a cuddle request by the specified furre")]
         private bool CuddleRequestFurreNamed(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
-            return NameIs(reader)
+            return TriggeringFurreNameIsAndSetVariables(reader)
                 && QueryType.cuddle == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
@@ -170,42 +171,45 @@ namespace Libraries
         [TriggerDescription("Detect a follow request by any furre.")]
         private bool FollowRequestAnyFurre(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Could not set triggering furre variables");
             return QueryType.follow == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
         [TriggerDescription("Detect a follow request by the specified furre.")]
         private bool FollowRequestFurreNamed(TriggerReader reader)
         {
-            return NameIs(reader)
+            return TriggeringFurreNameIsAndSetVariables(reader)
                 && QueryType.follow == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
         [TriggerDescription("Detect a join request by the specified.")]
         private bool JoinRequestFurreNamed(TriggerReader reader)
         {
-            return NameIs(reader) &&
+            return TriggeringFurreNameIsAndSetVariables(reader) &&
                 QueryType.join == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
         [TriggerDescription("Detect join request by any furre.")]
         private bool JoinRequestTriggeringFurre(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Could not set triggering furre variables");
             return QueryType.join == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
         [TriggerDescription("Detect leading request by any furre.")]
         private bool LeadRequestAnyFurre(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Could not set triggering furre variables");
             return QueryType.lead == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
         [TriggerDescription("Detect a lead request by the specified furre.")]
         private bool LeadRequestFurreNamed(TriggerReader reader)
         {
-            return NameIs(reader)
+            return TriggeringFurreNameIsAndSetVariables(reader)
                && QueryType.lead == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
@@ -218,14 +222,15 @@ namespace Libraries
         [TriggerDescription("Detect summoning request by the specified furre.")]
         private bool SummonRequestFurreNamed(TriggerReader reader)
         {
-            return NameIs(reader) &&
+            return TriggeringFurreNameIsAndSetVariables(reader) &&
                  QueryType.summon == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 
         [TriggerDescription("Detect summoning request by any furre.")]
         private bool SummonRequestTriggeringFurre(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Could not set triggering furre variables");
             return QueryType.summon == reader.GetParametersOfType<QueryChannelObject>().FirstOrDefault().Query;
         }
 

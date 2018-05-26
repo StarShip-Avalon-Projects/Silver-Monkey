@@ -798,16 +798,14 @@ namespace Libraries
         [TriggerStringParameter]
         private bool WhenFurreNamedEnterView(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
-            return NameIs(reader) && Player.HasEnteredRange;
+            return TriggeringFurreNameIsAndSetVariables(reader) && Player.HasEnteredRange;
         }
 
         [TriggerDescription("Triggers once when the specified Furre leaves the bot view.")]
         [TriggerStringParameter]
         private bool WhenFurreNamedLeaveView(TriggerReader reader)
         {
-            ReadTriggeringFurreParams(reader);
-            return NameIs(reader) && Player.HasLeftRange;
+            return TriggeringFurreNameIsAndSetVariables(reader) && Player.HasLeftRange;
         }
 
         #endregion Private Methods

@@ -202,12 +202,12 @@ namespace Libraries
 
             //  (1:3) and the triggering furre's name is {...},
             Add(TriggerCategory.Condition,
-                r => NameIs(r),
+                r => TriggeringFurreNameIs(r),
                 "and the triggering furre's name is {...},");
 
             //  (1:4) and the triggering furre's name is not {...},
             Add(TriggerCategory.Condition,
-                r => !NameIs(r),
+                r => !TriggeringFurreNameIs(r),
                 "and the triggering furre's name is not {...},");
 
             //  (1:5) and the Triggering Furre's message is {...}, (say, emote,

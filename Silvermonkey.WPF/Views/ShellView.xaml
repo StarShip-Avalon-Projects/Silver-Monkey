@@ -35,10 +35,10 @@
                 <MenuItem Header="_Paste" />
             </MenuItem>
             <MenuItem Header="_Tools">
-                <MenuItem Header="_Edit Monkey Speak">
+                <MenuItem Header="_Edit Monkey Speak" x:Name="MsEditor" Click="MsEditor_Click">
                 </MenuItem>
                 <MenuItem Header="_Debug Window" />
-                <MenuItem Header="_Data Monkey" />
+                <MenuItem Header="_Data Monkey" x:Name="DataMonkey" Click="DataMonkey_Click" />
             </MenuItem>
             <MenuItem Header="Resource Links">
             </MenuItem>

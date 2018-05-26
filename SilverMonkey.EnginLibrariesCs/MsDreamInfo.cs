@@ -43,7 +43,7 @@ namespace Libraries
                 "When anyone enters the Dream,");
 
             Add(TriggerCategory.Cause,
-                 NameIs,
+                 TriggeringFurreNameIsAndSetVariables,
                 "When the furre named {..} enters the Dream,");
 
             Add(TriggerCategory.Cause,
@@ -55,7 +55,7 @@ namespace Libraries
                 "When anyone leaves the Dream,");
 
             Add(TriggerCategory.Cause,
-                r => NameIs(r),
+                r => TriggeringFurreNameIsAndSetVariables(r),
                 "When a furre named {..} leaves the Dream,");
 
             Add(TriggerCategory.Cause,

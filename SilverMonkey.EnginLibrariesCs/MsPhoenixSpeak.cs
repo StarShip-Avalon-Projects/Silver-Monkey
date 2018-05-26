@@ -491,7 +491,7 @@ namespace Libraries
                             if (short.TryParse(PsQuery[1].AsString(), out short psID) && psID > 0)
                             {
                                 if (PsQuery[2] == "Error:")
-                                    Logger.Warn(PhoenixSpeakErrorMessage);
+                                    Logger.Warn("Sorry. there was an error detected, I cannot process the Phoenix Speak query. :(");
                                 phoenxSpeakObjects.Enqueue(new PhoenixSpeakDataObject(ChanObject.RawInstruction));
                                 break;
                             }
@@ -610,7 +610,9 @@ namespace Libraries
                 else
                     Logger.Error($"Expected CurrentPsId: '{CurrentPsId}' but got result.PhoenixSpeakID: '{result.PhoenixSpeakID}'");
             }
-
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
             return Task.FromResult(result);
         }
 

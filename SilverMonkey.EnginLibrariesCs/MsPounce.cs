@@ -88,11 +88,11 @@ namespace Libraries
                 "When a furre logs off,");
 
             Add(TriggerCategory.Cause,
-                NameIs,
+                TriggeringFurreNameIsAndSetVariables,
                 "When the furre named {...} logs on,");
 
             Add(TriggerCategory.Cause,
-                NameIs,
+                TriggeringFurreNameIsAndSetVariables,
                 "When the furre named {...} logs off,");
 
             Add(TriggerCategory.Condition,

@@ -1,14 +1,12 @@
 ﻿using Furcadia.Net.DreamInfo;
 using Furcadia.Net.Proxy;
+using MonkeyCore.Data;
+using MonkeyCore.Logging;
 using Monkeyspeak;
 using Monkeyspeak.Libraries;
 using System.Linq;
-using MonkeyCore.Logging;
-using static Libraries.MsLibHelper;
-using MonkeyCore.Data;
-using Furcadia.Net.Utils.ServerParser;
 using System.Threading;
-using System;
+using static Libraries.MsLibHelper;
 
 namespace Libraries
 {
@@ -249,19 +247,43 @@ namespace Libraries
         }
 
         /// <summary>
-        /// Generic base Furre named {...} is Triggering Furre
+        /// Triggering furre is the specified name.
+        /// <para/>
+        /// Does not set Triggering furre Variables for anything thats not a <see cref="TriggerCategory.Cause"/>
         /// </summary>
         /// <param name="reader"><see cref="TriggerReader"/></param>
         /// <returns>True on Name match</returns>
         /// <remarks>
         /// any name is accepted and converted to Furcadia Machine name (ShortName version, lowercase
-        /// with special characters stripped)
+        /// with special characters and pipe-space "|" stripped)
         /// </remarks>
         [TriggerDescription("Checks to see if the current triggering furre is the specified furre")]
         [TriggerStringParameter]
-        public bool NameIs(TriggerReader reader)
+        protected bool TriggeringFurreNameIs(TriggerReader reader)
         {
             return reader.ReadString().ToFurcadiaShortName() == Player.ShortName;
+        }
+
+        /// <summary>
+        /// Triggering furre is the specified name.
+        /// <para/>
+        /// This Set triggering furre variables by the Execute Parameters
+        /// <para/>
+        /// used for <see cref="TriggerCategory.Cause"/> only
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// any name is accepted and converted to Furcadia Machine name (ShortName version, lowercase
+        /// with special characters and pipe-space "|" stripped)
+        /// </remarks>
+        [TriggerDescription("Checks to see if the current triggering furre is the specified furre")]
+        [TriggerStringParameter]
+        protected bool TriggeringFurreNameIsAndSetVariables(TriggerReader reader)
+        {
+            if (!ReadTriggeringFurreParams(reader))
+                throw new MonkeyspeakException("Could not set triggering furre variables");
+            return TriggeringFurreNameIs(reader);
         }
 
         /// <summary>
