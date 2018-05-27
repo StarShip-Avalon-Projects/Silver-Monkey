@@ -153,7 +153,7 @@ namespace Libraries
 
             // (0:20) When anyone whispers {...},
             Add(TriggerCategory.Cause,
-                r => MessageContainsAndSetVariables(r),
+                r => MessageIsAndSetVariables(r),
                 "When anyone whispers {...},");
 
             // (0:21) When anyone whispers anything with {...} in it,

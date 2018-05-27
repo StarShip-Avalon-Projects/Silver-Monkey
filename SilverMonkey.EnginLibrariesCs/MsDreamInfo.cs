@@ -49,7 +49,8 @@ namespace Libraries
             Add(TriggerCategory.Cause,
                 r =>
                 {
-                    ReadTriggeringFurreParams(r);
+                    if (!ReadTriggeringFurreParams(r))
+                        throw new MonkeyspeakException("Could not set Triggering Furre Variables");
                     return true;
                 },
                 "When anyone leaves the Dream,");
@@ -61,7 +62,8 @@ namespace Libraries
             Add(TriggerCategory.Cause,
                   r =>
                   {
-                      ReadDreamParams(r);
+                      if (!ReadDreamParams(r))
+                          throw new MonkeyspeakException("Could not set Dream Variables");
                       return true;
                   },
                 "When the bot enters a Dream,");
@@ -71,11 +73,16 @@ namespace Libraries
                 "When the bot enters the Dream named {..},");
 
             Add(TriggerCategory.Cause,
-               EnterOrLeaveTheDreamNamed,
+                  r =>
+                  {
+                      if (!ReadDreamParams(r))
+                          throw new MonkeyspeakException("Could not set Dream Variables");
+                      return true;
+                  },
                "When the bot leaves a Dream,");
 
             Add(TriggerCategory.Cause,
-               r => DreamNameIs(r),
+               r => DreamNameIsAndSetVariabled(r),
                "When the bot leaves the Dream named {..},");
 
             Add(TriggerCategory.Condition,
@@ -164,6 +171,32 @@ namespace Libraries
             return DreamInfo.DreamOwner.ToFurcadiaShortName() == ParentBotSession.ConnectedFurre.ShortName;
         }
 
+        /// <summary>
+        /// Check the name of the dream
+        /// <para/>
+        /// Set Dream Variables for <see cref="Trigger.Category.Cause"/> <see cref="TriggerHandler"/>
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        /// <exception cref="MonkeyspeakException">Could not set Dream Variables</exception>
+        [TriggerDescription("Check to see if we are in the specified dream.")]
+        [TriggerStringParameter]
+        private static bool DreamNameIsAndSetVariabled(TriggerReader reader)
+        {
+            if (!ReadDreamParams(reader))
+                throw new MonkeyspeakException("Could not set Dream Variables");
+            return DreamNameIs(reader);
+        }
+
+        /// <summary>
+        /// Check the name of the dream
+        /// <para/>
+        /// does not set Dream variables for anything but <see cref="Trigger.Category.Cause"/> <see cref="TriggerHandler"/>
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
+        /// <exception cref="MonkeyspeakException">Could not set Dream Variables</exception>
+        [TriggerDescription("Check to see if we are in the specified dream.")]
         [TriggerStringParameter]
         private static bool DreamNameIs(TriggerReader reader)
         {
@@ -197,7 +230,8 @@ namespace Libraries
 
         private bool EnterOrLeaveTheDreamNamed(TriggerReader reader)
         {
-            ReadDreamParams(reader);
+            if (!ReadDreamParams(reader))
+                throw new MonkeyspeakException("Could not set Dream Variables");
             return DreamNameIs(reader);
         }
 

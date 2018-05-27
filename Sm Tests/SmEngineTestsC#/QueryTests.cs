@@ -33,14 +33,14 @@ namespace SmEngineTests
         {
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
-            var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+            var MsFile = Path.Combine(IO.Paths.SilverMonkeyDocumentsPath,
                 "Bugreport 165 From Jake.ms");
             var CharacterFile = Path.Combine(Paths.FurcadiaCharactersFolder,
                 "silvermonkey.ini");
             var MsEngineOption = new EngineOptoons()
             {
                 MonkeySpeakScriptFile = MsFile,
-                IsEnabled = true,
+                IsEnabled = false,
                 BotController = @"Gerolkae"
             };
             Options = new BotOptions(BotFile)
@@ -65,22 +65,25 @@ namespace SmEngineTests
         [TestCase(GeroCuddleBot, "Gerolkae")]
         public void ExpectedQueryCharacter(string testc, string ExpectedValue)
         {
+            bool IsTested = false;
             Proxy.ProcessServerChannelData += (sender, Args) =>
             {
-                if (sender is QueryChannelObject queryObject)
+                if (!IsTested && sender is QueryChannelObject queryObject)
                 {
                     Assert.That(queryObject.Player.ShortName,
                         Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                    IsTested = true;
                 }
             };
 
             Proxy.ParseServerChannel(testc, false);
             Proxy.ProcessServerChannelData -= (sender, Args) =>
             {
-                if (sender is QueryChannelObject queryObject)
+                if (!IsTested && sender is QueryChannelObject queryObject)
                 {
                     Assert.That(queryObject.Player.ShortName,
                         Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                    IsTested = true;
                 }
             };
             Console.WriteLine($"ServerStatus: {Proxy.ServerStatus}");

@@ -61,7 +61,7 @@ namespace SmEngineTests
         {
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 "Silver Monkey.bini");
-            var MsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+            var MsFile = Path.Combine(IO.Paths.SilverMonkeyDocumentsPath,
                 "Bugreport 165 From Jake.ms");
             var CharacterFile = Path.Combine(Paths.FurcadiaCharactersFolder,
                 "dbugger.ini");
@@ -73,7 +73,7 @@ namespace SmEngineTests
             };
             options = new BotOptions(BotFile)
             {
-                Standalone = true,
+                Standalone = false,
                 CharacterIniFile = CharacterFile,
                 MonkeySpeakEngineOptions = MsEngineOption,
                 ResetSettingTime = 10
@@ -97,12 +97,14 @@ namespace SmEngineTests
         [TestCase(EmitTest, "test")]
         public void ChannelTextIs(string testc, string ExpectedValue)
         {
+            bool IsTested = false;
             Proxy.ProcessServerChannelData += (sender, Args) =>
             {
-                if (sender is ChannelObject ServeObject)
+                if (!IsTested && sender is ChannelObject ServeObject)
                 {
                     Assert.That(ServeObject.Player.Message.Trim(),
                         Is.EqualTo(ExpectedValue.Trim()));
+                    IsTested = true;
                 }
             };
 
@@ -110,10 +112,11 @@ namespace SmEngineTests
 
             Proxy.ProcessServerChannelData -= (sender, Args) =>
             {
-                if (sender is ChannelObject ServeObject)
+                if (!IsTested && sender is ChannelObject ServeObject)
                 {
                     Assert.That(ServeObject.Player.Message.Trim(),
                         Is.EqualTo(ExpectedValue.Trim()));
+                    IsTested = true;
                 }
             };
 
@@ -134,9 +137,10 @@ namespace SmEngineTests
         [TestCase(GeroWhisperHi, "whisper", "Gerolkae")]
         public void ExpectedCharachter(string testc, string channel, string ExpectedValue)
         {
+            bool IsTested = false;
             Proxy.ProcessServerChannelData += (sender, Args) =>
             {
-                if (sender is ChannelObject ServeObject)
+                if (!IsTested && sender is ChannelObject ServeObject)
                 {
                     if (ExpectedValue == "you")
                         Assert.That(ServeObject.Player,
@@ -144,6 +148,7 @@ namespace SmEngineTests
                     else
                         Assert.That(ServeObject.Player.ShortName,
                             Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                    IsTested = true;
                 }
             };
 
@@ -151,15 +156,15 @@ namespace SmEngineTests
 
             Proxy.ProcessServerChannelData -= (sender, Args) =>
             {
-                if (sender is ChannelObject ServeObject)
+                if (!IsTested && sender is ChannelObject ServeObject)
                 {
                     if (ExpectedValue == "you")
-
                         Assert.That(ServeObject.Player,
                             Is.EqualTo(Proxy.ConnectedFurre));
                     else
                         Assert.That(ServeObject.Player.ShortName,
                             Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                    IsTested = true;
                 }
             };
 
@@ -170,15 +175,17 @@ namespace SmEngineTests
         [TestCase(GeroShout, "ping")]
         public void SilverMonkeyEngine_InstructionObjectPlayerIs(string testc, string ExpectedValue)
         {
+            bool IsTested = false;
             //Turn the channel on
             Proxy.SendFormattedTextToServer("- Shout");
             HaltFor(1);
             Proxy.ProcessServerChannelData += (sender, Args) =>
             {
-                if (sender is ChannelObject InstructionObject)
+                if (!IsTested && sender is ChannelObject InstructionObject)
                 {
                     Assert.That(InstructionObject.Player.Message.Trim(),
                         Is.EqualTo(ExpectedValue.Trim()));
+                    IsTested = true;
                 }
             };
 
@@ -186,17 +193,17 @@ namespace SmEngineTests
 
             Proxy.ProcessServerChannelData -= (sender, Args) =>
             {
-                if (sender is ChannelObject InstructionObject)
+                if (!IsTested && sender is ChannelObject InstructionObject)
                 {
                     Assert.That(InstructionObject.Player.Message.Trim(),
                         Is.EqualTo(ExpectedValue.Trim()));
+                    IsTested = true;
                 }
             };
         }
 
         public void BotHasConnected(bool StandAlone = true)
         {
-            Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
 
             HaltFor(ConnectWaitTime);

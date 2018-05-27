@@ -80,13 +80,8 @@ namespace Libraries
         public static void UpdateCurrentDreamVariables(Dream ActiveDream, Page MonkeySpeakPage)
         {
             if (ActiveDream == null)
-            {
-                ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamOwnerVariable)).SetValue(null);
-                ((ConstantVariable)MonkeySpeakPage.GetVariable(DreamNameVariable)).SetValue(null);
-                return;
-            }
+                throw new MonkeyspeakException("ActiveDream is Null.");
 
-            Logger.Debug((ActiveDream != null) ? ActiveDream.ToString() : "null");
             if (!MonkeySpeakPage.HasVariable(DreamOwnerVariable))
             {
                 MonkeySpeakPage.SetVariable(new ConstantVariable(DreamOwnerVariable, ActiveDream.DreamOwner));

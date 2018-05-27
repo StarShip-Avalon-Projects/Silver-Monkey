@@ -121,26 +121,20 @@ namespace Libraries
         }
 
         /// <summary>
-        /// Reads the triggering Furre parameters.
+        /// Set Triggering furre variables by <see cref="TriggerCategory.Cause"/> Parameters
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
         [TriggerDescription("gets the triggering furre information and set the Triggering furre Monkeyspeak Variables.")]
         public static bool ReadTriggeringFurreParams(TriggerReader reader)
         {
-            bool ParamSet = false;
-
             Furre ActiveFurre = reader.GetParametersOfType<Furre>().FirstOrDefault();
+            if (ActiveFurre == null)
+                throw new MonkeyspeakException("ActiveFurre Parameter not set");
             if (ActiveFurre != Player)
             {
                 Player = ActiveFurre;
-                if (ActiveFurre.FurreID != -1 && ActiveFurre.ShortName != "unknown")
-                {
-                    ParamSet = true;
-                }
-
                 UpdateTriggerigFurreVariables(Player, reader.Page);
-                return ParamSet;
             }
 
             return Player == ActiveFurre;
@@ -384,8 +378,6 @@ namespace Libraries
         {
             if (!ReadTriggeringFurreParams(reader))
                 throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
-            if (!ReadDreamParams(reader))
-                throw new MonkeyspeakException("Failed to set Dream Variables");
 
             return MessageContains(reader);
         }
@@ -420,8 +412,6 @@ namespace Libraries
         {
             if (!ReadTriggeringFurreParams(reader))
                 throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
-            if (!ReadDreamParams(reader))
-                throw new MonkeyspeakException("Failed to set Dream Variables");
 
             return MessageEndsWith(reader);
         }
@@ -460,8 +450,6 @@ namespace Libraries
         {
             if (!ReadTriggeringFurreParams(reader))
                 throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
-            if (!ReadDreamParams(reader))
-                throw new MonkeyspeakException("Failed to set Dream Variables");
 
             return MessageIs(reader);
         }
@@ -496,8 +484,6 @@ namespace Libraries
         {
             if (!ReadTriggeringFurreParams(reader))
                 throw new MonkeyspeakException("Failed to set Triggering Furre Variables");
-            if (!ReadDreamParams(reader))
-                throw new MonkeyspeakException("Failed to set Dream Variables");
 
             return MessageStartsWith(reader);
         }

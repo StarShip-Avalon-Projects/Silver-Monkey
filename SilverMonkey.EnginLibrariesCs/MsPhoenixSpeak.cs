@@ -464,7 +464,7 @@ namespace Libraries
 
         private void ParsePhoenixSpeak(object sender, ParseChannelArgs Args)
         {
-            var ParseChannelThread = new Thread(() => OnParePhoenixSpeak(sender, Args));
+            var ParseChannelThread = new Thread(() => OnParsePhoenixSpeak(sender, Args));
             ParseChannelThread.Start();
         }
 
@@ -473,19 +473,21 @@ namespace Libraries
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="Args"></param>
-        private void OnParePhoenixSpeak(object sender, ParseChannelArgs Args)
+        private void OnParsePhoenixSpeak(object sender, ParseChannelArgs Args)
         {
             if (sender is ChannelObject ChanObject && (Args.Channel == "text" || Args.Channel == "error"))
             {
-                Logger.Debug<MsPhoenixSpeak>(ChanObject.ChannelText);
                 // Snag the PS data only if the API has sent a PS Query
                 // Sample Data, Thanks Wiren ~ Gero
                 // PS ### Ok: get: result: money='500', partysize='1', playerexp='0', playerlevel='1', pokeballs='15', pokemon1='7 1 n Squirtle 1 0 1 tackle', pokemon2='0', pokemon3='0', pokemon4='0', pokemon5='0', pokemon6='0', sys_lastused_date=1523076301, totalpokemon='1'
                 switch (Args.Channel)
                 {
                     case "text":
+
                         if (ChanObject.ChannelText.StartsWith("PS ") && GetPsId > 0) //
                         {
+                            Logger.Debug<MsPhoenixSpeak>(ChanObject.ChannelText);
+
                             var PsQuery = ChanObject.ChannelText.Split(new char[] { ' ' }, 5);
 
                             if (short.TryParse(PsQuery[1].AsString(), out short psID) && psID > 0)
@@ -502,6 +504,7 @@ namespace Libraries
                         if (ChanObject.ChannelText == "Sorry, you do not have access to this PhoenixSpeak command.")
                         {
                             Logger.Warn(PhoenixSpeakErrorMessage);
+                            Logger.Debug<MsPhoenixSpeak>(ChanObject.ChannelText);
                         }
                         break;
                         // PS ### Error: get: Query error: Field 'field' does not exist
