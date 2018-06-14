@@ -14,6 +14,7 @@ namespace SmEngineTests
     [TestFixture]
     internal class PhoenixSpeakTests
     {
+        private object EventLock = new object();
         private const string PsGetCharacters = "PS Ok: get: result: b='<array>', bloodofaraven666='<array>', bloodstar='<array>', CJ='<array>', cjkilman='<array>', g='<array>', gerolkae='<array>', h='<array>', queenchrysalis='<array>', r='<array>', s='<array>', silvermonkey='<array>', w='<array>'";
         private const string PsGetCharacterOk = "PS Ok: get: result: sys_lastused_date='2/9/2013 4:31:39 AM', testvar1=1, testvar2='Test2'";
         private const string PsGetCharacterError = "PS Error: get: Query error: (-1) Unexpected character '^' at column 17";
@@ -37,11 +38,6 @@ namespace SmEngineTests
         }
 
         [OneTimeSetUp]
-        public void OneTimeSetUp()
-        {
-        }
-
-        [SetUp]
         public void Initialize()
         {
             if (!File.Exists(BackupSettingsFile))
@@ -66,76 +62,61 @@ namespace SmEngineTests
                 ResetSettingTime = 10
             };
 
-            options.SaveBotSettings();
-
             Proxy = new Bot(options);
             Proxy.ClientData2 += (ClintData) => Proxy.SendToServer(ClintData);
             Proxy.ServerData2 += (ServerData) => Proxy.SendToClient(ServerData);
             Proxy.Error += (e, o) => Logger.Error($"{e} {o}");
+
+            BotHasConnected_StandAlone();
         }
 
         [TestCase(PsGetCharacters, PsGetCharacters)]
         public void TestPsCharacterList_StandAlone(string PSData, string ExpectedValue, string ExpectedChannel = "text")
         {
-            BotHasConnected_StandAlone();
-            if (!Proxy.StandAlone)
-                HaltFor(DreamEntranceDelay);
-
-            Proxy.ProcessServerChannelData += (sender, Args) =>
+            lock (EventLock)
             {
-                if (sender is ChannelObject ServeObject)
+                bool IsTested = false;
+                Proxy.ProcessServerChannelData += (sender, Args) =>
                 {
-                    Assert.That(ServeObject.Player.Message.Trim(),
-                        Is.EqualTo(ExpectedValue.Trim()),
-                        $"Player.Message '{ServeObject.Player.Message}' ExpectedValue: {ExpectedValue}"
-                        );
-                    Assert.That(Args.Channel,
-                        Is.EqualTo(ExpectedChannel),
-                        $"Player.Message '{Args.Channel}' ExpectedValue: {ExpectedChannel}"
-                        );
-                }
-            };
+                    if (!IsTested && sender is ChannelObject ServeObject)
+                    {
+                        IsTested = true;
 
-            Proxy.ParseServerChannel(PSData, false);
+                        Assert.That(ServeObject.Player.Message.Trim(),
+                            Is.EqualTo(ExpectedValue.Trim()),
+                            $"Player.Message '{ServeObject.Player.Message}' ExpectedValue: {ExpectedValue}"
+                            );
+                        Assert.That(Args.Channel,
+                            Is.EqualTo(ExpectedChannel),
+                            $"Player.Message '{Args.Channel}' ExpectedValue: {ExpectedChannel}"
+                            );
+                    }
+                };
 
-            Proxy.ProcessServerChannelData -= (sender, Args) =>
-            {
-                if (sender is ChannelObject ServeObject)
+                Proxy.ParseServerChannel(PSData, false);
+
+                Proxy.ProcessServerChannelData -= (sender, Args) =>
                 {
-                    Assert.That(ServeObject.Player.Message.Trim(),
-                        Is.EqualTo(ExpectedValue.Trim()),
-                        $"Player.Message '{ServeObject.Player.Message}' ExpectedValue: {ExpectedValue}"
-                        );
-                    Assert.That(Args.Channel,
-                        Is.EqualTo(ExpectedChannel),
-                        $"Player.Message '{Args.Channel}' ExpectedValue: {ExpectedChannel}"
-                        );
-                }
-            };
+                    if (!IsTested && sender is ChannelObject ServeObject)
+                    {
+                        IsTested = true;
 
-            DisconnectTests();
+                        Assert.That(ServeObject.Player.Message.Trim(),
+                            Is.EqualTo(ExpectedValue.Trim()),
+                            $"Player.Message '{ServeObject.Player.Message}' ExpectedValue: {ExpectedValue}"
+                            );
+                        Assert.That(Args.Channel,
+                            Is.EqualTo(ExpectedChannel),
+                            $"Player.Message '{Args.Channel}' ExpectedValue: {ExpectedChannel}"
+                            );
+                    }
+                };
+            }
         }
 
-        // Template for recogmended tests
-        //public void BaseTest(bool Standalone)
-        //{
-        //    BotHasConnected_StandAlone(Standalone);
-        //    HaltFor(DreamEntranceDelay);
-        //    //
-        //    Assert.Multiple(() =>
-        //    {
-        //    });
-
-        //    DisconnectTests();
-        //}
-
-        public void BotHasConnected_StandAlone(bool StandAlone = true)
+        public void BotHasConnected_StandAlone()
         {
-            Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
-
-            // Gice the Furcadia Client a chance to fall in line
-            HaltFor(ConnectWaitTime);
 
             Assert.Multiple(() =>
             {
@@ -145,7 +126,7 @@ namespace SmEngineTests
                 Assert.That(Proxy.IsServerSocketConnected,
                     Is.EqualTo(true),
                     $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
-                if (StandAlone)
+                if (Proxy.StandAlone)
                 {
                     Assert.That(Proxy.ClientStatus,
                         Is.EqualTo(ConnectionPhase.Disconnected),
@@ -198,9 +179,11 @@ namespace SmEngineTests
             });
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void Cleanup()
         {
+            DisconnectTests();
+
             Proxy.ClientData2 -= (data) => Proxy.SendToServer(data);
             Proxy.ServerData2 -= (data) => Proxy.SendToClient(data);
             Proxy.Error -= (e, o) => Logger.Error($"{e} {o}");

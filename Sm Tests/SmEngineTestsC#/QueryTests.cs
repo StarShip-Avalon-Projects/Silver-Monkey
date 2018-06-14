@@ -28,7 +28,7 @@ namespace SmEngineTests
         public string BackupSettingsFile { get; private set; }
         public BotOptions Options { get; private set; }
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Initialize()
         {
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -97,25 +97,32 @@ namespace SmEngineTests
         [TestCase(GeroCuddleBot, QueryType.cuddle)]
         public void ChannelIsQueryOfType(string ChannelCode, QueryType ExpectedValue)
         {
+            bool IsTested = false;
             Proxy.ProcessServerChannelData += (sender, Args) =>
             {
-                if (sender is QueryChannelObject queryObject)
+                if (!IsTested && sender is QueryChannelObject queryObject)
+                {
+                    IsTested = true;
                     Assert.Multiple(() =>
                     {
                         Assert.That(queryObject.Query,
                             Is.EqualTo(ExpectedValue));
                     });
+                }
             };
 
             Proxy.ParseServerChannel(ChannelCode, false);
             Proxy.ProcessServerChannelData -= (sender, Args) =>
             {
-                if (sender is QueryChannelObject queryObject)
+                if (!IsTested && sender is QueryChannelObject queryObject)
+                {
+                    IsTested = true;
                     Assert.Multiple(() =>
                     {
                         Assert.That(queryObject.Query,
                             Is.EqualTo(ExpectedValue));
                     });
+                }
             };
         }
 
@@ -155,8 +162,6 @@ namespace SmEngineTests
         {
             Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
-
-            HaltFor(ConnectWaitTime);
 
             Assert.Multiple(() =>
             {
@@ -219,7 +224,7 @@ namespace SmEngineTests
             });
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void Cleanup()
         {
             BotHaseDisconnected();

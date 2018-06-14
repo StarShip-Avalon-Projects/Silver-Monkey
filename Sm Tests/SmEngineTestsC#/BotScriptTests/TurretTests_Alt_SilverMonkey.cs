@@ -23,7 +23,7 @@ namespace SmEngineTests.BotScriptTests
 
         #region Private Fields
 
-        private static Bot Proxy;
+        private Bot BotProxy;
 
         #endregion Private Fields
 
@@ -72,10 +72,10 @@ namespace SmEngineTests.BotScriptTests
 
             Options.SaveBotSettings();
 
-            Proxy = new Bot(Options);
-            Proxy.Error += (e, o) => MsLog.Logger.Error($"{e} {o}");
+            BotProxy = new Bot(Options);
+            BotProxy.Error += (e, o) => MsLog.Logger.Error($"{e} {o}");
 
-            BotHasConnected_StandAlone(Proxy.StandAlone);
+            BotHasConnected_StandAlone(BotProxy.StandAlone);
         }
 
         [TestCase("furc://furrabiannights/", "The Shoddy Ribbon", "Murder Mystery Hotel (WIP)")]
@@ -86,36 +86,37 @@ namespace SmEngineTests.BotScriptTests
         [Author("Gerolkae")]
         public void DreamBookmarkSettingsTest(string DreamUrl, string DreamOwner, string DreamTitle = null)
         {
-            Proxy.SendFormattedTextToServer($"`fdl {DreamUrl}");
-            HaltFor(DreamEntranceDelay);
+            BotProxy.SendFormattedTextToServer($"`fdl {DreamUrl}");
+            if (!BotProxy.StandAlone)
+                HaltFor(DreamEntranceDelay);
 
-            Proxy.ProcessServerInstruction += (data, handled) =>
+            BotProxy.ProcessServerInstruction += (data, handled) =>
             {
                 if (data is DreamBookmark)
                 {
                     Assert.Multiple(() =>
                     {
-                        Assert.That(Proxy.Dream.DreamOwner, Is.EqualTo(DreamOwner.ToFurcadiaShortName()), $"Dream Owner: {Proxy.Dream.DreamOwner}");
-                        if (string.IsNullOrWhiteSpace(Proxy.Dream.Title))
-                            Assert.That(Proxy.Dream.DreamUrl, Is.EqualTo($"furc://{DreamOwner.ToFurcadiaShortName()}/"), $"Dream URL {Proxy.Dream.DreamUrl}");
+                        Assert.That(BotProxy.Dream.DreamOwner, Is.EqualTo(DreamOwner.ToFurcadiaShortName()), $"Dream Owner: {BotProxy.Dream.DreamOwner}");
+                        if (string.IsNullOrWhiteSpace(BotProxy.Dream.Title))
+                            Assert.That(BotProxy.Dream.DreamUrl, Is.EqualTo($"furc://{DreamOwner.ToFurcadiaShortName()}/"), $"Dream URL {BotProxy.Dream.DreamUrl}");
                         else
-                            Assert.That(Proxy.Dream.DreamUrl, Is.EqualTo($"furc://{DreamOwner.ToFurcadiaShortName()}:{DreamTitle.ToFurcadiaShortName()}/"), $"Dream URL {Proxy.Dream.DreamUrl}");
+                            Assert.That(BotProxy.Dream.DreamUrl, Is.EqualTo($"furc://{DreamOwner.ToFurcadiaShortName()}:{DreamTitle.ToFurcadiaShortName()}/"), $"Dream URL {BotProxy.Dream.DreamUrl}");
                     });
                 }
             };
 
             HaltFor(1);
-            Proxy.ProcessServerInstruction -= (data, handled) =>
+            BotProxy.ProcessServerInstruction -= (data, handled) =>
             {
                 if (data is DreamBookmark)
                 {
                     Assert.Multiple(() =>
                     {
-                        Assert.That(Proxy.Dream.DreamOwner, Is.EqualTo(DreamOwner.ToFurcadiaShortName()), $"Dream Owner: {Proxy.Dream.DreamOwner}");
-                        if (string.IsNullOrWhiteSpace(Proxy.Dream.Title))
-                            Assert.That(Proxy.Dream.DreamUrl, Is.EqualTo($"furc://{DreamOwner.ToFurcadiaShortName()}/"), $"Dream URL {Proxy.Dream.DreamUrl}");
+                        Assert.That(BotProxy.Dream.DreamOwner, Is.EqualTo(DreamOwner.ToFurcadiaShortName()), $"Dream Owner: {BotProxy.Dream.DreamOwner}");
+                        if (string.IsNullOrWhiteSpace(BotProxy.Dream.Title))
+                            Assert.That(BotProxy.Dream.DreamUrl, Is.EqualTo($"furc://{DreamOwner.ToFurcadiaShortName()}/"), $"Dream URL {BotProxy.Dream.DreamUrl}");
                         else
-                            Assert.That(Proxy.Dream.DreamUrl, Is.EqualTo($"furc://{DreamOwner.ToFurcadiaShortName()}:{DreamTitle.ToFurcadiaShortName()}/"), $"Dream URL {Proxy.Dream.DreamUrl}");
+                            Assert.That(BotProxy.Dream.DreamUrl, Is.EqualTo($"furc://{DreamOwner.ToFurcadiaShortName()}:{DreamTitle.ToFurcadiaShortName()}/"), $"Dream URL {BotProxy.Dream.DreamUrl}");
                     });
                 }
             };
@@ -124,86 +125,87 @@ namespace SmEngineTests.BotScriptTests
         [OneTimeTearDown]
         public void Cleanup()
         {
-            if (Proxy == null)
+            if (BotProxy == null)
                 return;
             BotHaseDisconnected();
-            Proxy.ClientData2 -= (data) => Proxy.SendToServer(data);
-            Proxy.ServerData2 -= (data) => Proxy.SendToClient(data);
-            Proxy.Error -= (e, o) =>
+            BotProxy.ClientData2 -= (data) => BotProxy.SendToServer(data);
+            BotProxy.ServerData2 -= (data) => BotProxy.SendToClient(data);
+            BotProxy.Error -= (e, o) =>
             FurcLog.Logger.Error<TurretTests_Alt_SilverMonkey>($"{e} {o}");
-            Proxy.MSpage.Error -= (page, handler, trigger, ex) =>
+            BotProxy.MSpage.Error -= (page, handler, trigger, ex) =>
                 FurcLog.Logger.Error($"{page} {handler}  {trigger}  {ex}");
-            Proxy.Dispose();
+            BotProxy.Dispose();
             Options = null;
         }
 
         public void BotHasConnected_StandAlone(bool StandAlone)
         {
-            Task.Run(() => Proxy.ConnetAsync()).Wait();
-            Proxy.MSpage.Error += (page, handler, trigger, ex) =>
-                MsLog.Logger.Error($"{page} {handler}  {trigger}  {ex}");
+            //BotProxy.MSpage.Error += (page, handler, trigger, ex) =>
+            //    MsLog.Logger.Error($"{page} {handler}  {trigger}  {ex}");
             MsLog.Logger.LogOutput = new MsLog.MultiLogOutput(new MsLog.FileLogOutput(Path.Combine(Paths.SilverMonkeyErrorLogPath, "TurretTests.log"), MsLog.Level.Debug), new MsLog.FileLogOutput(Paths.SilverMonkeyErrorLogPath, MsLog.Level.Error));
             FurcLog.Logger.LogOutput = new FurcLog.MultiLogOutput(new FurcLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, FurcLog.Level.Debug), new FurcLog.FileLogOutput(IO.Paths.SilverMonkeyErrorLogPath, FurcLog.Level.Error));
-            HaltFor(ConnectWaitTime);
+
+            Task.Run(() => BotProxy.ConnetAsync()).Wait();
+            //  HaltFor(ConnectWaitTime);
 
             Assert.Multiple(() =>
             {
-                Assert.That(Proxy.ServerStatus,
+                Assert.That(BotProxy.ServerStatus,
                     Is.EqualTo(ConnectionPhase.Connected),
-                    $"Proxy.ServerStatus {Proxy.ServerStatus}");
-                Assert.That(Proxy.IsServerSocketConnected,
+                    $"Proxy.ServerStatus {BotProxy.ServerStatus}");
+                Assert.That(BotProxy.IsServerSocketConnected,
                     Is.EqualTo(true),
-                    $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
+                    $"Proxy.IsServerSocketConnected {BotProxy.IsServerSocketConnected}");
                 if (StandAlone)
                 {
-                    Assert.That(Proxy.ClientStatus,
+                    Assert.That(BotProxy.ClientStatus,
                         Is.EqualTo(ConnectionPhase.Disconnected),
-                         $"Proxy.ClientStatus {Proxy.ClientStatus}");
-                    Assert.That(Proxy.IsClientSocketConnected,
+                         $"Proxy.ClientStatus {BotProxy.ClientStatus}");
+                    Assert.That(BotProxy.IsClientSocketConnected,
                         Is.EqualTo(false),
-                         $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.FurcadiaClientIsRunning,
+                         $"Proxy.IsClientSocketConnected {BotProxy.IsClientSocketConnected}");
+                    Assert.That(BotProxy.FurcadiaClientIsRunning,
                         Is.EqualTo(false),
-                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+                        $"Proxy.FurcadiaClientIsRunning {BotProxy.FurcadiaClientIsRunning}");
                 }
                 else
                 {
-                    Assert.That(Proxy.ClientStatus,
+                    Assert.That(BotProxy.ClientStatus,
                         Is.EqualTo(ConnectionPhase.Connected),
-                        $"Proxy.ClientStatus {Proxy.ClientStatus}");
-                    Assert.That(Proxy.IsClientSocketConnected,
+                        $"Proxy.ClientStatus {BotProxy.ClientStatus}");
+                    Assert.That(BotProxy.IsClientSocketConnected,
                         Is.EqualTo(true),
-                        $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                    Assert.That(Proxy.FurcadiaClientIsRunning,
+                        $"Proxy.IsClientSocketConnected {BotProxy.IsClientSocketConnected}");
+                    Assert.That(BotProxy.FurcadiaClientIsRunning,
                         Is.EqualTo(true),
-                        $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+                        $"Proxy.FurcadiaClientIsRunning {BotProxy.FurcadiaClientIsRunning}");
                 }
             });
         }
 
         public void BotHaseDisconnected()
         {
-            Proxy.Disconnect();
-            if (!Proxy.StandAlone)
+            BotProxy.Disconnect();
+            if (!BotProxy.StandAlone)
                 HaltFor(CleanupDelayTime);
 
             Assert.Multiple(() =>
             {
-                Assert.That(Proxy.ServerStatus,
+                Assert.That(BotProxy.ServerStatus,
                      Is.EqualTo(ConnectionPhase.Disconnected),
-                    $"Proxy.ServerStatus {Proxy.ServerStatus}");
-                Assert.That(Proxy.IsServerSocketConnected,
+                    $"Proxy.ServerStatus {BotProxy.ServerStatus}");
+                Assert.That(BotProxy.IsServerSocketConnected,
                      Is.EqualTo(false),
-                    $"Proxy.IsServerSocketConnected {Proxy.IsServerSocketConnected}");
-                Assert.That(Proxy.ClientStatus,
+                    $"Proxy.IsServerSocketConnected {BotProxy.IsServerSocketConnected}");
+                Assert.That(BotProxy.ClientStatus,
                      Is.EqualTo(ConnectionPhase.Disconnected),
-                     $"Proxy.ClientStatus {Proxy.ClientStatus}");
-                Assert.That(Proxy.IsClientSocketConnected,
+                     $"Proxy.ClientStatus {BotProxy.ClientStatus}");
+                Assert.That(BotProxy.IsClientSocketConnected,
                      Is.EqualTo(false),
-                     $"Proxy.IsClientSocketConnected {Proxy.IsClientSocketConnected}");
-                Assert.That(Proxy.FurcadiaClientIsRunning,
+                     $"Proxy.IsClientSocketConnected {BotProxy.IsClientSocketConnected}");
+                Assert.That(BotProxy.FurcadiaClientIsRunning,
                      Is.EqualTo(false),
-                    $"Proxy.FurcadiaClientIsRunning {Proxy.FurcadiaClientIsRunning}");
+                    $"Proxy.FurcadiaClientIsRunning {BotProxy.FurcadiaClientIsRunning}");
             });
         }
     }

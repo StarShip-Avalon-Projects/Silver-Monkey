@@ -15,6 +15,7 @@ namespace SmEngineTests
     [TestFixture]
     public class SilerMonkeyEngineTests_Alt_DBugger
     {
+        private object parseLock = new object();
         private const string GeroSayPing = "<name shortname='gerolkae'>Gerolkae</name>: ping";
         private const string GeroWhisperCunchatize = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"crunchatize\" to you. ]</font>";
         private const string GeroWhisperRollOut = "<font color='whisper'>[ <name shortname='gerolkae' src='whisper-from'>Gerolkae</name> whispers, \"roll out\" to you. ]</font>";
@@ -52,11 +53,6 @@ namespace SmEngineTests
         }
 
         [OneTimeSetUp]
-        public void OneTimeSetUp()
-        {
-        }
-
-        [SetUp]
         public void Initialize()
         {
             var BotFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -97,31 +93,34 @@ namespace SmEngineTests
         [TestCase(EmitTest, "test")]
         public void ChannelTextIs(string testc, string ExpectedValue)
         {
-            bool IsTested = false;
-            Proxy.ProcessServerChannelData += (sender, Args) =>
+            lock (parseLock)
             {
-                if (!IsTested && sender is ChannelObject ServeObject)
+                bool IsTested = false;
+                Proxy.ProcessServerChannelData += (sender, Args) =>
                 {
-                    Assert.That(ServeObject.Player.Message.Trim(),
-                        Is.EqualTo(ExpectedValue.Trim()));
-                    IsTested = true;
-                }
-            };
+                    if (!IsTested && sender is ChannelObject ServeObject)
+                    {
+                        Assert.That(ServeObject.Player.Message.Trim(),
+                            Is.EqualTo(ExpectedValue.Trim()));
+                        IsTested = true;
+                    }
+                };
 
-            Proxy.ParseServerChannel(testc, false);
+                Proxy.ParseServerChannel(testc, false);
 
-            Proxy.ProcessServerChannelData -= (sender, Args) =>
-            {
-                if (!IsTested && sender is ChannelObject ServeObject)
+                Proxy.ProcessServerChannelData -= (sender, Args) =>
                 {
-                    Assert.That(ServeObject.Player.Message.Trim(),
-                        Is.EqualTo(ExpectedValue.Trim()));
-                    IsTested = true;
-                }
-            };
+                    if (!IsTested && sender is ChannelObject ServeObject)
+                    {
+                        Assert.That(ServeObject.Player.Message.Trim(),
+                            Is.EqualTo(ExpectedValue.Trim()));
+                        IsTested = true;
+                    }
+                };
 
-            Logger.Debug<SilerMonkeyEngineTests_Alt_DBugger>($"ServerStatus: {Proxy.ServerStatus}");
-            Logger.Debug<SilerMonkeyEngineTests_Alt_DBugger>($"ClientStatus: {Proxy.ClientStatus}");
+                Logger.Debug<SilerMonkeyEngineTests_Alt_DBugger>($"ServerStatus: {Proxy.ServerStatus}");
+                Logger.Debug<SilerMonkeyEngineTests_Alt_DBugger>($"ClientStatus: {Proxy.ClientStatus}");
+            }
         }
 
         [TestCase(WhisperTest, "whisper", "Gerolkae")]
@@ -137,69 +136,75 @@ namespace SmEngineTests
         [TestCase(GeroWhisperHi, "whisper", "Gerolkae")]
         public void ExpectedCharachter(string testc, string channel, string ExpectedValue)
         {
-            bool IsTested = false;
-            Proxy.ProcessServerChannelData += (sender, Args) =>
+            lock (parseLock)
             {
-                if (!IsTested && sender is ChannelObject ServeObject)
+                bool IsTested = false;
+                Proxy.ProcessServerChannelData += (sender, Args) =>
                 {
-                    if (ExpectedValue == "you")
-                        Assert.That(ServeObject.Player,
-                            Is.EqualTo(Proxy.ConnectedFurre));
-                    else
-                        Assert.That(ServeObject.Player.ShortName,
-                            Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
-                    IsTested = true;
-                }
-            };
+                    if (!IsTested && sender is ChannelObject ServeObject)
+                    {
+                        if (ExpectedValue == "you")
+                            Assert.That(ServeObject.Player,
+                                Is.EqualTo(Proxy.ConnectedFurre));
+                        else
+                            Assert.That(ServeObject.Player.ShortName,
+                                Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                        IsTested = true;
+                    }
+                };
 
-            Proxy.ParseServerChannel(testc, false);
+                Proxy.ParseServerChannel(testc, false);
 
-            Proxy.ProcessServerChannelData -= (sender, Args) =>
-            {
-                if (!IsTested && sender is ChannelObject ServeObject)
+                Proxy.ProcessServerChannelData -= (sender, Args) =>
                 {
-                    if (ExpectedValue == "you")
-                        Assert.That(ServeObject.Player,
-                            Is.EqualTo(Proxy.ConnectedFurre));
-                    else
-                        Assert.That(ServeObject.Player.ShortName,
-                            Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
-                    IsTested = true;
-                }
-            };
+                    if (!IsTested && sender is ChannelObject ServeObject)
+                    {
+                        if (ExpectedValue == "you")
+                            Assert.That(ServeObject.Player,
+                                Is.EqualTo(Proxy.ConnectedFurre));
+                        else
+                            Assert.That(ServeObject.Player.ShortName,
+                                Is.EqualTo(ExpectedValue.ToFurcadiaShortName()));
+                        IsTested = true;
+                    }
+                };
 
-            Logger.Debug<SilerMonkeyEngineTests_Alt_DBugger>($"ServerStatus: {Proxy.ServerStatus}");
-            Logger.Debug<SilerMonkeyEngineTests_Alt_DBugger>($"ClientStatus: {Proxy.ClientStatus}");
+                Logger.Debug<SilerMonkeyEngineTests_Alt_DBugger>($"ServerStatus: {Proxy.ServerStatus}");
+                Logger.Debug<SilerMonkeyEngineTests_Alt_DBugger>($"ClientStatus: {Proxy.ClientStatus}");
+            }
         }
 
         [TestCase(GeroShout, "ping")]
         public void SilverMonkeyEngine_InstructionObjectPlayerIs(string testc, string ExpectedValue)
         {
-            bool IsTested = false;
-            //Turn the channel on
-            Proxy.SendFormattedTextToServer("- Shout");
-            HaltFor(1);
-            Proxy.ProcessServerChannelData += (sender, Args) =>
+            lock (parseLock)
             {
-                if (!IsTested && sender is ChannelObject InstructionObject)
+                bool IsTested = false;
+                //Turn the channel on
+                Proxy.SendFormattedTextToServer("- Shout");
+                HaltFor(1);
+                Proxy.ProcessServerChannelData += (sender, Args) =>
                 {
-                    Assert.That(InstructionObject.Player.Message.Trim(),
-                        Is.EqualTo(ExpectedValue.Trim()));
-                    IsTested = true;
-                }
-            };
+                    if (!IsTested && sender is ChannelObject InstructionObject)
+                    {
+                        Assert.That(InstructionObject.Player.Message.Trim(),
+                            Is.EqualTo(ExpectedValue.Trim()));
+                        IsTested = true;
+                    }
+                };
 
-            Proxy.ParseServerChannel(testc, false);
+                Proxy.ParseServerChannel(testc, false);
 
-            Proxy.ProcessServerChannelData -= (sender, Args) =>
-            {
-                if (!IsTested && sender is ChannelObject InstructionObject)
+                Proxy.ProcessServerChannelData -= (sender, Args) =>
                 {
-                    Assert.That(InstructionObject.Player.Message.Trim(),
-                        Is.EqualTo(ExpectedValue.Trim()));
-                    IsTested = true;
-                }
-            };
+                    if (!IsTested && sender is ChannelObject InstructionObject)
+                    {
+                        Assert.That(InstructionObject.Player.Message.Trim(),
+                            Is.EqualTo(ExpectedValue.Trim()));
+                        IsTested = true;
+                    }
+                };
+            }
         }
 
         public void BotHasConnected(bool StandAlone = true)
@@ -290,7 +295,7 @@ namespace SmEngineTests
             };
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void Cleanup()
         {
             DisconnectTests();

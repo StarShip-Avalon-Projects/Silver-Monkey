@@ -73,7 +73,7 @@ namespace SmEngineTests
         {
             Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
-            HaltFor(ConnectWaitTime);
+            // HaltFor(ConnectWaitTime);
 
             Assert.Multiple(() =>
             {
@@ -198,8 +198,6 @@ namespace SmEngineTests
                 ResetSettingTime = 10
             };
 
-            options.SaveBotSettings();
-
             Proxy = new Bot(options);
             Proxy.Error += (e, o) => MsLog.Logger.Error($"{e} {o}");
             BotHasConnected(Proxy.StandAlone);
@@ -269,9 +267,10 @@ namespace SmEngineTests
         [Author("Gerolkae")]
         public void DreamBookmarkSettingsTest(string DreamUrl, string DreamOwner, string DreamTitle = null)
         {
+            bool isTested = false;
             Proxy.ProcessServerInstruction += (data, handled) =>
             {
-                if (data is DreamBookmark)
+                if (!isTested && data is DreamBookmark)
                 {
                     Assert.Multiple(() =>
                     {
@@ -281,6 +280,7 @@ namespace SmEngineTests
                         else
                             Assert.That(Proxy.Dream.DreamUrl, Is.EqualTo($"furc://{DreamOwner.ToFurcadiaShortName()}:{DreamTitle.ToFurcadiaShortName()}/"), $"Dream URL {Proxy.Dream.DreamUrl}");
                     });
+                    isTested = true;
                 }
             };
 
@@ -288,7 +288,7 @@ namespace SmEngineTests
 
             Proxy.ProcessServerInstruction -= (data, handled) =>
             {
-                if (data is DreamBookmark)
+                if (!isTested && data is DreamBookmark)
                 {
                     Assert.Multiple(() =>
                     {
@@ -298,6 +298,7 @@ namespace SmEngineTests
                         else
                             Assert.That(Proxy.Dream.DreamUrl, Is.EqualTo($"furc://{DreamOwner.ToFurcadiaShortName()}:{DreamTitle.ToFurcadiaShortName()}/"), $"Dream URL {Proxy.Dream.DreamUrl}");
                     });
+                    isTested = true;
                 }
             };
         }
@@ -310,10 +311,12 @@ namespace SmEngineTests
         [Author("Gerolkae")]
         public void ConstanVariablesAreSet(string DreamUrl, string DreamOwner, string DreamTitle = null)
         {
+            bool isTested = false;
             Proxy.ProcessServerInstruction += (data, handled) =>
             {
-                if (data is DreamBookmark)
+                if (!isTested && data is DreamBookmark)
                 {
+                    isTested = true;
                     Assert.Multiple(() =>
                     {
                         var Var = Proxy.MSpage.GetVariable(TriggeringFurreNameVariable);
@@ -379,8 +382,9 @@ namespace SmEngineTests
 
             Proxy.ProcessServerInstruction -= (data, handled) =>
             {
-                if (data is DreamBookmark)
+                if (!isTested && data is DreamBookmark)
                 {
+                    isTested = true;
                     Assert.Multiple(() =>
                     {
                         var Var = Proxy.MSpage.GetVariable(TriggeringFurreNameVariable);

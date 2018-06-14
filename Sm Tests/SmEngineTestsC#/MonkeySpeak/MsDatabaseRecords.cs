@@ -8,7 +8,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using static Libraries.MsLibHelper;
-using static SmEngineTests.Utilities;
 
 namespace SmEngineTests.MonkeySpeak
 {
@@ -36,7 +35,7 @@ namespace SmEngineTests.MonkeySpeak
             Proxy.StandAlone = StandAlone;
             Task.Run(() => Proxy.ConnetAsync()).Wait();
 
-            HaltFor(ConnectWaitTime);
+            // HaltFor(ConnectWaitTime);
 
             Assert.Multiple(() =>
             {
@@ -93,10 +92,12 @@ namespace SmEngineTests.MonkeySpeak
         [Author("Gerolkae")]
         public void ConstanVariablesAreSet(string DreamUrl, string DreamOwner, string DreamTitle = null)
         {
+            bool isTested = false;
             Proxy.ProcessServerInstruction += (data, handled) =>
             {
-                if (data is DreamBookmark)
+                if (!isTested && data is DreamBookmark)
                 {
+                    isTested = true;
                     Assert.Multiple(() =>
                     {
                         var Var = Proxy.MSpage.GetVariable(TriggeringFurreNameVariable);
@@ -162,8 +163,9 @@ namespace SmEngineTests.MonkeySpeak
 
             Proxy.ProcessServerInstruction -= (data, handled) =>
             {
-                if (data is DreamBookmark)
+                if (!isTested && data is DreamBookmark)
                 {
+                    isTested = true;
                     Assert.Multiple(() =>
                     {
                         var Var = Proxy.MSpage.GetVariable(TriggeringFurreNameVariable);

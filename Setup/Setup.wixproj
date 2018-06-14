@@ -81,18 +81,18 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj">
-      <Name>MonkeyCore.WinFormsControls</Name>
-      <Project>{6a9fc31d-150b-4c4b-9694-7f8c084df602}</Project>
+    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
+      <Name>FurcadiaLib</Name>
+      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Symbols;Sources;Content;Satellites;Documents</RefProjectOutputGroups>
       <RefTargetDir>APPLICATIONFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\FurcLib\FurcadiaLib.csproj">
-      <Name>FurcadiaLib</Name>
-      <Project>{156c2af0-3da8-4d8c-a525-5400185579b3}</Project>
+    <ProjectReference Include="..\MonkeyCore.WinFormsControls\MonkeyCore.WinFormsControls.csproj">
+      <Name>MonkeyCore.WinFormsControls</Name>
+      <Project>{6a9fc31d-150b-4c4b-9694-7f8c084df602}</Project>
       <Private>True</Private>
       <DoNotHarvest>
       </DoNotHarvest>

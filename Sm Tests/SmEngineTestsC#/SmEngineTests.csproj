@@ -105,12 +105,12 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MsDatabaseRecords.ms">
+    <Content Include="MsDatabaseRecords.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Turret Tests.ms">
+    </Content>
+    <Content Include="Turret Tests.ms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
