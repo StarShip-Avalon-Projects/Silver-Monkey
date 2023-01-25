@@ -16,3 +16,6 @@ Silver Monkey is a bot creation program for [Furcadia](https://cms.furcadia.com)
 - Install [latest](https://github.com/StarShip-Avalon-Projects/Silver-Monkey/releases/tag/3.0.PreAlpha28)
 - Open saved off file
 - Start editing!
+
+## Known Issues
+- [#43](https://github.com/StarShip-Avalon-Projects/Silver-Monkey/issues/43) File -> New Bot **does not work** in latest, use [2.19.650.503](https://github.com/StarShip-Avalon-Projects/Silver-Monkey/releases/tag/2.19.Beta7.1) to create initial file and keep a blank copy for future reference
